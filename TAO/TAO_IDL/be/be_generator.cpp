@@ -121,21 +121,21 @@ be_generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
  */
 AST_Module *
 be_generator::create_module (UTL_Scope *s,
-                             UTL_ScopedName *n, 
+                             UTL_ScopedName *n,
                              UTL_StrList *p)
 {
   AST_Decl *d = 0;
-  UTL_ScopeActiveIterator *iter = 
+  UTL_ScopeActiveIterator *iter =
     new UTL_ScopeActiveIterator (s,
                                  UTL_Scope::IK_decls);
-  
+
   // We create this first so if we find a module with the
-  // same name from an included file, we can add its 
+  // same name from an included file, we can add its
   // members to the new module's scope.
   AST_Module *retval =  (AST_Module *) new be_module (n, p);
 
 
-  // Check for another module of the same name in this scope.                               
+  // Check for another module of the same name in this scope.
   while (!iter->is_done ())
     {
       d = iter->item ();
@@ -163,7 +163,7 @@ be_generator::create_module (UTL_Scope *s,
                   // one), but the one being created is not. We add
                   // the #included module's members to the new node
                   // and return it.
-                  UTL_ScopeActiveIterator *i = 
+                  UTL_ScopeActiveIterator *i =
                     new UTL_ScopeActiveIterator (DeclAsScope (d),
                                                  UTL_Scope::IK_decls);
 
@@ -182,7 +182,7 @@ be_generator::create_module (UTL_Scope *s,
                         }
 
                       i->next ();
-                    } 
+                    }
 
                   delete i;
                 }
@@ -213,30 +213,38 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 long nih,
                                 AST_Interface **ih_flat,
                                 long nih_flat,
-                                UTL_StrList *p)
+                                UTL_StrList *p,
+                                idl_bool l,
+                                idl_bool a)
 {
-  return (AST_Interface *) new be_interface (n, 
-                                             ih, 
+  return (AST_Interface *) new be_interface (n,
+                                             ih,
                                              nih,
                                              ih_flat,
                                              nih_flat,
-                                             p);
+                                             p,
+                                             l,
+                                             a);
 }
 
 /*
  * Create a BE_InterfaceFwd node
  */
 AST_InterfaceFwd *
-be_generator::create_interface_fwd (UTL_ScopedName *n, 
-                                    UTL_StrList *p)
+be_generator::create_interface_fwd (UTL_ScopedName *n,
+                                    UTL_StrList *p,
+                                    idl_bool local,
+                                    idl_bool abstract)
 {
-  return (AST_InterfaceFwd *) new be_interface_fwd (this->create_interface (n, 
-                                                                            0, 
+  return (AST_InterfaceFwd *) new be_interface_fwd (this->create_interface (n,
+                                                                            0,
                                                                             -1,
                                                                             0,
-                                                                            0, 
-                                                                            p),
-                                                    n, 
+                                                                            0,
+                                                                            p,
+                                                                            local,
+                                                                            abstract),
+                                                    n,
                                                     p);
 }
 
@@ -276,27 +284,42 @@ be_generator::create_valuetype_fwd(UTL_ScopedName *n, UTL_StrList *p)
  * Create a BE_Exception node
  */
 AST_Exception *
-be_generator::create_exception(UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_exception(UTL_ScopedName *n,
+                               UTL_StrList *p,
+                               idl_bool local,
+                               idl_bool abstract)
 {
-  return (AST_Exception *) new be_exception(n, p);
+  return (AST_Exception *) new be_exception(n,
+                                            p,
+                                            local,
+                                            abstract);
 }
 
 /*
  * Create a BE_Structure node
  */
 AST_Structure *
-be_generator::create_structure(UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_structure(UTL_ScopedName *n,
+                               UTL_StrList *p,
+                               idl_bool local,
+                               idl_bool abstract)
 {
-  return (AST_Structure *) new be_structure(n, p);
+  return (AST_Structure *) new be_structure(n,
+                                            p,
+                                            local,
+                                            abstract);
 }
 
 /*
  * Create a BE_Enum node
  */
 AST_Enum *
-be_generator::create_enum(UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_enum(UTL_ScopedName *n,
+                          UTL_StrList *p,
+                          idl_bool local,
+                          idl_bool abstract)
 {
-  return (AST_Enum *) new be_enum(n, p);
+  return (AST_Enum *) new be_enum(n, p, local, abstract);
 }
 
 /*
@@ -351,9 +374,15 @@ be_generator::create_attribute(idl_bool ro,
 AST_Union *
 be_generator::create_union(AST_ConcreteType *dt,
                            UTL_ScopedName *n,
-                           UTL_StrList *p)
+                           UTL_StrList *p,
+                           idl_bool local,
+                           idl_bool abstract)
 {
-  return (AST_Union *) new be_union(dt, n, p);
+  return (AST_Union *) new be_union(dt,
+                                    n,
+                                    p,
+                                    local,
+                                    abstract);
 }
 
 /*
@@ -517,9 +546,15 @@ be_generator::create_array(UTL_ScopedName *n,
  * Create a BE_Sequence node
  */
 AST_Sequence *
-be_generator::create_sequence(AST_Expression *v, AST_Type *bt)
+be_generator::create_sequence(AST_Expression *v,
+                              AST_Type *bt,
+                              idl_bool local,
+                              idl_bool abstract)
 {
-  return (AST_Sequence *) new be_sequence(v, bt);
+  return (AST_Sequence *) new be_sequence(v,
+                                          bt,
+                                          local,
+                                          abstract);
 }
 
 /*
@@ -537,7 +572,7 @@ be_generator::create_string(AST_Expression *v)
 AST_String *
 be_generator::create_wstring(AST_Expression *v)
 {
-  return (AST_String *) new be_string (v, 
+  return (AST_String *) new be_string (v,
                                        sizeof (ACE_CDR::WChar));
 }
 
@@ -545,9 +580,13 @@ be_generator::create_wstring(AST_Expression *v)
  * Create a BE_Typedef node
  */
 AST_Typedef *
-be_generator::create_typedef(AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_typedef(AST_Type *bt,
+                             UTL_ScopedName *n,
+                             UTL_StrList *p,
+                             idl_bool local,
+                             idl_bool abstract)
 {
-  return (AST_Typedef *) new be_typedef(bt, n, p);
+  return (AST_Typedef *) new be_typedef(bt, n, p, local, abstract);
 }
 
 /*

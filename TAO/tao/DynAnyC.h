@@ -594,7 +594,7 @@ struct TAO_Export CORBA_NameValuePair
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CH_
 
@@ -602,9 +602,9 @@ struct TAO_Export CORBA_NameValuePair
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void); // Default constructor.
-      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum,
         CORBA::ULong length,
         CORBA_NameValuePair *data,
@@ -621,7 +621,7 @@ struct TAO_Export CORBA_NameValuePair
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       CORBA_NameValuePair *get_buffer (CORBA::Boolean orphan = 0);
       const CORBA_NameValuePair *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -633,10 +633,10 @@ struct TAO_Export CORBA_NameValuePair
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 class CORBA_NameValuePairSeq_var;
-  
+
 // *************************************************************
 // CORBA::NameValuePairSeq
 // *************************************************************

@@ -318,7 +318,7 @@ TAO_NAMESPACE_END
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_duplicate (PortableServer::ThreadPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -482,7 +482,7 @@ TAO_NAMESPACE_END
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_duplicate (PortableServer::LifespanPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -646,7 +646,7 @@ TAO_NAMESPACE_END
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_duplicate (PortableServer::IdUniquenessPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -809,7 +809,7 @@ TAO_NAMESPACE_END
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_duplicate (PortableServer::IdAssignmentPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -975,7 +975,7 @@ TAO_NAMESPACE_END
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_duplicate (PortableServer::ImplicitActivationPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1139,7 +1139,7 @@ TAO_NAMESPACE_END
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_duplicate (PortableServer::ServantRetentionPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1303,7 +1303,7 @@ TAO_NAMESPACE_END
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_duplicate (PortableServer::RequestProcessingPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1449,7 +1449,7 @@ TAO_NAMESPACE_END
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1620,7 +1620,7 @@ TAO_NAMESPACE_END
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_duplicate (PortableServer::AdapterActivator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1693,7 +1693,7 @@ TAO_NAMESPACE_END
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_duplicate (PortableServer::ServantManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1766,7 +1766,7 @@ TAO_NAMESPACE_END
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_duplicate (PortableServer::ServantActivator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1840,7 +1840,7 @@ TAO_NAMESPACE_END
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_duplicate (PortableServer::ServantLocator_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -1916,7 +1916,7 @@ TAO_NAMESPACE_END
 PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate
@@ -2902,7 +2902,7 @@ TAO_NAMESPACE_END
 PortableServer::Current_ptr PortableServer::Current::_duplicate (PortableServer::Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate

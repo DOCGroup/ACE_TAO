@@ -1,3 +1,412 @@
+Tue Apr 25 19:25:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Added local interfaces support as defined in the CCM spec.
+	  Currently, all programming contructs (struct, union,
+	  sequence...) occurring within a local interface are treated
+	  correctly by the TAO_IDL compiler.  However, if these contructed
+	  types occurred outside of a local interface but contain other
+	  local types, then they don't get necessarily treated correctly
+	  at the moment and should get fixed in no time.  Support for
+	  semantic checking is also not complete (e.g., an operation of a
+	  regular interface can not take an argument of any local types.)
+
+	  Please see the "Portable Interceptor" test under
+	  $TAO_ROOT/tests/Interceptors for an example on how to implement
+	  local objects.  Also check out the releasenotes in local
+	  interface section which I will add very soon.
+
+	Mon Apr 24 14:41:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO/tao/LocalObject.cpp:
+		* TAO/tao/LocalObject.h: Fixed _is_equivalent's signature.
+
+		* TAO/tao/Makefile:
+		* TAO/tao/Makefile.am:
+		* TAO/tao/Makefile.bor: Added LocalObject.
+
+		* TAO/tao/Object.h:
+		* TAO/tao/Object.i: Fixed some inlining problems on old gcc.
+
+		* TAO/tests/Interceptors/client.cpp:
+		* TAO/tests/Interceptors/server.cpp:
+		* TAO/tests/Interceptors/interceptors.cpp:
+		* TAO/tests/Interceptors/interceptors.h: Fixed gcc specific
+		  problems (like not able to use a var in place of ptr.)
+
+	Mon Apr 24 03:40:36 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO_IDL/ast/ast_decl.cpp:
+		* TAO_IDL/ast/ast_enum.cpp:
+		* TAO_IDL/ast/ast_exception.cpp:
+		* TAO_IDL/ast/ast_generator.cpp:
+		* TAO_IDL/ast/ast_interface.cpp:
+		* TAO_IDL/ast/ast_interface_fwd.cpp:
+		* TAO_IDL/ast/ast_sequence.cpp:
+		* TAO_IDL/ast/ast_structure.cpp:
+		* TAO_IDL/ast/ast_type.cpp:
+		* TAO_IDL/ast/ast_typedef.cpp:
+		* TAO_IDL/ast/ast_union.cpp:
+		* TAO_IDL/be/be_enum.cpp:
+		* TAO_IDL/be/be_exception.cpp:
+		* TAO_IDL/be/be_generator.cpp:
+		* TAO_IDL/be/be_interface.cpp:
+		* TAO_IDL/be/be_sequence.cpp:
+		* TAO_IDL/be/be_structure.cpp:
+		* TAO_IDL/be/be_typedef.cpp:
+		* TAO_IDL/be/be_union.cpp:
+		* TAO_IDL/be/be_valuetype.cpp:
+		* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+		* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+		* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+		* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+		* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+		* TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+		* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+		* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+		* TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+		* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+		* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+		* TAO_IDL/be/be_visitor_module/module.cpp:
+		* TAO_IDL/be/be_visitor_root/root.cpp:
+		* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+		* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+		* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+		* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+		* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+		* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+		* TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+		* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+		* TAO_IDL/be/be_visitor_typedef/typedef_cs.cpp:
+		* TAO_IDL/be/be_visitor_union/union_ch.cpp:
+		* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+		* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+		* TAO_IDL/be_include/be_enum.h:
+		* TAO_IDL/be_include/be_exception.h:
+		* TAO_IDL/be_include/be_generator.h:
+		* TAO_IDL/be_include/be_interface.h:
+		* TAO_IDL/be_include/be_sequence.h:
+		* TAO_IDL/be_include/be_structure.h:
+		* TAO_IDL/be_include/be_typedef.h:
+		* TAO_IDL/be_include/be_union.h:
+		* TAO_IDL/fe/fe_interface_header.cpp:
+		* TAO_IDL/fe/idl.yy:
+		* TAO_IDL/fe/y.tab.cpp:
+		* TAO_IDL/include/ast_decl.h:
+		* TAO_IDL/include/ast_enum.h:
+		* TAO_IDL/include/ast_exception.h:
+		* TAO_IDL/include/ast_generator.h:
+		* TAO_IDL/include/ast_interface.h:
+		* TAO_IDL/include/ast_interface_fwd.h:
+		* TAO_IDL/include/ast_sequence.h:
+		* TAO_IDL/include/ast_structure.h:
+		* TAO_IDL/include/ast_type.h:
+		* TAO_IDL/include/ast_typedef.h:
+		* TAO_IDL/include/ast_union.h: Moved the local and
+		  abstract information down into COMMON_Base as many
+		  "types" in IDL files can be "local".  TAO_IDL now
+		  propagates the local state from an local interface down
+		  into types defined within the interface correctly.
+
+		* tao/Interceptor.cpp:
+		* tao/Interceptor.h:
+		* tao/Interceptor.pidl:
+		* tao/InterceptorC.cpp:
+		* tao/InterceptorC.h:
+		* tao/InterceptorC.i:
+		* tao/InterceptorS.cpp:
+		* tao/InterceptorS.h: Re-defined the "Portable"
+		  interceptor interfaces as local to test out the local
+		  interfaces.  (Notice that we are going to change the
+		  Portable Interceptors interfaces completely to conform
+		  with the latest Portable Interceptors specification.)
+
+		* tao/LocalObject.cpp:
+		* tao/LocalObject.h: Oops, _is_equivalent should always
+		  take an Object, instead of LocalObject.
+
+		* tao/ORB.i: Removed the type-checking in interceptor
+		  registration operations because they use _is_a which is
+		  not supported for local interfaces.
+
+		* tests/Interceptors/client.cpp:
+		* tests/Interceptors/interceptors.cpp:
+		* tests/Interceptors/interceptors.h:
+		* tests/Interceptors/server.cpp: Revised to test to
+		  demonstrate how to use local interfaces.
+
+	Thu Apr 20 03:00:35 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO_IDL/be_include/be_codegen.h: Attribute
+		  accessors/mutators also need to be handled differently
+		  if they are part of a local interface.  Added local
+		  attribute states.
+
+		* TAO_IDL/be/be_visitor_factory.cpp:
+		* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface.cpp: Added
+		  state transition rules for "local attributes."
+
+		* TAO_IDL/be/be_visitor_module/module.cpp:
+		* TAO_IDL/be/be_visitor_operation/arglist.cpp: Fixed
+		  previously missing state transitions.
+
+		* TAO_IDL/be/be_interface.cpp: Fixed a syntax error in
+		  generated code.
+
+		* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: I
+		  accidentally removed the endif codegen for local
+		  interfaces.
+
+		* TAO_IDL/be/be_visitor_interface/interface_ci.cpp: Forgot
+		  to supress codegen for remote object constructor for
+		  local interfaces.
+
+	Thu Apr 20 00:40:19 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO_IDL/be_include/be_codegen.h: Added several new
+		  compiler states to propagate local interface information
+		  down the chain.
+
+		* TAO_IDL/be/be_visitor_factory.cpp:
+		* TAO_IDL/be/be_visitor_root/root.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface.cpp: Changed
+		  to propagate local interface states down the chain.
+
+		* TAO_IDL/be/be_visitor_ami_pre_proc.cpp: No need to
+		  preprocess local interfaces for AMI.
+
+		* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: Do not
+		  generate typecode information for local interfaces.
+
+		* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+		* TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+		  Operations of local interfaces should be declared as
+		  pure virtual functions.
+
+		* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Do not
+		  generate code local interface's operations.
+
+	Wed Apr 19 04:05:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tao/LocalObject.h:
+		* tao/LocalObject.i:
+		* tao/LocalObject.cpp:
+		* tao/Object.h:
+		* tao/Object.h: Reverted my previous changes about
+		  differentiating local and remote
+		  _interface_repository_id methods.  It didn't solve any
+		  problem.  Instead, the LocalObject class should not
+		  implement the _interface_repository_id method to avoid
+		  inheritance ambiguity.  Removed _interface_repository_id
+		  method from LocalObject class.
+
+		* TAO_IDL/be_include/be_interface.h:
+		* TAO_IDL/be/be_interface.cpp: Added a new
+		  queryinterface_helper method to help traverse the
+		  inheritance tree and generate the proper
+		  _tao_QueryInterface implementation.
+
+		* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+		* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+		* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+		  Implemented local interface code generation and remove
+		  the old hack for generating locality constraint
+		  interfaces.
+
+		* TAO_IDL/be/be_visitor_operation/operation.cpp:
+		* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+		* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+		* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+		* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+		* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+		* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+		* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+		* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+		  Removed code for generating locality constraint
+		  interfaces.  They are superceded by local interfaces.
+
+		* docs/compiler.html:
+		* TAO_IDL/be/be_codegen.cpp:
+		* TAO_IDL/include/idl_global.h:
+		* TAO_IDL/util/utl_global.cpp:
+		* TAO_IDL/driver/drv_args.cpp: Removed support for -Gl
+		  flag which directed idl compiler to generate locality
+		  constraint interfaces.  This is now depreciated.
+
+	Tue Apr 18 16:06:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: The
+		  idl compiler must generate
+		  <_remote_interface_repository_id> for remote client
+		  stubs now.
+
+		* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+		* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Do not
+		  generate skeletons for local interfaces.
+
+		* tao/Object.h:
+		* tao/Object.i:
+		* tao/Object.cpp: Changed the method
+		  <_interface_repository_id> as inlined, non-virtual
+		  function and invoke either
+		  <_remote_interface_repository_id> or
+		  <_local_interface_repository_id> depending on whether
+		  the interface is remote or local.  Added the two
+		  aforementioned new virtual functions.
+
+		* tao/LocalObject.h:
+		* tao/LocalObject.cpp: Rename <_interface_repository_id>
+		  to <_local_interface_repository_id>.
+
+	Tue Apr 18 03:17:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tao/corba.h: Included "tao/LocalObject" in this file.
+
+		* tao/LocalObject.h:
+		* tao/LocalObject.cpp: Changed <_is_a> operation back to
+		  throw NO_IMPLEMENT exception.
+
+	Tue Apr 18 02:03:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO_IDL/be/be_interface.cpp:
+		* TAO_IDL/be_include/be_interface.h: Forgot to initialize
+		  other virtual base classes in be_local_interface and
+		  be_abstract_interface.
+
+		* TAO_IDL/ast/ast_interface.cpp (fwd_redefinition_helper):
+		  Added redefinition check for local interface (forward
+		  declaration must match with the actual definition.)
+
+		* TAO_IDL/fe/fe_interface_header.h:
+		* TAO_IDL/fe/fe_interface_header.cpp (check_further):
+		  Added check for inproper inheritance of local interface.
+		  A remote interface can not inherit from local
+		  interfaces.  Also changed to compile the inheritance in
+		  the derived class'es constructors.
+
+	Mon Apr 17 20:48:42 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO_IDL/fe/y.tab.h:
+		* TAO_IDL/fe/idl.ll:
+		* TAO_IDL/fe/lex.yy.cpp:
+		* TAO_IDL/fe/lex.yy.cpp.diff: Added a new token IDL_LOCAL.
+
+		* TAO_IDL/fe/idl.yy:
+		* TAO_IDL/fe/y.tab.cpp: Added rules for local and abstract
+		  interfaces.  Currently, however, abstract interface is
+		  still not supported.
+
+		* TAO_IDL/include/ast_generator.h:
+		* TAO_IDL/ast/ast_generator.cpp:
+		* TAO_IDL/be_include/be_generator.h:
+		* TAO_IDL/be/be_generator.cpp: Modified the
+		  {be_ast}_generate::create_{interface|interface_fwd} to
+		  create different interface type based on the information
+		  passed in from FE_InterfaceHeader.
+
+		* TAO_IDL/include/fe_interface_header.h:
+		* TAO_IDL/fe/fe_interface_header.cpp: Added new methods,
+		  is_local and is_abstract to differentiate the type of
+		  interface being parsed.
+
+		* TAO_IDL/ast/ast_interface.cpp:
+		* TAO_IDL/ast/ast_interface_fwd.cpp:
+		* TAO_IDL/be/be_interface.cpp:
+		* TAO_IDL/be_include/be_interface.h:
+		* TAO_IDL/include/ast_interface.h:
+		* TAO_IDL/include/ast_interface_fwd.h: Extended
+		  {be|ast}_interface and ast_interface_fwd to represent
+		  "local" and "abstract" interfaces other than regular
+		  CORBA interface.  Two new methods, is_local_interface
+		  and is_abstract_interface, are added to differentiate
+		  the interface type.
+
+		  I didn't create new visitor classes for either local or
+		  abstract interfaces because they more or less generate
+		  subset of regular interface and it's esier to simply
+		  "turn off" some feature of regular interface depend on
+		  the type of interfaces we are generating.
+
+	Mon Apr 17 13:18:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* TAO_IDL/fe/idl.ll:
+		* TAO_IDL/fe/y.tab.h:
+		* TAO_IDL/fe/lex.yy.cpp:
+		* TAO_IDL/fe/lex.yy.cpp.diff: Added the "local" keyword.
+
+	Thu Apr 13 02:00:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tao/Object.h:
+		* tao/Object.i:
+		* tao/Object.cpp: Added implementation of
+		  _tao_QueryInterface.  This method is used to downcast
+		  local object.  Added a member data called <is_local_>
+		  and a readonly accessor.  We use this method to find out
+		  whether an object reference points to a local object or
+		  not.  <_narrow> behaves differently for LocalObject and
+		  Object.
+
+		* tao/LocalObject.h:
+		* tao/LocalObject.i:
+		* tao/LocalObject.cpp: Added implementation of
+		  _tao_QueryInterface.
+
+	Sat Apr 01 02:04:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+		* tao/corbafwd.h:
+		* tao/LocalObject.cpp:
+		* tao/LocalObject.h:
+		* tao/LocalObject.i:
+		* tao/TAO.dsp:
+		* tao/TAO_Static.dsp: Added LocalObject.*
+
+		* tao/Object.cpp:
+		* tao/Object.h:
+		* tao/Object.i: Changed _incr_refcnt and _decr_refcnt to
+		  protected method.  Added two new virtual function
+		  _add_ref and _remove_ref which call _incr_refcnt and
+		  _decr_refcnt to manage the reference counting of
+		  objects.  The CCM specifies these functions for
+		  LocalObject.  So we need to change to use them in Object
+		  also.
+
+		* be/be_visitor_interface/interface_cs.cpp:
+		* tao/CurrentC.cpp:
+		* tao/DomainC.cpp:
+		* tao/DynAnyC.cpp:
+		* tao/IORC.cpp:
+		* tao/ImplRepoC.cpp:
+		* tao/InterceptorC.cpp:
+		* tao/InterfaceC.cpp:
+		* tao/MessagingC.i:
+		* tao/Object.cpp:
+		* tao/Object.i:
+		* tao/POAC.cpp:
+		* tao/PolicyC.cpp:
+		* tao/PolicyC.i:
+		* tao/PollableC.i:
+		* tao/RT_Current.cpp:
+		* tao/TAOC.cpp: Changed to use _incr_refcnt and
+		  _decr_refcnt for Object derived interfaces.
+
 Tue Apr 25 19:45:18 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IORManipulation.cpp:
@@ -38,7 +447,7 @@ Tue Apr 25 15:05:48 2000  Ossama Othman  <ossama@uci.edu>
 	  Improved the hashing code to provide a more a unique hash by
 	  utilizing the ACE::hash_pjw() method, and the profile tag, in
 	  addition to values that were used before.  [Bug 543]
-	
+
 	* tao/IIOP_Profile.cpp (set):
 	* tao/SHMIOP_Profile.cpp (set):
 

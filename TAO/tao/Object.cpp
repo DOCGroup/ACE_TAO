@@ -37,6 +37,7 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
                             CORBA::Boolean collocated)
   : servant_ (servant),
     is_collocated_ (collocated),
+    is_local_ (0),
     protocol_proxy_ (protocol_proxy),
     refcount_ (1),
     refcount_lock_ ()
@@ -44,6 +45,18 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
   // Notice that the refcount_ above is initialized to 1 because
   // the semantics of CORBA Objects are such that obtaining one
   // implicitly takes a reference.
+}
+
+void
+CORBA_Object::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+CORBA_Object::_remove_ref (void)
+{
+  this->_decr_refcnt ();
 }
 
 void
@@ -187,6 +200,12 @@ CORBA_Object::_is_collocated (void) const
   return this->is_collocated_;
 }
 
+CORBA::Boolean
+CORBA_Object::_is_local (void) const
+{
+  return this->is_local_;
+}
+
 // Quickly hash an object reference's representation data.  Used to
 // create hash tables.
 
@@ -249,6 +268,21 @@ const TAO_ObjectKey &
 CORBA::Object::_object_key (void)
 {
   return this->_stubobj ()->profile_in_use ()->object_key ();
+}
+
+void *
+CORBA::Object::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (ptr_arith_t,
+                                    &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *, this);
+
+  if (retv)
+    this->_add_ref ();
+
+  return 0;
 }
 
 // @@ This doesn't seemed to be used anyplace! It should go away!! FRED

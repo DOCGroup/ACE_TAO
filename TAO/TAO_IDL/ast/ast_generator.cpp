@@ -109,7 +109,7 @@ AST_Generator::create_predefined_type(AST_PredefinedType::PredefinedType t,
  */
 AST_Module      *
 AST_Generator::create_module (UTL_Scope *,
-                              UTL_ScopedName *n, 
+                              UTL_ScopedName *n,
                               UTL_StrList *p)
 {
   return new AST_Module(n, p);
@@ -134,14 +134,18 @@ AST_Generator::create_interface (UTL_ScopedName *n,
                                  long nih,
                                  AST_Interface **ih_flat,
                                  long nih_flat,
-                                 UTL_StrList *p)
+                                 UTL_StrList *p,
+                                 idl_bool l,
+                                 idl_bool a)
 {
-  return new AST_Interface (n, 
-                            ih, 
-                            nih, 
-                            ih_flat, 
-                            nih_flat, 
-                            p);
+  return new AST_Interface (n,
+                            ih,
+                            nih,
+                            ih_flat,
+                            nih_flat,
+                            p,
+                            l,
+                            a);
 }
 
 /*
@@ -149,9 +153,14 @@ AST_Generator::create_interface (UTL_ScopedName *n,
  * declaration of an interface)
  */
 AST_InterfaceFwd *
-AST_Generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_interface_fwd(UTL_ScopedName *n,
+                                    UTL_StrList *p,
+                                    idl_bool local,
+                                    idl_bool abstract)
 {
-  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, 0, 0, p), n, p);
+  return new AST_InterfaceFwd (this->create_interface (n, 0, -1, 0, 0, p, local, abstract),
+                               n,
+                               p);
 }
 
 /*
@@ -179,7 +188,7 @@ AST_Generator::create_valuetype(UTL_ScopedName *,
  * Create a be_valuetype_fwd node
  */
 AST_InterfaceFwd *
-AST_Generator::create_valuetype_fwd (UTL_ScopedName *, 
+AST_Generator::create_valuetype_fwd (UTL_ScopedName *,
                                      UTL_StrList *)
 {
   // see note in create_valuetype()
@@ -194,27 +203,36 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *,
  * Construct an AST_Exception node (an exception)
  */
 AST_Exception   *
-AST_Generator::create_exception(UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_exception(UTL_ScopedName *n,
+                                UTL_StrList *p,
+                                idl_bool local,
+                                idl_bool abstract)
 {
-  return new AST_Exception(n, p);
+  return new AST_Exception(n, p, local, abstract);
 }
 
 /*
  * Construct an AST_Structure node (a struct)
  */
 AST_Structure   *
-AST_Generator::create_structure(UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_structure(UTL_ScopedName *n,
+                                UTL_StrList *p,
+                                idl_bool local,
+                                idl_bool abstract)
 {
-  return new AST_Structure(n, p);
+  return new AST_Structure(n, p, local, abstract);
 }
 
 /*
  * Construct an AST_Enum node (an enum)
  */
 AST_Enum        *
-AST_Generator::create_enum(UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_enum(UTL_ScopedName *n,
+                           UTL_StrList *p,
+                           idl_bool local,
+                           idl_bool abstract)
 {
-  return new AST_Enum(n, p);
+  return new AST_Enum(n, p, local, abstract);
 }
 
 /*
@@ -268,10 +286,16 @@ AST_Generator::create_attribute(idl_bool ro,
  */
 AST_Union       *
 AST_Generator::create_union(AST_ConcreteType *dt,
-                           UTL_ScopedName *n,
-                           UTL_StrList *p)
+                            UTL_ScopedName *n,
+                            UTL_StrList *p,
+                            idl_bool local,
+                            idl_bool abstract)
 {
-  return new AST_Union(dt, n, p);
+  return new AST_Union(dt,
+                       n,
+                       p,
+                       local,
+                       abstract);
 }
 
 /*
@@ -438,9 +462,12 @@ AST_Generator::create_array(UTL_ScopedName *n,
  * Construct an AST_Sequence node (a sequence type definition)
  */
 AST_Sequence    *
-AST_Generator::create_sequence(AST_Expression *ms, AST_Type *bt)
+AST_Generator::create_sequence(AST_Expression *ms,
+                               AST_Type *bt,
+                               idl_bool local,
+                               idl_bool abstract)
 {
-  return new AST_Sequence(ms, bt);
+  return new AST_Sequence(ms, bt, local, abstract);
 }
 
 /*
@@ -465,9 +492,13 @@ AST_Generator::create_wstring(AST_Expression *ms)
  * Construct an AST_Typedef node (a typedef)
  */
 AST_Typedef     *
-AST_Generator::create_typedef(AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p)
+AST_Generator::create_typedef(AST_Type *bt,
+                              UTL_ScopedName *n,
+                              UTL_StrList *p,
+                              idl_bool local,
+                              idl_bool abstract)
 {
-  return new AST_Typedef(bt, n, p);
+  return new AST_Typedef(bt, n, p, local, abstract);
 }
 
 /*

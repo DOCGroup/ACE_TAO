@@ -81,6 +81,26 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(ast, ast_decl, "$Id$")
 
+COMMON_Base::COMMON_Base (idl_bool local,
+                          idl_bool abstract)
+  : is_local_ (local),
+    is_abstract_ (abstract)
+{
+}
+
+idl_bool
+COMMON_Base::is_local (void)
+{
+  return this->is_local_;
+}
+
+idl_bool
+COMMON_Base::is_abstract (void)
+{
+  return this->is_abstract_;
+}
+
+
 /*
  * Constructor(s) and destructor
  */
@@ -291,10 +311,10 @@ AST_Decl::name()
 
 
 // @@ Wherever compute_* are called, we should remember to delete them
-//    after use.  
+//    after use.
 
 // Variation of the <name>. Computes scoped name string, applying
-// prefix and suffix to the local name component. 
+// prefix and suffix to the local name component.
 UTL_ScopedName *
 AST_Decl::compute_name (const char *prefix, const char *suffix)
 {
@@ -307,7 +327,7 @@ AST_Decl::compute_name (const char *prefix, const char *suffix)
 
   ACE_CString suffix_str (suffix);
   ACE_CString local_str (this->local_name ()->get_string ());
-  
+
   ACE_CString result_local_str (prefix);
   result_local_str += local_str;
   result_local_str += suffix_str;
@@ -317,26 +337,26 @@ AST_Decl::compute_name (const char *prefix, const char *suffix)
                                                 1,
                                                 0,
                                                 I_FALSE);
-  
+
   // UTL_Scoped name for the resulting local name.
   UTL_ScopedName *result_local_name = new UTL_ScopedName (result_local_id,
                                                           NULL);
-  
+
   // Global scope?
-  if (this->defined_in () == NULL) 
+  if (this->defined_in () == NULL)
     {
       result_name = result_local_name;
     }
   else
     {
-      // OK, not global. So copy name of containing scope, then 
+      // OK, not global. So copy name of containing scope, then
       // smash last cdr of copy with new component.
-      
+
       AST_Decl *d = ScopeAsDecl(defined_in());
       if (d != NULL)
         {
           UTL_ScopedName *cn = d->name();
-          if (cn != NULL) 
+          if (cn != NULL)
             {
               result_name = (UTL_ScopedName *) cn->copy();
               if (result_name == NULL)
@@ -348,9 +368,9 @@ AST_Decl::compute_name (const char *prefix, const char *suffix)
             }
         }
     }
-  
+
   return result_name;
-  
+
 }
 
 
@@ -365,7 +385,7 @@ AST_Decl::set_name(UTL_ScopedName *n)
     {
       pd_local_name = n->last_component();
 
-      // The name without _cxx_ prefix removed, if there was any. 
+      // The name without _cxx_ prefix removed, if there was any.
       original_local_name (n->last_component ());
     }
 }
@@ -384,7 +404,7 @@ AST_Decl::compute_local_name (const char *prefix, const char *suffix)
 
   // Init the result with prefix.
   ACE_CString result_str (prefix);
-  
+
   // Put local.
   result_str += ACE_CString (this->local_name ()->get_string ());
 
@@ -413,7 +433,7 @@ AST_Decl::original_local_name (Identifier *local_name)
     {
       // CSting class is good to do this stuff.
       ACE_CString name_str (local_name->get_string ());
-      
+
       // Remove _cxx_.
       name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
 

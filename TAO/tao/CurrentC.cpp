@@ -26,7 +26,7 @@ ACE_RCSID(tao, CurrentC, "$Id$")
 CORBA_Current_ptr CORBA_Current::_duplicate (CORBA_Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 } // end of _duplicate

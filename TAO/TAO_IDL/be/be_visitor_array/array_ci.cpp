@@ -62,8 +62,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
-      if (this->gen_anonymous_base_type (bt, 
-                                         TAO_CodeGen::TAO_SEQUENCE_CI) 
+      if (this->gen_anonymous_base_type (bt,
+                                         TAO_CodeGen::TAO_SEQUENCE_CI)
           == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,7 +71,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
                              "visit_array - "
                              "gen_anonymous_base_type failed\n"),
                             -1);
-        }              
+        }
     }
 
   // generate code for the _var, _out, and _forany types
@@ -184,7 +184,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << fname << "::" << lname << " (const " << fname
       << " &p) // copy constructor" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "this->ptr_ = " << nodename << "_dup " << "(ACE_const_cast (const " 
+  *os << "this->ptr_ = " << nodename << "_dup " << "(ACE_const_cast (const "
       << nodename << "_slice *, p.ptr_));" << be_uidt_nl;
   *os << "}\n\n";
 
@@ -224,7 +224,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "// not assigning to ourselves" << be_nl;
   *os << nodename << "_free (this->ptr_); // free old stuff" << be_nl;
   *os << "// deep copy" << be_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const " 
+  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const "
       << nodename << "_slice *, p.ptr_));" << be_uidt_nl;
   *os << "}" << be_nl;
   *os << "return *this;" << be_uidt_nl;
@@ -243,7 +243,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
     {
       os->indent ();
       *os << "ACE_INLINE " << be_nl;
-      *os << fname << "::operator " << nodename 
+      *os << fname << "::operator " << nodename
           << "_slice *&() // cast " << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return this->ptr_;" << be_uidt_nl;
@@ -258,7 +258,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "{" << be_nl;
 
   *os << "#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename 
+  *os << "return ACE_const_cast (const " << nodename
       << "_slice &, this->ptr_[index]);" << be_uidt_nl;
   *os << "#else" << be_idt_nl;
   *os << "const " << nodename << "_slice &tmp = this->ptr_[index];" << be_nl;
@@ -289,7 +289,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename 
+  *os << "return ACE_const_cast (const " << nodename
       << "_slice *, this->ptr_);" << be_uidt_nl;
   *os << "}\n\n";
 
@@ -474,6 +474,9 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
 int
 be_visitor_array_ci::gen_forany_impl (be_array *node)
 {
+  if (node->is_local ())
+    return 0;
+
   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
   char nodename [NAMEBUFSIZE]; // node name
@@ -567,7 +570,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << fname << "::operator= (" << nodename
       << "_slice *p)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "// is what we own the same that is being assigned to us?" 
+  *os << "// is what we own the same that is being assigned to us?"
       << be_nl;
   *os << "if (this->ptr_ != p)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -589,7 +592,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "// not assigning to ourselves" << be_nl;
   *os << nodename << "_free (this->ptr_); // free old stuff" << be_nl;
   *os << "// deep copy" << be_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const " 
+  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const "
       << nodename << "_slice *, p.ptr_));" << be_nl;
   *os << "this->nocopy_ = p.nocopy_;" << be_uidt_nl;
   *os << "}" << be_nl;
@@ -620,11 +623,11 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_idt_nl;
 
-  // MSVC requires an explicit cast for this. SunCC will 
+  // MSVC requires an explicit cast for this. SunCC will
   // not accept one, but will do it implicitly with a temporary.
   // It's only a problem with multidimensional arrays.
 #if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
-  *os << "return ACE_const_cast (const " << nodename 
+  *os << "return ACE_const_cast (const " << nodename
       << "_slice &, this->ptr_[index]);" << be_uidt_nl;
 #else
   *os << "const " << nodename << "_slice &tmp = this->ptr_[index];" << be_nl;
@@ -646,7 +649,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename 
+  *os << "return ACE_const_cast (const " << nodename
       << "_slice *, this->ptr_);" << be_uidt_nl;
   *os << "}\n\n";
 

@@ -33,10 +33,14 @@ be_enum::be_enum (void)
   this->size_type (be_decl::FIXED);
 }
 
-be_enum::be_enum (UTL_ScopedName *n, UTL_StrList *p)
-  : AST_Enum (n, p),
+be_enum::be_enum (UTL_ScopedName *n,
+                  UTL_StrList *p,
+                  idl_bool local,
+                  idl_bool abstract)
+  : AST_Enum (n, p, local, abstract),
     AST_Decl (AST_Decl::NT_enum, n, p),
     UTL_Scope (AST_Decl::NT_enum),
+    COMMON_Base (local, abstract),
     member_count_ (-1)
 {
   this->size_type (be_decl::FIXED);
@@ -85,14 +89,14 @@ be_enum::value_to_name (const unsigned long v)
   AST_EnumVal             *item;
   AST_Decl		            *i;
 
-  iter = new UTL_ScopeActiveIterator (this, 
+  iter = new UTL_ScopeActiveIterator (this,
                                       IK_decls);
 
-  while (!iter->is_done ()) 
+  while (!iter->is_done ())
     {
       i = iter->item  ();
       item = AST_EnumVal::narrow_from_decl (i);
-      if (item->constant_value  ()->ev ()->u.ulval == v) 
+      if (item->constant_value  ()->ev ()->u.ulval == v)
         {
           delete iter;
           return item->name ();

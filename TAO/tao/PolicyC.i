@@ -610,7 +610,7 @@ ACE_INLINE CORBA_PolicyManager_ptr
 CORBA_PolicyManager::_duplicate (CORBA_PolicyManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -799,7 +799,7 @@ ACE_INLINE CORBA_PolicyCurrent_ptr
 CORBA_PolicyCurrent::_duplicate (CORBA_PolicyCurrent_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -1213,4 +1213,3 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-

@@ -64,7 +64,9 @@ public:
                 long nih,
                 AST_Interface **ih_flat,
                 long nih_flat,
-                UTL_StrList *p);
+                UTL_StrList *p,
+                idl_bool local,
+                idl_bool abstract);
   // Constructor that sets its scoped name <n>, a list of inherited interfaces
   // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
 
@@ -169,6 +171,12 @@ public:
   // helper method passed to the template method that generates code for the
   // is_a method
 
+  static int queryinterface_helper (be_interface *,
+                                    be_interface *,
+                                    TAO_OutStream *os);
+  // helper method passed to the template method that generates code for the
+  // _tao_QueryInterface method
+
   static int downcast_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *os);
@@ -226,7 +234,7 @@ public:
 
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
-  // find the next state, used to hide differences between variants of 
+  // find the next state, used to hide differences between variants of
   // interfaces.
 
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
@@ -235,11 +243,11 @@ public:
 
   void original_interface (be_interface *original_interface);
   // Sets the original interface from which this one was created,
-  // applies only to implied IDL 
+  // applies only to implied IDL
 
   be_interface *original_interface ();
   // Returns the original interface from which this one was created,
-  // applies only to implied IDL 
+  // applies only to implied IDL
 
   be_interface *replacement ();
   // Returns an interface, which can be used instead.
@@ -294,4 +302,3 @@ private:
 };
 
 #endif  // if !defined
-

@@ -37,11 +37,15 @@ be_sequence::be_sequence (void)
   this->has_constructor (I_TRUE);      // always the case
 }
 
-be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
-  : AST_Sequence (v, t),
+be_sequence::be_sequence (AST_Expression *v,
+                          AST_Type *t,
+                          idl_bool local,
+                          idl_bool abstract)
+  : AST_Sequence (v, t, t->is_local () || local, abstract),
     AST_Decl (AST_Decl::NT_sequence,
               NULL,
               NULL),
+    COMMON_Base (t->is_local () || local, abstract),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
   // check if we are bounded or unbounded. An expression value of 0 means
@@ -101,12 +105,12 @@ be_sequence::gen_name (void)
 
       // Some platforms define IDL sequences as template classes
       // and some do not. If the nested sequence were defined in
-      // the scope of the enclosing sequence, we would have to 
+      // the scope of the enclosing sequence, we would have to
       // not only define the nested class in two places, but also
       // deal with the fact that, for the template classes, the
-      // enclosing sequence's template type is a class defined 
+      // enclosing sequence's template type is a class defined
       // inside it. So we define the nested sequence in the next
-      // scope up, and the existing code generation works for both 
+      // scope up, and the existing code generation works for both
       // template and non-template implementations of IDL sequences.
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
@@ -161,9 +165,9 @@ be_sequence::create_name (be_typedef *node)
           // add our local name as the last component
           n->nconc (
               new UTL_ScopedName (
-                  new Identifier (ACE_OS::strdup (namebuf), 
+                  new Identifier (ACE_OS::strdup (namebuf),
                                   1,
-                                  0, 
+                                  0,
                                   I_FALSE),
                   NULL
                 )
@@ -330,23 +334,23 @@ be_sequence::instance_name ()
       break;
     default: // not a managed type
       if (this->unbounded ())
-	{
-	  // TAO provides extensions for octet sequences, first find out
-	  // if the base type is an octet (or an alias for octet)
-	  be_predefined_type *predef =
-	    be_predefined_type::narrow_from_decl (prim_type);
-	  if (predef != 0 &&
-	      predef->pt() == AST_PredefinedType::PT_octet)
-	    ACE_OS::sprintf (namebuf,
-			     "TAO_Unbounded_Sequence<CORBA::Octet>");
-	  else
+        {
+          // TAO provides extensions for octet sequences, first find out
+          // if the base type is an octet (or an alias for octet)
+          be_predefined_type *predef =
+            be_predefined_type::narrow_from_decl (prim_type);
+          if (predef != 0 &&
+              predef->pt() == AST_PredefinedType::PT_octet)
+            ACE_OS::sprintf (namebuf,
+                             "TAO_Unbounded_Sequence<CORBA::Octet>");
+          else
             ACE_OS::sprintf (namebuf,
                              "_TAO_Unbounded_Sequence_%s",
                              this->flat_name());
                              // or prim_type->flat_name ());
-	  // ACE_DEBUG ((LM_DEBUG, "testing.... %d, %d = <%s>\n",
-	  // predef, predef->pt (), namebuf));
-	}
+          // ACE_DEBUG ((LM_DEBUG, "testing.... %d, %d = <%s>\n",
+          // predef, predef->pt (), namebuf));
+        }
       else
         ACE_OS::sprintf (namebuf,
                          "_TAO_Bounded_Sequence_%s_%lu",

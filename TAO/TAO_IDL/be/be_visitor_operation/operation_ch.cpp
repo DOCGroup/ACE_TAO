@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -96,7 +96,10 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_CH);
+  if (this->ctx_->state () == TAO_CodeGen::TAO_LOCAL_OPERATION_H)
+      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H);
+    else
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_CH);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {

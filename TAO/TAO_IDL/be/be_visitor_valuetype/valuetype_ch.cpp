@@ -127,8 +127,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               // AST_Interface, then type AST_Interface can be used
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
-              if (!inherited->is_valuetype() &&
-                  !inherited->is_abstract_interface())
+              if (!inherited->is_valuetype () &&
+                  !inherited->is_abstract ())
                 continue;
 
               ++ n_inherits_valuetypes;

@@ -5,6 +5,8 @@
 //   Torsten Kuepper
 //
 
+valuetype Event;
+
 // $Id$
 
 // Event inheritance hierarchy  ===========================

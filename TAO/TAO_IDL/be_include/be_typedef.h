@@ -40,7 +40,11 @@ public:
   be_typedef (void);
   // default constructor
 
-  be_typedef (AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p);
+  be_typedef (AST_Type *bt,
+              UTL_ScopedName *n,
+              UTL_StrList *p,
+              idl_bool l,
+              idl_bool a);
   // constructor
 
   be_type *primitive_base_type (void);
