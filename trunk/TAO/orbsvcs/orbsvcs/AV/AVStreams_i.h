@@ -466,45 +466,45 @@ class TAO_ORBSVCS_Export TAO_MMDevice
 };
 
 
-template<class T>
-class TAO_ORBSVCS_Export TAO_Client_MMDevice 
-  : public virtual TAO_MMDevice
-// = DESCRIPTION
-//     Specialiized MMDevice, meant to generate type "A"
-//     endpoints. This is meant to be used on the client side
-//     Trying to create a B type endpoint using this  class will
-//     result in an  error
-//     This class is templatized by the Stream endpoint
-//     that is to be created using create_A. The user
-//     of this class can thus use this as a factory to create
-//     user-defined stream-endpoints
-{
-public:
-  TAO_Client_MMDevice ();
-  // Constructor
-  
-  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
-                                                     CORBA::Environment &env);
-  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
-  
-  virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
-                                                     CORBA::Environment &env);
-  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
-};
-
-template<class T>
-class TAO_ORBSVCS_Export TAO_Server_MMDevice 
-  : public virtual TAO_MMDevice
+// template<class T>              
+// class TAO_ORBSVCS_Export TAO_Client_MMDevice 
+//   : public virtual TAO_MMDevice
+// // = DESCRIPTION               
+// //     Specialiized MMDevice, meant to generate type "A"
+// //     endpoints. This is meant to be used on the client side
+// //     Trying to create a B type endpoint using this  class will
+// //     result in an  error     
+// //     This class is templatized by the Stream endpoint
+// //     that is to be created using create_A. The user
+// //     of this class can thus use this as a factory to create
+// //     user-defined stream-endpoints
+// {                              
+// public:                        
+//   TAO_Client_MMDevice ();      
+//   // Constructor               
+//                                
+//   virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
+//                                                      AVStreams::VDev_out the_vdev, 
+//                                                      AVStreams::streamQoS &the_qos, 
+//                                                      CORBA::Boolean_out met_qos, 
+//                                                      char *&named_vdev, 
+//                                                      const AVStreams::flowSpec &the_spec,  
+//                                                      CORBA::Environment &env);
+//   // Called by StreamCtrl to create a "A" type streamandpoint and vdev
+//                                
+//   virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
+//                                                      AVStreams::VDev_out the_vdev, 
+//                                                      AVStreams::streamQoS &the_qos, 
+//                                                      CORBA::Boolean_out met_qos, 
+//                                                      char *&named_vdev, 
+//                                                      const AVStreams::flowSpec &the_spec,  
+//                                                      CORBA::Environment &env);
+//   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
+// };                             
+//                                
+// template<class T>              
+// class TAO_ORBSVCS_Export TAO_Server_MMDevice 
+//   : public virtual TAO_MMDevice
 // = DESCRIPTION
 //     Specialiized MMDevice, meant to generate type "B"
 //     endpoints. This is meant to be used on the server side
@@ -514,27 +514,27 @@ class TAO_ORBSVCS_Export TAO_Server_MMDevice
 //     that is to be created using create_A. The user
 //     of this class can thus use this as a factory to create
 //     user-defined stream-endpoints
-{
-public:
-  TAO_Server_MMDevice (void);
-
-  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
-                                                     CORBA::Environment &env);
-  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
-
-  virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
-                                                     CORBA::Environment &env);
-  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
-
-};
+//{
+//public:
+//  TAO_Server_MMDevice (void);
+//  
+//  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
+//                                                     AVStreams::VDev_out the_vdev, 
+//                                                     AVStreams::streamQoS &the_qos, 
+//                                                     CORBA::Boolean_out met_qos, 
+//                                                     char *&named_vdev, 
+//                                                     const AVStreams::flowSpec &the_spec,  
+//                                                     CORBA::Environment &env);
+//  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
+//  
+//  virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
+//                                                     AVStreams::VDev_out the_vdev, 
+//                                                     AVStreams::streamQoS &the_qos, 
+//                                                     CORBA::Boolean_out met_qos, 
+//                                                     char *&named_vdev, 
+//                                                     const AVStreams::flowSpec &the_spec,  
+//                                                     CORBA::Environment &env);
+//  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
+//  
+//};
 #endif /* AVSTREAMS_I_H */
