@@ -29,6 +29,11 @@ that's probably a valid assumption!
 <font color=blue>#define</font> <font color=purple>SERVER_H</font>
 
 <font color=blue>#include</font> "<font color=green>ace/Acceptor.h</font>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
 <font color=blue>#include</font> "<font color=green>ace/SOCK_Acceptor.h</font>"
 <font color=blue>#include</font> "<font color=green>Handler.h</font>"
 
@@ -60,7 +65,7 @@ public:
     int run(void);
 
 private:
-        <font color=red>// This will accept client connection requests and instantiate </font>
+        <font color=red>// This will accept client connection requests and instantiate</font>
         <font color=red>// a Handler object for each new connection.</font>
     Acceptor acceptor_;
 

@@ -46,14 +46,14 @@ public:
      <font color=red>// We must be given a valid peer when constructed.  Without that</font>
      <font color=red>// we don't know who to send data to.</font>
     Xmit( ACE_SOCK_Stream & _peer );
-    
+
     ~Xmit(void);
 
-     <font color=red>// As you know, close() will be called in a couple of ways by the </font>
+     <font color=red>// As you know, close() will be called in a couple of ways by the</font>
      <font color=red>// ACE framework.  We use that opportunity to terminate the</font>
      <font color=red>// connection to the peer.</font>
     int close(u_long flags);
-    
+
 protected:
 
     ACE_SOCK_Stream & peer(void)

@@ -30,6 +30,11 @@ processing.  Again, keep it simple and delegate authority.
 <font color=blue>#define</font> <font color=purple>HANDLER_H</font>
 
 <font color=blue>#include</font> "<font color=green>ace/Svc_Handler.h</font>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
 <font color=blue>#include</font> "<font color=green>ace/SOCK_Stream.h</font>"
 <font color=blue>#include</font> "<font color=green>Protocol_Stream.h</font>"
 
@@ -58,7 +63,7 @@ public:
         <font color=red>// differences between destroy() and close() so don't try to</font>
         <font color=red>// use either for all cases.</font>
     int close (u_long);
-    
+
 protected:
 
         <font color=red>// Respond to peer() activity.</font>

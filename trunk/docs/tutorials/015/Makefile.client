@@ -13,7 +13,7 @@ FILES += Xmit
 FILES += Recv
 FILES += Compressor
 FILES += Crypt
-FILES += Client
+FILES += Client_i
 
 BUILD  = $(VBIN)
 

@@ -27,6 +27,10 @@ concern in this file is to get everything in the correct order!
 
 <font color=blue>#include</font> "<font color=green>ace/Task.h</font>"
 
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
 <font color=red>/* A typical ACE_Task&lt;> derivative that adds a few things appropriate
    to protocol stacks.
 */</font>
@@ -41,13 +45,13 @@ public:
         <font color=red>// zero and let things proceed serially.  You might have a</font>
         <font color=red>// need, however, for some of your tasks to have their own thread.</font>
     Protocol_Task( int _thr_count );
-    
+
     ~Protocol_Task(void);
 
         <font color=red>// open() is invoked when the task is inserted into the stream.</font>
     virtual int open(void *arg);
 
-        <font color=red>// close() is invoked when the stream is closed (flags will be </font>
+        <font color=red>// close() is invoked when the stream is closed (flags will be</font>
         <font color=red>// set to '1') and when the svc() method exits (flags will be</font>
         <font color=red>// '0').</font>
     virtual int close(u_long flags);
@@ -57,13 +61,13 @@ public:
     virtual int put(ACE_Message_Block *message,
                     ACE_Time_Value *timeout);
 
-        <font color=red>// If you choose to activate the task then this method will be </font>
+        <font color=red>// If you choose to activate the task then this method will be</font>
         <font color=red>// doing all of the work.</font>
     virtual int svc(void);
 
 protected:
 
-        <font color=red>// Called by put() or svc() as necessary to process a block of </font>
+        <font color=red>// Called by put() or svc() as necessary to process a block of</font>
         <font color=red>// data.</font>
     int process(ACE_Message_Block * message, ACE_Time_Value *timeout);
 
@@ -78,7 +82,7 @@ protected:
         <font color=red>// the peer.</font>
     virtual int send(ACE_Message_Block *message,
                      ACE_Time_Value *timeout);
-    
+
         <font color=red>// Tasks on the reader (upstream) side will be receiving data</font>
         <font color=red>// that came from the peer.</font>
     virtual int recv(ACE_Message_Block * message,

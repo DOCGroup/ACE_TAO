@@ -47,7 +47,7 @@ public:
 
      <font color=red>// Give it someone to talk to...</font>
     Recv( ACE_SOCK_Stream & _peer );
-    
+
     ~Recv(void);
 
      <font color=red>// Trigger a read from the socket</font>
@@ -60,7 +60,7 @@ public:
         {
             return this->error_;
         }
-    
+
 protected:
 
     ACE_SOCK_Stream & peer(void)

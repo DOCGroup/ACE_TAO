@@ -42,6 +42,11 @@ going on here.
 <font color=blue>#define</font> <font color=purple>PROTOCOL_STREAM_H</font>
 
 <font color=blue>#include</font> "<font color=green>ace/SOCK_Stream.h</font>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
 <font color=blue>#include</font> "<font color=green>ace/Stream.h</font>"
 
 <font color=red>// Shorthand for the stream.</font>
@@ -83,18 +88,18 @@ public:
              _timeout = 0 );
 
         <font color=red>// Tell the Recv task to read some data and send it upstream.</font>
-        <font color=red>// The data will pass through the protocol tasks and be queued </font>
+        <font color=red>// The data will pass through the protocol tasks and be queued</font>
         <font color=red>// into the stream head reader task's message queue.  If</font>
         <font color=red>// you've installed a _reader in open() then that task's</font>
         <font color=red>// recv() method will see the message and may consume it</font>
         <font color=red>// instead of passing it to the stream head for queueing.</font>
     int get(void);
-    
+
     ACE_SOCK_Stream & peer(void)
         {
             return this->peer_;
         }
-    
+
 private:
         <font color=red>// Our peer connection</font>
     ACE_SOCK_Stream peer_;

@@ -15,7 +15,7 @@ FILES += Compressor
 FILES += Crypt
 
 FILES += Handler
-FILES += Server
+FILES += Server_i
 
 BUILD  = $(VBIN)
 
