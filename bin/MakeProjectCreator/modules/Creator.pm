@@ -20,6 +20,15 @@ use vars qw(@ISA);
 @ISA = qw(Parser);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my(@statekeys) = ('global', 'include', 'template', 'ti',
+                  'dynamic', 'static', 'relative', 'addtemp',
+                  'addproj', 'progress', 'toplevel', 'baseprojs',
+                 );
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -43,11 +52,11 @@ sub new {
   $self->{'relative'}       = $relative;
   $self->{'template'}       = $template;
   $self->{'ti'}             = $ti;
-  $self->{'global_cfg'}     = $global;
+  $self->{'global'}         = $global;
   $self->{'grammar_type'}   = $type;
   $self->{'type_check'}     = $type . '_defined';
   $self->{'global_read'}    = 0;
-  $self->{'include_path'}   = $inc;
+  $self->{'include'}        = $inc;
   $self->{'current_input'}  = '';
   $self->{'progress'}       = $progress;
   $self->{'addtemp'}        = $addtemp;
@@ -305,18 +314,6 @@ sub generate_default_file_list {
 }
 
 
-sub get_global_cfg {
-  my($self) = shift;
-  return $self->{'global_cfg'};
-}
-
-
-sub get_include_path {
-  my($self) = shift;
-  return $self->{'include_path'};
-}
-
-
 sub search_include_path {
   my($self)     = shift;
   my($file)     = shift;
@@ -329,24 +326,6 @@ sub search_include_path {
     }
   }
   return $found;
-}
-
-
-sub get_template_override {
-  my($self) = shift;
-  return $self->{'template'};
-}
-
-
-sub get_ti_override {
-  my($self) = shift;
-  return $self->{'ti'};
-}
-
-
-sub get_relative {
-  my($self) = shift;
-  return $self->{'relative'};
 }
 
 
@@ -370,36 +349,6 @@ sub transform_file_name {
 }
 
 
-sub get_current_input {
-  my($self) = shift;
-  return $self->{'current_input'};
-}
-
-
-sub get_progress_callback {
-  my($self) = shift;
-  return $self->{'progress'};
-}
-
-
-sub get_addtemp {
-  my($self) = shift;
-  return $self->{'addtemp'};
-}
-
-
-sub get_addproj {
-  my($self) = shift;
-  return $self->{'addproj'};
-}
-
-
-sub get_toplevel {
-  my($self) = shift;
-  return $self->{'toplevel'};
-}
-
-
 sub add_file_written {
   my($self) = shift;
   my($file) = shift;
@@ -412,12 +361,6 @@ sub add_file_written {
     }
   }
   push(@{$self->{'files_written'}}, $file);
-}
-
-
-sub get_files_written {
-  my($self) = shift;
-  return $self->{'files_written'};
 }
 
 
@@ -445,6 +388,17 @@ sub extension_recursive_input_list {
 }
 
 
+sub modify_assignment_value {
+  my($self)  = shift;
+  my($value) = shift;
+
+  if ($self->convert_slashes()) {
+    $value = $self->slash_to_backslash($value);
+  }
+  return $value;
+}
+
+
 sub process_assignment {
   my($self)   = shift;
   my($name)   = shift;
@@ -467,9 +421,8 @@ sub process_assignment {
     $value =~ s/^\s+//;
     $value =~ s/\s+$//;
 
-    if ($self->convert_slashes()) {
-      $value = $self->slash_to_backslash($value);
-    }
+    ## Modify the assignment value before saving it
+    $value = $self->modify_assignment_value($value);
   }
 
   $$assign{$name} = $value;
@@ -510,6 +463,111 @@ sub process_assignment_sub {
     }
     $self->process_assignment($name, $nval, $assign);
   }
+}
+
+
+sub save_state {
+  my($self)  = shift;
+  my(%state) = ();
+
+  ## Make a deep copy of each state value.  That way our array
+  ## references and hash references do not get accidentally modified.
+  foreach my $skey (@statekeys) {
+    if (UNIVERSAL::isa($self->{$skey}, 'ARRAY')) {
+      $state{$skey} = [];
+      foreach my $element (@{$self->{$skey}}) {
+        push(@{$state{$skey}}, $element);
+      }
+    }
+    elsif (UNIVERSAL::isa($self->{$skey}, 'HASH')) {
+      $state{$skey} = {};
+      foreach my $key (keys %{$self->{$skey}}) {
+        $state{$skey}->{$key} = $self->{$skey}->{$key};
+      }
+    }
+    else {
+      $state{$skey} = $self->{$skey};
+    }
+  }
+
+  return %state;
+}
+
+
+sub restore_state {
+  my($self)  = shift;
+  my($state) = shift;
+
+  ## Overwrite each state value
+  foreach my $skey (@statekeys) {
+    $self->{$skey} = $$state{$skey};
+  }
+}
+
+
+sub get_global_cfg {
+  my($self) = shift;
+  return $self->{'global'};
+}
+
+
+sub get_include_path {
+  my($self) = shift;
+  return $self->{'include'};
+}
+
+
+sub get_template_override {
+  my($self) = shift;
+  return $self->{'template'};
+}
+
+
+sub get_ti_override {
+  my($self) = shift;
+  return $self->{'ti'};
+}
+
+
+sub get_relative {
+  my($self) = shift;
+  return $self->{'relative'};
+}
+
+
+sub get_current_input {
+  my($self) = shift;
+  return $self->{'current_input'};
+}
+
+
+sub get_progress_callback {
+  my($self) = shift;
+  return $self->{'progress'};
+}
+
+
+sub get_addtemp {
+  my($self) = shift;
+  return $self->{'addtemp'};
+}
+
+
+sub get_addproj {
+  my($self) = shift;
+  return $self->{'addproj'};
+}
+
+
+sub get_toplevel {
+  my($self) = shift;
+  return $self->{'toplevel'};
+}
+
+
+sub get_files_written {
+  my($self) = shift;
+  return $self->{'files_written'};
 }
 
 

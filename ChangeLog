@@ -1,15 +1,23 @@
+Fri Apr  4 09:22:25 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Allow mwc files to have scoped assignments that will only apply to
+          the mpc files within that scope.
+
 Thu Apr 03 17:20:32 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* bin/MakeProjectCreator/config/notifytest.mpb:
-	  Changed target to TAO_NotifyTests.
-	* bin/tao_other_tests.lst:
-	  Added TAO/orbsvcs/tests/Notify/Lanes/run_test.pl and
-	  TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl
-	  or RT_Notification.
+        * bin/MakeProjectCreator/config/notifytest.mpb:
+          Changed target to TAO_NotifyTests.
+        * bin/tao_other_tests.lst:
+          Added TAO/orbsvcs/tests/Notify/Lanes/run_test.pl and
+          TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl
+          or RT_Notification.
 
 Thu Apr  3 11:24:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst: Added a new test for the daily builds.
+        * bin/tao_orb_tests.lst: Added a new test for the daily builds.
 
 Thu Apr  3 08:20:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
