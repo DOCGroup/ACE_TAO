@@ -1,0 +1,14 @@
+project(MT Client Server): server {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(MT Client Client): client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

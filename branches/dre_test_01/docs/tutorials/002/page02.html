@@ -1,0 +1,159 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 002</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 002</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Creating a Better Server</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+<P>Like Tutorial 1, this is also a rather small program.&nbsp; I'm going
+to add a couple of new ideas along the way but to make up for it I'm also
+going to simplify the acceptor a great deal.
+
+<P>
+Kirthika's Abstract:
+<UL>
+This is a server example made simpler due to the use of off-the-shelf
+components and classes from ACE.
+<P>
+Here, the Logging_Acceptor is an ACE_Acceptor class which is associated
+with the Logging_Handler and the ACE_SOCK_ACCEPTOR. This will now
+accept connection requests from the clients on being opened with the
+reactor instance passed to it.
+<P>
+We also implement a signal to capture CTRL-C [ which generates SIGINT ] using ACE_SigAction and
+ACE_SignalHandler. This signal can now be used to stop the reactor
+from handling events.
+<P>
+Then, the reactor is allowed to loop infintely until it is shut down
+using a ^C, after which both the reactor as well as the acceptor are
+destroyed.
+<P>
+The Logging_Handler derives from the ACE_Svc_Handler instead of the
+Event_Handler since the Svc_Handler has inbuilt SOCK_Stream and
+provides all the calls needed by the reactor. The Svc_Handler has the
+ability to react to events and communicate to remote tasks using the
+underlying data stream passed to it.
+<P>
+A timer is scheduled in the reactor which does nothing but simply
+display how it could be used to provide periodic processing when
+needed. The ACE_TimeValue is used to set the time period.
+<P>
+Also, optimisations have been  made in the form of a separate function
+for
+destroying the objects used.
+<P>
+Thus a simpler server has now been built which successfully
+demonstrates how simple a task, writing a server can become on using
+the various ACE components judiciously.
+</UL>
+<P>We begin by looking at the <A HREF="server.cpp">main (server.cpp)</A> portion program:
+
+<P>
+<HR WIDTH="100%">
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=red>/* As before, we need a few ACE objects as well as our Logging_Handler
+  declaration.  */</font>
+<font color=blue>#include</font> "<A HREF="../../../ace/Acceptor.h">ace/Acceptor.h</A>"
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Acceptor.h">ace/SOCK_Acceptor.h</A>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Reactor.h">ace/Reactor.h</A>"
+<font color=blue>#include</font> "<font color=green>handler.h</font>"
+
+<font color=red>/* We'll still use the global reactor pointer.  There's a snappy way
+   around this that shows up in later server tutorials.  */</font>
+ACE_Reactor *g_reactor;
+
+<font color=red>/* This was hinted at in Tutorial 1.  Remember the hand-coded acceptor
+  that we created there?  This template does all of that and more and
+  better.  If you find yourself creating code that doesn't feel like a
+  part of your application, there's a good chance that ACE has a
+  template or framework component to do it for you.  */</font>
+typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
+
+<font color=red>/* One of the new things will be a signal handler so that we can exit
+  the application somewhat cleanly.  The 'finished' flag is used
+  instead of the previous infninite loop and the 'handler' will set
+  that flag in respose to SIGINT (CTRL-C).
+  The invocation of <font color=#008888>ACE_Reactor::notify</font>() will cause the
+  handle_events() to return so that we can see the new value of 'finished'.
+*/</font>
+static sig_atomic_t finished = 0;
+extern "<font color=green>C</font>" void handler (int)
+{
+  finished = 1;
+  g_reactor->notify();
+}
+
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
+
+int
+main (int, char **)
+{
+  <font color=red>// Create the reactor we'll register our event handler derivatives with.</font>
+  ACE_NEW_RETURN (g_reactor,
+                  ACE_Reactor,
+                  1);
+
+  <font color=red>// Create the acceptor that will listen for client connetions</font>
+  Logging_Acceptor peer_acceptor;
+
+  <font color=red>/* Notice how similar this is to the open() call in Tutorial 1.  I
+    read ahead when I created that one so that it would come out this
+    way...  */</font>
+  if (peer_acceptor.open (ACE_INET_Addr (PORT),
+                          g_reactor) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>open</font>"),
+                      -1);
+
+  <font color=red>/* Here's the easiest way to respond to signals in your application.
+    Simply construct an ACE_Sig_Action object with a "<font color=green>C</font>" function and
+    the signal you want to capture.  As you might expect, there is
+    also a way to register signal handlers with a reactor but we take
+    the easy-out here.  */</font>
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) starting up server logging daemon\n</font>"));
+
+  <font color=red>// Perform logging service until the signal handler receives SIGINT.</font>
+  while (!finished)
+    g_reactor->handle_events ();
+
+  <font color=red>// Close the acceptor so that no more clients will be taken in.</font>
+  peer_acceptor.close();
+
+  <font color=red>// Free up the memory allocated for the reactor.</font>
+  delete g_reactor;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) shutting down server logging daemon\n</font>"));
+  return 0;
+}
+
+<font color=blue>#if defined</font> (<font color=purple>ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION</font>)
+template class ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+<font color=blue>#elif defined</font> (<font color=purple>ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA</font>)
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR>
+<font color=blue>#pragma</font> <font color=purple>instantiate</font> ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+<font color=blue>#endif</font> <font color=red>/* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */</font>
+
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
+

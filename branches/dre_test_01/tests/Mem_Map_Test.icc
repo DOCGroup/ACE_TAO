@@ -1,0 +1,22 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "Mem_Map_Test"
+	{
+	   source type (cpp) "Mem_Map_Test.cpp"
+	   if ($__IBMCPP__ >= 500) {
+	     option macros(global) {
+	       source type (hpp) "test_config.h"
+	     }
+	     source type (cpp) "test_config.h"
+	     source type (cpp) "../ace/Singleton.cpp"
+	   }
+	   source type (lib) platformLinkLibs
+	}
+    }

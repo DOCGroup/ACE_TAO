@@ -1,0 +1,7 @@
+project : acelib, core {
+  depends     = ace
+  sharedname  = ACE_QoS
+  dllflags    = ACE_QoS_BUILD_DLL
+  libout      = ..
+  include_dir = ace/QoS
+}

@@ -1,0 +1,40 @@
+project (Simple_Server_Stub) : taolib_with_idl, ciao_client {
+  sharedname  = CIAO_Simple_Server_Stub
+  idlflags  += -Wb,stub_export_include=Simple_Server_Stub_Export.h -Wb,stub_export_macro=CIAO_SIMPLE_SERVER_STUB_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  dllflags    = CIAO_SIMPLE_SERVER_STUB_BUILD_DLL
+
+  IDL_Files {
+    Simple_Server.idl
+  }
+
+  Source_Files {
+    Simple_ServerC.cpp
+  }
+}
+
+project (Simple_Component_Server) : ciao_server {
+  depends += Simple_Server_Stub
+  libs += CIAO_Simple_Server_Stub
+  exename = Simple_Component_Server
+
+  Source_Files {
+    Simple_ServerS.cpp
+    Simple_Server_i.cpp
+    Simple_Component_Server.cpp
+  }
+}
+
+// Use the following settings as a blueprint for creating client project.
+project (Simple_Component_Server_test_client) : ciao_server {
+  depends += Simple_Server_Stub
+  libs += CIAO_Simple_Server_Stub
+  libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
+  exename = sample_client
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    sample_client.cpp
+  }
+}

@@ -1,0 +1,23 @@
+project(AMI Timeouts Server): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+
+  Source_Files {
+    timeout_i.cpp
+    timeout_client.cpp
+    server.cpp
+  }  
+}
+ 
+project(AMI Timeouts Client): messaging {
+  exename   = client
+  idlflags -= -Sc
+  idlflags += -GC
+
+  Source_Files {
+    timeout_i.cpp
+    timeout_client.cpp
+    client.cpp
+  }  
+}
+

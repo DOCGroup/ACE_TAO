@@ -1,0 +1,314 @@
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+<%marker(top)%>
+MAKEFILE        = <%project_file%>
+DEPENDENCY_FILE = .depend.<%project_file%>
+<%if(exename)%>
+BIN_UNCHECKED   = <%exename%>
+<%endif%>
+<%if(staticname)%>
+LIB_UNCHECKED   = lib<%staticname%>.a
+<%endif%>
+<%if(sharedname)%>
+SHLIB_UNCHECKED = lib<%sharedname%>.$(SOEXT)
+<%endif%>
+<%if(tao)%>
+
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+<%endif%>
+<%if(idl_files)%>
+
+IDL_FILES =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
+IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
+<%endif%>
+
+<%gnu_source_files%>
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+<%marker(macros)%>
+<%if(!exename)%>
+<%if(avoids)%>
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%else%>
+<%if(requires)%>
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%endif%>
+<%endif%>
+<%if(comps)%>
+
+<%if(compname)%>
+CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
+<%endif%>
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
+<%foreach(comps)%>
+ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
+<%endfor%>
+<%if(staticname)%>
+LIB   = $(LIB_UNCHECKED)
+<%endif%>
+<%if(sharedname)%>
+SHLIB = $(SHLIB_UNCHECKED)
+<%endif%>
+<%foreach(avoids requires comps)%>
+endif
+<%endfor%>
+<%else%>
+
+<%if(tagname)%>
+ifeq (,$(<%tagname%>))
+<%endif%>
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
+<%if(staticname)%>
+LIB   = $(LIB_UNCHECKED)
+<%endif%>
+<%if(sharedname)%>
+SHLIB = $(SHLIB_UNCHECKED)
+<%endif%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
+<%if(tagname)%>
+else
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
+<%foreach(tagchecks)%>
+  ifeq (<%tagcheck%>, $(findstring <%tagcheck%>, $(<%tagname%>)))
+<%endfor%>
+    LIB   = $(LIB_UNCHECKED)
+    SHLIB = $(SHLIB_UNCHECKED)
+<%foreach(tagchecks)%>
+  endif
+<%endfor%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
+endif
+<%endif%>
+<%endif%>
+<%endif%>
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+<%if(tao)%>
+include $(TAO_ROOT)/rules.tao.GNU
+<%endif%>
+<%if(exename)%>
+
+<%if(compname)%>
+CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
+<%endif%>
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
+<%foreach(comps)%>
+ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
+<%endfor%>
+BIN    = $(BIN_UNCHECKED)
+<%foreach(avoids requires comps)%>
+endif
+<%endfor%>
+
+OBJS   = $(addsuffix .o, <%notdirfiles%>)
+SRC    = $(addsuffix .cpp, $(FILES))
+<%endif%>
+<%if(sharedname)%>
+LSRC   = $(addsuffix .cpp, $(FILES))
+<%endif%>
+<%if(!comps)%>
+<%if(tagname)%>
+ifeq (,$(<%tagname%>))
+<%endif%>
+<%build%>
+<%if(tagname)%>
+else
+<%foreach(tagchecks)%>
+  ifeq (<%tagcheck%>, $(findstring <%tagcheck%>, $(<%tagname%>)))
+<%endfor%>
+    <%build%>
+<%foreach(tagchecks)%>
+  endif
+<%endfor%>
+endif
+<%endif%>
+<%endif%>
+ACELIB =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+<%if(install)%>
+
+INSTALL_CHECK = <%install%>
+ifeq ($(INSTALL_CHECK),)
+  INSTALL = $(INSTALL_CHECK)
+else
+<%if(exename)%>
+  INSBIN  = $(INSTALL_CHECK)
+  INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
+<%endif%>
+<%if(sharedname)%>
+  INSLIB  = $(INSTALL_CHECK)
+<%endif%>
+endif
+<%endif%>
+<%if(sharedname)%>
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+<%endif%>
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+<%if(tao)%>
+include $(TAO_ROOT)/taoconfig.mk
+<%endif%>
+
+<%if(includes)%>
+CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
+<%endif%>
+<%if(idlpreprocessor)%>
+ifeq ($(TAO_IDL_PREPROCESSOR),)
+  CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
+else
+  CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(subst \,\,$(TAO_IDL_PREPROCESSOR))\"
+endif
+<%endif%>
+<%if(dllflags)%>
+ifeq ($(shared_libs),1)
+  ifneq ($(SHLIB),)
+    CPPFLAGS +=<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
+  endif
+endif
+<%endif%>
+<%if(libflags)%>
+ifeq ($(static_libs),1)
+  ifneq ($(LIB),)
+    CPPFLAGS +=<%foreach(libflags)%> -D<%libflag%><%endfor%>
+  endif
+endif
+<%endif%>
+
+
+<%if(libpaths)%>
+LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
+<%endif%>
+<%if(idl_files)%>
+<%if(idlflags)%>
+TAO_IDLFLAGS += <%idlflags%>
+<%endif%>
+<%endif%>
+<%if(libs)%>
+
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%>  =<%foreach(libs)%> -l<%lib%><%endfor%><%if(sharedname)%> $(ACELIB)<%endif%>
+<%endif%>
+<%if(lit_libs)%>
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%if(sharedname)%> $(ACELIB)<%endif%>
+<%endif%>
+<%if(ssl)%>
+<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
+<%endif%>
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+<%marker(local)%>
+<%if(custom_types)%>
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+<%foreach(custom_type->input_file->output_files)%>
+<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>: <%custom_type->input_file%>
+	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $^ <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+
+<%endfor%>
+<%endif%>
+<%endfor%>
+<%endfor%>
+ifneq ($(GENERATED_DIRTY),)
+.PRECIOUS: $(GENERATED_DIRTY)
+all: $(GENERATED_DIRTY)
+endif
+
+<%endif%>
+<%comptarget%>
+<%if(idl_files)%>
+
+ADDITIONAL_IDL_TARGETS =
+<%foreach(idl_files)%>
+<%if(flag_overrides(idl_file, idlgendir))%>
+ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
+<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
+	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
+<%else%>
+<%if(idlgendir)%>
+ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
+<%idlgendir%>/<%basenoextension(idl_file)%>C.h <%idlgendir%>/<%basenoextension(idl_file)%>C.cpp <%idlgendir%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
+	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
+<%else%>
+# IDL File Directory: <%dirname(idl_file)%>
+<%if(dirname_found)%>
+ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
+<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp: <%idl_file%>
+	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> $^
+<%else%>
+<%if(flag_overrides(idl_file, idlflags))%>
+<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp: <%idl_file%>
+	$(TAO_IDL) <%flag_overrides(idl_file, idlflags)%> $^
+<%endif%>
+<%endif%>
+<%endif%>
+<%endif%>
+<%endfor%>
+
+ifneq ($(ADDITIONAL_IDL_TARGETS),)
+idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+endif
+
+<%if(exename)%>
+ifneq ($(BIN),)
+<%else%>
+<%if(sharedname)%>
+ifneq ($(SHLIB),)
+<%else%>
+ifneq ($(LIB),)
+<%endif%>
+<%endif%>
+all: idl_stubs
+endif
+
+.PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+<%endif%>
+<%if(exename)%>
+
+$(BIN): $(addprefix $(VDIR), $(OBJS))
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+<%endif%>
+
+realclean: clean <%compclean%>
+<%if(idl_files)%>
+	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+<%endif%>
+<%if(custom_types)%>
+ifneq ($(GENERATED_DIRTY),)
+	-$(RM) -r $(GENERATED_DIRTY)
+endif
+<%endif%>
+
+<%marker(bottom)%>
