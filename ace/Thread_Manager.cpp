@@ -1226,7 +1226,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
           {
             // Mark thread as terminated.
             td->thr_state_ = ACE_THR_TERMINATED;
-            this->terminated_thr_queue_.enqueue_tail (td);
+            this->terminated_thr_queue_.enqueue_tail (*td);
           }
 #endif /* ! VXWORKS */
 
@@ -1286,12 +1286,12 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    ACE_Thread_Descriptor *item;
+    ACE_Thread_Descriptor item;
 
     while (!this->terminated_thr_queue_.dequeue_head (item))
-      if(ACE_BIT_DISABLED (item->flags_, (THR_DETACHED | THR_DAEMON))
-	   || ACE_BIT_ENABLED (item->flags_, THR_JOINABLE))
-        ACE_Thread::join (item->thr_handle_);
+      if(ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
+	   || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
+        ACE_Thread::join (item.thr_handle_);
   }
 #endif /* VXWORKS */
 #else
@@ -1669,6 +1669,11 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if !defined (VXWORKS)
+template class ACE_Unbounded_Queue<ACE_Thread_Descriptor>;
+template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>;
+template class ACE_Node<ACE_Thread_Descriptor>;
+#endif /* ! VXWORKS */
 template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
 template class ACE_Node<ACE_Thread_Descriptor*>;
@@ -1680,6 +1685,11 @@ template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   template class ACE_TSS<ACE_Thread_Exit>;
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if !defined (VXWORKS)
+  #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor>
+  #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>
+  #pragma instantiate ACE_Node<ACE_Thread_Descriptor
+#endif /* ! VXWORKS */
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor*>

@@ -463,7 +463,7 @@ protected:
   // affecting other thread's descriptor entries.
 
 #if !defined (VXWORKS)
-  ACE_Unbounded_Queue<ACE_Thread_Descriptor*> terminated_thr_queue_;
+  ACE_Unbounded_Queue<ACE_Thread_Descriptor> terminated_thr_queue_;
   // Collect terminated but not yet joined thread entries.
 #endif /* VXWORKS */
 
