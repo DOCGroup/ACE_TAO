@@ -1,3 +1,8 @@
+Thu Sep 12 12:02:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/TSS_Test.cpp: Pass iteration count to worker() as a pointer
+          to int, not an int cast to a pointer and back.
+
 Wed Sep 11 13:03:48 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* ace/Select_Reactor_Base.cpp:
