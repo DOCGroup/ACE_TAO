@@ -80,6 +80,9 @@ int main (int argc, ACE_TCHAR *argv[])
 
 void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
 {
+  // Pre-declare for-loop index
+  size_t i = 0;
+
   size_t in_out_size = 100;
   ACE_INET_Addr in_out[100];
 
@@ -99,7 +102,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
   ACE_DEBUG((LM_DEBUG, "Called get_local_addrs\n"));
 
   // Print individual results of get_local_addrs
-  for (size_t i = 0; i < in_out_size; ++i) {
+  for (i = 0; i < in_out_size; ++i) {
 
     if (in_out[i].addr_to_string(outbuf, outbuf_size)) {
       
@@ -130,7 +133,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
   ACE_DEBUG((LM_DEBUG, "Called get_remote_addrs\n"));
 
   // Print individual results of get_remote_addrs
-  for (size_t i = 0; i < in_out_size; ++i) {
+  for (i = 0; i < in_out_size; ++i) {
 
     if (in_out[i].addr_to_string(outbuf, outbuf_size)) {
       
