@@ -83,6 +83,17 @@ The (project_name) part of the project declaration is optional.  If it is
 left off, the project name will default to the name of the mpc file without
 the extension.  Inheritance is optional.
 
+If the project name or workspace name contains an asterisk (*) then the
+default project (workspace) name will be used in its place.  For example, if
+the mpc file is named example.mpc and it contains the following:
+
+project(*client) {
+
+The project name will be example_client.  If the any part of the modified
+project (workspace) name contains a capital letter then each word will be
+capitalized.  For instance, if the above mpc file example was named
+Example.mpc, then the modified project name would be Example_Client.
+
 
 Project Keywords
 ----------------

@@ -1,3 +1,15 @@
+Tue May 13 09:04:18 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added support for dynamic workspace and project names based on the
+          default project name.  Asterisks in the project or workspace name
+          are replaced by the default name.  See the README for more
+          details.
+
 Tue May 13 07:47:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
