@@ -1,3 +1,11 @@
+Fri May 26 12:30:56 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/TLI_Connector.h:
+	* ace/TLI_Connector.cpp:
+
+	  Moved include of ace/Log_Msg.h to the header file.
+	  TLI_Connector.i utilizes some of the ACE_Log_Msg macros.
+
 Fri May 26 14:25:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
