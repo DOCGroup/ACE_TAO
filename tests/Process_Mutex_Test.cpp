@@ -108,23 +108,26 @@ main (int argc, char *argv[])
 	s_argv[4] = 0;
       s_argv[5] = 0;
       
-      // Spawn ACE_MAX_PROCESSES processes which will contend for the
+      // Spawn ACE_MAX_PROCESSES processes that will contend for the
       // lock.
       ACE_Process servers[ACE_MAX_PROCESSES];
-      int i;
+      size_t i;
 
       for (i = 0; i < ACE_MAX_PROCESSES; i++)
 	{	  
 	  ACE_ASSERT (servers[i].start (s_argv) != -1);
-
-	  ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", servers[i].getpid ()));
+	  ACE_DEBUG ((LM_DEBUG, 
+		      "Server forked with pid = %d.\n", 
+		      servers[i].getpid ()));
 	}
 
       for (i = 0; i < ACE_MAX_PROCESSES; i++)
 	{
 	  // Wait for the process we created to exit.
 	  ACE_ASSERT (servers[i].wait () != -1);
-	  ACE_DEBUG ((LM_DEBUG, "Server %d finished\n", servers[i].getpid ()));
+	  ACE_DEBUG ((LM_DEBUG, 
+		      "Server %d finished\n", 
+		      servers[i].getpid ()));
 	}
       ACE_END_TEST;      
     }
