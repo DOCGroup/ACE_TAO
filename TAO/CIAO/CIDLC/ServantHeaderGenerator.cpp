@@ -338,7 +338,7 @@ namespace
     traverse (UnconstrainedInterface& i)
     {
       if (i.context ().count ("facet_hdr_gen")) return;
-    
+
       ScopedName scoped (i.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
@@ -416,6 +416,7 @@ namespace
          << "_get_component (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl
+         << endl
          << "protected:" << endl
          << "// Facet executor." << endl
          << i.scoped_name ().scope_name ()<< "::CCM_" << i.name ()
@@ -423,14 +424,14 @@ namespace
          << "// Context object." << endl
          << "::Components::CCMContext_var ctx_;" << endl
          << "};";
-         
-      os << "typedef " << ctx.export_macro () << " " 
-         << i.name () << "_Servant_T<int> " 
+
+      os << "typedef " << ctx.export_macro () << " "
+         << i.name () << "_Servant_T<int> "
          << i.name () << "_Servant;";
 
       // Close the CIAO_GLUE namespace.
       os << "}";
-      
+
       i.context ().set ("facet_hdr_gen", true);
     }
   };
@@ -1270,7 +1271,7 @@ namespace
          << "_Servant" << endl
          << "  : public virtual CIAO::Servant_Impl<" << endl
          << "      POA_" << stripped << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_" 
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
@@ -1281,8 +1282,8 @@ namespace
          << "public:" << endl;
 
       os << "/// Hack for VC6 the most sucky compiler" << endl
-	       << "typedef CIAO::Servant_Impl<" << endl
-	       << "    POA_" << stripped << "," << endl
+               << "typedef CIAO::Servant_Impl<" << endl
+               << "    POA_" << stripped << "," << endl
          << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
          << "    " << t.scoped_name ().scope_name () << "::CCM_"
@@ -1296,9 +1297,9 @@ namespace
          << "::Components::CCMHome_ptr home," << endl
          << "::CIAO::Session_Container *c);" << endl << endl;
 
-      os << "virtual ~" << t.name () << "_Servant (void);" 
+      os << "virtual ~" << t.name () << "_Servant (void);"
          << endl << endl;
-         
+
       os << "virtual void" << endl
          << "set_attributes (" << endl
          << "const ::Components::ConfigValues &descr" << endl
@@ -1579,6 +1580,13 @@ namespace
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "));" << endl << endl;
 
+      os << "// CIAO specific operations on the servant " << endl
+         << "CORBA::Object_ptr" << endl
+         << "get_facet_executor (const char *name" << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS]<< "));" << endl << endl;
+
       os << "private:" << endl << endl;
 
       // Generate protected operations for facets and event sinks.
@@ -1597,7 +1605,7 @@ namespace
 
         component_emitter.traverse (t);
       }
-          
+
       os << "private:" << endl << endl
          << "void" << endl
          << "populate_port_tables (" << endl
@@ -1835,7 +1843,7 @@ namespace
       {
         os << "," << endl;
       }
-      
+
     private:
       ReturnTypeNameEmitter returns_emitter_;
       Traversal::Returns returns_;
@@ -2151,7 +2159,7 @@ namespace
       // Home servant class closer.
       os << "};";
 
-      os << "extern \"C\" " << ctx.export_macro () 
+      os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant" << endl
          << "create" << t.name () << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
@@ -2164,7 +2172,7 @@ namespace
       // Namespace closer.
       os << "}";
     }
-    
+
   private:
     TypeNameEmitter type_name_emitter_;
     SimpleTypeNameEmitter simple_type_name_emitter_;
