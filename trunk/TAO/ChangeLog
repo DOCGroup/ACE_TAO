@@ -1,3 +1,8 @@
+Fri Nov 22 12:27:27 2002  Craig Rodrigues <crodrigu@bbn.com>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+          Fix extraneous spaces in GNU make findstring commands.
+
 Fri Nov 22 04:53:12 2002  Bala  <bala@cs.wustl.edu>
 
         * TAO version 1.2.6 released.
