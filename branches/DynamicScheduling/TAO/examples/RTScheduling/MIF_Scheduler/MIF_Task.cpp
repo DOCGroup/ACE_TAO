@@ -69,7 +69,7 @@ MIF_Task::perform_task (void)
 
 	  count_down.update ();
 	}
-      
+
       current_->update_scheduling_segment (name,
 					   sched_param.in (),
 					   sched_param.in ()
@@ -81,26 +81,21 @@ MIF_Task::perform_task (void)
     {
       this->job_->work (this->load_,
 			this->importance_);
-    }
-  //      else
-  //	{
+
+
 
   for (int j = 0; j < this->iter_; j++)
     {
       ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
       TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
 				       count_);
-      
+
       ACE_Time_Value count_down_time (1);
       ACE_Countdown_Time count_down (&count_down_time);
-      
+
       while (count_down_time > ACE_Time_Value::zero)
 	{
-	  if (TAO_debug_level > 0)
-	    ACE_DEBUG ((LM_DEBUG,
-			"Waiting on count down\n"));
-	  
-	  
+
 	  ACE::is_prime (prime_number,
 			 2,
 			 prime_number / 2);
@@ -112,23 +107,23 @@ MIF_Task::perform_task (void)
 					   sched_param.in ()
 					   ACE_ENV_ARG_DECL);
       ACE_CHECK;
-      
-    }
-      
-      
-      if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Thread %d\n",
-		    this->count_));
-      
-      /*
-      run_time = ACE_OS::gettimeofday () - *base_time_;
-      TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
-				       count_);
-      */
 
-      //  task_stats_->sample (ACE_UINT64 (run_time.sec ()),
-      //  			   count_);
+    }
+
+    }
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Thread %d\n",
+		this->count_));
+
+  /*
+    run_time = ACE_OS::gettimeofday () - *base_time_;
+    TASK_STATS::instance ()->sample (ACE_UINT64 (run_time.sec ()),
+    count_);
+  */
+
+  //  task_stats_->sample (ACE_UINT64 (run_time.sec ()),
+  //  			   count_);
 
 
 

@@ -541,12 +541,12 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
       ACE_CHECK;
 
     }
-  /*
+
   while (active_dt_count_ > 0 || active_job_count_ > 0)
     {
       yield(1,0);
     }
-  */
+
   current_->end_scheduling_segment (name
 				    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -559,7 +559,8 @@ DT_Creator::dt_ended (void)
   {
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
     --active_dt_count_;
-    //ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_dt_count_));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Active dt count = %d\n",active_dt_count_));
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active dt count = %d\n",active_dt_count_);
     log [log_index++] = ACE_OS::strdup (buf);
@@ -584,6 +585,12 @@ DT_Creator::job_ended (void)
 void
 DT_Creator::check_ifexit (void)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Checking exit status Job# = %d DT# = %d\n",
+		active_job_count_,
+		active_dt_count_));
+
   static int shutdown = 0;
 
   {
@@ -630,11 +637,6 @@ DT_Creator::check_ifexit (void)
 	      }
 	    ACE_DEBUG ((LM_DEBUG,
 			"Log File Ready\n"));
-
-	    if (!orb_->work_pending ())
-	      {
-		orb_->destroy ();
-	      }
 
 	  }
       }
