@@ -2,13 +2,14 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Stats.h"
+#include "ace/Task.h"
 #include "ace/Sample_History.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "testS.h"
 #include "tests/RTCORBA/common_args.cpp"
-#include "fudge_priorities.cpp"
+#include "tests/RTCORBA/check_supported_priorities.cpp"
 
 ACE_RCSID(Thread_Pools, server, "$Id$")
 
@@ -196,23 +197,34 @@ write_ior_to_file (const char *ior_file,
   return 0;
 }
 
+class Task : public ACE_Task_Base
+{
+public:
+
+  Task (ACE_Thread_Manager &thread_manager,
+        CORBA::ORB_ptr orb);
+
+  int svc (void);
+
+  CORBA::ORB_var orb_;
+
+};
+
+Task::Task (ACE_Thread_Manager &thread_manager,
+            CORBA::ORB_ptr orb)
+  : ACE_Task_Base (&thread_manager),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
 int
-main (int argc, char *argv[])
+Task::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      fudge_priorities (orb.in ());
-
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
@@ -225,8 +237,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
@@ -235,8 +247,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
@@ -248,11 +260,7 @@ main (int argc, char *argv[])
         current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
-
+      int result = 0;
       CORBA::ULong stacksize = 0;
       CORBA::Boolean allow_request_buffering = 0;
       CORBA::ULong max_buffered_requests = 0;
@@ -371,7 +379,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       test_i *servant =
-        new test_i (orb.in (),
+        new test_i (this->orb_.in (),
                     poa.in ());
 
       PortableServer::ServantBase_var safe_servant (servant);
@@ -383,7 +391,7 @@ main (int argc, char *argv[])
 
       result =
         write_ior_to_file (ior_output_file,
-                           orb.in (),
+                           this->orb_.in (),
                            test.in ()
                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -394,10 +402,10 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -405,6 +413,62 @@ main (int argc, char *argv[])
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
       return 1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      int result =
+        parse_args (argc, argv);
+      if (result != 0)
+        return result;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in ());
+
+      // Thread Manager for managing task.
+      ACE_Thread_Manager thread_manager;
+
+      // Create task.
+      Task task (thread_manager,
+                 orb.in ());
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      // Activate task.
+      result =
+        task.activate (flags);
+      ACE_ASSERT (result != -1);
+      ACE_UNUSED_ARG (result);
+
+      // Wait for task to exit.
+      result =
+        thread_manager.wait ();
+      ACE_ASSERT (result != -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return -1;
     }
   ACE_ENDTRY;
 
