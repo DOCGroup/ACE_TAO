@@ -63,17 +63,23 @@ ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer,
 
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
-                                        u_int streambuf_size)
-  : iostream (streambuf_ = new ACE_Streambuf_T<STREAM> ((STREAM *) this, streambuf_size)),
+                                    u_int streambuf_size)
+  : iostream (0),
     STREAM (stream)
 {
+  ACE_NEW (streambuf_,
+           ACE_Streambuf_T<STREAM> ((STREAM *) this, 
+                                    streambuf_size));
   iostream::init (this->streambuf_);
 }
 
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
-  : iostream (streambuf_ = new ACE_Streambuf_T<STREAM> ((STREAM *) this, streambuf_size))
+  : iostream (0)
 {
+  ACE_NEW (this->streambuf_,
+           ACE_Streambuf_T<STREAM> ((STREAM *) this, 
+                                    streambuf_size));
   iostream::init (this->streambuf_);
 }
 
