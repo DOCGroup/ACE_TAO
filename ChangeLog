@@ -1,16 +1,23 @@
+Tue May 13 07:47:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          If a value is an empty string or an array of empty strings, then
+          we will assume the value is undefined for <%if()%> statements.
+
 Mon May 12 19:27:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (wait): Fixed an occasional assertion
-	  failure during shutdown of our servers which seems be caused by
-	  a double deletion of an item in the ACE_Thread_Manager
-	  terminated_thr_list_ in ACE_Thread_Manager::wait ().
+        * ace/Thread_Manager.cpp (wait): Fixed an occasional assertion
+          failure during shutdown of our servers which seems be caused by
+          a double deletion of an item in the ACE_Thread_Manager
+          terminated_thr_list_ in ACE_Thread_Manager::wait ().
 
-	  The statement "item = this->terminated_thr_list_.delete_head ()"
-	  is not protected by the mutex and can be access by
-	  more than one thread modifying the terminated_thr_list_.
-	  Extending the mutex protection scope fixed this problem.
-	  Thanks to Bruce McIntosh <bruce.mcintosh@boeing.com> for
-	  suggesting the fix.  [Bug 1505]
+          The statement "item = this->terminated_thr_list_.delete_head ()"
+          is not protected by the mutex and can be access by
+          more than one thread modifying the terminated_thr_list_.
+          Extending the mutex protection scope fixed this problem.
+          Thanks to Bruce McIntosh <bruce.mcintosh@boeing.com> for
+          suggesting the fix.  [Bug 1505]
 
 Mon May 12 13:32:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
