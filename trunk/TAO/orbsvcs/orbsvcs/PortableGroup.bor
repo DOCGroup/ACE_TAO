@@ -32,7 +32,7 @@ OBJFILES = \
         $(OBJDIR)\UIPMC_Profile.obj \
         $(OBJDIR)\UIPMC_Transport.obj
 
-#RESOURCE = $(OBJDIR)\PortableGroup.res
+RESOURCE = $(OBJDIR)\PortableGroup.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
