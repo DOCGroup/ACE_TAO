@@ -9,6 +9,9 @@ Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.i and OS.cpp: uninlined functions that use varargs, because
 	  they usually won't get inlined anyways.
 
+	* ace/OS.cpp (thr_create): added #else clause to be sure that
+	  always sparam.sched_priority always get set to the priority argument
+
 	* netsvcs/clients/Naming/Client/Client_Test.cpp: commented out
 	  unused parameters and wrapped combined assignments/conditional
 	  values to avoid compiler (g++) warnings
