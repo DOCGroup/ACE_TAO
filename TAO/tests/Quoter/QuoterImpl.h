@@ -28,10 +28,10 @@ typedef Quoter_Impl_ptr Quoter_Impl_ref;
 class Quoter_Impl: public POA_Stock::Quoter
 {
   // = TITLE
-  //   @@@@ Write
+  //   @@ Write
   //
   // = DESCRIPTION
-  //   @@@@ Write
+  //   @@ Write
 public:
   Quoter_Impl (const char *obj_name = 0);
   // Constructor

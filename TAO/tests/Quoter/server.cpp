@@ -13,7 +13,7 @@
 //
 // ============================================================================
 
-#include "Quoter_Server.h"
+#include "server.h"
 
 Quoter_Server::Quoter_Server (void)
   : num_of_objs_ (1),
@@ -183,11 +183,6 @@ Quoter_Server::~Quoter_Server (void)
       TAO_CHECK_ENV;
       factory_name.length (1);
       this->namingContext_var_->unbind (factory_name,TAO_TRY_ENV);
-
-      //      this->root_poa_->destroy (CORBA::B_TRUE,
-      //                                CORBA::B_TRUE,
-      //                                TAO_TRY_ENV);
-      // TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)
     {
