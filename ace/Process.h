@@ -150,6 +150,13 @@ public:
   // Buffer of command-line options.  Returns exactly what was passed
   // to this->command_line.
 
+  char *const *command_line_argv (void);
+  // argv-style command-line options.  Parses and modifies the string
+  // created from <command_line_>.  All spaces not in quotes ("" or
+  // '') are replaced with null (\0) bytes.  An argv array is built
+  // and returned with each entry pointing to the start of
+  // null-terminated string.  Returns { 0 } if nothing has been set.
+
   LPTSTR env_buf (void);
   // Null-terminated buffer of null terminated strings.  Each string
   // is an environment assignment "VARIABLE=value".  This buffer
@@ -188,13 +195,6 @@ public:
   void handle_inheritence (int);
   // Allows disabling of handle inheritence.
 #else /* All things not WIN32 */
-
-  char *const *command_line_argv (void);
-  // argv-style command-line options.  Parses and modifies the string
-  // created from this->command_line.  All spaces not in quotes ("" or
-  // '') are replaced with null (\0) bytes.  An argv array is built
-  // and returned with each entry pointing to the start of
-  // null-terminated string.  Returns { 0 } if nothing has been set.
 
   char *const *env_argv (void);
   // argv-style array of environment settings.
