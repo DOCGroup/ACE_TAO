@@ -1,3 +1,17 @@
+Wed Mar 26 16:15:39 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* ace/Unbounded_Set.h: 
+	* ace/Unbounded_Set.cpp: 
+	* ace/Unbounded_Set.inl: 
+	* ace/Node.h: 
+	* ace/Node.cpp:
+	* tests/Makefile:
+	* tests/Makefile.am:
+	* tests/Makefile.bor: 
+
+	  Reverted changes to the above to position before changelog entry:
+	  Mon Mar 24 13:16:29 CET 2003  Oliver Kellog
+	
 Wed Mar 26 16:48:54 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* tests/Unbounded_Set_Test.cpp:
