@@ -36,7 +36,7 @@ test_duplicates (size_t count)
 
   for (size_t i = 0; i < count; i++)
     {
-      size_t handle = size_t (ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
+      size_t handle = ACE_static_cast(size_t, ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
 
       if (ACE_ODD (handle))
 	{

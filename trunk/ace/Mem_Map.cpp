@@ -65,7 +65,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   if (file_len == -1)
     return -1;
 
-  if (this->length_ < size_t (file_len))
+  if (this->length_ < ACE_static_cast(size_t, file_len))
     {
       // If the length of the mapped region is less than the length of
       // the file then we force a complete new remapping by setting
@@ -75,13 +75,13 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     }
 
   // At this point we know <file_len> is not negative...
-  this->length_ = size_t (file_len); 
+  this->length_ = ACE_static_cast(size_t, file_len); 
 
   if (len_request == -1)
     len_request = 0;
 
   if ((this->length_ == 0 && len_request > 0)
-      || this->length_ < size_t (len_request))
+      || this->length_ < ACE_static_cast(size_t, len_request))
     {
       this->length_ = len_request;
 

@@ -23,7 +23,7 @@
 #include "ace/SOCK_Stream.h"
 #include "test_config.h"
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS)  && !defined (ACE_PSOS)
 #include <sys/utsname.h>
 #endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
 
@@ -39,7 +39,7 @@ find_another_host (char other_host[])
   ACE_OS::strcpy (other_host, ACE_DEFAULT_SERVER_HOST);	// If all else fails
 
   // These gethost-type things don't work everywhere.
-#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD)
+#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD) && !defined (ACE_PSOS)
   struct hostent *h;
   struct utsname un;
 
@@ -95,6 +95,7 @@ fail_no_listener_nonblocking (void)
   // On some systems, a failed connect to localhost will return
   // ECONNREFUSED or ENETUNREACH directly, instead of
   // EWOULDBLOCK. That is also fine.
+
   if (errno == EWOULDBLOCK || errno == ECONNREFUSED || errno == ENETUNREACH)
     {
       if (sock.get_handle () != ACE_INVALID_HANDLE)

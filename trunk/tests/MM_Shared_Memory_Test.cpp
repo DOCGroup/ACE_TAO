@@ -75,7 +75,7 @@ server (void *)
 static void
 spawn (void)
 {
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
   switch (ACE_OS::fork ())
     {
     case -1:
