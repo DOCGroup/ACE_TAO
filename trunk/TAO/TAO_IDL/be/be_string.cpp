@@ -38,8 +38,9 @@ be_string::be_string (AST_Expression *v)
                                                   1, 
                                                   0, 
                                                   I_FALSE),
-                                  NULL),
-              NULL)
+                                  0),
+              0,
+              I_TRUE)
 {
   // Always the case.
   this->size_type (be_decl::VARIABLE);
@@ -56,13 +57,14 @@ be_string::be_string (AST_Expression *v,
                                                       1,
                                                       0,
                                                       I_FALSE),
-                                      NULL)
+                                      0)
                 : new UTL_ScopedName (new Identifier ("wstring",
                                                       1,
                                                       0,
                                                       I_FALSE),
-                                      NULL),
-              NULL)
+                                      0),
+              0,
+              I_TRUE)
 {
   // Always the case.
   this->size_type (be_decl::VARIABLE);
