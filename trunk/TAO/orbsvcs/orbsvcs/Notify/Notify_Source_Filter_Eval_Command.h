@@ -31,7 +31,6 @@
 
 class TAO_Notify_Event;
 class TAO_Notify_EventSource;
-class TAO_Notify_Worker_Task;
 
 class TAO_Notify_Export TAO_Notify_Source_Filter_Eval_Command : public TAO_Notify_Command
 {
@@ -43,15 +42,17 @@ class TAO_Notify_Export TAO_Notify_Source_Filter_Eval_Command : public TAO_Notif
   //
 public:
   // = Initialization and termination code
-  TAO_Notify_Source_Filter_Eval_Command (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source);
-  ~TAO_Notify_Source_Filter_Eval_Command ();
+  TAO_Notify_Source_Filter_Eval_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event, TAO_Notify_EventSource* event_source);
+  // Constructor.
 
-  virtual int execute (TAO_Notify_Worker_Task* parent_task, CORBA::Environment& ACE_TRY_ENV);
+  ~TAO_Notify_Source_Filter_Eval_Command ();
+  // Destructor.
+
+  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
   // Command callback
 
 protected:
   // = Data Members
-  TAO_Notify_Event* event_;
   TAO_Notify_EventSource* event_source_;
 };
 

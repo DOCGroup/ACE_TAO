@@ -30,7 +30,7 @@
 
 class TAO_Notify_Event;
 class TAO_Notify_EventListener;
-class TAO_Notify_Worker_Task;
+class TAO_Notify_Event_Map;
 
 class TAO_Notify_Export TAO_Notify_Lookup_Command : public TAO_Notify_Command, public TAO_ESF_Worker<TAO_Notify_EventListener>
 {
@@ -42,21 +42,19 @@ class TAO_Notify_Export TAO_Notify_Lookup_Command : public TAO_Notify_Command, p
   //
  public:
   // = Initialization and termination code
-  TAO_Notify_Lookup_Command (TAO_Notify_Event* event);
+  TAO_Notify_Lookup_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event, TAO_Notify_Event_Map* event_map);
+
   ~TAO_Notify_Lookup_Command ();
 
-  virtual int execute (TAO_Notify_Worker_Task* parent_task, CORBA::Environment&);
+  virtual int execute (CORBA::Environment&);
   // Command callback
 
   // = TAO_ESF_Worker method
   void work (TAO_Notify_EventListener* listener, CORBA::Environment &ACE_TRY_ENV);
  protected:
   // = Data member
-  TAO_Notify_Event* event_;
-  // The evnt we are processing
-
-  TAO_Notify_Worker_Task* parent_task_;
-  TAO_Notify_Worker_Task* next_task_;
+  TAO_Notify_Event_Map* event_map_;
+  // The event map to lookup in.
 };
 
 #include "ace/post.h"

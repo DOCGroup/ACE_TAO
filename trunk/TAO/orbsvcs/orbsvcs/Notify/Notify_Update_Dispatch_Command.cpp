@@ -8,7 +8,8 @@
 ACE_RCSID(Notify, Notify_Update_Dispatch_Command, "$Id$")
 
 TAO_Notify_Update_Dispatch_Command::TAO_Notify_Update_Dispatch_Command (TAO_Notify_UpdateListener* update_listener, TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed)
-  :update_listener_ (update_listener),
+  :TAO_Notify_Command (0,0),
+   update_listener_ (update_listener),
    added_ (added),
    removed_ (removed)
 {
@@ -21,7 +22,7 @@ TAO_Notify_Update_Dispatch_Command::~TAO_Notify_Update_Dispatch_Command ()
 }
 
 int
-TAO_Notify_Update_Dispatch_Command::execute (TAO_Notify_Worker_Task* /*parent_task*/, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Update_Dispatch_Command::execute (CORBA::Environment& ACE_TRY_ENV)
 {
   this->update_listener_->dispatch_update (this->added_, this->removed_,
                                            ACE_TRY_ENV);

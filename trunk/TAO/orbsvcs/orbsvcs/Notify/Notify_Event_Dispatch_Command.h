@@ -41,15 +41,15 @@ class TAO_Notify_Export TAO_Notify_Event_Dispatch_Command : public TAO_Notify_Co
   //
  public:
   // = Initialization and termination code.
-  TAO_Notify_Event_Dispatch_Command (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener);
+  TAO_Notify_Event_Dispatch_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener);
+
   ~TAO_Notify_Event_Dispatch_Command ();
 
-  virtual int execute (TAO_Notify_Worker_Task* parent_task, CORBA::Environment& ACE_TRY_ENV);
+  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
   // Command callback
 
  protected:
   // = Data Members
-  TAO_Notify_Event* event_;
   TAO_Notify_EventListener* event_listener_;
 };
 

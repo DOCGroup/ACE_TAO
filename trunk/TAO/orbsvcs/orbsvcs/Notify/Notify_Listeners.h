@@ -29,6 +29,7 @@
 
 class TAO_Notify_Event;
 class TAO_Notify_EventType_List;
+class TAO_Notify_Worker_Task;
 
 // @@ Pradeep: this file has three separate classes, that do not seem
 // related in anyway, you should move them to their own files.
@@ -79,11 +80,17 @@ public:
   // Evaluates true if this event is acceptable by the listener.
   // The <eval_parent> is a hint to the listener to help it determine
   // if its wise to evaluate the parents filter too. This helps in
-  // implementing the "interfilter group operator" logic. 
+  // implementing the "interfilter group operator" logic.
 
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV) = 0;
   // Ask the listener to relinquish any bindings and prepare to be
   // disposed.
+
+  virtual TAO_Notify_Worker_Task* event_dispatch_task (void) = 0;
+  // The Worker task associated with the event listener for event dispatching
+
+  virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
+  // The Worker task associated with the event listener for filter evaluation.
 };
 
 // ****************************************************************
@@ -97,9 +104,14 @@ class TAO_Notify_Export TAO_Notify_EventSource : virtual public TAO_Notify_RefCo
   //   The event source suppliers events to the Notify Manager.
   //
  public:
+  // TODO: add a shutdown method to this interface!!
+
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event,
                                           CORBA::Environment &ACE_TRY_ENV) = 0;
   // Evaluates true if this event is acceptable by the Source.
+
+  virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
+  // The Worker task associated with the event listener for filter evaluation.
 };
 
 // ****************************************************************

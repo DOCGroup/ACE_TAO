@@ -29,10 +29,6 @@
 #include "Notify_Listeners.h"
 #include "Notify_Collection.h"
 
-//#include "Notify_Listeners.h"
-//#include "orbsvcs/ESF/ESF_Worker.h"
-//
-
 class TAO_Notify_EventChannel_i;
 class TAO_Notify_Event;
 class TAO_Notify_Event_Processor;

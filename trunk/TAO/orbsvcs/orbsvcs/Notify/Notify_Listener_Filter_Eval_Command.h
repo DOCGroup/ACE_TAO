@@ -29,6 +29,7 @@
 
 class TAO_Notify_Event;
 class TAO_Notify_EventListener;
+class TAO_Notify_Event_Processor;
 
 class TAO_Notify_Export TAO_Notify_Listener_Filter_Eval_Command : public TAO_Notify_Command
 {
@@ -39,17 +40,16 @@ class TAO_Notify_Export TAO_Notify_Listener_Filter_Eval_Command : public TAO_Not
   //   Listener filter evaluation command.
   //
  public:
-  TAO_Notify_Listener_Filter_Eval_Command (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Boolean eval_parent);
+  TAO_Notify_Listener_Filter_Eval_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Boolean eval_parent);
   // The event, listener, and hint to pass (see the listener interface for details)
 
   ~TAO_Notify_Listener_Filter_Eval_Command();
 
-  virtual int execute (TAO_Notify_Worker_Task* parent_task, CORBA::Environment& ACE_TRY_ENV);
+  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
   // Command callback
 
  protected:
   // = Data Members
-  TAO_Notify_Event* event_;
   TAO_Notify_EventListener* event_listener_;
   CORBA::Boolean eval_parent_;
 };

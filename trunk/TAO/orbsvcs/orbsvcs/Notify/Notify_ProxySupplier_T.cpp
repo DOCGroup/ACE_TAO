@@ -8,13 +8,17 @@
 #include "Notify_ConsumerAdmin_i.h"
 #include "Notify_Factory.h"
 #include "Notify_Channel_Objects_Factory.h"
+#include "Notify_Event_Manager_Objects_Factory.h"
+#include "Notify_Worker_Task.h"
 
 ACE_RCSID(Notify, Notify_ProxySupplier_T, "$Id$")
 
 template <class SERVANT_TYPE>
 TAO_Notify_ProxySupplier<SERVANT_TYPE>::TAO_Notify_ProxySupplier (TAO_Notify_ConsumerAdmin_i* consumer_admin)
   :consumer_admin_ (consumer_admin),
-   is_suspended_ (0)
+   is_suspended_ (0),
+   dispatching_task_ (0),
+   filter_eval_task_ (0)
 {
   event_manager_ = consumer_admin->get_event_manager ();
 }
@@ -30,6 +34,22 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     TAO_Notify_Factory::get_channel_objects_factory ();
 
   this->lock_ = cof->create_proxy_supplier_lock (ACE_TRY_ENV);
+
+  TAO_Notify_EMO_Factory* event_manager_objects_factory =
+    TAO_Notify_Factory::get_event_manager_objects_factory ();
+
+  // Create the task to forward filtering/dispatching commands to:
+  this->dispatching_task_ =
+    event_manager_objects_factory->create_dispatching_task (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->filter_eval_task_ =
+    event_manager_objects_factory->create_listener_eval_task (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // open the tasks
+  this->dispatching_task_->open (0);
+  this->filter_eval_task_->open (0);
 }
 
 // Implementation skeleton destructor
@@ -54,6 +74,9 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::~TAO_Notify_ProxySupplier (void)
 
   this->consumer_admin_->proxy_pushsupplier_destroyed (this->proxy_id_);
   consumer_admin_->_remove_ref (ACE_TRY_ENV);
+
+  delete this->dispatching_task_;
+  delete this->filter_eval_task_;
 }
 
 template <class SERVANT_TYPE> CORBA::Boolean
@@ -103,6 +126,18 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::dispatch_event (TAO_Notify_Event &event,
     }
   else
     this->dispatch_event_i (event, ACE_TRY_ENV);
+}
+
+template <class SERVANT_TYPE> TAO_Notify_Worker_Task*
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::event_dispatch_task (void)
+{
+  return this->dispatching_task_;
+}
+
+template <class SERVANT_TYPE> TAO_Notify_Worker_Task*
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::filter_eval_task (void)
+{
+  return this->filter_eval_task_;
 }
 
 template <class SERVANT_TYPE> void
@@ -157,14 +192,16 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::on_connected (CORBA::Environment &ACE_TR
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier<SERVANT_TYPE>::on_disconnected (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-                      CORBA::INTERNAL ());
-  ACE_CHECK;
+  {
+    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
 
-  if (this->is_connected_ == 0)
-    return;
+    if (this->is_connected_ == 0)
+      return;
 
-  this->is_connected_ = 0;
+    this->is_connected_ = 0;
+  }
 
   CosNotification::EventTypeSeq removed;
 
@@ -181,6 +218,14 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::on_disconnected (CORBA::Environment &ACE
   ACE_CHECK;
 
   this->event_manager_->unregister_from_publication_updates (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // shutdown the tasks.
+
+  this->dispatching_task_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->filter_eval_task_->shutdown (ACE_TRY_ENV);
   ACE_CHECK;
 }
 

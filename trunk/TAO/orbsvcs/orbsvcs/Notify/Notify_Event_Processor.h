@@ -47,6 +47,7 @@ class TAO_Notify_Event_Manager;
 class TAO_Notify_EventSource;
 class TAO_Notify_Worker_Task;
 class TAO_Notify_EMO_Factory;
+class TAO_Notify_EventListener;
 
 class TAO_Notify_Export TAO_Notify_Event_Processor
 {
@@ -67,28 +68,26 @@ class TAO_Notify_Export TAO_Notify_Event_Processor
   void shutdown (CORBA::Environment &ACE_TRY_ENV);
   // Shutdown operations.
 
-  void process_event (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment& ACE_TRY_ENV);
+  void evaluate_source_filter(TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment& ACE_TRY_ENV);
   // Event processing entry point.
 
-  // = Accessors
-  TAO_Notify_Worker_Task* get_listener_filter_eval_task (void);
-  TAO_Notify_Worker_Task* get_dispatching_task (void);
+  // = Callbacks for Source/Event Listeners.
+  void lookup_subscriptions (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV);
+  // This method is called by an Event_Source after it has successfully evaluated its filter.
 
- protected:
-  typedef ACE_Module<ACE_MT_SYNCH> TAO_Notify_Module;
-  typedef ACE_Stream<ACE_MT_SYNCH> TAO_Notify_Stream;
+  void evaluate_listener_filter (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Boolean eval_parent, CORBA::Environment &ACE_TRY_ENV);
+  // This method is called by the subscription lookup command asking that <event> be delivered
+  // to <event_listener>.
 
+  void dispatch_event (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Environment &ACE_TRY_ENV);
+  // This method is called by an Event_Listener after it has successfully evaluated its filter.
+
+protected:
   // = Data Members
   TAO_Notify_Event_Manager* event_manager_;
   // The Event Manager
 
-  TAO_Notify_Stream processing_stream_;
-  // The processing stream.
-
-  TAO_Notify_Worker_Task* first_task_;
-  TAO_Notify_Worker_Task* listener_filter_eval_task_;
-  TAO_Notify_Worker_Task* dispatching_task_;
-  // Tasks required for direct access.
+  TAO_Notify_Worker_Task* lookup_task_;
 
   TAO_Notify_EMO_Factory* emo_factory_;
   // Factory for manager ojects

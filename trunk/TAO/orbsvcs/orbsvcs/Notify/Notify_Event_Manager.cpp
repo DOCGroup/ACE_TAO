@@ -48,7 +48,7 @@ TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
 
   this->updates_dispatching_task_ =
     // @@ add another method to RM
-    this->emo_factory_->create_dispatching_task (this, ACE_TRY_ENV);
+    this->emo_factory_->create_dispatching_task (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Init the objects
