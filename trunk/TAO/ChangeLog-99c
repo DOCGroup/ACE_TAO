@@ -126,11 +126,6 @@ Tue May 25 10:06:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue May 25 10:23:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tests/SOCK_Send_Recv_Test.cpp:
-          Fixed a signed/unsigned mismatch warning and
-          changed several uses of static_cast to
-          reinterpret_cast.
-
         * TAO_IDL/be/be_union.cpp:
           Fixed a signed/unsigned mismatch and an unused
           variable warning.
