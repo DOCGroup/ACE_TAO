@@ -1,3 +1,20 @@
+Thu Aug 13 17:45:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: changed dump_schedule
+          so that if one of the arrays is length 0, 0 is output for its size
+	  (instead of a formula with a built-in access violation ;-)
+	
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp
+	  orbsvcs/orbsvcs/Sched/DynSched.cpp
+	  orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, h, i}
+	  orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp, h}: fixes related to
+	  the new 64 bit times for NT.
+	
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: expanded the test to
+	  16 operations, ranging across 4 rates, and 2 criticalities
+	  (half are still consumers, the other half suppliers)
+
+
 Thu Aug 13 15:20:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Scheduler.cpp (dispatch_configuration):

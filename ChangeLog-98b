@@ -1,3 +1,8 @@
+Thu Aug 13 17:45:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Basic_Types.h: added ACE_UINT64_DBLCAST_ADAPTER macro
+	  to patch unimplemented UINT64 to double casts
+
 Thu Aug 13 13:34:52 1998  John Mulhern  <9107@mn3.lawson.lawson.com>
 
         * tests/Priority_Task_Test.cpp: don't try to run on HPUX 11,
