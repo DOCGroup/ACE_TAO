@@ -165,7 +165,7 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   ACE_NEW (buff,
            CORBA::Octet [string_len]);
 
-  ACE_OS::strcpy (ACE_reinterpret_cast (char *, buff), request_msg);
+  ACE_OS::strcpy (ACE_reinterpret_cast (char *, buff), reply_msg);
   
   scc.context_data.replace (string_len, string_len, buff, 1);
 
@@ -190,7 +190,8 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext_var sc = ri->get_reply_service_context (id); 
 
-  const char *buf = ACE_reinterpret_cast (const char *, scc.context_data.get_buffer ());
+  const char *buf = ACE_reinterpret_cast (const char *,
+                                          sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Replying service context: %s\n",
               buf));
