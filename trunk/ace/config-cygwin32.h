@@ -33,24 +33,18 @@
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
 
-#define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_HAS_SIG_MACROS
 #define ACE_LACKS_SYSTIME_H
-#define ACE_LACKS_TELLDIR
 #define ACE_LACKS_SYSV_SHMEM
 
 #define ACE_HAS_BROKEN_MAP_FAILED
 
 #define ACE_LACKS_SEMBUF_T
-#define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_LACKS_SENDMSG
 #define ACE_LACKS_RECVMSG
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_RLIMIT
-#define ACE_LACKS_SOCKETPAIR
-#define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_MKTEMP
 
 #define ACE_LACKS_PRAGMA_ONCE
 
@@ -91,7 +85,6 @@
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
-#define ACE_HAS_GETRUSAGE_PROTO
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -111,10 +104,6 @@
 #define ACE_DEFAULT_SELECT_REACTOR_SIZE 256
 
 #define ACE_HAS_GETPAGESIZE
-
-// Platform lacks POSIX prototypes for certain System V functions
-// like shared memory and message queues.
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 #define ACE_LACKS_STRRECVFD
 
