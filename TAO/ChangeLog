@@ -1,7 +1,17 @@
+Mon Aug 11 00:35:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Load_Balancing_persistent/Load_Balancer_i.h:
+          Added #include Memory_Pool.h and Malloc_T.h needed due to recent
+          subsetting.
+
+        * examples/Persistent_Grid/Grid_i.h:
+          Added #include OS.h, Memory_Poll.h, and Null_Mutex.h needed due
+          to recent subsetting.
+
 Sun Aug 10 20:26:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile:
-          Fixed a typo: s/IFR_Test/IDL_Test/.
+          Fixed a typo: s/IFR_Test/IDL3_Test/.
 
 Sun Aug 10 08:27:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 

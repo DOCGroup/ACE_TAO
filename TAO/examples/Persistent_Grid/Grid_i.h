@@ -20,6 +20,10 @@
 #define GRID_I_H
 
 #include "GridS.h"
+#include "ace/OS.h"
+#include "ace/Memory_Pool.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Malloc_T.h"
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> pool_t;
 // Memory pool for the persistent stuff
