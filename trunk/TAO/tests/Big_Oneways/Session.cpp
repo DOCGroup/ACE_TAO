@@ -159,14 +159,15 @@ Session::start (const Test::Session_List &other_sessions
 
     if (this->active_thread_count_ != this->thread_count_)
       return;
-
-    this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-    this->barrier_.wait ();
-
-    if (this->running_ != 0)
-      return;
   }
+
+  this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  this->barrier_.wait ();
+
+  if (this->running_ != 0)
+    return;
+
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
   this->terminate (0 ACE_ENV_ARG_PARAMETER);

@@ -1,3 +1,10 @@
+Tue Jul  2 12:39:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Oneways/Session.cpp (start): Fixed a problem in the
+	  start ()  method that was leading to deadlocks and failures in
+	  out nightly builds. The change made was to let go of the lock
+	  before we call validate connections.
+
 Tue Jul  2 11:37:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile* : Updated dependencies. 
