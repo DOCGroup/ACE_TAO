@@ -19,6 +19,13 @@ FTP_Client_Callback::handle_stop (void)
   return this->handler_->stop ();
 }
 
+int
+FTP_Client_Callback::handle_end_stream (void)
+{
+  TAO_AV_CORE::instance ()->stop_run ();
+  return 0;
+}
+
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manager)
   :orb_manager_ (orb_manager)
 {
@@ -110,7 +117,7 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
   ACE_Message_Block mb (BUFSIZ);
   char *buf = mb.rd_ptr ();
   cerr << "message block size" << mb.size () << endl;
-  int n = ACE_OS::fread(buf,mb.size (),1,CLIENT::instance ()->file ());
+  int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
   if (n < 0)
     {
       TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
@@ -122,15 +129,17 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
         {
           // wait for sometime for the data to be flushed to the other side.
           this->count_++;
-          if (this->count_ == 10)
+          if (this->count_ == 2)
             {
               ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
               AVStreams::flowSpec stop_spec (1);
-              stop_spec.length (1);
               ACE_DECLARE_NEW_CORBA_ENV;
-              stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
+              //              stop_spec.length (1);
+              //              stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
               CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
               ACE_CHECK_RETURN (-1);
+              CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+              TAO_AV_CORE::instance ()->stop_run ();
             }
           else
             return 0;
@@ -139,7 +148,7 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
     }
   cerr << "read bytes = " << n << endl;
-  mb.wr_ptr (n*BUFSIZ);
+  mb.wr_ptr (n);
   int result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);

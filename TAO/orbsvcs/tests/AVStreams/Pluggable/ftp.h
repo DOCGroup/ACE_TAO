@@ -39,6 +39,7 @@ public:
   FTP_Client_Callback (FTP_Client_Flow_Handler *handler);
   virtual int handle_start (void);
   virtual int handle_stop (void);
+  virtual int handle_end_stream (void);
 protected:
   FTP_Client_Flow_Handler *handler_;
 };
