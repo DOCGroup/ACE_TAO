@@ -12,7 +12,7 @@
 
 ACE_RCSID(tao, GIOP_Message_State, "$Id$")
 
-TAO_GIOP_Message_State::TAO_GIOP_Message_State (TAO_ORB_Core* orb_core)
+  TAO_GIOP_Message_State::TAO_GIOP_Message_State (TAO_ORB_Core* /*orb_core*/)
   : byte_order (TAO_ENCAP_BYTE_ORDER),
     more_fragments (0),
     message_type (TAO_GIOP_MESSAGERROR),
