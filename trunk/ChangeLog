@@ -1,8 +1,14 @@
+Sun May  9 13:12:37 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/global.features:
+	  Added dnc to the default features to avoid unintentional
+	  building of $CIAO_ROOT/DnC directory.
+
 Sun May 9 16:07:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* bin/fuzz.pl:
-	Script checks now if file names are not too long. Names exceeding 50 characters 
-	are classified as an error (QNX limit), MPC files longer than 30 characters 
+	Script checks now if file names are not too long. Names exceeding 50 characters
+	are classified as an error (QNX limit), MPC files longer than 30 characters
 	lead to warnings as MPC can add some characters eg. .depend.GNUmakefile.
 
 Sun May  9 13:20:22 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
