@@ -557,6 +557,89 @@ ctime_r_test (void)
   return result;
 }
 
+int
+string_strsncpy_test (void)
+{
+  {
+    // Test strsncpy (char version)
+     ACE_DEBUG ((LM_DEBUG,
+                 ACE_TEXT ("Testing strsncpy (char version)\n")));
+
+     char strsncpy1[] =  "abcdefghijklmnopqrstuvwxyzabc";
+     char strsncpy2[36];
+
+     ACE_ASSERT
+       (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                        36),
+                               strsncpy1) == 0);
+
+     ACE_ASSERT
+       (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                         strsncpy1,
+                                                         26),
+                                strsncpy1,
+                                25) == 0);
+     strsncpy1[25] = 0;
+     strsncpy2[25] = 0;
+
+     ACE_ASSERT (ACE_OS_String::strcmp (strsncpy2, strsncpy1) == 0);
+
+     ACE_ASSERT
+       (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                         strsncpy1,
+                                                        2),
+                                strsncpy1,
+                                1) == 0);
+     ACE_ASSERT
+       (ACE_OS_String::strlen (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                        1)) == 0);
+
+  }
+
+#if defined (ACE_HAS_WCHAR)
+  {
+     // Test strsncpy (wchar_t version)
+     ACE_DEBUG ((LM_DEBUG,
+                 ACE_TEXT ("Testing strsncpy (wchar_t version)\n")));
+
+     wchar_t strsncpy1[]  ACE_TEXT_WIDE = ("abcdefghijklmnopqrstuvwxyzabc");
+     wchar_t strsncpy2[36];
+
+     ACE_ASSERT
+       (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                        36),
+                               strsncpy1) == 0);
+     ACE_ASSERT
+       (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                         strsncpy1,
+                                                         26),
+                                strsncpy1,
+                                25) == 0);
+
+     strsncpy1[25]  0;
+     strsncpy2[25]  0;
+
+     ACE_ASSERT (ACE_OS_String::strcmp (strsncpy2, strsncpy1) == 0);
+
+     ACE_ASSERT
+       (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                         strsncpy1,
+                                                         2),
+                                strsncpy1,
+                                1) == 0);
+     ACE_ASSERT
+       (ACE_OS_String::strlen (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                        1)) == 0);
+
+  }
+#endif /* ACE_HAS_WCHAR */
+
+   return 0;
+}
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -574,6 +657,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   if ((result = ctime_r_test ()) != 0)
     status = result;
+
+  if ((result =  string_strsncpy_test ()) != 0)
+      status = result;
 
   ACE_END_TEST;
   return status;
