@@ -1,3 +1,10 @@
+Tue Jul 19 07:56:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.dsp:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.dsp:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.dsp:
+	  Fixed the dsp files to link in the strategies library.
+
 Tue Jul 19 12:49:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Sequence.i (replace):
