@@ -18,6 +18,7 @@
 #include "Remote_Object_Proxy_Broker.h"
 #include "CDR.h"
 #include "SystemException.h"
+#include "PolicyC.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"

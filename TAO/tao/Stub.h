@@ -47,6 +47,11 @@ namespace TAO
   class ObjectKey;
 }
 
+namespace IOP
+{
+  struct IOR;
+}
+
 /**
  * @class TAO_Stub
  *
