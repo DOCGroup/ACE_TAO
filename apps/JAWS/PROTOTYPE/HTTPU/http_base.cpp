@@ -317,3 +317,7 @@ HTTP_Base::dump (void)
               this->status (),
               (*HTTP_SCode::instance ())[this->status ()]));
 }
+
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+#   include "HTTPU/http_base.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */

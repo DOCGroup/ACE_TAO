@@ -5,16 +5,18 @@
 
 #include "ace/Singleton.h"
 
+#include "HTTPU/http_export.h"
+
 class HTTP_SCode_Base;
 
-class HTTP_SCode_Node
+class HTTPU_Export HTTP_SCode_Node
 // Constructor should be passed a string literal.
 {
   friend class HTTP_SCode_Base;
 
 public:
-  operator int (void) const { return this->code_; }
-  operator const char * (void) const { return this->code_str_; }
+  operator int (void) const;
+  operator const char * (void) const;
 
 private:
   HTTP_SCode_Node (int code, const char *code_str);
@@ -24,7 +26,7 @@ private:
   const char *code_str_;
 };
 
-class HTTP_SCode_Base
+class HTTPU_Export HTTP_SCode_Base
 {
 public:
   static HTTP_SCode_Node STATUS_OK;
@@ -56,7 +58,7 @@ private:
   static HTTP_SCode_Node DUMMY;
 };
 
-class HTTP_SCode : public HTTP_SCode_Base
+class HTTPU_Export HTTP_SCode : public HTTP_SCode_Base
 {
   // = TITLE
   //     Go from numeric status codes to descriptive strings.
@@ -67,7 +69,7 @@ class HTTP_SCode : public HTTP_SCode_Base
 protected:
 
   HTTP_SCode (void);
-  ~HTTP_SCode (void) {}
+  ~HTTP_SCode (void);
 
 public:
 
@@ -92,5 +94,12 @@ private:
 typedef ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>
         HTTP_SCode_Singleton;
 
+#if defined (ACE_HAS_INLINED_OSCALLS)
+#   if defined (ACE_INLINE)
+#     undef ACE_INLINE
+#   endif /* ACE_INLINE */
+#   define ACE_INLINE inline
+#   include "HTTPU/http_status.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* HTTPU_HTTP_STATUS_HPP */

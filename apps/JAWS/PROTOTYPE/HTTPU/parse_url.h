@@ -4,7 +4,9 @@
 #if !defined (HTTPU_HTTP_PARSE_H)
 #define HTTPU_HTTP_PARSE_H
 
-class HTTP_Parse_URL
+#include "HTTPU/http_export.h"
+
+class HTTPU_Export HTTP_Parse_URL
 {
   // CAVEAT:
 

@@ -10,18 +10,19 @@
 #include "ace/Singleton.h"
 
 #include "JAWS/Parse_Headers.h"
+#include "HTTPU/http_export.h"
 
 class HTTP_Headers;
 
-class HTTP_Hdr_Node
+class HTTPU_Export HTTP_Hdr_Node
 {
   // Constructor should be passed literal strings.
   friend class HTTP_HCodes;
 
 public:
-  operator const int (void) const { return this->index_; }
-  operator const char * (void) const { return this->token_; }
-  const char * format (void) const { return this->format_; }
+  operator const int (void) const;
+  operator const char * (void) const;
+  const char * format (void) const;
 
 private:
   HTTP_Hdr_Node (const char *token, const char *format);
@@ -35,13 +36,13 @@ private:
 
 class HTTP_HCodes;
 
-class HTTP_Header_Nodes : public RB_Tree<int, const HTTP_Hdr_Node *>
+class HTTPU_Export HTTP_Header_Nodes : public RB_Tree<int, const HTTP_Hdr_Node *>
 {
   friend class HTTP_HCodes;
   friend class HTTP_Hdr_Node;
 
 public:
-  HTTP_Header_Nodes (void) : num_header_strings_ (0) {}
+  HTTP_Header_Nodes (void);
 
 private:
   int num_header_strings_;
@@ -50,12 +51,10 @@ private:
 typedef ACE_Singleton<HTTP_Header_Nodes, ACE_SYNCH_MUTEX>
         HTTP_Header_Nodes_Singleton;
 
-class HTTP_HCodes
+class HTTPU_Export HTTP_HCodes
 {
 public:
-  HTTP_HCodes (void)
-    : header_nodes_ (HTTP_Header_Nodes_Singleton::instance ())
-    {}
+  HTTP_HCodes (void);
 
   enum {
     REPLACE_HEADER = 1,  // Remove any existing header that matches first
@@ -128,20 +127,14 @@ public:
 
 protected:
 
-  const HTTP_Hdr_Node &hcode (int type) const
-    {
-      const HTTP_Hdr_Node **hn = this->header_nodes_->find (type);
-
-      // No error checking!
-      return **hn;
-    }
+  const HTTP_Hdr_Node &hcode (int type) const;
 
 protected:
 
   HTTP_Header_Nodes *header_nodes_;
 };
 
-class HTTP_Headers : public JAWS_Header_Info, public HTTP_HCodes
+class HTTPU_Export HTTP_Headers : public JAWS_Header_Info, public HTTP_HCodes
 {
 public:
   const char *header( int name ) const;
@@ -150,20 +143,20 @@ public:
   void value_reset ( void );
 
 public:
-  HTTP_Headers (void) {}
+  HTTP_Headers (void);
 
-  const char *header_token (int name) const
-    {
-      const HTTP_Hdr_Node **hn = this->header_nodes_->find (name);
-      return ((hn && *hn) ? (const char *)**hn : 0);
-    }
-
-  const char *header_strings (int name) const
-    {
-      const HTTP_Hdr_Node **hn = this->header_nodes_->find (name);
-      return ((hn && *hn) ? (*hn)->format () : 0);
-    }
+  const char *header_token (int name) const;
+  const char *header_strings (int name) const;
 
 };
+
+
+#if defined (ACE_HAS_INLINED_OSCALLS)
+#   if defined (ACE_INLINE)
+#     undef ACE_INLINE
+#   endif /* ACE_INLINE */
+#   define ACE_INLINE inline
+#   include "HTTPU/http_headers.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* !defined (HTTPU_HTTP_HEADERS_HPP) */

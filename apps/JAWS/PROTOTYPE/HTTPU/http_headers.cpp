@@ -124,6 +124,11 @@ HTTP_Headers::value_reset (void)
   this->table ()->iter ().first ();
 }
 
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+#   include "HTTPU/http_headers.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
+
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class RB_Tree<int, const HTTP_Hdr_Node *>;
 template class RB_Tree_Node<int, const HTTP_Hdr_Node *>;

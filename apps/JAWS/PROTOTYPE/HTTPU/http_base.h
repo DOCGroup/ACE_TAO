@@ -6,30 +6,16 @@
 #include "ace/Message_Block.h"
 
 #include "JAWS/Parse_Headers.h"
+#include "HTTPU/http_export.h"
 #include "HTTPU/http_status.h"
 #include "HTTPU/http_headers.h"
 
-class HTTP_Base : public HTTP_SCode_Base
+class HTTPU_Export HTTP_Base : public HTTP_SCode_Base
 {
 public:
 
-  HTTP_Base (void)
-    : status_ (200),
-      line_ (0),
-      deliver_state_ (0),
-      no_headers_ (0),
-      iter_ (*(this->info_.table ())),
-      mb_ (0)
-    {}
-  virtual ~HTTP_Base (void)
-    {
-      if (this->line_)
-        ACE_OS::free (this->line_);
-      if (this->mb_)
-        delete this->mb_;
-      this->line_ = 0;
-      this->mb_ = 0;
-    }
+  HTTP_Base (void);
+  virtual ~HTTP_Base (void);
 
   virtual int receive (ACE_Message_Block &mb);
   virtual int deliver (ACE_Message_Block &mb);
@@ -40,10 +26,10 @@ public:
   const char * payload (void);
   unsigned long payload_size (void);
 
-  int status (void) const { return this->status_; }
-  const char *line (void) const { return this->line_; }
-  HTTP_Headers *http_headers (void) { return &(this->info_); }
-  JAWS_Headers *headers (void) { return this->info_.table (); }
+  int status (void) const;
+  const char *line (void) const;
+  HTTP_Headers *http_headers (void);
+  JAWS_Headers *headers (void);
 
   int build_headers (JAWS_Headers *new_headers);
   // takes a set of new headers that will replace existing headers or
@@ -84,5 +70,14 @@ protected:
   ACE_Message_Block payload_;
 
 };
+
+
+#if defined (ACE_HAS_INLINED_OSCALLS)
+#   if defined (ACE_INLINE)
+#     undef ACE_INLINE
+#   endif /* ACE_INLINE */
+#   define ACE_INLINE inline
+#   include "HTTPU/http_base.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* !defined (HTTPU_HTTP_BASE_H) */
