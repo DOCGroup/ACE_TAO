@@ -1,3 +1,10 @@
+Fri Jan 26 17:31:26 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.i (mutex_lock):
+
+	  Fixed unused argument warnings that occured when compiling for
+	  the single threaded case.
+
 Fri Jan 26 16:58:03 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-linux.h:
