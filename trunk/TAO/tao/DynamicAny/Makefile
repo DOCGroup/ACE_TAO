@@ -89,16 +89,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -410,16 +410,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -735,16 +735,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1056,16 +1056,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1380,16 +1380,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1702,16 +1702,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2023,16 +2023,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2346,16 +2346,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2668,16 +2668,16 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.h \
- $(ACE_ROOT)/ace/ACE_Flag_Manip.i \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.h \
- $(ACE_ROOT)/ace/ACE_Handle_Ops.i \
- $(ACE_ROOT)/ace/ACE_Lib_Find.h \
- $(ACE_ROOT)/ace/ACE_Lib_Find.i \
- $(ACE_ROOT)/ace/ACE_Init.h \
- $(ACE_ROOT)/ace/ACE_Init.i \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.h \
- $(ACE_ROOT)/ace/ACE_Sock_Connect.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
