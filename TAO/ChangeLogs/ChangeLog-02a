@@ -1,3 +1,20 @@
+Sun Jul  2 14:44:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+	  
+	  In the case where an operation has one or more OUT 
+	  parameters which are a sequence, or a struct or array 
+	  of dynamic element type, we allocate memory for that
+	  argument to demarshal into. If the operation also has
+	  a non-void return type, the TAO IDL compiler does this
+	  by generating ACE_NEW_RETURN (...., ....., _tao_retval);
+	  in the stub operation body. For some return types, 
+	  _tao_safe_retval (which may be a _var) is defined
+	  instead of _tao_retval, so _tao_retval has been replaced
+	  in the ACE_NEW_RETURN statement with 0. Thanks to
+	  Matej Sekoranja <matej.sekoranja@ijs.si> for reporting
+	  this bug.
+
 Fri Jun 30 12:28:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
