@@ -9,12 +9,28 @@ Table of contents
 
 1. Introduction
 
-The Real-Time CORBA specification provides a high level API for programmers to write distributed applications in which the priority of a distributed thread of execution is maintained across separate hosts with potentially different operating systems.  It also provides support for explicit binding, standard sychronizers, the ability to modify transport protocol properties and thread pools as a standard.
+The Real-Time CORBA specification provides a high level API for programmers
+to write distributed applications in which the priority of a distributed
+thread of execution is maintained across separate hosts with potentially
+different operating systems.  It also provides support for explicit
+binding, standard sychronizers, the ability to modify transport protocol
+properties and thread pools as a standard.
+
 In this experiment we show the effect of maintaining end to end priorities.
+
 The experiment consists of the following participants:
-Job: A CORBA servant object that performs CPU intensive work. The ammount of work depends on a load factor that is conveyed to the object per invocation as an argument. 
-Periodic Task: A periodic task is a thread of execution that is associated with a Job. A Task periodically invokes the Job after a period of time specified by the user.
-Activity: An activity is a collection of Job’s and Tasks hosted in a single process. An activity reads a configuration file that can be used to initialize in many ways such as a client or server.
+
+Job: A CORBA servant object that performs CPU intensive work. The ammount
+of work depends on a load factor that is conveyed to the object per
+invocation as an argument.
+
+Periodic Task: A periodic task is a thread of execution that is associated
+with a Job. A Task periodically invokes the Job after a period of time
+specified by the user.
+
+Activity: An activity is a collection of Jobs and Tasks hosted in a single
+process. An activity reads a configuration file that can be used to
+initialize in many ways such as a client or server.
 
 2. Conf file parameters
 --------------------
@@ -41,7 +57,9 @@ Lanes - 2 Lanes with Lane values as follows -
 	Lane 1 : priority = 10, 1 static thread, 0 dynamic threads
 	Lane 2 : priority = 80, 1 static thread, 0 dynamic threads
 
-You can specify options for creating POA, Job and Task as shown below. Please note that you must specify the number of POA, Job or Task via the following options at the beginning of the conf. file:
+You can specify options for creating POA, Job and Task as shown
+below. Please note that you must specify the number of POA, Job or Task via
+the following options at the beginning of the conf. file:
 
 -POACount [count]
 -TaskCount [count]
