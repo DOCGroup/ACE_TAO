@@ -1,5 +1,5 @@
 #
-# Makefile for building the TAO PortableGroup library
+# Makefile for building the TAO ETCL library
 #
 
 NAME = TAO_ETCL
