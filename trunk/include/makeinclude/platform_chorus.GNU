@@ -6,6 +6,7 @@ CHORUS = 1
 CROSS-COMPILE = 1
 
 debug = 1
+exceptions =
 optimize = 1
 shared_libs =
 static_libs = 1
@@ -35,9 +36,14 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates    \
                    -nostdinc                            \
                    -pipe                                \
                    -fno-rtti                            \
-                   -fno-exceptions                      \
                    -D_POSIX_THREADS                     \
                    -D_POSIX_THREAD_SAFE_FUNCTIONS
+
+ifeq ($(exceptions),1)
+else  # ! exceptions
+  CCFLAGS += -fno-exceptions
+endif # ! exceptions
+
 #DCFLAGS         += -gstabs+
 INCLDIRS        += -I$(INC_DIR)/posix                   \
                    -I$(INC_DIR)/stdc                    \
