@@ -317,7 +317,7 @@ ImR_Locator_i::register_activator (const char* activator,
 // object_ref is set to the removed activator.
 void
 ImR_Locator_i::unregister_activator (const char * activator,
-                                     CORBA::Long /* token */
+                                     CORBA::Long token
                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
