@@ -44,6 +44,20 @@ CORBA_Any::operator<<= (CORBA::ULong l)
 }
 
 ACE_INLINE void
+CORBA_Any::operator<<= (CORBA::LongLong l)
+{
+  CORBA::Environment env;
+  this->replace (CORBA::_tc_longlong, new CORBA::LongLong (l), CORBA::B_TRUE, env);
+}
+
+ACE_INLINE void
+CORBA_Any::operator<<= (CORBA::ULongLong l)
+{
+  CORBA::Environment env;
+  this->replace (CORBA::_tc_ulonglong, new CORBA::ULongLong (l), CORBA::B_TRUE, env);
+}
+
+ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Float f)
 {
   CORBA::Environment env;
@@ -155,6 +169,14 @@ CORBA_Any::operator<<= (from_char c)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_char, new CORBA::Char (c.val_),
+                 CORBA::B_TRUE, env);
+}
+
+ACE_INLINE void
+CORBA_Any::operator<<= (from_wchar wc)
+{
+  CORBA::Environment env;
+  this->replace (CORBA::_tc_wchar, new CORBA::WChar (wc.val_),
                  CORBA::B_TRUE, env);
 }
 

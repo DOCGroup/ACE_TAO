@@ -609,6 +609,7 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
     case CORBA::tk_float:
     case CORBA::tk_double:
     case CORBA::tk_longlong:
+    case CORBA::tk_ulonglong:
     case CORBA::tk_longdouble:
     case CORBA::tk_boolean:
     case CORBA::tk_octet:
