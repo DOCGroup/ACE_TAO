@@ -23,16 +23,37 @@ rw_unlock            0.20       27.792   6813    0.004    0.045    0.004   0.000
 Cubit results over Ethernet with 20,000 calls
 ---------------------------------------------
 
-                                Latency (ms)            Calls/Sec
+                                Clients         Latency (ms)      Calls/Sec
                 
-TAO reactive version            1.172                   853
-TAO threaded version            
+TAO reactive                    1               1.172             853
+                                2               1.342             745
+                                3               1.902             525
+
+TAO threaded version            1               1.174             851
+                                2               1.219             820
+                                3               1.600             625
+
 
 Cubit results over ATM with 20,000 calls
 ---------------------------------------------
 
-                                Latency (ms)            Calls/Sec
-                
-TAO reactive version            1.161                   861
-TAO threaded version
+                                Clients         Latency (ms)      Calls/Sec
+
+TAO reactive                    1               1.161             861
+                                2               1.302             768
+                                3               1.732             577
+
+TAO threaded version            1               1.170             854
+                                2               1.3               769
+                                3               1.600             625
+
+
+Cubit results over ATM with 20,000 calls
+----------------------------------------
+
+                               Clients  Latency (ms)          Calls/Sec
+
+Visibroker without filters     1        1.060                 943
+                               2        1.327                 753
+                               3        2.108                 474
 
