@@ -1,26 +1,32 @@
+Tue Mar  8 06:54:56 2005  Olli Savia  <ops@iki.fi>
+
+        * tao/ORBInitializer_Registry.h:
+          Added a workaround for g++ (version 2.9-gnupro-98r2) on LynxOS 3.x
+          which has problems with friend declarations in namespaces.
+
 Tue Mar 08 09:21:39 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Connection_Handler.h:
-	* tao/Connection_Handler.inl:
-	* tao/Transport_Connector.cpp:
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Transport_Connector.cpp:
 
-	  Cosmetic fixes to use consts and bools when possible. 
+          Cosmetic fixes to use consts and bools when possible.
 
 Tue Mar 08 08:53:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection): 
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection):
 
- 	  Fixed a compile error due to the changes in 
+          Fixed a compile error due to the changes in
 
-	  Mon Mar 07 16:37:25 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+          Mon Mar 07 16:37:25 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Mar 08 08:49:12 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp (make_connection): 
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp (make_connection):
 
-	  Fixed a compile error due to the changes in 
+          Fixed a compile error due to the changes in
 
-	  Mon Mar 07 16:37:25 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+          Mon Mar 07 16:37:25 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Mar 07 21:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -114,52 +120,52 @@ Mon Mar 07 13:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Mar  7 06:04:18 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* tao/Strategies/SCIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
 
-	  Fixed subtle compilation errors from my last checkins.
+          Fixed subtle compilation errors from my last checkins.
 
 Mon Mar 07 16:37:25 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Resource_Factory.h:
-	* tao/default_resource.cpp:
-	* tao/default_resource.h:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
 
-	  Added a new strategy to decide whether the ORB should continue
-	  to shutdown when waiting for outstanding replies. The name of
-	  the resource factory option is "-ORBDropRepliesonShutdown",
-	  which when on would drop replies when the ORB is shutting down
-	  and wait for replies when turned off.
+          Added a new strategy to decide whether the ORB should continue
+          to shutdown when waiting for outstanding replies. The name of
+          the resource factory option is "-ORBDropRepliesonShutdown",
+          which when on would drop replies when the ORB is shutting down
+          and wait for replies when turned off.
 
-	* tao/Leader_Follower.cpp:
-	* tao/Thread_Lane_Resources.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Thread_Lane_Resources.cpp:
 
-	  Use the above strategy to wakeup threads if they are waiting for
-	  replies.
+          Use the above strategy to wakeup threads if they are waiting for
+          replies.
 
-	* tao/Transport_Connector.cpp:
+        * tao/Transport_Connector.cpp:
 
-	  Fixed a race condition and a subtle problem. If a thread waits
-	  for connection completion, and if the ORB is shutdown (with the
-	  strategy turned on), it is possible for the thread to exit the
-	  LF without accepting the connection. This creates a problem when
-	  the reactor is shutdown since there is a dangling reference to a
-	  connection handler which might have been closed completely. To
-	  get around this problem, we do a check to see if a connection
-	  has been completed, and if not we clear the reactor of the
-	  dangling reference.
+          Fixed a race condition and a subtle problem. If a thread waits
+          for connection completion, and if the ORB is shutdown (with the
+          strategy turned on), it is possible for the thread to exit the
+          LF without accepting the connection. This creates a problem when
+          the reactor is shutdown since there is a dangling reference to a
+          connection handler which might have been closed completely. To
+          get around this problem, we do a check to see if a connection
+          has been completed, and if not we clear the reactor of the
+          dangling reference.
 
-	* tao/Profile_Transport_Resolver.h (blocked_connect):
-	* tao/Profile_Transport_Resolver.inl:
+        * tao/Profile_Transport_Resolver.h (blocked_connect):
+        * tao/Profile_Transport_Resolver.inl:
 
-	  Changed the method name to be blocked_connect () instead of
-	  blocked ().
+          Changed the method name to be blocked_connect () instead of
+          blocked ().
 
-	* tao/IIOP_Connector.cpp:
-	* tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
 
-	  Used blocked_connect () on Profile_Transport_Resolver.
+          Used blocked_connect () on Profile_Transport_Resolver.
 
 Mon Mar 07 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -178,9 +184,9 @@ Mon Mar 07 07:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar  6 20:27:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
 Sun Mar 06 21:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -236,20 +242,20 @@ Sun Mar 06 21:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar  6 02:03:25 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
-	* examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
-	* examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
-	* examples/RTScheduling/Job_i.cpp:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
-	* tao/Leader_Follower.cpp:
-	* tao/LocateRequest_Invocation.cpp:
-	* tao/Profile_Transport_Resolver.cpp:
-	* tao/Synch_Invocation.cpp:
-	* tao/Wait_On_Reactor.cpp:
-	* tao/Wait_On_Read.cpp:
-	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp:
-	Added proper include for Countdown_Time.h
+        * examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp:
+        Added proper include for Countdown_Time.h
 
 Sat Mar 05 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -258,34 +264,34 @@ Sat Mar 05 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Mar 04 09:26:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Collocated_Invocation.cpp (invoke):
+        * tao/Collocated_Invocation.cpp (invoke):
 
-	  Perform thru-POA collocated invocations through the servant
-	  ORB.  The client code will otherwise not be able to find the
-	  servant in applications that use multiple ORBs.  Addresses a
-	  regression that occured after the skeleton-refactor branch
-	  merge.  Thanks to Johnny for tracking down the problem and
-	  suggesting a fix.  [Bug 2055]
+          Perform thru-POA collocated invocations through the servant
+          ORB.  The client code will otherwise not be able to find the
+          servant in applications that use multiple ORBs.  Addresses a
+          regression that occured after the skeleton-refactor branch
+          merge.  Thanks to Johnny for tracking down the problem and
+          suggesting a fix.  [Bug 2055]
 
-	  Increment the reference count on the servant ORB_Core prior to
-	  dispatching the request in the thru-POA collocation case.
-	  Ownership of the servant ORB_Core must be retained for the
-	  duration of the request in case another thread attempts to
-	  destroy it (e.g. via CORBA::ORB::destroy()) before the thread
-	  that initiated the request completes the invocation.  Fixes a
-	  race condition.  [Bug 2055]
+          Increment the reference count on the servant ORB_Core prior to
+          dispatching the request in the thru-POA collocation case.
+          Ownership of the servant ORB_Core must be retained for the
+          duration of the request in case another thread attempts to
+          destroy it (e.g. via CORBA::ORB::destroy()) before the thread
+          that initiated the request completes the invocation.  Fixes a
+          race condition.  [Bug 2055]
 
-	* tao/Invocation_Adapter.cpp (invoke):
+        * tao/Invocation_Adapter.cpp (invoke):
 
-	  In addition to the existing collocation proxy broker collocation
-	  test, determine if collocation is viable by checking if the
-	  object reference contains a valid pointer to a servant.
-	  Collocation proxy brokers should be phased out soon.
+          In addition to the existing collocation proxy broker collocation
+          test, determine if collocation is viable by checking if the
+          object reference contains a valid pointer to a servant.
+          Collocation proxy brokers should be phased out soon.
 
-	* tao/PortableServer/Object_Adapter.cpp (dispatch_servant):
+        * tao/PortableServer/Object_Adapter.cpp (dispatch_servant):
 
-	  Call Servant_Upcall::pre_invoke_collocated_request() in the
-	  collocated case, not pre_invoke_remote_request().
+          Call Servant_Upcall::pre_invoke_collocated_request() in the
+          collocated case, not pre_invoke_remote_request().
 
 Fri Mar  4 15:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -386,25 +392,25 @@ Wed Mar  2 13:29:50 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Mar  2 06:30:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
-	* orbsvcs/Concurrency_Service/Concurrency_Service.h:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.h:
 
           Added '-p' command line option to write process id to file.
 
-	  Changed to save the IOR file name instead of opening the IOR
-	  file when parsing command line arguments.  This avoids a file
-	  descriptor leak if multiple "-o" options are specified on the
-	  command line.
+          Changed to save the IOR file name instead of opening the IOR
+          file when parsing command line arguments.  This avoids a file
+          descriptor leak if multiple "-o" options are specified on the
+          command line.
 
 Wed Mar  2 06:22:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
 
-	  Changed to save the IOR file name instead of opening the IOR
-	  file when parsing command line arguments.  This avoids a file
-	  descriptor leak if multiple "-o" options are specified on the
-	  command line.
+          Changed to save the IOR file name instead of opening the IOR
+          file when parsing command line arguments.  This avoids a file
+          descriptor leak if multiple "-o" options are specified on the
+          command line.
 
 Wed Mar  2 12:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -446,41 +452,41 @@ Tue Mar  1 15:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar  1 01:46:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/amh_si.cpp:
-	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
-	* tao/PortableServer/Servant_Base.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
 
-	  Fixed inconsistencies in AMH skeleton function parameter order.
-	  Addresses regressions in the Bug_1670_Regression test.
+          Fixed inconsistencies in AMH skeleton function parameter order.
+          Addresses regressions in the Bug_1670_Regression test.
 
 Tue Mar  1 00:47:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CORBALOC_Parser.cpp:
+        * tao/CORBALOC_Parser.cpp:
 
-	  Include "ace/os_include/os_netdb.h" to pull in MAXHOSTNAMELEN
-	  constant.
+          Include "ace/os_include/os_netdb.h" to pull in MAXHOSTNAMELEN
+          constant.
 
-	* tao/Invocation_Adapter.cpp (invoke_i):
+        * tao/Invocation_Adapter.cpp (invoke_i):
 
-	* tao/TAO_Server_Request.cpp (tao_send_reply):
-	  (tao_send_reply_exception):
+        * tao/TAO_Server_Request.cpp (tao_send_reply):
+          (tao_send_reply_exception):
 
-	  Do not attempt to send a reply over the transport in the
-	  collocated case.  There is no transport in that case.
+          Do not attempt to send a reply over the transport in the
+          collocated case.  There is no transport in that case.
 
-	* tao/TAO_Server_Request.h (collocated):
-	* tao/TAO_Server_Request.i (collocated):
+        * tao/TAO_Server_Request.h (collocated):
+        * tao/TAO_Server_Request.i (collocated):
 
-	  New accessor that returns true if the current request is
-	  collocated.
+          New accessor that returns true if the current request is
+          collocated.
 
-	* tao/PortableServer/Servant_Base.cpp
-	  (synchronous_upcall_dispatch):
+        * tao/PortableServer/Servant_Base.cpp
+          (synchronous_upcall_dispatch):
 
-	  Re-throw the caught exception in the collocated case.  The
-	  exception must be directly reported to the collocated client
-	  since the exception will not be marshaled and sent back to the
-	  client side ORB.
+          Re-throw the caught exception in the collocated case.  The
+          exception must be directly reported to the collocated client
+          since the exception will not be marshaled and sent back to the
+          client side ORB.
 
 Tue Mar  1 08:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -514,26 +520,26 @@ Mon Feb 28 17:06:44 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
 
-	  Fixed an issue with servers requiring client authentication, whereby
-	  the server failed to resume an SSL session and terminates a
-	  connection in the middle of the handshake, because the
-	  (OpenSSL-based) SSL library was not getting correctly initialized
-	  with a call to SSL_CTX_set_session_id_context(3), as pointed out in
-	  the man page warnings section.
+          Fixed an issue with servers requiring client authentication, whereby
+          the server failed to resume an SSL session and terminates a
+          connection in the middle of the handshake, because the
+          (OpenSSL-based) SSL library was not getting correctly initialized
+          with a call to SSL_CTX_set_session_id_context(3), as pointed out in
+          the man page warnings section.
 
-	  Added new service configuration option "-SSLCAFile FORMAT:file" to
-	  allow the user to explicitly specify where TAO must load the Trusted
-	  Certificates from. The FORMAT is either "PEM" or "DER". Added new
-	  service configuration option "-SSLCAPath directory" to allow
-	  explicit specification of the directory, where the Trusted
-	  Certificates are located. The directory must be in a particular
-	  format - see openssl(1) fom more details on how to install
-	  additional CA certificates.  Added new service configuration option
-	  "-SSLRand file1:file2:.." to allow specification of additional
-	  sources of randomness (entropy). The option mimics the -rand option
-	  on genrsa(1), for example. Note that on Windows platforms it accepts
-	  semi-colon (";") as path delimiter vs. colon (":") on Unix
-	  platforms.
+          Added new service configuration option "-SSLCAFile FORMAT:file" to
+          allow the user to explicitly specify where TAO must load the Trusted
+          Certificates from. The FORMAT is either "PEM" or "DER". Added new
+          service configuration option "-SSLCAPath directory" to allow
+          explicit specification of the directory, where the Trusted
+          Certificates are located. The directory must be in a particular
+          format - see openssl(1) fom more details on how to install
+          additional CA certificates.  Added new service configuration option
+          "-SSLRand file1:file2:.." to allow specification of additional
+          sources of randomness (entropy). The option mimics the -rand option
+          on genrsa(1), for example. Note that on Windows platforms it accepts
+          semi-colon (";") as path delimiter vs. colon (":") on Unix
+          platforms.
 
 
 Mon Feb 28 21:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
