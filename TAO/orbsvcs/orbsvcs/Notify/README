@@ -18,12 +18,6 @@ CosNotifyChannelAdmin::ConsumerAdmin
 CosNotifyChannelAdmin::SupplierAdmin
 CosNotifyChannelAdmin::EventChannel
 
-Helper classes TAO_Notify_StructuredPushConsumer,
-               TAO_Notify_StructuredPushSupplier,
-               TAO_Notify_PushConsumer,
-               TAO_Notify_PushSupplier,
-to help write client consumers and suppliers.
-
 Work in progress:
 ----------------
 
