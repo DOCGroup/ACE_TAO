@@ -1,3 +1,23 @@
+Mon Sep 13 12:29:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Bidirectional_Flows/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Modify_QoS/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Multiple_Flows/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * tao/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl:
+
+          Added generation of input datafiles to testscripts.
+          All these scripts now generate an input file of ~100Kb when started,
+          deleting the file when the test has finished.
+
 Mon Sep 13 09:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/UShortSeqC.h:
