@@ -37,7 +37,7 @@ DIRS  = CDR \
 	Timeout \
 	Timed_Buffered_Oneways \
 	Smart_Proxies \
-	PortableInterceptors \
+	Portable_Interceptors \
 	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
 	DynAny_Test \

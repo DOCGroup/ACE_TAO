@@ -1,44 +1,58 @@
+Mon Aug 28 10:18:50 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+          Fixed the name of the Portable_Interceptors directory.
+
+        * tests/DynAny_Test/Makefile:
+          Add missing library to the link line.
+
+        * tests/Object_Loader/Makefile:
+        * tests/Portable_Interceptors/Benchmark/Makefile:
+        * tests/Portable_Interceptors/Dynamic/Makefile:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+          Updated dependencies.
+
 Mon Aug 28 10:54:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile*: Updated dependencies
+        * orbsvcs/orbsvcs/Makefile*: Updated dependencies
 
 Mon Aug 28 02:22:11 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/Portable_Interceptors/Benchmark/Benchmark.dsw
-	* tests/Portable_Interceptors/Benchmark/client.dsp
-	* tests/Portable_Interceptors/Benchmark/server.dsp:
+        * tests/Portable_Interceptors/Benchmark/Benchmark.dsw
+        * tests/Portable_Interceptors/Benchmark/client.dsp
+        * tests/Portable_Interceptors/Benchmark/server.dsp:
 
-	  Added these project and workspace files for the Win32 platform.
+          Added these project and workspace files for the Win32 platform.
 
 Mon Aug 28 01:16:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* docs/releasenotes/index.html
+        * docs/releasenotes/index.html
 
 Mon Aug 28 00:33:21 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/IOP.pidl
-	* tao/IOPC.cpp:
+        * tao/IOP.pidl
+        * tao/IOPC.cpp:
 
-	  Constant TAG_MULTIPLE_COMPONENTS was incorrectly defined as 0.
-	  Changed it to be 1 in accordance with CORBA specification.
+          Constant TAG_MULTIPLE_COMPONENTS was incorrectly defined as 0.
+          Changed it to be 1 in accordance with CORBA specification.
 
-	* tao/Policy_Manager.cpp
-	* tao/Stub.cpp:
+        * tao/Policy_Manager.cpp
+        * tao/Stub.cpp:
 
-	  - Removed code throwing CORBA::NO_PERMISSION exception from
-	  <get_policy_overrides> method implementations for
-	  PolicyCurrent and Object in case a policy that's not valid at
-	  these scopes is queried.  This is more in tune with the spec.
+          - Removed code throwing CORBA::NO_PERMISSION exception from
+          <get_policy_overrides> method implementations for
+          PolicyCurrent and Object in case a policy that's not valid at
+          these scopes is queried.  This is more in tune with the spec.
 
-	  - Changed implementations of <get_policy> and
-	  <get_client_policy> methods in TAO_Stub to throw
-	  CORBA::INV_POLICY instead of CORBA::NO_PERMISSION if the policy
-	  requested is not valid at the Object scope.  This is more in
-	  tune with Section 4.3 of CORBA 2.4 draft.
+          - Changed implementations of <get_policy> and
+          <get_client_policy> methods in TAO_Stub to throw
+          CORBA::INV_POLICY instead of CORBA::NO_PERMISSION if the policy
+          requested is not valid at the Object scope.  This is more in
+          tune with Section 4.3 of CORBA 2.4 draft.
 
-	* tao/ORB.cpp (create_policy):
+        * tao/ORB.cpp (create_policy):
 
-	  Removed unused piece of code.
+          Removed unused piece of code.
 
 Sun Aug 27 22:11:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
