@@ -184,6 +184,9 @@ TAO_Object_Adapter::create_lock (int enable_locking,
                       0);
       return the_lock;
     }
+#else
+  ACE_UNUSED_ARG (enable_locking);
+  ACE_UNUSED_ARG (thread_lock);
 #endif /* ACE_HAS_THREADS */
 
   ACE_Lock *the_lock;
