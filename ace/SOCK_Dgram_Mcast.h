@@ -71,7 +71,10 @@ public:
                  int reuse_addr = 1,
                  const ASYS_TCHAR *net_if = 0,
                  int protocol_family = PF_INET,
-                 int protocol = 0);
+                 int protocol = 0,
+                 ACE_Protocol_Info *protocolinfo = 0,
+                 ACE_SOCK_GROUP g = 0,
+                 u_long flags = 0);
   // This is a QoS-enabled method for joining a multicast group, which
   // passes <qos_params> via <ACE_OS::join_leaf>.  The network
   // interface device driver is instructed to accept datagrams with

@@ -372,13 +372,20 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                  int reuse_addr,
                                  const ASYS_TCHAR *net_if,
                                  int protocol_family,
-                                 int protocol)
+                                 int protocol,
+                                 ACE_Protocol_Info *protocolinfo,
+                                 ACE_SOCK_GROUP g,
+                                 u_long flags)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
 
   if (this->open (mcast_addr,
+                  qos_params,
                   protocol_family,
                   protocol,
+                  protocolinfo,
+                  g,
+                  flags,
                   reuse_addr) == -1)
     return -1;
 
