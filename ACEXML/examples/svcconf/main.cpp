@@ -13,9 +13,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TCHAR *filename = 0;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:"));
-  ACE_TCHAR c;
+  int c;
 
-  while ((c = get_opt ()) != -1)
+  while ((c = get_opt ()) != EOF)
     {
       switch (c)
         {

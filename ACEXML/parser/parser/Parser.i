@@ -239,7 +239,7 @@ ACEXML_Parser::peek (void)
   const ACEXML_InputSource* ip = this->current_->getInputSource();
   ACEXML_CharStream* instream = ip->getCharStream();
   ch = instream->peek ();
-  return (ch == -1 ? 0 : ch);
+  return (ch > 0 ? ch : 0);
 }
 
 ACEXML_INLINE int
