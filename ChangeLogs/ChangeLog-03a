@@ -1,3 +1,8 @@
+Thu Sep  6 07:50:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: The AMI buffering test should not be run
+	  Single threaded builds. 
+
 Thu Sep  6 02:30:14 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * examples/Export/Makefile.bor:
