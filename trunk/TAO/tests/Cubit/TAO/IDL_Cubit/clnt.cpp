@@ -26,6 +26,7 @@
 // Constructor.
 
 #define quote(x) #x
+#define MAX_IOR_SIZE 512
 
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ (0),
@@ -54,7 +55,9 @@ int
 Cubit_Client::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:x");
-  int c,result;
+  int c;
+  char temp_buf[MAX_IOR_SIZE];
+  char *result = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -66,20 +69,21 @@ Cubit_Client::parse_args (void)
         loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'f':
-	cubit_factory_ior_file = ACE_OS::fopen (get_opts.optarg,"w");
-	if (cubit_factory_ior_file == 0)
+	cubit_factory_ior_file_ = ACE_OS::fopen (get_opts.optarg,"r");
+	if (cubit_factory_ior_file_ == 0)
 	  ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
-	result = ACE_OS::fscanf (cubit_factory_ior_file, "%s", cubit_key_);
-	if ( result < 0 )
+	result = ACE_OS::fgets (temp_buf,MAX_IOR_SIZE,cubit_factory_ior_file_);
+	if ( result == 0 )
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "Unable to read cubit_factory_ior from file %s: %p\n",
 			     get_opts.optarg), -1);
-	ACE_OS::fclose (cubit_factory_ior_file);
+	cubit_factory_key_ = ACE_OS::strdup (temp_buf);
+	ACE_OS::fclose (cubit_factory_ior_file_);
 	break;
       case 'k':
-        cubit_key_ = ACE_OS::strdup (get_opts.optarg);
+        cubit_factory_key_ = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'x':
         this->exit_later_++;

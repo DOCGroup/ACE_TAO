@@ -1,3 +1,8 @@
+Sun Feb 15 16:15:49 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -o <ior_output_file> 
+	option to output the cubit factory ior to a file.
+
 Sat Feb 14 22:39:46 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Logger/clnt.cpp (init): Added negative test case
