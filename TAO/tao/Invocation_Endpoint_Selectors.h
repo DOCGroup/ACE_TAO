@@ -9,7 +9,6 @@
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
@@ -28,73 +27,6 @@
 #include "tao/MProfile.h"
 
 class TAO_GIOP_Invocation;
-class TAO_Endpoint;
-class TAO_PrivateConnectionPolicy;
-class TAO_PriorityModelPolicy;
-class TAO_ClientProtocolPolicy;
-class TAO_PriorityBandedConnectionPolicy;
-
-// ****************************************************************
-
-/**
- * @class TAO_Endpoint_Selector_Factory
- *
- * @brief Factory for initializing <Endpoint_Selection_State> and
- * obtaining appropriate <Invocation_Endpoint_Selector>.
- *
- * Used by Invocation classes to intialize its endpoint selection
- * strategy and state based on the effective policies.
- * Endpoint selection strategies are stateless objects - all the
- * state they need is contained by Invocation in
- * <Endpoint_Selection_State>.  Thus, rather than allocating an
- * endpoint selection strategy object for each Invocation, the
- * factory simply returns the appropriate one from the
- * set preallocated in the ORB_Core.  One endpoint selection
- * strategy object can be used by many invocations concurrently.
- */
-class TAO_Export TAO_Endpoint_Selector_Factory
-{
-public:
-  /// Constructor.
-  TAO_Endpoint_Selector_Factory (void);
-
-  /// Destructor.
-  ~TAO_Endpoint_Selector_Factory (void);
-
-  /// Initialize Invocation's endpoint selection strategy and
-  /// state.
-  void get_selector (TAO_GIOP_Invocation *invocation,
-                     CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-
-private:
-
-  // = Helpers for <get_selector>.
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  /**
-   * Gets the appropriate selector if TAO_HAS_CLIENT_PRIORITY_POLICY
-   * is enabled. Also initializes endpoint selection state as
-   * necessary.   WARNING: TAO::Client_Pririority_Policy is
-   * deprecated.  See TAO RTCORBA documentation for more details.
-   */
-  void check_client_priority_policy (TAO_GIOP_Invocation *invocation,
-                                     CORBA::Environment &ACE_TRY_ENV);
-
-  /// Initializes RTCORBA::ClientProtocolPolicy in the endpoint
-  /// selection state.
-  void init_client_protocol (TAO_GIOP_Invocation *invocation,
-                             CORBA::Environment &ACE_TRY_ENV);
-
-  /// Initializes RTCORBA::PriorityBandsPolicy in the endpoint
-  /// selection state.
-  void init_bands (TAO_GIOP_Invocation *invocation,
-                   CORBA::Environment &ACE_TRY_ENV);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-};
 
 #if (TAO_HAS_RT_CORBA == 1)
 

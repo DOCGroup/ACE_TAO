@@ -63,6 +63,7 @@ OBJFILES = \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Endpoint.obj \
+	$(OBJDIR)\Endpoint_Selector_Factory.obj \
 	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Exception.obj \
 	$(OBJDIR)\Exclusive_TMS.obj \
@@ -154,6 +155,7 @@ OBJFILES = \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RequestInfo_Util.obj \
 	$(OBJDIR)\RT_Current.obj \
+	$(OBJDIR)\RT_Endpoint_Selector_Factory.obj \
 	$(OBJDIR)\RT_Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\RT_Mutex.obj \
 	$(OBJDIR)\RT_ORB.obj \

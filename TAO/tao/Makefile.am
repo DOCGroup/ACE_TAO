@@ -182,6 +182,8 @@ ORB_CORE_FILES = \
   GIOPC.cpp \
   TAO_Singleton_Manager.cpp \
   DLL_ORB.cpp \
+  Endpoint_Selector_Factory.cpp \
+  RT_Endpoint_Selector_Factory.cpp
 
 # Build a libtool library, libTAO.la for installation in libdir.
 lib_LTLIBRARIES = libTAO.la
@@ -404,7 +406,9 @@ HEADER_FILES = \
   qt_resource.h \
   rtcorbafwd.h \
   try_macros.h \
-  xt_resource.h
+  xt_resource.h \
+  Endpoint_Selector_Factory.h \
+  RT_Endpoint_Selector_Factory.h
 
 INLINE_FILES = \
   Acceptor_Impl.i \

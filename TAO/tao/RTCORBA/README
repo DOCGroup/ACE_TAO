@@ -1,9 +1,7 @@
-RTCORBA Subsetting Plan
+RTCORBA Subsetting Plan, Status, and Notes
 
 In this file, we're keeping track of the status of the subsetting
 of RTCORBA and its effect on TAO files.
-
-*******YOU ARE HEREBY WARNED******
 
 The steps of the subsetting process are the following:
 
@@ -85,11 +83,16 @@ examples/PluggableUDP/DIOP/DIOP_Profile
 GIOP
 ----
 tao/Invocation:
-tao/Invocation:
-tao/Invocation:
 tao/Invocation_Endpoint_Selectors:
-tao/RT_Invocation_Endpoint_Selectors
-tao/Private_Transport_Descriptor
+  Almost clean - some work will need to be done to handle the selector state
+
+tao/Private_Transport_Descriptor:
+
+clean:
+  tao/Endpoint_Selector_Factory:
+  tao/RT_Invocation_Endpoint_Selectors:
+  tao/RT_Endpoint_Selector_Factory:
+
 
 Other
 -----
@@ -110,3 +113,12 @@ Tests
 tests/Exposed_policies/*
 tests/RTCORBA/*
 
+
+---------------------------------------------------------------------------
+RTCORBA DLL registration hooks
+
+The purpose of this section is to document all of the hooks that the RTCORBA
+library needs to register.
+
+1.  Invocation Endpoint Selector Factory - currently hardcoded in a 
+    TAO_HAS_RT_CORBA block in ORB_Core.cpp

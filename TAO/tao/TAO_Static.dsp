@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -272,6 +272,10 @@ SOURCE=.\Encodable.h
 # Begin Source File
 
 SOURCE=.\Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 
@@ -652,6 +656,10 @@ SOURCE=.\Resource_Factory.h
 # Begin Source File
 
 SOURCE=.\RT_Current.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1643,6 +1651,10 @@ SOURCE=.\Endpoint.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Endpoint_Selector_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.cpp
 # End Source File
 # Begin Source File
@@ -1984,6 +1996,10 @@ SOURCE=.\Resource_Factory.cpp
 # Begin Source File
 
 SOURCE=.\RT_Current.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Endpoint_Selector_Factory.cpp
 # End Source File
 # Begin Source File
 
