@@ -1,6 +1,16 @@
+Thu Aug 28 08:21:24 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.h:
+	* tao/ObjectKey_Table.cpp:
+
+	  Moved "Object_KeyC.h" include to ObjectKey_Table.h.  The
+	  ObjectKey table's ACE_RB_Tree template declaration/typedef
+	  requires a complete type.  Fixes MSVC++ 6 builds.
+
 Thu Aug 28 07:41:58 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/Context.cpp:
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
 
 	  Include "tao/Environment.h" for CORBA::Environment type.
 
