@@ -1,0 +1,25 @@
+#!/bin/csh -f
+# All ATM tests: 64k socket Queue Size
+#
+# shorts
+run_test 67108864 128 $1 ./results/REMOTE/$1/sun-iiop.atm.64 s $2
+sleep 5
+# longs
+run_test 67108864 128 $1 ./results/REMOTE/$1/sun-iiop.atm.64 l $2 
+sleep 5
+# octets
+run_test 67108864 128 $1 ./results/REMOTE/$1/sun-iiop.atm.64 o $2
+sleep 5
+# doubles
+run_test 67108864 128 $1 ./results/REMOTE/$1/sun-iiop.atm.64 d $2
+sleep 5
+# chars
+#run_test 67108864 128 $1 ./results/REMOTE/$1/sun-iiop.atm.64 c $2
+#sleep 5
+# structures
+run_test 67108864 128 $1 ./results/REMOTE/$1/sun-iiop.atm.64 S $2
+sleep 5
+# Composite Structs
+#run_test 67108864 128 $1 ./results/REMOTE/$1/sun-iiop.atm.64 C $2
+#sleep 5
+#
