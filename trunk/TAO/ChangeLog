@@ -13,13 +13,14 @@ Thu Nov  6 17:58:21 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
 
-        Changed the application controlled membership test.
-        The test uses the Random load balancing strategy built in TAO
-        load balancer service.
-        Servers or members are added onto object groups. After
-        request invocations are made, application has to delete
-        those members from the object group. This is application
-        controlled membership.
+          Changed the application controlled membership test.
+          The test uses the Random load balancing strategy built in TAO
+          load balancer service.
+
+          Servers or members are added onto object groups. After
+          request invocations are made, application has to delete
+          those members from the object group. This is application
+          controlled membership.
 
 Thu Nov  6 14:13:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
