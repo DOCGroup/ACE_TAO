@@ -30,7 +30,7 @@
 
 
 /**
- * @class Map_Entry
+ * @class TAO_LB_ObjectGroup_Map_Entry
  *
  * @brief Value field of the ObjectGroup map.
  */
