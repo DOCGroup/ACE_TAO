@@ -780,9 +780,6 @@ ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 #endif /* ACE_HAS_THREADS */
 }
 
-// The following *printf functions aren't inline because
-// they use varargs.
-
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
@@ -852,6 +849,10 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 # endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_WINCE)
+
+// The following *printf functions aren't inline because
+// they use varargs.
+
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
