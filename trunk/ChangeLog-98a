@@ -1,6 +1,6 @@
 Mon Apr 06 01:29:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_ce.dsp: Update project files.  Rearrange dll filenames a
+	* ace/ace_ce_dll.dsp: Update project files.  Rearrange dll filenames a
 	  bit so that it's eaier to have various ACE libraries for various
 	  CE supported CPUs.  Files for every supported CPU are generated
 	  under CPU specific directory as follow:
