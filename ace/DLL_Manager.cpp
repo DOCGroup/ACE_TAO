@@ -174,7 +174,7 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
 
   void *sym =  ACE_OS::dlsym (this->handle_, auto_name.get ());
 
- // Linux says that the symbol could be null and that it isn't an error.
+  // Linux says that the symbol could be null and that it isn't an error.
   // So you should check the error message also, but since null symbols
   // won't do us much good anyway, let's still report an error.
   if (!sym && ignore_errors != 1)
@@ -223,8 +223,9 @@ ACE_DLL_Handle::error (void)
 {
   ACE_TRACE ("ACE_DLL_Handle::error");
   const ACE_TCHAR *error = ACE_OS::dlerror ();
-  ACE_TString *str = new ACE_TString (error ? error : ACE_LIB_TEXT ("no error"));
-  return auto_ptr <ACE_TString> (str);
+  auto_ptr<ACE_TString> str
+    (new ACE_TString (error ? error : ACE_LIB_TEXT ("no error")));
+  return str;
 }
 
 /******************************************************************/
