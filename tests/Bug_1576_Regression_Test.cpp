@@ -23,7 +23,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DLL dll;
 
-  char const dll_name[] = "NOT_A_DLL.so";
+  const ACE_TCHAR * dll_name = ACE_TEXT ("NOT_A_DLL.so");
 
   // Normally applications should check the return value, but if they
   // ignore it...
@@ -32,30 +32,30 @@ run_main (int, ACE_TCHAR *[])
   if(result == -1)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Load failed, as expected (%s)\n",
+                ACE_TEXT ("Load failed, as expected (%s)\n"),
                 dll.error ()));
   }
   else
   {
     ACE_ERROR((LM_ERROR,
-               "Success loading %s ? It should have failed!\n",
+               ACE_TEXT ("Success loading %s ? It should have failed!\n"),
                dll_name));
   }
 
   // ... and then use the DLL library, the program crashes (instead of
   // just getting an error ...
-  void * symbol = dll.symbol ("SHOULD_CRASH");
+  void * symbol = dll.symbol (ACE_TEXT ("SHOULD_CRASH"));
 
   if(symbol == 0)
   {
     ACE_DEBUG((LM_DEBUG,
-               "Symbol lookup failed, as expected (%s)\n",
+               ACE_TEXT ("Symbol lookup failed, as expected (%s)\n"),
                dll.error ()));
   }
   else
   {
     ACE_ERROR ((LM_ERROR,
-                "Found symbol ? It should have failed!\n"));
+                ACE_TEXT ("Found symbol ? It should have failed!\n")));
   }
 
   ACE_END_TEST;

@@ -1,3 +1,10 @@
+Thu Aug 28 22:29:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Don Hinton <dhinton@dresystems.com>
+	* tests/Bug_1576_Regression_Test.cpp:
+
+	  Updated to work in wchar builds.
+
 Thu Aug 28 07:57:33 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
