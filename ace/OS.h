@@ -5254,44 +5254,60 @@ public:
   // Constructor that initializes all the fields.
 
   // = Get/set the token rate in bytes/sec.
-  u_long token_rate (void);
+  u_long token_rate (void) const;
   void token_rate (u_long tr);
 
   // = Get/set the token bucket size in bytes.
-  u_long token_bucket_size (void);
+  u_long token_bucket_size (void) const;
   void token_bucket_size (u_long tbs);
 
   // = Get/set the PeakBandwidth in bytes/sec.
-  u_long peak_bandwidth (void);
+  u_long peak_bandwidth (void) const;
   void peak_bandwidth (u_long pb);
 
   // = Get/set the latency in microseconds.
-  u_long latency (void);
+  u_long latency (void) const;
   void latency (u_long l);
 
   // = Get/set the delay variation in microseconds.
-  u_long delay_variation (void);
+  u_long delay_variation (void) const;
   void delay_variation (u_long dv);
 
   // = Get/set the service type.
-  ACE_SERVICE_TYPE service_type (void);
+  ACE_SERVICE_TYPE service_type (void) const;
   void service_type (ACE_SERVICE_TYPE st);
 
   // = Get/set the maximum SDU size in bytes.
-  u_long max_sdu_size (void);
+  u_long max_sdu_size (void) const;
   void max_sdu_size (u_long mss);
 
   // = Get/set the minimum policed size in bytes.
-  u_long minimum_policed_size (void);
+  u_long minimum_policed_size (void) const;
   void minimum_policed_size (u_long mps);
 
   // = Get/set the time-to-live.
-  int ttl (void);
+  int ttl (void) const;
   void ttl (int t);
 
   // = Get/set the priority.
-  int priority (void);
+  int priority (void) const;
   void priority (int p);
+
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#else
+private:
+  u_long token_rate_;
+  u_long token_bucket_size_;
+  u_long peak_bandwidth_;
+  u_long latency_;
+  u_long delay_variation_;
+  ACE_SERVICE_TYPE service_type_;
+  u_long max_sdu_size_;
+  u_long minimum_policed_size_;
+  int ttl_;
+  int priority_;
+#endif
+
 };
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -5305,16 +5321,25 @@ class ACE_Export ACE_QoS
   //   information, which is used by IntServ (RSVP) and DiffServ.
 public:
   // = Get/set the flow spec for data sending.
-  ACE_Flow_Spec sending_flowspec (void);
+  ACE_Flow_Spec sending_flowspec (void) const;
   void sending_flowspec (const ACE_Flow_Spec &fs);
 
   // = Get/set the flow spec for data receiving.
-  ACE_Flow_Spec receiving_flowspec (void);
+  ACE_Flow_Spec receiving_flowspec (void) const;
   void receiving_flowspec (const ACE_Flow_Spec &fs);
 
   // = Get/set the provider specific information.
-  iovec provider_specific (void);
+  iovec provider_specific (void) const;
   void provider_specific (const iovec &ps);
+  
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#else
+private:
+  
+  ACE_Flow_Spec sending_flowspec_;
+  ACE_Flow_Spec receiving_flowspec_;
+#endif
+
 };
 
 class ACE_Export ACE_QoS_Params

@@ -1,3 +1,11 @@
+Tue Dec 14 07:49:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.i:
+	* ace/OS.h: Extended the ACE_Flow_Spec and ACE_QoS classes to 
+ 	  accommodate the use of such classes for non-Win32
+	  platforms. These changes are motivated by the new ACE QoS
+	  classes that will soon be included with ACE.
+
 Mon Dec 13 16:23:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.{h,cpp}: Made print_alignment_info available for all
