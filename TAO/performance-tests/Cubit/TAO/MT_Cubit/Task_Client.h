@@ -42,7 +42,7 @@
 # include "pccTimer.h"
 #endif /* CHORUS */
 
-#if defined(ACE_HAS_EXCEPTIONS)
+#if defined(ACE_HAS_EXCEPTIONS) && !defined (__KCC)
   // Some plaforms define an exception structure in math.h...
 # if defined (__GNUG__)
     // And some compilers have this workaround.  Disable it with this
