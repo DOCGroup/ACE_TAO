@@ -1,31 +1,37 @@
+Sun Mar 11 21:00:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Print out the config.h and platform_macros.GNU files, this is
+          useful when debugging builds.
+
 Sun Mar 11 18:41:08 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/CDR_Stream.h: Updated a comment to clarify that the buffer()
-	  method just returns a pointer to the first block in the chain. 
-	  Thanks to Johnny Willemsen for pointing this out.
+        * ace/CDR_Stream.h: Updated a comment to clarify that the buffer()
+          method just returns a pointer to the first block in the chain.
+          Thanks to Johnny Willemsen for pointing this out.
 
 Sun Mar 11 17:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Local_Name_Space_T.cpp: Fixed a compiler error on Win32
-	  Unicode platforms. 
+        * ace/Local_Name_Space_T.cpp: Fixed a compiler error on Win32
+          Unicode platforms.
 
 Sun Mar 11 17:28:40 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/QoS/QoS_Session_Impl.cpp (rsvp_callback): <errflags> was unused.
+        * ace/QoS/QoS_Session_Impl.cpp (rsvp_callback): <errflags> was unused.
 
 Sun Mar 11 08:31:05 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Makefile.bor (NAMES): Added Logging_Strategy_Test.
+        * tests/Makefile.bor (NAMES): Added Logging_Strategy_Test.
 
 Sun Mar 11 07:32:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp (order): Fixed a warning in g++
-	  builds.  
+        * tests/Logging_Strategy_Test.cpp (order): Fixed a warning in g++
+          builds.
 
 Sat Mar 10 23:15:10 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* bin/auto_run_tests.lst:
-	  Fixed name of Crashed_Callback test
+        * bin/auto_run_tests.lst:
+          Fixed name of Crashed_Callback test
 
 Sat Mar 10 19:28:30 PST 2001 Mayur Deshpande <mayur@ics.uci.edu>
 
@@ -38,7 +44,7 @@ Sat Mar 10 19:05:38 2001  Darrell Brunsch <brunsch@uci.edu>
         * ace/config-win32.h:
 
           Include config-win32-common.h even on Windows CE.
-        
+
         * ace/config-win32-msvc-6.h:
 
           If ACE_ENDTHREADEX is already defined, don't define it.
@@ -62,7 +68,7 @@ Sat Mar 10 19:05:38 2001  Darrell Brunsch <brunsch@uci.edu>
           files go into Release/PLATFORM and Debug/PLATFORM (where
           PLATFORM = MIPS/ARM/X86EM/SH3/SH4).  The *.lib files go
           into ../Lib/PLATFORM and the *.dll into ../bin/PLATFORM.
-          Also, the DLL's were renamed from ace_dll.dll and 
+          Also, the DLL's were renamed from ace_dll.dll and
           ace_os_dll.dll to ace[d].dll and ace_os[d].dll.
 
         * bin/pippen.pl:
@@ -74,9 +80,9 @@ Sat Mar 10 19:05:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Mar 10 16:59:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ACE-INSTALL.html:
-	  Remove references to the now obsolete config-linux-lxpthreads.h
-	  and platform_linux_lxpthread.GNU 
+        * ACE-INSTALL.html:
+          Remove references to the now obsolete config-linux-lxpthreads.h
+          and platform_linux_lxpthread.GNU
 
 Sat Mar 10 16:38:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 

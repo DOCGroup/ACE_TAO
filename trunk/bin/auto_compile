@@ -344,6 +344,26 @@ chop;
 print LOG "TAO ChangeLogTag:", $_, "\n";
 close (CHLOG);
 
+print LOG "================ ace/config.h ================\n";
+open (CONFIG, "build/$BUILD/ace/config.h")
+  || mydie "cannot open ace/config.h";
+while (<CONFIG>) {
+  chop;
+  print LOG $_, "\n";
+}
+close (CONFIG);
+print LOG "================ ace/config.h ================\n";
+
+print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
+open (CONFIG, "build/$BUILD/include/makeinclude/platform_macros.GNU")
+  || mydie "cannot open include/makeinclude/platform_macros.GNU";
+while (<CONFIG>) {
+  chop;
+  print LOG $_, "\n";
+}
+close (CONFIG);
+print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
+
 $date = localtime;
 print LOG "$CMD: starting clone at ", $date, "\n";
 open(CLONE, "perl bin/create_ace_build -a -v $BUILD 2>&1 |")
