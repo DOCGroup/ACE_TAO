@@ -1,3 +1,20 @@
+Wed Oct 28 14:30:01 1998  Rainer Blome <rainer_blome@de.ibm.com>
+
+        * ace/Makefile: added AIX_TEMPLATE_HACK support.
+          This patch helps using Rob Jordan's trick described in the
+          ACE-INSTALL file.  The existing description in the ACE-INSTALL
+          is a little misleading.  Creating a ACE_All_Tmp.h will not
+          really help, because the Makefile will look for a ACE_All_Tmp.cpp.
+
+          Here's how to use the patch:
+
+          Use `make ACE_All' to create 0_ACE_All_Src.h, 0_ACE_All_Src.cpp and
+          0_ACE_All_Tmp.cpp.  These files contain include directives for each
+          of the files mentioned in the makefile variables FILES and
+          TEMPLATE_FILES.  Then `make AIX_TEMPLATE_HACK=1' to compile the
+          library in one go.  Compilation is fast then, but `ar' will still
+          take a long time.
+
 Wed Oct 28 09:13:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: expanded discussion of non-static
