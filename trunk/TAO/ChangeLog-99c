@@ -1,3 +1,16 @@
+Wed Mar 17 23:39:44 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
+	1) Made the server send only 1 reply in response to multicast,
+	since the client (ORB.cpp) was modified to use multiple attempts,
+	i.e., it's the responsibility of the client to attempt to insure
+	'reliability', server just replies ones.
+	2) If replying to a multicast fails, the multicast handler is
+	*not* deregistered from the reactor, unless we get some really bad
+	errno.  This needs to be further refined.  This fixes the bug on
+	Linux servers of multicast not working properly.
+
+
 Wed Mar 17 22:53:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp: Phase one of the new POA design is complete.
