@@ -26,7 +26,6 @@
 
 #include "ace/Event_Handler.h"
 
-#define ACE_Component ACE_Service_Object
 class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Shared_Object
 {
   // = TITLE

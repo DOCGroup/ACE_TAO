@@ -198,8 +198,34 @@ ACE_Process_Manager::open (size_t size,
   if (r)
     {
       ACE_Event_Handler::reactor (r);
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
-      // Register signal handler object.
+#if !defined(ACE_WIN32) && !defined (ACE_PSOS)
+      // (No signals for child-exited on Win32) Assign the
+      // Process_Manager a dummy I/O descriptor.  Note that even
+      // though we open this file "Write Only" we still need to use
+      // the ACE_Event_Handler::NULL_MASK when registering this with
+      // the ACE_Reactor (see below).
+      this->dummy_handle_ = ACE_OS::open (ACE_DEV_NULL,
+                                          O_WRONLY);
+      ACE_ASSERT (this->dummy_handle_ != ACE_INVALID_HANDLE);
+#if defined (F_SETFD)
+      // Don't want children to inherit the dummy I/O handle!
+      ACE_OS::fcntl (this->dummy_handle_, F_SETFD, 1);
+#endif /* F_SETFD */
+
+      // Register signal handler object.  Note that NULL_MASK is used
+      // to keep the ACE_Reactor from calling us back on the
+      // "/dev/null" descriptor.  NULL_MASK just reserves a "slot" in
+      // the Reactor's internal demuxing table, but doesn't cause it
+      // to dispatch the event handler directly.  Instead, we use the
+      // signal handler to do this.
+      if (reactor ()->register_handler
+          (this,
+           ACE_Event_Handler::NULL_MASK) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n%a",
+                    "register_handler",
+                    1));
+
       if (reactor ()->register_handler
           (SIGCHLD, this) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -209,7 +235,7 @@ ACE_Process_Manager::open (size_t size,
 #endif  // !defined(ACE_WIN32) && !defined (ACE_PSOS)
     }
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->max_process_table_size_ < size)
     this->resize (size);
@@ -224,6 +250,9 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
     process_table_ (0),
     max_process_table_size_ (0),
     current_count_ (0),
+#if !defined(ACE_WIN32)
+    dummy_handle_ (ACE_INVALID_HANDLE),
+#endif // !defined(ACE_WIN32)
     default_exit_handler_ (0)
 #if defined (ACE_HAS_THREADS)
   , lock_ ()
@@ -253,7 +282,7 @@ ACE_Process_Manager::close (void)
     }
 #endif /*  !ACE_WIN32  */
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->process_table_ != 0)
     {
@@ -302,6 +331,11 @@ ACE_Process_Manager::handle_input (ACE_HANDLE)
   return 0;
 }
 
+ACE_HANDLE
+ACE_Process_Manager::get_handle (void) const
+{
+  return this->dummy_handle_;
+}
 #endif /* !ACE_WIN32 */
 
 // On Unix, this routine is called asynchronously when a SIGCHLD is
@@ -327,7 +361,7 @@ ACE_Process_Manager::handle_signal (int,
       if (status != STILL_ACTIVE)
         {
           {
-            ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, lock_, -1));
+            ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1));
 
             ssize_t i = this->find_proc (proc);
             pid_t pid = i != -1
@@ -353,9 +387,10 @@ ACE_Process_Manager::handle_signal (int,
     }
 #else /* !ACE_WIN32 */
   ACE_UNUSED_ARG (si);
-  return reactor ()->notify
-    (this,
-     ACE_Event_Handler::READ_MASK);
+  return reactor ()->ready_ops
+    (this->dummy_handle_,
+     ACE_Event_Handler::READ_MASK,
+     ACE_Reactor::ADD_MASK);
 #endif /* !ACE_WIN32 */
 }
 
@@ -363,7 +398,7 @@ int
 ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
                                        pid_t pid)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (pid == ACE_INVALID_PID)
     {
@@ -388,6 +423,21 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
       (ACE_INVALID_HANDLE,
        0);
   proc_desc.exit_notify_ = eh;
+  return 0;
+}
+
+int
+ACE_Process_Manager::handle_close (ACE_HANDLE handle,
+                                   ACE_Reactor_Mask)
+{
+  ACE_TRACE ("ACE_Process_Manager::handle_close");
+  ACE_UNUSED_ARG (handle);
+
+#if !defined (ACE_WIN32)
+  ACE_ASSERT (handle == this->dummy_handle_);
+
+  ACE_OS::close (dummy_handle_);
+#endif /* ACE_WIN32 */
   return 0;
 }
 
@@ -422,7 +472,7 @@ ACE_Process_Manager::spawn (ACE_Process *process,
       || pid == 0)
     return pid;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
                             ace_mon, this->lock_, -1));
 
   if (this->append_proc (process) == -1)
@@ -522,7 +572,7 @@ ACE_Process_Manager::remove (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::remove");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ssize_t i = this->find_proc (pid);
 
@@ -578,7 +628,7 @@ ACE_Process_Manager::terminate (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::terminate");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if they're already
   // registered...
@@ -607,7 +657,7 @@ ACE_Process_Manager::terminate (pid_t pid,
 {
   ACE_TRACE ("ACE_Process_Manager::terminate");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if they're already
   // registered...
@@ -725,7 +775,7 @@ ACE_Process_Manager::wait (pid_t pid,
   ssize_t idx = -1;
   ACE_Process *proc = 0;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (pid != 0)
     {

@@ -16,11 +16,9 @@
 //
 // ==========================================================================
 
-
-#include "ace/SSL/SSL_Context.h"
-
 #if defined (ACE_HAS_SSL)
 
+#include "ace/SSL/SSL_Context.h"
 #include "ace/SSL/sslconf.h"
 
 #if !defined(__ACE_INLINE__)

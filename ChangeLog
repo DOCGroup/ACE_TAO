@@ -1,737 +1,19 @@
-Mon Jul 31 22:51:11 2000  Balachandran  <bala@cs.wustl.edu>
-
-        * ACE version 5.1.6 released.
-
-Sat Jul 29 08:41:48 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * tests/Makefile: don't build CDR_Array_Test with
-          ACE_HAS_GNUG_PRE_2_8.   Build it on LynxOS >= 3.1.0.
-
-Fri Jul 28 15:58:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
-
-        * bin/pace_components:
-          Deleting from CVS since it is being melded into
-          bin/ace_components.
-
-        * bin/ace_components:
-          Adding commands for pace.
-
-        * include/makeinclude/wrapper_macros.GNU:
-          For PACE, modified so that it doesn't include the PACE
-          library if we are inlining.
-
-Fri Jul 28 12:46:54 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * tests/run_tests.lst: disabled SOCK_Send_Recv_Test,
-          Thread_Pool_Test, Cached_Conn_Test, and Process_Strategy_Test
-          on LynxOS.  The work on LynxOS 3.0.0 x86, but not
-          on our LynxOS 3.1.0 PPC (maybe because it runs out of
-          resources?).
-
-Fri Jul 28 11:12:39 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * tests/Thread_Mutex_Test.cpp (spawn): use 3 threads instead
-          of 4 (ACE_MAX_THREADS) on LynxOS, otherwise the test doesn't
-          seem to terminate.
-
-Fri Jul 28 10:47:27 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * bin/ace-install: added this handy build+install script.
-          Thanks to Eric Mitchell <emitchell@altaira.com> for
-          initially authoring the script, and to Chad Elliott
-          <elliott_c@ociweb.com> for converting it from tcsh to
-          Bourne sh.
-
-Fri Jul 28 10:39:17 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * tests/Reader_Writer_Test.cpp (n_iterations): use
-          default value of 25 instead of 50 on LynxOS as well
-          as on VxWorks, so the test runs in a reasonable period
-          of time (under 1.5 seconds on a 266 MHz PPC).
-
-Fri Jul 28 10:34:01 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * test/Semaphore_Test.cpp (ACE_ALLOWED_SLACK): set
-          to 1100 if ACE isn't using a high resolution timer,
-          such as on LynxOS/PPC.
-
-Fri Jul 28 10:23:03 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * Makefile (DIRS, CLONE, CONTROLLED_FILES, RELEASE_LIB_FILES):
-          added PACE, so that it will be in ACE 5.1.6.
-
-Fri Jul 28 07:42:50 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * tests/Makefile: build CDR_Array_Test, even on LynxOS.
-          It builds and runs successfully on LynxOS 3.1.0.
-
-Fri Jul 28 00:23:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/OS.h
-          Slightly modified semaphore code for pace.
-
-        * ace/OS.i
-          Updated cond_timedwait in ACE_HAS_PACE to
-          initialize name_ to null.
-
-          Linux uses native gettimeofday.
-
-        * docs/ACE-SSL.html
-          Updated with new information about obtaining ACE+SSL.
-
-Thu Jul 27 18:03:24 2000  Luther J Baker  <luther@cs.wustl.edu>
-
-        * include/makeinclude/platform_linux_lxpthread.GNU:
-
-          Updated to include the current correct platform_linux.GNU.
-
-Thu Jul 27 18:17:36 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/Future.h: Added some comments to ACE_Future_Rep<>::set and
-          ACE_Future<>::set to say they only have an effect on the first
-          call for that object. Thanks to Andres Kruse <Andres.Kruse@cern.ch>,
-          Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
-          John Tucker <jtucker@infoglide.com> for their insight on the
-          original intentions.
-
-Thu Jul 27 08:32:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/OS.i
-          Qualified two pace functions with the correct
-          pace_ name. Added preliminary pace implementation
-          for ACE_OS::gettimeofday. See PACE/ChangeLog for
-          other changes relevant to ACE_OS compiled with pace.
-
-Wed Jul 26 18:08:11 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * ace/Log_Record.cpp
-        * ace/ACE.cpp
-        * ace/Handle_Set.cpp
-        * ace/Capabilities.{cpp, h}
-          Cosmetic changes required for split-cpp.
-
-Wed Jul 26 13:20:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
-
-        * ace/Cached_Connect_Strategy_T.h
-        (ACE_Bounded_Cached_Connect_Strategy): Added a typedef member
-        which I assumed wrongly would be inherited from the superclass.
-
-Tue Jul 25 22:41:53 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/Log_Msg.cpp (ACE_Log_Msg::log): Replace use of C++ 'true'
-          value with '1' so old compilers still work.
-
-Tue Jul 25 22:35:31 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/Future.cpp (ACE_Future_Rep<T>::set): If two threads compete
-          to set the value, make sure only one notifies waiters. Thanks to
-          Joseph Weihs <yossi@bandwiz.com> for this fix.
-
-Tue Jul 25 20:27:26 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * ace/Naming_Context.cpp:
-          Cosmetic change required for split-cpp.
-
-Tue Jul 25 18:20:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * include/makeinclude/wrapper_macros.GNU:
-          Changed pace=1 code to check for inline=1, and
-          include libPACE correctly.
-
-Tue Jul 25 16:42:02 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * ace/Logging_Strategy.cpp:
-          Changed #include "Logging_Strategy.h" to
-                  #include "ace/Logging_Strategy.h"
-
-Tue Jul 25 16:12:31 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * ace/Log_Msg.h:
-          More cosmetic changes, similar to previous ChangeLog entry.
-
-Tue Jul 25 15:58:27 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * ace/Capabilities.{h, cpp}:
-        * ace/Filecache.cpp:
-          More fixes to allow to be used by $ACE_ROOT/bin/split-cpp.
-          These changes are merely cosmetic.
-
-Tue Jul 25 13:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
-
-        * ace/Cached_Connect_Strategy_T.{h, cpp}: Added
-        ACE_Bounded_Cached_Connect_Strategy which provides a bound on the
-        cache which is checked before creating new handlers. Thanks to
-        Edan Ayal  <edana@bandwiz.com> for contributing this class and
-        Susan Liebeskind  <shl@janis.gtri.gatech.edu> for brainstorming
-        about it.
-
-Tue Jul 25 05:46:29 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Log_Msg.cpp (log): Optimized the check to make sure that
-          ACE_Log_Msg isn't too long.  Now we can keep it in "non-debug" code!
-          Thanks to Tomer for this suggestion.
-
-Mon Jul 24 22:49:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/OS_String.inl
-
-          The emulation functions still need system libraries,
-          which were not being included when ace was enabled.
-
-Mon Jul 24 21:22:03 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * ace/Remote_Tokens.cpp:
-        * ace/Signal.{cpp,h}:
-        * ace/Priority_Reactor.cpp:
-        * ace/Object_Manager.{cpp,h}:
-        * ace/OS.cpp:
-        * ace/Parse_Node.{cpp,h}:
-
-          The script $ACE_ROOT/bin/split-cpp makes some assumptions about the
-          source code that it is working with. These changes allow split-cpp
-          to be used with ACE. These fixes are all mostly code formatting changes.
-          The functionality should not be changed in any case.
-
-Mon Jul 24 20:21:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * include/makeinclude/wrapper_macros.GNU
-        * include/makeinclude/rules.local.GNU
-        * include/makeinclude/rules.lib.GNU
-          Added support for make split=1 which will use the split-cpp script
-          when compiling. This should be considered an extremely beta,
-          use-at-your-own-risk feature for the time being.
-
-Mon Jul 24 20:13:59 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * bin/split-cpp:
-          Initial check-in. This script is used to split up C++ source files
-          into smaller C++ source files, each containing one static data
-          declaration or one function definition. For more information, see
-          the comments at the top of the file.
-
-Mon Jul 24 20:02:03 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Process_Manager: Replaced ACE_Thread_Mutex with
-          ACE_Recursive_Thread_Mutex to avoid nasty self-deadlocks!
-          Thanks to Tom Arbuckle's <arbuckle@uran.informatik.uni-bonn.de>
-          for reporting this.
-
-        * ace/Log_Msg.cpp (log): Added a sanity check to make sure that
-          long messages don't corrupt the memory.  Thanks to Tomer
-          Amiaz <Tomer@bandwiz.com> for contributing this.
-
-Mon Jul 24 14:03:59 2000  Chad Elliott  <elliott_c@ociweb.com>
-        * include/makeinclude/platform_vxworks5.x_g++.GNU
-
-          Added the PENTIUM and PENTIUMPRO CPU's for x86 VxWorks.
-
-Mon Jul 24 10:30:35 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
-
-        * OS_Dirent.inl: Added the deletion of the DIR.directory_name_
-          and the DIR struct itself for the Win32 emulation.
-
-Sat Jul 22 22:10:35 2000  Marina Spivak  <marina@cs.wustl.edu>
-
-        * config-win32-common.h
-        * config-win32-visualage.h:
-
-          By default WIN32 has FD_SETSIZE of 64, which places the limit
-          between 61 and 64 on the number of clients a server using the
-          Select Reactor can support at the same time (i.e., 64 - standard
-          in, out, error).  Raised the limit to 1024.
-
-Fri Jul 21 21:24:09 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * ace/Parse_Node.cpp: Updated the ACE_Object_Name and
-          ACE_Function_Node constructors to use the new ACE::ldname()
-          method rather than ACE::strnew().  Thanks to Chris Kohlhoff for
-          this fix.
-
-        * ace/ACE.cpp: Added a new method called ACE::ldname() so that
-          dynamic loading performed by the service configurator work the
-          same with BCB as with other compilers. With BCB, exported
-          functions from a DLL all have a "_" prepended. Previously you
-          had to explicitly add the "_" into the svc.conf or when you
-          called ACE_Service_Config::process_directive. This change
-          removes that need and makes BCB stuff source/config compatible
-          with other compilers. This change was prompted by Lothar
-          Werzinger <werzinger.lothar@krones.de> and was provided by
-          Christopher Kohlhoff <chris@kohlhoff.com>.
-
-Fri Jul 21 19:22:20 2000  Carlos O'Ryan  <coryan@uci.edu>
-
-        * bin/auto_compile:
-          Use a .txt extension instead of .log for the log files, that
-          makes it possible to view them in web browsers without
-          downloading.
-
-Fri Jul 21 14:46:37 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
-
-        * ace/QoS_Decorator.h: Added ACE_Export for decorator classes for
-          WinNT.
-        * ace/QoS_Decorator.cpp: Removed an extra semi-colon.
-
-Fri Jul 21 09:11:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Process_Manager: Updated the documentation to reflect the recent
-          change in the notify() implementation.
-
-Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
-
-        * examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
-        * examples/IPC_SAP/SSL_SAP/SSL-server.dsp:
-
-          Fixed up the include paths in these projects.
-
-Fri Jul 21 00:29:38 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
-
-        * examples/QOS/Receiver_QoS_Event_Handler.h:
-        * examples/QOS/Receiver_QoS_Event_Handler.cpp: Added this event
-          handler to handle QoS and socket data for the receiver.
-
-        * examples/QOS/Sender_QoS_Event_Handler.h:
-        * examples/QOS/Sender_QoS_Event_Handler.cpp: Added this event
-          handler to handle QoS and socket data for the Sender.
-
-        * examples/QOS/QoS_Util.h:
-        * examples/QOS/QoS_Util.cpp: This class provides utility funtions
-          like parsing QoS parameters for the QoS enabled applications.
-
-        * examples/QOS/QoS_Signal_Handler.h:
-        * examples/QOS/QoS_Signal_Handler.cpp: Used to gracefully close
-          QoS sessions and shutdown RSVP signalling.
-
-        * examples/QOS/FlowSpec_Dbase.h: Provides a name-Flowspec mapping
-          for the standard QoS flowspecs like g711. Typical QoS flowspecs
-          required for different video encoding/decoding schemes can be
-          listed here.
-
-        * examples/QOS/Fill_ACE_QoS.h:
-        * examples/QOS/Fill_ACE_QoS.cpp: This class helps users to add
-          new flow specs and provides utility functions for filling up the
-          flow specs for simplex/duplex sessions.
-
-        * examples/QOS/server.cpp: QoS enabled receiver application.
-        * examples/QOS/client.cpp: QoS enabled sender application.
-
-        * examples/QOS/Makefile:
-        * examples/QOS/README
-        * examples/QOS/QOS.dsw:
-        * examples/QOS/client.dsp:
-        * examples/QOS/server.dsp: Updated these files to reflect changes
-          to the test. The above test demonstrates the use of various
-          aspects of AQoSA (ACE QoS API).
-
-Thu Jul 20 23:04:30 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/Thread_Manager.cpp
-        * ace/OS_String.inl
-          Added pace functionality.
-
-Thu Jul 20 18:28:43 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * ace/SV_Message_Queue: Made the get_id() method const.  Thanks
-          to Mike Winter for suggesting this.
-
-        * ace/Typed_SV_Message_Queue: Added a get_id() accessor.  Thanks
-          to Mike Winter <Mike.Winter@Schwab.com> for reporting this.
-
-Thu Jul 20 14:19:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Thread_Manager.h: Updated the comments on the various *kill*()
-          methods to clarify what they do and where they are not portable.
-          Thanks to Steve Huston for motivating this.
-
-Thu Jul 20 11:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
-        * ace/Caching_Utility_T.cpp: To get rid of egcs warnings on Linux,
-        static casted both fields of ACE_MAX in method <clear_cache>.
-        Thanks to David Levine <levine@cs.wustl.edu> for pointing this
-        out. Also changed ssize_t to size_t in the cast.
-
-Thu Jul 20 08:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/OS.i: Rearranged some code so that the operator *=
-          and the ACE_Time_Value copy constructor appear in the right
-          order...  Thanks to David for reporting this.
-
-Wed Jul 19 22:51:42 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/OS.i (ACE_OS::cond_timedwait): For pSOS, convert absolute
-          time value to relative, expressed in ticks. Account for pSOS
-          behavior on timeout - returns with mutex unlocked. Thanks to
-          Sarmeesha Reddy <sarmeesha@bigfoot.com> for this fix.
-
-Wed Jul 19 19:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
-        * ace/Caching_Utility_T.cpp: Rectified a typo made in method
-        <clear_cache>.
-
-Wed Jul 19 17:12:50 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/OS.h
-        * ace/OS.i
-          Wrapped most pace calls with ACE_OSCALL to handle EINTR
-          correctly, minor corrections and adjustments to pace
-          functions.
-
-Wed Jul 19 16:50:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
-        * ace/Caching_Utility_T.cpp: Changed the formula to calculate the
-        <entries_to_remove> as per the contribution by Edan Ayal
-        <edana@bandwiz.com>. Thanks to Edan for discovering this bug and
-        contributing the solution for it.
-
-Wed Jul 19 08:40:10 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * ace/OS.i: Moved the new operator *= so that it's *after*
-          the inlined sec() and usec() members.
-
-Tue Jul 18 23:30:59 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/OS.h
-
-          Modified earlier changes to improve support for LynxOS
-          signals using pace.
-
-        * ace/ACE.cpp
-        * ace/OS_Memory.h
-
-          Use pace system calls instead of regular calls
-          when pace is enabled.
-
-Tue Jul 18 12:55:55 2000  Joe Hoffert  <joeh@cs.wustl.edu>
-
-        * include/makeinclude/platform_lynxos.GNU:
-          Added PACE_SYSVER assignment to distinguish different
-          versions of LynxOS in the future.
-
-Mon Jul 17 23:44:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
-
-        * ace/Makefile (OTHER_FILES): Moved SOCK_Dgram_Mcast_QoS to the
-          other files category. It really belongs to a separate category
-          that I'll create later.
-
-Mon Jul 17 12:41:25 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
-
-        * ace/Log_Msg.cpp (LOCAL_EXTERN_PREFIX):
-
-        Changed #define LOCALEXTERN_PREFIX to #define LOCAL_EXTERN_PREFIX
-
-Mon Jul 17 05:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Process_Manager.cpp (open): Zapped a stray register_handler()
-          call that was mistakenly left around during the recent merge.
-          Thanks to Darrell Brunsch for reporting this.
-
-Sun Jul 16 18:53:42 2000  Darrell Brunsch  <brunsch@uci.edu>
-
-        * ace/TTY_IO:  Removed the #define for ACE_BUILD_DLL, since it
-          is already defined in the .dsp file.
-
-Sun Jul 16 19:36:17 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
-
-        * ace/QoS_Session.h:
-        * ace/QoS_Session_Impl.{cpp,h,i}:
-        * ace/SOCK_Dgram_Mcast_QoS.cpp: Changed these files to accomodate
-          the new QoS decorator classes.
-
-        * ace/QoS_Decorator.{cpp,h}: Added the QoS decoration for the
-          ACE_Event_Handler that enables it to catch the RAPI events along
-          with the usual socket events.
-
-Sun Jul 16 08:49:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/OS: Added multiplication operators to ACE_Time_Value.  Thanks
-          to Tomer Amiaz <Tomer@bandwiz.com> for contributing these.
-
-        * ace/Process_Manager: To fix deadlocks with the Process_Manager
-          on UNIX applied the following fixes:
-
-          Use the notify() capability of the reactor from the signal
-          handler. This allows the signal handler to notify the reactor
-          (over a pipe) that the signal should be processed. This is done
-          completely without MT locks.  If
-          ACE_HAS_REACTOR_NOTIFICATION_QUEUE is defined,
-          ACE_Select_Reactor_Notify::notify_queue_lock_ is now made a
-          recursive mutex.
-
-          Thanks to Roger Larsson <larssoro@hotmail.com> for contribution
-          these fixes.
-
-        * ace/TTY_IO: Added additional support for the ACE serial line I/O
-          wrapper facades.  Thanks to Martin Stack <mstack@cambertx.com>
-          for contribution this.
-
-        * ace/Service_Repository.h,
-        * ace/Service_Object.h,
-        * ace/Service_Config.h: Added the following aliases:
-
-          #define ACE_Component ACE_Service_Object
-          #define ACE_Component_Config ACE_Service_Config
-          #define ACE_Component_Repository ACE_Service_Repository
-
-          to be consistent with the terminology in the POSA2 book.
-
-Fri Jul 14 19:31:39 2000  Eric Ding  <qnd1@cs.wustl.edu>
-
-        * ace/config-linux.h
-        * ace/config-linux-lxpthreads.h
-        * include/makeinclude/platform_linux.GNU
-        * include/makeinclude/platform_linux_lxpthreads.GNU
-
-        Changing the default config/platform setting to thread enable on Linux
-
-Fri Jul 14 19:03:49 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * include/makeinclude/wrapper_macros.GNU:
-          Added -DPACE_HAS_ALL_POSIX_FUNCS to the pace flag.
-
-        * ace/OS.h:
-          Changed typedef of ACE_SignalHandler on LynxOS to
-          use pace_sig_pf when pace is enabled. Also changed
-          SIG_IGN accordingly.
-
-Fri Jul 14 17:25:29 2000  Steve Huston  <shuston@riverace.com>
-
-        * tests/UNIXserver.conf:
-        * tests/UNIXclerk.conf:
-        * tests/UNIXtokens.conf:
-        * tests/Win32server.conf:
-        * tests/Win32clerk.conf:
-        * tests/Win32tokens.conf: Look for _make_ACE_Logging_Strategy in
-          ACE, not netsvcs. It was moved there recently.
-
-Fri Jul 14 12:00:26 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/Log_Msg.h (ACE_Log_Msg): Replaced class comments with some new
-          text submitted by Jerry D. DeMaster <jdemaster@ritesolutions.com>
-          that explain the per-thread and per-process logging enablement
-          clearly.
-
-Fri Jul 14 00:28:07 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/OS.i
-
-          Updates to srand and qsort to eliminate return (for pace).
-
-Thu Jul 13 20:25:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ACE-INSTALL.html: Updated this file to reflect current reality
-          wrt Borland C++.  Thanks to Christopher Kohlhoff
-          <chris@kohlhoff.com> for reporting this.
-
-Thu Jul 13 16:34:36 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * include/makeinclude/wrapper_macros.GNU:
-
-          Added 'pace' flag to use pace as the underpinnings
-          of ACE_OS.
-
-Thu Jul 13 14:50:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-        * ace/OS.h: Undid the change
-          Mon Jun 19 17:33:28 2000  Douglas C. Schmidt
-
-          This was creating problems in the IRIX builds. Moreover this
-          also busted the 'thread-per-connection' strategy in TAO. The
-          change actually removed a conditional check. I have added that
-          back. Thanks to Nanbor Wang for guiding me through this.
-
-Thu Jul 13 14:41:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
-
-        * ace/OS.i:
-
-          Minor updates to PACE functions which used to use
-          double parenthesis.
-
-Thu Jul 13 12:58:26 2000  Ossama Othman  <ossama@uci.edu>
-
-        * ace/SSL/ACE_SSL.dsp:
-
-          Added `SSL_Export.h' to the list of headers.
-
-        * ace/SSL/SSL_Context.cpp:
-
-          Moved preprocessor conditional that checks if ACE_HAS_SSL is
-          defined after the inclusion of SSL_Context.h.  This fixes a link
-          error that occurs when ACE_HAS_SSL is defined in the config
-          header instead of on the command line.
-
-Thu Jul 13 10:55:44 2000  David L. Levine <levine@cs.wustl.edu>
-
-        * ace/Makefile: changed ssl check from ifneq null to
-          ifeq 1, to allow ssl = 0.
-
-Thu Jul 13 10:10:54 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Makefile: move ssl check to after include of wrapper_macros.GNU,
-          so that ssl=1 can be set in platform_macros.GNU.
-
-Thu Jul 13 09:33:45 2000  Ossama Othman  <ossama@uci.edu>
-
-        * ace/SSL/SSL_SOCK_Stream.i (send, recv):
-
-          Fixed typos where size of buffer being sent/received was passed
-          to the OpenSSL SSL_get_error() function, instead of the return
-          status of the SSL_write()/SSL_read() call.  This will fix
-          some broken error handling.
-          Reported by Craig Perras <cperras@watchguard.com>
-
-Thu Jul 13 07:55:41 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * docs/ACE-guidelines.html: added general guideline to not
-          end text lines with spaces, and the .emacs incantation
-          that removes them.  Thanks to Craig Rodrigues <crodrigu@bbn.com>
-          for suggesting this addition, which we already check for
-          when committing to our CVS repository.
-
-Wed Jul 12 09:42:21 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
-
-        * ace/CDR_Stream.h: added forward declaration of
-          ACE_InputCDR before ACE_OutputCDR class definition.
-
-Wed Jul 12 07:26:25 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * tests/Service_Config_Test.cpp (instance): cast the u_short to
-          u_long before casting to void *, to avoid KCC warning about
-          casting to pointer from integer of different size.
-
-Tue Jul 11 17:20:48 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Local_Tokens.cpp (ACE_TPQ_Entry ctor): try a reinterpret cast
-          of ACE_Thread::self () to u_long.  We need u_long on Linux.
-
-Tue Jul 11 16:09:14 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * bin/auto_run_tests.lst: don't run LongUpcalls test
-          with minimum CORBA.  Thanks to Irfan for reporting
-          that the test needs AMI to run, and minimum CORBA
-          doesn't have AMI.
-
-Tue Jul 11 16:03:58 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Local_Tokens.cpp (ACE_TPQ_Entry ctor): don't cast result
-          of ACE_Thread::self (), because it might be a structure.
-          Thanks to Ossama for reminding me of that.
-          Changed format specifier to be %u instead of %lu, to avoid
-          mismatch, at least on some platforms.
-
-Tue Jul 11 14:47:48 2000  Chris Kohlhoff <chris@kohlhoff.com>
-
-        * ace/config-win32-common.h:
-          Use default value of 0 for ACE_USE_RCSID on Win32 since RCS IDs
-          should probably not be required on this platform.
-
-        * include/makeinclude/build_core_exe.bor:
-        * include/makeinclude/build_core_library.bor:
-        * include/makeinclude/build_dll.bor:
-        * include/makeinclude/build_exe.bor:
-        * include/makeinclude/build_lib.bor:
-        * include/makeinclude/make_flags.bor:
-        * include/makeinclude/outputdir.bor:
-        * include/makeinclude/recurse.bor:
-        * include/makeinclude/install.bor:
-        * ace/Makefile.bor:
-          Added support for 'make install'.
-
-        * include/makeinclude/build_dll.bor:
-        * include/makeinclude/build_exe.bor:
-        * include/makeinclude/build_lib.bor:
-        * include/makeinclude/clean.bor:
-          Changed clean target so that files generated by the IDL compiler
-          are removed.
-
-        * ace/ace_wchar.h:
-        * ace/config-win32-borland.h:
-        * ace/OS.h:
-        * ace/OS_String.h:
-        * ace/OS.i:
-          Bring certain types and functions into the global namespace. This
-          is necessary so that the ACE headers will work the same regardless
-          of any standard C++ headers that may be included beforehand.
-
-Tue Jul 11 14:21:51 2000  Steve Huston  <shuston@riverace.com>
-
-        * ace/Log_Msg.cpp (ACE_Log_Msg::log): Added an ACE_Errno_Guard to
-          prevent errors in this function from destroying errno. This function
-          should be benign, just reporting, and leaving errno alone for
-          further checks/logging by apps.
-
-Tue Jul 11 14:20:35 2000  Steve Huston  <shuston@riverace.com>
-
-        * tests/SOCK_Send_Recv_Test.cpp: Added some additional output
-          to replace an assert - helps track problems quicker. Thanks to
-          David Levine for this suggestion.
-
-Tue Jul 11 11:06:45 2000  Craig Rodrigues <rodrigc@mediaone.net>
-
-        * ace/config-linux-common.h: in glibc 2.2, the function
-          prototypes for msgsnd() and msgrcv() were changed to be POSIX
-          compliant.  So, ACE_LACKS_SOME_POSIX_PROTOTYPES breaks
-          compilation.
-
-Tue Jul 11 11:03:50 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * bin/make_release: chmod of kits to 664, and chgrp to doc,
-          after creation.
-
-Tue Jul 11 10:45:46 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * bin/generate_man_pages: don't try generate man pages for
-          RMCast_Reassembly.h, either, because it trips up class2man.
-          [Bug 608]
-
-Tue Jul 11 10:40:48 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * bin/make_release: robustness improvements:
-          1) set CVSROOT and ACE_ROOT environment variables, and $logname,
-             to reasonable default values if they were null.
-          2) Always prepend /project/danzon/pkg/gnu/bin to PATH.  Before,
-             -d was first used to check to see if it existed.  But, it
-             might not have been mounted, and -d won't cause it to automount.
-
-Tue Jul 11 08:24:33 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * ace/POSIX_Asynch_IO.h,
-        * ace/SUN_Proactor.h: Fixed these files so that class2man
-          now generates proper manual pages. [Bug 608]
-
-Tue Jul 11 08:07:23 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * bin/generate_man_pages: don't try generate man pages for
-          RMCast_Export.h, because it's a generated file and doesn't
-          have any man page formatting info.  It trips up class2man.
-          [Bug 608]
-
-Tue Jul 11 07:42:57 2000  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Local_Tokens.cpp (ACE_TPQ_Entry ctor): cast result
-          to ACE_Thread::self () to u_long, to avoid mismatch with
-          %lu sprintf parameter.
-
-Tue Jul 11 06:21:35 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * apps/Gateway/Peer/Peer.cpp (transmit): The last two arguments to
-          Event_Header were reversed!  Thanks to Kim Lester
-          <Kim_R_Lester@rta.nsw.gov.au> for reporting this.
-
 Mon Jul 10 20:35:08 2000 Marina Spivak  <marina@cs.wustl.edu>
 
         * ACE version 5.1.5 released.
 
 Mon Jul 10 13:15:10 2000  Ossama Othman  <ossama@uci.edu>
 
-        * ace/SSL/Makefile (ACE_SHLIBS):
+	* ace/SSL/Makefile (ACE_SHLIBS):
 
-          Added "-lACE" to the list of libraries that should be linked in
-          to libACE_SSL, since the ACE SSL wrappers depend on ACE.
+	  Added "-lACE" to the list of libraries that should be linked in
+	  to libACE_SSL, since the ACE SSL wrappers depend on ACE.
 
 Sun Jul 09 21:38:03 2000  Ossama Othman  <ossama@uci.edu>
 
-        * ace/SSL/ACE_SSL.dsp:
+	* ace/SSL/ACE_SSL.dsp:
 
-          Fixed library path in "Release" configuration.
+	  Fixed library path in "Release" configuration.
 
 Sun Jul 09 14:20:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
@@ -747,56 +29,56 @@ Sun Jul 09 14:20:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
 Sun Jul 09 14:00:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
-        * ace/ace_wchar.h:
+	* ace/ace_wchar.h:
 
-          Added two macros for straight out conversion of strings:
-          ACE_TEXT_CHAR_TO_WCHAR and ACE_TEXT_WCHAR_TO_CHAR.
+	  Added two macros for straight out conversion of strings:
+	  ACE_TEXT_CHAR_TO_WCHAR and ACE_TEXT_WCHAR_TO_CHAR.
 
-        * ace/adapter/README: (Added)
-        * ace/adapter/ace/ACE.h: (Added)
-        * ace/adapter/ace/ARGV.h: (Added)
-        * ace/adapter/ace/Arg_Shifter.h: (Added)
-        * ace/adapter/ace/ATM_Addr.h: (Added)
-        * ace/adapter/ace/DEV_Addr.h: (Added)
-        * ace/adapter/ace/Dirent.h: (Added)
-        * ace/adapter/ace/DLL.h: (Added)
-        * ace/adapter/ace/Dynamic_Service.h: (Added)
-        * ace/adapter/ace/FIFO.h: (Added)
-        * ace/adapter/ace/FIFO_Recv.h: (Added)
-        * ace/adapter/ace/FIFO_Recv_Msg.h: (Added)
-        * ace/adapter/ace/FIFO_Send.h: (Added)
-        * ace/adapter/ace/FIFO_Send_Msg.h: (Added)
-        * ace/adapter/ace/FILE_Addr.h: (Added)
-        * ace/adapter/ace/Functor.h: (Added)
-        * ace/adapter/ace/High_Res_Timer.h: (Added)
-        * ace/adapter/ace/INET_Addr.h: (Added)
-        * ace/adapter/ace/Malloc_T.h: (Added)
-        * ace/adapter/ace/Memory_Pool.h: (Added)
-        * ace/adapter/ace/MEM_Addr.h: (Added)
-        * ace/adapter/ace/OS_Dirent.h: (Added)
-        * ace/adapter/ace/OS_String.h: (Added)
-        * ace/adapter/ace/Service_Config.h: (Added)
-        * ace/adapter/ace/Service_Object.h: (Added)
-        * ace/adapter/ace/SOCK_Dgram_Bcast.h: (Added)
-        * ace/adapter/ace/SOCK_Dgram_Mcast.h: (Added)
-        * ace/adapter/ace/SPIPE_Addr.h: (Added)
-        * ace/adapter/ace/System_Time.h: (Added)
-        * ace/adapter/ace/Task_T.h: (Added)
-        * ace/adapter/ace/Trace.h: (Added)
+	* ace/adapter/README: (Added)
+	* ace/adapter/ace/ACE.h: (Added)
+	* ace/adapter/ace/ARGV.h: (Added)
+	* ace/adapter/ace/Arg_Shifter.h: (Added)
+	* ace/adapter/ace/ATM_Addr.h: (Added)
+	* ace/adapter/ace/DEV_Addr.h: (Added)
+	* ace/adapter/ace/Dirent.h: (Added)
+	* ace/adapter/ace/DLL.h: (Added)
+	* ace/adapter/ace/Dynamic_Service.h: (Added)
+	* ace/adapter/ace/FIFO.h: (Added)
+	* ace/adapter/ace/FIFO_Recv.h: (Added)
+	* ace/adapter/ace/FIFO_Recv_Msg.h: (Added)
+	* ace/adapter/ace/FIFO_Send.h: (Added)
+	* ace/adapter/ace/FIFO_Send_Msg.h: (Added)
+	* ace/adapter/ace/FILE_Addr.h: (Added)
+	* ace/adapter/ace/Functor.h: (Added)
+	* ace/adapter/ace/High_Res_Timer.h: (Added)
+	* ace/adapter/ace/INET_Addr.h: (Added)
+	* ace/adapter/ace/Malloc_T.h: (Added)
+	* ace/adapter/ace/Memory_Pool.h: (Added)
+	* ace/adapter/ace/MEM_Addr.h: (Added)
+	* ace/adapter/ace/OS_Dirent.h: (Added)
+	* ace/adapter/ace/OS_String.h: (Added)
+	* ace/adapter/ace/Service_Config.h: (Added)
+	* ace/adapter/ace/Service_Object.h: (Added)
+	* ace/adapter/ace/SOCK_Dgram_Bcast.h: (Added)
+	* ace/adapter/ace/SOCK_Dgram_Mcast.h: (Added)
+	* ace/adapter/ace/SPIPE_Addr.h: (Added)
+	* ace/adapter/ace/System_Time.h: (Added)
+	* ace/adapter/ace/Task_T.h: (Added)
+	* ace/adapter/ace/Trace.h: (Added)
 
-          This is a initial shot at the implementation of an adaptation
-          layer for ACE that provides a Wide character interface with
-          a character library and vice versa.
+	  This is a initial shot at the implementation of an adaptation
+	  layer for ACE that provides a Wide character interface with 
+	  a character library and vice versa.  
 
-          Right now the above files contain classes ending with _W that
-          correspond to the actual classes (such as ACE_W).  This class
-          will have methods that take in wchar_t instead of char, and
-          then convert the parameters and return value when calling
-          the actual char implementation.
+	  Right now the above files contain classes ending with _W that
+	  correspond to the actual classes (such as ACE_W).  This class
+	  will have methods that take in wchar_t instead of char, and 
+	  then convert the parameters and return value when calling
+	  the actual char implementation.
 
-          Note, this is an initial implementation that isn't complete
-          across all interfaces and there are memory management issues that
-          still must be dealt with.
+	  Note, this is an initial implementation that isn't complete
+	  across all interfaces and there are memory management issues that
+	  still must be dealt with.
 
 Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -804,9 +86,9 @@ Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jul  7 20:24:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * examples/Reactor/Multicast/server.cpp:  The last character 0x0D in the
-          message was messing up the display.  Thanks to Zoran Ivanovic
-          <Zoran_Ivanovic@i2.com> for this fix.
+	* examples/Reactor/Multicast/server.cpp:  The last character 0x0D in the
+	  message was messing up the display.  Thanks to Zoran Ivanovic
+ 	  <Zoran_Ivanovic@i2.com> for this fix.
 
 Fri Jul 07 17:17:21 2000  George Reid <greid@entrenet.com>
 

@@ -166,12 +166,9 @@ ACE_Log_Msg_Manager::close (void)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION)
 /* static */
-#  if defined (ACE_HAS_THR_C_DEST)
-#   define LOCAL_EXTERN_PREFIX extern "C"
-#  else
-#   define LOCAL_EXTERN_PREFIX
-#  endif /* ACE_HAS_THR_C_DEST */
-LOCAL_EXTERN_PREFIX
+#if defined (ACE_HAS_THR_C_DEST)
+extern "C"
+#endif /* ACE_HAS_THR_C_DEST */
 void
 ACE_TSS_cleanup (void *ptr)
 {
@@ -757,9 +754,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   if (this->log_priority_enabled (log_priority) == 0)
     return 0;
 
-  // Logging is a benign activity, so don't inadvertently smash errno.
-  ACE_Errno_Guard guard (errno);
-
   ACE_Log_Record log_record (log_priority,
                              ACE_OS::gettimeofday (),
                              this->getpid ());
@@ -1228,14 +1222,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   *bp = '\0'; // Terminate bp, but don't auto-increment this!
 
   ACE_OS::free (ACE_MALLOC_T (save_p));
-
-  // Check that memory was not corrupted.
-  if (bp >= this->msg_ + ACE_Log_Record::MAXLOGMSGLEN)
-    {
-      abort_prog = 1;
-      ACE_OS::fprintf (stderr,
-                       "The following logged message is too long!\n");
-    }
 
   // Copy the message from thread-specific storage into the transfer
   // buffer (this can be optimized away by changing other code...).

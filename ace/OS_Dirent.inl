@@ -67,8 +67,6 @@ ACE_OS_Dirent::closedir (DIR *d)
 
 #   if defined (ACE_WIN32)
   ACE_OS_Dirent::closedir_emulation (d);
-  delete d->directory_name_;
-  delete d;
 #   else /* ACE_WIN32 */
   ::closedir (d);
 #   endif /* ACE_WIN32 */

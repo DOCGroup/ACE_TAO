@@ -25,7 +25,6 @@
 #                     default, others do not.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 #  orbix            Enable use of Orbix.
-#  pace             Enable PACE as the underpinnings of ACE_OS.
 #  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 #  purify           Purify all executables.  purify must be in user's PATH!
@@ -46,11 +45,6 @@
 #  qt_reactor       Build the QtReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
-#  split            Build the library by first splitting up the ACE source to several
-#                   files, with one object code entity for each source file. This allows
-#                   an application that is linked with ACE to extract _exactly_ what it
-#                   needs from the library, resulting in a smaller executable.
-#                   Setting this to 1 overrides debug to 0.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -292,18 +286,6 @@ ifneq ($(optimize),)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
 
-ifeq ($(split),0)
-  override split =
-endif # split
-
-ifneq ($(split),)
-  override split_target = SPLIT
-  override debug = 0
-  CFLAGS += -DACE_IS_SPLITTING
-else
-  override split_target =
-endif # split
-
 ifeq ($(debug),0)
   override debug =
 endif # debug
@@ -432,23 +414,6 @@ else  # exceptions
   endif # g++ > 2.8.0
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # exceptions
-
-ifeq ($(pace),0)
-  override pace=
-endif # pace
-
-ifneq ($(pace),)
-  ifneq ($(inline),0)
-    CFLAGS += -DPACE_HAS_INLINE=1
-  endif
-  CFLAGS += -DACE_HAS_PACE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
-  ACELIB = -lACE
-  ifeq ($(inline),0)
-    ACELIB += -lPACE
-    LDFLAGS += -L$(ACE_ROOT)/PACE/pace/
-  endif # inline == 0
-  include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
-endif # pace
 
 ifeq ($(profile),0)
   override profile =
@@ -602,7 +567,6 @@ ifdef repo
   CCFLAGS += -frepo -DACE_HAS_GNU_REPO
   ace_lib_prelink := 1
 endif # repo
-
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions

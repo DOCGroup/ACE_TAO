@@ -34,8 +34,6 @@ ifneq ($(shell uname -s),LynxOS)
     export VERSION=3.0.0
   endif # VERSION
 
-  PACE_SYSVER = 0x$(VERSION)
-
   ifeq (,$(LYNXTARGET))
     export LYNXTARGET = x86
   endif # LYNXTARGET

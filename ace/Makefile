@@ -4,6 +4,10 @@
 #       Makefile for the entire ACE release
 #----------------------------------------------------------------------------
 
+ifneq ($(ssl),)
+  DIRS += SSL
+endif # ssl
+
 MAKEFILE = Makefile
 LIB      = libACE.a
 SHLIB    = libACE.$(SOEXT)
@@ -97,6 +101,7 @@ SOCKETS_FILES = \
   SOCK_Dgram \
   SOCK_Dgram_Bcast \
   SOCK_Dgram_Mcast \
+  SOCK_Dgram_Mcast_QoS \
   SOCK_IO \
   SOCK_Stream
 IPC_FILES = \
@@ -195,11 +200,9 @@ OTHER_FILES = \
   Naming_Context \
   Registry_Name_Space \
   Remote_Name_Space \
-  SOCK_Dgram_Mcast_QoS \
   QoS_Session_Impl \
   QoS_Session_Factory \
-  QoS_Manager \
-  QoS_Decorator
+  QoS_Manager
 
 TEMPLATE_FILES = \
            Acceptor \
@@ -269,10 +272,6 @@ ifneq ($(GHS),)
     LSRC += gethrtime.cpp
   endif # 86
 endif # GHS
-
-ifeq ($(ssl),1)
-  DIRS += SSL
-endif # ssl
 
 ####
 #### Build customization.
@@ -513,7 +512,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
 
 ifneq ($(qt_reactor),)
 QtReactor_moc.cpp: QtReactor.h
-	moc QtReactor.h >QtReactor_moc.cpp
+		moc QtReactor.h >QtReactor_moc.cpp
 endif #qt_reactor
 
 ifeq ($(SUPPRESS_DASH_G),1)

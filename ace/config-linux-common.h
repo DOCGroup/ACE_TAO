@@ -175,12 +175,9 @@
 
 #define ACE_HAS_GETPAGESIZE 1
 
-#if (__GLIBC__  < 2)  ||  (__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
-  // GLIBC 2.2 and higher doesn't need this macro any more.
-  // Platform lacks POSIX prototypes for certain System V functions
-  // like shared memory and message queues.
-# define ACE_LACKS_SOME_POSIX_PROTOTYPES
-#endif
+// Platform lacks POSIX prototypes for certain System V functions
+// like shared memory and message queues.
+#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T

@@ -164,26 +164,6 @@ private:
   // This is the set of ACE_CapEntry.
 };
 
-#if defined (ACE_IS_SPLITTING)
-int
-is_empty (const ACE_TCHAR *line)
-{
-  while (*line && isspace (*line))
-    line++;
-
-  return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
-}
-
-int
-is_line (const ACE_TCHAR *line)
-{
-  while (*line && isspace (*line))
-    line++;
-
-  return *line != ACE_TEXT ('\0');
-}
-#endif /* ACE_IS_SPLITTING */
-
 #if defined (__ACE_INLINE__)
 #include "ace/Capabilities.i"
 #endif /* __ACE_INLINE__ */

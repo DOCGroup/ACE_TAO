@@ -47,9 +47,13 @@ class ACE_Export ACE_POSIX_Asynch_Result : public virtual ACE_Asynch_Result_Impl
                                            public aiocb
 {
   // = TITLE
+  //
   //     This class provides concrete implementation for
-  //     <ACE_Asynch_Result> for POSIX4 platforms. This class extends
+  //     ACE_Asynch_Result for POSIX4 platforms. This class extends
   //     <aiocb> and makes it more useful.
+  //
+  // = DESCRIPTION
+  //
 public:
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
@@ -85,7 +89,7 @@ public:
   // Priority of the operation.
 
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
+  // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
   // default, SIGRTMIN is used to issue <aio_> calls.
   
@@ -130,10 +134,14 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Operation : public virtual ACE_Asynch_Operation_Impl
 {
   // = TITLE
+  //
   //     This class abstracts out the common things needed for
-  //     implementing <Asynch_Operation> for POSIX platforms. Specific
-  //     implementations such as <POSIX_AIOCB_Asynch_Operation> and
-  //     <POSIX_SIG_Asynch_Operation>, can derive from this class.
+  //     implementing Asynch_Operation for POSIX platforms. Specific
+  //     implementations such as POSIX_AIOCB_Asynch_Operation and
+  //     POSIX_SIG_Asynch_Operation etc., can derive from this class.
+  //
+  //  = DESCRIPTION
+  //
 public:
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
@@ -175,9 +183,13 @@ protected:
 class ACE_Export ACE_POSIX_AIOCB_Asynch_Operation : public virtual ACE_POSIX_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Operation> for <AIOCB>
+  //
+  //     This class implements ACE_Asynch_Operation for AIOCB
   //     (Asynchronous I/O Control Blocks) based implementation of
   //     Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_AIOCB_Proactor *posix_proactor (void) const;
   // Return the underlying Proactor implementation.
@@ -211,8 +223,12 @@ protected:
 class ACE_Export ACE_POSIX_SIG_Asynch_Operation : public virtual ACE_POSIX_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Operation> for Realtime
+  //
+  //     This class implements ACE_Asynch_Operation for Real-Time
   //     Signal (<sigtimedwait>) based implementation of Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_SIG_Proactor *posix_proactor (void) const;
   // Return the  underlying Proactor implemetation.
@@ -235,8 +251,12 @@ class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch
                                                        public ACE_POSIX_Asynch_Result
 {
   // = TITLE
+  //
   //     This class provides concrete implementation for
-  //     <ACE_Asynch_Read_Stream::Result> class for POSIX platforms.
+  //     ACE_Asynch_Read_Stream::Result class for POSIX platforms.
+  //
+  // = DESCRIPTION
+  //
 
   friend class ACE_POSIX_AIOCB_Asynch_Read_Stream;
   friend class ACE_POSIX_SIG_Asynch_Read_Stream;
@@ -293,7 +313,7 @@ public:
   // The priority of the asynchronous operation.
 
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
+  // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
@@ -337,9 +357,13 @@ class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_Stream : public virtual ACE_Asynch_
                                                       public ACE_POSIX_AIOCB_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Read_Stream> for <AIOCB>
+  //
+  //     This class implements ACE_Asynch_Read_Stream for AIOCB
   //     (Asynchronous I/O Control Blocks) based implementation of
   //      Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_AIOCB_Asynch_Read_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
   // Constructor.
@@ -386,8 +410,12 @@ class ACE_Export ACE_POSIX_SIG_Asynch_Read_Stream : public virtual ACE_Asynch_Re
                                                     public ACE_POSIX_SIG_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Read_Stream> for Realtime
+  //
+  //     This class implements ACE_Asynch_Read_Stream for Real-Time
   //     Signal (<sigtimedwait>) based implementation of Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_SIG_Asynch_Read_Stream (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
   // Constructor.
@@ -433,10 +461,12 @@ class ACE_Export ACE_POSIX_Asynch_Write_Stream_Result : public virtual ACE_Async
                                                         public ACE_POSIX_Asynch_Result
 {
   // = TITLE
+  //
   //     This class provides concrete implementation for
-  //     <ACE_Asynch_Write_Stream::Result> on POSIX platforms.
+  //     ACE_Asynch_Write_Stream::Result on POSIX platforms.
   //
   // = DESCRIPTION
+  //
   //     This class has all the information necessary for the
   //     <handler> to uniquiely identify the completion of the
   //     asynchronous write.
@@ -496,7 +526,7 @@ public:
   // The priority of the asynchronous operation.
 
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
+  // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
@@ -541,9 +571,13 @@ class ACE_Export ACE_POSIX_AIOCB_Asynch_Write_Stream : public virtual ACE_Asynch
                                                        public ACE_POSIX_AIOCB_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Write_Stream> for <AIOCB>
+  //
+  //     This class implements ACE_Asynch_Write_Stream for AIOCB
   //     (Asynchronous I/O Control Blocks) based implementation of
   //      Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_AIOCB_Asynch_Write_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
   // Constructor.
@@ -589,8 +623,12 @@ class ACE_Export ACE_POSIX_SIG_Asynch_Write_Stream : public virtual ACE_Asynch_W
                                                      public ACE_POSIX_SIG_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Write_Stream> for Realtime
+  //
+  //     This class implements ACE_Asynch_Write_Stream for Real-Time
   //     Signal (<sigtimedwait>) based implementation of Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_SIG_Asynch_Write_Stream (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
   // Constrctor.
@@ -636,8 +674,12 @@ class ACE_Export ACE_POSIX_Asynch_Read_File_Result : public virtual ACE_Asynch_R
                                                      public ACE_POSIX_Asynch_Read_Stream_Result
 {
   // = TITLE
+  //
   //     This class provides concrete implementation for
-  //     <ACE_Asynch_Read_File::Result> class for POSIX platforms.
+  //     ACE_Asynch_Read_File::Result class for POSIX platforms.
+  //
+  // = DESCRIPTION
+  //
 
   friend class ACE_POSIX_AIOCB_Asynch_Read_File;
   friend class ACE_POSIX_SIG_Asynch_Read_File;
@@ -685,7 +727,7 @@ public:
   // The priority of the asynchronous operation.
 
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
+  // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
@@ -736,20 +778,21 @@ class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_File : public virtual ACE_Asynch_Re
                                                     public ACE_POSIX_AIOCB_Asynch_Read_Stream
 {
   // = TITLE
+  //
   //     This class is a factory for starting off asynchronous reads
-  //     on a file. This class implements <ACE_Asynch_Read_File> for
-  //     <AIOCB> (Asynchronous I/O Control Blocks) based implementation
+  //     on a file. This class implements ACE_Asynch_Read_File for
+  //     AIOCB (Asynchronous I/O Control Blocks) based implementation
   //     of Proactor.
   //
   // = DESCRIPTION
   //
   //     Once <open> is called, multiple asynchronous <read>s can
-  //     started using this class.  A <ACE_Asynch_Read_File::Result>
+  //     started using this class.  A ACE_Asynch_Read_File::Result
   //     will be passed back to the <handler> when the asynchronous
   //     reads completes through the <ACE_Handler::handle_read_file>
   //     callback.
   //
-  //     This class differs slightly from <ACE_Asynch_Read_Stream> as it
+  //     This class differs slightly from ACE_Asynch_Read_Stream as it
   //     allows the user to specify an offset for the read.
 
 public:
@@ -806,14 +849,16 @@ class ACE_Export ACE_POSIX_SIG_Asynch_Read_File : public virtual ACE_Asynch_Read
                                                   public ACE_POSIX_SIG_Asynch_Read_Stream
 {
   // = TITLE
+  //
   //     This class is a factory for starting off asynchronous reads
-  //     on a file. This class implements <ACE_Asynch_Operation> for
-  //     Realtime Signal (<sigtimedwait>) based implementation of
+  //     on a file. This class implements ACE_Asynch_Operation for
+  //     Real-Time Signal (<sigtimedwait>) based implementation of
   //     Proactor.
   //
   // = DESCRIPTION
+  //
   //     Once <open> is called, multiple asynchronous <read>s can
-  //     started using this class.  A <ACE_Asynch_Read_File::Result>
+  //     started using this class.  A ACE_Asynch_Read_File::Result
   //     will be passed back to the <handler> when the asynchronous
   //     reads completes through the <ACE_Handler::handle_read_file>
   //     callback.
@@ -871,8 +916,9 @@ class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_
                                                       public ACE_POSIX_Asynch_Write_Stream_Result
 {
   // = TITLE
+  //
   //     This class provides implementation for
-  //     <ACE_Asynch_Write_File_Result> for POSIX platforms.
+  //      ACE_Asynch_Write_File_Result for POSIX platforms.
   //
   // = DESCRIPTION
   //
@@ -881,11 +927,11 @@ class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_
   //     asynchronous write.
   //
   //     This class differs slightly from
-  //     <ACE_Asynch_Write_Stream::Result> as it calls back
-  //     <ACE_Handler::handle_write_file> on the <handler> instead of
-  //     <ACE_Handler::handle_write_stream>.  No additional state is
-  //     required by this class as <ACE_Asynch_Result> can store the
-  //     <offset>.
+  //     ACE_Asynch_Write_Stream::Result as it calls back
+  //     <ACE_Handler::handle_write_file> on the <handler> instead
+  //     of <ACE_Handler::handle_write_stream>.  No additional state
+  //     is required by this class as ACE_Asynch_Result can store
+  //     the <offset>.
 
   friend class ACE_POSIX_AIOCB_Asynch_Write_File;
   friend class ACE_POSIX_SIG_Asynch_Write_File;
@@ -932,7 +978,7 @@ public:
   // The priority of the asynchronous operation.
 
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
+  // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
@@ -983,8 +1029,9 @@ class ACE_Export ACE_POSIX_AIOCB_Asynch_Write_File : public virtual ACE_Asynch_W
                                                      public ACE_POSIX_AIOCB_Asynch_Write_Stream
 {
   // = TITLE
+  //
   //     This class provides concrete implementation for
-  //     <ACE_Asynch_Write_File> for POSIX platforms where the
+  //     ACE_Asynch_Write_File for POSIX platforms where the
   //     completion strategy for Proactor is based on AIOCB (AIO
   //     Control Blocks).
   //
@@ -1044,14 +1091,16 @@ class ACE_Export ACE_POSIX_SIG_Asynch_Write_File : public virtual ACE_Asynch_Wri
                                                    public ACE_POSIX_SIG_Asynch_Write_Stream
 {
   // = TITLE
+  //
   //     This class is a factory for starting off asynchronous reads
-  //     on a file. This class implements <ACE_Asynch_Operation> for
-  //     Realtime Signal (<sigtimedwait>) based implementation of
+  //     on a file. This class implements ACE_Asynch_Operation for
+  //     Real-Time Signal (<sigtimedwait>) based implementation of
   //     Proactor.
   //
   // = DESCRIPTION
+  //
   //     Once <open> is called, multiple asynchronous <read>s can
-  //     started using this class.  A <ACE_Asynch_Read_File::Result>
+  //     started using this class.  A ACE_Asynch_Read_File::Result
   //     will be passed back to the <handler> when the asynchronous
   //     reads completes through the <ACE_Handler::handle_read_file>
   //     callback.
@@ -1110,6 +1159,7 @@ class ACE_Export ACE_POSIX_Asynch_Accept_Result : public virtual ACE_Asynch_Acce
                                                   public ACE_POSIX_Asynch_Result
 {
   // = TITLE
+  //
   //     This is that class which will be passed back to the
   //     <handler> when the asynchronous accept completes.
   //
@@ -1177,7 +1227,7 @@ public:
   // The priority of the asynchronous operation. 
 
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
+  // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
@@ -1289,8 +1339,12 @@ class ACE_Export ACE_POSIX_SIG_Asynch_Accept : public virtual ACE_Asynch_Accept_
                                                public ACE_POSIX_SIG_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Accept> for Realtime
+  //
+  //     This class implements ACE_Asynch_Accept for Real-Time
   //     Signal (<sigtimedwait>) based implementation of Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_SIG_Asynch_Accept (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
   // Constructor.
@@ -1348,10 +1402,12 @@ class ACE_Export ACE_POSIX_Asynch_Transmit_File_Result : public virtual ACE_Asyn
                                                          public ACE_POSIX_Asynch_Result
 {
   // = TITLE
+  //
   //     This is that class which will be passed back to the
   //     <handler> when the asynchronous transmit file completes.
   //
   // = DESCRIPTION
+  //
   //     This class has all the information necessary for the
   //     <handler> to uniquiely identify the completion of the
   //     asynchronous transmit file.
@@ -1426,7 +1482,7 @@ public:
   // The priority of the asynchronous operation.
 
   int signal_number (void) const;
-  // POSIX4 realtime signal number to be used for the
+  // POSIX4 real-time signal number to be used for the
   // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
@@ -1539,8 +1595,12 @@ class ACE_Export ACE_POSIX_SIG_Asynch_Transmit_File : public virtual ACE_Asynch_
                                                       public ACE_POSIX_SIG_Asynch_Operation
 {
   // = TITLE
-  //     This class implements <ACE_Asynch_Transmit_File> for Realtime
+  //
+  //     This class implements ACE_Asynch_Transmit_File for Real-Time
   //     Signal (<sigtimedwait>) based implementation of Proactor.
+  //
+  // = DESCRIPTION
+  //
 public:
   ACE_POSIX_SIG_Asynch_Transmit_File (ACE_POSIX_SIG_Proactor *posix_sig_proactor);
   // Constructor.
@@ -1594,3 +1654,4 @@ public:
 
 #endif /* ACE_HAS_AIO_CALLS */
 #endif /* ACE_POSIX_ASYNCH_IO_H */
+//==================================================

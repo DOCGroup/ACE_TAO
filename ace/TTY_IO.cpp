@@ -2,7 +2,7 @@
 
 #include "ace/TTY_IO.h"
 
-ACE_RCSID(ace, TTY_IO, "TTY_IO.cpp,v 4.18 1999/06/02 21:20:14 nanbor Exp")
+ACE_RCSID(ace, TTY_IO, "$Id$")
 
 // Interface for reading/writing serial device parameters
 
@@ -36,7 +36,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
   // Get default device parameters.
 
 #if defined (TCGETS)
-    if (this->ACE_IO_SAP::control (TCGETS, (void *) &devpar) == -1)
+    if (this->ACE_IO_SAP::control (ACE_static_cast (int, TCGETS),
+                                   (void *) &devpar) == -1)
 #elif defined (TCGETA)
     if (this->ACE_IO_SAP::control (TCGETA, (void *) &devpar) == -1)
 #else
@@ -135,29 +136,18 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->parityenb)
         {
           c_cflag |= PARENB;
-          if (ACE_OS::strcmp (arg->paritymode, "ODD") == 0
-              || ACE_OS::strcmp (arg->paritymode, "odd") == 0)
+          if (ACE_OS::strcmp ((char *) arg->paritymode, "ODD") == 0
+              || ACE_OS::strcmp ((char *) arg->paritymode, "odd") == 0)
             c_cflag |= PARODD;
         }
 #if defined (CRTSCTS)
-  	  // 6/22/00 MLS add rtsenb to if statement 
-      if ((arg->ctsenb)||(arg->rtsenb)) /* enable CTS/RTS protocoll */
+      if (arg->ctsenb) /* enable CTS/RTS protocoll */
         c_cflag |= CRTSCTS;
 #endif /* CRTSCTS */
 #if defined (CREAD)
       if (arg->rcvenb) /* enable receiver */
         c_cflag |= CREAD;
 #endif /* CREAD */
-
-	  // 6/22/00 MLS add enable xon/xoff 
-#if defined (IXON)
-      if (arg->xinenb) /* enable XON/XOFF output*/
-        c_cflag |= IXON;
-#endif /* IXON */
-#if defined (IXOFF)
-      if (arg->xoutenb) /* enable XON/XOFF input*/
-        c_cflag |= IXOFF;
-#endif /* IXOFF */
 
       c_oflag = 0;
       c_iflag = IGNPAR | INPCK;
@@ -175,7 +165,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_cc[5] = ivtime_cc5;
 
 #if defined(TCSETS)
-      return this->ACE_IO_SAP::control (TCSETS,
+      return this->ACE_IO_SAP::control (ACE_static_cast (int, TCSETS),
                                         (void *) &devpar);
 #elif defined(TCSETA)
       return this->ACE_IO_SAP::control (TCSETA,
@@ -231,34 +221,24 @@ ACE_TTY_IO::control (Control_Mode cmd,
       switch (arg->stopbits)
         {
         case 1:
-	  dcb.StopBits = ONESTOPBIT;
-	  break;
+          dcb.StopBits = ONESTOPBIT;
+          break;
         case 2:
-	  dcb.StopBits = TWOSTOPBITS;
-	  break;
+          dcb.StopBits = TWOSTOPBITS;
+          break;
         default:
           return -1;
         }
 
-
-      // 6/22/00 MLS enabled extra paths for win32 parity checking.
       if (arg->parityenb)
         {
           dcb.fParity = TRUE;
-          if (ACE_OS::strcmp (arg->paritymode, "ODD") == 0
-              || ACE_OS::strcmp (arg->paritymode, "odd") == 0)
+          if (ACE_OS::strcmp ((char *) arg->paritymode, "ODD") == 0
+              || ACE_OS::strcmp ((char *) arg->paritymode, "odd") == 0)
             dcb.Parity = ODDPARITY;
-          else if (ACE_OS::strcmp (arg->paritymode, "EVEN") == 0
-                   || ACE_OS::strcmp (arg->paritymode, "even") == 0)
+          else if (ACE_OS::strcmp ((char *) arg->paritymode, "EVEN") == 0
+                   || ACE_OS::strcmp ((char *) arg->paritymode, "even") == 0)
             dcb.Parity = EVENPARITY;
-          else if (ACE_OS::strcmp (arg->paritymode, "MARK") == 0
-                   || ACE_OS::strcmp (arg->paritymode, "mark") == 0)
-            dcb.Parity = MARKPARITY;
-          else if (ACE_OS::strcmp (arg->paritymode, "SPACE") == 0
-                   || ACE_OS::strcmp (arg->paritymode, "space") == 0)
-            dcb.Parity = SPACEPARITY;
-          else
-            dcb.Parity = NOPARITY;
         }
       else
         {
@@ -266,55 +246,25 @@ ACE_TTY_IO::control (Control_Mode cmd,
           dcb.Parity = NOPARITY;
         }
 
-      if (arg->ctsenb) // enable CTS protocol.
-        dcb.fOutxCtsFlow = TRUE;
-      else
-        dcb.fOutxCtsFlow = FALSE;
-
-      // 6/22/00 MLS add  great flexibility for win32 
-      //		     pulled rts out of ctsenb
-      switch (arg->rtsenb) // enable RTS protocol.
+      if (arg->ctsenb) // enable CTS/RTS protocol.
         {
-        case 1:
-          dcb.fRtsControl = RTS_CONTROL_ENABLE;
-          break;
-        case 2:
+          dcb.fOutxCtsFlow = TRUE;
           dcb.fRtsControl = RTS_CONTROL_HANDSHAKE;
-          break;
-        case 3:
-          dcb.fRtsControl = RTS_CONTROL_TOGGLE;
-          break;
-        default:
+        }
+      else
+        {
+          dcb.fOutxCtsFlow = FALSE;
           dcb.fRtsControl = RTS_CONTROL_DISABLE;
-        }	  
-
-      // 6/22/00 MLS add enable xon/xoff 
-      if (arg->xinenb) // enable XON/XOFF for reception
-        dcb.fOutX = TRUE;
-      else
-        dcb.fOutX = FALSE;
-
-      if (arg->xoutenb) // enable XON/XOFF for transmission
-        dcb.fOutX = TRUE;
-      else
-        dcb.fOutX = FALSE;
-
-      // always set limits unless set to -1 to use default
-      // 6/22/00 MLS add xon/xoff limits
-      if (arg->xonlim != -1)
-        dcb.XonLim  = arg->xonlim;
-      if (arg->xofflim != -1)
-        dcb.XoffLim  = arg->xofflim;
-
+        }
       dcb.fDtrControl = DTR_CONTROL_ENABLE;
       dcb.fBinary = TRUE;
-      ::SetCommState (this->get_handle (), &dcb);
-  
-      // 2/13/97 BWF added drop out timer
-      COMMTIMEOUTS timeouts;
-      ::GetCommTimeouts (this->get_handle (), &timeouts);
-      timeouts.ReadIntervalTimeout = arg->readtimeoutmsec;
-      return ::SetCommTimeouts (this->get_handle (), &timeouts);
+    ::SetCommState (this->get_handle (), &dcb);
+
+    // 2/13/97 BWF added drop out timer
+    COMMTIMEOUTS timeouts;
+    ::GetCommTimeouts (this->get_handle(), &timeouts);
+    timeouts.ReadIntervalTimeout = arg->readtimeoutmsec;
+    return ::SetCommTimeouts (this->get_handle (), &timeouts);
 
     case GETPARAMS:
       ACE_NOTSUP_RETURN (-1); // Not yet implemented.

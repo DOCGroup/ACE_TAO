@@ -1,4 +1,0 @@
-Test for Update
-
-This test will check if the subscription and publication update messages
-from the event channel are properly received from the Notify Service.

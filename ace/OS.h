@@ -666,7 +666,6 @@ typedef int key_t;
 #include "pace/stdio.h"
 #include "pace/time.h"
 #include "pace/unistd.h"
-#include "pace/sys/utsname.h"
 #include "pace/sys/wait.h"
 #define ACE_HAS_POSIX_SEM
 #endif /* ACE_HAS_PACE */
@@ -1171,12 +1170,6 @@ extern "C" pthread_t pthread_self (void);
 #   endif /* VXWORKS */
 # endif /* ACE_LACKS_SYSTIME_H */
 
-# if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
-             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
-using std::time_t;
-using std::tm;
-# endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
-
 # if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
 // Definition per POSIX.
 typedef struct timespec
@@ -1211,7 +1204,6 @@ ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
 
 ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                       const ACE_Time_Value &tv2);
-
 // -------------------------------------------------------------------
 
 class ACE_Export ACE_Time_Value
@@ -1314,16 +1306,14 @@ public:
   void usec (long usec);
   // Set microseconds.
 
-  // = The following arithmetic methods operate on <Time_Value>s.
+  // = The following are arithmetic methods for operating on
+  // Time_Values.
 
   void operator += (const ACE_Time_Value &tv);
   // Add <tv> to this.
 
   void operator -= (const ACE_Time_Value &tv);
   // Subtract <tv> to this.
-
-  ACE_Time_Value &operator *= (double d);
-  // Multiply the time value by the <d> factor, which must be >= 0.
 
   friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
@@ -1774,27 +1764,9 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 
-#if defined (ACE_HAS_PACE)
-# include "pace/semaphore.h"
-#   if !defined (SEM_FAILED)
-#     define SEM_FAILED ((pace_sem_t *) -1)
-#   endif  /* !SEM_FAILED */
-
-
-typedef struct
-{
-  pace_sem_t *sema_;
-  // Pointer to semaphore handle.  This is allocated by ACE if we are
-  // working with an unnamed POSIX semaphore or by the OS if we are
-  // working with a named POSIX semaphore.
-
-  char *name_;
-  // Name of the semaphore (if this is non-NULL then this is a named
-  // POSIX semaphore, else its an unnamed POSIX semaphore).
-} ACE_sema_t;
-
-# elif defined (ACE_HAS_POSIX_SEM)
+# if defined (ACE_HAS_POSIX_SEM)
 #   include /**/ <semaphore.h>
+
 #   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
 #     define SEM_FAILED ((sem_t *) -1)
 #   endif  /* !SEM_FAILED */
@@ -1810,7 +1782,7 @@ typedef struct
   // Name of the semaphore (if this is non-NULL then this is a named
   // POSIX semaphore, else its an unnamed POSIX semaphore).
 } ACE_sema_t;
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_POSIX_SEM */
 
 struct cancel_state
 {
@@ -2139,13 +2111,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #     define THR_SCHED_FIFO          0x00020000
 #     define THR_SCHED_RR            0x00040000
 #     define THR_SCHED_DEFAULT       0x00080000
-
-#     if defined (ACE_HAS_IRIX62_THREADS)
-#     define THR_SCOPE_SYSTEM        0x00100000
-#     else
 #     define THR_SCOPE_SYSTEM        THR_BOUND
-#endif /*ACE_HAS_IRIX62_THREADS*/
-
 #     define THR_SCOPE_PROCESS       0x00200000
 #     define THR_INHERIT_SCHED       0x00400000
 #     define THR_EXPLICIT_SCHED      0x00800000
@@ -2978,10 +2944,7 @@ typedef int sig_atomic_t;
 typedef int ssize_t;
 # endif /* ACE_HAS_SSIZE_T */
 
-# if defined (ACE_HAS_PACE)
-typedef pace_sig_pf ACE_SignalHandler;
-typedef pace_sig_pf ACE_SignalHandlerV;
-# elif defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
+# if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
 #   if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
@@ -3029,7 +2992,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 typedef void (*ACE_SignalHandler)(int);
 #   endif /* SIG_PF */
 typedef void (*ACE_SignalHandlerV)(...);
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
 # if defined (BUFSIZ)
 #   define ACE_STREAMBUF_SIZE BUFSIZ
