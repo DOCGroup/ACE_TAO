@@ -13,6 +13,7 @@
 
 
 #include "data.h"
+#include "ace/Log_Msg.h"
 #include "tao/TypeCode.h"
 #include "tao/PortableServer/PortableServer.h"
 

@@ -1,3 +1,12 @@
+Sun Apr  3 18:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+        * tests/DynAny_Test/data.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/PolicyFactory/server.cpp:
+          Added include of ace/Log_Msg.h
+
 Sun Apr  3 17:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/skip.cpp:
