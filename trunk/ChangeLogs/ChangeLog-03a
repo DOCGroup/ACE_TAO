@@ -1,4 +1,69 @@
-Mon Feb 18 18:23:49  Steve Huston  <shuston@riverace.com>
+Mon Feb 18 18:41:33 2002  Steve Huston  <shuston@riverace.com>
+
+       Integrated the following from the ACE 5.2 stream:
+
+        Wed Feb 13 15:37:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Hash_Cache_Map_Manager_T.h: Added #include "ace/Synch.h" to
+          pick up ACE_Null_Mutex.
+
+        * tests/Process_Manager_Test.cpp: Added #include "ace/Thread.h" to
+          pick up ACE_Thread::self ().
+
+        * tests/Refcounted_Auto_Ptr_Test.h (new file):
+        * tests/Refcounted_Auto_Ptr_Test.cpp: Moved definition of Printer
+          from .cpp to .h so Visual Age C++ can find it when instantiating
+          templates. Also removes the compile warning where the compiler
+          warns that the test won't work...
+
+        Tue Feb 12 21:59:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Added -qstaticinline
+          to CCFLAGS to tell compiler to generate inlined functions with
+          static scope instead of extern scope (how stupid is this?).
+          Removed error suppression options which should be unnecessary now.
+
+        Sat Feb  9 18:34:59 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.h: Removed an extra
+          master_handle_set_.set_bit call. Thanks to Craig Perras
+          <craigp@iswnet.com> for reporting this.
+
+        Sat Feb  9 13:49:44 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Hash_Map_With_Allocator_T.h: Added #include "ace/Synch.h" to
+          see the definition of ACE_Null_Mutex.
+
+        * ace/config-all.h (ACE_RCSID): Make generated function static to
+          keep Visual Age C++ from complaining about the multiple definitions.
+
+        Fri Feb  8 16:20:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Removed #define ACE_TEMPLATES_REQUIRE_SOURCE
+          for Visual Age C++ 5. As it turns out, wherever the compiler sees
+          source and a template is referenced, it generates the template
+          class functions used. This is very bad for size as well as for
+          situations counting on only one such as ACE_Singleton.
+
+          Also added support for explicit template instantiation with Visual
+          Age C++. If the preprocessor define __TEMPINC__ is not defined,
+          explicit instantiation is turned on.
+
+        Mon Feb  4 17:21:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Singleton.h (ACE_TSS_Singleton): Added ACE_UNIMPLEMENTED_FUNCS
+          for assignment and copy ctor methods. This is necessary to allow
+          the *_SINGLETON_DECLARE macro, that explicitly instantiates a
+          template class on Win32, to compile clean when instantiating an
+          ACE_TSS_Singleton class.  Thanks very much to Nanbor Wang for
+          direction on solving this problem.
+
+        * ace/config-win32-msvc-6.h: Added ACE_NEEDS_FUNC_DEFINITIONS. This
+          avoids warnings when explicitly instantiating an entire class, as
+          with ACE_TSS_Singleton and *_SINGLETON_DECLARE, above.
+
+
+Mon Feb 18 18:23:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Clarified behavior with respect to remaining
           queued notifications when end_reactor_event_loop() is called

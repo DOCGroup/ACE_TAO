@@ -25,21 +25,11 @@
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Refcounted_Auto_Ptr.h"
+#include "Refcounted_Auto_Ptr_Test.h"
 
 ACE_RCSID (tests,
            Refcounted_Auto_Ptr_Test,
            "Refcounted_Auto_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
-
-struct Printer
-{
-  Printer (const char *message);
-  ~Printer (void) ;
-
-  void print (void);
-
-  const char *message_;
-  static size_t instance_count_;
-};
 
 size_t Printer::instance_count_ = 0;
 

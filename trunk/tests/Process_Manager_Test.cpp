@@ -28,6 +28,7 @@
 #include "test_config.h"
 #include "ace/Process_Manager.h"
 #include "ace/Get_Opt.h"
+#include "ace/Thread.h"
 
 ACE_RCSID(tests, Process_Manager_Test, "Process_Manager_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
 
