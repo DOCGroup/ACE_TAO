@@ -78,6 +78,12 @@ else
 endif
 override TOOL_FAMILY := $(TOOL)
 
+ifeq ("$(TOOL)","gnu")
+ifndef templates
+  templates = automatic
+endif # ! templates
+endif
+
 PRJ_TYPE = vxApp
 TGT_DIR = $(WIND_BASE)/target
 
@@ -153,6 +159,22 @@ ifeq ($(debug),1)
   CPPFLAGS +=
 endif
 
+ifeq ("$(TOOL)","gnu")
+# Test for template instantiation, add to SOFLAGS if SONAME set,
+# add -E to LDFLAGS if using GNU ld
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+ifeq ("$(templates)","automatic")
+TEMPLATES_FLAG=-fmerge-templates
+endif
+
+# TEMPLATES_FLAG is set by platform_g++_common.GNU
+ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
+  C++FLAGS += $(TEMPLATES_FLAG)
+endif
+endif  # TOOl == gnu
+
 ifeq ("$(TOOL)","diab")
 ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
@@ -171,7 +193,11 @@ endif
 
 ifeq (0,$(rtti))
   #### Don't use RTTI, because Tornado 1.0.x libraries don't support it.
-  C++FLAGS += -DACE_LACKS_RTTI
+ifeq ("$(TOOL)","gnu")
+  C++FLAGS += -fno-rtti -DACE_LACKS_RTTI
+else
+  C++FLAGS += -Xrtti-off -DACE_LACKS_RTTI
+endif
 endif # rtti
 
 ifneq ($(optimize),1)

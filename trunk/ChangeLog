@@ -1,3 +1,9 @@
+Thu Dec 2 08:32:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Changed template handling to allow implicit template instantiation
+          with VxWorks GNU toolchain.
+
 Wed Dec  1 15:01:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Threads/Guards.cpp:
