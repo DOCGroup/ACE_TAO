@@ -381,15 +381,15 @@ TAO_CodeGen::start_server_header (const char *fname)
     {
       return -1;
     }
-    
+
   // If we are suppressing skel file generation, bail after generating the
-  // copyright text and an informative message.  
+  // copyright text and an informative message.
   if (!be_global->gen_skel_files ())
     {
       *this->server_header_ << be_nl
                             << "// Skeleton file generation suppressed with "
                             << "command line option -SS" << be_nl;
-                            
+
       return 0;
     }
 
@@ -1636,8 +1636,11 @@ TAO_CodeGen::gen_skel_src_includes (void)
         break;
     }
 
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ForwardRequestC.h");
+  if (be_global->gen_direct_collocation ())
+    {
+      this->gen_standard_include (this->server_skeletons_,
+                                  "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h");
+    }
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Upcall_Command.h");
   this->gen_standard_include (this->server_skeletons_,
