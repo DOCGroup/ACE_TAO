@@ -10,9 +10,15 @@ set nsiorfile=%temp%\qns_ior
 set del=2
 
 REM variables for parameters
+
+set nsport=20002
+set clport=20003
+set svport=20004
+set ffport=20005
 set n=1
 set leave=/C
 set ior=0
+set done=
 
 :get_args
 
@@ -20,13 +26,34 @@ if %1 == /h goto is_h
 if %1 == /? goto is_h
 goto no_h
 :is_h
-echo run_test [/n num] [/leave] [/h]
+echo run_test [/n num] [/leave] [/h] [/ns|sv|ff|cl]
 echo.
-echo /n num  -- runs the client num times
-echo /leave  -- leaves the servers running and their windows open
-echo /h      -- prints this information
+echo /n num          -- runs the client num times
+echo /leave          -- leaves the servers running and their windows open
+echo /h              -- prints this information
+echo /ns /sv /ff /cl -- Runs each separately
 quit
 :no_h
+
+if not %1 == /ns goto no_ns
+set done=quit
+goto run_name_server
+:no_ns
+
+if not %1 == /sv goto no_sv
+set done=quit
+goto run_server
+:no_sv
+
+if not %1 == /ff goto no_ff
+set done=quit
+goto run_finder
+:no_ff
+
+if not %1 == /cl goto no_cl
+set done=quit
+goto run_client
+:no_cl
 
 if not %1 == /n goto no_n
 set n=%2
@@ -41,30 +68,48 @@ shift
 goto get_args
 :no_leave
 
+:run_name_server
 REM Naming Service must have been built or else this will fail
-start "Naming Service" %leave ..\..\orbsvcs\Naming_Service\Naming_Service.exe -ORBobjrefstyle url -o %nsiorfile
+start "Naming Service" %leave ..\..\orbsvcs\Naming_Service\Naming_Service.exe -ORBport %nsport -ORBobjrefstyle url -o %nsiorfile
 rem -ORBnameserviceior %temp\qns_ior
+
+%done
 
 REM Delay some to let the Naming Service get set up
 DELAY %del
 
+:run_server
 REM read in the IOR from the file
 for %%d in (@%nsiorfile) do set ior=%%d
 
 REM Start the server
-start "Quoter Server" %leave Quoter_Server.exe -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf server.conf 
+start "Quoter Server" %leave Quoter_Server.exe -ORBport %svport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf server.conf 
+
+%done
 
 REM Delay some to let the server get set up
 DELAY %del
 
+:run_finder
+REM read in the IOR from the file
+for %%d in (@%nsiorfile) do set ior=%%d
+
 REM Start the factory finder
-start "Quoter Factory Finder" %leave QuoterFactoryFinder.exe -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf svc.conf
+rem start "Quoter Factory Finder" %leave QuoterFactoryFinder.exe -ORBport %ffport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf svc.conf
+
+%done
 
 REM Delay some to let the Factory Finder get set up
 DELAY %del
 
+:run_client
+REM read in the IOR from the file
+for %%d in (@%nsiorfile) do set ior=%%d
+
 REM And now start the client
-for /l %x in (1,1,%n) do Quoter_Client.exe -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf client.conf
+for /l %x in (1,1,%n) do Quoter_Client.exe -ORBobjrefstyle url -ORBport %clport -ORBnameserviceior %ior -ORBsvcconf client.conf
+
+%done
 
 REM We don't really need to delete this
 REM del %temp%\qns_ior
