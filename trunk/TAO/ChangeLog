@@ -1,3 +1,10 @@
+Mon Sep 13 09:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/UShortSeqC.h:
+          Explictly export the base template, to fix duplicate link errors
+          when linking DsAdmin. This is a workaround for a bug in the vc7
+          compiler.
+
 Sun Sep 12 17:08:17 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
