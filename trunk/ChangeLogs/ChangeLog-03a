@@ -1,5 +1,10 @@
 Mon Jan 15 15:22:42 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Asynch_IO.h: Changed the ACE_Asynch_Read_Stream::read()
+	  method's "bytes_to_read" parameter to "num_bytes_to_read" to
+ 	  workaround a weird problem with some compilers.  Thanks to Chris
+ 	  Kohlhoff <chris@kohlhoff.com> for this fix.
+
 	* examples/Service_Configurator/IPC-tests/README: Updated this
 	  file so that it's now up-to-date and also explains how to
  	  reconfigure a server if SIGHUP isn't supported.  Thanks to Mike
