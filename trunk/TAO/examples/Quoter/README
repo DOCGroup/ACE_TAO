@@ -14,6 +14,11 @@ working on other platforms as soon as it is completed.
 DOCUMENTATION FOR THE EXAMPLE
 =============================
 
+Note: Moving the Quoter object is no longer available!
+      The code was relying on ORB internal mechanisms. One way to
+	  implement the move operation in a standard way would be
+	  to use a servant locator on the POA managing the Quoter object.
+
 Context: The Quoter example serves several tests, the first is the test
          of several multithreading policies and the second is showing the 
          use of the Life Cycle Service as it is defined in the 
@@ -72,12 +77,6 @@ client: Creates one Quoter through using the Quoter_Factory_Finder. After that
         client->Quoter->Quoter_Factory_Finder->Quoter_Life_Cycle_Service
               ->Quoter_Generic_Factory->Quoter_Factory
 
-
-
-!!!!Note: 
-To make use of the move operation you need to use the -sm switch on 
-the perl script. This activates in the server multiple objects, which is needed for
-moving.
 
 RUNNING THE EXAMPLE
 ===================

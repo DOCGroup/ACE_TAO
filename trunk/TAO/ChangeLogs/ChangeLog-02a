@@ -1,3 +1,16 @@
+Fri 13 10:07:16 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* examples/Quoter/Quoter_i.cpp: Removed the code to move the
+	  Quoter object. This code was relying on the proprietary 
+	  TAO_POA::forward_object () method. To implement the move ()
+	  operation in a standard way, the whole example would have 
+	  needed to be rewritten using a PortableServer::ServantLocator.
+	 
+	* examples/Quoter/client.cpp: Removed the code for moving
+	  the Quoter object.
+
+	* examples/Quoter/README: Documented the step described above. 
+
 Fri Oct 13 06:28:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/IFR_Service.bor:

@@ -277,76 +277,14 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
                        CosLifeCycle::InvalidCriteria,
                        CosLifeCycle::CannotMeetCriteria))
 {
-  const char *exception_message = "Null message";
+  ACE_UNUSED_ARG (there);
+  ACE_UNUSED_ARG (the_criteria);
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,"Quoter_i::move: being called\n"));
+  ACE_ERROR ((LM_ERROR, 
+			  "Quoter_i::move: The Quoter object is not movable!"));
 
-  ACE_TRY
-    {
-      // We need to have a Factory Finder
-      if (CORBA::is_nil (there))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Quoter_i::move: No Factory Finder, don't know how to go on.\n"));
+  ACE_THROW (new CosLifeCycle::NotMovable);
 
-          ACE_THROW (CosLifeCycle::NoFactory ());
-        }
-
-      // We need to have access to the POA
-      if (CORBA::is_nil (this->poa_var_.in()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Quoter_i::move: No access to the POA. Cannot move.\n"));
-          ACE_THROW (CosLifeCycle::NotMovable ());
-        }
-
-      // Create a new Quoter over there
-      exception_message = "While creating a new Quoter";
-      CosLifeCycle::LifeCycleObject_var lifeCycleObject_var =
-        this->copy (there, the_criteria, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (lifeCycleObject_var.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Quoter_i::move: Created Quoter is not valid.\n"));
-          ACE_THROW (CosLifeCycle::NoFactory ());
-        }
-
-      // Set the POA, so that the requests will be forwarded to the new location
-
-      // new location
-      CORBA::Object_var forward_to_var =
-        CORBA::Object::_duplicate ((CORBA::Object_ptr) lifeCycleObject_var.in());
-
-      if (!CORBA::is_nil (forward_to_var.in ()))
-        {
-          exception_message = "While servant_to_id";
-          PortableServer::ObjectId_var oid = this->poa_var_->servant_to_id (this, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, this->poa_var_.in ());
-
-          exception_message = "While forwarding object";
-          tao_poa->forward_object (oid.in (),
-                                   forward_to_var.in (),
-                                   ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,"Quoter_i::move: forward_to refenence is nil.\n"));
-          ACE_THROW (CosLifeCycle::NotMovable());
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_ERROR ((LM_ERROR,"Quoter_i::move: %s\n", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
-      return;
-    }
-  ACE_ENDTRY;
 }
 
 
