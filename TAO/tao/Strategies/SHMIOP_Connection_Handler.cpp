@@ -72,11 +72,11 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   TAO_SHMIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
-  protocol_properties.send_buffer_size_ = 
+  protocol_properties.send_buffer_size_ =
     this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  protocol_properties.recv_buffer_size_ = 
+  protocol_properties.recv_buffer_size_ =
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  protocol_properties.no_delay_ = 
+  protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
 
   TAO_Protocols_Hooks *tph =
@@ -86,9 +86,9 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   int client = 0;
 
   if (client)
-    tph->client_protocol_properties_at_orb_level (protocol_properties);  
+    tph->client_protocol_properties_at_orb_level (protocol_properties);
   else
-    tph->server_protocol_properties_at_orb_level (protocol_properties);  
+    tph->server_protocol_properties_at_orb_level (protocol_properties);
 
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
@@ -231,12 +231,6 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
   // Add the handler to Cache
   return cache.cache_idle_transport (&prop,
                                      this->transport ());
-}
-
-int 
-TAO_SHMIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean)
-{
-  return 0;
 }
 
 // ****************************************************************

@@ -13,11 +13,9 @@ ACE_RCSID (SSLIOP,
 #include "tao/debug.h"
 
 
-int
-TAO::SSLIOP::Util::setup_handler_state (
-  TAO_ORB_Core *orb_core,
-  TAO_IIOP_Properties *tcp_properties,
-  TAO::SSLIOP::Connection_Handler_State &s)
+TAO::SSLIOP::Current_ptr
+TAO::SSLIOP::Util::current (
+  TAO_ORB_Core *orb_core)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -40,9 +38,7 @@ TAO::SSLIOP::Util::setup_handler_state (
       if (CORBA::is_nil (tao_current.in ()))
         ACE_TRY_THROW (CORBA::INV_OBJREF ());
 
-
-      s.tcp_properties = tcp_properties;
-      s.ssliop_current = tao_current;
+      return tao_current._retn ();
     }
   ACE_CATCHANY
     {
@@ -51,7 +47,7 @@ TAO::SSLIOP::Util::setup_handler_state (
                              "Could not resolve "
                              "\"SSLIOPCurrent\" object");
 
-      return -1;
+      return 0;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);

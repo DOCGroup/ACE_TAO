@@ -30,8 +30,7 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *
     TAO_Connection_Handler (0),
     udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
     mcast_socket_ (),
-    using_mcast_ (0),
-    uipmc_properties_ (0)
+    using_mcast_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -42,15 +41,12 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *
 }
 
 
-TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                            void *arg)
+TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_UIPMC_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
     mcast_socket_ (),
-    using_mcast_ (0),
-    uipmc_properties_ (ACE_static_cast
-                       (TAO_UIPMC_Properties *, arg))
+    using_mcast_ (0)
 {
   TAO_UIPMC_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,

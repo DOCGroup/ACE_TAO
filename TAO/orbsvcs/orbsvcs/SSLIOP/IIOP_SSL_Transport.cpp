@@ -1,5 +1,6 @@
 #include "IIOP_SSL_Transport.h"
 #include "IIOP_SSL_Connection_Handler.h"
+#include "SSLIOP_Util.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -15,13 +16,13 @@ ACE_RCSID (SSLIOP,
 TAO::IIOP_SSL_Transport::IIOP_SSL_Transport (
     IIOP_SSL_Connection_Handler *handler,
     TAO_ORB_Core *orb_core,
-    TAO::SSLIOP::Current_ptr current,
     CORBA::Boolean flag)
   : TAO_IIOP_Transport (handler,
                         orb_core,
-                        flag),
-    current_ (TAO::SSLIOP::Current::_duplicate (current))
+                        flag)
 {
+  this->current_ =
+    TAO::SSLIOP::Util::current (orb_core);
 }
 
 TAO::IIOP_SSL_Transport::~IIOP_SSL_Transport (void)
