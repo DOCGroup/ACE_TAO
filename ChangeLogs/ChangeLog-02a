@@ -1,3 +1,10 @@
+Thu Dec 20 18:20:51 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/RB_Tree.cpp: Added checks in the RB_tree_predecessor() and
+	  RB_tree_successor() methods to guard against indirections via a
+ 	  NULL pointer.  Thanks to Craig Ching <cching@mqsoftware.com> for
+ 	  reporting this fix.
+
 Thu Dec 20 18:05:32 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/Shared_Malloc/test_persistence.cpp: Added a nothrow

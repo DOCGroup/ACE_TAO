@@ -458,6 +458,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor (ACE_RB_T
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor");
 
+  if (x == 0)
+    return 0;
+
   if (x->right ())
     return RB_tree_minimum (x->right ());
 
@@ -477,6 +480,8 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor");
+  if (x == 0)
+    return 0;
 
   if (x->left ())
     return RB_tree_maximum (x->left ());
