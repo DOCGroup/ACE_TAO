@@ -6,7 +6,7 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/AV/Transport.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/Policy.h"
@@ -25,8 +25,10 @@ class FTP_Server_Callback
 {
 public:
   virtual int handle_stop (void);
-  virtual int receive_frame (ACE_Message_Block *frame);
-  virtual int handle_end_stream (void);
+  virtual int receive_frame (ACE_Message_Block *frame,
+                             TAO_AV_frame_info *frame_info = 0,
+                             const ACE_Addr &peer_address = ACE_Addr::sap_any);
+  virtual int handle_destroy (void);
 };
 
 class Server

@@ -27,7 +27,9 @@ FTP_Server_Callback::handle_stop (void)
 }
 
 int
-FTP_Server_Callback::receive_frame (ACE_Message_Block *frame)
+FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
+                                    TAO_AV_frame_info *,
+                                    const ACE_Addr &)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != 0)
@@ -44,7 +46,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame)
 }
 
 int
-FTP_Server_Callback::handle_end_stream (void)
+FTP_Server_Callback::handle_destroy (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::end_stream\n"));
   TAO_AV_CORE::instance ()->stop_run ();
@@ -73,9 +75,9 @@ Server::init (int argc,
 
       // Initialize the orb_manager
       this->orb_manager_->init_child_poa (argc,
-                                         argv,
-                                         "child_poa",
-                                         ACE_TRY_ENV);
+                                          argv,
+                                          "child_poa",
+                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =

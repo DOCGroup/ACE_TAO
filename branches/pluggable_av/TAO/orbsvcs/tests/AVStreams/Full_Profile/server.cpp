@@ -6,9 +6,10 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
   :TAO_FlowConsumer ("Data",SERVER::instance ()->protocols (),SERVER::instance ()->format ())
 {
   AVStreams::protocolSpec protocols (2);
-  protocols.length (2);
+  protocols.length (3);
   protocols [0] = CORBA::string_dup ("TCP");
   protocols [1] = CORBA::string_dup ("UDP");
+  protocols [2] = CORBA::string_dup ("RTP/UDP");
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -44,7 +45,8 @@ FTP_Server_Callback::handle_stop (void)
 }
 
 int
-FTP_Server_Callback::receive_frame (ACE_Message_Block *frame)
+FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
+                                    TAO_AV_frame_info *)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != 0)
@@ -69,26 +71,26 @@ FTP_Server_Callback::handle_end_stream (void)
   return 0;
 }
 
-FTP_Server_FDev::FTP_Server_FDev (void)
-  :TAO_FDev ("Data")
-{
-}
+// FTP_Server_FDev::FTP_Server_FDev (void)
+//   :TAO_FDev ("Data")
+// {
+// }
 
-AVStreams::FlowConsumer_ptr 
-FTP_Server_FDev::make_consumer (AVStreams::FlowConnection_ptr the_requester,
-                                AVStreams::QoS & the_qos,
-                                CORBA::Boolean_out met_qos,
-                                char *& named_fdev,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Server_FDev::make_consumer"));
-  FTP_Server_FlowEndPoint *endpoint;
-  ACE_NEW_RETURN (endpoint,
-                  FTP_Server_FlowEndPoint,
-                  0);
-  return endpoint->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-}
+// AVStreams::FlowConsumer_ptr 
+// FTP_Server_FDev::make_consumer (AVStreams::FlowConnection_ptr the_requester,
+//                                 AVStreams::QoS & the_qos,
+//                                 CORBA::Boolean_out met_qos,
+//                                 char *& named_fdev,
+//                                 CORBA::Environment &ACE_TRY_ENV)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Server_FDev::make_consumer"));
+//   FTP_Server_FlowEndPoint *endpoint;
+//   ACE_NEW_RETURN (endpoint,
+//                   FTP_Server_FlowEndPoint,
+//                   0);
+//   return endpoint->_this (ACE_TRY_ENV);
+//   ACE_CHECK_RETURN (0);
+// }
 
 Server::Server (void)
   :orb_manager_ (TAO_AV_CORE::instance ()->orb_manager ()),
@@ -160,6 +162,8 @@ Server::init (int argc,
       ACE_NEW_RETURN (this->fdev_,
                       FTP_Server_FDev,
                       -1);
+      this->fdev_->flowname ("Data");
+
       AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       AVStreams::FDev_var fdev = this->fdev_->_this (ACE_TRY_ENV);
@@ -263,8 +267,10 @@ main (int argc,
 template class ACE_Singleton <Server,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_B <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Server,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

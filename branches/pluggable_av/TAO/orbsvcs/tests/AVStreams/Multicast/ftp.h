@@ -13,35 +13,43 @@
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
 
-class FTP_Client_Flow_Handler
-  :public virtual ACE_Event_Handler
-{
-public:
-  FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
-                           ACE_Time_Value &timeout);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-  virtual int start (void);
-  virtual int stop (void);
-  virtual int set_protocol_object (TAO_AV_Protocol_Object *object);
-protected:
-  TAO_ORB_Manager *orb_manager_;
-  long timer_id_;
-  int count_;
-  TAO_AV_Protocol_Object *protocol_object_;
-  ACE_Time_Value timeout_;
-};
+// class FTP_Client_Flow_Handler
+//   :public virtual ACE_Event_Handler
+// {
+// public:
+//   FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
+//                            ACE_Time_Value &timeout);
+//   virtual int handle_timeout (const ACE_Time_Value &tv,
+//                               const void *arg = 0);
+//   virtual int start (void);
+//   virtual int stop (void);
+//   virtual int set_protocol_object (TAO_AV_Protocol_Object *object);
+// protected:
+//   TAO_ORB_Manager *orb_manager_;
+//   long timer_id_;
+//   int count_;
+//   TAO_AV_Protocol_Object *protocol_object_;
+//   ACE_Time_Value timeout_;
+// };
 
 class FTP_Client_Callback
   :public TAO_AV_Callback
 {
 public:
-  FTP_Client_Callback (FTP_Client_Flow_Handler *handler);
-  virtual int handle_start (void);
-  virtual int handle_stop (void);
+  FTP_Client_Callback (void);
+  //  FTP_Client_Callback (FTP_Client_Flow_Handler *handler);
+//   virtual int handle_start (void);
+//   virtual int handle_stop (void);
   virtual int handle_end_stream (void);
+  void set_protocol_object (TAO_AV_Protocol_Object *protocol_object) {this->protocol_object_ = protocol_object;}
+  virtual int handle_timeout (void *arg);
+  virtual void get_timeout (ACE_Time_Value *&tv,
+                            void *&arg);
+
 protected:
-  FTP_Client_Flow_Handler *handler_;
+  int count_;
+  //  FTP_Client_Flow_Handler *handler_;
+  TAO_AV_Protocol_Object *protocol_object_;
 };
 
 class FTP_Client_StreamEndPoint
@@ -57,7 +65,7 @@ public:
                                    TAO_AV_Protocol_Object *object);
 protected:
   TAO_ORB_Manager *orb_manager_;
-  FTP_Client_Flow_Handler *handler_;
+  //  FTP_Client_Flow_Handler *handler_;
   FTP_Client_Callback *callback_;
 };
 

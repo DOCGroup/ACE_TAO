@@ -1,17 +1,43 @@
-Thu Jul 29 22:48:54 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+Mon Aug  9 15:25:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/MProfile/README:
-	* tests/MProfile/test_i.cpp:
-	* tests/MProfile/test_i.h:
-	* tests/MProfile/client.cpp:
-	* tests/MProfile/server.cpp:
-	* tests/MProfile/test.idl
-	* tests/MProfile/Makefile:
-	* tests/MProfile/client.dsp:
-	* tests/MProfile/server.dsp:
-	* tests/MProfile/MProfile.dsw: An example application that use IOR
-	  merging to demonstrate  FT aspects.
+	* orbsvcs/orbsvcs/AV/: 
+          Split the Transport files for different protocols like UDP and
+	  TCP seperate files. Also added a new Protocol_Factory.{h,cpp}
+	  which contains the factory information. Added new flow protocol
+	  classes and remodelled the architecture with true layering
+	  between the Protocol_Object and the Transport class. 
 
+Tue Aug  3 14:24:21 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} : Defined the
+	  TAO_String_Hash_Key from Trader.{h,cpp} with TAO_Has_Trader
+	  flags so it gets defined if Trader is not defined. Added code to
+	  set the source ids for flow producers. Fixed a bug in
+	  add_producer code which wont add a second producer. 
+
+	* orbsvcs/orbsvcs/AV/Flows_T.{h,cpp}: Templatized the FDev by the
+	  concrete producer and consumer and also moved them to the
+	  separate files.
+
+	* orbsvcs/orbsvcs/AV/AV_Core.{h,cpp}: Moved the AV_Core class
+	  to this file.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.i: Inlined all the small
+	  functions in TAO_AV_Qos class.
+
+	* orbsvcs/orbsvcs/AV/Transport.i: Moved all inline functions to
+	  this file.
+
+	* orbsvcs/orbsvcs/AV/Policy.h: Added a new send_frame on the
+	  protocol object to send iovecs. 
+
+	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}: Added an implementation for
+	  send_frame using iovecs. Also fixed a bug in the creation of
+	  RTCP_Flow_Handler in the UDP_MCast_Connector.
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.{h,i,cpp}: Moved all the
+	  FlowSpec_Entry class code to a separate file.
+	
 Mon Jul 26 18:27:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/RTCP.{h,cpp}: 
