@@ -221,14 +221,14 @@ namespace CIAO
 
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::ConsumerDescriptions *tmp = 0;
-    ACE_NEW_RETURN (tmp,
-                    ::Components::ConsumerDescriptions,
-                    0);
+    ACE_NEW_THROW_EX (tmp,
+                      ::Components::ConsumerDescriptions (this->consumer_table_.current_size ()),
+                      CORBA::NO_MEMORY ());
 
     ::Components::ConsumerDescriptions_var retval = tmp;
 
@@ -239,6 +239,7 @@ namespace CIAO
          iter != this->consumer_table_.end ();
          ++iter, ++i)
       {
+        // ACE_DEBUG ((LM_DEBUG, "EXECUTING \n"));
         ConsumerTable::ENTRY & entry = *iter;
         retval[i] = entry.int_id_;
       }
