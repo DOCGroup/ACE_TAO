@@ -649,6 +649,11 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   ACE_TRY_NEW_ENV
     {
       // Try to recv a new request.
+
+      // Init the input message states in Transport.
+      this->iiop_transport_->message_size (0);
+
+      // Recv message. Block for it.
       TAO_GIOP::Message_Type type =
         TAO_GIOP::recv_message (this->iiop_transport_,
                                 input,
