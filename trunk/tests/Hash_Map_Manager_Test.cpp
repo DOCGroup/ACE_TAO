@@ -177,17 +177,19 @@ static String_Table string_table[] =
   { "funny",
     "lustig" 
   },
-  { 0, 0 }
+  { 0,
+    0 
+  }
 };
 
-static const int MAX_HASH = 256;
+static const int STRING_TABLE_SIZE = 3;
+static const int MAX_HASH = 6;
 
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
 // out how to simplify this.
-static const int POOL_SIZE = 
-  sizeof (HASH_STRING_ENTRY) * 3 // Number of items in <string_table>.
-  + sizeof (HASH_STRING_ENTRY) * MAX_HASH; // Size of the Hash_Map_Manager table
+static const POOL_SIZE = sizeof (HASH_STRING_ENTRY) * STRING_TABLE_SIZE
+                         + sizeof (HASH_STRING_ENTRY) * MAX_HASH; 
 
 static ACE_Static_Allocator<POOL_SIZE> allocator;
 
@@ -288,12 +290,10 @@ template class ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
-template class ACE_Static_Allocator<POOL_SIZE>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>
 #pragma instantiate ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
-#pragma instantiate ACE_Static_Allocator<POOL_SIZE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
