@@ -1,3 +1,12 @@
+Thu Mar  3 13:15:02 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Config_Handlers/DnC_Dump.h
+	* Config_Handlers/DnC_Dump_T.cpp
+	* Config_Handlers/Dump_Obj.h
+	* Config_Handlers/Config_Handlers.mpc
+
+	Checked these files into the xsc_handler_1 branch, with a few changes.
+	
 Mon Mar 03 01:45:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* examples/BasicSP/BMDisplay/BMDisplay.idl

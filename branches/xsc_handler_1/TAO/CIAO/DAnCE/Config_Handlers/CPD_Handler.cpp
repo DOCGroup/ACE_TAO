@@ -35,12 +35,13 @@ namespace CIAO
       if (desc.kind () == CCMComponentPortKind::EventPublisher)
         toconfig.kind = Deployment::EventPublisher;
       if (desc.kind () == CCMComponentPortKind::EventConsumer)
-        toconfig.kind = Deployment::EventConsumer;
-
-      toconfig.provider = desc.provider ().empty ();
-      toconfig.exclusiveProvider = !desc.exclusiveProvider ().empty ();
-      toconfig.exclusiveUser = !desc.exclusiveUser ().empty ();
-      toconfig.optional =  !desc.optional ().empty ();
+        toconfig.kind = Deployment::EventConsumer;      
+      
+      /* @@BUG: We need to consider how to handle booleans. */
+      toconfig.provider = desc.provider () == "true";
+      toconfig.exclusiveProvider = desc.exclusiveProvider () == "true";
+      toconfig.exclusiveUser = desc.exclusiveUser () == "true";
+      toconfig.optional =  desc.optional () == "true";
     }
     
     ComponentPortDescription

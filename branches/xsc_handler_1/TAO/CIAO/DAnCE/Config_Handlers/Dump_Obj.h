@@ -2,7 +2,7 @@
 /**
  *  @file  Dump_Obj.h
  *
- *  $Id$
+ * $Id$
  *
  *  @author Gan Deng <gan.deng@vanderbilt.edu>
  */
@@ -18,7 +18,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Config_Handler_export.h"
+#include "Config_Handlers_Export.h"
 #include <string>
 #include <map>
 
@@ -28,7 +28,7 @@ namespace Deployment
    *  @brief class Dump_Obj handles the indentation and keeps a map of
    * structures for reference look-up.
    */
-  class Config_Handler_Export Dump_Obj
+  class Config_Handlers_Export Dump_Obj
   {
   public:
     /// Exception thrown when there is a node with the same name in the
