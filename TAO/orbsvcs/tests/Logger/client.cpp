@@ -84,13 +84,14 @@ Logger_Client::show_record (Logger::Log_Record &newrec)
 
   ACE_DEBUG ((LM_DEBUG,
 	      " Log Priority: %d\n"
-	      "Log_Verbosity: %d\n" 
 	      "         Time: %d\n"
 	      "          PID: %d\n"
 	      " Host Address: %s\n"
 	      "      Message: %s\n",
-	      newrec.type, newrec.verbosity, newrec.time,
-	      newrec.app_id, inet_ntoa (address),
+	      newrec.type,
+              newrec.time,
+	      newrec.app_id,
+              inet_ntoa (address),
 	      newrec.msg_data.in ()));
 }
 
@@ -160,16 +161,13 @@ Logger_Client::run (void)
       Logger::Log_Record rec2;
 
       // Setup the first log record
-      this->init_record (rec1, Logger::LM_DEBUG,
-			  ACE_static_cast
-			  (Logger::Log_Verbosity, Logger_Client::verb_level_),
-			  "Logging at logger 1\n");
+      this->init_record (rec1,
+                         Logger::LM_DEBUG,
+                         "Logging at logger 1\n");
       
       // Setup the second log record
       this->init_record (rec2,
                          Logger::LM_ERROR,
-                         ACE_static_cast (Logger::Log_Verbosity,
-                                          Logger_Client::verb_level_),	
                          "Logging at logger 2\n");
 
       // If debugging, output the new log records
