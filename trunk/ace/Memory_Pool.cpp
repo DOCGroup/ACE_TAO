@@ -1092,8 +1092,11 @@ ACE_Pagefile_Memory_Pool::remap (void *addr)
 int
 ACE_Pagefile_Memory_Pool::unmap (void)
 {
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind
     (this->local_cb_.mapped_base_);
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+
   // Cleanup cached pool pointer.
   this->shared_cb_ = 0;
 
@@ -1264,9 +1267,11 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
   // Update local copy of the shared memory statistics.
   this->local_cb_.sh_ =
     this->shared_cb_->sh_;
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
   ACE_BASED_POINTER_REPOSITORY::instance ()->bind
     (this->local_cb_.mapped_base_,
      this->local_cb_.sh_.mapped_size_);
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   return 0;
 }

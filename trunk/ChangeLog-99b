@@ -1,3 +1,9 @@
+Sat Dec 04 19:45:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp: Conditionally bind/unbind the
+	  Pagefile_Memory_Pool with the Based_Pointer_Repository depends
+	  on whether position independent pointers are used or not.
+
 Sat Dec  4 16:59:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	Circular dependency fixes/updates:
