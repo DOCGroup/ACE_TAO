@@ -346,10 +346,10 @@ int
 ACE_NT_Service::state (DWORD *pstate, ACE_Time_Value *wait_hint)
 {
 
-  DWORD state = state (wait_hint);
-  if (state > 0)
-    *pstate = state;
-  return state == 0 ? -1 : 0;
+  DWORD curr_state = state (wait_hint);
+  if (curr_state > 0)
+    *pstate = curr_state;
+  return curr_state == 0 ? -1 : 0;
 
 }
 
