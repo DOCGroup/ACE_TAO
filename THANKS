@@ -757,7 +757,8 @@ Boris Kaminer <kaminer.boris@cherus.msk.ru>
 Martin Botzler <martin.botzler@mchp.siemens.de>
 Lorin Hochstein <lmh@xiphos.ca>
 Wenli Bai <bai@gsao.med.ge.com>
-Harry Forry <harry_l_forry@res.raytheon.com>
+Harry Forry <harry_l_forry@res.raytheon.com>>
+Joerg Pommnitz <pommnitz@darmstadt.gmd.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
