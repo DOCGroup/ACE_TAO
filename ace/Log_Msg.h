@@ -194,13 +194,20 @@ public:
   /// cleanup logger.
   ~ACE_Log_Msg (void);
 
+  /// Initialize the ACE logging facility.
   /**
-   * Initialize the ACE error handling facility.  <prog_name> is the
-   * name of the executable program.  <flags> are a bitwise-or of
-   * options flags passed to the Logger (see the enum above for the valid
-   * values).  If the <LOGGER> bit in <flags> is enabled then
-   * <logger_key> is the name of ACE_FIFO rendezvous point where the
-   * local client logger daemon is listening for logging messages.
+   * Initialize the ACE logging facility. Supplies the program name
+   * that is available to each logging message call. Default arguments
+   * set up logging to STDERR only.
+   *
+   * @param prog_name  The name of the calling program.
+   * @param flags      A bitwise-or of options flags used to set the
+   *                   initial behavior and logging sink(s). (see the
+   *                   enum above for the valid values).
+   * @param logger_key The name of ACE_FIFO rendezvous point where the
+   *                   local client logger daemon is listening for logging
+   *                   messages. Only meaningful if the LOGGER bit is
+   *                   set in the <flags> argument.
    */
   int open (const ACE_TCHAR *prog_name,
             u_long options_flags = ACE_Log_Msg::STDERR,
@@ -406,24 +413,29 @@ public:
   /**
    * Format a message to the thread-safe ACE logging mechanism.  Valid
    * options (prefixed by '%', as in printf format strings) include:
-   *  + 'A': print an ACE_timer_t value (which could be either double or ACE_UINT32.)
+   *  + 'A': print an ACE_timer_t value (which could be either double
+   *         or ACE_UINT32.)
    *  + 'a': abort the program at this point abruptly.
    *  + 'c': print a character
    *  + 'C': print a character string
    *  + 'i', 'd': print a decimal number
-   *  + 'I', indent according to nesting depth (obtained from <ACE_Trace::get_nesting_indent>).
+   *  + 'I': indent according to nesting depth (obtained from
+   *         <ACE_Trace::get_nesting_indent>).
    *  + 'e', 'E', 'f', 'F', 'g', 'G': print a double
-   *  + 'l', print line number where an error occurred.
-   *  + 'm': Return the message corresponding to errno value, e.g., as done by strerror()
+   *  + 'l': print line number where an error occurred.
+   *  + 'm': return the message corresponding to errno value, e.g., as
+   *         done by strerror()
    *  + 'N': print file name where the error occurred.
    *  + 'n': print the name of the program (or "<unknown>" if not set)
    *  + 'o': print as an octal number
    *  + 'P': print out the current process id
-   *  + 'p': print out the appropriate errno message from sys_errlist, e.g., as done by perror()
+   *  + 'p': print out the appropriate errno message from sys_errlist,
+   *         e.g., as done by perror()
    *  + 'Q': print out the uint64 number
    *  + 'r': call the function pointed to by the corresponding argument
    *  + 'R': print return status
-   *  + 'S': print out the appropriate _sys_siglist entry corresponding to var-argument.
+   *  + 'S': print out the appropriate _sys_siglist entry corresponding
+   *         to var-argument.
    *  + 's': print out a character string
    *  + 'T': print timestamp in hour:minute:sec:usec format.
    *  + 'D': print timestamp in month/day/year hour:minute:sec:usec format.
