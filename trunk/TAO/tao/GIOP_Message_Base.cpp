@@ -425,13 +425,16 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 
       // Now grow the message block so that we can copy the rest of
       // the data...
-      ACE_CDR::grow (qd->msg_block_,
-                     state.message_size ());
+      if (qd->msg_block_->space () < state.message_size ())
+        {
+          ACE_CDR::grow (qd->msg_block_,
+                         state.message_size ());
+        }
 
       // Copy the pay load..
-
       // Calculate the bytes that needs to be copied in the queue...
-      size_t copy_len =  state.payload_size ();
+      size_t copy_len =
+        state.payload_size ();
 
       // If the data that needs to be copied is more than that is
       // available to us ..
@@ -518,18 +521,24 @@ TAO_GIOP_Message_Base::consolidate_fragments (TAO_Queued_Data *dqd,
     sqd->msg_block_->rd_ptr (TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
 
   // Get the length of the incoming message block..
-  int incoming_size = sqd->msg_block_->length ();
+  size_t incoming_length =
+    sqd->msg_block_->length ();
 
-  // Increase the size of the destination message block
-  ACE_Message_Block *mb = dqd->msg_block_;
+  // Increase the size of the destination message block if we need
+  // to.
+  ACE_Message_Block *mb =
+    dqd->msg_block_;
 
-  ACE_CDR::grow (mb,
-                 mb->size () + incoming_size);
+  // Check space before growing.
+  if (mb->space () < incoming_length)
+    {
+      ACE_CDR::grow (mb,
+                     mb->length () + incoming_length);
+    }
 
   // Copy the data
   dqd->msg_block_->copy (sqd->msg_block_->rd_ptr (),
-                         incoming_size);
-
+                         incoming_length);
   return 0;
 }
 
