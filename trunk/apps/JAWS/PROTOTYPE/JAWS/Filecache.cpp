@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/OS.h"
+#include "ace/FILE_Connector.h"
+
 #include "JAWS/Filecache.h"
 #include "JAWS/Cache_List_T.h"
 
@@ -32,7 +35,34 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 
   if (this->data () != 0)
-    handle = ACE_OS::dup (this->data ()->get_handle ());
+    {
+      handle = ACE_OS::dup (this->data ()->get_handle ());
+    }
+  else
+    {
+      JAWS_FILE *file = new JAWS_FILE;
+      ACE_FILE_Connector file_connector;
+
+      int result = file_connector.connect (*file, ACE_FILE_Addr (filename));
+      if (result == -1 || file->get_handle () == ACE_INVALID_HANDLE)
+        {
+          // TODO: do something here!
+        }
+
+      ACE_FILE_Info info;
+      file->get_info (info);
+
+      handle = ACE_OS::dup (file->get_handle ());
+
+      {
+        JAWS_Cached_FILE cf (filename, file, info.size_, cm);
+        if (cf.data () != 0)
+          {
+            new (this) JAWS_Cached_FILE (filename, cm);
+            return;
+          }
+      }
+    }
 
   this->file_.set_handle (handle);
 }
@@ -59,7 +89,7 @@ JAWS_Cached_FILE::file (void)
 ACE_Mem_Map *
 JAWS_Cached_FILE::mmap (void)
 {
-  return this->data ()->mem_map ();
+  return (this->data () == 0 ? 0 : this->data ()->mem_map ());
 }
 
 

@@ -267,7 +267,7 @@ JAWS_Assoc_Array_Iterator (const JAWS_Assoc_Array_Iterator<KEY, DATA> &aai)
 
 template <class KEY, class DATA> void
 JAWS_Assoc_Array_Iterator<KEY,DATA>::
-operator= (const JAWS_Assoc_Array_Iterator<KEY, DATA> &aai)
+operator= (const JAWS_Assoc_Array_Iterator<KEY, DATA> &)
 {
 }
 
