@@ -221,13 +221,12 @@ main (int argc, char **argv)
       ACE_TIMEPROBE_PRINT;
       
       ACE_OS::free (IOR);
-      
-      return 0;
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Error!");
-      return 0;
     }
   TAO_ENDTRY;  
+
+  return 0;
 }
