@@ -172,6 +172,7 @@ libACE_Utils_la_SOURCES = \
   Profile_Timer.cpp \
   Registry.cpp \
   SString.cpp \
+  Basic_Stats.cpp \
   Stats.cpp \
   Sample_History.cpp \
   System_Time.cpp \
@@ -705,6 +706,7 @@ HEADER_FILES = \
   Signal.h \
   Singleton.h \
   Sock_Connect.h \
+  Basic_Stats.h \
   Stats.h \
   Sample_History.h \
   Strategies.h \
@@ -928,6 +930,7 @@ INLINE_FILES = \
   Signal.i \
   Singleton.i \
   Sock_Connect.i \
+  Basic_Stats.inl \
   Stats.i \
   Sample_History.inl \
   Strategies.i \
