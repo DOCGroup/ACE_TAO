@@ -9,7 +9,7 @@
 
 
 <softpkg name="CIAO-HelloWorld-Servant" version=="1.0">
-  <pkgtype>CIAO Servants</pkgtype>
+  <pkgtype>CIAO Servant</pkgtype>
   <title>Hello World Servants</title>
   <author>
     <company>Washington University in St. Louis</company>

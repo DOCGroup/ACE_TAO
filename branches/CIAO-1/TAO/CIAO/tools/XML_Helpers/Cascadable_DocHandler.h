@@ -131,7 +131,47 @@ namespace CIAO
       const ACEXML_Char *localName (void) const;
       const ACEXML_Char *qName (void) const;
 
+      /**
+       * Receive an object for locating the origin of SAX document events.
+       */
+      virtual void setDocumentLocator (ACEXML_Locator *locator) ;
+
+      // Methods inherit from ACEXML_ErrorHandler.
+
+      /**
+       * Receive notification of a recoverable error.
+       */
+      virtual void error (ACEXML_SAXParseException &exception
+                          ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException))
+        ;
+
+      /**
+       * Receive notification of a non-recoverable error.
+       */
+      virtual void fatalError (ACEXML_SAXParseException &exception
+                               ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException))
+        ;
+
+      /**
+       * Receive notification of a warning.
+       */
+      virtual void warning (ACEXML_SAXParseException &exception
+                            ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException))
+        ;
+
     protected:
+      /**
+       * Print out an error/warning message
+       */
+      virtual void print_warning (const ACEXML_Char *level,
+                                  ACEXML_SAXParseException &exception
+                                  ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException))
+        ;
+
       /**
        * Element tag information.
        */
@@ -152,6 +192,9 @@ namespace CIAO
     private:
       /// No implement
       Cascadable_DocHandler ();
+
+      /// Pointer to Locator.
+      ACEXML_Locator* locator_;
     };
 
     /**
@@ -175,7 +218,7 @@ namespace CIAO
       /// Destructor
       virtual ~Skip_DocHandler ();
 
-      /*
+      /**
        * Receive notification of the end of an element.
        */
       virtual void endElement (const ACEXML_Char *namespaceURI,
@@ -184,7 +227,7 @@ namespace CIAO
                                ACEXML_ENV_ARG_DECL)
         ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
-      /*
+      /**
        * Receive notification of the beginning of an element.
        */
       virtual void startElement (const ACEXML_Char *namespaceURI,

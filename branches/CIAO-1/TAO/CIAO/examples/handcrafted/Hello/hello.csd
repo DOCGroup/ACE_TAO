@@ -8,7 +8,7 @@
 <!-- implementations. -->
 
 
-<softpkg name="CIAO-HelloWorld" version=="1.0">
+<softpkg name="CIAO-HelloWorld" version="1.0">
   <pkgtype>CORBA Component</pkgtype>
   <title>Hello World</title>
   <author>
@@ -49,7 +49,7 @@
     </dependency>
 
     <!-- CIAO extension -->
-    <dependency type="DLL">
+    <dependency type="CIAODLL">
       <softpkgref>
         <!-- .ssd stands for Servant Software Descriptors which is a CIAO extension -->
         <fileinarchive name="hello.ssd"/>
@@ -60,7 +60,7 @@
     <!-- What happens when one define descriptors for both softpkg and -->
     <!-- implementations? -->
 
-    <code>
+    <code type="DLL">
       <!-- No need to specify extension below since ACE takes care of that, -->
       <fileinarchive name="hello_executors"/>
       <entrypoint>createHelloHome_Impl</entrypoint>
