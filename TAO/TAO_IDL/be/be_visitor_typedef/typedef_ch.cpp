@@ -191,8 +191,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_array - "
-                             "base class visitor failed \n"
-                             ),
+                             "base class visitor failed \n"),
                             -1);
         }
     }
