@@ -11,6 +11,9 @@ Mon Sep 22 07:11:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	  down this problem with failing to clone continuation blocks,
 	  and for providing the fix.
 
+	* ace/OS.{h,i} (ACE_U_LongLong): added operator!=, and made args
+	  const to ctor, operator/, hi, and lo member functions.
+
 Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Object_Manager.{h,cpp},Managed_Object.*,
