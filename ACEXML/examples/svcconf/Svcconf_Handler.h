@@ -153,7 +153,7 @@ public:
   /*
    * Receive an object for locating the origin of SAX document events.
    */
-  virtual void setDocumentLocator (ACEXML_Locator *locator) ;
+  virtual void setDocumentLocator (ACEXML_Locator *) ;
 
   /*
    * Receive notification of a skipped entity.
