@@ -85,7 +85,7 @@ int be_visitor_args_request_info_sh::visit_array (be_array *node)
       *os << this->type_name (node)<< " &";;
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<< " &";;
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -104,7 +104,7 @@ int be_visitor_args_request_info_sh::visit_enum (be_enum *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<< " &";;
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -123,7 +123,7 @@ int be_visitor_args_request_info_sh::visit_interface (be_interface *node)
       *os << this->type_name (node, "_ptr") << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<< " &";;
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -142,7 +142,7 @@ int be_visitor_args_request_info_sh::visit_interface_fwd (be_interface_fwd *node
       *os << this->type_name (node, "_ptr") << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<< " &";
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -183,7 +183,7 @@ int be_visitor_args_request_info_sh::visit_predefined_type (be_predefined_type *
           *os << this->type_name (node) << " &";
           break;
         case AST_Argument::dir_OUT:
-          *os << this->type_name (node, "_out")<<" &";
+          *os << this->type_name (node, "_out");
           break;
         } // end switch direction
     } // end of if
@@ -198,7 +198,7 @@ int be_visitor_args_request_info_sh::visit_predefined_type (be_predefined_type *
           *os << this->type_name (node, "_ptr") << " &";
           break;
         case AST_Argument::dir_OUT:
-          *os << this->type_name (node, "_out")<<" &";
+          *os << this->type_name (node, "_out");
           break;
         } // end switch direction
     } // end else if
@@ -213,7 +213,7 @@ int be_visitor_args_request_info_sh::visit_predefined_type (be_predefined_type *
           *os << this->type_name (node) << " &";
           break;
         case AST_Argument::dir_OUT:
-          *os << this->type_name (node, "_out")<<" &";
+          *os << this->type_name (node, "_out");
           break;
         } // end switch direction
     } // end of else
@@ -234,7 +234,7 @@ int be_visitor_args_request_info_sh::visit_sequence (be_sequence *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<<" &";
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -255,7 +255,7 @@ int be_visitor_args_request_info_sh::visit_string (be_string *node)
           *os << "char *&"<<" &";
           break;
         case AST_Argument::dir_OUT:
-          *os << "CORBA::String_out"<<" &";
+          *os << "CORBA::String_out";
           break;
         }
     }
@@ -270,7 +270,7 @@ int be_visitor_args_request_info_sh::visit_string (be_string *node)
           *os << "CORBA::WChar *&"<<" &";
           break;
         case AST_Argument::dir_OUT:
-          *os << "CORBA::WString_out"<<" &";
+          *os << "CORBA::WString_out";
           break;
         }
     }
@@ -291,7 +291,7 @@ int be_visitor_args_request_info_sh::visit_structure (be_structure *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<<" &";
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -310,7 +310,7 @@ int be_visitor_args_request_info_sh::visit_union (be_union *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<<" &";
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -347,7 +347,7 @@ int be_visitor_args_request_info_sh::visit_valuetype (be_valuetype *node)
       *os << this->type_name (node) << " *&";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<<" &";
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
@@ -366,7 +366,7 @@ int be_visitor_args_request_info_sh::visit_valuetype_fwd (be_valuetype_fwd *node
       *os << this->type_name (node) << " *&";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out")<<" &";
+      *os << this->type_name (node, "_out");
       break;
     }
   return 0;
