@@ -28,6 +28,12 @@ sub dollar_special {
 }
 
 
+sub expand_variables_from_template_values {
+  #my($self) = shift;
+  return 0;
+}
+
+
 sub sort_files {
   #my($self) = shift;
   return 0;

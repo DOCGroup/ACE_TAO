@@ -19,13 +19,25 @@ use File::Basename;
 my($basePath) = getExecutePath($0) . '/MakeProjectCreator';
 unshift(@INC, $basePath . '/modules');
 
-my($mpcpath) = (defined $ENV{MPC_CORE} ? "$ENV{MPC_CORE}" :
-                                         dirname(dirname($basePath)) . '/MPC');
+my($mpcroot) = $ENV{MPC_ROOT};
+my($mpcpath) = (defined $mpcroot ? $mpcroot :
+                                   dirname(dirname($basePath)) . '/MPC');
 unshift(@INC, $mpcpath . '/modules');
 
+if (defined $mpcroot) {
+  print STDERR "MPC_ROOT was set to $mpcroot.\n";
+}
+
 if (! -x "$mpcpath/modules") {
-  print STDERR "ERROR: Unable to access the MPC module path.\n" .
-               "       Perhaps you need to check out the MPC module?\n";
+  print STDERR "ERROR: Unable to find the MPC modules in $mpcpath.\n";
+  if (defined $mpcroot) {
+    print STDERR "Your MPC_ROOT environment variable does not point to a ",
+                 "valid MPC location.\n";
+  }
+  else {
+    print STDERR "You can set the MPC_ROOT environment variable to the ",
+                 "location of MPC.\n";
+  }
   exit(255);
 }
 
@@ -80,12 +92,10 @@ sub getExecutePath {
     $loc = dirname(which($prog));
   }
 
+  $loc =~ s/\/\.$//;
+
   if ($loc eq '.') {
     $loc = getcwd();
-  }
-
-  if ($loc ne '') {
-    $loc .= '/';
   }
 
   return $loc;

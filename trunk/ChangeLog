@@ -1,3 +1,39 @@
+Thu Apr  8 08:03:13 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+
+          Modified this base project to set tao_idl and tao_idlflags as
+          template overrides.  The custom command was then set to $(TAO_IDL)
+          and the idlflags was set to $(TAO_IDLFLAGS).  In all project
+          creators (except GNUACE), these values will be replaced by the
+          template override values.
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+
+          Override the expand_variables_from_template_values method to turn
+          off variable expansion.  This allows us to set TAO_IDL and
+          TAO_IDLFLAGS as variables within the generated project and gives
+          more flexibility to the user.
+
+        * bin/MakeProjectCreator/config/vcfullmacros.mpt:
+        * bin/MakeProjectCreator/config/vcpartialmacros.mpt:
+
+          Set the ACE_HAS_MFC macro to 1 instead of just defining it.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Updated these to properly support the 'pch_postrule' custom
+          defined keyword.
+
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Updated these to give a somewhat more useful message when the MPC
+          core is not found in the usual place.  Setting the MPC_ROOT
+          environment variable can help these scripts determine the location
+          of the MPC core.
+
 Mon Apr  5 13:27:27 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
