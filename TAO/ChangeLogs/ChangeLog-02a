@@ -1,3 +1,23 @@
+Wed May 30 13:44:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_base.h:
+
+          Added some missing pieces needed for code generation when a
+          reopened module contains a sequence whose element type is a
+          forward declared interface from a previous opening of the
+          module. Thanks to Russell Mora <rd.mora@econz.co.nz> for sending
+          in the example IDL file.
+
+        * tests/IDL_Test/sequence.idl:
+
+          Added the above example IDL file to the test suite.
+
 Wed May 30 00:35:15 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton.cpp (instance):
