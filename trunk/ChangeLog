@@ -1,3 +1,12 @@
+Thu Mar 20 11:23:46 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Changed the default behavior for naming workspaces and projects.
+          They now use the name of the mwc and mpc file respectively.
+
 Thu Mar 20 07:23:48 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
