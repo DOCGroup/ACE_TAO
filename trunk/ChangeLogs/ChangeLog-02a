@@ -1,3 +1,9 @@
+Fri Aug 17 09:44:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Map_T.{h,i}: Reverted this change "Fri Aug 17 08:07:12 2001
+	  Johnny Willemsen <jwillemsen@remedy.nl>" as this was giving too
+	  much of warnings in the builds.
+
 Fri Aug 17 09:30:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* gperf/apps/tests/Makefile: Fixed the problem that was causing
