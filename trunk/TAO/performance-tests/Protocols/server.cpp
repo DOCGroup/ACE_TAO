@@ -136,7 +136,7 @@ main (int argc, char **argv)
       u_int result =
         ACE_OS::fprintf (output_file,
                          "%s",
-                         ior);
+                         ior.in ());
       ACE_ASSERT (result == ACE_OS::strlen (ior));
 
       ACE_OS::fclose (output_file);
