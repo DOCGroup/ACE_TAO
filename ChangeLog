@@ -1,3 +1,14 @@
+Fri Nov 10 17:08:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * etc/tao_strategies.doxygen:
+          New doxygen configuration file for the TAO_Strategies library.
+
+        * bin/generate_doxygen.pl:
+          Add tao_strategies.doxygen to the list.
+
+        * etc/ace_man.doxygen:
+          Generate man pages in the man directory instead of doxygen_man.
+
 Fri Nov 10 12:58:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/generate_doxygen.pl:
@@ -28,10 +39,10 @@ Fri Nov 10 12:53:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Nov 10 14:26:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-sunos5.6.h: The AIO definitions were missing the #if
-	  !defined guards that are present in the solaris 2.7 config
- 	  header.  Thanks to Alex Hornby <alex@anvil.co.uk> for reporting
- 	  this.
+        * ace/config-sunos5.6.h: The AIO definitions were missing the #if
+          !defined guards that are present in the solaris 2.7 config
+          header.  Thanks to Alex Hornby <alex@anvil.co.uk> for reporting
+          this.
 
 Fri Nov 10 11:44:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 

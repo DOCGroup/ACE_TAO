@@ -3,7 +3,7 @@
 # $Id$
 #
 
-PROJECT_NAME          = ACE
+PROJECT_NAME          = TAO_Strategies
 PROJECT_NUMBER        = Snapshot
 OUTPUT_DIRECTORY      = .
 OUTPUT_LANGUAGE       = English
@@ -19,13 +19,13 @@ ALWAYS_DETAILED_SEC   = NO
 FULL_PATH_NAMES       = NO
 STRIP_FROM_PATH       = 
 INTERNAL_DOCS         = NO
-CLASS_DIAGRAMS        = NO
-SOURCE_BROWSER        = NO
-INLINE_SOURCES        = NO
+CLASS_DIAGRAMS        = YES
+SOURCE_BROWSER        = YES
+INLINE_SOURCES        = YES
 STRIP_CODE_COMMENTS   = NO
 CASE_SENSE_NAMES      = YES
 HIDE_SCOPE_NAMES      = NO
-VERBATIM_HEADERS      = NO
+VERBATIM_HEADERS      = YES
 SHOW_INCLUDE_FILES    = YES
 JAVADOC_AUTOBRIEF     = NO
 INHERIT_DOCS          = YES
@@ -47,11 +47,11 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = ace
-FILE_PATTERNS         = *.h
-RECURSIVE             = NO
-EXCLUDE               = ace/config.h
-EXCLUDE_PATTERNS      = config-*.h
+INPUT                 = TAO/tao/Strategies
+FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl
+RECURSIVE             =
+EXCLUDE               = 
+EXCLUDE_PATTERNS      = InterfaceC.cpp Services.h
 EXAMPLE_PATH          = 
 EXAMPLE_PATTERNS      = 
 IMAGE_PATH            = 
@@ -69,8 +69,8 @@ IGNORE_PREFIX         =
 # configuration options related to the HTML output
 #---------------------------------------------------------------------------
 
-GENERATE_HTML         = NO
-HTML_OUTPUT           = 
+GENERATE_HTML         = YES
+HTML_OUTPUT           = html/tao/strategies
 HTML_HEADER           = 
 HTML_FOOTER           =
 HTML_STYLESHEET       = 
@@ -104,7 +104,7 @@ RTF_STYLESHEET_FILE   =
 # configuration options related to the man page output
 #---------------------------------------------------------------------------
 
-GENERATE_MAN          = YES
+GENERATE_MAN          = NO
 MAN_OUTPUT            = man
 MAN_EXTENSION         = .3
 
@@ -116,7 +116,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = .
+INCLUDE_PATH          = TAO .
 PREDEFINED            = 
 EXPAND_AS_DEFINED     = ACE_RCSID \
 			ACE_UNIMPLEMENTED_FUNC
@@ -125,8 +125,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = 
-GENERATE_TAGFILE      = 
+TAGFILES              = html/ace/ACE.tag=../../ace html/tao/TAO.tag=..
+GENERATE_TAGFILE      = html/tao/strategies/TAO_Strategies.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -137,12 +137,12 @@ PERL_PATH             = /usr/bin/perl
 # If you set the HAVE_DOT tag to YES then doxygen will assume the dot tool is 
 # available from the path. This tool is part of Graphviz
 
-HAVE_DOT              = NO
-CLASS_GRAPH           = NO
-COLLABORATION_GRAPH   = NO
-INCLUDE_GRAPH         = NO
-INCLUDED_BY_GRAPH     = NO
-GRAPHICAL_HIERARCHY   = NO
+HAVE_DOT              = YES
+CLASS_GRAPH           = YES
+COLLABORATION_GRAPH   = YES
+INCLUDE_GRAPH         = YES
+INCLUDED_BY_GRAPH     = YES
+GRAPHICAL_HIERARCHY   = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be 
 # found. If left blank, it is assumed the dot tool can be found on the path. 
 DOT_PATH              = /usr/local/bin
@@ -165,7 +165,7 @@ CGI_NAME              = search.cgi
 # cgi binaries are located. See the documentation of your http daemon for 
 # details. 
 
-CGI_URL               = http://doc.ece.uci.edu/cgi-bin/
+CGI_URL               = http://doc.ece.uci.edu/cgi-bin/Doxygen/Current
 
 # The DOC_URL tag should be the absolute URL to the directory where the 
 # documentation is located. If left blank the absolute path to the 
@@ -188,4 +188,4 @@ BIN_ABSPATH           = /usr/bin
 # documentation generated for other projects. This allows doxysearch to search 
 # the documentation for these projects as well. 
 
-EXT_DOC_PATHS         = 
+EXT_DOC_PATHS         = html/ace
