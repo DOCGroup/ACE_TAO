@@ -220,7 +220,23 @@ specifies that no locking be performed.  The default is
 <H3><CODE>TAO_Default_Client_Strategy_Factory</CODE><A NAME="DefaultClient"></A></H3>
 
 <BLOCKQUOTE>
-  <P>There are currently no options for the <CODE>TAO_Default_Client_Strategy_Factory</CODE>.</P>
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+<TR>
+<TH>Option</TH>
+<TH>Description</TH></TR>
+<TR>
+<TD><CODE>-ORBiiopprofilelock</CODE> <EM>which</EM></TD>
+<TD>
+Specify, whether to use a lock for accessing the IIOP Profile or not.
+Default is <code>thread</code>, which means that a lock is used. The
+second option is <code>null</code>, which means a null lock is used.
+This makes sense in case of optiziations and is allowed when 
+no forwarding is used or only a single threaded client.
+</TD></TR>
+</TABLE>
+</P>
+
+
 </BLOCKQUOTE>
 </blockquote>
 

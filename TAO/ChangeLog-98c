@@ -1,4 +1,9 @@
-Mon Jul  6 17:00;00 1998  Jeff Parsons   <jp4@cs.wustl.edu>
+Mon Jul  6 19:17:00 1998  Michael Kircher <mk1@cs.wustl.edu>
+
+	* docs/Options.html: Added documentation about the
+	  -ORBiiopprofilelock switch.
+
+Mon Jul  6 17:00:00 1998  Jeff Parsons   <jp4@cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/DII_Cubit/client.{h.cpp}:
 	  Added a DII request on the naming service to get the
