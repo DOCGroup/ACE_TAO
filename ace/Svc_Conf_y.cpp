@@ -10,6 +10,8 @@ char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
 #include "ace/Module.h"
 #include "ace/Stream.h"
 
+ACE_RCSID(ace, Svc_Conf_y, "$Id$")
+
 /* Prototypes.*/
 static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
                                     ACE_Static_Node *svc_type);
@@ -23,7 +25,7 @@ static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
 /* Efficient memory allocation technique.*/
 ACE_Obstack *ace_obstack;
 
-#line 27 "Svc_Conf_y.cpp"
+#line 29 "Svc_Conf_y.cpp"
 #define ACE_DYNAMIC 257
 #define ACE_STATIC 258
 #define ACE_SUSPEND 259
@@ -247,7 +249,7 @@ ACE_YYSTYPE ace_yylval;
 #define ace_yystacksize ACE_YYSTACKSIZE
 short ace_yyss[ACE_YYSTACKSIZE];
 ACE_YYSTYPE ace_yyvs[ACE_YYSTACKSIZE];
-#line 278 "Svc_Conf.y"
+#line 280 "Svc_Conf.y"
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 
@@ -380,7 +382,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 384 "Svc_Conf_y.cpp"
+#line 386 "Svc_Conf_y.cpp"
 #define ACE_YYABORT goto ace_yyabort
 #define ACE_YYACCEPT goto ace_yyaccept
 #define ACE_YYERROR goto ace_yyerrlab
@@ -687,7 +689,7 @@ ace_yyreduce:
     switch (ace_yyn)
     {
 case 1:
-#line 42 "Svc_Conf.y"
+#line 44 "Svc_Conf.y"
 {
       if (ace_yyvsp[0].parse_node_ != 0)
       {
@@ -697,13 +699,13 @@ case 1:
     }
 break;
 case 2:
-#line 50 "Svc_Conf.y"
+#line 52 "Svc_Conf.y"
 {
       ace_obstack->release ();
     }
 break;
 case 10:
-#line 67 "Svc_Conf.y"
+#line 69 "Svc_Conf.y"
 {
       if (ace_yyvsp[-1].svc_record_ != 0)
         ace_yyval.parse_node_ = new ACE_Dynamic_Node (ace_yyvsp[-1].svc_record_, ace_yyvsp[0].ident_);
@@ -712,74 +714,74 @@ case 10:
     }
 break;
 case 11:
-#line 77 "Svc_Conf.y"
+#line 79 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Static_Node (ace_yyvsp[-1].ident_, ace_yyvsp[0].ident_);
     }
 break;
 case 12:
-#line 84 "Svc_Conf.y"
+#line 86 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Suspend_Node (ace_yyvsp[0].ident_);
     }
 break;
 case 13:
-#line 91 "Svc_Conf.y"
+#line 93 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Resume_Node (ace_yyvsp[0].ident_);
     }
 break;
 case 14:
-#line 98 "Svc_Conf.y"
+#line 100 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Remove_Node (ace_yyvsp[0].ident_);
     }
 break;
 case 15:
-#line 105 "Svc_Conf.y"
+#line 107 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Stream_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     }
 break;
 case 16:
-#line 108 "Svc_Conf.y"
+#line 110 "Svc_Conf.y"
 { ace_yyval.static_node_ = new ACE_Static_Node (ace_yyvsp[0].ident_); }
 break;
 case 17:
-#line 109 "Svc_Conf.y"
+#line 111 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = new ACE_Dummy_Node (ace_yyvsp[-1].static_node_, ace_yyvsp[0].parse_node_);
     }
 break;
 case 18:
-#line 116 "Svc_Conf.y"
+#line 118 "Svc_Conf.y"
 {
     }
 break;
 case 19:
-#line 119 "Svc_Conf.y"
+#line 121 "Svc_Conf.y"
 {
     }
 break;
 case 20:
-#line 125 "Svc_Conf.y"
+#line 127 "Svc_Conf.y"
 {
       /* Initialize left context...*/
       ace_yyval.static_node_ = ace_yyvsp[-1].static_node_;
     }
 break;
 case 21:
-#line 130 "Svc_Conf.y"
+#line 132 "Svc_Conf.y"
 {
       ace_yyval.parse_node_ = ace_yyvsp[-1].parse_node_;
     }
 break;
 case 22:
-#line 133 "Svc_Conf.y"
+#line 135 "Svc_Conf.y"
 { ace_yyval.parse_node_ = 0; }
 break;
 case 23:
-#line 138 "Svc_Conf.y"
+#line 140 "Svc_Conf.y"
 {
       if (ace_yyvsp[0].parse_node_ != 0)
         {
@@ -789,11 +791,11 @@ case 23:
     }
 break;
 case 24:
-#line 145 "Svc_Conf.y"
+#line 147 "Svc_Conf.y"
 { ace_yyval.parse_node_ = 0; }
 break;
 case 25:
-#line 150 "Svc_Conf.y"
+#line 152 "Svc_Conf.y"
 {
       if (ace_yyvsp[0].static_node_ != 0)
         {
@@ -811,7 +813,7 @@ case 25:
     }
 break;
 case 26:
-#line 166 "Svc_Conf.y"
+#line 168 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
 
@@ -820,7 +822,7 @@ case 26:
     }
 break;
 case 27:
-#line 173 "Svc_Conf.y"
+#line 175 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0)
@@ -828,7 +830,7 @@ case 27:
     }
 break;
 case 28:
-#line 179 "Svc_Conf.y"
+#line 181 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0)
@@ -836,7 +838,7 @@ case 28:
     }
 break;
 case 29:
-#line 185 "Svc_Conf.y"
+#line 187 "Svc_Conf.y"
 {
       ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_->name ());
       if (mt != 0
@@ -850,7 +852,7 @@ case 29:
     }
 break;
 case 30:
-#line 200 "Svc_Conf.y"
+#line 202 "Svc_Conf.y"
 {
       u_int flags
         = ACE_Service_Type::DELETE_THIS
@@ -873,64 +875,64 @@ case 30:
     }
 break;
 case 31:
-#line 224 "Svc_Conf.y"
+#line 226 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 32:
-#line 228 "Svc_Conf.y"
+#line 230 "Svc_Conf.y"
 {
       ace_yyval.type_ = 0;
     }
 break;
 case 33:
-#line 232 "Svc_Conf.y"
+#line 234 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 34:
-#line 239 "Svc_Conf.y"
+#line 241 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Object_Node (ace_yyvsp[-2].ident_, ace_yyvsp[0].ident_);
     }
 break;
 case 35:
-#line 243 "Svc_Conf.y"
+#line 245 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Function_Node (ace_yyvsp[-4].ident_, ace_yyvsp[-2].ident_);
     }
 break;
 case 36:
-#line 247 "Svc_Conf.y"
+#line 249 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Static_Function_Node (ace_yyvsp[-2].ident_);
     }
 break;
 case 37:
-#line 254 "Svc_Conf.y"
+#line 256 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_MODULE_T;
     }
 break;
 case 38:
-#line 258 "Svc_Conf.y"
+#line 260 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_SVC_OBJ_T;
     }
 break;
 case 39:
-#line 262 "Svc_Conf.y"
+#line 264 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_STREAM_T;
     }
 break;
 case 41:
-#line 269 "Svc_Conf.y"
+#line 271 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 933 "Svc_Conf_y.cpp"
+#line 935 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;

@@ -6,6 +6,8 @@
 #include "ace/Module.h"
 #include "ace/Stream.h"
 
+ACE_RCSID(ace, Svc_Conf_y, "$Id$")
+
 // Prototypes.
 static ACE_Module_Type *get_module (ACE_Static_Node *str_rec,
                                     ACE_Static_Node *svc_type);

@@ -1,4 +1,5 @@
 %{
+// $Id$
 // Sample lexical analysis for regular expression subset.  Must be
 // compiled with FLEX and an ANSI C++ compiler.
 
@@ -6,7 +7,9 @@
 #include "ace/Svc_Conf.h"
 #include "ace/Svc_Conf_Tokens.h"
 
-// Keeps track of the current line for debugging output. 
+ACE_RCSID(ace, Svc_Conf_l, "$Id$")
+
+// Keeps track of the current line for debugging output.
 int yylineno = 1;
 
 // Keeps track of the number of errors encountered so far.
@@ -56,15 +59,15 @@ inactive	      { return token (ACE_INACTIVE); }
 {string}	      { // Eliminate the opening and closing double quotes
 		        *strrchr (yytext, '"') = '\0';
 			yyleng -= 1;
-                        yylval.ident_ = ace_obstack->copy (yytext + 1, yyleng); 
+                        yylval.ident_ = ace_obstack->copy (yytext + 1, yyleng);
 			return token (ACE_STRING); }
-{ident}		      { 
-		        yylval.ident_ = ace_obstack->copy (yytext, yyleng); 
-			return token (ACE_IDENT); 
+{ident}		      {
+		        yylval.ident_ = ace_obstack->copy (yytext, yyleng);
+			return token (ACE_IDENT);
 		      }
-{pathname}	      { 
-		        yylval.ident_ = ace_obstack->copy (yytext, yyleng); 
-			return token (ACE_PATHNAME); 
+{pathname}	      {
+		        yylval.ident_ = ace_obstack->copy (yytext, yyleng);
+			return token (ACE_PATHNAME);
 		      }
 {white_space}+	      ; /* EMPTY */
 {newline}	      { yylineno++; }
@@ -76,7 +79,7 @@ yywrap (void)
 {
   ::fflush (yyin);
   yytext[0] = '#';
-  yyleng = 0;    
+  yyleng = 0;
 
   // This needs to be freed to prevent a memory leak.
   yy_delete_buffer (yy_current_buffer);
