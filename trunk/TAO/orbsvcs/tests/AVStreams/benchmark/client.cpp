@@ -203,7 +203,7 @@ Client::establish_stream (void)
 int
 main (int argc, char **argv)
 {
-  ACE_Get_Opt opts (argc, argv, "t:");
+  ACE_Get_Opt opts (argc, argv, "T:");
   int thread_count = 0;
   
   int c;
