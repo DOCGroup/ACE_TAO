@@ -240,7 +240,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 	{
 	case ACE_Scheduler::SUCCEEDED:
 	  // We know that handles start at 1.
-	  (*infos)[handle - 1] = *rt_info;
+	  infos[handle - 1] = *rt_info;
 	  break;
 	case ACE_Scheduler::FAILED:
 	case ACE_Scheduler::ST_UNKNOWN_TASK:
