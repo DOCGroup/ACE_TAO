@@ -2235,7 +2235,7 @@ ACE_Log_Msg::inc (void)
 int
 ACE_Log_Msg::dec (void)
 {
-  return --this->trace_depth_;
+  return this->trace_depth_ == 0 ? 0 : --this->trace_depth_;
 }
 
 int

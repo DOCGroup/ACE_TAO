@@ -172,7 +172,12 @@
 // excessively large.
 
 #if !defined (ACE_IOV_MAX)
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) 
 # define ACE_IOV_MAX 64
+#else
+// Win 95/98/me need a smaller value than WinNT versions of Windows.
+# define ACE_IOV_MAX 16
+#endif /* #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 #endif /* ACE_IOV_MAX */
 
 #if !defined (ACE_HAS_WINCE)
