@@ -1,3 +1,14 @@
+Sun Oct 25 10:59:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: Added 
+	
+	  #if defined (i386)
+	  #define ACE_HAS_X86_STAT_MACROS
+	  #endif /* i386 */
+
+	  to check for the [f]stat macros on Solaris for Intel.  Thanks to
+ 	  Daniel Nieten <dnieten@bellsouth.net> for reporting this.
+
 Sun Oct 25 00:15:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Config.cpp (process_directives): We should use
