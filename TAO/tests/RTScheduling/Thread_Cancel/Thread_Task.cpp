@@ -14,32 +14,42 @@ Thread_Task::guids (void)
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb)
 {
-  ACE_NEW_RETURN (shutdown_lock_,
-		  ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
-		  -1);
+  ACE_TRY_NEW_ENV
+    {
+      ACE_NEW_RETURN (shutdown_lock_,
+                      ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
+                      -1);
 
-  ACE_NEW_RETURN (lock_,
-		  ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
-		  -1);
+      ACE_NEW_RETURN (lock_,
+                      ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
+                      -1);
    
-  this->orb_ = CORBA::ORB::_duplicate (orb);
+      this->orb_ = CORBA::ORB::_duplicate (orb);
   
-  CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
+      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
   
-  this->current_ = RTScheduling::Current::_narrow (current_obj
-						   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  
+      this->current_ = RTScheduling::Current::_narrow (current_obj
+                                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }  
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			   "Exception:");
+    }
+  ACE_ENDTRY;
+
   long flags = THR_NEW_LWP | THR_JOINABLE;
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
-					    4) == -1)
+                                            4) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                          -1);
     }
   active_thread_count_ = 4;
+
   return 0;
 }
 

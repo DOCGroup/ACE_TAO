@@ -1,3 +1,19 @@
+Fri Jul 18 00:42:12 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/RTScheduling/VoidData/test_client.cpp: 
+	* tests/RTScheduling/Thread_Cancel/test.cpp: 
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
+	* tests/RTScheduling/Scheduling_Interceptor/test_server.cpp: 
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp: 
+	* tests/RTScheduling/DT_Spawn/Thread_Action.h: 
+	* tests/RTScheduling/Current/Thread_Task.cpp: 
+	* tests/RTScheduling/Scheduler.cpp: 
+
+	  Fixed all manner of wrong usage of ACE_ENV_* related macros.
+	  I may not have caught them all.  This should address problems in
+	  the RH71_Explicit_Templates build specifically, and any build
+	  that doesn't have native exceptions turned on.
+
 Thu Jul 17 13:14:46 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tests/Bug_1551_Regression/Reply_Handler.h

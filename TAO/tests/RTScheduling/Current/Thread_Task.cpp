@@ -33,13 +33,13 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
       CORBA::Policy_ptr sched_param = 0;
       CORBA::Policy_ptr implicit_sched_param = 0;
   
-      ACE_TRY
+      ACE_TRY_EX(yamuna_give_this_a_better_name_1)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Making an end_scheduling_segment call without first calling begin_scheduling_segment\n"));
 	  this->current_->end_scheduling_segment (name
 						  ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
+	  ACE_TRY_CHECK_EX(yamuna_give_this_a_better_name_1);
 	}
       ACE_CATCHANY
 	{
@@ -48,7 +48,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
 	}
       ACE_ENDTRY;
 
-      ACE_TRY
+      ACE_TRY_EX(yamuna_give_this_a_better_name_2)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Making an update_scheduling_segment call without first calling begin_scheduling_segment\n"));
@@ -57,7 +57,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
 						     sched_param,
 						     implicit_sched_param
 						     ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
+	  ACE_TRY_CHECK_EX(yamuna_give_this_a_better_name_2);
 	}
       ACE_CATCHANY
 	{
@@ -126,7 +126,7 @@ Thread_Task::svc (void)
 
 
       RTScheduling::Current::NameList* segment_name_list = 
-	this->current_->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
+	this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
       {
