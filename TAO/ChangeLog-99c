@@ -1,25 +1,30 @@
+Mon Jun 28 12:57:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp (compute_coll_name): Fixed ABW
+	  errors.
+
 Mon Jun 28 12:54:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
 	* TAO_IDL/fe/lex.yy.cpp:
-	  Changed one line of method idl_parse_line_and_file() to call 
-	  idl_atoui() instead of idl_atoi(). This fixes a line number 
-	  off-by-one error in error outputs. Thanks to 
+	  Changed one line of method idl_parse_line_and_file() to call
+	  idl_atoui() instead of idl_atoi(). This fixes a line number
+	  off-by-one error in error outputs. Thanks to
 	  Hata Yoshiaki <hatay@alpha.co.jp> for reporting the error
 	  and supplying a fix.
 
 Mon Jun 28 12:46:57 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
-  	Fixed the exception macros problems. Thanks Carlos for reporting the 
-	errors. 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+  	Fixed the exception macros problems. Thanks Carlos for reporting the
+	errors.
 
 Mon Jun 28 12:19:21 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* examples/Logging/Logger_i.cpp 
-	* examples/Logging/Logging_Service.cpp 
+	* examples/Logging/Logger_i.cpp
+	* examples/Logging/Logging_Service.cpp
 	  Removed some remaining TAO exceptions macros.
-	
+
 Mon Jun 28 12:15:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/any.cpp:
