@@ -16,13 +16,13 @@
 #define MAXNAMLEN  __DIR_NAME_MAX
 #define ERRMAX __sys_nerr
 #if defined (log)                /* log is a macro in math.h */
-#undef log			 /* conflicts with log function in ACE */
+# undef log                      /* conflicts with log function in ACE */
 #endif /* log */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-// See the README file in this directory 
+// See the README file in this directory
 // for a description of the following ACE_ macros
 
 #if __COMPILER_VER__ >= 0x21020000   /* OS/390 r2 or higher */
@@ -80,6 +80,7 @@
 #define ACE_LACKS_IOSTREAM_FX
 #define ACE_LACKS_KEYDELETE
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#define ACE_LACKS_LONGLONG_T
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MSGBUF_T
@@ -94,7 +95,7 @@
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 #define ACE_NEEDS_DEV_IO_CONVERSION
 #define ACE_NEEDS_SYSTIME_H
@@ -102,7 +103,7 @@
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 #endif /* ACE_CONFIG_H */
