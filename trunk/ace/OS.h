@@ -5593,12 +5593,12 @@ public:
   static int setpgid (pid_t pid, pid_t pgid);
   static int system (const char *s);
   static pid_t waitpid (pid_t,
-                        int *status = 0,
+                        ACE_exitcode *status = 0,
                         int wait_options = 0);
   // Calls <::waitpid> on UNIX/POSIX platforms and <::await> on
   // Chorus.  Does not work on Win32, Vxworks, or pSoS.
   static pid_t wait (pid_t pid,
-                     int *status,
+                     ACE_exitcode *status,
                      int wait_options = 0);
   // Calls <::WaitForSingleObject> on Win32 and <ACE::waitpid>
   // otherwise.  Returns the appropriate <pid_t> on success and -1 on

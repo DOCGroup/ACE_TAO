@@ -1,5 +1,13 @@
 Sun Sep  5 10:59:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process.i (wait): Removed the ACE_static_cast() Michael
+	  had added recently because the change below makes it
+ 	  unnecessary.
+
+	* ace/OS.h (ACE_OS): Modified the 3-arg wait() and the waitpid()
+	  methods to take an ACE_exitcode* rather than int* so this will
+ 	  work on Win32.
+
 	* ace/Log_Msg.cpp: Added a new explicit template instantiation
 	  for template class
   
