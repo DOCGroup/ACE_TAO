@@ -1,3 +1,20 @@
+Wed Jan  3 15:44:31 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i:
+
+          Removed ACE_TIMEZONE since we found another workaround for 
+          platforms that define timezone () as a macro.
+
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Moved much of the code from ACE_OS::timezone and 
+          ACE_OS::difftime into ace_timezone and ace_difftime.  Since 
+          some platforms don't have timezone or difftime, we needed 
+          to do something here so those methods aren't used.  Instead 
+          of figuring out what larger #if !... should be, it is easier 
+          (and less error prone) to just move the code here.
+
 Wed Jan  3 13:10:39 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/JAWS/server/HTTP_Helpers.cpp:
