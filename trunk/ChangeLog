@@ -1,3 +1,12 @@
+Fri May 12 10:12:05 2000  James Hu  <jxh@entera.com>
+
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke):
+          If the TSS instance of the ACE_Thread_Exit class fails to
+          create, the application will crash.  The new code will
+          detect the failure, and use an instance created off the
+          stack if it happens.  This mimics how ACE does it in
+          the case of platforms that do not support TSS.
+
 Thu May 11 18:07:53 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/OS.i (malloc): Bug 566.
