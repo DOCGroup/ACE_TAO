@@ -1,3 +1,13 @@
+Mon Dec 30 16:05:11 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.cpp (ace_thread_adapter): Updated ACE_TRACE arg
+	  names (even though they're currently commented out).
+
+	* ace/Task.cpp (svc_run): If TSS isn't supported, and on
+	  Linux, for now, create the ACE_Task_Exit exit_hook instance
+	  on the stack so that it's destructor will be called when
+	  svc_run () completes.
+
 Sun Dec 29 18:38:03 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/File_Parser.h: Removed the endofline()
