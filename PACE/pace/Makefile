@@ -211,7 +211,6 @@ _POSIX_JC_FILES = \
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 INCLDIRS += -I$(PACE_ROOT)
-#INCLDIRS = -I$(PACE_ROOT)
 
 ####
 #### Build customization.
