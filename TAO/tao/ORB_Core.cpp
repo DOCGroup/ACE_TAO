@@ -842,8 +842,14 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   else
     this->use_tss_resources_ = use_tss_resources;
 
-  (void) this->reactor ();
+  ACE_Reactor *reactor = this->reactor ();
+
   // Make sure the reactor is initialized...
+  if (reactor == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) %p\n",
+                       "ORB Core unable to initialize reactor"),
+                      -1);
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
 
