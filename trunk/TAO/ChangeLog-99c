@@ -1,3 +1,13 @@
+Fri Apr 23 16:09:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Added EC_Default_Factory to the project files.
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  Added include file that is required on NT, but not on Unix,
+	  beats me.
+
 Fri Apr 23 16:17:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}:
