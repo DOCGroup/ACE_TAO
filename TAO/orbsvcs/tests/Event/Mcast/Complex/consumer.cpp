@@ -32,7 +32,7 @@ private:
 
   /// Helper - destroys EC, shutdowns the ORB and prints number of
   /// events received.
-  void disconnect (ACE_ENV_ARG_DECL)
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Number of events of different types pushed to us by EC.
