@@ -1,3 +1,11 @@
+Sat Nov  4 18:19:46 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+          Add missing template instantiations, they only showed up in
+          builds with disabled inlining.
+
 Sat Nov  4 17:05:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
