@@ -49,13 +49,18 @@ namespace CIAO
       public virtual PortableServer::RefCountServantBase
   {
   public:
-    /// Define the type which contains a pair of NodeApplication object
-    /// reference and Connections_var type variable.
-    typedef struct _node_application_para
+    /// Define the type which contains a list of DnC artifacts.
+    /// @@ Assumption: Each NodeApplicationManager create only one NodeApplication
+    /// when the startLaunch() operation is invoked, which means all the nodes
+    /// on that child plan are collocated in the same process.
+    typedef struct _chained_artifacts
     {
+      ::Deployment::NodeManager_var node_manager_;
+      ::Deployment::DeploymentPlan_var child_plan_;
+      ::Deployment::NodeApplicationManager_var node_application_manager_;
       ::Deployment::NodeApplication_var node_application_;
       ::Deployment::Connections_var connections_;
-    } Node_Application_Para;
+    } Chained_Artifacts;
 
     /// Constructor
     DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
@@ -185,6 +190,8 @@ namespace CIAO
      * Split the global (domain-level) deployment plan to a set of
      * local (node-level) deployment plans. The set of local plans
      * are cached in the ACE hash map member variable.
+     * Also, fill in the <node_manager_> field of the Chained_Artifacts
+     * struct.
      */
     int split_plan (void);
 
@@ -215,20 +222,21 @@ namespace CIAO
     //Deployment::DeploymentPlan * child_plan_;
 
     /// Total number of child deployment plans.
-    int num_child_plans_;
+    size_t num_child_plans_;
 
     /// The list of node manager names, each of them
     /// corresponds to one child plan.
-    ACE_Vector <ACE_CString> node_manager_names_;
+    ACE_Vector<ACE_CString> node_manager_names_;
 
-    /// Cached child plans in a map.
-    /// Key: NodeManager name.
-    /// Value: child deployment plan with _var type.
+    /// Cached information for NodeManager, NodeApplicationManager,
+    /// NodeApplication, Connections, etc.
+    /// Key: NodeManager name with CString type.
+    /// Value: Chained_Artifacts struct type.
     ACE_Hash_Map_Manager_Ex<ACE_CString,
-                            ::Deployment::DeploymentPlan_var,
+                            Chained_Artifacts,
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> child_plans_info_;
+                            ACE_Null_Mutex> artifact_map_;
 
     /// The deployment information data file.
     const char * deployment_file_;
@@ -242,15 +250,15 @@ namespace CIAO
     /// Maintain a list of NodeApplicationManager references, each of which
     /// is returned by calling the preparePlan() method on the
     /// corresponding NodeManager object.
-    Object_Set<Deployment::NodeApplicationManager,
-               Deployment::NodeApplicationManager_var>
-      node_application_manager_set_;
+   // Object_Set<Deployment::NodeApplicationManager,
+   //            Deployment::NodeApplicationManager_var>
+   //   node_application_manager_set_;
 
     /// Maintain a list of NodeApplication references paired with the
     /// Deployment::Connections_var type variable.
-    /// Each pair is obtained by calling the startLaunch () method on
+    /// Each pair is obtained by calling the startLaunch() method on
     /// the corresponding NodeApplicationManager object.
-    ACE_Vector<Node_Application_Para> node_application_vec_;
+    //ACE_Vector<Node_Application_Para> node_application_vec_;
   };
 }
 

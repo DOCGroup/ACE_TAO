@@ -32,49 +32,51 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
                    Deployment::StartError,
                    Deployment::PlanError))
 {
-  //@@ Not implemented yet.
-
   ACE_TRY
     {
       // Call get_plan_info() method to get the total number
       // of child plans and list of NodeManager names.
-      if ( ! this->get_plan_info ())
+      if ( ! this->get_plan_info () )
         ACE_THROW (Deployment::PlanError ());
 
       // Check the validity of the global deployment plan.
-      if ( this->check_validity () == false)
+      if ( ! this->check_validity () )
+        ACE_THROW (Deployment::PlanError ());
+
+      // Call split_plan()
+      if ( ! this->split_plan () )
         ACE_THROW (Deployment::PlanError ());
 
       // Invoke preparePlan for each child deployment plan.
-      for (int i = 0; i < this->num_child_plans_; i++)
-      {
-        // Get the NodeManager reference.
-        ::Deployment::NodeManager_var my_node_manager =
-          this->deployment_config_.get_node_manager
-            (this->node_manager_names_[i].c_str ());
+      for (size_t i = 0; i < this->num_child_plans_; i++)
+        {
+          // Get the NodeManager object reference.
+          ::Deployment::NodeManager_var my_node_manager =
+            this->deployment_config_.get_node_manager
+              (this->node_manager_names_[i].c_str ());
 
-        // Get the child deployment plan reference.
-        ACE_Hash_Map_Entry
-          <ACE_CString,
-          ::Deployment::DeploymentPlan_var> *entry;
+          // Get the child deployment plan reference.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
 
-        if (this->child_plans_info_.find (this->node_manager_names_[i],
-                                          entry) != 0)
-           ACE_THROW (Deployment::PlanError ());
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::PlanError ());
 
-        Deployment::DeploymentPlan_var my_child_plan = entry->int_id_;
+          Chained_Artifacts artifacts = entry->int_id_;
 
-        // Call preparePlan() method on the NodeManager, which returns
-        // a node application manager.
-        // @@TODO: Does preparePlan take a _var type variable?
-        ::Deployment::NodeApplicationManager_var my_nam =
-          my_node_manager->preparePlan (my_child_plan
-                                        ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          // Call preparePlan() method on the NodeManager with the corresponding
+          // child plan as input, which returns a NodeApplicationManager object reference.
+          // @@TODO: Does preparePlan take a _var type variable?
+          ::Deployment::NodeApplicationManager_var my_nam =
+            my_node_manager->preparePlan (artifacts.child_plan_
+                                          ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-        // Cache the node_application_manager reference
-        this->node_application_manager_set_.add (my_nam.in ());
-      }
+          // Cache the NodeApplicationManager object reference.
+          artifacts.node_application_manager_ = my_nam;
+        }
     }
   ACE_CATCHANY
     {
@@ -160,10 +162,11 @@ check_validity (void)
   if ( this->deployment_config_.init (this->deployment_file_) == -1 )
     return false;
 
-  for (int i = 0; i < this->num_child_plans_; i++)
+  for (size_t i = 0; i < this->num_child_plans_; i++)
     {
       if (this->deployment_config_.get_node_manager
-            (this->node_manager_names_[i].c_str ()) == NULL) // invalid name
+            (this->node_manager_names_[i].c_str ()) 
+            == NULL) // invalid name
         {
           return false;
         }
@@ -176,10 +179,10 @@ int
 CIAO::DomainApplicationManager_Impl::
 split_plan (void)
 {
-  // Initialize the total number of node-level deployment plans specified
+  // Initialize the total number of child deployment plans specified
   // by the global plan.
 
- for (int i = 0; i < this->num_child_plans_; i++)
+ for (size_t i = 0; i < this->num_child_plans_; i++)
   {
     ::Deployment::DeploymentPlan * c_plan;
     ACE_NEW_RETURN (c_plan, ::Deployment::DeploymentPlan, 0);
@@ -193,7 +196,17 @@ split_plan (void)
     tmp_plan->artifact.length (0);
     tmp_plan->infoProperty.length (0);
 
-    this->child_plans_info_.bind (node_manager_names_[i], tmp_plan);
+    Chained_Artifacts artifacts;
+
+    // Fill in the child_plan_ field.
+    artifacts.child_plan_ = tmp_plan;
+
+    // Fill in the node_manager_ field.
+    artifacts.node_manager_ =             
+      this->deployment_config_.get_node_manager
+              (this->node_manager_names_[i].c_str ());
+
+    this->artifact_map_.bind (node_manager_names_[i], artifacts);
   }
 
   // (1) Iterate over the <instance> field of the global DeploymentPlan
@@ -213,13 +226,16 @@ split_plan (void)
       // the hash map for this instance.
       ACE_Hash_Map_Entry
         <ACE_CString,
-        ::Deployment::DeploymentPlan_var> *entry;
+        Chained_Artifacts> *entry;
 
-      if (this->child_plans_info_.find (ACE_CString (my_instance.node), //is this parameter correct?
-                                        entry) != 0)
+      if (this->artifact_map_.find (ACE_CString (my_instance.node), //is this parameter correct?
+                                    entry) != 0)
         return 0;                   // no valid name found.
 
-      // Fill in the contents of the child deployment plan entry
+      // Get the child plan.
+      ::Deployment::DeploymentPlan_var & child_plan = (entry->int_id_).child_plan_;
+
+      // Fill in the contents of the child plan entry.
 
       // Append the "MonolithicDeploymentDescriptions implementation" field with
       // a new "implementation", which is specified by the <implementationRef> field
@@ -228,14 +244,14 @@ split_plan (void)
       ::Deployment::MonolithicDeploymentDescription my_implementation =
         (this->plan_.implementation)[my_instance.implementationRef];
 
-      CORBA::ULong index_imp = entry->int_id_->implementation.length ();
-      entry->int_id_->implementation.length (index_imp++);
-      entry->int_id_->implementation[index_imp] = my_implementation;
+      CORBA::ULong index_imp = child_plan->implementation.length ();
+      child_plan->implementation.length (++index_imp);
+      child_plan->implementation[index_imp] = my_implementation;
 
       // @@TODO: Create a ULong sequence of artifactRef, which will be
       // as the new artifactRef field for the implementation struct.
 
-      // Initialize with length.
+      // Initialize with the correct sequence length.
       CORBA::ULongSeq ulong_seq (my_implementation.artifactRef.length ());
 
       // Append the "ArtifactDeploymentDescriptions artifact" field with
@@ -244,33 +260,33 @@ split_plan (void)
       for (CORBA::ULong iter = 0;
            iter < my_implementation.artifactRef.length ();
            iter ++)
-      {
-        CORBA::ULong artifact_ref = my_implementation.artifactRef[iter];
+        {
+          CORBA::ULong artifact_ref = my_implementation.artifactRef[iter];
 
-        CORBA::ULong index_art = entry->int_id_->artifact.length ();
-        entry->int_id_->artifact.length (index_art++);
-        entry->int_id_->artifact[index_art] =
-          (this->plan_.artifact)[artifact_ref];
+          CORBA::ULong index_art = child_plan->artifact.length ();
+          child_plan->artifact.length (++index_art);
+          child_plan->artifact[index_art] =
+            (this->plan_.artifact)[artifact_ref];
 
-        // @@ The artifactRef starts from 0.
-        ulong_seq[iter] = index_art;
-      }
+          // @@ The artifactRef starts from 0.
+          ulong_seq[iter] = index_art;
+        }
 
       // Change the <artifactRef> field of the "implementation".
-      entry->int_id_->implementation[index_imp].artifactRef = ulong_seq;
+      child_plan->implementation[index_imp].artifactRef = ulong_seq;
 
 
       // Append the "InstanceDeploymentDescription instance" field with
       // a new "instance", which is almost the same as the "instance" in
       // the global plan except the <implementationRef> field.
       // NOTE: The <implementationRef> field needs to be changed accordingly.
-      CORBA::ULong index_ins = entry->int_id_->instance.length ();
-      entry->int_id_->instance.length (index_ins++);
-      entry->int_id_->instance[index_ins] = my_instance;
+      CORBA::ULong index_ins = child_plan->instance.length ();
+      child_plan->instance.length (++index_ins);
+      child_plan->instance[index_ins] = my_instance;
 
       // Change the <implementationRef> field of the "instance".
       // @@ The implementationRef starts from 0.
-      entry->int_id_->instance[index_ins].implementationRef = index_ins;
+      child_plan->instance[index_ins].implementationRef = index_ins;
     }
 
   return 1;
@@ -289,30 +305,43 @@ startLaunch (const ::Deployment::Properties & configProperty,
   ACE_TRY
     {
       // Invoke startLaunch() operations on each cached NodeApplicationManager
-      CORBA::ULong len = this->node_application_manager_set_.size ();
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (size_t i = 0; i < this->num_child_plans_; i++)
         {
-          ::Deployment::NodeApplicationManager_var my_nam =
-            this->node_application_manager_set_.at (i);
+          // Get the NodeApplicationManager object reference.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
 
-          ::Deployment::Connections_var out_connections;
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StartError ()); // Should never happen!
+
+          ::Deployment::NodeApplicationManager_var my_nam = 
+            (entry->int_id_).node_application_manager_;
+
+          ::Deployment::Connections_var retn_connections;
 
           // Obtained the returned NodeApplication object reference
-          ::Deployment::Application_var temp =
+          // and the returned Connections variable.
+          ::Deployment::Application_var temp_application =
             my_nam->startLaunch (configProperty,
-                                 out_connections.out (),
+                                 retn_connections.out (),
                                  start);
 
           // Narrow down to NodeApplication object reference
           ::Deployment::NodeApplication_var my_na =
-            ::Deployment::NodeApplication::_narrow (temp.in ()
+            ::Deployment::NodeApplication::_narrow (temp_application.in ()
                                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-          // Cache the NodeApplication object reference and Connections pair
-          Node_Application_Para node_app;
-          node_app.node_application_ = my_na;
-          node_app.connections_ = out_connections;
-          this->node_application_vec_.push_back (node_app);
+          // @@@ TODO: Analyze the Connections returned by calling startLaunch(),
+          // get the corresponding Connections which will be used for finishLaunch().
+          // @@ Need a helper class to do this.
+
+
+          // Cache the NodeApplication object reference and Connections variable.
+          (entry->int_id_).node_application_ = my_na;
+          (entry->int_id_).connections_ = retn_connections; // @@TODO: Need to Change this.
         }
     }
   ACE_CATCHANY
@@ -338,16 +367,31 @@ finishLaunch (::CORBA::Boolean start
   ACE_TRY
     {
       // Invoke finishLaunch() operation on each cached NodeApplication object.
-      for (size_t i = 0; i < this->node_application_vec_.size (); i++)
+      for (size_t i = 0; i < this->num_child_plans_; i++)
         {
-          ::Deployment::NodeApplication_var my_na =
-            this->node_application_vec_[i].node_application_;
+          // Get the NodeApplication object reference.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
 
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StartError ()); // Should never happen!
+
+          ::Deployment::NodeApplication_var my_na = 
+            (entry->int_id_).node_application_;
+
+          // Get the Connections variable.
           ::Deployment::Connections_var my_connections =
-            this->node_application_vec_[i].connections_;
+            (entry->int_id_).connections_;
 
-          my_na->finishLaunch (my_connections, start);
+          // Invoke finishLaunch() operation on NodeApplication.
+          my_na->finishLaunch (my_connections,
+                               start
+                               ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
+
     }
   ACE_CATCHANY
     {
@@ -371,15 +415,22 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_TRY
     {
       // Invoke start() operation on each cached NodeApplication object.
-      for (size_t i = 0; i < this->node_application_vec_.size (); i++)
+      for (size_t i = 0; i < this->num_child_plans_; i++)
         {
-          ::Deployment::NodeApplication_var my_na =
-            this->node_application_vec_[i].node_application_;
+          // Get the NodeApplication object reference.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
 
-          ::Deployment::Connections_var my_connections =
-            this->node_application_vec_[i].connections_;
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StartError ()); // Should never happen!
 
-          my_na->finishLaunch (my_connections);
+          ::Deployment::NodeApplication_var my_na = 
+            (entry->int_id_).node_application_;
+
+          my_na->start (ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -402,17 +453,30 @@ destroyApplication ()
 {
   ACE_TRY
     {
-      // Invoke destroyApplication() operation on each cached 
-      // NodeApplicationManager object.
-      for (size_t i = 0; i < this->node_application_vec_.size (); i++)
+      // Invoke destroyManager() operation on each cached 
+      // NodeManager object.
+      // @@NOTE: This is different from the DnC spec since we think the
+      for (size_t i = 0; i < this->num_child_plans_; i++)
         {
-          ::Deployment::NodeApplication_var my_na =
-            this->node_application_vec_[i].node_application_;
+          // Get the NodeManager and NodeApplicationManager object references.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
 
-          ::Deployment::Connections_var my_connections =
-            this->node_application_vec_[i].connections_;
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StopError ()); // Should never happen!
 
-          my_na->finishLaunch (my_connections);
+          ::Deployment::NodeManager_var my_node_manager = 
+            (entry->int_id_).node_manager_;
+
+          ::Deployment::NodeApplicationManager_var my_node_application_manager = 
+            (entry->int_id_).node_application_manager_;
+
+          // Invoke destoryManager() operation on the NodeManger.
+          my_node_manager->destroyManager (my_node_application_manager
+                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
