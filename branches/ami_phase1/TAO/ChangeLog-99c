@@ -1,5 +1,23 @@
 Wed May 19 22:55:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+  	* tao/Makefile
+        * tao/Wait_Strategy.h
+ 	* tao/Wait_Strategy.cpp
+ 	* tao/Reply_Dispatcher.h
+	* tao/Reply_Dispatcher.cpp
+ 	* tao/Request_Mux_Strategy.h
+	* tao/Request_Mux_Strategy.cpp
+
+		Added the files to rename from the IIOP prefixed names.
+
+	* tao/IIOP_RMS.h:
+	* tao/IIOP_RMS.cpp: Removed IIOP from the file names. Deleted
+		these files.	
+
+	* tao/IIOP_Reply_Dispatcher.h: 
+	* tao/IIOP_Reply_Dispatcher.cpp: Removed IIOP from their
+		names.Deleted these files. 
+
 	* tests/test.idl
  	* tests/test_i.cpp
  	* tests/test_i.h
