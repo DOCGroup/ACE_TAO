@@ -1,3 +1,9 @@
+Tue Feb  9 22:11:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
+	  The generated code contained a variable that was not used in all 
+	  cases. Now we only generate the variable if we actually use it.
+
 Tue Feb  9 22:06:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.h: Added Title and description
