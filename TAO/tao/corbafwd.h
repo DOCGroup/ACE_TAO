@@ -84,8 +84,11 @@ namespace TAO_Collocation_Strategies
   };
 }
 
-// forward declare sequences.
+// Forward declarations in the global namespace.
 template <class T> class TAO_Unbounded_Sequence;
+template <typename T> class TAO_Pseudo_Var_T;
+template <typename T, typename T_var> class TAO_Pseudo_Out_T;
+
 /**
  * @class CORBA
  *
@@ -216,6 +219,9 @@ namespace CORBA
 
   class Object;
   typedef Object *Object_ptr;
+
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
 
   class LocalObject;
   typedef LocalObject *LocalObject_ptr;

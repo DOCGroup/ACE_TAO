@@ -37,7 +37,7 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#include "tao/PolicyC.h"
+#include "tao/Policy_ForwardC.h"
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)

@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================
 
@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PortableInterceptorC.h"
-#include "PolicyC.h"
+#include "Policy_ForwardC.h"
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
@@ -31,7 +31,7 @@ class TAO_ORB_Core;
 /**
  * @class TAO_PolicyFactory_Registry
  *
- * @brief ORB-specific registry
+ * @brief ORB-specific PortableInterceptor::PolicyFactory registry.
  *
  * ORB-specific registry that contains all portable interceptor
  * policy factories.
@@ -74,16 +74,12 @@ public:
   /// contained in the CORBA::Any <value>.
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any &value
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
+                                   ACE_ENV_ARG_DECL);
 
   /// Create an empty policy, usually to be filled in later by
   /// demarshaling.
   CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
+                                    ACE_ENV_ARG_DECL);
 
 private:
 

@@ -1,13 +1,12 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
- *  @file     Connector_Registry.h
+ *  @file    Connector_Registry.h
  *
  *  $Id$
  *
- *   Interface for the TAO Connector Registry
- *
+ *  Interface for the TAO Connector Registry
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
@@ -16,6 +15,7 @@
 
 #ifndef TAO_CONNECTOR_REGISTRY_H
 #define TAO_CONNECTOR_REGISTRY_H
+
 #include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Endpoint.h"
 #include "ace/CORBA_macros.h"
 
 // Forward declarations.
@@ -67,7 +66,6 @@ public:
 
   /// Return the connector bridges
   TAO_Connector *get_connector (CORBA::ULong tag);
-  TAO_Connector *get_connector (TAO_Endpoint *ep);
 
   /// Initialize all registered connectors.
   int open (TAO_ORB_Core *orb_core);

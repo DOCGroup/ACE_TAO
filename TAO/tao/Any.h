@@ -22,7 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object.h"
 #include "tao/Typecode.h"
 
 namespace TAO

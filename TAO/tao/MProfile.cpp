@@ -5,14 +5,18 @@
 #include "tao/MProfile.h"
 #include "tao/Environment.h"
 #include "tao/Profile.h"
+#include "tao/PolicyC.h"
+
 
 ACE_RCSID (tao,
            MProfile,
            "$Id$")
 
+
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.i"
 #endif /* __ACE_INLINE__ */
+
 
 TAO_MProfile::~TAO_MProfile (void)
 {
@@ -301,6 +305,16 @@ TAO_MProfile::hash (CORBA::ULong max
   //return hashval / this->last_;
   // Changed to a mod value instead of an average.
   return hashval % max;
+}
+
+void
+TAO_MProfile::create_policy_list (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_NEW_THROW_EX (this->policy_list_,
+                    CORBA::PolicyList,
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_NO)
+                    );
 }
 
 void

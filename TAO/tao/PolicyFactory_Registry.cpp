@@ -59,8 +59,6 @@ CORBA::Policy_ptr
 TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
                                            const CORBA::Any &value
                                            ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();
@@ -83,8 +81,6 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
 CORBA::Policy_ptr
 TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
                                             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();

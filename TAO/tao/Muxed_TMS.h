@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,6 +13,7 @@
 
 #ifndef TAO_MUXED_TMS_H
 #define TAO_MUXED_TMS_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Transport_Mux_Strategy.h"
@@ -22,9 +23,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Functor.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
+class TAO_ORB_Core;
 class TAO_Pluggable_Reply_Params;
 
 /**
@@ -88,4 +90,5 @@ protected:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* MUXED_TMS_H */

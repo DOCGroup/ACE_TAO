@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
 
