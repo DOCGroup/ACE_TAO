@@ -253,8 +253,14 @@ ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
   if (this->ACE_URL_Addr::set (addr) != 0)
     return -1;
   this->clear ();
-  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
-  ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (addr.path_), -1);
+  if (addr.hostname_ != 0)
+    ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
+  else
+    ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (""), -1);
+  if (addr.path_ != 0)
+    ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (addr.path_), -1);
+  else
+    ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (""), -1);
   this->port_number_ = addr.port_number_;
   if (addr.query_ != 0)
     ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (addr.query_), -1);

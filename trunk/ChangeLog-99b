@@ -1,3 +1,13 @@
+Thu Feb  4 23:11:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* websvcs/lib/URL_Addr.h: 
+	* websvcs/lib/URL_Addr.i: 
+	  Added operator= to the ACE_URL_Addr classes.
+
+	* websvcs/lib/URL_Addr.cpp: 
+	  Fixed minor memory allocation problem for invalid HTTP
+	  addresses.
+
 Wed Feb 03 21:50:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: added ACE_HAS_BROKEN_ENUMS with

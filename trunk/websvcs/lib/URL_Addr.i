@@ -8,6 +8,16 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)
 {
 }
 
+ACE_INLINE ACE_URL_Addr&
+ACE_URL_Addr::operator= (const ACE_URL_Addr& address)
+{
+  if (this == &address)
+    return *this;
+
+  this->set (address);
+  return *this;
+}
+
 ACE_INLINE LPCTSTR
 ACE_URL_Addr::get_url (void) const
 {
@@ -21,6 +31,16 @@ ACE_URL_Addr::set_url (LPTSTR url)
 }
 
 // ****************************************************************
+
+ACE_INLINE ACE_HTTP_Addr&
+ACE_HTTP_Addr::operator= (const ACE_HTTP_Addr& rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  this->set (rhs);
+  return *this;
+}
 
 ACE_INLINE ACE_INET_Addr
 ACE_HTTP_Addr::get_inet_address (void) const
@@ -54,6 +74,16 @@ ACE_HTTP_Addr::get_query (void) const
 
 // ****************************************************************
 
+ACE_INLINE ACE_FTP_Addr&
+ACE_FTP_Addr::operator= (const ACE_FTP_Addr& rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  this->set (rhs);
+  return *this;
+}
+
 ACE_INLINE LPCTSTR
 ACE_FTP_Addr::get_user (void) const
 {
@@ -85,6 +115,16 @@ ACE_FTP_Addr::get_inet_address (void) const
 }
 
 // ****************************************************************
+
+ACE_INLINE ACE_Mailto_Addr&
+ACE_Mailto_Addr::operator= (const ACE_Mailto_Addr& rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  this->set (rhs);
+  return *this;
+}
 
 ACE_INLINE LPCTSTR
 ACE_Mailto_Addr::get_user (void) const

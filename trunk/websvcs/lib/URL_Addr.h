@@ -42,13 +42,17 @@ public:
   ACE_URL_Addr (const ACE_URL_Addr& address);
   // The copy constructor.
 
+  ACE_URL_Addr& operator= (const ACE_URL_Addr& address);
+  // The assignment operator
+
+  virtual ~ACE_URL_Addr (void);
+  // destructor
+
   LPCTSTR get_url (void) const;
   // Get the original URL
 
   int set (const ACE_URL_Addr& address);
   // Essentially the copy contructor.
-
-  virtual ~ACE_URL_Addr (void);
 
   virtual int string_to_addr (LPCTSTR address);
   // Initializes from the scheme specific address, for instance: if
@@ -164,6 +168,9 @@ public:
   ACE_HTTP_Addr (const ACE_HTTP_Addr &addr);
   // Copy constructor.
 
+  ACE_HTTP_Addr& operator= (const ACE_HTTP_Addr &addr);
+  // Assignment operator.
+ 
   int set (const ACE_HTTP_Addr &addr);
   // Essentially the copy constructor.
 
@@ -264,6 +271,9 @@ public:
   ACE_FTP_Addr (const ACE_FTP_Addr &addr);
   // Copy constructor.
 
+  ACE_FTP_Addr& operator= (const ACE_FTP_Addr &addr);
+  // Assignment operator
+
   int set (const ACE_FTP_Addr &addr);
   // Essentially the copy constructor.
 
@@ -339,6 +349,9 @@ public:
 
   ACE_Mailto_Addr (const ACE_Mailto_Addr &addr);
   // Copy constructor.
+
+  ACE_Mailto_Addr& operator= (const ACE_Mailto_Addr &addr);
+  // Assignment operator
 
   int set (const ACE_Mailto_Addr &addr);
   // Essentially the copy constructor.
