@@ -21,7 +21,7 @@ TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 }
 
 TAO_GIOP_Message_State *
-TAO_Reply_Dispatcher::message_state (void) const
+TAO_Reply_Dispatcher::message_state (void)
 {
   return 0;
 }
@@ -37,10 +37,7 @@ TAO_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *)
 
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core)
-  : message_state_ (0),
-    reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
-                TAO_ENCAP_BYTE_ORDER,
-                orb_core),
+  : message_state_ (orb_core),
     reply_received_ (0),
     leader_follower_condition_variable_ (0),
     orb_core_ (orb_core)
@@ -63,7 +60,6 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
 
   this->reply_status_ = reply_status;
   this->version_ = version;
-  this->message_state_ = message_state;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
@@ -72,8 +68,17 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
-  // Steal the buffer so that no copying is done.
-  this->reply_cdr_.steal_from (message_state->cdr);
+  if (&this->message_state_ != message_state)
+    {
+      // The Transport Mux Strategy did not use our Message_State to
+      // receive the event, possibly because it is muxing multiple
+      // requests over the same connection.
+
+      // Steal the buffer so that no copying is done.
+      this->message_state_.cdr.steal_from (message_state->cdr);
+
+      // There is no need to copy the other fields!
+    }
 
   // If condition variable is present, then we are doing leader
   // follower model. Do all the nessary things.
@@ -98,21 +103,21 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
 }
 
 TAO_GIOP_Message_State *
-TAO_Synch_Reply_Dispatcher::message_state (void) const
+TAO_Synch_Reply_Dispatcher::message_state (void)
 {
-  return this->message_state_;
+  return &this->message_state_;
 }
 
 TAO_InputCDR &
 TAO_Synch_Reply_Dispatcher::reply_cdr (void)
 {
-  return this->reply_cdr_;
+  return this->message_state_.cdr;
 }
 
 int &
 TAO_Synch_Reply_Dispatcher::reply_received (void)
 {
-  return reply_received_;
+  return this->reply_received_;
 }
 
 int
@@ -188,8 +193,9 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
 }
 
 TAO_GIOP_Message_State *
-TAO_Asynch_Reply_Dispatcher::message_state (void) const
+TAO_Asynch_Reply_Dispatcher::message_state (void)
 {
   return this->message_state_;
 }
+
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
