@@ -1,7 +1,7 @@
 The subdirectories in this directory provide a number of complete
 applications that utilize the ACE features.
 
-        . drwho - This provides a "Distributed RWHO (drwho) utility
+        . drwho - This provides a "Distributed RWHO (drwho)" utility
           that gets around certain rwho limitations, adds
           functionality, and also prints a much prettier listing of
           who's logged in around a network. 
