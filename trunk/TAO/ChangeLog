@@ -1,3 +1,10 @@
+Sat Dec  6 10:41:50 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tao/PortableServer/Object_Adapter.cpp: Replaced the use of
+	  operator== to compare to thread ids with ACE_OS::thr_equal().
+  	  Thanks to Gary Maxey <gary.maxey@hp.com> for reporting this.
+	  This fixes bugid 1663.
+
 Sat Dec  6 09:19:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/CodeSets/UCS4_UTF16/WUCS4_UTF16.cpp:
