@@ -20,7 +20,7 @@ Fri Jul 23 12:01:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/util/utl_scope.cpp:
 	   Further tweaking of the lookup_by_name() method,
 	   in response to a bug report. Thanks to 
-	   Diterwich, Ruud <R.M.L.Diterwich@marin.nl>
+	   Ruud Diterwich<R.M.L.Diterwich@marin.nl>
 	   for sending in the example.
 
 	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
