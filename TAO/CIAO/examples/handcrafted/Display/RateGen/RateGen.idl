@@ -8,9 +8,9 @@
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
-#include "HUDisplay.idl"
+#include "../HUDisplay.idl"
 
-Module HUDisplay
+module HUDisplay
 {
 
   component RateGen supports opmode
