@@ -88,23 +88,31 @@ Guard_Test::test_guard (int ni)
 {
   while (!this->done ())
     {
-      ACE_GUARD (ACE_Thread_Mutex, _ace_mon, Guard_Test::mutex_);
+      {
+        ACE_GUARD (ACE_Thread_Mutex, _ace_mon, Guard_Test::mutex_);
 
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+        performance_test_options.thr_work_count[ni]++;
+        buffer++;
+      }
     }
 }
 
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
+# define ACE_THREAD_GUARD(OBJ,LOCK) \
+  ACE_Thread_Mutex_Guard OBJ (LOCK); \
+    if (OBJ.locked () == 0) return;
+
 void
 Guard_Test::test_thread_guard (int ni)
 {
   while (!this->done ())
     {
-      ACE_Thread_Mutex_Guard _ace_mon (Guard_Test::mutex_);
+      {
+        ACE_THREAD_GUARD (_ace_mon, Guard_Test::mutex_);
 
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+        performance_test_options.thr_work_count[ni]++;
+        buffer++;
+      }
     }
 }
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */

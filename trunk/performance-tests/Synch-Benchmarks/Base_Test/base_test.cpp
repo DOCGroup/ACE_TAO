@@ -32,32 +32,24 @@ Baseline_Base_Test::release ()
 int
 Baseline_Base_Test::test_acquire_release ()
 {
+  baseline_options.start_inc_timer ();
+
   for (; baseline_options.inc_loop_counter () ; )
-    {
-      this->yield ();
-      baseline_options.start_inc_timer ();
+    ;
 
-      for (size_t i=0; i < baseline_options.current_multiply_factor (); i++)
-        ;
-
-      baseline_options.stop_inc_timer ();
-    }
+  baseline_options.stop_inc_timer ();
   return 0;
 }
 
 int
 Baseline_Base_Test::test_try_lock ()
 {
+  baseline_options.start_inc_timer ();
+
   for (; baseline_options.inc_loop_counter () ; )
-    {
-      this->yield ();
-      baseline_options.start_inc_timer ();
+    ;
 
-      for (size_t i=0; i < baseline_options.current_multiply_factor (); i++)
-        ;
-
-      baseline_options.stop_inc_timer ();
-    }
+  baseline_options.stop_inc_timer ();
   return 0;
 }
 

@@ -8,6 +8,8 @@
 
 #include "Synch_Lib/Benchmark_Base.h"
 
+const unsigned long DEFAULT_ITERATIONS = 1000000;
+
 class ACE_Svc_Export Baseline_Test_Base : public Benchmark_Base
 {
   // = TITLE
@@ -33,7 +35,6 @@ public:
   virtual void yield ();
   // Yield to other thread.
 
-  size_t multiply_factor (void);
   size_t iteration (void);
   // Access methods.
 
@@ -43,11 +44,8 @@ protected:
   int yield_method_;
   // Should we your thr_yield or sleep (0).
 
-  size_t multiply_factor_;
-  // Number of operations before yielding to other threads.
-
   size_t iteration_;
-  // Total number of operations.  <iterations_> <= <multiply_factor_> * n
+  // Total number of operations.  <iterations_>
 };
 
 class ACE_Svc_Export Baseline_Test_Options
@@ -69,7 +67,7 @@ public:
   int parse_args (int argc, char *argv[]);
   // Parse and set the Baseline_Test options and flags.
 
-  int reset_params (size_t mulply_factor, size_t iteration, int yield);
+  int reset_params (size_t iteration, int yield);
   // Reset test parameters for next round.
 
   int test_try_lock (void);
@@ -80,11 +78,7 @@ public:
   // Start/stop measuring time.
 
   int inc_loop_counter (void);
-  // Added multiply_factor_ to total_iteration_.
   // Returns
-
-  size_t current_multiply_factor (void);
-  // Return <multiply_factor_>.
 
   size_t current_iteration (void);
   // Return <iteration_>.
@@ -102,9 +96,6 @@ private:
 
   int current_yield_method_;
   // yield or sleep.
-
-  size_t current_multiply_factor_;
-  // Number loop before performing thread yield.
 
   size_t current_iteration_;
   // Number of iteration.
