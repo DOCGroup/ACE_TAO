@@ -77,7 +77,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
       int i;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%T (%t): heartbeat\n"));
+                  ASYS_TEXT ("%T (%t): heartbeat\n")));
       // See if all of the timers have fired.  If so, leave the thread's
       // reactor loop which will exit the thread and end the test.
 
@@ -99,7 +99,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "%T (%t): Timer #%d (id #%d) expired\n",
+              ASYS_TEXT ("%T (%t): Timer #%d (id #%d) expired\n"),
               time_tag,
               this->timer_id_[time_tag]));
 
@@ -113,9 +113,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("MT_Reactor_Timer_Test");
+  ACE_START_TEST (ASYS_TEXT ("MT_Reactor_Timer_Test"));
 
 #if defined (ACE_HAS_THREADS)
 
@@ -134,7 +134,7 @@ main (int, char *[])
   the_reactor->run_event_loop ();
   other_thread.wait ();
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;

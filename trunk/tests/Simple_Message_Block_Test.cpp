@@ -25,9 +25,9 @@
 #include "ace/Synch.h"
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Simple_Message_Block_Test");
+  ACE_START_TEST (ASYS_TEXT ("Simple_Message_Block_Test"));
 
   {
     // Checks normal stack deletes.

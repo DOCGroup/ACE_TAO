@@ -30,7 +30,7 @@ static void
 throw_exception (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) throw exception\n"));
+              ASYS_TEXT ("(%P|%t) throw exception\n")));
 
   // Cause a Win32 structured exception.
   *(char *) 0 = 0;
@@ -43,7 +43,7 @@ static void
 throw_exception (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) throw exception\n"));
+              ASYS_TEXT ("(%P|%t) throw exception\n")));
   throw Except ();
 }
 #endif /* ACE_WIN32 */
@@ -71,11 +71,11 @@ My_Handler::get_handle (void) const
 int
 My_Handler::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
+  ASYS_TCHAR buf[BUFSIZ];
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Activity occurred on handle %d!\n",
+              ASYS_TEXT ("Activity occurred on handle %d!\n"),
               ACE_SOCK_Dgram::get_handle ()));
 
   ssize_t n = ACE_SOCK_Dgram::recv (buf,
@@ -83,11 +83,11 @@ My_Handler::handle_input (ACE_HANDLE)
                                     from_addr);
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "handle_input"));
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("handle_input")));
   else
     ACE_DEBUG ((LM_DEBUG,
-                "got buf = %s\n",
+                ASYS_TEXT ("got buf = %s\n"),
                 buf));
 
   throw_exception ();
@@ -107,7 +107,7 @@ public:
     catch (...)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    " (%t) catch exception\n"));
+                    ASYS_TEXT (" (%t) catch exception\n")));
         ret = -1;
         // do your thing, etc.
       }
@@ -128,7 +128,7 @@ worker (void)
   for (;;)
     if (ACE_Reactor::instance ()->handle_events () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%t) exception return\n"),
+                         ASYS_TEXT (" (%t) exception return\n")),
                         0);
 
   ACE_NOTREACHED (return 0);
@@ -136,9 +136,9 @@ worker (void)
 #endif /* ACE_HAS_EXCEPTIONS */
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST ("Reactor_Exceptions_Test");
+  ACE_START_TEST (ASYS_TEXT ("Reactor_Exceptions_Test"));
 
 #if defined (ACE_HAS_EXCEPTIONS)
   My_Reactor reactor;
@@ -146,7 +146,7 @@ main (int argc, char *argv[])
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Starting tracing\n"));
+              ASYS_TEXT ("Starting tracing\n")));
 
   ACE_Reactor::instance (&reactor);
   ACE_Thread_Manager *thr_mgr =
@@ -161,8 +161,8 @@ main (int argc, char *argv[])
       (&handler,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "register_handler"),
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("register_handler")),
                       -1);
 
 #if defined (ACE_HAS_THREADS)
@@ -170,13 +170,13 @@ main (int argc, char *argv[])
 #else
   // Need to figure out how to implement this test.
   ACE_ERROR ((LM_ERROR,
-              "threads not supported on this platform\n"));
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_SOCK_Dgram dgram ((ACE_INET_Addr &) ACE_Addr::sap_any);
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
-    dgram.send ("Hello", sizeof ("Hello"), remote_addr);
+    dgram.send (ASYS_TEXT ("Hello"), sizeof (ASYS_TEXT ("Hello")), remote_addr);
 
   // Barrier to wait for the other thread to return.
   thr_mgr->wait ();
@@ -185,12 +185,12 @@ main (int argc, char *argv[])
   dgram.close ();
 
   ACE_DEBUG ((LM_DEBUG,
-              " (%t) exiting main\n"));
+              ASYS_TEXT (" (%t) exiting main\n")));
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR,
-              "C++ exceptions not supported on this platform\n"));
+              ASYS_TEXT ("C++ exceptions not supported on this platform\n")));
 #endif /* ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;

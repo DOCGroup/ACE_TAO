@@ -26,12 +26,12 @@
 #include "ace/Containers.h"
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
   int ret = 0;
   int *ptr = 0;
 
-  ACE_START_TEST ("OrdMultiSet_Test");
+  ACE_START_TEST (ASYS_TEXT ("OrdMultiSet_Test"));
 
   // make an empty set of int and an iterator
   ACE_Ordered_MultiSet<int> set;

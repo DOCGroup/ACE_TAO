@@ -22,7 +22,7 @@
 #include "ace/Sched_Params.h"
 #include "test_config.h"
 
-static char *usage = "usage: %s [-d]\n";
+static ASYS_TCHAR *usage = ASYS_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)
 
@@ -84,20 +84,20 @@ Priority_Task::open (void *arg)
         ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
                                         ACE_SCOPE_THREAD);
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) task activation at priority %d with "
-                            "flags 0x%X failed; retry at priority %d with "
-                            "flags 0x%X (errno is %d%p)\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) task activation at priority %d with ")
+                            ASYS_TEXT ("flags 0x%X failed; retry at priority %d with ")
+                            ASYS_TEXT ("flags 0x%X (errno is %d%p)\n"),
                   this->priority_,
                   flags,
                   fallback_priority,
-                  THR_NEW_LWP, errno, ""));
+                  THR_NEW_LWP, errno, ASYS_TEXT ("")));
 
       flags = THR_NEW_LWP;
       this->priority_ = fallback_priority;
 
       if (this->activate (flags, 1, 1, this->priority_) == -1)
-        ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority %d failed, "
-                              "exiting!\n%a",
+        ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("(%t) task activation at priority %d failed, ")
+                              ASYS_TEXT ("exiting!\n%a"),
                     this->priority_,
                     -1));
     }
@@ -112,14 +112,14 @@ Priority_Task::svc (void)
   int prio;
 
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("getprio failed")), -1);
 
   if (prio == this->priority_)
-    ACE_DEBUG ((LM_INFO, "(%t) actual prio of %d equals desired priority\n",
+    ACE_DEBUG ((LM_INFO, ASYS_TEXT ("(%t) actual prio of %d equals desired priority\n"),
                 prio));
   else
     {
-      ACE_DEBUG ((LM_ERROR, "(%t) actual prio = %d, desired priority_ = %d!\n",
+      ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("(%t) actual prio = %d, desired priority_ = %d!\n"),
                   prio, this->priority_));
       ++error_;
     }
@@ -130,9 +130,9 @@ Priority_Task::svc (void)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST ("Priority_Task_Test");
+  ACE_START_TEST (ASYS_TEXT ("Priority_Task_Test"));
 
   if (argc <= 1)
     // Disable LM_DEBUG messages.
@@ -140,7 +140,7 @@ main (int argc, char *argv[])
       (ACE_Log_Msg::instance ()->priority_mask () & ~ LM_DEBUG);
   else if (argc == 2)
     {
-      if (ACE_OS::strcmp (argv[1], "-d") != 0)
+      if (ACE_OS::strcmp (argv[1], ASYS_TEXT ("-d")) != 0)
         ACE_ERROR_RETURN ((LM_ERROR, usage, argv [0]), -1);
       // else -d option: don't disable LM_DEBUG messages
     }
@@ -176,7 +176,7 @@ main (int argc, char *argv[])
         priority.next ();
     }
 
-  ACE_DEBUG ((LM_INFO, "(%t) %d tasks spawned, wait for them to exit . . .\n",
+  ACE_DEBUG ((LM_INFO, ASYS_TEXT ("(%t) %d tasks spawned, wait for them to exit . . .\n"),
                        ACE_MAX_ITERATIONS));
 
   // Wait for all tasks to exit.
@@ -192,7 +192,7 @@ main (int argc, char *argv[])
     }
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   // Re-enable LM_DEBUG messages.

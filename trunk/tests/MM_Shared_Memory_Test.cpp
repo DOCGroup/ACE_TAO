@@ -66,7 +66,7 @@ server (void *)
     ACE_OS::sleep (1);
 
   if (shm_server.remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "remove"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("remove")));
 
   ACE_OS::unlink (shm_key);
   return 0;
@@ -79,7 +79,7 @@ spawn (void)
   switch (ACE_OS::fork ())
     {
     case -1:
-      ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("fork failed")));
       exit (-1);
     case 0: 
       client (0);
@@ -90,25 +90,25 @@ spawn (void)
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
 					      (void *) 0,
 					      THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
 
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
 					      (void *) 0,
 					      THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_ERROR ((LM_ERROR, "only one thread may be run in a process on this platform\n%a", 1));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("only one thread may be run in a process on this platform\n%a"), 1));
 #endif /* ACE_HAS_THREADS */	
 }
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("MM_Shared_Memory_Test");
+  ACE_START_TEST (ASYS_TEXT ("MM_Shared_Memory_Test"));
 
   if (ACE_OS::mktemp (shm_key) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", shm_key), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), shm_key), 1);
 
   spawn ();
 

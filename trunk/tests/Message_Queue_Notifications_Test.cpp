@@ -64,7 +64,7 @@ Message_Handler::Message_Handler (ACE_Reactor &reactor)
 int
 Message_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "Message_Handler::handle_input\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_input\n")));
 
   // Next time handle_output will be called 
   this->notification_strategy_.mask (ACE_Event_Handler::WRITE_MASK);
@@ -75,7 +75,7 @@ Message_Handler::handle_input (ACE_HANDLE)
 int 
 Message_Handler::handle_output (ACE_HANDLE fd)
 {
-  ACE_DEBUG ((LM_DEBUG, "Message_Handler::handle_output\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_output\n")));
   ACE_UNUSED_ARG (fd);  
 
   // Next time handle_exception will be called 
@@ -87,7 +87,7 @@ Message_Handler::handle_output (ACE_HANDLE fd)
 int 
 Message_Handler::handle_exception (ACE_HANDLE fd)
 {
-  ACE_DEBUG ((LM_DEBUG, "Message_Handler::handle_exception\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_exception\n")));
   ACE_UNUSED_ARG (fd);  
 
   // Next time handle_input will be called 
@@ -102,10 +102,10 @@ Message_Handler::process_message (void)
   ACE_Message_Block *mb;
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("dequeue_head")), -1);
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "message received = %s\n", mb->rd_ptr ()));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("message received = %s\n"), mb->rd_ptr ()));
       delete mb;
     }
 
@@ -118,18 +118,18 @@ Message_Handler::make_message (void)
 {
   if (--iterations > 0)
     {
-      ACE_Message_Block *mb = new ACE_Message_Block ("hello");
+      ACE_Message_Block *mb = new ACE_Message_Block ((char *) ASYS_TEXT ("hello"));
       
-      ACE_DEBUG ((LM_DEBUG, "sending message\n"));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sending message\n")));
       this->putq (mb);
     }
 }
   
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Message_Queue_Notifications_Test");
+  ACE_START_TEST (ASYS_TEXT ("Message_Queue_Notifications_Test"));
 
 #if defined (ACE_HAS_THREADS)
   ACE_Reactor reactor; 
@@ -139,7 +139,7 @@ main (int, char *[])
     reactor.handle_events ();
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

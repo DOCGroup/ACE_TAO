@@ -106,14 +106,14 @@ producer (void *args)
 
       // Enqueue in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "put_next"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"), ASYS_TEXT ("put_next")), 0);
     }
 
   // Now send a 0-sized shutdown message to the other thread
   ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), 0);
 
   if (msg_queue->enqueue_tail (mb) == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"), ASYS_TEXT ("put_next")));
 
   count++;
 
@@ -130,9 +130,9 @@ producer (void *args)
 // size of each line.
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Priority_Buffer_Test");
+  ACE_START_TEST (ASYS_TEXT ("Priority_Buffer_Test"));
 
 #if defined (ACE_HAS_THREADS)
   // Message queue.
@@ -141,12 +141,12 @@ main (int, char *[])
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (producer),
                                              (void *) &msg_queue,
                                              THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn")), 1);
 
   // Wait for producer and consumer threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
