@@ -534,11 +534,11 @@ public:
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.
 
-  static ACE_HANDLE open_temp_file (char* name,
+  static ACE_HANDLE open_temp_file (const char *name,
                                     int mode, 
                                     int perm = 0);
-  // Opening the temp file. File gets unlinked when the it is
-  // closed. Cool for  having temp files.
+  // Opening the temp file.  File is automagically unlinked when it is
+  // closed.  This is useful for have temp files.
   
   // = Shield us from Win32's inability to select on STDIN.
 
