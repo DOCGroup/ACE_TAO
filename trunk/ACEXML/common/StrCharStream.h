@@ -13,7 +13,7 @@
 #ifndef _ACEXML_STRCHARSTREAM_H_
 #define _ACEXML_STRCHARSTREAM_H_
 
-#include "common/CharStream.h"
+#include "ACEXML/common/CharStream.h"
 
 /**
  * @class ACEXML_StrCharStream StrCharStream.h "common/StrCharStream.h"
