@@ -10,7 +10,7 @@ ACE_Remote_Mutex::ACE_Remote_Mutex (void)
 }
 
 ACE_INLINE
-ACE_Remote_Mutex::ACE_Remote_Mutex (const char *token_name,
+ACE_Remote_Mutex::ACE_Remote_Mutex (const ASYS_TCHAR *token_name,
 				    int ignore_deadlock,
 				    int debug)
 {
@@ -27,7 +27,7 @@ ACE_Remote_Mutex::clone (void) const
 }
 
 ACE_INLINE ACE_Tokens *
-ACE_Remote_Mutex::create_token (const char *name)
+ACE_Remote_Mutex::create_token (const ASYS_TCHAR *name)
 {
   return new ACE_Mutex_Token (name);
 }
@@ -35,7 +35,7 @@ ACE_Remote_Mutex::create_token (const char *name)
 // ************************************************************
 
 ACE_INLINE
-ACE_Remote_RLock::ACE_Remote_RLock (const char *token_name,
+ACE_Remote_RLock::ACE_Remote_RLock (const ASYS_TCHAR *token_name,
 				    int ignore_deadlock,
 				    int debug)
 {
@@ -44,7 +44,7 @@ ACE_Remote_RLock::ACE_Remote_RLock (const char *token_name,
 }
 
 ACE_INLINE ACE_Tokens *
-ACE_Remote_RLock::create_token (const char *name)
+ACE_Remote_RLock::create_token (const ASYS_TCHAR *name)
 {
   return new ACE_RW_Token (name);
 }
@@ -66,7 +66,7 @@ ACE_Remote_RLock::clone (void) const
 // ************************************************************
 
 ACE_INLINE
-ACE_Remote_WLock::ACE_Remote_WLock (const char *token_name,
+ACE_Remote_WLock::ACE_Remote_WLock (const ASYS_TCHAR *token_name,
 				    int ignore_deadlock,
 				    int debug)
 {
@@ -76,7 +76,7 @@ ACE_Remote_WLock::ACE_Remote_WLock (const char *token_name,
 
 
 ACE_INLINE ACE_Tokens *
-ACE_Remote_WLock::create_token (const char *name)
+ACE_Remote_WLock::create_token (const ASYS_TCHAR *name)
 {
   return new ACE_RW_Token (name);
 }
@@ -94,5 +94,3 @@ ACE_Remote_WLock::clone (void) const
 			       ignore_deadlock_,
 			       debug_);
 }
-
-

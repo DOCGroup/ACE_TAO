@@ -206,7 +206,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
   // Must have a thread manager!
   if (this->thr_mgr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "error: must have a non-NULL thread manager\n"),
+                       ASYS_TEXT ("error: must have a non-NULL thread manager\n")),
                       -1);
   else
     return 0;

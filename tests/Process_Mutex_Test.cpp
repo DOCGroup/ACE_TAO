@@ -98,14 +98,14 @@ acquire_release (void)
 #endif /* ! ACE_LACKS_FORK */
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
 #if defined (ACE_LACKS_FORK)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST ("Process_Mutex_Test");
-  ACE_ERROR ((LM_INFO, "fork is not supported on this platform\n"));
+  ACE_START_TEST (ASYS_TEXT ("Process_Mutex_Test"));
+  ACE_ERROR ((LM_INFO, ASYS_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
 #else  /* ! ACE_LACKS_FORK */
 
@@ -120,7 +120,7 @@ main (int argc, char *argv[])
     }
   else
     {
-      ACE_START_TEST ("Process_Mutex_Test");
+      ACE_START_TEST (ASYS_TEXT ("Process_Mutex_Test"));
       ACE_INIT_LOG ("Process_Mutex_Test-children");
 
       ACE_Process_Options options;

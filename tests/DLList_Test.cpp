@@ -37,12 +37,12 @@ static STRING string_table[] =
   // Note: all these casts are to appease SC 5.0 which is not pleased
   // with using string literals (i.e. const char *'s) as char
   // *'s. It's ugly, but necessary.
-  ASYS_TEXT (ACE_const_cast (char *, "hello")),
-  ASYS_TEXT (ACE_const_cast (char *, "guten Tag")),
-  ASYS_TEXT (ACE_const_cast (char *, "goodbye")),
-  ASYS_TEXT (ACE_const_cast (char *, "auf wiedersehen")),
-  ASYS_TEXT (ACE_const_cast (char *, "funny")),
-  ASYS_TEXT (ACE_const_cast (char *, "lustig")),
+  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("hello")),
+  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("guten Tag")),
+  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("goodbye")),
+  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("auf wiedersehen")),
+  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("funny")),
+  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("lustig")),
   0
 };
 

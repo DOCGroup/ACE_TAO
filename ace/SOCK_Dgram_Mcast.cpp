@@ -106,7 +106,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
         {
           if (this->subscribe (mcast_addr,
                                reuse_addr,
-                               ASYS_WIDE_STRING ("0.0.0.0"),
+                               ASYS_TEXT ("0.0.0.0"),
                                protocol_family,
                                protocol) == 0)
             ++nr_subscribed;

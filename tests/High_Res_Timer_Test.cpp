@@ -47,8 +47,8 @@ check (const u_int interval, const u_int measured)
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("The measured time of %u differs from "
-                             "the interval of %u by %u percent.\n"),
+                  ASYS_TEXT ("The measured time of %u differs from ")
+                  ASYS_TEXT ("the interval of %u by %u percent.\n"),
                   measured, interval, percentage_difference));
       return 1;
     }
@@ -78,8 +78,8 @@ main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("High_Res_Timer_Test"));
 
-  ACE_DEBUG ((LM_DEBUG, "The ACE_High_Res_Timer scale factor is %u "
-                        "1/microsecond\n",
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
+                        ASYS_TEXT ("1/microsecond\n"),
               ACE_High_Res_Timer::global_scale_factor ()));
 
   u_int errors = 0;
@@ -105,11 +105,11 @@ main (int argc, ASYS_TCHAR *argv[])
         {
           const ACE_Time_Value interval (0, intervals[i]);
           const ACE_Time_Value measured = time_interval (interval);
-          ACE_DEBUG ((LM_DEBUG, "interval: %u usec, measured: %u usec%s\n",
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("interval: %u usec, measured: %u usec%s\n"),
                       interval.sec () * 1000000 + interval.usec (),
                       measured.sec () * 1000000 + measured.usec (),
                       intervals[i] <= TIMER_RESOLUTION  ?
-                      " (interval and measured may differ)"  :  ""));
+                      ASYS_TEXT (" (interval and measured may differ)")  :  ASYS_TEXT ("")));
 
           if (intervals[i] > TIMER_RESOLUTION)
             {

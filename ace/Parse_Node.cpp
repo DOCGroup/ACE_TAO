@@ -54,7 +54,7 @@ ACE_Parse_Node::dump (void) const
   ACE_TRACE ("ACE_Parse_Node::dump");
 }
 
-const char *
+const ASYS_TCHAR *
 ACE_Parse_Node::name (void) const
 {
   ACE_TRACE ("ACE_Parse_Node::name");
@@ -78,12 +78,12 @@ ACE_Parse_Node::link (ACE_Parse_Node *n)
 ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
                                   const ACE_Parse_Node *str_mods)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-  : ACE_Parse_Node (str_ops == 0 ? ACE_static_cast (char *,
+  : ACE_Parse_Node (str_ops == 0 ? ACE_static_cast (ASYS_TCHAR *,
                                                     ASYS_TEXT ("<unknown>"))
-                                 : ACE_static_cast (char *,
+                                 : ACE_static_cast (ASYS_TCHAR *,
                                                     str_ops->name ())),
 #else
-  : ACE_Parse_Node (str_ops == 0 ? "<unknown>" : str_ops->name ()),
+  : ACE_Parse_Node ((str_ops == 0 ? ASYS_TEXT ("<unknown>") : str_ops->name ())),
 #endif /* defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
     node_ (str_ops),
     mods_ (str_mods)
@@ -110,7 +110,7 @@ ACE_Parse_Node::ACE_Parse_Node (void)
 }
 
 
-ACE_Parse_Node::ACE_Parse_Node (const char *nm)
+ACE_Parse_Node::ACE_Parse_Node (const ASYS_TCHAR *nm)
   : name_ (nm),
     next_ (0)
 {
@@ -145,7 +145,7 @@ ACE_Suspend_Node::dump (void) const
   ACE_TRACE ("ACE_Suspend_Node::dump");
 }
 
-ACE_Suspend_Node::ACE_Suspend_Node (const char *name)
+ACE_Suspend_Node::ACE_Suspend_Node (const ASYS_TCHAR *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Suspend_Node::ACE_Suspend_Node");
@@ -159,7 +159,7 @@ ACE_Resume_Node::dump (void) const
   ACE_TRACE ("ACE_Resume_Node::dump");
 }
 
-ACE_Resume_Node::ACE_Resume_Node (const char *name)
+ACE_Resume_Node::ACE_Resume_Node (const ASYS_TCHAR *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Resume_Node::ACE_Resume_Node");
@@ -202,7 +202,7 @@ ACE_Remove_Node::dump (void) const
   ACE_TRACE ("ACE_Remove_Node::dump");
 }
 
-ACE_Remove_Node::ACE_Remove_Node (const char *name)
+ACE_Remove_Node::ACE_Remove_Node (const ASYS_TCHAR *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Remove_Node::ACE_Remove_Node");
@@ -223,8 +223,8 @@ ACE_Remove_Node::apply (void)
 }
 
 ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Type *sr,
-                                    char *parms)
-  : ACE_Static_Node (sr->chname (), parms),
+                                    ASYS_TCHAR *parms)
+  : ACE_Static_Node (sr->name (), parms),
     record_ (sr)
 {
   ACE_TRACE ("ACE_Dynamic_Node::ACE_Dynamic_Node");
@@ -274,8 +274,8 @@ ACE_Static_Node::dump (void) const
   ACE_TRACE ("ACE_Static_Node::dump");
 }
 
-ACE_Static_Node::ACE_Static_Node (const char *nm,
-                                  char *params)
+ACE_Static_Node::ACE_Static_Node (const ASYS_TCHAR *nm,
+                                  ASYS_TCHAR *params)
   : ACE_Parse_Node (nm),
     parameters_ (params)
 {
@@ -289,14 +289,14 @@ ACE_Static_Node::record (void) const
   ACE_Service_Type *sr;
 
   if (ACE_Service_Repository::instance()->find
-      (ASYS_WIDE_STRING (this->name ()),
+      (this->name (),
        (const ACE_Service_Type **) &sr) == -1)
     return 0;
   else
     return sr;
 }
 
-char *
+ASYS_TCHAR *
 ACE_Static_Node::parameters (void) const
 {
   ACE_TRACE ("ACE_Static_Node::parameters");
@@ -344,7 +344,7 @@ ACE_Location_Node::~ACE_Location_Node (void)
   ACE_TRACE ("ACE_Location_Node::~ACE_Location_Node");
 }
 
-const char *
+const ASYS_TCHAR *
 ACE_Location_Node::pathname (void) const
 {
   ACE_TRACE ("ACE_Location_Node::pathname");
@@ -352,7 +352,7 @@ ACE_Location_Node::pathname (void) const
 }
 
 void
-ACE_Location_Node::pathname (const char *p)
+ACE_Location_Node::pathname (const ASYS_TCHAR *p)
 {
   ACE_TRACE ("ACE_Location_Node::pathname");
   this->pathname_ = p;
@@ -395,7 +395,7 @@ ACE_Location_Node::open_handle (void)
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  int result = ACE::ldfind (ASYS_WIDE_STRING (this->pathname ()),
+  int result = ACE::ldfind (this->pathname (),
                             dl_pathname,
                             (sizeof dl_pathname / sizeof (ASYS_TCHAR)));
 
@@ -404,7 +404,7 @@ ACE_Location_Node::open_handle (void)
     return 0;
 
   // Set the handle
-  this->handle (ACE_OS::dlopen (dl_pathname));
+  this->handle (ACE_OS::dlopen (ASYS_ONLY_MULTIBYTE_STRING (dl_pathname)));
 
   if (this->handle () == 0)
     {
@@ -438,8 +438,8 @@ ACE_Object_Node::dump (void) const
   ACE_TRACE ("ACE_Object_Node::dump");
 }
 
-ACE_Object_Node::ACE_Object_Node (const char *path,
-                                  const char *obj_name)
+ACE_Object_Node::ACE_Object_Node (const ASYS_TCHAR *path,
+                                  const ASYS_TCHAR *obj_name)
   : object_name_ (obj_name)
 {
   ACE_TRACE ("ACE_Object_Node::ACE_Object_Node");
@@ -457,7 +457,7 @@ ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
 
       this->symbol_ = (void *)
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       object_name);
+                       ASYS_ONLY_MULTIBYTE_STRING (object_name));
 
       if (this->symbol_ == 0)
         {
@@ -498,8 +498,8 @@ ACE_Function_Node::dump (void) const
   ACE_TRACE ("ACE_Function_Node::dump");
 }
 
-ACE_Function_Node::ACE_Function_Node (const char *path,
-                                      const char *func_name)
+ACE_Function_Node::ACE_Function_Node (const ASYS_TCHAR *path,
+                                      const ASYS_TCHAR *func_name)
   : function_name_ (func_name)
 {
   ACE_TRACE ("ACE_Function_Node::ACE_Function_Node");
@@ -519,8 +519,8 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       // Locate the factory function <function_name> in the shared
       // object.
 
-      char *function_name = ACE_const_cast (char *,
-                                            this->function_name_);
+      ASYS_TCHAR *function_name = ACE_const_cast (ASYS_TCHAR *,
+                                                  this->function_name_);
 
       // According to the new ANSI C++ specification, casting a void*
       // pointer to a function pointer is not allowed.  However,
@@ -536,7 +536,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       long temp_ptr =
         ACE_reinterpret_cast(long,
                              ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                                            ASYS_WIDE_STRING (function_name)));
+                                            ASYS_ONLY_MULTIBYTE_STRING (function_name)));
       func = ACE_reinterpret_cast(void *(*)(ACE_Service_Object_Exterminator *),
                                   temp_ptr);
 
@@ -550,7 +550,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("dlsym failed for function %s\n"),
-                          ASYS_WIDE_STRING (function_name)));
+                          function_name));
 
               ASYS_TCHAR *errmsg = ACE_OS::dlerror ();
 
@@ -573,7 +573,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
           ace_yyerrno++;
           ACE_ERROR_RETURN ((LM_ERROR,
                              ASYS_TEXT ("%p\n"),
-                             ASYS_WIDE_STRING (this->function_name_)),
+                             this->function_name_),
                             0);
         }
     }
@@ -633,7 +633,7 @@ ACE_Static_Function_Node::dump (void) const
   ACE_TRACE ("ACE_Static_Function_Node::dump");
 }
 
-ACE_Static_Function_Node::ACE_Static_Function_Node (const char *func_name)
+ACE_Static_Function_Node::ACE_Static_Function_Node (const ASYS_TCHAR *func_name)
   : function_name_ (func_name)
 {
   ACE_TRACE ("ACE_Static_Function_Node::ACE_Static_Function_Node");
@@ -653,7 +653,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 
   ACE_Static_Svc_Descriptor **ssdp = 0;
   ACE_STATIC_SVCS &svcs = *ACE_Service_Config::static_svcs ();
-  char *function_name = ACE_const_cast (char *, this->function_name_);
+  ASYS_TCHAR *function_name = ACE_const_cast (ASYS_TCHAR *, this->function_name_);
 
   for (ACE_STATIC_SVCS_ITERATOR iter (svcs);
        iter.next (ssdp) != 0;
@@ -661,7 +661,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
       if (ACE_OS::strcmp (ssd->name_,
-                          ASYS_WIDE_STRING (function_name)) == 0)
+                          function_name) == 0)
         func = (void *(*)(ACE_Service_Object_Exterminator*)) ssd->alloc_;
     }
 
@@ -675,7 +675,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              ASYS_TEXT ("no static service registered for function %s\n"),
-                             ASYS_WIDE_STRING (function_name)),
+                             function_name),
                              0);
         }
     }
@@ -688,7 +688,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       ace_yyerrno++;
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("%p\n"),
-                         ACE_WIDE_STRING (this->function_name_)),
+                         this->function_name_),
                         0);
     }
 

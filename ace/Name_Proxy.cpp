@@ -148,8 +148,8 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
                   ASYS_TEXT ("****************** recv_reply returned -1\n")));
     default:
       ACE_ERROR ((LM_ERROR,
-                  "%p got %d bytes, expected %d bytes\n",
-		  "recv failed",
+                  ASYS_TEXT ("%p got %d bytes, expected %d bytes\n"),
+		  ASYS_TEXT ("recv failed"),
                   n,
                   sizeof (ACE_UINT32)));
       // FALLTHROUGH
@@ -171,8 +171,9 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
         // Subtract off the size of the part we skipped over...
         if (n != ssize_t (length - sizeof (ACE_UINT32)))
           {
-            ACE_ERROR ((LM_ERROR, "%p expected %d, got %d\n",
-			"invalid length",
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT ("%p expected %d, got %d\n"),
+			ASYS_TEXT ("invalid length"),
                         length,
                         n));
             return -1;

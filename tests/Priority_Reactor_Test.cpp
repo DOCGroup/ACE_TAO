@@ -92,14 +92,14 @@ Read_Handler::open (void *)
 {
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Read_Handler::open, "
-                       "cannot set non blocking mode"),
+                       ASYS_TEXT ("(%P|%t) Read_Handler::open, ")
+                       ASYS_TEXT ("cannot set non blocking mode")),
                       -1);
 
   if (reactor ()->register_handler (this, READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Read_Handler::open, "
-                       "cannot register handler"),
+                       ASYS_TEXT ("(%P|%t) Read_Handler::open, ")
+                       ASYS_TEXT ("cannot register handler")),
                       -1);
 
   // A number larger than the actual number of priorities, so some
@@ -110,8 +110,8 @@ Read_Handler::open (void *)
   started_++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) created svc_handler for handle %d "
-              "with priority %d\n",
+              ASYS_TEXT ("(%P|%t) created svc_handler for handle %d ")
+              ASYS_TEXT ("with priority %d\n"),
               get_handle (),
               priority ()));
   return 0;
@@ -134,19 +134,19 @@ Read_Handler::handle_input (ACE_HANDLE h)
         return 0;
 
       if (result != 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n",
-                    "Read_Handler::handle_input"));
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %p\n"),
+                    ASYS_TEXT ("Read_Handler::handle_input")));
       waiting_--;
 
       if (waiting_ == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Last svc_handler closed, shutting down\n"));
+                      ASYS_TEXT ("Last svc_handler closed, shutting down\n")));
           ACE_Reactor::instance()->end_event_loop();
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Read_Handler::handle_input closing down\n"));
+                  ASYS_TEXT ("(%P|%t) Read_Handler::handle_input closing down\n")));
       return -1;
     }
 
@@ -174,8 +174,8 @@ Write_Handler::svc (void)
       if (this->peer ().send_n (ACE_ALPHABET,
                                 sizeof (ACE_ALPHABET) - 1) == -1)
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) %p\n",
-                      "send_n"));
+                      ASYS_TEXT ("(%P|%t) %p\n"),
+                      ASYS_TEXT ("send_n")));
       ACE_OS::sleep (pause);
     }
 
@@ -189,7 +189,7 @@ client (void *arg)
   ACE_INET_Addr *connection_addr =
     ACE_reinterpret_cast (ACE_INET_Addr *, arg);
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) running client\n"));
+              ASYS_TEXT ("(%P|%t) running client\n")));
   CONNECTOR connector;
 
   Write_Handler *writer = 0;
@@ -214,7 +214,7 @@ client (void *arg)
           options.timeout (tmp);
           writer = 0;
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) still trying to connect\n"));
+                      ASYS_TEXT ("(%P|%t) still trying to connect\n")));
         }
       else
         {
@@ -225,23 +225,23 @@ client (void *arg)
           writer->destroy ();
 
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) finishing client\n"));
+                      ASYS_TEXT ("(%P|%t) finishing client\n")));
           return 0;
         }
     }
 
   ACE_ERROR ((LM_ERROR,
-              "(%P|%t) failed to connect after %d retries\n",
+              ASYS_TEXT ("(%P|%t) failed to connect after %d retries\n"),
               max_retries));
   return 0;
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST ("Priority_Reactor_Test");
+  ACE_START_TEST (ASYS_TEXT ("Priority_Reactor_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, "dc:l:m:t:");
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("dc:l:m:t:"));
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -250,26 +250,26 @@ main (int argc, char *argv[])
         opt_priority_reactor = 0;
         break;
       case 'c':
-        opt_nchildren = atoi (getopt.optarg);
+        opt_nchildren = ACE_OS::atoi (getopt.optarg);
         break;
       case 'l':
-        opt_nloops = atoi (getopt.optarg);
+        opt_nloops = ACE_OS::atoi (getopt.optarg);
         break;
       case 'm':
-        max_retries = atoi (getopt.optarg);
+        max_retries = ACE_OS::atoi (getopt.optarg);
         break;
       case 't':
-        opt_max_duration = atoi (getopt.optarg);
+        opt_max_duration = ACE_OS::atoi (getopt.optarg);
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: Priority_Reactor_Test "
-                           "   [-d] (disable priority reactor)\n"
-                           "   [-c nchildren] (number of threads/processes)\n"
-                           "   [-l loops] (number of loops per child)\n"
-                           "   [-m maxretries] (attempts to connect)\n"
-                           "   [-t max_time] (limits test duration)\n"),
+                           ASYS_TEXT ("Usage: Priority_Reactor_Test ")
+                           ASYS_TEXT ("   [-d] (disable priority reactor)\n")
+                           ASYS_TEXT ("   [-c nchildren] (number of threads/processes)\n")
+                           ASYS_TEXT ("   [-l loops] (number of loops per child)\n")
+                           ASYS_TEXT ("   [-m maxretries] (attempts to connect)\n")
+                           ASYS_TEXT ("   [-t max_time] (limits test duration)\n")),
                           -1);
         ACE_NOTREACHED (break);
       }
@@ -305,12 +305,12 @@ main (int argc, char *argv[])
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "open"),
+                       ASYS_TEXT ("(%P|%t) %p\n"),
+                       ASYS_TEXT ("open")),
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) starting server at port %d\n",
+              ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
               server_addr.get_port_number ()));
 
   ACE_INET_Addr connection_addr (server_addr.get_port_number (),
@@ -326,8 +326,8 @@ main (int argc, char *argv[])
            (void *) &connection_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %p\n%a",
-                    "thread create failed"));
+                    ASYS_TEXT ("(%P|%t) %p\n%a"),
+                    ASYS_TEXT ("thread create failed")));
     }
 #elif !defined (ACE_LACKS_FORK)
   for (i = 0; i < opt_nchildren; ++i)
@@ -336,7 +336,7 @@ main (int argc, char *argv[])
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) %p\n%a", "fork failed"));
+                      ASYS_TEXT ("(%P|%t) %p\n%a"), ASYS_TEXT ("fork failed")));
           exit (-1);
           /* NOTREACHED */
         case 0:
@@ -351,7 +351,7 @@ main (int argc, char *argv[])
     }
 #else
   ACE_ERROR ((LM_ERROR,
-              "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
+              ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
 #endif /* ACE_HAS_THREADS */
 
   ACE_Time_Value tv (opt_max_duration);
@@ -363,12 +363,12 @@ main (int argc, char *argv[])
   if (Read_Handler::get_countdown () != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) running out of time, "
-                  "probably due to failed connections.\n"));
+                  ASYS_TEXT ("(%P|%t) running out of time, ")
+                  ASYS_TEXT ("probably due to failed connections.\n")));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) waiting for the children...\n"));
+              ASYS_TEXT ("(%P|%t) waiting for the children...\n")));
 
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Manager::instance ()->wait ();
@@ -377,7 +377,7 @@ main (int argc, char *argv[])
     {
       pid_t pid = ACE_OS::wait();
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) child %d terminated\n",
+                  ASYS_TEXT ("(%P|%t) child %d terminated\n"),
                   pid));
     }
 #else

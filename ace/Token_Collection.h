@@ -59,7 +59,7 @@ class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
   //   returns zero for now.
 public:
   ACE_Token_Collection (int debug = 0,
-                        const char *name = 0);
+                        const ASYS_TCHAR *name = 0);
   // <debug> print out verbose debugging messages. <name> will give a
   // name to the collection.  Collections don't really need names, but
   // are sometimes useful for debugging.
@@ -79,14 +79,14 @@ public:
   // thread using the collection will be used.  Client ID's can be
   // changed explicity on each proxy using is_member.
 
-  int extract (const char *token_name, ACE_Token_Proxy *&proxy);
+  int extract (const ASYS_TCHAR *token_name, ACE_Token_Proxy *&proxy);
   // removes the ACE_Token matching the given token_name from the
   // collection.  On success, extract returns 0. On failure
   // (token_name was not in the collection,) extract returns -1.  On
   // success, the state of the token found is copied into proxy.
   // The returned ACE_Token_Proxy* must be deleted by the user.
 
-  ACE_Token_Proxy *is_member (const char *token_name);
+  ACE_Token_Proxy *is_member (const ASYS_TCHAR *token_name);
   // returns the proxy if true.  0 otherwise.
 
   int is_member (const ACE_Token_Proxy &token);
@@ -124,7 +124,7 @@ public:
   // words, once the collection reports deadlock, it is out of our
   // hands.
 
-  virtual int acquire (const char *token_name,
+  virtual int acquire (const ASYS_TCHAR *token_name,
                        int notify = 0,
                        void (*sleep_hook)(void *) = 0,
                        ACE_Synch_Options &options =
@@ -135,7 +135,7 @@ public:
   virtual int tryacquire (void (*sleep_hook)(void *) = 0);
   // Try to acquire all tokens in collection.
 
-  virtual int tryacquire (const char *token_name,
+  virtual int tryacquire (const ASYS_TCHAR *token_name,
                           void (*sleep_hook)(void *) = 0);
   // Try to acquire <token_name>.
 
@@ -149,7 +149,7 @@ public:
   // problem.
 
 
-  virtual int renew (const char *token_name,
+  virtual int renew (const ASYS_TCHAR *token_name,
                      int requeue_position = 0,
                      ACE_Synch_Options &options =
                      ACE_Synch_Options::defaults);
@@ -165,7 +165,7 @@ public:
   // problem.
 
 
-  virtual int release (const char *token_name,
+  virtual int release (const ASYS_TCHAR *token_name,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
   // Release the token corresponding to <token_name>.  The other
@@ -176,7 +176,7 @@ public:
   void dump (void) const;
   // Dump the state of the class.
 
-  virtual const char *name (void) const;
+  virtual const ASYS_TCHAR *name (void) const;
   // Return the name of the collection.  Not very functionally
   // important, but sometimes a useful debugging tool.
 
@@ -202,13 +202,13 @@ protected:
   int debug_;
   // Whether to print out debug messages or not.
 
-  char name_[ACE_MAXTOKENNAMELEN];
+  ASYS_TCHAR name_[ACE_MAXTOKENNAMELEN];
   // Name of the collection.
 
   // = I'm not sure what these mean, but they have to be defined since they're
   //   pure virtual in ACE_Token_Proxy.
   virtual ACE_Token_Proxy *clone (void) const;
-  virtual ACE_Tokens *create_token (const char *name);
+  virtual ACE_Tokens *create_token (const ASYS_TCHAR *name);
 };
 
 #if defined (__ACE_INLINE__)

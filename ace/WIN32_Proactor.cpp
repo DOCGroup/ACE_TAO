@@ -19,10 +19,10 @@
 class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
   // = TITLE
-  //     This is result object is used by the <end_event_loop> of the 
+  //     This is result object is used by the <end_event_loop> of the
   //     ACE_Proactor interface to wake up all the threads blocking
   //     for completions.
-  
+
 public:
   ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
                                const void *act = 0,
@@ -30,11 +30,11 @@ public:
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
   // Constructor.
-  
+
   virtual ~ACE_WIN32_Wakeup_Completion (void);
   // Destructor.
-  
-  
+
+
   virtual void complete (u_long bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
@@ -99,7 +99,7 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
             {
               ACE_DEBUG ((LM_ERROR,
                           ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("CreateIoCompletionPort")));           
+                          ASYS_TEXT ("CreateIoCompletionPort")));
             }
           return -1;
         }
@@ -487,7 +487,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 {
   // Grab the event associated with the Proactor
   HANDLE handle = this->get_handle ();
-  
+
   // If Proactor event is valid, signal it
   if (handle != ACE_INVALID_HANDLE &&
       handle != 0)
@@ -524,13 +524,13 @@ ACE_WIN32_Proactor::post_wakeup_completions (int how_many)
       ACE_NEW_RETURN (wakeup_completion,
                       ACE_WIN32_Wakeup_Completion (this->wakeup_handler_),
                       -1);
-      
+
       if (wakeup_completion->post_completion (this) == -1)
         return -1;
     }
-  
+
   return 0;
-}  
+}
 
 int
 ACE_WIN32_Proactor::wake_up_dispatch_threads (void)

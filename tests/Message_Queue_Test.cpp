@@ -208,7 +208,7 @@ single_thread_performance_test (int queue_type = 0)
       ACE_NEW_RETURN (msgq,
                       ACE_Message_Queue_NT,
                       -1);
-      message = "ACE_Message_Queue_NT, single thread test";
+      message = ASYS_TEXT ("ACE_Message_Queue_NT, single thread test");
     }
 #endif /* VXWORKS */
 

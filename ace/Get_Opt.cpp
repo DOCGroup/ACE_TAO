@@ -45,14 +45,14 @@ ACE_RCSID(ace, Get_Opt, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Get_Opt)
 
-ACE_Get_Opt::ACE_Get_Opt (int argc, 
+ACE_Get_Opt::ACE_Get_Opt (int argc,
 			  ASYS_TCHAR **argv,
-			  const ASYS_TCHAR *optstring, 
-			  int skip, 
+			  const ASYS_TCHAR *optstring,
+			  int skip,
 			  int report_errors)
-  : optarg (0), 
+  : optarg (0),
     optind (skip),
-    opterr (report_errors), 
+    opterr (report_errors),
     argc_ (argc),
     argv_ (argv),
     nextchar_ (0),
@@ -87,30 +87,30 @@ ACE_Get_Opt::operator () (void)
   const ASYS_TCHAR *oli; // Option letter index.
 
   if (this->nextchar_ == 0 || *this->nextchar_ == '\0')
-    { 
+    {
       // Update scanning pointer.
 
-      if (this->optind >= this->argc_ 
-	  || *(this->nextchar_ = this->argv_[this->optind]) != '-') 
+      if (this->optind >= this->argc_
+	  || *(this->nextchar_ = this->argv_[this->optind]) != '-')
 	{
-	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
 	  return EOF;
 	}
 
       if (this->nextchar_[1] != 0
-	  && *++this->nextchar_ == '-') 
-	{	
+	  && *++this->nextchar_ == '-')
+	{
 	  // Found "--".
 	  ++this->optind;
-	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
 	  return EOF;
 	}
-    }			
+    }
 
-  // Option letter okay? 
+  // Option letter okay?
   opt = (int) *this->nextchar_++;
 
-  if (opt == (int) ':' 
+  if (opt == (int) ':'
       || ((oli = ACE_OS::strchr (this->optstring_, opt)) == 0))
     {
       // If the user didn't specify '-' as an option, assume it means
@@ -123,26 +123,26 @@ ACE_Get_Opt::operator () (void)
 
       if (this->opterr && *this->optstring_ != ':')
 	ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%s: illegal option -- %c\n"), 
+                    ASYS_TEXT ("%s: illegal option -- %c\n"),
 		    this->argv_[0],
                     opt));
       return '?';
     }
 
-  if (*++oli != ':') 
+  if (*++oli != ':')
     { // Don't need argument.
       this->optarg = 0;
       if (!*this->nextchar_)
 	++this->optind;
     }
-  else 
+  else
     { // Need an argument.
       if (*this->nextchar_) // No white space.
 	this->optarg = this->nextchar_;
-      else if (this->argc_ <= ++this->optind) 
-	{ 
+      else if (this->argc_ <= ++this->optind)
+	{
 	  // No arg.
-	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
 
 	  if (*this->optstring_ == ':')
 	    return ':';
@@ -155,7 +155,7 @@ ACE_Get_Opt::operator () (void)
       else // White space.
 	this->optarg = this->argv_[this->optind];
 
-      this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+      this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
       ++this->optind;
     }
 

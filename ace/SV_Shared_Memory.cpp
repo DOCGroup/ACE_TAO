@@ -22,11 +22,11 @@ ACE_SV_Shared_Memory::dump (void) const
 // this segment.
 
 int
-ACE_SV_Shared_Memory::open_and_attach (key_t external_id, 
-				       size_t sz, 
+ACE_SV_Shared_Memory::open_and_attach (key_t external_id,
+				       size_t sz,
 				       int create,
-				       int perms, 
-				       void *virtual_addr, 
+				       int perms,
+				       void *virtual_addr,
 				       int flags)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::open_and_attach");
@@ -40,24 +40,24 @@ ACE_SV_Shared_Memory::open_and_attach (key_t external_id,
 
 // Constructor interface to this->open_and_attach () member function.
 
-ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id, 
-					    size_t sz, 
-					    int create, 
-					    int perms, 
-					    void *virtual_addr, 
+ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
+					    size_t sz,
+					    int create,
+					    int perms,
+					    void *virtual_addr,
 					    int flags)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
-  if (this->open_and_attach (external_id, sz, create, 
+  if (this->open_and_attach (external_id, sz, create,
 			     perms, virtual_addr, flags) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", 
-		"ACE_SV_Shared_Memory::ACE_SV_Shared_Memory"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+		ASYS_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
 }
 
 // The "do nothing" constructor.
 
 ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (void)
-  : internal_id_ (0), 
+  : internal_id_ (0),
     size_ (0),
     segment_ptr_ (0)
 {
@@ -73,11 +73,11 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (void)
 
 ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (ACE_HANDLE int_id,
 					    int flags)
-  : internal_id_ (int_id), 
+  : internal_id_ (int_id),
     size_ (0)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
   if (this->attach (0, flags) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", 
-		"ACE_SV_Shared_Memory::ACE_SV_Shared_Memory"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+		ASYS_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
 }

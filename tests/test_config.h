@@ -173,12 +173,12 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
   // This is the only way I could figure out to avoid an error
   // about attempting to unlink a non-existant file.
 #define ACE_INIT_LOG(NAME) \
-  char temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, "%s%s%s", \
-                   ACE_LOG_DIRECTORY_A, \
-                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
-                   ACE_LOG_FILE_EXT_NAME_A); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
+  ASYS_TCHAR temp[MAXPATHLEN]; \
+  ACE_OS::sprintf (temp, ASYS_TEXT ("%s%s%s"), \
+                   ACE_SYS_TEXT (ACE_LOG_DIRECTORY_A), \
+                   ACE::basename (NAME, ASYS_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)), \
+                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A)); \
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
   int fd_init_log; \
   if ((fd_init_log = ACE_OS::open (temp, \
                                    O_WRONLY | O_CREAT, 0x644)) != ERROR) \
@@ -194,12 +194,12 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #endif /* ghs */
 #else /* ! VXWORKS */
 #define ACE_INIT_LOG(NAME) \
-  char temp[MAXPATHLEN]; \
-  ACE_OS::sprintf (temp, "%s%s%s", \
-                   ACE_LOG_DIRECTORY_A, \
-                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
-                   ACE_LOG_FILE_EXT_NAME_A); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
+  ASYS_TCHAR temp[MAXPATHLEN]; \
+  ACE_OS::sprintf (temp, ASYS_TEXT ("%s%s%s"), \
+                   ASYS_TEXT (ACE_LOG_DIRECTORY_A), \
+                   ACE::basename (NAME, ASYS_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)), \
+                   ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A)); \
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
   ACE_OS::unlink (temp);
 #endif /* ! VXWORKS */
 
@@ -290,7 +290,7 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-  ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
+  ACE_OS::mkdir (ASYS_TEXT (ACE_LOG_DIRECTORY_A));
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -300,7 +300,8 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   else
     flags |= ios::trunc;
 
-  this->output_file_->open (temp, flags);
+  this->output_file_->open (ASYS_ONLY_MULTIBYTE_STRING (temp),
+                            flags);
   if (this->output_file_->bad ())
     return -1;
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
