@@ -91,11 +91,8 @@ initialize (MALLOC *allocator)
 
   data1->long_test_= lt;
 
-  long long_cont_1 = *lt->bpl_;
-  long long_cont_2 = lt->bpl_[3];
-
-  ACE_ASSERT (long_cont_1 == 1000);
-  ACE_ASSERT (long_cont_2 == 1003);
+  ACE_ASSERT (*lt->bpl_ == 1000);
+  ACE_ASSERT (lt->bpl_[3] == 1003);
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
@@ -111,11 +108,8 @@ initialize (MALLOC *allocator)
 
   data2->long_test_= lt;
 
-  long long_cont_3 = *lt->bpl_;
-  long long_cont_4 = lt->bpl_[4];
-
-  ACE_ASSERT (long_cont_3 == 2000);
-  ACE_ASSERT (long_cont_4 == 2004);
+  ACE_ASSERT (*lt->bpl_ == 2000);
+  ACE_ASSERT (lt->bpl_[4] == 2004);
 
   return data2;
 }
