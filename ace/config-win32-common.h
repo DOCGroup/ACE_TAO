@@ -167,8 +167,6 @@
                 #endif /* (_MSC_VER > 1020) */
 	#endif /* _MSC_VER */
 
-	// ace/iostream.h does not work with the standard cpp library (yet).
-	#define ACE_LACKS_ACE_IOSTREAM
 #else
 	// iostream header lacks ipfx (), isfx (), etc., declarations
 	#define ACE_LACKS_IOSTREAM_FX
