@@ -21,7 +21,8 @@
 // ============================================================================
 
 #include "ace/Profile_Timer.h"
-#include "ace/Timers.h"
+#include "ace/Timer_List.h"
+#include "ace/Timer_Heap.h"
 #include "test_config.h"
 
 static void

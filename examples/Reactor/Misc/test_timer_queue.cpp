@@ -1,6 +1,7 @@
 // $Id$
 
-#include "ace/Timers.h"
+#include "ace/Time_List.h"
+#include "ace/Time_Queue.h"
 
 class Example_Handler : public ACE_Event_Handler
 {
