@@ -120,8 +120,13 @@ public:
 
 protected:
   key_t key_;
+  // Semaphore key.
+
   int internal_id_;
+  // Internal ID to identify the semaphore group within this process.
+
   int sem_number_;
+  // Number of semaphores we're creating.
 
   int init (key_t k = ACE_INVALID_SEM_KEY, int i = -1);
   key_t name_2_key (const char *name);
