@@ -949,7 +949,7 @@ class TAO_AV_Endpoint_Strategy;
  */
 class TAO_AV_Export TAO_MMDevice
   :public virtual POA_AVStreams::MMDevice,
-   public TAO_PropertySet,
+   public virtual TAO_PropertySet,
    public virtual PortableServer::RefCountServantBase
 {
 
@@ -1099,7 +1099,7 @@ class TAO_FlowProducer;
  */
 class TAO_AV_Export TAO_FlowConnection
  : public virtual POA_AVStreams::FlowConnection,
-   public TAO_PropertySet,
+   public virtual TAO_PropertySet,
    public virtual PortableServer::RefCountServantBase
 {
 
