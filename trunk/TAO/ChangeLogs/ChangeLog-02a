@@ -1,3 +1,8 @@
+Tue Jun 12 19:00:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+          Fixed fuzz error.
+
 Tue Jun 12 18:50:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * docs/Options.html:
