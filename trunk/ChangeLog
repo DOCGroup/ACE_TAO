@@ -1,3 +1,19 @@
+Wed Jun 09 09:27:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/WFMO_Reactor.cpp:
+
+          Use prefix {in,dec}rement operators where applicable instead of
+          postfix operators.  The former are more efficient.
+
+          Fixed "pointless comparison of unsigned integer with zero"
+          MSVC++ 7.1 warning.
+
+	* ace/Process_Manager.cpp (wait):
+
+	  Fixed incorrect preprocessor conditional.  Addresses "pointless
+	  comparison of unsigned integer with zero" warning from MSVC++
+	  7.1.
+
 Wed Jun  9 12:04:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_sys_socket.inl (closesocket): Changed the constant passed
