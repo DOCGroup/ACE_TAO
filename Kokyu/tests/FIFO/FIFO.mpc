@@ -1,0 +1,3 @@
+project: kokyu {
+  exename = FIFO
+}

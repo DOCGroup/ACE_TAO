@@ -1,3 +1,15 @@
+Tue Jul 29 09:01:44 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
+        * Kokyu/tests/EDF/EDF.mpc:
+        * Kokyu/tests/FIFO/FIFO.mpc:
+
+          Added mpc files for the tests.
+
+        * bin/MakeProjectCreator/config/kokyu.mpb:
+
+          Added an include of $(ACE_ROOT)/Kokyu.
+
 Tue Jul 29 07:59:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
