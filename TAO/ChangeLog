@@ -1,3 +1,16 @@
+Wed Nov 20 12:48:35 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs\tests\Notify\performance-tests\RedGreen\Makefile.bor:
+
+	  Fixed test name from RedGreen to RedGreen_Test.
+
+	* orbsvcs\tests\Notify\Structured_Filter/Structured_Filter_Consumer.dsp
+	* orbsvcs\tests\Notify\Structured_Filter/Structured_Filter_Supplier.dsp
+	* orbsvcs\tests\Notify\Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp
+	* orbsvcs\tests\Notify\Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp
+
+	  Fixed release executable name.
+	
 Wed Nov 20 10:26:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp: Fixed path to some

@@ -3,7 +3,7 @@
 # Makefile for building the orbsvcs notify redgreen performance-tests
 #
 
-NAME = RedGreen
+NAME = RedGreen_Test
 
 OBJFILES = \
         $(OBJDIR)\RedGreen_Test.obj \
