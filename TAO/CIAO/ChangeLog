@@ -1,6 +1,24 @@
+Mon Sep 13 13:18:33 2004  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * RepositoryManager/Update_Plan.h
+
+          Fixed a waring in Windows build by changing "class" to "struct"
+          in forward declaration.
+
+        * examples/BasicSP/BasicSP.mpc
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * examples/BasicSP/BMDevice/BMDevice.mpc
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc
+        * examples/BasicSP/EC/EC.mpc
+
+          Changed the output stub, servant, and executor library names 
+          for all the components in BasicSP example. The reason is 
+          becasue all the examples are tightly coupled with the
+          output library names.
+
 Mon Sep 13 13:07:33 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
           Fixed a bug inside create_connections () method.
 
