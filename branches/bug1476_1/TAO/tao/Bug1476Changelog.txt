@@ -1,3 +1,9 @@
+Fri Aug  6 15:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp (make_connection):
+        * tao/Transport_Connector.cpp (connect):
+          Corrected method name in debug statement
+
 Fri Aug  6 14:58:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Connector.cpp:
@@ -9,28 +15,28 @@ Fri Aug  6 14:11:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/IIOP_Connection_Handler.cpp:
 
-	  Cosmetic fix. 
-	
+	  Cosmetic fix.
+
 	* tao/IIOP_Connector.cpp:
 
-	  Register handler after the caching the transport. 
-	
+	  Register handler after the caching the transport.
+
 	* tao/Transport.cpp:
 
 	  Register handler if there is a non-empty queue. then call
-	  schedule_wakeup (). Added locks to prevents races. 
+	  schedule_wakeup (). Added locks to prevents races.
 
 	  Removed locks from format_queue_message (), since I think its
-	  not necessary. 
-	
+	  not necessary.
+
 	* tao/Transport.inl:
 
 	  Added a lock to is_connected (). This introduces a lock on the
-	  critical path. We need to think about this later. 
-	
+	  critical path. We need to think about this later.
+
 	* tao/Transport_Connector.cpp:
 
-	  Added code to register the handler with the reactor. 
+	  Added code to register the handler with the reactor.
 
 Fri Aug  6 13:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -264,7 +264,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     "TAO (%P|%t) - Transport_Connector::"
                     "connect, "
                     "wait for completion failed\n"));
-
       return 0;
     }
 
@@ -282,7 +281,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Transport_Connector [%d]::make_connect , "
+                    "TAO (%P|%t) - Transport_Connector [%d]::connect, "
                     "could not register the transport "
                     "in the reactor.\n",
                     base_transport->id ()));

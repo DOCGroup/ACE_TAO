@@ -288,7 +288,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - IIOP_Connector [%d]::make_connect , "
+                    "TAO (%P|%t) - IIOP_Connector [%d]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));
