@@ -72,8 +72,12 @@ namespace CIAO
       /// destructor
       ~SR_Handler(void);
 
-      /// Process the SharedResource type
+      /// Process the SharedResource type when the iterator is not passed
       void process_sr (::Deployment::SharedResource &sr);
+
+      /// Process the SharedResource type when the iterator is passed
+      static void process_sr_with_iter (DOMNodeIterator * iter,
+                                        ::Deployment::SharedResource &sr);
 
       /// Process the name attribute
       void process_name (const XMLCh* name, ::Deployment::SharedResource &sr);

@@ -72,8 +72,12 @@ namespace CIAO
       /// destructor
       ~Resource_Handler(void);
 
-      /// Process the Resource type
+      /// Process the Resource type when an iterator is not passed.
       void process_resource (::Deployment::Resource &resource);
+
+      /// Process the Resource type when an iterator is passed.
+      static void process_resource_with_iter (DOMNodeIterator * iter,
+                                              ::Deployment::Resource &resource);
 
       /// Process the name attribute
       void process_name (const XMLCh* name,

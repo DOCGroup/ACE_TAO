@@ -72,8 +72,12 @@ namespace CIAO
       /// destructor
       ~Node_Handler(void);
 
-      /// Process the Node type
+      /// Process the Node type when the iterator is not passed
       void process_node (::Deployment::Node &node);
+
+      /// Process the Node type when the iterator is passed
+      static void process_node_with_iter (DOMNodeIterator * iter,
+                                          ::Deployment::Node &node);
 
       /// Process the name attribute
       void process_name (const XMLCh* name, ::Deployment::Node &node);
