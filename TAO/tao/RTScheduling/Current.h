@@ -90,7 +90,8 @@ public RTScheduling::Current,
     ACE_THROW_SPEC ((CORBA::SystemException));
   
   virtual RTScheduling::DistributableThread_ptr 
-    lookup(const RTScheduling::Current::IdType & id)
+    lookup(const RTScheduling::Current::IdType & id
+	   ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // returns a null reference if
