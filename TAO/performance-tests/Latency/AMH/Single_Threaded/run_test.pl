@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
-print STDERR "================ Single-threaded Latency Test\n";
+print STDERR "================ AMH Single-threaded Latency Test\n";
 
 unlink $iorfile;
 
