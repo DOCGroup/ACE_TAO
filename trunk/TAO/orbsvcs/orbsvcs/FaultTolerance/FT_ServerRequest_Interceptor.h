@@ -106,7 +106,8 @@ namespace TAO
 
     void check_iogr_version (const IOP::ServiceContext &svc
                              ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       PortableInterceptor::ForwardRequest));
 
     bool is_primary (void);
 

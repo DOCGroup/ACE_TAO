@@ -1,3 +1,11 @@
+Sun Sep 28 21:46:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+
+	  Fixed warnings in Borland builds that were caused due to
+	  improper exception  specifications.
+
 Sun Sep 28 11:01:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:  
