@@ -1,3 +1,10 @@
+Thu Apr 17 12:07:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Configuration.cpp (temp_name):
+
+          Access a static member variable with the class name outside
+          the class, not the this pointer.  Changed return value to const.
+
 Thu Apr 17 07:05:50 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:

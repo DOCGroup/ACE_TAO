@@ -484,9 +484,9 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 
 static const int ACE_DEFAULT_BUFSIZE = 256;
 
-static ACE_TCHAR *temp_name (ACE_TCHAR *name)
+static const ACE_TCHAR *temp_name (const ACE_TCHAR *name)
 {
-  if (name && *name == this->NULL_String_)
+  if (name && *name == ACE_Configuration::NULL_String_)
     return 0;
   return name;
 }
@@ -731,7 +731,7 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
                                                    const ACE_TCHAR* name,
                                                    const ACE_TString& value)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
@@ -758,7 +758,7 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
                                                     const ACE_TCHAR* name,
                                                     u_int value)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
@@ -783,7 +783,7 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
                                                    const void* data,
                                                    size_t length)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
@@ -808,7 +808,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                                    const ACE_TCHAR* name,
                                                    ACE_TString& value)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
@@ -859,7 +859,7 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
                                                     const ACE_TCHAR* name,
                                                     u_int& value)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
@@ -892,7 +892,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                                    void *&data,
                                                    size_t &length)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
@@ -941,7 +941,7 @@ ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key
                                              const ACE_TCHAR* name,
                                              VALUETYPE& type_out)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
@@ -982,7 +982,7 @@ int
 ACE_Configuration_Win32Registry::remove_value (const ACE_Configuration_Section_Key& key,
                                                const ACE_TCHAR* name)
 {
-  ACE_TCHAR *t_name = temp_name (name);
+  const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
     return -1;
 
