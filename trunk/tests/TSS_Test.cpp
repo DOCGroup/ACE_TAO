@@ -45,6 +45,8 @@ static u_int errors = 0;
   static const int ITERATIONS =
     ACE_DEFAULT_THREAD_KEYS/8 < 2  ?  1  :  ACE_DEFAULT_THREAD_KEYS/8;
 #elif defined (__Lynx__)
+  // LynxOS only has 16 native TSS keys, and most of those don't seem
+  // to be available.
   static const int ITERATIONS = 1;
 #else
   static const int ITERATIONS = 100;
@@ -184,7 +186,7 @@ worker (void *c)
           ++errors;
         }
 
-#if !defined (__Lynx__) && !defined (ACE_HAS_TSS_EMULATION)
+#if !defined (__Lynx__) || defined (ACE_HAS_TSS_EMULATION)
       key = ACE_OS::NULL_key;
 
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
@@ -212,7 +214,7 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
                     ASYS_TEXT ("ACE_Thread::setspecific")));
 
-#if ! defined (ACE_HAS_PTHREADS_DRAFT4)
+#if !defined (ACE_HAS_PTHREADS_DRAFT4)
       // See comment in cleanup () above.
       delete ip;
 #endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
@@ -220,7 +222,7 @@ worker (void *c)
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
                     ASYS_TEXT ("ACE_Thread::keyfree")));
-#endif /* ! __Lynx__) && ! ACE_HAS_TSS_EMULATION */
+#endif /* ! __Lynx__ || ACE_HAS_TSS_EMULATION */
     }
 
   return 0;
