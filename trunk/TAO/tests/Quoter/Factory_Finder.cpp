@@ -21,11 +21,11 @@
 static const char usage [] = 
 "[-? |\n[-O[RBport] ORB port number]]";
 
-QuoterFactoryFinder_Server::QuoterFactoryFinder_Server () 
+Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server () 
 {
 }
 
-QuoterFactoryFinder_Server::~QuoterFactoryFinder_Server () 
+Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server () 
 {
   TAO_TRY
     {
@@ -33,7 +33,7 @@ QuoterFactoryFinder_Server::~QuoterFactoryFinder_Server ()
       CosNaming::Name factory_name (2);
       factory_name.length (2);
       factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
-      factory_name[1].id = CORBA::string_dup ("QuoterFactoryFinder");
+      factory_name[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
       this->quoterNamingContext_var_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -50,7 +50,7 @@ QuoterFactoryFinder_Server::~QuoterFactoryFinder_Server ()
   TAO_ENDTRY;
 }
 
-QuoterFactoryFinder_Server::init (int argc, char *argv[], CORBA::Environment& env)
+Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& env)
 {
   if (this->orb_manager_.init (argc,
                                argv,
@@ -67,13 +67,13 @@ QuoterFactoryFinder_Server::init (int argc, char *argv[], CORBA::Environment& en
   this->parse_args ();
 
 
-  ACE_NEW_RETURN (this->quoterFactoryFinderImpl_ptr_,
-                  QuoterFactoryFinderImpl(),
+  ACE_NEW_RETURN (this->quoter_Factory_Finder_Impl_ptr_,
+                  Quoter_Factory_Finder_Impl(),
                   -1);
 
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (this->quoterFactoryFinderImpl_ptr_,
+    this->orb_manager_.activate (this->quoter_Factory_Finder_Impl_ptr_,
                                  env);
 
   // Failure while activating the Quoter Factory Finder object
@@ -126,12 +126,12 @@ QuoterFactoryFinder_Server::init (int argc, char *argv[], CORBA::Environment& en
 
       // Bind the QuoterFactory Finder to the IDL_Quoter naming
       // context.
-      CosNaming::Name quoterFactoryFinderName_ (1);
-      quoterFactoryFinderName_.length (1);
-      quoterFactoryFinderName_[0].id = CORBA::string_dup ("QuoterFactoryFinder");
+      CosNaming::Name quoter_Factory_Finder_Name_ (1);
+      quoter_Factory_Finder_Name_.length (1);
+      quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
-      quoterNamingContext_var_->bind (quoterFactoryFinderName_,
-                                            this->quoterFactoryFinderImpl_ptr_->_this(TAO_TRY_ENV),
+      quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
+                                            this->quoter_Factory_Finder_Impl_ptr_->_this(TAO_TRY_ENV),
                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,"Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
@@ -147,7 +147,7 @@ QuoterFactoryFinder_Server::init (int argc, char *argv[], CORBA::Environment& en
 }
 
 int
-QuoterFactoryFinder_Server::run (CORBA::Environment& env)
+Quoter_Factory_Finder_Server::run (CORBA::Environment& env)
 {
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -161,7 +161,7 @@ QuoterFactoryFinder_Server::run (CORBA::Environment& env)
 // Function get_options.
 
 unsigned int
-QuoterFactoryFinder_Server::parse_args ()
+Quoter_Factory_Finder_Server::parse_args ()
 {
   // We need the 'O' in get_opt () because we also want to have ORB
   // parameters, they all start with 'O'.
@@ -194,10 +194,10 @@ QuoterFactoryFinder_Server::parse_args ()
 int
 main (int argc, char *argv [])
 {
-  QuoterFactoryFinder_Server quoterFactoryFinder_server;
+  Quoter_Factory_Finder_Server quoterFactoryFinder_server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tIDL_Quoter:QuoterFactoryFinder \n \n"));
+              "\n\tIDL_Quoter:Quoter_Factory_Finder \n \n"));
   TAO_TRY
     {
       if (quoterFactoryFinder_server.init (argc,argv,TAO_TRY_ENV) == -1)

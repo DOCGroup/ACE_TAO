@@ -20,16 +20,16 @@
 #if !defined (QUOTER_FACTORY_FINDER_H)
 #define QUOTER_FACTORY_FINDER_H
 
-class QuoterFactoryFinder_Server
+class Quoter_Factory_Finder_Server
 {
   // = TILE
   //   Server object for the Quoter Factory Finder
 
 public:
-  QuoterFactoryFinder_Server (void);
+  Quoter_Factory_Finder_Server (void);
   // Default constructor
 
-  ~QuoterFactoryFinder_Server (void);
+  ~Quoter_Factory_Finder_Server (void);
   // Destructor
 
   int init (int argc, char *argv[], CORBA::Environment& env);
@@ -45,7 +45,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
-  QuoterFactoryFinderImpl *quoterFactoryFinderImpl_ptr_;
+  Quoter_Factory_Finder_Impl *quoter_Factory_Finder_Impl_ptr_;
   // instance of the Quoter Factory Finder
   
   CosNaming::NamingContext_var quoterNamingContext_var_;

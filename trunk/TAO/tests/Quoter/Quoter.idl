@@ -65,7 +65,7 @@ module Stock
     };
 
 
-  interface QuoterFactoryFinder : CosLifeCycle::FactoryFinder
+  interface Quoter_Factory_Finder : CosLifeCycle::FactoryFinder
     {
       // = TITLE 
       //   Wrapper for the CosLifeCycle FactoryFinder

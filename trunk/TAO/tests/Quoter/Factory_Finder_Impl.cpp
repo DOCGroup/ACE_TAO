@@ -23,18 +23,18 @@ static const char usage [] =
 "[-? |\n[-O[RBport] ORB port number]]";
 
 // Constructor
-QuoterFactoryFinderImpl::QuoterFactoryFinderImpl (void)
+Quoter_Factory_Finder_Impl::Quoter_Factory_Finder_Impl (void)
 {
 }
 
 // Destructor.
-QuoterFactoryFinderImpl::~QuoterFactoryFinderImpl (void)
+Quoter_Factory_Finder_Impl::~Quoter_Factory_Finder_Impl (void)
 {
 }
 
 
 CosLifeCycle::Factories *
-QuoterFactoryFinderImpl::find_factories (const CosLifeCycle::Key &factory_key,
+Quoter_Factory_Finder_Impl::find_factories (const CosLifeCycle::Key &factory_key,
                                        CORBA::Environment &_env_there)
 {
   CORBA::Environment env_here;
