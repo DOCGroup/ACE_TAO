@@ -31,6 +31,32 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
 
   // ----------------------------------------------------
 
+  // Verify that the following RSC->TSC->RSC copying scenario works:
+  //
+  // 1.    ServerRequestInterceptor::receive_request_service_contexts()
+  //   a.       ServerRequestInfo::set_slot()
+  //   b.       RSC->TSC shallow copy 
+  // 2.    servant implementation invokes method on another server
+  //   a.       TSC->RSC shallow copy
+  //   b.       ClientRequestInterceptor::send_request()
+  //     i.          ClientRequestInfo::get_slot()
+
+  // By this point all of step 1 has occurred.  Step 2 will now
+  // occur.
+  PICurrentTest::test_var my_ref =
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Note that the invocation must occur through the object
+  // reference to force the client request interceptor
+  // (ClientRequestInterceptor2) to be invoked.  This assumes that
+  // DIRECT collocation (and possibly THRU_POA collocation) is
+  // disabled.
+  my_ref->invoke_you (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // ----------------------------------------------------
+
   CORBA::Any_var retrieved_any;
 
   ACE_TRY
@@ -39,7 +65,8 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
       // receive_request_service_contexts() interception point, and
       // then copied into the TSC current.
       retrieved_any =
-        this->current_->get_slot (this->slot_id_ ACE_ENV_ARG_PARAMETER);
+        this->current_->get_slot (this->slot_id_
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
@@ -85,10 +112,11 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
 
   data <<= str;
 
-
   ACE_TRY_EX (foo)
     {
-      this->current_->set_slot (this->slot_id_, data ACE_ENV_ARG_PARAMETER);
+      this->current_->set_slot (this->slot_id_,
+                                data
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (foo);
     }
   ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
@@ -113,11 +141,20 @@ test_i::invoke_me (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
+test_i::invoke_you (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Nothing to be tested here.  This method is here just so that we
+  // have a different method
+}
+
+void
 test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Server is shutting down.\n"));
 
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0
+                        ACE_ENV_ARG_PARAMETER);
 }
