@@ -4072,7 +4072,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4132,6 +4133,8 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -4171,9 +4174,6 @@ realclean: clean
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/IIOP_Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4239,7 +4239,13 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SecurityLevel2C.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
+ SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
  $(TAO_ROOT)/tao/Tagged_Components.h \
@@ -4296,7 +4302,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/IIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4356,6 +4363,8 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Endpoint.i \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -4395,9 +4404,6 @@ realclean: clean
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/IIOP_Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.h \
- $(TAO_ROOT)/tao/Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -4463,7 +4469,14 @@ realclean: clean
  Security/security_export.h \
  SecurityC.i \
  SSLIOPC.i \
- SSLIOP/SSLIOP_Endpoint.i SSLIOP/SSLIOP_Connection_Handler.h \
+ SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SecurityLevel2C.h \
+ SecurityLevel1C.h \
+ SecurityLevel1C.i \
+ SecurityLevel2C.i \
+ SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
@@ -4600,10 +4613,6 @@ realclean: clean
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  Security/Security_Current_Impl.h \
- SecurityLevel2C.h \
- SecurityLevel1C.h \
- SecurityLevel1C.i \
- SecurityLevel2C.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
@@ -5028,7 +5037,9 @@ realclean: clean
  SSLIOP/SSLIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
- SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
  $(TAO_ROOT)/tao/Tagged_Components.h \
@@ -5935,7 +5946,9 @@ realclean: clean
  SSLIOP/SSLIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
- SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
  $(TAO_ROOT)/tao/Tagged_Components.h \
@@ -6334,7 +6347,9 @@ realclean: clean
  SSLIOP/SSLIOP_Connection_Handler.i SSLIOP/SSLIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
- SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.h \
