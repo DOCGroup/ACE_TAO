@@ -8,7 +8,7 @@
 
 ACE_RCSID(Client, main, "$Id$")
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_Service_Config daemon;
