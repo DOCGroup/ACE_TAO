@@ -1880,7 +1880,7 @@ libTAO_ImR_Client_la_CPPFLAGS = \
   -DTAO_IMR_CLIENT_BUILD_DLL
 
 libTAO_ImR_Client_la_SOURCES = \
-  ImR_Client/ImR_Client_Adapter_Impl.cpp \
+  ImR_Client/ImR_Client.cpp \
   ImR_Client/ImplRepoA.cpp \
   ImR_Client/ImplRepoC.cpp \
   ImR_Client/ImplRepoS.cpp \
@@ -1898,7 +1898,7 @@ libTAO_ImR_Client_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  ImR_Client/ImR_Client_Adapter_Impl.h \
+  ImR_Client/ImR_Client.h \
   ImR_Client/ImplRepo.pidl \
   ImR_Client/ImplRepoC.h \
   ImR_Client/ImplRepoC.inl \

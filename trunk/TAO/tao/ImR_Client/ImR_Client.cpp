@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ImR_Client_Adapter_Impl.h"
+#include "ImR_Client.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -12,7 +12,7 @@
 #include "tao/ImR_Client/ImplRepoC.h"
 
 ACE_RCSID (ImR_Client,
-           ImR_Client_Adapter_Impl,
+           ImR_Client,
            "$Id$")
 
 namespace TAO
