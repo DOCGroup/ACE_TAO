@@ -1,5 +1,13 @@
 Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* netsvcs/lib/Client_Logging_Handler.cpp (handle_signal): 
+	  If SIGPIPE occurs, ACE_Client_Logging_Handler::handle_signal()
+ 	  returns -1, thus removing svc handler from reactor.  Since svc
+ 	  handler is implemented as a singleton here, all next incoming
+ 	  SPIPE connections operate on object that is already destroyed ->
+ 	  SIGSEGV/SIGBUS.  Therefore, we now return 0 in handle_signal().
+  	  Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+
 	* netsvcs/lib/Server_Logging_Handler_T.cpp (svc): The following
 	  loop
 
