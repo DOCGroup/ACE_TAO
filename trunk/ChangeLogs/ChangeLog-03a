@@ -1,3 +1,9 @@
+Mon Oct 29 20:12:40 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/run_test.lst:
+
+	  Added the Proactor test to the list of one-button tests to run.
+
 Mon Oct 29 20:04:40 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Test.cpp:
