@@ -84,22 +84,23 @@ public:
   // = Initialization and termination methods.
 
   ACE_Event_Handler_T (T *op_handler, 
-                   int delete_handler,
-                   GET_HANDLE get_handle = 0,
-                   IO_HANDLER input = 0,
-                   CL_HANDLER close = 0,
-                   SIG_HANDLER sig = 0,
-                   TO_HANDLER timeout = 0,
-                   IO_HANDLER output = 0,
-                   SET_HANDLE set_handle = 0,
-                   IO_HANDLER except = 0);
+                       int delete_handler,
+                       GET_HANDLE get_handle = 0,
+                       IO_HANDLER input = 0,
+                       CL_HANDLER close = 0,
+                       SIG_HANDLER sig = 0,
+                       TO_HANDLER timeout = 0,
+                       IO_HANDLER output = 0,
+                       SET_HANDLE set_handle = 0,
+                       IO_HANDLER except = 0);
   // Initialize the op_handler.
 
   ~ACE_Event_Handler_T (void);
   // Close down and delete the <op_handler>
 
-  // = Override all the ACE_Event_Handler methods and have them call
-  // through to the <T> operations handler.
+  // = Override all the ACE_Event_Handler methods.
+
+  // These methods all delegate down to the <T> operations handler.
   virtual ACE_HANDLE get_handle (void) const;
   virtual void set_handle (ACE_HANDLE);
   virtual int handle_input (ACE_HANDLE fd = -1);
@@ -113,8 +114,7 @@ public:
   T *op_handler (void);
   void op_handler (T *);
 
-  // = Get/set the target pointer-to-member-function used for
-  // dispatching.
+  // = Get/set the target pointer-to-method used for dispatching.
   
   GET_HANDLE handle_get (void);
   void handle_get (GET_HANDLE);
@@ -176,6 +176,14 @@ protected:
 #if defined (__ACE_INLINE__)
 #include "ace/Event_Handler_T.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ace/Event_Handler_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Event_Handler_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 #endif /* ACE_EVENT_HANDLER_H */

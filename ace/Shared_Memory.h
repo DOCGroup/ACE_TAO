@@ -33,6 +33,7 @@ class ACE_Export ACE_Shared_Memory
   //     out the <ACE_Malloc> class.
 public:
   // = Note that all methods are pure virtual.
+  ~ACE_Shared_Memory (void) { /* no-op. */ }
   virtual int close (void) = 0;
   virtual int remove (void) = 0;
   virtual void *malloc (size_t = 0) = 0;
