@@ -40,7 +40,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/CDR.h"
 #include "tao/Environment.h"
 
 #if defined (TAO_EXPORT_MACRO)

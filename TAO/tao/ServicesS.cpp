@@ -26,8 +26,8 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:610
+// TAO_IDL - Generated from
+// be\be_codegen.cpp:631
 
 #ifndef _TAO_IDL_ORIG_SERVICESS_CPP_
 #define _TAO_IDL_ORIG_SERVICESS_CPP_
@@ -47,12 +47,13 @@
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/PICurrent.h"
+#include "tao/PortableServer/PICurrent_Guard.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Malloc_Allocator.h"
 #include "ace/config-all.h"
 
 #if defined (__BORLANDC__)
@@ -63,23 +64,23 @@
 #include "ServicesS.i"
 #endif /* !defined INLINE */
 
-
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:60
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
+
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1739
+// be\be_visitor_root/root.cpp:1680
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ifndef */
+

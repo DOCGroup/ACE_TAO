@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:545
+// be\be_codegen.cpp:566
 
 #ifndef _TAO_IDL_ORIG_SERVICESS_T_H_
 #define _TAO_IDL_ORIG_SERVICESS_T_H_
@@ -42,7 +42,7 @@
 
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
+// be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
 namespace POA_CORBA
@@ -51,7 +51,7 @@ namespace POA_CORBA
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1043
+// be\be_codegen.cpp:1111
 
 #if defined (__ACE_INLINE__)
 #include "ServicesS_T.i"

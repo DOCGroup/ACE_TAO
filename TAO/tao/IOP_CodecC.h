@@ -40,7 +40,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Typecode.h"
@@ -71,13 +70,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -87,22 +86,22 @@ namespace TAO
 
 namespace IOP
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_IOP_CODEC__VAR_OUT_CH_)
 #define _IOP_CODEC__VAR_OUT_CH_
-
+  
   class Codec;
   typedef Codec *Codec_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         Codec
       >
     Codec_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Codec
@@ -110,58 +109,58 @@ namespace IOP
     Codec_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IOP_CODEC_CH_)
 #define _IOP_CODEC_CH_
-
+  
   class TAO_Export Codec
     : public virtual CORBA::Object
   {
   public:
     typedef Codec_ptr _ptr_type;
     typedef Codec_var _var_type;
-
+    
     // The static operations.
     static Codec_ptr _duplicate (Codec_ptr obj);
-
+    
     static Codec_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Codec_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Codec_ptr _nil (void)
     {
       return (Codec_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_IOP_CODEC_INVALIDTYPEFORENCODING_CH_)
 #define _IOP_CODEC_INVALIDTYPEFORENCODING_CH_
-
+    
     class TAO_Export InvalidTypeForEncoding : public CORBA::UserException
     {
     public:
-
+      
       InvalidTypeForEncoding (void);
       InvalidTypeForEncoding (const InvalidTypeForEncoding &);
       ~InvalidTypeForEncoding (void);
 
       InvalidTypeForEncoding &operator= (const InvalidTypeForEncoding &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static InvalidTypeForEncoding *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
@@ -173,25 +172,25 @@ namespace IOP
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL
         );
-
+      
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_InvalidTypeForEncoding;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:51
 

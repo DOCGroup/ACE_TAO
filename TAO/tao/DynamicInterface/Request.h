@@ -36,6 +36,7 @@
 #include "tao/NVList.h"
 #include "tao/Environment.h"
 #include "tao/Sequence.h"
+#include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

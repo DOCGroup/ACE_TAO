@@ -30,6 +30,7 @@
 
 
 #include "UShortSeqC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
@@ -103,48 +104,6 @@ void CORBA::UShortSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_UShortSeq[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5553), 
-  ACE_NTOHL (0x686f7274), 
-  ACE_NTOHL (0x5365713a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/UShortSeq:1.0
-    10,
-  ACE_NTOHL (0x5553686f), 
-  ACE_NTOHL (0x72745365), 
-  ACE_NTOHL (0x71000000),  // name = UShortSeq
-    CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_ushort,
-
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_UShortSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_UShortSeq),
-    (char *) &_oc_CORBA_UShortSeq,
-    0,
-    sizeof (CORBA::UShortSeq)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_UShortSeq =
-    &_tc_TAO_tc_CORBA_UShortSeq;
-}
-
-// TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_UShortSeq_CPP_
@@ -203,7 +162,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_UShortSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

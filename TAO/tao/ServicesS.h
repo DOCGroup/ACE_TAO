@@ -26,12 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:390
+// be\be_codegen.cpp:411
 
 #ifndef _TAO_IDL_ORIG_SERVICESS_H_
 #define _TAO_IDL_ORIG_SERVICESS_H_
 
 #include /**/ "ace/pre.h"
+
 #include "OctetSeqS.h"
 #include "ServicesC.h"
 
@@ -55,19 +56,19 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
+// be\be_visitor_module/module_sh.cpp:49
 
 namespace POA_CORBA
 {
   
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
+// be\be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:946
+// be\be_codegen.cpp:1014
 
 #include "ServicesS_T.h"
 

@@ -31,6 +31,737 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_Interceptor[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f723a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/Interceptor:1.0
+    12,
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f7200),  // name = Interceptor
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_Interceptor (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_Interceptor),
+    (char *) &_oc_PortableInterceptor_Interceptor,
+    0,
+    sizeof (PortableInterceptor::Interceptor)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_Interceptor =
+    &_tc_TAO_tc_PortableInterceptor_Interceptor;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ForwardRequest[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  51,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x466f7277),
+  ACE_NTOHL (0x61726452),
+  ACE_NTOHL (0x65717565),
+  ACE_NTOHL (0x73743a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableInterceptor/ForwardRequest:1.0
+    15,
+  ACE_NTOHL (0x466f7277),
+  ACE_NTOHL (0x61726452),
+  ACE_NTOHL (0x65717565),
+  ACE_NTOHL (0x73740000),  // name = ForwardRequest
+  2, // member count
+    8,
+  ACE_NTOHL (0x666f7277),
+  ACE_NTOHL (0x61726400),  // name = forward
+    CORBA::tk_objref,
+  52, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    29,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f62),
+    ACE_NTOHL (0x6a656374),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
+        7,
+    ACE_NTOHL (0x4f626a65),
+    ACE_NTOHL (0x63740000),  // name = Object
+
+  10,
+  ACE_NTOHL (0x7065726d),
+  ACE_NTOHL (0x616e656e),
+  ACE_NTOHL (0x74000000),  // name = permanent
+    CORBA::tk_boolean,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ForwardRequest (
+    CORBA::tk_except,
+    sizeof (_oc_PortableInterceptor_ForwardRequest),
+    (char *) &_oc_PortableInterceptor_ForwardRequest,
+    0,
+    sizeof (PortableInterceptor::ForwardRequest)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ForwardRequest =
+    &_tc_TAO_tc_PortableInterceptor_ForwardRequest;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ReplyStatus[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79537461),
+  ACE_NTOHL (0x7475733a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/ReplyStatus:1.0
+    12,
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79537461),
+  ACE_NTOHL (0x74757300),  // name = ReplyStatus
+    CORBA::tk_short,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ReplyStatus (
+    CORBA::tk_alias,
+    sizeof (_oc_PortableInterceptor_ReplyStatus),
+    (char *) &_oc_PortableInterceptor_ReplyStatus,
+    0,
+    sizeof (PortableInterceptor::ReplyStatus)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ReplyStatus =
+    &_tc_TAO_tc_PortableInterceptor_ReplyStatus;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_SlotId[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  43,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x536c6f74),
+  ACE_NTOHL (0x49643a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableInterceptor/SlotId:1.0
+    7,
+  ACE_NTOHL (0x536c6f74),
+  ACE_NTOHL (0x49640000),  // name = SlotId
+    CORBA::tk_ulong,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_SlotId (
+    CORBA::tk_alias,
+    sizeof (_oc_PortableInterceptor_SlotId),
+    (char *) &_oc_PortableInterceptor_SlotId,
+    0,
+    sizeof (PortableInterceptor::SlotId)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_SlotId =
+    &_tc_TAO_tc_PortableInterceptor_SlotId;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_InvalidSlot[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c696453),
+  ACE_NTOHL (0x6c6f743a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/InvalidSlot:1.0
+    12,
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c696453),
+  ACE_NTOHL (0x6c6f7400),  // name = InvalidSlot
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_InvalidSlot (
+    CORBA::tk_except,
+    sizeof (_oc_PortableInterceptor_InvalidSlot),
+    (char *) &_oc_PortableInterceptor_InvalidSlot,
+    0,
+    sizeof (PortableInterceptor::InvalidSlot)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_InvalidSlot =
+    &_tc_TAO_tc_PortableInterceptor_InvalidSlot;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_Current[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  44,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x656e743a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/Current:1.0
+    8,
+  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x656e7400),  // name = Current
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_Current (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_Current),
+    (char *) &_oc_PortableInterceptor_Current,
+    0,
+    sizeof (PortableInterceptor::Current)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_Current =
+    &_tc_TAO_tc_PortableInterceptor_Current;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_RequestInfo[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737449),
+  ACE_NTOHL (0x6e666f3a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/RequestInfo:1.0
+    12,
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737449),
+  ACE_NTOHL (0x6e666f00),  // name = RequestInfo
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_RequestInfo (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_RequestInfo),
+    (char *) &_oc_PortableInterceptor_RequestInfo,
+    0,
+    sizeof (PortableInterceptor::RequestInfo)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_RequestInfo =
+    &_tc_TAO_tc_PortableInterceptor_RequestInfo;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ClientRequestInfo[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  54,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x436c6965),
+  ACE_NTOHL (0x6e745265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e66),
+  ACE_NTOHL (0x6f3a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableInterceptor/ClientRequestInfo:1.0
+    18,
+  ACE_NTOHL (0x436c6965),
+  ACE_NTOHL (0x6e745265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e66),
+  ACE_NTOHL (0x6f000000),  // name = ClientRequestInfo
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ClientRequestInfo (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_ClientRequestInfo),
+    (char *) &_oc_PortableInterceptor_ClientRequestInfo,
+    0,
+    sizeof (PortableInterceptor::ClientRequestInfo)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ClientRequestInfo =
+    &_tc_TAO_tc_PortableInterceptor_ClientRequestInfo;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ServerRequestInfo[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  54,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65725265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e66),
+  ACE_NTOHL (0x6f3a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableInterceptor/ServerRequestInfo:1.0
+    18,
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65725265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e66),
+  ACE_NTOHL (0x6f000000),  // name = ServerRequestInfo
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ServerRequestInfo (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_ServerRequestInfo),
+    (char *) &_oc_PortableInterceptor_ServerRequestInfo,
+    0,
+    sizeof (PortableInterceptor::ServerRequestInfo)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ServerRequestInfo =
+    &_tc_TAO_tc_PortableInterceptor_ServerRequestInfo;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ClientRequestInterceptor[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  61,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x436c6965),
+  ACE_NTOHL (0x6e745265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e74),
+  ACE_NTOHL (0x65726365),
+  ACE_NTOHL (0x70746f72),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableInterceptor/ClientRequestInterceptor:1.0
+    25,
+  ACE_NTOHL (0x436c6965),
+  ACE_NTOHL (0x6e745265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e74),
+  ACE_NTOHL (0x65726365),
+  ACE_NTOHL (0x70746f72),
+  ACE_NTOHL (0x0),  // name = ClientRequestInterceptor
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ClientRequestInterceptor (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_ClientRequestInterceptor),
+    (char *) &_oc_PortableInterceptor_ClientRequestInterceptor,
+    0,
+    sizeof (PortableInterceptor::ClientRequestInterceptor)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ClientRequestInterceptor =
+    &_tc_TAO_tc_PortableInterceptor_ClientRequestInterceptor;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ServerRequestInterceptor[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  61,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65725265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e74),
+  ACE_NTOHL (0x65726365),
+  ACE_NTOHL (0x70746f72),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableInterceptor/ServerRequestInterceptor:1.0
+    25,
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65725265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x74496e74),
+  ACE_NTOHL (0x65726365),
+  ACE_NTOHL (0x70746f72),
+  ACE_NTOHL (0x0),  // name = ServerRequestInterceptor
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ServerRequestInterceptor (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_ServerRequestInterceptor),
+    (char *) &_oc_PortableInterceptor_ServerRequestInterceptor,
+    0,
+    sizeof (PortableInterceptor::ServerRequestInterceptor)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ServerRequestInterceptor =
+    &_tc_TAO_tc_PortableInterceptor_ServerRequestInterceptor;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_PolicyFactory[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  50,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63794661),
+  ACE_NTOHL (0x63746f72),
+  ACE_NTOHL (0x793a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableInterceptor/PolicyFactory:1.0
+    14,
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63794661),
+  ACE_NTOHL (0x63746f72),
+  ACE_NTOHL (0x79000000),  // name = PolicyFactory
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_PolicyFactory (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_PolicyFactory),
+    (char *) &_oc_PortableInterceptor_PolicyFactory,
+    0,
+    sizeof (PortableInterceptor::PolicyFactory)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_PolicyFactory =
+    &_tc_TAO_tc_PortableInterceptor_PolicyFactory;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_ObjectId[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  57,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f524249),
+  ACE_NTOHL (0x6e697449),
+  ACE_NTOHL (0x6e666f2f),
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63744964),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo/ObjectId:1.0
+    9,
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63744964),
+  ACE_NTOHL (0x0),  // name = ObjectId
+    CORBA::tk_string,
+  0U, // string length
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_ObjectId (
+    CORBA::tk_alias,
+    sizeof (_oc_PortableInterceptor_ORBInitInfo_ObjectId),
+    (char *) &_oc_PortableInterceptor_ORBInitInfo_ObjectId,
+    0,
+    sizeof (PortableInterceptor::ORBInitInfo::ObjectId)
+  );
+
+::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_ObjectId =
+  &_tc_TAO_tc_PortableInterceptor_ORBInitInfo_ObjectId;
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_DuplicateName[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  62,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f524249),
+  ACE_NTOHL (0x6e697449),
+  ACE_NTOHL (0x6e666f2f),
+  ACE_NTOHL (0x4475706c),
+  ACE_NTOHL (0x69636174),
+  ACE_NTOHL (0x654e616d),
+  ACE_NTOHL (0x653a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo/DuplicateName:1.0
+    14,
+  ACE_NTOHL (0x4475706c),
+  ACE_NTOHL (0x69636174),
+  ACE_NTOHL (0x654e616d),
+  ACE_NTOHL (0x65000000),  // name = DuplicateName
+  1, // member count
+    5,
+  ACE_NTOHL (0x6e616d65),
+  ACE_NTOHL (0x0),  // name = name
+    CORBA::tk_string,
+  0U, // string length
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName (
+    CORBA::tk_except,
+    sizeof (_oc_PortableInterceptor_ORBInitInfo_DuplicateName),
+    (char *) &_oc_PortableInterceptor_ORBInitInfo_DuplicateName,
+    0,
+    sizeof (PortableInterceptor::ORBInitInfo::DuplicateName)
+  );
+
+::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_DuplicateName =
+  &_tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName;
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_InvalidName[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  60,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f524249),
+  ACE_NTOHL (0x6e697449),
+  ACE_NTOHL (0x6e666f2f),
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c69644e),
+  ACE_NTOHL (0x616d653a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo/InvalidName:1.0
+    12,
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c69644e),
+  ACE_NTOHL (0x616d6500),  // name = InvalidName
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_InvalidName (
+    CORBA::tk_except,
+    sizeof (_oc_PortableInterceptor_ORBInitInfo_InvalidName),
+    (char *) &_oc_PortableInterceptor_ORBInitInfo_InvalidName,
+    0,
+    sizeof (PortableInterceptor::ORBInitInfo::InvalidName)
+  );
+
+::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_InvalidName =
+  &_tc_TAO_tc_PortableInterceptor_ORBInitInfo_InvalidName;
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f524249),
+  ACE_NTOHL (0x6e697449),
+  ACE_NTOHL (0x6e666f3a),
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo:1.0
+    12,
+  ACE_NTOHL (0x4f524249),
+  ACE_NTOHL (0x6e697449),
+  ACE_NTOHL (0x6e666f00),  // name = ORBInitInfo
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_ORBInitInfo),
+    (char *) &_oc_PortableInterceptor_ORBInitInfo,
+    0,
+    sizeof (PortableInterceptor::ORBInitInfo)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ORBInitInfo =
+    &_tc_TAO_tc_PortableInterceptor_ORBInitInfo;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_PortableInterceptor_ORBInitializer[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  51,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x4f524249),
+  ACE_NTOHL (0x6e697469),
+  ACE_NTOHL (0x616c697a),
+  ACE_NTOHL (0x65723a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitializer:1.0
+    15,
+  ACE_NTOHL (0x4f524249),
+  ACE_NTOHL (0x6e697469),
+  ACE_NTOHL (0x616c697a),
+  ACE_NTOHL (0x65720000),  // name = ORBInitializer
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitializer (
+    CORBA::tk_objref,
+    sizeof (_oc_PortableInterceptor_ORBInitializer),
+    (char *) &_oc_PortableInterceptor_ORBInitializer,
+    0,
+    sizeof (PortableInterceptor::ORBInitializer)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ORBInitializer =
+    &_tc_TAO_tc_PortableInterceptor_ORBInitializer;
+}
+
+// TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION

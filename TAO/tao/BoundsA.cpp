@@ -30,6 +30,41 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_CORBA_Bounds[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  29,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f426f),
+  ACE_NTOHL (0x756e6473),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
+    7,
+  ACE_NTOHL (0x426f756e),
+  ACE_NTOHL (0x64730000),  // name = Bounds
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Bounds (
+    CORBA::tk_except,
+    sizeof (_oc_CORBA_Bounds),
+    (char *) &_oc_CORBA_Bounds,
+    0,
+    sizeof (CORBA::Bounds)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_Bounds =
+    &_tc_TAO_tc_CORBA_Bounds;
+}
+
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION

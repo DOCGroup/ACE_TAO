@@ -5,7 +5,7 @@
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-#include "TAOA.h"
+#include "TAOC.h"
 
 ACE_RCSID(TAO, Buffering_Constraint_Policy, "$Id$")
 

@@ -26,10 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "TAOC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
@@ -42,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -50,151 +51,8 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_TAO_BufferingConstraintMode[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e744d), 
-  ACE_NTOHL (0x6f64653a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/BufferingConstraintMode:1.0
-    24,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e744d), 
-  ACE_NTOHL (0x6f646500),  // name = BufferingConstraintMode
-    CORBA::tk_ushort,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintMode (
-    CORBA::tk_alias,
-    sizeof (_oc_TAO_BufferingConstraintMode),
-    (char *) &_oc_TAO_BufferingConstraintMode,
-    0,
-    sizeof (TAO::BufferingConstraintMode)
-  );
-
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraintMode =
-    &_tc_TAO_tc_TAO_BufferingConstraintMode;
-}
-
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_TAO_BufferingConstraint[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e743a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/BufferingConstraint:1.0
-    20,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e7400),  // name = BufferingConstraint
-  4, // member count
-    5,
-  ACE_NTOHL (0x6d6f6465), 
-  ACE_NTOHL (0x0),  // name = mode
-    CORBA::tk_alias, // typecode kind for typedefs
-  80, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    40,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x74616f2f), 
-    ACE_NTOHL (0x54414f2f), 
-    ACE_NTOHL (0x42756666), 
-    ACE_NTOHL (0x6572696e), 
-    ACE_NTOHL (0x67436f6e), 
-    ACE_NTOHL (0x73747261), 
-    ACE_NTOHL (0x696e744d), 
-    ACE_NTOHL (0x6f64653a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/BufferingConstraintMode:1.0
-        24,
-    ACE_NTOHL (0x42756666), 
-    ACE_NTOHL (0x6572696e), 
-    ACE_NTOHL (0x67436f6e), 
-    ACE_NTOHL (0x73747261), 
-    ACE_NTOHL (0x696e744d), 
-    ACE_NTOHL (0x6f646500),  // name = BufferingConstraintMode
-        CORBA::tk_ushort,
-
-
-  8,
-  ACE_NTOHL (0x74696d65), 
-  ACE_NTOHL (0x6f757400),  // name = timeout
-    CORBA::tk_alias, // typecode kind for typedefs
-  56, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
-        6,
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x54000000),  // name = TimeT
-        CORBA::tk_ulonglong,
-
-
-  14,
-  ACE_NTOHL (0x6d657373), 
-  ACE_NTOHL (0x6167655f), 
-  ACE_NTOHL (0x636f756e), 
-  ACE_NTOHL (0x74000000),  // name = message_count
-    CORBA::tk_ulong,
-
-  14,
-  ACE_NTOHL (0x6d657373), 
-  ACE_NTOHL (0x6167655f), 
-  ACE_NTOHL (0x62797465), 
-  ACE_NTOHL (0x73000000),  // name = message_bytes
-    CORBA::tk_ulong,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraint (
-    CORBA::tk_struct,
-    sizeof (_oc_TAO_BufferingConstraint),
-    (char *) &_oc_TAO_BufferingConstraint,
-    0,
-    sizeof (TAO::BufferingConstraint)
-  );
-
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraint =
-    &_tc_TAO_tc_TAO_BufferingConstraint;
-}
-
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 TAO::BufferingConstraint::_tao_any_destructor (
@@ -207,7 +65,7 @@ TAO::BufferingConstraint::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for TAO::BufferingConstraintPolicy.
 
@@ -356,49 +214,34 @@ TAO::BufferingConstraintPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_structure/cdr_op_cs.cpp:61
 
-static const CORBA::Long _oc_TAO_BufferingConstraintPolicy[] =
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const TAO::BufferingConstraint &_tao_aggregate
+  )
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e7450), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:tao/TAO/BufferingConstraintPolicy:1.0
-    26,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e7450), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x79000000),  // name = BufferingConstraintPolicy
-  };
+  return
+    (strm << _tao_aggregate.mode) &&
+    (strm << _tao_aggregate.timeout) &&
+    (strm << _tao_aggregate.message_count) &&
+    (strm << _tao_aggregate.message_bytes);
+}
 
-static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintPolicy (
-    CORBA::tk_objref,
-    sizeof (_oc_TAO_BufferingConstraintPolicy),
-    (char *) &_oc_TAO_BufferingConstraintPolicy,
-    0,
-    sizeof (TAO::BufferingConstraintPolicy)
-  );
-
-namespace TAO
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    TAO::BufferingConstraint &_tao_aggregate
+  )
 {
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraintPolicy =
-    &_tc_TAO_tc_TAO_BufferingConstraintPolicy;
+  return
+    (strm >> _tao_aggregate.mode) &&
+    (strm >> _tao_aggregate.timeout) &&
+    (strm >> _tao_aggregate.message_count) &&
+    (strm >> _tao_aggregate.message_bytes);
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

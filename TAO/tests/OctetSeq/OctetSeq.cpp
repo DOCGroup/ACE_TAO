@@ -22,6 +22,7 @@
 #include "ace/High_Res_Timer.h"
 
 #include "tao/ORB.h"
+#include "tao/CDR.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 

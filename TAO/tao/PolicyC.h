@@ -39,9 +39,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Environment.h"
+#include "tao/Object.h"
+#include "tao/Objref_VarOut_T.h"
+
 #include "UShortSeqC.h"
 #include "CurrentC.h"
-#include "tao/Exception.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -66,13 +69,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -82,62 +85,62 @@ namespace TAO
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:342
-
+  
   typedef CORBA::Short PolicyErrorCode;
   typedef CORBA::Short_out PolicyErrorCode_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyErrorCode;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyErrorCode BAD_POLICY = 0;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyErrorCode UNSUPPORTED_POLICY = 1;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyErrorCode BAD_POLICY_TYPE = 2;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyErrorCode BAD_POLICY_VALUE = 3;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyErrorCode UNSUPPORTED_POLICY_VALUE = 4;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_POLICYERROR_CH_)
 #define _CORBA_POLICYERROR_CH_
-
+  
   class TAO_Export PolicyError : public CORBA::UserException
   {
   public:
-
+    
     CORBA::PolicyErrorCode reason;
     PolicyError (void);
     PolicyError (const PolicyError &);
     ~PolicyError (void);
 
     PolicyError &operator= (const PolicyError &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static PolicyError *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
@@ -149,51 +152,51 @@ namespace CORBA
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ctor.cpp:66
-
+    
     PolicyError (
         ACE_NESTED_CLASS (CORBA, PolicyErrorCode) _tao_reason
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:125
-
+    
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyError;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_INVALIDPOLICIES_CH_)
 #define _CORBA_INVALIDPOLICIES_CH_
-
+  
   class TAO_Export InvalidPolicies : public CORBA::UserException
   {
   public:
-
+    
     CORBA::UShortSeq indices;
     InvalidPolicies (void);
     InvalidPolicies (const InvalidPolicies &);
     ~InvalidPolicies (void);
 
     InvalidPolicies &operator= (const InvalidPolicies &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static InvalidPolicies *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
@@ -205,47 +208,47 @@ namespace CORBA
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ctor.cpp:66
-
+    
     InvalidPolicies (
         const ACE_NESTED_CLASS (CORBA, UShortSeq) & _tao_indices
       );
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:125
-
+    
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_POLICY__VAR_OUT_CH_)
 #define _CORBA_POLICY__VAR_OUT_CH_
-
+  
   class Policy;
   typedef Policy *Policy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         Policy
       >
     Policy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Policy
@@ -253,13 +256,13 @@ namespace CORBA
     Policy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLICY_CH_)
 #define _CORBA_POLICY_CH_
-
+  
   class TAO_Export Policy
     : public virtual CORBA::Object
   {
@@ -267,65 +270,65 @@ namespace CORBA
     friend class TAO::Narrow_Utils<Policy>;
     typedef Policy_ptr _ptr_type;
     typedef Policy_var _var_type;
-
+    
     // The static operations.
     static Policy_ptr _duplicate (Policy_ptr obj);
-
+    
     static Policy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Policy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Policy_ptr _nil (void)
     {
       return (Policy_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::PolicyType policy_type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -339,21 +342,21 @@ namespace CORBA
 
   private:
     TAO::Collocation_Proxy_Broker *the_TAO_Policy_Proxy_Broker_;
-
+  
   protected:
     // Concrete interface only.
     Policy (int collocated = 0);
-
+    
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
     virtual void CORBA_Policy_setup_collocation (int collocated);
-
+    
     // Concrete non-local interface only.
     Policy (
         IOP::IOR *ior,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     // Non-local interface only.
     Policy (
         TAO_Stub *objref,
@@ -361,38 +364,38 @@ namespace CORBA
         TAO_Abstract_ServantBase *servant = 0,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     virtual ~Policy (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     Policy (const Policy &);
-
+    
     void operator= (const Policy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Policy;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_POLICYMANAGER__VAR_OUT_CH_)
 #define _CORBA_POLICYMANAGER__VAR_OUT_CH_
-
+  
   class PolicyManager;
   typedef PolicyManager *PolicyManager_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         PolicyManager
       >
     PolicyManager_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         PolicyManager
@@ -400,43 +403,43 @@ namespace CORBA
     PolicyManager_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLICYMANAGER_CH_)
 #define _CORBA_POLICYMANAGER_CH_
-
+  
   class TAO_Export PolicyManager
     : public virtual CORBA::Object
   {
   public:
     typedef PolicyManager_ptr _ptr_type;
     typedef PolicyManager_var _var_type;
-
+    
     // The static operations.
     static PolicyManager_ptr _duplicate (PolicyManager_ptr obj);
-
+    
     static PolicyManager_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PolicyManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PolicyManager_ptr _nil (void)
     {
       return (PolicyManager_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::PolicyList * get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -444,10 +447,10 @@ namespace CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void set_policy_overrides (
         const CORBA::PolicyList & policies,
         CORBA::SetOverrideType set_add
@@ -457,44 +460,44 @@ namespace CORBA
         CORBA::SystemException
         , CORBA::InvalidPolicies
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     PolicyManager (void);
-
+    
     virtual ~PolicyManager (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     PolicyManager (const PolicyManager &);
-
+    
     void operator= (const PolicyManager &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyManager;
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_POLICYCURRENT__VAR_OUT_CH_)
 #define _CORBA_POLICYCURRENT__VAR_OUT_CH_
-
+  
   class PolicyCurrent;
   typedef PolicyCurrent *PolicyCurrent_ptr;
   

@@ -40,7 +40,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/Typecode.h"
 #include "tao/Sequence_T.h"
@@ -78,22 +77,22 @@
 
 namespace Dynamic
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_DYNAMIC_PARAMETERLIST_CH_)
 #define _DYNAMIC_PARAMETERLIST_CH_
-
+  
   class ParameterList;
-
+  
   typedef
     TAO_VarSeq_Var_T<
         ParameterList,
         Parameter
       >
     ParameterList_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         ParameterList,
@@ -101,7 +100,7 @@ namespace Dynamic
         Parameter
       >
     ParameterList_out;
-
+  
   class TAO_Export ParameterList
     : public
         TAO_Unbounded_Sequence<
@@ -114,44 +113,44 @@ namespace Dynamic
     ParameterList (
         CORBA::ULong max,
         CORBA::ULong length,
-        Parameter* buffer,
+        Parameter* buffer, 
         CORBA::Boolean release = 0
       );
     ParameterList (const ParameterList &);
     ~ParameterList (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef ParameterList_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ParameterList;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:435
-
+  
   typedef CORBA::StringSeq ContextList;
   typedef CORBA::StringSeq_var ContextList_var;
   typedef CORBA::StringSeq_out ContextList_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ContextList;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CH_)
 #define _DYNAMIC_EXCEPTIONLIST_CH_
-
+  
   class ExceptionList;
-
+  
   typedef
     TAO_MngSeq_Var_T<
         ExceptionList,
@@ -160,7 +159,7 @@ namespace Dynamic
           >
       >
     ExceptionList_var;
-
+  
   typedef
     TAO_MngSeq_Out_T<
         ExceptionList,
@@ -170,7 +169,7 @@ namespace Dynamic
           >
       >
     ExceptionList_out;
-
+  
   class TAO_Export ExceptionList
     : public
         TAO_Unbounded_Pseudo_Sequence<
@@ -183,14 +182,14 @@ namespace Dynamic
     ExceptionList (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::TypeCode_ptr* buffer,
+        CORBA::TypeCode_ptr* buffer, 
         CORBA::Boolean release = 0
       );
     ExceptionList (const ExceptionList &);
     ~ExceptionList (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef ExceptionList_var _var_type;
   };
 
