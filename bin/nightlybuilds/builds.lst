@@ -111,8 +111,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_S
 
 [SunOS_KCC]
 TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC3.4/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC3.4
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC4.0/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC4.0
 
 [SunOS_SunCC42]
 TYPE = TIMEONLY
