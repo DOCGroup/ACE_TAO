@@ -1,3 +1,11 @@
+Thu Jun  5 10:09:01 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
+
+	* IIOP/test/svr.cpp: Added a new class to catch SIGINT and
+ 	terminate.  This was necessary to Quantify the server process.
+
+	* IIOP/lib/orbobj.h: Added ACE_INLINE to forward decls of
+ 	CORBA_release() and CORBA_is_nil().
+
 Wed May 23 14:39:01 1997  Brian Mendel  <bmendel@mdc.com>
 
         * IIOP/lib/objtable.{h,cpp}:  Added template specialization of 
