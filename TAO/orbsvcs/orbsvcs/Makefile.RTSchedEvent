@@ -293,6 +293,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -382,7 +384,6 @@ realclean: clean
  RtecEventCommC.i \
  Event/event_export.h Event/EC_Filter.i \
  RtecSchedulerC.h \
- Sched/sched_export.h \
  RtecBaseC.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
@@ -603,6 +604,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -692,7 +695,6 @@ realclean: clean
  RtecEventCommC.i \
  Event/event_export.h Event/EC_Filter.i \
  RtecSchedulerC.h \
- Sched/sched_export.h \
  RtecBaseC.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
@@ -741,7 +743,7 @@ realclean: clean
  Event/EC_Priority_Scheduling.h \
  $(ACE_ROOT)/ace/pre.h \
  Event/EC_Scheduling_Strategy.h \
- RtecSchedulerC.h \
+ RtecBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -951,6 +953,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1031,21 +1035,21 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- Sched/sched_export.h \
- TimeBaseC.h \
  svc_utils_export.h \
- TimeBaseC.i \
- RtecBaseC.h \
  RtecBaseC.i \
- RtecSchedulerC.i \
  RtecEventCommC.h \
  Event/event_export.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
  RtecDefaultEventDataC.h \
  RtecDefaultEventDataC.i \
  RtecEventCommC.i \
- Event/EC_Scheduling_Strategy.i Event/sched_event_export.h \
- Event/EC_Priority_Scheduling.i Event/EC_QOS_Info.h \
- Event/event_export.h Event/EC_QOS_Info.i Event/EC_ProxyConsumer.h \
+ Event/EC_Scheduling_Strategy.i \
+ RtecSchedulerC.h \
+ RtecSchedulerC.i \
+ Event/sched_event_export.h Event/EC_Priority_Scheduling.i \
+ Event/EC_QOS_Info.h Event/event_export.h Event/EC_QOS_Info.i \
+ Event/EC_ProxyConsumer.h \
  RtecEventChannelAdminS.h \
  RtecEventCommS.h \
  TimeBaseS.h \
@@ -1292,6 +1296,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1381,7 +1387,6 @@ realclean: clean
  RtecEventCommC.i \
  Event/event_export.h Event/EC_Dispatching.i \
  RtecSchedulerC.h \
- Sched/sched_export.h \
  RtecBaseC.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
@@ -1650,6 +1655,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1731,8 +1738,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  Event/EC_Factory.i Event/EC_Defaults.h Event/EC_Default_Factory.i \
- Event/sched_event_export.h Event/EC_Priority_Dispatching.h \
- Event/EC_Dispatching.h \
+ Event/sched_event_export.h Event/EC_Sched_Factory.i \
+ Event/EC_Priority_Dispatching.h Event/EC_Dispatching.h \
  RtecEventCommC.h \
  TimeBaseC.h \
  svc_utils_export.h \
@@ -1742,7 +1749,6 @@ realclean: clean
  RtecEventCommC.i \
  Event/event_export.h Event/EC_Dispatching.i \
  RtecSchedulerC.h \
- Sched/sched_export.h \
  RtecBaseC.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
@@ -1753,6 +1759,33 @@ realclean: clean
  RtecEventChannelAdminC.h \
  RtecEventChannelAdminC.i \
  Event/EC_Filter_Builder.i Event/EC_Sched_Filter_Builder.i \
+ Event/EC_Event_Channel.h \
+ RtecEventChannelAdminS.h \
+ RtecEventCommS.h \
+ TimeBaseS.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ Event/EC_Event_Channel.i \
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
@@ -1979,6 +2012,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/rtcorbafwd.h \
+ $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -2092,8 +2127,8 @@ realclean: clean
  Channel_Clients_T.i \
  Channel_Clients_T.cpp \
  RtecSchedulerC.h \
- Sched/sched_export.h \
  RtecSchedulerC.i \
+ Event/sched_event_export.h \
  Time_Utilities.h \
  Time_Utilities.i
 
