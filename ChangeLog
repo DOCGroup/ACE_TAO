@@ -47,7 +47,7 @@ Mon Oct 14  10:12:31 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Oct 14 00:12:48 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
-        * ACEXML\docs\bugs.txt: Updated to match the current status of
+        * ACEXML/docs/bugs.txt: Updated to match the current status of
           ACEXML parser.
 
 Sun Oct 13 19:38:35 2002  Krishnakumar B  <kitty@cse.wustl.edu>
