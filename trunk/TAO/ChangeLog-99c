@@ -1,5 +1,7 @@
 Sun Jul 18 14:21:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* docs/compiler.html: Updated the new options described below.
+
 	* TAO_IDL/be/be_args.cpp:
 	* TAO_IDL/be/be_codegen.cpp:
 	* TAO_IDL/be/be_interface.cpp:
