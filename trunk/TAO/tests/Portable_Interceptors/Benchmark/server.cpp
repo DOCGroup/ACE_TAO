@@ -81,6 +81,9 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       Secure_Vault_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
@@ -116,9 +119,6 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
