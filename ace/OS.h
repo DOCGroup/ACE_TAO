@@ -2100,7 +2100,7 @@ typedef char TCHAR;
 #define ACE_INVALID_HANDLE -1
 #define ACE_SYSCALL_FAILED -1
 
-#define ACE_SEH_TRY
+#define ACE_SEH_TRY if (1)
 #define ACE_SEH_EXCEPT(X) while (0)
 #define ACE_SEH_FINALLY while (0)
 

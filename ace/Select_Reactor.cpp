@@ -581,6 +581,23 @@ ACE_Select_Reactor_Token::ACE_Select_Reactor_Token (void)
   ACE_TRACE ("ACE_Select_Reactor_Token::ACE_Select_Reactor_Token");
 }
 
+ACE_Select_Reactor_Token::~ACE_Select_Reactor_Token (void)
+{
+  ACE_TRACE ("ACE_Select_Reactor_Token::~ACE_Select_Reactor_Token");
+}
+
+ACE_Select_Reactor &
+ACE_Select_Reactor_Token::select_reactor (void)
+{
+  return *this->select_reactor_;
+}
+
+void 
+ACE_Select_Reactor_Token::select_reactor (ACE_Select_Reactor &select_reactor)
+{
+  this->select_reactor_ = &select_reactor;
+}
+
 // Used to wakeup the Select_Reactor.
 
 void
