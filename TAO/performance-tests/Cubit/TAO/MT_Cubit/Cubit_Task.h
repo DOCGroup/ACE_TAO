@@ -57,7 +57,7 @@ private:
   int create_servants (void);
   // Create the servants.
 
-  CORBA::String key_;
+  const char *key_;
   // All cubit objects will have this as prefix to its key.
 
   char *orbname_;

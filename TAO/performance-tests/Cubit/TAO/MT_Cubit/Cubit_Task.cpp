@@ -191,7 +191,7 @@ Cubit_Task::create_servants (void)
         {
           ACE_OS::sprintf (buffer,
                            "%s%02d",
-                           (char *) this->key_,
+                           this->key_,
                            this->task_id_);
 
           ACE_NEW_RETURN (this->servants_[i],

@@ -179,12 +179,13 @@ Server::activate_high_servant (void)
                    GLOBALS::instance ()->hostname,
                    GLOBALS::instance ()->base_port);
 
-  char *high_second_argv[] = {orbendpoint,
-                              "-ORBsndsock 32768 ",
-                              "-ORBrcvsock 32768 ",
-                              0};
+  char *high_second_argv[] =
+    {orbendpoint,
+     ACE_const_cast (char *, "-ORBsndsock 32768 "),
+     ACE_const_cast (char *, "-ORBrcvsock 32768 "),
+     0};
   ACE_NEW_RETURN (this->high_argv_,
-                  ACE_ARGV (this->argv_,high_second_argv),
+                  ACE_ARGV (this->argv_, high_second_argv),
                   -1);
   ACE_NEW_RETURN (this->high_priority_task_,
                   Cubit_Task (this->high_argv_->buf (),
@@ -250,10 +251,11 @@ Server::activate_low_servants (void)
                        ? (int) 0
                        : GLOBALS::instance ()->base_port + i);
 
-      char *low_second_argv[] = {orbendpoint,
-                                 "-ORBsndsock 32768 ",
-                                 "-ORBrcvsock 32768 ",
-                                 0};
+      char *low_second_argv[] =
+        {orbendpoint,
+         ACE_const_cast (char *, "-ORBsndsock 32768 "),
+         ACE_const_cast (char *, "-ORBrcvsock 32768 "),
+         0};
       ACE_NEW_RETURN (this->low_argv_,
                       ACE_ARGV (this->argv_,
                                 low_second_argv),
