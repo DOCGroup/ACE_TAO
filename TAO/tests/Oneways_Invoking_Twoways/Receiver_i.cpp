@@ -26,7 +26,7 @@ Receiver_i::receive_call (CORBA::Environment &ACE_TRY_ENV)
               "Doing a ping... \n"));
 
   this->sender_->ping (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   return this->no_calls_++;
 }
