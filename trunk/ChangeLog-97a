@@ -1,3 +1,10 @@
+Thu Mar 27 14:10:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-aix-4.[12].x.h and config-mvs.h: Fixed the
+ 	  ACE_HAS_MULTICAST macros, which should have said
+ 	  ACE_HAS_IP_MULTICAST.  Thanks to Daniel Montalibet
+ 	  <daniel_montalibet@stortek.com> for reporting this.
+
 Thu Mar 27 11:25:38 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/servers/Makefile: removed SHOBJ so that main.so is not

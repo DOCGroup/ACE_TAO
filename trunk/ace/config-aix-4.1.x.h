@@ -12,13 +12,15 @@
 // Use BSD 4.4 socket definitions
 #define _BSD 44
 
+// Platform supports IP multicast
+#define ACE_HAS_IP_MULTICAST
+
 #define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
 #define ACE_HAS_AIX_HI_RES_TIMER
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_UNION_WAIT
-#define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_TID_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_H_ERRNO
