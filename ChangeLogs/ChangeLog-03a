@@ -4,6 +4,7 @@ Thu Apr 11 07:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
           Reverted my change of yesterday. Already the copy constructor is called
 
         * ace/Task.h:
+        * ace/Timer_Queue_Adapters.h:
           Fixed some small typos in comment
 
 Wed Apr 10 20:00:57 2002  Ossama Othman  <ossama@uci.edu>
