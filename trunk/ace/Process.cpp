@@ -52,6 +52,33 @@ ACE_Process::spawn (ACE_Process_Options &options)
   else
     // CreateProcess failed.
     return -1;
+#elif defined (CHORUS)
+  // This only works if we exec.  Chorus does not really support
+  // forking
+  if (ACE_BIT_ENABLED (options.creation_flags (),
+                       ACE_Process_Options::NO_EXEC))
+    ACE_NOTSUP_RETURN (-1);
+
+  // These are all currently unsupported.
+  if (options.get_stdin () != ACE_INVALID_HANDLE)
+    ACE_NOTSUP_RETURN (-1);
+  if (options.get_stdout () != ACE_INVALID_HANDLE)
+    ACE_NOTSUP_RETURN (-1);
+  if (options.get_stderr () != ACE_INVALID_HANDLE)
+    ACE_NOTSUP_RETURN (-1);
+  if (options.working_directory () != 0)
+    ACE_NOTSUP_RETURN (-1);
+
+  if (options.env_argv ()[0] == 0)
+    // command-line args
+    this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
+				      options.command_line_argv ());
+  else
+    // Command-line args and environment variables
+    this->child_id_ = ACE_OS::execve (options.command_line_argv ()[0],
+                                      options.command_line_argv (),
+                                      options.env_argv ());
+  return this->child_id_;
 #else /* ACE_WIN32 */
   // Fork the new process.
   this->child_id_ = ACE_OS::fork (options.command_line_argv ()[0]);

@@ -1,3 +1,25 @@
+Sat Oct 10 18:30:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-chorus.h: Updated the config file for Chorus.  Thanks
+ 	  Alberto Villarica <Alberto.Villarica.rav@nt.com> for this.
+
+	* ace/OS.i: Added flock support for Chorus.  Thanks Alberto
+ 	  Villarica <Alberto.Villarica.rav@nt.com> for this.
+
+	* ace/OS.i: Added exec*() support for Chorus.  Thanks Alberto
+ 	  Villarica <Alberto.Villarica.rav@nt.com> for this.
+
+	* ace/config-chorus.h: Added #include of file <am/wait.h>.
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i): Added a special
+ 	  case for CHORUS so that we use a base address of 0.  Thanks to
+ 	  Alberto Villarica <Alberto.Villarica.rav@nt.com> for reporting
+ 	  this.
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i): Don't use
+ 	  ACE_OS::access() if the platform lacks it.  Thanks to Alberto
+ 	  Villarica <Alberto.Villarica.rav@nt.com> for reporting this.
+
 Sat Oct 10 18:33:06 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tests/Aio_Platform_Test.cpp: Comments.

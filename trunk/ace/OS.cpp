@@ -3444,7 +3444,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
   // CreateProcess failed.
   return -1;
 # elif defined (CHORUS)
-  return -1;                    // do it later!!!
+  return ACE_OS::execv (argv[0], argv);
 # else
       pid_t result = ACE_OS::fork ();
 
@@ -4089,9 +4089,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #   else /* ACE_WIN32 */
 
   return ::pwrite (handle, buf, nbytes, offset);
-
 #   endif /* ACE_WIN32 */
-
 # else /* ACE_HAS_P_READ_WRITE */
 
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
@@ -4103,7 +4101,6 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   off_t original_position = ACE_OS::lseek (handle,
                                            0,
                                            SEEK_SET);
-
   if (original_position == -1)
     return -1;
 
@@ -4111,14 +4108,12 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   off_t altered_position = ACE_OS::lseek (handle,
                                           offset,
                                           SEEK_SET);
-
   if (altered_position == -1)
     return -1;
 
   ssize_t bytes_written = ACE_OS::write (handle,
                                          buf,
                                          nbytes);
-
   if (bytes_written == -1)
     return -1;
 
@@ -4128,7 +4123,6 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     return -1;
 
   return bytes_written;
-
 # endif /* ACE_HAD_P_READ_WRITE */
 }
 

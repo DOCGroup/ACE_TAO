@@ -89,16 +89,16 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       this->length_ = len_request;
     }
   else
-    {
-      // Set length to file_request
-      this->length_ = file_len;
-    }
+    // Set length to file_request
+    this->length_ = file_len;
 
-  if (extend_backing_store)
+  if (extend_backing_store
     // Extend the backing store.
-    if (ACE_OS::pwrite (this->handle_, "", 1,
-                        this->length_ > 0 ? this->length_ - 1 : 0) == -1)
-      return -1;
+      && ACE_OS::pwrite (this->handle_,
+                         "",
+                         1,
+                         this->length_ > 0 ? this->length_ - 1 : 0) == -1)
+    return -1;
   
 #if defined (__Lynx__)
   // Set flag that indicates whether PROT_WRITE has been enabled.
@@ -125,9 +125,15 @@ ACE_Mem_Map::open (LPCTSTR file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
-  ACE_OS::strncpy (this->filename_, file_name, MAXPATHLEN);
+  ACE_OS::strncpy (this->filename_,
+                   file_name,
+                   MAXPATHLEN);
 
+#if defined (CHORUS)
+  this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
+#else
   this->handle_ = ACE_OS::open (file_name, flags, mode, sa);
+#endif /* CHORUS */
 
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
@@ -226,7 +232,12 @@ ACE_Mem_Map::remove (void)
   this->close ();
 
   if (this->filename_[0] != '\0')
-    return ACE_OS::unlink (this->filename_);
+#if defined (CHORUS)
+  return ACE_OS::shm_unlink (this->filename_);
+#else
+  return ACE_OS::unlink (this->filename_);
+#endif /* CHORUS */
+
   else
     return 0;
 }
