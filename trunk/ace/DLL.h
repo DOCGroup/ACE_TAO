@@ -37,10 +37,11 @@ class ACE_Export ACE_DLL
 public:
   // = Initialization and termination methods.
 
-  ACE_DLL ( int close_on_detruction = 0);
-  // Initialization.
-  // The close_on_destruction flag is a feature which closes the 
-  // library automagically before the class object is destroyed.
+  ACE_DLL (ACE_DL_TYPE dll_name = 0,
+           int mode = ACE_DEFAULT_SHLIB_MODE);
+  // Another way of initialisation wherein the user gives the 
+  // library name and mode and thus the opening of the library is
+  // done implicitly along with the auto_close feature.
  
   ~ACE_DLL (void);
   // Called when object is destroyed.
@@ -67,6 +68,9 @@ public:
 
   char *error (void);
   // The error on any of the dl-procedures.
+
+  ACE_SHLIB_HANDLE get_handle (int orphan_mode);
+  // Return the handle to the user either forever or for temporary use.
 
 private:
   ACE_SHLIB_HANDLE handle_;
