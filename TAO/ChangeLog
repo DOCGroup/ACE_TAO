@@ -1,3 +1,11 @@
+Thu Apr 29 07:26:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Base_Transport_Property.h:
+          Converted some old style documentation to doxygen style
+
+        * tao/Adapter.h:
+          Improved doxygen documentation tag usage.
+
 Wed Apr 28 22:17:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
