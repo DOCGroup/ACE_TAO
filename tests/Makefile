@@ -100,6 +100,7 @@ BIN =   Aio_Platform_Test \
 
 BIN2 =  Naming_Test \
         Thread_Pool_Reactor_Test \
+        Thread_Pool_Reactor_Resume_Test \
         XtReactor_Test \
         FlReactor_Test \
         TkReactor_Test
