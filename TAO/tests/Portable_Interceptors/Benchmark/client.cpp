@@ -74,10 +74,11 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
       ACE_CHECK;
       if (TAO_debug_level > 0 && i % 100 == 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-
-      marker.dump_stats ("Ready method  ", gsf, 1);
     }
-  throughput.dump_results ("Aggregated", gsf);
+
+  marker.dump_stats ("Ready method  ", gsf, 1);
+      
+  //throughput.dump_results ("Aggregated", gsf);
 
   ACE_TRY
         {
@@ -102,12 +103,12 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
               ACE_CHECK;
               if (TAO_debug_level > 0 && i % 100 == 0)
                 ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-              
-              marker.dump_stats ("Authenticate method  ", gsf, 2);
-              
-              ACE_TRY_CHECK;
+                          
             }
-          throughput.dump_results ("Aggregated", gsf);
+          marker.dump_stats ("Authenticate method  ", gsf, 2);
+              
+          ACE_CHECK;
+          //  throughput.dump_results ("Aggregated", gsf);
         }
   ACE_CATCH (Test_Interceptors::Invalid, userex)
     {
@@ -147,10 +148,11 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
       if (TAO_debug_level > 0 && i % 100 == 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
       
+    }
       marker.dump_stats ("update records  method  ", gsf, 3);
       ACE_CHECK;
-    }
-  throughput.dump_results ("Aggregated", gsf);
+
+      //  throughput.dump_results ("Aggregated", gsf);
               
 }
 
