@@ -5,6 +5,7 @@
 */
 
 #include "ace/streams.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Thread_Manager.h"
