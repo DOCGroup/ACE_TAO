@@ -110,19 +110,20 @@ ACE_Mem_Map::unmap (int len)
   int writeback_result = 0;
   if (write_enabled_)
     {
-      // Write back the contents of the shared memory object to the file.
+      // Write back the contents of the shared memory object to the
+      // file.
       const off_t filesize = ACE_OS::filesize (handle_);
-      writeback_result = ACE_OS::lseek (handle_, 0, 0) != -1  &&
-                         ACE_OS::write (handle_,
-                                        base_addr_,
-                                        (int) filesize) == filesize  ?  0
-                                                                     : -1;
+      writeback_result =
+        ACE_OS::lseek (handle_, 0, 0) != -1  
+        && ACE_OS::write (handle_,
+                          base_addr_,
+                          (int) filesize) == filesize ? 0 : -1;
     }
 #endif /* __Lynx__ */
-
   if (this->base_addr_ != MAP_FAILED)
     {
-      int result = ACE_OS::munmap (this->base_addr_, len < 0 ? this->length_ : len);
+      int result = ACE_OS::munmap (this->base_addr_,
+                                   len < 0 ? this->length_ : len);
       this->base_addr_ = MAP_FAILED;
       return result;
     }
@@ -149,19 +150,21 @@ ACE_Mem_Map::unmap (void *addr, int len)
     {
       // Write back the contents of the shared memory object to the file.
       const off_t filesize = ACE_OS::filesize (handle_);
-      writeback_result = ACE_OS::lseek (handle_, 0, 0) != -1  &&
-                         ACE_OS::write (handle_,
-                                        base_addr_,
-                                        (int) filesize) == filesize  ?  0
-                                                                     : -1;
+      writeback_result =
+        ACE_OS::lseek (handle_, 0, 0) != -1 
+        && ACE_OS::write (handle_,
+                          base_addr_,
+                          (int) filesize) == filesize ? 0 : -1;
     }
 #endif /* __Lynx__ */
 
 #if defined (__Lynx__)
-  return ACE_OS::munmap (addr, len < 0 ? this->length_ : len) |
-    writeback_result;;
+  return ACE_OS::munmap (addr,
+                         len < 0 ? this->length_ : len) 
+    | writeback_result;;
 #else  /* ! __Lynx__ */
-  return ACE_OS::munmap (addr, len < 0 ? this->length_ : len);
+  return ACE_OS::munmap (addr,
+                         len < 0 ? this->length_ : len);
 #endif /* ! __Lynx__ */
 }
 
@@ -173,7 +176,9 @@ ACE_INLINE int
 ACE_Mem_Map::sync (ssize_t len, int flags)
 {
   ACE_TRACE ("ACE_Mem_Map::sync");
-  return ACE_OS::msync (this->base_addr_, len < 0 ? this->length_ : len, flags);
+  return ACE_OS::msync (this->base_addr_,
+                        len < 0 ? this->length_ : len,
+                        flags);
 }
 
 // Sync <len> bytes of the memory region to the backing store starting
@@ -217,7 +222,10 @@ ACE_Mem_Map::advise (int behavior, int len)
   ACE_TRACE ("ACE_Mem_Map::advise");
   if (len < 0)
     len = this->length_;
-  return ACE_OS::madvise ((caddr_t) this->base_addr_, len, behavior);
+
+  return ACE_OS::madvise ((caddr_t) this->base_addr_,
+                          len,
+                          behavior);
 }
 
 ACE_INLINE int

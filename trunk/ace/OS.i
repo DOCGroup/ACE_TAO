@@ -8110,6 +8110,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
   if (lock->handle_ == ACE_INVALID_HANDLE)
     {
       if (errno == EEXIST) 
+        // It's already there, so we'll just open it.
         lock->handle_ = ACE_OS::shm_open (name,
                                           flags | O_CREAT,
                                           ACE_DEFAULT_FILE_PERMS);
@@ -8122,7 +8123,6 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
       if (ACE_OS::ftruncate (lock->handle_,
                              sizeof (ACE_mutex_t)) == -1)
         return -1;
-
       ACE_ALLOCATOR_RETURN (lock->lockname_,
                             ACE_OS::strdup (name),
                             -1);
@@ -8130,22 +8130,24 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
   if (lock->handle_ == ACE_INVALID_HANDLE) 
     return -1;
 
-  lock->processLock_ =
+  lock->process_lock_ =
     (ACE_mutex_t *) ACE_OS::mmap (0,
                                   sizeof (ACE_mutex_t),
                                   PROT_RDWR,
                                   MAP_SHARED,
                                   lock->handle_,
                                   0);
-  if (lock->processLock_ == MAP_FAILED) 
+  if (lock->process_lock_ == MAP_FAILED) 
     return -1;
 
   if (lock->lockname_
       // Only initialize it if we're the one who created it.
-      && ACE_OS::mutex_init (lock->processLock_, USYNC_PROCESS, name, 0) != 0)
+      && ACE_OS::mutex_init (lock->process_lock_,
+                             USYNC_PROCESS,
+                             name,
+                             0) != 0)
         return -1;
-
-  return lock->handle_;
+  return 0;
 #else
 #if defined (ACE_WIN32)
   // Once initialized, these values are never changed.
@@ -8221,6 +8223,11 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
                                                       0),
                                           ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 */
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  return ACE_OS::mutex_lock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -8238,7 +8245,10 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
 }
 
 ACE_INLINE int
-ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
+                      short whence,
+                      off_t start,
+                      off_t len)
 {
   // ACE_TRACE ("ACE_OS::flock_rdlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -8259,6 +8269,11 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
                                                       0),
                                           ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 */
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  return ACE_OS::mutex_lock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -8276,7 +8291,10 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
 }
 
 ACE_INLINE int
-ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
+                         short whence,
+                         off_t start,
+                         off_t len)
 {
   // ACE_TRACE ("ACE_OS::ace_flock_trywrlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -8296,6 +8314,11 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #  endif /* ACE_HAS_WINNT4 */
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  return ACE_OS::mutex_trylock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -8322,7 +8345,10 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
 }
 
 ACE_INLINE int
-ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
+                         short whence,
+                         off_t start,
+                         off_t len)
 {
   // ACE_TRACE ("ACE_OS::ace_flock_tryrdlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -8342,6 +8368,11 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #  endif /* ACE_HAS_WINNT4 */
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  return ACE_OS::mutex_trylock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -8368,7 +8399,10 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
 }
 
 ACE_INLINE int
-ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
+                      short whence,
+                      off_t start,
+                      off_t len)
 {
   // ACE_TRACE ("ACE_OS::flock_unlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -8379,6 +8413,11 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
                                                         len,
                                                         0),
                                           ace_result_), int, -1);
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  return ACE_OS::mutex_unlock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -8403,22 +8442,43 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
   if (lock->handle_ != ACE_INVALID_HANDLE)
     {
       ACE_OS::flock_unlock (lock);
+      // Close the handle.
       ACE_OS::close (lock->handle_);
       lock->handle_ = ACE_INVALID_HANDLE;
+#if defined (CHORUS)
+      // Are we the owner?
+      if (lock->process_lock_ && lock->lockname_ != 0)
+        {
+          // Only destroy the lock if we're the owner
+          ACE_OS::mutex_destroy (lock->process_lock_);
+          ACE_OS::munmap (lock->process_lock_,
+                          sizeof (ACE_mutex_t));
+          ACE_OS::shm_unlink (lock->lockname_);
+          ACE_OS::free (ACE_static_cast (void *,
+                                         ACE_const_cast (LPTSTR,
+                                                         lock->lockname_)));
+        }
+      else if (lock->process_lock_) 
+        // Just unmap the memory.
+        ACE_OS::munmap (lock->process_lock_,
+                     sizeof (ACE_mutex_t));
+#else
       if (lock->lockname_ != 0)
         {
           ACE_OS::unlink (lock->lockname_);
           ACE_OS::free (ACE_static_cast (void *,
                                          ACE_const_cast (LPTSTR,
                                                          lock->lockname_)));
-          lock->lockname_ = 0;
         }
+#endif /* CHORUS */
+      lock->lockname_ = 0;
     }
   return 0;
 }
 
 ACE_INLINE int
-ACE_OS::execv (const char *path, char *const argv[])
+ACE_OS::execv (const char *path,
+               char *const argv[])
 {
   // ACE_TRACE ("ACE_OS::execv");
 #if defined (ACE_LACKS_EXEC)
@@ -8446,7 +8506,9 @@ ACE_OS::execv (const char *path, char *const argv[])
 }
 
 ACE_INLINE int
-ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
+ACE_OS::execve (const char *path,
+                char *const argv[],
+                char *const envp[])
 {
   // ACE_TRACE ("ACE_OS::execve");
 #if defined (ACE_LACKS_EXEC)
@@ -8475,7 +8537,8 @@ ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
 }
 
 ACE_INLINE int
-ACE_OS::execvp (const char *file, char *const argv[])
+ACE_OS::execvp (const char *file,
+                char *const argv[])
 {
   // ACE_TRACE ("ACE_OS::execvp");
 #if defined (ACE_LACKS_EXEC)

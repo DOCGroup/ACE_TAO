@@ -4362,7 +4362,7 @@ public:
     // Handle to the underlying file.
 
 #if defined (CHORUS)
-    ACE_mutex_t *processLock_;
+    ACE_mutex_t *process_lock_;
 #endif /* CHORUS */
   };
 
