@@ -174,11 +174,24 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 
   if (current != 0)
     {
+      if (ri == 0)
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "ri = 0\n"));
+	  return;
+	}
 
       CORBA::Any_var ex =
         ri->received_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       CORBA::TypeCode_var type = ex->type ();
+
+      if (CORBA::is_nil (type.in ()))
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "type = 0 \n"));
+	  return;
+	}
       const char * id = type->id ();
 
       if (TAO_debug_level > 0)
@@ -282,8 +295,9 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   ACE_CATCHANY
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Invalid Service REquest\n"));
+	ACE_DEBUG ((LM_DEBUG,
+		    "Invalid Service Request\n"));
+      return;
     }
   ACE_ENDTRY;
   ACE_CHECK;
