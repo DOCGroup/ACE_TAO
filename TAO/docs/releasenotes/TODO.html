@@ -63,6 +63,56 @@
     <H3>Pending Tasks</H3>
     </P>
 
+    <H4>Performance optimizations</H4>
+
+    <OL>
+      <LI>Use active demuxing in the POA
+      <P></LI>
+
+      <LI>Optimize twoways by delaying memory allocation for the
+	incoming data buffer, thus improving interleaving between the
+	client and server (the client does something useful before
+	starting to wait for the server).
+      <P></LI>
+      
+      <LI>Further optimize memory allocation by using a memory pool
+	for the incoming CDR stream.
+      <P></LI>
+      
+      <LI>Further optimize the outgoing memory allocation by adding
+	support for message blocks allocated from a pool (the
+	Message_Block class itself not the Data_Block or the buffer it
+	contains).
+      <P></LI>
+
+      <LI>The data blocks and their buffers could be allocated in a
+	single operation, using the beginning of a buffer to contain
+	the data block and the rest of it to contain the actual buffer
+      <P></LI>
+
+      <LI><P>For extremely low latency applications we could remove
+	  some fields from the IIOP protocol, for instance:
+	  <UL>
+	  <LI>The first four bytes are always 'GIOP'
+	  </LI>
+	  <LI>In homogeneous environments sending the byte order is a
+	    waste
+	  </LI>
+	  <LI>Fields like the <CODE>Principal</CODE>, the services
+	    context list, the versions can also be removed
+	  </LI>
+	  </UL>
+      </P>
+      </LI>
+
+      <LI><P>Parameterized support for location forwarding
+	</P>
+      </LI>
+	
+      
+    </OL>
+
+    <H4>New features</H4>
     <OL>
       <LI><B>EC:</B> Improve configuration support in the EC, give an
 	example of a single threaded EC, support different dispatching
@@ -175,30 +225,6 @@ class Foo {
 
       <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
 	preserve end-to-end QoS.
-      <P></LI>
-      
-      <LI>Use active demuxing in the POA
-      <P></LI>
-
-      <LI>Optimize twoways by delaying memory allocation for the
-	incoming data buffer, thus improving interleaving between the
-	client and server (the client does something useful before
-	starting to wait for the server).
-      <P></LI>
-      
-      <LI>Further optimize memory allocation by using a memory pool
-	for the incoming CDR stream.
-      <P></LI>
-      
-      <LI>Further optimize the outgoing memory allocation by adding
-	support for message blocks allocated from a pool (the
-	Message_Block class itself not the Data_Block or the buffer it
-	contains).
-      <P></LI>
-
-      <LI>The data blocks and their buffers could be allocated in a
-	single operation, using the beginning of a buffer to contain
-	the data block and the rest of it to contain the actual buffer
       <P></LI>
       
       <LI>The size of pre-allocated buffer for the outgoing CDR
@@ -506,6 +532,7 @@ class Foo {
       <P></LI>
       
     </OL>
+
 
 <HR><P>
       <H3>Completed Tasks</H3>
