@@ -1,29 +1,36 @@
+Tue Nov 14 08:50:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * utils/IOR-parser/Makefile:
+        * utils/catior/Makefile:
+        * utils/nslist/Makefile:
+          Update dependencies
+
 Tue Nov 14 06:56:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connection_Cache_Manager.cpp: Fixed a compiler error in
-	  VC++. Looks like VC++ does not like the same variable
-	  declaration in two different for loops. 
+        * tao/Connection_Cache_Manager.cpp: Fixed a compiler error in
+          VC++. Looks like VC++ does not like the same variable
+          declaration in two different for loops.
 
 Tue Nov 14 01:51:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Invocation.h
-	* tao/Invocation_Endpoint_Selectors.cpp
-	* tao/Invocation_Endpoint_Selectors.h
-	* tao/Invocation_Endpoint_Selectors.i
-	* tao/ORB_Core.h
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
+        * tao/Invocation.h
+        * tao/Invocation_Endpoint_Selectors.cpp
+        * tao/Invocation_Endpoint_Selectors.h
+        * tao/Invocation_Endpoint_Selectors.i
+        * tao/ORB_Core.h
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
 
-	  Added two new endpoint selector strategies for use when
-	  RTCORBA::PriorityBandedConnection policy is enabled:
-	  TAO_Bands_Endpoint_Selector and TAO_Bands_Protocol_Selector.
-	
-	* tao/PortableServer/POA.cpp
-	* tao/PortableServer/POA.h
-	* tao/PortableServer/POA.i:
+          Added two new endpoint selector strategies for use when
+          RTCORBA::PriorityBandedConnection policy is enabled:
+          TAO_Bands_Endpoint_Selector and TAO_Bands_Protocol_Selector.
 
-	  Added validity checks for RTCORBA::PriorityBandedConnection
-	  policy. 
+        * tao/PortableServer/POA.cpp
+        * tao/PortableServer/POA.h
+        * tao/PortableServer/POA.i:
+
+          Added validity checks for RTCORBA::PriorityBandedConnection
+          policy.
 
 Mon Nov 13 19:22:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
@@ -33,26 +40,26 @@ Mon Nov 13 19:22:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
         * tests/RTCORBA/Server_Protocol/Server.dsp
         * tests/RTCORBA/Server_Protocol/client.dsp
 
-	  Modified the perl script and the service conf file 
-	  to run only those tests wherein SHMIOP and UIOP are not made
-	  POA Server protocols. 
+          Modified the perl script and the service conf file
+          to run only those tests wherein SHMIOP and UIOP are not made
+          POA Server protocols.
 
-	  Updated the project files to link TAO_Strategies.
+          Updated the project files to link TAO_Strategies.
 
 Mon Nov 13 20:44:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation.cpp: Commented the line make_idle () call on the
-	  transport after the connection is closed. 
+        * tao/Invocation.cpp: Commented the line make_idle () call on the
+          transport after the connection is closed.
 
-	* tao/Connection_Handler.inl:
-	* tao/Connection_Cache_Manager.cpp:
-	* tao/Connection_Cache_Manager.h:
-	* tao/Connection_Cache_Manager.inl: Fixed a bug in the Faults
-	  test. This needed marking the Hash_Map entry as "closed" for the
-	  handler whose ref_count goes to zero. During shutdown of the
-	  Connection_Cache, we can just purge those entries first, before
-	  we iterate over the map to determine the handlers that are
-	  registered with the reactor.  
+        * tao/Connection_Handler.inl:
+        * tao/Connection_Cache_Manager.cpp:
+        * tao/Connection_Cache_Manager.h:
+        * tao/Connection_Cache_Manager.inl: Fixed a bug in the Faults
+          test. This needed marking the Hash_Map entry as "closed" for the
+          handler whose ref_count goes to zero. During shutdown of the
+          Connection_Cache, we can just purge those entries first, before
+          we iterate over the map to determine the handlers that are
+          registered with the reactor.
 
 Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
@@ -62,9 +69,9 @@ Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
         * tests/RTCORBA/Server_Declared/Server.dsp
         * tests/RTCORBA/Server_Declared/client.dsp
 
-	  Made minor changes to get the test running.
-	  Updated the project files to link TAO_Strategies.
- 
+          Made minor changes to get the test running.
+          Updated the project files to link TAO_Strategies.
+
 
 Mon Nov 13 18:00:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
@@ -74,11 +81,11 @@ Mon Nov 13 18:00:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
         * tests/RTCORBA/Client_Propagated/client.dsp
         * tests/RTCORBA/Client_Propagated/server.dsp
 
-	  Modified the perl script and the service conf file 
-	  to run only those tests wherein SHMIOP and UIOP are not made
-	  POA Server protocols. 
+          Modified the perl script and the service conf file
+          to run only those tests wherein SHMIOP and UIOP are not made
+          POA Server protocols.
 
-	  Updated the project files to link TAO_Strategies.
+          Updated the project files to link TAO_Strategies.
 
 Mon Nov 13 16:12:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
@@ -88,128 +95,128 @@ Mon Nov 13 16:12:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Client_Protocol/Client_Protocol.dsw
 
-	  Was trying to load UIOP_Factory even on NT. Corrected it.
-	  Updated the project files to link TAO_Strategies.
+          Was trying to load UIOP_Factory even on NT. Corrected it.
+          Updated the project files to link TAO_Strategies.
 
 Mon Nov 13 17:40:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Invocation.i:
+        * tao/Invocation.i:
 
-	  Added missing ACE_INLINE for destructor of
-	  TAO_GIOP_Locate_Request_Invocation.
+          Added missing ACE_INLINE for destructor of
+          TAO_GIOP_Locate_Request_Invocation.
 
 Mon Nov 13 16:59:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* */Makefile*:
+        * */Makefile*:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Nov 13 16:50:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
 
-	  Removed unused arguments.
+          Removed unused arguments.
 
 Mon Nov 13 14:35:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Reply_Dispatcher.h:
-	* tao/Reply_Dispatcher.i:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Synch_Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.i:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Synch_Reply_Dispatcher.h:
 
-	  Moved member and accessor function reply_status to base
-	  class, since it is common to all reply dispatcher concrete classes.
+          Moved member and accessor function reply_status to base
+          class, since it is common to all reply dispatcher concrete classes.
 
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/Asynch_Reply_Dispatcher.h:
-	* tao/Asynch_Reply_Dispatcher.i:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.i:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
 
-	  Added new base class TAO_Asynch_Reply_Dispatcher_Base
-	  to hold common code for TAO_Asynch_Reply_Dispatcher and 
-	  TAO_DII_Deferred_Reply_Dispatcher.
+          Added new base class TAO_Asynch_Reply_Dispatcher_Base
+          to hold common code for TAO_Asynch_Reply_Dispatcher and
+          TAO_DII_Deferred_Reply_Dispatcher.
 
-	* tao/Invocation.cpp:
-	* tao/Invocation.h:
-	* tao/Invocation.i:
-	* tao/DynamicInterface/DII_Invocation.cpp:
-	* tao/DynamicInterface/DII_Invocation.h:
-	* tao/DynamicInterface/DII_Invocation.inl:
-	* tao/DynamicInterface/Request.cpp:
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation.inl:
+        * tao/DynamicInterface/Request.cpp:
 
-	  Moved some code from the subclasses' start() method to that
-	  of the base class, which is called by all the start() methods.
-	  Also moved the invoke() method of 
-	  TAO_GIOP_Twoway_Invocation that was specific to DII
-	  requests out to the DynamicInterface library into a new class
-	  called TAO_GIOP_DII_Invocation.
-	  Also created new base class TAO_GIOP_Synch_Invocation,
-	  to be the parent of TAO_GIOP_Twoway_Invocation,
-	  TAO_GIOP_Oneway_Invocation, and
-	  TAO_GIOP_Locate_Request_Invocation. The invoke_i method
-	  of the first of these subclasses was moved to the base class, with
-	  minor changes, and the invoke() methods of the latter two subclasses
-	  were modified to use this relocated invoke_i().
+          Moved some code from the subclasses' start() method to that
+          of the base class, which is called by all the start() methods.
+          Also moved the invoke() method of
+          TAO_GIOP_Twoway_Invocation that was specific to DII
+          requests out to the DynamicInterface library into a new class
+          called TAO_GIOP_DII_Invocation.
+          Also created new base class TAO_GIOP_Synch_Invocation,
+          to be the parent of TAO_GIOP_Twoway_Invocation,
+          TAO_GIOP_Oneway_Invocation, and
+          TAO_GIOP_Locate_Request_Invocation. The invoke_i method
+          of the first of these subclasses was moved to the base class, with
+          minor changes, and the invoke() methods of the latter two subclasses
+          were modified to use this relocated invoke_i().
 
-	* tao/Asynch_Invocation.cpp:
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
 
-	  Created new base class TAO_GIOP_Asynch_Invocation to be
-	  the parent of TAO_GIOP_Twoway_Asynch_Invocation and
-	  TAO_GIOP_DII_Deferred_Invocation, and to hold code
-	  common to these latter two classes.
+          Created new base class TAO_GIOP_Asynch_Invocation to be
+          the parent of TAO_GIOP_Twoway_Asynch_Invocation and
+          TAO_GIOP_DII_Deferred_Invocation, and to hold code
+          common to these latter two classes.
 
-	* tao/Dynamic_Adapter.cpp:
-	* tao/Dynamic_Adapter.h:
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        * tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.h:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
 
-	  Removed method decode_exception, since the method in 
-	  TAO_GIOP_Twoway_Invocation from which it was called
-	  is now in the DynamicInterface library.
+          Removed method decode_exception, since the method in
+          TAO_GIOP_Twoway_Invocation from which it was called
+          is now in the DynamicInterface library.
 
-	* tao/Synch_Reply_Dispatcher.i:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.inl:
+        * tao/Synch_Reply_Dispatcher.i:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.inl:
 
-	  Removed these files from CVS.
+          Removed these files from CVS.
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/DynamicInterface/TAO_DynamicInterface.dsp:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
 
-	  Removed the above two files from these projects.
+          Removed the above two files from these projects.
 
 Mon Nov 13 11:19:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed a compile
-	  error. Thanks to Christopher Kohloff for reporting this. For
-	  some strange reasons this was missed by the SunCC5 compiler. 
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed a compile
+          error. Thanks to Christopher Kohloff for reporting this. For
+          some strange reasons this was missed by the SunCC5 compiler.
 
 Mon Nov 13 10:20:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
 
-	  In ClientRequestInfo subclass generation, changed the type
-	  of private valuetype member for an IN argument from *& 
-	  to *. Again, thanks to Johnny Willemsen 
-	  <Johnny.Willemsen@meco.nl> for pointing this out.
+          In ClientRequestInfo subclass generation, changed the type
+          of private valuetype member for an IN argument from *&
+          to *. Again, thanks to Johnny Willemsen
+          <Johnny.Willemsen@meco.nl> for pointing this out.
 
 Mon Nov 13 09:50:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connect.cpp (open):
-	* tao/Service_Callbacks.h:
-	* tao/Service_Callbacks.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i:
-	* tao/PortableServer/Servant_Base.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Added
-	  hooks for the implementation of the Logging & Recovery. This
-	  will be implemented by Andy & Oscar at Bell-Labs.
+        * tao/IIOP_Connect.cpp (open):
+        * tao/Service_Callbacks.h:
+        * tao/Service_Callbacks.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i:
+        * tao/PortableServer/Servant_Base.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Added
+          hooks for the implementation of the Logging & Recovery. This
+          will be implemented by Andy & Oscar at Bell-Labs.
 
 Mon Nov 13 02:13:54 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -258,25 +265,25 @@ Sat Nov 11 21:01:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Nov 11 11:33:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/client.cpp:
-	* tests/Xt_Stopwatch/test_i.cpp:
-	* tests/Xt_Stopwatch/test_i.h:
-	* tests/Xt_Stopwatch/Control.h:
-	* tests/Xt_Stopwatch/Control.cpp:
-	* tests/Xt_Stopwatch/Stopwatch_display.h:
-	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
-	* tests/Xt_Stopwatch/Client.h:
-	* tests/Xt_Stopwatch/timer.cpp:
-	* tests/Xt_Stopwatch/timer.h:
-	* tests/QtTest/client.cpp:  Added #if defined guards in all these
-	  files so that they compile clean even in default configuration.
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/test_i.cpp:
+        * tests/Xt_Stopwatch/test_i.h:
+        * tests/Xt_Stopwatch/Control.h:
+        * tests/Xt_Stopwatch/Control.cpp:
+        * tests/Xt_Stopwatch/Stopwatch_display.h:
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp:
+        * tests/Xt_Stopwatch/Client.h:
+        * tests/Xt_Stopwatch/timer.cpp:
+        * tests/Xt_Stopwatch/timer.h:
+        * tests/QtTest/client.cpp:  Added #if defined guards in all these
+          files so that they compile clean even in default configuration.
 
-	* tests/Xt_Stopwatch/Makefile:
-	* tests/QtTest/Makefile: Updated the library names against which
-	  they are linked.
+        * tests/Xt_Stopwatch/Makefile:
+        * tests/QtTest/Makefile: Updated the library names against which
+          they are linked.
 
-	  Thanks to Wei Zheng <weizheng@uiuc.edu> for reporting these
-	  problems.
+          Thanks to Wei Zheng <weizheng@uiuc.edu> for reporting these
+          problems.
 
 Sat Nov 11 10:19:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
