@@ -3,6 +3,8 @@
 
 project(Priority_Test_Worker_stub): ciao_client {
   after += Priority_Test_stub
+  libs    += Priority_Test_stub
+  libpaths += ..
   sharedname = Worker_stub
   idlflags += -Wb,stub_export_macro=WORKER_STUB_Export -Wb,stub_export_include=Worker_stub_export.h -Wb,skel_export_macro=WORKER_SVNT_Export -Wb,skel_export_include=Worker_svnt_export.h
   dynamicflags   = WORKER_STUB_BUILD_DLL

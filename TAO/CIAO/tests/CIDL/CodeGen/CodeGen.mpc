@@ -13,7 +13,7 @@ project(CIDL_Basic_stub): ciao_client {
   Source_Files {
     BasicC.cpp
   }
-  
+
   Header_Files {
     BasicC.h
     Basic_stub_export.h
@@ -27,7 +27,7 @@ project(CIDL_Basic_svnt) : ciao_servant {
 
   idlflags  += -Wb,stub_export_macro=BASIC_STUB_Export -Wb,stub_export_include=Basic_stub_export.h -Wb,skel_export_macro=BASIC_SVNT_Export -Wb,skel_export_include=Basic_svnt_export.h
   dynamicflags = BASIC_SVNT_BUILD_DLL
-  
+
   IDL_Files {
     Basic.idl
   }
@@ -35,7 +35,7 @@ project(CIDL_Basic_svnt) : ciao_servant {
   Source_Files {
     BasicS.cpp
   }
-  
+
   Header_Files {
     BasicS.h
     Basic_svnt_export.h
@@ -44,6 +44,7 @@ project(CIDL_Basic_svnt) : ciao_servant {
 
 project(CodeGen_stub): ciao_client {
   after += CIDL_Basic_stub
+  libs    += CIDL_Basic_stub
   sharedname = CodeGen_stub
   idlflags += -Wb,stub_export_macro=CODEGEN_STUB_Export -Wb,stub_export_include=CodeGen_stub_export.h -Wb,skel_export_macro=CODEGEN_SVNT_Export -Wb,skel_export_include=CodeGen_svnt_export.h
   dynamicflags   = CODEGEN_STUB_BUILD_DLL
@@ -51,11 +52,11 @@ project(CodeGen_stub): ciao_client {
   IDL_Files {
     CodeGen.idl
   }
-  
+
   Source_Files {
     CodeGenC.cpp
   }
-  
+
   Header_Files {
     CodeGenC.h
     CodeGen_stub_export.h
@@ -85,7 +86,7 @@ project(CodeGen_svnt) : ciao_servant {
     CodeGenS.cpp
     CodeGen_svnt.cpp
   }
-  
+
   Header_Files {
     CodeGenEC.h
     CodeGenS.h
@@ -100,14 +101,14 @@ project(CodeGen_exec) : ciao_component {
   sharedname = CodeGen_exec
   libs      += CodeGen_stub CodeGen_svnt CIDL_Basic_stub CIDL_Basic_svnt
   dynamicflags   = CODEGEN_EXEC_BUILD_DLL
-  
+
   IDL_Files {
   }
 
   Source_Files {
     CodeGen_exec.cpp
   }
-  
+
   Header_Files {
     CodeGen_exec.h
     CodeGen_exec_export.h
