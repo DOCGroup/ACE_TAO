@@ -620,7 +620,7 @@ TAO_DynCommon::insert_longdouble (CORBA::LongDouble value,
 
 void
 TAO_DynCommon::insert_wchar (CORBA::WChar value,
-                               CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -647,7 +647,7 @@ TAO_DynCommon::insert_wchar (CORBA::WChar value,
                         ACE_TRY_ENV);
       ACE_CHECK;
       
-      this->any_ <<= value;
+      this->any_ <<= CORBA::Any::from_wchar (value);
     }
 }
 
