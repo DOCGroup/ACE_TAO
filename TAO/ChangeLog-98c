@@ -1,6 +1,33 @@
-Sun Oct  4 15:40:05 1998  Balachandra Natarajan <bala@lambada.cs.wustl.edu>
+Sun Oct  4 16:37:23 1998  Carlos O'Ryan  <coryan@tango.cs.wustl.edu>
 
-        * Any.cpp
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  It is now possible to have several suppliers with the same ID on
+	  the same Event Channel.
+ 	  I also fixed a bug with the supplier reconnections: if a
+	  consumer was filtering by source it wouldn't receive the events
+	  if the supplier disconnected and connected again.  Thanks to
+	  Thomas Venturella <tventurell@mdc.com> for some his hints on how
+	  to fix this.
+	  Fixed some problems with exception handling and propagation.
+
+	* orbsvcs/tests/Makefile: 
+	* orbsvcs/tests/EC_Basic/Makefile: 
+	* orbsvcs/tests/EC_Basic/README: 
+	* orbsvcs/tests/EC_Basic/run_test.pl: 
+	* orbsvcs/tests/EC_Basic/EC_Basic.h: 
+	* orbsvcs/tests/EC_Basic/EC_Basic.i: 
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
+	  Added a new test for the Event Channel, this will grow to become
+	  the main regression test for the EC, at this point it only tests
+	  the use of several suppliers with the same ID.
+
+	* docs/releasenotes/TODO.html: 
+	  Update the file.
+
+Sun Oct  4 15:40:05 1998  Balachandra Natarajan  <bala@lambada.cs.wustl.edu>
+
+	* Any.cpp
           Anticipated fix for break in build. The TypeCode_ptr was not
 	  completely qualified (as CORBA::TypeCode_ptr). 
 
@@ -42,9 +69,11 @@ Sat Oct  3 20:20:14 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         GPERF. Also extended testing for GPERF's existance in the case of
         Binary Search strategy also.
 
-Sat Oct  3 19:35:05 1998  Balachandra Natarajan <bala@lambada.cs.wustl.edu>
-        * Any.cpp
-        Fix for memeory leaks in extraction.
+Sat Oct  3 19:35:05 1998  Balachandra Natarajan  <bala@lambada.cs.wustl.edu>
+
+	* Any.cpp
+	  Fix for memeory leaks in extraction.
+
 Sat Oct  3 15:16:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
         * orbsvcs/tests/Simple_Naming/client.cpp
