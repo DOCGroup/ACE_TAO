@@ -1,3 +1,27 @@
+Sun Dec 28 23:24:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_Basic_Impl.cpp:
+	* tao/Any_Basic_Impl.h:
+
+	  Fix for [BUGID 1693]. Thanks to Christoph Liebig for reporting
+	  the problem.
+
+	  Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1693
+
+	  for an outline of the problem. The problem showed up because the
+	  Any_Basic_Impl::extract () didn't handle alias TCKind's
+	  right. Previously we used to do everything using the type
+	  information by which the class was parametrized. Once we opened
+	  things up, we started seeing problems with irrgular handling of
+	  TCKinds. Two overloaded methods assign_value () and
+	  demarshal_value () which take in TCKinds have been. We now use
+	  the TCKind's that were passed in while the call to extract ()
+	  was made. Since the equivalency of the typecodes have been
+	  checked already using the original value of TCKind should not be
+	  an issue.
+
 Sun Dec 28 22:24:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tests/Bug_1693_Test:
