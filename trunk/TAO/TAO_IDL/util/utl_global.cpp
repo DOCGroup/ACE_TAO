@@ -640,27 +640,102 @@ IDL_GlobalData::validate_included_idl_files (void)
 
   // New number of included_idl_files.
   size_t newj = 0;
+  char separator[2];
+  size_t n_found = 0;
+
+# if defined (ACE_WIN32)
+#   define FULLPATH(full, partial, maxlen) ::_fullpath (full, partial, maxlen)
+    ACE_OS::strcpy (separator, "\\");
+# else
+#   define FULLPATH(full, partial, maxlen) realpath (full, partial)
+    ACE_OS::strcpy (separator, "/");
+# endif
 
   size_t n_pre_preproc_includes = idl_global->n_included_idl_files ();
   char **pre_preproc_includes = idl_global->included_idl_files ();
   size_t n_post_preproc_includes = idl_global->n_include_file_names ();
   UTL_String **post_preproc_includes = idl_global->include_file_names ();
 
+  char pre_abspath[MAXPATHLEN];
+  char post_abspath[MAXPATHLEN];
+  char **path_tmp = 0;
+  char *post_tmp = 0;
+
   for (size_t j = 0; j < n_pre_preproc_includes; ++j)
     {
       // Check this name with the names list that we got from the
       // preprocessor.
       size_t valid_file = 0;
+      (void) FULLPATH (pre_abspath, pre_preproc_includes[j], MAXPATHLEN);
 
-      for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
+      if (pre_abspath != 0)
         {
-          if (ACE_OS::strcmp (post_preproc_includes[ni]->get_string (), 
-                              pre_preproc_includes[j]) 
-               == 0)
+          for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
             {
-             // This file name is valid.
-              valid_file = 1;
-              break;
+              post_tmp = post_preproc_includes[ni]->get_string ();
+              (void) FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
+
+              if (post_abspath != 0 
+                  && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
+                {
+	                FILE *test = ACE_OS::fopen (post_abspath, "r");
+
+                  if (test == 0)
+                    {
+                      continue;
+                    }
+
+                  // This file name is valid.
+                  valid_file = 1;
+                  ++n_found;
+                  break;
+                }
+            }
+        }
+
+      if (valid_file == 0)
+        {
+          for (ACE_Unbounded_Queue_Iterator<char *>iter (
+                   this->include_paths_
+                 );
+               !iter.done ();
+               iter.advance ())
+            {
+              iter.next (path_tmp);
+              ACE_CString pre_partial (*path_tmp);
+              pre_partial += separator;
+              pre_partial += pre_preproc_includes[j];
+              (void) FULLPATH (pre_abspath, pre_partial.c_str (), MAXPATHLEN);
+
+              if (pre_abspath != 0)
+                {
+                  for (size_t m = 0; m < n_post_preproc_includes; ++m)
+                    {
+                      post_tmp = post_preproc_includes[m]->get_string ();
+                      (void) FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
+
+                      if (post_abspath != 0 
+                          && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
+                        {
+	                        FILE *test = ACE_OS::fopen (post_abspath, "r");
+
+                          if (test == 0)
+                            {
+                              continue;
+                            }
+
+                          // This file name is valid.
+                          valid_file = 1;
+                          ++n_found;
+                          break;
+                        }
+                    }
+                }
+
+              if (valid_file == 1)
+                {
+                  break;
+                }
             }
         }
 
@@ -687,6 +762,11 @@ IDL_GlobalData::validate_included_idl_files (void)
 
           // Increment the new index.
           newj++;
+        }
+
+      if (n_found == n_post_preproc_includes)
+        {
+          break;
         }
     }
 
@@ -1082,86 +1162,21 @@ IDL_GlobalData::string_to_scoped_name (char *s)
   return retval;
 }
 
-char *
+const char *
 IDL_GlobalData::stripped_preproc_include (const char *name)
 {
   // Some preprocessors prepend "./" to filenames in the
   // working directory, some others prepend ".\". If either
-  // of these are here, we want to strip them. Since we also
-  // know we're in the working directory, we can skip the
-  // command line prefix iteration.
+  // of these are here, we want to strip them.
   if (name[0] == '.')
     {
       if (name[1] == '\\' || name[1] == '/')
         {
-          return (char *)name + 2;
+          return name + 2;
         }
     }
 
-  ssize_t cursor = this->idl_flags_.find ("-I", 0);
-  ACE_CString c_name (name, 0, 0);
-  ssize_t start = 0;
-  ssize_t end = 0;
-  char *candidate = 0;
-
-  while (cursor != ACE_SString::npos)
-    {
-      // Skip over the "-I".
-      start = cursor + 2;
-
-      // If the "-I" is followed by a space. skip that too.
-      if (this->idl_flags_[start] == ' ')
-        {
-          ++start;
-        }
-
-      // idl_flags_ uses ' ' as a separator.
-      end = this->idl_flags_.find (' ', start);
-
-      // If it's the last one, there won't be a space at the end.
-      if (end == ACE_SString::npos)
-        {
-          end = this->idl_flags_.length ();
-        }
-
-      // Set the cursor for the next iteration, if any.
-      cursor = this->idl_flags_.find ("-I", end);
-      // If this prefix is found at the beginning of the name, strip it
-      // and return it.
-      if (c_name.find (this->idl_flags_.substr (start, end - start)) == 0)
-        {
-          // If the prefix ends in / or \, we don't need to strip the one
-          // that *would* have been added for concatenation...
-          char prefix_cap = this->idl_flags_[end - 1];
-          size_t skip_slash = (prefix_cap != '\\' && prefix_cap != '/');
-          char *rep = c_name.substr (end - start + skip_slash).rep ();
-
-          // ...unless it's the SunCC preprocessor, which adds a / for
-          // concatentation no matter what, so we check for it.
-          if (rep[0] == '/')
-            {
-              ++rep;
-            }
-
-          // If there's more than one match in the list, we want the 
-          // longest one.
-          if (candidate == 0
-              || ACE_OS::strlen (rep) < ACE_OS::strlen (candidate))
-            {
-              candidate = rep;
-            }
-        }
-    }
-
-  // If no prefix matches, just return the name unchanged.
-  if (candidate != 0)
-    {
-      return candidate;
-    }
-  else
-    {
-      return (char *)name;
-    }
+  return name;
 }
 
 /**
@@ -1185,4 +1200,9 @@ IDL_GlobalData::preserve_cpp_keywords (idl_bool val)
 { 
   preserve_cpp_keywords_ = val; 
 } 
-
+ 
+void
+IDL_GlobalData::add_include_path (const char *s)
+{
+  this->include_paths_.enqueue_tail (ACE::strnew (s));
+}

@@ -94,6 +94,10 @@ template class ACE_Unbounded_Queue_Iterator<AST_Operation *>;
 template class ACE_Unbounded_Stack<char *>;
 template class ACE_Unbounded_Stack_Iterator<char *>;
 
+template class ACE_Node<char *>;
+template class ACE_Unbounded_Set<char *>;
+template class ACE_Unbounded_Set_Iterator<char *>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, 
@@ -172,5 +176,9 @@ template class ACE_Unbounded_Stack_Iterator<char *>;
 
 #pragma instantiate ACE_Unbounded_Stack<char *>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<char *>
+
+#pragma instantiate ACE_Node<char *>
+#pragma instantiate ACE_Unbounded_Set<char *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<char *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
