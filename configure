@@ -32310,13 +32310,12 @@ echo "configure:32308: checking if generated ACE configuration is usable" >&5
 else
   
          
- if test -f ${srcdir}/ace/config.h; then
-   mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
-   touch ${srcdir}/ace/config.h
- fi
 
- if test -f ./ace/config.h; then
-   mv ./ace/config.h ./ace/config.h.conf
+ test -f ${srcdir}/ace/config.h && mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
+ touch ${srcdir}/ace/config.h
+
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   test -f ./ace/config.h && mv ./ace/config.h ./ace/config.h.conf
    touch ./ace/config.h
  fi
 
@@ -32329,7 +32328,7 @@ else
  CFLAGS="$CFLAGS -I. -I${srcdir}"
 
  cat > conftest.$ac_ext <<EOF
-#line 32333 "configure"
+#line 32332 "configure"
 #include "confdefs.h"
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
@@ -32342,7 +32341,7 @@ int a=0; a += 1;
         
 ; return 0; }
 EOF
-if { (eval echo configure:32346: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:32345: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ace_cv_configuration_is_usable=yes
         
@@ -32367,10 +32366,12 @@ rm -f conftest*
    rm ${srcdir}/ace/config.h
  fi
 
- if test -f ./ace/config.h.conf; then
-   mv ./ace/config.h.conf ./ace/config.h
- else
-   rm ./ace/config.h
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   if test -f ./ace/config.h.conf; then
+     mv ./ace/config.h.conf ./ace/config.h
+   else
+     rm ./ace/config.h
+   fi
  fi
 
   
@@ -32414,19 +32415,18 @@ the \`config.log' file and the following information:
 
 
   echo $ac_n "checking for ACE iostream support""... $ac_c" 1>&6
-echo "configure:32418: checking for ACE iostream support" >&5
+echo "configure:32419: checking for ACE iostream support" >&5
   if eval "test \"`echo '$''{'ace_cv_feature_ace_iostream'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   
          
- if test -f ${srcdir}/ace/config.h; then
-   mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
-   touch ${srcdir}/ace/config.h
- fi
 
- if test -f ./ace/config.h; then
-   mv ./ace/config.h ./ace/config.h.conf
+ test -f ${srcdir}/ace/config.h && mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
+ touch ${srcdir}/ace/config.h
+
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   test -f ./ace/config.h && mv ./ace/config.h ./ace/config.h.conf
    touch ./ace/config.h
  fi
 
@@ -32477,10 +32477,12 @@ rm -f conftest*
    rm ${srcdir}/ace/config.h
  fi
 
- if test -f ./ace/config.h.conf; then
-   mv ./ace/config.h.conf ./ace/config.h
- else
-   rm ./ace/config.h
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   if test -f ./ace/config.h.conf; then
+     mv ./ace/config.h.conf ./ace/config.h
+   else
+     rm ./ace/config.h
+   fi
  fi
 
   
@@ -32502,19 +32504,18 @@ EOF
 
 
   echo $ac_n "checking if ACE needs minimum iostream header inclusion""... $ac_c" 1>&6
-echo "configure:32506: checking if ACE needs minimum iostream header inclusion" >&5
+echo "configure:32508: checking if ACE needs minimum iostream header inclusion" >&5
   if eval "test \"`echo '$''{'ace_cv_lib_minimum_iostream'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   
          
- if test -f ${srcdir}/ace/config.h; then
-   mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
-   touch ${srcdir}/ace/config.h
- fi
 
- if test -f ./ace/config.h; then
-   mv ./ace/config.h ./ace/config.h.conf
+ test -f ${srcdir}/ace/config.h && mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
+ touch ${srcdir}/ace/config.h
+
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   test -f ./ace/config.h && mv ./ace/config.h ./ace/config.h.conf
    touch ./ace/config.h
  fi
 
@@ -32527,7 +32528,7 @@ else
  CFLAGS="$CFLAGS -I. -I${srcdir}"
 
  cat > conftest.$ac_ext <<EOF
-#line 32531 "configure"
+#line 32532 "configure"
 #include "confdefs.h"
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
@@ -32540,7 +32541,7 @@ int a=0; a += 1;
         
 ; return 0; }
 EOF
-if { (eval echo configure:32544: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:32545: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ace_cv_lib_minimum_iostream=no
         
@@ -32556,7 +32557,7 @@ else
  CFLAGS="$CFLAGS -I. -I${srcdir}"
 
  cat > conftest.$ac_ext <<EOF
-#line 32560 "configure"
+#line 32561 "configure"
 #include "confdefs.h"
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
@@ -32570,7 +32571,7 @@ int a=0; a += 1;
            
 ; return 0; }
 EOF
-if { (eval echo configure:32574: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:32575: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ace_cv_lib_minimum_iostream=yes
            
@@ -32603,10 +32604,12 @@ rm -f conftest*
    rm ${srcdir}/ace/config.h
  fi
 
- if test -f ./ace/config.h.conf; then
-   mv ./ace/config.h.conf ./ace/config.h
- else
-   rm ./ace/config.h
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   if test -f ./ace/config.h.conf; then
+     mv ./ace/config.h.conf ./ace/config.h
+   else
+     rm ./ace/config.h
+   fi
  fi
 
   
@@ -32627,19 +32630,18 @@ EOF
 
 
   echo $ac_n "checking for ACE_addr::sap_any support""... $ac_c" 1>&6
-echo "configure:32631: checking for ACE_addr::sap_any support" >&5
+echo "configure:32634: checking for ACE_addr::sap_any support" >&5
   if eval "test \"`echo '$''{'ace_cv_lib_sap_any_support'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   
          
- if test -f ${srcdir}/ace/config.h; then
-   mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
-   touch ${srcdir}/ace/config.h
- fi
 
- if test -f ./ace/config.h; then
-   mv ./ace/config.h ./ace/config.h.conf
+ test -f ${srcdir}/ace/config.h && mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
+ touch ${srcdir}/ace/config.h
+
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   test -f ./ace/config.h && mv ./ace/config.h ./ace/config.h.conf
    touch ./ace/config.h
  fi
 
@@ -32652,7 +32654,7 @@ else
  CFLAGS="$CFLAGS -I. -I${srcdir}"
 
  cat > conftest.$ac_ext <<EOF
-#line 32656 "configure"
+#line 32658 "configure"
 #include "confdefs.h"
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
@@ -32665,7 +32667,7 @@ int a=0; a += 1;
         
 ; return 0; }
 EOF
-if { (eval echo configure:32669: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:32671: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ace_cv_lib_sap_any_support=yes
         
@@ -32681,7 +32683,7 @@ else
  CFLAGS="$CFLAGS -I. -I${srcdir}"
 
  cat > conftest.$ac_ext <<EOF
-#line 32685 "configure"
+#line 32687 "configure"
 #include "confdefs.h"
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
@@ -32695,7 +32697,7 @@ int a=0; a += 1;
            
 ; return 0; }
 EOF
-if { (eval echo configure:32699: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:32701: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ace_cv_lib_sap_any_support=no
            
@@ -32728,10 +32730,12 @@ rm -f conftest*
    rm ${srcdir}/ace/config.h
  fi
 
- if test -f ./ace/config.h.conf; then
-   mv ./ace/config.h.conf ./ace/config.h
- else
-   rm ./ace/config.h
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   if test -f ./ace/config.h.conf; then
+     mv ./ace/config.h.conf ./ace/config.h
+   else
+     rm ./ace/config.h
+   fi
  fi
 
   
@@ -32753,19 +32757,18 @@ EOF
 
 
   echo $ac_n "checking if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector""... $ac_c" 1>&6
-echo "configure:32757: checking if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector" >&5
+echo "configure:32761: checking if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector" >&5
   if eval "test \"`echo '$''{'ace_cv_lib_need_dev_io_conv'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   
          
- if test -f ${srcdir}/ace/config.h; then
-   mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
-   touch ${srcdir}/ace/config.h
- fi
 
- if test -f ./ace/config.h; then
-   mv ./ace/config.h ./ace/config.h.conf
+ test -f ${srcdir}/ace/config.h && mv ${srcdir}/ace/config.h ${srcdir}/ace/config.h.conf
+ touch ${srcdir}/ace/config.h
+
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   test -f ./ace/config.h && mv ./ace/config.h ./ace/config.h.conf
    touch ./ace/config.h
  fi
 
@@ -32778,7 +32781,7 @@ else
  CFLAGS="$CFLAGS -I. -I${srcdir}"
 
  cat > conftest.$ac_ext <<EOF
-#line 32782 "configure"
+#line 32785 "configure"
 #include "confdefs.h"
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
@@ -32791,7 +32794,7 @@ int a=0; a += 1;
         
 ; return 0; }
 EOF
-if { (eval echo configure:32795: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:32798: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ace_cv_lib_need_dev_io_conv=no
         
@@ -32807,7 +32810,7 @@ else
  CFLAGS="$CFLAGS -I. -I${srcdir}"
 
  cat > conftest.$ac_ext <<EOF
-#line 32811 "configure"
+#line 32814 "configure"
 #include "confdefs.h"
 #if defined(ACE_UINT64_TYPEDEF)
   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
@@ -32821,7 +32824,7 @@ int a=0; a += 1;
            
 ; return 0; }
 EOF
-if { (eval echo configure:32825: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+if { (eval echo configure:32828: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
   rm -rf conftest*
   ace_cv_lib_need_dev_io_conv=yes
            
@@ -32854,10 +32857,12 @@ rm -f conftest*
    rm ${srcdir}/ace/config.h
  fi
 
- if test -f ./ace/config.h.conf; then
-   mv ./ace/config.h.conf ./ace/config.h
- else
-   rm ./ace/config.h
+ if test ${srcdir}/ace/config.h != "./ace/config.h"; then
+   if test -f ./ace/config.h.conf; then
+     mv ./ace/config.h.conf ./ace/config.h
+   else
+     rm ./ace/config.h
+   fi
  fi
 
   
