@@ -23,9 +23,9 @@ Mon May 15 15:14:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 	* ace/CDR_Stream.i:
 	* ace/CDR_Stream.cpp:
 	  Cristian Ferretti <cristian_ferretti@yahoo.com> has contributed
-	  a number of optimizations to the but swapping code for CDR
+	  a number of optimizations to the byte swapping code for CDR
 	  streams.  The optimizations include loop unrolling for 32-bit
-	  and 64-bit architectures, use of special assembly instructions
+	  and 64-bit architectures, use of especial assembly instructions
 	  for x86-based platforms and use of bit operations (instead of
 	  memory manipulation) for other processors.
 
@@ -42,7 +42,7 @@ Mon May 15 15:14:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 	  New test to verify that the array operations in the CDR classes
 	  actually work, this is specially critical because the new
 	  versions unroll loop, perform assembly instructions that work
-	  best when the alingment is right, etc.
+	  best when the alignment is right, etc.
 
 	* tests/CDR_File_Test.cpp:
 	  The test was extended.  Now we can save a file in one platform
