@@ -345,6 +345,14 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
                           listen_point.host.in ());
 
 
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Listening port [%d] on [%s]\n",
+                      listen_point.port, listen_point.host.in ()));
+        }
+
+      // Construct an  IIOP_Endpoint object
       // Construct an IIOP_Endpoint object.
       //
       // Note that the port in the ACE_INET_Addr is actually the SSL
