@@ -402,11 +402,12 @@ namespace TAO
     this->resolver_.stub ()->add_forward_profiles (stubobj->base_profiles ());
 
     if (this->resolver_.stub ()->next_profile () == 0)
-      ACE_THROW (CORBA::TRANSIENT (
+      ACE_THROW_RETURN (CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
-        CORBA::COMPLETED_NO));
+        CORBA::COMPLETED_NO),
+                        TAO_INVOKE_FAILURE);
 
     mon.set_status (TAO_INVOKE_RESTART);
 

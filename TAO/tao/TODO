@@ -35,8 +35,6 @@
 
 . Interaction between location forward and collocation.
 
-. Ask Jai to include a test for out parameters in Interceptors
-
 . Memory leaks with Transport, run valgrind in Param_Test
 
 . Move traits classes in the header file to the cpp file.
@@ -45,11 +43,9 @@
 
 . Try a build with MESSAGING == 0;
 
-. Real-time CORBA
+. Real-time CORBA testing
 
 . Code set translators 
-
-. Collocation and generated code
 
 . Complete documentation
 
@@ -57,3 +53,4 @@
 
 . Different versions of GIOP
 
+. What about AMH

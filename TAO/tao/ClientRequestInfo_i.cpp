@@ -82,7 +82,7 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /*if (CORBA::is_nil (this->target_))
@@ -106,7 +106,7 @@ TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /*if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
@@ -500,7 +500,7 @@ CORBA::Any *
 TAO_ClientRequestInfo_i::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invocation_->result ();
+  return this->invocation_->result (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Boolean

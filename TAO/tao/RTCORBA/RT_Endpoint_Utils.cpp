@@ -93,7 +93,7 @@ TAO_RT_Endpoint_Utils::client_protocol_policy (TAO_GIOP_Invocation *invocation
     {
       retval =
         rt_stub->effective_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)
     {
@@ -128,7 +128,7 @@ TAO_RT_Endpoint_Utils::client_protocol_policy (
     {
       retval =
         rt_stub->effective_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)
     {

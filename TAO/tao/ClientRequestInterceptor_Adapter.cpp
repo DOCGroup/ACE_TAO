@@ -210,9 +210,7 @@ namespace TAO
   {
     ri->forward_reference (exc);
 
-    this->invocation_->forwarded_reference (exc.forward.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->invocation_->forwarded_reference (exc.forward.in ());
 
     // receive_other() is potentially invoked recursively.
     this->receive_other (ri

@@ -1,3 +1,14 @@
+Thu Aug 28 19:38:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/ClientRequestInterceptor_Adapter.cpp:
+	* tao/Invocation_Adapter.cpp:
+	* tao/Synch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation.h:
+	* tao/RTCORBA/RT_Endpoint_Utils.cpp: Fixed compilation errors when
+	  native exceptions are turned off. Most of the compilation errors
+	  are due to wrong macros usage. 
+
 Thu Aug 28 18:36:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Dynamic/client.cpp:
