@@ -111,6 +111,10 @@ ACE_HAS_PROC_FS				Platform supports the /proc file system and defines tid_t in 
 ACE_HAS_POWERPC				Platform is a PowerPC microprocessor.
 ACE_HAS_PRUSAGE_T			Platform supports the prusage_t struct
 ACE_HAS_PTHREADS			Platform supports POSIX Pthreads
+ACE_HAS_PTHREADS_1003_DOT_1C		Platform supports POSIX.1C threads
+					(This should be synonomous with
+					ACE_HAS_PTHREADS, but probably isn't
+					in the sources)
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_DSTATE_PTR		pthread_attr_setdetachstate() takes pointer to 2nd arg.
 ACE_HAS_PTHREAD_EQUAL			Platform has pthread_equal().
@@ -205,6 +209,9 @@ ACE_HAS_WIN32_TRYLOCK			The Win32 platform support TryEnterCriticalSection() (Wi
 ACE_HAS_WINSOCK2			The Win32 platform supports WinSock 2.0
 ACE_HAS_XLI 				Platform has the XLI version of TLI
 ACE_HAS_XT 				Platform has Xt and Motif
+ACE_HAS_XTI				Platform has XTI (X/Open-standardized
+					superset of TLI).  Implies ACE_HAS_TLI
+					but uses a different header file.
 ACE_HAS_YIELD_VOID_PTR			Platform requires pthread_yield() to take a NULL.
 ACE_LACKS_ACCESS			Platform lacks access() (e.g., VxWorks and Chorus)
 ACE_LACKS_ACE_IOSTREAM			Platform can not build ace/IOStream{,_T}.cpp.  This does not necessarily mean that the platform does not support iostreams.
@@ -286,6 +293,8 @@ ACE_NEEDS_HUGE_THREAD_STACKSIZE		Required by platforms with small default stacks
 ACE_NEEDS_READV				Platform doesn't define readv, so use our own
 ACE_NEEDS_SYSTIME_H			<time.h> doesn't automatically #include /**/ <sys/time.h>
 ACE_NEEDS_WRITEV			Platform doesn't define writev, so use our own
+ACE_NEW_THROWS_EXCEPTIONS		Compiler's 'new' throws exception on
+					failure (ANSI C++ behavior).
 ACE_NLOGGING				Turns off the LM_DEBUG and LM_ERROR logging macros...
 ACE_NTRACE				Turns off the tracing feature.
 ACE_NO_THREAD_ADAPTER			Don't use the ACE_Thread_Adapter feature...
@@ -891,5 +900,3 @@ ACE_USE_POLL_IMPLEMENTATION:
   Notes:
      in the reactor, use poll instead of select.  In general,
      good thing to have set.
-
-     Don't set this, it will get set by ACE_HAS_SVR4_POLL
