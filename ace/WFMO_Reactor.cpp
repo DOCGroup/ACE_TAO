@@ -24,6 +24,13 @@ ACE_WFMO_Reactor_Handler_Repository::ACE_WFMO_Reactor_Handler_Repository (ACE_WF
 int
 ACE_WFMO_Reactor_Handler_Repository::open (size_t size)
 {
+  if (size > MAXIMUM_WAIT_OBJECTS)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ASYS_TEXT ("%d exceeds MAXIMUM_WAIT_OBJECTS (%d)\n"), 
+                       size,
+                       MAXIMUM_WAIT_OBJECTS),
+                      -1);
+
   // Dynamic allocation
   ACE_NEW_RETURN (this->current_handles_,
                   ACE_HANDLE[size],

@@ -525,19 +525,21 @@ public:
 		    int unused = 0,
 		    ACE_Sig_Handler * = 0,
 		    ACE_Timer_Queue * = 0);
-  // Initialize <ACE_WFMO_Reactor> with size <size>.  Two slots will
-  // be added to the <size> parameter which will store handles used
-  // for internal management purposes.
+  // Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should
+  // not exceed <ACE_WFMO_Reactor::DEFAULT_SIZE>. Two slots will be
+  // added to the <size> parameter which will store handles used for
+  // internal management purposes.
 
-  virtual int open (size_t size = DEFAULT_SIZE,
+  virtual int open (size_t size = ACE_WFMO_Reactor::DEFAULT_SIZE,
 		    int restart = 0,
 		    ACE_Sig_Handler * = 0,
 		    ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0,
                     ACE_Reactor_Notify * = 0);
-  // Initialize <ACE_WFMO_Reactor> with size <size>.  Two slots will
-  // be added to the <size> parameter which will store handles used
-  // for internal management purposes.
+  // Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should
+  // not exceed <ACE_WFMO_Reactor::DEFAULT_SIZE>. Two slots will be
+  // added to the <size> parameter which will store handles used for
+  // internal management purposes.
 
   virtual int current_info (ACE_HANDLE, size_t & /* size */);
   // Returns -1 (not used in this implementation);
