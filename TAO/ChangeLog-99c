@@ -25,17 +25,16 @@ Sun Jun 27 16:48:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Sun Jun 27 17:18:29 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_type.cpp (gen_nested_typename):
+	* TAO_IDL/be/be_type.cpp (gen_nested_typename): Fixed a bug where
+	  we were generating incorrect relative path in a specific
+ 	  scenario where the "use" scope of a type shares only a few
+ 	  ancestors of the scope in which the type is defined.  Our code
+ 	  would work only when either of the "use" scope or the "defined"
+ 	  scope was a subset of the other.
 
-	  Fixed a bug where we were generating incorrect relative path
-	  in a specific scenario where the "use" scope of a type shares
-	  only a few ancestors of the scope in which the type is defined.
-	  Our code would work only when either of the "use" scope or the
-	  "defined" scope was a subset of the other.
-
-	  Thanks to Brian Peterson <bpeterson@globalmt.com> for sending 
-	  the bug report and fixes. We have used a slightly different 
-	  solution than the suggested fixes.
+	  Thanks to Brian Peterson <bpeterson@globalmt.com> for sending
+ 	  the bug report and fixes. We have used a slightly different
+ 	  solution than his suggested fixes.
 
 Sun Jun 27 15:23:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -70,9 +69,8 @@ Sun Jun 27 15:23:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/performance-tests/Pluggable/server.cpp:
 	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
 	* tao/Any.cpp:
-
-	  Changed ACE_NOTREACHED (return foo); to
-	  ACE_NOTREACHED (return foo;)
+	  Changed ACE_NOTREACHED (return foo); to ACE_NOTREACHED (return
+ 	  foo;)
 
 Sun Jun 27 11:02:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -95,6 +93,18 @@ Sun Jun 27 09:17:11 1999  David L. Levine  <levine@cs.wustl.edu>
         * tao/DynAny_i.cpp: added ACE_Auto_Basic_Ptr explicit template
           instantiations.  Thanks to Alex for reporting that they're
           necessary without __ACE_INLINE__.
+
+Sun Jun 27 11:02:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Reformatted a lot of this file so it'll conform 
+	  to the ACE+TAO programming guidelines.
+
+	* tao/Object_Adapter.cpp: Cleanedup the programming style to make
+	  it conform to ACE.
+
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n): Fixed
+	  an error by returning 0 if we get an exception.  Thanks to David
+ 	  Levine for reporting this.
 
 Sat Jun 26 19:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -184,16 +194,12 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
         Christopher Kohlhoff <chris@kohlhoff.com> and Chris Uzdavinis
         <chris@uzdavinis.com> for helping with this.
 
-        * TAO\examples\BCB\chat\*: Example program for Borland C++Builder
-          4 showing how to use TAO in a GUI application. Implements a
-          client for the server in TAO\examples\Simple\chat.
-
         * TAO/TAO_IDL/be/be_args.cpp: Added new back end (-Wb) option
           'pch_include' which allows you to specify a common include to be
-          added at the top of all idl generated files. This can be used
-          with a precompiled header mechanism (such as that provided by
-          C++Builder or MSVC++). It takes a *very* long time to compile
-          GUI programs without this.
+ 	  added at the top of all idl generated files. This can be used
+ 	  with a precompiled header mechanism (such as that provided by
+ 	  C++Builder or MSVC++). It takes a *very* long time to compile
+ 	  GUI programs without this.
 
         * TAO/TAO_IDL/be/be_codegen.cpp: Added support for
           TAO_EXPORT_NESTED_CLASSES macro.
