@@ -1,3 +1,8 @@
+Fri Jun 25 17:01:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/NestedUpcall/Triangle_Test/initiator.cpp:
+	  Fixed silly typos in my last commit.
+
 Fri Jun 25 16:43:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/NestedUpcall/Reactor/NestedUpCalls_i.h: Removed old file.
