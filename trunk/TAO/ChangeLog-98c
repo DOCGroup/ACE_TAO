@@ -1,3 +1,10 @@
+Fri Sep 11 22:28:26 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Simple_Naming/client.h
+	* TAO/orbsvcs/tests/Simple_Naming/client.cpp
+	* TAO/orbsvcs/tests/Simple_Naming/README
+	  Replaced simple test with a set of tests for Naming Service.
+
 Fri Sep 11 22:08:25 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit: Added my name to the authors in the
