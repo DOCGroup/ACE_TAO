@@ -5,9 +5,9 @@
 <HR>
 
 <P>
-<H1 align=center>Options for TAO Components</H1>
+<H2 align=center>Options for TAO Components</H2>
 
-<H2>Table of Contents</H2>
+<H3>Table of Contents</H3>
 <UL>
   <LI><A
   href="#MOT">Introduction </A>
@@ -44,116 +44,114 @@
       </A></LI></UL></LI></UL></LI></UL>
 <HR>
 
-<H2><B><A name=MOT>Introduction</A></B></H2>
+<H3><B><A name=MOT>Introduction</A></B></H3>
 
-TAO is a highly flexible ORB that contains a wide range of ORB configuration
-options. One or more of these options are combined to meet various application
-requirements, such as low-latency, predictable real-time behavior,
-or small memory footprint.    TAO's ORB configuration options are managed by
-an object-oriented framework within the ORB core that contains the
-following types of entities:
+TAO is a highly flexible ORB that contains a wide range of ORB
+configuration options.  One or more of these options can be combined
+to meet various application requirements, such as low-latency,
+predictable real-time behavior, or small memory footprint.  TAO's ORB
+configuration options are managed by an object-oriented framework
+within the ORB Core that contains the following types of entities:
 
 <UL>
 
 <LI><B>Settings</B>, which are options that can be assigned values
-that differ from their default settings.  Examples include setting the
-size of a Portable Object Adapter (POA)'s active object map or configuring the
-ORB to print debugging information as it processes requests. A few of these are
-run time options while a majority of them are compile time options. <P>
+differing from their default settings.  Examples include setting the
+size of a Portable Object Adapter (POA)'s active object map or
+configuring the ORB to print debugging information as it processes
+requests.  A few of these are run-time options, while a majority of
+them are compile-time options. <P>
 
 <LI><B>Resources</B>, which are objects used internally by TAO, such
-as a <EM>reactor</EM> framework that demultiplexes new connection and data
-requests from a client, or <EM>synchronization mechanisms</EM> used to regulate
-access to certain parts of the ORB.<P>
+as a <EM>reactor</EM> framework that demultiplexes new connection and
+data requests from a client or <EM>synchronization mechanisms</EM>
+used to regulate access to certain parts of the ORB.<P>
 
-<LI><B>Strategies</B>, which are objects that use the Resource
-	entities to perform various ORB tasks, such as connection
-	management, concurrency, and demultiplexing. <P>
+<LI><B>Strategies</B>, which are objects that use the <B>Resource</B>
+entities to perform various ORB tasks, such as connection management,
+concurrency, and demultiplexing. <P>
 
 <LI><B>Factories</B>, which TAO uses to create and consolidate its
 many resources and strategies into a manageable number of factories
-that can be (re)configured into the ORB conveniently and
-consistently by the ORB and application developers. <P>
+that can be (re)configured into the ORB conveniently and consistently
+by ORB and application developers. <P>
 
 </UL>
 
 The set of TAO ORB configuration options that are represented by the
 settings, resources, strategies, and factories can be specified via
-<B>environment variables</B>, <B>command-line arguments</B>, and
-<B>service configuration files</B>.
-<p>Environment variables are limited to specifying the interoperable
-object reference (IOR) and port number of TAO's Naming Service,
-Trading Service and Implementation Repository.	Command-line options
-and service configurator files are more powerful since they can specify and
-modify the values of the various TAO resources, strategies, and factories. </p>
-<P>
+<B>environment variables</B>, <B>service configuration files</B>, and
+<B>command-line arguments</B>, as outlined below:
 
-Command-line options are passed to the	ORB initialization factory method,
-<CODE>CORBA::ORB_init()</CODE>, by the application using the standard
-<i>argc, argv</i> tuple passed to the application's <font face="Courier New">
-main () </font><font face="Times New Roman">function</font>. On the other hand,
-the service configuration file is opened and its options parsed by TAO's ACE
-Service Configurator framework during the execution of <font face="Courier New">
-CORBA::ORB_init () </font><font face="Times New Roman">method</font>.<P>
+<UL>
 
-<!--Tao added-->
-The  Service Configurator is a framework that supports the creation of
-dynamically configured applications. Applications may comprise different
-sets of components. The metadata comprising the names of these
+<LI> <B>Environment variables</B> are limited to specifying the
+interoperable object reference (IOR) and port number of TAO's Naming
+Service, Trading Service and Implementation Repository. Command-line
+options and service configurator files are more powerful since they
+can specify and modify the values of the various TAO resources,
+strategies, and factories. <P>
+
+<LI> The <B>Service Configurator</B> is a framework that can be used
+to statically and dynamically configure components into middleware and
+applications.  The information comprising the names of these
 components and their corresponding options are specified in a service
-configurator file (default file name is
-<font face="Courier New">svc.conf</font>).
+configurator file, whose default file name is <font face="Courier
+New">svc.conf</font>. <P>
 
+<LI> <B>Command-line options</B> are passed to the ORB initialization
+factory method, <CODE>CORBA::ORB_init()</CODE>, by an application
+using the standard <i>argc, argv</i> tuple passed to the application's
+<CODE>main()</CODE>.  In contrast, the service configuration file is
+opened and its options parsed by TAO's ACE Service Configurator
+framework during the execution of
+<CODE>CORBA::ORB_init()</CODE>method.<P>
 
-<h3>Choosing the right approach</h3>
-<p>
+</UL>
 
-<!--Tao question: what about using "component" instead of "plug-in"?
-I was confused by the word component. So I elaborated it - Andy -->
+<P><HR align=left width=25%><P>
+<h3>Choosing the Right Approach</h3>
 
 Command-line options are useful when there is a fixed set of
 configuration options each of which has a predefined list of
-alternative values. Whereas the service configurator file is useful
-for configuring a broader range of resources, strategies
-and factories. Generally speaking, the service configurator file allows
+alternative values.  Conversely, the service configurator file is
+useful for configuring a broader range of resources, strategies, and
+factories. Generally speaking, the service configurator file allows
 the user to <br>
-<ol>
-  <li>configure the existing plug-ins (i.e., resources, strategies and
-      factories) based on the predefined list of alternatives that TAO
-      provides or
+
+<Ul>
+  <li>configure the existing components (<EM>i.e.</EM>, resources,
+      strategies and factories) based on the predefined list of
+      alternatives that TAO provides or<P>
   </li>
-  <li>extend the existing factories by providing user defined plug-ins
-      and dynamically load them through the service configurator
-      mechanism. </li>
-</ol>
+  <li>extend the existing factories by providing user-defined
+      components and dynamically load them through the service
+      configurator mechanism. </li>
+</Ul>
 Additionally, the service configurator mechanism provides a way for
 the application to control the behavior of the ORB using extensible
-metadata information. Applications can choose to use a subset of
-preexisting  metadata to control their applications or extend the
-metadata set by writing their own.
-<!-- Doug, we are not able to arrive at a consensus on whether to use
-the word metadata here. The metadata as used here indicates all the
-stuff we can say inside a svc.conf file. One argument in favor of it
-is that this is metadata for something that gets configured inside an
-ORB. - Andy -->
-<P>
+configuration information.
 
-Note that the command line options and the service configurator
-options cannot be used interchangeably.<P>
-
+Note that the command-line options and the service configurator
+options cannot be used interchangeably.
+<!-- Andy, Bala, can you please add a sentence or two explaining why -->
+<!-- this is the case?!  It's always been mysterious to me *why* this -->
+<!-- is the case! -->
 <!-- Tao, Is this needed? -->
 <!--Tao added, i think sentences below is a source of confusion-->
 <!--webbot bot="PurpleText" PREVIEW="right. this line seems to be a
       repition to me. Let us zap it - Andy" -->
-The values of TAO's command-line options must be selected from
-preexisting settings compiled into the ORB.  Options that require
-more flexible manipulation of resources, strategies, and factories
-must be configured via <A HREF="#SVC">service configuration
-files</A>. <P>
+<!-- Andy, Bala, I think we need something along these lines to -->
+<!-- explain why it's the case we distinguish command-line options and -->
+<!-- the svc.conf options!  Perhaps we just need to reword this stuff better? -->
+The values of TAO's command-line options must be selected from 
+preexisting settings compiled into the ORB.  Options that require more
+flexible manipulation of resources, strategies, and factories must be
+configured via <A HREF="#SVC">service configuration files</A>. <P>
 
 <HR>
 
-<H2><B><A name=EXP>TAO's ORB Configuration Options</A></B></H2>
+<H3><B><A name=EXP>TAO's ORB Configuration Options</A></B></H3>
 
 This section provides a detailed overview of how to configure TAO's
 options using environment variables, command-line options, and service
@@ -162,11 +160,10 @@ configuration files.<P>
 <HR align=left width=25%>
 <h3><A name=EV>Environment Variables</A></h3>
 
-As mentioned earlier, environment variables have a limited use in TAO ORB
-configuration.
-
-The currently supported environment variables are listed below. They
-are used to specify the IOR and port numbers for three of TAO's ORB services.
+As mentioned earlier, environment variables have a limited use in TAO
+ORB configuration.  The currently supported environment variables are
+listed below. They are used to specify the IOR and port numbers for
+three of TAO's ORB services.
 
 <BLOCKQUOTE>
   <P>
@@ -216,10 +213,10 @@ An explanation of these command-line options appears below. <P>
 <HR align=left width=25%>
 <H3><A name=CLO>Command-line Options</A></h3>
 
-TAO's run-time behavior can also be controlled by passing options
-via the CORBA initialization method <CODE>CORBA::ORB_init()</CODE>.
-ORB initialization options are commonly passed into the program from
-the command-line, using the <CODE>argc</CODE> and <CODE>argv</CODE>
+TAO's run-time behavior can also be controlled by passing options via
+the CORBA initialization method <CODE>CORBA::ORB_init()</CODE>.  ORB
+initialization options are commonly passed into the program from the
+command-line, using the <CODE>argc</CODE> and <CODE>argv</CODE>
 parameters available to the <CODE>main()</CODE> function. <P>
 
 Command-line options can be classified into the following groups
@@ -315,7 +312,7 @@ information at several levels of granularity.<P>
 
 <h4><A name=ORP>3. Optimizing Request Processing</A></h4>
 
-It is often possible to <A HREF="/redirect?performance.html">increase throughput
+It is often possible to <A HREF="performance.html">increase throughput
 and reduce latency</A> by optimizing certain stages of request
 processing in the ORB.	The following options control various
 optimizations during request processing.<P>
@@ -359,7 +356,7 @@ optimizations during request processing.<P>
 	<CODE>direct</CODE> strategy,  your interfaces must be
 	compiled with the
 	<CODE><A
-	href="/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/compiler.html#collocation-stubs">-Gd</A></CODE> IDL <A HREF="/redirect?compiler.html">compiler option</a>. </TD></TR>
+	href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/compiler.html#collocation-stubs">-Gd</A></CODE> IDL <A HREF="compiler.html">compiler option</a>. </TD></TR>
     <TR>
       <TD><CODE>-ORBNodelay</CODE> <EM>boolean (0|1)</EM></TD>
       <TD><A name=-ORBNodelay></A>Enable or disable the <CODE>TCP_NODELAY</CODE>
@@ -406,9 +403,9 @@ optimizations during request processing.<P>
 <h4><A name=CMPS>4. Connection Management and Protocol Selection</A></h4>
 
 ORBs send and receive requests and replies using various <A
-/redirect?pluggable_protocols">transport protocols</a>.  Each protocol has
+pluggable_protocols">transport protocols</a>.  Each protocol has
 its own concept of an <A
-/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">endpoint</CODE>.
+http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">endpoint</CODE>.
 The following options manage connections and control protocol
 selection within a CORBA application.<P>
 
@@ -428,7 +425,7 @@ selection within a CORBA application.<P>
 	for the UIOP pluggable protocol) and a simple object key, forms a new URL to identify
 	an initial object reference. The URL prefix format currently supported
 	is based on the standard <CODE>corbaloc</CODE> mechanism in
-	the CORBA <A HREF="/redirect?INS.html">Interoperable Naming Service</CODE>. </TD></TR>
+	the CORBA <A HREF="INS.html">Interoperable Naming Service</CODE>. </TD></TR>
     <TR>
       <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0|1)</EM></TD>
       <TD><A name=-ORBDottedDecimalAddresses></A>Use the dotted decimal
@@ -528,23 +525,19 @@ selection within a CORBA application.<P>
 	</FONT></P></TD></TR>
     <TR>
       <TD> <A
-/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html"><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
+http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html"><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
       <TD> <A
-/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">Specifies to which port the Trading Service is listening on for
+http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html">Specifies to which port the Trading Service is listening on for
 	multicast requests. By default, the <CODE>TAO_DEFAULT_TRADING_SERVICE_REQUEST_PORT</CODE>
 	(10016) value is used.</TD></TR>
     <TR>
-      <TD> <A
-/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ORBEndpoint.html"><CODE>-ORBUseIMR</CODE> <EM>boolean (0|1)</EM></TD>
-      <TD>Specifies whether to use the implementation repository or
-	  not. Default is 0.
-    </TD></TR>
-    <TR>
-      <T><A name=-ORBUseIMR></A>This argument specifies that for POAs with
+      <TD> <CODE>-ORBUseIMR</CODE> <EM>boolean (0|1)</EM></TD>
+      <TD>This argument specifies that for POAs with
 	the <CODE>PERSISTENT</CODE> policy, that the TAO <A
-	HREF="/redirect?implrepo/">Implementation Repository</A> should be used
+	HREF="implrepo/">Implementation Repository</A> should be used
 	for notification of startup and shutdown and object references should be
 	changed to use the Implementation Repository also.
+    </TD></TR>
   </TD></TR></TBODY></TABLE></P></BLOCKQUOTE>
 
 <h4><A name=MO>5. Miscellaneous Options</A></h4>
@@ -571,11 +564,11 @@ specific application requirements.
       <TD><A name=-ORBId></A>This option allows setting a name/id to a
   server
   <!-- Tao, could you please provide the actual link? -->
-	to uniquely identify a server to TAO's <A HREF="/redirect?implrepo">Implementation Repository</A>. </TD></TR>
+	to uniquely identify a server to TAO's <A HREF="implrepo">Implementation Repository</A>. </TD></TR>
     <TR>
       <TD><CODE>-ORBResources</CODE> <EM>tss/global</EM></TD>
       <TD><A name=-ORBResources><FONT color=red>This option is
-	<STRONG>deprecated</STRONG>, since this option has almost negligible
+	<STRONG>deprecated</STRONG>, since it has almost negligible
 	effect on the ORB</FONT>. The right type of resources are selected by
 	the ORB during runtime. For example the memory for the output datapath
 	always defaults to TSS. The inour data path always defaults to stack for
@@ -594,15 +587,14 @@ specific application requirements.
 
 <H3><A name=SVC>The Service Configurator File</A></H3>
 
-Internally, TAO uses the
-<A href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE service
+Internally, TAO uses the <A
+href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE service
 configurator framework</A> that allows applications to configure the
 ORB at run-time. Applications provide a file by name
-<CODE>svc.conf</CODE> with options that configure appropriate strategies in to
-the ORB. The options enable developers to control the behavior of the factories,
-strategies and resources that the ORB uses.
-
-<p>By default, TAO provides the following set of factories: </p>
+<CODE>svc.conf</CODE> with options that configure appropriate
+strategies in to the ORB. The options enable developers to control the
+behavior of the factories, strategies and resources that the ORB uses.
+By default, TAO provides the following set of factories: </p>
 
 <OL>
   <LI><A href="#TRF">TAO Resource Factory :</A> This factory controls
@@ -611,13 +603,13 @@ strategies and resources that the ORB uses.
   access to various resources used by the ORB irrespective of whether
   they perform client or server roles. ORB resources include reactors,
   protocol factories, message flushing strategies, connection purging
-  strategies and different IOR parsers.
+  strategies and different IOR parsers. <P>
   <LI> <A href="#TSSF">TAO Server Strategy Factory:</A> This factory
   creates various strategies of special utility to the ORB that is useful for
   controlling the behavior of servers. This factory is responsible
   for creating strategies useful for server objects like the
   concurrency strategy	and the request demultiplexing strategies used by the
-  POA.
+  POA.<P>
   <LI> <A href="#TCSF">TAO Client Strategy Factory:</A> This factory
   creates various strategies of special utility to the ORB, useful for
   controlling the behavior of clients. This factory is responsible
@@ -625,36 +617,35 @@ strategies and resources that the ORB uses.
   multiplexing strategies, wait strategies, connect strategies etc.<P>
 </OL>
 
-<!-- Guys, the following sentence makes no sense to me.  Can you
-please revise it to make it more clear? -->
-<!--- TAO/Andy, This is still confusing. Could you please reword it?
-DONE - andy-->
-Options specified via a <CODE>svc.conf</CODE> file can represent either
-the components provided by TAO (including Resource factory and server/client
-strategy factory) or customized components developed by the
-users. The service configurator file (svc.conf) provided by the
-user identifies the components to be loaded with the required strategies
-for that component.  <p>
+Options specified via a <CODE>svc.conf</CODE> file can represent
+either the components provided by TAO (including the 
+<!-- Bala, can you please use code font here and explicitly mention -->
+<!-- which factory names we're referring to?! -->
+resource factory and server/client strategy factory) or customized
+components developed by the users. The service configurator file
+(<CODE>svc.conf</CODE>) provided by the user identifies the components
+to be loaded with the required strategies for each component.  <p>
 
 A <CODE>svc.conf</CODE> file is <EM><B>not</B></EM> required to run
-TAO applications since TAO provides a set of default values for strategies
-useful for the most common use cases, <EM>i.e.</EM> the default
-values are set for all options.  When a TAO application calls
+TAO applications since TAO provides a set of default values for
+strategies useful for the most common use cases, <EM>i.e.</EM>, the
+default values are set for all options.  When a TAO application calls
 <CODE>CORBA::ORB_init()</CODE> it will try to find the
 <CODE>svc.conf</CODE> file.  If found, TAO will parse and process the
 directives in the file; if not found, the default value for the
 default components will be used.</P>
 
 <hr align=left width=25%>
+<!-- Bala, is there a specific name for this, i.e., can you use the -->
+<!-- "real" name here rather than the "conceptual" name?! -->
 <h4><A name=TRF>1. TAO Resource Factory</A></h4>
 
 Many resources required by TAO's ORB core are fixed, though there is
 some flexibility in the choice of a reactor, the selection of
 transport protocols, choice of data flushing strategy, various forms
 of connection resource management strategies and possibility of using
-different IOR parsers.
-
-The resource factories provided with TAO include the following:
+different IOR parsers.  The resource factories provided with TAO
+include the following:
 
 <BLOCKQUOTE>
   <P>
@@ -709,8 +700,12 @@ The resource factories provided with TAO include the following:
 
 Typically, the following options are set via the service configurator
 (svc.conf) file. The following line in the <CODE>svc.conf</CODE> file
-(all in one line) <BR> <CODE>static Resource_Factory "[list of
-options]"</CODE><BR>would load all the options listed within the
+(all in one line) <P> 
+<!-- Bala, it's not clear why the name of this section is -->
+<!-- "TAO_Default_Resource_Factory" when the following svc.conf file -->
+<!-- says "Resource_Factory"?! -->
+<CODE>static Resource_Factory "[list of
+options]"</CODE><P>will load all the options listed within the
 double quotes.<P>
 
 <TABLE cellSpacing=2 cellPadding=0 border=2>
@@ -751,7 +746,7 @@ double quotes.<P>
       By default the ORB can handle multiple string formats, including
       <CODE>IOR:</CODE>, <CODE>corbaloc:</CODE>, <CODE>corbaname:</CODE>, and
       <CODE>file:</CODE>. The application developer can <A
-      href="/redirect?http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ior_parsing.html">add
+      href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/ior_parsing.html">add
       new IOR formats </A>using this option. </TD></TR>
   <TR>
     <TD><CODE>-ORBConnectionCachingStrategy</CODE> <EM>type</EM></TD>
@@ -774,7 +769,7 @@ double quotes.<P>
     <TD><CODE>-ORBConnectionCacheMax</CODE> <EM>limit</EM></TD>
     <TD><A name=-ORBConnectionCacheMax></A>The transport cache will grow to a
       maximum of the specified limit. The default is system dependent, but can
-      be overridden at compile time by defining the preprocessor macro
+      be overridden at compile-time by defining the preprocessor macro
       TAO_CONNECTION_CACHE_MAXIMUM. </TD></TR>
   <TR>
     <TD><CODE>-ORBMuxedConnectionMax</CODE> <EM>number</EM></TD>
@@ -848,28 +843,38 @@ double quotes.<P>
 </TD></TR></TBODY></TABLE></P>
 <BLOCKQUOTE></BLOCKQUOTE>
 
+<!-- Bala, again, it's not clear why we say -->
+<!-- "TAO_Advanced_Resource_Factory" when the svc.conf example says -->
+<!-- ""Advanced_Resource_Factory".  Can we please be consistent here, -->
+<!-- or at least explain why we're inconsistent?! -->
 <h4><A name=TARF>3. TAO_Advanced_Resource_Factory</A></h4>
 
-This factory is located in the TAO_Strategies library. It accepts the options
-below as well as those described above in the TAO_Default_Resource_Factory. This
-factory can be loaded dynamically using a service configurator directive of the
-form (all on one line): </P><CODE>dynamic Advanced_Resource_Factory
-Service_Object
-*</CODE><BR><CODE>TAO_Strategies:_make_TAO_Advanced_Resource_Factory ()
-"-ORBReactorType select_st" </CODE><BR>It can also be loaded statically by doing
-the following:<BR>
+This factory is located in the <CODE>TAO_Strategies</CODE> library. It
+accepts the options below as well as those described above in the
+<CODE>TAO_Default_Resource_Factory</CODE>. This factory can be loaded
+dynamically using a service configurator directive of the form (all on
+one line): <P>
+
+<CODE>dynamic Advanced_Resource_Factory Service_Object
+*</CODE><BR><CODE>TAO_Strategies:_make_TAO_Advanced_Resource_Factory
+() "-ORBReactorType select_st" </CODE><P>
+
+It can also be loaded statically by doing the following:<BR>
+
 <UL>
   <LI>Add <CODE>#include "tao/Strategies/advanced_resource.h"</CODE> to the file
   containing <CODE>main()</CODE>.
   <LI>Link the TAO_Strategies library into the executable.
   <LI>Specify a service configurator directive of the form: <CODE>static
   Advanced_Resource_Factory "-ORBReactorType select_st"</CODE> </LI></UL>You can
-omit the <CODE>#include</CODE> if you always use dynamic libraries.<BR>Once you
-have loaded the Advanced_Resource_Factory, then directives for the
-Resource_Factory have no effect (and generate warnings telling you
-so).<BR><BR><EM>Note:</EM>-ORBReactorLock flag has been superseded by <A
-href="#-ORBReactorType">-ORBReactorType.
-<BR>
+omit the <CODE>#include</CODE> if you always use dynamic libraries.<P>
+
+Once you have loaded the <CODE>Advanced_Resource_Factory</CODE>, then
+directives for the <CODE>Resource_Factory</CODE> have no effect (and
+generate warnings telling you so).<P> Note the
+<CODE>-ORBReactorLock</CODE> flag has been superseded by <A
+href="#-ORBReactorType">-ORBReactorType. <P>
+
 <BLOCKQUOTE>
   <P>
   <TABLE cellSpacing=2 cellPadding=0 border=2>
@@ -943,19 +948,19 @@ include demultiplexing and concurrency-related strategies. The
 concurrency strategies control the thread creation flags and other
 concurrency related behaviors. The demuliplexing strategies are used
 to locate servants inside the POA that are responsible for handling
-requests.
-<p>Typically, the following options are set via the service
+requests.  <p>
+
+Typically, the following options are set via the service
 configurator (svc.conf) file. The following line in the svc.conf file
-(all in one line)<BR><CODE>static Server_Strategy_Factory "[list of
-options]"</CODE><BR>would load all the options listed within ""<BR>
+(all in one line)<P><CODE>static Server_Strategy_Factory "[list of
+options]"</CODE><P>would load all the options listed within "".
+<p>
 
-</p>
-
-<P><EM>Note:</EM><CODE> -ORBDemuxStrategy </CODE>flag has been changed
-to<BR><CODE>-ORBSystemidPolicyDemuxStrategy </CODE>and
-<CODE>-ORBUseridPolicyDemuxStrategy</CODE>.</P><EM>Note:</EM><CODE>
--ORBTableSize</CODE>flag has been changed
-to <CODE>-ORBActiveObjectMapSize</CODE>.<P>
+Note that the <CODE> -ORBDemuxStrategy </CODE>flag has been changed
+to<CODE>-ORBSystemidPolicyDemuxStrategy </CODE>and
+<CODE>-ORBUseridPolicyDemuxStrategy</CODE>.  Likewise,
+<CODE>-ORBTableSize</CODE>flag has been changed to
+<CODE>-ORBActiveObjectMapSize</CODE>.<P>
 
 <TABLE cellSpacing=2 cellPadding=0 border=2>
   <TBODY>
@@ -982,7 +987,7 @@ to <CODE>-ORBActiveObjectMapSize</CODE>.<P>
       running at shutdown (for example if all the clients terminate before the
       server) can disable the polling using the magic value
       <CODE>INFINITE</CODE>.
-      <P>If the option is not provided then the ORB uses the compile time flag
+      <P>If the option is not provided then the ORB uses the compile-time flag
       <CODE>TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT</CODE>, this flag also
       expresses the time in milliseconds (as a string constant) and the magic
       value <CODE>"INFINITE"</CODE> can be used to disable polling entirely.
@@ -1076,20 +1081,23 @@ ids</EM></TD>
       performed. The default is <CODE>thread</CODE>.</TD></TR></TBODY></TABLE></P>
 
 <h4><A name=TDCSF>5. TAO_Default_Client_Strategy_Factory</A></h4>
+<!-- Bala, again, it's not clear why we say -->
+<!-- "TAO_Default_Client_Strategy_Factory" when the svc.conf example says -->
+<!-- "Client_Strategy_Factory".  Can we please be consistent here, -->
+<!-- or at least explain why we're inconsistent?! -->
 
 Similar to the server strategy factory, the client strategy factory
 supports those elements of TAO that are specific to the behavior of
-clients (Any application that actively establishes connections, submits
-requests and perhaps receive responses.). The client strategy factory
-provides control over several resources used by
-clients.
-<p>Typically, the following options are set via the service
-configurator (svc.conf) file. The following line in the svc.conf file
-(all in one line)<BR><CODE>static Client_Strategy_Factory "[list of
-options]"</CODE> would load all the options listed within
-""<BR><BR>List the detail description of the client strategy factory
-here. </p>
-<P>
+clients (Any application that actively establishes connections,
+submits requests and perhaps receive responses.). The client strategy
+factory provides control over several resources used by clients.  <p>
+
+Typically, the following options are set via the service configurator
+(svc.conf) file. The following line in the svc.conf file (all in one
+line)<P><CODE>static Client_Strategy_Factory "[list of
+options]"</CODE><P> would load all the options listed within "".<P>
+<!-- Andy, what does the following sentence mean?! -->
+List the detail description of the client strategy factory here.  <P>
 
 <TABLE cellSpacing=2 cellPadding=0 border=2>
   <TBODY>
@@ -1127,14 +1135,14 @@ here. </p>
       <P>Default for this option is MT. </P></TD></TR>
   <TR>
     <TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE / MUXED</EM></TD>
-    <TD><A name=-ORBTransportMuxStrategy></A>EXCLUSIVE means that the
+    <TD><A name=-ORBTransportMuxStrategy></A><CODE>EXCLUSIVE</CODE> means that the
       Transport does not multiplex requests on a connection. At a time, there
       can be only one request pending on a connection.
-      <P>MUXED means that Transport multiplexes more than one request at the
+      <P><CODE>MUXED</CODE> means that Transport multiplexes more than one request at the
       same time on a connection. This option is often used in conjunction with
       Asynchronous Method Invocation (AMI), because multiple requests can be sent 'in
       bulk'.
-      <P>Default for this option is MUXED. </P></TD></TR>
+      <P>Default for this option is <CODE>MUXED</CODE>. </P></TD></TR>
   <TR>
     <TD><CODE>-ORBConnectStrategy</CODE> <EM>type</EM></TD>
     <TD><A name=-ORBConnectStrategy></A>TAO provides three strategies to
