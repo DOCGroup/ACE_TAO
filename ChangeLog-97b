@@ -1,3 +1,11 @@
+Wed Oct 29 20:30:55 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/OS.i (strlen): Moved it earlier so that it would be declared
+	  inline before use.
+
+	* ace/OS.i (strcasecmp): Removed spurious semi-colons (how did
+	  they get in there?).
+
 Wed Oct 29 19:30:07 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: #include <unistd.h> before ACE_Time_Value as long as
@@ -151,13 +159,13 @@ Wed Oct 29 00:29:52 1997    <irfan@TWOSTEP>
           necessary since this class has been absorbed into ACE.
 
         * tests: Fixed auto_ptr use in:
-          
+
           Notify_Performance_Test.cpp
-          Priority_Reactor_Test.cpp 
-          Reactor_Performance_Test.cpp 
+          Priority_Reactor_Test.cpp
+          Reactor_Performance_Test.cpp
 
           Thanks to Jack Erickson (jack@pinion.com) for pointing this out.
-        
+
 Tue Oct 28 11:26:39 1997  Nanbor Wang  <nw1@CHA-CHA>
 
         * ace/ace_{dll,lib}.dsp:  Moved Acceptor.cpp from Source file

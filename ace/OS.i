@@ -1092,7 +1092,7 @@ ACE_OS::strcasecmp (const char *s, const char *t)
      {
        for (;
             *s != '\0' && *t != '\0';
-            ++s; ++t)
+            ++s, ++t)
          if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
            {
              result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
@@ -1131,7 +1131,6 @@ ACE_OS::strncasecmp (const char *s, const char *t, size_t len)
 
       ++s; ++t; --len;
     }
-  }
 
   return result; // == 0 for match, else 1
 #else
@@ -7405,6 +7404,13 @@ ACE_OS::tolower (wint_t c)
   return ::towlower (c);
 }
 
+ACE_INLINE size_t
+ACE_OS::strlen (const wchar_t *s)
+{
+  // ACE_TRACE ("ACE_OS::strlen");
+  return ::wcslen (s);
+}
+
 ACE_INLINE int
 ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
 {
@@ -7423,7 +7429,7 @@ ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
      {
        for (;
             *s != '\0' && *t != '\0';
-            ++s; ++t)
+            ++s, ++t)
          if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
            {
              result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
@@ -7460,7 +7466,6 @@ ACE_OS::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 
       ++s; ++t; --len;
     }
-  }
 
   return result; // == 0 for match, else 1
 
@@ -7474,13 +7479,6 @@ ACE_OS::strncmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
   // ACE_TRACE ("ACE_OS::strncmp");
   return ::wcsncmp (s, t, len);
-}
-
-ACE_INLINE size_t
-ACE_OS::strlen (const wchar_t *s)
-{
-  // ACE_TRACE ("ACE_OS::strlen");
-  return ::wcslen (s);
 }
 
 ACE_INLINE wchar_t *
