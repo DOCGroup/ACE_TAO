@@ -107,6 +107,12 @@ ACE_Select_Reactor::remove_handler (int signum,
   return this->signal_handler_->remove_handler (signum, new_disp, old_disp, sigkey);
 }
 
+ACE_INLINE int
+ACE_Select_Reactor::reset_new_handle (void)
+{
+  return 0;                     // Select Reactor doesn't need to reset new handles.
+}
+
 // = The remaining methods in this file must be called with locks
 // held.  Note the queue handles its own locking.
 
