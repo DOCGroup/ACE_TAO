@@ -1,3 +1,16 @@
+Wed Oct 13 17:10:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.i:
+	  In TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan),
+	  if the orphan flag is 1 and the the sequence's release_ flag is 0, 
+	  a null pointer is returned no matter what is actually in the 
+	  sequence's buffer. This is in the non-const version of get_buffer(),
+	  so usually some  assignment (and allocation if necessary) is made 
+	  to the return value. The caller can't, and the sequence won't 
+	  release the original buffer, so there is a memory leak. These 
+	  leaks were cropping up in calls to string_to_object(). 
+	  Thanks to Irfan for noticing the leak.
+
 Wed Oct 13 16:34:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Reply_Dispatcher.cpp:
