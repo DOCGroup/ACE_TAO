@@ -38,6 +38,7 @@ public:
 
   static int session_limit;
   static int session_num;
+  static int rttag;
 };
 
 
