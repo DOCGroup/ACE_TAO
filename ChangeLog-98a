@@ -16,6 +16,10 @@ Fri Mar 27 23:04:08 1998  David L. Levine  <levine@cs.wustl.edu>
           we'll live with it.  This change is only visible with SGI,
           DEC CXX, and Green Hills.
 
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU: added missing
+          close paren after ppc conditional.  Thanks to Brian Mendel for
+          reporting this.
+
 Fri Mar 27 16:47:26 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.mdp: Made settings for Env_Value_Test consistent with
