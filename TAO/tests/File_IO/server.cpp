@@ -1,4 +1,4 @@
-// $Idserver.cpp,v 1.13 2001/03/26 21:16:52 coryan Exp$
+// $Id$
 
 //===================================================================
 //  = LIBRARY
@@ -188,6 +188,7 @@ main (int argc, char **argv)
 
       // set the state of the poa_manager to active i.e ready to process requests
       poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK; 
 
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
