@@ -1,3 +1,10 @@
+Fri Aug  2 22:00:26 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* examples/Log_Msg/Log_Msg_MFC/*: Added example to show how
+	  to send ACE_DEBUG output to the Microsoft Visual Studio debugger console.
+	  Thanks to Don Hinton <dhinton@ieee.org> and 
+	  Chris Hafey <chafey@stentor.com> for help with this.
+
 Fri Aug  2 13:10:05 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/examples/SAXPrint/main.cpp (ACE_TMAIN):
