@@ -1,0 +1,40 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/runtime/nvlist.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+static pthread_mutex_t nvlist_lock=  1    21       9     1     0   0.1   0.0
+DEFINE_GUID(IID_CORBA_NamedValue,0x  26   32       4     2     0   0.5   0.0
+ULONG __stdcall CORBA_NamedValue::A  35   44       0     6     1 ! *** ! ***
+ULONG __stdcall CORBA_NamedValue::R  46   61       0    10     3 ! *** ! ***
+HRESULT __stdcall CORBA_NamedValue:  63   80       0    14     5 ! *** ! ***
+void CORBA_release(){}               82   90       3     5     1   1.7   0.3
+CORBA_Boolean CORBA_is_nil(){}       92   96       0     4     1 ! *** ! ***
+CORBA_NamedValue::~CORBA_NamedValue  98   102      0     4     1 ! *** ! ***
+DEFINE_GUID(IID_CORBA_NVList,0x7742  105  111      4     2     0   0.5   0.0
+ULONG __stdcall CORBA_NVList::AddRe  114  123      0     6     1 ! *** ! ***
+ULONG __stdcall CORBA_NVList::Relea  125  140      0    10     3 ! *** ! ***
+HRESULT __stdcall CORBA_NVList::Que  142  159      0    14     5 ! *** ! ***
+void CORBA_release(){}               161  169      3     5     1   1.7   0.3
+CORBA_Boolean CORBA_is_nil(){}       171  175      0     4     1 ! *** ! ***
+CORBA_NVList::~CORBA_NVList(){}      177  188      0     9     2 ! *** ! ***
+CORBA_NamedValue_ptr CORBA_NVList::  190  262     32    35     6   1.1   0.2
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                55   147    31   2.7   0.6
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

@@ -1,0 +1,53 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/runtime/except.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+static pthread_mutex_t except_lock=  1    31      12     1     0   0.1   0.0
+DEFINE_GUID(IID_CORBA_Exception,0x7  35   45       2     2     0   1.0   0.0
+DEFINE_GUID(IID_CORBA_UserException  47   49       1     1     0   1.0   0.0
+DEFINE_GUID(IID_CORBA_SystemExcepti  51   53       1     1     0   1.0   0.0
+CORBA_Exception::CORBA_Exception(){  56   66       0    10     1 ! *** ! ***
+CORBA_Exception::CORBA_Exception(){  68   78       0    10     1 ! *** ! ***
+CORBA_Exception::~CORBA_Exception()  80   91       5     5     0   1.0   0.0
+CORBA_Exception&CORBA_Exception::op  93   107      0    13     3 ! *** ! ***
+const CORBA_String CORBA_Exception:  109  119      0     9     3 ! *** ! ***
+const CORBA_TypeCode_ptr CORBA_Exce  121  126      0     5     1 ! *** ! ***
+ULONG __stdcall CORBA_Exception::Ad  128  141      3     7     1   2.3   0.3
+ULONG __stdcall CORBA_Exception::Re  143  167      2    12     3   6.0   1.5
+HRESULT __stdcall CORBA_Exception::  169  192      4    15     5   3.8   1.3
+CORBA_UserException::CORBA_UserExce  195  203      3     5     0   1.7   0.0
+CORBA_UserException::~CORBA_UserExc  205  207      0     2     0 ! ***      
+CORBA_SystemException::CORBA_System  209  218      0     9     0 ! ***      
+CORBA_SystemException::~CORBA_Syste  220  222      0     2     0 ! ***      
+static CORBA_TypeCode_ptr sys_excep  228  228      0     0     0            
+CORBA_ExceptionList __system_except  229  229      0     0     0            
+static void make_standard_typecode(  231  318     29    49 ?  10   1.7   0.3
+SYSEX(UNKNOWN)SYSEX(BAD_PARAM)SYSEX  321  396     24    36     1   1.5   0.0
+static CORBA_Octet tc_buf_Bounds[]=  400  418      7    11     0   1.6   0.0
+static CORBA_TypeCode tc_std_Bounds  419  420      0     1     0 ! ***      
+CORBA_TypeCode_ptr _tc_CORBA_Bounds  421  421      0     0     0            
+static CORBA_Octet tc_buf_BadKind[]  423  437      3    11     0   3.7   0.0
+static CORBA_TypeCode tc_std_BadKin  438  439      0     1     0 ! ***      
+CORBA_TypeCode_ptr _tc_CORBA_BadKin  440  440      0     0     0            
+CORBA_ExceptionType CORBA_Environme  444  469      8    13     6   1.6   0.8
+void _EXPFUNC print_exception(const  472  535     24    35     7   1.5   0.3
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                               128   295    42   2.3   0.3
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

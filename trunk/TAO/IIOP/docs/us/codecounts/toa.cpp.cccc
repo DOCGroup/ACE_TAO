@@ -1,0 +1,27 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/runtime/toa.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+DEFINE_GUID(IID_TOA,0xa201e4c8,0xf2  1    44      14     3     0   0.2   0.0
+TOA_ptr TOA::get_named_toa(){}       47   102     28    22     5   0.8   0.2
+TOA_ptr TOA::get_toa(){}             105  146     15    21     5   1.4   0.3
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                57    49    10   0.9   0.2
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

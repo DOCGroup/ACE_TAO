@@ -1,0 +1,59 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/corba/corbacom.hh
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+typedef bool CORBA_Boolean;          1    11       6     1     0   0.2   0.0
+typedef int CORBA_Boolean;           16   16       0     0     0            
+enum{CORBA_B_FALSE=0,CORBA_B_TRUE=1  17   17       0     0     0            
+;                                    17   17       0     0     0            
+typedef unsigned char CORBA_Octet;   20   20       0     0     0            
+typedef short CORBA_Short;           22   22       0     0     0            
+typedef unsigned short CORBA_UShort  23   23       0     0     0            
+typedef long CORBA_Long;             25   30       4     0     0   0.0   0.0
+typedef unsigned long CORBA_ULong;   31   31       0     0     0            
+typedef int CORBA_Long;              33   34       1     0     0   0.0   0.0
+typedef unsigned CORBA_ULong;        35   35       0     0     0            
+typedef long long CORBA_LongLong;    38   45       6     0     0   0.0   0.0
+typedef unsigned long long CORBA_UL  46   46       0     0     0            
+typedef long CORBA_LongLong;         48   48       0     0     0            
+typedef unsigned long CORBA_ULongLo  49   49       0     0     0            
+typedef __int64 CORBA_LongLong;      51   51       0     0     0            
+typedef unsigned __int64 CORBA_ULon  52   52       0     0     0            
+struct CORBA_LongLong{};             54   62       6     0     0   0.0   0.0
+struct CORBA_ULongLong{};            63   63       0     0     0            
+struct CORBA_LongLong{};             65   65       0     0     0            
+struct CORBA_ULongLong{};            66   66       0     0     0            
+typedef float CORBA_Float;           70   70       0     0     0            
+typedef double CORBA_Double;         71   71       0     0     0            
+typedef long double CORBA_LongDoubl  73   81       7     0     0   0.0   0.0
+struct CORBA_LongDouble{};           84   86       0     2     0 ! ***      
+typedef char CORBA_Char;             89   89       0     0     0            
+typedef CORBA_Char*CORBA_String;     90   90       0     0     0            
+CORBA_String CORBA_string_alloc();   92   92       0     0     0            
+CORBA_String CORBA_string_copy();    93   93       0     0     0            
+void CORBA_string_free();            94   94       0     0     0            
+typedef wchar_t CORBA_WChar;         96   102      6     0     0   0.0   0.0
+typedef CORBA_WChar*CORBA_WString;   103  103      0     0     0            
+CORBA_WString CORBA_wstring_alloc()  105  105      0     0     0            
+CORBA_WString CORBA_wstring_copy();  106  106      0     0     0            
+void CORBA_wstring_free();           107  107      0     0     0            
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                36    37     0   1.0   0.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

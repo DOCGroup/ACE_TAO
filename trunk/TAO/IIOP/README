@@ -2,6 +2,23 @@
 
 Inter-ORB Engine
 ================
+17-Feb, 1997
+
+    NOTE!!!!!!!!!!!!!!!
+
+    All makefiles in this distribution currently require that the
+    Sun make (from /usr/ccs/bin/make).  Hopefully this will be
+    eliminated.
+
+    A new directory has been added under 'docs' called 'us'.  This is
+    used for documentation produced locally at WU.
+
+    We are also going to track some metrics on the code as we migrate
+    it from the reference implementation to TAO.  A tool ("cccc") has
+    been located to perform this task and produce reports.  At milestones,
+    this should be run against all source code.
+
+
 02-Feb, 1997
 Version 1.4
 

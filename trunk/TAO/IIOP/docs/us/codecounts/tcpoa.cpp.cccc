@@ -1,0 +1,31 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/bridge/tcpoa.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+extern"int gethostname(char*,int);   1    51      14     1     0   0.1   0.0
+static TCP_OA*the_oa;                56   56       0     0     0            
+static short tcp_port;               57   57       0     0     0            
+static char namebuf[];               58   58       0     0     0            
+static pthread_key_t request_key;    62   62       0     0     0            
+static pthread_mutex_t tcpoa_mutex=  63   63       0     0     0            
+static pthread_mutex_t tcpoa_lock=P  64   64       0     0     0            
+static pthread_attr_t thread_attr;   65   65       0     0     0            
+TCP_OA::TCP_OA(){}                   69   142     34    29     3   0.9   0.1
+TCP_OA::~TCP_OA(){}                  144  150      0     6     1 ! *** ! ***
+Exiting due to signal 2
