@@ -516,7 +516,7 @@ ACE_INET_Addr::get_host_name (char hostname[],
             {
               //result == -1;
               // This could be worse than hostname[len -1] = '\0'?
-              hostname[0] = '\0';   
+              hostname[0] = '\0';
             }
         }
     }
@@ -639,7 +639,7 @@ ACE_INET_Addr::set_host_name (const char host_name[],
       else
         {
           this->set_addr((void*)hp->h_addr, hp->h_length);
-	  return 0;
+          return 0;
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -731,7 +731,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
         return -1;
 
       if (ACE_OS::strlen (hp->h_name) >= len)
-        {        
+        {
           // We know the length, so use memcpy
           if (len > 0)
             {
@@ -740,7 +740,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
             }
           errno = ENOSPC;
           return -2;  // -2 Means that we have a good string
-          // Using errno looks ok, but ENOSPC could be set on 
+          // Using errno looks ok, but ENOSPC could be set on
           // other places.
         }
 
