@@ -1,3 +1,11 @@
+Sun Sep 26 14:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+          Moved check for interface_repository out of debug level check, just
+          do the debugs based on the debug level, not the functionality itself.
+          This fixes bugzilla bug 1944. Thanks for Markus Stenberg
+          <markus dot stenberg at conformiq dot com> for reporting this.
+
 Sun Sep 26 14:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/UIOP_Profile.cpp:
