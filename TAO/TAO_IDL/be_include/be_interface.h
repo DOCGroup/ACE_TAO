@@ -98,6 +98,9 @@ public:
                                           TAO_OutStream *os);
   // template method using breadth first traversal of inheritance graph
 
+  char *relative_skel_name (const char *);
+  // relative skeleton name
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_interface);
