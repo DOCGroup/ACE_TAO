@@ -13,40 +13,6 @@ ACE_RCSID (tao,
            Objref_VarOut_T,
            "$Id$")
 
-// @@@ (JP) This needs to be here temporarily until we regenerate the
-// hand-crafted files.
-
-template<typename T>
-T *
-TAO::Objref_Traits<T>::tao_duplicate (T * p)
-{
-  return T::_duplicate (p);
-}
-
-template<typename T>
-void
-TAO::Objref_Traits<T>::tao_release (T * p)
-{
-  CORBA::release (p);
-}
-
-template<typename T>
-T *
-TAO::Objref_Traits<T>::tao_nil (void)
-{
-  return T::_nil ();
-}
-
-template<typename T>
-CORBA::Boolean
-TAO::Objref_Traits<T>::tao_marshal (T * p,
-                                    TAO_OutputCDR & cdr)
-{
-  return p->marshal (cdr);
-}
-
-// =================================================================
-
 template <typename T>
 TAO_Objref_Var_T<T>::TAO_Objref_Var_T (void)
   : ptr_ (TAO::Objref_Traits<T>::tao_nil ())

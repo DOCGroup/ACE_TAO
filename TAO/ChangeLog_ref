@@ -1,3 +1,24 @@
+Wed Sep  3 19:17:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/OBV_Constants.h:
+        * tao/Objref_VarOut_T.cpp:
+
+           Second checkin of changes that were lost in the merge from 
+           refactor-stage_5.
+
+        * tao/ORBInitInfo.cpp:
+        * tao/ORBInitInfo.h:
+
+          The class in these files, TAO_ORBInitInfo, is not generated from
+          a .pidl file declaration, but it contains methods that would
+          be generated for a local interface. These methods were changed to
+          reflect the new style of the refactored generated code. Also
+          added Objref_Traits<> specialization.
+
+        * tao/TAO.dsp:
+
+          Added files TSS_Resources.{h,cpp} to the project.
+
 Wed Sep  3 18:23:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor/IORInterceptorC.h: 
