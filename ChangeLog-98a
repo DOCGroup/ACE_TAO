@@ -1,4 +1,6 @@
-Wed Dec 17 11:37:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Wed Dec 17 19:27:06 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ACE-INSTALL.html (HREF): Added an advise not to use VC5.0 SP3.
 
 	* examples/OS/Process/Makefile: Removed inclusion of
 	  rules.lib.GNU. Thanks to Avi Nash <anash@RedBrick.Com> for
@@ -37,7 +39,7 @@ Tue Dec 16 22:09:42 1997  David L. Levine  <levine@cs.wustl.edu>
           in OS.i.  It now depends on whether or not POSIX ::sigwait ()
           returns 0, to agree with the documenation for POSIX sigwait.
           Before, the code checked for a -1 return value from ::sigwait ().
-         
+
 Tue Dec 16 21:00:49 1997  Chris Gill  <cdgill@tango.cs.wustl.edu>
 
         Single Threaded port of ACE to pSOSim - first checkin
