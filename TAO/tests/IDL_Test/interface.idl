@@ -112,3 +112,31 @@ interface Client
   attribute End::Value v;
 };
 
+// The example below uncovered errors in the logic of
+// AST_Module::fe_add_interface_fwd() and 
+// AST_Module::add_to_previous() that were causing
+// AST_Module::look_in_previous() (and thus lookup_by_name)
+// to fail on the last line.
+module Schmoik
+{
+  interface foo
+  {
+    typedef string foo_type;
+  };
+};
+
+module Schmoik
+{
+  interface foo;
+};
+
+module Schmoik
+{
+  struct bar
+  {
+    foo::foo_type member;
+  };
+};
+
+
+
