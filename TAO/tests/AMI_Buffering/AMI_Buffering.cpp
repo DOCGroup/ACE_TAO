@@ -18,6 +18,7 @@ AMI_Buffering::receive_data (const Test::Payload &the_payload
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->admin_->request_received (the_payload.length () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -31,6 +32,7 @@ AMI_Buffering::sync (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->admin_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -38,4 +40,5 @@ AMI_Buffering::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
