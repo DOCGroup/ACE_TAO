@@ -1,3 +1,8 @@
+Wed Jul  8 21:08:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/implrepo.html: 
+	  Quick revision and added comments with remaining issues.
+
 Wed Jul  8 17:13:00 1998  Jeff Parsons  <jp4@cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/DII_Cubit/client.cpp,
