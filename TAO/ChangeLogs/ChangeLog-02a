@@ -1,3 +1,10 @@
+Fri Mar 16 15:45:21 2001  Angelo Corsaro  <angelo@cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Protocol/client.cpp (exception_test): 
+	  Moved an ACE_DEBUG that was writing an error message to the
+	  CATCH block instead of the TRY. This fix a fictious error in the
+	  Client_Protocol unit test.
+
 Fri Mar 16 13:53:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/EC_Throughput/run_test.pl:
