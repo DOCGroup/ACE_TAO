@@ -106,6 +106,9 @@ protected:
    */
   mutable TAO_SYNCH_MUTEX addr_lookup_lock_;
 
+  /// Cache the hash value
+  CORBA::ULong hash_val_;
+
 private:
 
   /// Endpoints should not be copied.

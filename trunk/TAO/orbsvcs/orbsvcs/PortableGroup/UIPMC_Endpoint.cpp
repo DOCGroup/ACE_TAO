@@ -5,13 +5,14 @@
 #include "UIPMC_Endpoint.h"
 
 #include "tao/debug.h"
+#include "ace/Guard_T.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (tao, 
-           UIPMC_Endpoint, 
+ACE_RCSID (tao,
+           UIPMC_Endpoint,
            "$Id$")
 
 
@@ -128,7 +129,21 @@ TAO_UIPMC_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO_UIPMC_Endpoint::hash (void)
 {
-  return
-    this->uint_ip_addr ()
-    + this->port_;
+  if (this->hash_val_ != 0)
+    return this->hash_val_;
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->addr_lookup_lock_,
+                      this->hash_val_);
+    // .. DCL
+    if (this->hash_val_ != 0)
+      return this->hash_val_;
+
+    this->hash_val_ =
+      this->uint_ip_addr () + this->port_;
+  }
+
+  return this->hash_val_;
 }
