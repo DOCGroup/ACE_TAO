@@ -1235,10 +1235,10 @@ ace_thread_adapter (void *args)
 
   // Inherit the logging feature if the parent 
   // has got an ACE_Log_Msg.
+  ACE_Log_Msg *new_log = ACE_LOG_MSG;
   if( thread_args->inherit_log_ )
     {
 	ACE_Log_Msg *inherit_log = thread_args->inherit_log_;
-	ACE_Log_Msg *new_log = ACE_LOG_MSG;
 	new_log->msg_ostream (inherit_log->msg_ostream ());
 	new_log->priority_mask (inherit_log->priority_mask ());
 	if (inherit_log->tracing_enabled ())
