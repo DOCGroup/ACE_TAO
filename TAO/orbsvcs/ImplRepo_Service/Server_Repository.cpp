@@ -549,7 +549,7 @@ Server_Repository::remove (const ACE_CString POA_name)
       /// Have a temporary file
       CORBA::String_var temp_file = "temporary_file";
 
-      FILE *fp_temp = ACE_OS::fopen (temp_file, "w");
+      FILE *fp_temp = ACE_OS::fopen (temp_file.in (), "w");
 
       ACE_TCHAR buffer[4096];
 
@@ -586,7 +586,7 @@ Server_Repository::remove (const ACE_CString POA_name)
       ACE_OS::fclose (fp);
 
       // Now copy the temporary file to the original file.
-      fp_temp = ACE_OS::fopen (temp_file, "r");
+      fp_temp = ACE_OS::fopen (temp_file.in (), "r");
 
       fp = ACE_OS::fopen (filename, "w");
 
@@ -598,7 +598,7 @@ Server_Repository::remove (const ACE_CString POA_name)
 
       ACE_OS::fclose (fp);
       ACE_OS::fclose (fp_temp);
-      ACE_OS::unlink (temp_file);
+      ACE_OS::unlink (temp_file.in ());
       return 0;
     }
   /*
@@ -615,7 +615,7 @@ Server_Repository::remove (const ACE_CString POA_name)
             dtd_section = 1;
             remove_section = 0;
             }
-            cout << "buffer 2 : " << buffer << endl;
+
             ACE_OS::fprintf (fp_temp,
             buffer);
             }
@@ -627,21 +627,17 @@ Server_Repository::remove (const ACE_CString POA_name)
 
             if (!found)
             {
-            cout << "buffer 3 : " << buffer << endl;
-            ACE_OS::fprintf (fp_temp,
+	    ACE_OS::fprintf (fp_temp,
             buffer);
             }
             else
             {
-            cout << "buffer 4: " << buffer << endl;
-            remove_section = 1;
+	    remove_section = 1;
             }
             }
             else
             {
-            cout << "buffer 5 : " << buffer << endl;
-
-            found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
+	    found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
 
             if (found)
             remove_section = 0;

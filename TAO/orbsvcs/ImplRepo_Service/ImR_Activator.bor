@@ -9,13 +9,20 @@ NAME = ImplRepo_Service
 !endif
 
 OBJFILES = \
-	$(OBJDIR)\Adapter_Activator.obj \
-	$(OBJDIR)\Forwarder.obj \
-	$(OBJDIR)\ImR_Locator.obj \
-	$(OBJDIR)\ImR_Locator_i.obj
+	$(OBJDIR)\ImR_Activator.obj \
+	$(OBJDIR)\ImR_Activator_i.obj \
+        $(OBJDIR)\Iterator.obj \
+        $(OBJDIR)\Locator.obj \
+        $(OBJDIR)\Options.obj \
+	$(OBJDIR)\Server_Info.obj \
+	$(OBJDIR)\Server_Repository.obj \
+	$(OBJDIR)\Repository_Configuration.obj \
+	$(OBJDIR)\XML_ContentHandler.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
+	$(ACE_XML_CFLAGS) \
+	$(ACE_XML_PARSER_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_IORTABLE_CFLAGS) \
