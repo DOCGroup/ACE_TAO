@@ -1,3 +1,27 @@
+Sat Oct 25 09:15:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.cpp:
+	* tao/Object.cpp:
+	* tao/PolicyC.cpp:
+	* tao/Policy_ForwardC.cpp:
+	* tao/PortableInterceptorC.cpp:
+	* tao/Typecode.cpp:
+	* tao/PortableServer/PortableServerC.cpp:
+
+	  More explicit template instantiations.
+	
+	* tao/Valuetype/ValueBase.cpp:
+	* tao/Valuetype/ValueBase.h:
+	* tao/Valuetype/ValueFactory.cpp:
+	* tao/Valuetype/ValueFactory.h:
+
+	  Template specializations for Value_Traits<ValueBase> and
+	  Value_Traits<ValueFactoryBase>. 
+	
+	* tao/Policy.pidl: 
+          
+          Fixed command line arguments.
+
 Sat Oct 25 000:28:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:

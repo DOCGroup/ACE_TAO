@@ -7575,11 +7575,6 @@ CORBA::Boolean operator>> (
         PortableServer::RequestProcessingPolicy
       >;
 
-  template class
-    TAO::Any_Basic_Impl_T<
-        PortableServer::POAManager::State
-      >;
-
   template class TAO::Objref_Traits<PortableServer::POAManager>;
 
   template class

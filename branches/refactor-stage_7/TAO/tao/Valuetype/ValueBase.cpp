@@ -365,8 +365,8 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
 void
 CORBA::DefaultValueRefCountBase::_tao_add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, 
-             guard, 
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             guard,
              this->_tao_reference_count_lock_);
 
   ++this->_tao_reference_count_;
@@ -376,8 +376,8 @@ void
 CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 {
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, 
-               guard, 
+    ACE_GUARD (TAO_SYNCH_MUTEX,
+               guard,
                this->_tao_reference_count_lock_);
 
     --this->_tao_reference_count_;
@@ -439,3 +439,27 @@ operator>> (TAO_InputCDR &strm,
                                            _tao_valuetype);
 }
 
+// =============== Template Specializations =====================
+namespace TAO
+{
+  void
+  Value_Traits<CORBA::ValueBase>::tao_add_ref (
+      CORBA::ValueBase *p)
+  {
+    CORBA::add_ref (p);
+  }
+
+  void
+  Value_Traits<CORBA::ValueBase>::tao_remove_ref (
+      CORBA::ValueBase * p)
+  {
+    CORBA::remove_ref (p);
+  }
+
+  void
+  Value_Traits<CORBA::ValueBase>::tao_release (
+      CORBA::ValueBase * p)
+  {
+    CORBA::remove_ref (p);
+  }
+}

@@ -10,6 +10,11 @@
 
 #include "ace/Log_Msg.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+    || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#include "Var_Size_Argument_T.h"
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"
 #endif /* ! __ACE_INLINE__ */
@@ -777,13 +782,14 @@ template class TAO::Arg_Traits<CORBA::Any>;
 template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
                                           CORBA::Any_var,
                                           CORBA::Any_out>;
-template class TAO::In_Var_Size_Argument_T<CORBA::Any>;
-template class TAO::Inout_Var_Size_Argument_T<CORBA::Any>;
-template class TAO::Out_Var_Size_Argument_T<CORBA::Any,
-                                            CORBA::Any_out>;
-template class TAO::Ret_Var_Size_Argument_T<CORBA::Any,
-                                            CORBA::Any_var>;
 
+template TAO::In_Var_Size_Argument_T<CORBA::Any>;
+template TAO::Out_Var_Size_Argument_T<CORBA::Any, CORBA::Any_out>;
+template TAO::Inout_Var_Size_Argument_T<CORBA::Any>;
+template TAO::Ret_Var_Size_Argument_T<CORBA::Any, CORBA::Any_var>;
+
+#if 0
+// Needed in the future..
 template class TAO::SArg_Traits<CORBA::Any>;
 template class TAO::Var_Size_SArg_Traits_T<CORBA::Any,
                                            CORBA::Any_var,
@@ -794,18 +800,19 @@ template class TAO::Out_Var_Size_SArgument_T<CORBA::Any,
                                              CORBA::Any_var>;
 template class TAO::Ret_Var_Size_SArgument_T<CORBA::Any,
                                              CORBA::Any_var>;
+#endif /*if 0*/
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO::Any_Special_Impl_T<
-      char,
-      CORBA::Any::from_string,
-      CORBA::Any::to_string
+#pragma instantiate TAO::Any_Special_Impl_T< \
+      char, \
+      CORBA::Any::from_string, \
+      CORBA::Any::to_string \
     >
 
-#pragma instantiate TAO::Any_Special_Impl_T<
-      CORBA::WChar,
-      CORBA::Any::from_wstring,
-      CORBA::Any::to_wstring
+#pragma instantiate TAO::Any_Special_Impl_T< \
+      CORBA::WChar, \
+      CORBA::Any::from_wstring, \
+      CORBA::Any::to_wstring \
     >
 
 #pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Any>
@@ -816,6 +823,9 @@ template class TAO::Ret_Var_Size_SArgument_T<CORBA::Any,
 #pragma instantiate TAO::Any_Impl_T<CORBA::Object>
 
 #pragma instantiate TAO::Arg_Traits<CORBA::Any>
+#pragma instantiate TAO::Var_Size_Arg_Traits_T<CORBA::Any, \
+                                               CORBA::Any_var, \
+                                               CORBA::Any_out>
 #pragma instantiate TAO::Var_Size_Arg_Traits_T<CORBA::Any, \
                                           CORBA::Any_var, \
                                           CORBA::Any_out>
@@ -836,5 +846,13 @@ template class TAO::Ret_Var_Size_SArgument_T<CORBA::Any,
                                              CORBA::Any_var>
 #pragma instantiate TAO::Ret_Var_Size_SArgument_T<CORBA::Any, \
                                              CORBA::Any_var>
+
+#pragma instantiate TAO::In_Var_Size_Argument_T<CORBA::Any>
+
+#pragma instantiate TAO::Out_Var_Size_Argument_T<CORBA::Any,  \
+                                                 CORBA::Any_out>
+#pragma instantiate TAO::Inout_Var_Size_Argument_T<CORBA::Any>
+#pragma instantiate TAO::Ret_Var_Size_Argument_T<CORBA::Any, \
+                                                 CORBA::Any_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
