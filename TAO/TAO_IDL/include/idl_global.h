@@ -463,12 +463,6 @@ public:
   virtual const char *ident_string (void) const;
   // Get the value of the #ident string.
 
-  virtual void obv_support (idl_bool);
-  // set enable/disable OBV (Valuetype) support
-
-  virtual idl_bool obv_support (void);
-  // check if OBV (Valuetype) support is enabled
-
   virtual void case_diff_error (idl_bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
@@ -598,9 +592,6 @@ private:
   char *ident_string_;
   // Holds a string that begins with #ident, to be passed from the IDL
   // file to the generated files.
-
-  idl_bool obv_support_;
-  // Do we support OBV (Valuetype)?
 
   idl_bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ

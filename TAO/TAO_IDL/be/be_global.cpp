@@ -1369,11 +1369,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             // generating Direct collocated stubs.
             be_global->gen_direct_collocation (1);
           }
-        else if (av[i][2] == 'v')
-          {
-            // enable OBV (Valuetype) support.
-            idl_global->obv_support (1);
-          }
         else if (av[i][2] == 'I')
           {
             size_t options = ACE_OS::strlen(av[i]) - 3;
@@ -1479,11 +1474,6 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // suppress generating tie classes and files
             be_global->gen_tie_classes (0);
-          }
-        else if (av[i][2] == 'v')
-          {
-            // disable OBV (Valuetype) support
-            idl_global->obv_support (I_FALSE);
           }
         else if (av[i][2] == 'm')
           {
@@ -1851,11 +1841,6 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Sd\t\t\tsuppress generating Direct collocated")
       ACE_TEXT (" stubs (disable by default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Sv\t\t\tdisable OBV (Valuetype) support")
-      ACE_TEXT (" (enabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
