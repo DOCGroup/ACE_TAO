@@ -8775,15 +8775,18 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   return now;
 # endif /* ! ACE_LACKS_LONGLONG_T */
 #elif defined (linux) && defined (ACE_HAS_ALPHA_TIMER)
-// NOTE: For unknown reasons, rpcc must load to a 32-bit int on
-//       alphas.  This severely limits the range of high-res times
-//       that can be returned.
+  // NOTE:  alphas only have a 32 bit tick (cycle) counter.  The rpcc
+  // instruction actually reads 64 bits, but the high 32 bits are
+  // implementation-specific.  Linux and Digital Unix, for example,
+  // use them for virtual tick counts, i.e., taking into account only
+  // the time that the process was running.  This information is from
+  // David Mosberger's article, see comment below.
   ACE_UINT32 now;
 
   // The following statement is based on code published by:
   // Mosberger, David, "How to Make Your Applications Fly, Part 1",
-  // Linux Journal Issue 42, October 1997, page 50.
-  // It reads the high-res tick counter directly into memory variable "now".
+  // Linux Journal Issue 42, October 1997, page 50.  It reads the
+  // high-res tick counter directly into the memory variable.
   asm volatile ("rpcc %0" : "=r" (now) : : "memory");
 
   return now;
