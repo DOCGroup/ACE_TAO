@@ -54,7 +54,7 @@ static const char *TAO_Event_Channel_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED = 5100,
   TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_OBTAINED,
   TAO_EVENT_CHANNEL_ENTER_PUSH_SUPPLIER_PROXY_PUSH,
@@ -490,7 +490,7 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
   if (CORBA::is_nil (push_consumer_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "EC (%t) Push to disconnected consumer %s\n",
+                  "EC (%t) Push to disconnected consumer %s\n",
                   ::ACE_ES_Consumer_Name (this->qos ())));
       // ACE_ES_DEBUG_ST (::dump_sequence (events));
       return;
@@ -571,8 +571,8 @@ ACE_Push_Consumer_Proxy::shutdown (void)
 // ************************************************************
 
 ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
-				    u_long type,
-				    TAO_Module_Factory* factory)
+                                    u_long type,
+                                    TAO_Module_Factory* factory)
   : rtu_manager_ (0),
     type_ (type),
     state_ (INITIAL_STATE),
@@ -589,10 +589,10 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
   consumer_module_ =
     this->module_factory_->create_consumer_module (this);
 
-  this->task_manager_ = 
+  this->task_manager_ =
     this->module_factory_->create_task_manager (this);
 
-  this->dispatching_module_ = 
+  this->dispatching_module_ =
     this->module_factory_->create_dispatching_module(this);
 
   this->correlation_module_ =
@@ -617,7 +617,7 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
 ACE_EventChannel::~ACE_EventChannel (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "EC (%t) ACE_EventChannel deleting all modules.\n"));
+              "EC (%t) ACE_EventChannel deleting all modules.\n"));
 
   TAO_TRY
     {
@@ -745,7 +745,7 @@ ACE_EventChannel::report_disconnect_i (u_long event)
 
 void
 ACE_EventChannel::add_gateway (TAO_EC_Gateway* gw,
-			       CORBA::Environment& _env)
+                               CORBA::Environment& _env)
 {
   this->gwys_.insert (gw);
 
@@ -763,7 +763,7 @@ ACE_EventChannel::add_gateway (TAO_EC_Gateway* gw,
 
 void
 ACE_EventChannel::del_gateway (TAO_EC_Gateway* gw,
-			       CORBA::Environment&)
+                               CORBA::Environment&)
 {
   this->gwys_.remove (gw);
 }
@@ -775,7 +775,7 @@ ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
     return;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "EC (%t) Event_Channel::update_consumer_gwys\n"));
+              "EC (%t) Event_Channel::update_consumer_gwys\n"));
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   RtecEventChannelAdmin::SupplierQOS s_qos;
@@ -797,7 +797,7 @@ ACE_EventChannel::update_supplier_gwys (CORBA::Environment& _env)
     return;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "EC (%t) Event_Channel::update_supplier_gwys\n"));
+              "EC (%t) Event_Channel::update_supplier_gwys\n"));
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   RtecEventChannelAdmin::SupplierQOS s_qos;
@@ -871,7 +871,7 @@ ACE_ES_Subscription_Info::remove (Subscriber_Map &type_map,
   if (type_map.find (type, subscribers) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "EC (%t) Info::remove - not found %d\n", type));
+                  "EC (%t) Info::remove - not found %d\n", type));
       // type_map does not contain the type.
       return -1;
     }
@@ -1128,7 +1128,7 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
       if (all_consumers_.size () <= 0)
         {
           // ACE_DEBUG ((LM_DEBUG,
-	  //             "EC (%t) No more consumers connected.\n"));
+          //             "EC (%t) No more consumers connected.\n"));
           channel_->report_disconnect_i (ACE_EventChannel::CONSUMER);
         }
     }
@@ -3079,7 +3079,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 
   CORBA::Boolean dont_update = supplier->qos ().is_gateway;
 
-  // @@ TODO It would seem 
+  // @@ TODO It would seem
   // IMHO this release is broken: supplier is a parameter, we never
   // actually increased its reference count, so we shouldn't decrease
   // it.
@@ -3429,14 +3429,17 @@ template class ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>;
 
 // For ACE_ES_Event_Container_Allocator.
-template class ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_Null_Mutex>;
-template class ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_Null_Mutex>;
+template class ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_MEMORY_POOL_MUTEX>;
+template class ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_SYNCH_MUTEX>;
+template class ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX>;
 template class ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>;
 template class ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>;
 template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Null_Mutex>;
+template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Thread_Mutex>;
 template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>;
 template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >;
 template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >;
+template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 
 template class ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>;
 template class ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>;
@@ -3469,14 +3472,17 @@ template class ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*>;
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>
-#pragma instantiate ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_Null_Mutex>
-#pragma instantiate ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_Null_Mutex>
+#pragma instantiate ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_MEMORY_POOL_MUTEX>
+#pragma instantiate ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX>
 #pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>
 #pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>
 #pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Null_Mutex>
+#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Thread_Mutex>
 #pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >
+#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>
 #pragma instantiate ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>
 #pragma instantiate ACE_CORBA_var<ACE_ES_Event_Container>
