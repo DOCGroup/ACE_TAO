@@ -969,11 +969,11 @@ ACE_OS::time (time_t *tloc)
 #if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::time");
 #  if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-	unsigned long d_date, d_time, d_tick;
-	tm_get(&d_date, &d_time, &d_tick); // get current time
-	if (tloc)
-		*tloc = d_time; // set time as time_t
-	return d_time;
+        unsigned long d_date, d_time, d_tick;
+        tm_get(&d_date, &d_time, &d_tick); // get current time
+        if (tloc)
+                *tloc = d_time; // set time as time_t
+        return d_time;
 #  else
   ACE_OSCALL_RETURN (::time (tloc), time_t, (time_t) -1);
 #  endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
@@ -6688,7 +6688,7 @@ ACE_OS::creat (LPCTSTR filename, mode_t mode)
 #elif defined(ACE_PSOS)
    ACE_OSCALL_RETURN(::create_f((char *)filename, 1024,
                               S_IRUSR | S_IWUSR | S_IXUSR),
-		     ACE_HANDLE, ACE_INVALID_HANDLE);
+                     ACE_HANDLE, ACE_INVALID_HANDLE);
 #elif defined(ACE_PSOS_TM)
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -10671,7 +10671,7 @@ ACE_OS::strenvdup (const char *str)
      // WinCE doesn't have environment variables so we just skip it.
   return ACE_OS::strdup (str);
 #else
-  char *temp;
+  char *temp = 0;
 
   if (str[0] == '$'
       && (temp = ACE_OS::getenv (&str[1])) != 0)
