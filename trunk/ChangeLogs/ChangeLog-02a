@@ -1,3 +1,9 @@
+Tue Jul 25 05:46:29 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Optimized the check to make sure that
+	  ACE_Log_Msg isn't too long.  Now we can keep it in "non-debug" code!
+	  Thanks to Tomer for this suggestion.
+
 Mon Jul 24 22:49:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* ace/OS_String.inl
