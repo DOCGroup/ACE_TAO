@@ -623,14 +623,14 @@ template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repos
 template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*>
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
-template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*>
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
-template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
