@@ -1,3 +1,16 @@
+Tue Jun 17 06:54:14 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/params.cpp:
+
+          There was an error in the parse_enpoints() function that affects
+          the semi-colon(;) seperated list of Endpoints if more than 2
+          Enpoints are given:
+
+          -ORBEndpoint "protocolx://V.v@addr1;protocolx://V.v@addr;protocolx://V.v@addr1"
+
+          Thanks to Markus Wild <markus.wild@homag.de> for supplying the
+          fix.
+
 Tue Jun 17 05:50:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/implrepo/index.html:
@@ -9,43 +22,43 @@ Mon Jun 16 11:14:15 2003  Chris Cleeland  <cleeland@ociweb.com>
 
 Sat Jun 14 08:44:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Exception.h: gcc version 2.9-gnupro-98r2 on LynxOS produces
-	  a huge amount of  "implicit declaration of function `int
-	  vsprintf(...)'" warnings on TAO build. LynxOS needs stdarg.h to
-	  be included before stdio.h. Thanks to Olli Savia <ops@iki.fi>
-	  for the patch.
+        * tao/Exception.h: gcc version 2.9-gnupro-98r2 on LynxOS produces
+          a huge amount of  "implicit declaration of function `int
+          vsprintf(...)'" warnings on TAO build. LynxOS needs stdarg.h to
+          be included before stdio.h. Thanks to Olli Savia <ops@iki.fi>
+          for the patch.
 
 Fri Jun 13 13:11:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile: Removed creation of a README for orbsvcs during the
-	  release since we have an html file in docs.
+        * Makefile: Removed creation of a README for orbsvcs during the
+          release since we have an html file in docs.
 
 Thu Jun 12 15:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Typecode.cpp: In lieu of the following "Thu Jun 12 15:20:37
-	  2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" change
-	  in ACE, the explicit template instantiations for
-	  ACE_Unbounded_Queue<> is now removed. Thanks again to Rob Andzik
-	  for motivating these changes.
+        * tao/Typecode.cpp: In lieu of the following "Thu Jun 12 15:20:37
+          2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" change
+          in ACE, the explicit template instantiations for
+          ACE_Unbounded_Queue<> is now removed. Thanks again to Rob Andzik
+          for motivating these changes.
 
 Thu Jun 12 14:53:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/BiDir_GIOP/BiDir_Policy_i.cpp: Fixed compilation errors on
-	  MSVC 6.0.
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp: Fixed compilation errors on
+          MSVC 6.0.
 
 Thu Jun 12 14:05:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/OctetSeqC.h:
-	* tao/OctetSeqC.cpp:
-	* tao/OctetSeqC.i: Regenerated code for OctetSeq due to the change
-	  "Tue Jun 10 10:05:34 2003  Jeff Parsons
-	  <j.parsons@vanderbilt.edu>".
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.i: Regenerated code for OctetSeq due to the change
+          "Tue Jun 10 10:05:34 2003  Jeff Parsons
+          <j.parsons@vanderbilt.edu>".
 
-	* tao/diffs/OctetSeq.diff: Updated the diffs.
+        * tao/diffs/OctetSeq.diff: Updated the diffs.
 
-	* tao/PortableServer/PortableServerC.h: Removed duplicate
-	  instantiations of Any_Dual_Impl_T<>. Thanks to Rob Andzik for
-	  pointing this out.
+        * tao/PortableServer/PortableServerC.h: Removed duplicate
+          instantiations of Any_Dual_Impl_T<>. Thanks to Rob Andzik for
+          pointing this out.
 
 Thu Jun 12 10:46:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -63,44 +76,44 @@ Thu Jun 12 10:46:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 11 16:14:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/IDL_Test/Makefile: Fixed a minor problem which should
-	  help the daily builds to run this test a lot smoother!
+        * tests/IDL_Test/Makefile: Fixed a minor problem which should
+          help the daily builds to run this test a lot smoother!
 
 Wed Jun 11 15:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Transport_Cache_Manager.cpp (make_idle_i): Fixes for BUG
-	  1528. Please see
+        * tao/Transport_Cache_Manager.cpp (make_idle_i): Fixes for BUG
+          1528. Please see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1528
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1528
 
-	  for the motivation. This checkin just removes the call to find
-	  () on the map. It just changes the state of the map entry to
-	  idle after holding a lock.
+          for the motivation. This checkin just removes the call to find
+          () on the map. It just changes the state of the map entry to
+          idle after holding a lock.
 
 Wed Jun 11 15:08:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Profile.cpp:
-	* tao/Profile.h: Strategized the lock held by the Profile
-	  class. With this change it is possible to hold a null-lock for
-	  single threaded applications. We can configure the profiles to
-	  have a null lock using -ORBProfileLock null. This fixes BUG
-	  1527.
+        * tao/Profile.cpp:
+        * tao/Profile.h: Strategized the lock held by the Profile
+          class. With this change it is possible to hold a null-lock for
+          single threaded applications. We can configure the profiles to
+          have a null lock using -ORBProfileLock null. This fixes BUG
+          1527.
 
-	* tao/Invocation.cpp: Fixed a stupid typo that caused the profile's
-	  refcount to be incremented twice in every call. This should fix
-	  a memory leak.
+        * tao/Invocation.cpp: Fixed a stupid typo that caused the profile's
+          refcount to be incremented twice in every call. This should fix
+          a memory leak.
 
 Wed Jun 11 12:15:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Added
-	  TAO_Abstract_ServantBase to the list of constructors that needs
-	  to be called. This will help to avoid warnings for simple
-	  cases.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Added
+          TAO_Abstract_ServantBase to the list of constructors that needs
+          to be called. This will help to avoid warnings for simple
+          cases.
 
-	  For deeply nested hierachies we still have a problem in that we
-	  are not calling the base class constructors with virtual
-	  inheritance, in the right order. We are doing things in the
-	  reverse order which ticks of gcc 3.3.
+          For deeply nested hierachies we still have a problem in that we
+          are not calling the base class constructors with virtual
+          inheritance, in the right order. We are doing things in the
+          reverse order which ticks of gcc 3.3.
 
 Wed Jun 11 12:07:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -114,23 +127,23 @@ Wed Jun 11 12:07:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 11 11:44:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Buffering_Constraint_Policy.cpp:
-	* tao/BiDir_GIOP/BiDir_Policy_i.cpp:
-	* tao/BiDir_GIOP/BiDir_Policy_i.h:
-	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
-	* tao/Messaging/Messaging_Policy_i.cpp:
-	* tao/PortableServer/Servant_Base.cpp:
-	* tao/RTCORBA/RT_Policy_i.cpp: First set of fixes for gcc
-	  3.3. These are all related to the order of base class
-	  construction which has virtual inheritance. gcc 3.3 is
-	  particularly picky about this emitting up lots of warnings. What
-	  makes this particularly tricky is that gcc 3.3 is a bit
-	  inconsistent emitting warnings for only copy constructors. But
-	  that is besides the point.
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/BiDir_GIOP/BiDir_Policy_i.h:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/RTCORBA/RT_Policy_i.cpp: First set of fixes for gcc
+          3.3. These are all related to the order of base class
+          construction which has virtual inheritance. gcc 3.3 is
+          particularly picky about this emitting up lots of warnings. What
+          makes this particularly tricky is that gcc 3.3 is a bit
+          inconsistent emitting warnings for only copy constructors. But
+          that is besides the point.
 
-	  The fixes made are also for regular constructors and so they
-	  should just work fine. Thanks to Boris and Jeff Parsons for
-	  spending some of their time to discuss about this.
+          The fixes made are also for regular constructors and so they
+          should just work fine. Thanks to Boris and Jeff Parsons for
+          spending some of their time to discuss about this.
 
 Wed Jun 11 11:45:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -211,23 +224,23 @@ Mon Jun  9 16:17:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jun 09 15:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Latency/Single_Threaded/svc.conf.xml: 
-	* performance-tests/Latency/Single_Threaded/svc.conf: Removed the
-	  deprecated -ORBResources option.
+        * performance-tests/Latency/Single_Threaded/svc.conf.xml:
+        * performance-tests/Latency/Single_Threaded/svc.conf: Removed the
+          deprecated -ORBResources option.
 
-	* performance-tests/Latency/Single_Threaded/client.dsp:
-	* performance-tests/Latency/Single_Threaded/server.dsp: Removed
-	  extraneous library inclusions on the link line. Removed the -GC
-	  option while invoking the IDL compiler. Other than being
-	  inconsistent, doing exraneous things skews up displayed results
-	  from tools like quantify which creates a hurdle when one is
-	  doing performance analysis.
+        * performance-tests/Latency/Single_Threaded/client.dsp:
+        * performance-tests/Latency/Single_Threaded/server.dsp: Removed
+          extraneous library inclusions on the link line. Removed the -GC
+          option while invoking the IDL compiler. Other than being
+          inconsistent, doing exraneous things skews up displayed results
+          from tools like quantify which creates a hurdle when one is
+          doing performance analysis.
 
 Mon Jun  9 14:38:44 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/Single_Threaded/client.cpp:
-	  Fixed compile errors on Win32. Thanks to Bala for helping me
-	  out. 
+        * performance-tests/Sequence_Latency/Single_Threaded/client.cpp:
+          Fixed compile errors on Win32. Thanks to Bala for helping me
+          out.
 
 Mon Jun  9 13:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -236,7 +249,7 @@ Mon Jun  9 13:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added context state initialization to the visitor created
           to traverse the interface inheritance graph when generating
-          code for the implementation classes. Thanks to 
+          code for the implementation classes. Thanks to
           Tommy Andreasen <Tommy.Andreasen@Radiometer.dk> for reporting the
           bug. Also added annotation generation and fixed indentation.
 
@@ -247,9 +260,9 @@ Mon Jun  9 13:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jun  9 12:33:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Strategies/SCIOP_Endpoint.cpp: 
-	* tao/Strategies/SCIOP_Endpoint.h:
-	* tao/Strategies/SCIOP_Endpoint.i: Cosmetic changes.
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Endpoint.i: Cosmetic changes.
 
 Mon Jun  9 11:30:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -292,34 +305,34 @@ Sun Jun  8 23:21:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
 
-	  More changes toward support of components, valuetypes and eventtypes
-	  in the IFR.
+          More changes toward support of components, valuetypes and eventtypes
+          in the IFR.
 
 Sun Jun  8 18:50:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/Single_Threaded: New test for
-	  tracking performance of sequence<basic types>. Our code
-	  generatiom for sequence<> were broken for 1.3.2.
+        * performance-tests/Sequence_Latency/Single_Threaded: New test for
+          tracking performance of sequence<basic types>. Our code
+          generatiom for sequence<> were broken for 1.3.2.
 
-	* performance-tests/Makefile:
-	* performance-tests/Makefile.bor: Added the new test directory
+        * performance-tests/Makefile:
+        * performance-tests/Makefile.bor: Added the new test directory
 
-	* performance-tests/Sequence_Latency/Makefile.bor:
-	* performance-tests/Sequence_Latency/Makefile: New makefile for
-	  recursing into every test.
+        * performance-tests/Sequence_Latency/Makefile.bor:
+        * performance-tests/Sequence_Latency/Makefile: New makefile for
+          recursing into every test.
 
 Sun Jun  8 13:39:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
 
-	  Fixed a bug in CDR operator generation for octet sequences.
-	  Previous changes were causing the octet sequence no-copy
-	  optimization to never be generated.
+          Fixed a bug in CDR operator generation for octet sequences.
+          Previous changes were causing the octet sequence no-copy
+          optimization to never be generated.
 
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
 
-	  Fixed a bug in name creation for anonymous sequences that
-	  are themselves sequence elements.
+          Fixed a bug in name creation for anonymous sequences that
+          are themselves sequence elements.
 
 Sun Jun  8 11:12:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -332,12 +345,12 @@ Sun Jun  8 11:12:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbwsvcs/orbsvcs/IFRService/OperationDef_i.h:
         * orbwsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
 
-	  Errors caught from the checkin below by gcc 3.2.
+          Errors caught from the checkin below by gcc 3.2.
 
 Sun Jun  8 10:10:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (get_protocols_hooks): Fixed a small problem in
-	  logic that lead to crashes in the daily builds.
+        * tao/ORB_Core.cpp (get_protocols_hooks): Fixed a small problem in
+          logic that lead to crashes in the daily builds.
 
 Sun Jun  8 10:20:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -373,8 +386,8 @@ Sun Jun  8 10:20:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
 
-	  Added partial support in the IFR for valuetypes, components, homes
-	  and eventtypes.
+          Added partial support in the IFR for valuetypes, components, homes
+          and eventtypes.
 
 Sun Jun  8 12:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -383,125 +396,125 @@ Sun Jun  8 12:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jun  7 18:01:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ChangeLogs/ChangeLog-03a: Moved entries till Mar 31 to this file
-	  from $TAO_ROOT/ChangeLog
+        * ChangeLogs/ChangeLog-03a: Moved entries till Mar 31 to this file
+          from $TAO_ROOT/ChangeLog
 
 Sat Jun  7 14:14:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp (get_protocol_hooks): This method needed
-	  synchronization that was missing. This method is called from the
-	  the *IOP_Transport::send_request () method. Multiple threads
-	  could be calling the same method from various handlers and there
-	  is a race during initialization.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp (get_protocol_hooks): This method needed
+          synchronization that was missing. This method is called from the
+          the *IOP_Transport::send_request () method. Multiple threads
+          could be calling the same method from various handlers and there
+          is a race during initialization.
 
-	  Since we now have a lock in the get_protocol_hooks () method and
-	  since the method goes to the ACE_Dynamic_Service singleton,
-	  there was need to optimize things a bit. This necessitated a flag
-	  that will keep track whether the get_protocol_hooks () has been
-	  called or not. If called, the method wold be more or like a
-	  no-op. Sad that we cannot inline this method to squeeze things
-	  out a bit more.
+          Since we now have a lock in the get_protocol_hooks () method and
+          since the method goes to the ACE_Dynamic_Service singleton,
+          there was need to optimize things a bit. This necessitated a flag
+          that will keep track whether the get_protocol_hooks () has been
+          called or not. If called, the method wold be more or like a
+          no-op. Sad that we cannot inline this method to squeeze things
+          out a bit more.
 
-	* tao/Protocols_Hooks.h: Changed the signatures of the methods
-	  update_client_protocol_properties () and
-	  update_server_protocol_properties (). These methods will now use
-	  a transport instead of the connection handler. Please see below
-	  for the actual reason.
+        * tao/Protocols_Hooks.h: Changed the signatures of the methods
+          update_client_protocol_properties () and
+          update_server_protocol_properties (). These methods will now use
+          a transport instead of the connection handler. Please see below
+          for the actual reason.
 
-	* tao/Default_Protocols_Hooks.h:
-	* tao/Default_Protocols_Hooks.cpp: Changes necessitated by the
-	  above change.
+        * tao/Default_Protocols_Hooks.h:
+        * tao/Default_Protocols_Hooks.cpp: Changes necessitated by the
+          above change.
 
-	* tao/IIOP_Transport.cpp:
-	* tao/IIOP_Transport.h: Added a methoid update_protocol_properties
-	  () which would serve as a bridge for a similar call on the
-	  connection handler. This method holds the transport lock and
-	  checks for the sanity of the connection handler before it calls
-	  update_protocol_properties () on the connection handler.
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h: Added a methoid update_protocol_properties
+          () which would serve as a bridge for a similar call on the
+          connection handler. This method holds the transport lock and
+          checks for the sanity of the connection handler before it calls
+          update_protocol_properties () on the connection handler.
 
-	* tao/Stub.cpp: Removed a call to reset_hint () on the endpoint.
+        * tao/Stub.cpp: Removed a call to reset_hint () on the endpoint.
 
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp
-	* tao/RTCORBA/RT_Protocols_Hooks.h: Changed the signatures of
-	  update_client_protocol_properties () and
-	  update_server_protocol_properties () to be in sync with the
-	  above change.
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp
+        * tao/RTCORBA/RT_Protocols_Hooks.h: Changed the signatures of
+          update_client_protocol_properties () and
+          update_server_protocol_properties () to be in sync with the
+          above change.
 
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: The nucleus of
-	  the problem was here. The object adapter during the invocation
-	  path makes a call to pre_invoke_remote_request (). Since the
-	  call is on the server side, only the transport object can be
-	  used to do anything since there is a possibility that the
-	  connection handlers could have been deleted. This goes back to
-	  how the TP_Reactor works and how things are implemented in TAO.
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp: The nucleus of
+          the problem was here. The object adapter during the invocation
+          path makes a call to pre_invoke_remote_request (). Since the
+          call is on the server side, only the transport object can be
+          used to do anything since there is a possibility that the
+          connection handlers could have been deleted. This goes back to
+          how the TP_Reactor works and how things are implemented in TAO.
 
-	  The transport object is capable of running some consistency
-	  checks on the connection handlers before invoking any method on
-	  the connection handler. We have now restructured the code in
-	  such a manner that the Protocols_Hooks will make a call on the
-	  transport object which will delegate to the connection handler
-	  after a couple of consistency checks. We got rid of a dynamic
-	  cast on the critical path by this restructuring.
+          The transport object is capable of running some consistency
+          checks on the connection handlers before invoking any method on
+          the connection handler. We have now restructured the code in
+          such a manner that the Protocols_Hooks will make a call on the
+          transport object which will delegate to the connection handler
+          after a couple of consistency checks. We got rid of a dynamic
+          cast on the critical path by this restructuring.
 
-	  Thanks to Andrew <andrewv@melbpc.org.au> for reporting the
-	  problem and providing lots of stack traces that pointed out the
-	  source of the problem.
+          Thanks to Andrew <andrewv@melbpc.org.au> for reporting the
+          problem and providing lots of stack traces that pointed out the
+          source of the problem.
 
 Sat Jun  7 13:45:38 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/PortableServer/Operation_Table.cpp:
-	* TAO_IDL/be/be_tmplinst.cpp: HP/UX and GCC do some weird things,
-	  so it's necessary to explicitly instantiate all static template
- 	  singletons, even when using automatic template instantiation!
-  	  Thanks to Stan Sosnovsky <sosnovsky_stan@emc.com> for reporting
- 	  this.
+        * tao/PortableServer/Operation_Table.cpp:
+        * TAO_IDL/be/be_tmplinst.cpp: HP/UX and GCC do some weird things,
+          so it's necessary to explicitly instantiate all static template
+          singletons, even when using automatic template instantiation!
+          Thanks to Stan Sosnovsky <sosnovsky_stan@emc.com> for reporting
+          this.
 
 Sat Jun 07 09:34:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h: Religiously
-	  replicated the changes made to other protocols.
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h: Religiously
+          replicated the changes made to other protocols.
 
 Sat Jun 07 09:10:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAOACE.dsw (Package): Added TAO_Strategies library as a
-	  dependency to ImR_Activator.
+        * TAOACE.dsw (Package): Added TAO_Strategies library as a
+          dependency to ImR_Activator.
 
 Sat Jun 07 08:50:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Endpoint.h: Removed the reset_hint () method.
+        * tao/Endpoint.h: Removed the reset_hint () method.
 
-	* tao/IIOP_Endpoint.h: Removed the reset_hint () method since it
-	  is not used anymore. Added an extra argument to the constructor
-	  to pass the priority of the endpoint.
+        * tao/IIOP_Endpoint.h: Removed the reset_hint () method since it
+          is not used anymore. Added an extra argument to the constructor
+          to pass the priority of the endpoint.
 
-	* tao/IIOP_Endpoint.cpp:
-	* tao/IIOP_Endpoint.i: Moved the object_addr () method from the
-	  inlined file to the cpp file. It was too big to be inlined in
-	  the first place.
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.i: Moved the object_addr () method from the
+          inlined file to the cpp file. It was too big to be inlined in
+          the first place.
 
-	  The implementation of the duplicate () method now passes the
-	  priority of the endpoint when it creates a new endpoint
-	  object.
+          The implementation of the duplicate () method now passes the
+          priority of the endpoint when it creates a new endpoint
+          object.
 
-	  Removed the implementation of the reset_hint () method.
+          Removed the implementation of the reset_hint () method.
 
-	* tao/Strategies/SHMIOP_Endpoint.cpp:
-	* tao/Strategies/SHMIOP_Endpoint.h:
-	* tao/Strategies/SHMIOP_Endpoint.i:
-	* tao/Strategies/UIOP_Endpoint.h:
-	* tao/Strategies/UIOP_Endpoint.cpp:
-	* tao/Strategies/DIOP_Endpoint.h:
-	* tao/Strategies/DIOP_Endpoint.i:
-	* tao/Strategies/DIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i: Religiously replicated
-	  the above changes.
+        * tao/Strategies/SHMIOP_Endpoint.cpp:
+        * tao/Strategies/SHMIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Endpoint.i:
+        * tao/Strategies/UIOP_Endpoint.h:
+        * tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Endpoint.h:
+        * tao/Strategies/DIOP_Endpoint.i:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i: Religiously replicated
+          the above changes.
 
-	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Added TAO_Strategies
-	  library to the link line.
+        * orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Added TAO_Strategies
+          library to the link line.
 
 Sat Jun  7 08:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -695,17 +708,17 @@ Sat Jun  7 08:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun  4 13:44:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp: Fixed compilation
-	  errors on VxWorks. Thanks to Rob Andzik for providing the
-	  patches.
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp: Fixed compilation
+          errors on VxWorks. Thanks to Rob Andzik for providing the
+          patches.
 
 Wed Jun  4 12:40:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/orb.idl: Removed the definition of OctetSeq from the CORBA
-	  module.  There is another definition in OctetSeq.pidl which is
-	  needed. Thanks to Gary Duzan <gduzan@bbn.com> for catching
-	  this. At this point I am not exactly sure how this missed us for
-	  almost 3 years.
+        * tao/orb.idl: Removed the definition of OctetSeq from the CORBA
+          module.  There is another definition in OctetSeq.pidl which is
+          needed. Thanks to Gary Duzan <gduzan@bbn.com> for catching
+          this. At this point I am not exactly sure how this missed us for
+          almost 3 years.
 
 Wed Jun  4 13:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -714,8 +727,8 @@ Wed Jun  4 13:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Jun  4 07:48:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/Makefile: Somehow missed the makefile
-	  from the checkin.
+        * orbsvcs/ImplRepo_Service/Makefile: Somehow missed the makefile
+          from the checkin.
 
 Wed Jun  4 07:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -728,16 +741,16 @@ Wed Jun  4 07:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jun  3 15:28:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/Options.cpp (init): Use a single
-	  threaded reactor instead of the default reactor. The default
-	  reactor ie. the TP reactor cannot be used with
-	  ACE_Process_Manager since the process manager tries to register
-	  a signal handler with the reactor. The registration would fail,
-	  causing ImR_Activators to be unusable. Hence this fix to use the
-	  single threaded reactor.
+        * orbsvcs/ImplRepo_Service/Options.cpp (init): Use a single
+          threaded reactor instead of the default reactor. The default
+          reactor ie. the TP reactor cannot be used with
+          ACE_Process_Manager since the process manager tries to register
+          a signal handler with the reactor. The registration would fail,
+          causing ImR_Activators to be unusable. Hence this fix to use the
+          single threaded reactor.
 
-	* orbsvcs/ImplRepo_Service/Makefile: Added TAO_Strategies to the
-	  link line.
+        * orbsvcs/ImplRepo_Service/Makefile: Added TAO_Strategies to the
+          link line.
 
 Tue Jun 03 07:52:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -745,90 +758,90 @@ Tue Jun 03 07:52:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Mon Jun  2 00:44:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Fixed
-	  a stupid typo. Actually caught this a half an hour back but
-	  couldnt  get this into the repository.
+        * orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Fixed
+          a stupid typo. Actually caught this a half an hour back but
+          couldnt  get this into the repository.
 
 Mon Jun  2 00:25:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/IDL_Test/Makefile: Disable the test if
-	  templates=explicit. The test is sufficiently complicated (for
-	  very good reasons) to get it right with explicit template
-	  instantiations. It is easy to fix the problem by changing the
-	  way the IDL's are specified. But we dont want to loose the
-	  structure of the exisiting IDL files in our test directories.
+        * tests/IDL_Test/Makefile: Disable the test if
+          templates=explicit. The test is sufficiently complicated (for
+          very good reasons) to get it right with explicit template
+          instantiations. It is easy to fix the problem by changing the
+          way the IDL's are specified. But we dont want to loose the
+          structure of the exisiting IDL files in our test directories.
 
-	  Once we have a nice way to handle these cases with explicit
-	  templates we can revert this. We will open up a bugzilla entry
-	  to remind us. The IDL compiler needs to get smarterwith users
-	  cooperation to handle all this weird cases.
+          Once we have a nice way to handle these cases with explicit
+          templates we can revert this. We will open up a bugzilla entry
+          to remind us. The IDL compiler needs to get smarterwith users
+          cooperation to handle all this weird cases.
 
 Sun Jun  1 23:38:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile: Added paths to the CONTROLLE_FILES
+        * Makefile: Added paths to the CONTROLLE_FILES
 
 Sun Jun 01 19:34:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Added a
-	  work  around for linking errors that show up in SunCC
-	  builds. The problem was that there was a typedef for the same
-	  sequence in two different IDL files (ie. in this file and
-	  CosLifeCycle.idl). This generated two explicit template
-	  instantiations which lead to multiply defined symbols. The IDL
-	  file is perfectly valid only that our IDL compiler need to made
-	  smarter for these cases.
+        * orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Added a
+          work  around for linking errors that show up in SunCC
+          builds. The problem was that there was a typedef for the same
+          sequence in two different IDL files (ie. in this file and
+          CosLifeCycle.idl). This generated two explicit template
+          instantiations which lead to multiply defined symbols. The IDL
+          file is perfectly valid only that our IDL compiler need to made
+          smarter for these cases.
 
-	  We work around the short-coming of the IDL compile by making a
-	  typedef which would suppress the generation of the second
-	  explicit template instantiations. This is just work around for
-	  the timebeing.
+          We work around the short-coming of the IDL compile by making a
+          typedef which would suppress the generation of the second
+          explicit template instantiations. This is just work around for
+          the timebeing.
 
 Sun Jun  1 10:08:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Simulator/Event_Supplier/Makefile: Updated
-	  dependencies.
+        * examples/Simulator/Event_Supplier/Makefile: Updated
+          dependencies.
 
 Sat May 31 23:57:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.cpp:
 
-	  Replaced all instances of skip_short() (for ValueModifer and member
-	  visibility in valuetypes and eventtypes) with skip_ulong(). Although
-	  these quantities are defined by CORBA to be 2 bytes, all values
-	  inserted into a type code are padded to 4-byte boundaries, including
-	  strings, This differs from the padding of CDR streams in general.
+          Replaced all instances of skip_short() (for ValueModifer and member
+          visibility in valuetypes and eventtypes) with skip_ulong(). Although
+          these quantities are defined by CORBA to be 2 bytes, all values
+          inserted into a type code are padded to 4-byte boundaries, including
+          strings, This differs from the padding of CDR streams in general.
 
 Sat May 31 10:39:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/configurations.html: Added a example for an optimized
-	  single-threaded setting.
+        * docs/configurations.html: Added a example for an optimized
+          single-threaded setting.
 
 Sat May 31 10:26:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile: Added a list of controlled files. With CIAO in picture
-	  we cannot ta everything underneath TAO with a single tag while
-	  making a release.
+        * Makefile: Added a list of controlled files. With CIAO in picture
+          we cannot ta everything underneath TAO with a single tag while
+          making a release.
 
 Fri May 30 20:29:11 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* docs/configurations.html: Fixed a typo where we claimed
-	  the leader/followers model was the default ORB concurrency
- 	  configuration.  Thanks to Dave Ryan <djryan@raytheon.com> for
- 	  detecting this.
+        * docs/configurations.html: Fixed a typo where we claimed
+          the leader/followers model was the default ORB concurrency
+          configuration.  Thanks to Dave Ryan <djryan@raytheon.com> for
+          detecting this.
 
 Fri May 30 13:56:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile: Added a new target 'releaseall'. Please see
-	  the entry "Fri May 30 13:52:49 2003  Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>" in $ACE_ROOT/ChangeLog  for the
-	  motivation.
+        * Makefile: Added a new target 'releaseall'. Please see
+          the entry "Fri May 30 13:52:49 2003  Balachandran Natarajan
+          <bala@dre.vanderbilt.edu>" in $ACE_ROOT/ChangeLog  for the
+          motivation.
 
 Fri May 30 13:06:02 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/RT_Notify_Service.h:
-	* orbsvcs/orbsvcs/Notify/RT_Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.cpp:
 
-	  Overloaded base virtual <init> method to silence HPUX11 build warning.
+          Overloaded base virtual <init> method to silence HPUX11 build warning.
 
 Thu May 29 22:24:02 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
@@ -839,21 +852,21 @@ Thu May 29 22:24:02 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
 Thu May 29 19:19:30 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/CONV_FRAMEC.cpp:
-	* tao/DynamicC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/Tagged_Components.cpp: Fixed duplicate symbols errors in
-	  SunCC builds.
+        * tao/CONV_FRAMEC.cpp:
+        * tao/DynamicC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/Tagged_Components.cpp: Fixed duplicate symbols errors in
+          SunCC builds.
 
 Thu May 29 18:47:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp: Another cosmetic change.
+        * tao/ObjectKey_Table.cpp: Another cosmetic change.
 
 Thu May 29 16:46:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* rules.tao.GNU: Reverted the change "Thu May 29 14:30:57 UTC 2003
-	  Gary Duzan <gduzan@bbn.com> , Craig Rodrigues
-	  <crodrigu@bbn.com>" since it breaks parallel builds.
+        * rules.tao.GNU: Reverted the change "Thu May 29 14:30:57 UTC 2003
+          Gary Duzan <gduzan@bbn.com> , Craig Rodrigues
+          <crodrigu@bbn.com>" since it breaks parallel builds.
 
 Thu May 29 11:12:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -865,27 +878,27 @@ Thu May 29 11:12:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu May 29 14:30:57 UTC 2003  Gary Duzan <gduzan@bbn.com>
                               Craig Rodrigues  <crodrigu@bbn.com>
 
-	* rules.tao.GNU:
-	  Replace several rules for building stub/skeleton files from an
-	  idl file with a single straightforward rule. The intermediate
-	  rules could cause problems with false dependencies when the
-	  generated files have slightly different timestamps.
+        * rules.tao.GNU:
+          Replace several rules for building stub/skeleton files from an
+          idl file with a single straightforward rule. The intermediate
+          rules could cause problems with false dependencies when the
+          generated files have slightly different timestamps.
 
 Thu May 29 14:55:15 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Removed entries for some moved files.
+          Removed entries for some moved files.
 
 Wed May 28 11:22:29 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/Activation_Manager.cpp:
-	* orbsvcs/tests/Notify/Periodic_Supplier.cpp:
-	* orbsvcs/tests/Notify/Periodic_Supplier.h:
+        * orbsvcs/tests/Notify/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/Periodic_Supplier.cpp:
+        * orbsvcs/tests/Notify/Periodic_Supplier.h:
 
-	  Renamed the <Periodic_Supplier::activate> method to
-	  <activate_task> method. This is done to stop the warnings from
-	  the Borland compiler.
+          Renamed the <Periodic_Supplier::activate> method to
+          <activate_task> method. This is done to stop the warnings from
+          the Borland compiler.
 
 Wed May 28 14:10:50 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -913,14 +926,14 @@ Wed May 28 08:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May 27 17:37:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/tmplinst.cpp: Fixed a explicit
-	  template instantiation problem in our daily builds. The problem
-	  was that some of the instantiated templates also had a
-	  specialization which the compiler couldn't see. The fix
-	  essentially moved the explicit template instantiations after the
-	  specialization so that the compiler doesn't get confused when
-	  using explicit template instantiations.
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp: Fixed a explicit
+          template instantiation problem in our daily builds. The problem
+          was that some of the instantiated templates also had a
+          specialization which the compiler couldn't see. The fix
+          essentially moved the explicit template instantiations after the
+          specialization so that the compiler doesn't get confused when
+          using explicit template instantiations.
 
 Tue May 27 15:17:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -940,11 +953,11 @@ Tue May 27 14:43:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May 26 17:04:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (register_value_factory): Changed to make sure we
-	  don't return the newly registered value factory as the
-	  previously registered value factory if none exist.  Otherwise,
-	  we would simply register the valuefactory and then destroy it
-	  immediately.
+        * tao/ORB.cpp (register_value_factory): Changed to make sure we
+          don't return the newly registered value factory as the
+          previously registered value factory if none exist.  Otherwise,
+          we would simply register the valuefactory and then destroy it
+          immediately.
 
 Mon May 26 17:29:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -985,49 +998,49 @@ Sun May 25 09:06:12 UTC 2003  Martin Corino  <mcorino@remedy.nl>
 
 Fri May 23 22:23:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor/IORInterceptor_List.h:
-	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
-	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
-	* orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
-	* orbsvcs/tests/Notify/lib/StructuredEvent.h:
-	* orbsvcs/tests/Notify/lib/Task_Callback.h: Fixed fuzz errors.
+        * tao/IORInterceptor/IORInterceptor_List.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
+        * orbsvcs/tests/Notify/lib/StructuredEvent.h:
+        * orbsvcs/tests/Notify/lib/Task_Callback.h: Fixed fuzz errors.
 
 Fri May 23 19:23:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB.cpp:
-	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h: Fixed warnings
-	  and compile errors in builds when exceptions are turned off.
+        * tao/ORB.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h: Fixed warnings
+          and compile errors in builds when exceptions are turned off.
 
 Fri May 23 17:53:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor_Adapter.h (TAO_IORInterceptor_Adapter): Fixed
-	  compilation errors in builds where exceptions are turned off.
+        * tao/IORInterceptor_Adapter.h (TAO_IORInterceptor_Adapter): Fixed
+          compilation errors in builds where exceptions are turned off.
 
 Fri May 23 17:49:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (destroy_interceptors): Fixed warning in builds
-	  where interceptors are turned off.
+        * tao/ORB_Core.cpp (destroy_interceptors): Fixed warning in builds
+          where interceptors are turned off.
 
 Fri May 23 17:40:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (add_interceptor): Fixed compilation errors in
-	  builds where exceptions are turned off.
+        * tao/ORB_Core.cpp (add_interceptor): Fixed compilation errors in
+          builds where exceptions are turned off.
 
 Fri May 23 17:02:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp: Some cosmetic fixes.
+        * tao/ObjectKey_Table.cpp: Some cosmetic fixes.
 
 Fri May 23 15:35:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Object.cpp (is_nil_i): Added a new conditional check for
-	  null objects in partially evaluated IOR's.
+        * tao/Object.cpp (is_nil_i): Added a new conditional check for
+          null objects in partially evaluated IOR's.
 
 Fri May 23 15:18:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Added code to
-	  initialize the proxy_broker pointers in the constructors.
+        * TAO_IDL/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Added code to
+          initialize the proxy_broker pointers in the constructors.
 
 Fri May 23 15:08:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1038,194 +1051,194 @@ Fri May 23 15:08:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri May 23 13:21:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Any.cpp: Moved explicit template instantiations for
-	  ValueBase and AbstractBase to its own library.
+          ValueBase and AbstractBase to its own library.
 
-	* tao/ObjectKey_Table.cpp: Fixed template instantiations for
-	  RB_Tree.
+        * tao/ObjectKey_Table.cpp: Fixed template instantiations for
+          RB_Tree.
 
-	* tao/Messaging/MessagingC.cpp: Removed unnecessary template
-	  instantiations.
+        * tao/Messaging/MessagingC.cpp: Removed unnecessary template
+          instantiations.
 
-	* tao/Valuetype/AbstractBase.cpp:
-	* tao/Valuetype/Seq_Tmplinst.cpp: Template instantiations for the
-	  ValueType library.
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/Seq_Tmplinst.cpp: Template instantiations for the
+          ValueType library.
 
 Fri May 23 11:16:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From David Kinder <david.kinder@sophos.com>
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
+        From David Kinder <david.kinder@sophos.com>
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
 
-	  Fixed logic error in comparison of two TAO_SSLIOP_Credentials
-	  objects.  [Bug 1509]
+          Fixed logic error in comparison of two TAO_SSLIOP_Credentials
+          objects.  [Bug 1509]
 
 Fri May 23 10:59:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Valuetype_Adapter.h: Cleaned the interface to the ORB to
-	  provide a consistent way of performing operations on ValueType.
+        * tao/Valuetype_Adapter.h: Cleaned the interface to the ORB to
+          provide a consistent way of performing operations on ValueType.
 
-	* tao/ORB.h: Removed references to TAO_ValueFactory_Map. Cache a
-	  pointer to the ValueFactory_Adapter instead.
+        * tao/ORB.h: Removed references to TAO_ValueFactory_Map. Cache a
+          pointer to the ValueFactory_Adapter instead.
 
-	* tao/ORB.cpp: Integrated patches from Vincent Korkos
-	  <vincent.korkos@fr.thalesgroup.com>  which contained the
-	  implentation of the ORB::unregister_value_factory ().
+        * tao/ORB.cpp: Integrated patches from Vincent Korkos
+          <vincent.korkos@fr.thalesgroup.com>  which contained the
+          implentation of the ORB::unregister_value_factory ().
 
-	  Did some cosmetic fixes to the implementations of
-	  lookup_value_factory () and register_value_factory ().
+          Did some cosmetic fixes to the implementations of
+          lookup_value_factory () and register_value_factory ().
 
-	* tao/Valuetype/Valuetype_Adapter_Impl.cpp (vf_map_find):
-	  Implemented the new adapter interfaces.
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp (vf_map_find):
+          Implemented the new adapter interfaces.
 
 Fri May 23 08:14:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor_Adapter.h: #included Exception.h. This should
-	  fix compilation errors with g++.
+        * tao/IORInterceptor_Adapter.h: #included Exception.h. This should
+          fix compilation errors with g++.
 
 Fri May 23 07:28:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor/IORInterceptor_List.h:
-	* tao/IORInterceptor/IORInterceptor_List.cpp: Fixed compilation
-	  problems on Win32.
+        * tao/IORInterceptor/IORInterceptor_List.h:
+        * tao/IORInterceptor/IORInterceptor_List.cpp: Fixed compilation
+          problems on Win32.
 
-	* tao/IORInterceptor/TAO_IORInterceptor.dsp: Added the new file to
-	  the project.
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp: Added the new file to
+          the project.
 
 Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	  This checkin cleans up things that were not properly done during
-	  IORInterceptor strategizing. There were multiple problems but
-	  they just showed up as a failure in the DLL_ORB test in our
-	  daily builds.
+          This checkin cleans up things that were not properly done during
+          IORInterceptor strategizing. There were multiple problems but
+          they just showed up as a failure in the DLL_ORB test in our
+          daily builds.
 
-	  The focal point of the problem TAO_IORInterceptor_List class
-	  which was left in the main tao library. This class used all
-	  sorts of mechanisms to access the IORInterceptor library which
-	  lead to shutdown problems if the ORB was dynamically loaded.
+          The focal point of the problem TAO_IORInterceptor_List class
+          which was left in the main tao library. This class used all
+          sorts of mechanisms to access the IORInterceptor library which
+          lead to shutdown problems if the ORB was dynamically loaded.
 
-	  The following changes basically moved the class to its own
-	  library and resolves the problems seen.
+          The following changes basically moved the class to its own
+          library and resolves the problems seen.
 
-	* tao/IORInterceptor_Adapter.h: Completely changed the interface
-	  of the adapter class. It now houses the following pure virtual
-	  methods
-	  - add_interceptor (),
-	  - destroy_interceptors (), and
-	  - interceptor_list () which provide a nice interface for the ORB
-	  to interact with the IORInterceptor in the library.
+        * tao/IORInterceptor_Adapter.h: Completely changed the interface
+          of the adapter class. It now houses the following pure virtual
+          methods
+          - add_interceptor (),
+          - destroy_interceptors (), and
+          - interceptor_list () which provide a nice interface for the ORB
+          to interact with the IORInterceptor in the library.
 
-	* tao/Interceptor_List.cpp:
-	* tao/Interceptor_List.h:
-	* tao/Interceptor_List.inl: Removed the TAO_IORInterceptor_List
-	  class from the file.
+        * tao/Interceptor_List.cpp:
+        * tao/Interceptor_List.h:
+        * tao/Interceptor_List.inl: Removed the TAO_IORInterceptor_List
+          class from the file.
 
-	* tao/ORB_Core.h: The ORB_Core will not store the list of IOR
-	  interceptors, but store a pointer to the Adapter class
-	  instead. The accessor for the IORInterceptor_List::TYPE has been
-	  removed but replaced with an accessor that returns a pointer
-	  IORInterceptor_List and a pointer to the adapter class.
+        * tao/ORB_Core.h: The ORB_Core will not store the list of IOR
+          interceptors, but store a pointer to the Adapter class
+          instead. The accessor for the IORInterceptor_List::TYPE has been
+          removed but replaced with an accessor that returns a pointer
+          IORInterceptor_List and a pointer to the adapter class.
 
-	* tao/ORB_Core.cpp: Added implementation for the new accessor
-	  methods included. Methods add_interceptor () and
-	  destroy_interceptors () just turns around and invokes the
-	  adapter classes for getting their work done.
+        * tao/ORB_Core.cpp: Added implementation for the new accessor
+          methods included. Methods add_interceptor () and
+          destroy_interceptors () just turns around and invokes the
+          adapter classes for getting their work done.
 
-	* tao/ORB_Core.i: Moved the add_interceptor () call to the .cpp
-	  file since it has a conditional statement.
+        * tao/ORB_Core.i: Moved the add_interceptor () call to the .cpp
+          file since it has a conditional statement.
 
-	* tao/IORInterceptor/IORInterceptor_List.cpp:
-	* tao/IORInterceptor/IORInterceptor_List.h:
-	* tao/IORInterceptor/IORInterceptor_List.inl: The class
-	  TAO_IORInterceptor_List has been placed in this file.
+        * tao/IORInterceptor/IORInterceptor_List.cpp:
+        * tao/IORInterceptor/IORInterceptor_List.h:
+        * tao/IORInterceptor/IORInterceptor_List.inl: The class
+          TAO_IORInterceptor_List has been placed in this file.
 
-	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
-	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h: The actual
-	  implementation for the adapter classes.
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h: The actual
+          implementation for the adapter classes.
 
-	* tao/IORInterceptor/Makefile.bor:
-	* tao/IORInterceptor/Makefile: Added the new file for
-	  compilation.
+        * tao/IORInterceptor/Makefile.bor:
+        * tao/IORInterceptor/Makefile: Added the new file for
+          compilation.
 
-	* tao/PortableServer/POA.cpp:
-	* tao/PortableServer/POAManager.cpp: They now use the new method
-	  on the ORB_Core to access the underlying registered IOR
-	  interceptors.
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POAManager.cpp: They now use the new method
+          on the ORB_Core to access the underlying registered IOR
+          interceptors.
 
-	* tao/Refcounted_ObjectKey.cpp:
-	* tao/Refcounted_ObjectKey.inl: Moved the decr_refcount () to the
-	  cpp file.
+        * tao/Refcounted_ObjectKey.cpp:
+        * tao/Refcounted_ObjectKey.inl: Moved the decr_refcount () to the
+          cpp file.
 
 Fri May 23 06:17:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp: Left
-	  overs from the previous checkin.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp: Left
+          overs from the previous checkin.
 
 Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	  This checkin is for fixing a problem with thread-per-connection
-	  strategy. If the client crahses during request processing on the
-	  server side, the server cleans up both the transport and the
-	  connection handler. This is in sync with what needs to happen
-	  for the reactive strategy.
+          This checkin is for fixing a problem with thread-per-connection
+          strategy. If the client crahses during request processing on the
+          server side, the server cleans up both the transport and the
+          connection handler. This is in sync with what needs to happen
+          for the reactive strategy.
 
-	  But in the thread-per-connection strategy, the problem gets
-	  exacerbated when the thread created for handling a new
-	  connection starts to clean itself up once its exits the
-	  *IOP_Connection_Handler::svc (). Since the handler is completely
-	  deleted resource cleanup by ACE_Task crashes.
+          But in the thread-per-connection strategy, the problem gets
+          exacerbated when the thread created for handling a new
+          connection starts to clean itself up once its exits the
+          *IOP_Connection_Handler::svc (). Since the handler is completely
+          deleted resource cleanup by ACE_Task crashes.
 
-	  This checkin basically decouples the thread-per-connection
-	  handler and the handler that has protocol specific code. When
-	  the client crashes only the protocol specific handler would get
-	  cleaned up, leaving the thread-per-connection handler to be
-	  cleaned when the thread created exits.
+          This checkin basically decouples the thread-per-connection
+          handler and the handler that has protocol specific code. When
+          the client crashes only the protocol specific handler would get
+          cleaned up, leaving the thread-per-connection handler to be
+          cleaned when the thread created exits.
 
-	* tao/Thread_Per_Connection_Handler.h:
-	* tao/Thread_Per_Connection_Handler.cpp: The new
-	  thread-per-connection handler class.
+        * tao/Thread_Per_Connection_Handler.h:
+        * tao/Thread_Per_Connection_Handler.cpp: The new
+          thread-per-connection handler class.
 
-	* tao/Acceptor_Impl.cpp (activate_svc_handler): If
-	  thread-per-connection is enabled, create a thread-per-connection
-	  handler object and pass the protocol specific handler to it.
+        * tao/Acceptor_Impl.cpp (activate_svc_handler): If
+          thread-per-connection is enabled, create a thread-per-connection
+          handler object and pass the protocol specific handler to it.
 
-	* tao/Connection_Handler.cpp (svc_i): Remove reference counting
-	  since this is now performed by the thread-per-connection
-	  handler.
+        * tao/Connection_Handler.cpp (svc_i): Remove reference counting
+          since this is now performed by the thread-per-connection
+          handler.
 
-	* tao/Transport.h: Provide privileged access to the
-	  thread-per-connection-handler.
+        * tao/Transport.h: Provide privileged access to the
+          thread-per-connection-handler.
 
-	* tao/Connection_Handler.h: Added a pure virtual open_handler ()
-	  method which would serve as a hook for the protocol specific
-	  handler's open () call.
+        * tao/Connection_Handler.h: Added a pure virtual open_handler ()
+          method which would serve as a hook for the protocol specific
+          handler's open () call.
 
-	* tao/IIOP_Connection_Handler.h:
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.h:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.h:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/SCIOP_Connection_Handler.h:
-	* tao/Strategies/SCIOP_Connection_Handler.cpp: Implemented the
-	  open_handler () hook method. Removed the svc () and activate ()
-	  calls since they should be taken care by the new
-	  thread-per-connection-handler class. This also removes a bunch
-	  of code duplication from within these classes.
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.h:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp: Implemented the
+          open_handler () hook method. Removed the svc () and activate ()
+          calls since they should be taken care by the new
+          thread-per-connection-handler class. This also removes a bunch
+          of code duplication from within these classes.
 
-	* tao/ObjectKey_Table.cpp (unbind_i): Removed a wrong comment.
+        * tao/ObjectKey_Table.cpp (unbind_i): Removed a wrong comment.
 
-	* tao/TAO.dsp:
-	* tao/Makefile.tao:
-	* tao/Makefile.bor: Added the new files for building.
+        * tao/TAO.dsp:
+        * tao/Makefile.tao:
+        * tao/Makefile.bor: Added the new files for building.
 
-	  Thanks to Ira Burton <imburton@micron.com> for reporting the
-	  problem.
+          Thanks to Ira Burton <imburton@micron.com> for reporting the
+          problem.
 
 Thu May 22 14:06:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1238,72 +1251,72 @@ Thu May 22 14:06:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu May 22 11:35:51 2003  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.h:
-	  Made Changes to reference count the servant so that it lasts as
-	  long as the POA needs it.
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.h:
+          Made Changes to reference count the servant so that it lasts as
+          long as the POA needs it.
 
 Thu May 22 13:02:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp (unbind_i): Beefed up error checking.
+        * tao/ObjectKey_Table.cpp (unbind_i): Beefed up error checking.
 
 Thu May 22 10:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (create_object): If create_collocated_object ()
-	  returns a null, create a CORBA::Object () before
-	  returning.  The null pointer returned by the
-	  create_collocated_object () is indeed right since the object
-	  pointed to by the PortableGroup::ObjectGroup_ptr object
-	  reference being created is not a servant.  It is a
-	  ServantManager!  More specifically, it is Cygnus' ServantManager
-	  created and housed by its LoadManager object.  An actual
-	  ObjectGroup object does not exist.  It is a logical entity
-	  exposed to clients to allow them to invoke methods transparently
-	  on members of that object group.
+        * tao/ORB_Core.cpp (create_object): If create_collocated_object ()
+          returns a null, create a CORBA::Object () before
+          returning.  The null pointer returned by the
+          create_collocated_object () is indeed right since the object
+          pointed to by the PortableGroup::ObjectGroup_ptr object
+          reference being created is not a servant.  It is a
+          ServantManager!  More specifically, it is Cygnus' ServantManager
+          created and housed by its LoadManager object.  An actual
+          ObjectGroup object does not exist.  It is a logical entity
+          exposed to clients to allow them to invoke methods transparently
+          on members of that object group.
 
-	  Hence returning a null-object would break the
-	  LoadBalancer. Thanks to Ossama for reporting and explaining the
-	  source of the problem.
+          Hence returning a null-object would break the
+          LoadBalancer. Thanks to Ossama for reporting and explaining the
+          source of the problem.
 
 Thu May 22 10:38:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp (ObjectKey_Table):
-	* tao/ObjectKey_Table.h: The hash value that was used as an key
-	  did not scale. We got collissions which broke down the whole
-	  model. Instead of using the hash value as the key, we now use
-	  the ObjectKey itself as the key. This turns out to be more
-	  efficient than the previous scheme and avoid collisions.
+        * tao/ObjectKey_Table.cpp (ObjectKey_Table):
+        * tao/ObjectKey_Table.h: The hash value that was used as an key
+          did not scale. We got collissions which broke down the whole
+          model. Instead of using the hash value as the key, we now use
+          the ObjectKey itself as the key. This turns out to be more
+          efficient than the previous scheme and avoid collisions.
 
-	  The other problem that came up because of the above change, is
-	  the requirement of a operator < for the ObjectKey. This was
-	  solved by the addition of a class TAO::Less_Than_ObjectKey which
-	  acts as a comparative operator. Ideally this should have been a
-	  template specialization of the parametric class ACE_Less_Than<>,
-	  but this wouldnt work so easily without breaking builds.
+          The other problem that came up because of the above change, is
+          the requirement of a operator < for the ObjectKey. This was
+          solved by the addition of a class TAO::Less_Than_ObjectKey which
+          acts as a comparative operator. Ideally this should have been a
+          template specialization of the parametric class ACE_Less_Than<>,
+          but this wouldnt work so easily without breaking builds.
 
 Wed May 21 19:57:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Acceptor.cpp (open_i): Changed to use the
-	  new init_buffer_size in ACE_MEM_Stream to set the initial
-	  MEM_Stream buffer size.
+        * tao/Strategies/SHMIOP_Acceptor.cpp (open_i): Changed to use the
+          new init_buffer_size in ACE_MEM_Stream to set the initial
+          MEM_Stream buffer size.
 
 Tue May 20 21:49:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/Request.cpp (invoke): Added an extra check
-	  for null Any_Impl pointers before going ahead with the
-	  _tao_decode () call.
+        * tao/DynamicInterface/Request.cpp (invoke): Added an extra check
+          for null Any_Impl pointers before going ahead with the
+          _tao_decode () call.
 
 Tue May 20 16:56:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp: Added explicit template instantiation.
+        * tao/ObjectKey_Table.cpp: Added explicit template instantiation.
 
 Tue May 20 13:56:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1482_Regression/Makefile:
-	* orbsvcs/examples/ORT/Makefile: Fixed a problem with parallel
-	  builds by not allowing the builds to run in parallel. Not sure
-	  why the dependencies are getting screwed. We now prevent
-	  parallel builds in these to directories.
+        * tests/Bug_1482_Regression/Makefile:
+        * orbsvcs/examples/ORT/Makefile: Fixed a problem with parallel
+          builds by not allowing the builds to run in parallel. Not sure
+          why the dependencies are getting screwed. We now prevent
+          parallel builds in these to directories.
 
 Tue May 20 12:43:58 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -1322,47 +1335,47 @@ Tue May 20 12:43:58 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue May 20 11:11:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Makefile: Added -lTAO_SmartProxies to the
-	  link line.
+        * tests/Smart_Proxies/Makefile: Added -lTAO_SmartProxies to the
+          link line.
 
 Mon May 19 15:41:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Makefile:
-	* utils/catior/makefile: Makefile fixes for the static builds.
+        * tests/Smart_Proxies/Makefile:
+        * utils/catior/makefile: Makefile fixes for the static builds.
 
 Mon May 19 13:02:16 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp (main):
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp (main):
 
-	  Destroy the POA prior to exiting on failure the scope containing
-	  the stack instantiated servants used by this test.  Fixes a
-	  segmenation fault caused by the POA being destroyed after the
-	  stack instantiated servants were destroyed.  The POA was
-	  attempting to deactivate servants that no longer existed.
+          Destroy the POA prior to exiting on failure the scope containing
+          the stack instantiated servants used by this test.  Fixes a
+          segmenation fault caused by the POA being destroyed after the
+          stack instantiated servants were destroyed.  The POA was
+          attempting to deactivate servants that no longer existed.
 
 Mon May 19 11:05:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Knut-Håvard Aksnes <knut@orion.no>
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (parse_options):
+        From Knut-Håvard Aksnes <knut@orion.no>
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (parse_options):
 
-	  Fixed support for "hostname_in_ior" endpoint option.  [Bug 1370]
+          Fixed support for "hostname_in_ior" endpoint option.  [Bug 1370]
 
-	From David Kinder <david.kinder@sophos.com>
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+        From David Kinder <david.kinder@sophos.com>
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
 
-	  The base_connector_.connect() call will increment the handler's
-	  reference count once more.  This is not needed as we already
-	  hold a reference to the handler.  Therefore we discard this
-	  second reference.  Fixes a memory leak.  [Bug 1506]
+          The base_connector_.connect() call will increment the handler's
+          reference count once more.  This is not needed as we already
+          hold a reference to the handler.  Therefore we discard this
+          second reference.  Fixes a memory leak.  [Bug 1506]
 
-	  (retrieve_credentials):
+          (retrieve_credentials):
 
-	  For the default certificate and private key case, assign the
-	  return value of the TAO_SSLIOP_Credentials_var::out() call to a
-	  reference to a TAO_SSLIOP_Credentials_ptr.  Previously, the
-	  return value was assigned to a local TAO_SSLIOP_Credentials_ptr
-	  variable that was lost when leaving the scope of this method.
-	  Fixes a memory leak.  [Bug 1508]
+          For the default certificate and private key case, assign the
+          return value of the TAO_SSLIOP_Credentials_var::out() call to a
+          reference to a TAO_SSLIOP_Credentials_ptr.  Previously, the
+          return value was assigned to a local TAO_SSLIOP_Credentials_ptr
+          variable that was lost when leaving the scope of this method.
+          Fixes a memory leak.  [Bug 1508]
 
 Mon May 19 15:51:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -1382,40 +1395,40 @@ Mon May 19 15:51:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Sun May 18 05:47:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/POA.cpp: Fixed a warning in minimum builds.
+        * tao/PortableServer/POA.cpp: Fixed a warning in minimum builds.
 
 Sun May 18 05:42:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Sequence_T.i: TAO_Unbounded_Array_Sequence and
-	  TAO_Bounded_Array_Sequence  were parametrized by T and
-	  T_var. But the template parameters in the .i file read T
-	  and T_life. Borland 6 compiler doesnt seem to like this
-	  throwing up a bunch of link errors.
+        * tao/Sequence_T.i: TAO_Unbounded_Array_Sequence and
+          TAO_Bounded_Array_Sequence  were parametrized by T and
+          T_var. But the template parameters in the .i file read T
+          and T_life. Borland 6 compiler doesnt seem to like this
+          throwing up a bunch of link errors.
 
-	  Thanks to Johnny Willemsen for providing this patch.
+          Thanks to Johnny Willemsen for providing this patch.
 
 Sat May 17 09:44:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/Options.html: Revamped the original documentation to be
-	  more usefule for the users. Thanks to Tao Lu, Andy and
-	  Dr. Schmidt for working on this and donating it to TAO.
+        * docs/Options.html: Revamped the original documentation to be
+          more usefule for the users. Thanks to Tao Lu, Andy and
+          Dr. Schmidt for working on this and donating it to TAO.
 
-	* doc/Options_new.html: Removed from the repository.
+        * doc/Options_new.html: Removed from the repository.
 
 Fri May 16 18:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any.cpp:
-	* tao/CDR_Encaps_Codec.cpp:
-	* tao/NVList.cpp: Few hours of nonstop debugging opened up a
-	  problem with a way ptrdiff_t was used. ptrdiff_t is signed
-	  whereas ptr_arith_t was unsigned. This lead to cases where
-	  alignments got a negative value on Linux and memcpy data into
-	  and from CDR streams were totally busted. This lead to crashes
-	  in Any tests in our daily builds. The problem was fixed by
-	  adding the MAX_ALIGNMENT to the aligned value.
+        * tao/Any.cpp:
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/NVList.cpp: Few hours of nonstop debugging opened up a
+          problem with a way ptrdiff_t was used. ptrdiff_t is signed
+          whereas ptr_arith_t was unsigned. This lead to cases where
+          alignments got a negative value on Linux and memcpy data into
+          and from CDR streams were totally busted. This lead to crashes
+          in Any tests in our daily builds. The problem was fixed by
+          adding the MAX_ALIGNMENT to the aligned value.
 
-	  This will not fix all the problems with Any's. There are some
-	  more fixes which would be checked in in the next few days.
+          This will not fix all the problems with Any's. There are some
+          more fixes which would be checked in in the next few days.
 
 Thu May 15 14:54:31 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -1524,15 +1537,15 @@ Thu May 15 14:07:33 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Wed May 14 12:46:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp (destroy): Iterating conditions while
-	  destroying was wrong which lead to crashes.
+        * tao/ObjectKey_Table.cpp (destroy): Iterating conditions while
+          destroying was wrong which lead to crashes.
 
 Tue May 13 15:38:29 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (destroy_interceptors):
+        * tao/ORB_Core.cpp (destroy_interceptors):
 
-	  Corrected emulated exception macro within ACE_TRY block.
-	  ACE_TRY_THROW, not ACE_THROW.
+          Corrected emulated exception macro within ACE_TRY block.
+          ACE_TRY_THROW, not ACE_THROW.
 
 Tue May 13 10:57:22 2003  Chad Elliott  <elliott_c@ociweb.com>
 

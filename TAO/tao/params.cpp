@@ -87,7 +87,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
               continue;
             }
 
-          ACE_CString endpt = endpoints.substring (begin, end);
+          ACE_CString endpt = endpoints.substring (begin, end - begin);
           // The substring call will work even if `end' is equal to
           // ACE_CString::npos since that will just extract the substring
           // from the offset `begin' to the end of the string.
@@ -104,7 +104,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
           else
             status = -1;  // Error: invalid URL style endpoint set
 
-          begin += end + 1;
+          begin = end + 1;
           end = endpoints.find (endpoints_delimiter, begin);
         }
     }
