@@ -1,3 +1,9 @@
+Tue Sep 28 11:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Removed setting of ACE_SIZEOF_LONG_DOUBLE, this is done in
+          Basic_Types.h
+
 Mon Sep 27 18:53:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/script.mpb:
