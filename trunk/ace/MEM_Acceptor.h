@@ -10,7 +10,7 @@
 //    MEM_Aceeptor.h
 //
 // = AUTHOR
-//    Nanbor Wang
+//    Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -33,14 +33,17 @@ class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
   // = TITLE
   //     Defines the format and interface for the acceptor side of the
-  //     local mmap stream.  I should probably designed the class
-  //     to prevent user passing a non-localhost endpoint as the acceptor
-  //     listen point because it doesn't make any sense at all to make
-  //     the listening endpoint visible (or connectable) anywhere outside
-  //     of this machine.  However, I decided to leave the type of endpoint
-  //     as <ACE_Addr> so we can later changed to use UNIX sockets with
-  //     mmap stream if so desired.  (Currently, using UNIX socket with
-  //     this class will not work.)
+  //     local mmap stream.  
+  //
+  // = DESCRIPTION
+  //     This class should be modified to prevent user passing a
+  //     non-localhost endpoint as the acceptor listen point because
+  //     it doesn't make any sense at all to make the listening
+  //     endpoint visible (or connectable) anywhere outside of this
+  //     machine.  However, the type of endpoint is left as <ACE_Addr>
+  //     so we can later changed to use UNIX sockets with mmap stream
+  //     if so desired.  (Currently, using UNIX socket with this class
+  //     will not work.)
 public:
   // = Initialization methods.
   ACE_MEM_Acceptor (void);
@@ -85,8 +88,8 @@ public:
   // ${(TMP|TEMP)}//ACE_MEM_Acceptor_(port-number)_(&stream),
   // otherwise, it is <mmap_prefix_>_(port-number)_(&stream),
   // <mmap_prefix_> should include _absolute_ path so the connector
-  // within the same host can located the mmap file.
-  // Example:  /tmp/mmapfile
+  // within the same host can located the mmap file.  Example:
+  // /tmp/mmapfile.
 
   int get_local_addr (ACE_MEM_Addr &) const;
   // Return the local endpoint address in the referenced <ACE_Addr>.
@@ -137,8 +140,10 @@ protected:
 
 private:
   ASYS_TCHAR *mmap_prefix_;
+  // @@ Nanbor, can you please add a comment here?
 
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
+  // @@ Nanbor, can you please add a comment here?
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -10,7 +10,7 @@
 //    MEM_SAP.h
 //
 // = AUTHOR
-//    Nanbor Wang
+//    Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -42,7 +42,7 @@ public:
   ~ACE_MEM_SAP (void);
   // Destructor.
 
-  void * acquire_buffer (const ssize_t size);
+  void *acquire_buffer (const ssize_t size);
   // request a buffer of size <size>.  Return 0 if the <shm_malloc_> is
   // not initialized.
 
@@ -72,18 +72,18 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-
   // = Class initializing methods to create/connect to a shared memory pool.
 
   int create_shm_malloc (LPCTSTR name,
                          MALLOC_OPTIONS *options = 0);
-  // Create a new shm_malloc object.  Return 0 if succeed and -1 otherwise.
-  // This method should only be called from an acceptor class that wants to
-  // create a new memory pool for inter process communication.
+  // Create a new shm_malloc object.  Return 0 if succeed and -1
+  // otherwise.  This method should only be called from an acceptor
+  // class that wants to create a new memory pool for inter process
+  // communication.
 
   int close_shm_malloc (const int remove = 0);
-  // Close down the share memory pool.  If <remove> != 0, then the mmap file
-  // will also get removed.
+  // Close down the share memory pool.  If <remove> != 0, then the
+  // mmap file will also get removed.
 
   MALLOC_TYPE *shm_malloc_;
   // Data exchange channel.
@@ -94,6 +94,6 @@ protected:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_SAP.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SOCK_IO_H */

@@ -10,10 +10,11 @@
 //
 // = DESCRIPTION
 //    This is a test to verify and illustrate the static and dynamic
-//    priority mechanisms of the ACE_Message_Queue class and the
-//    ACE_Dynamic_Message_Queue class. As in the Priority_Buffer_Test,
-//    a producer generates messages and enqueues them, and a consumer
-//    dequeues them and checks their ordering.
+//    priority mechanisms of the <ACE_Message_Queue> class and the
+//    <ACE_Dynamic_Message_Queue> class.  As in the
+//    <Priority_Buffer_Test>, a producer generates messages and
+//    enqueues them, and a consumer dequeues them and checks their
+//    ordering.
 //
 //    In these tests, every effort is made to ensure that there is
 //    plenty of time for the messages to be enqueued and dequeued,
@@ -133,9 +134,12 @@ order_consumer (void *args)
 {
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
-  const char *receipt_order = ACE_static_cast (ArgStruct *, args)->order_string_;
-  u_int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue =
+    ACE_static_cast (ArgStruct *, args)->queue_;
+  const char *receipt_order =
+    ACE_static_cast (ArgStruct *, args)->order_string_;
+  u_int expected_count =
+    ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (receipt_order != 0);
   ACE_ASSERT (msg_queue != 0);
@@ -176,10 +180,14 @@ order_producer (void *args)
 {
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
-  const char *send_order = ACE_static_cast (ArgStruct *, args)->order_string_;
-  ACE_Message_Block **block_array = ACE_static_cast (ArgStruct *, args)->array_;
-  int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue =
+    ACE_static_cast (ArgStruct *, args)->queue_;
+  const char *send_order =
+    ACE_static_cast (ArgStruct *, args)->order_string_;
+  ACE_Message_Block **block_array =
+    ACE_static_cast (ArgStruct *, args)->array_;
+  int expected_count =
+    ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (send_order != 0);
   ACE_ASSERT (block_array != 0);
@@ -249,7 +257,9 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
       supplier_args.array_[i]->msg_priority (i);
 
       // Assign every other message short or long execution time.
-      supplier_args.array_[i]->msg_execution_time (((i % 2) ? slow_execution : fast_execution));
+      supplier_args.array_[i]->msg_execution_time (((i % 2) 
+                                                    ? slow_execution 
+                                                    : fast_execution));
     }
 
   consumer_args.queue_ = msg_queue;
@@ -276,7 +286,7 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
 
   for (i = 0; i < array_size; ++i)
     {
-      switch ((4*i)/array_size)
+      switch ((4 * i) / array_size)
         {
         case 0:
           supplier_args.array_[i]->msg_deadline_time (future_deadline);
@@ -292,7 +302,7 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
           break;
           // should never reach here, but its better to make sure
         default:
-          ACE_ASSERT ((4*i)/array_size < 4);
+          ACE_ASSERT ((4 * i) / array_size < 4);
           break;
         }
     }
@@ -327,8 +337,10 @@ performance_consumer (void * args)
 
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
-  u_int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue =
+    ACE_static_cast (ArgStruct *, args)->queue_;
+  u_int expected_count =
+    ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (msg_queue != 0);
 
@@ -342,10 +354,8 @@ performance_consumer (void * args)
   // Keep looping, reading a message out of the queue, until the
   // expected number of messages have been dequeued.
   for (local_count = 0; local_count < expected_count; ++local_count)
-    {
-      if (msg_queue->dequeue_head (mb) == -1)
-        break;
-    }
+    if (msg_queue->dequeue_head (mb) == -1)
+      break;
 
   // Stop timer, obtain and report its elapsed time.x
   timer.stop ();
@@ -373,9 +383,12 @@ performance_producer (void *args)
 
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ACE_static_cast (ArgStruct *, args)->queue_;
-  ACE_Message_Block **block_array = ACE_static_cast (ArgStruct *, args)->array_;
-  int expected_count = ACE_static_cast (ArgStruct *, args)->expected_count_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue =
+    ACE_static_cast (ArgStruct *, args)->queue_;
+  ACE_Message_Block **block_array =
+    ACE_static_cast (ArgStruct *, args)->array_;
+  int expected_count =
+    ACE_static_cast (ArgStruct *, args)->expected_count_;
 
   ACE_ASSERT (send_order != 0);
   ACE_ASSERT (block_array != 0);
@@ -515,13 +528,16 @@ run_performance_test (u_int min_load,
       // Fill in information for all types of tests.
       for (i = 0; i < load; ++i)
         {
-          // construct a message new block off the heap, to hold a single character
+          // Construct a message new block off the heap, to hold a
+          // single character.
           ACE_NEW_RETURN (supplier_args.array_[i],
                           ACE_Message_Block (1),
                           -1);
 
           // Assign every other message short or long execution time.
-          supplier_args.array_[i]->msg_execution_time (((i % 2) ? slow_execution : fast_execution));
+          supplier_args.array_[i]->msg_execution_time (((i % 2) 
+                                                        ? slow_execution 
+                                                        : fast_execution));
         }
 
       // Fill in information for the specific type of test.
@@ -541,6 +557,7 @@ run_performance_test (u_int min_load,
               // Assign time to deadline in descending order.
               time_offsets [i] = time_offsets [i - 1] + offset_step;
             }
+
           break;
         case WORST:
           // Fill in worst case information.
@@ -678,6 +695,7 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Dynamic_Priority_Test"));
 
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (
         ACE_Sched_Params (
@@ -703,23 +721,31 @@ main (int, ASYS_TCHAR *[])
   ACE_Message_Queue<ACE_SYNCH> *test_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_static_message_queue (max_queue);
   ACE_ASSERT (test_queue != 0);
-  run_order_test (test_queue, send_order, static_receipt_order);
+  run_order_test (test_queue,
+                  send_order,
+                  static_receipt_order);
   delete test_queue;
 
   // Test factory, dynamic message queue (deadline strategy).
-  test_queue = ACE_Message_Queue_Factory<ACE_SYNCH>::create_deadline_message_queue (max_queue);
+  test_queue =
+    ACE_Message_Queue_Factory<ACE_SYNCH>::create_deadline_message_queue (max_queue);
   ACE_ASSERT (test_queue != 0);
-  run_order_test (test_queue, send_order, deadline_receipt_order);
+  run_order_test (test_queue,
+                  send_order,
+                  deadline_receipt_order);
   delete test_queue;
 
   // Test factory, dynamic message queue (laxity strategy).
-  test_queue =  ACE_Message_Queue_Factory<ACE_SYNCH>::create_laxity_message_queue (max_queue);
+  test_queue =
+    ACE_Message_Queue_Factory<ACE_SYNCH>::create_laxity_message_queue (max_queue);
   ACE_ASSERT (test_queue != 0);
-  run_order_test (test_queue, send_order, laxity_receipt_order);
+  run_order_test (test_queue,
+                  send_order,
+                  laxity_receipt_order);
   delete test_queue;
 
 #if defined (VXWORKS)
-  // test factory for VxWorks message queue
+  // test factory for VxWorks message queue.
   ACE_Message_Queue_Vx *test_queue_vx =
     ACE_Message_Queue_Factory<ACE_NULL_SYNCH>::create_Vx_message_queue (vx_max_queue,
                                                                         vx_msg_size);
@@ -738,19 +764,26 @@ main (int, ASYS_TCHAR *[])
 
   // For each of an increasing number of message loads, run the same
   // performance test (best case, worst case, and randomized, over
-  // each kind of queue
+  // each kind of queue).
   run_performance_test (MIN_LOAD,
                         MAX_LOAD,
                         LOAD_STEP,
                         BEST);
+
   run_performance_test (MIN_LOAD,
                         MAX_LOAD,
                         LOAD_STEP,
                         WORST);
+
   run_performance_test (MIN_LOAD,
                         MAX_LOAD,
                         LOAD_STEP,
                         RANDOM);
+#else
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("ACE is not compiled with ACE_HAS_TIMED_MESSAGE_BLOCKS enabled\n")));
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
+
   ACE_END_TEST;
   return 0;
 }

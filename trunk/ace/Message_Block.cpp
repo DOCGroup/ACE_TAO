@@ -378,8 +378,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Allocator *allocator_strategy,
                                       ACE_Lock *locking_strategy,
                                       u_long priority,
-                                      const ACE_Time_Value & execution_time,
-                                      const ACE_Time_Value & deadline_time,
+                                      const ACE_Time_Value &execution_time,
+                                      const ACE_Time_Value &deadline_time,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
   : data_block_ (0)
@@ -411,8 +411,8 @@ ACE_Message_Block::init (size_t size,
                          ACE_Allocator *allocator_strategy,
                          ACE_Lock *locking_strategy,
                          u_long priority,
-                         const ACE_Time_Value & execution_time,
-                         const ACE_Time_Value & deadline_time,
+                         const ACE_Time_Value &execution_time,
+                         const ACE_Time_Value &deadline_time,
                          ACE_Allocator *data_block_allocator,
                          ACE_Allocator *message_block_allocator)
 {
@@ -463,8 +463,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Lock *locking_strategy,
                                       Message_Flags flags,
                                       u_long priority,
-                                      const ACE_Time_Value & execution_time,
-                                      const ACE_Time_Value & deadline_time,
+                                      const ACE_Time_Value &execution_time,
+                                      const ACE_Time_Value &deadline_time,
                                       ACE_Data_Block *db,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
@@ -521,8 +521,8 @@ ACE_Message_Block::init_i (size_t size,
                            ACE_Lock *locking_strategy,
                            Message_Flags flags,
                            u_long priority,
-                           const ACE_Time_Value & execution_time,
-                           const ACE_Time_Value & deadline_time,
+                           const ACE_Time_Value &execution_time,
+                           const ACE_Time_Value &deadline_time,
                            ACE_Data_Block *db,
                            ACE_Allocator *data_block_allocator,
                            ACE_Allocator *message_block_allocator)
@@ -533,8 +533,10 @@ ACE_Message_Block::init_i (size_t size,
   this->rd_ptr_ = 0;
   this->wr_ptr_ = 0;
   this->priority_ = priority;
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   this->execution_time_ = execution_time;
   this->deadline_time_ = deadline_time;
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
   this->cont_ = msg_cont;
   this->next_ = 0;
   this->prev_ = 0;
@@ -831,8 +833,13 @@ ACE_Message_Block::duplicate (void) const
                                        0, // locking strategy
                                        0, // flags
                                        this->priority_, // priority
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
                                        this->execution_time_, // execution time
                                        this->deadline_time_, // absolute time to deadline
+#else
+                                       ACE_Time_Value::zero,     // execution time
+                                       ACE_Time_Value::max_time, // absolute time of deadline
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
                                        // Get a pointer to a
                                        // "duplicated" <ACE_Data_Block>
                                        // (will simply increment the
@@ -853,8 +860,13 @@ ACE_Message_Block::duplicate (void) const
                                               0, // locking strategy
                                               0, // flags
                                               this->priority_, // priority
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
                                               this->execution_time_, // execution time
                                               this->deadline_time_, // absolute time to deadline
+#else
+                                              ACE_Time_Value::zero,     // execution time
+                                              ACE_Time_Value::max_time, // absolute time of deadline
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
                                               // Get a pointer to a
                                               // "duplicated" <ACE_Data_Block>
                                               // (will simply increment the
@@ -969,8 +981,13 @@ ACE_Message_Block::clone (Message_Flags mask) const
                                   0, // locking strategy
                                   0, // flags
                                   this->priority_, // priority
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
                                   this->execution_time_, // execution time
                                   this->deadline_time_, // absolute time to deadline
+#else
+                                  ACE_Time_Value::zero,     // execution time
+                                  ACE_Time_Value::max_time, // absolute time of deadline
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
                                 // Get a pointer to a
                                 // "duplicated" <ACE_Data_Block>
                                 // (will simply increment the
@@ -996,10 +1013,15 @@ ACE_Message_Block::clone (Message_Flags mask) const
                                     0, // locking strategy
                                     0, // flags
                                     this->priority_, // priority
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
                                     this->execution_time_, // execution time
                                     this->deadline_time_, // absolute time to deadline
+#else
+                                    ACE_Time_Value::zero,     // execution time
+                                    ACE_Time_Value::max_time, // absolute time of deadline
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
                                     db,
-                                    db->data_block_allocator(),
+                                    db->data_block_allocator (),
                                     this->message_block_allocator_);
     }
 

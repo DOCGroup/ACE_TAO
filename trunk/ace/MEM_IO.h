@@ -10,7 +10,7 @@
 //    MEM_IO.h
 //
 // = AUTHOR
-//    Nanbor Wang
+//    Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,11 +29,11 @@
 class ACE_Export ACE_MEM_IO : public ACE_SOCK, public ACE_MEM_SAP
 {
   // = TITLE
-  //     Defines the methods for the ACE shared memeory wrapper I/O routines
-  //     (e.g., send/recv).
+  //     Defines the methods for the ACE shared memeory wrapper I/O
+  //     routines (e.g., send/recv).
 public:
   // = Initialization and termination methods.
-  ACE_MEM_IO ();
+  ACE_MEM_IO (void);
   // Constructor.
 
   ~ACE_MEM_IO (void);
@@ -60,7 +60,7 @@ public:
   // Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
 
   ssize_t fetch_recv_buf (int flags, const ACE_Time_Value *timeout = 0);
-  // @@ Please fill in here.
+  // @@ Nanbor, please fill in here.
 
   ssize_t send (const void *buf,
                 size_t n,
@@ -121,14 +121,14 @@ private:
   // Internal pointer for support recv/send.
 
   ssize_t buf_size_;
-  // total buffer size.
+  // Total buffer size.
 
   ssize_t cur_offset_;
-  // current read pointer location.
+  // Current read pointer location.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_IO.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SOCK_IO_H */
