@@ -1,9 +1,23 @@
-project(Assembly_Manager): server, ciao_server {
+project(Assembly_Manager): ciao_server, acexml {
 
   libs += TAO_IORTable
   libpaths += $(TAO_ROOT)/tao/IORTable
 
   Source_Files {
+    Assembly_Impl.cpp
+    Assembly_Visitors.cpp
     Deployment_Configuration.cpp
+    Assembly_Manager.cpp                // Main
+    ../XML_Helpers/XML_Utils.cpp
+    ../XML_Helpers/Softpkg_Handlers.cpp
+    ../XML_Helpers/Cascadable_DocHandler.cpp
+    ../XML_Helpers/Assembly_Spec.cpp
+    ../XML_Helpers/Assembly_Handlers.cpp
+  }
+}
+
+project(Assembly_Deployer) : ciao_server {
+  Source_Files {
+    Assembly_Deployer.cpp
   }
 }

@@ -94,6 +94,9 @@ namespace CIAO
       Container (const char *id,
                  unsigned long cardinality);
 
+      /// Accepting a visitor.
+      virtual int accept (Visitor &v);
+
       //@{
       /** Accesor/mutator for destination information */
       void destination (const char *des);
@@ -123,9 +126,16 @@ namespace CIAO
           CONSUMESID
         } IF_Register_Type;
 
+      typedef enum _register_method
+        {
+          NAMINGSERVICE,
+          IORFILE               // CIAO extension
+        } Register_Method;
+
       typedef struct _register_info
       {
         IF_Register_Type type_;
+        Register_Method method_;
 
         ACE_CString port_id_;
         ACE_CString name_;
@@ -238,6 +248,8 @@ namespace CIAO
       Visitor ();
 
       virtual ~Visitor () = 0;
+
+      virtual int visit_Container (Container *c) = 0;
 
       virtual int visit_hostcollocation (hostcollocation *hc) = 0;
 

@@ -107,6 +107,13 @@ CIAO::Assembly_Placement::processcollocation::processcollocation (const char *id
 // ================================================================
 
 ACE_INLINE
+CIAO::Assembly_Placement::Visitor::Visitor (void)
+{
+}
+
+// ================================================================
+
+ACE_INLINE
 CIAO::Assembly_Connection::IF_Resolver_Info::IF_Resolver_Info
 (CIAO::Assembly_Connection::IF_Resolution_Method type,
  const char *info,

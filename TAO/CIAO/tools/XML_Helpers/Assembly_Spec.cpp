@@ -25,6 +25,15 @@ CIAO::Assembly_Placement::Node::~Node ()
 // ================================================================
 
 int
+CIAO::Assembly_Placement::Container::accept
+(CIAO::Assembly_Placement::Visitor &visitor)
+{
+  return visitor.visit_Container (this);
+}
+
+// ================================================================
+
+int
 CIAO::Assembly_Placement::componentinstantiation::accept
 (CIAO::Assembly_Placement::Visitor &visitor)
 {
@@ -75,3 +84,7 @@ CIAO::Assembly_Placement::processcollocation::~processcollocation ()
 }
 
 // ================================================================
+
+CIAO::Assembly_Placement::Visitor::~Visitor (void)
+{
+}

@@ -18,5 +18,7 @@ project(DaemonController) : ciao_server, acexml {
     ../XML_Helpers/XML_Utils.cpp
     ../XML_Helpers/Softpkg_Handlers.cpp
     ../XML_Helpers/Cascadable_DocHandler.cpp
+    ../XML_Helpers/Assembly_Handlers.cpp
+    ../XML_Helpers/Assembly_Spec.cpp
   }
 }

@@ -3,6 +3,8 @@
 #include "Assembly_Impl.h"
 //#include "ACtive_Objref_Map.h"
 #include "Cookies.h"
+#include "../XML_Helpers/Assembly_Spec.h"
+#include "../XML_Helpers/XML_Utils.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Assembly_Impl.inl"
@@ -20,17 +22,11 @@ CIAO::AssemblyFactory_Impl::_default_POA (void)
 }
 
 int
-CIAO::AssemblyFactory_Impl::init (ACE_ENV_ARG_DECL)
+CIAO::AssemblyFactory_Impl::init (const char *init_file
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Initialize AssemblyFactory and create the internal container
-  // implementation that actually interacts with installed
-  // homes/components.
-
-  // We will probably need two ORBs in this process.  One for the
-  // deployment framework, and one for the actual components.
-
-  return 0;
+  return this->deployment_config_.init (init_file);
 }
 
 ::Components::Cookie *
@@ -40,12 +36,21 @@ CIAO::AssemblyFactory_Impl::create_assembly (const char * assembly_loc
                    Components::Deployment::InvalidLocation,
                    Components::CreateFailure))
 {
-  ACE_UNUSED_ARG (assembly_loc);
+  CIAO::Assembly_Spec *assembly_spec;
+  ACE_NEW_RETURN (assembly_spec,
+                  CIAO::Assembly_Spec,
+                  0);
+
+  if (CIAO::XML_Utils::parse_componentassembly (assembly_loc,
+                                                assembly_spec) != 0)
+    ACE_THROW_RETURN (Components::Deployment::InvalidLocation (), 0);
 
   CIAO::Assembly_Impl *servant = 0;
   ACE_NEW_RETURN (servant,
                   CIAO::Assembly_Impl (this->orb_.in (),
-                                       this->poa_.in ()),
+                                       this->poa_.in (),
+                                       assembly_spec,
+                                       this->deployment_config_),
                   0);
 
   PortableServer::ServantBase_var save_servant (servant);
@@ -80,7 +85,7 @@ CIAO::AssemblyFactory_Impl::create_assembly (const char * assembly_loc
 
 ::Components::Deployment::Assembly_ptr
 CIAO::AssemblyFactory_Impl::lookup (Components::Cookie * c
-                               ACE_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::Deployment::InvalidAssembly))
 {
@@ -101,7 +106,7 @@ CIAO::AssemblyFactory_Impl::lookup (Components::Cookie * c
 
 void
 CIAO::AssemblyFactory_Impl::destroy (Components::Cookie * c
-                                ACE_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::Deployment::InvalidAssembly,
                    Components::RemoveFailure))
@@ -135,6 +140,8 @@ CIAO::AssemblyFactory_Impl::destroy (Components::Cookie * c
 
   this->poa_->deactivate_object (oid
                                  ACE_ENV_ARG_PARAMETER);
+
+  this->orb_->shutdown ();
 }
 
 
@@ -142,10 +149,13 @@ CORBA::ULong CIAO::Assembly_Impl::assembly_count_ = 0;
 
 CIAO::Assembly_Impl::~Assembly_Impl ()
 {
-  // @@ remove all Containers?
+  // @@ tearing down everything?
+
   ACE_DEBUG ((LM_DEBUG,
               "CIAO::Assembly_Impl::~Assembly_Impl %d\n",
               this->serial_number_));
+
+  delete this->assembly_spec_;
 }
 
 PortableServer::POA_ptr
@@ -155,7 +165,7 @@ CIAO::Assembly_Impl::_default_POA (void)
 }
 
 int
-CIAO::Assembly_Impl::init (ACE_ENV_ARG_DECL)
+CIAO::Assembly_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Initialize Assembly and create the internal container
@@ -174,8 +184,19 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               "CIAO::Assembly_Impl::build %d\n",
               this->serial_number_));
+  if (this->state_ == Components::Deployment::INSERVICE)
+    return;                     // We are running already.
 
-  // @@ Well, we need to actually buid something here.
+  ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
+
+  CIAO::Assembly_Builder_Visitor builder (this->orb_.in (),
+                                          this->assembly_context_,
+                                          this->deployment_config_);
+  int build_result = this->assembly_spec_->partitioning_.accept (builder);
+
+  ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
+
+  // @@ Connect components.
 
   this->state_ = ::Components::Deployment::INSERVICE;
 }
@@ -188,6 +209,10 @@ CIAO::Assembly_Impl::tear_down (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               "CIAO::Assembly_Impl::tear_down %d\n",
               this->serial_number_));
+  if (this->state_ != Components::Deployment::INSERVICE)
+    return;                     // Nothing to do here.
+
+  // @@ At least we should remove home and kill the component server.
 
   this->state_ = ::Components::Deployment::INACTIVE;
 }

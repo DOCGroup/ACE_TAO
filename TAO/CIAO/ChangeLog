@@ -1,3 +1,25 @@
+Fri Apr 04 16:26:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	M examples/handcrafted/Display/CIAO_Installation_Data.ini
+	M examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp
+	A tools/Assembly_Deployer/Assembly_Deployer.cpp
+	M tools/Assembly_Deployer/Assembly_Deployer.mpc
+	M tools/Assembly_Deployer/Assembly_Impl.cpp
+	M tools/Assembly_Deployer/Assembly_Impl.h
+	M tools/Assembly_Deployer/Assembly_Impl.inl
+	A tools/Assembly_Deployer/Assembly_Manager.cpp
+	A tools/Assembly_Deployer/Assembly_Visitors.h
+	A tools/Assembly_Deployer/Assembly_Visitors.inl
+	A tools/Assembly_Deployer/Deployment_Configuration.cpp
+	A tools/Assembly_Deployer/Deployment_Configuration.h
+	A tools/Assembly_Deployer/Deployment_Configuration.inl
+	M tools/Daemon/Daemon.mpc
+	M tools/Daemon/DaemonController.dsp
+	M tools/XML_Helpers/Assembly_Handlers.cpp
+	M tools/XML_Helpers/Assembly_Spec.cpp
+	M tools/XML_Helpers/Assembly_Spec.h
+	M tools/XML_Helpers/Assembly_Spec.inl
+
 Thu Apr 03 15:08:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Assembly_Impl.*:
