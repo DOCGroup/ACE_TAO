@@ -114,8 +114,7 @@ endif
 
 ifeq (03,$(CXXMAJORVERS))
   # Suppress Warning 302 ((...) parameter list is a non-portable feature)
-  # Suppress Warning 1039 about binary incompatibility with 3.33 to 3.50
-  CCFLAGS                += +W302 +W1039
+  CCFLAGS                += +W302
 endif
 CPPFLAGS	+= $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 
