@@ -1906,9 +1906,9 @@ static void PLAYvideo()
   int preGroup = -1;
   int preHeader = -1;
   int preFrame = -1;
-  /*
+  
   fprintf(stderr, "PLAY . . .\n");
-  */
+  
   CmdRead((char *)&para, sizeof(para));
 #ifdef NeedByteOrderConversion
   para.sn = ntohl(para.sn);
@@ -1936,9 +1936,9 @@ static void PLAYvideo()
     return;
   }
   
-  /*
+  
   fprintf(stderr, "VStimeAdvance from client: %d\n", VStimeAdvance);
-  */
+  
   sendPatternGops = para.sendPatternGops;
   ComputeFirstSendPattern(frameRateLimit);
 #ifdef STAT
@@ -1953,6 +1953,7 @@ static void PLAYvideo()
   SendReferences(timerGroup, timerFrame);
   StartTimer();
   
+  fprintf (stderr, "VS Going into the for loop\n");
   for (;;)
   {
     int curGroup = timerGroup;
@@ -2205,14 +2206,14 @@ void VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
   
   for (;;)
   {
-    /*
+    
     fprintf(stderr, "VS: waiting for a new command...\n");
-    */
+    
     precmd = cmd;
     CmdRead((char *)&cmd, 1);
-    /*
-    SFprintf(stderr, "VS got cmd %d\n", cmd);
-    */
+    
+    fprintf(stderr, "VS got cmd %d\n", cmd);
+    
     switch (cmd)
     {
     case CmdPOSITION:
