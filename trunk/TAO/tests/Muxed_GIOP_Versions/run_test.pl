@@ -116,12 +116,5 @@ if ($server != 0) {
 unlink $iorfile;
 unlink $logfile;
 
-exit $status
-
-
-
-
-
-
-
+exit $status;
 
