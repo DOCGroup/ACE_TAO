@@ -6,7 +6,7 @@ ACE_RCSID(Benchmark, interceptors, "$Id$")
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 const CORBA::ULong request_ctx_id = 0xdead;
-const CORBA::ULong reply_ctx_id = 0xbeef;
+//const CORBA::ULong reply_ctx_id = 0xbeef;   // Never used.
 
 Vault_Client_Request_Interceptor::Vault_Client_Request_Interceptor (CORBA::ORB_ptr orb)
   : myname_ ("Vault_Client_Interceptor"),
@@ -180,8 +180,7 @@ Vault_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRe
 void
 Vault_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                                              CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (ri->operation (), "update_records") == 0)
     {
@@ -356,8 +355,7 @@ Vault_Server_Request_Context_Interceptor::receive_request (PortableInterceptor::
 void
 Vault_Server_Request_Context_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr,
                                                       CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
@@ -545,8 +543,7 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (PortableInterceptor::
 void
 Vault_Server_Request_Dynamic_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                                              CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   if (ACE_OS::strcmp (ri->operation (), "ready") == 0)
@@ -704,8 +701,7 @@ Vault_Server_Request_NOOP_Interceptor::receive_request (PortableInterceptor::Ser
 void
 Vault_Server_Request_NOOP_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr,
                                              CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
