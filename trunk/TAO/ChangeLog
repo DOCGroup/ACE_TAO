@@ -1,3 +1,7 @@
+Tue Oct 22 10:15:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp: Fixed a unused variable warning. 
+
 Mon Oct 21 23:17:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsp (RSC): Fixed
