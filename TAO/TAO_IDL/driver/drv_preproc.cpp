@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"drv_link.h"
 
 #include "ace/Process_Manager.h"
+#include "ace/Env_Value_T.h"
 
 #include	<stdio.h>
 #include	<fcntl.h>
@@ -115,7 +116,9 @@ void
 DRV_cpp_init()
 {
   // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
-  DRV_cpp_putarg(idl_global->cpp_location());
+  ACE_Env_Value<char*> cpp_path ("CPP_PATH", (char *) 0);
+
+  DRV_cpp_putarg(cpp_path != 0 ? cpp_path : idl_global->cpp_location());
   DRV_cpp_putarg("-E");
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg("-I.");
