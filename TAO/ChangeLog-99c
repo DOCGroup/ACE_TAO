@@ -1,3 +1,8 @@
+Wed Aug 18 10:49:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* default_resource.cpp:
+	  Removed an extra 'break' statement.
+
 Wed Aug 18 03:12:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/include/idl_global.h:
