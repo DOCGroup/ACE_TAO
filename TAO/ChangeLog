@@ -1,3 +1,8 @@
+Sun Apr  3 17:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/skip.cpp:
+          Fixed compile error in emulated exception build
+
 Sun Apr  3 17:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
