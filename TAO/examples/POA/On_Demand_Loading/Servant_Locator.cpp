@@ -95,7 +95,7 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
 
 PortableServer::ObjectId_var
 ServantLocator_i::create_dll_object_id (const char *dllname,
-                                           const char *factory_function)
+                                        const char *factory_function)
 {
   return this->servant_manager_.create_dll_object_id (dllname,
                                                       factory_function);
