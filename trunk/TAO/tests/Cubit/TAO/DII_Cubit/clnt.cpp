@@ -185,7 +185,7 @@ Cubit_Client::cube_union_dii (void)
    
   this->call_count_++;
 
-  req = this->objref_->_request ((const CORBA::String) "cube_union", this->env_);
+  req = this->objref_->_request ((CORBA::String) "cube_union", this->env_);
 
   if (this->env_.exception () != 0) 
     {
@@ -450,7 +450,7 @@ Cubit_Client::cube_struct_dii (void)
   // Create the request ...
 
   CORBA::Request_ptr	req = 
-    this->objref_->_request ((const CORBA::String) "cube_struct", this->env_);
+    this->objref_->_request ((CORBA::String) "cube_struct", this->env_);
 
   if (this->env_.exception () != 0) 
     {
