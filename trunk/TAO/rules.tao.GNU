@@ -45,6 +45,9 @@ IDL_EXT2=Cli.h Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
 .SUFFIXES: $(IDL_EXT)
 
 ifneq ($(use_flick),1)
+ifneq ($(tao_native_exception),1)
+TAO_IDLFLAGS += -Ge 1
+endif
 $(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 else
