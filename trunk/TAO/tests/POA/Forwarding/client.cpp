@@ -16,24 +16,55 @@
 //
 //==================================================================================
 
+#include "tao/corba.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
+#include "ace/Read_Buffer.h"
 #include "FooC.h"
 
-static char *IOR = 0;
+static char *server_IOR_ = 0;
 static int iterations = 6;
+
+
+int
+read_ior (char *filename)
+{
+  // Open the file for reading.
+    ACE_HANDLE f_handle_ = ACE_OS::open (filename,0);
+  
+  if (f_handle_ == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+    "Unable to open %s for writing: %p\n",
+    filename),
+    -1);
+  ACE_Read_Buffer ior_buffer (f_handle_);
+  server_IOR_ = ior_buffer.read ();
+  
+  if (server_IOR_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to allocate memory to read ior: %p\n"),
+                      -1);
+   return 0;
+}
+
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:");
+  ACE_Get_Opt get_opts (argc, argv, "f:i:");
   int c;
+  int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'k':
-        IOR = get_opts.optarg;
+      case 'f': // read the IOR from the file.
+        result = read_ior (get_opts.optarg);
+        if (result < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+          "Unable to read ior from %s : %p\n",
+          get_opts.optarg),
+          -1);
         break;
       case 'i':
         iterations = ::atoi (get_opts.optarg);
@@ -42,13 +73,13 @@ parse_args (int argc, char **argv)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           "-k IOR"
+                           "-f server_IOR_file"
                            "\n",
                            argv [0]),
                           -1);
       }
 
-  if (IOR == 0)
+  if (server_IOR_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
 
@@ -75,7 +106,7 @@ main (int argc, char **argv)
     return parse_args_result;
 
   // Get an object reference from the argument string.
-  CORBA::Object_var object = orb->string_to_object (IOR, env);
+  CORBA::Object_var object = orb->string_to_object (server_IOR_, env);
 
   if (env.exception () != 0)
     {
@@ -109,7 +140,7 @@ main (int argc, char **argv)
     {
 
       // About half way through
-      if (i == iterations / 2)
+      if (i % 3 == 0)
         {
           foo->forward (env);
 
@@ -128,44 +159,7 @@ main (int argc, char **argv)
           // If exception
           if (env.exception () != 0)
             {
-              // Narrow to ForwardRequest
-              PortableServer::ForwardRequest_ptr forward_request =
-                PortableServer::ForwardRequest::_narrow (env.exception ());
-
-              // If narrowing of exception succeeded
-              if (forward_request != 0)
-                {
-                  // Set foo to new location
-                  foo = Foo::_narrow (forward_request->forward_reference.in (), env);
-
-                  // If narrowing of Foo succeeded
-                  if (env.exception () == 0)
-                    {
-                      CORBA::String_var new_location = orb->object_to_string (foo.in (), env);
-                      if (env.exception () == 0)
-                        {
-                          ACE_DEBUG ((LM_DEBUG, "new location = %s \n", new_location.in ()));
-                          continue;
-                        }
-                      else
-                        {
-                          env.print_exception ("ORB::object_to_string");
-                          return -1;
-                        }
-                    }
-                  // If narrowing of Foo failed
-                  else
-                    ACE_ERROR_RETURN ((LM_ERROR,
-                                       "Foo::_narrow on forwarded location failed\n"),
-                                      -1);
-                }
-
-              // If narrowing of exception failed
-              else
-                {
-                  env.print_exception ("PortableServer::ForwardRequest::_narrow");
-                  return -1;
-                }
+              ACE_DEBUG ((LM_DEBUG, "Got an exception. :-(\n"));
             }
           else
             // Print the result of doit () method of the foo reference.

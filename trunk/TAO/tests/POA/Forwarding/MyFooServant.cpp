@@ -14,6 +14,7 @@
 //
 //==================================================================================
 
+#include "tao/corba.h"
 #include "MyFooServant.h"
 
 // Constructor
@@ -24,6 +25,10 @@ MyFooServant::MyFooServant (PortableServer::POA_ptr poa,
     value_ (value),
     forward_to_ (CORBA::Object::_duplicate (forward_to))
 {
+  if (CORBA::is_nil (forward_to))
+  {
+     ACE_DEBUG ((LM_DEBUG,"forward_to is nil!\n"));
+  }
 }
 
 // Destructor
