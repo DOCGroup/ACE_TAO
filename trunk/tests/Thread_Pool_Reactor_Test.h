@@ -42,6 +42,9 @@ public:
 protected:
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
+
+private:
+  size_t  nr_msgs_rcvd_;
 };
 
 #endif /* ACE_TESTS_THREAD_POOL_REACTOR_TEST_H */

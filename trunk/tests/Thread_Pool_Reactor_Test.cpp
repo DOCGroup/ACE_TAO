@@ -106,7 +106,7 @@ parse_arg (int argc, ASYS_TCHAR *argv[])
 }
 
 Acceptor_Handler::Acceptor_Handler (ACE_Thread_Manager *thr_mgr)
-  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr)
+  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr), nr_msgs_rcvd_(0)
 {
   // Make sure we use TP_Reactor with this class (that's the whole
   // point, right?)
@@ -122,12 +122,10 @@ Acceptor_Handler::handle_input (ACE_HANDLE fd)
 
   if (result > 0 && this->peer ().recv_n (buffer, len) == len)
     {
+      ++this->nr_msgs_rcvd_;
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) Acceptor_Handler::handle_input (fd = %x)\n"),
-                  fd));
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) handle_input: input is %s\n"),
-                  buffer));
+                  ASYS_TEXT ("(%t) svr input; fd: 0x%x; input: %s\n"),
+                  fd, buffer));
       if (ACE_OS::strcmp (buffer, ASYS_TEXT ("shutdown")) == 0)
         {
           main_event_loop = 0;
@@ -138,7 +136,7 @@ Acceptor_Handler::handle_input (ACE_HANDLE fd)
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%t) Acceptor_Handler: end handle input (%x)\n"),
+                ASYS_TEXT ("(%t) Acceptor_Handler: end handle input (0x%x)\n"),
                 fd));
   return -1;
 }
@@ -147,8 +145,12 @@ int
 Acceptor_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Acceptor_Handler::handle_close (fd = %x)\n"),
-              fd));
+              ASYS_TEXT ("(%t) svr close; fd: 0x%x, rcvd %d msgs\n"),
+              fd, this->nr_msgs_rcvd_));
+  if (this->nr_msgs_rcvd_ != cli_req_no)
+    ACE_ERROR((LM_ERROR, ASYS_TEXT ("(%t) Expected %d messages; got %d\n"),
+               cli_req_no, this->nr_msgs_rcvd_));
+
   this->destroy ();
   return 0;
 }
@@ -161,15 +163,16 @@ svr_worker (void *)
   while (!ACE_Reactor::event_loop_done ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) handling events ....\n"));
+                  ASYS_TEXT ("(%t) handling events ....\n")));
 
       if (ACE_Reactor::instance ()->handle_events () == -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) Error handling events\n"));
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("(%t) %p\n"),
+                    ASYS_TEXT ("Error handling events")));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) I am done handling events. Bye, bye\n"));
+              ASYS_TEXT ("(%t) I am done handling events. Bye, bye\n")));
 
   return 0;
 }
@@ -197,8 +200,8 @@ cli_worker (void *arg)
       for (size_t j = 0; j < cli_req_no; j++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%t) conn_worker stream handle = %x\n"),
-                      stream.get_handle ()));
+                      ASYS_TEXT ("(%t) conn_worker handle 0x%x, req %d\n"),
+                      stream.get_handle (), j+1));
           stream.send_n (arg,
                          len + sizeof (ASYS_TCHAR));
           ACE_OS::sleep (delay);
@@ -214,13 +217,15 @@ void *
 worker (void *)
 {
   ACE_OS::sleep (3);
-  ASYS_TCHAR *msg = ASYS_TEXT ("Message from Connection worker\n");
+  ASYS_TCHAR *msg = ASYS_TEXT ("Message from Connection worker");
   ASYS_TCHAR buf [BUFSIZ];
   buf[0] = (ACE_OS::strlen (msg) + 1) * sizeof (ASYS_TCHAR);
   ACE_OS::strcpy (&buf[1], msg);
 
   ACE_INET_Addr addr (rendezvous);
 
+  ACE_DEBUG((LM_DEBUG,
+             ASYS_TEXT ("(%t) Spawning %d client threads...\n"), cli_thrno));
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
                                                       buf);
@@ -228,15 +233,14 @@ worker (void *)
 
   ACE_Thread_Manager::instance ()->wait_grp (grp);
 
-  ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Shutting down...\n")));
+              ASYS_TEXT ("(%t) Client threads done; shutting down...\n")));
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
 
   if (connect.connect (stream, addr) < 0)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p Error while connecting\n"),
+                ASYS_TEXT ("(%t) %p Error while connecting\n"),
                 ASYS_TEXT ("connect")));
 
   char *sbuf = "\011shutdown";
@@ -277,6 +281,8 @@ main (int argc, ASYS_TCHAR *argv[])
                        ASYS_TEXT ("open")),
                       1);
 
+  ACE_DEBUG((LM_DEBUG,
+             ASYS_TEXT ("(%t) Spawning %d server threads...\n"), svr_thrno));
   ACE_Thread_Manager::instance ()->spawn_n (svr_thrno,
                                             svr_worker);
   ACE_Thread_Manager::instance ()->spawn (worker);
@@ -289,8 +295,6 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_ASSERT (result != -1);
 
   ACE_Thread_Manager::instance ()->wait ();
-
-  ACE_OS::sleep (1);
 
   ACE_END_TEST;
   return 0;
