@@ -1,4 +1,4 @@
-// $Id
+// $Id$
 
 // ============================================================================
 //
@@ -66,7 +66,7 @@ Generator::gen_fixed_struct (void)
   this->fixed_struct_.c = ACE_OS::rand () % 128;
   this->fixed_struct_.s = (CORBA::Short) ACE_OS::rand ();
   this->fixed_struct_.o = ACE_OS::rand () % 128;
-  this->fixed_struct_.f = (CORBA::Float) drand48 ();
+  this->fixed_struct_.f = (CORBA::Float) ACE_OS::rand () * 1.0;
   this->fixed_struct_.b = (CORBA::Boolean) ACE_OS::rand () % 2;
   this->fixed_struct_.d = (ACE_OS::rand () * 1.0);
   return this->fixed_struct_;
