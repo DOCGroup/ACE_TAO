@@ -1,3 +1,11 @@
+Thu Apr 09 16:43:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/ACE.*: Changed *_version() functions to be non-inlined.
+  	  After this change, inclusion of ace/Version.h can be moved into
+ 	  ACE.cpp.  This change helps as all of ACE doesn't have to be
+ 	  compiled after Version.h changes (Version.h changes every time a
+ 	  new beta is produced).
+
 Thu Apr  9 13:39:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP: Improved both the CPP-unserver.cpp
