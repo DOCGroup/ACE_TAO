@@ -1,6 +1,6 @@
 //$Id$
 
-project(*CIDL) {
+project(CIDL) {
   requires += cidl
   sharedname =
   staticname = CIDL
