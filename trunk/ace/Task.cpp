@@ -96,9 +96,9 @@ ACE_Task_Base::activate (long flags,
                                            priority,
                                            grp_id,
                                            task,
+                                           thread_handles,
                                            stack,
-                                           stack_size,
-                                           thread_handles);
+                                           stack_size);
   if (this->grp_id_ == -1)
     return -1;
   else
