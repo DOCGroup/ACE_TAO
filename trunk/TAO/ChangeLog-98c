@@ -8,116 +8,116 @@ Sat Jul 18 22:16:14 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Jul 18 20:22:19 1998  Michael Kircher <mk1@cs.wustl.edu>
 
-	* tests/Quoter/run_test.sh: Removed this file,
-	  all the functionality is provided by the 
-	  run_test.pl script.
+        * tests/Quoter/run_test.sh: Removed this file,
+          all the functionality is provided by the
+          run_test.pl script.
 
-	* tao/Server_Request.{h,cpp}: Added a new constructor,
-	  which does not need an input CDR stream. It is going
-	  to be used for locate requests. When we invoke
-	  the non_existend method on the object to see if it
-	  is there, forwarded or not existent.
+        * tao/Server_Request.{h,cpp}: Added a new constructor,
+          which does not need an input CDR stream. It is going
+          to be used for locate requests. When we invoke
+          the non_existend method on the object to see if it
+          is there, forwarded or not existent.
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java.JDK1.2:
-	  Adopted to the new interfaces for the Event Service.
+        * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java.JDK1.2:
+          Adopted to the new interfaces for the Event Service.
 
 Sat Jul 18 19:37:19 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp: The ORB now looks
-	  at argv and argc before the client does.
-	
-	* orbsvcs/tests/Simple_Naming/run_test.pl: New Perl script
-	  for testing.
+        * orbsvcs/tests/Simple_Naming/client.cpp: The ORB now looks
+          at argv and argc before the client does.
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl: New Perl script
+          for testing.
 
 Sat Jul 18 17:31:29 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/Hardpack/IDL_Cubit/cubit.idl:
-	* tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.{hh,cc}:
-	* tests/Cubit/Hardpack/IDL_Cubit/client_i.{h,cpp}:
-	* tests/Cubit/Hardpack/IDL_Cubit/server_i.{h,cpp}:
-	* tests/Cubit/Hardpack/IDL_Cubit/client.cpp:
-	* tests/Cubit/Hardpack/IDL_Cubit/server.cpp:
-	* tests/Cubit/Hardpack/IDL_Cubit/Makefile:
-	* tests/Cubit/Hardpack/IDL_Cubit/README:
-	* tests/Cubit/Hardpack/IDL_Cubit/initref.cfg:
-		Added these files for the IDL_Cubit test for the Hardpack
-	ORB.
-	
+        * tests/Cubit/Hardpack/IDL_Cubit/cubit.idl:
+        * tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.{hh,cc}:
+        * tests/Cubit/Hardpack/IDL_Cubit/client_i.{h,cpp}:
+        * tests/Cubit/Hardpack/IDL_Cubit/server_i.{h,cpp}:
+        * tests/Cubit/Hardpack/IDL_Cubit/client.cpp:
+        * tests/Cubit/Hardpack/IDL_Cubit/server.cpp:
+        * tests/Cubit/Hardpack/IDL_Cubit/Makefile:
+        * tests/Cubit/Hardpack/IDL_Cubit/README:
+        * tests/Cubit/Hardpack/IDL_Cubit/initref.cfg:
+                Added these files for the IDL_Cubit test for the Hardpack
+        ORB.
+
 Sat Jul 18 15:44:59 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
-	* orbsvcs/orbsvcs/Trader/Offer_Database.*: 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.*:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.*:
-	* orbsvcs/orbsvcs/Trader/Trader_T.cpp 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.*:
-	* orbsvcs/tests/Trading/Offer_Exporter.*:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.*:
-	* orbsvcs/tests/Trading/Offer_Importer.*:
-	* orbsvcs/tests/Trading/export_test.cpp:
-	* orbsvcs/tests/Trading/import_test.cpp:
-	* orbsvcs/tests/Trading/collocated_test.cpp:
-	* orbsvcs/tests/Trading/Makefile:
-	* orbsvcs/Trading_Service/Trading_Service.cpp:
-	* orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.*:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.*:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.*:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.*:
+        * orbsvcs/tests/Trading/Offer_Exporter.*:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.*:
+        * orbsvcs/tests/Trading/Offer_Importer.*:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/import_test.cpp:
+        * orbsvcs/tests/Trading/collocated_test.cpp:
+        * orbsvcs/tests/Trading/Makefile:
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/Trading_Service/Makefile:
 
-	Fixed g++ 2.7.2 compilation warnings/errors. Note: the tests and
-	applications, although they compile now with g++ 2.7.2, don't link
-	properly because the g++ linker is baffled by the profuse
-	virtual/multiple inheritance in the skeletons generated from the
-	CosTrading.idl file, and can't find the copy constructors it
-	autogenerated. The solution is to have the IDL compiler generate
-	explicit copy constructors for these skeleton classes.
+        Fixed g++ 2.7.2 compilation warnings/errors. Note: the tests and
+        applications, although they compile now with g++ 2.7.2, don't link
+        properly because the g++ linker is baffled by the profuse
+        virtual/multiple inheritance in the skeletons generated from the
+        CosTrading.idl file, and can't find the copy constructors it
+        autogenerated. The solution is to have the IDL compiler generate
+        explicit copy constructors for these skeleton classes.
 
 Sat Jul 18 15:39:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.dsp: Updated this MSVC
-	  project file to use the latest changes to the Simple 
-	  Naming test.
+        * orbsvcs/tests/Simple_Naming/client.dsp: Updated this MSVC
+          project file to use the latest changes to the Simple
+          Naming test.
 
 Sat Jul 18 15:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * docs/forwarding.html: Added some optimization
-	  suggestions.
+          suggestions.
 
 Sat Jul 18 14:19:48 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/orbconf.h:
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/CosTrading.idl:
-	Moved the definition of TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG into
-	orbconf.h and CosTrading.idl, and out of the orbsvcs Makefile.
+        * tao/orbconf.h:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/CosTrading.idl:
+        Moved the definition of TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG into
+        orbconf.h and CosTrading.idl, and out of the orbsvcs Makefile.
 
 Sat Jul 18 14:12:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Added the 
-	  ORBiiopprofilelock switch to the client configuration to
-	  switch off the lock needed for forwarding. We know, we
-	  do not need it, so we use a null lock instead. This
-	  should improve the performance a little bit.
+        * tests/Cubit/TAO/IDL_Cubit/svc.conf: Added the
+          ORBiiopprofilelock switch to the client configuration to
+          switch off the lock needed for forwarding. We know, we
+          do not need it, so we use a null lock instead. This
+          should improve the performance a little bit.
 
-	* tao/Connect.cpp: Added code for handle_locate, which is still
-	  commented, because not tested.
-	  The TAO_ORB_Core_instance is now cached in send_request and
-	  handle_input.
+        * tao/Connect.cpp: Added code for handle_locate, which is still
+          commented, because not tested.
+          The TAO_ORB_Core_instance is now cached in send_request and
+          handle_input.
 
 Sat Jul 18 14:00:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: Always try to 
-	  generate perfect hash functions for the operation
-	  dispatching by enabling the -P flag.
+        * tests/Cubit/TAO/IDL_Cubit/Makefile: Always try to
+          generate perfect hash functions for the operation
+          dispatching by enabling the -P flag.
 
 Sat Jul 18 11:29:43 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/RT_Task.h
           orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp
 
-	  Changed to always typedef ACE_ES_QUEUE as the base
-	  template class ACE_Message_Queue<ACE_SYNCH> and
-	  explicitly construct dynamic message queues as needed.
+          Changed to always typedef ACE_ES_QUEUE as the base
+          template class ACE_Message_Queue<ACE_SYNCH> and
+          explicitly construct dynamic message queues as needed.
 
 Sat Jul 18 10:19:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
