@@ -218,7 +218,7 @@ public:
   // socket internally (and free it).  Returns -1 on failure and 0 on
   // success.
 
-  static int get_ip_interfaces (ACE_UINT32 &count, 
+  static int get_ip_interfaces (size_t &count, 
 				ACE_INET_Addr *&addr_array);
   // Return count and array of all configured IP interfaces on this
   // host, rc = 0 on success (count == number of interfaces else -1).

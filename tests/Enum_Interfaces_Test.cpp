@@ -39,7 +39,7 @@ main (int, char *[])
   ACE_INET_Addr *the_addr_array;
   ACE_UINT32 how_many = 0;
 
-  int rc ACE::get_ip_interfaces (how_many, the_addr_array);
+  int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
   if (rc != 0)
     ACE_ERROR ((LM_ERROR,
