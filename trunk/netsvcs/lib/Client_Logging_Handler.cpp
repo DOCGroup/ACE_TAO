@@ -360,5 +360,7 @@ ACE_SVC_FACTORY_DEFINE (ACE_Client_Logging_Connector)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<ACE_Client_Logging_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *, ACE_RW_Mutex>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<ACE_Client_Logging_Handler> *, ACE_RW_Mutex>;
 template class ACE_Svc_Tuple<ACE_Client_Logging_Handler>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
