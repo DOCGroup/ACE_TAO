@@ -20,6 +20,7 @@
 #ifndef TAO_IFR_VISITOR_H
 #define TAO_IFR_VISITOR_H
 
+#include "ifr_visitor_macro.h"
 #include "ast_visitor.h"
 #include "be_extern.h"
 #include "tao/Environment.h"

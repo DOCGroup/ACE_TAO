@@ -73,7 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_extern.h"
 #include "ifr_removing_visitor.h"
 #include "ifr_adding_visitor.h"
-#include "ifr_visitor_macro.h"
 
 ACE_RCSID(be, be_produce, "$Id$")
 

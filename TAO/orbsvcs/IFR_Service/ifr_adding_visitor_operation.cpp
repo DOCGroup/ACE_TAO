@@ -30,7 +30,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (!CORBA::is_nil (prev_def.in ()))
     {
@@ -88,11 +88,11 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       prev_def =
         be_global->repository ()->lookup_id (ex->repoID (),
                                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       exceptions[i++] = IR_ExceptionDef::_narrow (prev_def.in (),
                                                   this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       ex_iter.next ();
     }
@@ -143,11 +143,11 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       IR_Contained_var prev_def =
         be_global->repository ()->lookup_id (return_type->repoID (),
                                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       this->ir_current_ = IR_IDLType::_narrow (prev_def.in (),
                                                this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
     }
   else
     {
@@ -181,7 +181,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       IR_InterfaceDef_var iface = 
         IR_InterfaceDef::_narrow (current_scope,
                                   this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       IR_OperationDef_var new_def =
         iface->create_operation (node->repoID (),
@@ -193,7 +193,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                  exceptions,
                                  contexts,
                                  this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
     }
   else
     {
@@ -229,11 +229,11 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
       IR_Contained_var prev_def =
         be_global->repository ()->lookup_id (arg_type->repoID (),
                                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       this->ir_current_ = IR_IDLType::_narrow (prev_def.in (),
                                                this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
     }
   else
     {
