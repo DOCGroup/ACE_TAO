@@ -1,3 +1,30 @@
+Sat Nov 22 11:32:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bug_1330_Regression/server.cpp:
+        * tests/Bug_1627_Regression/server.cpp:
+        * tests/Bug_1635_Regression/client.cpp:
+        * tests/Bug_1636_Regression/client.cpp:
+        * tests/Bug_1639_Regression/struct_client.cpp:
+        * tests/ICMG_Any_Bug/HelloWorld.h:
+        * tests/IORManipulation/IORTest.cpp:
+        * tests/Portable_Interceptors/Bug_1559/server.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Echo_Collocated_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:
+        * tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.cpp:
+        * tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h:
+        * tests/RTCORBA/Diffserv/server.cpp:
+
+          Added missing #includes and removed #includes of corba.h
+          and corbafwd.h.
+
+        * tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation.mpc:
+
+          Made the IDL command line options of stub and skeleton
+          projects the same (both sets of export macro and include
+          directives in both projects) so the 2nd execution of the
+          IDL compiler won't change anything in files generated
+          from the 1st execution.
+
 Sat Nov 22 10:12:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU:
