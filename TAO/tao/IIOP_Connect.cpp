@@ -28,10 +28,7 @@ ACE_RCSID(tao, Connect, "$Id$")
   "Server_Connection_Handler::receive_request - end",
 
   "IIOP_Client_Connection_Handler::send_request - start",
-  "IIOP_Client_Connection_Handler::send_request - end",
-
-  "GIOP::Send_Request - return"
-};
+  "IIOP_Client_Connection_Handler::send_request - end"};
 
 enum
 {
@@ -45,9 +42,7 @@ enum
   TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END,
 
   TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
-  TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
-
-  GIOP_SEND_REQUEST_RETURN
+  TAO_IIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END
 };
 
 // Setup Timeprobes
@@ -247,12 +242,16 @@ TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
   if (result == 0 || result == -1)
     return result;
 
-  TAO_GIOP::process_server_message (this->transport (),
-                                    this->orb_core_,
-                                    this->transport_->message_state_.cdr,
-                                    this->transport_->message_state_);
-  this->transport_->message_state_.reset ();
-  return 0;
+  result = TAO_GIOP::process_server_message (this->transport (),
+                                             this->orb_core_,
+                                             this->transport_->message_state_.cdr,
+                                             this->transport_->message_state_);
+  if (result != -1)
+    {
+      this->transport_->message_state_.reset ();
+    }
+
+  return result;
 }
 
 // ****************************************************************

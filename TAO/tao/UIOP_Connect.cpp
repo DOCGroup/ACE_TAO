@@ -199,17 +199,20 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
                   "TAO (%P|%t) - %p\n",
                   "UIOP_Server_CH::handle_input, handle_input"));
     }
-  if (result == 0)
-    return 0;
 
-  // ACE_ASSERT (result == 1);
+  if (result == 0 || result == -1)
+    return result;
 
-  TAO_GIOP::process_server_message (this->transport (),
-                                    this->orb_core_,
-                                    this->transport_->message_state_.cdr,
-                                    this->transport_->message_state_);
-  this->transport_->message_state_.reset ();
-  return 0;
+  result = TAO_GIOP::process_server_message (this->transport (),
+                                             this->orb_core_,
+                                             this->transport_->message_state_.cdr,
+                                             this->transport_->message_state_);
+  if (result != -1)
+    {
+      this->transport_->message_state_.reset ();
+    }
+
+  return result;
 }
 
 // ****************************************************************

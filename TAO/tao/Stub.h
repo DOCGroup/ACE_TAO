@@ -477,6 +477,10 @@ private:
   TAO_ORB_Core* orb_core_;
   // The ORB
 
+  CORBA::ORB_var orb_;
+  // ORB required for reference counting.  This will help us keep the
+  // ORB around until the CORBA::Object we represent dies.
+
   CORBA::ORB_var servant_orb_;
   // If this stub refers to a collocated object then we need to hold on to
   // the servant's ORB (which may be different from the client ORB) so that,
