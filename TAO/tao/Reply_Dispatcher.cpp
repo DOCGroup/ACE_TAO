@@ -72,8 +72,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   this->reply_ctx_.replace (max, len, context_list, 1);
 
   // Steal the buffer so that no copying is done.
-  this->reply_cdr_.reset (message_state->cdr.steal_contents (),
-                          message_state->cdr.byte_order ());
+  this->reply_cdr_.steal_from (message_state->cdr);
   
   // If condition variable is present, then we are doing leader
   // follower model. Do all the nessary things. 
