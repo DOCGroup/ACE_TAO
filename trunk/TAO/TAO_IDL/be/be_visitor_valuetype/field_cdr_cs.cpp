@@ -130,11 +130,13 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> "
-          << "_tao_" << pre_ << f->local_name () << post_ << ")";
+          << "_tao_" << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << "
-          << "_tao_" << pre_ << f->local_name () << post_ << ")";
+          << "_tao_" << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -192,10 +194,12 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -251,13 +255,14 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-//      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
       *os << "TAO::Objref_Traits< ::" << node->name () 
           << ">::marshal (" << be_idt << be_idt_nl
-          << pre_ << f->local_name () << post_ << ".in (), " << be_nl
+          << this->pre_ << f->local_name ()
+          << this->post_ << ".in (), " << be_nl
           << "strm" << be_uidt_nl
           << ")" << be_uidt;
       break;
@@ -278,7 +283,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *)
+be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -299,13 +304,19 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ").out ()";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ").out ()";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
+      *os << "TAO::Objref_Traits< ::" << node->name () 
+          << ">::marshal (" << be_idt << be_idt_nl
+          << this->pre_ << f->local_name ()
+          << this->post_ << ".in (), " << be_nl
+          << "strm" << be_uidt_nl
+          << ")" << be_uidt;
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
-      // Nothing to be done because an interface cannit be declared inside a
+      // Nothing to be done because an interface cannot be declared inside a
       // structure.
       break;
     default:
@@ -342,10 +353,12 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype (be_valuetype *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
+      *os << "(strm << " << this->pre_ << f->local_name ()
+          << this->post_ << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because a valuetype cannit be declared inside a
@@ -385,10 +398,12 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ").out ()";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ").out ()";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ").in ()";
+      *os << "(strm << " << this->pre_ << f->local_name ()
+          << this->post_ << ").in ()";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because a valuetype cannot be declared inside a
@@ -457,64 +472,66 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
       if (pt == AST_PredefinedType::PT_pseudo
           || pt == AST_PredefinedType::PT_object)
         {
-          *os << "(strm >> " << pre_ << f->local_name () << post_
-              << ".out ())";
+          *os << "(strm >> " << this->pre_ << f->local_name ()
+              << this->post_ << ".out ())";
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm >> CORBA::Any::to_char (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm >> CORBA::Any::to_char ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm >> CORBA::Any::to_wchar (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm >> CORBA::Any::to_wchar ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
             }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm >> CORBA::Any::to_octet (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm >> CORBA::Any::to_octet ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm >> CORBA::Any::to_boolean (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm >> CORBA::Any::to_boolean ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else
         {
-          *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+          *os << "(strm >> " << this->pre_ << f->local_name ()
+              << this->post_ << ")";
         }
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (pt == AST_PredefinedType::PT_pseudo
           || pt == AST_PredefinedType::PT_object)
         {
-          *os << "(strm << " << pre_ << f->local_name ()
-              << post_ << ".in ())";
+          *os << "(strm << " << this->pre_ << f->local_name ()
+              << this->post_ << ".in ())";
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm << CORBA::Any::from_char (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm << CORBA::Any::from_char ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm << CORBA::Any::from_wchar (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm << CORBA::Any::from_wchar ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm << CORBA::Any::from_octet (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm << CORBA::Any::from_octet ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm << CORBA::Any::from_boolean (" << pre_
-              << f->local_name () << post_ << "))";
+          *os << "(strm << CORBA::Any::from_boolean ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else
         {
-          *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+          *os << "(strm << " << this->pre_ << f->local_name ()
+              << this->post_ << ")";
         }
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -554,10 +571,12 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -616,10 +635,12 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
+      *os << "(strm << " << this->pre_ << f->local_name ()
+          << this->post_ << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done.
@@ -658,10 +679,12 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (be_structure *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -738,10 +761,12 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm >> " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ")";
+      *os << "(strm << " << this->pre_ << f->local_name ()
+          << this->post_ << ")";
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.

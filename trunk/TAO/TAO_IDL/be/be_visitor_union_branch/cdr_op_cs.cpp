@@ -280,7 +280,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (node->is_local ())
         {
-          *os << "result = 0;";
+          *os << "result = false;";
         }
       else
         {
@@ -297,30 +297,24 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      if (node->is_defined ())
+    
+      *os << "result =" << be_idt_nl;
+      
+      if (f->is_abstract ())
         {
-          if (f->is_abstract ())
-            {
-              *os << "(strm << _tao_union."
-                  << f->local_name () << " ());";
-            }
-          else
-            {
-              *os << "CORBA::Object::marshal (" << be_idt << be_idt_nl
-                  << "_tao_union." << f->local_name () << " ()," << be_nl
-                  << "strm" << be_uidt_nl
-                  << ");" << be_uidt;
-            }
+          *os << "(strm << _tao_union."
+              << f->local_name () << " ());";
         }
       else
         {
-          *os << "result =" << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
+          *os << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
               << be_idt << be_idt_nl
               << "_tao_union." << f->local_name () << " ()," << be_nl
               << "strm" << be_uidt_nl
-              << ");" << be_uidt << be_uidt;
+              << ");" << be_uidt;
         }
+        
+      *os << be_uidt;
 
       break;
 
@@ -365,7 +359,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (node->is_local ())
         {
-          *os << "result = 0;";
+          *os << "result = false;";
         }
       else
         {
@@ -382,8 +376,12 @@ be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result = _tao_union."
-          << f->local_name () << " ()->marshal (strm);";
+      *os << "result =" << be_idt_nl
+          << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
+          << be_idt << be_idt_nl
+          << "_tao_union." << f->local_name () << " ()," << be_nl
+          << "strm" << be_uidt_nl
+          << ");" << be_uidt << be_uidt;
       break;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:
