@@ -21,10 +21,11 @@ include $(TAO_ROOT)/rules.tao.GNU
 #----------------------------------------------------------------------------
 #       Define local rules and targets
 #---------------------------------------------------------------------------
-MKLIST = \
-	Makefile.TypeCodeFactory \
-	Makefile.IFR_Service \
-        Makefile.tao_ifr
+MKLIST = Makefile.TypeCodeFactory
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  MKLIST += Makefile.IFR_Service Makefile.tao_ifr
+endif # ACE_HAS_GNUG_PRE_2_8
 
 all debug profile optimize install deinstall clean realclean clobber depend:
 ifeq (Windows,$(findstring Windows,$(OS)))

@@ -24,7 +24,6 @@ DIRS  = Simple_Naming \
 	Concurrency \
 	FaultTolerance \
 	ImplRepo \
-	InterfaceRepo \
 	Trading \
 	AVStreams \
 	Notify \
@@ -32,6 +31,10 @@ DIRS  = Simple_Naming \
 	LoadBalancing \
 	ior_corbaname \
 	tests_svc_loader
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  DIRS += InterfaceRepo
+endif # ACE_HAS_GNUG_PRE_2_8
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
