@@ -19,10 +19,11 @@
 #ifndef TAO_WAIT_STRATEGY_H
 #define TAO_WAIT_STRATEGY_H
 
-#include "tao/CDR.h"
+#include "tao/corbafwd.h"
 
-class TAO_Transport_Mux_Strategy;
+class TAO_ORB_Core;
 class TAO_Transport;
+class TAO_Transport_Mux_Strategy;
 
 class TAO_Export TAO_Wait_Strategy
 {
@@ -117,12 +118,12 @@ public:
   // Destructor.
 
   // = Documented in TAO_Wait_Strategy.
-  
+
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
-  
+
   virtual int wait (void);
-  
+
   virtual int handle_input (void);
 
   virtual int register_handler (void);
@@ -130,7 +131,7 @@ public:
 protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);
   // Return the cond_response_available, initializing it if
-  // necessary. 
+  // necessary.
 
   void wake_up (void);
   // Helper method to wake us up when we are a follower...

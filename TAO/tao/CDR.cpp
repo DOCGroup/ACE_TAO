@@ -80,20 +80,18 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
                               ACE_Allocator *data_block_allocator,
-                              size_t memcpy_tradeoff)
+                              size_t memcpy_tradeoff,
+                              ACE_Char_Codeset_Translator *char_translator,
+                              ACE_WChar_Codeset_Translator *wchar_translator)
   :  ACE_OutputCDR (size,
-        byte_order,
-        buffer_allocator
-          ? buffer_allocator
-          : TAO_ORB_Core_instance ()->output_cdr_buffer_allocator (),
-        data_block_allocator
-          ? data_block_allocator
-          : TAO_ORB_Core_instance ()->output_cdr_dblock_allocator (),
-        memcpy_tradeoff
-          ? memcpy_tradeoff
-          : TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ())
+                    byte_order,
+                    buffer_allocator,
+                    data_block_allocator,
+                    memcpy_tradeoff)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
+  this->char_translator_ = char_translator;
+  this->wchar_translator_ = wchar_translator;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (char *data,
@@ -101,33 +99,33 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
                               ACE_Allocator *data_block_allocator,
-                              size_t memcpy_tradeoff)
+                              size_t memcpy_tradeoff,
+                              ACE_Char_Codeset_Translator *char_translator,
+                              ACE_WChar_Codeset_Translator *wchar_translator)
   :  ACE_OutputCDR (data,
-        size,
-        byte_order,
-        buffer_allocator
-          ? buffer_allocator
-          : TAO_ORB_Core_instance ()->output_cdr_buffer_allocator (),
-        data_block_allocator
-          ? data_block_allocator
-          : TAO_ORB_Core_instance ()->output_cdr_dblock_allocator (),
-        memcpy_tradeoff
-          ? memcpy_tradeoff
-          : TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ())
+                    size,
+                    byte_order,
+                    buffer_allocator,
+                    data_block_allocator,
+                    memcpy_tradeoff)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
+  this->char_translator_ = char_translator;
+  this->wchar_translator_ = wchar_translator;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                               int byte_order,
-                              size_t memcpy_tradeoff)
+                              size_t memcpy_tradeoff,
+                              ACE_Char_Codeset_Translator *char_translator,
+                              ACE_WChar_Codeset_Translator *wchar_translator)
   :  ACE_OutputCDR (data,
-        byte_order,
-        memcpy_tradeoff
-          ? memcpy_tradeoff
-          : TAO_ORB_Core_instance ()->orb_params ()->cdr_memcpy_tradeoff ())
+                    byte_order,
+                    memcpy_tradeoff)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
+  this->char_translator_ = char_translator;
+  this->wchar_translator_ = wchar_translator;
 }
 
 CORBA::TypeCode::traverse_status
@@ -226,11 +224,24 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
   : ACE_InputCDR (rhs,
         buffer_allocator
           ? buffer_allocator
-          : TAO_ORB_Core_instance ()->output_cdr_buffer_allocator (),
+          : (orb_core ? orb_core->output_cdr_buffer_allocator () : 0),
         data_block_allocator
           ? data_block_allocator
-          : TAO_ORB_Core_instance ()->output_cdr_dblock_allocator ())
+          : (orb_core ? orb_core->output_cdr_dblock_allocator () :
+             0)),
+    orb_core_ (orb_core)
 {
+  this->init_translators ();
+}
+
+void
+TAO_InputCDR::init_translators (void)
+{
+  if (this->orb_core_ != 0)
+    {
+      this->char_translator_ = this->orb_core_->from_iso8859 ();
+      this->wchar_translator_ = this->orb_core_->from_unicode ();
+    }
 }
 
 CORBA::TypeCode::traverse_status

@@ -93,7 +93,6 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS (void)
 CORBA::ULong
 TAO_Exclusive_TMS::request_id (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   return this->request_id_generator_++;
 }
 
@@ -102,7 +101,6 @@ int
 TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
                                     TAO_Reply_Dispatcher *rd)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   this->request_id_ = request_id;
   this->rd_ = rd;
   return 0;
@@ -115,7 +113,6 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
                                    TAO_GIOP_ServiceContextList& reply_ctx,
                                    TAO_InputCDR* cdr)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   if (this->request_id_ != request_id)
     {
       if (TAO_debug_level > 0)
@@ -138,7 +135,6 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
 TAO_InputCDR *
 TAO_Exclusive_TMS::get_cdr_stream (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   if (this->rd_ == 0)
     return 0;
 

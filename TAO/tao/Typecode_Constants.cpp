@@ -387,77 +387,83 @@ TAO_TypeCodes::init (void)
   //
   // NOTE:  Must be four-byte aligned
 
-  static const u_char oc_objref [] =
+  static const CORBA::Long _oc_CORBA_Object[] =
   {
-    0, 0, 0, 0,                 // big endian encoding (+ padding)
-    0, 0, 0, 29,                  // 29 char string + 3 pad bytes
-    'I', 'D', 'L', ':',
-    'o', 'm', 'g', '.',
-    'o', 'r', 'g', '/',
-    'C', 'O', 'R', 'B',
-    'A', '/', 'O', 'b',
-    'j', 'e', 'c', 't',
-    ':', '1', '.', '0',
-    '\0', 0, 0, 0,
-    0, 0, 0, 7,                 // 7 chars "Object" + 1 pad byte
-    'O', 'b', 'j', 'e',
-    'c', 't', '\0', 0,
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    29,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f62),
+    ACE_NTOHL (0x6a656374),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
+    7,
+    ACE_NTOHL (0x4f626a65),
+    ACE_NTOHL (0x63740000),  // name = Object
   };
 
   CORBA::_tc_Object = new CORBA::TypeCode (CORBA::tk_objref,
-                                           sizeof oc_objref,
-                                           (char *) &oc_objref,
+                                           sizeof (_oc_CORBA_Object),
+                                           (char *) &_oc_CORBA_Object,
                                            1,
                                            sizeof (CORBA::Object));
 
   // Static initialization of the two user-defined exceptions that
   // are part of the ORB.
 
-  static char tc_buf_Bounds [] =
+  static const CORBA::Long _oc_CORBA_TypeCode_Bounds[] =
   {
-    0, 0, 0, 0,           // big endian, padded
-    0, 0, 0, 38,  // strlen (id) + 1
-    'I', 'D', 'L', ':',
-    'o', 'm', 'g', '.',
-    'o', 'r', 'g', '/',
-    'C', 'O', 'R', 'B',
-    'A', '/', 'T', 'y',
-    'p', 'e', 'C', 'o',
-    'd', 'e', '/', 'B',
-    'o', 'u', 'n', 'd',
-    's', ':', '1', '.',
-    '0', '\0', 0, 0,
-    0, 0, 0, 0            // no members to this typecode
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    38,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5479),
+    ACE_NTOHL (0x7065436f),
+    ACE_NTOHL (0x64652f42),
+    ACE_NTOHL (0x6f756e64),
+    ACE_NTOHL (0x733a312e),
+    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/TypeCode/Bounds:1.0
+    7,
+    ACE_NTOHL (0x426f756e),
+    ACE_NTOHL (0x64730000),  // name = Bounds
+    0, // member count
   };
 
   CORBA::TypeCode::_tc_Bounds =
     new CORBA::TypeCode (CORBA::tk_except,
-                         sizeof tc_buf_Bounds,
-                         tc_buf_Bounds,
+                         sizeof (_oc_CORBA_TypeCode_Bounds),
+                         (char*) &_oc_CORBA_TypeCode_Bounds,
                          1,
                          sizeof (CORBA::TypeCode::Bounds));
 
-  static char tc_buf_BadKind [] =
-  {
-    0, 0, 0, 0,           // big endian, padded
-    0, 0, 0, 39,  // strlen (id) + 1
-    'I', 'D', 'L', ':',
-    'o', 'm', 'g', '.',
-    'o', 'r', 'g', '/',
-    'C', 'O', 'R', 'B',
-    'A', '/', 'T', 'y',
-    'p', 'e', 'C', 'o',
-    'd', 'e', '/', 'B',
-    'a', 'd', 'K', 'i',
-    'n', 'd', ':', '1',
-    '.', '0', '\0', 0,
-    0, 0, 0, 0            // no members to this typecode
-  };
 
+  static const CORBA::Long _oc_CORBA_TypeCode_BadKind[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    39,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5479),
+    ACE_NTOHL (0x7065436f),
+    ACE_NTOHL (0x64652f42),
+    ACE_NTOHL (0x61644b69),
+    ACE_NTOHL (0x6e643a31),
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/TypeCode/BadKind:1.0
+    8,
+    ACE_NTOHL (0x4261644b),
+    ACE_NTOHL (0x696e6400),  // name = BadKind
+    0, // member count
+  };
   CORBA::TypeCode::_tc_BadKind =
     new CORBA::TypeCode (CORBA::tk_except,
-                         sizeof tc_buf_BadKind,
-                         tc_buf_BadKind,
+                         sizeof (_oc_CORBA_TypeCode_BadKind),
+                         (char*) &_oc_CORBA_TypeCode_BadKind,
                          1,
                          sizeof (CORBA::TypeCode::BadKind));
 

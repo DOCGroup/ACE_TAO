@@ -1,3 +1,74 @@
+Fri Jun  4 23:48:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	  The ORB core holds Codeset translators between the native char
+	  and ISO88659 and between the native wchar codeset and UNICODE.
+	  This is not a complete implementation but should be enough to
+	  get platforms that do not have ISO8859 as their native set
+	  working (such as MVS).
+	  Many thanks to Jim Rogers <jrogers@viasoft.com> for his
+	  cooperation on this task.
+	  The acceptor registry is initialized on demand, not on the class 
+	  construction.
+	  Removed methods to set the protocol factories, acceptor registry 
+	  and connector registry, this objects do not change after
+	  initialization.
+
+	* tao/GIOP.cpp:
+	* tao/ORB.cpp:
+	* tao/Invocation.cpp:
+	  The OutputCDR are initialized with the right codeset
+	  translators.
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	  On MVS generate the typecodes using the translator to ISO8859,
+	  that way the buffers are all in that codeset (including the
+	  hardcoded buffers in the Typecode_Constants.cpp file).
+	  Many thanks to Jim Rogers <jrogers@viasoft.com> for his
+	  cooperation on this task.
+
+	* tao/CDR.h:
+	* tao/CDR.i:
+	* tao/CDR.cpp:
+	  Added support for code set translators, they are either provided 
+	  as a parameter (for the OutputCDR streams) or obtained from the
+	  ORB_Core. Needs some cleanup, but the basics are there.
+
+	* tao/Typecode_Constants.cpp:
+	  Re-generated the typecodes for CORBA::Object,
+	  CORBA::TypeCode::BadKind and CORBA::TypeCode::Bounds. I used the 
+	  IDL compiler this time to obtain a consistent and platform
+	  independent mapping.
+
+	* tao/Transport_Mux_Strategy.h:
+	* tao/Transport_Mux_Strategy.cpp:
+	  Removed uneeded lock
+
+	* tao/Wait_Strategy.h:
+	  Removed uneeded #include
+
+	* tao/IIOP_Profile.cpp:
+	* tao/UIOP_Profile.cpp:
+	  Removed unused statement
+
+	* tao/default_resource.h:
+	  The acceptor registry and connector registry instances where
+	  left in the class by accident.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+	  Some improvements to the propagation of exceptions, but it needs 
+	  a major rework.
+
+	* tao/Object_Adapter.cpp:
+	  The compiler (egcs) was complaining about a switch() over an
+	  enum but not using all the values, the code was OK, because not
+	  all the values are reached. added a default case to shut it up.
+
 Fri Jun 04 19:47:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp

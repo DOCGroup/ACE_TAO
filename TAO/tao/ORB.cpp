@@ -1199,7 +1199,8 @@ CORBA_WString_var::operator= (const CORBA_WString_var& r)
 void
 CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ()));
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon,
+                     *ACE_Static_Object_Lock::instance ()));
 
   // Put these initializations here so that exceptions are enabled
   // immediately.
@@ -1372,13 +1373,17 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // ORB implementations ...
 
       // @@ Is BUFSIZ the right size here?
-      char buf [BUFSIZ];
-      TAO_OutputCDR cdr (buf,
-                         sizeof buf,
-                         TAO_ENCAP_BYTE_ORDER);
+      char buf [ACE_CDR::DEFAULT_BUFSIZE];
+      TAO_OutputCDR cdr (buf,  sizeof buf,
+                         TAO_ENCAP_BYTE_ORDER,
+                         this->orb_core_->output_cdr_buffer_allocator (),
+                         this->orb_core_->output_cdr_dblock_allocator (),
+                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                         this->orb_core_->to_iso8859 (),
+                         this->orb_core_->to_unicode ());
 
       // support limited oref ACE_OS::strcmp.
-      (void) ACE_OS::memset (buf, 0, BUFSIZ);
+      (void) ACE_OS::memset (buf, 0, sizeof(buf));
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.write_octet (TAO_ENCAP_BYTE_ORDER);

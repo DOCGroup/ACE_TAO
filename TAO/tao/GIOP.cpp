@@ -777,7 +777,9 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
                         TAO_ENCAP_BYTE_ORDER,
                         orb_core->output_cdr_buffer_allocator (),
                         orb_core->output_cdr_dblock_allocator (),
-                        orb_core->orb_params ()->cdr_memcpy_tradeoff ());
+                        orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                        orb_core->to_iso8859 (),
+                        orb_core->to_unicode ());
 
   CORBA::Boolean response_required = 0;
   CORBA::ULong request_id = 0;
@@ -1178,7 +1180,18 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
                                 CORBA::Exception *x)
 {
   // Create a new output CDR stream
-  TAO_OutputCDR output;
+
+  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
+#if defined(ACE_HAS_PURIFY)
+  (void) ACE_OS::memset (repbuf, '\0', sizeof (repbuf));
+#endif /* ACE_HAS_PURIFY */
+  TAO_OutputCDR output (repbuf, sizeof(repbuf),
+                        TAO_ENCAP_BYTE_ORDER,
+                        orb_core->output_cdr_buffer_allocator (),
+                        orb_core->output_cdr_dblock_allocator (),
+                        orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                        orb_core->to_iso8859 (),
+                        orb_core->to_unicode ());
 
   // Construct a REPLY header.
   TAO_GIOP::start_message (TAO_GIOP::Reply, output, orb_core);
