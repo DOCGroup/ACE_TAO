@@ -43,7 +43,7 @@ Client_i::read_ior (char *filename)
 
   this->ior_ = ACE_OS::strdup (data);
   ior_buffer.alloc ()->free (data);
- 
+
   ACE_OS::close (f_handle);
 
   return 0;
@@ -55,7 +55,7 @@ int
 Client_i::parse_args (void)
 {
   // Gets the command line options
-  // The string enclosed in " " essentially tells us 
+  // The string enclosed in " " essentially tells us
   // what to expect from the command line options.
   ACE_Get_Opt get_opts (argc_, argv_, "df:sk:w:h:x:y:v:");
   int c = 0;
@@ -116,12 +116,12 @@ Client_i::parse_args (void)
                           -1);
       }
   if (setx_ == 0 )
-    setx_ = Grid::DEFAULT_LOCATION; 
+    setx_ = Grid::DEFAULT_LOCATION;
   if (sety_ == 0 )
-    sety_ = Grid::DEFAULT_LOCATION; 
+    sety_ = Grid::DEFAULT_LOCATION;
   if (setvalue_ == 0 )
-    setvalue_ = Grid::DEFAULT_VALUE; 
-   
+    setvalue_ = Grid::DEFAULT_VALUE;
+
   // Indicates successful parsing of command line.
   return 0;
 }
@@ -134,26 +134,27 @@ Client_i::test_grid (void)
   // Make the RMI.
   TAO_TRY
     {
-      this->grid_ = this->server_->make_grid (width_, 
+      this->grid_ = this->server_->make_grid (width_,
                                               height_,
                                               this->env_);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully\n"));
       // Set a value for a grid.
-      this->grid_->set (setx_, 
-                        sety_, 
-                        setvalue_, 
+      this->grid_->set (setx_,
+                        sety_,
+                        setvalue_,
                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Setting a value for the grid\n"));
-       
+
       // Get the value of the grid
-      CORBA::Long ret_val = this->grid_->get (setx_, 
-					      sety_,
-					      TAO_TRY_ENV);
+      CORBA::Long ret_val = this->grid_->get (setx_,
+                                              sety_,
+                                              TAO_TRY_ENV);
       ACE_ASSERT (ret_val == setvalue_);
+      ACE_UNUSED_ARG (ret_val); // To avoid compile warning with ACE_NDEBUG.
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::UserException, range_ex)
@@ -180,7 +181,7 @@ Client_i::run (void)
   // Destroy the grid.
   this->grid_->destroy ();
 
-  // Shutdown the server 
+  // Shutdown the server
   if (this->shutdown_)
     this->server_->shutdown (this->env_);
 
@@ -228,7 +229,7 @@ Client_i::init (int argc, char **argv)
                            this->ior_),
                           -1);
       this->server_ = Grid_Factory::_narrow (server_object.in (),
-					     TAO_TRY_ENV);
+                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
