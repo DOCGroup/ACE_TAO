@@ -1,3 +1,61 @@
+Thu Mar  1 14:14:38 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        And today's quote is.....
+
+        "What we call progress is the exchange of one Nuisance for another 
+         Nuisance."
+                     - Havelock Ellis
+
+        This is the first in a set of updates to the run_test.pl scripts.
+        The goal is to start running the tests for the Release configuration
+        and for Borland.  These setups output the executables into sub- 
+        directories, which wasn't handled too well by the old ACEutils.pm
+        perl module.  PerlACE::Run_Test contains an updated Process class 
+        which does a much better job of handling this (among other things).
+
+        * performance-tests/Latency/deferred_synch_client.dsp:
+
+          Changed the output executable name to match the other platforms.
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+
+          Output directory of Win32 Release executables should be "Release".
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+
+          Made sure to clean up shmiop files when finished.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
+
+          Made some minor updates to make it more consistent with the rest of
+          the run_test.pl scripts.
+
+        * performance-tests/Callback/run_test.pl:
+        * performance-tests/Cubit/TAO/DII_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Latency/multi_threaded.pl:
+        * performance-tests/Latency/run_test.pl:
+        * performance-tests/Latency/scalability.pl:
+        * performance-tests/Latency/single_threaded.pl:
+        * performance-tests/POA/Object_Creation_And_Registration/run_test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/run-test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/run-test.pl:
+        * performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
+        * performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
+
+          Updated to use PerlACE::Run_Test.  
+
+Tue Feb 27 17:45:55 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Latency/control.cpp: 	
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+
 Thu Mar  1 15:21:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCode.cpp:
@@ -762,7 +820,6 @@ Mon Feb 26 01:24:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           With TAO_ORB_Core_instance we could have actually fetched
           the wrong ORB.
 
->>>>>>> 1.2613
 Sun Feb 25 19:37:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/POA/Adapter_Activator/run_test.pl:
