@@ -25,7 +25,7 @@ CFLAGS          += -mt
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
 #### We've commented -pta out for the moment to see if it works.
-CCFLAGS         += $(CFLAGS) # -pta
+CCFLAGS         += $(CFLAGS) -features=castop # -pta
 DCFLAGS         += -g
 DLD             = $(CXX)
 
@@ -39,6 +39,13 @@ DLD             = $(CXX)
 ifndef exceptions
   CCFLAGS += -noex
 endif # ! exceptions
+
+#### RTTI can coexist with ACE, but it doesn't use it.  To enable,
+#### add rtti=1 to your make invocation.  Sun C++ 4.2 (and later?)
+#### only support this option.
+ifdef rtti
+  CCFLAGS += -features=rtti -DACE_HAS_RTTI
+endif # rtti
 
 LD              = $(CXX)
 
@@ -95,12 +102,8 @@ endif # BIN
 #### -g is incompatible with -fast.  If you need -g, you can
 #### use "-fast -O3".
 ####
-#### Dynamic casting and RTTI can coexist with ACE, but it doesn't
-#### use them.  To disable, add: -features=no%castop,no%rtti
-#### Sun C++ 4.2 (and later?) only support this option.
 ifdef fast
   CFLAGS += -fast
-  CCFLAGS += -features=no%castop,no%rtti
   DCFLAGS =
   LDFLAGS += -fast
 endif # fast
