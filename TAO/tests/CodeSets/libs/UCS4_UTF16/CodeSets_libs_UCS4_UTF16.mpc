@@ -1,0 +1,4 @@
+project(*) : taolib {
+  sharedname = UCS4_UTF16
+  dynamicflags += UCS4_UTF16_BUILD_DLL
+}
