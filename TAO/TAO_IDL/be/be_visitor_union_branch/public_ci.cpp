@@ -963,7 +963,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       *os << ";" << be_nl;
 
       *os << "this->u_."
-          << ub->local_name () << "_var = new " << bt->name ()
+          << ub->local_name () << "_ = new " << bt->name ()
           << " (val);" << be_nl;
     }
   else
