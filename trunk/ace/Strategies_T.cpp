@@ -6,6 +6,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Strategies_T.h"
+#include "ace/Synch.h"
 #include "ace/Service_Types.h"
 #include "ace/Thread_Manager.h"
 #include "ace/WFMO_Reactor.h"
@@ -809,35 +810,35 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
   // Try to find the addres in the cache.  Only if we don't find it do
   // we create a new <SVC_HANDLER> and connect it with the server.
+  
+  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
 
-  {
-    if (this->connection_cache_.find (search_addr, sh) == -1)
-      {
-	ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
-
-	// Actively establish the connection.  This is a timed blocking
-	// connect.
-	if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
-	    (sh,
-	     remote_addr,
-	     timeout,
-	     local_addr,
-	     reuse_addr,
-	     flags,
-	     perms) == -1)
-	  return -1;
-	// Insert the new SVC_HANDLER instance into the cache.
-	else
-	  {
-	    ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> server_addr (remote_addr,
-									     sh);
-	    if (this->connection_cache_.bind (server_addr, sh) == -1)
-	      return -1;
-	  }
-      }
-
-    sh->in_use (1);
-  }
+  if (this->connection_cache_.find (search_addr, sh) == -1)
+    {
+      ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
+      
+      // Actively establish the connection.  This is a timed blocking
+      // connect.
+      if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
+          (sh,
+           remote_addr,
+           timeout,
+           local_addr,
+           reuse_addr,
+           flags,
+           perms) == -1)
+        return -1;
+      // Insert the new SVC_HANDLER instance into the cache.
+      else
+        {
+          ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR, SVC_HANDLER> server_addr (remote_addr,
+                                                                           sh);
+          if (this->connection_cache_.bind (server_addr, sh) == -1)
+            return -1;
+        }
+    }
+  
+  sh->in_use (1);
   return 0;
 }
 

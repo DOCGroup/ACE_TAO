@@ -184,62 +184,46 @@ typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_Null_Mu
 // ****************************************
 
 static void
-nonblocking_connect (CONNECTOR &con, const ACE_INET_Addr &server_addr)
+timed_blocking_connect (CONNECTOR &con, const ACE_INET_Addr &server_addr)
 {
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
-  Svc_Handler *svc_handler[2];
-  ACE_NEW (svc_handler[0], Svc_Handler);
-  ACE_NEW (svc_handler[1], Svc_Handler);
+  Svc_Handler *svc_handler;
+  ACE_NEW (svc_handler, Svc_Handler);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting non-blocking connect\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting timed-blocking connect\n"));
 
-  // Perform a non-blocking connect to the server (this should connect
+  // Perform a timed-blocking connect to the server (this should connect
   // immediately since we're in the same address space or same host).
-  if (con.connect (svc_handler[0], server_addr, options) == -1
-      || con.connect (svc_handler[1], server_addr, options) == -1)
+  if (con.connect (svc_handler, server_addr, options) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
 
-  // These two handles should be different.
-  ACE_ASSERT (svc_handler[0]->peer ().get_handle ()
-	      != svc_handler[1]->peer ().get_handle ());
-
   // Send the data to the server.
-  svc_handler[0]->send_data ();
-  svc_handler[1]->send_data ();
+  svc_handler->send_data ();
 
   // Close the connection completely.
-  if (svc_handler[0]->close (1) == -1
-      || svc_handler[1]->close (1) == -1)
+  if (svc_handler->close (1) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
 static void
 blocking_connect (CONNECTOR &con, const ACE_INET_Addr &server_addr)
 {
-  Svc_Handler *svc_handler[2];
-  ACE_NEW (svc_handler[0], Svc_Handler);
-  ACE_NEW (svc_handler[1], Svc_Handler);
+  Svc_Handler *svc_handler;
+  ACE_NEW (svc_handler, Svc_Handler);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting blocking connect\n"));
 
   // Perform a blocking connect to the server.
-  if (con.connect (svc_handler[0], server_addr) == -1
-      || con.connect (svc_handler[1], server_addr) == -1)
+  if (con.connect (svc_handler, server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
 
-  // These two handles should be different.
-  ACE_ASSERT (svc_handler[0]->peer ().get_handle ()
-	      != svc_handler[1]->peer ().get_handle ());
-
   // Send the data to the server.
-  svc_handler[0]->send_data ();
-  svc_handler[1]->send_data ();
+  svc_handler->send_data ();
 
   // Close the connection completely.
-  if (svc_handler[0]->close (1) == -1
-      || svc_handler[1]->close (1) == -1)
+  if (svc_handler->close (1) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
@@ -297,57 +281,68 @@ dump (STRAT_CONNECTOR &con)
 static void
 cached_connect (STRAT_CONNECTOR &con, const ACE_INET_Addr &server_addr)
 {
-  Svc_Handler *svc_handler[2];
-  svc_handler[0] = 0;
-  svc_handler[1] = 0;
+  Svc_Handler *svc_handler = 0;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting cached blocking connect\n"));
-
-  // Initiate timed, non-blocking connection with server.
 
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.  Since we are
   // connecting to the same <server_addr> these calls will return the
   // same dynamically allocated <Svc_Handler> for each <connect>.
-  if (con.connect (svc_handler[0], server_addr) == -1)
+  if (con.connect (svc_handler, server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
-  if (con.connect (svc_handler[1], server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
-
-  // These two handles must be different since we can only have open
-  // one <Svc_Handler> busy at a time .
-  ACE_ASSERT (svc_handler[0] != svc_handler[1]);
 
   // Send the data to the server.
-  svc_handler[0]->send_data ();
-  svc_handler[1]->send_data ();
+  svc_handler->send_data ();
 
   // Mark this as being available.
-  svc_handler[0]->in_use (0);
+  svc_handler->in_use (0);
+  svc_handler = 0;
 
-  Svc_Handler *sh = svc_handler[0];
-  svc_handler[0] = 0;
-
-  // Try to reconnect (this should reacquire the <Svc_Handler> that we
-  // just marked as no longer in use).
-  if (con.connect (svc_handler[0], server_addr) == -1)
+  // Try to reconnect.
+  if (con.connect (svc_handler, server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
 
-  // These pointers should be identical.
-  ACE_ASSERT (sh == svc_handler[0]);
-
   // Send the data to the server.
-  svc_handler[0]->send_data ();
-  svc_handler[1]->send_data ();
+  svc_handler->send_data ();
 
   // Close the connection completely.
-  if (svc_handler[0]->close (1) == -1
-      || svc_handler[1]->close (1) == -1)
+  if (svc_handler->close (1) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 }
 
-// Execute the client tests.
+struct Client_Info 
+{
+  ACE_INET_Addr *server_addr_;
+  CONNECTOR *connector_;
+  STRAT_CONNECTOR *strat_connector_;
+  ACE_Barrier *barrier_;
+};
 
+static void *
+client_connections (void *arg)
+{
+  Client_Info *info = (Client_Info *) arg;
+
+  // Run the timed-blocking test.
+  timed_blocking_connect (*info->connector_, *info->server_addr_);
+
+  // Wait for other threads to join us.
+  info->barrier_->wait ();
+
+  // Run the blocking test.
+  blocking_connect (*info->connector_, *info->server_addr_);
+
+  // Wait for other threads to join us.
+  info->barrier_->wait ();
+
+  // Run the cached blocking test.
+  cached_connect (*info->strat_connector_, *info->server_addr_);
+
+  return 0;
+}
+
+// Execute the client tests.
 
 static void *
 client (void *arg)
@@ -355,6 +350,10 @@ client (void *arg)
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
 			     ACE_DEFAULT_SERVER_HOST);
+
+  int n_threads = ACE_MAX_THREADS;
+  ACE_Barrier barrier (n_threads);
+
   CONNECTOR connector;
 
   NULL_CREATION_STRATEGY creation_strategy;
@@ -365,15 +364,22 @@ client (void *arg)
   STRAT_CONNECTOR strat_connector (0,
 				   &creation_strategy,
 				   &caching_connect_strategy);
+  Client_Info info;
+  info.server_addr_ = &server_addr;
+  info.connector_ = &connector;
+  info.strat_connector_ = &strat_connector;
+  info.barrier_ = &barrier;
 
-  // Run the non-blocking test.
-  nonblocking_connect (connector, server_addr);
-
-  // Run the blocking test.
-  blocking_connect (connector, server_addr);
-
-  // Run the cached blocking test.
-  cached_connect (strat_connector, server_addr);
+  ACE_Thread_Manager client_manager;
+  if (client_manager.spawn_n 
+      (n_threads,
+       ACE_THR_FUNC (client_connections),
+       (void *) &info,
+       THR_NEW_LWP | THR_DETACHED) == -1)
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+  
+  // Wait for the threads to exit.
+  client_manager.wait ();
   return 0;
 }
 

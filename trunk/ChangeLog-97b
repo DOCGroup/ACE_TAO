@@ -1,3 +1,14 @@
+Thu Oct 09 21:13:47 1997    <irfan@TWOSTEP>
+
+	* ace/Strategies_T.cpp (connect_svc_handler): Added
+ 	  synchronization to the method as the setting of the in_use bit
+ 	  in the service handler must be done atomically with the finding
+ 	  and binding of the service handler in the cache.
+
+	* tests/Conn_Test.cpp (client_connections): Added mutlithreading
+ 	  to the test in order to test out the new MT features of the
+ 	  Connector.
+
 Thu Oct  9 19:59:46 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 	* tests/MT_SOCK_Test.cpp: Revised the code so that it uses
