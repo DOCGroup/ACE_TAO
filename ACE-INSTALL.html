@@ -98,8 +98,7 @@ For information on TAO's platform coverage and support, please also see
     <td><A HREF="http://www.dre.vanderbilt.edu/scoreboard/">Tested</A>
         and used daily by the DOC group:
         Solaris 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)
-        Windows NT 4.0, 2000, XP (MSVC++ 6.x, and 7.x, and
-        Borland C++ Builder 5.0)
+        Windows NT 4.0, 2000, XP (MSVC++ 6.x, and 7.x)
         Linux/Intel (many compilers), Linux/IA64 (GCC).
     </td>
     <td>DOC sites at <A HREF="http://doc.ece.uci.edu/">UCI</A> and
@@ -126,7 +125,7 @@ For information on TAO's platform coverage and support, please also see
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. Besides the standard DOC group platforms 
         we also support Borland C++ Builder 6, CBuilderX 1.0, VxWorks 5.5, 
-        OpenVMS 7.3-2, Linux 64bit Alpha, and Tru64.
+        OpenVMS 7.3-2, Linux 64bit Alpha, Tru64, and HPUX 11i 32/64 bit.
     </td>
     <td>Remedy IT <A HREF="http://www.theaceorb.nl">web site</A> and
         the TAO <A HREF="TAO/TAO-INSTALL.html">install document</A>
@@ -137,10 +136,9 @@ For information on TAO's platform coverage and support, please also see
     <td>Responsible for continued maintenance and testing of platforms
         to which ACE has been ported, but aren't supported by the
         above groups. These include
-        Windows 95/98 using Borland C++ Builder 4.0 and later;
         Digital UNIX (Compaq Tru64) 4.0 and 5.0;
         IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
-        Linux on Alpha and PPC; OpenMVS;
+        Linux on PPC; OpenMVS;
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
         Chorus; OS/9; PharLap TNT Embedded ToolSuite 9.1;
         QNX RTP and Neutrino 2.0; VxWorks; LynxOS; RTEMS
@@ -149,8 +147,9 @@ For information on TAO's platform coverage and support, please also see
     <th>Not supported</th>
     <td>The following platforms have been supported in the past but are
         not supported anymore by the DOC Group. If you want to have
-        support for these environments contact ons of the commercial
-        support organisations. The platforms are: VxWorks 5.4, MSVC5.
+        support for these environments contact one of the commercial
+        support organisations. The platforms are: VxWorks 5.4, MSVC5, 
+        Borland C++ Builder 4 and 5.
     </td>
   </tr>
     <td></td>
@@ -1282,7 +1281,7 @@ and delete all *.obj, *.dll, *.lib, *.ilk, *.pdb, *.idb, *.ncb, *.opt,
 and *.exp files in order to start over from scratch (the Clean command
 in MSVC may not do this).  <P>
 
-ACE contains project files for Microsoft Visual C++ 5.0 and 6.0 (*.dsp/.dsw)
+ACE contains project files for Microsoft Visual C++ 6.0 (*.dsp/.dsw)
 and Visual C++ .NET 2003 (*.vcproj/.sln).  There are also
 Makefile.bor files to compile ACE, the ACE one-button tests, and TAO
 with Borland C++ Builder. <P>
@@ -1324,9 +1323,9 @@ to check <A HREF="#win32nonic">here</A> first. <P>
       <CODE>set ACE_ROOT=C:\ACE_wrappers</CODE><BR>
       <BR>
   <LI>Set the BCBVER environment vairable to the main version of your Borland C++ compiler.
-      Currently 4, 5, and 6 are supported. For example:<BR>
+      Currently only 6 is supported, 4 and 5 are options but not supported. For example:<BR>
       <BR>
-      <CODE>set BCBVER=5</CODE><BR>
+      <CODE>set BCBVER=6</CODE><BR>
       <BR>
   <LI>Change to the ACE_ROOT\ace directory.<BR>
       <BR>
@@ -1404,11 +1403,11 @@ make -f Makefile.bor
 </CODE></BLOCKQUOTE><P>
 
 Once you build all the tests, you can run the perl script:<P>
-<BLOCKQUOTE><CODE>run_test.pl -ExeSubDir
-Dynamic\Release</CODE></BLOCKQUOTE><P> in the
+<BLOCKQUOTE><CODE>run_test.pl</CODE></BLOCKQUOTE><P> in the
 <code>tests</code> directory to try all the tests. You need to make
-sure the ACE bin directory (in this case ACE_ROOT\bin\Dynamic\Release)
-is on the path before you try to run the tests.<p>
+sure the ACE bin and lib directory (in this case 
+<CODE>ACE_ROOT\bin</CODE> and <CODE>ACE_ROOT\lib</CODE>)
+are on the path before you try to run the tests.<p>
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="msvc">Building and Installing ACE on Windows with
