@@ -1,3 +1,11 @@
+Mon Jan  3 22:48:32 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* ace/ace_xtreactor.mpc (Module):
+	* ace/ace_tkreactor.mpc (Module):
+	* ace/ace_qtreactor.mpc (Module):
+	* ace/ace_flreactor.mpc (Module):
+	Removed ace_*reactor required features.
+
 Tue Dec 14 00:09:48 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* bin/MakeProjectCreator/config/ace_x11.mpb (Module):

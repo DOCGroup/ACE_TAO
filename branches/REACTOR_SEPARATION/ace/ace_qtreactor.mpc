@@ -2,9 +2,7 @@
 // ace_qtreactor.mpc,v
 
 project(ACE_QtReactor) : acedefaults, aceversion, core, acelib, ace_qt {
-  requires += ace_qtreactor
 
-  libout       = $(ACE_ROOT)/lib
   sharedname   = ACE_QtReactor
   dynamicflags = ACE_QTREACTOR_BUILD_DLL
 
