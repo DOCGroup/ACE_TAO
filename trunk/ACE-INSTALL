@@ -659,12 +659,12 @@
 
 References
 
-   1. file://localhost/project/merengue/levine/ACE_wrappers/ChangeLog
-   2. file://localhost/project/merengue/levine/ACE_wrappers/ACE.FAQ.html
-   3. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#platforms
-   4. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#aceinstall
-   5. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#svcsinstall
-   6. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#advanced
+   1. file://localhost/project/adaptive/ACE_wrappers/ChangeLog
+   2. file://localhost/project/adaptive/ACE_wrappers/ACE.FAQ.html
+   3. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#platforms
+   4. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
+   5. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#svcsinstall
+   6. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#advanced
    7. http://www.wrs.com/
    8. http://www.s390.ibm.com/products/oe/index.html
    9. mailto:ace-users@cs.wustl.edu
@@ -676,31 +676,31 @@ References
   15. mailto:shuston@riverace.com
   16. http://www.cs.wustl.edu/~levine/
   17. mailto:levine@cs.wustl.edu
-  18. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#spa
-  19. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#g++
+  18. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#spa
+  19. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#g++
   20. mailto:gehr@sweng.stortek.com
-  21. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#mvs
+  21. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
   22. mailto:kielmann@informatik.uni-siegen.de
-  23. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unixsvcs
-  24. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32svcs
-  25. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32
+  23. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
+  24. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  25. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
   26. http://www.cs.wustl.edu/~schmidt/byacc.tar.gz
-  27. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unix
-  28. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32
-  29. file://localhost/project/merengue/levine/ACE_wrappers/ACE-netsvcs.html
-  30. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unixsvcs
-  31. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32svcs
-  32. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#win32svcs
-  33. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#unix
+  27. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
+  28. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32
+  29. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
+  30. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unixsvcs
+  31. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  32. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#win32svcs
+  33. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#unix
   34. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/main.cpp
   35. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/svc.conf
-  36. file://localhost/project/merengue/levine/ACE_wrappers/ACE-papers.html#config
-  37. file://localhost/project/merengue/levine/ACE_wrappers/ACE-netsvcs.html
-  38. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#cloning
-  39. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#corba
-  40. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#mvs
+  36. file://localhost/project/adaptive/ACE_wrappers/ACE-papers.html#config
+  37. file://localhost/project/adaptive/ACE_wrappers/ACE-netsvcs.html
+  38. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#cloning
+  39. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#corba
+  40. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
   41. http://www.cs.wustl.edu/~levine/CVS.html
   42. http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html
-  43. file://localhost/project/merengue/levine/ACE_wrappers/ACE-INSTALL.html#aceinstall
+  43. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
   44. http://www.s390.ibm.com/products/oe/index.html
   45. http://www.cs.wustl.edu/~schmidt/ACE.html
