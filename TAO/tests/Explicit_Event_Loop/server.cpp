@@ -42,12 +42,9 @@ get_gmt ( CORBA_Environment &)
   return tod;
 }
 
-
-
 void do_something_else()
-{};
-
-
+{
+}
 
 int
 main (int argc, char *argv[])
@@ -58,33 +55,50 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            "",
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Get reference to Root POA.
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA");
+        = orb->resolve_initial_references ("RootPOA",
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj.in ());
+        = PortableServer::POA::_narrow (obj.in (),
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Activate POA manager
       PortableServer::POAManager_var mgr
-        = poa->the_POAManager ();
-      mgr->activate ();
+        = poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      mgr->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Create an object
       Time_impl time_servant;
 
       // Write its stringified reference to stdout
-      Time_var tm = time_servant._this ();
-      CORBA::String_var str = orb->object_to_string (tm.in ());
+      Time_var tm = time_servant._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      CORBA::String_var str = orb->object_to_string (tm.in (),
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       cout << str.in () << endl;
 
       // Explicit Event Loop
       while (1)
         {
-          if (orb->work_pending())
+          CORBA::Boolean pending =
+            orb->work_pending(ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          if (pending)
             {
-              orb->perform_work();
+              orb->perform_work(ACE_TRY_ENV);
+              ACE_TRY_CHECK;
             }
           do_something_else();
         }
