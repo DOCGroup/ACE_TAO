@@ -47,10 +47,11 @@ main (int argc, char *argv[])
   ACE_OS::time (&clock);
   tm = ACE_OS::localtime (&clock);
 
-  ACE_OS::printf ("/* starting time is %d:%02d:%02d */\n",
-                  tm->tm_hour,
-                  tm->tm_min,
-                  tm->tm_sec);
+  if (option[DEBUGGING])
+    ACE_OS::printf ("/* starting time is %d:%02d:%02d */\n",
+                    tm->tm_hour,
+                    tm->tm_min,
+                    tm->tm_sec);
 
   // Initializes the key word list.
   Gen_Perf gperf;
@@ -62,10 +63,11 @@ main (int argc, char *argv[])
   ACE_OS::time (&clock);
   tm = ACE_OS::localtime (&clock);
 
-  ACE_OS::printf ("/* ending time is %d:%02d:%02d */\n",
-                  tm->tm_hour,
-                  tm->tm_min,
-                  tm->tm_sec);
+  if (option[DEBUGGING])
+    ACE_OS::printf ("/* ending time is %d:%02d:%02d */\n",
+                    tm->tm_hour,
+                    tm->tm_min,
+                    tm->tm_sec);
   return status;
 }
 #else  /* ! ACE_HAS_GPERF */
