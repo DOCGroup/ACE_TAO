@@ -2,8 +2,8 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/PortableServer/LifespanPolicyC.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTCORBA/RT_ORB.h"
