@@ -456,7 +456,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       
       be_visitor_context ctx = *this->ctx_;
       //       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      TAO::be_visitor_objref_typecode tc_visitor (&ctx, node);
+      TAO::be_visitor_objref_typecode tc_visitor (&ctx);
 
       if (node->accept (&tc_visitor) == -1)
         {

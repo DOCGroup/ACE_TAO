@@ -63,7 +63,7 @@ public:
   virtual int visit_array (be_array *node);
   // visit a array
 
-  virtual int visit_enum (be_enum *node);
+//   virtual int visit_enum (be_enum *node);
   // visit an enum
 
   virtual int visit_exception (be_exception *node);
@@ -102,8 +102,8 @@ public:
 
   // = visit methods for the scope elements
 
-  virtual int visit_enum_val (be_enum_val *node);
-  // visit the enumeration values
+//   virtual int visit_enum_val (be_enum_val *node);
+//   // visit the enumeration values
 
   virtual int visit_field (be_field *node);
   // visit the field (struct and exception member)
@@ -123,7 +123,7 @@ public:
 
   int gen_typecode (be_array *node);
 
-  int gen_typecode (be_enum *node);
+//   int gen_typecode (be_enum *node);
 
   int gen_typecode (be_exception *node);
 
@@ -149,9 +149,9 @@ public:
 
   int gen_encapsulation (be_array *node);
 
-  int gen_encapsulation (be_enum *node);
+//   int gen_encapsulation (be_enum *node);
 
-  int gen_encapsulation (be_enum_val *node);
+//   int gen_encapsulation (be_enum_val *node);
 
   int gen_encapsulation (be_exception *node);
 
@@ -181,7 +181,7 @@ public:
 
   ACE_CDR::Long compute_tc_size (be_array *node);
 
-  ACE_CDR::Long compute_tc_size (be_enum *node);
+//   ACE_CDR::Long compute_tc_size (be_enum *node);
 
   ACE_CDR::Long compute_tc_size (be_exception *node);
 
@@ -207,9 +207,9 @@ public:
 
   ACE_CDR::Long compute_encap_length (be_array *node);
 
-  ACE_CDR::Long compute_encap_length (be_enum *node);
+//   ACE_CDR::Long compute_encap_length (be_enum *node);
 
-  ACE_CDR::Long compute_encap_length (be_enum_val *node);
+//   ACE_CDR::Long compute_encap_length (be_enum_val *node);
 
   ACE_CDR::Long compute_encap_length (be_exception *node);
 

@@ -49,6 +49,7 @@
 #include "be_visitor_typecode/typecode_defn.cpp"
 
 #include "be_visitor_typecode/alias_typecode.cpp"
+#include "be_visitor_typecode/enum_typecode.cpp"
 #include "be_visitor_typecode/objref_typecode.cpp"
 #include "be_visitor_typecode/struct_typecode.cpp"
 

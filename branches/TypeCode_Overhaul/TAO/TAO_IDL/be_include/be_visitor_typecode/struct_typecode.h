@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Object reference TypeCode generation visitor.
+ *  Structure TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
@@ -44,12 +44,12 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_structure (be_structure * node);
+    virtual int visit_structure (AST_Structure * node);
 
   private:
 
     /// Generate structure field related TypeCode code.
-    int visit_members (be_structure * node);
+    int visit_members (AST_Structure * node);
 
   private:
 
