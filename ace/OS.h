@@ -3959,10 +3959,12 @@ public:
                         char **ptr,
                         int base);
 
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
   // = These go here since they are needed for TAO.
   static size_t strlen (const wchar_t *s);
   static wchar_t *strcpy (wchar_t *s,
                           const wchar_t *t);
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
