@@ -1,3 +1,14 @@
+Mon May 27 09:20:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Added tao_costime to the list of doxygen files that must be run
+
+        * etc/tao_costime.doxygen:
+          Created doxygen config file for this TAO service
+
+        * html/index.html:
+          Added link for the TAO CosTime service doxygen documentation
+
 Mon May 27 08:18:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/common/Attributes_Def_Builder.h:

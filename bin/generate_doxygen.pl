@@ -42,6 +42,7 @@ $dot_path = '/usr/local/bin';
              ,'tao_security'
              ,'tao_ssliop'
              ,'tao_cosnaming'
+             ,'tao_costime'
             );
 
 # Modify defaults using the command line arguments
