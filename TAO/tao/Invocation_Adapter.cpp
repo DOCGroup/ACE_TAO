@@ -286,7 +286,7 @@ namespace TAO
                                             op);
 
 
-          synch.remote_twoway (max_wait_time
+        synch.remote_twoway (max_wait_time
                                ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 

@@ -11,6 +11,7 @@
 #include "Profile.h"
 #include "ORB_Core.h"
 #include "Connector_Registry.h"
+#include "LocateRequest_Invocation_Adapter.h"
 #include "debug.h"
 #include "Dynamic_Adapter.h"
 #include "IFR_Client_Adapter.h"
@@ -575,10 +576,27 @@ CORBA::Object::_validate_connection (
   if (this->is_collocated_)
       return !(this->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER));
 
-  if (this->protocol_proxy_)
-    return this->protocol_proxy_->validate_connection (inconsistent_policies
-                                                       ACE_ENV_ARG_PARAMETER);
+  TAO::LocateRequest_Invocation_Adapter tao_call (
+                                                 this);
+  ACE_TRY
+    {
+      tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::INV_POLICY, ex)
+    {
+      inconsistent_policies =
+        tao_call.get_inconsistent_policies ();
+      return false;
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (false);
 
+  return true;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   return 0;
@@ -895,9 +913,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
-// Traits specializations for CORBA::Object.
-// =========================================================
 
+// =========================================================
+// Traits specializations for CORBA::Object.
 namespace TAO
 {
   CORBA::Object_ptr
@@ -925,7 +943,7 @@ namespace TAO
     return p->marshal (cdr);
   }
 
-  //=============================================================
+//============================================================================
   using namespace CORBA;
 
   CORBA::Boolean
