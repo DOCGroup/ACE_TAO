@@ -26,9 +26,9 @@
 #if !defined (_MPEG_COMMON_H)
 #define _MPEG_COMMON_H
 
-#include <sys/types.h>
-#include <netdb.h>
-#include <sys/socket.h>
+//#include <sys/types.h>
+//#include <netdb.h>
+//#include <sys/socket.h>
 #include "ace/OS.h"
 /*
 #include <netinet/in.h>
