@@ -25,6 +25,10 @@
 
 #include "ace/OS.h"
 
+#if !defined (TAO_REACTOR)
+#define TAO_REACTOR ACE_Select_Reactor
+#endif /* TAO_REACTOR */
+
 // Users should override this stuff if they don't want to use the
 // default ACE Socket wrappers.  This makes it possible to change
 // TAO's transport mechanism wholesale by making a few minor changes
