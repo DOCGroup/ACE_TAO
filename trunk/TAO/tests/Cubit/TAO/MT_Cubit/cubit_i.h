@@ -49,7 +49,8 @@ class Cubit_Factory_i : public POA_Cubit_Factory
   // = TITLE
   //   Cubit Factory implementation class.
 public:
-  Cubit_Factory_i (CORBA::String * cubits, u_int num_of_objs);
+  Cubit_Factory_i (CORBA::String *cubits,
+                   u_int num_of_objs);
   // Constructor.
 
   ~Cubit_Factory_i (void);

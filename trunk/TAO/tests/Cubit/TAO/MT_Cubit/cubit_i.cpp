@@ -37,9 +37,9 @@ Cubit_i::cube_struct (const Cubit::Many &values,
                       CORBA::Environment &)
 {
   Cubit::Many out_values;
-  out_values.o  = values.o * values.o * values.o;
-  out_values.s  = values.s * values.s * values.s;
-  out_values.l  = values.l * values.l * values.l;
+  out_values.o = values.o * values.o * values.o;
+  out_values.s = values.s * values.s * values.s;
+  out_values.l = values.l * values.l * values.l;
 
   return out_values;
 }
@@ -57,11 +57,16 @@ void Cubit_i::shutdown (CORBA::Environment &)
 
 // Constructor
 
-Cubit_Factory_i::Cubit_Factory_i (CORBA::String * cubits, u_int num_of_objs)
+Cubit_Factory_i::Cubit_Factory_i (CORBA::String *cubits,
+                                  u_int num_of_objs)
   : num_of_objs_ (num_of_objs)
 {
-  my_cubit_ = new CORBA::String [num_of_objs_];
-  for (u_int i = 0; i < num_of_objs_; ++i)
+  ACE_NEW (my_cubit_,
+           CORBA::String[num_of_objs_]);
+
+  for (u_int i = 0; 
+       i < num_of_objs_;
+       ++i)
       my_cubit_[i] = ACE_OS::strdup (cubits[i]);
 }
 
@@ -87,6 +92,7 @@ Cubit_Factory_i::create_cubit (CORBA::UShort orb_index,
 	      "(%P|%t) ior returned is [%d]:<%s>\n", 
 	      orb_index, 
 	      my_cubit_[orb_index]));
+
   return ACE_OS::strdup (my_cubit_[orb_index]);
 }
 
