@@ -1225,6 +1225,20 @@ template class
         >
     >;
 
+template class TAO_Pseudo_Object_Manager<
+  CORBA::Object,
+  CORBA::Object_var
+  >;
+
+template class
+  TAO_Seq_Var_Base_T<
+      TAO_IOP::TAO_IOR_Manipulation::IORList,
+      TAO_Pseudo_Object_Manager<
+          CORBA::Object,
+          CORBA::Object_var
+        >
+    >;
+
 template class
   TAO_MngSeq_Out_T<
       TAO_IOP::TAO_IOR_Manipulation::IORList,
@@ -1246,6 +1260,18 @@ template class
         > \
     >
 
+#pragma instantiate TAO_Pseudo_Object_Manager< \
+          CORBA::Object, \
+          CORBA::Object_var \
+        > 
+# pragma instantiate \
+  TAO_Seq_Var_Base_T< \
+      TAO_IOP::TAO_IOR_Manipulation::IORList, \
+      TAO_Pseudo_Object_Manager< \
+          CORBA::Object, \
+          CORBA::Object_var \
+        > \
+    >
 # pragma instantiate \
   TAO_MngSeq_Out_T< \
       TAO_IOP::TAO_IOR_Manipulation::IORList, \
