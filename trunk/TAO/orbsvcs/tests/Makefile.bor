@@ -13,6 +13,7 @@ DIRS = \
 	EC_Mcast \
 	EC_Custom_Marshal \
 	Event_Latency \
+        ior_corbaname \
 	Property \
         Simple_Naming \
 	Trading
