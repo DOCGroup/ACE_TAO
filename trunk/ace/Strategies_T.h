@@ -483,6 +483,18 @@ public:
   // The default behavior delegates to the <connect> method of the
   // <PEER_CONNECTOR::connect>.
 
+  virtual int connect_svc_handler (SVC_HANDLER *&sh,
+                                   SVC_HANDLER *&sh_copy,
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
+  // The default behavior delegates to the <connect> method of the
+  // <PEER_CONNECTOR::connect>.
+  // Please check the documentation in Connector.h for more details.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -766,6 +778,14 @@ public:
                                    int reuse_addr,
                                    int flags,
                                    int perms);
+  virtual int connect_svc_handler (SVC_HANDLER *&sh,
+                                   SVC_HANDLER *&sh_copy,
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
   // Checks to see if there is already a <SVC_HANDLER> in the cache
   // connected to the <remote_addr>.  If so, we return this pointer.
   // Otherwise we establish the connection, put it into the cache, and
@@ -842,6 +862,15 @@ protected:
                     int perms,
                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                     int &found);
+
+  int connect_svc_handler_i (SVC_HANDLER *&sh,
+                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                             ACE_Time_Value *timeout,
+                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                             int reuse_addr,
+                             int flags,
+                             int perms,
+                             int &found);
 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
