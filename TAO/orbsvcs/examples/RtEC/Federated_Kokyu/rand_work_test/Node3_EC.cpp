@@ -261,7 +261,7 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
-      ACE_Time_Value stop_time(134,0); //5min + allowance for gateway init and synchronous EC start
+      ACE_Time_Value stop_time(340,0); //5min + allowance for gateway init and synchronous EC start
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
