@@ -7,7 +7,7 @@ Wed Jan  7 13:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/Policy/Smart_Proxies_Policy.mpc:
           Use taoserver and taoclient as base project so that exenames are
-          set to the names the run_test.pl expects.
+          set to the names the run_test.pl expects
 
 Tue Jan  6 20:43:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
