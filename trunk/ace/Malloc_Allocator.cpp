@@ -113,6 +113,38 @@ ACE_Allocator::ACE_Allocator (void)
   ACE_TRACE ("ACE_Allocator::ACE_Allocator");
 }
 
+/******************************************************************************/
+
+void *
+ACE_New_Allocator::malloc (size_t nbytes)
+{
+  char *ptr = 0;
+
+  if (nbytes > 0)
+    ACE_NEW_RETURN (ptr, char[nbytes], 0);
+  return (void *) ptr;
+}
+
+void *
+ACE_New_Allocator::calloc (size_t nbytes,
+                           char initial_value)
+{
+  char *ptr = 0;
+
+  ACE_NEW_RETURN (ptr, char[nbytes], 0);
+
+  ACE_OS::memset (ptr, initial_value, nbytes);
+  return (void *) ptr;
+}
+
+void
+ACE_New_Allocator::free (void *ptr)
+{
+  delete [] (char *) ptr;
+}
+
+/******************************************************************************/
+
 void
 ACE_Static_Allocator_Base::dump (void) const
 {

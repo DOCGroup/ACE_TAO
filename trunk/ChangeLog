@@ -1,3 +1,12 @@
+Wed Apr  9 15:51:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+        
+        * ace/Malloc_Allocator.{i,cpp}:
+        
+          Uninlined ACE_New_Allocator::{malloc, calloc, free} () to
+          avoid the multiple heap problem on systems like Windows.
+          Thanks to Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
+          for reporting the problem.  This fixes bug [1464].
+
 Wed Apr 09 17:04:01 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* apps/mkcsregdb/mkcsregdb.dsp: Added missing library in release

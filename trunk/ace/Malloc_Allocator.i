@@ -1,26 +1,5 @@
 // $Id$
 
-ACE_INLINE void *
-ACE_New_Allocator::malloc (size_t nbytes)
-{
-  char *ptr = 0;
-
-  if (nbytes > 0)
-    ACE_NEW_RETURN (ptr, char[nbytes], 0);
-  return (void *) ptr;
-}
-
-ACE_INLINE void *
-ACE_New_Allocator::calloc (size_t nbytes,
-                           char initial_value)
-{
-  char *ptr = 0;
-
-  ACE_NEW_RETURN (ptr, char[nbytes], 0);
-
-  ACE_OS::memset (ptr, initial_value, nbytes);
-  return (void *) ptr;
-}
 
 ACE_INLINE void *
 ACE_New_Allocator::calloc (size_t n_elem, size_t elem_size, char initial_value)
@@ -28,11 +7,6 @@ ACE_New_Allocator::calloc (size_t n_elem, size_t elem_size, char initial_value)
   return ACE_New_Allocator::calloc (n_elem * elem_size, initial_value);
 }
 
-ACE_INLINE void
-ACE_New_Allocator::free (void *ptr)
-{
-  delete [] (char *) ptr;
-}
 
 ACE_INLINE int
 ACE_New_Allocator::remove (void)
