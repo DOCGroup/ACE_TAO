@@ -1,3 +1,26 @@
+Sun Mar 19 16:48:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.i:
+	* tao/Sequence.i:
+	  The automatic buffer allocation in the bounded
+	  sequence default constructor was causing a 
+	  problem with recursive structs/unions. Since the
+	  constructor was still executing, there would be
+	  an infinite loop of calls to 'new'. Buffer allocation
+	  has been moved to the length() function, so now
+	  bounded sequences behave like unbounced ones in TAO
+	  (the CORBA spec states that the default constructors
+	  for bounded or unbounded sequences need not allocate
+	  a buffer). Thanks to Sal Amander <virgis@megagis.lt> 
+	  for reporting this problem.
+
+	* tests/Param_Test/bd_long_seq.cpp:
+	* tests/Param_Test/bd_short_seq.cpp:
+	* tests/Param_Test/bd_struct_seq.cpp:
+	  Added initialization for certain paramters, needed
+	  because of the change in the behavior of the defaul
+	  constructor noted above. 
+
 Sun Mar 19 16:46:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Updated dependencies. Thanks to 
