@@ -1,12 +1,15 @@
 // $Id$
 
-// Test the capability of <ACE_Malloc> to handle a single malloc that
-// can be rooted at different base addresses each time it's used.
+// Test the capability of the "position-independent" <ACE_Malloc> to
+// handle a single malloc that can be rooted at different base
+// addresses each time it's used.  The actual backing store used by
+// <ACE_Malloc> is located in a memory-mapped file.
 
 #include "ace/Malloc.h"
 #include "ace/Based_Pointer_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
+#include "ace/Auto_Ptr.h"
 #include "test_position_independent_malloc.h"
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
@@ -88,7 +91,6 @@ initialize (MALLOC *allocator)
   ACE_ASSERT (long_cont_1 == 1000);
   ACE_ASSERT (long_cont_2 == 1003);
 
-  // Test in local memory using long (array/pointer).
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
                         0);
@@ -142,12 +144,13 @@ main (int argc, char *argv[])
   ACE_MMAP_Memory_Pool_Options options (base_addr);
 
   // Create an allocator.
-  MALLOC *allocator;
-  ACE_NEW_RETURN (allocator,
+  MALLOC *ptr;
+  ACE_NEW_RETURN (ptr,
                   MALLOC ("test_file",
                           "test_lock",
                           &options),
                   1);
+  auto_ptr <MALLOC> allocator (ptr);
   void *data = 0;
 
   // This is the first time in, so we allocate the memory and bind it
@@ -155,7 +158,7 @@ main (int argc, char *argv[])
   if (allocator->find ("foo",
                        data) == -1)
     {
-      data = initialize (allocator);
+      data = initialize (allocator.get ());
 
       if (allocator->bind ("foo",
                            data) == -1)
@@ -178,8 +181,6 @@ main (int argc, char *argv[])
                   "all resources released\n"));
     }
 
-  delete allocator;
-
   return 0;
 }
 
@@ -189,10 +190,14 @@ template class ACE_Based_Pointer_Basic<Test_Data>;
 template class ACE_Based_Pointer_Basic<long>;
 template class ACE_Based_Pointer_Basic<Long_Test>;
 template class ACE_Based_Pointer<Long_Test>;
+template class auto_ptr <MALLOC>;
+template class ACE_Auto_Basic_Ptr<MALLOC>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Based_Pointer<Test_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Test_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<long>
 #pragma instantiate ACE_Based_Pointer_Basic<Long_Test>
 #pragma instantiate ACE_Based_Pointer_Basic<Long>
+#pragma instantiate auto_ptr <MALLOC>
+#pragma instantiate ACE_Auto_Basic_Ptr<MALLOC>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,29 +1,29 @@
-Tue Aug  3 23:43:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+Tue Aug  3 22:39:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/clients/Naming/Client/Makefile:
-	* netsvcs/clients/Naming/Dump_Restore/Makefile:
-	  Fixed dependencies so parallel compilations (using the -j
-	  option) will work correctly. This fixes [BUGID:187]
+	* tests/{Makefile,run_tests.sh}: Added support for the new
+ 	  Malloc_Test.
+  
+	* tests/Malloc_Test.cpp: Added a new test that exercises the new
+ 	  position-independent ACE_Malloc with ACE_MMAP_Memory_Pool and
+ 	  ACE_Process_Mutex.
 
-Tue Aug  3 23:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-
-	* ace/Cached_Connect_Strategy_T.{h,cpp} (cleanup):
-	  Added a specialised method to prevent memory leaks with old
-	  versions of g++. This method calls the underlying iterator
-	  and does the cleanup.
-
-	* ace/run_tests.sh:
-	  Removed purify check over Cached_Accept_Conn_Test and
-	  Cached_Conn_Test since they no longer leak memory when built
-	  using old version of g++.
+	* ace/Malloc_T: Added an accessor called mutex() to allow
+	  applications to acquire()/release() the lock used to provide
+ 	  mutual exclusion to an <ACE_Malloc> allocator.
 	
-Tue Aug  3 22:23:18 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+	* tests/SV_Shared_Memory_Test.cpp: Reformatted this test to
+	  conform to ACE programming guidelines.
 
-	* include/makeinclude/wrapper_macros.GNU: Added an ifeq flag for
-	  the interface repository. Compiling with interface_repo=1 will
-	  compile  the files  for interface repository.
+	* ace/Memory_Pool: The void * and char * arguments to the various
+	  ACE_*_Memory_Pool_Options constructors should be const; now they
+ 	  are!
 
-Tue Aug  3 18:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp (main): 
+	  Added auto_ptr support to this test, as well.
+
+	* examples/Shared_Malloc/test_multiple_mallocs.cpp: Enhanced
+	  this test so that it uses auto pointers and also now takes
+ 	  advantage of position-independent malloc, when possible.
 
 	* examples/Shared_Malloc/test_position_independent_malloc.cpp: 
 	  Finished integrating all the features of this test.  It's pretty
@@ -56,6 +56,31 @@ Tue Aug  3 18:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  one process and freed in another.  This is now fixed by not
  	  storing a pointer, but by storing the value instead.  Thanks to
  	  Nanbor for reporting this.
+
+Tue Aug  3 23:43:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* netsvcs/clients/Naming/Client/Makefile:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile:
+	  Fixed dependencies so parallel compilations (using the -j
+	  option) will work correctly. This fixes [BUGID:187]
+
+Tue Aug  3 23:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.{h,cpp} (cleanup):
+	  Added a specialised method to prevent memory leaks with old
+	  versions of g++. This method calls the underlying iterator
+	  and does the cleanup.
+
+	* ace/run_tests.sh:
+	  Removed purify check over Cached_Accept_Conn_Test and
+	  Cached_Conn_Test since they no longer leak memory when built
+	  using old version of g++.
+	
+Tue Aug  3 22:23:18 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Added an ifeq flag for
+	  the interface repository. Compiling with interface_repo=1 will
+	  compile  the files  for interface repository.
 
 Tue Aug 03 21:17:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 

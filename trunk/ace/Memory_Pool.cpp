@@ -162,7 +162,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
     {
       if (options->use_fixed_addr_)
         {
-          this->base_addr_ = options->base_addr_;
+          this->base_addr_ =
+            ACE_const_cast (void *, options->base_addr_);
           ACE_SET_BITS (flags_, MAP_FIXED);
         }
       this->write_each_page_ = options->write_each_page_;
@@ -370,7 +371,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
   return this->map_file (current_map_size);
 }
 
-ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
+ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_addr,
                                                             int use_fixed_addr,
                                                             int write_each_page,
                                                             off_t minimum_bytes,
@@ -516,7 +517,7 @@ ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (LPCTSTR ,
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_Pool)
 
-ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (char *base_addr,
+ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (const char *base_addr,
                                                                 size_t max_segments,
                                                                 size_t file_perms,
                                                                 off_t minimum_bytes,
@@ -744,7 +745,10 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
   // Only change the defaults if <options> != 0.
   if (options)
     {
-      this->base_addr_ = (void *) options->base_addr_;
+      this->base_addr_ =
+        ACE_reinterpret_cast (void *,
+                              ACE_const_cast (char *,
+                                              options->base_addr_));
       this->max_segments_ = options->max_segments_;
       this->file_perms_ = options->file_perms_;
       this->minimum_bytes_ = options->minimum_bytes_;

@@ -17,7 +17,7 @@
 //    to run the test.
 //
 // = AUTHOR
-//    Prashant Jain
+//    Prashant Jain <pjain@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -61,10 +61,14 @@ main (int, ASYS_TCHAR *[])
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, ASYS_TEXT ("%n; %p (%s).\n"),
-                       ASYS_TEXT ("Server fork failed"), server_cl), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ASYS_TEXT ("%n; %p (%s).\n"),
+                       ASYS_TEXT ("Server fork failed"),
+                       server_cl),
+                      -1);
   else
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Server forked with pid = %d.\n"),
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("Server forked with pid = %d.\n"),
                 server.getpid ()));
 
   ACE_OS::sleep (3);
