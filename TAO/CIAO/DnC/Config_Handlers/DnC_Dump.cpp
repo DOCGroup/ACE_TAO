@@ -24,7 +24,7 @@ namespace Deployment
       : desc_()
     {
       ACE_DEBUG ((LM_DEBUG, "%s%s:\n", indent_.c_str(), caption));
-      indent_.append("   ");
+      indent_.append("  ");
     }
 
     template <typename DESC>
@@ -48,7 +48,7 @@ namespace Deployment
 
     ~Dump_Obj()
     {
-      indent_.erase(indent_.size() - 3, 3);
+      indent_.erase(indent_.size() - 2, 2);
       if (desc_.size() != 0)
         {
           desc_map_.erase(desc_map_.find(desc_.c_str()));
@@ -88,8 +88,10 @@ namespace Deployment
         
         for (CORBA::ULong i = 0; i < size; ++i)
           {
-            ACE_DEBUG ((LM_DEBUG, "%s%s%s ",
-                        Dump_Obj::indent(), str_seq[i].in (), (i < size) ? ", " : "\n"));
+            ACE_DEBUG ((LM_DEBUG, "%s%s %d: \n",
+                        Dump_Obj::indent(), caption, i));
+            ACE_DEBUG ((LM_DEBUG, "%s  %s: \n",
+                        Dump_Obj::indent(), str_seq[i].in ()));
           }
       }
   }
@@ -222,7 +224,8 @@ namespace Deployment
     Dump_Obj dump_obj("Bridge");
     dump ("name", bridge.name);
     dump ("label", bridge.label);
-    dump_ref_seq<Deployment::Domain> ("connectRef", bridge.connectRef, "Domain", &Domain::node);
+    dump_ref_seq<Deployment::Domain> ("connectRef", bridge.connectRef,
+"Domain", &Domain::interconnect);
     dump_sequence ("resource", bridge.resource);
   }
 
@@ -320,8 +323,7 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::ComponentInterfaceDescription &cid)
   {
-    Dump_Obj dump_obj("ComponentInterfaceDescription", cid);
-
+    Dump_Obj dump_obj("ComponentInterfaceDescription");
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
     dump ("specificType", cid.specificType);
@@ -352,7 +354,8 @@ namespace Deployment
 
     dump ("name", mdd.name);
     dump ("source", mdd.source);
-    dump_ref_seq<Deployment::DeploymentPlan> ("artifactRef", mdd.artifactRef, "Plan", &DeploymentPlan::artifact);
+    dump_ref_seq<Deployment::DeploymentPlan> ("artifactRef", mdd.artifactRef,
+"DeploymentPlan", &DeploymentPlan::artifact);
     dump_sequence ("execParameter", mdd.execParameter);
     dump_sequence ("deployRequirement", mdd.deployRequirement);
   }
@@ -393,7 +396,8 @@ namespace Deployment
     dump ("name", idd.name);
     dump ("node", idd.node);
     dump ("source", idd.source);
-    dump_ref<Deployment::DeploymentPlan> ("implementationRef", idd.implementationRef, "Plan", &DeploymentPlan::implementation);
+    dump_ref<Deployment::DeploymentPlan> ("implementationRef",
+idd.implementationRef, "DeploymentPlan", &DeploymentPlan::implementation);
     dump_sequence ("configProperty", idd.configProperty);
     dump_sequence ("deployedResource", idd.deployedResource);
     dump_sequence ("deployedSharedResource", idd.deployedSharedResource);
@@ -425,7 +429,8 @@ namespace Deployment
     case EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
     case EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
     }
-    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspe.instanceRef, "Plan", &DeploymentPlan::instance);
+    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspe.instanceRef,
+"DeploymentPlan", &DeploymentPlan::instance);
   }
 
   // ExternalReferenceEndpoint
@@ -473,7 +478,8 @@ namespace Deployment
 
     dump ("propertyName", pspr.propertyName);
 
-    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspr.instanceRef, "Plan", &DeploymentPlan::instance);
+    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspr.instanceRef,
+"DeploymentPlan", &DeploymentPlan::instance);
   }
 
   // PlanPropertyMapping
@@ -954,7 +960,7 @@ namespace Deployment
 
     dump ("label", comppkgdesc.label);
     dump ("UUID", comppkgdesc.UUID);
-    ACE_DEBUG ((LM_DEBUG, "  realizes: \n"));
+    ACE_DEBUG ((LM_DEBUG, "%srealizes: \n", Dump_Obj::indent ()));
     DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
     dump_sequence ("configProperty", comppkgdesc.configProperty);
     dump_sequence ("implementation", comppkgdesc.implementation);
@@ -974,50 +980,6 @@ namespace Deployment
     dump_sequence ("reference", pc.reference);
     dump_sequence ("selectRequirement", pc.selectRequirement);
     dump_sequence ("configProperty", pc.configProperty);
-    /*
-    ACE_DEBUG ((LM_DEBUG, "  label: %s\n", pc.label.in ()));
-    ACE_DEBUG ((LM_DEBUG, "  UUID: %s\n", pc.UUID.in ()));
-
-    ACE_DEBUG ((LM_DEBUG, "  specializedConfig: \n"));
-    *    for (CORBA::ULong i = 0;
-         i < pc.specializedConfigRef.length ();
-         ++i)
-      {
-        ACE_DEBUG ((LM_DEBUG, "%i\n", pc.specializedConfigRef[i]));
-      }
-    *
-    ACE_DEBUG ((LM_DEBUG, "  configProperty: \n"));
-    for (CORBA::ULong i = 0;
-         i < pc.configProperty.length ();
-         ++i)
-      {
-        DnC_Dump::dump (pc.configProperty[i]); // Property
-      }
-
-    ACE_DEBUG ((LM_DEBUG, "  selectRequirement: \n"));
-    for (CORBA::ULong i = 0;
-         i < pc.selectRequirement.length ();
-         ++i)
-      {
-        DnC_Dump::dump (pc.selectRequirement[i]); // Requirement
-      }
-
-    ACE_DEBUG ((LM_DEBUG, "  reference: \n"));
-    for (CORBA::ULong i = 0;
-         i < pc.reference.length ();
-         ++i)
-      {
-        DnC_Dump::dump (pc.reference[i]); // ComponentPackageReference
-      }
-
-    ACE_DEBUG ((LM_DEBUG, "  basePackage: \n"));
-    for (CORBA::ULong i = 0;
-         i < pc.basePackage.length ();
-         ++i)
-      {
-        DnC_Dump::dump (pc.basePackage[i]); // ComponentPackageDescription
-      }
-    */
   }
 
   // Requirement Satisfier
@@ -1053,12 +1015,14 @@ namespace Deployment
                                   encoded different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
       case CORBA::tk_null:
-        ACE_DEBUG ((LM_DEBUG, "Any value: null value encoded\n"));
+        ACE_DEBUG ((LM_DEBUG, "%sAny value: null value encoded\n",
+                    Dump_Obj::indent ()));
         break;
 
       case CORBA::tk_void:
@@ -1073,7 +1037,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
@@ -1086,7 +1051,8 @@ namespace Deployment
                                    encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %u \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
@@ -1099,7 +1065,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %u \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
@@ -1112,7 +1079,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %f \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
       case CORBA::tk_double:
@@ -1124,7 +1092,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %f \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
       case CORBA::tk_boolean:
@@ -1153,7 +1122,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %c \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
@@ -1166,7 +1136,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
@@ -1179,7 +1150,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %s \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
       case CORBA::tk_longlong:
@@ -1191,7 +1163,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %l \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %l \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
@@ -1204,7 +1177,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %d \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
+                      temp));
         }
 
         break;
@@ -1217,7 +1191,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %c \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
@@ -1230,7 +1205,8 @@ namespace Deployment
                                     encoded with different type"));
               ACE_THROW (CORBA::INTERNAL ());
             }
-          ACE_DEBUG ((LM_DEBUG, "Any value: %s \n", temp));
+          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),
+                      temp));
         }
         break;
 
