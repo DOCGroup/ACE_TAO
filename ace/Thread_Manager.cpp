@@ -5,6 +5,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Dynamic.h"
 #include "ace/Object_Manager.h"
+#include "ace/Singleton.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"
@@ -1004,8 +1005,8 @@ ACE_Thread_Manager::apply_grp (int grp_id,
        iter.advance ())
     {
       if (iter.next ()->grp_id_ == grp_id)
-	if ((this->*func) (iter.next (), arg) == -1)
-	  result = -1;
+        if ((this->*func) (iter.next (), arg) == -1)
+          result = -1;
     }
 
   // Must remove threads after we have traversed the thr_list_ to
@@ -1015,7 +1016,7 @@ ACE_Thread_Manager::apply_grp (int grp_id,
     {
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-	this->remove_thr (td);
+        this->remove_thr (td);
     }
 
   return result;
@@ -1081,7 +1082,7 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
     {
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-	this->remove_thr (td);
+        this->remove_thr (td);
     }
 
   return result;
@@ -1309,7 +1310,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
     {
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
-	this->remove_thr (td);
+        this->remove_thr (td);
     }
 
   return result;
@@ -1664,7 +1665,8 @@ template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
 template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
-  template class ACE_TSS<ACE_Dynamic>;
+  template class ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>;
+  template class ACE_TSS<ACE_Dynamic>;  // might not need this anymore?
   template class ACE_TSS<ACE_Thread_Exit>;
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -1680,6 +1682,7 @@ template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
+  #pragma instantiate ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>
   #pragma instantiate ACE_TSS<ACE_Dynamic>
   #pragma instantiate ACE_TSS<ACE_Thread_Exit>
 #endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
