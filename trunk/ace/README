@@ -386,6 +386,8 @@ ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
                                         collection.
 ACE_HAS_MEMCHR                          Use native implementation of memchr.
+ACE_HAS_MEMORY_PROFILER                 We are using a memory profiler like
+                                        purify or valgrind
 ACE_HAS_MINIMAL_ACE_OS                  Disables some #includes in ace/OS.*.
 ACE_HAS_MFC                             Platform supports Microsoft
                                         Foundation Classes
@@ -661,6 +663,7 @@ ACE_HAS_UNIXWARE_SVR4_SIGNAL_T          Has inconsistent SVR4 signal
 ACE_HAS_USING_KEYWORD                   Compiler supports the new
                                         using keyword for C++
                                         namespaces.
+ACE_HAS_VALGRIND                        Running with valgrind
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for
                                         tracking down origin of

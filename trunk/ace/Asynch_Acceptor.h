@@ -37,7 +37,7 @@ class ACE_INET_Addr;
  * will accept new connections and create new HANDLER to handle
  * the new connections.
  *
- * Unlike the <ACE_Acceptor>, however, this class is designed to
+ * Unlike the ACE_Acceptor, however, this class is designed to
  * be used asynchronously.
  */
 template <class HANDLER>
@@ -256,7 +256,7 @@ private:
   /// Handle used to listen for new connections.
   ACE_HANDLE listen_handle_;
 
-  /// <Asynch_Accept> used to make life easier :-)
+  /// Asynch_Accept used to make life easier :-)
   ACE_Asynch_Accept asynch_accept_;
 
   /// Flag that indicates if parsing of addresses is necessary.

@@ -74,6 +74,14 @@
 #   define ACE_MT(X)
 # endif /* ACE_MT_SAFE */
 
+# if defined (ACE_HAS_PURIFY)
+#   define ACE_HAS_MEMORY_PROFILER
+# endif /* ACE_HAS_PURIFY */
+
+# if defined (ACE_HAS_VALGRIND)
+#   define ACE_HAS_MEMORY_PROFILER
+# endif /* ACE_HAS_VALGRIND */
+
 # if defined (ACE_HAS_USING_KEYWORD)
 #   define ACE_USING using
 # else
