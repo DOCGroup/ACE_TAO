@@ -1,3 +1,10 @@
+Thu Nov 20 15:39:44 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * TAOACE.dsw:
+
+          Added dependency on Messaging to CosNaming to hopefully fix new
+          errors in VC++ XP build on scoreboard.
+
 Thu Nov 20 08:20:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
@@ -57,7 +64,7 @@ Wed Nov 19 19:24:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/ORB.cpp:
 
 	  Fixed a warning. Probably this would be millionth time in the
-	  history of ACE+TAO that we fix a warning, which is basically 
+	  history of ACE+TAO that we fix a warning, which is basically
 	  a .in () for a _var.
 
 Wed Nov 19 17:39:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -110,10 +117,10 @@ Tue Nov 18 23:17:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Concurrency_Service/Makefile:
 	* orbsvcs/Time_Service/Makefile:
-	   
+
 	  Added messaging library. This is not sufficient. We need to make
 	  a check whether messaging is on or not. I just wanted to fix
-	  this before I went to bed. 
+	  this before I went to bed.
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
 
@@ -159,7 +166,7 @@ Tue Nov 18 11:29:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
 
 	  Fixed compile errors that were caused due to improper macro
-	  usage. 
+	  usage.
 
 Tue Nov 18 13:59:11 2003  Simon McQueen  <sm@prismtechnologies.com>
 
