@@ -678,18 +678,8 @@ sub generate_makefiles () {
     # At this point, the only mwc/mpc files are in ace and tests. When more
     # are available, this needs to be updated, maybe by cycling through
     # all non-TAO directories looking for mwc (or mpc?) files.
-    if ("$exec_prefix") {
-      print "chdir ace\n";
-    } else {
-      chdir "ace"  ||  die "$0: unable to chdir ace\n";
-    }
-    &ex ("../bin/mwc.pl -type vc7 ace.mwc; ../bin/mwc.pl -type em3 ace.mwc");
-    if ("$exec_prefix") {
-      print "chdir ../tests\n";
-    } else {
-      chdir "../tests"  ||  die "$0: unable to chdir ../tests\n";
-    }
-    &ex ("../bin/mwc.pl -type vc7 tests.mwc; ../bin/mwc.pl -type em3 tests.mwc");
+    &ex ("cd ACE_wrappers/ace;../bin/mwc.pl -type vc7 ace.mwc; ../bin/mwc.pl -type em3 ace.mwc");
+    &ex ("cd ACE_wrappers/tests;../bin/mwc.pl -type vc7 tests.mwc; ../bin/mwc.pl -type em3 tests.mwc");
   }
   if ($kit =~ /^tao/) {
     # A TAO-knowledgable person needs to decide what, if anything, is to be
