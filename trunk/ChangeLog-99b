@@ -1,3 +1,9 @@
+Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-aix-4.2.x.h: added ACE_LACKS_PRAGMA once
+          to xlC section.  Thanks to Rainer Blome <rainer_blome@de.ibm.com>
+          for reporting this.
+
 Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>
 
         * ace/IOStream_T.{cpp|h|i}: Those last changes break (at least)
