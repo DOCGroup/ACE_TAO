@@ -4418,7 +4418,7 @@ ACE_OS::mktemp (ACE_TCHAR *s)
     return 0;
   else
     {
-      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX");
+      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
 
       if (xxxxxx == 0)
         // the template string doesn't contain "XXXXXX"!
