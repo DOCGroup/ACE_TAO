@@ -1,3 +1,29 @@
+Mon Aug  4 11:06:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Tagged_Components.cpp (remove_component):
+	* tao/Tagged_Components.h: Added a new method which removes tagged
+	  components from the list of tagged components based on component
+	  id. 
+
+	* tao/IORManipulation/IOR.pidl: 
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORC.i: A new operation, remove_primary_tag
+	  ()  on TAO_IOP::TAO_IOR_Property interface. Please see
+	  documentation for details. 
+	
+	* tao/IORManipulation/IORManipulation.cpp:
+	* tao/IORManipulation/IORManipulation.h: A concrete implementation
+	  of remove_primary_tag () within the IORManipulation library. 
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: A concrete
+	  implementation of remove_primary_tag () within the
+	  FaultTolerance library.  
+
+	  Thanks to Milan Cvetkovic <mcvetcovic@mpathix.com>, for
+	  motivating the above changes and providing the patches. 
+	
 Mon Aug  4 000:09:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFRService/Container_i.cpp:

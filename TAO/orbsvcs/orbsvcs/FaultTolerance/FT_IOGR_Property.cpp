@@ -324,3 +324,31 @@ TAO_FT_IOGR_Property::get_primary_profile (
     }
   return 0;
 }
+
+CORBA::Boolean
+TAO_FT_IOGR_Property::remove_primary_tag (
+    CORBA::Object_ptr iogr
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Get the MProfile
+  TAO_MProfile &mprofile =
+    iogr->_stubobj ()->base_profiles ();
+
+  for (CORBA::ULong i = 0;
+       i < mprofile.profile_count ();
+       ++i)
+    {
+      TAO_Profile* profile = mprofile.get_profile (i);
+
+      // Get the Tagged Components
+      TAO_Tagged_Components &pfile_tagged =
+        profile->tagged_components ();
+
+      if (pfile_tagged.remove_component (IOP::TAG_FT_PRIMARY));
+        {
+          return 1;
+        }
+    }
+  return 0;
+}
