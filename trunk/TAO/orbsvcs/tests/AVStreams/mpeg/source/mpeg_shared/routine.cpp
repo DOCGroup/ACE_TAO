@@ -306,7 +306,13 @@ void delete_semaphore()
 void remove_semaphore(int sid)
 {
   return;
-  /* semctl(semId, semaphore_id, IPC_RMID, 0); */
+  //  semctl(semId, semaphore_id, IPC_RMID, 0);
+}
+
+void remove_all_semaphores (void)
+{
+  semctl(semId,0, IPC_RMID, 0);
+  return;
 }
 
 int get_semval(int sid)

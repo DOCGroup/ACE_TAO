@@ -144,6 +144,9 @@ public:
   void int_handler (int sig);
   // Signal handler function for SIGTERM,SIGBUS,SIGINT
 
+  int remove_names (void);
+  // Removes the audio server mmdevice and video server mmdevice from the naming service.
+
   void clear_child (int sig);
   // Signal handler function for SIGCHLD
 
