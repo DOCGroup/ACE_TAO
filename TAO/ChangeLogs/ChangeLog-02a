@@ -1,3 +1,7 @@
+Mon Sep 10 07:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Xt_Stopwatch/Makefile: Updated dependencies.
+
 Sun Sep  9 11:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile: Updated dependencies.
