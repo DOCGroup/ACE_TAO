@@ -1,3 +1,10 @@
+Fri Aug  1 13:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
+          Added two helper methods so that from the outside we can set the
+          supplierec and consumerec object reference to nil in case the
+          connection to that ec is lost.
+
 Fri Aug  1 12:32:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Persistent_ID/server.cpp:
