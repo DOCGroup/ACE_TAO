@@ -6,6 +6,8 @@
 #include "ace/Thread.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Select_Reactor_Base.h" //for ACE_Select_Reactor_Impl::DEFAULT_SIZE
+#include "ace/Map.h"
+#include "ace/Vector_T.h"
 
 #include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
@@ -29,24 +31,59 @@ namespace
   int config_run = 0;
   ACE_CString sched_type ="rms";
   FILE * ior_output_file;
+
+  typedef ACE_Vector<const char*> Filename_Array;
+  Filename_Array ior_input_files;
 }
 
 class Supplier_EC : public Kokyu_EC
 {
-  TAO_EC_Gateway_Sched gateway;
+  //need to handle multiple gateways!
+  typedef ACE_Map_Manager<const char*,TAO_EC_Gateway_Sched*,ACE_Thread_Mutex> Gateway_Map;
+  Gateway_Map gateways;
 public:
   Supplier_EC()
   {
+    this->gateways.open();
   } //Supplier_EC()
 
   ~Supplier_EC(void)
   {
+    //TODO: close down gateways
+
+    //now delete them and their IOR strings
+    Gateway_Map::iterator iter = this->gateways.begin();
+    Gateway_Map::iterator done = this->gateways.end();
+    while(iter != done)
+      {
+        Gateway_Map::ENTRY entry = *iter;
+
+        Gateway_Map::KEY key = entry.ext_id_;
+        Gateway_Map::VALUE val = entry.int_id_;
+        //we can delete as long as we don't unbind
+        //don't delete keys since we didn't allocate them
+        delete key;
+        delete val;
+
+        ++iter;
+      }
+    this->gateways.unbind_all();
+
+    this->gateways.close();
   } //~Supplier_EC()
 
   void init_gateway(CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
                     const char* consumer_ec_ior)
   {
+    if (this->gateways.find(consumer_ec_ior) == 0)
+      {
+        //Already a gateway for that EC
+        ACE_DEBUG((LM_DEBUG,"Supplier_EC (%P|%t) init_gateway(): Tried to create already-existing gateway for %s\n",
+                   consumer_ec_ior));
+        return;
+      }
+
       CORBA::Object_var obj;
       RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec, consumer_ec;
       ACE_CHECK;
@@ -75,16 +112,22 @@ public:
         consumer_ec->scheduler(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      gateway.init(supplier_event_channel.in(),
-                   consumer_event_channel.in(),
-                   supplier_scheduler.in(),
-                   consumer_scheduler.in(),
-                   "gateway1", "gateway2a"
-                   ACE_ENV_ARG_PARAMETER);
+      TAO_EC_Gateway_Sched *gateway;
+      ACE_NEW(gateway,
+              TAO_EC_Gateway_Sched() );
+
+      gateway->init(supplier_event_channel.in(),
+                    consumer_event_channel.in(),
+                    supplier_scheduler.in(),
+                    consumer_scheduler.in(),
+                    "gateway1", consumer_ec_ior
+                    ACE_ENV_ARG_PARAMETER);
+
+      this->gateways.bind(consumer_ec_ior,gateway);
 
       ACE_CHECK;
             PortableServer::ObjectId_var gateway_oid =
-         poa->activate_object(&gateway ACE_ENV_ARG_PARAMETER);
+         poa->activate_object(gateway ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Object_var gateway_obj =
@@ -189,10 +232,6 @@ main (int argc, char* argv[])
 
       if (parse_args (argc, argv) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Usage:  %s -s <rms|muf|edf>"
-                      "\n",
-                      argv [0]));
           return 1;
         }
 
@@ -220,10 +259,15 @@ main (int argc, char* argv[])
           ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
         }
 
-      supplier_ec.init_gateway(orb.in(),
-                               poa.in(),
-                               "file://consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      for(size_t i=0; i<ior_input_files.size(); ++i)
+        {
+          Filename_Array::TYPE filename = ior_input_files[i];
+          supplier_ec.init_gateway(orb.in(),
+                                   poa.in(),
+                                   filename
+                                   ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       // ****************************************************************
       RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec_ior =
@@ -312,8 +356,12 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "cs:o:");
+  ACE_Get_Opt get_opts (argc, argv, "cs:o:i:");
   int c;
+  //these used for handline '-i':
+  const char* input_file;
+  size_t len;
+  char *filename;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -321,9 +369,20 @@ int parse_args (int argc, char *argv[])
       case 'o':
         ior_output_file = ACE_OS::fopen (get_opts.opt_arg (), "w");
         if (ior_output_file == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing: %p\n",
+                               get_opts.opt_arg ()), -1);
+          }
+        break;
+      case 'i':
+        //TODO: segfault because filename not big enough?
+        input_file = get_opts.opt_arg();
+        len = ACE_OS::strlen("file://")+ACE_OS::strlen(input_file)+1;
+        filename = new char[len];
+        sprintf(filename,"file://%s",input_file);
+        ACE_DEBUG((LM_DEBUG,"Adding consumer IOR %s\n",filename));
+        ior_input_files.push_back(filename);
         break;
       case 's':
         sched_type = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
@@ -333,12 +392,21 @@ int parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s -s <rms|muf|edf>"
-                           "\n",
+                           " [-o iorfile]"
+                           " [-i consumer_ec_ior]"
+                           "\n"
+                           "For multiple consumers, specify -i multiple times\n",
                            argv [0]),
                           -1);
       }
   if (ior_output_file == 0)
-    ior_output_file = ACE_OS::fopen ("supplier_ec.ior", "w");
+    {
+      ior_output_file = ACE_OS::fopen ("supplier_ec.ior", "w");
+    }
+  if (ior_input_files.size() == 0)
+    {
+      ior_input_files.push_back("file://consumer_ec.ior");
+    }
   // Indicates sucessful parsing of the command line
   return 0;
 }
