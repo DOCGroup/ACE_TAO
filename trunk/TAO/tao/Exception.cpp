@@ -4,7 +4,6 @@
 // on all of these data structures.
 
 #include "ace/streams.h"
-#include "ace/SString.h"
 #include "tao/Exception.h"
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
@@ -105,10 +104,10 @@ CORBA_Exception::_tao_print_exception (const char *user_provided_info,
               ACE_TEXT ("(%P|%t) EXCEPTION, %s\n")
               ACE_TEXT ("%s\n"),
               user_provided_info,
-              this->_info ()));
+              this->_info ().c_str ()));
 }
 
-const char *
+ACE_CString
 CORBA_Exception::_info (void) const
 {
   CORBA::SystemException *system_exception =
@@ -124,7 +123,7 @@ CORBA_Exception::_info (void) const
   ACE_CString user_exception_info = "user exception, ID '";
   user_exception_info += this->_id ();
   user_exception_info += "'";
-  return user_exception_info.c_str ();
+  return user_exception_info;
 }
 
 void
@@ -378,10 +377,10 @@ CORBA_SystemException::_tao_print_system_exception (FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("(%P|%t) system exception, ID '%s'\n"),
-              this->_info ()));
+              this->_info ().c_str ()));
 }
 
-const char *
+ACE_CString
 CORBA_SystemException::_info (void) const
 {
   // @@ there are a other few "user exceptions" in the CORBA scope,
@@ -569,7 +568,7 @@ CORBA_SystemException::_info (void) const
               break;
             default:
               break;
-              // @@ We should add all the standard minor codes from 
+              // @@ We should add all the standard minor codes from
             }
         }
       /* else if (this->is_a ("IDL:omg.org/CORBA/....")) */
@@ -585,7 +584,7 @@ CORBA_SystemException::_info (void) const
                        (completed () == CORBA::COMPLETED_NO) ? "NO" :
                        (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
                        "garbage");
-      
+
       info += buffer;
     }
   else
@@ -604,7 +603,7 @@ CORBA_SystemException::_info (void) const
       info += buffer;
     }
 
-  return info.c_str ();
+  return info;
 }
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (void)
@@ -970,8 +969,9 @@ TAO_Exceptions::fini (void)
 int \
 CORBA_##name ::_is_a (const char* interface_id) const \
 { \
-  return ((ACE_OS_String::strcmp (interface_id, \
-                           "IDL:omg.org/CORBA/" #name ":1.0") == 0) \
+  return ((ACE_OS_String::strcmp ( \
+               interface_id, \
+               "IDL:omg.org/CORBA/" #name ":1.0") == 0) \
           || CORBA_SystemException::_is_a (interface_id)); \
 }
 STANDARD_EXCEPTION_LIST
@@ -1112,7 +1112,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
           if (!(stream >> interface_repository_id.out ())) \
             return 0; \
           if (ACE_OS_String::strcmp (interface_repository_id.in (), \
-                              "IDL:omg.org/CORBA/" #name ":1.0")) \
+                                     "IDL:omg.org/CORBA/" #name ":1.0")) \
             return 0; \
           tmp->_tao_decode (stream, ACE_TRY_ENV); \
           ACE_TRY_CHECK; \
