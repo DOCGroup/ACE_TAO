@@ -1,3 +1,8 @@
+Mon Sep 16 17:36:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Hash_Cache_Map_Manager_T.cpp:
+          Use typedefs from header file.
+
 Mon Sep 16 15:26:56 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-doxygen.h:
