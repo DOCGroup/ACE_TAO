@@ -454,10 +454,10 @@ sub create_kit () {
     system ("$exec_prefix" .
             "/bin/rm -f ACE+TAO.zip; " .
             "$find $release_files $release_filter | " .
-            "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\" | " .
+            "$egrep $bin_files | " .
             "zip ACE+TAO.zip -q9@ &&" .
             "$find $release_files $release_filter | " .
-            "$egrep -v \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\" | " .
+            "$egrep -v $bin_files | " .
             "zip ACE+TAO.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H tar | " .
             "$gzip -9 > ACE+TAO.tar.gz && " .
