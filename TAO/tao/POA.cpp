@@ -1144,6 +1144,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
                                     is_system_id,
                                     poa_creation_time);
       if (result != 0 ||
+          !this->root () &&
           poa_system_name != this->system_name () ||
           is_root != this->root () ||
           is_persistent != this->persistent () ||
@@ -1271,6 +1272,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
                                 is_system_id,
                                 poa_creation_time);
   if (result != 0 ||
+      !this->root () &&
       poa_system_name != this->system_name () ||
       is_root != this->root () ||
       is_persistent != this->persistent () ||
