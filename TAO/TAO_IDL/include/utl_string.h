@@ -119,7 +119,7 @@ private:
   char *c_str;
   // Canonicalized string
 
-  unsigned long len;
+  size_t len;
   // How long is string.
 
   void canonicalize (void);

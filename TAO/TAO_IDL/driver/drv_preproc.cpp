@@ -148,7 +148,7 @@ DRV_get_line (FILE *f)
     char *l = fgets (drv_line,
                      LINEBUF_SIZE,
                      f);
-    long i = 0;
+    size_t i = 0;
 
     if (l == 0)
       {
@@ -565,7 +565,7 @@ static char *
 DRV_stripped_name (char *fn)
 {
     char *n = fn;
-    long l;
+    size_t l;
 
     if (n == 0)
       {
@@ -810,7 +810,7 @@ DRV_pre_proc (const char *myfile)
     {
       FILE *preproc = ACE_OS::fopen (tmp_file, "r");
       char buffer[ACE_MAXLOGMSGLEN];
-      int bytes;
+      size_t bytes;
 
       if (preproc == 0)
         {

@@ -1,3 +1,164 @@
+Wed Apr 30 07:26:37 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/idl_narrow.h:
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/util/utl_string.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.i:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/ClientRequestInfo_i.cpp:
+        * tao/Codeset_Manager.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/Domain/DomainS.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicInterface/DII_Invocation.inl:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/Exception.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/LocalObject.cpp:
+        * tao/MCAST_Parser.cpp:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Object.cpp:
+        * tao/PortableServer/ImR_LocatorS.cpp:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POAManager.i:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Servant_Base.i:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/Service_Context.cpp:
+        * tao/Strategies/DIOP_Acceptor.h:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Synch_Queued_Message.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i:
+        * tao/Tagged_Components.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Typecode.cpp:
+        * tao/corbafwd.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+        * tao/params.cpp:
+
+          Remove build warnings on Windows XP 64-bit.
+
 Wed Apr 30 12:52:50 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * examples/Simple/time/client_static.dsp:
@@ -31,10 +192,10 @@ Wed Apr 30 12:52:50 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Wed Apr 30 11:30:18 2003  Edward Scott  <eas@prismtechnologies.com>
 
-	* examples/POA/Generic_Servant/Makefile.generic_servant: 
-	* examples/POA/Generic_Servant/Makefile.client: 
+        * examples/POA/Generic_Servant/Makefile.generic_servant:
+        * examples/POA/Generic_Servant/Makefile.client:
 
-	  Small fix to Makefile.client. Updated dependencies.
+          Small fix to Makefile.client. Updated dependencies.
 
 Tue Apr 29 14:10:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -88,12 +249,12 @@ Tue Apr 29 10:58:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Apr 29 16:13:46 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* tests/Abstract_Interface/client.cpp: Fixed build error.
+        * tests/Abstract_Interface/client.cpp: Fixed build error.
 
 Tue Apr 29 14:47:40 2003  Dave Smith  <dts@prismtechnologies.com>
 
-	* tao/IOP_IORC.h:
-	* tao/diffs/IOP_IOR.diff:
+        * tao/IOP_IORC.h:
+        * tao/diffs/IOP_IOR.diff:
 
           Removed clash with symbol "IOR" defined in
           /usr/include/machine/inline.h on HPUX.
@@ -124,47 +285,47 @@ Mon Apr 28 18:59:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 28 12:24:39 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.cpp:
 
-	  load_default_protocols(): Reset
-	  <TAO_Default_Resource_Factory::protocol_factories_> after
-	  copying the protocols from it to avoid double deletes.
+          load_default_protocols(): Reset
+          <TAO_Default_Resource_Factory::protocol_factories_> after
+          copying the protocols from it to avoid double deletes.
 
-	  ~TAO_Advanced_Resource_Factory(): delete all protocols in
-	  protocol factory to avoid memory leak.
+          ~TAO_Advanced_Resource_Factory(): delete all protocols in
+          protocol factory to avoid memory leak.
 
-	* tao/RTPortableServer/RT_POA.cpp (server_protocol):
+        * tao/RTPortableServer/RT_POA.cpp (server_protocol):
 
-	  Fixed code formatting.
+          Fixed code formatting.
 
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
 
-	  Avoid a memory leak in pre_invoke_remote_request() by assigning
-	  the result from POA::server_protocol() to a CORBA::Policy_var
-	  instead of a CORBA::Policy_ptr.
+          Avoid a memory leak in pre_invoke_remote_request() by assigning
+          the result from POA::server_protocol() to a CORBA::Policy_var
+          instead of a CORBA::Policy_ptr.
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Only set TAO_DEFAULT_ROOTPOA_NAME if not already set by the
-	  user.
+          Only set TAO_DEFAULT_ROOTPOA_NAME if not already set by the
+          user.
 
 Mon Apr 28 09:13:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RTKokyuEvent.dsp: Added the xxx_BUILD_DLL
-	  preprocessor definition to get rid of compile warnings on MSVC.
+        * orbsvcs/orbsvcs/RTKokyuEvent.dsp: Added the xxx_BUILD_DLL
+          preprocessor definition to get rid of compile warnings on MSVC.
 
 Mon Apr 28 07:05:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/PortableServerC.i (demarshal_value): Added
-	  ACE_INLINE to marshal_value and demarshal_value. This should fix
-	  link errors in MSVC6. Thanks to Simon McQueen for reporting this.
+        * tao/PortableServer/PortableServerC.i (demarshal_value): Added
+          ACE_INLINE to marshal_value and demarshal_value. This should fix
+          link errors in MSVC6. Thanks to Simon McQueen for reporting this.
 
 Mon Apr 28 06:52:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_IORC.cpp: Removed duplicate explicit template
-	  instantiations.
+        * tao/IOP_IORC.cpp: Removed duplicate explicit template
+          instantiations.
 
-	* tao/Array_VarOut_T.inl: Fixed a compilation error in BCB6.
+        * tao/Array_VarOut_T.inl: Fixed a compilation error in BCB6.
 
 Mon Apr 28 06:43:50 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -174,293 +335,293 @@ Mon Apr 28 06:43:50 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Sun Apr 27 20:42:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Transport_Acceptor.h: Fixed a forward declaration that
-	  caused compile errors in VC++.
+        * tao/Transport_Acceptor.h: Fixed a forward declaration that
+          caused compile errors in VC++.
 
 Sun Apr 27 20:08:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a typo that blasted
-	  the builds.
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a typo that blasted
+          the builds.
 
 Sun Apr 27 17:50:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1482_Regression/Makefile: Updated dependencies.
+        * tests/Bug_1482_Regression/Makefile: Updated dependencies.
 
 Sun Apr 27 17:45:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_IORC.h:
-	* tao/IOP_CodeC.h: Generated code to include "ace/post.h". This
-	  should fix warnings in BCB6 builds. Thanks to Johnny for
-	  alerting me on this.
+        * tao/IOP_IORC.h:
+        * tao/IOP_CodeC.h: Generated code to include "ace/post.h". This
+          should fix warnings in BCB6 builds. Thanks to Johnny for
+          alerting me on this.
 
 Sun Apr 27 17:34:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/PortableServerC.cpp:
-	* tao/PortableServer/PortableServerC.i: Moved marshal_value ()
-	  method from the cpp file to the inlined file. This shodl fix
-	  BCB5 build problems. Thanks to Johnny for helping me with this.
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.i: Moved marshal_value ()
+          method from the cpp file to the inlined file. This shodl fix
+          BCB5 build problems. Thanks to Johnny for helping me with this.
 
 Sun Apr 27 11:31:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/GIOPC.{h,cpp,i}: Regenerated code
-	* tao/diffs/GIOP.diff: Updated diffs
+        * tao/GIOPC.{h,cpp,i}: Regenerated code
+        * tao/diffs/GIOP.diff: Updated diffs
 
-	* tao/IOP_IORC.cpp: Removed unwanted headers
-	* tao/diffs/IOP_IOR.diff: Updated diffs.
+        * tao/IOP_IORC.cpp: Removed unwanted headers
+        * tao/diffs/IOP_IOR.diff: Updated diffs.
 
 Sun Apr 27 11:01:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/GIOPC.h:
-	* tao/GIOP_Utils.h:
-	* tao/Messaging_PolicyValueC.h:
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/Reply_Dispatcher.h:
-	* tao/Synch_Reply_Dispatcher.h:
-	* tao/Transport.h:
-	* tao/Transport_Acceptor.cpp:
-	* tao/Transport_Acceptor.h: Removed totally unwanted
-	  includes. This was setting up totally screwed dependencies and
-	  increased footprint.
+        * tao/GIOPC.h:
+        * tao/GIOP_Utils.h:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Transport.h:
+        * tao/Transport_Acceptor.cpp:
+        * tao/Transport_Acceptor.h: Removed totally unwanted
+          includes. This was setting up totally screwed dependencies and
+          increased footprint.
 
-	* tao/IOP_CodecC.cpp:
-	* tao/IOP_CodecC.h:
-	* tao/IOP_CodecC.i:
-	* tao/diffs/IOP_Codec.diff: Regenerated code and updated
-	  the diffs.
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/IOP_CodecC.i:
+        * tao/diffs/IOP_Codec.diff: Regenerated code and updated
+          the diffs.
 
 Sun Apr 27 09:37:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_IORC.h:
-	* tao/IOP_IORC.cpp:
-	* tao/IOP_IORC.i: Regenerated the code. Somehow the regenarted
-	  code never got merged back from the branch.
+        * tao/IOP_IORC.h:
+        * tao/IOP_IORC.cpp:
+        * tao/IOP_IORC.i: Regenerated the code. Somehow the regenarted
+          code never got merged back from the branch.
 
-	* tao/diffs/IOP_IOR.diff: Updated diff file.
+        * tao/diffs/IOP_IOR.diff: Updated diff file.
 
 Sat Apr 26 16:08:15 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/PortableServer/Servant_Base.{h,cpp} Added an accessor method
-	  that returns the current reference count.  Thanks to
-	  Zsolt Zsoldos <zsolt.zsoldos@rogers.com> for suggesting this.
+        * tao/PortableServer/Servant_Base.{h,cpp} Added an accessor method
+          that returns the current reference count.  Thanks to
+          Zsolt Zsoldos <zsolt.zsoldos@rogers.com> for suggesting this.
 
-	* utils/IOR-parser/ior-handler.cpp (interpretIor): Fixed this utility
-	  so that it correctly handles GIOP 1.2!  Thanks to Dave Ryan
- 	  <djryan7@pacbell.net> for this fix.
+        * utils/IOR-parser/ior-handler.cpp (interpretIor): Fixed this utility
+          so that it correctly handles GIOP 1.2!  Thanks to Dave Ryan
+          <djryan7@pacbell.net> for this fix.
 
 Sat Apr 26 11:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a compile error in
-	  builds where exceptions are turned off.
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed a compile error in
+          builds where exceptions are turned off.
 
 Sat Apr 26 11:08:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Messaging_No_ImplC.cpp: Missing template
-	  instantiations.
+        * tao/Messaging/Messaging_No_ImplC.cpp: Missing template
+          instantiations.
 
 Sat Apr 26 10:58:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PolicyC.cpp: Removed duplicate template instantiations.
+        * tao/PolicyC.cpp: Removed duplicate template instantiations.
 
 Sat Apr 26 10:52:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/ImR_LocatorC.i: Fixed a warning in VC++ builds.
+        * tao/PortableServer/ImR_LocatorC.i: Fixed a warning in VC++ builds.
 
 Sat Apr 26 08:42:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Environment.cpp: Removed operator= for
-	  CORBA::Environment_var since they shoudl be taken care by the
-	  template classes.
+        * tao/Environment.cpp: Removed operator= for
+          CORBA::Environment_var since they shoudl be taken care by the
+          template classes.
 
 Fri Apr 25 22:29:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: Added explicit
-	  template instations for the base class sequences.
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: Added explicit
+          template instations for the base class sequences.
 
 Fri Apr 25 22:26:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicC.cpp:
-	* tao/DynamicC.h:
-	* tao/DynamicC.i:
-	* tao/OctetSeqC.cpp:
-	* tao/OctetSeqC.h:
-	* tao/OctetSeqC.i:
-	* tao/PortableServer/Default_ORTC.cpp:
-	* tao/PortableServer/Default_ORTC.h:
-	* tao/PortableServer/Default_ORTC.i:
-	* tao/PortableServer/ImR_ActivatorC.h:
-	* tao/PortableServer/ImR_LocatorC.cpp:
-	* tao/PortableServer/ImR_LocatorC.h:
-	* tao/PortableServer/ImR_LocatorC.i:
-	* tao/PortableServer/ImplRepoC.cpp:
-	* tao/PortableServer/ImplRepoC.h:
-	* tao/PortableServer/PortableServerC.cpp
-	* tao/PortableServer/ImplRepoC.i: Regenerated ode and patched them.
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/DynamicC.i:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/Default_ORTC.i:
+        * tao/PortableServer/ImR_ActivatorC.h:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImR_LocatorC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/PortableServerC.cpp
+        * tao/PortableServer/ImplRepoC.i: Regenerated ode and patched them.
 
-	* tao/PortableServer/diffs/Default_ORT.diff:
-	* tao/PortableServer/diffs/ImplRepo.diff:
-	* tao/diffs/Dynamic.diff:
-	* tao/diffs/OctetSeq.diff: Updated the diff files.
+        * tao/PortableServer/diffs/Default_ORT.diff:
+        * tao/PortableServer/diffs/ImplRepo.diff:
+        * tao/diffs/Dynamic.diff:
+        * tao/diffs/OctetSeq.diff: Updated the diff files.
 
-	  With the above checkin a simple server and client should build
-	  without link errors when explicit template instantiations have
-	  been turned on.
+          With the above checkin a simple server and client should build
+          without link errors when explicit template instantiations have
+          been turned on.
 
 Fri Apr 25 17:04:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_type.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
-	* TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h: Added code
-	  to generate explicit template instantiations.
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h: Added code
+          to generate explicit template instantiations.
 
 Fri Apr 25 15:21:58 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\RTCORBA\Thread_Pool.cpp:
+        * tao\RTCORBA\Thread_Pool.cpp:
 
-	  In create_threadpool_helper(), finalize thread pool resource in
-	  case of thread creation errors.  This will fix a memory leak.
+          In create_threadpool_helper(), finalize thread pool resource in
+          case of thread creation errors.  This will fix a memory leak.
 
-	* tests\RTCORBA\Banded_Connections\client.cpp:
-	* tests\RTCORBA\Banded_Connections\server.cpp:
+        * tests\RTCORBA\Banded_Connections\client.cpp:
+        * tests\RTCORBA\Banded_Connections\server.cpp:
 
-	  Report meaningful message in case of thread creation errors.
+          Report meaningful message in case of thread creation errors.
 
 Fri Apr 25 08:59:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BaseC.i:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_BasicC.i:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ComponentsC.i:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IFR_Client/IFR_ExtendedC.i: Generated code for the IFR. This
-	  should compile fine if explicit template instantiations are
-	  used.
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.i: Generated code for the IFR. This
+          should compile fine if explicit template instantiations are
+          used.
 
-	  We still have a lots of link errors that needs fixing in TAO.
+          We still have a lots of link errors that needs fixing in TAO.
 
 Fri Apr 25 07:06:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/PortableServerC.i: Added #if
-	  (TAO_HAS_MINIMUM_POA == 0) guards in a few places to get the
-	  file compiling cleanly in minimum builds.
+        * tao/PortableServer/PortableServerC.i: Added #if
+          (TAO_HAS_MINIMUM_POA == 0) guards in a few places to get the
+          file compiling cleanly in minimum builds.
 
 Fri Apr 25 06:27:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/ObjectReferenceTemplate.cpp: Fixed a compile
-	  error in builds with no exceptions.
+        * tao/PortableServer/ObjectReferenceTemplate.cpp: Fixed a compile
+          error in builds with no exceptions.
 
 Thu Apr 24 22:01:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/CONV_FRAMEC.cpp:
-	* tao/CurrentC.cpp:
-	* tao/DomainC.cpp:
-	* tao/DynamicC.cpp:
-	* tao/Dynamic_Adapter.cpp:
-	* tao/Dynamic_Adapter.h:
-	* tao/GIOPC.cpp:
-	* tao/IIOPC.cpp:
-	* tao/IOP_CodecC.cpp:
-	* tao/Messaging_PolicyValueC.cpp:
-	* tao/ORB.cpp:
-	* tao/Object.cpp:
-	* tao/ObjectIdListC.cpp:
-	* tao/ObjectReferenceTemplateC.cpp:
-	* tao/Object_KeyC.cpp:
-	* tao/Objref_VarOut_T.cpp:
-	* tao/OctetSeqC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/Policy_ForwardC.cpp:
-	* tao/PortableInterceptorC.cpp:
-	* tao/Pseudo_Value_VarOut_T.inl:
-	* tao/Pseudo_VarOut_T.inl:
-	* tao/ServicesC.cpp:
-	* tao/StringSeqC.cpp:
-	* tao/TAOC.cpp:
-	* tao/TimeBaseC.cpp:
-	* tao/ValueBase.cpp:
-	* tao/ValueBase.h:
-	* tao/ValueFactory.cpp:
-	* tao/ValueFactory.h:
-	* tao/VarOut_T.cpp:
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicInterface/Request.cpp:
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/Messaging/MessagingC.cpp:
-	* tao/Messaging/Messaging_No_ImplC.cpp:
-	* tao/Messaging/Messaging_RT_PolicyC.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
-	* tao/Messaging/TAO_ExtC.cpp:
-	* tao/PortableServer/Default_ORTC.cpp:
-	* tao/PortableServer/ImR_LocatorC.cpp:
-	* tao/PortableServer/ImplRepoC.cpp:
-	* tao/PortableServer/PortableServerC.cpp:
-	* tao/RTCORBA/RTCORBAC.cpp:
-	* tao/RTCORBA/RTCORBAC.h:
-	* tao/RTCORBA/RTCORBAC.i:
-	* tao/RTPortableServer/RTPortableServerC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp: First set of fixes for
-	  explicit template  instantiation problems. The fixes are not
-	  complete since the instantiations generated by the IDL compiler
-	  for the generated code is busted. Fixes to the IDL compiler over
-	  the past couple of days havent helped the situation. This set of
-	  fixes addresses
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynamicC.cpp:
+        * tao/Dynamic_Adapter.cpp:
+        * tao/Dynamic_Adapter.h:
+        * tao/GIOPC.cpp:
+        * tao/IIOPC.cpp:
+        * tao/IOP_CodecC.cpp:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/ORB.cpp:
+        * tao/Object.cpp:
+        * tao/ObjectIdListC.cpp:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/Object_KeyC.cpp:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/OctetSeqC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.cpp:
+        * tao/PortableInterceptorC.cpp:
+        * tao/Pseudo_Value_VarOut_T.inl:
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/ServicesC.cpp:
+        * tao/StringSeqC.cpp:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.cpp:
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/ValueFactory.cpp:
+        * tao/ValueFactory.h:
+        * tao/VarOut_T.cpp:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBAC.i:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp: First set of fixes for
+          explicit template  instantiation problems. The fixes are not
+          complete since the instantiations generated by the IDL compiler
+          for the generated code is busted. Fixes to the IDL compiler over
+          the past couple of days havent helped the situation. This set of
+          fixes addresses
 
-	  - compilation issues arising in TAO and associated libraries
-	    from the explicit template instantiations section.
-	  - link errors while trying to link with TAO library.
+          - compilation issues arising in TAO and associated libraries
+            from the explicit template instantiations section.
+          - link errors while trying to link with TAO library.
 
-	  Applications linking to libraries other than TAO would still
-	  experience linking errors. They will be fixed along with the IDL
-	  compiler in the next couple of days.
+          Applications linking to libraries other than TAO would still
+          experience linking errors. They will be fixed along with the IDL
+          compiler in the next couple of days.
 
 Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/PortableServer/POA:
+        * tao/PortableServer/POA:
 
- 	  The following changes are primarily to fix the problems caused
-	  by:
+          The following changes are primarily to fix the problems caused
+          by:
 
-	  Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+          Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	  These problems include ignoring the <priority> value, running
-	  extra (and potentially incorrect) code, and memory leaks.
+          These problems include ignoring the <priority> value, running
+          extra (and potentially incorrect) code, and memory leaks.
 
-	  - create_reference_i() and create_reference_with_id_i():
-	  Re-added <priority> parameter and restored function to the way
-	  it was.  However, now we find user id from system id (if
-	  needed), remember params for potentially invoking
-	  key_to_object() later, and ask the ORT to create the object.
+          - create_reference_i() and create_reference_with_id_i():
+          Re-added <priority> parameter and restored function to the way
+          it was.  However, now we find user id from system id (if
+          needed), remember params for potentially invoking
+          key_to_object() later, and ask the ORT to create the object.
 
-	  - servant_to_reference(): Get priority from
-	  cached_policies_.server_priority() rather than fixing it to
-	  TAO_INVALID_PRIORITY.  Also remember params for potentially
-	  invoking key_to_object() later, and ask the ORT to create the
-	  object.
+          - servant_to_reference(): Get priority from
+          cached_policies_.server_priority() rather than fixing it to
+          TAO_INVALID_PRIORITY.  Also remember params for potentially
+          invoking key_to_object() later, and ask the ORT to create the
+          object.
 
-	  - id_to_reference_i(): Added code so that the ORT is also
-	  invoked from this method.  Not sure why this method was left
-	  out.
+          - id_to_reference_i(): Added code so that the ORT is also
+          invoked from this method.  Not sure why this method was left
+          out.
 
-	  - invoke_key_to_object(): Super simplified this method.  All
-	  params required to call create_object_key() and key_to_object()
-	  are stored away in <key_to_object_params_>.
+          - invoke_key_to_object(): Super simplified this method.  All
+          params required to call create_object_key() and key_to_object()
+          are stored away in <key_to_object_params_>.
 
-	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+        * tao/PortableServer/ObjectReferenceTemplate.cpp:
 
-	  In make_object(), invoke_key_to_object() no longer requires any
-	  parameters to be passed to it.
+          In make_object(), invoke_key_to_object() no longer requires any
+          parameters to be passed to it.
 
-	* tao/RTPortableServer/RT_POA.i:
+        * tao/RTPortableServer/RT_POA.i:
 
-	  Fixed create_reference_with_priority() and
-	  create_reference_with_id_and_priority() to pass the priority
-	  value down to the POA.
+          Fixed create_reference_with_priority() and
+          create_reference_with_id_and_priority() to pass the priority
+          value down to the POA.
 
 Thu Apr 24 13:52:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -505,31 +666,31 @@ Thu Apr 24 10:33:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr 24 10:03:48 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
 
-	  Fixed warnings on unused variable. Thanks to Bala for pointing this out.
+          Fixed warnings on unused variable. Thanks to Bala for pointing this out.
 
 Thu Apr 24 08:11:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/Context.h:
-	* tao/DynamicInterface/ExceptionList.h: Added a undef for
-	  TAO_EXPORT_MACRO and redefined TAO_EXPORT_MACRO. This should fix
-	  problems with MSVC builds.
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/ExceptionList.h: Added a undef for
+          TAO_EXPORT_MACRO and redefined TAO_EXPORT_MACRO. This should fix
+          problems with MSVC builds.
 
 Wed Apr 23 22:12:37 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CDR_Encaps_Codec.cpp (encode_value):
+        * tao/CDR_Encaps_Codec.cpp (encode_value):
 
-	  If the internal ACE_Message_Block in the supplied Any is null,
-	  explicitly create an ACE_Message_Block and populate with the
-	  marshalled data.  Fixes run-time errors in the Codec and
-	  IORInterceptor tests.  Thanks to Jeff for providing a fix.
+          If the internal ACE_Message_Block in the supplied Any is null,
+          explicitly create an ACE_Message_Block and populate with the
+          marshalled data.  Fixes run-time errors in the Codec and
+          IORInterceptor tests.  Thanks to Jeff for providing a fix.
 
-	* tao/PortableServer/POA.cpp (TAO_POA, create_POA_i):
+        * tao/PortableServer/POA.cpp (TAO_POA, create_POA_i):
 
-	  Reverted one more change from fix described in "Wed Apr 23
-	  18:06:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>".
-	  Fixes a remaining problem in the IORInterceptor test.
+          Reverted one more change from fix described in "Wed Apr 23
+          18:06:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>".
+          Fixes a remaining problem in the IORInterceptor test.
 
 Wed Apr 23 18:27:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -550,13 +711,13 @@ Wed Apr 23 18:12:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Apr 23 18:06:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/POA.cpp (id_to_reference_i):
-	  (establish_components):
-	* tao/PortableServer/Object_Adapter.cpp (open):
+        * tao/PortableServer/POA.cpp (id_to_reference_i):
+          (establish_components):
+        * tao/PortableServer/Object_Adapter.cpp (open):
 
-	  Reverted Carlos' changes that attempted to fix Bug 1414
-	  (IORInterceptor deadlock).  It introduced other problems.
-	  Thanks to Irfan for detecting this problem.
+          Reverted Carlos' changes that attempted to fix Bug 1414
+          (IORInterceptor deadlock).  It introduced other problems.
+          Thanks to Irfan for detecting this problem.
 
 Wed Apr 23 17:13:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -580,13 +741,13 @@ Wed Apr 23 17:05:10 2003  Irfan Pyarali  <irfan@oomworks.com>
         * tests/Bug_1020_Regression/client.dsp:
         * tests/Bug_1020_Regression/server.dsp:
 
-	  Reinstated these files.  These two tests should compile on VC6
-	  now that config-win32-msvc-6.h file has been updated and the -GR
-	  flag has been added to the project files.
+          Reinstated these files.  These two tests should compile on VC6
+          now that config-win32-msvc-6.h file has been updated and the -GR
+          flag has been added to the project files.
 
-	* tests\RTCORBA\RTCORBA-test-configurations.xls:
+        * tests\RTCORBA\RTCORBA-test-configurations.xls:
 
-	  Updated test configuration details.
+          Updated test configuration details.
 
 Wed Apr 23 15:51:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -598,9 +759,9 @@ Wed Apr 23 15:51:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Apr 23 15:03:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>1
 
-	* docs/tutorial/Quoter/AMI/Handler_i.h:
-	* docs/tutorial/Quoter/AMI/Handler_i.cpp: Fixed the code to be
-	  portable by removing _ptr's for non-object references.
+        * docs/tutorial/Quoter/AMI/Handler_i.h:
+        * docs/tutorial/Quoter/AMI/Handler_i.cpp: Fixed the code to be
+          portable by removing _ptr's for non-object references.
 
 Wed Apr 23 09:53:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 

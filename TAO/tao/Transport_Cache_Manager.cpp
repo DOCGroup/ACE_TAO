@@ -583,7 +583,7 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
   // Do we need to worry about cache purging?
   if (cache_maximum >= 0)
     {
-      current_size = this->cache_map_.current_size ();
+      current_size = ACE_static_cast (int, this->cache_map_.current_size ());
 
       if (TAO_debug_level > 0)
         {

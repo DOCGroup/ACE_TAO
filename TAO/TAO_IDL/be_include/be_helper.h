@@ -175,6 +175,14 @@ public:
   TAO_OutStream &operator<< (const ACE_CDR::Long num);
   // output the integer and return a reference to ourselves
 
+#if defined (ACE_WIN64)
+  TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
+  // output the integer and return a reference to ourselves
+
+  TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
+  // output the integer and return a reference to ourselves
+#endif /* ACE_WIN64 */
+
   TAO_OutStream &operator<< (const unsigned long num);
   // output the integer and return a reference to ourselves
 

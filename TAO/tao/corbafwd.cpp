@@ -26,7 +26,7 @@ CORBA::string_dup (const char *str)
   size_t len = ACE_OS::strlen (str);
 
   // This allocates an extra byte for the '\0';
-  char * copy = CORBA::string_alloc (len);
+  char * copy = CORBA::string_alloc (ACE_static_cast (CORBA::ULong, len));
 
   // The memcpy() below assumes that the destination is a valid buffer.
   if (copy == 0)

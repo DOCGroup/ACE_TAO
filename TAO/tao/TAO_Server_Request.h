@@ -102,7 +102,7 @@ public:
                   int release);
 
   /// Return the length of the operation.
-  unsigned int operation_length (void) const;
+  size_t operation_length (void) const;
   //@}
 
   /// Return the underlying ORB.

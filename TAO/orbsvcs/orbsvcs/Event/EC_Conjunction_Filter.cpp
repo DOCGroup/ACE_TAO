@@ -77,7 +77,7 @@ TAO_EC_Conjunction_Filter::end (void) const
 int
 TAO_EC_Conjunction_Filter::size (void) const
 {
-  return this->n_;
+  return ACE_static_cast (int, this->n_);
 }
 
 int
@@ -163,7 +163,7 @@ TAO_EC_Conjunction_Filter::clear (void)
     {
       *j = 0;
     }
-  int b = this->n_ % bits_per_word;
+  int b = ACE_static_cast (int, this->n_ % bits_per_word);
   Word last = ~0 << b;
   *j = last;
 

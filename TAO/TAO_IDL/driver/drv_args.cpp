@@ -1247,9 +1247,9 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'I')
                 {
-                  int options = ACE_OS::strlen(av[i]) - 3;
-                  int j;
-                  int k = i;
+                  size_t options = ACE_OS::strlen(av[i]) - 3;
+                  size_t j;
+                  size_t k = i;
                   // optimized typecode support
                   be_global->gen_impl_files (1);
 

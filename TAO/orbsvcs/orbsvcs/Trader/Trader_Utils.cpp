@@ -1214,7 +1214,8 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
   CORBA::ULong num_modified = 0,
     original_length = this->offer_->properties.length (),
-    total_length = this->props_.current_size ();
+    total_length = ACE_static_cast (CORBA::ULong,
+                                    this->props_.current_size ());
 
   // Scrap the existing property sequence and begin a new one
   CosTrading::PropertySeq prop_seq (total_length);
@@ -1405,7 +1406,8 @@ CosTrading::PolicyNameSeq*
 TAO_Offer_Filter::limits_applied (void)
 {
   int i = 0;
-  CORBA::ULong size = this->limits_.size ();
+  CORBA::ULong size = ACE_static_cast (CORBA::ULong,
+                                       this->limits_.size ());
   CosTrading::PolicyName* temp =
     CosTrading::PolicyNameSeq::allocbuf (size);
 
@@ -1474,7 +1476,8 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
   Prop_Queue prop_queue;
   CosTrading::PropertySeq& s_props = source->properties;
   CosTrading::PropertySeq& d_props = destination.properties;
-  CORBA::ULong length = s_props.length (), elem = 0;
+  CORBA::ULong length = ACE_static_cast (CORBA::ULong, s_props.length ()),
+               elem = 0;
 
   destination.reference = CORBA::Object::_duplicate (source->reference.in ());
   if (this->policy_ == CosTrading::Lookup::some)
@@ -1496,8 +1499,8 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
 
       // Shove the matched properties into the destination property
       // sequence.
-      length = prop_queue.size ();
-      d_props.length (prop_queue.size ());
+      length = ACE_static_cast (CORBA::ULong, prop_queue.size ());
+      d_props.length (length);
       for (Prop_Queue::ITERATOR prop_iter (prop_queue);
            ! prop_iter.done ();
            prop_iter.advance (), elem++)

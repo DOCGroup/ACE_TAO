@@ -179,7 +179,7 @@ protected:
   /// Specifies the limit on the number of muxed connections
   /// allowed per-property for the ORB. A value of 0 indicates no
   /// limit
-  size_t max_muxed_connections_;
+  int max_muxed_connections_;
 
   /// If <0> then we create reactors with signal handling disabled.
   int reactor_mask_signals_;

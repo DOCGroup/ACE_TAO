@@ -51,7 +51,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
 
   const char endpoints_delimiter = ';';
 
-  int length = endpoints.length ();
+  size_t length = endpoints.length ();
 
   if (endpoints[0] == endpoints_delimiter ||
       endpoints[length - 1] == endpoints_delimiter)
@@ -66,7 +66,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
     {
       int endpoints_count = 1;
 
-      for (int j = 0; j != length; ++j)
+      for (size_t j = 0; j != length; ++j)
         {
           if (endpoints[j] == endpoints_delimiter)
             endpoints_count++;

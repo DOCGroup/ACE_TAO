@@ -275,8 +275,8 @@ public:
    * the <code>this</code> pointer for the instance on which
    * it's called.
    */
-  int id (void) const;
-  void id (int id);
+  size_t id (void) const;
+  void id (size_t id);
 
   /// Get and Set the purging order. The purging strategy uses the set
   /// version to set the purging order.
@@ -995,7 +995,7 @@ protected:
    * HINT: Protocol-specific transports that use connection handler
    * might choose to set this to the handle for their connection.
    */
-  int id_;
+  size_t id_;
 
   /// Used by the LRU, LFU and FIFO Connection Purging Strategies.
   unsigned long purging_order_;

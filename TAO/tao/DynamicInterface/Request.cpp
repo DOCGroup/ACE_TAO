@@ -148,7 +148,8 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_GIOP_DII_Invocation call (this->target_->_stubobj (),
                                 this->opname_,
-                                ACE_OS::strlen (this->opname_),
+                                ACE_static_cast (CORBA::ULong,
+                                                 ACE_OS::strlen (this->opname_)),
                                 argument_flag,
                                 this->orb_->orb_core (),
                                 this,
@@ -268,7 +269,8 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_GIOP_Oneway_Invocation call (this->target_->_stubobj (),
                                    this->opname_,
-                                   ACE_OS::strlen (this->opname_),
+                                   ACE_static_cast (CORBA::ULong,
+                                           ACE_OS::strlen (this->opname_)),
                                    argument_flag,
                                    this->orb_->orb_core (),
                                    this->byte_order_);

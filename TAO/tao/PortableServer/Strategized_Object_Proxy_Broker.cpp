@@ -101,7 +101,7 @@ TAO_Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (
   return the_tao_strategized_object_proxy_broker ();
 }
 
-int _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (long dummy)
+int _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t dummy)
 {
   ACE_UNUSED_ARG (dummy);
 
@@ -113,5 +113,5 @@ int _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (long dummy)
 
 static int
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer_Scarecrow =
-_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long,
+_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t,
                                                                                 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer));

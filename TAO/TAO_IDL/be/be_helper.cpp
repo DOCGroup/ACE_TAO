@@ -395,6 +395,32 @@ TAO_OutStream::operator<< (const ACE_CDR::Long num)
   return *this;
 }
 
+#if defined (ACE_WIN64)
+TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
+{
+  ACE_OS::fprintf (this->fp_,
+                   ACE_UINT64_FORMAT_SPECIFIER,
+                   num);
+
+  ACE_OS::fflush (this->fp_);
+
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
+{
+  ACE_OS::fprintf (this->fp_,
+                   ACE_INT64_FORMAT_SPECIFIER,
+                   num);
+
+  ACE_OS::fflush (this->fp_);
+
+  return *this;
+}
+#endif /* ACE_WIN64 */
+
 TAO_OutStream &
 TAO_OutStream::operator<< (const unsigned long num)
 {

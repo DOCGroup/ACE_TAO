@@ -345,7 +345,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
   // profiles than there are endpoints.  In some cases, there can be
   // less profiles than endpoints.
   int result =
-    mprofile.set (profile_count);
+    mprofile.set (ACE_static_cast (CORBA::ULong, profile_count));
   if (result == -1)
     error = 1;
 

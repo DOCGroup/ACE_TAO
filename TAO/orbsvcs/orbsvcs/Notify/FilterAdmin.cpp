@@ -129,7 +129,7 @@ TAO_NS_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 
   CosNotifyFilter::FilterIDSeq_var list (list_ptr);
 
-  list->length (len);
+  list->length (ACE_static_cast (CORBA::ULong, len));
 
   FILTER_LIST::ITERATOR iter (this->filter_list_);
   FILTER_LIST::ENTRY *entry;

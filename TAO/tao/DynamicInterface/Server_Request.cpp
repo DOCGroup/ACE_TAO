@@ -223,7 +223,8 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   // to the original source of the reply.
   this->orb_server_request_.outgoing ().write_octet_array (
       ACE_reinterpret_cast (const CORBA::Octet *, raw_exception.fast_rep ()),
-      raw_exception.length () + ACE_CDR::MAX_ALIGNMENT
+      ACE_static_cast (CORBA::ULong,
+                       raw_exception.length () + ACE_CDR::MAX_ALIGNMENT)
     );
 
   // This will prevent the marshaling of any parameters into this reply.

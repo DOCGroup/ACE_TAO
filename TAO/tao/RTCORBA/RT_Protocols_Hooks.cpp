@@ -615,7 +615,7 @@ TAO_RT_Protocols_Hooks::set_default_policies (ACE_ENV_SINGLE_ARG_DECL)
   TAO_ProtocolFactorySet *pfs = this->orb_core_->protocol_factories ();
 
   RTCORBA::ProtocolList protocols;
-  protocols.length (pfs->size ());
+  protocols.length (ACE_static_cast (CORBA::ULong, pfs->size ()));
 
   int i = 0;
   for (TAO_ProtocolFactorySetItor factory = pfs->begin ();

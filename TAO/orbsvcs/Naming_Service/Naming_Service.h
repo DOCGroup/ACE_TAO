@@ -63,7 +63,7 @@ protected:
   TAO_Naming_Server my_naming_server_;
   // Naming Server instance.
 
-  size_t time_;
+  long time_;
   // After how long the server should stop listening to requests (in
   // seconds).
 };

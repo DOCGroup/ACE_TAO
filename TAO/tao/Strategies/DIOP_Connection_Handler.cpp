@@ -120,7 +120,7 @@ TAO_DIOP_Connection_Handler::open (void*)
   }
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
@@ -141,7 +141,7 @@ TAO_DIOP_Connection_Handler::open_server (void)
                ));
   }
 
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   return 0;
 }
@@ -169,7 +169,7 @@ TAO_DIOP_Connection_Handler::activate (long flags,
   // @@ Frank: Not disabled yet...
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id ((int) this->get_handle ());
+  this->transport ()->id ((size_t) this->get_handle ());
 
   return TAO_DIOP_SVC_HANDLER::activate (flags,
                                          n_threads,

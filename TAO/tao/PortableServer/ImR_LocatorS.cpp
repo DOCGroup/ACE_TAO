@@ -1323,7 +1323,7 @@ ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_function (CORBA::Obje
 }
 
 int
-ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer (long)
+ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer (size_t)
 {
   ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_function_pointer =
     ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_function;
@@ -1332,7 +1332,7 @@ ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer (long)
 }
 
 static int ImplementationRepository__TAO_Locator_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer));
+  ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////

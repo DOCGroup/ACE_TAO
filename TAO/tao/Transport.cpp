@@ -39,7 +39,7 @@ ACE_RCSID (tao,
  * Static function in file scope
  */
 static void
-dump_iov (iovec *iov, int iovcnt, int id,
+dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
           const char *location)
 {
@@ -112,7 +112,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , flush_timer_id_ (-1)
   , transport_timer_ (this)
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
-  , id_ ((long) this)
+  , id_ ((size_t) this)
   , purging_order_ (0)
   , char_translator_ (0)
   , wchar_translator_ (0)

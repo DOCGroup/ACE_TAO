@@ -239,7 +239,7 @@ remove_offer (CosTrading::Offer*& offer)
 }
 
 
-int
+size_t
 TAO_Preference_Interpreter::num_offers (void)
 {
   return this->offers_.size ();

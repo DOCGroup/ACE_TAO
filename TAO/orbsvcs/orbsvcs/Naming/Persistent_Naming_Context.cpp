@@ -477,7 +477,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   if (this->context_->current_size () > how_many)
     n = how_many;
   else
-    n = this->context_->current_size ();
+    n = ACE_static_cast (CORBA::ULong, this->context_->current_size ());
 
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);

@@ -267,12 +267,14 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   RtecScheduler::Scheduling_Anomaly **anomaly = 0;
   const char *anomaly_severity_msg = "NONE";
   CORBA::ULong anomaly_index = 0;
+  CORBA::ULong anomaly_set_size =
+                    ACE_static_cast (CORBA::ULong, anomaly_set.size ());
   if (anomalies.ptr () == 0)
     {
       anomalies =
-        new RtecScheduler::Scheduling_Anomaly_Set (anomaly_set.size ());
+        new RtecScheduler::Scheduling_Anomaly_Set (anomaly_set_size);
     }
-  anomalies->length (anomaly_set.size ());
+  anomalies->length (anomaly_set_size);
   ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>
     anomaly_iter (anomaly_set);
   for (anomaly_iter.first (), anomaly_index = 0;

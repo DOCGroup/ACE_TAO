@@ -1002,7 +1002,8 @@ TAO_YY_MALLOC_DECL
                         TAO_YY_FATAL_ERROR( "input in flex scanner failed" ); \
                 result = n; \
                 } \
-        else if ( ((result = fread( buf, 1, max_size, tao_yyin )) == 0) \
+        else if ( ((result = ACE_static_cast (int, \
+                                  fread( buf, 1, max_size, tao_yyin ))) == 0) \
                   && ferror( tao_yyin ) ) \
                 TAO_YY_FATAL_ERROR( "input in flex scanner failed" );
 #endif
@@ -1425,7 +1426,8 @@ TAO_YY_RULE_SETUP
   if (!idl_global->preserve_cpp_keywords())
     {
       entry = cpp_key_tbl.lookup (ace_tao_yytext,
-                        ACE_OS::strlen (ace_tao_yytext));
+                        ACE_static_cast (unsigned int,
+                          ACE_OS::strlen (ace_tao_yytext)));
     }  
   if (entry)
     tao_yylval.strval = ACE_OS::strdup (entry->mapping_);

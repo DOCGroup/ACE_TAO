@@ -220,7 +220,8 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
 
           // The service name string.
           iovp[2].iov_base = (char *) service_name;
-          iovp[2].iov_len  = ACE_OS::strlen (service_name) + 1;
+          iovp[2].iov_len  = ACE_static_cast (u_long,
+                               ACE_OS::strlen (service_name) + 1);
 
           // Send the multicast.
           result = dgram.send (iovp,
@@ -354,14 +355,11 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
 
   if (pos_colon1 == 0)
     {
-          const char *default_addr = ACE_DEFAULT_MULTICAST_ADDR;
-          this->mcast_address_ = CORBA::string_alloc (ACE_OS::strlen (default_addr));
-          this->mcast_address_ = default_addr;
-
+      const char *default_addr = ACE_DEFAULT_MULTICAST_ADDR;
+      this->mcast_address_ = default_addr;
     }
   else
     {
-      this->mcast_address_ = CORBA::string_alloc (pos_colon1);
       this->mcast_address_ =
         mcast_name_cstring.substring (0,
                                       pos_colon1).c_str ();
@@ -404,13 +402,10 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
 
       ACE_OS_String::itoa (trial_port, default_port, 10);
 
-      this->mcast_port_ =
-        CORBA::string_alloc (ACE_OS::strlen ((const char *) default_port));
       this->mcast_port_ = (const char *) default_port;
     }
   else
     {
-      this->mcast_port_ = CORBA::string_alloc (pos_colon2);
       this->mcast_port_ = mcast_name_cstring.substring (0,
                                                         pos_colon2).c_str ();
     }
@@ -422,7 +417,6 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
 
   int pos_colon3 = mcast_name_cstring.find (':', 0);
 
-  this->mcast_nic_ = CORBA::string_alloc (pos_colon3);
   this->mcast_nic_ =
     mcast_name_cstring.substring (0,
                                   pos_colon3).c_str ();
@@ -436,13 +430,11 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
   if (pos_colon4 == 0)
     {
       // And, the default TTL to be 1
-          const char *default_ttl = "1";
-          this->mcast_ttl_ = CORBA::string_alloc (ACE_OS::strlen (default_ttl));
+      const char *default_ttl = "1";
       this->mcast_ttl_ = default_ttl;
     }
   else
     {
-      this->mcast_ttl_ = CORBA::string_alloc (pos_colon4);
       this->mcast_ttl_ =
         mcast_name_cstring.substring (0,
                                       pos_colon4).c_str ();
@@ -450,9 +442,6 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon4,
                                   mcast_name_cstring.length() - pos_colon4);
-
-  this->service_name_ =
-    CORBA::string_alloc (mcast_name_cstring.length ());
 
   this->service_name_ =
     mcast_name_cstring.substring (1,

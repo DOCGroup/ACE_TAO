@@ -1630,8 +1630,8 @@ TAO_MCastConfigIf::set_dev_params (const char * flowName,
 int
 TAO_MCastConfigIf::in_flowSpec (const AVStreams::flowSpec& flow_spec, const char *flow_name)
 {
-  int len = strlen (flow_name);
-  for (u_int i=0;i<flow_spec.length ();i++)
+  size_t len = ACE_OS::strlen (flow_name);
+  for (CORBA::ULong i = 0; i < flow_spec.length (); i++)
     if (ACE_OS::strncmp (flow_spec[i], flow_name, len) == 0)
       {
         return 1;
@@ -5215,7 +5215,7 @@ TAO_Tokenizer::parse (const char *string, char delimiter)
       else
         {
           substring = new_string.substring (pos);
-          pos = new_string.length ();
+          pos = ACE_static_cast (int, new_string.length ());
         }
       char *token = CORBA::string_dup (substring.c_str ());
       result = this->token_array_.set (token, count);
@@ -5265,7 +5265,7 @@ TAO_Tokenizer::token (void)
 int
 TAO_Tokenizer::num_tokens (void)
 {
-  return this->num_tokens_;
+  return ACE_static_cast (int, this->num_tokens_);
 }
 
 const char *

@@ -305,7 +305,7 @@ AST_Decl::compute_full_name (void)
     }
   else
     {
-      long namelen = 0;
+      size_t namelen = 0;
       long first = I_TRUE;
       long second = I_FALSE;
       char *name = 0;
@@ -390,7 +390,7 @@ AST_Decl::compute_repoID (void)
       return;
     }
 
-  long namelen = 4; // for the prefix "IDL:"
+  size_t namelen = 4; // for the prefix "IDL:"
   long first = I_TRUE;
   long second = I_FALSE;
   char *name = 0;
@@ -575,7 +575,7 @@ AST_Decl::compute_flat_name (void)
     }
   else
     {
-      long namelen = 0;
+      size_t namelen = 0;
       long first = I_TRUE;
       long second = I_FALSE;
       char *item_name = 0;

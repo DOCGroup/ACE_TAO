@@ -468,7 +468,8 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = len - begin;  // Handle last endpoint differently
+        end = ACE_static_cast (int,
+                               len - begin); // Handle last endpoint differently
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
