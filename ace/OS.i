@@ -9755,7 +9755,7 @@ ACE_OS::gmtime (const time_t *t)
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_gmtime (t), pace_tm*, 0);
 #elif !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
-  ACE_OS_TRACE ("ACE_OS::localtime");
+  ACE_OS_TRACE ("ACE_OS::gmtime");
   ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
 #else
   // @@ WinCE doesn't have gmtime also.
