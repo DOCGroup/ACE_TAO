@@ -8,7 +8,7 @@ Servant_var<SERVANT>::Servant_var (SERVANT *s)
 
 template<typename SERVANT> ACE_INLINE
 Servant_var<SERVANT>::Servant_var (const Servant_var<SERVANT> &rhs)
-  : ptr_ (rhs)
+  : ptr_ (rhs.in ())
 {
   if (this->ptr_ != 0)
     this->ptr_->_add_ref ();
@@ -38,7 +38,7 @@ Servant_var<SERVANT>::operator-> ()
   return this->ptr_;
 }
 
-template<typename SERVANT> ACE_INLINE SERVANT* const
+template<typename SERVANT> ACE_INLINE const SERVANT*
 Servant_var<SERVANT>::operator-> () const
 {
   return this->ptr_;
@@ -51,13 +51,13 @@ Servant_var<SERVANT>::operator SERVANT *()
 }
 
 template<typename SERVANT> ACE_INLINE
-Servant_var<SERVANT>::operator SERVANT * const () const
+Servant_var<SERVANT>::operator const SERVANT * () const
 {
   return this->ptr_;
 }
 
 template<typename SERVANT> ACE_INLINE SERVANT *
-Servant_var<SERVANT>::in ()
+Servant_var<SERVANT>::in () const
 {
   return this->ptr_;
 }
