@@ -9,6 +9,12 @@ Wed Mar 18 09:22:13 1998  David L. Levine  <levine@cs.wustl.edu>
           (operator *): initialize retv to 0 to avoid warning about
           using it before setting its value.
 
+        * tests/Thread_Mutex_Test.cpp (test): added no-op statement to
+          suppress GHS warning about unused local variable "mutex".
+
+        * tests/Priority_Buffer_Test.cpp (consumer): added no-op statement
+          to suppress GHS warning about unused local variable "cur_priority".
+
 Tue Mar 17 23:53:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/task_five.cpp (main): Reformatted Detlef's new
