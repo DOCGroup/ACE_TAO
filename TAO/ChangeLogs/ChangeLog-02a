@@ -1,3 +1,9 @@
+Wed Sep 26 15:30:31 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Thread_Pool/client.cpp: Allow the user
+	  to set the invocation thread priority at thread creating time or
+	  after thread creation.  Also improved parse_args().
+
 Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Thread_Pool/client.cpp: 

@@ -15,22 +15,29 @@
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 
+enum Priority_Setting
+{
+  AT_THREAD_CREATION = 0,
+  AFTER_THREAD_CREATION = 1
+};
+
 static const char *ior = "file://ior";
+static const char *rates_file = "rates";
+static const char *invocation_priorities_file = "empty_file";
 static int shutdown_server = 0;
 static int do_dump_history = 0;
 static ACE_UINT32 gsf = 0;
-static const char *rates_file = "rates";
-static const char *invocation_priorities_file = "empty_file";
 static CORBA::ULong continuous_workers = 0;
 static int done = 0;
 static CORBA::ULong time_for_test = 10;
 static CORBA::ULong work = 10;
 static CORBA::ULong max_throughput_timeout = 5;
 static int set_priority = 1;
+static Priority_Setting priority_setting = AFTER_THREAD_CREATION;
 static int individual_continuous_worker_stats = 0;
-static ACE_Time_Value start_of_test;
-static ACE_hrtime_t test_start;
 static int print_missed_invocations = 0;
+static ACE_hrtime_t test_start;
+static ACE_Time_Value start_of_test;
 
 struct Synchronizers
 {
@@ -53,7 +60,7 @@ struct Synchronizers
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:hi:k:m:p:r:t:w:xy:z:");
+  ACE_Get_Opt get_opts (argc, argv, "c:h:i:k:m:p:r:t:v:w:x:y:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -65,7 +72,8 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'h':
-        do_dump_history = 1;
+        do_dump_history =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'i':
@@ -98,13 +106,19 @@ parse_args (int argc, char *argv[])
           ACE_OS::atoi (get_opts.optarg);
         break;
 
+      case 'v':
+        priority_setting =
+          Priority_Setting (ACE_OS::atoi (get_opts.optarg));
+        break;
+
       case 'w':
         work =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'y':
@@ -120,25 +134,38 @@ parse_args (int argc, char *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-c <number of continuous workers> "
-                           "-h <show history> "
-                           "-i <print stats of individual continuous workers> "
-                           "-k <ior> "
-                           "-m <print missed invocations for paced workers> "
-                           "-p <invocation priorities file> "
-                           "-r <rates file> "
-                           "-t <time for test> "
-                           "-w <work> "
-                           "-x [shutdown server] "
-                           "-y <set invocation priorities> "
-                           "-z <timeout for max throughput measurement> "
+                           "usage:  %s\n"
+                           "\t-c <number of continuous workers> (defaults to %d)\n"
+                           "\t-h <show history> (defaults to %d)\n"
+                           "\t-i <print stats of individual continuous workers> (defaults to %d)\n"
+                           "\t-k <ior> (defaults to %s)\n"
+                           "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
+                           "\t-p <invocation priorities file> (defaults to %s)\n"
+                           "\t-r <rates file> (defaults to %s)\n"
+                           "\t-t <time for test> (defaults to %d)\n"
+                           "\t-v <priority setting: AT_THREAD_CREATION = 0, AFTER_THREAD_CREATION = 1> (defaults to %s)\n"
+                           "\t-w <work> (defaults to %d)\n"
+                           "\t-x <shutdown server> (defaults to %d)\n"
+                           "\t-y <set invocation priorities> (defaults to %d)\n"
+                           "\t-z <timeout for max throughput measurement> (defaults to %d)\n"
                            "\n",
-                           argv [0]),
+                           argv [0],
+                           continuous_workers,
+                           do_dump_history,
+                           individual_continuous_worker_stats,
+                           ior,
+                           print_missed_invocations,
+                           invocation_priorities_file,
+                           rates_file,
+                           time_for_test,
+                           priority_setting == 0 ? "AT_THREAD_CREATION" : "AFTER_THREAD_CREATION",
+                           work,
+                           shutdown_server,
+                           set_priority,
+                           max_throughput_timeout),
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -208,6 +235,7 @@ public:
 
   int svc (void);
   ACE_Time_Value deadline_for_current_call (CORBA::ULong i);
+  void reset_priority (CORBA::Environment &ACE_TRY_ENV);
 
   test_var test_;
   int rate_;
@@ -240,6 +268,23 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
   this->interval_between_calls_.set (1 / double (this->rate_));
 }
 
+void
+Paced_Worker::reset_priority (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (set_priority)
+    {
+      this->current_->the_priority (this->priority_,
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  else
+    {
+      this->current_->the_priority (0,
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
 ACE_Time_Value
 Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 {
@@ -260,16 +305,9 @@ Paced_Worker::svc (void)
 
   ACE_TRY_NEW_ENV
     {
-      if (set_priority)
+      if (priority_setting == AFTER_THREAD_CREATION)
         {
-          this->current_->the_priority (this->priority_,
-                                        ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      else
-        {
-          this->current_->the_priority (0,
-                                        ACE_TRY_ENV);
+          this->reset_priority (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
@@ -432,9 +470,12 @@ Continuous_Worker::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->current_->the_priority (0,
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (priority_setting == AFTER_THREAD_CREATION)
+        {
+          this->current_->the_priority (0,
+                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
       ACE_Sample_History history (this->iterations_);
 
@@ -488,7 +529,6 @@ Continuous_Worker::svc (void)
                                                  stats.samples_count ());
         }
 
-      // Collective samples.
       history.collect_basic_stats (this->collective_stats_);
       ACE_hrtime_t elapsed_time_for_current_thread =
         test_end - test_start;
@@ -704,26 +744,80 @@ main (int argc, char *argv[])
         THR_NEW_LWP |
         THR_JOINABLE;
 
-      result =
-        continuous_worker.activate (flags,
-                                    continuous_workers);
-      if (result != 0)
-        return result;
+      CORBA::Short CORBA_priority = 0;
+      CORBA::Short native_priority;
+      CORBA::Boolean convert_result =
+        priority_mapping.to_native (CORBA_priority,
+                                    native_priority);
+      if (!convert_result)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Error in converting CORBA priority %d to native priority\n",
+                           CORBA_priority),
+                          -1);
+
+      int force_active = 0;
+
+      if (priority_setting == AT_THREAD_CREATION)
+        {
+          result =
+            continuous_worker.activate (flags,
+                                        continuous_workers,
+                                        force_active,
+                                        native_priority);
+          if (result != 0)
+            return result;
+        }
+      else
+        {
+          result =
+            continuous_worker.activate (flags,
+                                        continuous_workers);
+          if (result != 0)
+            return result;
+        }
+
+      flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->scope_policy () |
+        orb->orb_core ()->orb_params ()->sched_policy ();
 
       for (i = 0;
            i < rates.size ();
            ++i)
         {
-          flags =
-            THR_NEW_LWP |
-            THR_JOINABLE |
-            orb->orb_core ()->orb_params ()->scope_policy () |
-            orb->orb_core ()->orb_params ()->sched_policy ();
+          if (priority_setting == AT_THREAD_CREATION)
+            {
+              if (set_priority)
+                {
+                  CORBA_priority =
+                    paced_workers[i]->priority_;
 
-          result =
-            paced_workers[i]->activate (flags);
-          if (result != 0)
-            return result;
+                  convert_result =
+                    priority_mapping.to_native (CORBA_priority,
+                                                native_priority);
+                  if (!convert_result)
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "Error in converting CORBA priority %d to native priority\n",
+                                       CORBA_priority),
+                                      -1);
+                }
+
+              result =
+                paced_workers[i]->activate (flags,
+                                            1,
+                                            force_active,
+                                            native_priority);
+              if (result != 0)
+                return result;
+            }
+          else
+            {
+              result =
+                paced_workers[i]->activate (flags);
+              if (result != 0)
+                return result;
+            }
         }
 
       if (synchronizers.number_of_workers_ > 0)
