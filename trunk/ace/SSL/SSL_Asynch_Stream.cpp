@@ -34,6 +34,8 @@ ACE_RCSID (ACE_SSL,
 
 #include "ace/Proactor.h"
 
+#include <openssl/err.h>
+
 // ************************************************************
 //  SSL Asynchronous Write Result
 // ************************************************************
