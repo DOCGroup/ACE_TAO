@@ -117,6 +117,7 @@ CONNECTION_FILES = \
 SOCKETS_FILES = \
   Addr \
   INET_Addr \
+  Multihomed_INET_Addr \
   IPC_SAP \
   LSOCK \
   LSOCK_Acceptor \
@@ -133,6 +134,9 @@ SOCKETS_FILES = \
   SOCK_Dgram_Bcast \
   SOCK_Dgram_Mcast \
   SOCK_IO \
+  SOCK_SEQPACK_Acceptor \
+  SOCK_SEQPACK_Association \
+  SOCK_SEQPACK_Connector \
   SOCK_Stream
 IPC_FILES = \
   ATM_Addr \
@@ -305,6 +309,7 @@ TEMPLATE_FILES = \
            RB_Tree \
            Select_Reactor_T \
            Singleton \
+	   SOCK_Dgram_Mcast_T \
            Strategies_T \
            Stream \
            Stream_Modules \
@@ -484,18 +489,6 @@ INSTALL =
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-ifeq ($(shared_libs),1)
-ifneq ($(SHLIB),)
-CPPFLAGS     += -DACE_BUILD_DLL -DACE_OS_BUILD_DLL
-endif
-endif
-
-ifeq ($(static_libs),1)
-ifneq ($(LIB),)
-CPPFLAGS     += -DACE_AS_STATIC_LIBS
-endif
-endif
-
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
@@ -627,7 +620,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -653,7 +645,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Template_Instantiations.cpp
 
 .obj/Time_Value.o .obj/Time_Value.so .shobj/Time_Value.o .shobj/Time_Value.so: Time_Value.cpp Time_Value.h \
@@ -661,7 +654,6 @@ endif # GHS
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -676,7 +668,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -702,7 +693,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sched_Params.h \
   Sched_Params.i \
   OS_Thread_Adapter.h \
@@ -718,7 +710,6 @@ endif # GHS
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -738,13 +729,15 @@ endif # GHS
   Global_Macros.h \
   Default_Constants.h \
   Log_Priority.h \
-  OS.h OS_TLI.h \
+  OS.h \
+  OS_TLI.h \
   OS_TLI.inl \
   Time_Value.h \
   Time_Value.inl \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
@@ -753,7 +746,6 @@ endif # GHS
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -767,7 +759,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -793,14 +784,14 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp OS_String.h \
   pre.h \
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -819,7 +810,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -835,7 +825,6 @@ endif # GHS
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -849,7 +838,6 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -878,7 +866,8 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/OS_Thread_Adapter.o .obj/OS_Thread_Adapter.so .shobj/OS_Thread_Adapter.o .shobj/OS_Thread_Adapter.so: OS_Thread_Adapter.cpp \
   OS_Thread_Adapter.h \
@@ -887,7 +876,6 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -918,14 +906,14 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/OS_Log_Msg_Attributes.o .obj/OS_Log_Msg_Attributes.so .shobj/OS_Log_Msg_Attributes.o .shobj/OS_Log_Msg_Attributes.so: OS_Log_Msg_Attributes.cpp \
   OS_Log_Msg_Attributes.h \
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -935,11 +923,11 @@ endif # GHS
   OS_Export.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/Thread_Hook.o .obj/Thread_Hook.so .shobj/Thread_Hook.o .shobj/Thread_Hook.so: Thread_Hook.cpp Thread_Hook.h \
+.obj/Thread_Hook.o .obj/Thread_Hook.so .shobj/Thread_Hook.o .shobj/Thread_Hook.so: Thread_Hook.cpp \
+  Thread_Hook.h \
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -966,14 +954,14 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
   Sched_Params.h \
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -999,14 +987,14 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sched_Params.i
 
 .obj/Handle_Set.o .obj/Handle_Set.so .shobj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp Handle_Set.h \
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1032,7 +1020,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Handle_Set.i \
   Log_Msg.h \
   Log_Priority.h \
@@ -1045,7 +1034,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1056,7 +1044,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1082,7 +1069,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1112,7 +1100,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -1141,7 +1130,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -1160,7 +1150,6 @@ endif # GHS
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1173,7 +1162,8 @@ endif # GHS
   Active_Map_Manager.i \
   Active_Map_Manager_T.h \
   Map_Manager.h \
-  Synch.h OS.h \
+  Synch.h \
+  OS.h \
   OS_Dirent.h \
   OS_Errno.h \
   OS_Errno.inl \
@@ -1188,7 +1178,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -1240,7 +1231,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -1275,12 +1267,12 @@ endif # GHS
   Active_Map_Manager_T.i \
   Active_Map_Manager_T.cpp
 
-.obj/Arg_Shifter.o .obj/Arg_Shifter.so .shobj/Arg_Shifter.o .shobj/Arg_Shifter.so: Arg_Shifter.cpp Arg_Shifter.h \
+.obj/Arg_Shifter.o .obj/Arg_Shifter.so .shobj/Arg_Shifter.o .shobj/Arg_Shifter.so: Arg_Shifter.cpp \
+  Arg_Shifter.h \
   pre.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1301,7 +1293,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1327,9 +1318,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -1345,7 +1338,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1367,7 +1359,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1395,7 +1386,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -1411,7 +1403,8 @@ endif # GHS
   Log_Msg.h \
   Log_Priority.h \
   Hash_Map_Manager_T.h \
-  Functor.h ACE.h \
+  Functor.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1422,7 +1415,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Functor.i \
+  ACE.i \
+  Functor.i \
   Functor_T.h \
   Functor_T.i \
   Functor_T.cpp \
@@ -1430,7 +1424,8 @@ endif # GHS
   Hash_Map_Manager_T.cpp \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -1498,7 +1493,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1506,7 +1500,8 @@ endif # GHS
   ace_wchar.inl \
   Containers.i \
   Containers_T.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Array_Base.h \
   Global_Macros.h \
   OS_Export.h \
@@ -1528,7 +1523,8 @@ endif # GHS
   Default_Constants.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Malloc_Base.h \
   Array_Base.inl \
   Array_Base.cpp \
@@ -1547,12 +1543,12 @@ endif # GHS
 
 .obj/Configuration.o .obj/Configuration.so .shobj/Configuration.o .shobj/Configuration.so: Configuration.cpp \
   Configuration.h \
-  pre.h SString.h \
+  pre.h \
+  SString.h \
   String_Base.h \
   ACE.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1578,7 +1574,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1601,7 +1598,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -1630,7 +1628,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -1679,7 +1678,6 @@ endif # GHS
   ACE.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1705,7 +1703,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -1728,7 +1727,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -1757,7 +1757,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -1801,7 +1802,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1830,7 +1830,8 @@ endif # GHS
   Time_Value.inl \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
@@ -1838,7 +1839,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1864,7 +1864,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Dirent_Selector.h \
   Dirent_Selector.inl
 
@@ -1873,7 +1874,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1881,7 +1881,8 @@ endif # GHS
   ace_wchar.inl \
   Dynamic.i \
   Singleton.h \
-  Synch.h OS.h \
+  Synch.h \
+  OS.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
@@ -1901,7 +1902,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -1946,7 +1948,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -1972,16 +1973,17 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i
 
 .obj/Framework_Component.o .obj/Framework_Component.so .shobj/Framework_Component.o .shobj/Framework_Component.so: Framework_Component.cpp \
   Framework_Component.h \
-  pre.h Synch.h \
+  pre.h \
+  Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2007,7 +2009,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -2075,18 +2078,19 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
   SString.i
 
 .obj/Functor.o .obj/Functor.so .shobj/Functor.o .shobj/Functor.so: Functor.cpp Functor_T.h \
-  pre.h Functor.h \
+  pre.h \
+  Functor.h \
   ACE.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2112,7 +2116,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2123,17 +2128,18 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Functor.i \
+  ACE.i \
+  Functor.i \
   Functor_T.i \
   Functor_T.cpp
 
 .obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp Get_Opt.h \
-  pre.h SString.h \
+  pre.h \
+  SString.h \
   String_Base.h \
   ACE.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2159,7 +2165,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2182,7 +2189,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -2211,7 +2219,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -2237,7 +2246,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2245,8 +2253,8 @@ endif # GHS
   ace_wchar.inl \
   Hash_Map_Manager_T.h \
   Default_Constants.h \
-  Functor.h ACE.h \
-  OS.h \
+  Functor.h \
+  ACE.h OS.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
@@ -2266,7 +2274,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -2277,7 +2286,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Functor.i \
+  ACE.i \
+  Functor.i \
   Functor_T.h \
   Functor_T.i \
   Functor_T.cpp \
@@ -2286,7 +2296,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Hash_Map_Manager_T.i \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -2299,7 +2310,8 @@ endif # GHS
   Hash_Map_Manager_T.cpp \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -2360,7 +2372,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2373,7 +2384,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2388,7 +2398,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2414,7 +2423,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Event_Handler.i \
   Notification_Strategy.inl
 
@@ -2423,7 +2433,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2437,7 +2446,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2450,7 +2458,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2476,7 +2483,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Handle_Ops.i
 
 .obj/Init_ACE.o .obj/Init_ACE.so .shobj/Init_ACE.o .shobj/Init_ACE.so: Init_ACE.cpp Init_ACE.h \
@@ -2484,7 +2492,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2512,7 +2519,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Object_Manager.i \
   Managed_Object.h \
   Managed_Object.i \
@@ -2522,7 +2530,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2548,7 +2555,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Lib_Find.i \
   Log_Msg.h \
   Log_Priority.h \
@@ -2561,7 +2569,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2587,7 +2594,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
@@ -2598,7 +2606,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -2615,7 +2624,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2629,7 +2637,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2655,13 +2662,15 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Object_Manager.i \
   Managed_Object.h \
   Managed_Object.i \
   Managed_Object.cpp \
   Token_Manager.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -2713,7 +2722,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -2772,7 +2782,8 @@ endif # GHS
   Service_Manager.h \
   SOCK_Stream.h \
   SOCK_IO.h \
-  SOCK.h Addr.h \
+  SOCK.h \
+  Addr.h \
   Addr.i \
   IPC_SAP.h \
   IPC_SAP.i \
@@ -2799,7 +2810,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2825,7 +2835,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/String_Base_Const.o .obj/String_Base_Const.so .shobj/String_Base_Const.o .shobj/String_Base_Const.so: String_Base_Const.cpp \
   String_Base_Const.h \
@@ -2833,7 +2844,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2847,7 +2857,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -2873,14 +2882,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -2922,7 +2933,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -2941,14 +2953,14 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   OS_Memory.h \
   OS_Export.h \
   OS_Errno.h \
@@ -2972,7 +2984,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -2988,7 +3001,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3020,16 +3032,17 @@ endif # GHS
   Time_Value.inl \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp Filecache.h \
-  pre.h Mem_Map.h \
+  pre.h \
+  Mem_Map.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3055,10 +3068,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Mem_Map.i \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -3072,7 +3087,8 @@ endif # GHS
   Log_Msg.h \
   Log_Priority.h \
   Hash_Map_Manager_T.h \
-  Functor.h ACE.h \
+  Functor.h \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -3083,7 +3099,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Functor.i \
+  ACE.i \
+  Functor.i \
   Functor_T.h \
   Functor_T.i \
   Functor_T.cpp \
@@ -3091,7 +3108,8 @@ endif # GHS
   Hash_Map_Manager_T.cpp \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -3149,11 +3167,11 @@ endif # GHS
   Managed_Object.cpp
 
 .obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp Synch_T.h \
-  pre.h Synch.h \
+  pre.h \
+  Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3179,7 +3197,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.i \
   Thread.h \
@@ -3193,7 +3212,8 @@ endif # GHS
   Synch_T.cpp \
   Log_Msg.h \
   Log_Priority.h \
-  Dump.h Dump_T.h \
+  Dump.h \
+  Dump_T.h \
   Dump_T.cpp \
   Object_Manager.h \
   Object_Manager.i \
@@ -3202,8 +3222,8 @@ endif # GHS
   Managed_Object.cpp
 
 .obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3230,7 +3250,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -3254,14 +3275,16 @@ endif # GHS
   Thread_Exit.h \
   Thread_Control.h \
   Thread_Control.inl \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
   Log_Priority.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -3299,7 +3322,8 @@ endif # GHS
   SOCK_Connector.h \
   SOCK_Stream.h \
   SOCK_IO.h \
-  SOCK.h Addr.h \
+  SOCK.h \
+  Addr.h \
   Addr.i \
   IPC_SAP.h \
   IPC_SAP.i \
@@ -3320,7 +3344,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3333,20 +3356,19 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl
 
-.obj/Log_Msg_IPC.o .obj/Log_Msg_IPC.so .shobj/Log_Msg_IPC.o .shobj/Log_Msg_IPC.so: Log_Msg_IPC.cpp Log_Msg_IPC.h \
+.obj/Log_Msg_IPC.o .obj/Log_Msg_IPC.so .shobj/Log_Msg_IPC.o .shobj/Log_Msg_IPC.so: Log_Msg_IPC.cpp \
+  Log_Msg_IPC.h \
   pre.h \
   Log_Msg_Backend.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3355,7 +3377,8 @@ endif # GHS
   SOCK_Connector.h \
   SOCK_Stream.h \
   SOCK_IO.h \
-  SOCK.h Addr.h \
+  SOCK.h \
+  Addr.h \
   Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
@@ -3379,10 +3402,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -3391,7 +3416,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -3402,8 +3428,8 @@ endif # GHS
 
 .obj/Log_Msg_NT_Event_Log.o .obj/Log_Msg_NT_Event_Log.so .shobj/Log_Msg_NT_Event_Log.o .shobj/Log_Msg_NT_Event_Log.so: Log_Msg_NT_Event_Log.cpp \
   config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3412,8 +3438,8 @@ endif # GHS
 
 .obj/Log_Msg_UNIX_Syslog.o .obj/Log_Msg_UNIX_Syslog.so .shobj/Log_Msg_UNIX_Syslog.o .shobj/Log_Msg_UNIX_Syslog.so: Log_Msg_UNIX_Syslog.cpp \
   config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3440,7 +3466,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -3451,7 +3478,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Log_Msg.h \
+  ACE.i \
+  Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
@@ -3464,7 +3492,6 @@ endif # GHS
   OS.h pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3490,7 +3517,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Priority.h \
   Log_Record.i \
   Log_Msg.h \
@@ -3510,13 +3538,13 @@ endif # GHS
   ACE.i
 
 .obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
-  Get_Opt.h pre.h \
+  Get_Opt.h \
+  pre.h \
   SString.h \
   String_Base.h \
   ACE.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3542,7 +3570,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -3565,7 +3594,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -3594,7 +3624,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -3639,7 +3670,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3666,18 +3696,19 @@ endif # GHS
   Time_Value.h \
   Time_Value.inl \
   Min_Max.h \
-  streams.h OS.i \
+  streams.h \
+  OS.i \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
 .obj/Activation_Queue.o .obj/Activation_Queue.so .shobj/Activation_Queue.o .shobj/Activation_Queue.so: Activation_Queue.cpp \
   Activation_Queue.h \
-  pre.h Synch_T.h \
+  pre.h \
+  Synch_T.h \
   Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3703,7 +3734,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.i \
   Thread.h \
@@ -3740,7 +3772,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3768,7 +3799,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -3792,7 +3824,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3818,7 +3849,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Process.h \
   Handle_Set.h \
   Handle_Set.i \
@@ -3847,7 +3879,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -3876,7 +3909,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -3892,12 +3926,12 @@ endif # GHS
   ARGV.i
 
 .obj/Process_Manager.o .obj/Process_Manager.so .shobj/Process_Manager.o .shobj/Process_Manager.so: Process_Manager.cpp \
-  Synch_T.h pre.h \
+  Synch_T.h \
+  pre.h \
   Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -3923,7 +3957,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.i \
   Thread.h \
@@ -3980,7 +4015,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -4012,7 +4048,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4038,14 +4073,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
-  Thread.i ACE.h \
+  Thread.i \
+  ACE.h \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -4056,7 +4093,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Synch.h \
+  ACE.i \
+  Synch.h \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -4070,7 +4108,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4085,11 +4122,11 @@ endif # GHS
 
 .obj/Process_Semaphore.o .obj/Process_Semaphore.so .shobj/Process_Semaphore.o .shobj/Process_Semaphore.so: Process_Semaphore.cpp \
   Process_Semaphore.h \
-  pre.h Synch.h \
+  pre.h \
+  Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4115,7 +4152,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -4141,7 +4179,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4170,11 +4207,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Process_Mutex.inl \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -4208,7 +4247,6 @@ endif # GHS
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4234,7 +4272,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   File_Lock.inl \
   RW_Process_Mutex.inl \
   Log_Msg.h \
@@ -4258,7 +4297,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4284,7 +4322,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   File_Lock.inl \
   Log_Msg.h \
   Log_Priority.h \
@@ -4296,7 +4335,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4322,7 +4360,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
@@ -4332,12 +4371,12 @@ endif # GHS
   Thread.i
 
 .obj/Thread_Manager.o .obj/Thread_Manager.so .shobj/Thread_Manager.o .shobj/Thread_Manager.so: Thread_Manager.cpp \
-  Synch_T.h pre.h \
+  Synch_T.h \
+  pre.h \
   Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4363,7 +4402,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.i \
   Thread.h \
@@ -4382,7 +4422,8 @@ endif # GHS
   Thread_Control.h \
   Thread_Control.inl \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -4438,7 +4479,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4469,21 +4509,24 @@ endif # GHS
   Default_Constants.h \
   Global_Macros.h \
   Min_Max.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Thread_Manager.h \
   Thread.h \
   Thread.i \
   Thread_Exit.h \
   Thread_Control.h \
   Thread_Control.inl \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
   Log_Priority.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -4529,11 +4572,11 @@ endif # GHS
   Thread_Manager.i \
   Thread_Hook.h
 
-.obj/Thread_Exit.o .obj/Thread_Exit.so .shobj/Thread_Exit.o .shobj/Thread_Exit.so: Thread_Exit.cpp Thread_Exit.h \
+.obj/Thread_Exit.o .obj/Thread_Exit.so .shobj/Thread_Exit.o .shobj/Thread_Exit.so: Thread_Exit.cpp \
+  Thread_Exit.h \
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4560,10 +4603,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Thread_Control.h \
   Thread_Control.inl \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -4584,7 +4629,8 @@ endif # GHS
   Managed_Object.cpp \
   Thread_Manager.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -4626,8 +4672,8 @@ endif # GHS
 
 .obj/Thread_Control.o .obj/Thread_Control.so .shobj/Thread_Control.o .shobj/Thread_Control.so: Thread_Control.cpp \
   config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4655,7 +4701,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Thread_Control.inl \
   Thread_Manager.h \
   Thread.h \
@@ -4667,14 +4714,16 @@ endif # GHS
   Thread_Adapter.inl \
   Thread.i \
   Thread_Exit.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
   Log_Priority.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -4724,7 +4773,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4750,7 +4798,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Thread_Adapter.h \
   Base_Thread_Adapter.h \
   OS_Log_Msg_Attributes.h \
@@ -4758,7 +4807,8 @@ endif # GHS
   Base_Thread_Adapter.inl \
   Thread_Adapter.inl \
   Thread.i \
-  Token.h Synch.h \
+  Token.h \
+  Synch.h \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -4773,7 +4823,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4799,7 +4848,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Event_Handler.i \
   Message_Block.h \
   Message_Block.i \
@@ -4811,7 +4861,8 @@ endif # GHS
   Handle_Set.h \
   Handle_Set.i \
   Timer_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -4843,7 +4894,8 @@ endif # GHS
   Thread_Control.h \
   Thread_Control.inl \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Containers.h \
@@ -4888,7 +4940,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4900,7 +4951,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4911,8 +4961,8 @@ endif # GHS
 .obj/POSIX_Proactor.o .obj/POSIX_Proactor.so .shobj/POSIX_Proactor.o .shobj/POSIX_Proactor.so: POSIX_Proactor.cpp \
   POSIX_Proactor.h \
   config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -4940,13 +4990,15 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Asynch_IO.h \
   Reactor.h \
   Handle_Set.h \
   Handle_Set.i \
   Timer_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -4975,12 +5027,14 @@ endif # GHS
   Signal.i \
   Reactor.i \
   Reactor_Impl.h \
-  Pipe.h Pipe.i \
+  Pipe.h \
+  Pipe.i \
   POSIX_Asynch_IO.h \
   Asynch_IO_Impl.h \
   Asynch_IO_Impl.i \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -5035,7 +5089,8 @@ endif # GHS
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
-  Token.h Token.i \
+  Token.h \
+  Token.i \
   Select_Reactor_Base.i \
   Select_Reactor_T.cpp \
   Timer_Heap.h \
@@ -5074,7 +5129,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   Message_Block.h \
   Message_Block.i \
@@ -5100,8 +5156,8 @@ endif # GHS
 .obj/POSIX_CB_Proactor.o .obj/POSIX_CB_Proactor.so .shobj/POSIX_CB_Proactor.o .shobj/POSIX_CB_Proactor.so: POSIX_CB_Proactor.cpp \
   POSIX_CB_Proactor.h \
   config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5130,13 +5186,15 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Asynch_IO.h \
   Reactor.h \
   Handle_Set.h \
   Handle_Set.i \
   Timer_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -5165,12 +5223,14 @@ endif # GHS
   Signal.i \
   Reactor.i \
   Reactor_Impl.h \
-  Pipe.h Pipe.i \
+  Pipe.h \
+  Pipe.i \
   POSIX_Asynch_IO.h \
   Asynch_IO_Impl.h \
   Asynch_IO_Impl.i \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -5225,7 +5285,8 @@ endif # GHS
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
-  Token.h Token.i \
+  Token.h \
+  Token.i \
   Select_Reactor_Base.i \
   Select_Reactor_T.cpp \
   Timer_Heap.h \
@@ -5264,7 +5325,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   Message_Block.h \
   Message_Block.i \
@@ -5293,7 +5355,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5307,7 +5368,6 @@ endif # GHS
   Node.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5338,7 +5398,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -5347,7 +5408,8 @@ endif # GHS
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
   Signal.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -5372,8 +5434,10 @@ endif # GHS
   Timer_Queue_T.cpp \
   Handle_Set.h \
   Handle_Set.i \
-  Token.h Token.i \
-  Pipe.h Pipe.i \
+  Token.h \
+  Token.i \
+  Pipe.h \
+  Pipe.i \
   Reactor_Impl.h \
   Select_Reactor_Base.i \
   Reactor.h \
@@ -5418,7 +5482,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5445,7 +5508,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Asynch_IO.h \
   Asynch_IO_Impl.h \
   Asynch_IO_Impl.i \
@@ -5461,14 +5525,16 @@ endif # GHS
   Thread_Exit.h \
   Thread_Control.h \
   Thread_Control.inl \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
   Log_Priority.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -5560,7 +5626,8 @@ endif # GHS
   Svc_Conf_Tokens.h \
   DLL.h \
   Service_Object.i \
-  Task.i Task_T.i \
+  Task.i \
+  Task_T.i \
   Task_T.cpp \
   Module.h \
   Module.i \
@@ -5595,7 +5662,8 @@ endif # GHS
   XML_Svc_Conf.h \
   Service_Config.i \
   POSIX_Proactor.h \
-  Pipe.h Pipe.i \
+  Pipe.h \
+  Pipe.i \
   POSIX_Asynch_IO.h \
   Map_Manager.h \
   Map_Manager.i \
@@ -5605,7 +5673,8 @@ endif # GHS
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
-  Token.h Token.i \
+  Token.h \
+  Token.i \
   Select_Reactor_Base.i \
   Select_Reactor_T.cpp \
   Select_Reactor_T.i \
@@ -5617,7 +5686,6 @@ endif # GHS
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5643,10 +5711,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Handle_Set.i \
   Timer_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -5677,7 +5747,8 @@ endif # GHS
   Reactor_Impl.h \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -5726,8 +5797,10 @@ endif # GHS
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
-  Token.h Token.i \
-  Pipe.h Pipe.i \
+  Token.h \
+  Token.i \
+  Pipe.h \
+  Pipe.i \
   Select_Reactor_Base.i \
   Select_Reactor_T.cpp \
   Timer_Heap.h \
@@ -5757,7 +5830,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5783,7 +5855,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -5813,8 +5886,10 @@ endif # GHS
   Timer_Queue_T.cpp \
   Handle_Set.h \
   Handle_Set.i \
-  Token.h Token.i \
-  Pipe.h Pipe.i \
+  Token.h \
+  Token.i \
+  Pipe.h \
+  Pipe.i \
   Reactor_Impl.h \
   Select_Reactor_Base.i \
   Reactor.h \
@@ -5835,7 +5910,8 @@ endif # GHS
   Timer_Heap.h \
   Timer_Heap_T.h \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -5844,12 +5920,12 @@ endif # GHS
 
 .obj/Select_Reactor_Base.o .obj/Select_Reactor_Base.so .shobj/Select_Reactor_Base.o .shobj/Select_Reactor_Base.so: Select_Reactor_Base.cpp \
   Select_Reactor_Base.h \
-  pre.h Signal.h \
+  pre.h \
+  Signal.h \
   Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5875,7 +5951,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -5905,8 +5982,10 @@ endif # GHS
   Timer_Queue_T.cpp \
   Handle_Set.h \
   Handle_Set.i \
-  Token.h Token.i \
-  Pipe.h Pipe.i \
+  Token.h \
+  Token.i \
+  Pipe.h \
+  Pipe.i \
   Reactor_Impl.h \
   Select_Reactor_Base.i \
   Reactor.h \
@@ -5914,13 +5993,15 @@ endif # GHS
   SOCK_Acceptor.h \
   SOCK_Stream.h \
   SOCK_IO.h \
-  SOCK.h Addr.h \
+  SOCK.h \
+  Addr.h \
   Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -5929,7 +6010,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -5939,7 +6021,8 @@ endif # GHS
   Timer_Heap.h \
   Timer_Heap_T.h \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -5948,8 +6031,8 @@ endif # GHS
 .obj/SUN_Proactor.o .obj/SUN_Proactor.so .shobj/SUN_Proactor.o .shobj/SUN_Proactor.so: SUN_Proactor.cpp \
   SUN_Proactor.h \
   config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5965,7 +6048,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -5991,7 +6073,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -6030,7 +6113,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6056,7 +6138,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -6086,8 +6169,10 @@ endif # GHS
   Timer_Queue_T.cpp \
   Handle_Set.h \
   Handle_Set.i \
-  Token.h Token.i \
-  Pipe.h Pipe.i \
+  Token.h \
+  Token.i \
+  Pipe.h \
+  Pipe.i \
   Reactor_Impl.h \
   Select_Reactor_Base.i \
   Reactor.h \
@@ -6108,7 +6193,8 @@ endif # GHS
   Timer_Heap.h \
   Timer_Heap_T.h \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -6120,7 +6206,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6132,7 +6217,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6143,7 +6227,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6154,7 +6237,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6165,7 +6247,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6192,7 +6273,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Proactor.h \
   Asynch_IO_Impl.h \
   Asynch_IO_Impl.i \
@@ -6208,14 +6290,16 @@ endif # GHS
   Thread_Exit.h \
   Thread_Control.h \
   Thread_Control.inl \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
   Log_Priority.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -6286,7 +6370,8 @@ endif # GHS
   Message_Block_T.i \
   Message_Block_T.cpp \
   INET_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i
 
 .obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.so .shobj/Asynch_IO_Impl.o .shobj/Asynch_IO_Impl.so: Asynch_IO_Impl.cpp \
@@ -6294,7 +6379,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6322,7 +6406,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Asynch_IO_Impl.i
 
 .obj/Asynch_Pseudo_Task.o .obj/Asynch_Pseudo_Task.so .shobj/Asynch_Pseudo_Task.o .shobj/Asynch_Pseudo_Task.so: Asynch_Pseudo_Task.cpp \
@@ -6330,7 +6415,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6356,12 +6440,14 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Reactor.h \
   Handle_Set.h \
   Handle_Set.i \
   Timer_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -6393,8 +6479,10 @@ endif # GHS
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
-  Token.h Token.i \
-  Pipe.h Pipe.i \
+  Token.h \
+  Token.i \
+  Pipe.h \
+  Pipe.i \
   Select_Reactor_Base.i \
   Select_Reactor_T.cpp \
   ACE.h \
@@ -6412,7 +6500,8 @@ endif # GHS
   Timer_Heap.h \
   Timer_Heap_T.h \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -6454,7 +6543,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   Message_Block.h \
   Message_Block.i \
@@ -6479,8 +6569,8 @@ endif # GHS
 .obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.so .shobj/POSIX_Asynch_IO.o .shobj/POSIX_Asynch_IO.so: POSIX_Asynch_IO.cpp \
   POSIX_Asynch_IO.h \
   config-all.h \
-  pre.h config.h \
-  config-linux.h \
+  pre.h \
+  config.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6507,12 +6597,14 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Asynch_IO_Impl.h \
   Asynch_IO.h \
   Asynch_IO_Impl.i \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -6521,7 +6613,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Map_Manager.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -6639,14 +6732,17 @@ endif # GHS
   Message_Block_T.i \
   Message_Block_T.cpp \
   INET_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   Asynch_Pseudo_Task.h \
   Select_Reactor.h \
   Select_Reactor_T.h \
   Select_Reactor_Base.h \
-  Token.h Token.i \
-  Pipe.h Pipe.i \
+  Token.h \
+  Token.i \
+  Pipe.h \
+  Pipe.i \
   Select_Reactor_Base.i \
   Select_Reactor_T.cpp \
   Select_Reactor_T.i \
@@ -6656,7 +6752,8 @@ endif # GHS
   Shared_Object.i \
   DLL.h \
   Service_Object.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   IO_Cntl_Msg.h \
   Message_Queue_T.h \
@@ -6681,7 +6778,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6693,7 +6789,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6722,7 +6817,8 @@ endif # GHS
   Time_Value.inl \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
@@ -6732,7 +6828,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6758,14 +6853,78 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sock_Connect.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
+
+.obj/Multihomed_INET_Addr.o .obj/Multihomed_INET_Addr.so .shobj/Multihomed_INET_Addr.o .shobj/Multihomed_INET_Addr.so: Multihomed_INET_Addr.cpp \
+  Multihomed_INET_Addr.h \
+  pre.h \
+  INET_Addr.h \
+  Sock_Connect.h \
+  ACE_export.h \
+  config-all.h \
+  config.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h \
+  OS.i \
+  Sock_Connect.i \
+  Addr.h \
+  Addr.i \
+  INET_Addr.i \
+  Containers_T.h \
+  Containers.h \
+  Containers.i \
+  Node.h \
+  Node.cpp \
+  Array_Base.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Multihomed_INET_Addr.i
 
 .obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp IPC_SAP.h \
   pre.h \
@@ -6773,7 +6932,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6799,7 +6957,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   Log_Msg.h \
@@ -6811,7 +6970,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6819,7 +6977,8 @@ endif # GHS
   ace_wchar.inl \
   SOCK.h \
   ACE_export.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -6842,10 +7001,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i LSOCK.i \
+  SOCK.i \
+  LSOCK.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -6856,7 +7017,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6867,7 +7027,8 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -6890,10 +7051,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -6902,7 +7065,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -6914,7 +7078,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   UNIX_Addr.i \
   LSOCK_Stream.h \
-  LSOCK.h LSOCK.i \
+  LSOCK.h \
+  LSOCK.i \
   LSOCK_Stream.i
 
 .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.so .shobj/LSOCK_CODgram.o .shobj/LSOCK_CODgram.so: LSOCK_CODgram.cpp \
@@ -6922,15 +7087,16 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  LSOCK.h SOCK.h \
+  LSOCK.h \
+  SOCK.h \
   ACE_export.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -6953,12 +7119,15 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i LSOCK.i \
+  SOCK.i \
+  LSOCK.i \
   SOCK_CODgram.h \
-  SOCK_IO.h ACE.h \
+  SOCK_IO.h \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -6967,7 +7136,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_CODgram.i \
@@ -6982,7 +7152,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -6993,7 +7162,8 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7016,10 +7186,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7028,7 +7200,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -7040,15 +7213,16 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   UNIX_Addr.i \
-  LSOCK.h LSOCK.i \
+  LSOCK.h \
+  LSOCK.i \
   LSOCK_Stream.i \
   LSOCK_Connector.i
 
-.obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.so .shobj/LSOCK_Dgram.o .shobj/LSOCK_Dgram.so: LSOCK_Dgram.cpp LSOCK_Dgram.h \
+.obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.so .shobj/LSOCK_Dgram.o .shobj/LSOCK_Dgram.so: LSOCK_Dgram.cpp \
+  LSOCK_Dgram.h \
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7057,7 +7231,8 @@ endif # GHS
   SOCK_Dgram.h \
   SOCK.h \
   ACE_export.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7080,7 +7255,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SOCK.i \
@@ -7089,7 +7265,8 @@ endif # GHS
   Sock_Connect.i \
   INET_Addr.i \
   SOCK_Dgram.i \
-  LSOCK.h LSOCK.i \
+  LSOCK.h \
+  LSOCK.i \
   LSOCK_Dgram.i \
   Log_Msg.h \
   Log_Priority.h \
@@ -7101,7 +7278,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7111,7 +7287,8 @@ endif # GHS
   SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7134,10 +7311,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7146,7 +7325,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -7156,7 +7336,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   UNIX_Addr.i \
-  LSOCK.h LSOCK.i \
+  LSOCK.h \
+  LSOCK.i \
   LSOCK_Stream.i
 
 .obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
@@ -7164,13 +7345,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7193,7 +7374,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SOCK.i \
@@ -7211,13 +7393,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7240,10 +7422,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7252,7 +7436,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -7262,7 +7447,8 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   OS_QoS.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -7275,18 +7461,19 @@ endif # GHS
 
 .obj/SOCK_CODgram.o .obj/SOCK_CODgram.so .shobj/SOCK_CODgram.o .shobj/SOCK_CODgram.so: SOCK_CODgram.cpp \
   SOCK_CODgram.h \
-  pre.h SOCK_IO.h \
+  pre.h \
+  SOCK_IO.h \
   SOCK.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7309,10 +7496,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7321,7 +7510,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_CODgram.i \
@@ -7336,7 +7526,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7362,10 +7551,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sock_Connect.i \
   INET_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   Log_Msg.h \
   Log_Priority.h \
@@ -7395,7 +7586,8 @@ endif # GHS
   Malloc.h \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -7424,7 +7616,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -7439,13 +7632,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7468,10 +7661,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7480,7 +7675,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -7492,17 +7688,18 @@ endif # GHS
   OS_QoS.h
 
 .obj/SOCK_Dgram.o .obj/SOCK_Dgram.so .shobj/SOCK_Dgram.o .shobj/SOCK_Dgram.so: SOCK_Dgram.cpp SOCK_Dgram.h \
-  pre.h SOCK.h \
+  pre.h \
+  SOCK.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7525,7 +7722,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SOCK.i \
@@ -7536,7 +7734,8 @@ endif # GHS
   SOCK_Dgram.i \
   Handle_Set.h \
   Handle_Set.i \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -7567,7 +7766,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7593,9 +7791,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sock_Connect.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   SOCK_Dgram.h \
   SOCK.h \
@@ -7627,13 +7827,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7656,7 +7856,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SOCK.i \
@@ -7672,68 +7873,18 @@ endif # GHS
   OS_Log_Msg_Attributes.inl
 
 .obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp SOCK_IO.h \
-  pre.h SOCK.h \
-  ACE_export.h \
-  config-all.h \
-  config.h \
-  config-linux.h \
-  config-linux-common.h \
-  config-g++-common.h \
-  post.h \
-  ace_wchar.h \
-  ace_wchar.inl \
-  Addr.h Addr.i \
-  IPC_SAP.h \
-  Flag_Manip.h \
-  OS.h \
-  OS_Dirent.h \
-  OS_Export.h \
-  OS_Errno.h \
-  OS_Errno.inl \
-  OS_Dirent.inl \
-  OS_String.h \
-  Basic_Types.h \
-  Basic_Types.i \
-  OS_String.inl \
-  OS_Memory.h \
-  OS_Memory.inl \
-  OS_TLI.h \
-  OS_TLI.inl \
-  Time_Value.h \
-  Time_Value.inl \
-  Default_Constants.h \
-  Global_Macros.h \
-  Min_Max.h \
-  streams.h \
-  Trace.h OS.i \
-  Flag_Manip.i \
-  IPC_SAP.i \
-  SOCK.i ACE.h \
-  Handle_Ops.h \
-  Handle_Ops.i \
-  Lib_Find.h \
-  Lib_Find.i \
-  Init_ACE.h \
-  Init_ACE.i \
-  Sock_Connect.h \
-  Sock_Connect.i \
-  ACE.i SOCK_IO.i \
-  Handle_Set.h \
-  Handle_Set.i
-
-.obj/SOCK_Stream.o .obj/SOCK_Stream.so .shobj/SOCK_Stream.o .shobj/SOCK_Stream.so: SOCK_Stream.cpp SOCK_Stream.h \
-  pre.h SOCK_IO.h \
+  pre.h \
   SOCK.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -7756,10 +7907,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -7768,7 +7921,306 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
+  Handle_Set.h \
+  Handle_Set.i
+
+.obj/SOCK_SEQPACK_Acceptor.o .obj/SOCK_SEQPACK_Acceptor.so .shobj/SOCK_SEQPACK_Acceptor.o .shobj/SOCK_SEQPACK_Acceptor.so: SOCK_SEQPACK_Acceptor.cpp \
+  SOCK_SEQPACK_Acceptor.h \
+  pre.h \
+  config.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ACE_export.h \
+  config-all.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  SOCK_SEQPACK_Association.h \
+  SOCK_IO.h \
+  SOCK.h \
+  Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h \
+  OS.i \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  SOCK.i \
+  ACE.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  SOCK_IO.i \
+  INET_Addr.h \
+  INET_Addr.i \
+  SOCK_SEQPACK_Association.i \
+  Multihomed_INET_Addr.h \
+  Containers_T.h \
+  Containers.h \
+  Containers.i \
+  Node.h \
+  Node.cpp \
+  Array_Base.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Multihomed_INET_Addr.i \
+  SOCK_SEQPACK_Acceptor.i \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp
+
+.obj/SOCK_SEQPACK_Association.o .obj/SOCK_SEQPACK_Association.so .shobj/SOCK_SEQPACK_Association.o .shobj/SOCK_SEQPACK_Association.so: SOCK_SEQPACK_Association.cpp \
+  SOCK_SEQPACK_Association.h \
+  pre.h \
+  config.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ACE_export.h \
+  config-all.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  SOCK_IO.h \
+  SOCK.h \
+  Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h \
+  OS.i \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  SOCK.i \
+  ACE.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  SOCK_IO.i \
+  INET_Addr.h \
+  INET_Addr.i \
+  SOCK_SEQPACK_Association.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl
+
+.obj/SOCK_SEQPACK_Connector.o .obj/SOCK_SEQPACK_Connector.so .shobj/SOCK_SEQPACK_Connector.o .shobj/SOCK_SEQPACK_Connector.so: SOCK_SEQPACK_Connector.cpp \
+  SOCK_SEQPACK_Connector.h \
+  pre.h \
+  config.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ACE_export.h \
+  config-all.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  SOCK_SEQPACK_Association.h \
+  SOCK_IO.h \
+  SOCK.h \
+  Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h \
+  OS.i \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  SOCK.i \
+  ACE.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  SOCK_IO.i \
+  INET_Addr.h \
+  INET_Addr.i \
+  SOCK_SEQPACK_Association.i \
+  Multihomed_INET_Addr.h \
+  Containers_T.h \
+  Containers.h \
+  Containers.i \
+  Node.h \
+  Node.cpp \
+  Array_Base.h \
+  Malloc_Base.h \
+  Array_Base.inl \
+  Array_Base.cpp \
+  Unbounded_Set.h \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Unbounded_Queue.h \
+  Unbounded_Queue.inl \
+  Unbounded_Queue.cpp \
+  Containers_T.i \
+  Containers_T.cpp \
+  Multihomed_INET_Addr.i \
+  SOCK_SEQPACK_Connector.i
+
+.obj/SOCK_Stream.o .obj/SOCK_Stream.so .shobj/SOCK_Stream.o .shobj/SOCK_Stream.so: SOCK_Stream.cpp \
+  SOCK_Stream.h \
+  pre.h \
+  SOCK_IO.h \
+  SOCK.h \
+  ACE_export.h \
+  config-all.h \
+  config.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  Addr.h \
+  Addr.i \
+  IPC_SAP.h \
+  Flag_Manip.h \
+  OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h \
+  OS.i \
+  Flag_Manip.i \
+  IPC_SAP.i \
+  SOCK.i \
+  ACE.h \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i
@@ -7777,7 +8229,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7789,7 +8240,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7801,7 +8251,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7812,7 +8261,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7823,7 +8271,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7834,7 +8281,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7846,7 +8292,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7854,12 +8299,12 @@ endif # GHS
   ace_wchar.inl
 
 .obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
-  pre.h IO_SAP.h \
+  pre.h \
+  IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7885,11 +8330,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IO_SAP.i \
   DEV_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   DEV_Addr.i \
   SString.h \
   String_Base.h \
@@ -7914,7 +8361,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -7943,21 +8391,23 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
-  SString.i DEV.i
+  SString.i \
+  DEV.i
 
 .obj/DEV_Addr.o .obj/DEV_Addr.so .shobj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp DEV_Addr.h \
-  pre.h Addr.h \
+  pre.h \
+  Addr.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -7983,7 +8433,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   DEV_Addr.i \
   SString.h \
   String_Base.h \
@@ -8010,7 +8461,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -8039,7 +8491,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -8050,13 +8503,14 @@ endif # GHS
 
 .obj/DEV_Connector.o .obj/DEV_Connector.so .shobj/DEV_Connector.o .shobj/DEV_Connector.so: DEV_Connector.cpp \
   DEV_Connector.h \
-  pre.h DEV_IO.h \
-  DEV.h IO_SAP.h \
+  pre.h \
+  DEV_IO.h \
+  DEV.h \
+  IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8082,11 +8536,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IO_SAP.i \
   DEV_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   DEV_Addr.i \
   SString.h \
   String_Base.h \
@@ -8111,7 +8567,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -8140,14 +8597,16 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
-  SString.i DEV.i \
+  SString.i \
+  DEV.i \
   DEV_IO.i \
   DEV_Connector.i
 
@@ -8158,7 +8617,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8184,11 +8642,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IO_SAP.i \
   DEV_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   DEV_Addr.i \
   SString.h \
   String_Base.h \
@@ -8213,7 +8673,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -8242,23 +8703,25 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
-  SString.i DEV.i \
+  SString.i \
+  DEV.i \
   DEV_IO.i
 
 .obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
-  pre.h IPC_SAP.h \
+  pre.h \
+  IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8284,7 +8747,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   FIFO.i \
@@ -8294,13 +8758,13 @@ endif # GHS
   OS_Log_Msg_Attributes.inl
 
 .obj/FIFO_Recv.o .obj/FIFO_Recv.so .shobj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp FIFO_Recv.h \
-  pre.h FIFO.h \
+  pre.h \
+  FIFO.h \
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8326,10 +8790,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  FIFO.i ACE.h \
+  FIFO.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8355,7 +8821,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8381,10 +8846,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  FIFO.i ACE.h \
+  FIFO.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8402,13 +8869,13 @@ endif # GHS
   OS_Log_Msg_Attributes.inl
 
 .obj/FIFO_Send.o .obj/FIFO_Send.so .shobj/FIFO_Send.o .shobj/FIFO_Send.so: FIFO_Send.cpp FIFO_Send.h \
-  pre.h FIFO.h \
+  pre.h \
+  FIFO.h \
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8434,10 +8901,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  FIFO.i ACE.h \
+  FIFO.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8463,7 +8932,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8489,10 +8957,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  FIFO.i ACE.h \
+  FIFO.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -8510,11 +8980,11 @@ endif # GHS
   OS_Log_Msg_Attributes.inl
 
 .obj/FILE_Addr.o .obj/FILE_Addr.so .shobj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp FILE_Addr.h \
-  pre.h Addr.h \
+  pre.h \
+  Addr.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8542,7 +9012,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   FILE_Addr.i \
   SString.h \
@@ -8568,7 +9039,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -8597,7 +9069,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -8607,12 +9080,12 @@ endif # GHS
   SString.i
 
 .obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
-  pre.h IO_SAP.h \
+  pre.h \
+  IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8638,11 +9111,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IO_SAP.i \
   FILE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   FILE_Addr.i \
   SString.h \
   String_Base.h \
@@ -8667,7 +9142,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -8696,7 +9172,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -8708,13 +9185,14 @@ endif # GHS
 
 .obj/FILE_Connector.o .obj/FILE_Connector.so .shobj/FILE_Connector.o .shobj/FILE_Connector.so: FILE_Connector.cpp \
   FILE_Connector.h \
-  pre.h FILE_IO.h \
-  FILE.h IO_SAP.h \
+  pre.h \
+  FILE_IO.h \
+  FILE.h \
+  IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8740,11 +9218,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IO_SAP.i \
   FILE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   FILE_Addr.i \
   SString.h \
   String_Base.h \
@@ -8769,7 +9249,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -8798,7 +9279,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -8811,13 +9293,13 @@ endif # GHS
   FILE_Connector.i
 
 .obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp FILE_IO.h \
-  pre.h FILE.h \
+  pre.h \
+  FILE.h \
   IO_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8843,11 +9325,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IO_SAP.i \
   FILE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   FILE_Addr.i \
   SString.h \
   String_Base.h \
@@ -8872,7 +9356,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -8901,7 +9386,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -8918,7 +9404,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8944,7 +9429,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IO_SAP.i \
   Log_Msg.h \
@@ -8956,7 +9442,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8968,7 +9453,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -8994,18 +9478,20 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
-  Pipe.i \
+  Trace.h \
+  OS.i Pipe.i \
   SOCK_Acceptor.h \
   SOCK_Stream.h \
   SOCK_IO.h \
-  SOCK.h Addr.h \
+  SOCK.h \
+  Addr.h \
   Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -9014,7 +9500,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -9027,11 +9514,11 @@ endif # GHS
   OS_Log_Msg_Attributes.inl
 
 .obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp Synch_T.h \
-  pre.h Synch.h \
+  pre.h \
+  Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9057,7 +9544,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.i \
   Thread.h \
@@ -9083,7 +9571,8 @@ endif # GHS
   Containers.h \
   Containers.i \
   Containers_T.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Array_Base.h \
   Malloc_Base.h \
   Array_Base.inl \
@@ -9102,14 +9591,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
-  OS.h \
+  Addr.h \
+  Addr.i OS.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
@@ -9129,7 +9617,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -9156,7 +9645,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -9185,7 +9675,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -9195,12 +9686,12 @@ endif # GHS
   SString.i
 
 .obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp SPIPE.h \
-  pre.h IPC_SAP.h \
+  pre.h \
+  IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9226,11 +9717,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SPIPE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -9255,7 +9748,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -9284,7 +9778,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -9304,7 +9799,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9330,11 +9824,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SPIPE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -9359,7 +9855,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -9388,7 +9885,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -9409,7 +9907,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9435,11 +9932,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SPIPE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -9464,7 +9963,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -9493,7 +9993,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -9507,13 +10008,13 @@ endif # GHS
 
 .obj/SPIPE_Stream.o .obj/SPIPE_Stream.so .shobj/SPIPE_Stream.o .shobj/SPIPE_Stream.so: SPIPE_Stream.cpp \
   SPIPE_Stream.h \
-  pre.h SPIPE.h \
+  pre.h \
+  SPIPE.h \
   IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9539,11 +10040,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SPIPE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -9568,7 +10071,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -9597,7 +10101,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -9613,7 +10118,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9639,7 +10143,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SV_Message.i
 
 .obj/SV_Message_Queue.o .obj/SV_Message_Queue.so .shobj/SV_Message_Queue.o .shobj/SV_Message_Queue.so: SV_Message_Queue.cpp \
@@ -9647,7 +10152,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9675,7 +10179,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SV_Message.i \
   SV_Message_Queue.i \
   Log_Msg.h \
@@ -9690,7 +10195,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9716,7 +10220,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Log_Msg.h \
@@ -9730,7 +10235,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9756,7 +10260,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SV_Semaphore_Simple.i \
   Log_Msg.h \
   Log_Priority.h \
@@ -9781,7 +10286,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9807,7 +10311,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SV_Shared_Memory.i \
   Log_Msg.h \
   Log_Priority.h \
@@ -9815,12 +10320,12 @@ endif # GHS
   OS_Log_Msg_Attributes.inl
 
 .obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
-  pre.h IPC_SAP.h \
+  pre.h \
+  IPC_SAP.h \
   Flag_Manip.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9846,10 +10351,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -9863,7 +10370,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9889,10 +10395,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   TLI_Stream.h \
   INET_Addr.h \
   Sock_Connect.h \
@@ -9916,7 +10424,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -9942,15 +10449,18 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Handle_Set.i \
   TLI_Connector.h \
   TLI_Stream.h \
-  TLI.h IPC_SAP.h \
+  TLI.h \
+  IPC_SAP.h \
   Flag_Manip.h \
   Flag_Manip.i \
   IPC_SAP.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.h \
   Sock_Connect.h \
   Sock_Connect.i \
@@ -9975,7 +10485,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -10001,10 +10510,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.h \
   Sock_Connect.h \
   Sock_Connect.i \
@@ -10022,7 +10533,6 @@ endif # GHS
   OS.h pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -10048,14 +10558,17 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
-  DEV_IO.h DEV.h \
+  Trace.h \
+  OS.i \
+  DEV_IO.h \
+  DEV.h \
   IO_SAP.h \
   Flag_Manip.h \
   Flag_Manip.i \
   IO_SAP.i \
   DEV_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   DEV_Addr.i \
   SString.h \
   String_Base.h \
@@ -10080,7 +10593,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -10109,21 +10623,22 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
   Auto_Ptr.h \
   Auto_Ptr.i \
   Auto_Ptr.cpp \
-  SString.i DEV.i \
+  SString.i \
+  DEV.i \
   DEV_IO.i
 
 .obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp UNIX_Addr.h \
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -10154,7 +10669,8 @@ endif # GHS
   Time_Value.inl \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   ACE.h \
@@ -10178,7 +10694,6 @@ endif # GHS
   Stream.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -10206,7 +10721,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Message_Block.h \
   Message_Block.i \
   Message_Block_T.h \
@@ -10216,7 +10732,8 @@ endif # GHS
   Module.h \
   Task_T.h \
   Message_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -10250,7 +10767,8 @@ endif # GHS
   Thread_Control.h \
   Thread_Control.inl \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Containers.h \
@@ -10293,7 +10811,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.i \
+  Task.i \
+  Task_T.i \
   Task_T.cpp \
   Module.i \
   Module.cpp \
@@ -10305,7 +10824,8 @@ endif # GHS
   IPC_SAP.h \
   IPC_SAP.i \
   SPIPE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -10348,7 +10868,6 @@ endif # GHS
   Stream.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -10376,7 +10895,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Message_Block.h \
   Message_Block.i \
   Message_Block_T.h \
@@ -10386,7 +10906,8 @@ endif # GHS
   Module.h \
   Task_T.h \
   Message_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -10420,7 +10941,8 @@ endif # GHS
   Thread_Control.h \
   Thread_Control.inl \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Containers.h \
@@ -10463,7 +10985,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.i \
+  Task.i \
+  Task_T.i \
   Task_T.cpp \
   Module.i \
   Module.cpp \
@@ -10475,7 +10998,8 @@ endif # GHS
   IPC_SAP.h \
   IPC_SAP.i \
   SPIPE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -10512,10 +11036,10 @@ endif # GHS
 
 .obj/UPIPE_Stream.o .obj/UPIPE_Stream.so .shobj/UPIPE_Stream.o .shobj/UPIPE_Stream.so: UPIPE_Stream.cpp \
   UPIPE_Stream.h \
-  pre.h Stream.h \
+  pre.h \
+  Stream.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -10543,7 +11067,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Message_Block.h \
   Message_Block.i \
   Message_Block_T.h \
@@ -10553,7 +11078,8 @@ endif # GHS
   Module.h \
   Task_T.h \
   Message_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -10587,7 +11113,8 @@ endif # GHS
   Thread_Control.h \
   Thread_Control.inl \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Containers.h \
@@ -10630,7 +11157,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.i \
+  Task.i \
+  Task_T.i \
   Task_T.cpp \
   Module.i \
   Module.cpp \
@@ -10642,7 +11170,8 @@ endif # GHS
   IPC_SAP.h \
   IPC_SAP.i \
   SPIPE_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   SPIPE_Addr.i \
   SString.h \
   String_Base.h \
@@ -10684,13 +11213,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -10713,10 +11242,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -10725,7 +11256,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -10741,7 +11273,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -10771,7 +11304,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -10815,7 +11349,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -10843,9 +11376,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sock_Connect.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   MEM_Addr.i \
   Log_Msg.h \
@@ -10863,13 +11398,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -10892,10 +11427,12 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
@@ -10904,7 +11441,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   INET_Addr.h \
   INET_Addr.i \
   SOCK_Stream.i \
@@ -10920,7 +11458,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -10950,7 +11489,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -10989,17 +11529,18 @@ endif # GHS
   MEM_Connector.i
 
 .obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp MEM_IO.h \
-  pre.h SOCK.h \
+  pre.h \
+  SOCK.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -11022,7 +11563,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SOCK.i \
@@ -11035,7 +11577,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -11075,7 +11618,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -11117,13 +11661,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Malloc.h OS.h \
+  Malloc.h \
+  OS.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
@@ -11143,14 +11687,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -11192,7 +11738,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -11219,18 +11766,19 @@ endif # GHS
   MEM_SAP.i
 
 .obj/MEM_Stream.o .obj/MEM_Stream.so .shobj/MEM_Stream.o .shobj/MEM_Stream.so: MEM_Stream.cpp MEM_Stream.h \
-  pre.h MEM_IO.h \
+  pre.h \
+  MEM_IO.h \
   SOCK.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   IPC_SAP.h \
   Flag_Manip.h \
   OS.h \
@@ -11253,7 +11801,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.i \
   IPC_SAP.i \
   SOCK.i \
@@ -11266,7 +11815,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -11306,7 +11856,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -11343,11 +11894,11 @@ endif # GHS
   INET_Addr.i \
   MEM_Stream.i
 
-.obj/Basic_Stats.o .obj/Basic_Stats.so .shobj/Basic_Stats.o .shobj/Basic_Stats.so: Basic_Stats.cpp Basic_Stats.h \
+.obj/Basic_Stats.o .obj/Basic_Stats.so .shobj/Basic_Stats.o .shobj/Basic_Stats.so: Basic_Stats.cpp \
+  Basic_Stats.h \
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11377,7 +11928,8 @@ endif # GHS
   Time_Value.inl \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
@@ -11387,7 +11939,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11413,11 +11964,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   High_Res_Timer.i \
   Stats.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -11427,7 +11980,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Basic_Stats.h \
   Basic_Stats.inl \
-  Stats.i Synch.h \
+  Stats.i \
+  Synch.h \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -11449,7 +12003,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11476,7 +12029,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   High_Res_Timer.h \
   High_Res_Timer.i \
   Profile_Timer.i \
@@ -11485,11 +12039,11 @@ endif # GHS
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/System_Time.o .obj/System_Time.so .shobj/System_Time.o .shobj/System_Time.so: System_Time.cpp System_Time.h \
+.obj/System_Time.o .obj/System_Time.so .shobj/System_Time.o .shobj/System_Time.so: System_Time.cpp \
+  System_Time.h \
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11515,7 +12069,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Memory_Pool.h \
   ACE.h \
   Flag_Manip.h \
@@ -11532,7 +12087,8 @@ endif # GHS
   Event_Handler.h \
   Event_Handler.i \
   Signal.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -11554,7 +12110,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -11577,7 +12134,6 @@ endif # GHS
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11604,7 +12160,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -11627,7 +12184,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -11656,7 +12214,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -11669,7 +12228,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11695,7 +12253,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/Timer_Hash.o .obj/Timer_Hash.so .shobj/Timer_Hash.o .shobj/Timer_Hash.so: Timer_Hash.cpp Timer_Hash.h \
   pre.h \
@@ -11705,7 +12264,6 @@ endif # GHS
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11731,9 +12289,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -11762,7 +12322,8 @@ endif # GHS
   High_Res_Timer.i \
   Timer_Heap_T.h \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -11778,7 +12339,6 @@ endif # GHS
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11804,9 +12364,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -11831,7 +12393,8 @@ endif # GHS
   Signal.h \
   Signal.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -11845,7 +12408,6 @@ endif # GHS
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11871,9 +12433,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -11904,7 +12468,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -11912,7 +12475,8 @@ endif # GHS
   ace_wchar.inl \
   Containers.i \
   Containers_T.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Array_Base.h \
   Global_Macros.h \
   OS_Export.h \
@@ -11934,7 +12498,8 @@ endif # GHS
   Default_Constants.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Malloc_Base.h \
   Array_Base.inl \
   Array_Base.cpp \
@@ -11951,7 +12516,8 @@ endif # GHS
   Containers_T.i \
   Containers_T.cpp \
   Timer_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -11975,7 +12541,8 @@ endif # GHS
   Signal.h \
   Signal.i
 
-.obj/Timer_Wheel.o .obj/Timer_Wheel.so .shobj/Timer_Wheel.o .shobj/Timer_Wheel.so: Timer_Wheel.cpp Timer_Wheel.h \
+.obj/Timer_Wheel.o .obj/Timer_Wheel.so .shobj/Timer_Wheel.o .shobj/Timer_Wheel.so: Timer_Wheel.cpp \
+  Timer_Wheel.h \
   pre.h \
   Timer_Wheel_T.h \
   Timer_Queue_T.h \
@@ -11983,7 +12550,6 @@ endif # GHS
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12009,9 +12575,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -12041,7 +12609,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12067,7 +12634,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -12086,7 +12654,8 @@ endif # GHS
   ACE.i \
   DLL_Manager.h \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -12126,17 +12695,18 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
   SString.i
 
-.obj/DLL_Manager.o .obj/DLL_Manager.so .shobj/DLL_Manager.o .shobj/DLL_Manager.so: DLL_Manager.cpp DLL_Manager.h \
+.obj/DLL_Manager.o .obj/DLL_Manager.so .shobj/DLL_Manager.o .shobj/DLL_Manager.so: DLL_Manager.cpp \
+  DLL_Manager.h \
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12162,9 +12732,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -12220,7 +12792,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -12242,7 +12815,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12250,7 +12822,8 @@ endif # GHS
   ace_wchar.inl \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   OS_Memory.h \
   OS_Export.h \
   OS_Errno.h \
@@ -12274,7 +12847,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
@@ -12302,7 +12876,8 @@ endif # GHS
   Malloc.h \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -12364,7 +12939,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12391,11 +12965,13 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Parse_Node.i \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -12426,7 +13002,8 @@ endif # GHS
   Malloc.h \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -12509,7 +13086,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   Message_Block.h \
   Message_Block.i \
@@ -12533,14 +13111,14 @@ endif # GHS
 
 .obj/Service_Config.o .obj/Service_Config.so .shobj/Service_Config.o .shobj/Service_Config.so: Service_Config.cpp \
   Svc_Conf.h \
-  pre.h Obstack.h \
+  pre.h \
+  Obstack.h \
   Obstack_T.h \
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12566,14 +13144,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -12615,7 +13195,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -12663,11 +13244,13 @@ endif # GHS
   Containers_T.i \
   Containers_T.cpp \
   Get_Opt.i \
-  ARGV.h ARGV.i \
+  ARGV.h \
+  ARGV.i \
   Service_Manager.h \
   SOCK_Stream.h \
   SOCK_IO.h \
-  SOCK.h Addr.h \
+  SOCK.h \
+  Addr.h \
   Addr.i \
   IPC_SAP.h \
   IPC_SAP.i \
@@ -12707,13 +13290,13 @@ endif # GHS
   Thread_Manager.i
 
 .obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
-  Get_Opt.h pre.h \
+  Get_Opt.h \
+  pre.h \
   SString.h \
   String_Base.h \
   ACE.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12739,7 +13322,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -12762,7 +13346,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -12791,7 +13376,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -12832,7 +13418,8 @@ endif # GHS
   Service_Manager.h \
   SOCK_Stream.h \
   SOCK_IO.h \
-  SOCK.h Addr.h \
+  SOCK.h \
+  Addr.h \
   Addr.i \
   IPC_SAP.h \
   IPC_SAP.i \
@@ -12860,7 +13447,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -12886,7 +13472,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Shared_Object.i \
   Svc_Conf_Tokens.h \
   Event_Handler.h \
@@ -12905,7 +13492,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Synch.h \
+  ACE.i \
+  Synch.h \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -12928,14 +13516,14 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
   Default_Constants.h \
-  Synch.h OS.h \
+  Synch.h \
+  OS.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
@@ -12954,7 +13542,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -13006,7 +13595,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13032,7 +13620,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Shared_Object.i \
   Svc_Conf_Tokens.h \
   Event_Handler.h \
@@ -13050,7 +13639,8 @@ endif # GHS
   Init_ACE.i \
   Sock_Connect.h \
   Sock_Connect.i \
-  ACE.i Synch.h \
+  ACE.i \
+  Synch.h \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -13073,7 +13663,8 @@ endif # GHS
   Thread_Control.h \
   Thread_Control.inl \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -13105,7 +13696,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   Message_Block.h \
   Message_Block.i \
@@ -13140,7 +13732,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13166,14 +13757,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -13215,7 +13808,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -13285,7 +13879,8 @@ endif # GHS
   Shared_Object.h \
   Shared_Object.i \
   Service_Object.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   Message_Block.h \
   Message_Block.i \
@@ -13315,7 +13910,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13341,7 +13935,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Shared_Object.i
 
 .obj/XML_Svc_Conf.o .obj/XML_Svc_Conf.so .shobj/XML_Svc_Conf.o .shobj/XML_Svc_Conf.so: XML_Svc_Conf.cpp \
@@ -13350,7 +13945,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13361,7 +13955,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13387,7 +13980,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Object_Manager.h \
   Object_Manager.i \
   Managed_Object.h \
@@ -13404,7 +13998,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -13446,7 +14041,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -13487,14 +14083,14 @@ endif # GHS
   Svc_Conf_Lexer_Guard.h
 
 .obj/Svc_Conf_y.o .obj/Svc_Conf_y.so .shobj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp Svc_Conf.h \
-  pre.h Obstack.h \
+  pre.h \
+  Obstack.h \
   Obstack_T.h \
   Obchunk.h \
   Malloc.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13520,14 +14116,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -13569,7 +14167,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -13607,7 +14206,8 @@ endif # GHS
   Parse_Node.h \
   DLL.h \
   Parse_Node.i \
-  ARGV.h ARGV.i \
+  ARGV.h \
+  ARGV.i \
   Module.h \
   Task_T.h \
   Message_Queue.h \
@@ -13654,7 +14254,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.i \
+  Task.i \
+  Task_T.i \
   Task_T.cpp \
   Module.i \
   Module.cpp \
@@ -13671,7 +14272,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13703,14 +14303,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -13752,7 +14354,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -13795,7 +14398,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13822,7 +14424,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   CDR_Base.inl \
   Message_Block.h \
   Message_Block.i \
@@ -13836,7 +14439,6 @@ endif # GHS
   CDR_Base.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13863,7 +14465,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   CDR_Base.inl \
   SString.h \
   String_Base.h \
@@ -13890,7 +14493,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -13919,7 +14523,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -13939,12 +14544,211 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl
+
+.obj/Codeset_Registry.o .obj/Codeset_Registry.so .shobj/Codeset_Registry.o .shobj/Codeset_Registry.so: Codeset_Registry.cpp \
+  Codeset_Registry.h \
+  pre.h \
+  SString.h \
+  String_Base.h \
+  ACE.h OS.h \
+  config-all.h \
+  config.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  ACE_export.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h \
+  OS.i \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
+  Malloc.h \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  CDR_Base.h \
+  CDR_Base.inl \
+  Codeset_Registry.inl
+
+.obj/Codeset_Registry_db.o .obj/Codeset_Registry_db.so .shobj/Codeset_Registry_db.o .shobj/Codeset_Registry_db.so: Codeset_Registry_db.cpp \
+  Codeset_Registry.h \
+  pre.h \
+  SString.h \
+  String_Base.h \
+  ACE.h OS.h \
+  config-all.h \
+  config.h \
+  config-linux-common.h \
+  config-g++-common.h \
+  post.h \
+  ace_wchar.h \
+  ace_wchar.inl \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Errno.h \
+  OS_Errno.inl \
+  OS_Dirent.inl \
+  OS_String.h \
+  Basic_Types.h \
+  ACE_export.h \
+  Basic_Types.i \
+  OS_String.inl \
+  OS_Memory.h \
+  OS_Memory.inl \
+  OS_TLI.h \
+  OS_TLI.inl \
+  Time_Value.h \
+  Time_Value.inl \
+  Default_Constants.h \
+  Global_Macros.h \
+  Min_Max.h \
+  streams.h \
+  Trace.h \
+  OS.i \
+  Flag_Manip.h \
+  Flag_Manip.i \
+  Handle_Ops.h \
+  Handle_Ops.i \
+  Lib_Find.h \
+  Lib_Find.i \
+  Init_ACE.h \
+  Init_ACE.i \
+  Sock_Connect.h \
+  Sock_Connect.i \
+  ACE.i \
+  String_Base_Const.h \
+  String_Base.i \
+  Malloc_Base.h \
+  String_Base.cpp \
+  Malloc.h \
+  Log_Msg.h \
+  Log_Priority.h \
+  OS_Log_Msg_Attributes.h \
+  OS_Log_Msg_Attributes.inl \
+  Malloc.i \
+  Malloc_T.h \
+  Synch.h \
+  Synch.i \
+  Synch_T.h \
+  Synch_T.i \
+  Thread.h \
+  Thread_Adapter.h \
+  Base_Thread_Adapter.h \
+  Base_Thread_Adapter.inl \
+  Thread_Adapter.inl \
+  Thread.i \
+  Synch_T.cpp \
+  Malloc_Allocator.h \
+  Malloc_Allocator.i \
+  Free_List.h \
+  Free_List.i \
+  Free_List.cpp \
+  Malloc_T.i \
+  Malloc_T.cpp \
+  Memory_Pool.h \
+  Event_Handler.h \
+  Event_Handler.i \
+  Signal.h \
+  Signal.i \
+  Mem_Map.h \
+  Mem_Map.i \
+  SV_Semaphore_Complex.h \
+  SV_Semaphore_Simple.h \
+  SV_Semaphore_Simple.i \
+  SV_Semaphore_Complex.i \
+  Unbounded_Set.h \
+  Node.h \
+  Node.cpp \
+  Unbounded_Set.inl \
+  Unbounded_Set.cpp \
+  Memory_Pool.i \
+  Auto_Ptr.h \
+  Auto_Ptr.i \
+  Auto_Ptr.cpp \
+  SString.i \
+  CDR_Base.h \
+  CDR_Base.inl \
+  Codeset_Registry.inl
 
 .obj/Message_Queue.o .obj/Message_Queue.so .shobj/Message_Queue.o .shobj/Message_Queue.so: Message_Queue.cpp \
   Message_Queue.h \
@@ -13953,7 +14757,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -13979,14 +14782,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Message_Block.i \
   Message_Block_T.h \
   Message_Block_T.i \
   Message_Block_T.cpp \
   Malloc_Base.h \
   IO_Cntl_Msg.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14017,7 +14822,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14043,7 +14847,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Event_Handler.i \
   Notification_Strategy.inl \
   Reactor_Notification_Strategy.inl \
@@ -14051,7 +14856,8 @@ endif # GHS
   Handle_Set.h \
   Handle_Set.i \
   Timer_Queue.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14086,7 +14892,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14112,7 +14917,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Shared_Object.i \
   Svc_Conf_Tokens.h \
   Event_Handler.h \
@@ -14131,14 +14937,16 @@ endif # GHS
   Thread_Exit.h \
   Thread_Control.h \
   Thread_Control.inl \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Synch_T.cpp \
   Log_Msg.h \
   Log_Priority.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -14182,7 +14990,8 @@ endif # GHS
   Framework_Component_T.inl \
   Framework_Component_T.cpp \
   Thread_Manager.i \
-  Task.i Task_T.h \
+  Task.i \
+  Task_T.h \
   Message_Queue.h \
   Message_Block.h \
   Message_Block.i \
@@ -14209,7 +15018,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14237,7 +15045,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -14289,7 +15098,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -14341,7 +15151,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14367,14 +15176,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14416,7 +15227,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -14431,13 +15243,13 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
   ace_wchar.h \
   ace_wchar.inl \
-  Malloc.h OS.h \
+  Malloc.h \
+  OS.h \
   OS_Dirent.h \
   OS_Export.h \
   OS_Errno.h \
@@ -14457,14 +15269,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14506,7 +15320,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -14536,7 +15351,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14562,7 +15376,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Malloc_Base.h \
   Log_Msg.h \
   Log_Priority.h \
@@ -14575,7 +15390,8 @@ endif # GHS
   Managed_Object.i \
   Managed_Object.cpp \
   Synch_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.i \
   Thread.h \
   Thread_Adapter.h \
@@ -14586,11 +15402,11 @@ endif # GHS
   Synch_T.cpp
 
 .obj/Malloc_Instantiations.o .obj/Malloc_Instantiations.so .shobj/Malloc_Instantiations.o .shobj/Malloc_Instantiations.so: Malloc_Instantiations.cpp \
-  Malloc.h pre.h \
+  Malloc.h \
+  pre.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14616,14 +15432,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14665,7 +15483,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i
@@ -14675,7 +15494,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14701,19 +15519,20 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Mem_Map.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl
 
-.obj/Memory_Pool.o .obj/Memory_Pool.so .shobj/Memory_Pool.o .shobj/Memory_Pool.so: Memory_Pool.cpp Memory_Pool.h \
+.obj/Memory_Pool.o .obj/Memory_Pool.so .shobj/Memory_Pool.o .shobj/Memory_Pool.so: Memory_Pool.cpp \
+  Memory_Pool.h \
   pre.h ACE.h \
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14739,7 +15558,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -14754,7 +15574,8 @@ endif # GHS
   Event_Handler.h \
   Event_Handler.i \
   Signal.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14776,7 +15597,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Malloc_Base.h \
@@ -14803,11 +15625,11 @@ endif # GHS
   Framework_Component_T.cpp
 
 .obj/Obchunk.o .obj/Obchunk.so .shobj/Obchunk.o .shobj/Obchunk.so: Obchunk.cpp Obchunk.h \
-  pre.h Malloc.h \
+  pre.h \
+  Malloc.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14833,14 +15655,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14882,7 +15706,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -14896,7 +15721,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -14922,14 +15746,16 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Log_Msg.h \
   Log_Priority.h \
   OS_Log_Msg_Attributes.h \
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -14971,7 +15797,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -14979,12 +15806,12 @@ endif # GHS
   Obstack_T.i \
   Obstack_T.cpp
 
-.obj/Read_Buffer.o .obj/Read_Buffer.so .shobj/Read_Buffer.o .shobj/Read_Buffer.so: Read_Buffer.cpp Read_Buffer.h \
+.obj/Read_Buffer.o .obj/Read_Buffer.so .shobj/Read_Buffer.o .shobj/Read_Buffer.so: Read_Buffer.cpp \
+  Read_Buffer.h \
   pre.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15010,7 +15837,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Read_Buffer.i \
   Log_Msg.h \
   Log_Priority.h \
@@ -15019,7 +15847,8 @@ endif # GHS
   Malloc_Base.h \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Unbounded_Set.h \
@@ -15045,7 +15874,8 @@ endif # GHS
   Malloc.h \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -15100,7 +15930,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15126,7 +15955,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.so .shobj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
   Shared_Memory_MM.h \
@@ -15135,7 +15965,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15161,7 +15990,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Mem_Map.h \
   Mem_Map.i \
   Shared_Memory_MM.i
@@ -15173,7 +16003,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15199,7 +16028,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   SV_Shared_Memory.h \
   SV_Shared_Memory.i \
   Shared_Memory_SV.i
@@ -15208,7 +16038,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15234,7 +16063,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Codecs.h \
   Log_Msg.h \
   Log_Priority.h \
@@ -15246,7 +16076,6 @@ endif # GHS
   pre.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15262,7 +16091,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15288,9 +16116,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sock_Connect.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   SOCK_Connector.h \
   SOCK_Stream.h \
@@ -15300,14 +16130,16 @@ endif # GHS
   Flag_Manip.h \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
   Lib_Find.i \
   Init_ACE.h \
   Init_ACE.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   SOCK_Stream.i \
   SOCK_Connector.i \
   Synch_Options.h \
@@ -15318,7 +16150,8 @@ endif # GHS
   Token_Request_Reply.i \
   Remote_Tokens.i \
   Singleton.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -15351,7 +16184,6 @@ endif # GHS
   Map_Manager.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15379,7 +16211,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -15431,7 +16264,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -15469,11 +16303,11 @@ endif # GHS
 
 .obj/Token_Invariants.o .obj/Token_Invariants.so .shobj/Token_Invariants.o .shobj/Token_Invariants.so: Token_Invariants.cpp \
   Token_Invariants.h \
-  pre.h Synch.h \
+  pre.h \
+  Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15499,7 +16333,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -15552,7 +16387,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -15594,11 +16430,11 @@ endif # GHS
 
 .obj/Token_Manager.o .obj/Token_Manager.so .shobj/Token_Manager.o .shobj/Token_Manager.so: Token_Manager.cpp \
   Token_Manager.h \
-  pre.h Synch.h \
+  pre.h \
+  Synch.h \
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15624,7 +16460,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Synch.i \
   Synch_T.h \
   Synch_T.i \
@@ -15677,7 +16514,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -15724,7 +16562,6 @@ endif # GHS
   Local_Tokens.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15742,7 +16579,6 @@ endif # GHS
   OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15768,7 +16604,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -15794,7 +16631,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -15823,7 +16661,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -15835,7 +16674,8 @@ endif # GHS
   Name_Space.h \
   Name_Proxy.h \
   INET_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   SOCK_Connector.h \
   SOCK_Stream.h \
@@ -15904,7 +16744,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -15930,9 +16769,11 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Sock_Connect.i \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   SOCK_Connector.h \
   SOCK_Stream.h \
@@ -15942,19 +16783,22 @@ endif # GHS
   Flag_Manip.h \
   Flag_Manip.i \
   IPC_SAP.i \
-  SOCK.i ACE.h \
+  SOCK.i \
+  ACE.h \
   Handle_Ops.h \
   Handle_Ops.i \
   Lib_Find.h \
   Lib_Find.i \
   Init_ACE.h \
   Init_ACE.i \
-  ACE.i SOCK_IO.i \
+  ACE.i \
+  SOCK_IO.i \
   SOCK_Stream.i \
   SOCK_Connector.i \
   Service_Config.h \
   Unbounded_Queue.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Queue.inl \
   Unbounded_Queue.cpp \
   Malloc_Base.h \
@@ -15973,7 +16817,8 @@ endif # GHS
   Malloc.h \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -16032,7 +16877,6 @@ endif # GHS
   OS_Export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -16059,7 +16903,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16082,7 +16927,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -16111,7 +16957,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -16125,7 +16972,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -16153,7 +16999,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16176,7 +17023,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -16205,7 +17053,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -16215,7 +17064,8 @@ endif # GHS
   SString.i \
   Name_Proxy.h \
   INET_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   SOCK_Connector.h \
   SOCK_Stream.h \
@@ -16251,13 +17101,13 @@ endif # GHS
   Name_Request_Reply.h
 
 .obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
-  Get_Opt.h pre.h \
+  Get_Opt.h \
+  pre.h \
   SString.h \
   String_Base.h \
   ACE.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -16283,7 +17133,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16306,7 +17157,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -16335,7 +17187,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -16364,7 +17217,8 @@ endif # GHS
   Service_Object.i \
   Name_Proxy.h \
   INET_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   SOCK_Connector.h \
   SOCK_Stream.h \
@@ -16418,7 +17272,6 @@ endif # GHS
   pre.h OS.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -16444,7 +17297,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i
+  Trace.h \
+  OS.i
 
 .obj/Remote_Name_Space.o .obj/Remote_Name_Space.so .shobj/Remote_Name_Space.o .shobj/Remote_Name_Space.so: Remote_Name_Space.cpp \
   Remote_Name_Space.h \
@@ -16452,7 +17306,6 @@ endif # GHS
   ACE_export.h \
   config-all.h \
   config.h \
-  config-linux.h \
   config-linux-common.h \
   config-g++-common.h \
   post.h \
@@ -16480,7 +17333,8 @@ endif # GHS
   Global_Macros.h \
   Min_Max.h \
   streams.h \
-  Trace.h OS.i \
+  Trace.h \
+  OS.i \
   Flag_Manip.h \
   Flag_Manip.i \
   Handle_Ops.h \
@@ -16503,7 +17357,8 @@ endif # GHS
   OS_Log_Msg_Attributes.inl \
   Malloc.i \
   Malloc_T.h \
-  Synch.h Synch.i \
+  Synch.h \
+  Synch.i \
   Synch_T.h \
   Synch_T.i \
   Thread.h \
@@ -16532,7 +17387,8 @@ endif # GHS
   SV_Semaphore_Simple.i \
   SV_Semaphore_Complex.i \
   Unbounded_Set.h \
-  Node.h Node.cpp \
+  Node.h \
+  Node.cpp \
   Unbounded_Set.inl \
   Unbounded_Set.cpp \
   Memory_Pool.i \
@@ -16542,7 +17398,8 @@ endif # GHS
   SString.i \
   Name_Proxy.h \
   INET_Addr.h \
-  Addr.h Addr.i \
+  Addr.h \
+  Addr.i \
   INET_Addr.i \
   SOCK_Connector.h \
   SOCK_Stream.h \
