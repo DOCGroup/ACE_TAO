@@ -1658,7 +1658,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
              msg_buf,
              buf);
 
-  delete msg_buf;
+  delete [] msg_buf;
   return 0;
 }
 
