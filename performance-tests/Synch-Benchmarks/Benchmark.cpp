@@ -67,7 +67,7 @@ Benchmark::svc_run (Benchmark *bp)
   return (void *) (bp->svc () == -1 ? -1 : 0);
 }
 
-#if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
 /* static */
 MT_INT Thr_ID::thread_id_ (0);
 
@@ -91,5 +91,5 @@ Thr_ID::thr_id (int i)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_TSS<Thr_ID>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-#endif /* ACE_HAS_PTHREADS || VXWORKS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 #endif /* ACE_HAS_THREADS */
