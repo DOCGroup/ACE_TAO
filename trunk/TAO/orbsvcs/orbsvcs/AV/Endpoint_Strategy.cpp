@@ -30,14 +30,14 @@ TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy (void)
 // Destructor.
 TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
 {
-  if (CORBA::is_nil (this->stream_endpoint_a_) == 0)
-    CORBA::release (this->stream_endpoint_a_);
+//   if (CORBA::is_nil (this->stream_endpoint_a_) == 0)
+//     CORBA::release (this->stream_endpoint_a_);
 
-  if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
-    CORBA::release (this->stream_endpoint_b_);
+//   if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
+//     CORBA::release (this->stream_endpoint_b_);
 
-  if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
-    CORBA::release (this->vdev_);
+//   if (CORBA::is_nil (this->stream_endpoint_b_) == 0)
+//     CORBA::release (this->vdev_);
 
 }
 
@@ -76,8 +76,11 @@ TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endp
 
 // Constructor
 TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options)
-  : process_options_ (process_options)
+  : process_options_ (process_options),
+    pid_ (-1)
 {
+  ACE_OS::hostname (this->host_,
+                    sizeof this->host_);
 }
 
 // Destructor.
@@ -95,10 +98,10 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
   ACE_Process process;
 
   // Create a new process to contain this endpoint
-  pid_t pid = process.spawn (*this->process_options_);
+  this->pid_ = process.spawn (*this->process_options_);
 
   // Process creation failed
-  if (pid == -1)
+  if (this->pid_ == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) ACE_Process:: spawn failed: %p\n",
                        "spawn"),
@@ -106,16 +109,13 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
 
   // Create a unique semaphore name, using my hostname, and pid.
   char sem_str [BUFSIZ];
-  char host [MAXHOSTNAMELEN];
-  ACE_OS::hostname (host,
-                    sizeof host);
   
   // create a unique semaphore name
   ACE_OS::sprintf (sem_str,
                    "%s:%s:%ld",
                    "TAO_AV_Process_Semaphore",
-                   host,
-                   pid);
+                   this->host_,
+                   this->pid_);
   
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
@@ -131,7 +131,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
       if (semaphore.acquire () == -1)
         {
           // See if my child process is still alive -- if not, return an error
-          if (ACE_OS::kill (pid,
+          if (ACE_OS::kill (this->pid_,
                             0) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) Process_Strategy: Process being waited on died unexpectedly.\n"),
@@ -201,12 +201,20 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (CORBA::Environment &en
 int
 TAO_AV_Endpoint_Process_Strategy::get_vdev (CORBA::Environment &env)
 {
+  char vdev_name [BUFSIZ];
+  ACE_OS::sprintf (vdev_name,
+                   "%s:%s:%d",
+                   "VDev",
+                   this->host_,
+                   this->pid_);
+
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+
   // Create the name
   CosNaming::Name VDev_Name (1);
   VDev_Name.length (1);
-  VDev_Name [0].id = CORBA::string_dup
-    ("VDev");
-  
+  VDev_Name [0].id = CORBA::string_dup (vdev_name);
+
   // Get the CORBA::Object
   CORBA::Object_var vdev =
     this->naming_context_->resolve (VDev_Name,
@@ -265,12 +273,20 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
 int
 TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &env)
 {
+  char stream_endpoint_name[BUFSIZ];
+  ACE_OS::sprintf (stream_endpoint_name,
+                   "%s:%s:%d",
+                   "Stream_Endpoint_A",
+                   this->host_,
+                   this->pid_);
+
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+
   // Create the name
   CosNaming::Name Stream_Endpoint_A_Name (1);
   
   Stream_Endpoint_A_Name.length (1);
-  Stream_Endpoint_A_Name [0].id = CORBA::string_dup
-    ("Stream_Endpoint_A");
+  Stream_Endpoint_A_Name [0].id = CORBA::string_dup (stream_endpoint_name);
 
   // Get the CORBA::Object
   CORBA::Object_var stream_endpoint_a =
@@ -313,27 +329,46 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
                                            AVStreams::VDev_ptr &vdev,
                                            CORBA::Environment &env)
 {
-  if (this->activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
-                      -1);
+  TAO_TRY
+    {
+    if (this->activate () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
+                        -1);
 
-  stream_endpoint = this->stream_endpoint_b_;
-  vdev = this->vdev_;
+    ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
+                TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_,
+                                                                    TAO_TRY_ENV)));
+    stream_endpoint = this->stream_endpoint_b_;
+    vdev = this->vdev_;
+  }
+  TAO_CATCHANY
+    { 
+      TAO_TRY_ENV.print_exception ("TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
+      return -1;
+    }
   return 0;
-  
+  TAO_ENDTRY;
 }
 
 // Gets the B type stream_endpoint from the Naming service
 int
 TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (CORBA::Environment &env)
 {
+  char stream_endpoint_name[BUFSIZ];
+  ACE_OS::sprintf (stream_endpoint_name,
+                   "%s:%s:%d",
+                   "Stream_Endpoint_B",
+                   this->host_,
+                   this->pid_);
+
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+
   // Create the name
   CosNaming::Name Stream_Endpoint_B_Name (1);
   
   Stream_Endpoint_B_Name.length (1);
-  Stream_Endpoint_B_Name [0].id = CORBA::string_dup
-    ("Stream_Endpoint_B");
+  Stream_Endpoint_B_Name [0].id = CORBA::string_dup (stream_endpoint_name);
   
   // Get the CORBA::Object reference
   CORBA::Object_var stream_endpoint_b =
