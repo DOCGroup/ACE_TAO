@@ -130,6 +130,7 @@ Explanation TBD. Class diagram TBD.
 Here are the files under $(ACE_ROOT) that were either modified or
 added. NO files were removed.
 
+$(ACE_ROOT)/ace/ace_dll.dsp                                MODIFIED
 $(ACE_ROOT)/ace/OS.h                                       MODIFIED
 $(ACE_ROOT)/ace/Makefile.ace                               MODIFIED
 $(ACE_ROOT)/ace/SOCK_Connector.h                           MODIFIED
@@ -159,8 +160,12 @@ $(ACE_ROOT)/include/makeinclude/platform_linux.GNU         MODIFIED
 
 $(ACE_ROOT)/tests/Makefile                                 MODIFIED
 $(ACE_ROOT)/tests/Multihomed_INET_Addr_Test.cpp            ADDED
+$(ACE_ROOT)/tests/Multihomed_INET_Addr_Test.dsp            ADDED
 $(ACE_ROOT)/tests/SOCK_SEQPACK_Association_Test.cpp        ADDED
+$(ACE_ROOT)/tests/SOCK_SEQPACK_Association_Test.dsp        ADDED
 $(ACE_ROOT)/tests/run_test.lst                             MODIFIED
+$(ACE_ROOT)/tests/run_tests.bat                            MODIFIED
+$(ACE_ROOT)/tests/tests.dsw                                MODIFIED
 
 $(ACE_ROOT)/performance-tests/SCTP/THANKS                  ADDED
 $(ACE_ROOT)/performance-tests/SCTP/README                  ADDED
