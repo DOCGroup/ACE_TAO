@@ -87,7 +87,7 @@ sub set_text_output ()
     $pre_section_title = "\n================================================".
                          "================================\n";
     $post_section_title = "\n================================================".
-                          "================================\n";              
+                          "================================\n";
 
     $pre_error = "";
     $post_error = "";
@@ -119,13 +119,14 @@ sub is_warning ()
 
     # Look for warnings
     return 1 if (/warning/i
+                 /info: /i
                  || /^make.*\*\*\*/);
 
     if (/^.*\.h: /
-	|| /^.*\.i: /
-	|| /^.*\.inl: /
-	|| /^.*\.cpp: /
-	|| /^.*\.java: /) {
+        || /^.*\.i: /
+        || /^.*\.inl: /
+        || /^.*\.cpp: /
+        || /^.*\.java: /) {
       return 1;
     }
 
@@ -141,7 +142,7 @@ sub is_warning ()
 sub is_error ()
 {
     # Look for any errors we should ignore
-    
+
     # Look for lines that also should be color coded, but not counted
     # as errors.
     return 2 if (/Types pointed to are unrelated/
@@ -149,19 +150,19 @@ sub is_error ()
                  || /requires an explicit cast/);
 
     if (/^.*:[0-9]+: /
-	&& !/^.*:[0-9]+: warning:/) {
+        && !/^.*:[0-9]+: warning:/) {
       return 1;
     }
 
     # Look for linking errors too
     return 1 if (/undefined reference to/
-		 || /: cannot open/
-		 || /: multiple definition of/);
+                 || /: cannot open/
+                 || /: multiple definition of/);
 
     # Look for possible errors
     return 1 if (/error/i
                  || /^Fatal\:/
-		 || /: fatal:/);
+                 || /: fatal:/);
 
     # didn't find anything
     return 0;
@@ -200,7 +201,7 @@ sub cvs_output ()
         ++$unknown if (/^\? /);
 
         last LOOP if (/^####################/);
- 
+
         if ($opt_t) {
         }
         elsif (/^C /) {
@@ -249,7 +250,7 @@ sub msvc_compiler_output ()
 
         if (/^Auto_compiling (.*)/) {
             print "$separator$line_break$pre_config$_$post_config$line_break"
-                if (!$opt_b && !$opt_t);  
+                if (!$opt_b && !$opt_t);
             $dsp = $1;
             $first_problem = 1;
         }
@@ -276,7 +277,7 @@ sub msvc_compiler_output ()
         }
         elsif ($is_error == 2 || $is_error == 1) {
             if (!$opt_t) {
-                print_build_header ($dsp, "$project: $configuration") 
+                print_build_header ($dsp, "$project: $configuration")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
                 print "$pre_error$_$post_error$line_break";
@@ -287,7 +288,7 @@ sub msvc_compiler_output ()
         }
         elsif ($is_warning == 2 || $is_warning == 1) {
             if (!$opt_t) {
-                print_build_header ($dsp, "$project: $configuration") 
+                print_build_header ($dsp, "$project: $configuration")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
                 print "$pre_warning$_$post_warning$line_break";
@@ -374,7 +375,7 @@ sub makefile_compiler_output ()
         }
         elsif ($is_error == 2 || $is_error == 1) {
             if (!$opt_t) {
-                print_build_header ($directory, "") 
+                print_build_header ($directory, "")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
                 print "$pre_error$_$post_error$line_break";
@@ -388,7 +389,7 @@ sub makefile_compiler_output ()
         }
         elsif ($is_warning == 2 || $is_warning == 1) {
             if (!$opt_t) {
-                print_build_header ($directory, "") 
+                print_build_header ($directory, "")
                     if ($first_problem && $opt_b);
                 $first_problem = 0;
                 print "$pre_warning$_$post_warning$line_break";
@@ -445,7 +446,7 @@ sub tests_output ()
             $run_test = $1;
             $first_problem = 1;
         }
-	elsif (m/Error/
+        elsif (m/Error/
                || m/ERROR/
                || m/FAILED/
                || m/EXCEPTION/
