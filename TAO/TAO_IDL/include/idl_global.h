@@ -540,6 +540,9 @@ public:
                                    AST_Component::port_description &pd);
   // We must do this in the front end since the executor
   // mapping IDL will have these data types.
+  
+  int path_cmp (const char *s, const char *t);
+  // Case insensitive for Windows, otherwise not.
 
 private:
   // Data

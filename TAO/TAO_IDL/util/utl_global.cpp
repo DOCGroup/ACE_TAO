@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_strings.h"
 #include "ace/Process.h"
 
 ACE_RCSID (util,
@@ -704,9 +705,9 @@ IDL_GlobalData::validate_included_idl_files (void)
               full_path = ACE_OS::realpath (post_tmp, post_abspath);
 
               if (full_path != 0
-                  && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
+                  && this->path_cmp (pre_abspath, post_abspath) == 0)
                 {
-                        FILE *test = ACE_OS::fopen (post_abspath, "r");
+                  FILE *test = ACE_OS::fopen (post_abspath, "r");
 
                   if (test == 0)
                     {
@@ -743,11 +744,11 @@ IDL_GlobalData::validate_included_idl_files (void)
                     {
                       post_tmp = post_preproc_includes[m]->get_string ();
                       full_path = ACE_OS::realpath (post_tmp, post_abspath);
-
+                      
                       if (full_path != 0
-                          && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
+                          && this->path_cmp (pre_abspath, post_abspath) == 0)
                         {
-                                FILE *test = ACE_OS::fopen (post_abspath, "r");
+                          FILE *test = ACE_OS::fopen (post_abspath, "r");
 
                           if (test == 0)
                             {
@@ -755,7 +756,7 @@ IDL_GlobalData::validate_included_idl_files (void)
                             }
 
                           ACE_OS::fclose (test);
-
+                          
                           // This file name is valid.
                           valid_file = 1;
                           ++n_found;
@@ -1501,4 +1502,21 @@ IDL_GlobalData::create_uses_multiple_stuff (
   seq_id.destroy ();
 
   (void) c->fe_add_typedef (connections);
+}
+
+int
+IDL_GlobalData::path_cmp (const char *s, const char *t)
+{
+#if defined (WIN32)
+  // Since Windows has case-insensitive filenames, the preprocessor,
+  // when searching using a provided relative path, will sometimes
+  // capitalize the first letter of the last segment of a path name
+  // and make the rest lowercase, regardless of how it was actually
+  // spelled when created. This 'feature' was preventing the
+  // validation of included IDL files, necessary before generating
+  // the corresponding C++ includes.
+  return ACE_OS::strcasecmp (s, t);
+#else
+  return ACE_OS::strcmp (s, t);
+#endif /* defined (WIN32) */
 }
