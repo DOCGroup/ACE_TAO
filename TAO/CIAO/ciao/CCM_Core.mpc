@@ -17,6 +17,7 @@ project (CAIO_Client) : taolib_with_idl {
     CCM_BaseC.cpp
     CCM_EventC.cpp
     CCM_ComponentC.cpp
+    CIAO_ValueC.cpp
     Client_init.cpp
   }
 }
@@ -59,17 +60,28 @@ project (CAIO_Server) :taolib_with_idl {
 
   IDL_Files {
     CCM_Deployment.idl
+    CIAO_Servers.idl
+    Daemon.idl
     HomeRegistrar.idl
   }
 
   Source_Files {
+    Assembly_Impl.cpp
     CCM_DeploymentC.cpp
     CCM_DeploymentS.cpp
+    CIAO_ServersC.cpp
+    CIAO_ServersS.cpp
+    ComponentInstallation_Impl.cpp
+    ComponentServer_Impl.cpp
+    Container_Base.cpp
+    Container_Impl.cpp
+    Daemon_Impl.cpp
+    DaemonC.cpp
+    DaemonS.cpp
+    HomeRegistrar_i.cpp
     HomeRegistrarC.cpp
     HomeRegistrarS.cpp
-    ContainerBase.cpp
-    HomeRegistrar_i.cpp
     Server_init.cpp
-    Assembly_Impl.cpp
+    ServerActivator_Impl.cpp
   }
 }
