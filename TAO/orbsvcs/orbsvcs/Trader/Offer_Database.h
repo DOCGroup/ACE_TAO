@@ -65,12 +65,12 @@ public:
 
   int remove_offer (const CosTrading::OfferId offer_id,
                     CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
 
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
                                    CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
   // Lookup an offer whose offer_id is <offer_id>, and return
   // it. Otherwise, throw the appropriate exception.
@@ -78,7 +78,7 @@ public:
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
                                    char*& type_name,
                                    CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
   // Lookup an offer whose OfferId is <offer_id> and return in
   // <type_name> the type name of the object. Type name is just a
@@ -131,7 +131,7 @@ private:
                               char* &service_type,
                               CORBA::ULong& id,
                               CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::IllegalOfferId));
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId));
   // Take in a previously generated offer id and return the type
   // and id that were used to generate the offer id.
 

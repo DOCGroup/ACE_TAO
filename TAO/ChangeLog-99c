@@ -1,3 +1,28 @@
+Tue Jun 15 11:06:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp:
+	* orbsvcs/orbsvcs/Log/Logger_i.h:
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.h:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.h:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.h:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_T.h:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+	  More ACE_THROW_SPEC fixes, finally the orbsvcs library compile
+	  on IRIX!
+
 Mon Jun 14 22:58:34 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 	

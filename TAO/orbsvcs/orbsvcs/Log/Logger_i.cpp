@@ -30,6 +30,7 @@ Logger_Factory_i::~Logger_Factory_i (void)
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &TAO_IN_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Logger_i *result;
   // If name is already in the map, <find> will assign <result> to the
@@ -122,6 +123,7 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 void
 Logger_i::log (const Logger::Log_Record &log_rec,
                CORBA::Environment &TAO_IN_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity_level_, TAO_IN_ENV);
 }
@@ -129,6 +131,7 @@ Logger_i::log (const Logger::Log_Record &log_rec,
 void
 Logger_i::log2 (const Logger::Log_Record &log_rec,
                CORBA::Environment &TAO_IN_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity_level_, TAO_IN_ENV);
 }
@@ -137,6 +140,7 @@ void
 Logger_i::logv2 (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
                CORBA::Environment &TAO_IN_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity, TAO_IN_ENV);
 }
@@ -145,6 +149,7 @@ void
 Logger_i::logv (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
                CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create an <ACE_Log_Record> to leverage existing logging
   // code. Since Logger::Log_Priority enum tags don't cleanly map to
@@ -198,10 +203,11 @@ Logger_i::verbosity (void) const
 }
 
 void
-Logger_i::verbosity (Logger::Verbosity_Level level, CORBA::Environment &env)
+Logger_i::verbosity (Logger::Verbosity_Level level,
+                     CORBA::Environment &)
+    ACE_THROW_SPEC (())
 {
-  ACE_UNUSED_ARG (env);
-  verbosity_level_ = level;
+  this->verbosity_level_ = level;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

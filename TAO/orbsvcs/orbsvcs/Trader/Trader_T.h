@@ -104,27 +104,27 @@ public:
 
   // = CosTrading::TraderComponents methods.
   virtual CosTrading::Lookup_ptr lookup_if (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns an object reference to the Lookup interface of the trader.
   // Returns nil if the trader does not support Lookup interface.
 
   virtual CosTrading::Register_ptr register_if (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference for the Register interface of the trader.
   // Returns nil if the trader does not support Register interface.
 
   virtual CosTrading::Link_ptr link_if (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference for the Link interface of the trader.
   // Returns nil if the trader does not support Link interface.
 
   virtual CosTrading::Proxy_ptr proxy_if (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference to the Proxy interface of the trader.
   // Returns nil if the trader does not support Proxy interface.
 
   virtual CosTrading::Admin_ptr admin_if (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns object reference for the Admin interface of the trader.
   // Returns nil if the trader does not support Admin interface.
 
@@ -143,16 +143,16 @@ public:
   // = CosTrading::SupportAttributes methods.
 
   virtual CORBA::Boolean supports_modifiable_properties (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean supports_dynamic_properties (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean supports_proxy_offers (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::TypeRepository_ptr type_repos (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
@@ -169,47 +169,47 @@ public:
   // = CosTrading::ImportAttributes methods.
 
   virtual CORBA::ULong def_search_card (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ULong max_search_card (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Search cardinality determines the maximum number of offers searched
   // before not considering other offers.
 
   virtual CORBA::ULong def_match_card (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ULong max_match_card (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Match cardinality determines the maximum number of offers
   // matched to the constraints before not considering other offers..
 
   virtual CORBA::ULong def_return_card (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ULong max_return_card (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return cardinality determines the maximum number of offers marked
   // to return before not considering other offers.
 
 
   virtual CORBA::ULong max_list (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ULong def_hop_count (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ULong max_hop_count (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::FollowOption def_follow_policy (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::FollowOption max_follow_policy (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 
 private:
@@ -226,7 +226,7 @@ public:
 
   // = CosTrading::LinkAttributes methods
   virtual CosTrading::FollowOption max_link_follow_policy (CORBA::Environment &)
-    TAO_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
