@@ -42,18 +42,11 @@ namespace TAO
         FACTORY *policy_factory =
            ACE_Dynamic_Service<FACTORY>::instance (factory_string);
 
-         // For static libraries try to force load
         if (policy_factory == 0)
-          {
-            ACE_Service_Config::process_directive (
-              directive);
-
-           policy_factory =
-             ACE_Dynamic_Service<FACTORY>::instance (factory_string);
-          }
-
-        if (policy_factory == 0)
-          return 0;
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) \n"),
+                      ACE_TEXT ("Unable to get %s"),
+                      factory_string));
         else
           return policy_factory->create (value ACE_ENV_ARG_PARAMETER);
       }
@@ -67,18 +60,11 @@ namespace TAO
         FACTORY *policy_factory =
            ACE_Dynamic_Service<FACTORY>::instance (factory_string);
 
-         // For static libraries try to force load
         if (policy_factory == 0)
-          {
-            ACE_Service_Config::process_directive (
-              directive);
-
-           policy_factory =
-             ACE_Dynamic_Service<FACTORY>::instance (factory_string);
-          }
-
-        if (policy_factory == 0)
-          return 0;
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) \n"),
+                      ACE_TEXT ("Unable to get %s"),
+                      factory_string));
         else
           return policy_factory->create (value ACE_ENV_ARG_PARAMETER);
       }
