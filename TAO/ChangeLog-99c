@@ -10,79 +10,79 @@ Tue Aug 24 5:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  files because the code is generated in the server header and 
 	  server implementation files.
 	  
-	* TAO/TAO_IDL/be/be_codegen.cpp,
-	  TAO/TAO_IDL/be/be_interface.cpp,
-	  TAO/TAO_IDL/be/be_visitor_factory.cpp,
-	  TAO/TAO_IDL/be/be_visitor_interface.cpp,
-	  TAO/TAO_IDL/be/be_visitor_operation.cpp,
-	  TAO/TAO_IDL/be/be_visitor_interface/interface.cpp,
-	  TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
-	  TAO/TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
-	  TAO/TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
-	  TAO/TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
-	  TAO/TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
-	  TAO/TAO_IDL/be_include/be_codegen.h,
-	  TAO/TAO_IDL/be_include/be_interface.h,
-	  TAO/TAO_IDL/be_include/be_visitor_interface.h,
-	  TAO/TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be/be_codegen.cpp,
+	  TAO_IDL/be/be_interface.cpp,
+	  TAO_IDL/be/be_visitor_factory.cpp,
+	  TAO_IDL/be/be_visitor_interface.cpp,
+	  TAO_IDL/be/be_visitor_operation.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+	  TAO_IDL/be_include/be_codegen.h,
+	  TAO_IDL/be_include/be_interface.h,
+	  TAO_IDL/be_include/be_visitor_interface.h,
+	  TAO_IDL/be_include/be_visitor_operation.h:
 	  Made minor adjustments to have AMI callbacks properly working.
 
-	* TAO/tao/Asynch_Invocation.cpp
-	  TAO/tao/Asynch_Invocation.h
-	  TAO/tao/Asynch_Invocation.i
-	  TAO/tao/MessagingC.cpp
-	  TAO/tao/MessagingC.h
-	  TAO/tao/MessagingS.cpp
- 	  TAO/tao/MessagingS.h
-	  TAO/tao/MessagingS_T.cpp
-	  TAO/tao/POA_CORBA.h
-	  TAO/tao/PollableC.cpp
-	  TAO/tao/PollableC.h
-	  TAO/tao/PollableS.cpp
-	  TAO/tao/PollableS.h
-	  TAO/tao/Reply_Dispatcher.cpp
-	  TAO/tao/Reply_Dispatcher.h
-	  TAO/tao/Typecode_Constants.cpp: Introduced the TAO_HAS_AMI_CALLBACK and
+	* tao/Asynch_Invocation.cpp
+	  tao/Asynch_Invocation.h
+	  tao/Asynch_Invocation.i
+	  tao/MessagingC.cpp
+	  tao/MessagingC.h
+	  tao/MessagingS.cpp
+ 	  tao/MessagingS.h
+	  tao/MessagingS_T.cpp
+	  tao/POA_CORBA.h
+	  tao/PollableC.cpp
+	  tao/PollableC.h
+	  tao/PollableS.cpp
+	  tao/PollableS.h
+	  tao/Reply_Dispatcher.cpp
+	  tao/Reply_Dispatcher.h
+	  tao/Typecode_Constants.cpp: Introduced the TAO_HAS_AMI_CALLBACK and
 	  TAO_HAS_AMI_POLLER define. Removed the TAO_POLLER define.
 
-	* TAO/tests/AMI/client.cpp,
-	  TAO/tests/AMI/client.dsp,
-	  TAO/tests/AMI/run_test.pl,
-	  TAO/tests/AMI/server.cpp,
-	  TAO/tests/AMI/server.dsp,
-	  TAO/tests/AMI/test.idl,
-	  TAO/tests/AMI/test_i.cpp,
-	  TAO/tests/AMI/test_i.h: Revived this test again.
+	* tests/AMI/client.cpp,
+	  tests/AMI/client.dsp,
+	  tests/AMI/run_test.pl,
+	  tests/AMI/server.cpp,
+	  tests/AMI/server.dsp,
+	  tests/AMI/test.idl,
+	  tests/AMI/test_i.cpp,
+	  tests/AMI/test_i.h: Revived this test again.
 
 
 Tue Aug 24 00:47:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* TAO/examples/Load_Balancing/Makefile:
+	* examples/Load_Balancing/Makefile:
 	  Removed foreign characters that were introduced during previous
 	  commit by mistake.
 
 
-	* TAO/examples/Load_Balancing/Identity_Client.cpp
-	* TAO/examples/Load_Balancing/Identity_Server.cpp
-	* TAO/examples/Load_Balancing/Load_Balancing_Service.cpp:
+	* examples/Load_Balancing/Identity_Client.cpp
+	* examples/Load_Balancing/Identity_Server.cpp
+	* examples/Load_Balancing/Load_Balancing_Service.cpp:
 	  Fixed some compilation warnings.
 
-	* TAO/examples/Load_Balancing/Identity_i.cpp:
+	* examples/Load_Balancing/Identity_i.cpp:
 	  Fixed warning regarding unused arg.
 
-	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp:
+	* examples/Load_Balancing/Load_Balancer_i.cpp:
 	  Took out duplicate explicit template instantiation.
 
 Mon Aug 23 21:33:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/UIOP_Connector.cpp:
-	* tao/IIOP_Connector.cpp:
+	* UIOP_Connector.cpp:
+	* IIOP_Connector.cpp:
 	  Use ACE_Auto_Basic_Array_Ptr<> for the arrays and fixed template
 	  instantiations too.
 
 Mon Aug 23 18:57:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/reopened_modules.idl:
+	* tests/IDL_Test/reopened_modules.idl:
 	  Took long .idl file sent in by
 	  Duane Binder <dbinder@globalmt.com>, cut it down to
 	  one of 10 lines or so that reproduced the problem,
@@ -90,24 +90,24 @@ Mon Aug 23 18:57:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Aug 23 18:25:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/examples/Load_Balancing/Load_Balancing.dsw:
-	* TAO/examples/Load_Balancing/client.dsp:
-	* TAO/examples/Load_Balancing/server.dsp:
-	* TAO/examples/Load_Balancing/service.dsp:
+	* examples/Load_Balancing/Load_Balancing.dsw:
+	* examples/Load_Balancing/client.dsp:
+	* examples/Load_Balancing/server.dsp:
+	* examples/Load_Balancing/service.dsp:
 	  New files for MSVC++.
 
-	* TAO/examples/Load_Balancing/Identity_Client.cpp:
-	* TAO/examples/Load_Balancing/Identity_Server.cpp:
+	* examples/Load_Balancing/Identity_Client.cpp:
+	* examples/Load_Balancing/Identity_Server.cpp:
 	  Some _var instantiations needed to be scoped with
 	  their module name to avoid compile errors.
 
-	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp:
+	* examples/Load_Balancing/Load_Balancer_i.cpp:
 	  In places where an exception is raised, the exception arg
 	  needed '()' added to make it a function call. This was
 	  causing compile errors on some platforms and warnings
 	  on others.
 
-	* TAO/examples/Load_Balancing/Makefile:
+	* examples/Load_Balancing/Makefile:
 	  Cosmetic changes.
 
 Mon Aug 23 16:43:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -143,9 +143,9 @@ Mon Aug 23 14:12:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Aug 23 11:59:33 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp
-	* TAO/examples/Load_Balancing/Identity_Server.cpp
-	* TAO/examples/Load_Balancing/Identity_Client.cpp:
+	* examples/Load_Balancing/Load_Balancer_i.cpp
+	* examples/Load_Balancing/Identity_Server.cpp
+	* examples/Load_Balancing/Identity_Client.cpp:
 	  Added explicit template instantiations and fixed a few other
 	  compilation warnings.
 
@@ -228,24 +228,24 @@ Sat Aug 21 17:18:07 1999  Marina Spivak  <marina@cs.wustl.edu>
         * tao/ORB.{h,i}: Added a CORBA_String_out constructor which takes
           const char* (we were missing this one from the spec).
 
-        * TAO/examples/Load_Balancing/Load_Balancer.idl
-        * TAO/examples/Load_Balancing/Load_Balancer_i.cpp
-        * TAO/examples/Load_Balancing/Load_Balancer_i.h
-        * TAO/examples/Load_Balancing/Makefile
-        * TAO/examples/Load_Balancing/README
-        * TAO/examples/Load_Balancing/Identity_i.h
-        * TAO/examples/Load_Balancing/Identity_i.cpp
-        * TAO/examples/Load_Balancing/Load_Balancing_Service.h
-        * TAO/examples/Load_Balancing/Identity.idl
-        * TAO/examples/Load_Balancing/Identity_Server.cpp
-        * TAO/examples/Load_Balancing/Identity_Server.h
-        * TAO/examples/Load_Balancing/Identity_Client.h
-        * TAO/examples/Load_Balancing/Identity_Client.cpp
-        * TAO/examples/Load_Balancing/Load_Balancing_Service.cpp
-        * TAO/examples/Makefile:
+        * examples/Load_Balancing/Load_Balancer.idl
+        * examples/Load_Balancing/Load_Balancer_i.cpp
+        * examples/Load_Balancing/Load_Balancer_i.h
+        * examples/Load_Balancing/Makefile
+        * examples/Load_Balancing/README
+        * examples/Load_Balancing/Identity_i.h
+        * examples/Load_Balancing/Identity_i.cpp
+        * examples/Load_Balancing/Load_Balancing_Service.h
+        * examples/Load_Balancing/Identity.idl
+        * examples/Load_Balancing/Identity_Server.cpp
+        * examples/Load_Balancing/Identity_Server.h
+        * examples/Load_Balancing/Identity_Client.h
+        * examples/Load_Balancing/Identity_Client.cpp
+        * examples/Load_Balancing/Load_Balancing_Service.cpp
+        * examples/Makefile:
           Added a new example to TAO: Load Balancing Service.
 
-        * TAO/examples/Makefile:
+        * examples/Makefile:
           Generated the dependencies.
 
 Sat Aug 21 14:16:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -283,7 +283,7 @@ Fri Aug 20 13:48:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
           Modified my earlier change to the way a return
           valuetype is declared in the stub. This clears up
-          compile errors in TAO/esamples/OBV/Typed_Events.
+          compile errors in esamples/OBV/Typed_Events.
 
 Thu Aug 19 20:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -468,29 +468,29 @@ Tue Aug 17 20:51:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Aug 17 19:17:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO/tests/Param_Test/driver.cpp:
-        * TAO/tests/Param_Test/helper.h:
-        * TAO/tests/Param_Test/helper.cpp:
-        * TAO/tests/Param_Test/options.h:
-        * TAO/tests/Param_Test/options.cpp:
-        * TAO/tests/Param_Test/tests.h:
-        * TAO/tests/Param_Test/param_test_i.h:
-        * TAO/tests/Param_Test/param_test_i.cpp
-        * TAO/tests/Param_Test/client.dsp:
-        * TAO/tests/Param_Test/param_test.idl:
-        * TAO/tests/Param_Test/Makefile:
-        * TAO/tests/Param_Test/README:
-        * TAO/tests/Param_Test/run_test.pl:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/helper.h:
+        * tests/Param_Test/helper.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/README:
+        * tests/Param_Test/run_test.pl:
           Updated to accomodate the new files listed below.
 
-        * TAO/tests/Param_Test/bd_wstring.h:
-        * TAO/tests/Param_Test/bd_wstring.cpp:
-        * TAO/tests/Param_Test/ub_wstring.h:
-        * TAO/tests/Param_Test/ub_wstring.cpp:
-        * TAO/tests/Param_Test/ub_wstrseq.h:
-        * TAO/tests/Param_Test/ub_wstrseq.cpp:
-        * TAO/tests/Param_Test/bd_wstrseq.h:
-        * TAO/tests/Param_Test/bd_wstrseq.cpp:
+        * tests/Param_Test/bd_wstring.h:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/ub_wstring.h:
+        * tests/Param_Test/ub_wstring.cpp:
+        * tests/Param_Test/ub_wstrseq.h:
+        * tests/Param_Test/ub_wstrseq.cpp:
+        * tests/Param_Test/bd_wstrseq.h:
+        * tests/Param_Test/bd_wstrseq.cpp:
           New files testing the (de)marshaling of wide
           strings. CORBA::WStrings have their
           counterparts to the regular string manipulation
@@ -499,8 +499,8 @@ Tue Aug 17 19:17:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           also has overloaded versions of strlen, strcmp, etc.
           that work with wstrings on NT, but they are not portable.
 
-        * TAO/tests/Param_Test/bd_string.h:
-        * TAO/tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_string.h:
+        * tests/Param_Test/bd_string.cpp:
           Fixed some comments pasted in unmodified from other
           tests, and the SII test call, which was to
           test_unbounded_string().
@@ -1122,7 +1122,7 @@ Wed Aug 11 09:18:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Aug 11 09:45:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO/tests/IDL_Test/main.cpp:
+        * tests/IDL_Test/main.cpp:
           Removed an unneeded '#pragma once' and fixed
           some ACE_CHECK_RETURNs used inside a try block.
           Thanks to David for pointing out the boo-boos.
@@ -1130,7 +1130,7 @@ Wed Aug 11 09:45:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Tue Aug 10 21:55:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
-        * TAO/fe/lex.yy.cpp.diff:
+        * fe/lex.yy.cpp.diff:
           Substituted a hard 'break;' for TAO_YY_BREAK in
           two places. TAO_YY_BREAK is defined as
           ACE_NOTREACHED (break;), which, for some compilers,
@@ -1162,8 +1162,8 @@ Tue Aug 10 19:59:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Aug 10 12:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO/tests/TAO_Test.dsw:
-        * TAO/tests/README:
+        * tests/TAO_Test.dsw:
+        * tests/README:
           Added IDL_Test project to workspace and added a
           paragraph about IDL_Test to README.
 
@@ -1175,11 +1175,11 @@ Tue Aug 10 11:52:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Aug 10 11:48:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO/tests/IDL_Test/pragma.idl:
-        * TAO/tests/IDL_Test/run_test.pl:
-        * TAO/tests/IDL_Test/main.cpp:
-        * TAO/tests/IDL_Test/Makefile:
-        * TAO/tests/IDL_Test/README:
+        * tests/IDL_Test/pragma.idl:
+        * tests/IDL_Test/run_test.pl:
+        * tests/IDL_Test/main.cpp:
+        * tests/IDL_Test/Makefile:
+        * tests/IDL_Test/README:
           Added new .idl file to generate pragma prefixes,
           including various declarations that have caused
           the prefixes to be dropped in the past. Added code
