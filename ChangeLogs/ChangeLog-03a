@@ -1,3 +1,8 @@
+Tue Nov 12 14:15:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_T.h:
+          Doxygen documentation improvements.
+
 Mon Nov 11 20:37:18 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
