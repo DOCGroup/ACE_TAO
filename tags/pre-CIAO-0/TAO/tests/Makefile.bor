@@ -1,0 +1,77 @@
+#
+# $Id$
+#
+
+DIRS = \
+        AMI \
+        AMI_Buffering \
+        AMI_Timeouts \
+        Bidirectional \
+        Bidirectional_NestedUpcall \
+        Big_Oneways \
+        Big_Reply \
+        Big_Request_Muxing \
+        Big_Twoways \
+        Blocking_Sync_None \
+	CDR \
+	Client_Leaks \
+	Codec \
+	Collocation \
+	Connection_Purging \
+	Crash_On_Write \
+	Cache_Growth_Test \
+	Crashed_Callback \
+        DLL_Orb \
+	DSI_Gateway \
+	DynAny_Test \
+	Explicit_Event_Loop \
+        Exposed_Policies \
+	Faults \
+        File_IO \
+        FL_Cube \
+        Forwarding \
+        Hello \
+	IDL_Test \
+	InterOp-Naming \
+        ior_corbaloc \
+	IORManipulation \
+	Leader_Followers \
+        LongUpcalls \
+	MProfile \
+        MProfile_Forwarding \
+	MT_Client \
+	MT_Server \
+	MT_Timeout \
+        Multiple \
+	Multiple_Inheritance \
+        Muxed_GIOP_Versions \
+	Muxing \
+        Native_Exceptions \
+	Nested_Event_Loop \
+        NestedUpcall \
+        Object_Loader \
+        Objref_Sequence_Test \
+        OBV \
+        OctetSeq \
+        Oneway_Buffering \
+        Oneways_Invoking_Twoways \
+	ORB_destroy \
+	ORB_init \
+        ORT \
+	Param_Test \
+        POA \
+	Policies \
+        Portable_Interceptors \
+        QtTests \
+        Queued_Message_Test \
+	Reliable_Oneways \
+	RTCORBA \
+	Server_Leaks \
+        Single_Read \
+        Smart_Proxies \
+        Strategies \
+	Timed_Buffered_Oneways \
+        Timeout \
+        Two_Objects
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

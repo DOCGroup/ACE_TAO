@@ -1,0 +1,866 @@
+Microsoft eMbedded Visual Tools Workspace File, Format Version 3.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Concurrency_Service"=".\orbsvcs\Concurrency_Service\Concurrency_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CosConcurrency"=".\orbsvcs\orbsvcs\CosConcurrency.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosEvent"=".\orbsvcs\orbsvcs\CosEvent.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosEvent_Service"=".\ORBSVCS\COSEVENT_SERVICE\CosEvent_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosLifeCycle"=".\orbsvcs\orbsvcs\CosLifeCycle.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosNaming"=".\orbsvcs\orbsvcs\CosNaming.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ace
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ace_os
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosNotification"=".\orbsvcs\orbsvcs\CosNotification.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosProperty"=".\orbsvcs\orbsvcs\CosProperty.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosTime"=".\orbsvcs\orbsvcs\CosTime.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosTrading"=".\orbsvcs\orbsvcs\CosTrading.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_DynamicAny
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DsLogAdmin"=".\orbsvcs\orbsvcs\DsLogAdmin.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Dump_Schedule"=".\ORBSVCS\DUMP_SCHEDULE\Dump_Schedule.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Event_Service"=".\ORBSVCS\EVENT_SERVICE\Event_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTOLDEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Fault_Tolerance"=".\orbsvcs\orbsvcs\Fault_Tolerance.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IORManip
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LifeCycle_Service"=".\ORBSVCS\LIFECYCLE_SERVICE\LifeCycle_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosLifeCycle
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Naming_Service"=".\ORBSVCS\NAMING_SERVICE\Naming_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Notify_Service"=".\ORBSVCS\NOTIFY_SERVICE\Notify_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IORTable
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTEvent"=".\orbsvcs\orbsvcs\RTEvent.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTOLDEvent"=".\ORBSVCS\ORBSVCS\RTOLDEvent.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSched"=".\orbsvcs\orbsvcs\RTSched.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSchedEvent"=".\orbsvcs\orbsvcs\RTSchedEvent.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Scheduling_Service"=".\ORBSVCS\SCHEDULING_SERVICE\Scheduling_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Security"=".\orbsvcs\orbsvcs\Security.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SmartProxies"=".\tao\SmartProxies\SmartProxies.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Svc_Utils"=".\orbsvcs\orbsvcs\Svc_Utils.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO"=".\tao\TAO.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ace
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ace_os
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_BiDir_GIOP"=".\tao\BiDir_GIOP\TAO_BiDir_GIOP.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ace
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ace_os
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_Domain"=".\tao\Domain\TAO_Domain.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IFR_Client
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_DynamicAny"=".\tao\DynamicAny\TAO_DynamicAny.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_DynamicInterface"=".\tao\DynamicInterface\TAO_DynamicInterface.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IFR_Client"=".\tao\IFR_Client\TAO_IFR_Client.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IORManip"=".\tao\IORManipulation\TAO_IORManip.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IORTable"=".\tao\IORTable\TAO_IORTable.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_PortableServer"=".\tao\PortableServer\TAO_PortableServer.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_RTCORBA"=".\tao\RTCORBA\TAO_RTCORBA.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_RTPortableServer"=".\tao\RTPortableServer\TAO_RTPortableServer.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_RTCORBA
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_Strategies"=".\tao\Strategies\TAO_Strategies.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Time_Service_Clerk"=".\ORBSVCS\TIME_SERVICE\Time_Service_Clerk.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Time_Service_Server"=".\ORBSVCS\TIME_SERVICE\Time_Service_Server.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Trading_Service"=".\orbsvcs\Trading_Service\Trading_Service.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_DynamicAny
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TypeCodeFactory"=".\tao\TypeCodeFactory\TypeCodeFactory.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IFR_Client
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ace"="..\ace\ace_dll.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ace_os
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ace_os"="..\ace\ace_os_dll.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+
