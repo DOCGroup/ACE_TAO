@@ -1,3 +1,205 @@
+Tue Jan 23 11:08:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * configure.in:
+        * rules.tao.GNU:
+        * tests/Smart_Proxies/Makefile:
+        * tests/Smart_Proxies/Benchmark/Makefile:
+        * tests/Smart_Proxies/On_Demand/Makefile:
+        * tests/Smart_Proxies/Policy/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/README:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/README:
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.EX:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/IFR_Service/README:
+        * tao/orbconf.h:
+
+          Removed all occurrences of the following - 'smart_proxies',
+          'interface_repo' and 'TAO_HAS_INTERFACE_REPOSITORY'.
+          'TAO_HAS_SMART_PROXIES' was removed in an earlier checkin.
+          Because of the Smart_Proxies library and the new
+          IFR_Client library described below, these compile options
+          are no longer necessary.
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Persistence_Test.dsp:
+
+          Added link to IFR_Client library.
+
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/InterfaceS.i:
+        * orbsvcs/IFR_Service/diffs/InterfaceS.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/InterfaceS.h.diff:
+        * orbsvcs/IFR_Service/diffs/InterfaceS.i.diff:
+
+          Removed POA_CORBA::IRObject from POA_CORBA.h and
+          moved it to InterfaceS.* as POA_CORBA_IRObject.
+          Also added the Borland preprocessor directives
+          that have recently been added to all generated code.
+
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+        * orbsvcs/IFR_Service/tao_ifr.dsp:
+        * orbsvcs/IFR_Service/TAO_IFR_BE_DLL.dsp:
+
+          Added link to IFR_Client library.
+
+        * orbsvcs/IFR_Service/IRObject_i.h:
+
+          Changed instances of POA_CORBA::IRObject to
+          POA_CORBA_IRObject.
+
+        * orbsvcs/IFR_Service/Servant_Factory.h:
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+
+          Changed #include of 'tao/ifrfwd.h' to
+          'tao/IFR_Client/ifrfwd.h', or 'tao/InterfaceC.h'
+          to 'tao/IFR_CLient/InterfaceC.h'.
+
+
+        * tao/PortableServer/POA_CORBA.h:
+
+          Removed this file, and moved the only remaining
+          declaration, POA_CORBA::Policy, to the new file
+          PolicyS.h, as POA_CORBA_Policy.
+
+        * tao/PortableServer/PolicyS.h:
+
+          New file containing the declaration of POA_CORBA_Policy
+          as described above.
+
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.i:
+        * tao/PortableServer/DomainS_T.cpp:
+        * tao/PortableServer/DomainS_T.h:
+        * tao/PortableServer/DomainS_T.i:
+
+          Moved these files to a new library called Domain, as
+          described below.
+
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/Makefile.bor:
+
+          Changes corresponding to the other changes to this library
+          described above.
+
+        * tao/Domain/DomainS.cpp:
+        * tao/Domain/DomainS.h:
+        * tao/Domain/DomainS.i:
+        * tao/Domain/DomainS_T.cpp:
+        * tao/Domain/DomainS_T.h:
+        * tao/Domain/DomainS_T.i:
+        * tao/Domain/domain_export.h:
+        * tao/Domain/TAO_Domain.dsp:
+        * tao/Domain/TAO_Domain_Static.dsp:
+        * tao/Domain/Makefile:
+        * tao/Domain/Makefile.bor:
+
+          Files either new or moved from PortableServer. The CORBA
+          Domain API depends on Interface Repository stub code,
+          which, as described below, has been given its own library.
+          If instead a hook method using the IFR client dynamic
+          service object had been used, the IFR client library
+          would then depend on PortableServer. Also, even after
+          the Domain API is fully implemented, there is no reason
+          for the POA to know about Domain's skeleton side.
+
+        * tao/IFR_Client/InterfaceC.cpp:
+        * tao/IFR_Client/InterfaceC.h:
+        * tao/IFR_Client/InterfaceC.i:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client/ifr_client_export.h:
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
+        * tao/IFR_Client/TAO_IFR_Client_Static.dsp:
+        * tao/IFR_Client/Makefile:
+        * tao/IFR_Client/Makefile.bor:
+
+          Files either new or moved from TAO. This new library
+          contains Interface Repository stub code, and a
+          dynamic service object containing hook methods for
+          use by TAO classes that interact with the IFR. This
+          library also enables the removal of the compile-time
+          options 'TAO_HAS_INTERFACE_REPOSITORY' and 
+          'interface_repo'. Also, in IFR_Client_Adapter_Impl.cpp,
+          the method _get_interface() (found in CORBA::Object and
+          LocalObject and required by CorbaScript) is implemented.
+          Finally, the static Initializer() method not only
+          registers the service object with the ORB, but also
+          initializes the IFR typecodes which are in the CORBA
+          namespace.
+
+        * tao/InterfaceC.cpp:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.i:
+        * tao/ifrfwd.h:
+
+          Moved from TAO to the new IFR_Client library.
+
+        * tao/IFR_Client_Adapter.cpp:
+        * tao/IFR_Client_Adapter.h:
+
+          Base class for the dynamic service object in the
+          IFR_Client library. This base class contains no-op
+          versions of the hook methods implemented in the
+          derived class.
+
+        * tao/IFR_TypeCodes.cpp:
+
+          New file wherein the IFR typecodes that are in the
+          CORBA namespace are initialized to 0, and the IFR
+          constants that are in the CORBA namespace are assigned
+          their correct values.
+
+        * tao/Typecode_Constants.cpp:
+
+          IFR typecodes in the CORBA namespace were removed from
+          this file and moved to the IFR_Client dynamic service
+          object.
+
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+
+          Calls to IFR_Client_Adapter hook methods added.
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+
+          Mechanism (member ifr_client_adapter_name_ and get/set
+          methods ifr_client_adapter_name()) added to enable the
+          IFR_Client dynamic service object to register with the
+          ORB.
+
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * TAOACE.dsw:
+        * TAOACE_Static.dsw:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/corba.h:
+        * tao/corbafwd.h:
+
+          Various changes necessitated by all of the above.
+
 Mon Jan 22 17:04:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connector.cpp: Corrected several
