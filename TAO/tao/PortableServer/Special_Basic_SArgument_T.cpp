@@ -114,7 +114,7 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_result (
     CORBA::Any * any
   )
 {
-  (*any) <<= this->x_;
+  (*any) <<= from_S (this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
