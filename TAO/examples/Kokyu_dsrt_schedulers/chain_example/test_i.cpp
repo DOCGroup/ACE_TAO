@@ -6,6 +6,8 @@
 #include "ace/ACE.h"
 #include "tao/debug.h"
 #include "EDF_Scheduler.h"
+#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "Task_Stats.h"
 
 #if defined (ACE_HAS_DSUI)
 #include <ace/Counter.h>
