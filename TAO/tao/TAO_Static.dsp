@@ -623,6 +623,10 @@ SOURCE=.\Policy_Set.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Policy_Validator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PolicyC.cpp
 # End Source File
 # Begin Source File
@@ -1452,6 +1456,10 @@ SOURCE=.\Policy_Manager.h
 # Begin Source File
 
 SOURCE=.\Policy_Set.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Validator.h
 # End Source File
 # Begin Source File
 
