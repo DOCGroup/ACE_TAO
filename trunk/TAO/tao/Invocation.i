@@ -22,8 +22,9 @@ TAO_GIOP_Invocation::out_stream (void)
 ACE_INLINE
 TAO_GIOP_Twoway_Invocation::
 TAO_GIOP_Twoway_Invocation (IIOP_Object *data,
-			    const char *operation)
-  : TAO_GIOP_Invocation (data, operation),
+			    const char *operation,
+			    TAO_ORB_Core *orb_core)
+  : TAO_GIOP_Invocation (data, operation, orb_core),
     inp_stream_ (CDR::DEFAULT_BUFSIZE)
 {
 }
@@ -53,8 +54,9 @@ TAO_GIOP_Twoway_Invocation::inp_stream (void)
 ACE_INLINE
 TAO_GIOP_Oneway_Invocation::
 TAO_GIOP_Oneway_Invocation (IIOP_Object *data,
-			    const char *operation)
-  : TAO_GIOP_Invocation (data, operation)
+			    const char *operation,
+			    TAO_ORB_Core *orb_core)
+  : TAO_GIOP_Invocation (data, operation, orb_core)
 {
 }
 
@@ -74,8 +76,9 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &env)
 
 ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::
-TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data)
-  : TAO_GIOP_Invocation (data, 0),
+TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data,
+				    TAO_ORB_Core *orb_core)
+  : TAO_GIOP_Invocation (data, 0, orb_core),
     inp_stream_ (CDR::DEFAULT_BUFSIZE)
 {
 }

@@ -145,3 +145,16 @@ ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 }
 # endif /* __ACE_INLINE__ */
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+
+ACE_INLINE ACE_Allocator*
+TAO_ORB_Core::data_block_allocator (void)
+{
+  return &this->data_block_allocator_;
+}
+
+ACE_INLINE ACE_Allocator*
+TAO_ORB_Core::cdr_buffer_allocator (void)
+{
+  return &this->cdr_buffer_allocator_;
+}
+

@@ -194,13 +194,14 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                                                CORBA::ULong &request_id,
                                                CORBA::Environment &env)
 {
-  TAO_POA *the_poa = TAO_ORB_Core_instance ()->root_poa ();
+  TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
+  TAO_POA *the_poa = orb_core->root_poa ();
 
   // This will extract the request header, set <response_required> as
   // appropriate.
   IIOP_ServerRequest request (input,
                               output,
-                              TAO_ORB_Core_instance ()->orb (),
+                              orb_core->orb (),
                               the_poa,
                               env);
 
@@ -262,7 +263,8 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   request_id = locateRequestHeader.request_id;
   response_required = CORBA::B_TRUE;
 
-  TAO_POA *the_poa = TAO_ORB_Core_instance ()->root_poa ();
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  TAO_POA *the_poa = orb_core->root_poa ();
 
   
   char repbuf[CDR::DEFAULT_BUFSIZE];
@@ -275,7 +277,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                     locateRequestHeader.object_key,
                                     "_non_existent",
                                     dummy_output,
-                                    TAO_ORB_Core_instance ()->orb (),
+                                    orb_core->orb (),
                                     the_poa,
                                     env);
 

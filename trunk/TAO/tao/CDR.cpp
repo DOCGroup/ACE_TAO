@@ -32,12 +32,42 @@
 // by external critical sections.
 
 #include "tao/corba.h"
+#include "ace/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, CDR, "$Id$")
+
+#if defined (ACE_ENABLE_TIMEPROBES)
+
+static const char *TAO_CDR_Timeprobe_Description[] =
+{
+  "OutputCDR::ctor[1] - enter",
+  "OutputCDR::ctor[1] - leave",
+  "OutputCDR::ctor[2] - enter",
+  "OutputCDR::ctor[2] - leave",
+  "OutputCDR::ctor[3] - enter",
+  "OutputCDR::ctor[3] - leave"
+};
+
+enum
+{
+  TAO_OUTPUT_CDR_CTOR1_ENTER = 2000,
+  TAO_OUTPUT_CDR_CTOR1_LEAVE,
+  TAO_OUTPUT_CDR_CTOR2_ENTER,
+  TAO_OUTPUT_CDR_CTOR2_LEAVE,
+  TAO_OUTPUT_CDR_CTOR3_ENTER,
+  TAO_OUTPUT_CDR_CTOR3_LEAVE
+};
+
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_CDR_Timeprobe_Description,
+                                  TAO_OUTPUT_CDR_CTOR1_ENTER);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 int
 CDR::grow (ACE_Message_Block *mb, size_t minsize)
@@ -73,8 +103,20 @@ CDR::grow (ACE_Message_Block *mb, size_t minsize)
         }
     }
 
+#if 0
+  TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
+  ACE_Message_Block tmp (newsize,
+			 ACE_Message_Block::MB_DATA,
+			 0, 0,
+			 orb_core->cdr_buffer_allocator (),
+			 0,
+			 0,
+			 ACE_Time_Value::zero,
+			 ACE_Time_Value::max_time,
+			 orb_core->data_block_allocator ());
+#else
   ACE_Message_Block tmp (newsize);
-
+#endif
   CDR::mb_align (&tmp);
 
   tmp.copy (mb->rd_ptr (), mb->length());
@@ -91,24 +133,47 @@ CDR::grow (ACE_Message_Block *mb, size_t minsize)
 
 TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
-                              TAO_Marshal_Factory *factory)
-  :  start_ (size?size:CDR::DEFAULT_BUFSIZE + CDR::MAX_ALIGNMENT),
+                              TAO_Marshal_Factory *factory,
+			      ACE_Allocator *buffer_allocator,
+			      ACE_Allocator *data_block_allocator)
+  :  start_ (size?size:CDR::DEFAULT_BUFSIZE + CDR::MAX_ALIGNMENT,
+	     ACE_Message_Block::MB_DATA,
+	     0, 0,
+	     buffer_allocator,
+	     0,
+	     0,
+	     ACE_Time_Value::zero,
+	     ACE_Time_Value::max_time,
+	     data_block_allocator),
      factory_ (factory),
      do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
      good_bit_ (1)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
   CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
 }
 
 TAO_OutputCDR::TAO_OutputCDR (char *data, size_t size,
                               int byte_order,
-                              TAO_Marshal_Factory *factory)
-  :  start_ (data, size),
+                              TAO_Marshal_Factory *factory,
+			      ACE_Allocator *buffer_allocator,
+			      ACE_Allocator *data_block_allocator)
+  :  start_ (size,
+	     ACE_Message_Block::MB_DATA,
+	     0,
+	     data,
+	     buffer_allocator,
+	     0,
+	     0,
+	     ACE_Time_Value::zero,
+	     ACE_Time_Value::max_time,
+	     data_block_allocator),
      factory_ (factory),
      do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
      good_bit_ (1)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
   // We cannot trust the buffer to be properly aligned
   CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
@@ -122,6 +187,7 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
      do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
      good_bit_ (1)
 { 
+  ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
   // We cannot trust the buffer to be properly aligned
   CDR::mb_align (&this->start_);
   this->current_ = &this->start_;
@@ -156,19 +222,9 @@ TAO_OutputCDR::total_length (void) const
   return l;
 }
 
-
-ACE_INLINE int
-TAO_OutputCDR::adjust (size_t size, size_t align, char*& buf)
+int
+TAO_OutputCDR::grow_and_adjust (size_t size, size_t align, char*& buf)
 {
-  buf = ptr_align_binary (this->current_->wr_ptr(), align);
-  char *end = buf + size;
-
-  if (end <= this->current_->end ())
-    {
-      this->current_->wr_ptr (end);
-      return 0;
-    }
-
   if (this->current_->cont () == 0
       || this->current_->cont ()->size () < size + CDR::MAX_ALIGNMENT)
     {
@@ -183,7 +239,18 @@ TAO_OutputCDR::adjust (size_t size, size_t align, char*& buf)
 	}
       this->good_bit_ = 0;
       ACE_Message_Block* tmp;
-      ACE_NEW_RETURN (tmp, ACE_Message_Block (block_size), -1);
+      TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
+      ACE_NEW_RETURN (tmp,
+		      ACE_Message_Block (block_size,
+					 ACE_Message_Block::MB_DATA,
+					 0, 0,
+					 orb_core->cdr_buffer_allocator (),
+					 0,
+					 0,
+					 ACE_Time_Value::zero,
+					 ACE_Time_Value::max_time,
+					 orb_core->data_block_allocator ()),
+		      -1);
       this->good_bit_ = 1;
 
       // The new block must start with the same alignment as the
@@ -209,12 +276,6 @@ TAO_OutputCDR::adjust (size_t size, size_t align, char*& buf)
   buf = ptr_align_binary (this->current_->wr_ptr(), align);
   this->current_->wr_ptr (buf + size);
   return 0;
-}
-
-ACE_INLINE int
-TAO_OutputCDR::adjust (size_t size, char*& buf)
-{
-  return this->adjust (size, size, buf);
 }
 
 CORBA_Boolean

@@ -1,3 +1,22 @@
+Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/INET_Addr.cpp: 
+	  Compare the fields of in_addr instead of calling memcmp.
+
+	* ace/Message_Block.cpp: 
+	* ace/Message_Block.h: 
+	* ace/Message_Block.i: 
+	  The Message_Block can receive an allocator for the data block,
+	  so instead of creating them on the heap they can be allocated
+	  from a TSS allocator or other memory pool. By default we use
+	  ACE_New_Allocator.
+
+	* apps/gperf/Makefile: 
+	  The Id was wrong.
+
+	* bin/auto_compile: 
+	  Added gperf to the default list of directories.
+
 Fri Aug  7 13:58:58 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* bin/envinfo.cpp: 

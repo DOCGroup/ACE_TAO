@@ -318,6 +318,27 @@ TAO_OutputCDR::length (void) const
   return this->start_.length ();
 }
 
+ACE_INLINE int
+TAO_OutputCDR::adjust (size_t size, size_t align, char*& buf)
+{
+  buf = ptr_align_binary (this->current_->wr_ptr(), align);
+  char *end = buf + size;
+
+  if (end <= this->current_->end ())
+    {
+      this->current_->wr_ptr (end);
+      return 0;
+    }
+
+  return this->grow_and_adjust (size, align, buf);
+}
+
+ACE_INLINE int
+TAO_OutputCDR::adjust (size_t size, char*& buf)
+{
+  return this->adjust (size, size, buf);
+}
+
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
                        const void *data,

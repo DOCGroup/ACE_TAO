@@ -29,10 +29,6 @@
     </CENTER>
 
     <UL>
-      <LI>Optimize the outgoing CDR streams by using TSS memory pools
-	for both the data blocks and the buffers.
-      </LI>
-
       <LI>The do_static_call() and do_dynamic_call() methods should
 	use an array of void* (in the first case static and generated
 	by the IDL compiler);
@@ -43,11 +39,19 @@
       <LI>Optimize twoways by delaying memory allocation for the
 	incoming data buffer.
       </LI>
-
+      
       <LI>Optimize connection lookup in the client side, using "hints"
 	from the previous lookup, or keeping smaller sets on each IIOP
 	profile or a combination of both. [STATUS] Irfan is working on
 	this.
+      </LI>
+
+      <LI>Further optimize memory allocation by using a memory pool
+	for the incoming CDR stream.
+      </LI>
+      
+      <LI>Further optimize the outgoing memory allocation by adding
+	support for message blocks allocated from a pool.
       </LI>
 
       <LI>Add compiled marshalling [STATUS] Andy is working on this.
@@ -71,8 +75,15 @@
 
       <LI>The operation tables do not need to be statics.
       </LI>
+      
+      <LI>Add suspend and resume operations to the PushConsumerProxy
+	and PushSupplierProxy interfaces, following the Notification
+	Service spec.
+      </LI>
 
-      <LI>IDL compiler front-end should be case-insensitive.
+      <LI>IDL compiler front-end should be case insensitive (actually
+	it should flag identifiers that only differ by case as a
+	conflict).
       </LI>
 
       <LI>Support nested upcalls in different concurrency models, like
@@ -213,7 +224,95 @@
       <LI>Remove the uneeded methods from CORBA::Object
       </LI>
 
-      <LI>Optimize operation demuxing [active demuxing for operations].
+      <LI>Implement operation demuxing for clients.
+      </LI>
+
+      <LI>The current implementation of octet sequences based on
+	message blocks has a few problems, it cannot marshall
+	sequences of message blocks properly.
+      </LI>
+
+      <LI><P>The CORBAlite RFP is very interesting IMHO we just need to
+	remove features from TAO to make it a CORBAlite
+	implementation. The problem is how to keep the full blown
+	CORBA implementation also, this is an idea:
+	Write the TAOlite version of a class (example TypeCode):</P>
+
+	<CODE>
+	class TAO_CORBAlite_TypeCode {
+	// Just the CORBAlite methods are implemented.
+	};
+	</CODE>
+
+	<P>Derive the full blown implementation:</P>
+
+	<CODE>
+	  class TAO_CORBA_TypeCode : public TAO_CORBAlite_TypeCode {
+	  };
+	</CODE>
+
+	<P>create two namespaces:</P>
+
+	<CODE>
+	  // in tao/CORBAlite.h
+	  class CORBA {
+	    tyedef TAO_CORBAlite_TypeCode TypeCode;
+	  };
+	
+	  // in tao/CORBAfull.h
+	  class CORBA {
+	    typedef TAO_CORBAfull_TypeCode TypeCode;
+	  };
+	</CODE>
+
+	<P>then (at compile time) the users chooses between the CORBAlite
+	or CORBAfull implementations:</P>
+
+	<CODE>
+	#if USERS_WANTS_FAT_FREE_CORBA
+	#include "tao/CORBAlite.h"
+	#else
+	#include "tao/CORBAfull.h"
+	#endif
+	</CODE>
+
+	<P>We need to consider how to support even smaller profiles that
+	the CORBAlite RFP, like removing <any> or <fixed> support.
+	    We also need to come out with a scheme to support
+	    interpretive marshalling in the CORBAlite framework (where
+	    TypeCodes don't have enough methods as to traverse them).
+	      </P>
+      </LI>
+
+      <LI>Consider decompositions of the ORB that would allow
+	dynamically linked plug-ins, examples of things that would be
+	easy to implement as plugins:
+	<UL>
+	  <LI>SSL support
+	  </LI>
+	  <LI>UNIX socket support
+	  </LI>
+	</UL>
+	Things that would be really hard:
+	<UL>
+	  <LI>Dynamically load the support for costly features, as the
+	    ImplRepo or Location Forwarding.
+	  </LI>
+	  <LI>Dynamically configure POA with or without support for
+	    holding state.
+	  </LI>
+	</UL>
+      </LI>
+      
+      <LI>Currently the IDL compiler creates an operation table that
+	includes all the base classes operations; this permits the
+	generation of efficient code that does not rely in
+	dynamic_cast or the _downcast() method for Servanst (which
+	compare strings, hence it is slow).
+	It could be interesting to implement the alternative approach
+	were the class only looks its own operations and then tries
+	the parent. This will reduce code size, but will probably
+	decrease performance.
       </LI>
 
       <LI>Cleanup memory managment in some of the servers, for
@@ -231,7 +330,7 @@
       </LI>
 
       <LI>Cleanup the IDL structures for subscriptions, publications,
-	etc.
+	etc. (in the EC).
       </LI>
 
       <LI>Resolve the Typecode::equal dilemma: is it structural or
@@ -280,6 +379,13 @@
     </CENTER>
 
     <UL>
+      <LI>Optimize the outgoing CDR streams by using TSS memory pools
+	for both the data blocks and the buffers.
+	[DONE] But we may consider strategizing the kind of allocator
+	we use (like using a free list instead of a generic
+	ACE_Malloc).
+      </LI>
+
       <LI>Optimize Octet Sequences.
 	[DONE]
       </LI>

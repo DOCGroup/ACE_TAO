@@ -74,7 +74,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
-                                  CUBIT_CLIENT_CUBE_OCTET_START);
+                                  CUBIT_CLIENT_CUBE_ONEWAY_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
@@ -168,6 +168,7 @@ Cubit_Client::parse_args (void)
           ACE_OS::strdup (get_opts.optarg);
         break;
       case 'x':
+	ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
         this->shutdown_ = 1;
         break;
       case 's': // Don't use the TAO Naming Service.
@@ -819,6 +820,7 @@ Cubit_Client::run (int testing_collocation)
           this->cubit_->shutdown (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
+	  ACE_DEBUG ((LM_DEBUG, "shutdown on shutdown object\n"));
           dexc (this->env_,
                 "server, please ACE_OS::exit");
         }
@@ -832,6 +834,7 @@ Cubit_Client::run (int testing_collocation)
     }
   else if (this->shutdown_)
     {
+      ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (this->env_);
       dexc (this->env_, "server, please ACE_OS::exit");
     }
@@ -860,6 +863,13 @@ Cubit_Client::run_oneway (void)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_oneway", elapsed_time);
 
+  if (this->shutdown_)
+    {
+      ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
+      this->cubit_->shutdown (this->env_);
+      dexc (this->env_, "server, please ACE_OS::exit");
+    }
+
   return this->error_count_ == 0 ? 0 : 1;
 }
 
@@ -881,6 +891,13 @@ Cubit_Client::run_void (void)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_void", elapsed_time);
+
+  if (this->shutdown_)
+    {
+      ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
+      this->cubit_->shutdown (this->env_);
+      dexc (this->env_, "server, please ACE_OS::exit");
+    }
 
   return this->error_count_ == 0 ? 0 : 1;
 }
@@ -1006,7 +1023,7 @@ Cubit_Client::init (int argc, char **argv)
         this->factory_->make_cubit (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (CORBA::is_nil (this->cubit_))
+      if (CORBA::is_nil (this->cubit_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null cubit objref returned by factory\n"),
                           -1);

@@ -60,6 +60,12 @@ ACE_Data_Block::flags (void) const
    return this->flags_;
 }
 
+ACE_INLINE ACE_Allocator*
+ACE_Data_Block::data_block_allocator (void)
+{
+  return this->data_block_allocator_;
+}
+
 ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Message_Block::set_flags (ACE_Message_Block::Message_Flags more_flags)
 {
@@ -519,10 +525,3 @@ ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
   priority -= mb.msg_deadline_time ();
 }
   // dynamic priority conversion function based on laxity
-
-
-
-
-
-
-

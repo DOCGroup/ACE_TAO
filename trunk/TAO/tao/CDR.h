@@ -142,14 +142,18 @@ public:
   TAO_OutputCDR (size_t size = 0,
 		 int byte_order = TAO_ENCAP_BYTE_ORDER,
 		 TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+		 ACE_Allocator* buffer_allocator = 0,
+		 ACE_Allocator* data_block_allocator = 0);
   // Default constructor, allocates <size> bytes in the internal
   // buffer, if <size> == 0 it allocates the default size.
 
   TAO_OutputCDR (char *data, size_t size,
 		 int byte_order = TAO_ENCAP_BYTE_ORDER,
 		 TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+		 ACE_Allocator* buffer_allocator = 0,
+		 ACE_Allocator* data_block_allocator = 0);
   // Build a CDR stream with an initial buffer, it will *not* remove
   // <data>, since it did not allocated it.
 
@@ -293,6 +297,12 @@ private:
   int adjust (size_t size, size_t align, char*& buf);
   // As above, but now the size and alignment requirements may be
   // different.
+
+  int grow_and_adjust (size_t size, size_t align, char*& buf);
+  // Grow the CDR stream. When it returns <buf> contains a pointer to
+  // memory in the CDR stream, with at least <size> bytes ahead of it
+  // and aligned to an <align> boundary. It moved the wr_ptr()
+  // to <buf + size>.
 
   CORBA_Boolean write_1 (const CORBA::Octet* x);
   CORBA_Boolean write_2 (const CORBA::UShort* x);

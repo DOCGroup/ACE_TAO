@@ -39,6 +39,7 @@ $MODULE='ACE_wrappers';
     ('ace',
      'netsvcs',
      'tests',
+     'apps/gperf',
      'TAO');
 
 # This are the pairs "sub-directory , script" we run; the separator
@@ -77,12 +78,12 @@ $ADMIN = $ARGV[3];
 # to ADMIN.
 
 sub mydie {
-    local $msg = shift;
+    local @msg = @_;
     open(MAIL, "|mail $ADMIN")
 	|| die "cannot open email pipe on error: $msg\n";
     print MAIL 'The following error is brought to you by: ', "\n";
     print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
-    print MAIL "\n", $msg, "\n";
+    print MAIL "\n", @msg, "\n";
     print MAIL "\nPlease check log files for more info\n";
     close(MAIL)
 	|| die "cannot close email pipe on error: $msg\n";
@@ -223,7 +224,7 @@ foreach $i (@RUN_LIST) {
 }
 
 if ($#failures >= 0) {
-    mydie join ("\n", @failures);
+    mydie @failures;
 }
 
 close(LOG)
