@@ -6,7 +6,10 @@ Wed Apr 16 00:18:08 2003  Ossama Othman  <ossama@uci.edu>
 	  Uninlined this method.  There wasn't much point in inlining it
 	  since it is a virtual method.
 
-	* tao/Any.cpp:
+	* tao/Any.cpp (create_empty):
+
+	  Marked constant initializer variables as "const".
+
 	* tao/Any_T.cpp:
 
 	  Nuked trailing whitespace.
