@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for the performance-tests directory
 #----------------------------------------------------------------------------
@@ -11,8 +11,8 @@
 INFO  = README
 
 DIRS  = Synch-Benchmarks \
-	Misc \
-	UDP
+	Misc
+#	UDP
 
 # The following directory isn't compiled by default since haven't
 # finished integrating it into ACE...
