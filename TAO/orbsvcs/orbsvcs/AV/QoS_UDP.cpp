@@ -1154,10 +1154,15 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
   this->flowname_ = entry->flowname ();
 
   ACE_INET_Addr *local_addr;
-  ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr ("0"),
-                  -1);
 
+  if (entry->get_peer_addr () != 0)
+    {
+      local_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->get_peer_addr ());
+    }
+  else
+    ACE_NEW_RETURN (local_addr,
+		    ACE_INET_Addr ("0"),
+		    -1);
 
   TAO_AV_Flow_Handler *flow_handler = 0;
 
