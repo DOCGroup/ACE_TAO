@@ -1269,24 +1269,25 @@ Sender::close ()
 void
 Sender::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
 {
-  char str[256];
-  char str2[256];
+  char my_name[256];
+  char peer_name[256];
+  ACE_TCHAR local_str[256];
   ACE_INET_Addr addr ((u_short) 0, host);
 
   // This checks to make sure the peer address given to us matches what
   // we expect it to be.
-  if (0 != peer.get_host_addr (str, sizeof (str)))
+  if (0 != peer.get_host_addr (peer_name, sizeof (peer_name)))
     {
-      if (0 != addr.get_host_addr (str2, sizeof (str2)))
+      if (0 != addr.get_host_addr (my_name, sizeof (my_name)))
         {
-          if (0 != ACE_OS::strncmp (str, str2, sizeof (str)))
+          if (0 != ACE_OS::strncmp (peer_name, my_name, sizeof (my_name)))
             {
               ACE_ERROR
                 ((LM_ERROR,
                   ACE_TEXT ("(%t) Sender %d peer address (%C) does not ")
                   ACE_TEXT ("match host address (%C)\n"),
                   this->index_,
-                  str, str2));
+                  peer_name, my_name));
               return;
             }
          }
@@ -1307,12 +1308,13 @@ Sender::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
       return;
     }
 
-  if (0 == local.addr_to_string (str, sizeof (str)))
+  if (0 == local.addr_to_string (local_str,
+                                 sizeof (local_str) / sizeof (ACE_TCHAR)))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Sender %d connected on %C\n"),
+                  ACE_TEXT ("(%t) Sender %d connected on %s\n"),
                   this->index_,
-                  str));
+                  local_str));
     }
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Receiver %d %p\n"),
