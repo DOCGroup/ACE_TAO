@@ -1,9 +1,24 @@
+Fri Jul 06 14:58:09 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	To build "CosEvent - Win32 MFC Release":
+
+	* TAOACE.dsw: Make RTEvent a dependent of CosEvent.
+
+	* orbsvcs/orbsvcs/RTEvent.dsp: Set up IDL custom build rules for
+	  MFC configs.
+
+	* orbsvcs/orbsvcs/CosEvent.dsp: Changed the name for release
+	  version libarary to XXXmfc.lib.
+
+	  Thanks to Kristopher Johnson <kristopher.johnson@transcore.com>
+	  for providing the fix.
+
 Fri Jul  6 13:33:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/Makefile.BE:
         * TAO_IDL/Makefile.FE:
 
-          Added lines to force static lib compiliation for mingw. Thanks 
+          Added lines to force static lib compiliation for mingw. Thanks
           to Cristian Ferretti <cristian_ferretti@yahoo.com> for the
           patches.
 
@@ -26,7 +41,7 @@ Fri Jul  6 13:19:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
           Added generation of 'TAO_EXPORT_MACRO' to class declaration.
 	  Thanks to Craig Rodrigues and Christopher Kohlhoff for helping to
-	  track this stuff down.	  
+	  track this stuff down.
 
         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
           Changed generation of 'TAO_EXPORT_NESTED_MACRO' to 'TAO_EXPORT_MACRO'.
