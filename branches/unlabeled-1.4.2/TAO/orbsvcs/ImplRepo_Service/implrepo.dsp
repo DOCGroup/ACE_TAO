@@ -97,6 +97,10 @@ SOURCE=.\ImplRepo_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Options.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Repository.cpp
 # End Source File
 # End Group
@@ -106,6 +110,10 @@ SOURCE=.\Repository.cpp
 # Begin Source File
 
 SOURCE=.\ImplRepo_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Options.h
 # End Source File
 # Begin Source File
 
