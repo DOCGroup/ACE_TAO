@@ -3,7 +3,7 @@ Tue Nov 30 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/util/utl_scope.cpp:
 	  Added a branch to give only a warning for a case
 	  difference only name clash. Thanks to
-	  Villatora, Alexander <alex@cfx.com> for reporting
+	  Alexander Villatora <alex@cfx.com> for reporting
 	  this bug.
 
 Tue Nov 30 13:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
