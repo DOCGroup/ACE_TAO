@@ -90,7 +90,7 @@ public:
   X509 *&out (void);
   X509 *_retn (void);
   X509 *ptr (void) const;
-  
+
 private:
 
   // Unimplemented - prevents widening assignment.

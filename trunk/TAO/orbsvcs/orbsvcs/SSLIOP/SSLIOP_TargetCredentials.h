@@ -32,7 +32,7 @@ typedef TAO_SSLIOP_TargetCredentials* TAO_SSLIOP_TargetCredentials_ptr;
  * @brief SSLIOP-specific implementation of the
  *        SecurityLevel2::TargetCredentials interface.
  *
- * 
+ *
  */
 class TAO_SSLIOP_TargetCredentials
   : public virtual TAO_SSLIOP_Credentials,
@@ -81,25 +81,25 @@ public:
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
-  
+
   // The static operations.
   static TAO_SSLIOP_TargetCredentials_ptr _duplicate (TAO_SSLIOP_TargetCredentials_ptr obj);
-  
+
   static TAO_SSLIOP_TargetCredentials_ptr _narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static TAO_SSLIOP_TargetCredentials_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static TAO_SSLIOP_TargetCredentials_ptr _nil (void)
     {
       return (TAO_SSLIOP_TargetCredentials_ptr)0;
     }
-  
+
   virtual void *_tao_QueryInterface (ptr_arith_t type);
   //@}
 

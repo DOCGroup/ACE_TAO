@@ -63,7 +63,7 @@ TAO_SSLIOP_TargetCredentials::association_options_used (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
-                    0);  
+                    0);
 }
 
 // ---------------------------
@@ -76,7 +76,7 @@ TAO_SSLIOP_TargetCredentials::_narrow (CORBA::Object_ptr obj
     TAO_SSLIOP_TargetCredentials::_unchecked_narrow (obj
                                                      TAO_ENV_ARG_PARAMETER);
 }
-  
+
 TAO_SSLIOP_TargetCredentials_ptr
 TAO_SSLIOP_TargetCredentials::_unchecked_narrow (CORBA::Object_ptr obj
                                                  TAO_ENV_ARG_DECL_NOT_USED)
@@ -131,7 +131,7 @@ TAO_SSLIOP_TargetCredentials::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;

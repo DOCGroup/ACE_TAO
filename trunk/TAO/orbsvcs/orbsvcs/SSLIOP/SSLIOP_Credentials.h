@@ -34,23 +34,23 @@ class TAO_SSLIOP_Credentials_var : public TAO_Base_var
 {
 public:
   TAO_SSLIOP_Credentials_var (void); // default constructor
-  TAO_SSLIOP_Credentials_var (TAO_SSLIOP_Credentials_ptr p) : ptr_ (p) {} 
+  TAO_SSLIOP_Credentials_var (TAO_SSLIOP_Credentials_ptr p) : ptr_ (p) {}
   TAO_SSLIOP_Credentials_var (const TAO_SSLIOP_Credentials_var &); // copy constructor
   ~TAO_SSLIOP_Credentials_var (void); // destructor
-  
+
   TAO_SSLIOP_Credentials_var &operator= (TAO_SSLIOP_Credentials_ptr);
   TAO_SSLIOP_Credentials_var &operator= (const TAO_SSLIOP_Credentials_var &);
   TAO_SSLIOP_Credentials_ptr operator-> (void) const;
-  
+
   operator const TAO_SSLIOP_Credentials_ptr &() const;
   operator TAO_SSLIOP_Credentials_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   TAO_SSLIOP_Credentials_ptr in (void) const;
   TAO_SSLIOP_Credentials_ptr &inout (void);
   TAO_SSLIOP_Credentials_ptr &out (void);
   TAO_SSLIOP_Credentials_ptr _retn (void);
   TAO_SSLIOP_Credentials_ptr ptr (void) const;
-  
+
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static TAO_SSLIOP_Credentials_ptr tao_duplicate (TAO_SSLIOP_Credentials_ptr);
@@ -238,25 +238,25 @@ public:
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
-  
+
   // The static operations.
   static TAO_SSLIOP_Credentials_ptr _duplicate (TAO_SSLIOP_Credentials_ptr obj);
-  
+
   static TAO_SSLIOP_Credentials_ptr _narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static TAO_SSLIOP_Credentials_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static TAO_SSLIOP_Credentials_ptr _nil (void)
     {
       return (TAO_SSLIOP_Credentials_ptr)0;
     }
-  
+
   virtual void *_tao_QueryInterface (ptr_arith_t type);
   //@}
 
