@@ -1,3 +1,9 @@
+Fri Feb  1 10:19:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * Thread_Manager.h:
+
+          Removed extra '*/'.
+
 Fri Feb 01 00:00:12 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Task.h:
