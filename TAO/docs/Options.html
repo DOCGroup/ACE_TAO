@@ -22,7 +22,7 @@ providing value for options or environment variables to them.  These
 options are commonly specified as (1) environment variables or (2)
 strings passed on the command-line.  Command-line options and
 environment variables to control global ORB features, such as the IOR
-format or ORB's bootstraping methods.  They are generally passed to
+format or ORB's bootstrapping methods.  They are generally passed to
 component initialization methods for consumption. <P>
 
 In addition, options in <code>svc.conf</code> file provide a mechanism
@@ -194,7 +194,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><a name="-ORBHost"></a>Tells the ORB to listen for requests on the
         interface associated with the host named
         <I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>
-        <STRONG>NOTE:</STRONG> This option has been superceded by the
+        <STRONG>NOTE:</STRONG> This option has been superseded by the
         <CODE>-ORBEndpoint</CODE> option. It will not be supported in the
         future.</TD>
   </TR>
@@ -206,7 +206,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         listen for requests on the port specified by
         <I><EM>portspec</EM></I>. If not specified, the OS gets to choose a
         random empty port.  This option is valid only for IIOP endpoints.<BR>
-        <STRONG>NOTE:</STRONG> This option has been superceded by the
+        <STRONG>NOTE:</STRONG> This option has been superseded by the
         <CODE>-ORBEndpoint</CODE> option. It will not be supported in the
         future.</TD>
 
@@ -242,7 +242,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBNameServiceIOR</CODE> <EM>ior</EM></TD>
     <TD>Specifies the IOR for the Naming Service.  Note, this option
-        is deprecated since its functionality can be achived with the
+        is deprecated since its functionality can be achieved with the
         standard <CODE>-ORBInitRef</CODE> option defined by the <A
         HREF="INS.html">Interoperable Naming Service</A>. </TD>
   </TR>
@@ -255,7 +255,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBTradingServiceIOR</CODE> <EM>ior</EM></TD>
     <TD>Specifies the IOR for the Trading Service.    Note, this option
-        is deprecated since its functionality can be achived with the
+        is deprecated since its functionality can be achieved with the
         standard <CODE>-ORBInitRef</CODE> option defined by the <A
         HREF="INS.html">Interoperable Naming Service</A>.</TD>
   </TR>
@@ -269,7 +269,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBImplRepoServiceIOR</CODE> <EM>ior</EM></TD>
     <TD>Specifies the IOR for the Implementation Repository.      Note, this option
-        is deprecated since its functionality can be achived with the
+        is deprecated since its functionality can be achieved with the
         standard <CODE>-ORBInitRef</CODE> option defined by the <A
         HREF="INS.html">Interoperable Naming Service</A>.</TD>
   </TR>
@@ -315,7 +315,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBCDRTradeoff</CODE> <EM>maxsize</EM></TD>
     <TD><A name="-ORBCDRTradeoff"></a>Control the strategy to tradeoff
-        between copy vs no copy marshalling of octet sequences.
+        between copy vs. no copy marshalling of octet sequences.
         If an octet sequence is smaller than <EM>maxsize</EM> and the current
         message block contains enough space for it the octet sequence is
         copied instead of appended to the CDR stream. By default,
@@ -333,7 +333,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><A name="-ORBGIOPlite"></a>Enable a lightweight version of the
         GIOP protocol. This protocol removes some of the fields in
         the GIOP and the Request header. It only works on
-        homogenous environments..</TD>
+        homogeneous environments..</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBDottedDecimalAddresses</CODE> <EM>boolean (0|1)</EM></TD>
@@ -363,8 +363,8 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   <TR>
     <TD><CODE>-ORBStdProfileComponents</CODE> <EM>boolean (0|1)</EM></TD>
     <TD><A name="-ORBStdProfileComponents"></a> If <EM>0</EM> then the ORB
-        does not generate the OMG standarized profile
-        components, such as the ORB type and codesets.
+        does not generate the OMG standardized profile
+        components, such as the ORB type and code sets.
         Notice that the presence of this components is optional
         in GIOP 1.1
         The default value is controlled by a compile-time flag
@@ -390,7 +390,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
 
 <H3><CODE>TAO_Resource_Factory</CODE><A NAME="ResourceFactory"></A></H3>
 
-<p><em>Note:</em> <code>-ORBReactorLock</code> flag has been superceded by <code>-ORBReactorType</code>.
+<p><em>Note:</em> <code>-ORBReactorLock</code> flag has been superseded by <code>-ORBReactorType</code>.
 
 <blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
@@ -624,7 +624,7 @@ The default is <code>select_mt</code></TD>
         old id.  If the user is not going to use this feature, the IORs can be
         shortened, an extra comparison in the critical upcall path removed,
         and some memory on the server side can be saved. The
-        <CODE>ORBallowreactivationofsystemids</CODE> can be <CODE>0</CODE> or
+        <CODE>ORBAllowReactivationOfSystemids</CODE> can be <CODE>0</CODE> or
         <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD>
   </TR>
   <TR>
@@ -692,7 +692,7 @@ The default is <code>select_mt</code></TD>
         name="-ORBPOALock"></a>Specify the type of lock to be used for POA
         accesses.  Possible values for <em>lock type</em> are
         <code>thread</code>, which specifies that an inter-thread mutex is
-        used to guarantee exclusive acccess, and <code>null</code>, which
+        used to guarantee exclusive access, and <code>null</code>, which
         specifies that no locking be performed.  The default is
         <code>thread</code>.</TD>
   </TR>
@@ -790,7 +790,7 @@ The default is <code>select_mt</code></TD>
         name="-ORBConnectorLock"></a>Specify the type of lock to be used by
         the connector.  Possible values for <em>lock type</em> are
         <code>thread</code>, which specifies that an inter-thread mutex is
-        used to guarantee exclusive acccess, and <code>null</code>, which
+        used to guarantee exclusive access, and <code>null</code>, which
         specifies that no locking be performed.  The default is
         <code>thread</code>.
     </TD>
