@@ -1,3 +1,34 @@
+Sun Jul 27 12:13:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_Schedulers.{cpp,h):
+
+	  Removed this file.
+	
+	* Kokyu/Kokyu_DLL.dsp:
+	
+	  Replaced with Kokyu.dsp.
+	
+	* Kokyu/Kokyu.mwc:
+
+	  Deleted this until I am able to get the mwc based generation
+	  working. 
+	
+	* Kokyu/Kokyu.mpc: 
+
+	  Changed "dllflags" keyword to "dynamicflags". This was causing
+	  build errors in Win2K_VC71_NET_DLL Remedy build. Thanks to
+	  Johnny Willemsen for pointing this out.
+
+	* Kokyu/Makefile.Kokyu:
+
+	  Updated dependencies.
+
+	* Kokyu/Kokyu.dsp:
+	* Kokyu/Kokyu_Static.dsp:
+	* Kokyu/Kokyu.dsw:
+
+	  Updated project and workspace files with newly added DSRT files.
+	
 Sat Jul 26 22:08:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h (getmacaddress):
