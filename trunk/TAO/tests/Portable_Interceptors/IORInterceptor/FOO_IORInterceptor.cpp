@@ -53,12 +53,17 @@ FOO_IORInterceptor::establish_components (
 
   component.tag = FOO::COMPONENT_ID;
 
-  CORBA::ULong maximum   = encoded_data->maximum ();
-  CORBA::ULong length    = encoded_data->length ();
+  const CORBA::ULong maximum   = encoded_data->maximum ();
+  const CORBA::ULong length    = encoded_data->length ();
   CORBA::Octet * buffer  = encoded_data->get_buffer ();
-  CORBA::Boolean release = 0;  // OctetSeq retains ownership.
+  const CORBA::Boolean release = 0;  // OctetSeq retains ownership.
+
+  ACE_ASSERT (maximum > 1);  // Sanity check.
+  ACE_ASSERT (length > 1);   // Sanity check.
 
   component.component_data.replace (maximum, length, buffer, release);
+
+  ACE_ASSERT (component.component_data.length () == length);
 
   // Add the tagged component to all profiles.
   info->add_ior_component (component
@@ -85,7 +90,6 @@ FOO_IORInterceptor::establish_components (
 
   ACE_TRY
     {
-    
       // Verify that policy retrieval internals work, and do not cause
       // memory access violations.
       CORBA::Policy_var policy =

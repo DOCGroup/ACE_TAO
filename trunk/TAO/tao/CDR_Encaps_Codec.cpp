@@ -41,7 +41,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
   // ----------------------------------------------------------------
 
   TAO_OutputCDR cdr ((size_t) 0,            // size
-                     (int) ACE_CDR_BYTE_ORDER,
+                     (int) TAO_ENCAP_BYTE_ORDER,
                      (ACE_Allocator *) 0,   // buffer_allocator
                      (ACE_Allocator *) 0,   // data_block_allocator
                      (ACE_Allocator *) 0,   // message_block_allocator
@@ -151,7 +151,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
   // ----------------------------------------------------------------
   TAO_OutputCDR cdr ((size_t) 0,            // size
-                     (int) ACE_CDR_BYTE_ORDER,
+                     (int) TAO_ENCAP_BYTE_ORDER,
                      (ACE_Allocator *) 0,   // buffer_allocator
                      (ACE_Allocator *) 0,   // data_block_allocator
                      (ACE_Allocator *) 0,   // message_block_allocator
@@ -161,8 +161,6 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
-      CORBA::TypeCode_var tc = data.type ();
-
       ACE_Message_Block * mb = data._tao_get_cdr ();
 
       if (mb == 0)
@@ -185,7 +183,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
                           this->minor_,
                           this->orb_core_);
 
-      TAO_Marshal_Object::perform_append (tc.in (),
+      TAO_Marshal_Object::perform_append (data._tao_get_typecode (),
                                           &input,
                                           &cdr
                                           ACE_ENV_ARG_PARAMETER);
@@ -324,8 +322,8 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                                 0);
             }
 
-          ptr_arith_t offset =
-            ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
+          ptrdiff_t offset =
+            ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
           mb.rd_ptr (offset);
           mb.wr_ptr (offset + size);
 

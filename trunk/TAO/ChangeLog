@@ -1,3 +1,18 @@
+Mon May  5 17:25:50 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/CDR_Encaps_Codec.cpp (encode_value):
+
+	  Fixed problem where encoding a value failed due to
+	  incompatibilities between the old Any implementation and the new
+	  one.  An ACE_Message_Block must be explicitly allocated and
+	  populated if the Any doesn't contain one.  Thanks to Jeff for
+	  suggesting the fix.
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp
+	  (establish_components):
+
+	  Added some sanity checks.
+
 Mon May  5 18:55:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/tutorials/Quoter/AMI/Makefile:
