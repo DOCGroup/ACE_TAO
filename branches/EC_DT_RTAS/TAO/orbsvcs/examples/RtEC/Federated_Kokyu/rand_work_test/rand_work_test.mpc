@@ -3,6 +3,7 @@ project(Rand_Work_Node1): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyue
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
+  macros += KOKYU_HAS_RELEASE_GUARD
 
   Source_Files {
     Kokyu_EC.cpp
@@ -18,6 +19,7 @@ project(Rand_Work_Node2): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyue
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
+  macros += KOKYU_HAS_RELEASE_GUARD
 
   Source_Files {
     Consumer.cpp
@@ -33,6 +35,7 @@ project(Rand_Work_Node3): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyue
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
+  macros += KOKYU_HAS_RELEASE_GUARD
 
   Source_Files {
     Consumer.cpp
@@ -48,6 +51,7 @@ project(Rand_Work_Node4): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyue
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
+  macros += KOKYU_HAS_RELEASE_GUARD
 
   Source_Files {
     Consumer.cpp

@@ -27,6 +27,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
 #include "ace/Map.h"
+#include "ace/Singleton.h"
 
 namespace Kokyu
 {
@@ -44,9 +45,12 @@ class Dispatch_Queue_Item; //forward decl
  * comes (last release time + period), this object calls enqueue() on
  * the Dispatcher_Task.
  */
-class Dispatch_Deferrer : public ACE_Event_Handler
+class Kokyu_Export Dispatch_Deferrer : public ACE_Event_Handler
 {
  public:
+
+  typedef ACE_Singleton<ACE_Reactor,ACE_Recursive_Thread_Mutex> Singleton_Reactor;
+
   Dispatch_Deferrer(void);
   //Default constructor
 

@@ -68,7 +68,8 @@ Dispatch_Deferrer::init(const Dispatch_Deferrer_Attributes& attr)
   //We assume that the singleton Reactor
   //has its own thread, so we don't have to run the Reactor's
   //event loop ourselves!
-  this->react_ = ACE_Reactor::instance();
+  //this->react_ = ACE_Reactor::instance();
+  this->react_ = Singleton_Reactor::instance();
 
   this->timers_.open();
 

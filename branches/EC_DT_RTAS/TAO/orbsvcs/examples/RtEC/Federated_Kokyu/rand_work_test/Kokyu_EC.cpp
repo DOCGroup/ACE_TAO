@@ -4,16 +4,16 @@
 #include "ace/OS_NS_sys_time.h" // for ACE_OS::gettimeofday
 #include "ace/Reactor.h"
 
-#include "Kokyu/Dispatch_Deferrer.h"
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
+#include "orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Kokyu_Factory.h"
 
-#include <orbsvcs/Sched/Reconfig_Scheduler.h>
-#include <orbsvcs/Runtime_Scheduler.h>
-#include <orbsvcs/Event_Service_Constants.h>
-#include <orbsvcs/Event_Utilities.h>
-#include <orbsvcs/Scheduler_Factory.h>
-#include <orbsvcs/Event/EC_Event_Channel.h>
-#include <orbsvcs/Event/EC_Default_Factory.h>
-#include <orbsvcs/Event/EC_Kokyu_Factory.h>
+#include "Kokyu/Dispatch_Deferrer.h"
 
 #include "Kokyu_EC.h"
 #include "RtSchedEventChannelC.h"
@@ -794,17 +794,14 @@ Reactor_Task::initialize(void)
   ACE_NEW_RETURN(reactor,
                  ACE_Reactor,
                  -1);
-  int err = reactor->open(ACE_Select_Reactor_Impl::DEFAULT_SIZE);
-  if (err < 0)
-    {
-      ACE_OS::fprintf(stderr,"Reactor_Task could not open ACE_Reactor\n");
-      return -1;
-    }
+  //assume reactor is already opened!
   ACE_Reactor::instance(reactor);
 
   this->react_ = reactor;
   */
-  this->react_ = ACE_Reactor::instance();
+  //this->react_ = ACE_Reactor::instance();
+  this->react_ = Kokyu::Dispatch_Deferrer::Singleton_Reactor::instance();
+  //assume reactor is already opened!
 
   this->initialized_ = 1;
 
