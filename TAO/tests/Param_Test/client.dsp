@@ -111,6 +111,14 @@ SOURCE=.\bd_struct_seq.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\bd_wstr_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_wstring.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\big_union.cpp
 # End Source File
 # Begin Source File
@@ -211,6 +219,14 @@ SOURCE=.\ub_struct_seq.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ub_wstr_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_wstring.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ulonglong.cpp
 # End Source File
 # Begin Source File
@@ -248,6 +264,14 @@ SOURCE=.\bd_string.h
 # Begin Source File
 
 SOURCE=.\bd_struct_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_wstr_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bd_wstring.h
 # End Source File
 # Begin Source File
 
@@ -348,6 +372,14 @@ SOURCE=.\ub_string.h
 # Begin Source File
 
 SOURCE=.\ub_struct_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_wstr_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ub_wstring.h
 # End Source File
 # Begin Source File
 

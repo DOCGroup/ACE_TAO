@@ -105,10 +105,10 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref,
     {
       CORBA::String_out str_out (this->out_);
 
-      this->ret_ = objref->test_unbounded_string (this->in_,
-                                                  this->inout_,
-                                                  str_out,
-                                                  ACE_TRY_ENV);
+      this->ret_ = objref->test_bounded_string (this->in_,
+                                                this->inout_,
+                                                str_out,
+                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       return 0;
@@ -116,7 +116,7 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Bounded_String_Sequence::run_sii_test\n");
+                           "Test_Bounded_String::run_sii_test\n");
 
     }
   ACE_ENDTRY;

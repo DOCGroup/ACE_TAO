@@ -6,31 +6,31 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    bd_string.h
+//    bd_wstring.h
 //
 // = DESCRIPTION
-//     Tests bounded string
+//     Tests bounded wide string
 //
 // = AUTHORS
-//      Carlos O'Ryan
+//      Jeff Parsons
 //
 // ============================================================================
 
-#ifndef PARAM_TEST_BOUNDED_STRING_H
-#define PARAM_TEST_BOUNDED_STRING_H
+#ifndef PARAM_TEST_BOUNDED_WSTRING_H
+#define PARAM_TEST_BOUNDED_WSTRING_H
 
 #include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        tests bounded strings
+//                        tests bounded wide strings
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-class Test_Bounded_String
+class Test_Bounded_WString
 {
 public:
-  Test_Bounded_String (void);
+  Test_Bounded_WString (void);
   // ctor
 
-  ~Test_Bounded_String (void);
+  ~Test_Bounded_WString (void);
   // dtor
 
   int run_sii_test (Param_Test_ptr objref,
@@ -50,7 +50,7 @@ public:
   // return operation name
 
   int init_parameters (Param_Test_ptr objref,
-                        CORBA::Environment &env);
+                       CORBA::Environment &env);
   // set values for parameters
 
   int reset_parameters (void);
@@ -65,24 +65,25 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
+  void dii_req_invoke (CORBA::Request *, 
+                       CORBA::Environment &);
   // invoke DII request with appropriate exception handling.
 
 private:
   char *opname_;
   // operation name
 
-  char *in_;
+  CORBA::WChar *in_;
   // in parameter
 
-  char *inout_;
+  CORBA::WChar *inout_;
   // inout parameter
 
-  char *out_;
+  CORBA::WChar *out_;
   // out parameter
 
-  char *ret_;
+  CORBA::WChar *ret_;
   // return value
 };
 
-#endif /* PARAM_TEST_BOUNDED_STRING_H */
+#endif /* PARAM_TEST_BOUNDED_WSTRING_H */
