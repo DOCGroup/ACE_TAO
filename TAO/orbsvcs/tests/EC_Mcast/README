@@ -19,8 +19,8 @@ you see no output.
 	Then you ough to run at least two copies of the test, on
 different windows (to make the test interesting):
 
-$ ./EC_Mcast -l ECM1 -p ECM1.pid -c sample.cfg -n 200 -t 500000 -f Set01
-$ ./EC_Mcast -l ECM2 -p ECM2.pid -c sample.cfg -n 200 -t 500000 -f Set02
+$ ./EC_Mcast -p ECM1.pid -c sample.cfg -n 200 -t 500000 -f Set01
+$ ./EC_Mcast -p ECM2.pid -c sample.cfg -n 200 -t 500000 -f Set02
 
 	the test will report the number of events received, if you run
 just one of the processes you will notice that this number is smaller,
