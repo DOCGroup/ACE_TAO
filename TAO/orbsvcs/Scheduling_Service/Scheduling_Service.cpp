@@ -44,8 +44,8 @@ int main (int argc, char *argv[])
 
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
-      schedule_name[0].id = CORBA::string_dup ("ScheduleService");
       schedule_name.length (1);
+      schedule_name[0].id = CORBA::string_dup ("ScheduleService");
       naming_context->bind (schedule_name, scheduler, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
