@@ -2,18 +2,18 @@
 
 #include "Notify_Service.h"
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
-#include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_EMO_Factory.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Sched_Params.h"
+#include "ace/Synch.h"
 #include "ace/Argv_Type_Converter.h"
+#include "tao/ORB_Core.h"
+#include "ace/Dynamic_Service.h"
 
 TAO_Notify_Service::TAO_Notify_Service (void)
-  : bootstrap_ (0),
+  : notify_service_ (0),
+	bootstrap_ (0),
     use_name_svc_ (1),
     ior_output_file_ (0),
     notify_factory_name_ (NOTIFY_KEY),
@@ -43,25 +43,96 @@ TAO_Notify_Service::init_ORB (int& argc, ACE_TCHAR *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  CORBA::Object_var poa_obj  =
+  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance ("TAO_NS_Service");
+
+  if (this->notify_service_ == 0)
+  {
+	  ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
+      return -1;
+  }
+
+  ACE_Sched_Params::Policy sched_policy;
+  long thr_sched_policy = orb_->orb_core ()->orb_params ()->sched_policy ();
+
+  long thr_scope_policy = orb_->orb_core ()->orb_params ()->scope_policy ();
+
+  if (thr_sched_policy == THR_SCHED_FIFO)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
+
+      sched_policy = ACE_SCHED_FIFO;
+    }
+  else if (thr_sched_policy == THR_SCHED_RR)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
+
+      sched_policy = ACE_SCHED_RR;
+    }
+  else
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
+
+      sched_policy = ACE_SCHED_OTHER;
+    }
+
+  // == sched stuff
+  /// Check sched.
+  int min_priority = ACE_Sched_Params::priority_min (sched_policy);
+  int max_priority = ACE_Sched_Params::priority_max (sched_policy);
+
+   if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
+                  max_priority, min_priority));
+
+      if (max_priority == min_priority)
+        {
+          ACE_DEBUG ((LM_DEBUG,"Detected max_priority == min_priority\n"));
+        }
+    }
+
+  // Set the main thread to min priority...
+    int priority = min_priority;
+    
+    if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy ,
+						priority,
+						ACE_SCOPE_PROCESS)) != 0)
+      {
+	if (ACE_OS::last_error () == EPERM)
+	  {
+	    ACE_DEBUG ((LM_DEBUG,
+			"(%P|%t): user is not superuser, "
+			"test runs in time-shared class\n"));
+	  }
+	else
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "(%P|%t): sched_params failed\n"),-1);
+      }
+    
+    // == sched stuff
+  
+  CORBA::Object_var object =
     this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (CORBA::is_nil (poa_obj.in ()))
+  if (CORBA::is_nil (object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the RootPOA.\n"),
                       -1);
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (object.in ()
+				  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-
+  
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -77,6 +148,7 @@ TAO_Notify_Service::init (int argc, ACE_TCHAR *argv[]
                       ACE_ENV_ARG_PARAMETER) != 0)
   return -1;
 
+  this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->parse_args(argc, argv) != 0)
@@ -108,8 +180,8 @@ TAO_Notify_Service::init (int argc, ACE_TCHAR *argv[]
 
   // Activate the factory
   this->notify_factory_ =
-    TAO_Notify_EventChannelFactory_i::create (this->poa_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+    notify_service_->create (this->poa_.in ()
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
@@ -269,7 +341,7 @@ TAO_Notify_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Notify_Service::run ()
+TAO_Notify_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (TAO_debug_level > 0 )
     ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
@@ -281,18 +353,9 @@ TAO_Notify_Service::run ()
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
-    }
-  ACE_ENDTRY;
-
+  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  
   return 0;
 }
 
@@ -300,16 +363,6 @@ void
 TAO_Notify_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
-  PortableServer::ObjectId_var oid =
-    this->poa_->reference_to_id (this->notify_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // deactivate from the poa.
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
   if (this->use_name_svc_)
   {
     // Unbind from the naming service.
@@ -339,6 +392,12 @@ TAO_Notify_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
+
+  /// Release all the _vars as the ORB is gone now.
+  notify_factory_._retn ();
+  orb_._retn ();
+  poa_._retn ();
+  naming_._retn ();
 }
 
 int
@@ -447,6 +506,7 @@ Worker::svc (void)
     {
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {
