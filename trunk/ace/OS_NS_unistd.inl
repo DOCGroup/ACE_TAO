@@ -106,7 +106,7 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
-#if defined (VXWORKS)
+#if defined (ACE_HAS_NONCONST_CHDIR)
   ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
 
 #elif defined (ACE_PSOS_LACKS_PHILE)
@@ -115,7 +115,7 @@ ACE_OS::chdir (const char *path)
 
 #elif defined (ACE_PSOS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), result),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir (const_cast<char *> (path)), result),
                      int, -1);
 
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
@@ -128,7 +128,7 @@ ACE_OS::chdir (const char *path)
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 
-#endif /* VXWORKS */
+#endif /* ACE_HAS_NONCONST_CHDIR */
 }
 
 #if defined (ACE_HAS_WCHAR)
