@@ -1,3 +1,17 @@
+Mon Mar 27 20:37:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/POAC.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	  The way we were handling ForwardRequest exceptions wasn't
+	  working with the new Any operators. The
+	  PortableServer::ForwardRequest >>= operator and
+	  TAO_GIOP_ServerRequest::set_exception have been changed
+	  to do the right thing. This fixes the failing of 
+	  examples/POA/Forwarding on all platforms (except where
+	  minimum CORBA is defined). Changing the Any operators
+	  for IDL-defined exceptions, and modifying the rest of
+	  the exception >>= operators in TAO will follow shortly.
+
 Mon Mar 27 19:27:00 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 	* tao/ORB.cpp (ORB_init): Replace CORBA::Environment with
