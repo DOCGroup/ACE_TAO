@@ -1,3 +1,10 @@
+Wed Sep 16 21:45:48 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/ACE.{h.cpp}: Changed some iovecs to ACE_IO_Vector_Base.
+
+	* ace/config-win32.h: Commented out ACE_HAS_GPERF until we get
+	  everything working with it.
+
 Wed Sep 16 21:43:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.i (open): Added SetFilePointer to move the file pointer
