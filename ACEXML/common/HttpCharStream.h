@@ -87,7 +87,7 @@ private:
 
   ACEXML_Mem_Map_Stream* stream_;
 
-  ACEXML_Mem_Map_Stream::Connector* connector_;
+  Connector* connector_;
 
   off_t size_;
 
