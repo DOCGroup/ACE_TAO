@@ -60,7 +60,7 @@ Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  clone () on the source data block returned exactly 1024 bytes
 	  and in addition could potentially (which is the destination)
 	  could be aligned on a 4 byte boundary. This made the destination
-	  buffer to get aligned on a 8 byte boundary and loose 4 bytes of
+	  buffer to get aligned on a 8 byte boundary and lose 4 bytes of
 	  space which lead to improper copying of the source
 	  buffer. Thanks to Jian Chen  <jchen@huawei.com> for reporting
 	  the problem.
@@ -229,7 +229,7 @@ Wed Nov  5 19:03:20 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/Object_Manager.h:
         * ace/Static_Object_Lock.h:
           Added new file, Static_Object_Lock.h, and moved
-          ACE_Stratic_Object_Lock.h there to help reduce need to include
+          ACE_Static_Object_Lock.h there to help reduce need to include
           Object_Manger.h.
 
         * ace/Reactor.cpp:
