@@ -1,3 +1,19 @@
+Mon Apr 12 12:04:20 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* ace/Makefile,ATM_Addr.cpp: 
+	  Added ACE_ATM_Addr class back into Makefile since it's working
+          now. Fixed address initialization problem in ACE_ATM_Addr.
+          NOTE: This code currently only works with Solaris 2.5/2.6. Will
+          need to update the code for FORE's implementation on Solaris 2.7.
+          NOTE: To use FORE's XTI/ATM implementation the following #defines
+          need to be included (typically in ace/config.h):
+            #define ACE_HAS_FORE_ATM_XTI
+            #define ACE_HAS_TIUSER_H_BROKEN_EXTERN_C
+            #define ACE_TLI_TCP_DEVICE "/dev/xtisvc*" //(e.g., /dev/xtisvc0)
+          AND the following flags are needed to build the ace library
+          (typically in include/makeinclude/platform_macros.GNU):
+            CPPFLAGS += -I$(FORE_ROOT)/include
+
 Mon Apr 12 10:04:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU: 
