@@ -24,8 +24,8 @@ Wed Aug 06 17:00:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
 	* performance-tests/Benchmark/RoundTrip/run_test.pl:
-	Fixed problems relating to parsing arguments when the number of iterations
-	is specified from the command line.
+	  Fixed problems relating to parsing arguments when the number of
+	  iterations is specified from the command line.
 
 Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -36,17 +36,18 @@ Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService.mpc:
         * examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
 
-        Added library include paths and additional library to MPC files.
+          Added library include paths and additional library to MPC
+	  files. 
 
-        Removed file:
+          Removed file:
         * examples/handcrafted/BasicSP_EC2/EC/config:
 
-        Removed unnecessary file.
+          Removed unnecessary file.
 
         * examples/handcrafted/BasicSP_EC2/EC/controller.cpp:
         * examples/handcrafted/BasicSP_EC2/EC/client.cpp:
 
-        Included ace/Streams.h.
+          Included ace/Streams.h.
 
 Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -59,17 +60,18 @@ Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC2/BMDisplay/*.*:
         * examples/handcrafted/BasicSP_EC2/RTEventService/*.*:
 
-        Added new event channel example. The event service is
-        integrated as a separate component.
+          Added new event channel example. The event service is
+	  integrated as a separate component. 
 
 2003-08-04  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
 	* performance-tests/Benchmark/RountTripClient/run_test.pl:
 	* performance-tests/Benchmark/RountTripClient/RoundTripClient_exec.cpp:
 	* performance-tests/Benchmark/RountTrip/RoundTrip_exec.cpp:
-	Fixed errors in the perl file for running the example. Corrected the way
-	in which throughput is measured within the client component. Also added
-	code to enable tests to be run in the super user mode.
+	  Fixed errors in the perl file for running the example. Corrected
+	  the way in which throughput is measured within the client
+	  component. Also added code to enable tests to be run in the
+	  super user mode. 
 
 2003-08-04  Diego Sevilla  <dsevilla@ditec.um.es>
 
@@ -79,9 +81,9 @@ Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 	* performance-tests/Benchmark/descriptors/RoundTripClient.cad:
 	* performance-tests/Benchmark/descriptors/RoundTripClient.csd:
 	* performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
-	Made the test to run.  Fixed some problems with UUID.  Made the
-	client to correctly expect a component instance instead of a
-	home.
+	  Made the test to run.  Fixed some problems with UUID.  Made the
+	  client to correctly expect a component instance instead of a
+	  home. 
 
 Mon Jul  7 23:35:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -144,16 +146,16 @@ Fri Aug 01 23:34:38 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
         * performance-tests/Benchmark/descriptors/RoundTripClient.csd:
         * performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
         * performance-tests/Benchmark/descriptors/test.dat:
-	Added files for the performance tests Arvind and I are
-	developing.
+	  Added files for the performance tests Arvind and I are
+	  developing. 
 
         * CIDLC/ServantHeaderGenerator.cpp: Removed usage of Traversal
-	namespace to avoid name clashing.
+	  namespace to avoid name clashing. 
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	Generate SessionContext by now instead of CCMContext for local
-	interfaces.
+	  Generate SessionContext by now instead of CCMContext for local
+	  interfaces. 
 
 Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
 
@@ -164,20 +166,20 @@ Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
         * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
 
-        Made modifications requested. Added @@ Bala comments
-        to indicate changes.
+          Made modifications requested. Added @@ Bala comments  to
+	  indicate changes. 
 
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
         * examples/OEP/BasicSP/EC/EC_exec.{cpp,h}: Changed the exception
-	specification for the new_EC method (explicit home operations
-	don't throw CCMException.)
+	  specification for the new_EC method (explicit home operations
+	  don't throw CCMException.) 
 
 	* examples/OEP/Display/RateGen/RateGen_exec.{cpp,h}: Ditto.
 
         * CIDLC/*: Adapted the CIDL compiler to work with the new CCF
-        library.  Basically the same code is generated with small bugs
-        fixed.
+          library.  Basically the same code is generated with small bugs
+	  fixed. 
 
 Wed Jul 30 07:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -200,10 +202,10 @@ Thu Jul 24 16:22:27 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC/descriptors/*.*:
         * examples/handcrafted/BasicSP_EC/EC/*.*:
 
-        Modified BasicSP example to use TAO's RT event channel for
-        event propagation. This involved modifications to each component's
-        servant header and source files, which are normally generated
-        by the CIDL compiler.
+          Modified BasicSP example to use TAO's RT event channel for
+	  event propagation. This involved modifications to each
+	  component's servant header and source files, which are normally
+	  generated by the CIDL compiler.
 
 Sun Jul 13 20:14:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
