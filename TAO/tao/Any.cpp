@@ -1123,7 +1123,7 @@ CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Exception>::extract (const CORBA::Any &,
                                                  _tao_destructor,
                                                  CORBA::TypeCode_ptr,
-                                                 const T *&)
+                                                 const CORBA::Exception *&)
 {
   return 0;
 }
@@ -1230,7 +1230,6 @@ TAO::Any_Any_Impl::free_value (void)
 {
   this->any_holder_.impl ()->free_value ();
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
