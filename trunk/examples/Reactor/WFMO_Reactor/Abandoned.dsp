@@ -1,23 +1,23 @@
-# Microsoft Developer Studio Project File - Name="Abondoned" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Abandoned" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Abondoned - Win32 Debug
+CFG=Abandoned - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Abondoned.mak".
+!MESSAGE NMAKE /f "Abandoned.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Abondoned.mak" CFG="Abondoned - Win32 Debug"
+!MESSAGE NMAKE /f "Abandoned.mak" CFG="Abandoned - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Abondoned - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Abandoned - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -49,7 +49,7 @@ LINK32=link.exe
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace"
 # Begin Target
 
-# Name "Abondoned - Win32 Debug"
+# Name "Abandoned - Win32 Debug"
 # Begin Source File
 
 SOURCE=.\test_abandoned.cpp

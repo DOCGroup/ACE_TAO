@@ -143,6 +143,7 @@ Task_Handler::Task_Handler (size_t number_of_handles,
 
 Task_Handler::~Task_Handler (void)
 {
+  this->reactor (0);
   delete [] this->events_;
 }
 
