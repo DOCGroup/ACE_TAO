@@ -1,9 +1,12 @@
-// Read_Buffer.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
 #include "ace/Read_Buffer.h"
 #include "ace/Service_Config.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Read_Buffer.i"
+#endif /* __ACE_INLINE__ */
 
 void
 ACE_Read_Buffer::dump (void) const
@@ -14,13 +17,13 @@ ACE_Read_Buffer::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\noccurrences_ = %d", this->occurrences_));
   ACE_DEBUG ((LM_DEBUG, "\nstream_ = %x", this->stream_));
   ACE_DEBUG ((LM_DEBUG, "\nallocator_ = %x", this->allocator_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
-				  int close_on_delete,
-				  ACE_Allocator *alloc)
-  : stream_ (fp), 
+                                  int close_on_delete,
+                                  ACE_Allocator *alloc)
+  : stream_ (fp),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
 {
@@ -30,8 +33,8 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
-				  int close_on_delete,
-				  ACE_Allocator *alloc)
+                                  int close_on_delete,
+                                  ACE_Allocator *alloc)
   : stream_ (ACE_OS::fdopen (handle, "r")),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
@@ -52,7 +55,7 @@ ACE_Read_Buffer::~ACE_Read_Buffer (void)
 
 // Input: term        the character to terminate on
 //        search      the character to search for
-//	  replace     the character with which to replace search
+//        replace     the character with which to replace search
 // Output: a buffer containing the contents of stream
 // Method: call the recursive helper function read_helper
 
@@ -71,9 +74,9 @@ ACE_Read_Buffer::read (int term, int search, int replace)
 // Purpose: read in a file to a buffer using only a single dynamic
 //          allocation.
 // Method: read until the local buffer is full and then recurse.
-//         Must continue until the termination character is reached. 
+//         Must continue until the termination character is reached.
 //         Allocate the final buffer based on the number of local
-//         buffers read and as the recursive calls bottom out, 
+//         buffers read and as the recursive calls bottom out,
 //         copy them in reverse order into the allocated buffer.
 
 char *
@@ -86,7 +89,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   int c = EOF;
   size_t index = 0;
   int done = 0;
-  
+
   // Read in the file char by char
   while (index < BUFSIZ)
     {
@@ -94,32 +97,32 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
       // Don't insert EOF into the buffer...
       if (c == EOF)
-	{
-	  if (index == 0)
-	    return 0;
-	  else
-	    {
-	      ungetc (c, this->stream_);
-	      break;
-	    }
-	}
+        {
+          if (index == 0)
+            return 0;
+          else
+            {
+              ungetc (c, this->stream_);
+              break;
+            }
+        }
       else if (c == term)
-	done = 1;
+        done = 1;
 
       // Check for possible substitutions.
-      if (c == search) 
-	{
-	  this->occurrences_++;
+      if (c == search)
+        {
+          this->occurrences_++;
 
-	  if (replace >= 0)
-	    c = replace;
-	}
+          if (replace >= 0)
+            c = replace;
+        }
 
       buf[index++] = (char) c;
 
-      // Substitutions must be made before checking for termination. 
+      // Substitutions must be made before checking for termination.
       if (done)
-	break;
+        break;
     }
 
   // Increment the number of bytes.
@@ -131,23 +134,26 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // buffer.
   if (done || c == EOF)
     {
-      // Use the allocator to acquire the memory.
-      result = (char *) this->allocator_->malloc (this->size_ * sizeof (char));
+      // Use the allocator to acquire the memory.  The + 1 allows
+      // space for the null terminator.
+      result = (char *) this->allocator_->malloc (this->size_ + 1);
 
       if (result == 0)
-	{
-	  errno = ENOMEM;
-	  return 0;
-	}
+        {
+          errno = ENOMEM;
+          return 0;
+        }
       result += this->size_;
     }
   else if ((result = this->rec_read (term, search, replace)) == 0)
     return 0;
-  
+
+  // Null terminate the buffer.
+  *result = '\0';
+
   // Copy buf into the appropriate location starting from end of
   // buffer.  Peter says this is confusing and that we should use
   // memcpy() ;-)
-
   for (size_t j = index; j > 0; j--)
     *--result = buf[j - 1];
 
