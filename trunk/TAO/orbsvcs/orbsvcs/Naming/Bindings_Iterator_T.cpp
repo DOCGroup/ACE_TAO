@@ -79,7 +79,11 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (CosNaming::Binding_out b
 
   // If there are no more bindings.
   if (hash_iter_->done ())
-    return 0;
+    {
+      b->binding_type = CosNaming::nobject;
+      b->binding_name.length (0);
+      return 0;
+    }
   else
     {
       // Return a binding.
