@@ -5,19 +5,20 @@ Sat Jul 10 10:18:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Clarified "context" parameter copying semantics.
 
-Thu Jul  10 09:38:44 2004  Frank Hunleth <frank@hunleth.com>
+Thu Jul 10 09:38:44 2004 Frank Hunleth <frank@hunleth.com>
 
 	* ace/config-openbsd.h:
 
-          Added ACE_HAS_UCONTEXT_T for OpenBSD 3.5 and later.  Thanks to
-          J.T. Conklin <jtc@acorntoolworks.com> for sending the patch over
-	  right after I upgraded to 3.5.
+	  Added ACE_HAS_UCONTEXT_T for OpenBSD 3.5 and later.  Thanks to
+ 	  J.T. Conklin <jtc@acorntoolworks.com> for sending the patch over
+ 	  right after I upgraded to 3.5.
 
 Sat Jul 10 09:37:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ACE-INSTALL.html:
 
-	  Added information for users who build from anon cvs repository.
+	  Added information on MPC for users who build from anon cvs
+ 	  repository.
 
 Fri Jul  9 23:45:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
