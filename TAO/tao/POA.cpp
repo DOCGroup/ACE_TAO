@@ -2845,10 +2845,13 @@ CORBA::WChar *
 TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
   // Compute resulting wide string's length.
-  // Allocate a couple on extra entries for the null terminator and in
-  // case the id's length is not "aligned" on a CORBA::WChar.
   CORBA::ULong string_length =
-    id.length () / sizeof (CORBA::WChar) + 2;
+    id.length () / sizeof (CORBA::WChar) + 1;
+
+  // Allocate an extra slot if the id's length is not "aligned" on a
+  // CORBA::WChar.
+  if (id.length () % sizeof (CORBA::WChar))
+    string_length++;
 
   // Create space.
   CORBA::WChar* string = CORBA::wstring_alloc (string_length);

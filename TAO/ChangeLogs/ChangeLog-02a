@@ -1,3 +1,13 @@
+Fri Jun 09 21:38:12 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (ObjectId_to_wstring): Carlos's change wasn't quite
+	  accurate since over-allocating can cause problems, e.g., id
+	  contains A0B0; result will be "A0B0??\0?"; though it should be
+	  "A0B0\0?".  This was fixed by only creating/using the extra
+	  space when needed.  The need for the next space was determined
+	  by using % (modulus) rather than ceil().  Thanks for the help
+	  Carlos.
+
 Fri Jun  9 19:06:10 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/RT_Policy_i.{h,cpp}:
