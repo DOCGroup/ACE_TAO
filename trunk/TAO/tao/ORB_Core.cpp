@@ -792,6 +792,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         // Any arguments that don't match are ignored so that the
         // caller can still use them.
         arg_shifter.ignore_arg ();
+
+      ACE_UNUSED_ARG (offset);
     }
 
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)

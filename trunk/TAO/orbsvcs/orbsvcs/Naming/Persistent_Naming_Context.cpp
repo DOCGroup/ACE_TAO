@@ -539,8 +539,6 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
     defined (ACE_HAS_GNU_REPO)
 
-template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Persistent_ExtId, TAO_Persistent_IntId> >;
-
 template class ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
 template class ACE_Hash_Map_Manager<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_Persistent_ExtId, TAO_Persistent_IntId, ACE_Hash<TAO_Persistent_ExtId>, ACE_Equal_To<TAO_Persistent_ExtId>, ACE_Null_Mutex>;
