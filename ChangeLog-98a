@@ -1,7 +1,17 @@
-Tue Apr 14 22:06:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Apr 14 23:35:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Profile_Timer.cpp (elapsed_rusage): The differences of user
+	  time and system time for GETRUSAGE were not calculated.
+
+	* performance-tests/Synch-Benchmarks/Options.cpp (print_results):
+	  Added dump code for ACE_HAS_GETRUSAGE.
 
 	* ace/ace_{dll,lib}.dsp: Removed Service_Main.cpp from the
  	  projects.  We don't really need them in ACE DLL.
+
+	* ace/Service_Main.cpp: Removed the file from CVS.  Lots of
+	  Service_Config examples can be found all round ACE directories
+	  so we really don't need it here anymore.
 
 Tue Apr 14 20:30:53 1998  Steve Huston  <shuston@riverace.com>
 
