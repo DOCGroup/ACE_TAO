@@ -1,3 +1,13 @@
+Fri Mar 10 17:44:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_interface.cpp:
+	  When a forward declared interface is defined, the forward
+	  declaration must be looked up for redefinition. If this
+	  happened in a module that was reopened from one included
+	  from another IDL file, the lookup was failing. Thanks to
+	  Brian Wright <bwright@paladyne.com> for sending in the IDL
+	  file that uncovered this bug.
+
 Fri Mar 10 12:50:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/nslist/nslist.cpp (show_chunk): Make sure to handle the
