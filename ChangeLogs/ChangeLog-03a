@@ -1,3 +1,10 @@
+Sun Feb 18 21:55:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* ace/OS.h:
+	Added an extern "C" void ace_mutex_lock_cleanup_adapter before
+	the definition of ACE_PTHREAD_CLEANUP_PUSH to avoid warnings on
+	SunCC 5.x.
+
 Sun Feb 18 17:16:41 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* netsvcs/clients/Tokens/manual/manual.cpp (main),
@@ -13,8 +20,8 @@ Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
 Sun Feb 18 09:59:18 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* netsvcs/clients/Tokens:
-	* netsvcs/servers/main.cpp (main): 
-	* netsvcs/servers/svc.conf: 
+	* netsvcs/servers/main.cpp (main):
+	* netsvcs/servers/svc.conf:
 	* netsvcs/lib/Token_Handler: Only compile this stuff if the
 	  ACE_HAS_TOKENS_LIBRARY macro is enabled.  Thanks to Carlos
 	  for reporting this.
@@ -22,18 +29,18 @@ Sun Feb 18 09:59:18 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
         * ace/Object_Manager.cpp: Added a check for ACE_HAS_TOKENS_LIBRARY
 	  so we can skip initializing certain things if that macro is
  	  undefined.
-  
+
 	* ace/Token_Collection.*:
-	* ace/Token_Invariants.*: 
+	* ace/Token_Invariants.*:
 	* ace/Token_Manager.*:
-	* ace/Local_Tokens.*: 
-  	* ace/Remote_Tokens.*: 
+	* ace/Local_Tokens.*:
+  	* ace/Remote_Tokens.*:
 	* ace/Token_Request_Reply.*:
 	  Only compile these files if ACE_HAS_TOKENS_LIBRARY is enabled
 	  since this functionality does not appear to be widely used and
 	  yet it takes up space.
 
-	* tests/Tokens_Test.cpp (main): Only run this test if 
+	* tests/Tokens_Test.cpp (main): Only run this test if
 	  ACE_HAS_TOKENS_LIBRARY is defined.
 
 Sat Feb 17 17:23:46 2001  Darrell Brunsch <brunsch@uci.edu>
@@ -41,9 +48,9 @@ Sat Feb 17 17:23:46 2001  Darrell Brunsch <brunsch@uci.edu>
         * ace/SOCK_Dgram_Mcast.cpp:
 
           Integrated a fix from Keith Nicewarner <knicewar@erg.sri.com>
-          In effect, this reverts the multicast code changed on 
+          In effect, this reverts the multicast code changed on
               Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  ...
-          for all platforms except linux.  
+          for all platforms except linux.
 
 Sat Feb 17 15:52:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
