@@ -142,6 +142,12 @@ Cubit_Factory_i::make_cubit (CORBA::Environment &env)
   return my_cubit_._this (env);
 }
 
+void
+Cubit_Factory_i::set_default_poa (PortableServer::POA_ptr poa)
+{
+  this->my_cubit_.set_default_poa (poa);
+}
+
 // Constructor
 
 Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
@@ -153,6 +159,18 @@ Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
 
 Cubit_i::~Cubit_i (void)
 {
+}
+
+PortableServer::POA_ptr
+Cubit_i::_default_POA (CORBA::Environment &)
+{
+  return this->poa_.ptr ();
+}
+
+void
+Cubit_i::set_default_poa (PortableServer::POA_ptr poa)
+{
+  this->poa_ = PortableServer::POA::_duplicate (poa);
 }
 
 void

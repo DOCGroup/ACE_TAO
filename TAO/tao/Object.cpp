@@ -179,6 +179,11 @@ CORBA::Object::_key (CORBA::Environment &)
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
 }
 
+const TAO_ObjectKey &
+CORBA::Object::_object_key (void)
+{
+  return this->_stubobj ()->profile_in_use ()->object_key ();
+}
 
 // @@ This doesn't seemed to be used anyplace! It should go away!! FRED
 void

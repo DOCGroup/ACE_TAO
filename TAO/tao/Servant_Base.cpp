@@ -121,12 +121,17 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
   TAO_POA_Current_Impl *poa_current_impl =
     TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
 
+  CORBA::ORB_ptr servant_orb = 0;
+
+  if (poa_current_impl != 0)
+    servant_orb = poa_current_impl->orb_core ().orb () ;
+
   if (poa_current_impl != 0 &&
       this == poa_current_impl->servant ())
     {
-      stub = poa_current_impl->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
-                                                                       this->_interface_repository_id (),
-                                                                       ACE_TRY_ENV);
+      stub = servant_orb->create_stub_object (poa_current_impl->object_key (),
+                                              this->_interface_repository_id (),
+                                              ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
   else
@@ -145,6 +150,9 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
       stub->_incr_refcnt ();
     }
 
+  if (servant_orb == 0)
+    servant_orb = stub->orb_core ()->orb ();
+  stub->servant_orb (CORBA::ORB::_duplicate (servant_orb));
   return stub;
 }
 
@@ -180,11 +188,10 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
     }
 }
 
-CORBA::Object_ptr
-TAO_ServantBase::_create_collocated_objref (CORBA::ULong type,
-                                            CORBA::Environment &ACE_TRY_ENV)
+void *
+TAO_ServantBase::_create_collocated_objref (CORBA::ULong, TAO_Stub *)
 {
-  return CORBA::Object::_nil ();
+  return 0;
 }
 
 TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
