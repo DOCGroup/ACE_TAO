@@ -147,7 +147,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
   ACE_TRY_NEW_ENV
     {
       if (!this->try_dispatch_reply ())
-        return 0;
+        return;
 
       if (this->timeout_handler_)
         {
