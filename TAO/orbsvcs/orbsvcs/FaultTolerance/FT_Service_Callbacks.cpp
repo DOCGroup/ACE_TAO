@@ -11,6 +11,7 @@
 #include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
+#include <iostream>
 
 #if !defined (__ACE_INLINE__)
 # include "FT_Service_Callbacks.i"
@@ -89,7 +90,7 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
       (that_comp.get_component (that_tc) == 1))
     {
       TAO_InputCDR this_cdr (ACE_reinterpret_cast (const char*,
-                                              this_tc.component_data.get_buffer ()),
+                                                   this_tc.component_data.get_buffer ()),
                              this_tc.component_data.length ());
 
       TAO_InputCDR that_cdr (ACE_reinterpret_cast (const char*,
@@ -125,7 +126,13 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
            return 1;
          }
     }
-
+  // If both the profiles did not have a tag group component then they
+  // are equivalent.
+  else if ((this_comp.get_component (this_tc) == 0) &&
+           (that_comp.get_component (that_tc) == 0))
+    {
+      return 1;
+    }
   return 0;
 }
 
