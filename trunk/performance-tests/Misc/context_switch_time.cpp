@@ -62,7 +62,7 @@ static const char usage [] = "[-? |\n"
 # define DEBUG 0
 #endif /* DEBUG */
 
-static u_int LOW_PRIORITY;
+static const u_int LOW_PRIORITY = ACE_THR_PRI_FIFO_DEF;
 static u_int HIGH_PRIORITY;
 
 // Global test configuration parameters.
@@ -514,7 +514,13 @@ public:
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const ACE_UINT32 iterations_;
+#if defined (VXWORKS)
+  ACE_Thread_Mutex mutex_;
+  u_int started_;
+  u_int stopped_;
+#else  /* ! VXWORKS */
   ACE_Barrier timer_barrier_;
+#endif /* ! VXWORKS */
   ACE_High_Res_Timer timer_;
   ACE_hrtime_t elapsed_time_;
 
@@ -527,21 +533,31 @@ private:
 Yield_Test::Yield_Test (const ACE_UINT32 iterations) :
   ACE_Task<ACE_MT_SYNCH> (),
   iterations_ (iterations),
+#if defined (VXWORKS)
+  mutex_ (),
+  started_ (0),
+  stopped_ (0),
+#else  /* ! VXWORKS */
   timer_barrier_ (3),
+#endif /* ! VXWORKS */
   timer_ ()
 {
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "Yield_Test ctor\n"));
 #endif /* DEBUG */
 
+#if !defined (VXWORKS)
   timer_.start ();
+#endif /* ! VXWORKS */
 
   this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   2, 0, LOW_PRIORITY);
 
+#if !defined (VXWORKS)
   timer_barrier_.wait ();
-
   timer_.stop ();
+#endif /* ! VXWORKS */
+
   timer_.elapsed_microseconds (elapsed_time_);
 }
 
@@ -565,6 +581,21 @@ Yield_Test::svc ()
               priority));
 #endif /* DEBUG */
 
+#if defined (VXWORKS)
+  // Start the timer, if it hasn't already been started.
+  if (! started_)
+    {
+      // Double-check.
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1);
+
+      if (! started_)
+        {
+          started_ = 1;
+          timer_.start ();
+        }
+    }
+#endif /* VXWORKS */
+
   for (ACE_UINT32 i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
@@ -578,7 +609,27 @@ Yield_Test::svc ()
       ACE_OS::thr_yield ();
     }
 
+#if defined (VXWORKS)
+  // Stop the timer, if it hasn't already been started.
+  if (! stopped_)
+    {
+      // Maybe it would be better to read the clock before grabbing
+      // the mutex.  Then, only apply the clock reading below, instead
+      // of reading the clock after grabbing the mutex.
+
+      // Double-check.
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1);
+
+      if (! stopped_)
+        {
+          stopped_ = 1;
+          timer_.stop ();
+          timer_.elapsed_time (elapsed_time_); /* nanoseconds */
+        }
+    }
+#else  /* ! VXWORKS */
   timer_barrier_.wait ();
+#endif /* ! VXWORKS */
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc, finishing\n"));
@@ -1124,7 +1175,6 @@ main (int argc, char *argv [])
         }
     }
 
-  LOW_PRIORITY = ACE_THR_PRI_FIFO_DEF;
   HIGH_PRIORITY = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                    LOW_PRIORITY);
   ACE_DEBUG ((LM_INFO, "low priority: %d, high priority: %d\n",
@@ -1191,7 +1241,6 @@ main (int argc, char *argv [])
             }
         }
 
-#if !defined (VXWORKS)
       // Then Yield test.
       Yield_Test yield_test (num_iterations);
       // Wait for all tasks to exit.
@@ -1208,7 +1257,6 @@ main (int argc, char *argv [])
                   (ACE_UINT32)
                     (yield_test.elapsed_time () % (num_iterations * 2u)) *
                       1000u / num_iterations / 2u));
-#endif /* ! VXWORKS */
 
       Synchronized_Suspend_Resume_Test
         synchronized_suspend_resume_test (num_iterations);
@@ -1224,15 +1272,17 @@ main (int argc, char *argv [])
                     average_context_switch_time () / 1000u,
                   synchronized_suspend_resume_test.
                     average_context_switch_time () / 1000u));
+
+      // Give, e.g., Draft 4 Posix platforms a chance to cleanup threads.
+      const ACE_Time_Value half_sec (0L, 500000L);
+      ACE_OS::sleep (half_sec);
     }
 
   ACE_OS::printf ("context_switch_test: ");
   context_switch_test_stats.print_summary (3, num_iterations * 2u);
 
-#if !defined (VXWORKS)
   ACE_OS::printf ("\nyield_test: ");
   yield_test_stats.print_summary (3, num_iterations * 2u);
-#endif /* ! VXWORKS */
 
   ACE_OS::printf ("\nsynchronized suspend-resume test: ");
   synchronized_suspend_resume_test_stats.print_summary (3,
