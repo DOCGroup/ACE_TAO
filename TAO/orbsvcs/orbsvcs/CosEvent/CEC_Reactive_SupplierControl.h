@@ -32,6 +32,10 @@ class TAO_CEC_EventChannel;
 
 class TAO_CEC_Reactive_SupplierControl;
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+class TAO_CEC_TypedEventChannel;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 /**
  * @class TAO_CEC_SupplierControl_Adapter
  *
@@ -77,6 +81,14 @@ public:
                                     TAO_CEC_EventChannel *event_channel,
                                     CORBA::ORB_ptr orb);
 
+  /// Constructor for the typed ec.
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
+                                    const ACE_Time_Value &timeout,
+                                    TAO_CEC_TypedEventChannel *typed_event_channel,
+                                    CORBA::ORB_ptr orb);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
   /// destructor...
   virtual ~TAO_CEC_Reactive_SupplierControl (void);
 
@@ -89,6 +101,10 @@ public:
   virtual int shutdown (void);
   virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy
                                    ACE_ENV_ARG_DECL_NOT_USED);
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy
+                                   ACE_ENV_ARG_DECL_NOT_USED);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy
                                    ACE_ENV_ARG_DECL_NOT_USED);
   virtual void system_exception (TAO_CEC_ProxyPullConsumer *proxy,
@@ -112,6 +128,11 @@ private:
 
   /// The event channel
   TAO_CEC_EventChannel *event_channel_;
+
+  /// The typed event channel
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  TAO_CEC_TypedEventChannel *typed_event_channel_;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The ORB
   CORBA::ORB_var orb_;
@@ -144,6 +165,22 @@ public:
 private:
   TAO_CEC_SupplierControl *control_;
 };
+
+// ****************************************************************
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+class TAO_CEC_Ping_Typed_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer>
+{
+public:
+  TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
+
+  virtual void work (TAO_CEC_TypedProxyPushConsumer *consumer
+                     ACE_ENV_ARG_DECL);
+
+private:
+  TAO_CEC_SupplierControl *control_;
+};
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 // ****************************************************************
 

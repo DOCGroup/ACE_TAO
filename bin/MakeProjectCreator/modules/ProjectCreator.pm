@@ -2076,7 +2076,7 @@ sub write_project {
   my($self)     = shift;
   my($status)   = 1;
   my($error)    = '';
-  my($name)     = $self->transform_file_name($self->project_file_name());
+  my($file_name)     = $self->transform_file_name($self->project_file_name());
   my($progress) = $self->get_progress_callback();
 
   if (defined $progress) {
@@ -2089,17 +2089,17 @@ sub write_project {
       ## Writing the non-static file so set it to 0
       if ($self->get_dynamic()) {
         $self->{'writing_type'} = 0;
-        ($status, $error) = $self->write_output_file($name);
+        ($status, $error) = $self->write_output_file($file_name);
       }
 
       if ($status &&
           $self->get_static() && $self->separate_static_project()) {
-        $name = $self->transform_file_name(
+        $file_name = $self->transform_file_name(
                           $self->static_project_file_name());
 
         ## Writing the static file so set it to 1
         $self->{'writing_type'} = 1;
-        ($status, $error) = $self->write_output_file($name);
+        ($status, $error) = $self->write_output_file($file_name);
       }
     }
   }
@@ -2225,7 +2225,7 @@ sub update_project_info {
   ## If we haven't seen this value yet, put it on the array
   if (!defined $self->{'project_info_hash_table'}->{"@narr $value"}) {
     $self->{'project_info_hash_table'}->{"@narr $value"} = 1;
-    $self->save_project_value("@narr", $value);
+    #$self->save_project_value("@narr", $value);
     push(@$arr, $value);
   }
 
@@ -2354,20 +2354,6 @@ sub get_default_element_name {
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
-
-sub specific_lookup {
-  #my($self) = shift;
-  #my($key)  = shift;
-  return undef;
-}
-
-
-sub save_project_value {
-  #my($self)  = shift;
-  #my($name)  = shift;
-  #my($value) = shift;
-}
-
 
 sub translate_value {
   my($self) = shift;

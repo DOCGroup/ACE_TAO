@@ -1,13 +1,5 @@
 # Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%endif%> with Borland C++ Builder
 
-<%if(ssl)%>
-!ifdef SSL_ROOT
-<%endif%>
-NAME = <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%endif%>
-<%if(ssl)%>
-!endif
-<%endif%>
-
 <%if(idl_files)%>
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe

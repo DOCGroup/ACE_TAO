@@ -1,3 +1,4 @@
+// $Id$
 /* -*- C++ -*- */
 //=============================================================================
 /**
@@ -22,6 +23,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_CEC_ProxyPushSupplier;
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+class TAO_CEC_TypedEvent;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 /**
  * @class TAO_CEC_Dispatching
@@ -58,6 +62,14 @@ public:
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
                             CORBA::Any &event
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
+                       const TAO_CEC_TypedEvent &typed_event
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+  virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
+                              TAO_CEC_TypedEvent &typed_event
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 };
 
 // ****************************************************************
@@ -86,6 +98,14 @@ public:
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
                             CORBA::Any &event
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
+                       const TAO_CEC_TypedEvent &typed_event
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
+                              TAO_CEC_TypedEvent &typed_event
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 };
 
 #if defined (__ACE_INLINE__)

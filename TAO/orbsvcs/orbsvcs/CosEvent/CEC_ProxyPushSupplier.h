@@ -5,7 +5,8 @@
  *
  *  $Id$
  *
- *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *  @authors Carlos O'Ryan (coryan@cs.wustl.edu)
+ *           Jon Astle (jon@astle45.fsnet.co.uk)
  */
 //=============================================================================
 
@@ -15,6 +16,9 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+#include "orbsvcs/CosTypedEventChannelAdminS.h"
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 #include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,6 +27,10 @@
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+class TAO_CEC_TypedEvent;
+class TAO_CEC_TypedEventChannel;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 /**
  * @class TAO_CEC_ProxyPushSupplier
@@ -49,6 +57,11 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel);
+
+  /// typed ec constructor
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
   virtual ~TAO_CEC_ProxyPushSupplier (void);
@@ -82,12 +95,23 @@ public:
                      ACE_ENV_ARG_DECL);
   virtual void push_nocopy (CORBA::Any &event
                             ACE_ENV_ARG_DECL);
+  /// Internal methods to invoke a typed event to each consumer.
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event
+                       ACE_ENV_ARG_DECL);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Pushes to the consumer, verifies that it is connected.
   void push_to_consumer (const CORBA::Any &event
                          ACE_ENV_ARG_DECL);
   void reactive_push_to_consumer (const CORBA::Any &event
                                   ACE_ENV_ARG_DECL);
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  void invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event
+                           ACE_ENV_ARG_DECL);
+  void reactive_invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event
+                                    ACE_ENV_ARG_DECL);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
@@ -121,6 +145,10 @@ protected:
   /// policies used when invoking operations on the consumer.
   void consumer (CosEventComm::PushConsumer_ptr consumer);
   void consumer_i (CosEventComm::PushConsumer_ptr consumer);
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  void consumer (CosTypedEventComm::TypedPushConsumer_ptr typed_consumer);
+  void consumer_i (CosTypedEventComm::TypedPushConsumer_ptr typed_consumer);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i (void) const;
@@ -128,9 +156,18 @@ protected:
   /// Release the child and the consumer
   void cleanup_i (void);
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  CORBA::Boolean is_typed_ec (void) const;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 private:
   /// The Event Channel that owns this object.
   TAO_CEC_EventChannel* event_channel_;
+
+  /// The Typed Event Channel that owns this object.
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  TAO_CEC_TypedEventChannel *typed_event_channel_;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The locking strategy.
   ACE_Lock* lock_;
@@ -140,6 +177,14 @@ private:
 
   /// The consumer....
   CosEventComm::PushConsumer_var consumer_;
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  /// The typed consumer....
+  CosTypedEventComm::TypedPushConsumer_var typed_consumer_;
+
+  /// The consumer object returned from get_typed_consumer()
+  CORBA::Object_var typed_consumer_obj_;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;

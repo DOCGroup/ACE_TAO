@@ -468,22 +468,18 @@ sub write_workspace {
   my($addfile)   = shift;
   my($status)    = 1;
   my($error)     = '';
+  my($duplicates) = 0;
 
   if ($self->get_toplevel()) {
     if ($addfile) {
-      ## NOTE: If support for VC6 is ever removed, then we can remove
-      ## this block of code.  So far, VC6 is the only tool we support
-      ## that can not handle projects that exist in different directories
-      ## but have the same name.
+      ## VC6 is the only tool that currently cannot work with duplicate names, but
+      ## duplicates really don't make sense for anything but Makefile-style projects.
       my(%names) = ();
       foreach my $project (@{$self->{'projects'}}) { 
         my($name) = $self->{'project_info'}->{$project}->[0];
         if (defined $names{$name}) {
-          ## Having duplicate project names is an error in a VC6 Workspace.
-          ## We will create the project, but we will warn the user that 
-          ## the project has duplicate names.
-          print "WARNING: A duplicate project named '$name' " .
-                "has already been added.\n";
+          ++$duplicates;
+          print "WARNING: Duplicate project '$name'.\n";
         }
         else {
           $names{$name} = 1;
@@ -493,8 +489,22 @@ sub write_workspace {
     else {
       $self->{'per_project_workspace_name'} = 1;
     }
+
     my($name) = $self->transform_file_name($self->workspace_file_name());
-    if (defined $self->{'projects'}->[0]) {
+
+    my($abort_creation) = 0;
+
+    if ($duplicates > 0 && ! $self->allow_duplicates()) {
+      print "WARNING: Duplicates not allowed.\n";
+      $abort_creation = 1;
+    } else {
+      if (! defined $self->{'projects'}->[0]) {
+          print "WARNING: No projects were created.\n";
+          $abort_creation = 1;
+      }
+    }
+
+    if (! $abort_creation) {
       my($fh)   = new FileHandle();
       my($dir)  = dirname($name);
 
@@ -548,10 +558,8 @@ sub write_workspace {
           }
         }
       }
-    }
-    else {
-      print "WARNING: No projects were created.\n" .
-            "         Workspace $name has not been created.\n";
+    } else {
+      print "         Workspace $name has not been created.\n";
     }
     if (!$addfile) {
       $self->{'per_project_workspace_name'} = undef;
@@ -1047,6 +1055,11 @@ sub get_validated_ordering {
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub allow_duplicates {
+  my($self) = shift;
+  return 1;
+}
 
 sub workspace_file_name {
   #my($self) = shift;

@@ -1,5 +1,4 @@
 project(*sender): avstreamsexe, qos {
-  requires += rapi
   exename   = sender
   Source_Files {
     sender.cpp
@@ -7,7 +6,6 @@ project(*sender): avstreamsexe, qos {
 }
 
 project(*receiver): avstreamsexe, qos {
-  requires += rapi
   exename   = receiver
   Source_Files {
     receiver.cpp

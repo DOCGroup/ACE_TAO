@@ -18,6 +18,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CEC_EventChannel.h"
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+#include "CEC_TypedEventChannel.h"
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Service_Config.h"
 
@@ -69,6 +72,14 @@ protected:
 
   /// The Event Service implementation class.
   TAO_CEC_EventChannel *ec_impl_;
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  /// Attributes used to configure the Typed Event Service properties.
+  TAO_CEC_TypedEventChannel_Attributes *typed_attributes_;
+
+  /// The Typed Event Service implementation class.
+  TAO_CEC_TypedEventChannel *typed_ec_impl_;
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Naming Context needed if '-x' option is passed
   CosNaming::NamingContext_var naming_context_;
