@@ -1,3 +1,23 @@
+Wed Sep 29 15:32:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  In >>= (to_object), decode from the stream using 
+	  the contained type rather than CORBA::Object. The
+	  widening happens upon assignment to the Object_ptr
+	  in the to_object struct.
+
+	* tao/DynAny_i.cpp:
+	  In insert_reference, instead of using <<= to insert the
+	  value, we duplicate the pointer and use replace().
+
+	* tao/GIOP_Server_Request.cpp:
+	  Added check for non-null Any value before narrowing to
+	  PortableServer::ForwardRequest and before trying the
+	  narrow to CORBA_SystemException.
+
+	  Thanks to Phillipe Merle <Philippe.Merle@lifl.fr> for
+	  sending in these patches.
+
 Wed Sep 29 15:33:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Exception.cpp (item):
