@@ -1,46 +1,50 @@
+Sat Jul 10 08:01:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: THANKS instead of README.
+
 Fri Jul  9 20:54:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/UNIX_Addr.{h,i} (hash):
+        * ace/UNIX_Addr.{h,i} (hash):
 
-	  Implemented a hash function for ACE_UNIX_Addr instead of relying
-	  on the base class no-op hash function.  Thanks to Irfan for
-	  explaining the best way to do this.
+          Implemented a hash function for ACE_UNIX_Addr instead of relying
+          on the base class no-op hash function.  Thanks to Irfan for
+          explaining the best way to do this.
 
 Fri Jul  9 20:39:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cached_Conn_Test.cpp: Added an Svc_Handler class which
-  	  helped in verifying the course of the program execution.
+        * tests/Cached_Conn_Test.cpp: Added an Svc_Handler class which
+          helped in verifying the course of the program execution.
 
-	* ace/Caching_Utility_T.cpp (minimum): Cleaned up code by removing
-	  redundant else if statement.
+        * ace/Caching_Utility_T.cpp (minimum): Cleaned up code by removing
+          redundant else if statement.
 
-	* tests/Cache_Map_Manager_Test.cpp: Resolved some template typos
-	  which surfaced on compiling with VxWorks.
+        * tests/Cache_Map_Manager_Test.cpp: Resolved some template typos
+          which surfaced on compiling with VxWorks.
 
 Fri Jul 09 20:14:13 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/MT_Reactor_Timer_Test.cpp (main): Added fixes so that test
-	  can work with WFMO_Reactor (WFMO_Reactor needs an extra
-	  handle_events() to get started).
+        * tests/MT_Reactor_Timer_Test.cpp (main): Added fixes so that test
+          can work with WFMO_Reactor (WFMO_Reactor needs an extra
+          handle_events() to get started).
 
-	* tests/Conn_Test.cpp (spawn_processes): Only printing reaping
-	  message when result is not -1.
+        * tests/Conn_Test.cpp (spawn_processes): Only printing reaping
+          message when result is not -1.
 
-	* ace/Strategies_T.i (ACE_Refcounted_Hash_Recyclable<T>::operator==):
-	  The check should be for "and", not "or".
+        * ace/Strategies_T.i (ACE_Refcounted_Hash_Recyclable<T>::operator==):
+          The check should be for "and", not "or".
 
-	* tests/Conn_Test.cpp: Since timed accept is implemented using
-	  select(), and we use timed accepts with threads, we need a real
-	  lock when using timed accepts even if the OS has thread-safe
-	  accept.
+        * tests/Conn_Test.cpp: Since timed accept is implemented using
+          select(), and we use timed accepts with threads, we need a real
+          lock when using timed accepts even if the OS has thread-safe
+          accept.
 
-	  Also changed the default number of clients to 5.  Hopefully,
-	  this won't overrun the backlog on the listen socket.
+          Also changed the default number of clients to 5.  Hopefully,
+          this won't overrun the backlog on the listen socket.
 
-	* ace/Svc_Handler.cpp (shutdown): Remove self from Reactor only
-	  when we have a valid handle.  Otherwise, we lose our current
-	  errno, since the failed remove_handler will set the errno to
-	  EINVAL.
+        * ace/Svc_Handler.cpp (shutdown): Remove self from Reactor only
+          when we have a valid handle.  Otherwise, we lose our current
+          errno, since the failed remove_handler will set the errno to
+          EINVAL.
 
 Fri Jul  9 14:02:52 1999  Steve Huston  <shuston@riverace.com>
 
@@ -59,56 +63,56 @@ Fri Jul  9 14:02:52 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Jul  9 14:27:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config.cpp (open_i): Be default, disable debugging
-	  messages.  Only reenable them if the -d option is given.  Thanks
- 	  to Jerry De Master <jdemaste@ipdinc.com> for reporting this.
+        * ace/Service_Config.cpp (open_i): Be default, disable debugging
+          messages.  Only reenable them if the -d option is given.  Thanks
+          to Jerry De Master <jdemaste@ipdinc.com> for reporting this.
 
-	* ace/Based_Pointer_T: Factored out all but the operator-> into
-	  a new class called ACE_Based_Pointer_Basic so that we can use
- 	  this for "basic types" like char *.  Thanks to Irfan for
- 	  pointing this out.
+        * ace/Based_Pointer_T: Factored out all but the operator-> into
+          a new class called ACE_Based_Pointer_Basic so that we can use
+          this for "basic types" like char *.  Thanks to Irfan for
+          pointing this out.
 
-	* ace/Based_Pointer_Repository.cpp (unbind): Fixed a
-	  bug in the unbind() loop.  Thanks to David Levine and DEC UNIX
- 	  C++ for noticing this!
+        * ace/Based_Pointer_Repository.cpp (unbind): Fixed a
+          bug in the unbind() loop.  Thanks to David Levine and DEC UNIX
+          C++ for noticing this!
 
-	* ace/Reactor.i (schedule_wakeup): Fixed a misplaced assignment
-	  of Event_Handler->reator ().  Thanks to Carlos for reporting
- 	  this.
+        * ace/Reactor.i (schedule_wakeup): Fixed a misplaced assignment
+          of Event_Handler->reator ().  Thanks to Carlos for reporting
+          this.
 
 Fri Jul 09 13:11:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Conn_Test.cpp (spawn_threads): ACE_OS::perror takes a
-	  wchar_t string on CE.
+        * tests/Conn_Test.cpp (spawn_threads): ACE_OS::perror takes a
+          wchar_t string on CE.
 
-	* tests/test_config.h (set_output): We should use non-unicode
-	  version of ACE_OS::getenv to initialize test_dir on "regular"
-	  UNICODE compilation.  Thanks to Steve for reporting this.
+        * tests/test_config.h (set_output): We should use non-unicode
+          version of ACE_OS::getenv to initialize test_dir on "regular"
+          UNICODE compilation.  Thanks to Steve for reporting this.
 
-	  Added more WinCE/UNICODE fixes.
+          Added more WinCE/UNICODE fixes.
 
 Fri Jul  9 12:16:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Utility_T.cpp (minimum):
-	  Modified minimum () of ACE_Recyclable_Handler_Utility class so
-	  that the minimum value is also an entry which is purgable.
+        * ace/Caching_Utility_T.cpp (minimum):
+          Modified minimum () of ACE_Recyclable_Handler_Utility class so
+          that the minimum value is also an entry which is purgable.
 
-	* tests/Cache_Map_Manager_Test.cpp:
-	  SunC++4.0 compiler doesnt accept typedefs with templates and
-	  having ::, for example: HASH_MAP::iterator. One has to typedef
-	  HASH_MAP::iterator and use it to typedef something else. Fixed
-	  this problem in the above test.
+        * tests/Cache_Map_Manager_Test.cpp:
+          SunC++4.0 compiler doesnt accept typedefs with templates and
+          having ::, for example: HASH_MAP::iterator. One has to typedef
+          HASH_MAP::iterator and use it to typedef something else. Fixed
+          this problem in the above test.
 
 Fri Jul  9 11:39:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Dirent.i: Added a pair of checks to open() and close()
-	  to avoid double deletes.  Thanks to Tom Arbuckle
- 	  <arbuckle@uran.informatik.uni-bonn.de> for pointing this out.
+        * ace/Dirent.i: Added a pair of checks to open() and close()
+          to avoid double deletes.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for pointing this out.
 
-	* ace/Reactor.i: For schedule_timer() and schedule_wakeup(),
-	  make sure that the Event_Handler is assigned "this" Reactor
-	  upon successful completion of the operation.  Thanks to
-	  Dirk Broer <Dirk.Broer@gsfc.nasa.gov> for suggesting this.
+        * ace/Reactor.i: For schedule_timer() and schedule_wakeup(),
+          make sure that the Event_Handler is assigned "this" Reactor
+          upon successful completion of the operation.  Thanks to
+          Dirk Broer <Dirk.Broer@gsfc.nasa.gov> for suggesting this.
 
 Fri Jul  9 11:10:23 1999  Steve Huston  <shuston@riverace.com>
 
@@ -120,8 +124,8 @@ Fri Jul  9 11:10:23 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Jul  9 10:52:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Utility_T.cpp (minimum): Checked the state of the
-	  Refcounted_Hash_Address with ACE_Recyclable::IDLE_AND_PURGABLE.
+        * ace/Caching_Utility_T.cpp (minimum): Checked the state of the
+          Refcounted_Hash_Address with ACE_Recyclable::IDLE_AND_PURGABLE.
 
 Fri Jul 09 10:49:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
