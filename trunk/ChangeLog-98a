@@ -1,3 +1,15 @@
+Fri Jan  2 10:23:05 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Env_Value_Test.cpp (main): Changed the definition of the
+ 	  TEST_THIS macro to be all on one line.  While ugly, this helps in
+ 	  locating the line when ACE_ASSERT fails, since allowing the macro
+ 	  to have multiple lines skews the line # reported by ACE_ASSERT.
+
+	* ace/Env_Value_T.*: Fixed lots of little bugs that got past both
+ 	  g++ and Solaris compilers, but were caught by the ever-skeptical
+ 	  SGI compiler.  This included providing a definition for the missing
+	  'varname(void)' method.
+
 Fri Jan 02 10:12:28 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-10.x-g++.h: Added #define HPUX_10 to catch OS

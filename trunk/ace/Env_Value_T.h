@@ -43,7 +43,7 @@ public:
   ~ACE_Env_Value (void);
   // Destroy the value.
 
-  operator const T (void) const;
+  operator T (void);
   // Returns the value as type T.
 
   void open (const char *varname, const T &defval);

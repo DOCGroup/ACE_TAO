@@ -14,26 +14,21 @@
 //
 // ============================================================================
 
-// main () has three arguments, so we can't use
-// ACE_HAS_NONSTATIC_OBJECT_MANAGER.  We don't need it, anyways.
-#include "ace/inc_user_config.h"
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-# undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-
 #include "test_config.h"
 #include "ace/OS.h"
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
 
 int
-main (int argc, char *[], char* envp[])
+main (int argc, char *argv[], char* environ[])
 {
   if (argc == 1)
     {
       // No arguments means we're the initial test
       ACE_Process_Options options (1);
-      options.setenv (envp);
+      options.setenv (environ);
+      
+      char* const* envargv;
 
       options.command_line ("Env_Value_Test run_as_test");
 
@@ -47,16 +42,10 @@ main (int argc, char *[], char* envp[])
   else
     {
       // In this case we're the child
-      ACE_START_TEST ("Env_Value_Test");
+      ACE_START_TEST ("Env_Value");
 
-#define TEST_THIS(type,varname,defval,expval) \
-      do { \
-        ACE_Env_Value<type> val(varname, (defval));\
-        ACE_ASSERT (val == (expval)); \
-      } while (0)
-
-          ;
-
+#define TEST_THIS(type,varname,defval,expval) do { ACE_Env_Value<type> val(varname, (defval)); ACE_ASSERT (val == (expval)); } while (0)
+      
       TEST_THIS (int, "TEST_VALUE_POSITIVE", 4, 10);
       TEST_THIS (double, "TEST_VALUE_POSITIVE", -1.0, 10.2);
       TEST_THIS (unsigned long, "TEST_VALUE_POSITIVE", 0, 10);
@@ -73,7 +62,7 @@ main (int argc, char *[], char* envp[])
 
       ACE_END_TEST;
     }
-
+  
   return 0;
 }
 
