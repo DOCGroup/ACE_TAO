@@ -1,3 +1,12 @@
+Tue Sep 21 12:10:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.cpp:
+	  Added a check in private_equal_union and private_equal_struct
+	  for a member that is recursive, but of a different type than
+	  the enclosing union or struct. Thanks to 
+	  Lothar Werzinger <werzinger.lothar@krones.de> for providing 
+	  the example that pointed out this use case.
+
 Tue Sep 21 12:08:46 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
