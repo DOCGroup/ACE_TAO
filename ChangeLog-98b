@@ -1,22 +1,28 @@
+Tue Aug 25 19:31:37 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Memory_Pool.i (~ACE_Lite_MMAP_Memory_Pool,~ACE_MMAP_Memory_Pool):
+          swapped to avoid use of ~ACE_MMAP_Memory_Pool before its linline
+          definition.
+
 Tue Aug 25 18:48:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (parse_args): Changed the default for
- 	  ACE_Service_Config::no_static_svcs_ to be 1.  This means that by
- 	  default static services (ACE_Naming_Context and
- 	  ACE_Service_Manager) will *not* be loaded into the Service
- 	  Repository.  The -n option remains the same for backward
- 	  compatibility, i.e., it sets ACE_Service_Config::no_static_svcs_
- 	  to 1.  -y is a new option that sets
- 	  ACE_Service_Config::no_static_svcs_ to 0.
+        * ace/Service_Config.cpp (parse_args): Changed the default for
+          ACE_Service_Config::no_static_svcs_ to be 1.  This means that by
+          default static services (ACE_Naming_Context and
+          ACE_Service_Manager) will *not* be loaded into the Service
+          Repository.  The -n option remains the same for backward
+          compatibility, i.e., it sets ACE_Service_Config::no_static_svcs_
+          to 1.  -y is a new option that sets
+          ACE_Service_Config::no_static_svcs_ to 0.
 
 Tue Aug 25 18:28:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (strdup): Changed ::strlen to ACE_OS::strlen so we can
-	  get the actual length for UNICODE strings.  Thanks to Dana
-	  Hackman <upboms@network-one.com> for reporting this.
+        * ace/OS.i (strdup): Changed ::strlen to ACE_OS::strlen so we can
+          get the actual length for UNICODE strings.  Thanks to Dana
+          Hackman <upboms@network-one.com> for reporting this.
 
-	  Also, the size of the allocated memory should be
-	  (strlen(s)+1)*sizeof(wchar_t), not strlen(s)*sizeof(wchar_t)+1.
+          Also, the size of the allocated memory should be
+          (strlen(s)+1)*sizeof(wchar_t), not strlen(s)*sizeof(wchar_t)+1.
 
 Tue Aug 25 14:33:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
