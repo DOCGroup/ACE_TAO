@@ -75,6 +75,11 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("node")))
             {
+              process_function<Deployment::Node>
+                (this, domain.node, &Domain_Handler::process_node,
+                 node, this->doc_, this->iter_, this->id_map_);
+
+                              /*
               Process_Member_Function<Domain_Handler, Deployment::Node> 
                 pf (this,
                     &Domain_Handler::process_node,
@@ -85,6 +90,7 @@ namespace CIAO
                                           domain.node,
                                           &pf,
                                           this->id_map_);
+              */
               /*
               this->process_node_element (node, this->doc_,
                                           this->iter_,
