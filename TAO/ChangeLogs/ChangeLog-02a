@@ -1,3 +1,58 @@
+Thu Jun 15 15:27:34 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h (LoadBalancer):
+
+	  `ReplicaLocator' replaced `DSI_ForwardingProxy', and it no
+	  longer exists.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp (init):
+
+	  Create child POA that is configured for use with a
+	  ServantLocator (i.e. the new ReplicaLocator described below).
+
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i (disconnect):
+
+	  Added comment that states that the ReplicaProxy should be
+	  deactivated in this method.
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+
+	  Added an ACE_SYNCH_MUTEX member to this class.  This lock is
+	  used to ensure that access to state retained by the
+	  corresponding class is atomic.
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp (disconnect,
+	  connect):
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp
+	  (~TAO_LB_Minimum_Dispersion_Strategy, replica, insert, remove,
+	  load_changed):
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp
+	  (~TAO_LB_Round_Robin_Strategy, replica, insert, remove):
+
+	  Made these methods thread-safe.
+
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+
+	  Removed these files.  The Load Balancer no longer uses DSI to
+	  forward requests.
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h:
+
+	  Added these files.  The Load Balancer now uses a ServantLocator
+	  to forward requests to the appropriate replica.  The DSI
+	  implementation that it replaces was a bit of a hack, and not
+	  compliant with the specification, particularly because it threw
+	  a PortableServer::ForwardRequest exception, but things such as
+	  ServantLocators are supposed to do so.
+
+	* orbsvcs/orbsvcs/Makefile:
+
+	  Updated dependencies.
+
 Thu Jun 15 19:41:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCORBA/Oneways/Reliable/client.cpp:
