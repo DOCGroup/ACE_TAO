@@ -12,8 +12,9 @@ Fri Feb 07 23:35:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  i.e., not on critical path, this class serves as a place holder
 	  for later, more efficient implementation.
 
-	  This new class is needed to support ServerActivator and
-	  ComponentServer interface.
+	  This new class is needed to support ServerActivator,
+	  ComponentServer, and Container interface in
+	  Components::Deployment module.
 
 	* docs/ConfigVAlues.html: Added this new document page to record
 	  what configuration values can be used to initialize
