@@ -539,7 +539,6 @@ public:
   // 0 if there is no more element available.
   // DEPRECATED
 
-
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
@@ -553,8 +552,7 @@ public:
   // without incurring the constructor overhead. If you do use this,
   // be aware that if there are more than one reference to this
   // iterator, the other "clients" may be very bothered when their
-  // iterator changes.
-  // @@ Here be dragons. Comments?
+  // iterator changes.  @@ Here be dragons. Comments?
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -578,7 +576,7 @@ protected:
 
   int go_tail (void);
   // Move to the last element of the list. Returns 0 if the list is
-  // empty, else 1. 
+  // empty, else 1.
 
   T *not_done (void) const ;
   // Check if we reach the end of the list.  Can also be used to get
@@ -737,7 +735,7 @@ class ACE_Double_Linked_List
   // = DESCRIPTION
   //     This implementation of an unbounded double-linked list uses a
   //     circular linked list with a dummy node.  It is pretty much
-  //     like the ACE_Unbounded_Queue except that it allows removing
+  //     like the <ACE_Unbounded_Queue> except that it allows removing
   //     of a specific element from a specific location.
 public:
   friend class ACE_Double_Linked_List_Iterator_Base<T>;

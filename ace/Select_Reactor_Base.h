@@ -171,14 +171,14 @@ private:
   // this is set to -1, which means "iterate until the pipe is empty."
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_set_;
+  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
   // Keeps track of allocated arrays of type
   // <ACE_Notification_Buffer>.
 
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_set_;
+  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_queue_;
   // Keeps track of all pending notifications.
 
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_set_;
+  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
   // Keeps track of all free buffers.
 
   ACE_SYNCH_MUTEX notify_queue_lock_;
