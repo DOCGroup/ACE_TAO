@@ -1,18 +1,24 @@
+Thu Nov 11 19:17:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Event_Service/Makefile.am:
+
+          Removed an unnecessary dependency upon the TAO_CosEvent library.
+
 Thu Nov 11 14:33:00 2004  Gary Maxey    <gary.maxey@hp.com>
 
 	* tao/Connector_Registry.cpp
 
 	  Fixed problem in create_profile() when there is an
 	  unknown profile.  The cdr.orb_core() value may be zero
-	  in this case.  This zero value is passed to the 
+	  in this case.  This zero value is passed to the
 	  TAO_Unknown_Profile constructor where it eventually leads
 	  to a memory fault.
-	
+
 Thu Nov 11 14:55:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
         * TAO_IDLbe/be_visitor_valuetype/field_cs.cpp:
-        
+
           In accessing or marshaling valuetype members that are interfaces
           changed calls to _duplicate() and marshal() to use the
           corresponding methods in TAO::Obref_Traits<>, in case the
@@ -22,14 +28,14 @@ Thu Nov 11 14:55:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Nov 10 11:25:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Added generation of #includes of Any.h and CDR.h in the
           *A.cpp file (if generated). This is for compilers (such
           as the Diablo VxWorks compiler) that do not include
           template source files in the corresponding template header
           files. In such a case, the files in question are not pulled
           in by Any_*_Impl_T.cpp via Any_*_Impl_T.h, as they are
-          in all other cases. Thanks to 
+          in all other cases. Thanks to
           Johnny Willemsen <jwillemsen@remedy.nl> and Martin Corino
           <mcorino@remedy.nl> for reporting these problems.
 
@@ -38,7 +44,7 @@ Wed Nov 10 09:46:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_union.cpp:
         * TAO_IDLbe/be_union_branch.cpp:
         * TAO_IDLbe/be_visitor_union/union_cs.cpp:
-        
+
           Changed code generation for a union default constructor to
           set the discriminator to a legal defaul value if there is
           one, and to the value of the first case label otherwise
