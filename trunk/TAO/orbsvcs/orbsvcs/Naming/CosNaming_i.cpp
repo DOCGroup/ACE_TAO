@@ -27,13 +27,13 @@ TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
     poa_ (PortableServer::POA::_duplicate (poa)),
     counter_ (0),
     hash_table_size_ (default_hash_table_size),
-    poa_id_ (poa_id)
+    poa_id_ (poa_id),
+    context_ (0)
 {
-  // Deal with faults.
-  if (context_.open (this->hash_table_size_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "TAO_NamingContext"));
+  ACE_NEW (context_,
+           HASH_MAP (hash_table_size_));
+
+  // if allocation failed, should we delete the rest of us? delete this?
 
   // Get the lock from the ORB, which knows what type is appropriate.
   // This method must be called AFTER the ORB has been initialized via
@@ -45,6 +45,7 @@ TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
 
 TAO_NamingContext::~TAO_NamingContext (void)
 {
+  delete this->context_;
   delete this->lock_;
 }
 
@@ -64,9 +65,14 @@ TAO_NamingContext::get_context (const CosNaming::Name &name,
     CosNaming::NamingContext::_nil ();
 
   // Create compound name to be resolved (<name> - last component).
+  // To avoid copying (and thus memory allocations), we can just
+  // reuse <name>'s buffer, since we will not be modifying it.
   CORBA::ULong len = name.length ();
-  CosNaming::Name comp_name (name);
-  comp_name.length (len - 1);
+  CosNaming::Name comp_name (name.maximum (),
+                             len - 1,
+                             ACE_const_cast
+                             (CosNaming::NameComponent*,
+                              name.get_buffer ()));
 
   TAO_TRY
     {
@@ -162,7 +168,7 @@ TAO_NamingContext::bind (const CosNaming::Name& n,
       TAO_ExtId name (n[0].id, n[0].kind);
 
       // Try binding the name.
-      int result = context_.bind (name, entry);
+      int result = context_->bind (name, entry);
       if (result == 1)
         TAO_THROW (CosNaming::NamingContext::AlreadyBound());
 
@@ -219,7 +225,7 @@ TAO_NamingContext::rebind (const CosNaming::Name& n,
       TAO_ExtId oldname;
 
       // Try rebinding the name.
-      int result = context_.rebind (name, entry, oldname, oldentry);
+      int result = context_->rebind (name, entry, oldname, oldentry);
 
       // Something went wrong with the internal structure
       if (result == -1)
@@ -266,12 +272,11 @@ TAO_NamingContext::bind_context (const CosNaming::Name &n,
   // If we received a simple name, we need to bind it in this context.
   else
     {
-      CosNaming::NameComponent comp = n[0];
       TAO_IntId entry (nc, CosNaming::ncontext);
       TAO_ExtId name (n[0].id, n[0].kind);
 
       // Try binding the name.
-      int result = context_.bind (name, entry);
+      int result = context_->bind (name, entry);
       if (result == 1)
         TAO_THROW (CosNaming::NamingContext::AlreadyBound());
 
@@ -321,14 +326,13 @@ TAO_NamingContext::rebind_context (const CosNaming::Name &n,
   // context.
   else
     {
-      CosNaming::NameComponent comp = n[0];
       TAO_IntId entry (nc, CosNaming::ncontext);
       TAO_ExtId name (n[0].id, n[0].kind);
       TAO_IntId oldentry;
       TAO_ExtId oldname;
 
       // Try rebinding the name.
-      if (context_.rebind (name, entry, oldname, oldentry) < 0)
+      if (context_->rebind (name, entry, oldname, oldentry) < 0)
         TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
@@ -338,7 +342,9 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
                            CORBA::Environment &_env)
 {
   CORBA::Object_ptr result = CORBA::Object::_nil ();
-  ACE_GUARD_THROW_RETURN (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL (CORBA::COMPLETED_NO), result);
+  ACE_GUARD_THROW_RETURN (ACE_Lock, ace_mon, *this->lock_,
+                          CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          result);
 
   // Get the length of the name.
   CORBA::ULong len = n.length ();
@@ -352,7 +358,7 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
   TAO_ExtId name (n[0].id, n[0].kind);
   TAO_IntId entry;
 
-  if (context_.find (name, entry) == -1)
+  if (context_->find (name, entry) == -1)
     TAO_THROW_RETURN (CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object,
                                                           n),
                       result);
@@ -391,13 +397,18 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
                           context._retn ());
       else
         {
-          CosNaming::Name rest_of_name (len - 1);
-          rest_of_name.length (len - 1);
+          // Recursively call resolve on <n> without the first component.
 
-          // Recursively resolve name with new name = n - 1st
-          // component.
-          for (CORBA::ULong i = 1; i < len; i++)
-            rest_of_name[i-1] = n[i];
+          // We need a name just like <n> but without the first
+          // component.  Instead of copying data we can reuse <n>'s
+          // buffer since we will only be using it for 'in' parameters
+          // (no modifications).
+          CosNaming::Name rest_of_name
+            (n.maximum () - 1,
+             n.length () - 1,
+             ACE_const_cast (CosNaming::NameComponent*,
+                             n.get_buffer ())
+             + 1);
 
           // If there are any exceptions, they will propagate up.
           return context->resolve (rest_of_name,
@@ -452,7 +463,7 @@ TAO_NamingContext::unbind (const CosNaming::Name& n,
     {
       TAO_ExtId name (n[0].id, n[0].kind);
       // Try unbinding the name.
-      if (context_.unbind (name) == -1)
+      if (context_->unbind (name) == -1)
         TAO_THROW (CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object,
                                                        n));
     }
@@ -472,9 +483,9 @@ TAO_NamingContext::new_context (CORBA::Environment &_env)
   CosNaming::NamingContext_var result;
 
   char poa_id[BUFSIZ];
-  ACE_OS::sprintf (poa_id, 
-                   "%s_%ld", 
-                   this->poa_id_.c_str (), 
+  ACE_OS::sprintf (poa_id,
+                   "%s_%ld",
+                   this->poa_id_.c_str (),
                    this->counter_++);
 
   ACE_NEW_THROW_RETURN (c,
@@ -512,47 +523,27 @@ CosNaming::NamingContext_ptr
 TAO_NamingContext::bind_new_context (const CosNaming::Name& n,
                                     CORBA::Environment &_env)
 {
-  CosNaming::NamingContext_ptr result =
+  CosNaming::NamingContext_var result =
     CosNaming::NamingContext::_nil ();
 
-  TAO_TRY
-    {
-      result = new_context (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  result = new_context (_env);
+  TAO_CHECK_ENV_RETURN (_env, CosNaming::NamingContext::_nil ());
 
-      bind_new_context_helper (n,
-                               result,
-                               TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      CORBA::release (result);
-      TAO_RETHROW_RETURN (CosNaming::NamingContext::_nil ());
-    }
-  TAO_ENDTRY;
-
-  return result;
-}
-
-void
-TAO_NamingContext::bind_new_context_helper (const CosNaming::Name &n,
-                                           CosNaming::NamingContext_ptr result,
-                                           CORBA::Environment &_env)
-{
   TAO_TRY
     {
       bind_context (n,
-                    result,
+                    result.in (),
                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
-      result->destroy (TAO_TRY_ENV);
-      TAO_RETHROW;
+      result->destroy (_env);
+      TAO_RETHROW_RETURN (CosNaming::NamingContext::_nil ());
     }
   TAO_ENDTRY;
+
+  return result._retn ();
 }
 
 void
@@ -564,7 +555,7 @@ TAO_NamingContext::destroy (CORBA::Environment &_env)
                      *this->lock_,
                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
-    if (context_.current_size () != 0)
+    if (context_->current_size () != 0)
       TAO_THROW (CosNaming::NamingContext::NotEmpty());
 
     if (this->root_ != 0)
@@ -600,7 +591,7 @@ TAO_NamingContext::destroy (CORBA::Environment &_env)
   //
   // Commit suicide: must have been dynamically allocated
 
-  if (this->root_ != 0)
+  if (this->root_ == 0)
     delete this;
 }
 
@@ -626,7 +617,7 @@ TAO_NamingContext::list (CORBA::ULong how_many,
   // Dynamically allocate hash map iterator.
   TAO_NamingContext::HASH_MAP::ITERATOR *hash_iter = 0;
   ACE_NEW_THROW (hash_iter,
-                 TAO_NamingContext::HASH_MAP::ITERATOR (context_),
+                 TAO_NamingContext::HASH_MAP::ITERATOR (*context_),
                  CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   // Number of bindings that will go into the BindingList.
@@ -636,10 +627,10 @@ TAO_NamingContext::list (CORBA::ULong how_many,
   TAO_BindingIterator *bind_iter = 0;
 
   // Calculate number of bindings that will go into bl.
-  if (context_.current_size () > how_many)
+  if (context_->current_size () > how_many)
     n = how_many;
   else
-    n = context_.current_size ();
+    n = context_->current_size ();
 
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);
@@ -651,30 +642,10 @@ TAO_NamingContext::list (CORBA::ULong how_many,
       hash_iter->next (hash_entry);
       hash_iter->advance ();
 
-      bl[i].binding_type = hash_entry->int_id_.type_;
-      bl[i].binding_name.length (1);
-
-      // Populate a binding with the name.
-      if (hash_entry->ext_id_.id_.fast_rep () != 0)
+      if (populate_binding (hash_entry, bl[i]) == 0)
         {
-          bl[i].binding_name[0].id =
-            hash_entry->ext_id_.id_.fast_rep ();
-          if (bl[i].binding_name[0].id.in () == 0)
-            {
-              delete hash_iter;
-              TAO_THROW (CORBA::NO_MEMORY(CORBA::COMPLETED_NO));
-            }
-        }
-      if (hash_entry->ext_id_.kind_.fast_rep () != 0)
-        {
-          bl[i].binding_name[0].kind =
-            hash_entry->ext_id_.kind_.fast_rep ();
-          if (bl[i].binding_name[0].kind.in () == 0)
-            {
-              delete hash_iter;
-              TAO_THROW (CORBA::NO_MEMORY
-                         (CORBA::COMPLETED_NO));
-            }
+          delete hash_iter;
+          TAO_THROW (CORBA::NO_MEMORY(CORBA::COMPLETED_NO));
         }
     }
 
@@ -682,7 +653,7 @@ TAO_NamingContext::list (CORBA::ULong how_many,
   // the iterator business.
 
   // If we do not need to pass back BindingIterator.
-  if (context_.current_size () <= how_many)
+  if (context_->current_size () <= how_many)
     delete hash_iter;
   else
     {
@@ -695,9 +666,9 @@ TAO_NamingContext::list (CORBA::ULong how_many,
           TAO_CHECK_ENV;
 
           char poa_id[BUFSIZ];
-          ACE_OS::sprintf (poa_id, 
-                           "%s_%ld", 
-                           this->poa_id_.c_str (), 
+          ACE_OS::sprintf (poa_id,
+                           "%s_%ld",
+                           this->poa_id_.c_str (),
                            this->counter_++);
 
           PortableServer::ObjectId_var id =
@@ -766,12 +737,15 @@ CORBA::Boolean
 TAO_BindingIterator::next_one (CosNaming::Binding_out b,
                               CORBA::Environment &_env)
 {
+  CosNaming::Binding * binding;
+
   // Allocate a binding to be returned (even if there no more
   // bindings, we need to allocate an out parameter.)
-  ACE_NEW_THROW_RETURN (b,
+  ACE_NEW_THROW_RETURN (binding,
                         CosNaming::Binding,
                         CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                         0);
+  b = binding;
 
   ACE_GUARD_THROW_RETURN (ACE_Lock,
                           ace_mon,
@@ -785,31 +759,39 @@ TAO_BindingIterator::next_one (CosNaming::Binding_out b,
       TAO_NamingContext::HASH_MAP::ENTRY *hash_entry;
       hash_iter_->next (hash_entry);
 
-      b->binding_type = hash_entry->int_id_.type_;
-      b->binding_name.length (1);
+      if (TAO_NamingContext::populate_binding (hash_entry, *binding) == 0)
+        TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
 
-      // Here we perform a check before assignment to make sure
-      // CORBA::string_dup is not called on 0 pointer, since the spec
-      // does not say what should happen in that case.
-      if (hash_entry->ext_id_.id_.fast_rep () != 0)
-        {
-          b->binding_name[0].id =
-            hash_entry->ext_id_.id_.fast_rep ();
-          if (b->binding_name[0].id.in () == 0)
-            TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
-        }
-      if (hash_entry->ext_id_.kind_.fast_rep () != 0)
-        {
-          b->binding_name[0].kind =
-            hash_entry->ext_id_.kind_.fast_rep ();
-          if (b->binding_name[0].kind.in () == 0)
-            TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                              0);
-        }
       hash_iter_->advance ();
       return 1;
     }
+}
+
+int
+TAO_NamingContext::populate_binding (TAO_NamingContext::HASH_MAP::ENTRY *hash_entry,
+                                     CosNaming::Binding &b)
+{
+  b.binding_type = hash_entry->int_id_.type_;
+  b.binding_name.length (1);
+
+  // Here we perform a check before assignment to make sure
+  // CORBA::string_dup is not called on 0 pointer, since the spec
+  // does not say what should happen in that case.
+  if (hash_entry->ext_id_.id_.fast_rep () != 0)
+    {
+      b.binding_name[0].id =
+        hash_entry->ext_id_.id_.fast_rep ();
+      if (b.binding_name[0].id.in () == 0)
+        return 0;
+    }
+  if (hash_entry->ext_id_.kind_.fast_rep () != 0)
+    {
+      b.binding_name[0].kind =
+        hash_entry->ext_id_.kind_.fast_rep ();
+      if (b.binding_name[0].kind.in () == 0)
+        return 0;
+    }
+  return 1;
 }
 
 CORBA::Boolean
@@ -847,24 +829,9 @@ TAO_BindingIterator::next_n (CORBA::ULong how_many,
         {
           hash_iter_->next (hash_entry);
 
-          bl[i].binding_type = hash_entry->int_id_.type_;
-          bl[i].binding_name.length (1);
+          if (TAO_NamingContext::populate_binding (hash_entry, bl[i]) == 0)
+            TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
 
-          // Populate a binding with the name.
-          if (hash_entry->ext_id_.id_.fast_rep () != 0)
-            {
-              bl[i].binding_name[0].id =
-                hash_entry->ext_id_.id_.fast_rep ();
-              if (bl[i].binding_name[0].id.in () == 0)
-                TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
-            }
-          if (hash_entry->ext_id_.kind_.fast_rep () != 0)
-            {
-              bl[i].binding_name[0].kind =
-                hash_entry->ext_id_.kind_.fast_rep ();
-              if (bl[i].binding_name[0].kind.in () == 0)
-                TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
-            }
           if (hash_iter_->advance () == 0)
             {
               // If no more bindings left, reset length to the actual
