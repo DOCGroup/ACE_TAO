@@ -109,12 +109,12 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
   switch (verbosity_level)
     {
     case Logger::SILENT:
-      return 040;
+      return 64;
     case Logger::VERBOSE_LITE:
-      return 020;
+      return 32;
     default:
     case Logger::VERBOSE:
-      return 010;
+      return 16;
     }
 }
 
@@ -178,9 +178,8 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
   // Create a buffer and fill it with the host name of the logger
   ASYS_TCHAR namebuf[MAXHOSTNAMELEN + 1];
-  addy.get_host_name (namebuf,
-                      MAXHOSTNAMELEN);
 
+  ACE_OS::strncpy (namebuf, addy.get_host_addr (), MAXHOSTNAMELEN);
 
   u_long verb_level = this->verbosity_conversion (verbosity);
 
