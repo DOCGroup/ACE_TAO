@@ -1,3 +1,165 @@
+Thu Mar 01 09:38:28 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CodecFactory.h:
+	* tao/CodecFactory.cpp:
+
+	  New files containing the implementation of the IOP::CodecFactory
+	  interface as defined by the adopted Portable Interceptor
+	  specification (ptc/00-08-05).
+
+	* tao/Codec_ORBInitializer.h:
+	* tao/Codec_ORBInitializer.cpp:
+
+	  ORBInitializer that registers the CodecFactory reference with
+	  the ORB.
+
+	* tao/CDR_Encaps_Codec.h:
+	* tao/CDR_Encaps_Codec.cpp:
+
+	  New files containing the implementation of the IOP::Codec
+	  interface specifically for CDR encapsulations.
+
+	* tao/ORB.cpp (init_orb_globals):
+
+	  Register the CodecFactory ORBInitializer with the ORB.
+
+	* tao/ORBInitInfo.h:
+	* tao/ORBInitInfo.cpp (codec_factory):
+
+	  Implemented this method, as required by the Portable Interceptor
+	  specification.  Each ORBInitInfo method now retains its own
+	  copy of a CodecFactory.  This was to done for ease of
+	  implementation.
+
+	* tao/OctetSeq.pidl:
+	* tao/StringSeq.pidl:
+
+	  Place the typedef in each of these PIDL files in the CORBA
+	  module.  Previously they were incorrectly placed in the global
+	  namespace.  [Bug 793]
+
+	* tao/OctetSeqC.h:
+	* tao/OctetSeqC.i:
+	* tao/OctetSeqC.cpp:
+	* tao/diffs/OctetSeq.diff
+	* tao/StringSeqC.h:
+	* tao/StringSeqC.i:
+	* tao/StringSeqC.cpp:
+	* tao/diffs/StringSeq.diff:
+
+	  Regenerated these files against the updated PIDL files.
+	  [Bug 793]
+
+	* tao/PortableInterceptor.pidl:
+	* tao/IOP.pidl:
+
+	  Updated with changes made in ptc/00-08-05.  These changes
+	  include (1) moving Codec related interfaces to the IOP module,
+	  (2) addition of the Interceptor::destroy() method, and (3)
+	  addition of the IOP::TaggedComponentSeq type to the IOP module.
+
+	* tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.i:
+	* tao/PortableInterceptorC.cpp:
+	* tao/diffs/PortableInterceptor.diff:
+	* tao/IOPC.h:
+	* tao/IOPC.i:
+	* tao/IOPC.cpp:
+	* tao/diffs/IOP.diff:
+
+	  Regenerated these files against the updated PIDL files.
+
+	* tao/ClientRequestInfo.inl:
+	* tao/ClientRequestInfo.cpp:
+	* tao/PortableServer/ServerRequestInfo.inl:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+
+	  Removed all reference to LOCATION_FORWARD_PERMANENT.  It is
+	  currently not supported by the CORBA and Portable Interceptor
+	  specifications.  This may change in the future as FT CORBA
+	  issues are resolved.
+
+	  Added all missing exception minor codes.  The final adopted
+	  Portable Interceptor specification specifies what they are (the
+	  joint submission did not).
+
+	* tao/ClientRequestInfo.h:
+
+	  Made target_ member a "_ptr."  The TAO_ClientRequestInfo no
+	  longer needs to release the reference.
+
+	* tao/ClientRequestInfo.cpp (TAO_ClientRequestInfo):
+
+	  Do not duplicate the target object reference.  There is no need
+	  to do so since it is guaranteed to be valid for the lifetime of
+	  the request.  This removes a pair of locks from the critical
+	  path, thus improving performance.  [Bug 795]
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp (destroy_interceptors):
+  
+	  New helper method that invokes Interceptor::destroy() on all
+	  registered interceptors when ORB::destroy() is called.
+
+	  (destroy):
+
+	  Invoke the TAO_ORB_Core::destroy_interceptors() help method when
+	  ORB::destroy() is called.
+
+	* tao/PortableInterceptor.i:
+	* tao/PortableInterceptor.cpp:
+
+	  Un-inlined the destructors.  They're already no-ops, and
+	  inlining them only serves to increase the footprint since
+	  inlined destructor code is placed at all exit points.
+
+	* tests/Codec/Codec.dsw:
+	* tests/Codec/Makefile:
+	* tests/Codec/Makefile.bor:
+	* tests/Codec/README:
+	* tests/Codec/client.bor:
+	* tests/Codec/client.cpp:
+	* tests/Codec/client.dsp:
+	* tests/Codec/run_test.pl:
+	* tests/Codec/test.idl:
+
+	  New test that verifies the CodecFactory and CDR encapsulation
+	  Codec objects are functioning properly.
+
+	* tests/README:
+
+	  Added a description of the Codec test.
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	* tests/Portable_Interceptors/Benchmark/interceptors.h:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.h:
+	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h:
+	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+	* tests/Portable_Interceptors/ForwardRequest/server.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+	* tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
+	* tests/Portable_Interceptors/ForwardRequest/test_i.h:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.cpp:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+
+	  Updated to conform to the Portable Interceptor support updates.
+
+	* docs/interceptors.html:
+
+	  Updated current status of TAO's interceptor support
+	  (e.g. addition of the CodecFactory and CDR encapsulation Codec),
+	  and the reference list (URL for the adopted Portable Interceptor
+	  specification). 
+
 Thu Mar  1 09:30:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/InterfaceC.i:
@@ -522,6 +684,7 @@ Mon Feb 26 01:24:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           With TAO_ORB_Core_instance we could have actually fetched
           the wrong ORB.
 
+>>>>>>> 1.2613
 Sun Feb 25 19:37:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/POA/Adapter_Activator/run_test.pl:
