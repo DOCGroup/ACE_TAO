@@ -14,14 +14,15 @@
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_NEEDS_SYSTIME_H
-#define ACE_HAS_UALARM
+// ualarm is only in BSD compatibility lib, but no header is provided
+// #define ACE_HAS_UALARM
 #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_GNU_CSTRING_H
 #define ACE_HAS_STRING_CLASS
 #define ACE_HAS_MSG
-#define ACE_HAS_SVR4_GETTIMEOFDAY
+#define ACE_HAS_OSF1_GETTIMEOFDAY
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_NONCONST_GETBY
@@ -78,6 +79,11 @@
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+
+#if ! defined (UNIXWARE)
+#define UNIXWARE
+#define UNIXWARE_2_1
+#endif /* ! UNIXWARE */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)

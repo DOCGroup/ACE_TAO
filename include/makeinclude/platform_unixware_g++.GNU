@@ -6,12 +6,11 @@ debug = 1
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -I/usr/include -D__STDC__=0 #-w
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates # -fno-strict-prototypes
+CFLAGS          += -D__STDC__=0
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
-LDFLAGS         += -L/usr/lib
 LIBS            += -lsocket -lnsl -lgen -lthread
 PIC             = -fpic
 AR              = ar

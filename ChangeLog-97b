@@ -1,5 +1,8 @@
 Sat Nov  8 15:46:30 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* Added a number of minor fixes for UNIXWARE with G++.  Thanks to
+ 	  Michael Rueger <m_rueger@syscomp.de> for reporting these.
+
 	* ace/Thread_Manager.h: Both Irix5 and VxWorks have problems with
  	  local typedefs with GCC.  Thanks to Laura Paterno
  	  <lpaterno@d0chb.fnal.gov> for reporting this.
