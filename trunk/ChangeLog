@@ -1,8 +1,23 @@
+Wed Mar 14 01:47:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * apps/Gateway/Gateway/Makefile:
+        * apps/Gateway/Peer/Makefile:
+        * apps/JAWS/server/Makefile:
+        * apps/gperf/tests/Makefile:
+        * examples/ASX/CCM_App/Makefile:
+        * examples/Service_Configurator/IPC-tests/server/Makefile:
+        * examples/Service_Configurator/Misc/Makefile:
+        * examples/Timer_Queue/Makefile:
+        * netsvcs/clients/Naming/Client/Makefile:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile:  Removed
+	  unnecessary 'LIBS += $(ACELIB)'.  They were causing link problem
+	  for the latest KCC. compiner.
+
 Tue Mar 13 20:56:10 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (remove_to_be_added_handler_i): 
-	* ace/WFMO_Reactor.cpp (remove_suspended_handler_i): 
-	* ace/WFMO_Reactor.cpp (remove_handler_i): 
+	* ace/WFMO_Reactor.cpp (remove_to_be_added_handler_i):
+	* ace/WFMO_Reactor.cpp (remove_suspended_handler_i):
+	* ace/WFMO_Reactor.cpp (remove_handler_i):
 
 	  If a user tried to (a) remove a "to be suspended handle" from
 	  either the current info set or the to be added set, the handle
