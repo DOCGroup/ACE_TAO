@@ -19,7 +19,7 @@ main (int argc, char *argv[])
                                              0,
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (argc < 2)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -37,18 +37,19 @@ main (int argc, char *argv[])
 
           if (ACE_OS::strcmp (argv[1], "NameService") == 0)
             {
-              
+
               CosNaming::NamingContext_var naming_context =
                 CosNaming::NamingContext::_narrow (objref.in (),
                                                    ACE_TRY_ENV);
               ACE_TRY_CHECK;
-              
+
               ACE_DEBUG ((LM_DEBUG,
                           "Resolved IOR for %s : %s\n",
                           argv[1],
                           orb_->object_to_string (naming_context.in ())));
 
-              // Sanity check to see if the reference to Naming Context is alright.
+              // Sanity check to see if the reference to Naming
+              // Context is alright.
               CosNaming::Name my_name;
               my_name.length (1);
               my_name[0].id = CORBA::string_dup ("ObjName");
@@ -64,7 +65,7 @@ main (int argc, char *argv[])
             }
           else
             {
-              
+
               INS_var server = INS::_narrow (objref.in (),
                                              ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -73,13 +74,13 @@ main (int argc, char *argv[])
                           "Resolved IOR for %s : %s\n",
                           argv[1],
                           orb_->object_to_string (server.in ())));
-              
+
               ACE_DEBUG ((LM_DEBUG,
                           "\nResult of Remote Call : %s\n",
                           server->test_ins (ACE_TRY_ENV)));
-              
+
             }
-          
+
         }
     }
   ACE_CATCHANY
@@ -89,10 +90,6 @@ main (int argc, char *argv[])
 
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }
-
-
-
-

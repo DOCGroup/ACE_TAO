@@ -803,7 +803,7 @@ TAO_GIOP::parse_reply (TAO_Transport *,
       // this on the firt iteration, leave it for the nearby future...
       // ERROR too.  @@ this->reply_handler_->error ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l handle_client_input: "
+                         "TAO (%P|%t) %N:%l TAO_GIOP::parse_reply: "
                          "request.\n"),
                         -1);
 
@@ -814,7 +814,7 @@ TAO_GIOP::parse_reply (TAO_Transport *,
       // @@ Errors for the time being.
       // @@ this->reply_handler_->error ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l handle_client_input: "
+                         "TAO (%P|%t) %N:%l TAO_GIOP::parse_reply: "
                          "wrong message.\n"),
                         -1);
 
