@@ -1117,7 +1117,7 @@ TAO_IIOP_Interpreter
         //        stream->skip_bytes (encap);
         return calc_union_attr_is_var_sized_member (&nested, flag);
       }
-      break;
+      ACE_NOTREACHED (break);
     case CORBA::tk_struct:
       // explore further based on members
       {
@@ -1170,7 +1170,7 @@ TAO_IIOP_Interpreter
           }
       }
       return flag;
-      break;
+      ACE_NOTREACHED (break);
     case ~0:
       // TO-DO
       return 0;
