@@ -39,6 +39,7 @@ class ACE_Export ACE
   //     single place in order to manage the namespace better.  These
   //     methods are put here rather than in ACE_OS in order to
   //     separate concerns.
+
   ACE_CLASS_IS_NAMESPACE (ACE);
 public:
   // Initialize ACE library services.
