@@ -17,6 +17,7 @@
 #define ACE_TIMER_HASH_H
 
 #include "ace/Timer_Hash_T.h"
+#include "ace/Timer_Heap_T.h"
 #include "ace/Timer_List_T.h"
 // The following typedef are here for ease of use 
 
