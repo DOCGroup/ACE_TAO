@@ -1,7 +1,6 @@
-Sat Jul  5 15:20:20 PDT 1997 
-
+Tue Aug 19 23:09:14 CDT 1997
 ====================================================================
-ASNMP = ACE+SNMP++ Version 1.0
+ASNMP = ACE+SNMP++ Version 1.1
 By Michael R. MacFaden mrm@acm.org, mrm@cisco.com
 ====================================================================
 
@@ -55,7 +54,7 @@ Any Support for ASNMP?
    As time permits from the mailing list.
 
 Where to ask questions?
-  Please use ace-users@cs.wustl.edu mailing list or macfaden@acm.org
+  Please use ace-users@cs.wustl.edu mailing list or mrm@acm.org
 
 NOTE: Please do not bother Eric Mellquist unless you are using 
    the original HP version of this library.
@@ -89,14 +88,13 @@ Any Future Plans?
 
 Regards,
 Michael R. MacFaden
-Software Engineer III
+Software Engineer IV 
 Cisco Systems, Inc.
 Network Management Business Unit
 170 West Tasman Drive
 San Jose, CA 95120
 408-526-6228
 mrm@cisco.com
-Fri Jul 25 12:36:32 PDT 1997
 
 ====================================================================
 SNMP++ For UNIX Source Code and Examples:
