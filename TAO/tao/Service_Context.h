@@ -81,6 +81,10 @@ public:
   /// list.
   void set_context (IOP::ServiceContext &context, TAO_OutputCDR &cdr);
 
+  /// Is the <id> available in the underlying service context list? If
+  /// so return 1, else return 0
+  int is_service_id (IOP::ServiceId id);
+
   /// = Marshaling and demarshaling the list
   int encode (TAO_OutputCDR& cdr) const;
   int decode (TAO_InputCDR& cdr);

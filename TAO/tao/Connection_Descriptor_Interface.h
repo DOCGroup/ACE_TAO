@@ -68,6 +68,9 @@ public:
   /// Return the underlying endpoint object
   TAO_Endpoint *endpoint (void);
 
+  /// Set the BiDir flag
+  void set_bidir_flag (CORBA::Boolean flag);
+
 protected:
 
   /// Default Constructor
@@ -79,6 +82,9 @@ protected:
 
   /// The base property of the connection ie. the peer's endpoint
   TAO_Endpoint *endpoint_;
+
+  /// Should the endpoint be used in either direction?
+  CORBA::Boolean bidir_flag_;
 
   /// Is the endpoint allocated on the heap? If so, we will have to
   /// delete it when we destruct ourselves.

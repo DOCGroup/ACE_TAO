@@ -12,7 +12,8 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/TAOC.h"
-
+#include "tao/Service_Context.h"
+#include "tao/Pluggable.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser_12.inl"
@@ -348,6 +349,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   input >> service_info;
 
+
   if (input.length () > 0)
     {
       // Reset the read_ptr to an 8-byte boundary.
@@ -571,4 +573,47 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
     }
 
   return 1;
+}
+
+
+int
+TAO_GIOP_Message_Generator_Parser_12::check_bidirectional_context (
+    TAO_ServerRequest &request)
+{
+  // Check whether we have the BiDir service context info available in
+  // the ServiceContextList
+  if (request.service_context ().is_service_id (IOP::BI_DIR_IIOP)
+      == 1)
+    {
+      return this->process_bidir_context (request.service_context (),
+                                          request.transport ());
+    }
+
+  return 0;
+}
+
+int
+TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
+    TAO_Service_Context &service_context,
+    TAO_Transport *transport)
+{
+  // Get the context info
+  IOP::ServiceContext context;
+  context.context_id = IOP::BI_DIR_IIOP;
+
+  if (service_context.get_context (context) != 1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Context info not found \n")),
+                      -1);
+
+
+  TAO_InputCDR cdr (ACE_reinterpret_cast
+                    (const char*,
+                     context.context_data.get_buffer ()),
+                    context.context_data.length ());
+
+
+
+  return transport->tear_listen_point_list (cdr);
+
 }

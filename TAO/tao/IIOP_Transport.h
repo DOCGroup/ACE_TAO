@@ -143,6 +143,8 @@ public:
   /// Set the bidirectional flag
   virtual void bidirectional_flag (int flag);
 
+  /// Open teh service context list and process it.
+  virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 private:
 
   /// Process the message that we have read

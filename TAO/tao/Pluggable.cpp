@@ -198,6 +198,12 @@ TAO_Transport::bidirectional_flag (int )
   return;
 }
 
+int
+TAO_Transport::tear_listen_point_list (TAO_InputCDR & /*cdr*/)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
 
 // Read the message on the connection. Returns 0 when there is Short
 // Read on the connection. Returns 1 when the full reply is read and

@@ -32,7 +32,7 @@
 #include "tao/ORB.h"
 #include "tao/Tagged_Profile.h"
 #include "tao/OctetSeqC.h"
-
+#include "tao/Service_Context.h"
 
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
@@ -126,6 +126,12 @@ public:
   void service_info (IOP::ServiceContextList &service_info);
   // @@ The above two should go away...
 
+  TAO_Service_Context &service_context (void);
+  // Return the TAO_Service_Context
+
+  TAO_Transport *transport ();
+  // Return the underlying transport
+
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
   CORBA::ULong request_id (void);
@@ -204,8 +210,11 @@ private:
   // A pointer to the ORB Core for the context where the request was
   // created.
 
-  IOP::ServiceContextList service_info_;
+  //IOP::ServiceContextList service_info_;
   // The service context for the request (CORBA Reference?).
+
+  TAO_Service_Context service_context_;
+  // Service Context info
 
   CORBA::ULong request_id_;
   // Unique identifier for a request.

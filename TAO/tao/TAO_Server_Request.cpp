@@ -20,7 +20,7 @@
 # include "tao/TAO_Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, GIOP_Server_Request, "$Id$")
+ACE_RCSID(tao, TAO_Server_Request, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -132,7 +132,7 @@ TAO_ServerRequest::init_reply (void)
   // Pass in the service context list.  We are sending back what we
   // received in the Request.  (RTCORBA relies on it.  Check before
   // modifying...) marina
-  reply_params.service_context_notowned (&this->service_info_);
+  reply_params.service_context_notowned (&this->service_info ());
 
   // Are we going to marshall any data with the reply?
   reply_params.argument_flag_ = this->argument_flag_;
@@ -187,7 +187,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
   // Pass in the service context list.  We are sending back what we
   // received in the Request.  (RTCORBA relies on it.  Check before
   // modifying...) marina
-  reply_params.service_context_notowned (&this->service_info_);
+  reply_params.service_context_notowned (&this->service_info ());
 
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
