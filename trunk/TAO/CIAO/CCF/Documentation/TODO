@@ -76,6 +76,8 @@ Legend:
 
 @% IDL feature: event (completion); do after (4)
 
+@% IDL feature: literals (left FP, fixed)
+
 ---
 
 @@ Revisit LEM for interconnected rules.
