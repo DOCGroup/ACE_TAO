@@ -1,3 +1,8 @@
+Sun Sep 17 09:23:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp (remote_call):
+	  Fixed a warning in g++.
+
 Sun Sep 17 07:14:28 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
