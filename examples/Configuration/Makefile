@@ -8,7 +8,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-BIN     = config_test
+BIN     = Config_Test
 
 LSRC    = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
