@@ -1,3 +1,7 @@
+Sat Dec 13 14:22:28 1997    <irfan@TWOSTEP>
+
+	* ace/Basic_Types.h: Changed _M_IX386 to _M_IX86.
+
 Fri Dec 12 19:41:42 1997    <irfan@TWOSTEP>
 
 	* ace, tests, version_tests: Updated Win32 makefiles (VC4.2 and
