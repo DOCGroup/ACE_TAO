@@ -37,7 +37,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 #### try to build test_naming.
 ifdef ACE_COMPONENTS
   ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
-    BIN+ = test_naming
+    BIN += test_naming
   endif # ! Other
 else  # ! ACE_COMPONENTS
   BIN += test_naming
