@@ -30,6 +30,7 @@ CDR_File_Test
 CDR_Array_Test
 Collection_Test
 Conn_Test: !chorus
+Dirent_Test
 DLL_Test: !Unicos !STATIC
 DLList_Test
 Dynamic_Priority_Test

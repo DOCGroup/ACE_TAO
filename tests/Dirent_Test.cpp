@@ -26,17 +26,12 @@
 ACE_RCSID(tests, Dirent_Test, "$Id$")
 
 int
-main (int argc, ACE_TCHAR *argv[])
+main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dirent_Test"));
   int status = 0;
-  char * testdir = "/tests";
-  char * ace_wrappers = ACE_OS::getenv ("ACE_ROOT");
-  
-  char * dirname = new char [ACE_OS::strlen(ace_wrappers) +
-                             ACE_OS::strlen(testdir) + 1];
-  ACE_OS::strcat (ACE_OS::strcpy (dirname,ace_wrappers),testdir);
-  DIR *directory = ACE_OS::opendir (dirname);
+
+  DIR *directory = ACE_OS::opendir (ACE_TEXT ("../tests"));
 
   int entrycount = 0;
   for (; ACE_OS::readdir(directory) != 0; entrycount++);

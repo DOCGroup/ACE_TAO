@@ -1,3 +1,27 @@
+Tue Jan 23 16:50:35 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Dirent_Test.dsp:
+
+          Updated to make consistent with the rest of the dsps in
+          this directory in regards to output directories and non-use
+          of ACE_ROOT.
+
+        * tests/Dirent_Test.cpp:
+
+          Updated wide character compatibility and removed the use
+          of ACE_ROOT (now looks at ../tests", which should give 
+          the same results).
+
+        * tests/run_test.lst:
+        
+          Added the Dirent_Test to the list
+        
+        * tests/version_tests/Dirent_Test.dsp: (added)
+        * tests/version_tests/Refcounted_Auto_Ptr_Test.dsp: (added)
+        * tests/version_tests/version_tests.dsw:
+
+          Used the create_vt_dsps.pl script to update this directory.
+
 Tue Jan 23 18:03:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp:
