@@ -2436,6 +2436,7 @@ union_type
               AST_Structure *st = AST_Structure::narrow_from_decl (u);
               AST_Structure::fwd_redefinition_helper (st,
                                                       s);
+              u = AST_Union::narrow_from_decl (st);
               (void) s->fe_add_union (u);
             }
 
