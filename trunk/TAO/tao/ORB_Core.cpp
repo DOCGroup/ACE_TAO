@@ -1377,8 +1377,11 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   TAO_MProfile mp (pfile_count);
 
   if (this->acceptor_registry ()->make_mprofile (key, mp) == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_MPROFILE_CREATION_ERROR,
-                                       CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA::SystemException::_tao_minor_code (
+                           TAO_MPROFILE_CREATION_ERROR,
+                           0),
+                        CORBA::COMPLETED_NO),
                       0);
 
   ACE_NEW_THROW_EX (stub,
