@@ -600,8 +600,6 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
       alignment = param->alignment (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      // Borland Builder aligns things a little differently.
-#if defined (__BORLANDC__)
       align_offset =
         (ptr_arith_t) ptr_align_binary (data, alignment)
         - (ptr_arith_t) data
@@ -609,13 +607,6 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
         - (ptr_arith_t) start_addr);
       if (align_offset < 0)
         align_offset += alignment;
-#else
-      align_offset =
-        (ptr_arith_t) ptr_align_binary (data, alignment)
-        - (ptr_arith_t) data
-        + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
-        - (ptr_arith_t) start_addr;
-#endif
 
       // if both the start_addr and data are not aligned as per
       // the alignment, we do not add the offset
