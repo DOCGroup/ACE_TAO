@@ -127,7 +127,7 @@ private:
   const ACE_Service_Type_Impl *type_;
 
   /// ACE_DLL representing the shared object file (non-zero if dynamically linked).
-  const ACE_DLL dll_;
+  mutable ACE_DLL dll_;
 
   /// 1 if svc is currently active, otherwise 0.
   int active_;

@@ -1,15 +1,22 @@
+Sat Nov 22 15:39:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Service_Object.h:
+
+	  Made <this->dll_> mutable. This should get rid of the errors in
+	  the scoreboard.
+
 Sat Nov 22 22:10:14 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* tests/Task_Ex_Test.cpp:
 	* tests/run_test.lst:
 	* tests/tests.mpc:
-	Added test for ACE_Task_Ex
+	  Added test for ACE_Task_Ex
 
 Sat Nov 22 22:03:34 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* ace/ace.mpc: 
 
-	Added Task_Ex_T file
+	  Added Task_Ex_T file
 
 Sat Nov 22 22:00:15 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
@@ -17,16 +24,18 @@ Sat Nov 22 22:00:15 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 	* ace/Task_Ex_T.i: 	
 	* ace/Task_Ex_T.cpp: 
 
-	Added support for ACE_Task with Use define Message template parameter
+	  Added support for ACE_Task with Use define Message template
+	  parameter.
 
 Sat Nov 22 21:07:09 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* ace/OS_NS_Thread.h : 
 
-	Added "&& !defined (ACE_DEFAULT_THREAD_KEYS)". 
-	Problems occurs on win2k/XP when OS support up to 1024 slots, 
-	but MS-sdk defines TLS_MINIMUM_AVAILABLE as 64. Now, Win2k/XP Users can 
-	raise that number, define-ing ACE_DEFAULT_THREAD_KEYS as 1024 e.g..
+	  Added "&& !defined (ACE_DEFAULT_THREAD_KEYS)". Problems occurs
+	  on win2k/XP when OS support up to 1024 slots,  but MS-sdk
+	  defines TLS_MINIMUM_AVAILABLE as 64. Now, Win2k/XP Users can
+	  raise that number, define-ing ACE_DEFAULT_THREAD_KEYS as 1024
+	  e.g.. 
 
 Sat Nov 22 11:18:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
