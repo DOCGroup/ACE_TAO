@@ -241,8 +241,9 @@ TAO_SSLIOP_Connection_Handler::add_transport_to_cache (void)
     return -1;
 
   // Construct an  IIOP_Endpoint object
-  TAO_IIOP_Endpoint tmpoint (addr,
-                             0);
+  TAO_IIOP_Endpoint tmpoint (
+      addr,
+      this->orb_core()->orb_params()->use_dotted_decimal_addresses());
 
   TAO_SSLIOP_Endpoint endpoint (0,
                                 &tmpoint);

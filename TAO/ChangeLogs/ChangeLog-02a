@@ -1,3 +1,14 @@
+Wed May  9 14:01:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp (add_transport_to_cache):
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixes for
+	  bug #901. When creating a endpoint that is being cached, use the
+	  value from ORB_Core params for the dotted decimal addresses
+	  instead of sending in a value of zero. Thanks to Darren Griffith
+	  <darren.griffith@esecurityinc.com> for reporting the problem and
+	  the fix. 
+
 Wed May 09 14:07:56 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/DynamicInterface/DII_Invocation.cpp:
