@@ -1,3 +1,9 @@
+Wed May  3 13:03:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/diffs/InterceptorC.cpp.diff:
+	* tao/InterceptorC.cpp: Oops, the restored explicit template
+	  instantiation code needs to be disabled under minimumCORBA too.
+
 Wed May  3 10:38:36 2000  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
