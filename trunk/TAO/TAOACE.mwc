@@ -4,6 +4,7 @@ workspace {
   ../ACEXML/common
   ../ACEXML/parser/parser
   ../ACEXML/apps/svcconf
+  ../Kokyu
   tao
   TAO_IDL
   utils

@@ -25,51 +25,71 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       RtecEventChannelAdminS.cpp
       RtecUDPAdminC.cpp
       RtecUDPAdminS.cpp
-      Event/EC_Event_Channel.cpp
+      Event_Utilities.cpp
+      Event/CRC.cpp
+      Event/ECG_Adapters.cpp
+      Event/ECG_Address_Server_Base.cpp
+      Event/ECG_CDR_Message_Receiver.cpp
+      Event/ECG_CDR_Message_Sender.cpp
+      Event/ECG_Complex_Address_Server.cpp
+      Event/ECG_Mcast_EH.cpp
+      Event/ECG_Mcast_Gateway.cpp
+      Event/ECG_Simple_Address_Server.cpp
+      Event/ECG_Simple_Mcast_EH.cpp
+      Event/ECG_UDP_EH.cpp
+      Event/ECG_UDP_Out_Endpoint.cpp
+      Event/ECG_UDP_Receiver.cpp
+      Event/ECG_UDP_Sender.cpp
+      Event/EC_And_Filter.cpp
+      Event/EC_Basic_Factory.cpp
+      Event/EC_Basic_Filter_Builder.cpp
+      Event/EC_Bitmask_Filter.cpp
+      Event/EC_Busy_Lock.cpp
+      Event/EC_Channel_Destroyer.cpp
+      Event/EC_Conjunction_Filter.cpp
       Event/EC_ConsumerAdmin.cpp
-      Event/EC_SupplierAdmin.cpp
-      Event/EC_ProxyConsumer.cpp
-      Event/EC_ProxySupplier.cpp
-      Event/EC_Supplier_Filter.cpp
-      Event/EC_Supplier_Filter_Builder.cpp
-      Event/EC_Trivial_Supplier_Filter.cpp
+      Event/EC_ConsumerControl.cpp
+      Event/EC_Default_Factory.cpp
+      Event/EC_Default_ProxyConsumer.cpp
+      Event/EC_Default_ProxySupplier.cpp
+      Event/EC_Disjunction_Filter.cpp
+      Event/EC_Dispatching.cpp
+      Event/EC_Dispatching_Task.cpp
+      Event/EC_Event_Channel.cpp
+      Event/EC_Event_Channel_Base.cpp
+      Event/EC_Factory.cpp
       Event/EC_Filter.cpp
       Event/EC_Filter_Builder.cpp
-      Event/EC_Dispatching.cpp
-      Event/EC_Factory.cpp
-      Event/EC_QOS_Info.cpp
-      Event/EC_Null_Factory.cpp
-      Event/EC_Disjunction_Filter.cpp
-      Event/EC_Conjunction_Filter.cpp
+      Event/EC_Gateway.cpp
+      Event/EC_Group_Scheduling.cpp
+      Event/EC_Lifetime_Utils.cpp
+      Event/EC_Lifetime_Utils_T.cpp
+      Event/EC_Masked_Type_Filter.cpp
+      Event/EC_MT_Dispatching.cpp
       Event/EC_Negation_Filter.cpp
-      Event/EC_Type_Filter.cpp
-      Event/EC_Basic_Filter_Builder.cpp
-      Event/EC_Basic_Factory.cpp
-      Event/EC_Default_Factory.cpp
+      Event/EC_Null_Factory.cpp
+      Event/EC_Null_Scheduling.cpp
       Event/EC_ObserverStrategy.cpp
       Event/EC_Per_Supplier_Filter.cpp
+      Event/EC_Prefix_Filter_Builder.cpp
+      Event/EC_ProxyConsumer.cpp
+      Event/EC_ProxySupplier.cpp
+      Event/EC_Proxy_Disconnector.cpp
+      Event/EC_QOS_Info.cpp
+      Event/EC_Reactive_ConsumerControl.cpp
+      Event/EC_Reactive_Dispatching.cpp
+      Event/EC_Reactive_SupplierControl.cpp
+      Event/EC_Reactive_Timeout_Generator.cpp
+      Event/EC_Scheduling_Strategy.cpp
+      Event/EC_SupplierAdmin.cpp
+      Event/EC_SupplierControl.cpp
+      Event/EC_Supplier_Filter.cpp
+      Event/EC_Supplier_Filter_Builder.cpp
       Event/EC_Timeout_Filter.cpp
       Event/EC_Timeout_Generator.cpp
-      Event/EC_Reactive_Timeout_Generator.cpp
-      Event/EC_MT_Dispatching.cpp
-      Event/EC_Dispatching_Task.cpp
-      Event/EC_Scheduling_Strategy.cpp
-      Event/EC_Null_Scheduling.cpp
-      Event/EC_Group_Scheduling.cpp
-      Event/EC_ConsumerControl.cpp
-      Event/EC_SupplierControl.cpp
-      Event/EC_Reactive_ConsumerControl.cpp
-      Event/EC_Reactive_SupplierControl.cpp
-      Event/EC_Bitmask_Filter.cpp
-      Event/EC_Masked_Type_Filter.cpp
-      Event/EC_Prefix_Filter_Builder.cpp
-      Event/EC_And_Filter.cpp
-      Event/EC_Gateway.cpp
-      Event/EC_Gateway_UDP.cpp
-      Event/ECG_Mcast_EH.cpp
-      Event/ECG_UDP_Sender.cpp
+      Event/EC_Trivial_Supplier_Filter.cpp
+      Event/EC_Type_Filter.cpp
       Event/EC_UDP_Admin.cpp
-      Event_Utilities.cpp
     }
   }
 }
