@@ -1,3 +1,11 @@
+Fri May 28 01:36:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/GIOP_Server_Request.i (principal): Calling
+	  Principal_var::prt() directly to avoid type ambiguity.
+
+	* tao/Stub.i: Reordered function definitions to avoid using inline
+	  functions before being declared inlined.
+
 Thu May 27 23:15:53 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init_new_naming):
