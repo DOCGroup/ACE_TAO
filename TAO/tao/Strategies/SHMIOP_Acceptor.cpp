@@ -367,7 +367,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - v%d.%d\n"),
                     major,
                     minor));
       }
@@ -486,7 +486,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
           if (name == "priority")
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
+                                 ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported. \n"),
                                  value.c_str ()),
                                 -1);
