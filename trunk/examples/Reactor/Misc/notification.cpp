@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Thread.h"

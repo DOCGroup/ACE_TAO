@@ -4,6 +4,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/ACE.h"
 #include "ace/SString.h"
+#include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_assert.h"

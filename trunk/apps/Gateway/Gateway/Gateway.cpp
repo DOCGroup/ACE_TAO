@@ -2,11 +2,13 @@
 
 #define ACE_BUILD_SVC_DLL
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
+#include "ace/Signal.h"
 #include "Config_Files.h"
 #include "Event_Channel.h"
 #include "Gateway.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(Gateway, Gateway, "$Id$")
 

@@ -24,8 +24,16 @@ ACE_OS::t_alloc (ACE_HANDLE handle, int struct_type,
                  int fields)
 {
 #if defined (ACE_HAS_TLI)
+#  if (_XOPEN_SOURCE - 0 >= 500)
+  // XPG5 changes t_alloc() return from char* to void*, so ACE_OSCALL_RETURN
+  // doesn't compile correctly.
+  char *result;
+  ACE_OSCALL (::t_alloc (handle, struct_type, fields), char *, 0, result);
+  return result;
+#  else
   ACE_OSCALL_RETURN (::t_alloc (handle, struct_type, fields),
                      char *, 0);
+#  endif /* XPG4 vs XPG5 */
 #else
   ACE_UNUSED_ARG (fields);
   ACE_UNUSED_ARG (struct_type);

@@ -26,6 +26,7 @@
 //    only one of the programs so that the test will work properly.
 
 #include "ace/OS_main.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"

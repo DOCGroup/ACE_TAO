@@ -143,7 +143,7 @@ else
 ACELIB      = -lACEns
 endif
 
-LIBS	    += -ltli_r -ldl
+LIBS	    += -lxti -ldl
 
 SONAME	    =
 SOVERSION   =

@@ -15,6 +15,7 @@
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 
 template <class TASK>

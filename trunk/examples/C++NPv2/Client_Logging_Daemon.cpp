@@ -4,6 +4,8 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/os_include/os_netdb.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Event_Handler.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
@@ -19,7 +21,6 @@
 #include "ace/Thread_Manager.h"
 #include "Logging_Acceptor.h"
 #include "CLD_export.h"
-#include "ace/os_include/os_netdb.h"
 
 #if !defined (FLUSH_TIMEOUT)
 #define FLUSH_TIMEOUT 120 /* 120 seconds == 2 minutes. */
