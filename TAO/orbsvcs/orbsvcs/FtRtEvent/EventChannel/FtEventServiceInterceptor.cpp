@@ -206,8 +206,8 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 void
 FtEventServiceInterceptor::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
