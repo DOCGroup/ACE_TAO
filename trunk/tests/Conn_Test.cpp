@@ -217,10 +217,6 @@ blocking_connect (CONNECTOR &con,
     }
 }
 
-typedef ACE_Hash_Addr<ACE_INET_Addr> EXT_ID;
-typedef Svc_Handler *INT_ID;
-typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> MAP_ENTRY;
-
 // This function runs the more sophisticated tests involving the
 // Caching_Connect_Strategy.
 
@@ -239,25 +235,25 @@ cached_connect (STRAT_CONNECTOR &con,
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
       return;
     }
-  
+
   // Send the data to the server.
   svc_handler->send_data ();
-  
+
   // Svc_Handler is now idle.
   svc_handler->idle (1);
-  
+
   // Rest for a second
   ACE_OS::sleep (1);
-  
+
   svc_handler = 0;
-  
+
   // Try to reconnect.
   if (con.connect (svc_handler, server_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
       return;
     }
-  
+
   // Send the data to the server.
   svc_handler->send_data ();
 
@@ -373,6 +369,7 @@ server (void *arg)
   ACE_INET_Addr cli_addr;
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
+  ACE_UNUSED_ARG (options);
 
   Svc_Handler *svc_handler;
   ACE_NEW_RETURN (svc_handler, Svc_Handler, 0);
@@ -383,13 +380,13 @@ server (void *arg)
     {
       // Create a new <Svc_Handler> to consume the data.
 
-      int result = acceptor->accept (svc_handler, 
+      int result = acceptor->accept (svc_handler,
                                      &cli_addr
 // Timing out is the only way for threads to stop accepting, since we
 // don't have signals
-#if defined (ACE_WIN32) || defined (VXWORKS)                                     
+#if defined (ACE_WIN32) || defined (VXWORKS)
                                      , options
-#endif /* ACE_WIN32 || VXWORKS */                                     
+#endif /* ACE_WIN32 || VXWORKS */
                                      );
 
       if (result == -1)
@@ -527,10 +524,10 @@ main (int argc, char *argv[])
       {
       case 'c':
         n_clients = atoi (getopt.optarg);
-	break;
+        break;
       case 's':
         n_servers = atoi (getopt.optarg);
-	break;
+        break;
       }
 
   // Acceptor
@@ -569,6 +566,8 @@ template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Creation_Strategy<Svc_Handler>;
 template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *>;
+template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
@@ -586,6 +585,8 @@ template class ACE_Svc_Tuple<Svc_Handler>;
 #pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<Svc_Handler>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
