@@ -470,6 +470,19 @@ Driver::run (void)
         delete client;
       }
       break;
+    case Options::TEST_COMPLEX_ANY:
+      {
+        Param_Test_Client<Test_Complex_Any> *client = new
+          Param_Test_Client<Test_Complex_Any> (this->orb_.in (),
+                                               this->objref_.in(),
+                                               new Test_Complex_Any);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
 #if 0
     case Options::TEST_MULTDIM_ARRAY:
       {
