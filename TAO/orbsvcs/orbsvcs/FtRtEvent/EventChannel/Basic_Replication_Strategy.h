@@ -18,18 +18,30 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class  Basic_Replication_Strategy
+ *
+ * @brief Use two-way CORBA call to replicate the state to backup replicas.
+ */
+
 class Basic_Replication_Strategy : public Replication_Strategy
 {
 public:
-  Basic_Replication_Strategy();
+  /**
+   * @param mt Specifies whether multithreaded ORB is used.
+   */
+  Basic_Replication_Strategy(bool mt);
+  ~Basic_Replication_Strategy();
 
   virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);
 
-  virtual void replicate_request(
-    const FTRT::State& state,
+  virtual void replicate_request(const FTRT::State& state,
     RollbackOperation rollback,
     const FtRtecEventChannelAdmin::ObjectId& oid
     ACE_ENV_ARG_DECL);
+  virtual void add_member(const FTRT::ManagerInfo & info,
+                          CORBA::ULong object_group_ref_version
+                          ACE_ENV_ARG_DECL);
 
   virtual int  acquire_read (void);
   virtual int  acquire_write (void);
@@ -37,7 +49,7 @@ public:
 
 private:
   FTRT::SequenceNumber sequence_num_;
-  ACE_Thread_Mutex mutex_;
+  ACE_Recursive_Thread_Mutex* mutex_;
 };
 
 #endif
