@@ -1,3 +1,11 @@
+Mon Jan 17 19:54:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/GIOP.cpp (write_request_header_lite): Made
+	  write_request_header_lite similar to write_request_header_std -
+	  both for checking the <response_flags> correctly and for dealing
+	  with the SYNC_WITH_SERVER option.  Thanks to Bala for pointing
+	  this out.
+
 Mon Jan 17 15:49:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
@@ -45,7 +53,7 @@ Fri Jan 14 06:01:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be_include/be_interface.h:
 	  Added a method named 'replacement' giving access to an
 	  interface node, which can serve as an replacement for the original.
- 
+
 	* TAO_IDL/be/be_interface_strategy.cpp,
 	  TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
 	  TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp,
