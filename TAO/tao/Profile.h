@@ -130,9 +130,13 @@ public:
 private:
 
   void create_policy_list (int length);
+  // This method handle the dynamic allocation of the data member
+  // <policy_list_>
+
   // @@ Angelo, please add a comment explaining what it does and why
   // it's needed.
-
+  
+  // @@ Marina DONE.
 private:
   TAO_MProfile *forward_to_i (void);
   // this object keeps ownership of this object
@@ -149,7 +153,7 @@ protected:
   // Flag indicating whether the lazy decoding of the client exposed
   // policies has taken place.
 
-  CORBA::PolicyList_var policy_list_;
+  CORBA::PolicyList *policy_list_;
   // Client exposed policies of this profile.
 
 private:

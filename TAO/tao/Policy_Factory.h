@@ -28,17 +28,21 @@
 
 // @@ Angelo, all TAO implementation classes should start with TAO_.
 // Please change.
-class TAO_Export Policy_Factory
+// @@ Marina DONE.
+
+class TAO_Export TAO_Policy_Factory
 {
   // = TITLE
-  //   Policy_Factory
+  //   TAO_Policy_Factory
   //
   // = DESCRIPTION
-  //   This class allows the creation of RT-Policies based on the
+  //   This class allows the creation of Policies based on the
   //   type of the policy.
 
   // @@ Angelo, does this class creates only RT policies as the
   // comment above indicates?
+
+  // @@ Marina not anymore...
 public:
 
   static CORBA::Policy * create_policy (CORBA::PolicyType ptype);
@@ -46,9 +50,13 @@ public:
   // returned if the policy type is unknown.
 
 protected:
-  Policy_Factory (void);
+  TAO_Policy_Factory (void);
   // @@ Angelo, The only method in this class is a static.  Do we
   // need the constructor?
+  
+  // @@ Marina if u look at the .cpp file this is not implemented, 
+  // and it is declared because there is no point in creating
+  // an instance for this class.
 };
 
 

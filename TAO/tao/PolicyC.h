@@ -210,12 +210,12 @@ public:
   // compiler generated code: they were added by hand.
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  //  Encode the Policy into a CDR representation.  Returns true on
-  //  success and false on failure.
+  // Encode the Policy into a CDR representation.  Returns true 
+  // on success and false on failure.
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  //  Decode the Policy from a CDR representation.
-  //  Returns true on success and false on failure.
+  // Decode the Policy from a CDR representation.  Returns true 
+  // on success and false on failure.
 
 protected:
   CORBA_Policy (void); // default constructor
