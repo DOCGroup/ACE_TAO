@@ -21,7 +21,6 @@
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Hash_Map_Manager.h"
 #include "ace/Signal.h"
 
 ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
@@ -33,50 +32,56 @@ USELIB("..\ace\aced.lib");
 
 #if defined (ACE_HAS_THREADS)
 
-#if defined (DIGITAL_UNIX)
-class ACE_Export ACE_Hash<ACE_hthread_t>
-{
-  // = TITLE
-  //     Function object for hashing an ACE_hthread_t.
-public:
-  u_long operator () (const ACE_hthread_t &t_id) const;
-};
-
-u_long
-ACE_Hash<ACE_hthread_t>::operator () (const ACE_hthread_t &t_id) const
-{
-  return ACE::hash_pjw (ACE_reinterpret_cast (const char *, &t_id),
-                        sizeof t_id);
-}
-#endif /* DIGITAL_UNIX */
-
 // Each thread keeps track of whether it has been signalled by using a
-// global hash map.  See comment below about why it's allocated
-// dynamically.
-typedef ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
-                                int,
-                                ACE_Hash<ACE_hthread_t>,
-                                ACE_Equal_To<ACE_hthread_t>,
-                                ACE_Null_Mutex> SIGNALLED_MAP;
-static SIGNALLED_MAP *signalled = 0;
+// global array.  It must be dynamically allocated to allow sizing at
+// runtime, based on the number of threads.
+static ACE_thread_t *signalled = 0;
+static u_int n_threads = ACE_MAX_THREADS;
+
+// Helper function that looks for an existing entry in the signalled
+// array.  Also finds the position of the first unused entry in the
+// array, and updates if requested with the t_id.
+extern "C"
+int
+been_signalled (const ACE_thread_t t_id, const u_int update = 0)
+{
+  u_int unused_slot = n_threads;
+  for (u_int i = 0; i < n_threads; ++i)
+    {
+      if (ACE_OS::thr_equal (signalled[i], t_id))
+        // Already signalled.
+        return 1;
+
+      if (update  &&
+          unused_slot == n_threads  &&
+          ACE_OS::thr_equal (signalled[i], ACE_OS::NULL_thread))
+        unused_slot = i;
+    }
+
+  if (update  &&  unused_slot < n_threads)
+    // Update the array using the first unused_slot.
+    signalled[unused_slot] = t_id;
+
+  return 0;
+}
 
 // Synchronize starts of threads, so that they all start before the
-// main thread cancels them.  To avoid creating a static object, it
-// is dynamically allocated, before spawning any threads.
-static ACE_Barrier *thread_start;
+// main thread cancels them.  To avoid creating a static object, it is
+// dynamically allocated, before spawning any threads.
+static ACE_Barrier *thread_start = 0;
 
-extern "C" void
-handler (int signum)
+extern "C"
+void
+handler (int /* signum */)
 {
   if (signalled)
     {
       // No printout here, to be safe.  Signal handlers must not
       // acquire locks, etc.
-      ACE_hthread_t t_id;
-      ACE_OS::thr_self (t_id);
+      const ACE_thread_t t_id = ACE_OS::thr_self ();
 
-      // There's not much we can do if the bind () fails.
-      signalled->bind (t_id, ACE_static_cast (sig_atomic_t, signum));
+      // Update the signalled indication.
+      (void) been_signalled (t_id, 1u /* update */);
     }
 }
 
@@ -90,15 +95,7 @@ worker (int iterations)
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Cache this thread's ID.
-  ACE_hthread_t t_id;
-  ACE_OS::thr_self (t_id);
-
-  if (! signalled)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) (worker): signal catcher is 0!!!!\n")));
-      return ACE_reinterpret_cast (void *, -1);
-    }
+  const ACE_thread_t t_id = ACE_OS::thr_self ();
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
@@ -114,12 +111,10 @@ worker (int iterations)
       if ((i % 1000) == 0)
         {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-          sig_atomic_t signum;
-          if (signalled->find (t_id, signum) == 0)
+          if (been_signalled (t_id))
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%t) had received signal %d\n"),
-                          signum));
+                          ASYS_TEXT ("(%t) had received signal\n")));
 
               // Only test for cancellation after we've been signaled,
               // to avoid race conditions for suspend() and resume().
@@ -141,46 +136,7 @@ worker (int iterations)
   return 0;
 }
 
-static const int DEFAULT_THREADS = ACE_MAX_THREADS;
 static const int DEFAULT_ITERATIONS = 10000;
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Equal_To<ACE_hthread_t>;
-template class ACE_Hash_Map_Entry<ACE_hthread_t, sig_atomic_t>;
-template class ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
-  sig_atomic_t,
-  ACE_Hash<ACE_hthread_t>,
-  ACE_Equal_To<ACE_hthread_t>,
-  ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_hthread_t,
-  sig_atomic_t,
-  ACE_Hash<ACE_hthread_t>,
-  ACE_Equal_To<ACE_hthread_t>,
-  ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_hthread_t,
-  sig_atomic_t,
-  ACE_Hash<ACE_hthread_t>,
-  ACE_Equal_To<ACE_hthread_t>,
-  ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Equal_To<ACE_hthread_t>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_hthread_t, sig_atomic_t>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_hthread_t,
-  sig_atomic_t,
-  ACE_Hash<ACE_hthread_t>,
-  ACE_Equal_To<ACE_hthread_t>,
-  ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_hthread_t,
-  sig_atomic_t,
-  ACE_Hash<ACE_hthread_t>,
-  ACE_Equal_To<ACE_hthread_t>,
-  ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_hthread_t,
-  sig_atomic_t,
-  ACE_Hash<ACE_hthread_t>,
-  ACE_Equal_To<ACE_hthread_t>,
-  ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
 
@@ -191,13 +147,17 @@ main (int, ASYS_TCHAR *[])
   int status = 0;
 
 #if defined (ACE_HAS_THREADS)
-  int n_threads = DEFAULT_THREADS;
   int n_iterations = DEFAULT_ITERATIONS;
+
+  u_int i;
 
   // Dynamically allocate signalled so that we can control when it
   // gets deleted.  Specifically, we need to delete it before the main
   // thread's TSS is cleaned up.
-  ACE_NEW_RETURN (signalled, SIGNALLED_MAP, 1);
+  ACE_NEW_RETURN (signalled, ACE_thread_t[n_threads], 1);
+  // Initialize each ACE_thread_t to avoid Purify UMR's.
+  for (i = 0; i < n_threads; ++i)
+    signalled[i] = ACE_OS::NULL_thread;
 
   // And similarly, dynamically allocate the thread_start barrier.
   ACE_NEW_RETURN (thread_start, ACE_Barrier (n_threads + 1), -1);
@@ -216,8 +176,6 @@ main (int, ASYS_TCHAR *[])
   // And test the ability to specify stack size.
   size_t *stack_size;
   ACE_NEW_RETURN (stack_size, size_t[n_threads], -1);
-
-  int i;
 
   for (i = 0; i < n_threads; ++i)
     {
@@ -294,7 +252,7 @@ main (int, ASYS_TCHAR *[])
 #endif /* ACE_HAS_WTHREADS */
 
   // Wait and then cancel all the threads.
-  ACE_OS::sleep (ACE_Time_Value (2));
+  ACE_OS::sleep (ACE_Time_Value (1));
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) cancelling group\n")));
 
@@ -332,7 +290,7 @@ main (int, ASYS_TCHAR *[])
 
   delete thread_start;
   thread_start = 0;
-  delete signalled;
+  delete [] signalled;
   signalled = 0;
 
 #else
