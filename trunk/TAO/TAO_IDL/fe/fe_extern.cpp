@@ -74,6 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
+#include "ace/UUID.h"
 
 ACE_RCSID (fe,
            fe_extern,
@@ -122,5 +123,20 @@ FE_new_UTL_Indenter (void)
                   UTL_Indenter,
                   0);
 
+  return retval;
+}
+
+// Utility method.
+
+ACE_CString
+FE_generate_UUID (void)
+{
+  ACE_Utils::UUID* uuid =
+    ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+    
+  const ACE_CString *tmp = uuid->to_string ();
+  ACE_CString retval = *tmp;
+  delete uuid;
+  
   return retval;
 }

@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _FE_EXTERN_FE_EXTERN_HH
 
 #include "TAO_IDL_FE_Export.h"
+#include "ace/SString.h"
 
 // Declares all global functions for the FE
 
@@ -95,5 +96,9 @@ FE_new_UTL_Error (void);
 
 TAO_IDL_FE_Export UTL_Indenter *
 FE_new_UTL_Indenter (void);
+
+// Utility method to generate a UUID.
+TAO_IDL_FE_Export ACE_CString
+FE_generate_UUID (void);
 
 #endif           // _FE_EXTERN_FE_EXTERN_HH
