@@ -9,7 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
-#include "tao/Connection_Purging_Strategy.h"
+#include "tao/Transport_Cache_Manager.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (TAO_SSLIOP,
@@ -207,8 +207,8 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->purging_strategy ()->find_in_cache (desc,
-                                                             base_transport) == 0)
+  if (this->orb_core ()->transport_cache ()->cache_transport (desc,
+                                                              base_transport) == 0)
     {
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
@@ -224,7 +224,7 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                     ACE_TEXT ("making a new connection \n")));
 
       // Purge connections (if necessary)
-      this->orb_core ()->purging_strategy ()->purge ();
+      this->orb_core ()->transport_cache ()->purge ();
 
       // @@ This needs to change in the next round when we implement a
       // policy that will not allow new connections when a connection
@@ -275,8 +275,8 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->purging_strategy ()->add_to_cache (desc,
-                                                              base_transport);
+        this->orb_core ()->transport_cache ()->cache_transport (desc,
+                                                                base_transport);
 
       if (retval != 0 && TAO_debug_level > 0)
         {

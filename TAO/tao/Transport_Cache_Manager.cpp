@@ -4,6 +4,8 @@
 #include "tao/Transport.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
+#include "tao/Resource_Factory.h"
+#include "tao/Connection_Purging_Strategy.h"
 
 #include "ace/Handle_Set.h"
 
@@ -17,8 +19,11 @@ ACE_RCSID (TAO,
            "$Id$")
 
 
-TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (void)
-  : cache_map_ (),
+TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (
+                                         TAO_Resource_Factory* rf)
+  : percent_ (rf->purge_percentage ()),
+    purging_strategy_ (rf->create_purging_strategy ()),
+    cache_map_ (),
     cache_lock_ (0)
 {
 }
@@ -28,12 +33,20 @@ TAO_Transport_Cache_Manager::~TAO_Transport_Cache_Manager (void)
 {
   // Delete the lock that we have
   delete this->cache_lock_;
+
+  // Delete the purging strategy
+  delete this->purging_strategy_;
 }
 
 int
 TAO_Transport_Cache_Manager::open (TAO_ORB_Core *orb_core,
                                     size_t size)
 {
+  if (this->purging_strategy_ == 0)
+    {
+      return -1;
+    }
+
   // Create the cache_lock
   this->cache_lock_ =
     orb_core->resource_factory ()->create_cached_connection_lock ();
@@ -57,6 +70,10 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
 {
   // Get the entry too
   HASH_MAP_ENTRY *entry = 0;
+
+  // Update the purging strategy information while we
+  // are holding our lock
+  this->purging_strategy_->update_item (int_id);
 
   // When it comes for bind we know the transport is going to be busy
   // and is marked for a partcular thread. So, mark it busy
@@ -126,6 +143,11 @@ TAO_Transport_Cache_Manager::find_transport (
                            int_id);
   if (retval == 0)
     {
+      // Update the purging strategy information by unbinding
+      // and then binding
+      this->unbind (ext_id);
+      this->bind (ext_id, int_id);
+
       transport = int_id.relinquish_transport ();
     }
 
@@ -200,13 +222,6 @@ TAO_Transport_Cache_Manager::rebind_i (const TAO_Cache_ExtId &key,
 {
   return this->cache_map_.rebind (key,
                                   value);
-}
-
-int
-TAO_Transport_Cache_Manager::trybind_i (const TAO_Cache_ExtId &key,
-                                        TAO_Cache_IntId &value)
-{
-  return this->cache_map_.trybind (key, value);
 }
 
 int
@@ -368,6 +383,151 @@ TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
 }
 
 
+#if !defined (ACE_LACKS_QSORT)
+int
+TAO_Transport_Cache_Manager::cpscmp(const void* a, const void* b)
+{
+  const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**)a;
+  const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**)b;
+
+  if ((*left)->int_id_.purging_order () > (*right)->int_id_.purging_order ())
+    return 1;                                   
+ 
+  if ((*left)->int_id_.purging_order () < (*right)->int_id_.purging_order ())
+    return -1;
+
+  return 0;
+}
+#endif /* ACE_LACKS_QSORT */
+
+
+void
+TAO_Transport_Cache_Manager::sort_set (HASH_MAP_ENTRY**& entries,
+                                       int current_size)
+{
+#if defined (ACE_LACKS_QSORT)
+  // Use insertion sort if we don't have qsort
+  for(int i = 1; i < current_size; i++)
+    {
+      if (entries[i]->int_id_.purging_order () <
+                    entries[i - 1]->int_id_.purging_order ())
+        {
+          HASH_MAP_ENTRY* entry = entries[i];
+          for(int j = i; j > 0 &&
+                         entries[j - 1]->int_id_.purging_order () >
+                           entry->int_id_.purging_order (); j--)   
+            {
+              HASH_MAP_ENTRY* holder = entries[j];
+              entries[j] = entries[j - 1];
+              entries[j - 1] = holder;
+            }
+        }
+    }
+#else
+  ACE_OS::qsort (entries, current_size,
+                 sizeof (HASH_MAP_ENTRY*), (ACE_COMPARE_FUNC)cpscmp);
+#endif /* ACE_LACKS_QSORT */
+}
+ 
+
+int
+TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
+{
+  int amount = -1;
+  int cache_maximum = this->purging_strategy_->cache_maximum ();
+
+  // Do we need to worry about cache purging?
+  if (cache_maximum >= 0)
+    {
+      int current_size = this->cache_map_.current_size ();
+      amount = current_size - cache_maximum;
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
+                                ACE_TEXT ("TAO_Transport_Cache_Manager")
+                                ACE_TEXT ("::fill_set_i - %d %d\n"),
+                                current_size, cache_maximum));
+        }
+
+      if (amount >= 0)
+        {
+          // I could not use ACE_Array_Base<HASH_MAP_ENTRY*> because
+          // the compiler kept complaining about HASH_MAP_ENTRY not having
+          // a default construtor.
+          HASH_MAP_ENTRY** entries;
+          ACE_NEW_RETURN(entries, HASH_MAP_ENTRY*[current_size], 0);
+          sorted_set.size (current_size);
+
+          int i;
+          HASH_MAP_ITER iter = this->cache_map_.begin ();
+          for (i = 0; i < current_size; i++)
+            {
+              entries[i] = &(*iter);
+              iter++;
+            }
+
+          this->sort_set (entries, current_size);
+
+          for(i = 0; i < current_size; i++)
+            {
+              // The owner of the sorted_set array accepts responsibility
+              // for deleting the memory allocated here.
+              sorted_set[i] = entries[i]->ext_id_.property ()->duplicate ();
+            }
+
+          delete [] entries;
+        }
+    }
+
+  return (amount >= 0);
+}
+
+
+void
+TAO_Transport_Cache_Manager::close_entries(DESCRIPTOR_SET& sorted_set)
+{
+  const int sorted_size = sorted_set.size ();
+  const int amount = (sorted_size * this->percent_) / 100;
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
+                            ACE_TEXT ("Purging %d of %d cache entries\n"),
+                            amount,
+                            sorted_size));
+    }
+
+  int count = 0;
+  for(int i = 0; i < sorted_size; i++)
+    {
+      TAO_Transport_Descriptor_Interface* prop = sorted_set[i];
+      if (count < amount)
+        {
+          // Compose the ExternId
+          TAO_Cache_ExtId ext_id (prop);
+          TAO_Cache_IntId int_id;
+
+          if (this->find (ext_id, int_id) == 0)
+            {
+              TAO_Transport* transport = int_id.relinquish_transport ();
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
+                                        ACE_TEXT ("Idle transport found in ")
+                                        ACE_TEXT ("cache: 0x%x\n"),
+                                        transport));
+                }
+
+              // Eventually calls purge_entry() on us.
+              transport->close_connection ();
+              count++;
+            }
+        }
+      delete prop;
+    }
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -385,6 +545,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Cache_ExtId, TAO_Cache_IntId
 template class ACE_Unbounded_Set<ACE_Event_Handler*>;
 template class ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>;
 template class ACE_Node<ACE_Event_Handler*>;
+template class ACE_Array_Base<TAO_Transport_Descriptor_Interface*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -402,5 +563,6 @@ template class ACE_Node<ACE_Event_Handler*>;
 #pragma instantiate ACE_Unbounded_Set<ACE_Event_Handler*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
 #pragma instantiate ACE_Node<ACE_Event_Handler*>
+#pragma instantiate ACE_Array_Base<TAO_Transport_Descriptor_Interface*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

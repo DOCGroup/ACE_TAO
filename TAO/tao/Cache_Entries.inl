@@ -4,14 +4,16 @@
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (void)
   : transport_ (0),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN),
+    purging_order_ (0)
 {
 }
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (const TAO_Cache_IntId &rhs)
   : transport_ (0),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN),
+    purging_order_ (0)
 {
   *this = rhs;
 }
@@ -59,6 +61,18 @@ TAO_Cache_IntId::relinquish_transport (void)
   TAO_Transport *val = this->transport_;
   this->transport_ = 0;
   return val;
+}
+
+ACE_INLINE unsigned long
+TAO_Cache_IntId::purging_order (void) const
+{
+  return this->purging_order_;
+}
+
+ACE_INLINE void
+TAO_Cache_IntId::purging_order (unsigned long value)
+{
+  this->purging_order_ = value;
 }
 
 /*******************************************************/

@@ -809,7 +809,8 @@ TAO_Default_Resource_Factory::create_purging_strategy (void)
   if (this->connection_caching_type_ == TAO_Resource_Factory::LRU)
     {
       ACE_NEW_RETURN (strategy,
-                      TAO_LRU_Connection_Purging_Strategy (this),
+                      TAO_LRU_Connection_Purging_Strategy (
+                                           this->cache_maximum ()),
                       0);
     }
   else

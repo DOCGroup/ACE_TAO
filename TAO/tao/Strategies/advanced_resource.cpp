@@ -608,22 +608,26 @@ TAO_Advanced_Resource_Factory::create_purging_strategy (void)
     {
     case TAO_Resource_Factory::LFU:
       ACE_NEW_RETURN (strategy,
-                      TAO_LFU_Connection_Purging_Strategy (this),
+                      TAO_LFU_Connection_Purging_Strategy (
+                                               this->cache_maximum ()),
                       0);
       break;
     case TAO_Resource_Factory::FIFO:
       ACE_NEW_RETURN (strategy,
-                      TAO_FIFO_Connection_Purging_Strategy (this),
+                      TAO_FIFO_Connection_Purging_Strategy (
+                                               this->cache_maximum ()),
                       0);
       break;
     case TAO_Resource_Factory::NOOP:
       ACE_NEW_RETURN (strategy,
-                      TAO_NULL_Connection_Purging_Strategy (this),
+                      TAO_NULL_Connection_Purging_Strategy (
+                                               this->cache_maximum ()),
                       0);
       break;
     case TAO_Resource_Factory::LRU:
       ACE_NEW_RETURN (strategy,
-                      TAO_LRU_Connection_Purging_Strategy (this),
+                      TAO_LRU_Connection_Purging_Strategy (
+                                               this->cache_maximum ()),
                       0);
       break;
     default:
