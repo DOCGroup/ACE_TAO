@@ -24,7 +24,6 @@
 
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
-#include "IOPC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
