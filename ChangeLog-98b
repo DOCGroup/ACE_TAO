@@ -1,3 +1,9 @@
+Fri Sep 25 18:24:17 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Proactor.{h,cpp}: Had to allow the definition of 
+	  POSIX_COMPLETION_STRATEGY for the do-nothing constructor on 
+	  NT.
+
 Fri Sep 25 18:07:19 EDT 1998   James CE Johnson  <jcej@lads.com>
 
 	* A few more minor changes to docs/tutorials/013.  With luck, the
