@@ -131,7 +131,7 @@ namespace TAO
     typedef Out_Var_Size_SArgument_T<T,T_var>           out_arg_val;
     typedef Ret_Var_Size_SArgument_T<T,T_var>           ret_val;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/Var_Size_SArgument_T.inl"

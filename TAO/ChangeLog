@@ -1,3 +1,10 @@
+Tue Nov 23 06:46:10 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Object_SArgument_T.h:
+        * tao/Var_Size_SArgument_T.h:
+
+          Removed semi-colons from the ending brace for namespaces.
+
 Tue Nov 23 07:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp (event):
