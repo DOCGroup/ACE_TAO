@@ -1,3 +1,8 @@
+Wed Feb 27 10:47:12 2002   Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/ace_flags.bor:
+          Added lines for new TAO_Messaging library
+
 Wed Feb 27 01:12:32 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Swap.h:
@@ -16,10 +21,10 @@ Wed Feb 26 00:38:50 2002 UTC  Don Hinton <dhinton@ieee.org>
 	  it isn't used.
 
 Tue Feb 26 22:54:50 2002 UTC  Don Hinton <dhinton@ieee.org>
-	
+
 	* ace/Synch.i (ACE_Noop_Token::queueing_strategy):
 
-	  Removed ACE_UNUSED_ARG and commented out the parameter 
+	  Removed ACE_UNUSED_ARG and commented out the parameter
 	  instead.  Thanks to Ossama and Craig for pointing this out.
 
 Tue Feb 26 16:17:45 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
