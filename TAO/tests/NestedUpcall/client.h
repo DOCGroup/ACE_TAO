@@ -10,7 +10,7 @@
 //    client.h
 //
 // = DESCRIPTION
-//      
+//
 //
 // = AUTHORS
 //    Aniruddha Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
@@ -104,4 +104,3 @@ template class ACE_Auto_Basic_Ptr<EventHandler_i>;
 #pragma instantiate auto_ptr<EventHandler_i>
 #pragma instantiate ACE_Auto_Basic_Ptr<EventHandler_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
