@@ -69,6 +69,8 @@
 # define ACE_HAS_ANSI_CASTS
 # define ACE_HAS_CPLUSPLUS_HEADERS
 # define ACE_HAS_STDCPP_STL_INCLUDES
+#else
+# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #endif /* EGCS */
 
 
@@ -164,9 +166,6 @@
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
-// Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
