@@ -6,17 +6,21 @@
 Video_Control_i::Video_Control_i ()
   : reactor_ (TAO_ORB_Core_instance ()->reactor ())
 {
-  // Associate the default ACE_Reactor instance as the reactor .
-  this->reactor_ = TAO_ORB_Core_instance ()->reactor ();
   
-  ACE_NEW (this->data_handler_,
-           Video_Data_Handler);
-
-  ACE_NEW (this->sig_handler_, 
-           Video_Sig_Handler);
-
 }
 
+int
+Video_Control_i::create_handlers (void)
+{
+  ACE_NEW_RETURN (this->data_handler_,
+                  Video_Data_Handler,
+                  -1);
+
+  ACE_NEW_RETURN (this->sig_handler_, 
+                  Video_Sig_Handler,
+                  -1);
+  return 0;
+}
 CORBA::Boolean 
 Video_Control_i::init_video (const Video_Control::INITvideoPara &para,
                              Video_Control::INITvideoReply_out reply,

@@ -271,6 +271,49 @@ static void SocketRead(int s, char *buf, int size)
   }
 }
 
+#if 0
+static void SocketRecv(int s, char *buf, int size)
+{ int val, remain = size;
+  char * ptr = buf;
+  for (;;)
+  {
+    val = read(s, ptr, remain);
+    /*
+    fprintf(stderr, "CTR got from %sSocket %d of %d.\n",
+	    s == videoSocket ? "video" : "audio", val, remain);
+    */
+    if (val == -1 && errno == EINTR)
+    {
+      errno = 0;
+      continue;
+    }
+    if (val == -1)
+    {
+      fprintf(stderr, "CTR error read %sSocket, ret=%d(size=%d)",
+	      s == videoSocket ? "video" : "audio", size-remain, size);
+      perror("");
+      exit(1);
+    }
+    if (val == 0)
+    {
+      fprintf(stderr, "CTR error read %sSocket, EOF met, ret=%d(size=%d).\n",
+	      s == videoSocket ? "video" : "audio", size-remain, size);
+      exit(1);
+    }
+    ptr += val;
+    remain -= val;
+    if (remain < 0)
+    {
+      fprintf(stderr, "CTR error read %sSocket, read too much, ret=%d(size=%d).\n",
+	      s == videoSocket ? "video" : "audio", size-remain, size);
+      exit(1);
+    }
+    if (remain == 0)
+      break;
+  }
+}
+#endif
+
 #define VideoRead(buf, size) SocketRead(videoSocket, buf, size)
 
 #define VideoWrite(buf, psize) \
@@ -625,6 +668,7 @@ static int InitVideoChannel(char * phostname, char * vf)
 
 static int InitAudioChannel(char * phostname, char * af)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%T) InitAudioChannel called "));
   int dataSocket = -1;
 
   if (!hasAudioDevice)

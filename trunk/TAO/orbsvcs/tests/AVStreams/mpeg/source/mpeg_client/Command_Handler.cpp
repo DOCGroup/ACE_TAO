@@ -4,6 +4,7 @@
 
 // %% yikes!!!
 #include "ctr.cpp"
+#include "ace/SOCK_Connector.h"
 
 const char *TAO_AV_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
 
@@ -476,7 +477,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
           free(ah);
           free(af);
           ::close(sp[0]);
-          ComCloseFd(videoSocket);
+          ::close (videoSocket);
           if (audioSocket >= 0)
             ComCloseFd(audioSocket);
           ABdeleteBuf();
@@ -494,7 +495,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
           break;
         default:
           ::close(sp[1]);
-          ComCloseFd(dataSocket);
+          ::close(dataSocket);
           {
             int bytes, res;
             /* passing all messages of INIT frame to VB here. */
@@ -508,6 +509,9 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
             }
             while (msgo + msgs < pkts) {
               VideoRead(buf, sizeof(*msg));
+              //~~ we need to read the first frame from the 
+              //  data socket instead of control socket.
+              //              SocketRecv(dataSocket, buf, size);
               pkts = ntohl(msg->packetSize);
               msgo = ntohl(msg->msgOffset);
               msgs = ntohl(msg->msgSize);
@@ -1303,23 +1307,32 @@ Command_Handler::connect_to_server (char *address,
                                     int *data_fd, 
                                     int *max_pkt_size)
 {
-  ::VideoComOpenConnPair (address,
-                          ctr_fd,
-                          data_fd,
-                          max_pkt_size);
 
+
+  // set the pointers to the correct values
+
+  *max_pkt_size = -INET_SOCKET_BUFFER_SIZE;
+  // construct the server addr
+  ACE_INET_Addr server_addr (VCR_TCP_PORT,
+                             address);
+
+  if (this->connector_.connect (this->stream_,
+                         server_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Connection to server failed: %p\n",
+                       "connect"),
+                      -1);
   // Write the CmdINITvideo to tell the server that this is a video
   // client.
   unsigned char tmp;
   tmp = CmdINITvideo;
-  ::write (*ctr_fd,
-           &tmp,
-           sizeof (tmp));
+  this->stream_.send_n (&tmp, sizeof (tmp));
   int ack;
-  ::read (*ctr_fd,
-          &ack,
-          sizeof (ack));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  this->stream_.recv_n (&ack, sizeof (ack));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) got ack :%d\n", 
+              ack));
   
   // initialize the command handler , ORB
   if (this->resolve_server_reference () == -1)
@@ -1329,28 +1342,32 @@ Command_Handler::connect_to_server (char *address,
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   // Resolve the video control object reference.
-  int i = sizeof (sockaddr_in);
-  struct sockaddr_in addressIn;
-  if (::getsockname(*data_fd, 
-                    (struct sockaddr *)&addressIn, 
-                    &i) == -1) 
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) Command_Handler::connect_to_server"
-                       " failed to getsocketname on TCP dfd:"),
-                      -1);
-
+//   int i = sizeof (sockaddr_in);
+//  struct sockaddr_in addressIn;
+//  if (::getsockname(*data_fd, 
+//                    (struct sockaddr *)&addressIn, 
+//                    &i) == -1) 
+//    ACE_ERROR_RETURN ((LM_ERROR, 
+//                       "(%P|%t) Command_Handler::connect_to_server"
+//                       " failed to getsocketname on TCP dfd:"),
+//                      -1);
+// 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   CORBA::Short server_port;
   TAO_TRY
     {
+      ACE_INET_Addr local_addr;
       CORBA::String client_address_string;
       ACE_NEW_RETURN (client_address_string,
                       char [BUFSIZ],
                       -1);
+      // Get the local address
+      this->stream_.get_local_addr (local_addr);
+      // form a string 
       ::sprintf (client_address_string,
                  "%s:%d",
-                 ::inet_ntoa (addressIn.sin_addr),
-                 &addressIn.sin_port);
+                 local_addr.get_host_name (),
+                 local_addr.get_port_number ());
       
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Client string is %s\n",
@@ -1372,12 +1389,24 @@ Command_Handler::connect_to_server (char *address,
     }
   TAO_ENDTRY;
 
-  ACE_INET_Addr server_addr (server_port,
-                             address);
+  ACE_INET_Addr server_udp_addr (server_port,
+                                 address);
 
   this->dgram_.set_handle (*data_fd);
 
-  return this->dgram_.open (server_addr);
+
+  if (this->dgram_.open (server_udp_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Command_Handler::connect_to_server:%p\n",
+                       "dgram.open "),
+                      -1);
+  
+  // set the pointers to the correct values
+
+  //  *ctr_fd = this->stream_.get_handle ();
+  *ctr_fd = *data_fd = this->dgram_.get_handle ();
+  // set both the control and data socket the same UDP socket.
+  return 0;
 }
 
 // ----------------------------------------------------------------------

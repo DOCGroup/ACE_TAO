@@ -749,6 +749,7 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
 	     cfd>=0: data sock     Paired with cfd and return.
    */
 
+#if 0
 int VideoComOpenConnPair (char * address, 
                           int *ctr_fd, 
                           int *data_fd, 
@@ -760,6 +761,10 @@ int VideoComOpenConnPair (char * address,
   struct sockaddr_in addressIn;
   struct sockaddr_un addressUn;
   
+  ACE_DEBUG ((LM_DEBUG,
+              "%s %d\n",
+              __FILE__,__LINE__));
+
   if (!size) {
     fprintf(stderr,
 	    "Error ComOpenConnPair: pid %d not done ComInitClient/Server yet.\n",
@@ -856,75 +861,8 @@ int VideoComOpenConnPair (char * address,
   }
 
   /* build appropriate type of Connections to Server */
-  if (csocktype == CONN_UNIX && dsocktype == CONN_UNIX) {
-    /* build UNIX connection to server */
-    addressUn.sun_family = AF_UNIX;
-    strncpy(addressUn.sun_path, unix_port,
-	    sizeof(struct sockaddr_un) - sizeof(short));
-    cfd = socket(AF_UNIX, SOCK_STREAM, 0);
-    if (cfd == -1) {
-      fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to open UNIX cfd:",
-	      getpid());
-      perror("");
-      return -1;
-    }
-    usleep(10000); /* this is for waiting for the uncaught signal mentioned
-		      below */
-    if (connect(cfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
-      fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to conn UNIX cfd to server:",
-	      getpid());
-      perror("");
-      i = -3;  /* I don't understand why when connect() returns EINTR, the connection
-		  is still built, and the other end can still get what written at
-		  this end, 'i = -3' is a garbage to be written. */
-      write(cfd, &i, 4);
-      close(cfd);
-      return -1;
-    }
-    if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
-      fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to write -1 to UNIX cfd:",
-	      getpid());
-      perror("");
-      close(cfd);
-      return -1;
-    }
-    
-    dfd = socket(AF_UNIX, SOCK_STREAM, 0);
-    if (dfd == -1) {
-      fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to open UNIX dfd:",
-	      getpid());
-      perror("");
-      close(cfd);
-      return -1;
-    }
-    usleep(10000);
-    if (connect(dfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
-       fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to conn UNIX dfd to server:",
-	      getpid());
-      perror("");
-      i = -3;
-      write(dfd, &i, 4);
-      close(cfd);
-      close(dfd);
-      return -1;
-    }
-    if (time_write_int(dfd, i) == -1) {
-      fprintf(stderr,
-	      "Error ComOpenConnPair: pid %d failed to write (cfd) to UNIX dfd:",
-	      getpid());
-      perror("");
-      close(cfd);
-      close(dfd);
-      return -1;
-    }
-    *max_pkt_size = 0;
-  }
-  else if (csocktype == CONN_INET && dsocktype == CONN_INET)  {
+ 
+  if (csocktype == CONN_INET && dsocktype == CONN_INET)  {
     /* build TCP connection to server */
     addressIn.sin_port = htons(inet_port);
     cfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -1290,6 +1228,7 @@ int VideoComOpenConnPair (char * address,
   *data_fd = dfd;
   return 0;
 }
+#endif
 
 /* returns: -1 -- failed,  >=0 -- fd */
 int ComOpenConn(char * address, int *max_pkt_size)

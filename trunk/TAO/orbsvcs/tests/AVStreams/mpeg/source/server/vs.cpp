@@ -19,7 +19,8 @@ main (int argc, char **argv)
                           -1);
 
       // Release the lock on which the server is waiting
-      ACE_SV_Semaphore_Simple semaphore (4242);
+      ACE_Process_Semaphore semaphore (0,
+                                       "Video_Server_Semaphore");
       semaphore.release ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       // Increment ACE_SV_Semaphore by one. Dijkstra's V operation,
