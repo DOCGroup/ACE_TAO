@@ -7,6 +7,10 @@ Mon Mar 08 12:27:54 1999  David L. Levine  <levine@cs.wustl.edu>
         * docs/ACE-subsets.html: added subset characterizations on
           several platforms.
 
+        * include/makeinclude/platform_sunos5_ghs.GNU: fixed AR and
+          ARFLAGS to use CC to build static libs.  It looks like GreenHills
+          no longer supplies a separate archiver with 1.8.9.
+
 Mon Mar 08 11:58:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Task.cpp (activate): Made sure we don't mess with the passed
