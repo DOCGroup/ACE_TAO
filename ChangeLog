@@ -1,3 +1,12 @@
+Fri Oct 18 11:39:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
+          Put the sigterm_handler function in an unnamed namespace
+          to avoid issues with g++ not liking 'static' and 'extern "C"'
+          together.
+
 Fri Oct 18 03:55:51 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 	                      Bill Fulton <Bill_A_Fulton@raytheon.com>
                            

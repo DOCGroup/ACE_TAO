@@ -16,7 +16,9 @@
 
 #include <errno.h>
 
-extern "C" static void sigterm_handler (int /* signum */) { /* No-op. */ }
+namespace {
+  extern "C" void sigterm_handler (int /* signum */) { /* No-op. */ }
+}
 
 
 int
