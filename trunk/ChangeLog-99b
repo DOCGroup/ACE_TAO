@@ -1,3 +1,8 @@
+Wed Apr 28 16:53:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Proactor.cpp: 
+	* ace/POSIX_Asynch_IO.cpp: Fixed old g++ warnings
+
 Wed Apr 28 15:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp (symbol): Use reinterpret_cast to cast
