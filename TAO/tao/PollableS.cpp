@@ -75,13 +75,13 @@ TAO_CORBA_Pollable_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_is_a",  &POA_CORBA::Pollable::_is_a_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"is_ready",      &POA_CORBA::Pollable::is_ready_skel},
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"_non_existent",  &POA_CORBA::Pollable::_non_existent_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"create_pollable_set",   &POA_CORBA::Pollable::create_pollable_set_skel},
     };
 
@@ -370,13 +370,13 @@ TAO_CORBA_DIIPollable_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"_is_a",  &POA_CORBA::DIIPollable::_is_a_skel},
-      {"",}, {"",},
+      {"",0}, {"",0},
       {"is_ready",      &POA_CORBA::DIIPollable::is_ready_skel},
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"_non_existent",  &POA_CORBA::DIIPollable::_non_existent_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"create_pollable_set",   &POA_CORBA::DIIPollable::create_pollable_set_skel},
     };
 
@@ -596,15 +596,15 @@ TAO_CORBA_PollableSet_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"poll",  &POA_CORBA::PollableSet::poll_skel},
       {"_is_a",  &POA_CORBA::PollableSet::_is_a_skel},
       {"remove",        &POA_CORBA::PollableSet::remove_skel},
-      {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0},
       {"number_left",   &POA_CORBA::PollableSet::number_left_skel},
       {"add_pollable",  &POA_CORBA::PollableSet::add_pollable_skel},
       {"_non_existent",  &POA_CORBA::PollableSet::_non_existent_skel},
-      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"create_dii_pollable",   &POA_CORBA::PollableSet::create_dii_pollable_skel},
     };
 
