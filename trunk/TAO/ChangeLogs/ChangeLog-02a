@@ -1,3 +1,34 @@
+Mon Sep 25 22:34:47 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+        * tao/uiop_endpoints.cpp
+	* tao/uiop_endpoints.h
+	* tao/uiop_endpoints.i
+	* tao/iiop_endpoints.cpp
+	* tao/iiop_endpoints.h
+	* tao/iiop_endpoints.i
+	* tao/ssl_endpoints.cpp
+	* tao/ssl_endpoints.h
+	* tao/ssl_endpoints.i:
+
+	  Trimmed down these files by removing generated classes/functions
+	  we do not use.  In particular,  removed all any operators, *_out
+	  classes and *info*_var classes.
+
+	* tao/SSLIOP_Profile.cpp (encode)
+	* tao/IIOP_Profile.cpp (create_profile_body)
+	* tao/UIOP_Profile.cpp (create_profile_body)
+	* tao/SHMIOP_Profile.cpp (create_profile_body):
+
+	  Added TAO_HAS_RT_CORBA protection: create TAO_TAG_ENDPOINTS
+	  component only when RTCORBA is enabled.
+
+	* tao/corbafwd.h:
+
+	  Updated Tagged Components tag ids.  Assigned a new id to
+	  TAO_TAG_ENDPOINTS rather than reusing TAO_TAG_PRIORITY to avoid
+	  interoperability problems with older versions of TAO (old
+	  server/new client).
+
 Mon Sep 25 20:03:11 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp (locate_servant_i): The incarnate()
@@ -16,7 +47,7 @@ Mon Sep 25 16:17:01 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Notify_Default_EMO_Factory.cpp:
 	  Fixes for various compilation problems - thanks to Wei Chiang
 	  <Wei.Chiang@nokia.com> for providing missing code for template instantiation.
-	* orbsvcs/Notify_Service/README:	
+	* orbsvcs/Notify_Service/README:
 	  Added a svc.conf option to show how show available options.
 
 Mon Sep 25 13:51:43 2000  Ossama Othman  <ossama@uci.edu>
@@ -30,7 +61,7 @@ Mon Sep 25 13:51:43 2000  Ossama Othman  <ossama@uci.edu>
 	  Security Service 1.8 updates.
 
 Mon Sep 25 11:09:20 2000  Ossama Othman  <ossama@uci.edu>
-	
+
 	* TAO_IDL/be/be_helper.cpp (copyright):
 
 	  Cosmetic update for the RCS ID in generated files.  Updated the

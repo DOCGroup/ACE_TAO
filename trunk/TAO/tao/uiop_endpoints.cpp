@@ -21,7 +21,7 @@ static const CORBA::Long _oc_TAO_UIOP_Endpoint_Info[] =
   23, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x55494f50), ACE_NTOHL (0x5f456e64), ACE_NTOHL (0x706f696e), ACE_NTOHL (0x745f496e), ACE_NTOHL (0x666f0000),  // name = TAO_UIOP_Endpoint_Info
   2, // member count
   17, ACE_NTOHL (0x72656e64), ACE_NTOHL (0x657a766f), ACE_NTOHL (0x75735f70), ACE_NTOHL (0x6f696e74), ACE_NTOHL (0x0),  // name = rendezvous_point
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   9, ACE_NTOHL (0x7072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = priority
   CORBA::tk_short,
@@ -38,7 +38,7 @@ void TAO_UIOP_Endpoint_Info::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_TAO_UIOPENDPOINTSEQUENCE_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_TAO_UIOPENDPOINTSEQUENCE_CS_
 
@@ -47,43 +47,43 @@ void TAO_UIOP_Endpoint_Info::_tao_any_destructor (void *x)
   {
     TAO_UIOP_Endpoint_Info* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       TAO_UIOP_Endpoint_Info *old = ACE_reinterpret_cast (TAO_UIOP_Endpoint_Info *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     TAO_UIOP_Endpoint_Info *tmp = ACE_reinterpret_cast (TAO_UIOP_Endpoint_Info *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence::~_TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_TAO_UIOPENDPOINTSEQUENCE_CS_)
 #define _TAO_UIOPENDPOINTSEQUENCE_CS_
@@ -95,30 +95,30 @@ void TAO_UIOP_Endpoint_Info::_tao_any_destructor (void *x)
 TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (void)
 {}
 TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TAO_UIOP_Endpoint_Info>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (CORBA::ULong max, CORBA::ULong length, TAO_UIOP_Endpoint_Info *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TAO_UIOP_Endpoint_Info>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (const TAO_UIOPEndpointSequence &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_UIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TAO_UIOP_Endpoint_Info>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 TAO_UIOPEndpointSequence::~TAO_UIOPEndpointSequence (void) // dtor
@@ -147,7 +147,7 @@ static const CORBA::Long _oc_TAO_UIOPEndpointSequence[] =
       23, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x55494f50), ACE_NTOHL (0x5f456e64), ACE_NTOHL (0x706f696e), ACE_NTOHL (0x745f496e), ACE_NTOHL (0x666f0000),  // name = TAO_UIOP_Endpoint_Info
       2, // member count
       17, ACE_NTOHL (0x72656e64), ACE_NTOHL (0x657a766f), ACE_NTOHL (0x75735f70), ACE_NTOHL (0x6f696e74), ACE_NTOHL (0x0),  // name = rendezvous_point
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       9, ACE_NTOHL (0x7072696f), ACE_NTOHL (0x72697479), ACE_NTOHL (0x0),  // name = priority
       CORBA::tk_short,
@@ -158,176 +158,6 @@ static const CORBA::Long _oc_TAO_UIOPEndpointSequence[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_TAO_UIOPEndpointSequence (CORBA::tk_alias, sizeof (_oc_TAO_UIOPEndpointSequence), (char *) &_oc_TAO_UIOPEndpointSequence, 0, sizeof (TAO_UIOPEndpointSequence));
 CORBA::TypeCode_ptr _tc_TAO_UIOPEndpointSequence = &_tc_TAO_tc_TAO_UIOPEndpointSequence;
-
-void operator<<= (CORBA::Any &_tao_any, const TAO_UIOP_Endpoint_Info &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      _tc_TAO_UIOP_Endpoint_Info,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-void operator<<= (CORBA::Any &_tao_any, TAO_UIOP_Endpoint_Info *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      _tc_TAO_UIOP_Endpoint_Info,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      TAO_UIOP_Endpoint_Info::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_UIOP_Endpoint_Info *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const TAO_UIOP_Endpoint_Info*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_UIOP_Endpoint_Info *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (_tc_TAO_UIOP_Endpoint_Info, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const TAO_UIOP_Endpoint_Info*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      TAO_UIOP_Endpoint_Info *tmp;
-      ACE_NEW_RETURN (tmp, TAO_UIOP_Endpoint_Info, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            _tc_TAO_UIOP_Endpoint_Info,
-            1,
-            ACE_static_cast (void *, tmp),
-            TAO_UIOP_Endpoint_Info::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const TAO_UIOPEndpointSequence &_tao_elem
-  ) // copying
-{
-  TAO_OutputCDR stream;
-  if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        _tc_TAO_UIOPEndpointSequence,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
-}
-
-void operator<<= (CORBA::Any &_tao_any, TAO_UIOPEndpointSequence *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      _tc_TAO_UIOPEndpointSequence,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      TAO_UIOPEndpointSequence::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_UIOPEndpointSequence *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(
-      const TAO_UIOPEndpointSequence*&,
-      _tao_elem
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_UIOPEndpointSequence *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (_tc_TAO_UIOPEndpointSequence, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const TAO_UIOPEndpointSequence*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      TAO_UIOPEndpointSequence *tmp;
-      ACE_NEW_RETURN (tmp, TAO_UIOPEndpointSequence, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            _tc_TAO_UIOPEndpointSequence,
-            1,
-            ACE_static_cast (void *, tmp),
-            TAO_UIOPEndpointSequence::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -358,7 +188,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -370,4 +200,3 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
-
