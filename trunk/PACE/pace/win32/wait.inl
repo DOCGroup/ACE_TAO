@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/wait.inl
+ *    pace/posix/wait.inl
  *
  * = AUTHOR
  *    Luther Baker

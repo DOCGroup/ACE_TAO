@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/math.inl
+ *    pace/posix/math.inl
  *
  * = AUTHOR
  *    Luther Baker

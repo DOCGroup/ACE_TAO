@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/grp.inl
+ *    pace/posix/grp.inl
  *
  * = AUTHOR
  *    Luther Baker
@@ -14,7 +14,7 @@
  * ============================================================================= */
 
 PACE_INLINE
-struct group *
+pace_group *
 pace_getgrgid (pace_gid_t gid)
 {
   return getgrgid (gid);
@@ -23,10 +23,10 @@ pace_getgrgid (pace_gid_t gid)
 PACE_INLINE
 int
 pace_getgrgid_r (pace_gid_t gid,
-                 struct group * grp,
+                 pace_group * grp,
                  char * buffer,
                  size_t bufsize,
-                 struct group ** result)
+                 pace_group ** result)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return getgrgid_r (gid, grp, buffer, bufsize, result);
@@ -41,7 +41,7 @@ pace_getgrgid_r (pace_gid_t gid,
 }
 
 PACE_INLINE
-struct group *
+pace_group *
 pace_getgrnam (const char * name)
 {
   return getgrnam (name);
@@ -50,10 +50,10 @@ pace_getgrnam (const char * name)
 PACE_INLINE
 int
 pace_getgrnam_r (const char * name,
-                  struct group * grp,
+                  pace_group * grp,
                   char * buffer,
                   size_t bufsize,
-                  struct group ** result)
+                  pace_group ** result)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return getgrnam_r (name, grp, buffer, bufsize, result);

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/unistd.inl
+ *    pace/posix/unistd.inl
  *
  * = AUTHOR
  *    Luther Baker
@@ -14,6 +14,7 @@
  * ============================================================================= */
 
 #include <unistd.h>
+#include <stdarg.h>
 
 PACE_INLINE
 void
@@ -59,6 +60,13 @@ pace_close (int fildes)
 }
 
 PACE_INLINE
+char *
+pace_ctermid (char * s)
+{
+  return ctermid (s);
+}
+
+PACE_INLINE
 int
 pace_dup (int fildes)
 {
@@ -70,6 +78,39 @@ int
 pace_dup2 (int fildes, int fildes2)
 {
   return dup2 (fildes, fildes2);
+}
+
+int
+pace_execl (const char* path, const char* arg, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, arg);
+  result = pace_execv (path, (char*const*)ap);
+  va_end (ap);
+  return result;
+}
+
+int
+pace_execle (const char* path, const char* arg, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, arg);
+  result = pace_execve (path, (char*const*)ap, 0);
+  va_end (ap);
+  return result;
+}
+
+int
+pace_execlp (const char* file, const char* arg,  ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, arg);
+  result = pace_execvp (file, (char*const*)ap);
+  va_end (ap);
+  return result;
 }
 
 PACE_INLINE
@@ -314,6 +355,20 @@ long
 pace_sysconf (int name)
 {
   return sysconf (name);
+}
+
+PACE_INLINE
+pid_t
+pace_tcgetpgrp (int fildes)
+{
+  return tcgetpgrp (fldes);
+}
+
+PACE_INLINE
+int
+pace_tcsetpgrp (int fildes, pid_t pgrp_id)
+{
+  return tcsetpgrp (fildes, pgrp_id);
 }
 
 PACE_INLINE

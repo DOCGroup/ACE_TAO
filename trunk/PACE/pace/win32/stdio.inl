@@ -6,12 +6,14 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/stdio.inl
+ *    pace/posix/stdio.inl
  *
  * = AUTHOR
  *    Luther Baker
  *
  * =========================================================================== */
+
+#include <stdarg.h>
 
 PACE_INLINE
 void
@@ -19,13 +21,6 @@ pace_clearerr (FILE * stream)
 {
   clearerr (stream);
   return;
-}
-
-PACE_INLINE
-char *
-pace_ctermid (char * s)
-{
-  return ctermid (s);
 }
 
 PACE_INLINE
@@ -80,6 +75,14 @@ pace_fgetc (FILE * stream)
 }
 
 PACE_INLINE
+int
+pace_fgetpos(PACE_FILE * stream,
+             pace_fpos_t * pos)
+{
+  return fgetpos (stream, pos);
+}
+
+PACE_INLINE
 char *
 pace_fgets (char * s,
             int n,
@@ -119,6 +122,17 @@ pace_fputc (int c,
 {
   return fputc (c,
                 stream);
+}
+
+int
+pace_fprintf (FILE *fp, const char *format, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  result = vfprintf (fp, format, ap);
+  va_end (ap);
+  return result;
 }
 
 PACE_INLINE
@@ -166,6 +180,13 @@ pace_fseek (FILE * stream,
 }
 
 PACE_INLINE
+int
+pace_fsetpos(PACE_FILE *stream, const pace_fpos_t *pos)
+{
+  return fsetpos (stream, pos);
+}
+
+PACE_INLINE
 long
 pace_ftell (FILE * stream)
 {
@@ -195,6 +216,15 @@ pace_funlockfile (FILE * file)
   PACE_ERRNO_NO_SUPPORT ();
 #endif /* ! PACE_HAS_REENTRANT */
   return;
+}
+
+PACE_INLINE
+pace_size_t
+pace_fwrite(const void * ptr,
+            pace_size_t size, pace_size_t nmemb,
+            PACE_FILE * stream)
+{
+  return fwrite (ptr, size, nmemb, stream);
 }
 
 PACE_INLINE
@@ -247,6 +277,17 @@ pace_perror (const char * s)
 {
   perror (s);
   return;
+}
+
+int
+pace_printf (const char* format, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  result = vprintf (format, ap);
+  va_end (ap);
+  return result;
 }
 
 PACE_INLINE
@@ -322,22 +363,30 @@ pace_rewind (FILE * stream)
 }
 
 PACE_INLINE
-int
-pace_sprintf (char * buf, const char * format, ... )
-{
-  va_list ap;
-  va_start (ap, format);
-  vsprintf (buf, format, ap);
-  va_end (ap);
-  return 0;
-}
-
-PACE_INLINE
 void
 pace_setbuf (FILE * stream, char * buf)
 {
   setbuf (stream, buf);
   return;
+}
+
+PACE_INLINE
+int
+pace_setvbuf(PACE_FILE * stream,
+             char * buf,
+             int mode, pace_size_t size)
+{
+  return setvbuf (stream, buf, mode, size);
+}
+int
+pace_sprintf (char* s, const char* format, ...)
+{
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  result = vsprintf (s, format, ap);
+  va_end (ap);
+  return result;
 }
 
 PACE_INLINE
@@ -363,9 +412,37 @@ pace_ungetc (int c, FILE * stream)
 
 PACE_INLINE
 int
-pace_vsprintf (char * buffer,
+pace_vfprintf (PACE_FILE * stream,
                const char * format,
-               va_list argptr)
+               va_list arg)
 {
-  return vsprintf (buffer, format, argptr);
+  /*  return vfprintf (stream, format, arg); */
+  PACE_UNUSED_ARG (stream);
+  PACE_UNUSED_ARG (format);
+  PACE_UNUSED_ARG (arg);
+  return -1;
+}
+
+PACE_INLINE
+int
+pace_vprintf (const char * format,
+              va_list arg)
+{
+  /*  return vfprintf (format, arg); */
+  PACE_UNUSED_ARG (format);
+  PACE_UNUSED_ARG (arg);
+  return -1;
+}
+
+PACE_INLINE
+int
+pace_vsprintf (char * s,
+               const char * format,
+               va_list arg)
+{
+  /*  return vsprintf (s, format, arg);*/
+  PACE_UNUSED_ARG (s);
+  PACE_UNUSED_ARG (format);
+  PACE_UNUSED_ARG (arg);
+  return -1;
 }

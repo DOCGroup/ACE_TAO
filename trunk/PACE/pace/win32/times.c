@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/times.c
+ *    pace/posix/times.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/sys/times.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/win32/times.inl"
+# include "pace/posix/times.inl"
 #endif /* ! PACE_HAS_INLINE */

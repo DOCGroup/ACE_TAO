@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/ctype.h
+ *    pace/posix/ctype.h
  *
  * = AUTHOR
  *    Luther Baker
