@@ -317,7 +317,7 @@ Twoway_Handler::run (void)
   for (;;)
     {
       ACE_INT32 len = 0;
-      char *request;
+      char *request = 0;
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
@@ -349,7 +349,7 @@ Twoway_Handler::run (void)
                     "ACE::write_n"));
       else
         {
-          size_t s_bytes = OPTIONS::instance ()->reply_message_len ();
+          ssize_t s_bytes = (ssize_t) OPTIONS::instance ()->reply_message_len ();
 
           // Don't try to send more than is in the request buffer!
           if (s_bytes > r_bytes)
@@ -363,8 +363,12 @@ Twoway_Handler::run (void)
         }
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
+
+      delete [] request;
+      request = 0;
     }
 
+  delete [] request;
   return 0;
 }
 
@@ -403,7 +407,7 @@ Oneway_Handler::run (void)
   for (;;)
     {
       ACE_INT32 len = 0;
-      char *request;
+      char *request = 0;
 
       if (parse_header_and_allocate_buffer (request,
                                             &len) == -1)
@@ -436,7 +440,11 @@ Oneway_Handler::run (void)
 
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
+      delete [] request;
+      request = 0;
     }
+
+  delete [] request;
   return 0;
 }
 
@@ -595,6 +603,8 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
