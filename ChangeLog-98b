@@ -18,6 +18,10 @@ Fri Nov 06 12:58:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Nov  6 10:12:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+        * Updated the "site map" for ACE so that it doesn't use absolute
+ 	  links.  Thanks to Rainer Blome <rainer_blome@de.ibm.com> for
+ 	  contributing this.
+
         * ace/Process.h: Clarified the behavior of ACE_Process and
           ACE_Process_Options on UNIX because of the use of execve(),
           which doesn't search the path.  Thanks to Avi Nash for reporting
