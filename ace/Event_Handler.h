@@ -147,7 +147,8 @@ public:
 #endif /* ACE_HAS_WINCE */
 
 protected:
-  ACE_Event_Handler (void);
+  ACE_Event_Handler (ACE_Reactor * = 0,
+                     int priority = ACE_Event_Handler::LO_PRIORITY);
   // Force ACE_Event_Handler to be an abstract base class.
 
 private:

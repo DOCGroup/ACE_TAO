@@ -1,5 +1,8 @@
 Tue Feb 23 20:58:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i: Make sure to do the right thang if we're compiling the
+ 	  ACE recursive thread mutexes on platforms that lack threading.
+
 	* ace/Service_Object: Added a new ACE_Service_Object constructor
  	  that takes an ACE_Reactor * and passes this down to the
  	  ACE_Event_Handler base class.

@@ -16,9 +16,10 @@ ACE_RCSID(ace, Event_Handler, "$Id$")
 // Implement conceptually abstract virtual functions in the base class
 // so derived classes don't have to implement unused ones.
 
-ACE_Event_Handler::ACE_Event_Handler (void)
-  : priority_ (ACE_Event_Handler::LO_PRIORITY),
-    reactor_ (0)
+ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
+                                      int p)
+  : priority_ (p),
+    reactor_ (r)
 {
   // ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
 }

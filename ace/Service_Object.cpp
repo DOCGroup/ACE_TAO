@@ -80,7 +80,8 @@ ACE_Service_Type::resume (void) const
   this->type_->resume ();
 }
 
-ACE_Service_Object::ACE_Service_Object (void)
+ACE_Service_Object::ACE_Service_Object (ACE_Reactor *r)
+  : ACE_Event_Handler (r)
 {
   ACE_TRACE ("ACE_Service_Object::ACE_Service_Object");
 }
