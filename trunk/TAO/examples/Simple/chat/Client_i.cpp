@@ -195,6 +195,8 @@ Client_i::handle_input (ACE_HANDLE)
 	  // Remove ourselves from the server.
 	  this->server_->remove (this->receiver_var_.in ());
 	  this->receiver_i_.shutdown (TAO_TRY_ENV);
+
+	  TAO_CHECK_ENV;
 	  return 0;
 	}
 
@@ -203,6 +205,7 @@ Client_i::handle_input (ACE_HANDLE)
       this->server_->say (this->receiver_var_.in (),
 			  buf,
 			  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
@@ -210,6 +213,7 @@ Client_i::handle_input (ACE_HANDLE)
       return -1;
     }
   TAO_ENDTRY;
+
   return 0;
 }
 

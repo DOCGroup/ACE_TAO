@@ -28,6 +28,8 @@ main (int argc, char *argv[])
       if (client_i.init (argc, argv) == -1
 	  || client_i.run () == -1)
 	return -1;
+
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {

@@ -28,11 +28,22 @@ main (int argc, char *argv[])
     {
       Server_i server_i;
 
-      if (server_i.init (argc, argv, TAO_TRY_ENV) != 0
-	  || server_i.run (TAO_TRY_ENV) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "\n error in init or run.\n"),
-			   1);
+      if (server_i.init (argc, argv, TAO_TRY_ENV) != 0)
+	{
+	  TAO_CHECK_ENV;
+
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "\n error in init.\n"),
+			    1);
+	}
+      if (server_i.run (TAO_TRY_ENV) != 0)
+	{
+	  TAO_CHECK_ENV;
+
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "\n error in run.\n"),
+			    1);
+	}
     }
   TAO_CATCHANY
     {
