@@ -18,7 +18,7 @@ ACE_TMAIN (int argc, char *argv[])
       NotifyExt::EventChannelFactory_var ecf_ext = NotifyExt::EventChannelFactory::_narrow (ecf);
       
       ecf_ext->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
