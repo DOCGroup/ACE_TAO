@@ -20,6 +20,10 @@ Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	  isn't really needed any more, but has been kept for backward
 	  compatibility.
 
+	* ace/Object_Manager.cpp: use a static ACE_Static_Object_Lock with
+	  ACE_HAS_NONSTATIC_OBJECT_MANAGER, because the ACE static services
+	  needs it.
+
 	* ace/Malloc.cpp,Reactor.cpp,Service_Repository.cpp: added
 	  #include "ace/Object_Manager.h" for ACE_Static_Object_Lock.
 
