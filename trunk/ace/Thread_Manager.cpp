@@ -135,13 +135,13 @@ ACE_Thread_Descriptor::terminate ()
          // Threads created with THR_DAEMON shouldn't exist here, but
          // just to be safe, let's put it here.
 
-         if (this->thr_state_ != ACE_THR_JOINING)
+         if (ACE_BIT_ENABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_JOINING))
            {
              if (ACE_BIT_DISABLED (this->flags_, THR_DETACHED | THR_DAEMON)
                  || ACE_BIT_ENABLED (this->flags_, THR_JOINABLE))
                {
                  // Mark thread as terminated.
-                 this->thr_state_ = ACE_THR_TERMINATED;
+                 ACE_SET_BITS (this->thr_state_, ACE_Thread_Manager::ACE_THR_TERMINATED);
                  tm_->register_as_terminated (this);
                  // Must copy the information here because td will be
                  // "freed" below.
@@ -246,7 +246,7 @@ void
 ACE_Thread_Descriptor::acquire_release (void)
 {
   // Just try to acquire the lock then release it.
-  if (this->registered_ == 0)
+  if (ACE_BIT_DISABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_SPAWNED))
     {
       this->sync_->acquire ();
       // Acquire the lock before removing <td> from the thread table.  If
@@ -254,7 +254,7 @@ ACE_Thread_Descriptor::acquire_release (void)
       // lock easily.
 
       // Once we get the lock, we must have registered.
-      ACE_ASSERT (this->registered_ != 0);
+      ACE_ASSERT (ACE_BIT_ENABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_SPAWNED));
 
       this->sync_->release ();
       // Release the lock before putting it back to freelist.
@@ -602,7 +602,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // <lock_> held...
 #if 1
   ACE_Thread_Descriptor *new_thr_desc = this->thread_desc_freelist_.remove ();
-  new_thr_desc->registered_ = 0;
+  new_thr_desc->thr_state_ = ACE_THR_IDLE;
   // Get a "new" Thread Descriptor from the freelist.
 
   new_thr_desc->sync_->acquire ();
@@ -824,7 +824,7 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
 int
 ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
                                 ACE_hthread_t t_handle,
-                                ACE_Thread_State thr_state,
+                                ACE_UINT32 thr_state,
                                 int grp_id,
                                 ACE_Task_Base *task,
                                 long flags,
@@ -841,7 +841,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   thr_desc->thr_id_ = t_id;
   thr_desc->thr_handle_ = t_handle;
   thr_desc->grp_id_ = grp_id;
-  thr_desc->thr_state_ = thr_state;
+  ACE_SET_BITS (thr_desc->thr_state_, thr_state);
   thr_desc->task_ = task;
 #if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   thr_desc->cleanup_info_.cleanup_hook_ = 0;
@@ -859,7 +859,6 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   thr_desc->terminated_ = 0;
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-  thr_desc->registered_ = 1;
   thr_desc->sync_->release ();
 
   return 0;
@@ -1033,7 +1032,7 @@ ACE_Thread_Manager::remove_thr_all (void)
     return -1; \
   } \
   else { \
-    td->thr_state_ = STATE; \
+    ACE_SET_BITS (td->thr_state_, STATE); \
     return 0; \
   }
 
@@ -1075,7 +1074,16 @@ ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_thr");
 
-  ACE_THR_OP (ACE_Thread::suspend, ACE_THR_SUSPENDED);
+  int result = ACE_Thread::suspend (td->thr_handle_);
+  if (result == -1) {
+    if (errno != ENOTSUP)
+      this->thr_to_be_removed_.enqueue_tail (td);
+    return -1;
+  }
+  else {
+    ACE_SET_BITS (td->thr_state_, ACE_THR_SUSPENDED);
+    return 0;
+  }
 }
 
 int
@@ -1083,7 +1091,16 @@ ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_thr");
 
-  ACE_THR_OP (ACE_Thread::resume, ACE_THR_RUNNING);
+  int result = ACE_Thread::resume (td->thr_handle_);
+  if (result == -1) {
+    if (errno != ENOTSUP)
+      this->thr_to_be_removed_.enqueue_tail (td);
+    return -1;
+  }
+  else {
+    ACE_CLR_BITS (td->thr_state_, ACE_THR_SUSPENDED);
+    return 0;
+  }
 }
 
 int
@@ -1091,7 +1108,7 @@ ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td, int async_cancel)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_thr");
   // Must set the state first and then try to cancel the thread.
-  td->thr_state_ = ACE_THR_CANCELLED;
+  ACE_SET_BITS (td->thr_state_, ACE_THR_CANCELLED);
 
   if (async_cancel != 0)
     // Note that this call only does something relevant if the OS
@@ -1185,13 +1202,14 @@ ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
 }
 
 int
-ACE_Thread_Manager::check_state (ACE_Thread_State state,
-                                 ACE_thread_t id)
+ACE_Thread_Manager::check_state (ACE_UINT32 state,
+                                 ACE_thread_t id,
+                                 int enable)
 {
   ACE_TRACE ("ACE_Thread_Manager::check_state");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_Thread_State thr_state;
+  ACE_UINT32 thr_state;
 
   int self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
 
@@ -1207,7 +1225,10 @@ ACE_Thread_Manager::check_state (ACE_Thread_State state,
         return 0;
       thr_state = ptr->thr_state_;
     }
-  return thr_state == state;
+  if (enable)
+    return ACE_BIT_ENABLED (thr_state, state);
+  else
+    return ACE_BIT_DISABLED (thr_state, state);
 }
 
 // Test if a single thread is suspended.
@@ -1225,7 +1246,7 @@ int
 ACE_Thread_Manager::testresume (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::testresume");
-  return this->check_state (ACE_THR_RUNNING, t_id);
+  return this->check_state (ACE_THR_SUSPENDED, t_id, 0);
 }
 
 // Test if a single thread is cancelled.
@@ -1449,7 +1470,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
         {
           tdb = *iter.next ();
-          tdb.thr_state_ = ACE_THR_JOINING;
+          ACE_SET_BITS (tdb.thr_state_, ACE_THR_JOINING);
           found = 1;
           break;
         }
@@ -1527,7 +1548,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
           (ACE_BIT_DISABLED (iter.next ()->flags_, THR_DETACHED | THR_DAEMON)
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
         {
-          iter.next ()->thr_state_ = ACE_THR_JOINING;
+          ACE_SET_BITS (iter.next ()->thr_state_, ACE_THR_JOINING);
           copy_table[copy_count++] = *iter.next ();
         }
 
@@ -1637,12 +1658,12 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
         // Threads created with THR_DAEMON shouldn't exist here, but
         // just to be safe, let's put it here.
 
-        if (td->thr_state != ACE_THR_JOINING)
+        if (ACE_BIT_DISABLED (td->thr_state_, ACE_THR_JOINING))
           if (ACE_BIT_DISABLED (td->flags_, THR_DETACHED | THR_DAEMON)
               || ACE_BIT_ENABLED (td->flags_, THR_JOINABLE))
             {
               // Mark thread as terminated.
-              td->thr_state_ = ACE_THR_TERMINATED;
+              ACE_SET_BITS (td->thr_state_, ACE_THR_TERMINATED);
               this->register_as_terminated (td);
               // Must copy the information here because td will be "freed" below.
             }
@@ -1729,7 +1750,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
                   && ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
                 {
                   this->thr_to_be_removed_.enqueue_tail (iter.next ());
-                  iter.next ()->thr_state_ = ACE_THR_JOINING;
+                  ACE_SET_BITS (iter.next ()->thr_state_, ACE_THR_JOINING);
                 }
 
             if (! this->thr_to_be_removed_.is_empty ())
@@ -1854,7 +1875,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
           (ACE_BIT_DISABLED (iter.next ()->flags_, THR_DETACHED | THR_DAEMON)
            || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
         {
-          iter.next ()->thr_state_ = ACE_THR_JOINING;
+          ACE_SET_BITS (iter.next ()->thr_state_, ACE_THR_JOINING);
           copy_table[copy_count++] = *iter.next ();
         }
 

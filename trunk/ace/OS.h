@@ -1642,35 +1642,6 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 #   define ACE_MT(X)
 # endif /* ACE_MT_SAFE */
 
-// These are the various states a thread managed by the
-// <Thread_Manager> can be in.
-enum ACE_Thread_State
-{
-  ACE_THR_IDLE,
-  // Uninitialized.
-
-  ACE_THR_SPAWNED,
-  // Created but not yet running.
-
-  ACE_THR_RUNNING,
-  // Thread is active (naturally, we don't know if it's actually
-  // *running* because we aren't the scheduler...).
-
-  ACE_THR_SUSPENDED,
-  // Thread is suspended.
-
-  ACE_THR_CANCELLED,
-  // Thread has been cancelled (which is an indiction that it needs to
-  // terminate...).
-
-  ACE_THR_TERMINATED,
-  // Thread has shutdown, but the slot in the thread manager hasn't
-  // been reclaimed yet.
-
-  ACE_THR_JOINING
-  // Join operation has been invoked on the thread by thread manager.
-};
-
 # if !defined (ACE_DEFAULT_THREAD_PRIORITY)
 #   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
 # endif /* ACE_DEFAULT_THREAD_PRIORITY */
@@ -6538,10 +6509,10 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 
 // Stuff used by the ACE CDR classes.
 #if defined ACE_LITTLE_ENDIAN
-#  define STREAM_BYTE_ORDER 1  
+#  define STREAM_BYTE_ORDER 1
 // little endian encapsulation byte order has value = 1
 #else  /* ! ACE_LITTLE_ENDIAN */
-#  define STREAM_BYTE_ORDER 0  
+#  define STREAM_BYTE_ORDER 0
 // big endian encapsulation byte order has value = 0
 #endif /* ! ACE_LITTLE_ENDIAN */
 
