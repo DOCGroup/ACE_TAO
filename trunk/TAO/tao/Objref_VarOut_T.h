@@ -50,6 +50,7 @@ public:
   operator T * const & () const;
   operator T *& ();
 
+  typedef T     _obj_type;
   typedef T *   _in_type;
   typedef T *&  _inout_type;
   typedef T *&  _out_type;
