@@ -74,7 +74,7 @@ ACE_Service_Type::fini (void) const
   ((ACE_Service_Type *) this)->name_ = 0;
 
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
-    delete (void *) this->object ();
+    operator delete ((void *) this->object ());	// cast to remove const-ness
 
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_THIS))
     delete (ACE_Service_Type *) this; 
