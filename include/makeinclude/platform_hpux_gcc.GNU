@@ -22,6 +22,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+ifeq (,$(with_ld))
+  with_ld = hpux
+endif
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
