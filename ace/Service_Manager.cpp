@@ -172,7 +172,9 @@ ACE_Service_Manager::list_services (void)
       ACE_TCHAR *p = buf + len;
 
       ACE_OS::strcpy (buf, sr->name ());
-      ACE_OS::strcat (buf, (sr->active ()) ? " (active) " : " (paused) ");
+      ACE_OS::strcat (buf, (sr->active ()) ?
+                      ACE_TEXT (" (active) ") :
+                      ACE_TEXT (" (paused) "));
 
       p[-1] = ' ';
       p[0]  = '\0';
@@ -231,13 +233,13 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
 {
   ACE_TRACE("ACE_Service_Manager::process_request");
   ACE_TCHAR *p;
- 
+
   // Kill trailing newlines.
   for (p = request;
        (*p != '\0') && (*p != '\r') && (*p != '\n');
        p++)
     continue;
- 
+
   *p = '\0';
 
   if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
