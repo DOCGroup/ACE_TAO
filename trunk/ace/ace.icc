@@ -1,193 +1,582 @@
-// Optimized configuration file to generate the ACE shared library
-option 
-        defaults(xlC_r),
-        gen(check,bounds,no),
-        link(typecheck,yes),
-        opt(level, 3),
-        gen(enumsize, small),
-        link(linkwithmultithreadlib),
-        link(exportAll),
-        link(linkwithsharedlib, yes)
-        {
-                // Initially create a temporary shared object
-               target type (shr) "libAceShr.a"
-                {
-                        option 
-			opt(level,3),
-			macros(global)
-                        {       
-                                   source type(cpp) "pthread.h"
-                                   source type(cpp) "ACE.h"
-                                   source type(cpp) "OS.h"
-                        }
-                        source type (cpp) "Log_Msg.cpp"
-                        source type (cpp) "ACE.cpp"
-                        source type (cpp) "Activation_Queue.cpp"
-                        source type (cpp) "Addr.cpp"
-                        source type (cpp) "ARGV.cpp"
-                        source type (cpp) "Asynch_IO.cpp"
-                        source type (cpp) "Basic_Types.cpp"
-                        source type (cpp) "CORBA_Handler.cpp"
-                        source type (cpp) "CORBA_Ref.cpp"
-                        source type (cpp) "DEV.cpp"
-                        source type (cpp) "DEV_Addr.cpp"
-                        source type (cpp) "DEV_Connector.cpp"
-                        source type (cpp) "DEV_IO.cpp"
-                        source type (cpp) "Dump.cpp"
-                        source type (cpp) "Dynamic.cpp"
-                        source type (cpp) "Event_Handler.cpp"
-                        source type (cpp) "Filecache.cpp"
-                        source type (cpp) "FIFO.cpp"
-                        source type (cpp) "FIFO_Recv.cpp"
-                        source type (cpp) "FIFO_Recv_Msg.cpp"
-                        source type (cpp) "FIFO_Send.cpp"
-                        source type (cpp) "FIFO_Send_Msg.cpp"
-                        source type (cpp) "FILE.cpp"
-                        source type (cpp) "FILE_Addr.cpp"
-                        source type (cpp) "FILE_Connector.cpp"
-                        source type (cpp) "FILE_IO.cpp"
-                        source type (cpp) "Get_Opt.cpp"
-                        source type (cpp) "Handle_Set.cpp"
-                        source type (cpp) "High_Res_Timer.cpp"
-                        source type (cpp) "INET_Addr.cpp"
-                        source type (cpp) "IOStream.cpp"
-                        source type (cpp) "IO_Cntl_Msg.cpp"
-                        source type (cpp) "IO_SAP.cpp"
-                        source type (cpp) "IPC_SAP.cpp"
-                        source type (cpp) "Local_Name_Space.cpp"
-                        source type (cpp) "Local_Tokens.cpp"
-                        source type (cpp) "LSOCK.cpp"
-                        source type (cpp) "LSOCK_Acceptor.cpp"
-                        source type (cpp) "LSOCK_CODgram.cpp"
-                        source type (cpp) "LSOCK_Connector.cpp"
-                        source type (cpp) "LSOCK_Dgram.cpp"
-                        source type (cpp) "LSOCK_Stream.cpp"
-                        source type (cpp) "Log_Record.cpp"
-                        source type (cpp) "Malloc.cpp"
-                        source type (cpp) "Mem_Map.cpp"
-                        source type (cpp) "Memory_Pool.cpp"
-                        source type (cpp) "Message_Block.cpp"
-                        source type (cpp) "Method_Object.cpp"
-                        source type (cpp) "Msg_WFMO_Reactor.cpp"
-                        source type (cpp) "Name_Proxy.cpp"
-                        source type (cpp) "Name_Request_Reply.cpp"
-                        source type (cpp) "Name_Space.cpp"
-                        source type (cpp) "Naming_Context.cpp"
-                        source type (cpp) "Object_Manager.cpp"
-                        source type (cpp) "Obstack.cpp"
-                        source type (cpp) "OS.cpp"
-                        source type (cpp) "OS_Dirent.cpp"
-                        source type (cpp) "OS_Memory.cpp"
-                        source type (cpp) "OS_String.cpp"
-                        source type (cpp) "OS_TLI.cpp"
-                        source type (cpp) "Thread_Hook.cpp"
-                        source type (cpp) "Base_Thread_Adapter.cpp"
-                        source type (cpp) "OS_Thread_Adapter.cpp"
-                        source type (cpp) "Thread_Adapter.cpp"
-                        source type (cpp) "Thread_Exit.cpp"
-                        source type (cpp) "Thread_Control.cpp"
-                        source type (cpp) "Parse_Node.cpp"
-                        source type (cpp) "Pipe.cpp"
-                        source type (cpp) "Proactor.cpp"
-                        source type (cpp) "Process.cpp"
-                        source type (cpp) "Process_Manager.cpp"
-                        source type (cpp) "Profile_Timer.cpp"
-                        source type (cpp) "Reactor.cpp"
-                        source type (cpp) "Read_Buffer.cpp"
-                        source type (cpp) "Registry.cpp"
-                        source type (cpp) "Registry_Name_Space.cpp"
-                        source type (cpp) "Remote_Name_Space.cpp"
-                        source type (cpp) "Remote_Tokens.cpp"
-                        source type (cpp) "SOCK.cpp"
-                        source type (cpp) "SOCK_Acceptor.cpp"
-                        source type (cpp) "SOCK_CODgram.cpp"
-                        source type (cpp) "SOCK_Connector.cpp"
-                        source type (cpp) "SOCK_Dgram.cpp"
-                        source type (cpp) "SOCK_Dgram_Bcast.cpp"
-                        source type (cpp) "SOCK_IO.cpp"
-                        source type (cpp) "SOCK_Dgram_Mcast.cpp"
-                        source type (cpp) "SOCK_Stream.cpp"
-                        source type (cpp) "SPIPE.cpp"
-                        source type (cpp) "SPIPE_Acceptor.cpp"
-                        source type (cpp) "SPIPE_Addr.cpp"
-                        source type (cpp) "SPIPE_Connector.cpp"
-                        source type (cpp) "SPIPE_Stream.cpp"
-                        source type (cpp) "SString.cpp"
-                        source type (cpp) "Sched_Params.cpp"
-                        source type (cpp) "Select_Reactor.cpp"
-                        source type (cpp) "Shared_Memory.cpp"
-                        source type (cpp) "Priority_Reactor.cpp"
-                        source type (cpp) "Service_Config.cpp"
-                        source type (cpp) "Service_Manager.cpp"
-                        source type (cpp) "Service_Object.cpp"
-                        source type (cpp) "Service_Types.cpp"
-                        source type (cpp) "Service_Repository.cpp"
-                        source type (cpp) "Shared_Memory_MM.cpp"
-                        source type (cpp) "Shared_Memory_SV.cpp"
-                        source type (cpp) "Shared_Object.cpp"
-                        source type (cpp) "Signal.cpp"
-                        source type (cpp) "Strategies.cpp"
-                        source type (cpp) "SV_Message.cpp"
-                        source type (cpp) "SV_Message_Queue.cpp"
-                        source type (cpp) "SV_Semaphore_Complex.cpp"
-                        source type (cpp) "SV_Semaphore_Simple.cpp"
-                        source type (cpp) "SV_Shared_Memory.cpp"
-                        source type (cpp) "Synch.cpp"
-                        source type (cpp) "Synch_Options.cpp"
-                        source type (cpp) "System_Time.cpp"
-                        source type (cpp) "Task.cpp"
-                        source type (cpp) "Timer_Hash.cpp"
-                        source type (cpp) "Timer_Heap.cpp"
-                        source type (cpp) "Timer_List.cpp"
-                        source type (cpp) "Timer_Queue.cpp"
-                        source type (cpp) "Timer_Wheel.cpp"
-                        source type (cpp) "TLI.cpp"
-                        source type (cpp) "TLI_Acceptor.cpp"
-                        source type (cpp) "TLI_Connector.cpp"
-                        source type (cpp) "TLI_Stream.cpp"
-                        source type (cpp) "Thread.cpp"
-                        source type (cpp) "Thread_Manager.cpp"
-                        source type (cpp) "Time_Request_Reply.cpp"
-                        source type (cpp) "Token.cpp"
-                        source type (cpp) "Token_Collection.cpp"
-                        source type (cpp) "Token_Invariants.cpp"
-                        source type (cpp) "Token_Manager.cpp"
-                        source type (cpp) "Token_Request_Reply.cpp"
-                        source type (cpp) "Trace.cpp"
-                        source type (cpp) "TTY_IO.cpp"
-                        source type (cpp) "UNIX_Addr.cpp"
-                        source type (cpp) "UPIPE_Acceptor.cpp"
-                        source type (cpp) "UPIPE_Connector.cpp"
-                        source type (cpp) "UPIPE_Stream.cpp"
-                        source type (cpp) "WFMO_Reactor.cpp"
-                        source type (cpp) "XtReactor.cpp"
-                        source type (cpp) "Svc_Conf_l.cpp"
-                        source type (cpp) "Svc_Conf_y.cpp"
-                        source type (cpp) "Array.cpp"
-                        source type (cpp) "Auto_Ptr.cpp"
-                        source type (cpp) "Containers.cpp"
-                        source type (cpp) "Free_List.cpp"
-                        source type (cpp) "Hash_Map_Manager.cpp"
-                        source type (cpp) "Local_Name_Space_T.cpp"
-                        source type (cpp) "Malloc_T.cpp"
-                        source type (cpp) "Managed_Object.cpp"
-                        source type (cpp) "Map_Manager.cpp"
-                        source type (cpp) "Message_Queue.cpp"
-                        source type (cpp) "Module.cpp"
-                        source type (cpp) "Singleton.cpp"
-                        source type (cpp) "Stream.cpp"
-                        source type (cpp) "Stream_Modules.cpp"
-                        source type (cpp) "Synch_T.cpp"
-                        source type (cpp) "Task_T.cpp"
-                        source type (cpp) "Timer_Heap_T.cpp"
-                        source type (cpp) "Timer_Queue_T.cpp"
+// $Id$
+//
+// Configuration file to build ACE shared library on AIX using
+// Visual Age C++ 5 (or later).
 
-			//  Link libraries
-                        source type (lib) "libtli_r.a"
-                        source type (lib) "libdl.a"
-                        source type (lib) "libpthreads.a"
-                        source type (lib) "libc_r.a"
-			// Imports
-			source type (imp) "pse.exp"
+include "ace_vacpp_options.icc"
+
+group OS_FILES =
+  "Basic_Types.cpp",
+  "OS.cpp",
+  "OS_Dirent.cpp",
+  "OS_Memory.cpp",
+  "OS_String.cpp",
+  "OS_TLI.cpp",
+  "OS_Errno.cpp",
+  "Base_Thread_Adapter.cpp",
+  "OS_Thread_Adapter.cpp",
+  "OS_Log_Msg_Attributes.cpp",
+  "Thread_Hook.cpp",
+  "Sched_Params.cpp"
+
+group OS_INCLUDES =
+  "Basic_Types.h",
+  "OS.h",
+  "OS_Dirent.h",
+  "OS_Memory.h",
+  "OS_String.h",
+  "OS_TLI.h",
+  "OS_Errno.h",
+  "Base_Thread_Adapter.h",
+  "OS_Thread_Adapter.h",
+  "OS_Log_Msg_Attributes.h",
+  "Thread_Hook.h",
+  "Sched_Params.h"
+
+group UTILS_FILES =
+  "ACE.cpp",
+  "Init_ACE.cpp",
+  "Flag_Manip.cpp",
+  "Handle_Ops.cpp",
+  "Lib_Find.cpp",
+  "Malloc_Instantiations.cpp",
+  "Active_Map_Manager.cpp",
+  "Arg_Shifter.cpp",
+  "ARGV.cpp",
+  "Capabilities.cpp",
+  "Containers.cpp",
+  "Configuration.cpp",
+  "Dirent.cpp",
+  "Dynamic.cpp",
+  "Dynamic_Service_Base.cpp",
+  "Functor.cpp",
+  "Get_Opt.cpp",
+  "Hash_Map_Manager.cpp",
+  "High_Res_Timer.cpp",
+  "Method_Request.cpp",
+  "Object_Manager.cpp",
+  "Profile_Timer.cpp",
+  "Registry.cpp",
+  "SString.cpp",
+  "Stats.cpp",
+  "Sample_History.cpp",
+  "Basic_Stats.cpp",
+  "System_Time.cpp",
+  "Time_Request_Reply.cpp",
+  "Timeprobe.cpp",
+  "Timer_Hash.cpp",
+  "Timer_Heap.cpp",
+  "Timer_List.cpp",
+  "Timer_Queue.cpp",
+  "Timer_Wheel.cpp"
+//  #### NOTE:  see below for Filecache.
+
+group UTILS_INCLUDES =
+  "ACE.h",
+  "Init_ACE.h",
+  "Flag_Manip.h",
+  "Handle_Ops.h",
+  "Lib_Find.h",
+  "Active_Map_Manager.h",
+  "Arg_Shifter.h",
+  "ARGV.h",
+  "Capabilities.h",
+  "Containers.h",
+  "Configuration.h",
+  "Dirent.h",
+  "Dynamic.h",
+  "Dynamic_Service_Base.h",
+  "Functor.h",
+  "Get_Opt.h",
+  "Hash_Map_Manager.h",
+  "High_Res_Timer.h",
+  "Method_Request.h",
+  "Object_Manager.h",
+  "Profile_Timer.h",
+  "Registry.h",
+  "SString.h",
+  "Stats.h",
+  "Sample_History.h",
+  "Basic_Stats.h",
+  "System_Time.h",
+  "Time_Request_Reply.h",
+  "Timeprobe.h",
+  "Timer_Hash.h",
+  "Timer_Heap.h",
+  "Timer_List.h",
+  "Timer_Queue.h",
+  "Timer_Wheel.h"
+//  #### NOTE:  see below for Filecache.
+
+group LOGGING_FILES =
+  "Dump.cpp",
+  "Log_Msg.cpp",
+  "Log_Msg_Callback.cpp",
+  "Log_Msg_Backend.cpp",
+  "Log_Msg_IPC.cpp",
+  "Log_Record.cpp",
+  "Logging_Strategy.cpp",
+  "Trace.cpp"
+
+group LOGGING_INCLUDES =
+  "Dump.h",
+  "Log_Msg.h",
+  "Log_Msg_Callback.h",
+  "Log_Msg_Backend.h",
+  "Log_Msg_IPC.h",
+  "Log_Record.h",
+  "Logging_Strategy.h",
+  "Trace.h"
+
+group THREADS_FILES =
+  "Activation_Queue.cpp",
+  "Process.cpp",
+  "Process_Manager.cpp",
+  "Synch.cpp",
+  "Synch_Options.cpp",
+  "Process_Semaphore.cpp",
+  "Process_Mutex.cpp",
+  "RW_Process_Mutex.cpp",
+  "File_Lock.cpp",
+  "Thread.cpp",
+  "Thread_Manager.cpp",
+  "Thread_Adapter.cpp",
+  "Thread_Exit.cpp",
+  "Thread_Control.cpp",
+  "Token.cpp"
+
+group THREADS_INCLUDES =
+  "Activation_Queue.h",
+  "Process.h",
+  "Process_Manager.h",
+  "Synch.h",
+  "Synch_Options.h",
+  "Process_Semaphore.h",
+  "Process_Mutex.h",
+  "RW_Process_Mutex.h",
+  "File_Lock.h",
+  "Thread.h",
+  "Thread_Manager.h",
+  "Thread_Adapter.h",
+  "Thread_Exit.h",
+  "Thread_Control.h",
+  "Token.h"
+
+group DEMUX_FILES =
+  "Event_Handler.cpp",
+  "FlReactor.cpp",
+  "Handle_Set.cpp",
+  "Msg_WFMO_Reactor.cpp",
+  "POSIX_Proactor.cpp",
+  "Priority_Reactor.cpp",
+  "Proactor.cpp",
+  "Reactor.cpp",
+  "Select_Reactor.cpp",
+  "Select_Reactor_Base.cpp",
+  "SUN_Proactor.cpp",
+  "TP_Reactor.cpp",
+  "TkReactor.cpp",
+  "WFMO_Reactor.cpp",
+  "XtReactor.cpp",
+  "QtReactor.cpp"
+
+group DEMUX_INCLUDES =
+  "Event_Handler.h",
+  "FlReactor.h",
+  "Handle_Set.h",
+  "Msg_WFMO_Reactor.h",
+  "POSIX_Proactor.h",
+  "Priority_Reactor.h",
+  "Proactor.h",
+  "Reactor.h",
+  "Select_Reactor.h",
+  "Select_Reactor_Base.h",
+  "SUN_Proactor.h",
+  "TP_Reactor.h",
+  "TkReactor.h",
+  "WFMO_Reactor.h",
+  "XtReactor.h",
+  "QtReactor.h"
+
+group CONNECTION_FILES =
+  "Asynch_IO.cpp",
+  "Asynch_IO_Impl.cpp",
+  "POSIX_Asynch_IO.cpp",
+  "Strategies.cpp"
+
+group CONNECTION_INCLUDES =
+  "Asynch_IO.h",
+  "Asynch_IO_Impl.h",
+  "POSIX_Asynch_IO.h",
+  "Strategies.h"
+
+group SOCKETS_FILES =
+  "Addr.cpp",
+  "INET_Addr.cpp",
+  "IPC_SAP.cpp",
+  "LSOCK.cpp",
+  "LSOCK_Acceptor.cpp",
+  "LSOCK_CODgram.cpp",
+  "LSOCK_Connector.cpp",
+  "LSOCK_Dgram.cpp",
+  "LSOCK_Stream.cpp",
+  "SOCK.cpp",
+  "SOCK_Acceptor.cpp",
+  "SOCK_CODgram.cpp",
+  "Sock_Connect.cpp",
+  "SOCK_Connector.cpp",
+  "SOCK_Dgram.cpp",
+  "SOCK_Dgram_Bcast.cpp",
+  "SOCK_Dgram_Mcast.cpp",
+  "SOCK_IO.cpp",
+  "SOCK_Stream.cpp"
+
+group SOCKETS_INCLUDES =
+  "Addr.h",
+  "INET_Addr.h",
+  "IPC_SAP.h",
+  "LSOCK.h",
+  "LSOCK_Acceptor.h",
+  "LSOCK_CODgram.h",
+  "LSOCK_Connector.h",
+  "LSOCK_Dgram.h",
+  "LSOCK_Stream.h",
+  "SOCK.h",
+  "SOCK_Acceptor.h",
+  "SOCK_CODgram.h",
+  "Sock_Connect.h",
+  "SOCK_Connector.h",
+  "SOCK_Dgram.h",
+  "SOCK_Dgram_Bcast.h",
+  "SOCK_Dgram_Mcast.h",
+  "SOCK_IO.h",
+  "SOCK_Stream.h"
+
+group IPC_FILES =
+  "ATM_Addr.cpp",
+  "ATM_Acceptor.cpp",
+  "ATM_Connector.cpp",
+  "ATM_Params.cpp",
+  "ATM_QoS.cpp",
+  "ATM_Stream.cpp",
+  "XTI_ATM_Mcast.cpp",
+  "DEV.cpp",
+  "DEV_Addr.cpp",
+  "DEV_Connector.cpp",
+  "DEV_IO.cpp",
+  "FIFO.cpp",
+  "FIFO_Recv.cpp",
+  "FIFO_Recv_Msg.cpp",
+  "FIFO_Send.cpp",
+  "FIFO_Send_Msg.cpp",
+  "FILE_Addr.cpp",
+  "FILE.cpp",
+  "FILE_Connector.cpp",
+  "FILE_IO.cpp",
+  "IO_SAP.cpp",
+  "IOStream.cpp",
+  "Pipe.cpp",
+  "Signal.cpp",
+  "SPIPE_Addr.cpp",
+  "SPIPE.cpp",
+  "SPIPE_Acceptor.cpp",
+  "SPIPE_Connector.cpp",
+  "SPIPE_Stream.cpp",
+  "SV_Message.cpp",
+  "SV_Message_Queue.cpp",
+  "SV_Semaphore_Complex.cpp",
+  "SV_Semaphore_Simple.cpp",
+  "SV_Shared_Memory.cpp",
+  "TLI.cpp",
+  "TLI_Acceptor.cpp",
+  "TLI_Connector.cpp",
+  "TLI_Stream.cpp",
+  "TTY_IO.cpp",
+  "UNIX_Addr.cpp",
+  "UPIPE_Acceptor.cpp",
+  "UPIPE_Connector.cpp",
+  "UPIPE_Stream.cpp",
+  "MEM_Acceptor.cpp",
+  "MEM_Addr.cpp",
+  "MEM_Connector.cpp",
+  "MEM_IO.cpp",
+  "MEM_SAP.cpp",
+  "MEM_Stream.cpp"
+
+group IPC_INCLUDES =
+  "ATM_Addr.h",
+  "ATM_Acceptor.h",
+  "ATM_Connector.h",
+  "ATM_Params.h",
+  "ATM_QoS.h",
+  "ATM_Stream.h",
+  "XTI_ATM_Mcast.h",
+  "DEV.h",
+  "DEV_Addr.h",
+  "DEV_Connector.h",
+  "DEV_IO.h",
+  "FIFO.h",
+  "FIFO_Recv.h",
+  "FIFO_Recv_Msg.h",
+  "FIFO_Send.h",
+  "FIFO_Send_Msg.h",
+  "FILE_Addr.h",
+  "FILE.h",
+  "FILE_Connector.h",
+  "FILE_IO.h",
+  "IO_SAP.h",
+  "IOStream.h",
+  "Pipe.h",
+  "Signal.h",
+  "SPIPE_Addr.h",
+  "SPIPE.h",
+  "SPIPE_Acceptor.h",
+  "SPIPE_Connector.h",
+  "SPIPE_Stream.h",
+  "SV_Message.h",
+  "SV_Message_Queue.h",
+  "SV_Semaphore_Complex.h",
+  "SV_Semaphore_Simple.h",
+  "SV_Shared_Memory.h",
+  "TLI.h",
+  "TLI_Acceptor.h",
+  "TLI_Connector.h",
+  "TLI_Stream.h",
+  "TTY_IO.h",
+  "UNIX_Addr.h",
+  "UPIPE_Acceptor.h",
+  "UPIPE_Connector.h",
+  "UPIPE_Stream.h",
+  "MEM_Acceptor.h",
+  "MEM_Addr.h",
+  "MEM_Connector.h",
+  "MEM_IO.h",
+  "MEM_SAP.h",
+  "MEM_Stream.h"
+
+group SVCCONF_FILES =
+  "DLL.cpp",
+  "Parse_Node.cpp",
+  "Service_Config.cpp",
+  "Service_Manager.cpp",
+  "Service_Object.cpp",
+  "Service_Repository.cpp",
+  "Service_Types.cpp",
+  "Service_Templates.cpp",
+  "Shared_Object.cpp",
+  "Svc_Conf_l.cpp",
+  "Svc_Conf_y.cpp"
+
+group SVCCONF_INCLUDES =
+  "DLL.h",
+  "Parse_Node.h",
+  "Service_Config.h",
+  "Service_Manager.h",
+  "Service_Object.h",
+  "Service_Repository.h",
+  "Service_Types.h",
+  "Service_Templates.h",
+  "Shared_Object.h"
+
+group STREAMS_FILES =
+  "CDR_Base.cpp",
+  "CDR_Stream.cpp",
+  "Codeset_IBM1047.cpp",
+  "Message_Block.cpp",
+  "Message_Queue.cpp",
+  "Task.cpp"
+
+group STREAMS_INCLUDES =
+  "CDR_Base.h",
+  "CDR_Stream.h",
+  "Codeset_IBM1047.h",
+  "Message_Block.h",
+  "Message_Queue.h",
+  "Task.h"
+
+group MEMORY_FILES =
+  "Based_Pointer_Repository.cpp",
+  "Malloc.cpp",
+  "PI_Malloc.cpp",
+  "Malloc_Allocator.cpp",
+  "Mem_Map.cpp",
+  "Memory_Pool.cpp",
+  "Obstack.cpp",
+  "Read_Buffer.cpp",
+  "Shared_Memory.cpp",
+  "Shared_Memory_MM.cpp",
+  "Shared_Memory_SV.cpp"
+
+group MEMORY_INCLUDES =
+  "Based_Pointer_Repository.h",
+  "Malloc.h",
+  "PI_Malloc.h",
+  "Malloc_Allocator.h",
+  "Mem_Map.h",
+  "Memory_Pool.h",
+  "Obstack.h",
+  "Read_Buffer.h",
+  "Shared_Memory.h",
+  "Shared_Memory_MM.h",
+  "Shared_Memory_SV.h"
+
+group TOKEN_FILES =
+  "Local_Tokens.cpp",
+  "Remote_Tokens.cpp",
+  "Token_Collection.cpp",
+  "Token_Invariants.cpp",
+  "Token_Manager.cpp",
+  "Token_Request_Reply.cpp"
+
+group TOKEN_INCLUDES =
+  "Local_Tokens.h",
+  "Remote_Tokens.h",
+  "Token_Collection.h",
+  "Token_Invariants.h",
+  "Token_Manager.h",
+  "Token_Request_Reply.h"
+
+group OTHER_FILES =
+  "CORBA_Handler.cpp",
+  "CORBA_Ref.cpp",
+  "Local_Name_Space.cpp",
+  "Name_Proxy.cpp",
+  "Name_Request_Reply.cpp",
+  "Name_Space.cpp",
+  "Naming_Context.cpp",
+  "Registry_Name_Space.cpp",
+  "Remote_Name_Space.cpp"
+
+group OTHER_INCLUDES =
+  "CORBA_Handler.h",
+  "CORBA_Ref.h",
+  "Local_Name_Space.h",
+  "Name_Proxy.h",
+  "Name_Request_Reply.h",
+  "Name_Space.h",
+  "Naming_Context.h",
+  "Registry_Name_Space.h",
+  "Remote_Name_Space.h"
+
+group TEMPLATE_FILES =
+           "Acceptor.cpp",
+           "Active_Map_Manager_T.cpp",
+	   "Array_Base.cpp",
+	   "Node.cpp",
+	   "Unbounded_Set.cpp",
+	   "Unbounded_Queue.cpp",
+           "Asynch_Acceptor.cpp",
+           "Auto_IncDec_T.cpp",
+           "Auto_Ptr.cpp",
+           "Based_Pointer_T.cpp",
+           "Connector.cpp",
+           "Containers_T.cpp",
+           "Cache_Map_Manager_T.cpp",
+           "Cached_Connect_Strategy_T.cpp",
+           "Caching_Strategies_T.cpp",
+           "Caching_Utility_T.cpp",
+           "Cleanup_Strategies_T.cpp",
+           "Dump_T.cpp",
+           "Dynamic_Service.cpp",
+           "Env_Value_T.cpp",
+           "Event_Handler_T.cpp",
+           "Free_List.cpp",
+           "Functor_T.cpp",
+           "Future.cpp",
+           "Future_Set.cpp",
+           "Hash_Map_Manager_T.cpp",
+	   "Hash_Map_With_Allocator_T.cpp",
+           "Hash_Cache_Map_Manager_T.cpp",
+           "IOStream_T.cpp",
+           "LOCK_SOCK_Acceptor.cpp",
+           "Local_Name_Space_T.cpp",
+           "Malloc_T.cpp",
+           "Managed_Object.cpp",
+           "Map_Manager.cpp",
+           "Map_T.cpp",
+           "Message_Block_T.cpp",
+           "Message_Queue_T.cpp",
+           "Module.cpp",
+           "Pair_T.cpp",
+           "Refcounted_Auto_Ptr.cpp",
+           "RB_Tree.cpp",
+           "Select_Reactor_T.cpp",
+           "Singleton.cpp",
+           "Strategies_T.cpp",
+           "Stream.cpp",
+           "Stream_Modules.cpp",
+           "Svc_Handler.cpp",
+           "Synch_T.cpp",
+           "Task_T.cpp",
+           "Template_Instantiations.cpp",
+	   "Test_and_Set.cpp",
+           "Timeprobe_T.cpp",
+           "Timer_Hash_T.cpp",
+           "Timer_Heap_T.cpp",
+           "Timer_List_T.cpp",
+           "Timer_Queue_Adapters.cpp",
+           "Timer_Queue_T.cpp",
+           "Timer_Wheel_T.cpp",
+           "Typed_SV_Message.cpp",
+           "Typed_SV_Message_Queue.cpp"
+
+option
+    PlatformOptions,
+    link(exportAll),
+    link(linkwithsharedlib),
+    link(linkWithMultiThreadLib,yes),
+    incl(searchpath, "..")
+    {
+        target type ( shr ) "libACE.a"
+        {
+//            run after sources("shr.o") targets ("libACE.a") "ar -r -u libACE.a shr.o", "rm -rf shr.o"
+            run cleanup "rm -rf libACE.a shr.o"
+
+            option macros(global)
+            {
+                source type(hpp) "wchar.h"
+                source type(hpp) "wcstr.h"
+                source type(hpp)
+                    OS_INCLUDES,
+                    UTILS_INCLUDES,
+                    LOGGING_INCLUDES,
+                    THREADS_INCLUDES,
+                    DEMUX_INCLUDES,
+                    CONNECTION_INCLUDES,
+                    SOCKETS_INCLUDES,
+                    IPC_INCLUDES,
+                    SVCCONF_INCLUDES,
+                    STREAMS_INCLUDES,
+                    MEMORY_INCLUDES,
+                    TOKEN_INCLUDES,
+                    OTHER_INCLUDES,
+                    "config.h",
+                    "config-aix-4.x.h",
+                    "config-all.h",
+                    "iosfwd.h",
+                    "streams.h",
+                    "Version.h"
+            }
+            source type(cpp)
+                OS_FILES,
+                UTILS_FILES,
+                LOGGING_FILES,
+                THREADS_FILES,
+                DEMUX_FILES,
+                CONNECTION_FILES,
+                SOCKETS_FILES,
+                IPC_FILES,
+                SVCCONF_FILES,
+                STREAMS_FILES,
+                MEMORY_FILES,
+                TOKEN_FILES,
+                OTHER_FILES
+
+            source type (lib) "libtli_r.a"
+            source type (lib) "libpthreads.a"
+            source type (lib) "libc_r.a"
+            source type (lib) "libdl.a"
+            // Imports
+            source type (imp) "pse.exp"
         }
-}
+    }

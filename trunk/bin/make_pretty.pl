@@ -117,8 +117,7 @@ sub is_warning ()
     return 3 if (/\(W\).*Compilation will proceed shortly./);
 
     # AIX reports a bazillion multiple defines when doing templates.
-    return 3 if ($^O eq 'aix'
-                 && m/^ld: \d+-\d+ WARNING: Duplicate symbol:/);
+    return 3 if (m/^ld: \d+\-\d+ WARNING: Duplicate symbol:/);
 
     # Look for lines that also should be color coded, but not counted
     # as warnings.
@@ -136,11 +135,11 @@ sub is_warning ()
         || /^.*\.inl: /
         || /^.*\.cpp: /
         || /^.*\.java: /) {
-      return 1 if ($^O ne 'aix');
+      return 1;
     }
 
     # IBM's compilers don't say the word "warning" - check for their code
-    return 1 if ($^O eq 'aix' && m/\d+-\d+:? \(W\)/);
+    return 1 if (m/^.*\d+\-\d+:? \(W\)/);
 
     # didn't find anything
     return 0;
@@ -157,8 +156,7 @@ sub is_error ()
 
     # AIX reports a bazillion multiple defines when doing templates; some
     # have the word 'error' in the symbol name - ignore those.
-    return 0 if ($^O eq 'aix'
-                 && m/^ld: \d+-\d+ WARNING: Duplicate symbol:/);
+    return 0 if (m/^ld: \d+\-\d+ WARNING: Duplicate symbol:/);
 
     # Look for lines that also should be color coded, but not counted
     # as errors.
@@ -182,7 +180,11 @@ sub is_error ()
                  || /: fatal:/);
 
     # Again, IBM's compilers speak in code langauge
-    return 1 if ($^O eq 'aix' && m/\d+-\d+:? \([SI]\)/);
+    if (m/.*\d+\-\d+:? \([SI]\)/) {
+        # Ignore licensing messages
+        return 3 if (/.*Compilation will proceed shortly./);
+        return 1;
+    }
 
     # didn't find anything
     return 0;
