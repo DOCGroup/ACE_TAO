@@ -1,6 +1,6 @@
 include stdmk
 
-EXE = test
+EXE = test 
 
 all: $(EXE)
 
@@ -14,6 +14,6 @@ remora_c.cc: remora.idl
 remora_s.cc: remora.idl
 	$(ORBCC) remora.idl
 
-test: remora_c.o test.o Remora_Import.o Remora_Export.o
-	$(CC) -o test test.o remora_c.o Remora_Import.o Remora_Export.o\
+test: remora_c.o Remora_Import.o Remora_Export.o test.o
+	$(CC) -o test test.o remora_c.o Remora_Import.o Remora_Export.o \
 		 $(LIBPATH) $(LIBORB) $(STDCC_LIBS) $(LIBACE)
