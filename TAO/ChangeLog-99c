@@ -1,3 +1,17 @@
+Fri Jan 29 12:22:22 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/server_discovery/AV_Demo : 
+	Moved Seths README to AV_Demo	
+
+	* orbsvcs/tests/AVStreams/server_discovery/README : 
+	Provided information about how to run the Java Interface 
+	to the AV Demo
+
+	* orbsvcs/tests/AVStreams/mpeg/README: 
+	Added how to run the AV Demo with the Trading Service
+
+	
+
 Fri Jan 29 11:01:50 1999 Fred Kuhns <fredk@cs,wustl.edu>
 
   * Updated profile references in 

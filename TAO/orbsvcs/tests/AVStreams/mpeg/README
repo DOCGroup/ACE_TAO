@@ -56,6 +56,11 @@ Using the Trading Service:
 The mpeg client can also be run using the Trading service to find the
 server which can give the best QoS and other properties.
 
+But in this case follow the steps in 'To run' above but instead of step 2 do the following two steps:
+
+1. Start the Trading Service
+2. Start the mpeg/source/server/augmented_server
+
 The files for the Trader Agent  are in
 $TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery.
 
