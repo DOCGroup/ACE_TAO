@@ -1,3 +1,20 @@
+Thu Mar  9 09:23:10 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/make_release (create_kit):
+
+	  Change to the destination directory prior to invoking `md5sum'
+	  on the file for which an MD5 checksum is being generated.  This
+	  was necessary to prevent the absolute path of the file from
+	  being used as part of the checksum.
+
+	  In any case, MD5 checksum generation is now working.  [Bug 48]
+
+	  (tag):
+
+	  Confirmed that the missing Makefile templates now get installed
+	  in the ACE betas/releases (no changes, just confirmation).
+	  [Bug 408]
+
 Thu Mar  9 11:01:34 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Configuration.h: Changed export_config()/import_config() to
@@ -13,7 +30,7 @@ Thu Mar 09 10:41:24 2000  Steve Huston  <shuston@riverace.com>
           for reporting this and suggesting a fix.
 
 Wed Mar 08 22:19:26 2000  David L. Levine  <levine@cs.wustl.edu>
-  
+
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
           moved VxWorks 5.4 (Tornado II) auto detection to
           before CCFLAGS definition, so that it gets set
