@@ -1,3 +1,44 @@
+Mon Dec  8 18:30:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/POA/Implicit_Activation/client.dsp:
+	* performance-tests/POA/Implicit_Activation/collocated.dsp:
+	* performance-tests/POA/Implicit_Activation/server.dsp:
+	* performance-tests/POA/Object_Creation_And_Registration/registration.dsp:
+	* performance-tests/Pluggable/client.dsp:
+	* performance-tests/Pluggable/server.dsp:
+	* performance-tests/Latency/Thread_Pool/client.dsp:
+	* performance-tests/Latency/Thread_Pool/server.dsp:
+	* performance-tests/Latency/Thread_Per_Connection/client.dsp:
+	* performance-tests/Latency/Thread_Per_Connection/server.dsp:
+	* performance-tests/Latency/Single_Threaded/server.dsp:
+	* performance-tests/Latency/Single_Threaded/client.dsp:
+	* performance-tests/Latency/DSI/client.dsp:
+	* performance-tests/Latency/DSI/server.dsp:
+	* performance-tests/Latency/AMH/Single_Threaded/client.dsp:
+	* performance-tests/Latency/AMH/Single_Threaded/server.dsp:
+	* performance-tests/Callback/client.dsp:
+	* performance-tests/Callback/server.dsp:
+	* orbsvcs/tests/Simple_Naming/client.dsp:
+	* orbsvcs/tests/Security/SecurityLevel1/client.dsp:
+	* orbsvcs/tests/Security/SecurityLevel1/server.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/server.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+	* orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
+	* orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp:
+	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
+	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
+	* orbsvcs/tests/Security/Callback/client.dsp:
+	* orbsvcs/tests/Security/Callback/server.dsp:
+	* orbsvcs/tests/Security/Big_Request/client.dsp:
+	* orbsvcs/tests/Security/Big_Request/server.dsp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
+	* orbsvcs/tests/Redundant_Naming/client.dsp:
+	* orbsvcs/tests/Notify/*.dsp:
+	  Enabled RTTI in all configurations.
+
 Mon Dec  8 17:00:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
