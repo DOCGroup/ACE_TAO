@@ -61,7 +61,7 @@ public:
   T* operator-> (void) const;
   // smart pointer (const)
 
-  operator const T* &() const;
+  operator T* const &() const;
   // cast operator
 
   operator T* &();

@@ -52,7 +52,7 @@ TAO_Object_Field_T<T>::ptr (void) const
 }
 
 template<class T> ACE_INLINE
-TAO_Object_Field_T<T>::operator const T* &() const
+TAO_Object_Field_T<T>::operator T* const &() const
 {
   return this->ptr_;
 }
