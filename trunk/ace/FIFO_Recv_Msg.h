@@ -20,9 +20,9 @@
 #include "ace/FIFO_Recv.h"
 
 class ACE_Export ACE_FIFO_Recv_Msg : public ACE_FIFO_Recv
+{
   // = TITLE
   //     Receiver side for the record oriented C++ wrapper for UNIX FIFOs.
-{
 public:
   // = Initialization methods.
   ACE_FIFO_Recv_Msg (void);

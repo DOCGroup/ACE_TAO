@@ -21,11 +21,11 @@
 #include "ace/Process.h"
 
 class ACE_Export ACE_Process_Descriptor
-  // = Title
-  //    Information for controlling groups of processs.
 {
-friend class ACE_Process_Manager;
+  // = TITLE
+  //    Information for controlling groups of processs.
 private:
+  friend class ACE_Process_Manager;
 
   ACE_Process_Descriptor (void);
 
@@ -40,14 +40,15 @@ private:
 };
 
 class ACE_Export ACE_Process_Manager
+{
   // = TITLE
   //    Manages a pool of processs.
   //
   // = DESCRIPTION
   //    This class allows operations on groups of processs atomically. 
-{
-friend class ACE_Process_Control;
 public:
+  friend class ACE_Process_Control;
+
   enum
   {
     DEFAULT_SIZE = 100

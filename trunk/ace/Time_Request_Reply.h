@@ -26,13 +26,13 @@
 #include "ace/SString.h"
 
 class ACE_Export ACE_Time_Request
+{
   // = TITLE
   //   Message format for delivering requests to the ACE_Time Server.
   //
   // = DESCRIPTION
   //   This class is implemented to minimize data copying.  
   //   In particular, all marshaling is done in situ...
-{
 public:
   enum Constants
   {

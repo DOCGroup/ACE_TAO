@@ -9,6 +9,13 @@
 // = FILENAME
 //    Asynch_IO.h
 //
+// = DESCRIPTION
+//    This only works on Win32 platforms. 
+//
+//    The implementation of <ACE_Asynch_Transmit_File> and
+//    <ACE_Asynch_Accept> are only supported if ACE_HAS_WINSOCK2 is
+//    defined or you are on WinNT 4.0 or higher
+//
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu)
 //    Tim Harrison (harrison@cs.wustl.edu)
@@ -21,11 +28,6 @@
 #include "ace/OS.h"
 
 #if defined (ACE_WIN32)
-// This only works on Win32 platforms. 
-//
-// The implementation of ACE_Asynch_Transmit_File and
-// ACE_Asynch_Accept are only supported if ACE_HAS_WINSOCK2 is defined
-// or you are on WinNT 4.0 or higher
 
 // Forward declarations
 class ACE_Proactor;
@@ -34,27 +36,23 @@ class ACE_Message_Block;
 class ACE_INET_Addr;
 
 class ACE_Export ACE_Asynch_Result : protected OVERLAPPED
-  //     
+{
   // = TITLE
-  //
   //     An abstract class which adds information to the OVERLAPPED
   //     structure to make it more useful.
   // 
   // = DESCRIPTION
-  //     
   //     An abstract base class from which you can obtain some basic
   //     information like the number of bytes transferred, the ACT
   //     associated with the asynchronous operation, indication of
   //     success or failure, etc.  Subclasses may want to store more
   //     information that is particular to the asynchronous operation
   //     it represents.
-{
-
+public:
   // Proactor is the only class which is allowed to call the
   // <complete> method.
   friend class ACE_Proactor;
 
-public:
   u_long bytes_transferred (void) const;
   // Number of bytes transferred by the operation.
   
@@ -120,21 +118,14 @@ protected:
 // ************************************************************
 
 class ACE_Export ACE_Asynch_Operation
-  //     
+{
   // = TITLE
-  //     
   //     This is a base class for all asynch operations.
   //
   // = DESCRIPTION
-  //     
   //     There are some attributes and functionality which is common
   //     to all asychronous operations.  This abstract class will
   //     factor out this code.
-{
-protected:
-  ACE_Asynch_Operation (void);
-  // A do nothing constructor.
-  
 public:
   int open (ACE_Handler &handler,
 	    ACE_HANDLE handle = ACE_INVALID_HANDLE,
@@ -151,8 +142,11 @@ public:
   // operations issued by other threads.
 
 protected:
-  // Proactor that this Asynch IO will be registered with
+  ACE_Asynch_Operation (void);
+  // A no-op constructor.
+  
   ACE_Proactor *proactor_;
+  // Proactor that this Asynch IO will be registered with.
   
   ACE_Handler *handler_;
   // Handler that will receive the callback.
@@ -161,23 +155,18 @@ protected:
   // I/O handle used for reading.
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Asynch_Read_Stream : public ACE_Asynch_Operation
-  //     
+{
   // = TITLE
-  //     
   //     This class is a factory for starting off asynchronous reads
   //     on a stream.
   //
   // = DESCRIPTION
-  //     
   //     Once <open> is called, multiple asynchronous <read>s can
   //     started using this class.  An ACE_Asynch_Read_Stream::Result
   //     will be passed back to the <handler> when the asynchronous
   //     reads completes through the <ACE_Handler::handle_read_stream>
   //     callback.
-{
 public:
   class Result;
   // Forward declaration of the Result class.
@@ -198,18 +187,15 @@ protected:
 
 public:
   class ACE_Export Result : public ACE_Asynch_Result
-    //     
+  {
     // = TITLE
-    //     
     //     This is that class which will be passed back to the
     //     <handler> when the asynchronous read completes.  
     //
     // = DESCRIPTION
-    //     
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
     //     asynchronous read. 
-  {
     friend class ACE_Asynch_Read_Stream;
     // The factory has special privileges.
     
@@ -255,23 +241,18 @@ public:
   };  
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
-  //     
+{
   // = TITLE
-  //     
   //     This class is a factory for starting off asynchronous writes
   //     on a stream.
   //
   // = DESCRIPTION
-  //     
   //     Once <open> is called, multiple asynchronous <writes>s can
   //     started using this class.  A ACE_Asynch_Write_Stream::Result
   //     will be passed back to the <handler> when the asynchronous
   //     write completes through the
   //     <ACE_Handler::handle_write_stream> callback.
-{
 public:
   class Result;
   // Forward declaration of the Result class.
@@ -292,22 +273,19 @@ protected:
 
 public:
   class ACE_Export Result : public ACE_Asynch_Result
-    //     
+  {
     // = TITLE
-    //     
     //     This is that class which will be passed back to the
     //     <handler> when the asynchronous write completes.  
     //
     // = DESCRIPTION
-    //     
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
     //     asynchronous write. 
-  {
+  public:
     friend class ACE_Asynch_Write_Stream;
     // The factory has special privileges.
 
-  public:
     u_long bytes_to_write (void) const;
     // The number of bytes which were requested at the start of the
     // asynchronous write.
@@ -350,17 +328,13 @@ public:
   };  
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
-  //     
+{
   // = TITLE
-  //     
   //     This class is a factory for starting off asynchronous reads
   //     on a file.
   //
   // = DESCRIPTION
-  //     
   //     Once <open> is called, multiple asynchronous <read>s can
   //     started using this class.  A ACE_Asynch_Read_File::Result
   //     will be passed back to the <handler> when the asynchronous
@@ -369,7 +343,6 @@ class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
   // 
   //     This class differs slightly from ACE_Asynch_Read_Stream as it
   //     allows the user to specify an offset for the read. 
-{
 public:
   int read (ACE_Message_Block &message_block,
 	    u_long bytes_to_read,
@@ -382,14 +355,12 @@ public:
 
 public:
   class ACE_Export Result : public ACE_Asynch_Read_Stream::Result
-    //     
+  {
     // = TITLE
-    //     
     //     This is that class which will be passed back to the
     //     <handler> when the asynchronous read completes.  
     //
     // = DESCRIPTION
-    //     
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
     //     asynchronous read. 
@@ -400,7 +371,7 @@ public:
     //     <ACE_Handler::handle_read_stream>.  No additional state is
     //     required by this class as ACE_Asynch_Result can store the
     //     <offset>. 
-  {
+
     friend class ACE_Asynch_Read_File;
     // The factory has special privileges.
     
@@ -427,17 +398,14 @@ public:
   };  
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Asynch_Write_File : public ACE_Asynch_Write_Stream
-  //     
+{
+public:
   // = TITLE
-  //     
   //     This class is a factory for starting off asynchronous writes
   //     on a file.
   //
   // = DESCRIPTION
-  //     
   //     Once <open> is called, multiple asynchronous <write>s can
   //     started using this class.  A ACE_Asynch_Write_File::Result
   //     will be passed back to the <handler> when the asynchronous
@@ -446,8 +414,6 @@ class ACE_Export ACE_Asynch_Write_File : public ACE_Asynch_Write_Stream
   // 
   //     This class differs slightly from ACE_Asynch_Write_Stream as
   //     it allows the user to specify an offset for the write.
-{
-public:
   int write (ACE_Message_Block &message_block,
 	     u_long bytes_to_write,
 	     u_long offset = 0,
@@ -459,14 +425,12 @@ public:
 
 public:
   class ACE_Export Result : public ACE_Asynch_Write_Stream::Result
-    //     
+  {
     // = TITLE
-    //     
     //     This is that class which will be passed back to the
     //     <handler> when the asynchronous write completes.
     //
     // = DESCRIPTION
-    //     
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
     //     asynchronous write.
@@ -477,7 +441,7 @@ public:
     //     of <ACE_Handler::handle_write_stream>.  No additional state
     //     is required by this class as ACE_Asynch_Result can store
     //     the <offset>.
-  {
+
     friend class ACE_Asynch_Write_File;
     // The factory has special privileges.
     
@@ -504,23 +468,18 @@ public:
   };  
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
-  //     
+{
   // = TITLE
-  //     
   //     This class is a factory for starting off asynchronous accepts
   //     on a listen handle.
   //
   // = DESCRIPTION
-  //     
   //     Once <open> is called, multiple asynchronous <accept>s can
   //     started using this class.  A ACE_Asynch_Accept::Result will
   //     be passed back to the <handler> when the asynchronous accept
   //     completes through the <ACE_Handler::handle_accept>
   //     callback.
-{
 public:
   ACE_Asynch_Accept (void);
   // A do nothing constructor.
@@ -541,22 +500,19 @@ public:
   
 public:
   class ACE_Export Result : public ACE_Asynch_Result
-    //     
+  {
     // = TITLE
-    //     
     //     This is that class which will be passed back to the
     //     <handler> when the asynchronous accept completes.  
     //
     // = DESCRIPTION
-    //     
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
     //     asynchronous accept. 
-  {
+  public:
     friend class ACE_Asynch_Accept;
     // The factory has special privileges.
     
-  public:
     u_long bytes_to_read (void) const;
     // The number of bytes which were requested at the start of the
     // asynchronous accept.
@@ -605,17 +561,13 @@ public:
   };  
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
-  //     
+{
   // = TITLE
-  //     
   //     This class is a factory for starting off asynchronous
   //     transmit files on a stream.
   //
   // = DESCRIPTION
-  //     
   //     Once <open> is called, multiple asynchronous <transmit_file>s
   //     can started using this class.  A
   //     ACE_Asynch_Transmit_File::Result will be passed back to the
@@ -628,7 +580,6 @@ class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
   //     function provides high-performance file data transfer over
   //     network connections.  This function would be of great use in
   //     a Web Server, Image Server, etc.
-{
 public:
   class Header_And_Trailer;
   // Forward declaration.
@@ -656,22 +607,19 @@ public:
 
 public:
   class ACE_Export Result : public ACE_Asynch_Result
-    //     
+  {
     // = TITLE
-    //     
     //     This is that class which will be passed back to the
     //     <handler> when the asynchronous transmit file completes.
     //
     // = DESCRIPTION
-    //     
     //     This class has all the information necessary for the
     //     <handler> to uniquiely identify the completion of the
     //     asynchronous transmit file. 
-  {
+  public:
     friend class ACE_Asynch_Transmit_File;
     // The factory has special privileges.
-    
-  public:
+
     ACE_HANDLE socket (void) const;
     // Socket used for transmitting the file.
 
@@ -739,17 +687,14 @@ public:
   };
   
   class ACE_Export Header_And_Trailer
-    // 
+  {
     // = TITLE
-    //     
     //     The class defines a data structure that contains pointers
     //     to data to send before and after the file data is sent.
     //
     // = DESCRIPTION
-    //     
     //     This class provides a wrapper over TRANSMIT_FILE_BUFFERS
     //     and provided a consistent use of ACE_Message_Blocks.
-  {
   public:
     Header_And_Trailer (ACE_Message_Block *header = 0,
 			u_long header_bytes = 0,
@@ -800,19 +745,14 @@ public:
   };
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Handler
-  //
+{
   // = TITLE
-  //     
   //     This base class defines the interface for receiving the
   //     results of asynchronous operations. 
   //
   // = DESCRIPTION
-  //     
   //     Subclasses of this class will fill in appropriate methods.
-{
 public:
   ACE_Handler (void);
   // A do nothing constructor.
@@ -824,31 +764,31 @@ public:
   // Virtual destruction.
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This method will be called when an asynchronous read completes on a stream. 
+  // This method will be called when an asynchronous read completes on
+  // a stream.
 
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This method will be called when an asynchronous write completes on a strea_m. 
+  // This method will be called when an asynchronous write completes
+  // on a strea_m.
 
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
-  // This method will be called when an asynchronous read completes on a file. 
+  // This method will be called when an asynchronous read completes on
+  // a file.
 
   virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
-  // This method will be called when an asynchronous write completes on a file. 
+  // This method will be called when an asynchronous write completes
+  // on a file.
 
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
-  // This method will be called when an asynchronous accept completes. 
+  // This method will be called when an asynchronous accept completes.
 
   virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
-  // This method will be called when an asynchronous transmit file completes. 
-
-  /*
-    virtual void handle_notify (const ACE_Asynch_Notify::Result &result);
-  */
+  // This method will be called when an asynchronous transmit file
+  // completes.
 
   virtual void handle_time_out (const ACE_Time_Value &tv,
 				const void *act = 0);
-  // Called when timer expires.
-  // <tv> was the requested time value and
+  // Called when timer expires.  <tv> was the requested time value and
   // <act> is the ACT passed when scheduling the timer
 
   ACE_Proactor *proactor (void);
@@ -867,13 +807,12 @@ protected:
   // The proactor associated with this handler.
 };
 
-// ************************************************************
-
 // Forward declartion
 template <class HANDLER>
 class ACE_Asynch_Acceptor;
 
 class ACE_Export ACE_Service_Handler : public ACE_Handler
+{
   // = TITLE
   //     This base class defines the interface for the
   //     ACE_Asynch_Acceptor to call into when new connection are
@@ -882,12 +821,11 @@ class ACE_Export ACE_Service_Handler : public ACE_Handler
   // = DESCRIPTION
   //     Subclasses of this class will fill in appropriate methods to
   //     define application specific behavior.
-{
+public:
   friend class ACE_Asynch_Acceptor<ACE_Service_Handler>;
   // The Acceptor is the factory and therefore should have special
   // privileges.
 
-public:
   ACE_Service_Handler (void);
   // A do nothing constructor.
 

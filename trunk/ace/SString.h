@@ -23,6 +23,7 @@
 class ACE_Allocator;
 
 class ACE_Export ACE_CString
+{
   // = TITLE
   //   A simple "C String" (ACE_CString) class.
   //
@@ -30,18 +31,18 @@ class ACE_Export ACE_CString
   //   This is a place holder until all compilers implement the
   //   ANSI/ISO C++ standard String class.  Note that we need to use
   //   this class since the ACE ACE_Map_Manager requires an object
-  //   that supports the operator== and operator!=.
-  //   This class uses an ACE_Allocator to allocate memory.
-  //   The user can make this a persistant class by providing an 
-  //   ACE_Allocator with a persistable memory pool.
-  //   NOTE: if an instance of this class is constructed from or assigned
-  //   an empty string (with first element of '\0'), then it is _not_
-  //   allocated new space.  Instead, its internal representation is set
-  //   equal to a global empty string.
-{
+  //   that supports the operator== and operator!=.  This class uses
+  //   an ACE_Allocator to allocate memory.  The user can make this a
+  //   persistant class by providing an ACE_Allocator with a
+  //   persistable memory pool.  NOTE: if an instance of this class is
+  //   constructed from or assigned an empty string (with first
+  //   element of '\0'), then it is _not_ allocated new space.
+  //   Instead, its internal representation is set equal to a global
+  //   empty string.
+public:
   friend ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
   friend ostream &operator << (ostream &, const ACE_CString &);
-public:
+
   ACE_CString (ACE_Allocator *alloc = 0);
   // Default constructor.
 

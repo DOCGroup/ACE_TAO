@@ -36,19 +36,18 @@ class ACE_Proactor_Timer_Handler;
 class ACE_Proactor;
 
 class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
+{
   // = TITLE 
   //      Functor for Timer_Queues.
   //
   // = DESCRIPTION
-  //
   //      This class implements the functor required by the Timer
   //      Queue to call <handle_timeout> on ACE_Handlers.
-{
+public:
   friend class ACE_Proactor;
   // Proactor has special privileges
   // Access needed to: proactor ()
 
-public:
   typedef ACE_Timer_Queue_T<ACE_Handler *, 
                             ACE_Proactor_Handle_Timeout_Upcall, 
                             ACE_SYNCH_RECURSIVE_MUTEX> TIMER_QUEUE;
@@ -81,15 +80,13 @@ protected:
 };
 
 class ACE_Export ACE_Proactor : public ACE_Event_Handler
-  //     
+{
   // = TITLE
-  //
   //     A Proactor for asynchronous I/O events.
   // 
   // = DESCRIPTION
-  //     
   //     A manager for the I/O completion port.
-{
+public:
   friend class ACE_Proactor_Timer_Handler;
   // Timer Handler has special privileges because
   // Access needed to: thr_mgr_
@@ -97,11 +94,7 @@ class ACE_Export ACE_Proactor : public ACE_Event_Handler
   friend class ACE_Proactor_Handle_Timeout_Upcall;  
   // Access needed to: Asynch_Timer, and completion_port_
 
-public:
-
-  // Here are the typedef for Timer_Queue, Timer_List, and Timer_Heap
-  // for the Proactor (add to the ease of use of these template
-  // classes).
+  // = Here are the typedefs that the <ACE_Proactor> uses.
 
   typedef ACE_Timer_Queue_T<ACE_Handler *, 
                             ACE_Proactor_Handle_Timeout_Upcall, 
@@ -266,19 +259,17 @@ protected:
   // before any events occur, return.
   
   class ACE_Export Asynch_Timer : protected ACE_Asynch_Result
-    //     
-    // = TITLE
-    //
-    //     This class is posted to the completion port when a timer
-    //     expires. When the complete method of this object is called,
-    //     the <handler>'s handle_timeout method will be called.
-    // 
     {
+      // = TITLE
+      //     This class is posted to the completion port when a timer
+      //     expires. When the complete method of this object is
+      //     called, the <handler>'s handle_timeout method will be
+      //     called.
+    public:
       friend class ACE_Proactor_Handle_Timeout_Upcall;
       // Timer Handler has special privileges
       // Access needed to: convert Asynch_Timer into an OVERLAPPED
 
-    public:
       Asynch_Timer (ACE_Handler &handler,
 		    const void *act,
 		    const ACE_Time_Value &tv, 

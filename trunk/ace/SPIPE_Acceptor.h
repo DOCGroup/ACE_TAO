@@ -20,10 +20,10 @@
 #include "ace/SPIPE_Stream.h"
 
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
+{
   // = TITLE
   //     Defines the format and interface for the listener side of the
   //     ACE_SPIPE_Stream. 
-{
 public:
 #if defined (ACE_WIN32)
   // = Maximum number of attempts to accept a connection

@@ -21,11 +21,12 @@
 #include "ace/DEV_Addr.h"
 
 class ACE_Export ACE_DEV_IO : public ACE_DEV
+{
   // = TITLE
   //     Read/Write operations on Devices.
-{
-friend class ACE_DEV_Connector;
 public:
+  friend class ACE_DEV_Connector;
+
   ACE_DEV_IO (void);
   // Default constructor.
 

@@ -24,12 +24,13 @@
 #if defined (ACE_HAS_TLI)
 
 class ACE_Export ACE_TLI_Stream : public ACE_TLI
+{
   // = TITLE
   //     Defines the member functions for ACE_TLI_Stream abstraction. 
-{
-friend class ACE_TLI_Acceptor;
-friend class ACE_TLI_Connector;
 public:
+  friend class ACE_TLI_Acceptor;
+  friend class ACE_TLI_Connector;
+
   // = Initialization and termination methods.
   ACE_TLI_Stream (void);
   // Default constructor.

@@ -21,13 +21,13 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Dynamic
+{
   // = TITLE
   //     Checks to see if an object was dynamically allocated.
   //
   // = DESCRIPTION
   //     This class holds the pointer in a thread-safe manner between
   //     the call to operator new and the call to the constructor.
-{
 public:
   ACE_Dynamic (void);
 

@@ -21,10 +21,10 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_IO_SAP
+{
   // = TITLE
   //     Defines the member functions for the base class of the ACE_IO_SAP
   //     abstraction.  
-{
 public:
   enum
   {

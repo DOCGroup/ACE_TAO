@@ -33,6 +33,7 @@
 #include "ace/SString.h"
 
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
+{
   // = TITLE
   //   Allows atomic token group operations AND
   //   provides a ACE_Token manager interface.
@@ -48,14 +49,11 @@ class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
   //   members of a collection of Token_Proxies.  This provides a
   //   single access point for operations on multiple tokens.
 
-  // = Bugs
+  // = BUGS
   //   Although ACE_Token_Collection inherits from ACE_Token_Proxy, it
   //   can not be including in a collection.  This is because clone()
   //   returns zero for now.
-
-{
 public:
-
   ACE_Token_Collection (int debug = 0,
 			const char *name = 0);
   // <debug> print out verbose debugging messages. <name> will give a

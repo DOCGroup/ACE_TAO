@@ -65,22 +65,22 @@ public:
   // acquire the lock, set the allocator to the one specific to this
   // process, and then call down to perform the intended operation.
   int bind (const ACE_NS_String &,
-	    const ACE_NS_Internal &,
-	    ALLOCATOR *alloc);
+            const ACE_NS_Internal &,
+            ALLOCATOR *alloc);
 
   int unbind (const ACE_NS_String &,
-	      ACE_NS_Internal &,
-	      ALLOCATOR *alloc);
+              ACE_NS_Internal &,
+              ALLOCATOR *alloc);
 
   int rebind (const ACE_NS_String &,
-	      const ACE_NS_Internal &,
-	      ACE_NS_String &,
-	      ACE_NS_Internal &,
-	      ALLOCATOR *alloc);
+              const ACE_NS_Internal &,
+              ACE_NS_String &,
+              ACE_NS_Internal &,
+              ALLOCATOR *alloc);
 
   int find (const ACE_NS_String &,
-	    ACE_NS_Internal &,
-	    ALLOCATOR *alloc);
+            ACE_NS_Internal &,
+            ALLOCATOR *alloc);
 
   int close (ALLOCATOR *alloc);
 
@@ -89,25 +89,25 @@ private:
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Local_Name_Space : public ACE_Name_Space
+{
   // = TITLE
   //     Maintaining accesses Local Name Server Database.  Allows to
   //     add NameBindings, change them, remove them and resolve
   //     NameBindings.
   //
   // = DESCRIPTION
-  //     Manages a Naming Service for a local name space which includes
-  //	 bindings for node_local and host_local naming contexts.
-  //	 All strings are stored in wide character format.
+  //     Manages a Naming Service for a local name space which
+  //     includes bindings for node_local and host_local naming
+  //     contexts.  All strings are stored in wide character format.
   //     A Name Binding consists of a name (that's the key), a value
-  //	 string and an optional type string (no wide chars).
-{
+  //     string and an optional type string (no wide chars).
 public:
   // = Initialization and termination methods.
   ACE_Local_Name_Space (void);
   // "Do-nothing" constructor.
 
   ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in,
-			ACE_Name_Options *name_options);
+                        ACE_Name_Options *name_options);
   // Specifies the scope of this namespace, opens and memory-maps the
   // associated file (if accessible) or contacts the dedicated name
   // server process for NET_LOCAL namespace.
@@ -122,13 +122,13 @@ public:
   // file
 
   virtual int bind (const ACE_WString &name,
-		    const ACE_WString &value,
-		    const char *type = "");
+                    const ACE_WString &value,
+                    const char *type = "");
   // Bind a new name to a naming context (Wide character strings).
 
   virtual int rebind (const ACE_WString &name,
-		      const ACE_WString &value,
-		      const char *type = "");
+                      const ACE_WString &value,
+                      const char *type = "");
   // Overwrite the value or type of an existing name in a
   // ACE_Local_Name_Space or bind a new name to the context, if it
   // didn't exist yet. (Wide charcter strings interface).
@@ -139,55 +139,55 @@ public:
   // Interface).
 
   virtual int resolve (const ACE_WString &name,
-		       ACE_WString &value,
-		       char *&type);
+                       ACE_WString &value,
+                       char *&type);
   virtual int resolve_i (const ACE_WString &name,
-			 ACE_WString &value,
-			 char *&type);
+                         ACE_WString &value,
+                         char *&type);
   // Get value and type of a given name binding (Wide chars).  The
   // caller is responsible for deleting <type>!
 
   virtual int list_names (ACE_WSTRING_SET &set,
-			  const ACE_WString &pattern);
+                          const ACE_WString &pattern);
   virtual int list_names_i (ACE_WSTRING_SET &set,
-			  const ACE_WString &pattern);
+                          const ACE_WString &pattern);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string.
 
   virtual int list_values (ACE_WSTRING_SET &set,
-			   const ACE_WString &pattern);
+                           const ACE_WString &pattern);
   virtual int list_values_i (ACE_WSTRING_SET &set,
-			     const ACE_WString &pattern);
+                             const ACE_WString &pattern);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string.
 
   virtual int list_types (ACE_WSTRING_SET &set,
-			  const ACE_WString &pattern);
+                          const ACE_WString &pattern);
   virtual int list_types_i (ACE_WSTRING_SET &set,
-			    const ACE_WString &pattern);
+                            const ACE_WString &pattern);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string.
 
   virtual int list_name_entries (ACE_BINDING_SET &set,
-				 const ACE_WString &pattern);
+                                 const ACE_WString &pattern);
   virtual int list_name_entries_i (ACE_BINDING_SET &set,
-				   const ACE_WString &pattern);
+                                   const ACE_WString &pattern);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_value_entries (ACE_BINDING_SET &set,
-				  const ACE_WString &pattern);
+                                  const ACE_WString &pattern);
   virtual int list_value_entries_i (ACE_BINDING_SET &set,
-				    const ACE_WString &pattern);
+                                    const ACE_WString &pattern);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_type_entries (ACE_BINDING_SET &set,
-				 const ACE_WString &pattern);
+                                 const ACE_WString &pattern);
   virtual int list_type_entries_i (ACE_BINDING_SET &set,
-				   const ACE_WString &pattern);
+                                   const ACE_WString &pattern);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
@@ -206,9 +206,9 @@ private:
 #endif /* ACE_WIN32 */
 
   int shared_bind (const ACE_WString &name, const ACE_WString &value,
-		   const char *type, int rebind);
+                   const char *type, int rebind);
   int shared_bind_i (const ACE_WString &name, const ACE_WString &value,
-		     const char *type, int rebind);
+                     const char *type, int rebind);
   // Factor out code from bind() and rebind().
 
   int create_manager (void);

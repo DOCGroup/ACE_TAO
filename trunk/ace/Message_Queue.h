@@ -27,6 +27,7 @@ template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue
+{
   // = TITLE
   //     A threaded message queueing facility, modeled after the
   //     queueing facilities in System V STREAMs.
@@ -36,10 +37,9 @@ class ACE_Message_Queue
   //     messages in the ASX framework.  If <ACE_SYNCH_DECL> is
   //     ACE_MT_SYNCH then all operations are thread-safe.  Otherwise,
   //     if it's <ACE_NULL_SYNCH> then there's no locking overhead.
-{
-friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE>;
-friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>;
 public:
+  friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE>;
+  friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>;
 
   // = Traits
   typedef ACE_Message_Queue_Iterator<ACE_SYNCH_USE> ITERATOR;
@@ -284,9 +284,9 @@ private:
 
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Iterator
+{
   // = TITLE
   //     Iterator for the <ACE_Message_Queue>.
-{
 public:
   // = Initialization method.
   ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue);
@@ -319,9 +319,9 @@ private:
 
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Reverse_Iterator
+{
   // = TITLE
   //     Reverse Iterator for the <ACE_Message_Queue>.
-{
 public:
   // = Initialization method.
   ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue);

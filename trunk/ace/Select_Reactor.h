@@ -33,9 +33,9 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 class ACE_Select_Reactor;
 
 class ACE_Export ACE_Select_Reactor_Handle_Set
+{
   // = TITLE
   //      Track handles we are interested for various events.
-{
 public:
   ACE_Handle_Set rd_mask_;
   // Read events (e.g., input pending, accept pending).
@@ -58,11 +58,11 @@ typedef ACE_Token ACE_SELECT_REACTOR_MUTEX;
 #endif /* ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION */
 
 class ACE_Export ACE_Select_Reactor_Token : public ACE_SELECT_REACTOR_MUTEX
+{
   // = TITLE
   //
   //     Used as a synchronization mechanism to coordinate concurrent
   //     access to a Select_Reactor object.
-{
 public:
   ACE_Select_Reactor_Token (ACE_Select_Reactor &r);
   ACE_Select_Reactor_Token (void);
@@ -89,18 +89,17 @@ private:
 typedef ACE_Null_Mutex ACE_Select_Reactor_Token;
 #endif /* ACE_MT_SAFE */
 
-struct ACE_Event_Tuple
+class ACE_Event_Tuple
+{
   // = TITLE
-  //
   //     An ACE_Event_Handler and its associated ACE_HANDLE.
   //
   // = DESCRIPTION
-  //
   //     One ACE_Event_Handler is registered for one or more
   //     ACE_HANDLE, in some points this information must be stored
   //     explicitly. This structure provides a lightweight mechanism
   //     to do so.
-{
+public:
   ACE_Event_Tuple (void);
   ACE_Event_Tuple (ACE_Event_Handler* eh, ACE_HANDLE h);
 
@@ -118,12 +117,11 @@ struct ACE_Event_Tuple
 // C++ compiler happy (it doesn't like nested classes).
 
 class ACE_Export ACE_Select_Reactor_Notify : public ACE_Event_Handler
+{
   // = TITLE
-  //
   //     Unblock the <ACE_Select_Reactor> from its event loop.
   //
   // = DESCRIPTION
-  //
   //     This implementation is necessary for cases where the
   //     <ACE_Select_Reactor> is run in a multi-threaded program.  In
   //     this case, we need to be able to unblock select() or poll()
@@ -133,7 +131,6 @@ class ACE_Export ACE_Select_Reactor_Notify : public ACE_Event_Handler
   //     If an <ACE_Event_Handler> and <ACE_Select_Reactor_Mask> is
   //     passed to <notify>, the appropriate <handle_*> method is
   //     dispatched in the context of the <ACE_Select_Reactor> thread.
-{
 public:
   // = Initialization and termination methods.
   int open (ACE_Select_Reactor *);
@@ -177,19 +174,17 @@ private:
 };
 
 class ACE_Export ACE_Select_Reactor_Handler_Repository
+{
   // = TITLE
-  //
   //     Used to map <ACE_HANDLE>s onto the appropriate
   //     <ACE_Event_Handler> *.
   //
   // = DESCRIPTION
-  //
   //     This class is necessary to shield differences between UNIX
   //     and Win32.  In UNIX, <ACE_HANDLE> is an int, whereas in Win32
   //     it's a void *.  This class hides all these details from the
   //     bulk of the <ACE_Select_Reactor> code.  All of these methods
   //     are called with the main <Select_Reactor> token lock held.
-{
 public:
   friend class ACE_Select_Reactor_Handler_Repository_Iterator;
 
@@ -276,10 +271,9 @@ private:
 };
 
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
-  // = TITLE
-  //
-  //     Iterate through the <ACE_Select_Reactor_Handler_Repository>.
 {
+  // = TITLE
+  //     Iterate through the <ACE_Select_Reactor_Handler_Repository>.
 public:
   // = Initialization method.
   ACE_Select_Reactor_Handler_Repository_Iterator (const ACE_Select_Reactor_Handler_Repository *s);
@@ -312,6 +306,7 @@ private:
 };
 
 class ACE_Export ACE_Select_Reactor : public ACE_Reactor_Impl
+{
   // = TITLE
   //     An object oriented event demultiplexor and event handler
   //     dispatcher.
@@ -324,7 +319,6 @@ class ACE_Export ACE_Select_Reactor : public ACE_Reactor_Impl
   //     methods acquire the main <Select_Reactor> token lock and call
   //     down to private or protected methods, which assume that the
   //     lock is held and so therefore don't (re)acquire the lock.
-{
 public:
   enum
   {

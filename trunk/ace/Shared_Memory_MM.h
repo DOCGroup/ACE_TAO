@@ -22,9 +22,9 @@
 #include "ace/Mem_Map.h"
 
 class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
+{
   // = TITLE
   //     Shared memory wrapper based on MMAP.
-{
 public:
   // = Initialization and termination methods.
   ACE_Shared_Memory_MM (void);

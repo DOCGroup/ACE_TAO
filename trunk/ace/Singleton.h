@@ -24,6 +24,7 @@
 
 template <class TYPE, class ACE_LOCK>
 class ACE_Singleton : public ACE_Cleanup
+{
   // = TITLE
   //     A Singleton Adapter the uses the Adapter pattern to turn
   //     ordinary classes into Singletons optimized with the
@@ -51,7 +52,6 @@ class ACE_Singleton : public ACE_Cleanup
   //     and ACE_Null_Mutex instances are used for all ACE_Singleton
   //     instantiations.  However, other types of locks are allocated
   //     per ACE_Singleton instantiation.
-{
 public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
@@ -81,6 +81,7 @@ protected:
 
 template <class TYPE, class ACE_LOCK>
 class ACE_TSS_Singleton : public ACE_Cleanup
+{
   // = TITLE
   //     This class uses the Adapter pattern to turn ordinary classes
   //     into Thread-specific Singletons optimized with the
@@ -97,7 +98,6 @@ class ACE_TSS_Singleton : public ACE_Cleanup
   //     scheme to work, a (static) <cleanup> function must be
   //     provided.  <ACE_Singleton> provides one so that TYPE doesn't
   //     need to.
-{
 public:
   static TYPE *instance (void);
   // Global access point to the Singleton.

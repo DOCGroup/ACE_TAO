@@ -21,6 +21,7 @@
 #include "ace/Event_Handler.h"
 
 class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Shared_Object
+{
   // = TITLE
   //     Provide the abstract base class common to all service
   //     implementations.  
@@ -30,7 +31,6 @@ class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Share
   //     of being registered with the <ACE_Reactor> (due to the
   //     <ACE_Event_Handler>, as well as being dynamically linked by
   //     the <ACE_Service_Config> (due to the <ACE_Shared_Object>).
-{
 public:
   // = Initialization and termination methods.
   ACE_Service_Object (void);
@@ -47,13 +47,13 @@ public:
 class ACE_Service_Type_Impl;
 
 class ACE_Export ACE_Service_Type
+{
   // = TITLE
   //      Keeps track of information related to the various
   //      <ACE_Service_Type_Impl> subclasses.  
   //
   // = DESCRIPTION
   //      This class acts as the interface of the "Bridge" pattern.
-{
 public:
   enum
   {
@@ -107,6 +107,7 @@ private:
 };
 
 class ACE_Export ACE_Service_Object_Ptr
+{
   // = TITLE 
   //     This is a smart pointer that holds onto the associated
   //     <ACE_Service_Object> * until the current scope is left, at
@@ -117,7 +118,6 @@ class ACE_Export ACE_Service_Object_Ptr
   //     <auto_ptr>.  It is used in conjunction with statically linked
   //     <ACE_Service_Objects>, as shown in the
   //     ./netsvcs/server/main.cpp example.
-{
 public:
   // = Initialization and termination methods.
   ACE_Service_Object_Ptr (ACE_Service_Object *so);

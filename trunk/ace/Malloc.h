@@ -20,11 +20,11 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Allocator
+{
   // = TITLE
   //    Interface for a dynamic memory allocator that uses inheritance
   //    and dynamic binding to provide extensible mechanisms for
   //    allocating and deallocating memory.
-{
 public:
   // = Memory Management
   
@@ -194,10 +194,10 @@ union ACE_Export ACE_Malloc_Header
 };
 
 class ACE_Export ACE_Name_Node 
+{
   // = TITLE
   //    This is stored as a linked list within the Memory_Pool  
   //    to allow "named memory chunks."
-{
 public:
   // = Initialization methods.
   ACE_Name_Node (const char *name, void *, ACE_Name_Node *);
@@ -217,13 +217,13 @@ public:
 };
 
 class ACE_Export ACE_Control_Block
+{
   // = TITLE
   //    This information is stored in memory allocated by the MEMORY_POOL.
   //
   // = DESCRIPTION
   //    This class should be local to class ACE_Malloc, but cfront and
   //    G++ don't like nested classes in templates...
-{
 public:
   ACE_Name_Node *name_head_;
   // Head of the linked list of Name Nodes.
@@ -263,6 +263,7 @@ public:
 };
 
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
+{
   // = TITLE
   //     Defines a class that provided a simple implementation of
   //     memory allocation.
@@ -275,7 +276,6 @@ class ACE_Export ACE_New_Allocator : public ACE_Allocator
   //     ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, MUTEX>>
   //     This will allow you to use the added functionality of
   //     bind/find/etc. while using the new/delete operators.
-{
 public:
   virtual void *malloc (size_t nbytes); 
   virtual void *calloc (size_t nbytes, char initial_value = '\0');

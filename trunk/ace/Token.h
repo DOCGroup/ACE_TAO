@@ -23,6 +23,7 @@
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Export ACE_Token
+{
   // = TITLE
   //    Class that acquires, renews, and releases a synchronization
   //    token that is serviced in strict FIFO ordering.
@@ -35,7 +36,6 @@ class ACE_Export ACE_Token
   //    blocked awaiting the token are serviced in strict FIFO order as
   //    other threads release the token (Solaris and Pthread mutexes don't 
   //    strictly enforce an acquisition order).
-{
 public:
   // = Initialization and termination.
 

@@ -25,13 +25,13 @@
 
 template <class SVC_HANDLER>
 class ACE_Svc_Tuple
+{
   // = TITLE
   //    Holds the ACE_Svc_Handler and its argument and
   //    <ACE_Timer_Handle> until an asynchronous connection completes. 
   //
   // = DESCRIPTION
   //    This is a no-brainer...
-{
 public:
   // = Initialization methods.
   ACE_Svc_Tuple (SVC_HANDLER *, 
@@ -82,6 +82,7 @@ private:
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Connector : public ACE_Service_Object
+{
   // = TITLE
   //     Generic factory for actively connecting clients and creating
   //     service handlers (SVC_HANDLERs).
@@ -100,7 +101,6 @@ class ACE_Connector : public ACE_Service_Object
   //     complete asynchronously.  The handle_output method performs
   //     the connector's active connection establishment and service
   //     activation strategy.
-{
 public:
   // = Initialization and termination methods.
 
@@ -286,6 +286,7 @@ private:
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Strategy_Connector : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+{
   // = TITLE
   //     Abstract factory for creating a service handler
   //     (SVC_HANDLER), connecting the SVC_HANDLER, and activating the
@@ -298,7 +299,6 @@ class ACE_Strategy_Connector : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNE
   //     actively connecting a new connection from a client into the
   //     SVC_HANDLER, and (3) activating the SVC_HANDLER with a
   //     particular concurrency mechanism.
-{
 public:
   ACE_Strategy_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
 			  ACE_Creation_Strategy<SVC_HANDLER> * = 0,

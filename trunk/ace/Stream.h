@@ -31,6 +31,7 @@ template<ACE_SYNCH_DECL> class ACE_Stream_Iterator;
 
 template <ACE_SYNCH_DECL>
 class ACE_Stream
+{
   // = TITLE
   //    This class is the primary abstraction for the ASX framework.
   //    It is moduled after System V Stream.
@@ -38,9 +39,9 @@ class ACE_Stream
   // = DESCRIPTION
   //    A Stream consists of a stack of <ACE_Modules>, each of which
   //    contains two <ACE_Tasks>.
-{
-friend class ACE_Stream_Iterator<ACE_SYNCH_USE>;
 public:
+  friend class ACE_Stream_Iterator<ACE_SYNCH_USE>;
+
   enum
   {
     M_DELETE = 3
@@ -160,9 +161,9 @@ private:
 
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Iterator
+{
   // = TITLE
   //     Iterate through an <ACE_Stream>.
-{
 public:
   // = Initialization method.
   ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_USE> &sr);

@@ -25,6 +25,7 @@
 
 template<class SVC_HANDLER> 
 class ACE_Recycling_Strategy
+{
   // = TITLE
   //     Defines the interface (and default implementation) for
   //     specifying a recycling strategy for a SVC_HANDLER.
@@ -32,7 +33,6 @@ class ACE_Recycling_Strategy
   // = DESCRIPTION
   //      Acts as a consular to the Svc_Handler, preparing it for the
   //      tough times ahead when the Svc_Handler will be recycled.
-{
 public:
   virtual ~ACE_Recycling_Strategy (void);
   // Virtual Destructor
@@ -49,6 +49,7 @@ public:
 
 template <class SVC_HANDLER>
 class ACE_Creation_Strategy
+{
   // = TITLE
   //     Defines the interface for specifying a creation strategy for
   //     a SVC_HANDLER.
@@ -59,7 +60,6 @@ class ACE_Creation_Strategy
   //     creation in any way that they like (such as creating subclass
   //     instances of SVC_HANDLER, using a singleton, dynamically
   //     linking the handler, etc.).
-{
 public:
   // = Initialization and termination methods.
 
@@ -91,6 +91,7 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_Singleton_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
+{
   // = TITLE
   //     Defines the interface for specifying a creation strategy for
   //     a <SVC_HANDLER> that always returns the same <SVC_HANDLER> (i.e.,
@@ -100,7 +101,6 @@ class ACE_Singleton_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
   //     Note that this class takes over the ownership of the
   //     SVC_HANDLER passed into it as a parameter and it becomes
   //     responsible for deleting this object.
-{
 public:
   // = Initialization and termination methods.
   ACE_Singleton_Strategy (SVC_HANDLER * = 0,
@@ -127,10 +127,10 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_DLL_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
+{
   // = TITLE
   //     Defines the interface for specifying a creation strategy for
   //     a SVC_HANDLER based on dynamic linking of the SVC_HANDLER.
-{
 public:
   // = Intialization and termination methods.
 
@@ -183,6 +183,7 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_Concurrency_Strategy
+{
   // = TITLE
   //     Defines the interface for specifying a concurrency strategy
   //     for a SVC_HANDLER.
@@ -194,7 +195,6 @@ class ACE_Concurrency_Strategy
   //     this default strategy to do more sophisticated concurrency
   //     activations (such as creating the SVC_HANDLER as an active
   //     object via multi-threading or multi-processing).
-{
 public:
   ACE_Concurrency_Strategy (int flags = 0);
   // Constructor
@@ -224,6 +224,7 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
+{
   // = TITLE
   //     Defines the interface for specifying a Reactive concurrency
   //     strategy for a SVC_HANDLER.
@@ -231,7 +232,6 @@ class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
   // = DESCRIPTION
   //     This class provides a strategy that registers the
   //     <SVC_HANDLER> with a <Reactor>.
-{
 public:
   // = Intialization and termination methods.
   ACE_Reactive_Strategy (int flags = 0);
@@ -275,6 +275,7 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+{
   // = TITLE
   //     Defines the interface for specifying a concurrency strategy
   //     for a <SVC_HANDLER> based on multithreading.
@@ -285,7 +286,6 @@ class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
   //     behaves as a "thread factory", spawning threads "on-demand"
   //     to run the service specified by a user-supplied
   //     <SVC_HANDLER>.
-{
 public:
   // = Intialization and termination methods.
   ACE_Thread_Strategy (int flags = 0);
@@ -334,6 +334,7 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+{
   // = TITLE
   //     Defines the interface for specifying a concurrency strategy
   //     for a <SVC_HANDLER> based on multiprocessing.
@@ -344,7 +345,6 @@ class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
   //     behaves as a "process factory", forking threads "on-demand"
   //     to run the service specified by a user-supplied
   //     <SVC_HANDLER>.
-{
 public:
   // = Intialization and termination methods.
 
@@ -395,6 +395,7 @@ protected:
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Accept_Strategy
+{
   // = TITLE
   //     Defines the interface for specifying a passive connection
   //     acceptance strategy for a SVC_HANDLER.
@@ -402,7 +403,6 @@ class ACE_Accept_Strategy
   // = DESCRIPTION
   //     This class provides a strategy that manages passive
   //     connection acceptance of a client.
-{
 public:
   // = Initialization and termination methods.
   ACE_Accept_Strategy (ACE_Reactor *reactor = ACE_Reactor::instance ());
@@ -446,6 +446,7 @@ protected:
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Connect_Strategy
+{
   // = TITLE
   //     Defines the interface for specifying an active
   //     connection establishment strategy for a SVC_HANDLER.
@@ -453,7 +454,6 @@ class ACE_Connect_Strategy
   // = DESCRIPTION
   //     This class provides a strategy that manages active
   //     connection establishment to a server.
-{
 public:
   // = Initialization and termination methods.
   ACE_Connect_Strategy (void);
@@ -488,6 +488,7 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_Scheduling_Strategy
+{
   // = TITLE
   //     Defines the interface for specifying how to suspend and
   //     resume a service .
@@ -496,7 +497,6 @@ class ACE_Scheduling_Strategy
   //     This class provides a strategy that allows arbitrarily
   //     sophisticated service suspension and resumption.  The default
   //     behavior is to do nothing...
-{
 public:
   // = Initialization and termination methods.
 
@@ -527,8 +527,8 @@ protected:
 
 template <class SVC_HANDLER>
 class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
+{
   // = TITLE
-  //
   //     Implements a no-op creation strategy in order to defer
   //     decisions regarding creation to some later point in time, such
   //     as in connect or accept strategy.
@@ -537,7 +537,6 @@ class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
   //     An example of the use of this is in the
   //     <ACE_Cached_Connect_Strategy>, which only returns a single
   //     connection for a given endpoint.
-{
 public:
   virtual int make_svc_handler (SVC_HANDLER *&);
   // This is a no-op.
@@ -545,18 +544,16 @@ public:
 
 template <class SVC_HANDLER>
 class ACE_NOOP_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+{
   // = TITLE
-  //
   //     Implements a no-op activation strategy in order to avoid
   //     calling open on a svc_handler multiple times.
   //
   // = DESCRIPTION
-  //
   //     An example of the use of this is in the
   //     <ACE_Cached_Connect_Strategy>, which reuses svc_handlers.
   //     Therefore we don't want to call open on the recycled
   //     svc_handler more than once.
-{
 public:
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -566,16 +563,15 @@ public:
 
 template <class ADDR_T>
 class ACE_Hash_Addr
+{
   // = TITLE
   //     Internal class to compute hash values on addresses in
   //     <ACE_Cached_Connect_Strategy>.
   //
   // = DESCRIPTION
-  //
   //     Intended to be used as a key to an <ACE_Hash_Map_Manager>.
   //     <ADDR_T> parameter/subclass is typically <ACE_INET_Addr>.  It
   //     is expected to implement operator==().
-{
 public:
   // = Initialization methods.
   ACE_Hash_Addr (void);
@@ -615,9 +611,8 @@ private:
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
-class ACE_Cached_Connect_Strategy
-  : public ACE_Connection_Recycling_Strategy,
-    public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+class ACE_Cached_Connect_Strategy : public ACE_Connection_Recycling_Strategy, public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+{
   // = TITLE
   //     A connection strategy which caches connections to peers
   //     (represented by <SVC_HANDLER> instances), thereby allowing
@@ -646,7 +641,6 @@ class ACE_Cached_Connect_Strategy
   //
   // = SEE ALSO
   //     <ACE_Hash_Addr>.
-{
 public:
 
   ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
@@ -752,6 +746,7 @@ private:
 
 template <class SVC_HANDLER>
 class ACE_Schedule_All_Reactive_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
+{
   // = TITLE
   //     Defines the interface for specifying how to suspend and
   //     resume a single-threaded reactive service .
@@ -759,7 +754,6 @@ class ACE_Schedule_All_Reactive_Strategy : public ACE_Scheduling_Strategy<SVC_HA
   // = DESCRIPTION
   //     This class provides a strategy that suspends and resumes all
   //     the Event_Handlers in a Reactor in one fell swoop.
-{
 public:
   // = Initialization and termination methods.
   ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
@@ -779,6 +773,7 @@ public:
 
 template <class SVC_HANDLER>
 class ACE_Schedule_All_Threaded_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
+{
   // = TITLE
   //     Defines the interface for specifying how to suspend and
   //     resume a multithreaded service .
@@ -786,7 +781,6 @@ class ACE_Schedule_All_Threaded_Strategy : public ACE_Scheduling_Strategy<SVC_HA
   // = DESCRIPTION
   //     This class provides a strategy that suspends and resumes all
   //     the Event_Handlers controlled by a Thread_Manager in one fell swoop.
-{
 public:
   // = Initialization and termination methods.
   ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);

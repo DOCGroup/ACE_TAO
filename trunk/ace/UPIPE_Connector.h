@@ -24,10 +24,10 @@
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Export ACE_UPIPE_Connector : public ACE_SPIPE
+{
   // = TITLE
   //     Defines an active connection factory for the
   //     <ACE_UPIPE_STREAM> wrappers.
-{
 public:
   // = Initialization methods.
   ACE_UPIPE_Connector (void);

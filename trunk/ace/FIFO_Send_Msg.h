@@ -21,10 +21,10 @@
 #include "ace/FIFO_Send.h"
 
 class ACE_Export ACE_FIFO_Send_Msg : public ACE_FIFO_Send
+{
   // = TITLE
   //     Sender side for the Record oriented C++ wrapper for UNIX
   //     FIFOs. 
-{
 public:
   // = Initialization methods.
   ACE_FIFO_Send_Msg (void);

@@ -68,6 +68,7 @@ protected:
 
 template <class STREAM>
 class ACE_IOStream : public iostream, public STREAM
+{
   // = TITLE
   //     A template adapter for creating an iostream-like object using
   //     an ACE IPC Stream for the actual I/O.  Iostreams use an
@@ -99,7 +100,6 @@ class ACE_IOStream : public iostream, public STREAM
   //     In the iostream.cpp file is an example of why it is necessary
   //     to overload all of the get/put operators when you want to
   //     customize only one or two.
-{
 public:
   // = Initialization and termination methods.
   ACE_IOStream (STREAM &stream,
@@ -224,6 +224,7 @@ private:
 
 template <class STREAM>
 class ACE_SOCK_Dgram_SC : public STREAM
+{
   // = TITLE
   //   "Dgram_SC" is short for "Datagram Self-Contained."
   //
@@ -235,7 +236,6 @@ class ACE_SOCK_Dgram_SC : public STREAM
   //   what this class is for.  Here, we keep an address object so
   //   that we can remember who last sent us data.  When we write
   //   back, we're then able to write back to that same address.
-{
 public:
   ACE_SOCK_Dgram_SC (void);
   ACE_SOCK_Dgram_SC (STREAM &source,

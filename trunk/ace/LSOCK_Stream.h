@@ -25,15 +25,19 @@
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
+{
   // = TITLE
   //     Create a Local ACE_SOCK stream. 
-{
 public:
   // = Send/recv methods.
-  ssize_t send_msg (const iovec iov[], size_t n, ACE_HANDLE handle);
+  ssize_t send_msg (const iovec iov[],
+                    size_t n,
+                    ACE_HANDLE handle);
   // Send iovecs via <::writev>.
 
-  ssize_t recv_msg (iovec iov[], size_t n, ACE_HANDLE &handle);
+  ssize_t recv_msg (iovec iov[],
+                    size_t n,
+                    ACE_HANDLE &handle);
   // Send iovecs via <::writev>.
 
   ACE_HANDLE get_handle (void) const;

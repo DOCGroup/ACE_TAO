@@ -24,12 +24,11 @@
 
 #if defined (ACE_HAS_TLI)
 
-/* Oh what I wouldn't do for namespaces... */
-
 // Forward reference...
 class ACE_TLI_Request_Queue;
 
 class ACE_Export ACE_TLI_Acceptor : public ACE_TLI
+{
   // = TITLE
   //     Defines the member functions for ACE_TLI_Acceptor abstraction. 
   // 
@@ -38,9 +37,9 @@ class ACE_Export ACE_TLI_Acceptor : public ACE_TLI
   //     book on System V UNIX network programming.  It basically
   //     makes TLI look like the C++ SOCK_SAP socket wrappers with
   //     respect to establishing passive-mode listener endpoints.
-{
-friend class ACE_Request_Queue;
 public:
+  friend class ACE_Request_Queue;
+
   // = Initialization and termination methods.
   ACE_TLI_Acceptor (void);
   // Default constructor.

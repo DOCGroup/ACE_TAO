@@ -22,10 +22,10 @@
 
 template <class T>
 class ACE_Typed_SV_Message
+{
   // = TITLE
   //     Defines the header file for the C++ wrapper for System V
   //     message queues.
-{
 public:
   // = Initialization and termination methods.
   ACE_Typed_SV_Message (long type = 0, 

@@ -23,10 +23,11 @@
 class ACE_Allocator;
 
 template <class EXT_ID, class INT_ID>
-struct ACE_Map_Entry
+class ACE_Map_Entry
+{
   // = TITLE
   //     An entry in the Map.
-{
+public:
   EXT_ID ext_id_;
   // Key used to look up an entry.
 
@@ -57,6 +58,7 @@ class ACE_Map_Reverse_Iterator;
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Manager
+{
   // = TITLE
   //     Define a map abstraction that associates <EXT_ID>s with
   //     <INT_ID>s.
@@ -71,11 +73,10 @@ class ACE_Map_Manager
   //     This implementation of a map uses an array, which is searched
   //     linearly.  For more efficient searching you should use the
   //     <ACE_Hash_Map_Manager>.
-
-{
-friend class ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
-friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 public:
+  friend class ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+  friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+
   // = Traits.
   typedef EXT_ID KEY;
   typedef INT_ID VALUE;
@@ -252,11 +253,9 @@ private:
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator
+{
   // = TITLE
   //     Iterator for the ACE_Map_Manager.
-  //
-  // = DESCRIPTION
-{
 public:
   // = Initialization method.
   ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
@@ -290,11 +289,9 @@ private:
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Reverse_Iterator
+{
   // = TITLE
   //     Reverse Iterator for the ACE_Map_Manager.
-  //
-  // = DESCRIPTION
-{
 public:
   // = Initialization method.
   ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);

@@ -26,6 +26,7 @@ template <ACE_SYNCH_DECL> class ACE_Module;
 
 template <ACE_SYNCH_DECL>
 class ACE_Task : public ACE_Task_Base
+{
   // = TITLE
   //    Primary interface for application message processing, as well
   //    as input and output message queueing.
@@ -33,10 +34,10 @@ class ACE_Task : public ACE_Task_Base
   // = DESCRIPTION
   //    This class serves as the basis for passive and active objects
   //    in ACE.
-{
-friend class ACE_Module<ACE_SYNCH_USE>;
-friend class ACE_Module_Type;
 public:
+  friend class ACE_Module<ACE_SYNCH_USE>;
+  friend class ACE_Module_Type;
+
   // = Initialization/termination methods.
   ACE_Task (ACE_Thread_Manager *thr_mgr = 0,
 	    ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0);

@@ -23,9 +23,9 @@ class ACE_Allocator;
 
 template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry
+{
   // = TITLE
   //     Define an entry in the hash table.
-{
 public:
   // = Initialization and termination methods.
   ACE_Hash_Map_Entry (const EXT_ID &ext_id,
@@ -67,6 +67,7 @@ class ACE_Hash_Map_Reverse_Iterator;
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Manager 
+{
   // = TITLE
   //     Define a map abstraction that associates <EXT_ID>s with
   //     <INT_ID>s.  
@@ -79,10 +80,10 @@ class ACE_Hash_Map_Manager
   //     specialization).  This class uses an ACE_Allocator to
   //     allocate memory The user can make this a persistant class by
   //     providing an ACE_Allocator with a persistable memory pool
-{
+public:
   friend class ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
   friend class ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
-public:
+
   typedef EXT_ID KEY;
   typedef INT_ID VALUE;
   typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> ENTRY;
@@ -297,11 +298,11 @@ private:
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator
+{
   // = TITLE
   //     Iterator for the ACE_Hash_Map_Manager.
   //
   // = DESCRIPTION
-{
 public:
   // = Initialization method.
   ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm);
@@ -339,11 +340,11 @@ private:
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Reverse_Iterator
+{
   // = TITLE
   //     Iterator for the ACE_Hash_Map_Manager.
   //
   // = DESCRIPTION
-{
 public:
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm);

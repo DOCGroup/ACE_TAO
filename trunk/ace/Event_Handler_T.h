@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -24,6 +23,7 @@
 
 template <class T> 
 class ACE_Export ACE_Event_Handler_T : public ACE_Event_Handler 
+{
   // = TITLE
   //     Enable a class that doesn't inherit from the
   //     ACE_Event_Handler to be incorporated into the ACE_Reactor
@@ -32,33 +32,34 @@ class ACE_Export ACE_Event_Handler_T : public ACE_Event_Handler
   //
   // = DESCRIPTION
   //     It is sometimes the case that an application has a hierarchy
-  //     of operation dispatcher classes that have their own inheritance
-  //     hierarchy but also would like to integrate with the ACE_Reactor.
-  //     Rather than adopt a "mixin" approach, it is often cleaner to 
-  //	 define a template as a subclass of ACE_Event_Handler and paramterize it 
-  //	 with an operation dispatcher type.
+  //     of operation dispatcher classes that have their own
+  //     inheritance hierarchy but also would like to integrate with
+  //     the ACE_Reactor.  Rather than adopt a "mixin" approach, it is
+  //     often cleaner to define a template as a subclass of
+  //     ACE_Event_Handler and paramterize it with an operation
+  //     dispatcher type.
   //
-  //     When constructing an instantiation of the ACE_Event_Handler_T object,
-  //	 a set of pointers to member functions must be provided so that 
-  //     when one of the handle_* methods is called by the ACE_Reactor,
-  //     the appropriate method is called on the underlying operations
-  //     object.  This is done since in some cases it is useful to 
-  //	 map any event that happens to the same method on an object.
+  //     When constructing an instantiation of the ACE_Event_Handler_T
+  //     object, a set of pointers to member functions must be
+  //     provided so that when one of the handle_* methods is called
+  //     by the ACE_Reactor, the appropriate method is called on the
+  //     underlying operations object.  This is done since in some
+  //     cases it is useful to map any event that happens to the same
+  //     method on an object.
   //
-  //     The ACE_Event_Handler_T template is instantiated by an operations
-  //     object and registered with the ACE_Reactor, and it then calls the
-  //     appropriate op_handler.  So, it's basically just another
-  //     level of indirection in event dispatching. The coupling
-  //     betweent the ultimate handler of the event and the
+  //     The ACE_Event_Handler_T template is instantiated by an
+  //     operations object and registered with the ACE_Reactor, and it
+  //     then calls the appropriate op_handler.  So, it's basically
+  //     just another level of indirection in event dispatching. The
+  //     coupling betweent the ultimate handler of the event and the
   //     ACE_Event_Handler class is relaxed a bit by have this
-  //     intermediate <op_handler_> object of type <T> around. The client
-  //     object can then dynamically change the bindings for the
-  //     various handlers so that during the life of one of the
+  //     intermediate <op_handler_> object of type <T> around. The
+  //     client object can then dynamically change the bindings for
+  //     the various handlers so that during the life of one of the
   //     operation objects, it can change how it wants events to be
   //     handled. It just instantiates a new instance of the template
   //     with different bindings and reregisters this new object with
   //     the ACE_Reactor.
-{
 public:
   // = Typedefs to simplify pointer-to-member-function registration.
 
@@ -83,15 +84,15 @@ public:
   // = Initialization and termination methods.
 
   ACE_Event_Handler_T (T *op_handler, 
-		   int delete_handler,
+                   int delete_handler,
                    GET_HANDLE get_handle = 0,
-		   IO_HANDLER input = 0,
-		   CL_HANDLER close = 0,
-		   SIG_HANDLER sig = 0,
-		   TO_HANDLER timeout = 0,
-		   IO_HANDLER output = 0,
+                   IO_HANDLER input = 0,
+                   CL_HANDLER close = 0,
+                   SIG_HANDLER sig = 0,
+                   TO_HANDLER timeout = 0,
+                   IO_HANDLER output = 0,
                    SET_HANDLE set_handle = 0,
-		   IO_HANDLER except = 0);
+                   IO_HANDLER except = 0);
   // Initialize the op_handler.
 
   ~ACE_Event_Handler_T (void);

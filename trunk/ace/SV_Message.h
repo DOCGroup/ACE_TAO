@@ -21,9 +21,9 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_SV_Message
+{
   // = TITLE
   //     Defines the header file for the C++ wrapper for message queues. */
-{
 public:
   // = Initialization and termination methods.
   ACE_SV_Message (long type = 0);

@@ -28,6 +28,7 @@ class ACE_Event_Handler;
 class ACE_INET_Addr;
 
 class ACE_Export ACE
+{
   // = TITLE
   //     Contains value added ACE methods that extend the behavior
   //     of the UNIX and Win32 OS calls.
@@ -37,10 +38,9 @@ class ACE_Export ACE
   //     single place in order to manage the namespace better.  These
   //     methods are put here rather than in ACE_OS in order to
   //     separate concerns.
-{
+public:
   ACE_CLASS_IS_NAMESPACE (ACE);
   
-public:
   // = ACE version information.
   static u_int major_version (void);
   // E.g., the "4" in ACE 4.3.19.

@@ -26,13 +26,13 @@
 #include "ace/SString.h"
 
 class ACE_Export ACE_Name_Request
+{
   // = TITLE
-  //   Message format for delivering requests to the ACE_Name Server.
+  //     Message format for delivering requests to the ACE_Name Server.
   //
   // = DESCRIPTION
-  //   This class is implemented to minimize data copying.
-  //   In particular, all marshaling is done in situ...
-{
+  //     This class is implemented to minimize data copying.  In
+  //     particular, all marshaling is done in situ...
 public:
   enum Constants
   {
@@ -176,13 +176,13 @@ private:
 };
 
 class ACE_Export ACE_Name_Reply
+{
   // = TITLE
   //     Message format for delivering replies from the ACE_Name Server.
   //
   // = DESCRIPTION
-  //   This class is implemented to minimize data copying.
-  //   In particular, all marshaling is done in situ...
-{
+  //     This class is implemented to minimize data copying.  In
+  //     particular, all marshaling is done in situ...
 public:
   enum Constants
   {

@@ -37,13 +37,12 @@ class ACE_Reactor_Impl;
 #include "ace/Signal.h"
 
 class ACE_Export ACE_Reactor
-  // = TITLE
-  //
-  //     The resposiblility of this class is to forward all methods to
-  //     its delegation/implementation class
 {
+  // = TITLE
+  //     The resposiblility of this class is to forward all methods to
+  //     its delegation/implementation class, e.g.,
+  //     <ACE_Select_Reactor> or <ACE_WFMO_Reactor>.
 public:
-
   enum
   {
     // = Operations on the "ready" mask and the "dispatch" mask.

@@ -21,10 +21,10 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Obchunk
+{
   // = TITLE
   //     A "chunk" of memory.  This should be a nested class but some
   //     compilers don't like them yet. 
-{
 friend class ACE_Obstack;
   
 public:
@@ -42,10 +42,10 @@ private:
 };
 
 class ACE_Export ACE_Obstack
+{
   // = TITLE
   //    Define a simple "mark and release" memory allocation utility.
   //    This class is based on the GNU obstack utility.
-{
 public:
   // = Initialization and termination methods.
   ACE_Obstack (int size = 4080);

@@ -21,9 +21,9 @@
 #include "ace/FILE_IO.h"
 
 class ACE_Export ACE_FILE_Connector : public ACE_FILE
+{
   // = TITLE
   //     Defines an active connection factory for the ACE_FILE wrappers. 
-{
 public:
   // = Initialization methods.
   ACE_FILE_Connector (void);

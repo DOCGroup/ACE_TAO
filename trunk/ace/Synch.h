@@ -30,6 +30,7 @@ class ACE_Time_Value;
 // template <class ACE_COND_MUTEX> class ACE_Condition;
 
 class ACE_Lock
+{
   // = TITLE
   //     This is the abstract base class that contains the uniform
   //     locking API that is supported by all the ACE synchronization
@@ -44,7 +45,6 @@ class ACE_Lock
   //     that (1) they add ~20% extra overhead for virtual function
   //     calls and (2) objects with virtual functions can't be placed
   //     into shared memory.
-{
 public:
   virtual int remove (void) = 0;
   // Explicitly destroy the lock.
@@ -85,13 +85,13 @@ public:
 };
 
 class ACE_Export ACE_File_Lock
+{
   // = TITLE
   //     A wrapper around the UNIX file locking mechanism.
   //
   // = DESCRIPTION
   //     Allows us to "adapt" the UNIX file locking mechanisms to work
   //     with all of our Guard stuff...
-{
 public:
   ACE_File_Lock (ACE_HANDLE handle = ACE_INVALID_HANDLE);
   // Set the <handle_> of the File_Lock to <handle>.  Note that this
@@ -176,9 +176,9 @@ private:
 };
 
 class ACE_Export ACE_Semaphore
+{
   // = TITLE
   //     Wrapper for Dijkstra style general semaphores.
-{
 public:
   // = Initialization and termination.
   ACE_Semaphore (u_int count = 1, // By default make this unlocked.
@@ -262,10 +262,10 @@ private:
 };
 
 class ACE_Export ACE_Process_Semaphore
+{
   // = TITLE
   //     Wrapper for Dijkstra style general semaphores that work
   //     across processes.
-{
 public:
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
 			 LPCTSTR name = 0,
@@ -338,13 +338,13 @@ protected:
 };
 
 class ACE_Export ACE_RW_Mutex
+{
   // = TITLE
   //     Wrapper for readers/writer locks.
   //
   // = DESCRIPTION
   //     These are most useful for applications that have many more
   //     parallel readers than writers...
-{
 public:
   ACE_RW_Mutex (int type = USYNC_THREAD,
 		LPCTSTR name = 0,
@@ -407,10 +407,10 @@ private:
 };
 
 class ACE_Export ACE_Mutex
+{
   // = TITLE
   //     <ACE_Mutex> wrapper (valid in same process or across
   //     processes (depending on TYPE flag)).
-{
 public:
   ACE_Mutex (int type = USYNC_THREAD,
 	     LPCTSTR name = 0,
@@ -478,11 +478,11 @@ private:
 };
 
 class ACE_Export ACE_Process_Mutex
+{
   // = TITLE
   //     A wrapper for mutexes that can be used across processes on
   //     the same host machine, as well as within a process, of
   //     course.
-{
 public:
   ACE_Process_Mutex (LPCTSTR name = 0,
 		     void *arg = 0);
@@ -540,9 +540,9 @@ public:
 };
 
 class ACE_Export ACE_RW_Process_Mutex : public ACE_Process_Mutex
+{
   // = TITLE
   //     Wrapper for readers/writer locks that exist across processes.
-{
 public:
   ACE_RW_Process_Mutex (LPCTSTR name = 0,
                         int flags = O_CREAT|O_RDWR);
@@ -596,9 +596,9 @@ private:
 };
 
 class ACE_Null_Barrier
+{
   // = TITLE
   //     Implements "NULL barrier synchronization".
-{
 public:
   ACE_Null_Barrier (u_int,
 		    const char * = 0,
@@ -622,10 +622,10 @@ private:
 };
 
 class ACE_Export ACE_Null_Mutex
+{
   // = TITLE
   //     Implement a do nothing <ACE_Mutex>, i.e., all the methods are
   //     no ops.
-{
 public:
   ACE_Null_Mutex (LPCTSTR = 0) {}
   ~ACE_Null_Mutex (void) {}
@@ -647,11 +647,11 @@ public:
 };
 
 class ACE_Export ACE_Null_Condition
+{
   // = TITLE
   //     Implement a do nothing <ACE_Condition> variable wrapper, i.e.,
   //     all methods are no ops.  This class is necessary since some
   //     C++ compilers are *very* lame...
-{
 public:
   ACE_Null_Condition (ACE_Null_Mutex &m, int = 0,
 			    LPCTSTR = 0, void * = 0): mutex_ (m) {}
@@ -678,6 +678,7 @@ private:
 };
 
 class ACE_Export ACE_Null_Mutex_Guard
+{
   // = TITLE
   //     This data structure is meant to be used within a method or
   //     function...  It performs automatic aquisition and release of
@@ -686,7 +687,6 @@ class ACE_Export ACE_Null_Mutex_Guard
   // = DESCRIPTION
   //     This should be a specialization of ACE_Guard, but compiler
   //     bugs preclude this...
-{
 public:
   ACE_Null_Mutex_Guard (ACE_Null_Mutex &) {}
   ~ACE_Null_Mutex_Guard (void) {}
@@ -704,6 +704,7 @@ private:
 };
 
 class ACE_TSS_Adapter
+{
   // = TITLE
   //     This class encapsulates a TSS object and its associated
   //     C++ destructor function.  It is used by the ACE_TSS...
@@ -716,7 +717,6 @@ class ACE_TSS_Adapter
   //     storage. ts_obj_ points to the "real" object and
   //     func_ is a pointer to the C++ cleanup function for ts_obj_.
   //
-{
 public:
   ACE_TSS_Adapter (void *object, ACE_THR_DEST f);
   // Initialize the adapter.
@@ -734,13 +734,13 @@ public:
 };
 
 class ACE_Export ACE_Event
+{
   // = TITLE
   //     A wrapper around the Win32 event locking mechanism.
   //
   // = DESCRIPTION
   //     Portable implementation of an Event mechanism, which is
   //     native to Win32, but must be emulated on UNIX.
-{
 public:
   ACE_Event (int manual_reset = 0,
 	     int initial_state = 0,
@@ -815,14 +815,13 @@ private:
 };
 
 class ACE_Export ACE_Manual_Event : public ACE_Event
+{
   // = TITLE
   //     Manual Events.
   //
   // = DESCRIPTION
-  //
   //     Specialization of Event mechanism which wakes up all waiting
   //     threads on signal()
-{
 public:
   ACE_Manual_Event (int initial_state = 0,
 		    int type = USYNC_THREAD,
@@ -838,14 +837,13 @@ public:
 };
 
 class ACE_Export ACE_Auto_Event : public ACE_Event
+{
   // = TITLE
   //     Auto Events.
   //
   // = DESCRIPTION
-  //
   //     Specialization of Event mechanism which wakes up one waiting
   //     thread on signal()
-{
 public:
   ACE_Auto_Event (int initial_state = 0,
 		  int type = USYNC_THREAD,
@@ -864,12 +862,12 @@ public:
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Export ACE_Thread_Mutex
+{
   // = TITLE
   //     ACE_Thread_Mutex wrapper (only valid for threads in the same
   //     process).
   //
   // = DESCRIPTION
-  //
   //     This implementation is optimized for locking threads that are
   //     in the same process.  It maps to <CRITICAL_SECTION>s on NT
   //     and <ACE_mutex_t> with <type> set to <USYNC_THREAD> on UNIX.
@@ -879,7 +877,6 @@ class ACE_Export ACE_Thread_Mutex
   //     recursive.  To be totally safe and portable, developers
   //     should use ACE_Recursive_Thread_Mutex when they need a
   //     recursive mutex.
-{
 public:
   ACE_Thread_Mutex (LPCTSTR name = 0, void *arg = 0);
 
@@ -944,6 +941,7 @@ private:
 };
 
 class ACE_Export ACE_Thread_Mutex_Guard
+{
   // = TITLE
   //     This data structure is meant to be used within a method or
   //     function...  It performs automatic aquisition and release of
@@ -952,7 +950,6 @@ class ACE_Export ACE_Thread_Mutex_Guard
   // = DESCRIPTION
   //     This should be a specialization of <ACE_Guard>, but compiler
   //     bugs in older C++ compilers preclude this...
-{
 public:
   ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m, int block = 1);
   // Implicitly and automatically acquire the lock.
@@ -998,6 +995,7 @@ private:
 };
 
 class ACE_Export ACE_Condition_Thread_Mutex
+{
   // = TITLE
   //     ACE_Condition variable wrapper written using ACE_Mutexes This
   //     allows threads to block until shared data changes state.
@@ -1017,7 +1015,6 @@ class ACE_Export ACE_Condition_Thread_Mutex
   // = DESCRIPTION
   //     This should be an instantiation of ACE_Condition but problems
   //     with compilers precludes this...
-{
 public:
   ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
 			      LPCTSTR name = 0,
@@ -1076,6 +1073,7 @@ private:
 };
 
 class ACE_Export ACE_Recursive_Thread_Mutex
+{
   // = TITLE
   //     Implement a C++ wrapper that allows calls to class
   //     <ACE_Thread_Mutex> to be nested for a nested acquire() that
@@ -1087,7 +1085,6 @@ class ACE_Export ACE_Recursive_Thread_Mutex
   //     compilers preclude this.  This implementation is based
   //     on an algorithm sketched by Dave Butenhof  <butenhof@zko.dec.com>.
   //     Naturally, I take the credit for any mistakes ;-)
-{
   // friend class ACE_Condition<class ACE_COND_MUTEX>;
 public:
   ACE_Recursive_Thread_Mutex (LPCTSTR name = 0,
@@ -1180,9 +1177,9 @@ private:
 };
 
 class ACE_Export ACE_RW_Thread_Mutex : public ACE_RW_Mutex
+{
   // = TITLE
   //     Wrapper for readers/writer locks that exist within a process.
-{
 public:
   ACE_RW_Thread_Mutex (LPCTSTR name = 0,
 		       void *arg = 0);
@@ -1195,10 +1192,10 @@ public:
 };
 
 class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
+{
   // = TITLE
   //     Wrapper for Dijkstra style general semaphores that work
   //     only within one process.
-{
 public:
   ACE_Thread_Semaphore (u_int count = 1, // By default make this unlocked.
 			LPCTSTR name = 0,
@@ -1236,6 +1233,7 @@ struct ACE_Export ACE_Sub_Barrier
 };
 
 class ACE_Export ACE_Barrier
+{
   // = TITLE
   //     Implements "barrier synchronization".
   //
@@ -1248,7 +1246,6 @@ class ACE_Export ACE_Barrier
   //     correct.  This code is based on an article from SunOpsis
   //     Vol. 4, No. 1 by Richard Marejka
   //     (Richard.Marejka@canada.sun.com).
-{
 public:
   ACE_Barrier (u_int count,
 	       LPCTSTR name = 0,
@@ -1293,10 +1290,14 @@ private:
 };
 
 #if 0
+// The following two classes are commented out since there doesn't
+// appear to be a portable and robust means of implementing this
+// functionality across platforms. 
+
 class ACE_Process_Condition
+{
   // = TITLE
   //     ACE_Condition variable wrapper that works across processes.
-{
 public:
   ACE_Process_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
 
@@ -1310,13 +1311,13 @@ public:
 
 #if 0
 class ACE_Export ACE_Process_Barrier : public ACE_Barrier
+{
   // = TITLE
   //     Implements "barrier synchronization" using ACE_Process_Mutexes!
   //
   // = DESCRIPTION
   //     This class is just a simple wrapper for ACE_Barrier that
   //     selects the USYNC_PROCESS variant for the locks.
-{
 public:
   ACE_Process_Barrier (u_int count, LPCTSTR name = 0);
   // Create a Process_Barrier, passing in the optional <name>.
@@ -1330,13 +1331,13 @@ public:
 #endif /* 0 */
 
 class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
+{
   // = TITLE
   //     Implements "barrier synchronization" using ACE_Thread_Mutexes!
   //
   // = DESCRIPTION
   //     This class is just a simple wrapper for ACE_Barrier that
   //     selects the USYNC_THREAD variant for the locks.
-{
 public:
   ACE_Thread_Barrier (u_int count, LPCTSTR name = 0);
   // Create a Thread_Barrier, passing in the optional <name>.

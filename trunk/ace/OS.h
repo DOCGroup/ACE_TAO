@@ -961,6 +961,7 @@ typedef int clockid_t;
 #endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
 
 class ACE_Export ACE_Time_Value
+{
   // = TITLE
   //     Operations on "timeval" structures.
   //
@@ -970,7 +971,6 @@ class ACE_Export ACE_Time_Value
   //     lower-level OS mechanisms like <select>, <poll>, or
   //     <cond_timedwait>.  ACE_Time_Value help make the use of these
   //     mechanisms portable across OS platforms,
-{
 public:
   // = Useful constants.
   static const ACE_Time_Value zero;
@@ -1104,6 +1104,7 @@ private:
 };
 
 class ACE_Export ACE_Countdown_Time
+{
   // = TITLE
   //     Keeps track of the amount of elapsed time.
   //
@@ -1111,7 +1112,6 @@ class ACE_Export ACE_Countdown_Time
   //     This class has a side-effect on the <max_wait_time> -- every
   //     time the <stop> method is called the <max_wait_time> is
   //     updated.
-{
 public:
   // = Initialization and termination methods.
   ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
@@ -1992,6 +1992,7 @@ typedef HANDLE ACE_sema_t;
 
 #if defined (ACE_LACKS_COND_T)
 class ACE_Export ACE_cond_t
+{
   // = TITLE
   //     This structure is used to implement condition variables on
   //     VxWorks and Win32.
@@ -1999,9 +2000,9 @@ class ACE_Export ACE_cond_t
   // = DESCRIPTION
   //     At the current time, this stuff only works for threads
   //     within the same process.
-{
-  friend class ACE_OS;
 public:
+  friend class ACE_OS;
+
   long waiters (void) const;
   // Returns the number of waiters.
 
@@ -2036,6 +2037,7 @@ protected:
 
 #if defined (ACE_LACKS_RWLOCK_T)
 struct ACE_Export ACE_rwlock_t
+{
   // = TITLE
   //     This is used to implement readers/writer locks on NT,
   //     VxWorks, and POSIX pthreads.
@@ -2043,9 +2045,9 @@ struct ACE_Export ACE_rwlock_t
   // = DESCRIPTION
   //     At the current time, this stuff only works for threads
   //     within the same process.
-{
-friend class ACE_OS;
 protected:
+  friend class ACE_OS;
+
   ACE_mutex_t lock_;
   // Serialize access to internal state.
 
@@ -3500,9 +3502,9 @@ typedef int ucontext_t;
 #endif /* ACE_HAS_BROKEN_T_ERRNO */
 
 class ACE_Export ACE_Thread_ID
+{
   // = TITLE
   //     Defines a platform-independent thread ID.
-{
 public:
   // = Initialization method.
   ACE_Thread_ID (ACE_thread_t, ACE_hthread_t);
@@ -3585,10 +3587,11 @@ struct strbuf
 };
 #endif /* ACE_HAS_STRBUF_T */
 
-struct ACE_Export ACE_Str_Buf : public strbuf
+class ACE_Export ACE_Str_Buf : public strbuf
+{
   // = TITLE
   //     Simple wrapper for STREAM pipes strbuf.
-{
+public:
   // = Initialization method
   ACE_Str_Buf (void *b = 0, int l = 0, int max = 0);
   // Constructor.
@@ -3623,9 +3626,9 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 class ACE_Export ACE_Cleanup
+{
   // = TITLE
   //    Base class for objects that are cleaned by ACE_Object_Manager.
-{
 public:
   virtual ~ACE_Cleanup ();
   // Destructor.
@@ -3638,10 +3641,11 @@ public:
 extern "C" ACE_Export
 void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
 
-struct ACE_Cleanup_Info
+class ACE_Cleanup_Info
+{
   // = TITLE
   //     Hold cleanup information for thread/process
-{
+public:
   ACE_Cleanup_Info (void);
   // Default constructor.
 
@@ -3670,6 +3674,7 @@ class ACE_Thread_Manager;
 class ACE_Thread_Descriptor;
 
 class ACE_Thread_Adapter
+{
   // = TITLE
   //     Converts a C++ function into a function <ace_thread_adapter>
   //     function that can be called from a thread creation routine
@@ -3680,7 +3685,6 @@ class ACE_Thread_Adapter
   //
   // = DESCRIPTION
   //     This class is used in <ACE_OS::thr_create>.
-{
 public:
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
@@ -3748,6 +3752,7 @@ private:
 };
 
 class ACE_Export ACE_OS
+{
   // = TITLE
   //     This class defines an operating system independent
   //     programming API that shields developers from non-portable
@@ -3765,14 +3770,14 @@ class ACE_Export ACE_OS
   //     The methods in this class also automatically restart when
   //     interrupts occur during system calls (assuming that the
   //     <ACE_Log_Msg::restart> flag is enabled).
-{
+public:
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
 
-public:
-  struct ace_flock_t
+  class ace_flock_t
+  {
     // = TITLE
     //     OS file locking structure.
-  {
+  public:
     void dump (void) const;
   // Dump state of the object.
 
@@ -4820,6 +4825,7 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #   endif /* ! ACE_DEFAULT_THREAD_KEYS */
 
 class ACE_TSS_Emulation
+{
   // = TITLE
   //     Thread-specific storage emulation.
   //
@@ -4828,7 +4834,6 @@ class ACE_TSS_Emulation
   //     It is intended for use on platforms that don't have a
   //     native TSS, or have a TSS with limitations such as the
   //     number of keys or lack of support for removing keys.
-{
 public:
   typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
 

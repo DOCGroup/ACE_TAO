@@ -24,13 +24,10 @@
 #include "ace/Service_Object.h"
 
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
-  // = TITLE
-  //     Provide a standard service that returns a list of all services in the
-  //  Service Repository. 
-  //
-  // = DESCRIPTION
-  //
 {
+  // = TITLE
+  //     Provide a standard service that returns a list of all
+  //     services in the Service Repository.
 public:
   ACE_Service_Manager (void);
   virtual int list_services (void);

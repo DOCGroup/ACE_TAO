@@ -21,12 +21,12 @@
 
 template <class T>
 class ACE_Free_List  
+{
   // = TITLE
   //      Implements a free list.
   //
   // = DESCRIPTION
   //      This class maintains a free list of nodes of type T.
-{
 public:
   virtual ~ACE_Free_List (void);
   // Destructor - removes all the elements from the free_list.
@@ -48,6 +48,7 @@ public:
 
 template <class T, class ACE_LOCK>
 class ACE_Locked_Free_List : public ACE_Free_List<T> 
+{
   // = TITLE
   //      Implements a free list.
   //
@@ -55,7 +56,6 @@ class ACE_Locked_Free_List : public ACE_Free_List<T>
   //      This class maintains a free list of nodes of type T.  It depends on
   //      the type T having a get_next () and set_next () method.  It maintains
   //      a mutex so the freelist can be used in a multithreaded program .
-{
 public:
   // = Initialization and termination.
   ACE_Locked_Free_List (int mode = ACE_FREE_LIST_WITH_POOL,

@@ -20,9 +20,11 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_High_Res_Timer
-  // = TITLE A high resolution timer class wrapper that encapsulates
-  // OS-specific high-resolution timers, such as those found on
-  // Solaris, AIX, Win32/Pentium, and VxWorks.
+{
+  // = TITLE 
+  //     A high resolution timer class wrapper that encapsulates
+  //     OS-specific high-resolution timers, such as those found on
+  //     Solaris, AIX, Win32/Pentium, and VxWorks.
   //
   // = DESCRIPTION
   //     Most of the member functions don't return values.  The only
@@ -60,7 +62,6 @@ class ACE_Export ACE_High_Res_Timer
   //
   //     This issue is not mentioned in the Solaris 2.5.1 gethrtime man
   //     page.
-{
 public:
   // = Initialization method.
 

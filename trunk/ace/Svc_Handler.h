@@ -29,6 +29,7 @@ class ACE_Connection_Recycling_Strategy;
 
 template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
 class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
+{
   // = TITLE
   //     Defines the interface for a service that exchanges data with
   //     its connected peer.
@@ -43,7 +44,6 @@ class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
   //     ACE_Connector when a connection is established successfully.
   //     This endpoint is used to exchange data between a
   //     ACE_Svc_Handler and the peer it is connected with.
-{
 public:
   // = Initialization and termination methods.
   ACE_Svc_Handler (ACE_Thread_Manager * = 0, 

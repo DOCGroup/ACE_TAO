@@ -21,14 +21,14 @@
 
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE>
+{
   // = TITLE
   //    Standard module that acts as the head of a ustream.
-{
 public:
-  ACE_Stream_Head ();
+  ACE_Stream_Head (void);
   // Construction 
 
-  ~ACE_Stream_Head ();
+  ~ACE_Stream_Head (void);
   // Destruction
 
   // = ACE_Task hooks
@@ -56,14 +56,14 @@ private:
 
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE>
+{
   // = TITLE
   //    Standard module that acts as the head of a ustream.
-{
 public:
-  ACE_Stream_Tail ();
+  ACE_Stream_Tail (void);
   // Construction 
 
-  ~ACE_Stream_Tail ();
+  ~ACE_Stream_Tail (void);
   // Destruction
 
   // = ACE_Task hooks
@@ -91,15 +91,15 @@ private:
 
 template <ACE_SYNCH_DECL>
 class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE>
+{
   // = TITLE
   //    Standard module that acts as a "no op", simply passing on all
   //    data to its adjacent neighbor.
-{
 public:
-  ACE_Thru_Task ();
+  ACE_Thru_Task (void);
   // Construction 
 
-  ~ACE_Thru_Task ();
+  ~ACE_Thru_Task (void);
   // Destruction
 
   // = ACE_Task hooks

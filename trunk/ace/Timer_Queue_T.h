@@ -25,9 +25,9 @@
 
 template <class TYPE>
 class ACE_Timer_Node_T
+{
   // = TITLE
   //     Maintains the state associated with a Timer entry.
-{
 public:
   ACE_Timer_Node_T (void);
   // Default constructor
@@ -122,6 +122,7 @@ private:
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Queue_Iterator_T
+{
   // = TITLE
   //     Generic interface for iterating over a subclass of
   //     <ACE_Timer_Queue>.
@@ -130,7 +131,6 @@ class ACE_Timer_Queue_Iterator_T
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  Be aware that it isn't guaranteed
   //     that the transversal will be in order of timeout values.  
-{
 public:
 
   // = Initialization and termination methods.
@@ -155,6 +155,7 @@ public:
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Queue_T
+{
   // = TITLE 
   //      Provides an interface to timers.
   //
@@ -162,7 +163,6 @@ class ACE_Timer_Queue_T
   //      This is an abstract base class that provides hook for
   //      implementing specialized policies such as <ACE_Timer_List>
   //      and <ACE_Timer_Heap>.
-{
 public: 
 
   typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> ITERATOR;
@@ -319,13 +319,13 @@ private:
 
 template <class ACE_LOCK>
 class ACE_Event_Handler_Handle_Timeout_Upcall
+{
   // = TITLE 
   //      Functor for Timer_Queues.
   //
   // = DESCRIPTION
   //      This class implements the functor required by the Timer
   //      Queue to call <handle_timeout> on ACE_Event_Handlers.
-{
 public:
   typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
                             ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 

@@ -128,11 +128,11 @@ typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, 
 #endif /* __GNUG__ */
 
 class ACE_Export ACE_Thread_Manager
+{
   // = TITLE
   //    Manages a pool of threads.
   //
   // = DESCRIPTION
-
   //    This class allows operations on groups of threads atomically.
   //    The default behavior behavior of thread manager is to wait on
   //    all threads under it's management when it gets destructed.
@@ -147,9 +147,9 @@ class ACE_Export ACE_Thread_Manager
   //    you are sure to have resource leaks in your program.  Remember
   //    to wait on threads before exiting main() if that could happen
   //    in your programs.
-{
-friend class ACE_Thread_Control;
 public:
+  friend class ACE_Thread_Control;
+
 #if !defined (__GNUG__)
   typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
 #endif /* !__GNUG__ */
@@ -544,6 +544,7 @@ private:
 };
 
 class ACE_Export ACE_Thread_Control
+{
   // = TITLE
   //     Used to keep track of a thread's activities within its entry
   //     point function.
@@ -558,7 +559,6 @@ class ACE_Export ACE_Thread_Control
   //     <ACE_TSS::cleanup> function deletes this object, thereby
   //     ensuring that it gets removed from its associated
   //     <ACE_Thread_Manager>.
-{
 public:
   ACE_Thread_Control (ACE_Thread_Manager *tm = 0,
 		      int insert = 0);
@@ -606,6 +606,7 @@ private:
 };
 
 class ACE_Export ACE_Thread_Exit
+{
   // = TITLE
   //    Keep exit information for a Thread in thread specific storage.
   //    so that the thread-specific exit hooks will get called no
@@ -618,7 +619,6 @@ class ACE_Export ACE_Thread_Exit
   //    storage using the <ACE_TSS> wrapper.  When a thread exits the
   //    <ACE_TSS::cleanup> function deletes this object, thereby
   //    closing it down gracefully.
-{
 public:
   ACE_Thread_Exit (void);
   // Capture the Thread that will be cleaned up automatically.

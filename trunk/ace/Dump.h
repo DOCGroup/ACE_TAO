@@ -54,14 +54,16 @@
 #include "ace/Synch.h"
 
 class ACE_Export ACE_Dumpable
+{
   // = TITLE
   //   Base class that defines a uniform interface for all object
   //   dumping.
-{
-friend class ACE_ODB;
-friend class ACE_Dumpable_Ptr;
 public:
+  friend class ACE_ODB;
+  friend class ACE_Dumpable_Ptr;
+
   ACE_Dumpable (const void *);
+  // Constructor.
 
   virtual void dump (void) const = 0;
   // This pure virtual method must be filled in by a subclass.
@@ -75,10 +77,10 @@ private:
 };
 
 class ACE_Export ACE_Dumpable_Ptr 
+{
   // = TITLE
   //    A smart pointer stored in the in-memory object database
   //    ACE_ODB.  The pointee (if any) is deleted when reassigned.
-{
 public:
   ACE_Dumpable_Ptr (const ACE_Dumpable *dumper = 0);
   const ACE_Dumpable *operator->() const;
@@ -91,10 +93,10 @@ private:
 };
 
 class ACE_Export ACE_ODB
+{
   // = TITLE
   //     This is the object database (ODB) that keeps track of all
   //     live ACE objects.
-{
 public:
   enum {MAX_TABLE_SIZE = 100000}; // This is clearly inadequate and should be dynamic...
 

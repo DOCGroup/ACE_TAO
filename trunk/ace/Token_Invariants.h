@@ -27,14 +27,13 @@
 #include "ace/Map_Manager.h"
 #include "ace/Local_Tokens.h"
 
-
 class ACE_Mutex_Invariants
+{
   // = TITLE
   //     Mutex Invariants
   //
   // = INVARIANTS
   //     1. Only one owner at a time.
-{
 public:
   ACE_Mutex_Invariants (void);
   // Default construction.
@@ -63,13 +62,13 @@ private:
 };
 
 class ACE_RWLock_Invariants
+{
   // = TITLE
   //     RWLock Invariants
   //
   // = INVARIANTS
   //     1. Only one writer at a time.
   //     2. If there is an owning writer, there are no owning readers.
-{
 public:
   ACE_RWLock_Invariants (void);
   // Default construction.
@@ -105,6 +104,7 @@ private:
 };
 
 class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup
+{
   // = TITLE
   //     Token Invariants
   //
@@ -116,7 +116,6 @@ class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup
   //
   //     Note that this class does not ever clean its database.  Until
   //     destroyed, it's size will forever increase.
-{
 public:
 
   static ACE_Token_Invariant_Manager *instance (void);

@@ -20,9 +20,13 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Mem_Map
-  // = TITLE
-  //     C++ interface to the mmap(2) UNIX system call.
 {
+  // = TITLE
+  //     C++ interface OS memory mapping system call.
+  //
+  // = DESCRIPTION
+  //     This class works with both the mmap(2) UNIX system and the
+  //     Win32 family of memory mapping system calls.
 public:
   // = Initialization and termination methods.
 

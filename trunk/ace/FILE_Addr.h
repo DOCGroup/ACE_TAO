@@ -22,9 +22,9 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_FILE_Addr : public ACE_Addr
+{
   // = TITLE
   //    Defines the FILE address family address format. 
-{
 public:
   // = Initialization methods.
   ACE_FILE_Addr (void);

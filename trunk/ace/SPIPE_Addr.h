@@ -21,9 +21,9 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_SPIPE_Addr : public ACE_Addr
+{
   // = TITLE
   //    Defines the SVR4 STREAM pipe address family address format. 
-{
 public:
   // = Initialization methods.
   ACE_SPIPE_Addr (void);

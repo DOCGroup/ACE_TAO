@@ -33,10 +33,11 @@
 #define ACE_FILE_STREAM ACE_FILE_IO, ACE_FILE_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
-struct ACE_FILE_Info
+class ACE_FILE_Info
+{
   // = TITLE
   //     Abstracts basic OS FILE information.
-{
+public:
   mode_t mode_;	
   // mode of file
 
@@ -48,10 +49,10 @@ struct ACE_FILE_Info
 };
 
 class ACE_Export ACE_FILE : public ACE_IO_SAP
+{
   // = TITLE
   //     Defines the member functions for the base class of the
   //     ACE_FILE abstraction. 
-{
 public:
   int close (void);
   // Close down the ACE_FILE

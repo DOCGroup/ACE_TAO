@@ -20,10 +20,10 @@
 #include "ace/FIFO.h"
 
 class ACE_Export ACE_FIFO_Recv : public ACE_FIFO
+{
   // = TITLE
   //    Receiver side of the bytestream C++ wrapper for UNIX
   //    FIFOs.  
-{
 public:
   // = Initialization methods.
   ACE_FIFO_Recv (void);

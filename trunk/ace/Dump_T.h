@@ -22,6 +22,7 @@
 
 template <class Concrete>
 class ACE_Dumpable_Adapter : public ACE_Dumpable
+{
   // = TITLE
   //    This class inherits the interface of the abstract ACE_Dumpable
   //    class and is instantiated with the implementation of the
@@ -32,7 +33,6 @@ class ACE_Dumpable_Adapter : public ACE_Dumpable
   //    from the ``Gang of Four'' book.  Note that <class Concrete>
   //    need not inherit from a common class since ACE_Dumpable
   //    provides the uniform virtual interface!
-{
 public:
   // = Initialization and termination methods.
   ACE_Dumpable_Adapter (const Concrete *t);

@@ -24,6 +24,7 @@
 
 template <class CORBA_REF>
 class ACE_CORBA_Ref
+{
   // = TITLE
   //    A wrapper for helping with orbix object references.
   //
@@ -33,7 +34,6 @@ class ACE_CORBA_Ref
   //    destructor of ACE_CORBA_Ref perform implicit duplicates and
   //    releases in order to help make the use of orbix object
   //    references transparent.
-{
 public:
   ACE_CORBA_Ref (void);
   // Null construction.

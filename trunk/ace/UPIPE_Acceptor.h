@@ -26,10 +26,10 @@
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Export ACE_UPIPE_Acceptor : public ACE_SPIPE_Acceptor
+{
   // = TITLE
   //     Defines the format and interface for the listener side of the
   //     ACE_UPIPE_Stream.
-{
 public:
   // = Initialization and termination.
   ACE_UPIPE_Acceptor (void);

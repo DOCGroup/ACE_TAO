@@ -21,10 +21,10 @@
 #include "ace/SPIPE_Addr.h"
 
 class ACE_Export ACE_SPIPE : public ACE_IPC_SAP
+{
   // = TITLE
   //     Defines the member functions for the base class of the
   //     ACE_SPIPE abstraction. 
-{
 public:
   int close (void);
   // Close down the STREAM pipe without removing the rendezvous point.

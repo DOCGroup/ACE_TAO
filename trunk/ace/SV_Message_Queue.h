@@ -21,10 +21,10 @@
 #include "ace/SV_Message.h"
 
 class ACE_Export ACE_SV_Message_Queue
+{
   // = TITLE
   //     Defines the header file for the C++ wrapper for System V IPC
   //     message queues.  
-{
 public: 
   // = Useful symbolic constants.
   enum 

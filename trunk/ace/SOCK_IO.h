@@ -21,10 +21,10 @@
 #include "ace/SOCK.h"
 
 class ACE_Export ACE_SOCK_IO : public ACE_SOCK
+{
   // = TITLE
   //     Defines the methods for the ACE socket wrapper I/O routines
   //     (e.g., send/recv).
-{
 public:
   ssize_t send (const void *buf,
                 size_t n,

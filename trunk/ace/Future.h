@@ -27,6 +27,7 @@
 template <class T> class ACE_Future;
 
 template <class T> class ACE_Future_Rep
+{
   // = TITLE
   //     ACE_Future_Rep<T>
   //
@@ -35,12 +36,10 @@ template <class T> class ACE_Future_Rep
   //     object of class T which is the result of an asynchronous
   //     method invocation. It is pointed to by ACE_Future<T> object[s]
   //     and only accessible through them.
-{
-  friend class ACE_Future<T>;
-
 private:
+  friend class ACE_Future<T>;
   
-  // Create, attach, detach and assign encapsulates the reference 
+  // Create, attach, detach and assign encapsulates the reference
   // count handling and the object lifetime of ACE_Future_Rep<T>
   // instances.
   
@@ -105,14 +104,11 @@ private:
 };
 
 template <class T> class ACE_Future 
+{
   // = TITLE
   //     This class implements a ``single write, multiple read''
   //     pattern that can be used to return results from asynchronous
   //     method invocations.
-  //
-  // = DESCRIPTION
-  //    @@ Please update me...
-{
 public:
   // = Initialization and termination methods.
   ACE_Future (void);

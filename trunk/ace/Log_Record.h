@@ -24,9 +24,10 @@
 
 class ACE_Export ACE_Log_Record
 {
+public:
   // = TITLE
   //     Defines the structure of an ACE logging record.
-public:
+
   enum 
   {
     MAXLOGMSGLEN = ACE_MAXLOGMSGLEN,

@@ -21,9 +21,9 @@
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_UNIX_Addr : public ACE_Addr
+{
   // = TITLE
   //    Defines the ``UNIX domain address family'' address format. 
-{
 public:
   // = Initialization methods.
   ACE_UNIX_Addr (void);

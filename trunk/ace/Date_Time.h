@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -21,9 +20,9 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Date_Time
+{
   // = TITLE
   //     System independent representation of date and time.
-{
 public:
   // constructor with init values, no check for validy
   ACE_Date_Time (long day = 0,

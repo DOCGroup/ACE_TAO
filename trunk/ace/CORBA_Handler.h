@@ -31,6 +31,7 @@
 #undef WANT_ORBIX_FDS
 
 class ACE_Export ACE_CORBA_Handler : public ACE_Service_Object
+{
   // = TITLE
   //     Handle CORBA requests in conjunction with ACE.
   //
@@ -38,7 +39,6 @@ class ACE_Export ACE_CORBA_Handler : public ACE_Service_Object
   //     Note, do *NOT* inherit from this class!  Instead, use the
   //     <ACE_MT_CORBA_HAndler> and <ACE_ST_CORBA_Handler> as
   //     Singletons.
-{
 public:
   // = Activation and deactivation methods.
 
@@ -152,10 +152,10 @@ protected:
 #if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
 
 class ACE_Export ACE_MT_CORBA_Handler : public ACE_CORBA_Handler, public ACE_CORBA_1 (ThreadFilter)
+{
   // = TITLE
   //     Handle multi-threaded CORBA requests in conjunction with the
   //     <ACE_Reactor>.
-{
 public:
   // = Singleton access point.
   static ACE_CORBA_Handler *instance (void);

@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-/*-*- C++ -*- */
-
 // ============================================================================
 //
 // = LIBRARY
@@ -28,6 +26,8 @@ typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;
 
 class ACE_Export ACE_Name_Binding
 {
+  // = TITLE
+  //     Maintains a mapping from name to value and type.
 public:
   // = Initialization and termination.
   ACE_Name_Binding (const ACE_WString &n,
@@ -67,6 +67,7 @@ typedef ACE_Unbounded_Set<ACE_WString> ACE_PWSTRING_SET;
 typedef ACE_Unbounded_Set_Iterator<ACE_WString> ACE_PWSTRING_ITERATOR;
 
 class ACE_Export ACE_Name_Space
+{
   // = TITLE
   //     Abstract base class that provides an abstract interface to
   //	 the database without exposing any implemenation details.
@@ -74,7 +75,6 @@ class ACE_Export ACE_Name_Space
   // = DESCRIPTION
   //     Manages a Naming Service Name Space. Provides the basic
   //	 methods -- bind, unbind, rebind, find, and listnames.
-{
 public:
 
   virtual ~ACE_Name_Space (void);

@@ -23,6 +23,7 @@
 #include "ace/OS.h"
 
 class ACE_Export ACE_Sched_Params
+{
   // = TITLE
   //    Container for scheduling-related parameters.
   //
@@ -60,7 +61,6 @@ class ACE_Export ACE_Sched_Params
   //    careful review of this class design, thoughtful comments, and
   //    assistance with implementation, especially for PTHREADS platforms.
   //    Please send any comments or corrections to the ACE developers.
-{
 public:
   typedef int Policy;
 

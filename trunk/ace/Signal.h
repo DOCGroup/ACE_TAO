@@ -24,6 +24,7 @@
 typedef struct sigaction ACE_SIGACTION;
 
 class ACE_Export ACE_Sig_Set
+{
   // = TITLE
   //     Provide a C++ wrapper for the C sigset_t interface.
   // 
@@ -31,7 +32,6 @@ class ACE_Export ACE_Sig_Set
   //     Handle signals via a more elegant C++ interface (e.g.,
   //     doesn't require the use of global variables or global
   //     functions in an application).
-{
 public:
   // = Initialization and termination methods.
   ACE_Sig_Set (sigset_t *sigset);
@@ -80,9 +80,9 @@ private:
 };
 
 class ACE_Export ACE_Sig_Action
+{
   // = TITLE
   //     C++ wrapper around struct sigaction.
-{
 public:
   // = Initialization methods.
   ACE_Sig_Action (void);
@@ -152,10 +152,10 @@ private:
 };
 
 class ACE_Export ACE_Sig_Guard
+{
   // = TITLE
   //     Hold signals in MASK for duration of a C++ statement block.
   //     Note that a "0" for mask causes all signals to be held.
-{
 public:
   // = Initialization and termination methods.
   ACE_Sig_Guard (ACE_Sig_Set *mask = 0);
@@ -176,6 +176,7 @@ private:
 };
 
 class ACE_Export ACE_Sig_Handler
+{
   // = TITLE
   //    This is the main dispatcher of signals for ACE.  It improves
   //    the existing UNIX signal handling mechanism by allowing C++
@@ -188,7 +189,6 @@ class ACE_Export ACE_Sig_Handler
   //    <signum>.  When a signal occurs that corresponds to this
   //    <signum>, the <handle_signal> method of the registered
   //    <ACE_Event_Handler> is invoked automatically.
-{
 public:
   // = Registration and removal methods.
   virtual int register_handler (int signum, 
@@ -255,11 +255,10 @@ private:
 };
 
 class ACE_Export ACE_Sig_Adapter : public ACE_Event_Handler
+{
   // = TITLE
   //     Provide an adapter that transforms various types of signal
   //     handlers into the scheme used by the <ACE_Reactor>.
-
-{
 public:
   ACE_Sig_Adapter (ACE_Sig_Action &, int sigkey);
   ACE_Sig_Adapter (ACE_Event_Handler *, int sigkey);
@@ -298,6 +297,7 @@ private:
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
+{
   // = TITLE
   //    This is an alternative signal handling dispatcher for ACE.  It
   //    allows a list of signal handlers to be registered for each
@@ -310,7 +310,6 @@ class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
   //    corresponds to this <signum>, the <handle_signal> methods of
   //    all the registered ACE_Event_Handlers are invoked
   //    automatically.
-{
 public:
   // = Registration and removal methods.
   virtual int register_handler (int signum, 

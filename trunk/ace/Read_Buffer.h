@@ -22,6 +22,7 @@
 #include "ace/Malloc.h"
 
 class ACE_Export ACE_Read_Buffer
+{
   // = TITLE
   //     Efficiently reads an artibrarily large buffer from an input
   //     stream up to an including a termination character.  Also
@@ -34,7 +35,6 @@ class ACE_Export ACE_Read_Buffer
   //     allocation and make only one copy of the data.  It uses
   //     recursion and the run-time stack to accomplish this
   //     efficiently.
-{
 public:
   // = Initialization and termination methods.
   ACE_Read_Buffer (FILE *fp, int close_on_delete = 0, ACE_Allocator * = 0);

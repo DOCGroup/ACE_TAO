@@ -23,13 +23,13 @@ class ACE_Allocator;
 
 template <class T>
 class ACE_Bounded_Stack
+{
   // = TITLE
   //     Implement a generic LIFO abstract data type.
   //
   // = DESCRIPTION
   //     This implementation of a Stack uses a bounded array
   //     that is allocated dynamically.
-{
 public:
   // = Initialization, assignemnt, and termination methods.
 
@@ -94,13 +94,13 @@ private:
 
 template <class T, size_t SIZE>
 class ACE_Fixed_Stack
+{
   // = TITLE
   //     Implement a generic LIFO abstract data type.
   //
   // = DESCRIPTION
   //     This implementation of a Stack uses a fixed array
   //     with the size fixed at instantiation time.
-{
 public:
   // = Initialization, assignemnt, and termination methods.
   ACE_Fixed_Stack (void);
@@ -172,9 +172,9 @@ template <class T> class ACE_Unbounded_Stack_Iterator;
 
 template<class T>
 class ACE_Node
+{
   // = TITLE
   //     Implementation element in a Queue.
-{
   friend class ACE_Unbounded_Queue<T>;
   friend class ACE_Unbounded_Queue_Iterator<T>;
   friend class ACE_Unbounded_Set<T>;
@@ -206,13 +206,14 @@ template <class T> class ACE_Double_Linked_List_Iterator;
 
 template <class T>
 class ACE_DNode
+{
 // = TITLE
 //     Implementation element in a Double-linked List.
-{
+public:
   friend class ACE_Double_Linked_List<T>;
   friend class ACE_Double_Linked_List_Iterator<T>;
-public:
-  T* item ();
+
+  T *item (void);
 protected:
   ACE_DNode (const T &i, ACE_DNode<T> *n = 0, ACE_DNode<T> *p = 0);
   ACE_DNode (const ACE_DNode<T> &i);
@@ -231,14 +232,15 @@ protected:
 
 template <class T>
 class ACE_Unbounded_Stack
+{
   // = TITLE
   //     Implement a generic LIFO abstract data type.
   //
   // = DESCRIPTION
   //     This implementation of an unbounded Stack uses a linked list.
-{
-  friend class ACE_Unbounded_Stack_Iterator<T>;
 public:
+  friend class ACE_Unbounded_Stack_Iterator<T>;
+
   // = Initialization, assignemnt, and termination methods.
   ACE_Unbounded_Stack (ACE_Allocator *alloc = 0);
   // Initialize a new stack so that it is empty.  Use user defined
@@ -320,9 +322,9 @@ private:
 
 template <class T>
 class ACE_Unbounded_Stack_Iterator
+{
   // = TITLE
   //     Implement an iterator over an unbounded Stack.
-{
 public:
   // = Initialization method.
   ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &);
@@ -359,9 +361,9 @@ class ACE_Unbounded_Queue;
 
 template <class T>
 class ACE_Unbounded_Queue_Iterator
+{
   // = TITLE
   //     Implement an iterator over an unbounded queue.
-{
 public:
   // = Initialization method.
   ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &);
@@ -395,15 +397,16 @@ private:
 
 template <class T>
 class ACE_Unbounded_Queue
+{
   // = TITLE
   //     A Queue of "infinite" length.
   //
   // = DESCRIPTION
   //     This implementation of an unbounded queue uses a circular
   //     linked list with a dummy node.
-{
-  friend class ACE_Unbounded_Queue_Iterator<T>;
 public:
+  friend class ACE_Unbounded_Queue_Iterator<T>;
+
   // = Initialization and termination methods.
   ACE_Unbounded_Queue (ACE_Allocator *alloc = 0);
   // construction.  Use user specified allocation strategy
@@ -486,6 +489,7 @@ class ACE_Double_Linked_List;
 
 template <class T>
 class ACE_Double_Linked_List_Iterator
+{
   // = TITLE
   //     Implement an iterator over a container double-linked list
   //
@@ -496,7 +500,6 @@ class ACE_Double_Linked_List_Iterator
   //     encasulation.  Notice <class T> must delcare
   //     ACE_Double_Linked_List<T> and
   //     ACE_Double_Linked_List_Iterator as friend classes.
-{
 public:
   // = Initialization method.
   ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &);
@@ -537,9 +540,9 @@ protected:
   ACE_Double_Linked_List<T> &dllist_;
 };
 
-
 template <class T>
 class ACE_Double_Linked_List
+{
   // = TITLE
   //     A double-linked list implementation.
   //
@@ -548,9 +551,9 @@ class ACE_Double_Linked_List
   //     circular linked list with a dummy node.  It is pretty much
   //     like the ACE_Unbounded_Queue except that it allows removing
   //     of a specific element from a specific location.
-{
-  friend class ACE_Double_Linked_List_Iterator<T>;
 public:
+  friend class ACE_Double_Linked_List_Iterator<T>;
+
   // = Initialization and termination methods.
   ACE_Double_Linked_List (ACE_Allocator *alloc = 0);
   // construction.  Use user specified allocation strategy
@@ -664,9 +667,9 @@ protected:
 
 template <class T>
 class ACE_Unbounded_Set_Iterator
+{
   // = TITLE
   //     Implement an iterator over an unbounded set.
-{
 public:
   // = Initialization method.
   ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s);
@@ -700,6 +703,7 @@ private:
 
 template <class T>
 class ACE_Unbounded_Set
+{
   // = TITLE
   //     Implement a simple unordered set of <T> of unbounded size.
   //
@@ -707,9 +711,9 @@ class ACE_Unbounded_Set
   //     This implementation of an unordered set uses a circular
   //     linked list with a dummy node.  This implementation does not
   //     allow duplicates, but it maintains FIFO ordering of insertions.
-{
-friend class ACE_Unbounded_Set_Iterator<T>;
 public:
+  friend class ACE_Unbounded_Set_Iterator<T>;
+
   // = Initialization and termination methods.
   ACE_Unbounded_Set (ACE_Allocator *alloc = 0);
   // Constructor.  Use user specified allocation strategy
@@ -787,13 +791,13 @@ class ACE_Fixed_Set;
 
 template <class T, size_t SIZE>
 class ACE_Fixed_Set_Iterator
+{
   // = TITLE
   //     Interates through an unordered set.
   //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a fixed array.
   //     Allows deletions while iteration is occurring.
-{
 public:
   // = Initialization method.
   ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, SIZE> &s);
@@ -827,15 +831,16 @@ private:
 
 template <class T, size_t SIZE>
 class ACE_Fixed_Set
+{
   // = TITLE
   //     Implement a simple unordered set of <T> with maximum <SIZE>.
   //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a fixed array.
   //     This implementation does not allow duplicates...
-{
-friend class ACE_Fixed_Set_Iterator<T, SIZE>;
 public:
+  friend class ACE_Fixed_Set_Iterator<T, SIZE>;
+
   // = Initialization and termination methods.
   ACE_Fixed_Set (void);
   // Constructor.
@@ -905,13 +910,13 @@ class ACE_Bounded_Set;
 
 template <class T>
 class ACE_Bounded_Set_Iterator
+{
   // = TITLE
   //     Interates through an unordered set.
   //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a Bounded array.
   //     Allows deletions while iteration is occurring.
-{
 public:
   // = Initialization method.
   ACE_Bounded_Set_Iterator (ACE_Bounded_Set<T> &s);
@@ -945,6 +950,7 @@ private:
 
 template <class T>
 class ACE_Bounded_Set
+{
   // = TITLE
   //     Implement a simple unordered set of <T> with maximum
   //     set at creation time.
@@ -952,9 +958,9 @@ class ACE_Bounded_Set
   // = DESCRIPTION
   //     This implementation of an unordered set uses a Bounded array.
   //     This implementation does not allow duplicates...
-{
-friend class ACE_Bounded_Set_Iterator<T>;
 public:
+  friend class ACE_Bounded_Set_Iterator<T>;
+
   enum
   {
     DEFAULT_SIZE = 10

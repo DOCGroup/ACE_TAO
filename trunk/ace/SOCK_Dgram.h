@@ -21,10 +21,10 @@
 #include "ace/Addr.h"
 
 class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
+{
   // = TITLE
   //     Defines the member functions for the ACE_SOCK datagram
   //     abstraction. 
-{
 public:
   // = Initialization routines.
   ACE_SOCK_Dgram (void);

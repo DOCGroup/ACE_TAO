@@ -20,6 +20,7 @@
 #include "ace/Service_Types.h"
 
 class ACE_Export ACE_Service_Repository
+{
   // = TITLE
   //     A container for all services offered by a Service
   //     Configurator-based application.  This allows an
@@ -28,9 +29,9 @@ class ACE_Export ACE_Service_Repository
   //
   // = DESCRIPTION
   //     This class contains a vector of <ACE_Service_Types> *'s.
-{
-  friend class ACE_Service_Repository_Iterator;
 public:
+  friend class ACE_Service_Repository_Iterator;
+
   enum {DEFAULT_SIZE = 50};
   // = Initialization and termination methods.
   ACE_Service_Repository (void);
@@ -125,10 +126,11 @@ private:
 };
 
 class ACE_Export ACE_Service_Repository_Iterator
-  // = TITLE
-  //     Iterate through the <ACE_Service_Repository>.
 {
 public:
+  // = TITLE
+  //     Iterate through the <ACE_Service_Repository>.
+
   // = Initialization method.
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr, 
 				   int ignored_suspended = 1);

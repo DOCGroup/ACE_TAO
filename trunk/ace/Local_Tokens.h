@@ -72,13 +72,12 @@ class ACE_Token_Proxy;
 
 // 3..
 class ACE_Export ACE_TPQ_Entry
+{
   // = TITLE
-  //   Not a public interface.
+  //     Token Proxy Queue entry.  Used in the ACE_Token_Proxy_Queue
   //
   // = DESCRIPTION
-  //   Token Proxy Queue entry.
-  //   Used in the ACE_Token_Proxy_Queue
-{
+  //     Not a public interface.
 friend class ACE_Token_Manager;
 public:
   typedef void (*PTVF) (void *);
@@ -168,11 +167,12 @@ typedef ACE_TSS<ACE_TPQ_Entry> ACE_TPQ_ENTRY;
 #endif /* ACE_NO_TSS_TOKENS */
 
 class ACE_Export ACE_TSS_TPQ_Entry : public ACE_TPQ_ENTRY
-  // = TITLE
-  //    Not a public interface.
-  // = DESCRIPTION
-  //    ACE_TSS_TPQ_Entry
 {
+  // = TITLE
+  //     ACE_TSS_TPQ_Entry
+  // 
+  // = DESCRIPTION
+  //     Not a public interface.
 public:
   ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
 		     const char *client_id);
@@ -214,12 +214,12 @@ class ACE_Token_Proxy_Queue;
 
 // c..
 class ACE_Export ACE_TPQ_Iterator
+{
   // = TITLE
-  //   Not a public interface.
+  //     Iterates through ACE_Token_Proxy_Queues.
   //
   // = DESCRIPTION
-  //   Iterates through ACE_Token_Proxy_Queues.
-{
+  //     Not a public interface.
 public:
   ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q);
   // Construction.
@@ -242,21 +242,23 @@ private:
 
 // 4..
 class ACE_Export ACE_Token_Proxy_Queue
+{
   // = TITLE
-  //   Not a public interface.
+  //     Token waiter list.
   //
   // = DESCRIPTION
-  //   Token waiter list.
-  //   This queue holds all the token proxies waiting for ownership of
-  //   a token.  Along with the proxy reference, it also stores the
-  //   nesting level, client id, and a magic cookie from the proxy.
-  //   This queue stores the ACE_TPQ_Entries by pointer values.  It
-  //   DOES NOT make copies.  Thus, the user is responsible to ensure
-  //   that the TPQ's stick around.  This is motivated by the need to
-  //   reduce dynamic memory allocation.
-{
-  friend class ACE_TPQ_Iterator;
+  //     Not a public interface.
+  //
+  //     This queue holds all the token proxies waiting for ownership
+  //     of a token.  Along with the proxy reference, it also stores
+  //     the nesting level, client id, and a magic cookie from the
+  //     proxy.  This queue stores the ACE_TPQ_Entries by pointer
+  //     values.  It DOES NOT make copies.  Thus, the user is
+  //     responsible to ensure that the TPQ's stick around.  This is
+  //     motivated by the need to reduce dynamic memory allocation.
 public:
+  friend class ACE_TPQ_Iterator;
+
   ACE_Token_Proxy_Queue (void);
   // Construction.
 
@@ -295,25 +297,25 @@ protected:
 
 // 5..
 class ACE_Export ACE_Tokens
+{
   // = TITLE
-  //   Not a public interface.
+  //     Abstract representation of ACE tokens.
   //
   // = DESCRIPTION
-  //   Abstract representation of ACE tokens.
-  //   Currently, I don't see a reason for providing an abstract
-  //   interface at this level of the library.  As of yet, no one uses
-  //   ACE_Tokens derivatives through this abstract interface except
-  //   for Token_Manager.  It only uses the statistical methods which
-  //   are shared by all Tokens.  For that reason, it still makes
-  //   since to have a common base class.  However, acquire, renew,
-  //   and release do not need to have matching interfaces throughout
-  //   all Tokens.
-
-  // = EXTENDING TOKENS
-  //   To add a new type of token (e.g. semaphore), this class must be
-  //   subtyped to define the new semantics.  See ACE_Token_Manager
-  //   for details.
-{
+  //     Not a public interface.
+  //
+  //     Currently, I don't see a reason for providing an abstract
+  //     interface at this level of the library.  As of yet, no one
+  //     uses <ACE_Tokens< derivatives through this abstract interface
+  //     except for <ACE_Token_Manager>.  It only uses the statistical
+  //     methods which are shared by all Tokens.  For that reason, it
+  //     still makes since to have a common base class.  However,
+  //     acquire, renew, and release do not need to have matching
+  //     interfaces throughout all Tokens.
+  //
+  //     To add a new type of token (e.g. semaphore), this class must
+  //     be subtyped to define the new semantics.  See
+  //     <ACE_Token_Manager> for details.
 public:
 
   ACE_Tokens (void);
@@ -418,20 +420,21 @@ class ACE_Local_Mutex;
 
 // 6..
 class ACE_Export ACE_Mutex_Token : public ACE_Tokens
+{
   // = TITLE
-  //    Not a public interface.
-  //
-  // = DESCRIPTION
   //    Class that acquires, renews, and releases a process-local
   //    synchronization token.
+  //
+  // = DESCRIPTION
+  //    Not a public interface.
+  //
   //    This class is a more general-purpose synchronization mechanism
   //    than SunOS 5.x mutexes.  For example, it implements "recursive
   //    mutex" semantics, where a thread that owns the token can
-  //    reacquire it without deadlocking.  In addition, threads that are
-  //    blocked awaiting the token are serviced in strict FIFO order as
-  //    other threads release the token (SunOS 5.x mutexes don't strictly
-  //    enforce an acquisition order).
-{
+  //    reacquire it without deadlocking.  In addition, threads that
+  //    are blocked awaiting the token are serviced in strict FIFO
+  //    order as other threads release the token (SunOS 5.x mutexes
+  //    don't strictly enforce an acquisition order).
 public:
   ACE_Mutex_Token (const char* name);
   // life
@@ -505,12 +508,14 @@ private:
 
 // 12..
 class ACE_Export ACE_RW_Token : public ACE_Tokens
+{
   // = TITLE
-  //    Not a public interface.
-  //
-  // = DESCRIPTION
   //    Class that acquires, renews, and releases a process-local
   //    synchronization token.
+  //
+  // = DESCRIPTION
+  //    Not a public interface.
+  //
   //    This class is a more general-purpose synchronization mechanism
   //    than SunOS 5.x mutexes.  For example, it implements "recursive
   //    mutex" semantics, where a thread that owns the token can
@@ -518,7 +523,6 @@ class ACE_Export ACE_RW_Token : public ACE_Tokens
   //    blocked awaiting the token are serviced in strict FIFO order as
   //    other threads release the token (SunOS 5.x mutexes don't strictly
   //    enforce an acquisition order).
-{
 public:
   ACE_RW_Token (const char* name);
   // Life.
@@ -601,16 +605,16 @@ protected:
 
 // a..
 class ACE_Token_Name
+{
   // = TITLE
-  //   Allows Token_Manger to identify tokens.
+  //     Allows Token_Manger to identify tokens.
   //
   // = DESCRIPTION
-  //   For now, this is just a string.  We need a string class anyway
-  //   to use in ACE_Map_Manager.  Having this class (instead of
-  //   SString) allows us to easily change if needed.  For instance,
-  //   we may choose to identify tokens by name and *type* in the
-  //   future.
-{
+  //     For now, this is just a string.  We need a string class
+  //     anyway to use in <ACE_Map_Manager>.  Having this class
+  //     (instead of <ACE_SString>) allows us to easily change if
+  //     needed.  For instance, we may choose to identify tokens by
+  //     name and *type* in the future.
 public:
   ACE_Token_Name (const char *token_name = 0);
   // Construction.
@@ -643,6 +647,7 @@ private:
 
 // 7..
 class ACE_Export ACE_Token_Proxy
+{
   // = TITLE
   //   Abstract representation of ACE tokens.
   //
@@ -656,12 +661,10 @@ class ACE_Export ACE_Token_Proxy
   //   ACE_Token_Proxy by passing the proper values at construction.
   //   Alternatively, there are class definitions which "know" how to
   //   do this (ACE_Local_Mutex, ACE_Local_RLock, ACE_Local_WLock).
-
-  // = EXTENDING TOKENS
+  //
   //   To add a new type of token (e.g. semaphore), this class is not
   //   changed.  See ACE_Token_Manager for details.
-
-  // = RESTRICTIONS
+  //
   //   Tokens (e.g. ACE_Mutex_Token) assume that it can always call
   //   ACE_Token_Proxy::token_acquired () on a new token owner.  This
   //   is not a problem for synchronous use of token proxies (that is,
@@ -670,10 +673,9 @@ class ACE_Export ACE_Token_Proxy
   //   operations, the proxy can not go away after an acquire until
   //   the token is acquired.  This is not really a problem, but
   //   should be understood.
-{
-friend class ACE_Token_Manager;
-friend class ACE_Token_Invariant_Manager; // For testing.
 public:
+  friend class ACE_Token_Manager;
+  friend class ACE_Token_Invariant_Manager; // For testing.
 
   // Initialization and termination methods.
   ACE_Token_Proxy (void);
@@ -813,9 +815,9 @@ protected:
 
 // 8..
 class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
+{
   // = TITLE
   //   No op class for nonthreaded platform protocols.
-{
 public:
   ACE_Null_Token (void) {};
   // Construction.
@@ -854,6 +856,7 @@ public:
 
 // 9..
 class ACE_Export ACE_Local_Mutex : public ACE_Token_Proxy
+{
   // = TITLE
   //    Class that acquires, renews, and releases a synchronization
   //    token local to the process.
@@ -868,11 +871,9 @@ class ACE_Export ACE_Local_Mutex : public ACE_Token_Proxy
   //    don't strictly enforce an acquisition order).  Lastly,
   //    ACE_Local_Mutex performs deadlock detection on acquire calls.
   //
-  // = Synchronization operations.
   //   The interfaces for acquire, tryacquire, renew, release,
   //   etc. are defined in ACE_Token_Proxy.  The semantics for
   //   ACE_Local_Mutex are that of a mutex.
-{
 public:
   ACE_Local_Mutex (const char *token_name = 0,
 		   int ignore_deadlock = 0,
@@ -894,31 +895,30 @@ protected:
 
 // *.
 class ACE_Export ACE_Local_RLock : public ACE_Token_Proxy
-// = TITLE
-//    Class that acquires, renews, and releases a readers lock that
-//    is local to the process.
-//
-// = DESCRIPTION
-//    This class implements the reader interface to canonical
-//    readers/writer locks.  Multiple readers can hold the lock
-//    simultaneously when no writers have the lock.  Alternatively,
-//    when a writer holds the lock, no other participants (readers or
-//    writers) may hold the lock.  This class is a more
-//    general-purpose synchronization mechanism than SunOS 5.x RLocks.
-//    For example, it implements "recursive RLock" semantics, where a
-//    thread that owns the token can reacquire it without deadlocking.
-//    In addition, threads that are blocked awaiting the token are
-//    serviced in strict FIFO order as other threads release the token
-//    (SunOS 5.x RLockes don't strictly enforce an acquisition
-//    order).
-//
-// = Synchronization operations.
-//    The interfaces for acquire, tryacquire, renew, release, etc. are
-//    defined in ACE_Token_Proxy.  The semantics for ACE_Local_RLock
-//    are that of a readers/writers lock.  Acquire for this class
-//    implies a reader acquisition.  That is, multiple clients may
-//    acquire a lock for read only.
 {
+  // = TITLE
+  //    Class that acquires, renews, and releases a readers lock that
+  //    is local to the process.
+  //
+  // = DESCRIPTION
+  //    This class implements the reader interface to canonical
+  //    readers/writer locks.  Multiple readers can hold the lock
+  //    simultaneously when no writers have the lock.  Alternatively,
+  //    when a writer holds the lock, no other participants (readers
+  //    or writers) may hold the lock.  This class is a more
+  //    general-purpose synchronization mechanism than SunOS 5.x
+  //    RLocks.  For example, it implements "recursive RLock"
+  //    semantics, where a thread that owns the token can reacquire it
+  //    without deadlocking.  In addition, threads that are blocked
+  //    awaiting the token are serviced in strict FIFO order as other
+  //    threads release the token (SunOS 5.x RLockes don't strictly
+  //    enforce an acquisition order).
+  //
+  //    The interfaces for acquire, tryacquire, renew, release,
+  //    etc. are defined in ACE_Token_Proxy.  The semantics for
+  //    ACE_Local_RLock are that of a readers/writers lock.  Acquire
+  //    for this class implies a reader acquisition.  That is,
+  //    multiple clients may acquire a lock for read only.
 public:
   // = Initialization and termination.
 
@@ -945,30 +945,30 @@ protected:
 
 // *.
 class ACE_Export ACE_Local_WLock : public ACE_Token_Proxy
-// = TITLE
-//    Class that acquires, renews, and releases a writer lock that
-//    is local to the process.
-//
-// = DESCRIPTION
-//    This class implements the writer interface to canonical
-//    readers/writer locks. Multiple readers can hold the lock
-//    simultaneously when no writers have the lock.  Alternatively,
-//    when a writer holds the lock, no other participants (readers or
-//    writers) may hold the lock.  This class is a more
-//    general-purpose synchronization mechanism than SunOS 5.x WLock.
-//    For example, it implements "recursive WLock" semantics, where a
-//    thread that owns the token can reacquire it without deadlocking.
-//    In addition, threads that are blocked awaiting the token are
-//    serviced in strict FIFO order as other threads release the token
-//    (SunOS 5.x WLocks don't strictly enforce an acquisition order).
-//
-// = Synchronization operations.
-//   The interfaces for acquire, tryacquire, renew, release,
-//   etc. are defined in ACE_Token_Proxy.  The semantics for
-//   ACE_Local_WLock are that of a readers/writers lock.  Acquire
-//   for this class implies a writer acquisition.  That is, only one
-//   client may hold the lock for writing.
 {
+  // = TITLE
+  //    Class that acquires, renews, and releases a writer lock that
+  //    is local to the process.
+  //
+  // = DESCRIPTION
+  //    This class implements the writer interface to canonical
+  //    readers/writer locks. Multiple readers can hold the lock
+  //    simultaneously when no writers have the lock.  Alternatively,
+  //    when a writer holds the lock, no other participants (readers
+  //    or writers) may hold the lock.  This class is a more
+  //    general-purpose synchronization mechanism than SunOS 5.x
+  //    WLock.  For example, it implements "recursive WLock"
+  //    semantics, where a thread that owns the token can reacquire it
+  //    without deadlocking.  In addition, threads that are blocked
+  //    awaiting the token are serviced in strict FIFO order as other
+  //    threads release the token (SunOS 5.x WLocks don't strictly
+  //    enforce an acquisition order).
+  //
+  //    The interfaces for acquire, tryacquire, renew, release,
+  //    etc. are defined in ACE_Token_Proxy.  The semantics for
+  //    ACE_Local_WLock are that of a readers/writers lock.  Acquire
+  //    for this class implies a writer acquisition.  That is, only
+  //    one client may hold the lock for writing.
 public:
   // = Initialization and termination.
 

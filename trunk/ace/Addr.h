@@ -20,10 +20,10 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Addr 
+{
   //  = TITLE
   //     Defines the base class for the "address family independent"
   //     address format.
-{
 public:
   // = Initialization method.
 

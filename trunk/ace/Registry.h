@@ -34,6 +34,7 @@
 // You must configure the STL components in order to use this wrapper.
 
 class ACE_Export ACE_Registry
+{
   // = TITLE
   //     A Name Server implementation
   //
@@ -44,7 +45,6 @@ class ACE_Export ACE_Registry
   //     Other than providing an OO wrapper for the Win32 Reg*()
   //     functions, ACE_Registry provides an abstraction for iteration
   //     over the elements of the Registry.
-{
 public:
 
 // International string
@@ -158,55 +158,56 @@ public:
   // Forward declaration of iterator
 
   class ACE_Export Object
+  {
     // = TITLE
     //     An object representation
+    //
     // = DESCRIPTION
     //     In CORBA, all objects inherit from (CORBA::Object).
     //     For the registry, this is used as a wrapper for an
     //     instance of a built-in data type.
     //     Think about an object as being similar to a file
     //     in a file system.
-    {
-    public:
-      Object (void *data = 0,
-	      u_long size = 0,
-	      u_long type = REG_NONE);
-      // Default constructor
+  public:
+    Object (void *data = 0,
+            u_long size = 0,
+            u_long type = REG_NONE);
+    // Default constructor
 
-      void data (void *data);
-      void *data (void) const;
-      // Set/Get data
+    void data (void *data);
+    void *data (void) const;
+    // Set/Get data
 
-      void size (u_long size);
-      u_long size (void) const;
-      // Set/Get size
+    void size (u_long size);
+    u_long size (void) const;
+    // Set/Get size
 
-      void type (u_long type);
-      u_long type (void) const;
-      // Set/Get type
+    void type (u_long type);
+    u_long type (void) const;
+    // Set/Get type
 
-    private:
-      void *data_;
-      // Pointer to data
+  private:
+    void *data_;
+    // Pointer to data
 
-      u_long size_;
-      // Size of the data
+    u_long size_;
+    // Size of the data
 
-      u_long type_;
-      // Type of data
-    };
+    u_long type_;
+    // Type of data
+  };
 
   class ACE_Export Naming_Context
+  {
     // = TITLE
     //     An context representation
+    //
     // = DESCRIPTION
     //     Think about a context as being similar to a directory
     //     in a file system.
-    {
+  public:
     friend class ACE_Predefined_Naming_Contexts;
     // Friend factory
-
-  public:
 
     enum { MAX_OBJECT_NAME_SIZE = BUFSIZ,
 	   MAX_CONTEXT_NAME_SIZE = MAXPATHLEN + 1 };
@@ -419,15 +420,16 @@ public:
   };
 
   class ACE_Export Binding_Iterator
+  {
     // = TITLE
     //     An iterator
+    //
     // = DESCRIPTION
     //     Useful when iteratorating over a few entries at a time
-  {
+  public:
     friend class Naming_Context;
     // Friend factory
 
-  public:
     Binding_Iterator ();
     // Default constructor
 
@@ -531,13 +533,14 @@ public:
 };
 
 class ACE_Export ACE_Predefined_Naming_Contexts
+{
   // = TITLE
   //     A factory for predefined registries, which exist by default
   //     on Win32 platforms
+  //
   // = DESCRIPTION
   //     This factory can connect to both local and remote
   //     predefined registries.
-{
 public:
   static int connect (ACE_Registry::Naming_Context &naming_context,
 		      HKEY predefined = HKEY_LOCAL_MACHINE,

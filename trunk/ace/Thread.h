@@ -26,8 +26,11 @@ class ACE_Export ACE_Thread
   //
   // = DESCRIPTION
   //     This class provides a common interface that is mapped onto
-  //     either POSIX Pthreads, Solaris threads, or Win32 threads.
-
+  //     POSIX Pthreads, Solaris threads, Win32 threads, VxWorks
+  //     threads, or pSoS threads.  Note, however, that it is
+  //     generally a better idea to use the <ACE_Thread_Manager>
+  //     programming API rather than the <ACE_Thread> API since the
+  //     thread manager is more powerful. 
 public:
   static int spawn (ACE_THR_FUNC func, 
 		    void *arg = 0,
