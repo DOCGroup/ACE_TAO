@@ -7,7 +7,7 @@
 #include "JAWS/server/IO.h"
 
 /* static */
-//const char *HTTP_Handler::HTTP_HEADER = "Server: JAWS\r\n";
+// const char *HTTP_Handler::HTTP_HEADER = "HTTP/1.0 200 Document follows\r\n" "Server: JAWS\r\n\r\n";
 const char *HTTP_Handler::HTTP_HEADER = "";
 const char *HTTP_Handler::HTTP_TRAILER = "";
 const int HTTP_Handler::HTTP_HEADER_LENGTH  = ACE_OS::strlen (HTTP_Handler::HTTP_HEADER);
