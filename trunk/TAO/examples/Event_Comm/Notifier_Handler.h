@@ -25,9 +25,14 @@ class Notifier_Handler
   //     Integrate CORBA with the ACE ACE_Reactor.
 {
 public:
+  Notifier_Handler ();
+  // This constructor gets the notifier object from the Naming Service.
+
   Notifier_Handler (const char *service_location,
 		    const char *marker = "notifier",
 		    int putit = 1); // Default marker name.
+  // This constructor starts up the ORB etc and
+  // registers the notifier object with the Naming Sxervice.
 
   Event_Comm::Notifier *notifier (void);
   void notifier (Event_Comm::Notifier *);

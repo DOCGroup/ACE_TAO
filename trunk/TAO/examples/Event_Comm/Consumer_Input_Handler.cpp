@@ -44,18 +44,19 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       // Only try to unsubscribe if the Consumer initiated the
       // shutdown.  Otherwise, the Supplier initiated it and it has
       // probably gone away by now!
-      TRY
+      TAO_TRY
         {
           // Gracefully shutdown the Receiver by removing it from the
           // Notifier's internal map.
 
-          notifier->unsubscribe (receiver, "", IT_X);
+          notifier->unsubscribe (receiver, "", TAO_TRY_ENV); //IT_X);
+	  TAO_CHECK_ENV;
         }
-      CATCHANY
+      TAO_CATCHANY
         {
-          cerr << IT_X << endl;
+          TAO_TRY_ENV.print_exception ("Consumer_Input_Handler::handle_close\n");
         }
-      ENDTRY;
+      TAO_ENDTRY;
     }
 
   // Don't execute a callback here otherwise we'll recurse
@@ -72,7 +73,7 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   return 0;
 }
 
-Consumer_Input_Handler::Input_Handler (Consumer_Handler *ch,
+Consumer_Input_Handler::Consumer_Input_Handler (Consumer_Handler *ch,
 			      ACE_HANDLE handle)
   : receiver_handler_ (ch),
     handle_ (handle),
@@ -103,6 +104,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG,
                   "notifying for event %s\n",
                   buf));
+
     }
   else
     {
@@ -121,23 +123,27 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
       // Consumer wants to shutdown.
       this->consumer_initiated_shutdown (1);
 
+
+
       // Tell the main event loop to shutdown.
       ACE_Reactor::end_event_loop();
     }
   else
     {
-      TRY
+      TAO_TRY
         {
           Event_Comm::Event event;
 
           event.tag_ = ACE_OS::strdup (buf);
 
-          notifier->push (event, IT_X);
-        }
-      CATCHANY
+          notifier->push (event, TAO_TRY_ENV); //IT_X);
+	  TAO_CHECK_ENV;
+	}
+      TAO_CATCHANY
         {
-          cerr << "Unexpected exception " << IT_X << endl;
-        } ENDTRY;
+          TAO_TRY_ENV.print_exception("Unexpected exception\n");
+        }
+      TAO_ENDTRY;
     }
 
   /* NOTREACHED */

@@ -57,6 +57,9 @@ module Event_Comm
     void disconnect (in string reason);
     // Disconnect the <Consumer> from the <Notifier>,
     // giving it the <reason>.
+
+    string marker ();
+    // @@ what does this do?? why was it missing?
   };
 
   interface Notifier

@@ -17,16 +17,17 @@ Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
   ACE_OS::fclose (this->fp_);
 
-  TRY
+  TAO_TRY
     {
       // Disconnect all the consumers gracefully.
-      notifier->disconnect ("quit", IT_X);
+      notifier->disconnect ("quit", TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  CATCHANY
+  TAO_CATCHANY
     {
-      cerr << IT_X << endl;
+      TAO_TRY_ENV.print_exception ("Error:Supplier_Input_Handler::handle_close\n ");
     }
-  ENDTRY;
+  TAO_ENDTRY;
 
   // Don't execute a callback here otherwise we'll recurse
   // indefinitely!
@@ -113,7 +114,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
   else
     {
       // Use the notifier to notify Consumers.
-      TRY
+      TAO_TRY
         {
           Event_Comm::Event event;
 
@@ -124,13 +125,14 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
           // reference...  event.value_ = ...
 
           // Forward <Event> to all <Consumers>.
-          notifier->push (event, IT_X);
+          notifier->push (event, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
         }
-      CATCHANY
+      TAO_CATCHANY
         {
-          cerr << "unexpected exception " << IT_X << endl;
+          TAO_TRY_ENV.print_exception ("Unexpected Error\n");
         }
-      ENDTRY;
+      TAO_ENDTRY;
     }
   return 0;
 }

@@ -25,7 +25,7 @@
 // Forward declaration.
 class Notifier_Handler;
 
-class Input_Handler : public ACE_Service_Object
+class Supplier_Input_Handler : public ACE_Service_Object
 {
   // = TITLE
   //   Handles input events generated from a keyboard.
