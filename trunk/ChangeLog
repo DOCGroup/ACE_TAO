@@ -1,3 +1,11 @@
+Thu Jun 24 08:55:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-lite.h (ACE_WIN32CALL_RETURN):
+
+	  Reverted usage of static_cast<> back to C style cast.  Some
+	  compilers on Windows fail to compile some ACE code when using
+	  the former.
+
 Thu Jun 24 07:03:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_dlfcn.inl:
@@ -77,7 +85,7 @@ Wed Jun 23 11:25:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	  Removed conditional code enabled by ACE_LACKS_POSIX_PROTOTYPES 
 	  and ACE_LACKS_SOME_POSIX_PROTOTYPES, as those macros have been
 	  obsolete for some time.
-	  
+
 Wed Jun 23 11:24:39 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_macros.h:

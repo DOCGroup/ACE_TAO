@@ -418,7 +418,7 @@
 #   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_; \
-    TYPE ace_local_result_ = static_cast< TYPE > (X); \
+    TYPE ace_local_result_ = (TYPE) X; \
     ace_result_ = ace_local_result_; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
@@ -427,7 +427,7 @@
 #   else
 #     define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
-    TYPE ace_result_ = static_cast< TYPE > (X); \
+    TYPE ace_result_ = (TYPE) X; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
@@ -435,7 +435,7 @@
 #   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x550) */
 #   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
-    RESULT = static_cast< TYPE > (X); \
+    RESULT = (TYPE) X; \
     if (RESULT == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
   } while (0)
