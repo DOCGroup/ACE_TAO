@@ -1,3 +1,12 @@
+Tue Dec  2 10:42:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+          Added initialization of a register variable, which some
+          newer compilers see as possibly being used before it is
+          initialized. Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for reporting the problem.
+
 Tue Dec  2 16:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_ORB.h:

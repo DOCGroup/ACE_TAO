@@ -363,7 +363,7 @@ int yyparse(void)
 int yyparse()
 #endif
 {
-	register YYSTYPE *yypvt;	/* top of value stack for $vars */
+	register YYSTYPE *yypvt = 0;	/* top of value stack for $vars */
 
 #if defined(__cplusplus) || defined(lint)
 /*
