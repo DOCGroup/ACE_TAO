@@ -77,7 +77,6 @@ CONTROLLED_FILES = \
         ACE-install.sh \
         ASNMP \
         BIBLIOGRAPHY \
-        BUG-REPORT-FORM \
         COPYING \
         ChangeLog \
         ChangeLog-98a \
@@ -91,6 +90,7 @@ CONTROLLED_FILES = \
         ChangeLog-93 \
         FAQ \
         Makefile \
+        PROBLEM-REPORT-FORM \
         README \
         VERSION \
         ace \

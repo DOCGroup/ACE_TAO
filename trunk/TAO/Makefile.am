@@ -23,7 +23,7 @@ SUBDIRS = \
         orbsvcs
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
-EXTRA_DIST = BUG-REPORT-FORM VERSION \
+EXTRA_DIST = PROBLEM-REPORT-FORM VERSION \
              COPYING.sun LICENSE.sun README.sun README.taoconf \
              tao-config.in taoConf.sh.in tao-config.1.in
 
