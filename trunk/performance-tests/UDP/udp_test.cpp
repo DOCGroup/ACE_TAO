@@ -305,7 +305,7 @@ Client::run (void)
 
 #if ! defined (ACE_LACKS_FLOATING_POINT)
   std_dev = std_err = 0;
-  for (i=0; i<nsamples; i++)
+  for (i = 0; i < (ACE_INT32) nsamples; i++)
     {
       std_dev += ((double)Samples[i] - sample_mean) *
         ((double)Samples[i] - sample_mean);
