@@ -1,5 +1,15 @@
 Thu Feb 14 08:17:40 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/config-all.h: There was a subtle difference between the
+	  ACE_NEW based on try/catch and a 0 pointer. The version based on
+ 	  the fact that new can return 0 always sets the pointer to 0 when
+ 	  a memory error occured. The version that is based on try/catch
+ 	  the pointer wasn't set to 0. If the pointer had a different
+ 	  value, the pointer stays at the old value and wasn't set to 0.
+  	  This is now fixed.  Thanks to Peter van Merkerk
+ 	  <Peter.van.Merkerk@meco.nl> for noticing this and to Johnny
+ 	  Willemsen for reporting it.
+
 	* ace/Strategies_T.h:
 	* ace/Strategies_T.i: Allow the reactor of the Svc Handler to be
 	  set to the reactor passed to the Creation Strategy.  Thanks to
