@@ -15,6 +15,7 @@
 // ============================================================================
 
 #include "Sender_QoS_Event_Handler.h"
+#include "ace/Log_Msg.h"
 
 // Constructor.
 Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (void)
@@ -22,7 +23,7 @@ Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (void)
 }
 
 // Constructor.
-Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS 
+Sender_QoS_Event_Handler::Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS
                                                     &dgram_mcast_qos,
                                                     ACE_QoS_Session *qos_session)
   : dgram_mcast_qos_ (dgram_mcast_qos),
@@ -44,7 +45,7 @@ Sender_QoS_Event_Handler::get_handle (void) const
   return this->dgram_mcast_qos_.get_handle ();
 }
 
-// Handle the QoS Event. In this case send data to the receiver 
+// Handle the QoS Event. In this case send data to the receiver
 // using WSASendTo() that uses overlapped I/O.
 
 int
@@ -53,11 +54,11 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               "\nReceived a QOS event. Inside handle_qos ()\n"));
 
-  // We have received an RSVP event. The following update_qos () call 
+  // We have received an RSVP event. The following update_qos () call
   // calls rapi_dispatch () in case of RAPI and WSAIoctl (GET_QOS) in
-  // case of W2K. It then does the QoS parameter translation and updates 
-  // the QoS session object with the latest QoS. This call replaces the 
-  // direct call that was being made to WSAIoctl (GET_QOS) here for the 
+  // case of W2K. It then does the QoS parameter translation and updates
+  // the QoS session object with the latest QoS. This call replaces the
+  // direct call that was being made to WSAIoctl (GET_QOS) here for the
   // Win2K example.
 
   if (this->qos_session_->update_qos () == -1)
@@ -113,7 +114,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
 //                  dwBytes));
 //    else
 //      ACE_DEBUG ((LM_DEBUG,
-//                  "Getting QOS using ACE_OS::ioctl () succeeds.\n"));  
+//                  "Getting QOS using ACE_OS::ioctl () succeeds.\n"));
 
   iovec iov[1];
   iov[0].iov_base = (char *) "Hello sent on a QoS enabled session !!\n";
@@ -121,7 +122,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
 
   size_t bytes_sent = 0;
 
-  // Send "Hello" to the QoS session address to which the receiver has 
+  // Send "Hello" to the QoS session address to which the receiver has
   // subscribed.
   if (this->dgram_mcast_qos_.send (iov,
                                    1,

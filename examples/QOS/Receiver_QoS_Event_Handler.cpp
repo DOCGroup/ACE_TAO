@@ -15,13 +15,14 @@
 // ============================================================================
 
 #include "Receiver_QoS_Event_Handler.h"
+#include "ace/Log_Msg.h"
 
 // Constructor.
 Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (void)
 {
 }
 
-Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS 
+Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS
                                                         &dgram_mcast_qos,
                                                         ACE_QoS_Session *qos_session)
   : dgram_mcast_qos_ (dgram_mcast_qos),
@@ -47,11 +48,11 @@ int
 Receiver_QoS_Event_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-	
+
   iovec iov;
   iov.iov_base = buf;
   iov.iov_len = BUFSIZ;
-	
+
   ACE_OS::memset (iov.iov_base,
                   0,
                   BUFSIZ);
@@ -84,11 +85,11 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
   ACE_DEBUG ((LM_DEBUG,
               "\nReceived a QOS event. Inside handle_qos ()\n"));
 
-  // We have received an RSVP event. The following update_qos () call 
+  // We have received an RSVP event. The following update_qos () call
   // calls rapi_dispatch () in case of RAPI and WSAIoctl (GET_QOS) in
-  // case of W2K. It then does the QoS parameter translation and updates 
-  // the QoS session object with the latest QoS. This call replaces the 
-  // direct call that was being made to WSAIoctl (GET_QOS) here for the 
+  // case of W2K. It then does the QoS parameter translation and updates
+  // the QoS session object with the latest QoS. This call replaces the
+  // direct call that was being made to WSAIoctl (GET_QOS) here for the
   // Win2K example.
 
   if (this->qos_session_->update_qos () == -1)
@@ -132,4 +133,3 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
   return 0;
 
 }
-
