@@ -3,6 +3,7 @@
 #include "RepositoryManager_Impl.h"
 #include "Update_Plan.h"
 #include "ExecutionManager/ExecutionManagerC.h"
+#include "Config_Handlers/DnC_Dump.h"
 #include "NodeManager/NodeDaemonC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
@@ -102,9 +103,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      DOMDocument* tpd_doc = tpd_parser->parseURI (package_url);
+      //DOMDocument* tpd_doc = tpd_parser->parseURI (package_url);
 
-      ACE_UNUSED_ARG (tpd_doc);
+      //ACE_UNUSED_ARG (tpd_doc);
 
       if (tpd_handler.getErrors())
         {
@@ -139,6 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       rep_impl->installPackage ("PC", package_url);
       pc = rep_impl->findPackageByName ("PC");
+      //Deployment::DnC_Dump::dump (*pc);
 
       REF_MAP ref_map;
       REF_MAP primary_ref_map;

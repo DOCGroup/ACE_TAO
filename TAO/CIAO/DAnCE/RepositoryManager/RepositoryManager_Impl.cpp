@@ -4,6 +4,7 @@
 #include "RepositoryManager_Impl.h"
 #include "Repository_Manager_conf.h"
 #include "Config_Handlers/TPD_Handler.h"
+#include "Config_Handlers/DnC_Dump.h"
 
 CIAO::RepositoryManager_Impl::RepositoryManager_Impl
    (CORBA::ORB_ptr orb,
@@ -79,7 +80,9 @@ installPackage (const char* installation_name,
                                                    DOMNodeFilter::SHOW_TEXT);
       Deployment::PackageConfiguration pc;
       pc_handler.process_PackageConfiguration (pc);
-      this->pc_table_.bind (installation_name, &(pc));
+      //Deployment::DnC_Dump::dump (pc);
+      this->pc_table_.bind (installation_name, (pc));
+      //Deployment::DnC_Dump::dump (*(&pc));
     }
   catch (CORBA::Exception& ex)
     {
@@ -130,11 +133,18 @@ CIAO::RepositoryManager_Impl::findPackageByName (const char* name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
-  Deployment::PackageConfiguration* pc = 0;
+  Deployment::PackageConfiguration pc;
   if (pc_table_.find (name, pc) == 0)
     {
-      Deployment::PackageConfiguration* dup_pc = pc;
-      return dup_pc;
+      //Deployment::PackageConfiguration* dup_pc = pc;
+      //Deployment::DnC_Dump::dump (*pc);
+      //return dup_pc;
+      Deployment::PackageConfiguration_var pc_var = 0;
+      ACE_NEW_THROW_EX (pc_var,
+                        Deployment::PackageConfiguration (pc),
+                        CORBA::NO_MEMORY ());
+      //Deployment::DnC_Dump::dump (*pc_var);
+      return pc_var._retn ();
     }
   else
     {
