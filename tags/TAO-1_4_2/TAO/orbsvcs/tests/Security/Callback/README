@@ -1,0 +1,13 @@
+#
+# $Id$
+#
+
+This test is designed to excercise the connection cache related code
+in a complex pluggable protocol such as SSLIOP.
+
+An object reference is sent to the target as an "in" parameter.  The
+target then uses that object reference to invoke a callback method on
+an object residing at the client.
+
+If the secure connection is not cached properly, then it will not be
+possible to invoke the callback method on the client.

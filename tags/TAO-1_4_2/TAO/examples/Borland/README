@@ -1,0 +1,16 @@
+$Id$
+
+Before compiling the example in The Borland C++ Builder IDE
+you must generate the client and server stubs using build_idl.bat.
+Please update the location of the tao_idl dependent on your build
+configuration. The default location is for a BCB4 Dynamic Debug
+Pascal configuration.
+
+In the project file you must also update the names of the ACE and
+TAO libraries that you use. The configured names are for the BCB4
+Dynamic Debug Pascal configuration.
+
+This directory illustrates how to write a Borland C++ Builder
+application using ACE+TAO.  Please contact Jody Hagins
+<jody@atdesk.com> if you have any questions.
+
