@@ -1,3 +1,17 @@
+Thu Apr 12 16:55:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp (close_connection): Fixed a problem where the
+	  reactor could be left with dangling references to the event
+	  handler.  This showed up from tests in
+	  $TAO_ROOT/tests/Reliable_Oneways. The source of the problem was
+	  that the client ORB while detecting a bad server closes the
+	  connection -- and hence the service handler for that connection
+	  by using handle_close (). As the reactor outlives the handler,
+	  the reactor happens to have the reference. When the ORB
+	  shutsdown, the reactor while trying to access the handler seg
+	  faults. Thanks to Chris Cleeland and Carlos O'Ryan for
+	  participating in the discussion for the right fix.
+
 Thu Apr 12 13:54:10 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * performance-tests/Latency/test_i.cpp: 
