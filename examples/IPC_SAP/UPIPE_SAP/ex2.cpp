@@ -34,7 +34,7 @@ supplier (void *)
 {
   ACE_UPIPE_Stream s_stream;
 
-  ACE_UPIPE_Addr c_addr ("pattern");
+  ACE_UPIPE_Addr c_addr (ACE_TEXT("pattern"));
 
   ACE_Auto_Basic_Array_Ptr<char> mybuf (new char[size]);
 
@@ -100,7 +100,7 @@ consumer (void *)
     ACE_DEBUG ((LM_DEBUG,
                 "set HWM failed\n"));
 
-  ACE_UPIPE_Addr serv_addr ("pattern");
+  ACE_UPIPE_Addr serv_addr (ACE_TEXT("pattern"));
 
   // accept will wait up to 4 seconds
   ACE_UPIPE_Acceptor acc (serv_addr);
@@ -149,7 +149,7 @@ consumer (void *)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   size = argc > 1 ? ACE_OS::atoi (argv[1]) : 32;
   iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : 16;
@@ -168,7 +168,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"),
