@@ -1,3 +1,12 @@
+Tue Jul 23 21:46:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process_Mutex.h:
+	* ace/Process_Mutex.cpp: Disallowed anonymous Process_Mutex by
+	  invoking this->unique_name() to create a temporary name if
+	  there's no mutex name passed to the constructor.  Thanks John
+	  Michael Zorko <j.zorko@att.net> for reporting this problem on
+	  Mac OSX and submitting the patch.
+
 Tue Jul 23 13:08:27 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.{h cpp} (log_hexdump):
