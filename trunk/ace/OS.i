@@ -10700,7 +10700,11 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 #elif defined (ACE_HAS_LSEEK64)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #elif defined (ACE_HAS_LLSEEK)
-  ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
+  # if defined (ACE_WIN32) 
+    ACE_OSCALL_RETURN (::_lseeki64 (int (handle), offset, whence), ACE_LOFF_T, -1);
+  # else
+    ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
+  # endif /* WIN32 */
 #endif
 }
 #endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
