@@ -233,6 +233,8 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
                   &disc_cdr,
                   _env);
 
+  delete disc_any;
+
   // Add the member to the CDR stream.
 
   CORBA_TypeCode_ptr member_tc = this->member_->type (_env);
@@ -247,6 +249,8 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
   out_cdr.append (member_tc,
                   &member_cdr,
                   _env);
+
+  delete member_any;
 
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
@@ -1248,47 +1252,47 @@ TAO_DynUnion_i::Enum_extractor::check_match (const CORBA_Any& inside_any,
 }
 
 // Functor factory.
-::DU_Extractor_base*
+DU_Extractor_base*
 TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
                                CORBA::Environment& _env)
 {
-  ::DU_Extractor_base* retval;
+  DU_Extractor_base* retval;
 
   switch (kind)
     {
       case CORBA::tk_short:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::Short>,
+                              DU_Extractor<CORBA::Short>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
       case CORBA::tk_long:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::Long>,
+                              DU_Extractor<CORBA::Long>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
       case CORBA::tk_ushort:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::UShort>,
+                              DU_Extractor<CORBA::UShort>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
       case CORBA::tk_ulong:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::ULong>,
+                              DU_Extractor<CORBA::ULong>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
       case CORBA::tk_boolean:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::Boolean>,
+                              DU_Extractor<CORBA::Boolean>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
       case CORBA::tk_char:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::Char>,
+                              DU_Extractor<CORBA::Char>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
@@ -1297,7 +1301,7 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
 #if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_longlong:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::LongLong>,
+                              DU_Extractor<CORBA::LongLong>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
 
@@ -1306,7 +1310,7 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
 
       case CORBA::tk_ulonglong:
         ACE_NEW_THROW_RETURN (retval,
-                              ::DU_Extractor<CORBA::ULongLong>,
+                              DU_Extractor<CORBA::ULongLong>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
         return retval;
@@ -1356,7 +1360,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
 
   CORBA::TCKind discriminator_kind = disc_tc->kind (env);
 
-  ::DU_Extractor_base* functor =
+  DU_Extractor_base* functor =
     this->get_extractor (discriminator_kind,
                          env);
 

@@ -102,6 +102,10 @@ Test_DynSequence::run_test (void)
       else 
         ++this->error_count_;
 
+      // Created with NEW
+      delete out_any1;
+
+
       ACE_DEBUG ((LM_DEBUG,
                  "testing: length/set_elements/get_elements\n"));
 
@@ -133,6 +137,9 @@ Test_DynSequence::run_test (void)
       if (this->error_count_ == 0)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
+
+      // Created with NEW
+      delete as_out;
 
       fa1.destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;

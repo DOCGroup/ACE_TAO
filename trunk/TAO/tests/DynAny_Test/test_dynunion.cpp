@@ -89,6 +89,9 @@ Test_DynUnion::run_test (void)
       else 
         ++this->error_count_;
 
+      // Created with NEW
+      delete out_any1;
+
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_as_default\n"));
 
@@ -127,7 +130,16 @@ Test_DynUnion::run_test (void)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
-        ++this->error_count_;        
+        ++this->error_count_; 
+      
+      fa1.destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      ftc1.destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      dp1->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      dp2->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {

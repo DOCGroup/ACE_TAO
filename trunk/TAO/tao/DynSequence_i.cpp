@@ -144,7 +144,12 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& _env)
 
   // Initialize each Any.
   for (CORBA::ULong i = 0; i < length; i++)
-    (*elements)[i] = *this->da_members_[i]->to_any (_env);
+    {
+      CORBA::Any_ptr temp = this->da_members_[i]->to_any (_env);
+      (*elements)[i] = *temp;
+      delete temp;
+    }
+
 
   return elements;
 }
@@ -300,6 +305,8 @@ TAO_DynSequence_i::to_any (CORBA::Environment& _env)
       out_cdr.append (field_tc,
                       &field_cdr,
                       _env);
+
+      delete field_any;
     }
 
   TAO_InputCDR in_cdr (out_cdr);

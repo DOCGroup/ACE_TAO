@@ -90,6 +90,10 @@ Test_DynEnum::run_test (void)
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
+
+      // Created with NEW
+      delete out_any1;
+
     }
   TAO_CATCHANY
     {
