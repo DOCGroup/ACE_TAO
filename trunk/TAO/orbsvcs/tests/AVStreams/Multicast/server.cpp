@@ -23,6 +23,7 @@ FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
+  TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
@@ -48,7 +49,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 int
 FTP_Server_Callback::handle_end_stream (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::end_stream\n"));
+  ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::end_stream\n"));
   CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb ();
   orb->shutdown ();
   return 0;

@@ -156,8 +156,8 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      flow_spec.length (0);
-      stream_control->stop (flow_spec, ACE_TRY_ENV);
+     // flow_spec.length (0);
+     // stream_control->stop (flow_spec, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
     }
