@@ -1,4 +1,7 @@
-Sun Dec 21 14:53:05 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Sun Dec 21 15:24:42 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/OS.h (class ACE_Cleanup_Info::operator ==, !=): Removed
+	  keyword struct.  ACE_Cleanup_Info is a class now.
 
 	* ace/Containers.h (class ACE_Double_Linked_List): Removed
 	  unused function declarations.
