@@ -45,7 +45,7 @@ ACE_RCSID(tests, Process_Manager_Test, "$Id$")
 #if !defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 
 // Global options.
-static int n_iterations = 100000;
+static size_t n_iterations = 100000;
 
 enum
 {
@@ -67,7 +67,7 @@ static ACE_Atomic_Op<ACE_Thread_Mutex, int> shut_down (0);
 // control for the <ACE_TEST_ONE_CHILD> test.
 
 static void *
-one_child_sig_handler (void *arg)
+one_child_sig_handler (void *)
 {
   ACE_Sig_Set sigset;
 
@@ -211,7 +211,7 @@ one_child_worker_child (void *)
 // control for the <ACE_TEST_MULTIPLE_CHILDREN> test.
 
 static void *
-multiple_children_sig_handler (void *arg)
+multiple_children_sig_handler (void *)
 {
   ACE_Sig_Set sigset;
 
@@ -370,7 +370,7 @@ multiple_children_worker_parent (void *)
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) child pids =\n")));
 
-  for (int i = 0; i < ACE_MAX_PROCESSES; i++)
+  for (size_t i = 0; i < ACE_MAX_PROCESSES; i++)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("[%d]\n"),
                 child_pids[i]));
@@ -514,6 +514,7 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_END_TEST;
       return 0;
     }
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
