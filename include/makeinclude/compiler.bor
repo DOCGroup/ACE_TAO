@@ -114,10 +114,14 @@ LIB_LFLAGS = /C /P512
 # VCL lib version number
 #
 
+!if $(BCBVER) == 6
+VCLVER =
+!else
 !if $(BCBVER) == 5
 VCLVER = 50
 !else
 VCLVER = 40
+!endif
 !endif
 
 #

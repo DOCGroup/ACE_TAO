@@ -17,7 +17,7 @@ PASCAL_FLAG = -DPASCAL
 !message
 !message -------------------------------------------------------------
 !message The PASCAL build configuration is *not* required for use with
-!message Borland C++Builder 5.
+!message Borland C++Builder 5 or 6.
 !message
 !message Since both VCL and non-VCL applications share a common run-
 !message time library (i.e. cc3250mt.dll), you can simply link your
