@@ -1,3 +1,19 @@
+Tue Dec 16 22:09:42 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Time_Value_Test.cpp: restored #include test_config.h,
+          and changed #include ace/config.h to ace/inc_user_config.h.
+
+        * examples/IPC_SAP/TLI_SAP/ftp-server.cpp,
+          examples/Reactor/Misc/test_timer_queue.cpp,
+          examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i,
+          examples/Shared_Malloc/test_malloc.cpp,
+          examples/Threads/thread_specific.cpp: replaced ACE_HAS_64BIT_LONGS
+          preprocessor logic with a cast through a long to an int.
+          A void * is the same size as a long on all currently supported
+          ACE platforms.  The int cast is also there, to avoid compiler
+          warnings about narrowing.  As a side effect, the function-style
+          casts were removed.
+
 Tue Dec 16 21:00:49 1997  Chris Gill  <cdgill@tango.cs.wustl.edu>
 
         Single Threaded port of ACE to pSOSim - first checkin
