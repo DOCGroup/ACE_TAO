@@ -151,7 +151,7 @@ INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
-DOT_PATH              = /usr/local/bin
+DOT_PATH              =
 MAX_DOT_GRAPH_WIDTH   = 1024
 MAX_DOT_GRAPH_HEIGHT  = 1024
 
