@@ -134,7 +134,7 @@ private:
   int size_;
 
   static JAWS_Virtual_Filesystem * cvf_;
-  static ACE_SYNCH_MUTEX lock_;
+  static ACE_SYNCH_RW_MUTEX lock_;
 };
 
 class JAWS_File
@@ -217,7 +217,7 @@ private:
   int error_;
 
   int reference_count_;
-  ACE_SYNCH_MUTEX lock_;
+  ACE_SYNCH_RW_MUTEX lock_;
 };
 
 #endif /* JAWS_FILE_H */
