@@ -612,7 +612,12 @@ TAO_Persistent_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
   // implementation* knows how to clean up appropriately, e.g., we may
   // have one servant serving many objects and will not want to delete
   // the servant in <destroy>.
-  delete interface_;
+
+  //@@ Now that the POA has been fixed to work right, this is no
+  // longer a correct approach to disposing off the servants.  This is
+  // a temporary fix to avoid crashing (but with the memory leak), a
+  // proper fix will be in the next release.
+  //  delete interface_;
 }
 
 void
@@ -881,7 +886,11 @@ TAO_Persistent_Binding_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
   }
 
   // Let go of the lock and commit suicide: must have been dynamically allocated
-  delete this;
+  //@@ Now that the POA has been fixed to work right, this is no
+  // longer a correct approach to disposing off the servants.  This is
+  // a temporary fix to avoid crashing (but with the memory leak), a
+  // proper fix will be in the next release.
+  //  delete this;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
