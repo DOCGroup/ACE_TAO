@@ -1,0 +1,9 @@
+  <!ELEMENT testconfig (test_config_t*) >
+  <!ELEMENT test_config_t (type,period,criticality,importance,num_entities) >
+  <!ELEMENT type (#PCDATA) >
+  <!ELEMENT period (#PCDATA) >
+  <!ELEMENT criticality EMPTY >
+  <!ELEMENT importance EMPTY >
+  <!ELEMENT num_entities (#PCDATA) >
+  <!ATTLIST criticality value (VERY_LOW|LOW|MEDIUM|HIGH|VERY_HIGH) #REQUIRED >
+  <!ATTLIST importance value (VERY_LOW|LOW|MEDIUM|HIGH|VERY_HIGH) #REQUIRED >

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE testconfig SYSTEM "testconfig.dtd">
+<testconfig>
+  <test_config_t>
+    <type>0</type>
+    <period>1000</period>
+    <criticality value="HIGH" />
+    <importance value="VERY_LOW" />
+    <num_entities>10</num_entities>
+  </test_config_t>
+  <test_config_t>
+    <type>1</type>
+    <period>2000</period>
+    <criticality value="LOW"/>
+    <importance value="VERY_LOW"/>
+    <num_entities>10</num_entities>
+  </test_config_t>
+</testconfig>
