@@ -129,7 +129,7 @@ Server_i::init (int argc, char **argv)
       // Narrow the Object reference to a POA reference
       root_poa_ = PortableServer::POA::_narrow (obj.in (),
                                                 ACE_TRY_ENV);  
-      ;
+      ACE_TRY_CHECK;
   
       // Get the POAManager of RootPOA
       poa_manager_ = root_poa_->the_POAManager (ACE_TRY_ENV);
@@ -188,6 +188,7 @@ Server_i::create_poa (const char *name,
         root_poa_->create_servant_retention_policy 
         (PortableServer::RETAIN,
          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       if (servant_retention_policy == 0)
       policies_[3] =
@@ -209,11 +210,12 @@ Server_i::create_poa (const char *name,
       // Destroy the policy objects as they have been passed to
       // create_POA and no longer needed.
       for (CORBA::ULong i = 0;
-           i < policies_.length () && ACE_TRY_ENV.exception () == 0;
+           i < policies_.length ();
            ++i)
         {
           CORBA::Policy_ptr policy = policies_[i];
           policy->destroy (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY 
@@ -222,6 +224,7 @@ Server_i::create_poa (const char *name,
       return 0;
     }
   ACE_ENDTRY;  
+  ACE_CHECK_RETURN (-1);
 
   return my_poa;
 }
@@ -381,7 +384,7 @@ Server_i::run (void)
       return 1;
     }
   ACE_ENDTRY;
-  
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
