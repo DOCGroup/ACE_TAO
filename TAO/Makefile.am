@@ -14,10 +14,6 @@ AUTOMAKE_OPTIONS = foreign
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I ../m4
 
-bin_SCRIPTS = tao-config
-
-man_MANS = tao-config.1
-
 SUBDIRS = \
         TAO_IDL \
         tao \
@@ -30,9 +26,7 @@ EXTRA_DIST =  \
   VERSION \
   COPYING.sun \
   LICENSE.sun \
-  README.sun \
-  tao-config.in \
-  tao-config.1.in
+  README.sun
 
 DISTCLEANFILES = tao-config tao-config.1
 

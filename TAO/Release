@@ -31,8 +31,6 @@ CONTROLLED_FILES = \
 	TAO/release.pl \
 	TAO/rules.tao.GNU \
 	TAO/tao \
-	TAO/tao-config.1.in \
-	TAO/tao-config.in \
 	TAO/Makefile.am \
 	TAO/configure.ac \
 	TAO/tests \

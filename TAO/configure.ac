@@ -172,8 +172,6 @@ dnl created from Makefile.in, etc.  Top-level Makefiles should be
 dnl created first.
 
 AC_CONFIG_FILES([
-  tao-config
-  tao-config.1
   Makefile
   TAO_IDL/Makefile
   tao/Makefile
