@@ -377,7 +377,6 @@ be_interpretive_visitor_operation_ss::gen_pre_skel_info (be_operation *node,
                                                          be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
   be_visitor_context ctx;
 
   os->indent ();
