@@ -117,6 +117,9 @@ public:
   /// can be used for initialization or in comparisons.
   static CORBA::ORB_ptr _nil (void);
 
+  /// Return this ORB's ORBid.
+  char * id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
   /**
    * Turn a string-ified object reference back into an object pointer.
    * Typically these strings are created using <object_to_string()>,
@@ -426,6 +429,13 @@ public:
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                ACE_Time_Value *timeout
                                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
+  /// Register an object reference with the ORB.
+  void register_initial_reference (
+      const char * id,
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Returns a sequence of ObjectIds that lists which objects have
   /// references available via the initial references mechanism.

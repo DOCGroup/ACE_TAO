@@ -550,7 +550,7 @@ TAO_ClientRequestInfo_i::get_service_context_i (
   else
     {
       // Not found.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 26,
                                           CORBA::COMPLETED_NO),
                         0);
     }
