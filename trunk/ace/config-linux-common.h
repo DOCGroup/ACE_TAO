@@ -4,8 +4,9 @@
 // This configuration file is designed to be included by another,
 // specific configuration file.  It provides config information common
 // to all Linux platforms.  It automatically determines the CPU
-// architecture, libc (libc5 or glibc), and compiler (g++ or egcs),
-// and configures based on those.
+// architecture, compiler (g++ or egcs), libc (libc5 or glibc), and
+// whether the library supports exception handling, and configures
+// based on those.
 
 #if !defined (ACE_LINUX_COMMON_H)
 #define ACE_LINUX_COMMON_H
@@ -52,7 +53,7 @@
 // OS/compiler uses size_t * rather than int * for socket lengths
 #define ACE_HAS_SIZET_SOCKET_LEN
 #else
-// Platform lacks POSIX prototypes for certain System V functions 
+// Platform lacks POSIX prototypes for certain System V functions
 // like shared memory and message queues.
 #define ACE_LACKS_SOME_POSIX_PROTOTYPES
 #endif /* __GLIBC__ */
