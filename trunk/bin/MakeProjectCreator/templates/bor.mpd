@@ -1,7 +1,14 @@
 # Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%endif%> with Borland C++ Builder
 
-<%if(idl_files)%>
+<%if(exename)%>
+NAME = <%exename%>
+<%else%>
+<%if(sharedname)%>
+NAME = <%sharedname%>
+<%endif%>
+<%endif%>
 
+<%if(idl_files)%>
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 <%endif%>
 
