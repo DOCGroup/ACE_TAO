@@ -260,96 +260,10 @@ namespace CIAO
             }
         }
 
-      CORBA::ULong x;
-      CORBA::ULong y;
-      int ref_value;
-      int orig_value;
-      ACE_TString ref_name;
-
-      for (x = 0; x < domain.node.length (); ++x)
-        {
-          for (y = 0; y < domain.node[x].connectionRef.length (); ++y)
-            {
-              ref_value =  domain.node[x].connectionRef[y];
-              if (idref_map_.find (ref_value, ref_name) == 0)
-                {
-                  if (id_map_.find (ref_name, orig_value) == 0)
-                    {
-                      domain.node[x].connectionRef[y] = orig_value;
-                    }
-                }
-            }
-
-          for (y = 0; y < domain.node[x].sharedResourceRef.length (); ++y)
-            {
-              ref_value = domain.node[x].sharedResourceRef[y];
-              if (idref_map_.find (ref_value, ref_name) == 0)
-                {
-                  if (id_map_.find (ref_name, orig_value) == 0)
-                    {
-                      domain.node[x].sharedResourceRef[y] = orig_value;
-                    }
-                }
-            }
-
-        }
-
-      for (x = 0; x < domain.interconnect.length (); ++x)
-        {
-          for (y = 0; y < domain.interconnect[x].connectionRef.length (); ++y)
-            {
-              ref_value = domain.interconnect[x].connectionRef[y];
-              if (idref_map_.find (ref_value, ref_name) == 0)
-                {
-                  if (id_map_.find (ref_name, orig_value) == 0)
-                    {
-                      domain.interconnect[x].connectionRef[y] = orig_value;
-                    }
-                }
-            }
-
-          for (y = 0; y < domain.interconnect[x].connectRef.length (); ++y)
-            {
-              ref_value = domain.interconnect[x].connectRef[y];
-              if (idref_map_.find (ref_value, ref_name) == 0)
-                {
-                  if (id_map_.find (ref_name, orig_value) == 0)
-                    {
-                      domain.interconnect[x].connectRef[y] = orig_value;
-                    }
-                }
-            }
-        }
-
-      for (x = 0; x < domain.bridge.length (); ++x)
-        {
-          for (y = 0; y < domain.bridge[x].connectRef.length (); ++y)
-            {
-              ref_value = domain.bridge[x].connectRef[y];
-              if (idref_map_.find (ref_value, ref_name) == 0)
-                {
-                  if (id_map_.find (ref_name, orig_value) == 0)
-                    {
-                      domain.bridge[x].connectRef[y] = orig_value;
-                    }
-                }
-            }
-        }
-
-      for (x = 0; x < domain.sharedResource.length (); ++x)
-        {
-          for (y = 0; y < domain.sharedResource[x].nodeRef.length (); ++y)
-            {
-              ref_value = domain.sharedResource[x].nodeRef[y];
-              if (idref_map_.find (ref_value, ref_name) == 0)
-                {
-                  if (id_map_.find (ref_name, orig_value) == 0)
-                    {
-                      domain.sharedResource[x].nodeRef[y] = orig_value;
-                    }
-                }
-            }
-        }
+      this->update_node_refs (domain);
+      this->update_ic_refs (domain);
+      this->update_bridge_refs (domain);
+      this->update_sr_refs (domain);
 
       return;
     }
@@ -2291,6 +2205,127 @@ namespace CIAO
         }
 
       return;
+    }
+
+    void Domain_Handler::update_node_refs (Deployment::Domain& domain)
+    {
+      CORBA::ULong x;
+      CORBA::ULong y;
+      int ref_value;
+      int orig_value;
+      ACE_TString ref_name;
+
+      for (x = 0; x < domain.node.length (); ++x)
+        {
+          for (y = 0; y < domain.node[x].connectionRef.length (); ++y)
+            {
+              ref_value =  domain.node[x].connectionRef[y];
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, orig_value) == 0)
+                    {
+                      domain.node[x].connectionRef[y] = orig_value;
+                    }
+                }
+            }
+
+          for (y = 0; y < domain.node[x].sharedResourceRef.length (); ++y)
+            {
+              ref_value = domain.node[x].sharedResourceRef[y];
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, orig_value) == 0)
+                    {
+                      domain.node[x].sharedResourceRef[y] = orig_value;
+                    }
+                }
+            }
+
+        }
+    }
+
+    void Domain_Handler::update_ic_refs (Deployment::Domain& domain)
+    {
+      CORBA::ULong x;
+      CORBA::ULong y;
+      int ref_value;
+      int orig_value;
+      ACE_TString ref_name;
+
+      for (x = 0; x < domain.interconnect.length (); ++x)
+        {
+          for (y = 0; y < domain.interconnect[x].connectionRef.length (); ++y)
+            {
+              ref_value = domain.interconnect[x].connectionRef[y];
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, orig_value) == 0)
+                    {
+                      domain.interconnect[x].connectionRef[y] = orig_value;
+                    }
+                }
+            }
+
+          for (y = 0; y < domain.interconnect[x].connectRef.length (); ++y)
+            {
+              ref_value = domain.interconnect[x].connectRef[y];
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, orig_value) == 0)
+                    {
+                      domain.interconnect[x].connectRef[y] = orig_value;
+                    }
+                }
+            }
+        }
+    }
+
+    void Domain_Handler::update_bridge_refs (Deployment::Domain& domain)
+    {
+      CORBA::ULong x;
+      CORBA::ULong y;
+      int ref_value;
+      int orig_value;
+      ACE_TString ref_name;
+
+      for (x = 0; x < domain.bridge.length (); ++x)
+        {
+          for (y = 0; y < domain.bridge[x].connectRef.length (); ++y)
+            {
+              ref_value = domain.bridge[x].connectRef[y];
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, orig_value) == 0)
+                    {
+                      domain.bridge[x].connectRef[y] = orig_value;
+                    }
+                }
+            }
+        }
+    }
+
+    void Domain_Handler::update_sr_refs (Deployment::Domain& domain)
+    {
+      CORBA::ULong x;
+      CORBA::ULong y;
+      int ref_value;
+      int orig_value;
+      ACE_TString ref_name;
+
+      for (x = 0; x < domain.sharedResource.length (); ++x)
+        {
+          for (y = 0; y < domain.sharedResource[x].nodeRef.length (); ++y)
+            {
+              ref_value = domain.sharedResource[x].nodeRef[y];
+              if (idref_map_.find (ref_value, ref_name) == 0)
+                {
+                  if (id_map_.find (ref_name, orig_value) == 0)
+                    {
+                      domain.sharedResource[x].nodeRef[y] = orig_value;
+                    }
+                }
+            }
+        }
     }
 
   }
