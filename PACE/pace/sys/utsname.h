@@ -13,17 +13,37 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_UTSNAME_H_INDIRECT
-#define PACE_SYS_UTSNAME_H_INDIRECT
+#ifndef PACE_SYS_UTSNAME_H
+#define PACE_SYS_UTSNAME_H
 
 #include "pace/config/defines.h"
 
-#if defined (PACE_HAS_POSIX)
+#if (PACE_HAS_POSIX)
 # include "pace/posix/utsname.h"
-#elif defined (PACE_VXWORKS)
+#elif (PACE_VXWORKS)
 # include "pace/vxworks/utsname.h"
-#elif defined (PACE_WIN32)
+#elif (PACE_WIN32)
 # include "pace/win32/utsname.h"
 #endif
 
-#endif /* PACE_SYS_UTSNAME_H_INDIRECT */
+#if defined (PACE_HAS_CPLUSPLUS)
+extern "C" {
+#endif /* PACE_HAS_CPLUSPLUS */
+
+  PACE_INLINE int pace_uname (pace_utsname * name);
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
+
+#if defined (PACE_HAS_INLINE)
+#  if (PACE_HAS_POSIX)
+#    include "pace/posix/utsname.inl"
+#  elif (PACE_VXWORKS)
+#    include "pace/vxworks/utsname.inl"
+#  elif (PACE_WIN32)
+#    include "pace/win32/utsname.inl"
+#  endif
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_SYS_UTSNAME_H */
