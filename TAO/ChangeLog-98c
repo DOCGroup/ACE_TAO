@@ -1,3 +1,9 @@
+Wed Aug 26 13:12:57 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/Cubit/TAO/DII_Cubit/client.cpp
+	* orbsvcs/tests/Concurrency/CC_naming_service.cpp
+	  Added ".in ()" to orb argument for my_name_client.init.
+
 Wed Aug 26 12:11:23 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the _out warnings 

@@ -142,7 +142,7 @@ CC_naming_service::init_naming_service (void)
       // Initialize the naming services
       // Normally, init () would take argc and argv as arguments but
       // in this situation, they can only be passed dummy values
-      if (my_name_client_.init (orb_, 0, 0) != 0)
+      if (my_name_client_.init (orb_.in (), 0, 0) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),
