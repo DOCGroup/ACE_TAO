@@ -3,9 +3,9 @@
 # This is the list of tests that need to be run by run_test.pl.
 # Each line has its own test, and a test can be followed by a
 # list of platforms it runs or does not run on.
-# 
+#
 # Example: Foo_Test: !linux
-# Example: Bar_Test: 
+# Example: Bar_Test:
 # Example: Baz_Test: Win32 !Borland
 #
 # Foo_Test runs on all configurations except for linux
@@ -15,7 +15,7 @@
 # Baz_Test only runs on Win32 configurations but not on Borland
 # configurations.
 
-ACE_Init_Test: MSVC 
+ACE_Init_Test: MSVC
 Atomic_Op_Test
 Auto_IncDec_Test
 Barrier_Test
@@ -45,6 +45,7 @@ IOStream_Test
 Lazy_Map_Manager_Test
 Map_Manager_Test
 Map_Test
+MEM_Stream_Test
 Mem_Map_Test: !chorus !Unicos
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
@@ -53,7 +54,7 @@ MM_Shared_Memory_Test: !chorus !Unicos
 MT_Reactor_Timer_Test: ALL MSVC !DISABLED
 MT_SOCK_Test: !chorus
 Malloc_Test
-Naming_Test: OTHER !chorus !LynxOS !Unicos 
+Naming_Test: OTHER !chorus !LynxOS !Unicos
 New_Fail_Test: ALL !DISABLED
 Notify_Performance_Test
 Object_Manager_Test

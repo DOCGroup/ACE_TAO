@@ -39,6 +39,7 @@ TESTS = \
 	Malloc_Test \
 	Map_Manager_Test \
 	Map_Test \
+        MEM_Stream_Test \
 	Mem_Map_Test \
 	Message_Block_Test \
 	Message_Queue_Notifications_Test \

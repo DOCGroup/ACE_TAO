@@ -41,6 +41,7 @@ BIN =   Aio_Platform_Test \
         Malloc_Test \
         Map_Test \
         Map_Manager_Test \
+	MEM_Stream_Test \
         Mem_Map_Test \
         MM_Shared_Memory_Test \
         MT_Reactor_Timer_Test \
