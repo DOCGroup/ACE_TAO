@@ -1,3 +1,9 @@
+
+Tue Jan 27 15:07:35 1998  Carlos O'Ryan  <coryan@tango.cs.wustl.edu>
+
+	* tests/Param_Test/Makefile, tests/POA/NewPOA/Makefile, tests/POA/On_Demand_Activation/Makefile, tests/POA/RootPOA/Makefile, tests/POA/FindPOA/Makefile, tests/POA/Generic_Servant/Makefile, tests/Cubit/TAO/IDL_Cubit/Makefile, tests/Cubit/TAO/MT_Cubit/Makefile, tests/POA/Explicit_Activation/Makefile, tao/poa.h, tao/Makefile, orbsvcs/tests/Simple_Naming/Makefile, orbsvcs/tests/Event_Latency/Event_Latency.cpp, orbsvcs/tests/Event_Latency/Makefile, orbsvcs/tests/Logger/Makefile, orbsvcs/orbsvcs/Makefile, orbsvcs/orbsvcs/TAO_IDL_templates.cpp, orbsvcs/orbsvcs/tmplinst.cpp, orbsvcs/Scheduling_Service/Makefile, orbsvcs/Naming_Service/Makefile, orbsvcs/Event_Service/Makefile, orbsvcs/Dump_Schedule/Dump_Schedule.cpp, orbsvcs/Dump_Schedule/Makefile, TAO_IDL/Makefile, TAO_IDL/be/Makefile, release.pl, ChangeLog:
+	ChangeLogTag:Tue Jan 27 15:06:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
 Fri Jan 30 15:10:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* README: Updated the documentation to reflect the latest changes
@@ -20,11 +26,11 @@ Fri Jan 30 13:15:10 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 Fri Jan 30 11:55:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/tests/Logger/Logger.dsw:
-	* orbsvcs/tests/Logger/{server,client}.dsp: Added new project file. 
-	
-	* orbsvcs/tests/Logger/svr.cpp: 
-	* orbsvcs/tests/Logger/clnt.cpp: 
-	* orbsvcs/tests/Logger/logger_i.h: 
+	* orbsvcs/tests/Logger/{server,client}.dsp: Added new project file.
+
+	* orbsvcs/tests/Logger/svr.cpp:
+	* orbsvcs/tests/Logger/clnt.cpp:
+	* orbsvcs/tests/Logger/logger_i.h:
 	* orbsvcs/tests/Logger/logger_i.cpp: Changed <iostream.h> to
  	  "ace/streams.h".  We should always use "ace/streams.h".
 
@@ -40,25 +46,25 @@ Fri Jan 30 11:42:10 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Fri Jan 30 01:55:59 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/COOL/IDL_Cubit/README: 
+	* tests/Cubit/COOL/IDL_Cubit/README:
 	* tests/Cubit/COOL/IDL_Cubit/Makefile:
 	* tests/Cubit/COOL/IDL_Cubit/client.cpp:
 	* tests/Cubit/COOL/IDL_Cubit/client.h:
 	* tests/Cubit/COOL/IDL_Cubit/cubit.idl:
 	* tests/Cubit/COOL/IDL_Cubit/cubit_i.cpp:
 	* tests/Cubit/COOL/IDL_Cubit/cubit_i.h:
-	* tests/Cubit/COOL/IDL_Cubit/server.cpp:	
+	* tests/Cubit/COOL/IDL_Cubit/server.cpp:
 	* tests/Cubit/COOL/IDL_Cubit/tmplinst.cpp: Added test code for
  	Chorus COOL ORB, for the IDL Cubit example.
 
-	* tests/Thruput/COOL/README: 
+	* tests/Thruput/COOL/README:
 	* tests/Thruput/COOL/Makefile:
 	* tests/Thruput/COOL/client.cpp:
 	* tests/Thruput/COOL/server.cpp:
 	* tests/Thruput/COOL/ttcp.idl:
 	* tests/Thruput/COOL/ttcp_decl.h:
 	* tests/Thruput/COOL/ttcp_i.cpp:
-	* tests/Thruput/COOL/ttcp_i.h:	
+	* tests/Thruput/COOL/ttcp_i.h:
 	* tests/Thruput/COOL/utils.cpp: Added test code for Chorus COOL
  	ORB, for the Thruput example.
 
@@ -101,19 +107,19 @@ Thu Jan 29 15:58:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tests/POA/FindPOA/FindPOA.cpp (main): Added missing double-quote
  	in ACE_DEBUG().
-	
+
 Thu Jan 29 15:55:25 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/clnt.h: 
-	* orbsvcs/tests/Logger/clnt.cpp: 
+	* orbsvcs/tests/Logger/clnt.h:
+	* orbsvcs/tests/Logger/clnt.cpp:
 	  We need to keep a reference to the ORB is some place.
 
 Thu Jan 29 14:59:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* tests/POA/On_Demand_Activation/server.cpp: 
-	* tests/POA/Generic_Servant/MyFooServant.cpp: 
-	* tests/POA/Explicit_Activation/server.cpp: 
-	* tests/POA/Default_Servant/server.cpp: 
+	* tests/POA/On_Demand_Activation/server.cpp:
+	* tests/POA/Generic_Servant/MyFooServant.cpp:
+	* tests/POA/Explicit_Activation/server.cpp:
+	* tests/POA/Default_Servant/server.cpp:
 	* tests/Cubit/TAO/MT_Cubit/server.cpp:
  	_var's passed as pointers need to use the .in() method.
 
@@ -133,14 +139,14 @@ Thu Jan 29 14:59:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Thu Jan 29 12:33:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/clnt.cpp: 
-	* orbsvcs/tests/Simple_Naming/clnt.h: 
+	* orbsvcs/tests/Simple_Naming/clnt.cpp:
+	* orbsvcs/tests/Simple_Naming/clnt.h:
 	  Simple Naming simply tries to locate the Naming Service, it is
 	  useful to test the TAO facilities (multicast, environment,
 	  command line) for that purpose.
-	
-	* orbsvcs/tests/Logger/clnt.cpp: 
-	* orbsvcs/tests/Logger/clnt.h: 
+
+	* orbsvcs/tests/Logger/clnt.cpp:
+	* orbsvcs/tests/Logger/clnt.h:
 	  We do not attempt to use nested context unless requested by the
 	  user, the reason is that it is failing consistently right now.
 
@@ -282,6 +288,7 @@ Wed Jan 28 09:14:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
 	  Another case of misplaced includes.
+
 
 Tue Jan 27 17:29:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
