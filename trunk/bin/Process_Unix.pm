@@ -7,16 +7,32 @@ sub Create
   my $name = shift;
   my $args = shift;
   my $self = [];
-  unless ($self->[0] = fork ()) 
-  {        
-    unless (fork ()) 
+
+  FORK:
+  {
+    if ($self->[0] = fork)
     {
-      exec $name." ".$args;
-      die "no exec";
+      #parent here
+      bless $self;
     }
-    exit 0;    
+    elsif (defined $self->[0])
+    {
+      #child here
+      exec $name." ".$args;
+      die "exec failed";
+    }
+    elsif ($! =~ /No more process/)
+    {
+      #EAGAIN, supposedly recoverable fork error
+      sleep 5;
+      redo FORK;
+    }
+    else 
+    {
+      # weird fork error
+      die "Can't fork: $!\n";
+    }
   }
-  bless $self;
 }
 
 sub Kill
