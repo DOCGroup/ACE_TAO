@@ -2,6 +2,9 @@
 
 #include "Newsweek.h"
 
+// This declaration necessary to get thi sworking on NT.
+#if defined (ACE_HAS_WIN32)
+
 #ifdef __cplusplus
 extern "C" {  // only need to export C interface if
               // used by C++ source code
@@ -11,6 +14,8 @@ extern "C" {  // only need to export C interface if
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 // Implementation of the abstract class method which describes
