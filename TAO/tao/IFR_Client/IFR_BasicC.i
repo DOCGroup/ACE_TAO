@@ -29,7 +29,7 @@
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CI_
 
   ACE_INLINE CORBA::InterfaceDef **
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
   {
     CORBA::InterfaceDef **buf = 0;
     
@@ -42,7 +42,7 @@
   }
   
   ACE_INLINE void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (CORBA::InterfaceDef **buffer)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (CORBA::InterfaceDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -50,18 +50,18 @@
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void)
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::InterfaceDef* *value,
     CORBA::Boolean release)
@@ -70,7 +70,7 @@
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -89,8 +89,8 @@
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -125,7 +125,7 @@
   }
   
   ACE_INLINE TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -134,7 +134,7 @@
   }
   
   ACE_INLINE CORBA::InterfaceDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::InterfaceDef **result = 0;
     if (orphan == 0)
@@ -168,7 +168,7 @@
   }
   
   ACE_INLINE const CORBA::InterfaceDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::InterfaceDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -396,7 +396,7 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CI_
 
   ACE_INLINE CORBA::AbstractInterfaceDef **
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
   {
     CORBA::AbstractInterfaceDef **buf = 0;
     
@@ -409,7 +409,7 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::freebuf (CORBA::AbstractInterfaceDef **buffer)
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::freebuf (CORBA::AbstractInterfaceDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -417,18 +417,18 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void)
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void)
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum)
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum,
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::AbstractInterfaceDef* *value,
     CORBA::Boolean release)
@@ -437,7 +437,7 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -456,8 +456,8 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -492,7 +492,7 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE TAO_Object_Manager<CORBA::AbstractInterfaceDef,CORBA::AbstractInterfaceDef_var>
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator[] (CORBA::ULong index) const
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -501,7 +501,7 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE CORBA::AbstractInterfaceDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+ _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::AbstractInterfaceDef **result = 0;
     if (orphan == 0)
@@ -535,7 +535,7 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::AbstractInterfaceDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::AbstractInterfaceDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -763,7 +763,7 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CI_
 
   ACE_INLINE CORBA::LocalInterfaceDef **
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+ _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
   {
     CORBA::LocalInterfaceDef **buf = 0;
     
@@ -776,7 +776,7 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::freebuf (CORBA::LocalInterfaceDef **buffer)
+ _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::freebuf (CORBA::LocalInterfaceDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -784,18 +784,18 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void)
+ _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void)
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::LocalInterfaceDef* *value,
     CORBA::Boolean release)
@@ -804,7 +804,7 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
+ _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -823,8 +823,8 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -859,7 +859,7 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE TAO_Object_Manager<CORBA::LocalInterfaceDef,CORBA::LocalInterfaceDef_var>
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator[] (CORBA::ULong index) const
+ _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -868,7 +868,7 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE CORBA::LocalInterfaceDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::LocalInterfaceDef **result = 0;
     if (orphan == 0)
@@ -902,7 +902,7 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::LocalInterfaceDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (void) const
+ _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::LocalInterfaceDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -4334,7 +4334,7 @@ CORBA_ExceptionDescription_out::operator-> (void)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_EXCEPTIONDEFSEQ_CI_
 
   ACE_INLINE CORBA::ExceptionDef **
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (CORBA::ULong nelems)
+ _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (CORBA::ULong nelems)
   {
     CORBA::ExceptionDef **buf = 0;
     
@@ -4347,7 +4347,7 @@ CORBA_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::freebuf (CORBA::ExceptionDef **buffer)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::freebuf (CORBA::ExceptionDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -4355,18 +4355,18 @@ CORBA_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (void)
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::ExceptionDef* *value,
     CORBA::Boolean release)
@@ -4375,7 +4375,7 @@ CORBA_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -4394,8 +4394,8 @@ CORBA_ExceptionDescription_out::operator-> (void)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -4430,7 +4430,7 @@ CORBA_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<CORBA::ExceptionDef,CORBA::ExceptionDef_var>
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -4439,7 +4439,7 @@ CORBA_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE CORBA::ExceptionDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::ExceptionDef **result = 0;
     if (orphan == 0)
@@ -4473,7 +4473,7 @@ CORBA_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE const CORBA::ExceptionDef* *
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ExceptionDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -4703,7 +4703,7 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
 
   // = Static operations.
   ACE_INLINE CORBA::ExceptionDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     CORBA::ExceptionDescription *retval = 0;
@@ -4711,25 +4711,25 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
     return retval;
   }
   
-  ACE_INLINE void CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::freebuf (CORBA::ExceptionDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::freebuf (CORBA::ExceptionDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::ExceptionDescription *data,
     CORBA::Boolean release)
@@ -4738,7 +4738,7 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -4758,8 +4758,8 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -4791,7 +4791,7 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   
   // = Accessors.
   ACE_INLINE CORBA::ExceptionDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -4800,7 +4800,7 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::ExceptionDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -4811,7 +4811,7 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE CORBA::ExceptionDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::ExceptionDescription *result = 0;
     if (orphan == 0)
@@ -4845,13 +4845,13 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::ExceptionDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ExceptionDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::ExceptionDescription *data,
   CORBA::Boolean release)
@@ -5670,7 +5670,7 @@ CORBA_ParameterDescription_out::operator-> (void)
 
   // = Static operations.
   ACE_INLINE CORBA::ParameterDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     CORBA::ParameterDescription *retval = 0;
@@ -5678,25 +5678,25 @@ CORBA_ParameterDescription_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::freebuf (CORBA::ParameterDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::freebuf (CORBA::ParameterDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::ParameterDescription *data,
     CORBA::Boolean release)
@@ -5705,7 +5705,7 @@ CORBA_ParameterDescription_out::operator-> (void)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -5725,8 +5725,8 @@ CORBA_ParameterDescription_out::operator-> (void)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -5758,7 +5758,7 @@ CORBA_ParameterDescription_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE CORBA::ParameterDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -5767,7 +5767,7 @@ CORBA_ParameterDescription_out::operator-> (void)
   }
   
   ACE_INLINE const CORBA::ParameterDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -5778,7 +5778,7 @@ CORBA_ParameterDescription_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE CORBA::ParameterDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::ParameterDescription *result = 0;
     if (orphan == 0)
@@ -5812,13 +5812,13 @@ CORBA_ParameterDescription_out::operator-> (void)
   }
   
   ACE_INLINE const CORBA::ParameterDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ParameterDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::ParameterDescription *data,
   CORBA::Boolean release)
@@ -6868,7 +6868,7 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
 
   // = Static operations.
   ACE_INLINE CORBA::OperationDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     CORBA::OperationDescription *retval = 0;
@@ -6876,25 +6876,25 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
     return retval;
   }
   
-  ACE_INLINE void CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (CORBA::OperationDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (CORBA::OperationDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::OperationDescription *data,
     CORBA::Boolean release)
@@ -6903,7 +6903,7 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -6923,8 +6923,8 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -6956,7 +6956,7 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   
   // = Accessors.
   ACE_INLINE CORBA::OperationDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -6965,7 +6965,7 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::OperationDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -6976,7 +6976,7 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE CORBA::OperationDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::OperationDescription *result = 0;
     if (orphan == 0)
@@ -7010,13 +7010,13 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::OperationDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::OperationDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::OperationDescription *data,
   CORBA::Boolean release)
@@ -7262,7 +7262,7 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
 
   // = Static operations.
   ACE_INLINE CORBA::AttributeDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     CORBA::AttributeDescription *retval = 0;
@@ -7270,25 +7270,25 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
     return retval;
   }
   
-  ACE_INLINE void CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (CORBA::AttributeDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (CORBA::AttributeDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::AttributeDescription *data,
     CORBA::Boolean release)
@@ -7297,7 +7297,7 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -7317,8 +7317,8 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -7350,7 +7350,7 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   
   // = Accessors.
   ACE_INLINE CORBA::AttributeDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -7359,7 +7359,7 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::AttributeDescription &
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -7370,7 +7370,7 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE CORBA::AttributeDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::AttributeDescription *result = 0;
     if (orphan == 0)
@@ -7404,13 +7404,13 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const CORBA::AttributeDescription *
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::AttributeDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::AttributeDescription *data,
   CORBA::Boolean release)
