@@ -68,9 +68,9 @@ Driver::init (int argc, char **argv)
 
   // Retrieve the underlying ORB
   this->orb_ = CORBA::ORB_init (argc,
-				argv,
-				"internet",
-				env);
+                                argv,
+                                "internet",
+                                env);
 
   if (env.exception () != 0)
     {
@@ -134,12 +134,12 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_LONGLONG:
+    case Options::TEST_ULONGLONG:
       {
-        Param_Test_Client<Test_LongLong> *client = new
-          Param_Test_Client<Test_LongLong> (this->orb_.in (),
-					    this->objref_.in(),
-					    new Test_LongLong);
+        Param_Test_Client<Test_ULongLong> *client = new
+          Param_Test_Client<Test_ULongLong> (this->orb_.in (),
+                                             this->objref_.in(),
+                                             new Test_ULongLong);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -164,8 +164,8 @@ Driver::run (void)
       {
         Param_Test_Client<Test_Bounded_String> *client = new
           Param_Test_Client<Test_Bounded_String> (this->orb_.in (),
-						  this->objref_.in(),
-						  new Test_Bounded_String);
+                                                  this->objref_.in(),
+                                                  new Test_Bounded_String);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -429,10 +429,10 @@ Driver::run (void)
   TAO_TRY
     {
       if (opt->shutdown ())
-	{
-	  this->objref_->shutdown (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
+        {
+          this->objref_->shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
     }
   TAO_CATCHANY
     {
@@ -446,7 +446,7 @@ Driver::run (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class Param_Test_Client<Test_Short>;
-template class Param_Test_Client<Test_LongLong>;
+template class Param_Test_Client<Test_ULongLong>;
 template class Param_Test_Client<Test_Unbounded_String>;
 template class Param_Test_Client<Test_Bounded_String>;
 template class Param_Test_Client<Test_Fixed_Struct>;
@@ -471,7 +471,7 @@ template class Param_Test_Client<Test_Var_Array>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
-#pragma instantiate Param_Test_Client<Test_LongLong>
+#pragma instantiate Param_Test_Client<Test_ULongLong>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
 #pragma instantiate Param_Test_Client<Test_Bounded_String>
 #pragma instantiate Param_Test_Client<Test_Fixed_Struct>

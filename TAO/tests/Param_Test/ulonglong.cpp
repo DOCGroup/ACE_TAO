@@ -6,7 +6,7 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    longlong.cpp
+//    ulonglong.cpp
 //
 // = DESCRIPTION
 //    tests 64 bit longs
@@ -17,30 +17,30 @@
 // ============================================================================
 
 #include "helper.h"
-#include "longlong.h"
+#include "ulonglong.h"
 
-ACE_RCSID(Param_Test, longlong, "$Id$")
+ACE_RCSID(Param_Test, ulonglong, "$Id$")
 
-Test_LongLong::Test_LongLong (void)
-  : opname_ (CORBA::string_dup ("test_longlong"))
+Test_ULongLong::Test_ULongLong (void)
+  : opname_ (CORBA::string_dup ("test_ulonglong"))
 {
 }
 
-Test_LongLong::~Test_LongLong (void)
+Test_ULongLong::~Test_ULongLong (void)
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_LongLong::opname (void) const
+Test_ULongLong::opname (void) const
 {
   return this->opname_;
 }
 
 int
-Test_LongLong::init_parameters (Param_Test_ptr objref,
-				CORBA::Environment &env)
+Test_ULongLong::init_parameters (Param_Test_ptr objref,
+                                CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -53,7 +53,7 @@ Test_LongLong::init_parameters (Param_Test_ptr objref,
 }
 
 int
-Test_LongLong::reset_parameters (void)
+Test_ULongLong::reset_parameters (void)
 {
   this->inout_ =  0;
   this->out_ =  0;
@@ -62,32 +62,32 @@ Test_LongLong::reset_parameters (void)
 }
 
 int
-Test_LongLong::run_sii_test (Param_Test_ptr objref,
+Test_ULongLong::run_sii_test (Param_Test_ptr objref,
                           CORBA::Environment &env)
 {
-  this->ret_ = objref->test_longlong (this->in_,
-				      this->inout_,
-				      this->out_,
-				      env);
+  this->ret_ = objref->test_ulonglong (this->in_,
+                                       this->inout_,
+                                       this->out_,
+                                       env);
 
   return (env.exception () ? -1:0);
 }
 
 int
-Test_LongLong::add_args (CORBA::NVList_ptr param_list,
+Test_ULongLong::add_args (CORBA::NVList_ptr param_list,
                       CORBA::NVList_ptr retval,
                       CORBA::Environment &env)
 {
   // we provide top level memory to the ORB to retrieve the data
-  CORBA::Any in_arg (CORBA::_tc_longlong,
+  CORBA::Any in_arg (CORBA::_tc_ulonglong,
                      &this->in_,
                      CORBA::B_FALSE);
 
-  CORBA::Any inout_arg (CORBA::_tc_longlong,
+  CORBA::Any inout_arg (CORBA::_tc_ulonglong,
                         &this->inout_,
                         CORBA::B_FALSE);
 
-  CORBA::Any out_arg (CORBA::_tc_longlong,
+  CORBA::Any out_arg (CORBA::_tc_ulonglong,
                       &this->out_,
                       CORBA::B_FALSE);
 
@@ -109,7 +109,7 @@ Test_LongLong::add_args (CORBA::NVList_ptr param_list,
 
   // add return value. Let the ORB allocate storage. We simply tell the ORB
   // what type we are expecting.
-  retval->item (0, env)->value ()->replace (CORBA::_tc_longlong,
+  retval->item (0, env)->value ()->replace (CORBA::_tc_ulonglong,
                                             &this->ret_,
                                             CORBA::B_FALSE, // does not own
                                             env);
@@ -117,7 +117,7 @@ Test_LongLong::add_args (CORBA::NVList_ptr param_list,
 }
 
 CORBA::Boolean
-Test_LongLong::check_validity (void)
+Test_ULongLong::check_validity (void)
 {
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
@@ -128,14 +128,14 @@ Test_LongLong::check_validity (void)
 }
 
 CORBA::Boolean
-Test_LongLong::check_validity (CORBA::Request_ptr req)
+Test_ULongLong::check_validity (CORBA::Request_ptr req)
 {
   ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
 void
-Test_LongLong::print_values (void)
+Test_ULongLong::print_values (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

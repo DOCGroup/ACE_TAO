@@ -57,10 +57,10 @@ Options::parse_args (int argc, char **argv)
         break;
 
       case 'x':
-	this->shutdown_ = CORBA::B_TRUE;
-	break;
+        this->shutdown_ = CORBA::B_TRUE;
+        break;
 
-      case 'n':			// loop count
+      case 'n':                 // loop count
         this->loop_count_ = (CORBA::ULong) ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -73,12 +73,12 @@ Options::parse_args (int argc, char **argv)
                              get_opts.optarg),
                             -1);
 
-	break;
+        break;
 
      case 'k':
-	CORBA::string_free (this->ior_);
-	this->ior_ = CORBA::string_copy (get_opts.optarg);
-	break;
+        CORBA::string_free (this->ior_);
+        this->ior_ = CORBA::string_copy (get_opts.optarg);
+        break;
 
       case 'i':  // invocation
         if (!ACE_OS::strcmp (get_opts.optarg, "dii"))
@@ -88,8 +88,8 @@ Options::parse_args (int argc, char **argv)
       case 't': // data type
         if (!ACE_OS::strcmp (get_opts.optarg, "short"))
           this->test_type_ = Options::TEST_SHORT;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "longlong"))
-          this->test_type_ = Options::TEST_LONGLONG;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "ulonglong"))
+          this->test_type_ = Options::TEST_ULONGLONG;
         else if (!ACE_OS::strcmp (get_opts.optarg, "ubstring"))
           this->test_type_ = Options::TEST_UB_STRING;
         else if (!ACE_OS::strcmp (get_opts.optarg, "bdstring"))
@@ -116,24 +116,24 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_TYPECODE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "any"))
           this->test_type_ = Options::TEST_ANY;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "objref_sequence"))
-    	  this->test_type_ = Options::TEST_OBJREF_SEQUENCE;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "any_sequence"))
-    	  this->test_type_ = Options::TEST_ANYSEQ;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "ub_short_sequence"))
-	  this->test_type_ = Options::TEST_UB_SHORTSEQ;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "bd_short_sequence"))
-	  this->test_type_ = Options::TEST_BD_SHORTSEQ;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "ub_long_sequence"))
-	  this->test_type_ = Options::TEST_UB_LONGSEQ;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "bd_long_sequence"))
-	  this->test_type_ = Options::TEST_BD_LONGSEQ;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "fixed_array"))
-	  this->test_type_ = Options::TEST_FIXED_ARRAY;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "var_array"))
-	  this->test_type_ = Options::TEST_VAR_ARRAY;
-	else if (!ACE_OS::strcmp (get_opts.optarg, "multdim_array"))
-	  this->test_type_ = Options::TEST_MULTDIM_ARRAY;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "objref_sequence"))
+          this->test_type_ = Options::TEST_OBJREF_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "any_sequence"))
+          this->test_type_ = Options::TEST_ANYSEQ;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "ub_short_sequence"))
+          this->test_type_ = Options::TEST_UB_SHORTSEQ;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bd_short_sequence"))
+          this->test_type_ = Options::TEST_BD_SHORTSEQ;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "ub_long_sequence"))
+          this->test_type_ = Options::TEST_UB_LONGSEQ;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bd_long_sequence"))
+          this->test_type_ = Options::TEST_BD_LONGSEQ;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "fixed_array"))
+          this->test_type_ = Options::TEST_FIXED_ARRAY;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "var_array"))
+          this->test_type_ = Options::TEST_VAR_ARRAY;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "multdim_array"))
+          this->test_type_ = Options::TEST_MULTDIM_ARRAY;
         break;
 
       case '?':
