@@ -1,4 +1,4 @@
-project : valuetype_only, taolib, core {
+project : valuetype, taolib, core {
   sharedname  = TAO_ObjRefTemplate
   libs       += TAO_Valuetype TAO
   dllflags    = TAO_ORT_BUILD_DLL
