@@ -1,3 +1,10 @@
+Thu Mar 27 01:04:43 2003  Pradeep Gore  <pradeep@.oomworks.com>
+
+	* orbsvcs/tests/Notify/lib/.depend.Makefile.TAO_NotifyTests
+	* orbsvcs/tests/Notify/lib/.depend.Makefile.TAO_RT_NotifyTests
+	* orbsvcs/tests/Notify/lib/.depend.Makefile.TAO_RT_NotifyTests_Filter
+	Added .depend files.
+	
 Thu Mar 27 07:29:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.RT_Notification:
@@ -7,7 +14,7 @@ Thu Mar 27 07:29:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
 	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
 	  In <init> method, call TAO_NS_Object::init instead of
-	  TAo_NS_proxy::init
+	  TAO_NS_proxy::init
 
 Fri Mar 21 17:16:42 2003  Pradeep Gore  <pradeep@oomworks.com>
 
