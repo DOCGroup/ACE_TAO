@@ -39,7 +39,9 @@ ACE_FILE::get_info (ACE_FILE_Info *finfo)
 {
   ACE_TRACE ("ACE_FILE::get_info");
   struct stat filestatus;
-  int result = ACE_OS::fstat (this->get_handle (), &filestatus);
+
+  int result = ACE_OS::fstat (this->get_handle (), 
+                              &filestatus);
 
   if (result == 0)
     {
