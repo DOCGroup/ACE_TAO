@@ -689,6 +689,22 @@ public:
   // Argument MUST be a power of 2.
   // Returns 0 on success and -1 on failure.
 
+  int do_byte_swap (void) const;
+  // If non-zero then this stream is writing in non-native byte order,
+  // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+
+protected:
+  ACE_Message_Block start_;
+  // The start of the chain of message blocks, even though in the
+  // current version the chain always has length 1.
+
+  int do_byte_swap_;
+  // The CDR stream byte order does not match the one on the machine,
+  // swapping is needed while reading.
+
+  int good_bit_;
+  // set to 0 when an error occurs.
+
 private:
   CDR::Boolean read_1 (CDR::Octet *x);
   CDR::Boolean read_2 (CDR::UShort *x);
@@ -734,22 +750,6 @@ private:
               char *&buf);
   // As above, but now the size and alignment requirements may be
   // different.
-
-  int do_byte_swap (void) const;
-  // If non-zero then this stream is writing in non-native byte order,
-  // this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
-
-protected:
-  ACE_Message_Block start_;
-  // The start of the chain of message blocks, even though in the
-  // current version the chain always has length 1.
-
-  int do_byte_swap_;
-  // The CDR stream byte order does not match the one on the machine,
-  // swapping is needed while reading.
-
-  int good_bit_;
-  // set to 0 when an error occurs.
 };
 
 #if defined(__ACE_INLINE__)
