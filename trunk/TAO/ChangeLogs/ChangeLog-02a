@@ -1,7 +1,26 @@
+Tue May 29 23:26:12 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * docs/releasenotes/index.html: 
+
+        Changed the default for multicast discovery for the Naming
+        Service, AV Stream, and Implementation Repository.  Now, the
+        default is to NOT listen for multicast discoveries.  This should
+        alleviate the most commonly experienced support problem with these
+        services.  Note that command line options permit you to turn on
+        multicast discovery; see documentation on the individual services
+        on how to do that for a particular service.  No client-side code
+        got changed, and no changes are necessary in application code.
+        NOTE: the Trading Service was not changed because it contains code 
+        to partially eliminate the type of problems this change was
+        motivated to prevent.
+
 Tue May 29 22:24:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
-	  Fixed a compile error with Win32.
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+          Fixed a compile error with Win32.
 
 Tue May 29 21:58:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 

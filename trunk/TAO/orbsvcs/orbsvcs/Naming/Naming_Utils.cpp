@@ -26,7 +26,7 @@ TAO_Naming_Server::TAO_Naming_Server (void)
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    multicast_ (1)
+    multicast_ (0)
 {
 }
 
@@ -47,7 +47,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    multicast_ (1)
+    multicast_ (0)
 {
   if (this->init (orb,
                   poa,
