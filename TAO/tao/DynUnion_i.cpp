@@ -1409,7 +1409,12 @@ template class DU_Extractor<CORBA::UShort>;
 template class DU_Extractor<CORBA::ULong>;
 template class DU_Extractor<CORBA::Boolean>;
 template class DU_Extractor<CORBA::Char>;
+
+// For Chorus and VxWorks
+#if !defined (ACE_LACKS_LONGLONG_T)
 template class DU_Extractor<CORBA::LongLong>;
+#endif /* ACE_LACKS_LONGLONG_T */
+
 template class DU_Extractor<CORBA::ULongLong>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate DU_Extractor<CORBA::Short>
@@ -1418,7 +1423,12 @@ template class DU_Extractor<CORBA::ULongLong>;
 #pragma instantiate DU_Extractor<CORBA::ULong>
 #pragma instantiate DU_Extractor<CORBA::Boolean>
 #pragma instantiate DU_Extractor<CORBA::Char>
+
+// For Chorus and VxWorks
+#if !defined (ACE_LACKS_LONGLONG_T)
 #pragma instantiate DU_Extractor<CORBA::LongLong>
+#endif /* ACE_LACKS_LONGLONG_T */
+
 #pragma instantiate DU_Extractor<CORBA::ULongLong>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
