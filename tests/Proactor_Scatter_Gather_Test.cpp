@@ -1126,8 +1126,8 @@ Sender::initiate_read_file (void)
 
   static const size_t file_size = ACE_OS::filesize (input_file);
 
-  static const size_t number_of_chunks_needed_for_file
-    = ACE_OS::ceil ((double) file_size / chunk_size);
+  static const size_t number_of_chunks_needed_for_file =
+    ACE_static_cast (size_t, ACE_OS::ceil ((double) file_size / chunk_size));
 
   size_t relevant_number_of_chunks =
     ACE_MIN ((size_t)ACE_IOV_MAX,

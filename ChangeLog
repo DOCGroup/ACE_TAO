@@ -1,3 +1,11 @@
+Thu Feb 27 10:56:01 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Proactor_Scatter_Gather_Test.cpp (initiate_read_file):
+
+	  Explicitly cast return value of ceil() to "size_t".  Fixes a
+	  "loss of data" warning.  Loss of data isn't an issue in this
+	  case.
+
 Thu Feb 27 10:53:38 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Atomic_Op.cpp (single_cpu_exchange, multi_cpu_exchange):
