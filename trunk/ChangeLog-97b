@@ -17,6 +17,10 @@ Tue Sep 09 09:14:07 1997  David L. Levine  <levine@cs.wustl.edu>
 	  thread exit hooks.  This should help avoid deadlocks, in case
 	  one of those hooks needs to operate on the Thread_Manager.
 
+	* ace/Object_Manager.{h,cpp},CORBA_Handler.{h,cpp},Dump.{h,cpp}:
+	  preallocate locks for CORBA_Handler and Dump in ACE_Object_Manager.
+	  Statics are evil.
+
 	* include/makeinclude/platform_sunos5_sunc++.GNU: when building
 	  libraries only, don't use CC to create individual .shobj/*.so
 	  files.  The .so files are not needed to build libraries, because
