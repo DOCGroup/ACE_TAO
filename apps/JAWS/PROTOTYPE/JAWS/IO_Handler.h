@@ -231,7 +231,7 @@ protected:
   virtual void write_error (void);
   virtual void confirmation_message_complete (void);
   virtual void error_message_complete (void);
-  virtual JAWS_Handler_Factory *factory (void);
+  virtual JAWS_IO_Handler_Factory *factory (void);
   virtual void task (JAWS_Pipeline_Handler *ph);
   virtual JAWS_Pipeline_Handler *task (void);
 
