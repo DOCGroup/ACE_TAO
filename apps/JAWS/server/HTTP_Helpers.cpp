@@ -161,7 +161,10 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
   char inalphabet[256], decoder[256];
   int i, bits, c, char_count, errors = 0;
 
-  for (i = (sizeof HTTP_Helper::alphabet_) - 1; i >= 0 ; i--)
+  ACE_OS::memset (inalphabet, 0, sizeof (inalphabet));
+  ACE_OS::memset (decoder, 0, sizeof (decoder));
+
+  for (i = ACE_OS::strlen (HTTP_Helper::alphabet_) - 1; i >= 0 ; i--)
     {
       inalphabet[(unsigned int) HTTP_Helper::alphabet_[i]] = 1;
       decoder[(unsigned int) HTTP_Helper::alphabet_[i]] = i;
@@ -198,7 +201,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
       if (char_count)
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "base64 encoding incomplete: at least %d bits truncated",
+                     "base64 encoding incomplete: at least %d bits truncated\n",
                      ((4 - char_count) * 6)));
             errors++;
         }
@@ -210,7 +213,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
         {
         case 1:
           ACE_DEBUG ((LM_DEBUG,
-                      "base64 encoding incomplete: at least 2 bits missing"));
+                      "base64 encoding incomplete: at least 2 bits missing\n"));
           errors++;
           break;
         case 2:
@@ -242,7 +245,7 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
     {
       if (c > 255)
         {
-          ACE_DEBUG ((LM_DEBUG, "encountered char > 255 (decimal %d)", c));
+          ACE_DEBUG ((LM_DEBUG, "encountered char > 255 (decimal %d)\n", c));
           error++;
           break;
         }
