@@ -1,3 +1,9 @@
+Sun Feb  1 15:15:44 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          Added missing libraries that are needed when linking with fltk
+          support.
+
 Sun Feb  1 12:36:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeinclude/build_lib.bor:
