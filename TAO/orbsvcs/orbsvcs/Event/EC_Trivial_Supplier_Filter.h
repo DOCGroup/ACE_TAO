@@ -36,7 +36,7 @@ class TAO_EC_ProxyPushSupplier_Set;
 
 // ****************************************************************
 
-class TAO_EC_Trivial_Supplier_Filter : public TAO_EC_SupplierFiltering
+class TAO_ORBSVCS_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_SupplierFiltering
 {
   // = TITLE
   //   A null filtering strategy.
