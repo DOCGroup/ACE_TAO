@@ -125,8 +125,10 @@ catiiop (char* string
 static CORBA::Boolean
 cat_iiop_profile (TAO_InputCDR& cdr);
 
+#if 0
 static CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& cdr);
+#endif /*if 0*/
 
 static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
@@ -641,7 +643,8 @@ cat_tag_policies (TAO_InputCDR& stream) {
 
   for (unsigned int iter=0; iter < policies.length() ; iter++) {
     // Create new stream for pvalue contents
-    char pmbuf[policies[iter].pvalue.length()];
+    char *pmbuf = new char [policies[iter].pvalue.length()];
+
     for (unsigned int biter=0 ;
          biter < policies[iter].pvalue.length() - sizeof(int) ;
          biter++) {
@@ -751,6 +754,8 @@ cat_tag_policies (TAO_InputCDR& stream) {
                   "%I Policy #%d Type: %d (UNKNOWN)\n", iter+1,
                   policies[iter].ptype));
     }
+
+    delete [] pmbuf;
   }
 
   return 1;
