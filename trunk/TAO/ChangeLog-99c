@@ -1,3 +1,11 @@
+Wed Aug 18 03:12:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/util/utl_global.cpp: Added a new flag to direct TAO_IDL
+	  to generate locality constraint stubs/skeletons to simplify
+	  generating TAO internal pidl implementations.
+
 Tue Aug 17 22:18:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
@@ -41,7 +49,7 @@ Tue Aug 17 19:17:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/tests/Param_Test/bd_wstrseq.h:
 	* TAO/tests/Param_Test/bd_wstrseq.cpp:
 	  New files testing the (de)marshaling of wide
-	  strings. CORBA::WStrings have their 
+	  strings. CORBA::WStrings have their
 	  counterparts to the regular string manipulation
 	  functions defined in ACE_OS. They are (so far)
 	  wslen, wscpy, wscmp, and wsncmp. ACE_OS
@@ -51,11 +59,11 @@ Tue Aug 17 19:17:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/tests/Param_Test/bd_string.h:
 	* TAO/tests/Param_Test/bd_string.cpp:
 	  Fixed some comments pasted in unmodified from other
-	  tests, and the SII test call, which was to 
+	  tests, and the SII test call, which was to
 	  test_unbounded_string().
 
 Tue Aug 17 15:28:43 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
- 
+
 	* TAO-INSTALL.html: Added a reference to the
 	  http://www.tenermerx.com/tao_bcb/index.html link provided by
  	  Christopher Kohlhoff <chris@kohlhoff.com> to explain how to
@@ -73,7 +81,7 @@ Tue Aug 17 15:40:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           Removed the definition of CPP_LOCATION from the projects.
 
         * TAO_IDL/driver/drv_init.cpp:
-          For Win32, use the ACE_CC_COMPILER macro instead of 
+          For Win32, use the ACE_CC_COMPILER macro instead of
           CPP_LOCATION for the name of the compiler.
 
 Tue Aug 17 15:20:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
