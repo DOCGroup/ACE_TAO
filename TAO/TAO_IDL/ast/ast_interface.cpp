@@ -173,7 +173,7 @@ AST_Interface::fe_add_constant (AST_Constant *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -228,7 +228,7 @@ AST_Interface::fe_add_exception (AST_Exception *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -284,7 +284,7 @@ AST_Interface::fe_add_attribute (AST_Attribute *t)
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -332,7 +332,7 @@ AST_Interface::fe_add_field (AST_Field *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -392,7 +392,7 @@ AST_Interface::fe_add_operation(AST_Operation *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -447,7 +447,7 @@ AST_Interface::fe_add_structure (AST_Structure *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -502,7 +502,7 @@ AST_Interface::fe_add_enum (AST_Enum *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -557,7 +557,7 @@ AST_Interface::fe_add_union (AST_Union *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -615,7 +615,7 @@ AST_Interface::fe_add_enum_val (AST_EnumVal *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -670,7 +670,7 @@ AST_Interface::fe_add_typedef (AST_Typedef *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -725,7 +725,7 @@ AST_Interface::fe_add_native (AST_Native *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       if (!can_be_redefined (d))
         {
