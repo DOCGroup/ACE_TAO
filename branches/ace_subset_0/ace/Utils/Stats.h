@@ -21,9 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Log_Msg.h"
-#include "ace/Basic_Stats.h"
+#include "ace/Utils/Unbounded_Queue.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/Timer/Basic_Stats.h"
 
 /**
  * @class ACE_Stats_Value
@@ -263,7 +267,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-# include "ace/Stats.i"
+# include "ace/Utils/Stats.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

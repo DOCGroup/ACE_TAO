@@ -51,6 +51,7 @@ ACE_Stats_Value::scaled_value (ACE_UINT64 &sv) const
   sv = whole () * fractional_field ()  +  fractional ();
 }
 
+#ifdef ACE_SUBSET_0
 ACE_INLINE
 void
 ACE_Stats_Value::dump (void) const
@@ -59,6 +60,7 @@ ACE_Stats_Value::dump (void) const
               ACE_LIB_TEXT ("precision: %u digits; whole: %u, fractional: %u\n"),
               precision_, whole_, fractional_));
 }
+#endif
 
 ACE_INLINE
 ACE_Stats::ACE_Stats (void)
