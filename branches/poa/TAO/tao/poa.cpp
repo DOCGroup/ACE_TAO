@@ -1826,14 +1826,41 @@ CORBA::Object_ptr
 TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
                           CORBA::Environment &env)
 {
-  PortableServer::Servant servant = this->id_to_servant (oid,
-                                                         env);
+  // Lock access to the POA for the duration of this transaction
+  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
 
-  if (env.exception () != 0)
-    return CORBA::Object::_nil ();
+  return this->id_to_reference_i (oid, env);
+}
+
+CORBA::Object_ptr
+TAO_POA::id_to_reference_i (const PortableServer::ObjectId &oid,
+                            CORBA::Environment &env)
+{
+  // This operation requires the RETAIN policy; if not present, the
+  // WrongPolicy exception is raised.
+  if (this->policies ().servant_retention () != PortableServer::RETAIN)
+    {
+      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
+      env.exception (exception);
+      return 0;
+    }
+
+  // If an object with the specified Object Id value is currently
+  // active, a reference encapsulating the information used to
+  // activate the object is returned.
+  PortableServer::Servant servant = 0;
+  if (this->active_object_map ().find (oid, servant) != -1)
+    return this->create_reference_with_id (oid, 
+                                           servant->_interface_repository_id (),
+                                           env);
   else
-    return this->servant_to_reference (servant,
-                                       env);
+    // If the Object Id value is not active in the POA, an
+    // ObjectNotActive exception is raised.
+    {
+      CORBA::Exception *exception = new PortableServer::POA::ObjectNotActive;
+      env.exception (exception);
+      return 0;
+    }
 }
 
 PortableServer::POA_ptr
@@ -2377,7 +2404,7 @@ TAO_POA::create_object_id (void)
 
   // Convert counter into string
   ACE_OS::sprintf (counter,
-                   "%d",
+                   "%ld",
                    this->counter_);
 
   // Calculate the required buffer size.
@@ -2404,12 +2431,12 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Convert seconds into string
   ACE_OS::sprintf (seconds,
-                   "%d",
+                   "%ld",
                    this->creation_time_.sec ());
 
   // Convert micro seconds into string
   ACE_OS::sprintf (micro_seconds,
-                   "%d",
+                   "%ld",
                    this->creation_time_.usec ());
 
   // Calculate the required buffer size.

@@ -168,6 +168,12 @@ public:
     virtual PortableServer::ThreadPolicyValue value (
         CORBA::Environment &env
       );
+    virtual PortableServer::Policy_ptr copy (
+        CORBA::Environment &_tao_environment
+      );
+    virtual void destroy (
+        CORBA::Environment &_tao_environment
+      );
   
   private:
     ThreadPolicy_ptr servant_;
@@ -225,6 +231,12 @@ public:
       );
     virtual PortableServer::LifespanPolicyValue value (
         CORBA::Environment &env
+      );
+    virtual PortableServer::Policy_ptr copy (
+        CORBA::Environment &_tao_environment
+      );
+    virtual void destroy (
+        CORBA::Environment &_tao_environment
       );
   
   private:
@@ -284,6 +296,12 @@ public:
     virtual PortableServer::IdUniquenessPolicyValue value (
         CORBA::Environment &env
       );
+    virtual PortableServer::Policy_ptr copy (
+        CORBA::Environment &_tao_environment
+      );
+    virtual void destroy (
+        CORBA::Environment &_tao_environment
+      );
   
   private:
     IdUniquenessPolicy_ptr servant_;
@@ -341,6 +359,12 @@ public:
       );
     virtual PortableServer::IdAssignmentPolicyValue value (
         CORBA::Environment &env
+      );
+    virtual PortableServer::Policy_ptr copy (
+        CORBA::Environment &_tao_environment
+      );
+    virtual void destroy (
+        CORBA::Environment &_tao_environment
       );
   
   private:
@@ -400,6 +424,12 @@ public:
     virtual PortableServer::ImplicitActivationPolicyValue value (
         CORBA::Environment &env
       );
+    virtual PortableServer::Policy_ptr copy (
+        CORBA::Environment &_tao_environment
+      );
+    virtual void destroy (
+        CORBA::Environment &_tao_environment
+      );
   
   private:
     ImplicitActivationPolicy_ptr servant_;
@@ -458,6 +488,12 @@ public:
     virtual PortableServer::ServantRetentionPolicyValue value (
         CORBA::Environment &env
       );
+    virtual PortableServer::Policy_ptr copy (
+        CORBA::Environment &_tao_environment
+      );
+    virtual void destroy (
+        CORBA::Environment &_tao_environment
+      );
   
   private:
     ServantRetentionPolicy_ptr servant_;
@@ -515,6 +551,12 @@ public:
       );
     virtual PortableServer::RequestProcessingPolicyValue value (
         CORBA::Environment &env
+      );
+    virtual PortableServer::Policy_ptr copy (
+        CORBA::Environment &_tao_environment
+      );
+    virtual void destroy (
+        CORBA::Environment &_tao_environment
       );
   
   private:

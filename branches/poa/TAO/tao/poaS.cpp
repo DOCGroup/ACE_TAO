@@ -421,6 +421,25 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ThreadPolicy::_is_a (
     );
 }
 
+
+PortableServer::Policy_ptr POA_PortableServer::_tao_collocated_ThreadPolicy::copy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  return this->servant_->copy (
+       _tao_environment
+    );
+}
+
+void POA_PortableServer::_tao_collocated_ThreadPolicy::destroy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  this->servant_->destroy (
+       _tao_environment
+    );
+}
+
 PortableServer::ThreadPolicyValue
 POA_PortableServer::_tao_collocated_ThreadPolicy::value (
     CORBA::Environment &_tao_environment
@@ -559,6 +578,24 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_LifespanPolicy::_is_a (
   return this->servant_->_is_a (
       logical_type_id,
       _tao_environment
+    );
+}
+
+PortableServer::Policy_ptr POA_PortableServer::_tao_collocated_LifespanPolicy::copy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  return this->servant_->copy (
+       _tao_environment
+    );
+}
+
+void POA_PortableServer::_tao_collocated_LifespanPolicy::destroy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  this->servant_->destroy (
+       _tao_environment
     );
 }
 
@@ -703,6 +740,24 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_IdUniquenessPolicy::_is_a (
     );
 }
 
+PortableServer::Policy_ptr POA_PortableServer::_tao_collocated_IdUniquenessPolicy::copy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  return this->servant_->copy (
+       _tao_environment
+    );
+}
+
+void POA_PortableServer::_tao_collocated_IdUniquenessPolicy::destroy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  this->servant_->destroy (
+       _tao_environment
+    );
+}
+
 PortableServer::IdUniquenessPolicyValue
 POA_PortableServer::_tao_collocated_IdUniquenessPolicy::value (
     CORBA::Environment &_tao_environment
@@ -841,6 +896,24 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_IdAssignmentPolicy::_is_a (
   return this->servant_->_is_a (
       logical_type_id,
       _tao_environment
+    );
+}
+
+PortableServer::Policy_ptr POA_PortableServer::_tao_collocated_IdAssignmentPolicy::copy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  return this->servant_->copy (
+       _tao_environment
+    );
+}
+
+void POA_PortableServer::_tao_collocated_IdAssignmentPolicy::destroy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  this->servant_->destroy (
+       _tao_environment
     );
 }
 
@@ -985,6 +1058,24 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::_is
     );
 }
 
+PortableServer::Policy_ptr POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::copy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  return this->servant_->copy (
+       _tao_environment
+    );
+}
+
+void POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::destroy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  this->servant_->destroy (
+       _tao_environment
+    );
+}
+
 PortableServer::ImplicitActivationPolicyValue
 POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::value (
     CORBA::Environment &_tao_environment
@@ -1126,6 +1217,24 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantRetentionPolicy::_is_a
     );
 }
 
+PortableServer::Policy_ptr POA_PortableServer::_tao_collocated_ServantRetentionPolicy::copy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  return this->servant_->copy (
+       _tao_environment
+    );
+}
+
+void POA_PortableServer::_tao_collocated_ServantRetentionPolicy::destroy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  this->servant_->destroy (
+       _tao_environment
+    );
+}
+
 PortableServer::ServantRetentionPolicyValue
 POA_PortableServer::_tao_collocated_ServantRetentionPolicy::value (
     CORBA::Environment &_tao_environment
@@ -1264,6 +1373,24 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_RequestProcessingPolicy::_is_
   return this->servant_->_is_a (
       logical_type_id,
       _tao_environment
+    );
+}
+
+PortableServer::Policy_ptr POA_PortableServer::_tao_collocated_RequestProcessingPolicy::copy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  return this->servant_->copy (
+       _tao_environment
+    );
+}
+
+void POA_PortableServer::_tao_collocated_RequestProcessingPolicy::destroy (
+    CORBA::Environment &_tao_environment
+  )
+{
+  this->servant_->destroy (
+       _tao_environment
     );
 }
 
