@@ -1,3 +1,5 @@
+## $Id$
+##
 ##  Process this file with automake to create Makefile.in
 
 includedir = @includedir@/tao
@@ -58,7 +60,6 @@ ORB_Core = \
   Connection_Purging_Strategy.cpp \
   CurrentA.cpp \
   CurrentC.cpp \
-  DLL_ORB.cpp \
   DLL_Parser.cpp \
   Default_Collocation_Resolver.cpp \
   Default_Endpoint_Selector_Factory.cpp \

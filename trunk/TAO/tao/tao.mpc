@@ -230,7 +230,6 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       TAOA.cpp
       Object_Loader.cpp
       TAO_Singleton_Manager.cpp
-      DLL_ORB.cpp
       Adapter.cpp
       Services_Activate.cpp
       Service_Callbacks.cpp
