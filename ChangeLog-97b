@@ -1,3 +1,12 @@
+Tue Oct 21 13:45:53 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-irix6.x-sgic++-nothreads.h: Added ACE_HAS_TERM_IOCTLS
+	  for SGI.  Thanks to Jeffrey Peterson
+	  <jpeterson@fallschurch.esys.com> for reporting htis.
+
+	* TAO/tests/Thruput_test/server.cpp (main): Changed BOA_init()
+	  to POA_init().
+
 Tue Oct 21 12:58:30 1997    <nw1@CHA-CHA>
 
 	* ace/OS.h (ACE_SINGLETON_DECLARATION):
@@ -38,11 +47,6 @@ Tue Oct 21 12:58:30 1997    <nw1@CHA-CHA>
 
 	  BTW, these is no templatized singleton object within ACE that
 	  needs to be exported at this moment.
-
-Tue Oct 21 02:49:15 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
-
-	* TAO/tests/Thruput_test/server.cpp (main): Changed BOA_init()
-	  to POA_init().
 
 Tue Oct 21 07:14:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
