@@ -1,3 +1,12 @@
+Wed Sep 10 16:03:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTScheduling/RTScheduler_Manager.h:
+
+          Removed all manipulations of MSVC #pragma warning disables.
+          Everything necessary is already in config-win32-msvc-*.h
+          and the further #pragmas were actually re-enabling some of
+          the warnings.
+
 Wed Sep 10 13:19:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:

@@ -13,15 +13,7 @@
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H
 #define TAO_PRIORITY_MAPPING_MANAGER_H
 
-#if defined (_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning (push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 #include "RTScheduler.h"
-//#include "tao/LocalObject.h"
 
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
@@ -144,10 +136,6 @@ public:
 private:
   TAO_RTScheduler_Manager_ptr &ptr_;
 };
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 #include "RTScheduler_Manager.i"
