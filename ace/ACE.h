@@ -332,6 +332,15 @@ public:
   // Computes the hash value of <str> using the ``Hash PJW'' routine
   // (works for UNICODE strings).
 
+  static u_long is_prime (const u_long n,
+                          const u_long min_factor,
+                          const u_long max_factor);
+  // Function that can burn up noticeable CPU time:  brute-force
+  // determination of whether number "n" is prime.  Returns 0 if
+  // it is prime, or the smallest factor if it is not prime.  min_factor
+  // and max_factor can be used to partition the work among threads.
+  // For just one thread, typical values are 2 and n/2.
+
   static int map_errno (int error);
   // Map troublesome win32 errno values to values that standard C
   // strerr function understands.  Thank you Microsoft.
