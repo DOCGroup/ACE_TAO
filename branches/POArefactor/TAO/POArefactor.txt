@@ -1,3 +1,30 @@
+Fri Oct  8 09:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Activation_Strategy.h:
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+        * tao/PortableServer/Active_Policy_Strategies.h:
+        * tao/PortableServer/Id_Assignment_Strategy.cpp:
+        * tao/PortableServer/Id_Assignment_Strategy.h:
+        * tao/PortableServer/Id_Uniqueness_Strategy.cpp:
+        * tao/PortableServer/Id_Uniqueness_Strategy.h:
+        * tao/PortableServer/Lifespan_Strategy.h:
+        * tao/PortableServer/Policy_Strategy.h:
+        * tao/PortableServer/Servant_Retention_Strategy.h:
+        * tao/PortableServer/Thread_Strategy.cpp:
+        * tao/PortableServer/Thread_Strategy.h:
+          Added a TAO_POA* to the strategy_init call, this can then be used by
+          the strategies
+
+        * tao/PortableServer/Request_Processing_Strategy.cpp:
+        * tao/PortableServer/Request_Processing_Strategy.h:
+          Besides adding TAO_POA* also now implemented several of the methods
+
+        * tao/PortableServer/POA.cpp:
+          Changed get_servant_i() and set_servant_i() to use the
+          Request_Processing_Strategy to show how another strategy would work
+          after the rework, this way Bala can better see the direction I want
+          to go
+
 Fri Oct  8 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Current.{h,cpp,inl}:
