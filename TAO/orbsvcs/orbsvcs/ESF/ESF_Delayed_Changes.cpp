@@ -118,6 +118,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     {
       // We can add the object immediately
       this->connected_i (proxy, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
@@ -144,6 +145,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     {
       // We can reconnect the object immediately
       this->reconnected_i (proxy, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
@@ -169,6 +171,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     {
       // We can remove the object immediately
       this->disconnected_i (proxy, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
@@ -193,6 +196,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     {
       // We can shutdown the object immediately
       this->shutdown_i (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {

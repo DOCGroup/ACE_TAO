@@ -187,6 +187,7 @@ Event_Service::run (int argc, char* argv[])
 
       CORBA::String_var str =
         this->orb_->object_to_string (ec.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->ior_file_name_ != 0)
         {

@@ -288,16 +288,17 @@ ECB_Consumer::disconnect (CORBA::Environment& ACE_TRY_ENV)
       || CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+  RtecEventChannelAdmin::ProxyPushSupplier_var tmp =
+    this->supplier_proxy_._retn ();
+  tmp->disconnect_push_supplier (ACE_TRY_ENV);
   ACE_CHECK;
-  this->supplier_proxy_ =
-    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
 ECB_Consumer::close (CORBA::Environment &ACE_TRY_ENV)
 {
   this->disconnect (ACE_TRY_ENV);
+  ACE_CHECK;
   this->consumer_admin_ =
     RtecEventChannelAdmin::ConsumerAdmin::_nil ();
 }
@@ -703,12 +704,9 @@ ECB_SupplierID_Test::dump_results (void)
 
 void
 ECB_SupplierID_Test::push (int consumer_id,
-                           const RtecEventComm::EventSet& events,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           const RtecEventComm::EventSet &,
+                           CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (events);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   switch (this->phase_)
     {
     case ECB_SupplierID_Test::PHASE_END:

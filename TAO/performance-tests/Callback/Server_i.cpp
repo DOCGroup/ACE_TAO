@@ -22,10 +22,10 @@ Server_i::request (Test::TimeStamp time_stamp,
                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (!CORBA::is_nil (this->callback_.in ()))
-    {
-      this->callback_->response (time_stamp, payload, ACE_TRY_ENV);
-    }
+  if (CORBA::is_nil (this->callback_.in ()))
+    return;
+
+  this->callback_->response (time_stamp, payload, ACE_TRY_ENV);
 }
 
 void

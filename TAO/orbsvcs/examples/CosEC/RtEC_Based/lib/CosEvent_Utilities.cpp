@@ -67,9 +67,10 @@ CosEC_ServantBase::activate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (-1);
 
   // Activate the CosEC
-  if (this->activate_cosec (ACE_TRY_ENV) != 0)
-    return -1;
+  int retval = this->activate_cosec (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
+  if (retval != 0)
+    return -1;
 
    // Activate ourselves..
    // Note that the POA is <thispoa_>
@@ -102,10 +103,10 @@ CosEC_ServantBase::activate (const char* servant_id,
   ACE_CHECK_RETURN (-1);
 
   // Activate the CosEC
-  if (this->activate_cosec (ACE_TRY_ENV) != 0)
+  int retval = this->activate_cosec (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  if (retval != 0)
     return -1;
-   ACE_CHECK_RETURN (-1);
-
 
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (servant_id);
