@@ -274,13 +274,6 @@ CDR_Test<T, H>::checkval (int i)
     }
 }
 
-static char digits[16] = {
-  '0', '1', '2', '3',
-  '4', '5', '6', '7',
-  '8', '9', 'a', 'b',
-  'c', 'd', 'e', 'f'
-};
-
 //
 // Returns in s an hex representation of T's memory.
 // (differences in byte order will be noticed in s).
@@ -295,6 +288,13 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
 {
   const unsigned char *const p =
     ACE_reinterpret_cast(const unsigned char*, &t);
+
+  static char digits[16] = {
+    '0', '1', '2', '3',
+    '4', '5', '6', '7',
+    '8', '9', 'a', 'b',
+    'c', 'd', 'e', 'f'
+  };
 
   const unsigned char* q;
   for (q = p; q < p + H::size (); ++q)
