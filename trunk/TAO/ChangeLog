@@ -1,3 +1,8 @@
+Sun May 11 09:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Makefile: Updated dependencies once
+	  again.
+
 Sun May 11 09:12:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* utils/*/Makefile: Updated dependencies.
