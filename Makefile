@@ -29,6 +29,7 @@ CLONE   = Makefile \
           ace \
           apps \
           bin \
+          lib \
           etc \
           examples \
           include \
@@ -174,6 +175,7 @@ CONTROLLED_FILES = \
         aceConf.sh.in \
         apps \
         bin \
+        lib \
         docs \
         etc \
         examples \
@@ -199,6 +201,7 @@ RELEASE_LIB_FILES = \
         ACE_wrappers/VERSION \
         ACE_wrappers/ace \
         ACE_wrappers/bin \
+        ACE_wrappers/lib \
         ACE_wrappers/etc \
         ACE_wrappers/include \
         ACE_wrappers/m4 \
