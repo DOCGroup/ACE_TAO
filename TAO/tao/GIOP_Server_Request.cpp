@@ -16,6 +16,7 @@
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/POA.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Server_Request.i"
@@ -417,3 +418,27 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
         }
     }
 }
+
+
+ACE_INLINE CORBA::Object_ptr
+TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
+{
+
+  return this->orb ()->key_to_object (this->object_key (),
+                                      0,
+                                      this->oa()->get_client_exposed_policies(),
+                                      0,
+                                      1,
+                                      ACE_TRY_ENV);
+
+}
+
+
+
+
+
+
+
+
+
+
