@@ -3,8 +3,8 @@ Thu Jun 21 12:57:34 2001  Paul Calabrese <calabrese_p@ociweb.com>
         * docs/ec_options.html:
         * docs/cec_options.html:
 
-          Add a note warning of deadlocks when the immediate 
-          update strategy is used on the proxy collections with 
+          Add a note warning of deadlocks when the immediate
+          update strategy is used on the proxy collections with
           the reactive value of the dispatching and consumer/supplier
           control options.
 
