@@ -1,3 +1,8 @@
+Tue Feb 15 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace_rmcast.doxygen:
+          Updated because of move of RMCast library
+
 Mon Feb 14 20:19:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* protocols/ace/RMCast/Socket.h (Socket):
