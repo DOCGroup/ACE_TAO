@@ -1,9 +1,13 @@
+Mon Jul 23 1:44:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: Added GIOP_Lite files to the builds.
+
 Mon Jul 23 11:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         Support for GIOP Lite and GIOP Fragments are being added in this
         checkin. Merged from the branch giop_lite_fragment.
 
-	* tao/Makefile: 
+	* tao/Makefile:
 	* tao/Makefile.bor: Added GIOP Lite  files to the list of files.
 
 Sat Jul 14 16:42:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -65,7 +69,7 @@ Sun Jul 22 21:53:23 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Exposed_Policies/Policy_Tester.cpp (Policy_Tester): Fixed
 	  several things:
-	
+
 	  - No need for the Policy_Tester::~Policy_Tester to call
 	  shutdown().  This is already done by the servant.
 
@@ -81,9 +85,9 @@ Sun Jul 22 21:53:23 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - Removed unnecessary default values from the function
 	  prototypes.
 
-	* tests/Exposed_Policies/run_test.pl: 
-	* tests/Exposed_Policies/POA.cfg: 
-	* tests/Exposed_Policies/Object.cfg: 
+	* tests/Exposed_Policies/run_test.pl:
+	* tests/Exposed_Policies/POA.cfg:
+	* tests/Exposed_Policies/Object.cfg:
 
 	  Updated config files so that the priorities would be ok for
 	  Win32.
@@ -97,7 +101,7 @@ Sun Jul 22 16:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Client_Task.cpp:
 	* tests/Big_Reply/Client_Task.h: Fixed a compile error in no
-	  exception builds.  
+	  exception builds.
 
 Sun Jul 22 13:36:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -113,7 +117,7 @@ Sun Jul 20 12:30:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 	* tao/Asynch_Invocation.cpp:
 	* tao/Asynch_Invocation.i:
 
-	  Changed the code which sets up a reply dispatcher for 
+	  Changed the code which sets up a reply dispatcher for
 	  AMI calls to only set up one, if a non-nil reply handler
 	  got registerd. This change is related to my change on
 	  Fri Jul 20 08:10:00 2001. It assumes that the ORB
@@ -123,21 +127,21 @@ Sun Jul 22 09:43:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/Test.idl: Added a no-op ping () operation which
 	  is used to setup a connection properly.
-	
+
 	* tests/Big_Reply/Client_Task.cpp:
 	* tests/Big_Reply/Client_Task.h: Called the ping () method before
 	  getting the replies.
-	
+
 	* tests/Big_Reply/Big_Reply_i.h:
 	* tests/Big_Reply/Big_Reply_i.cpp: Implementation for the ping ()
-	  method. 
- 
+	  method.
+
 Sun Jul 22 09:27:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneway_Buffering/Test.idl: Changed the operation
 	  request_received () in Oneway_Buffering_Admin interface to a
 	  oneway. The reason for doing this has been well documented in
-	  bug #982. 
+	  bug #982.
 
 Fri Jul 20 23:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
