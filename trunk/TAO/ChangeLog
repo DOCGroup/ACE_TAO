@@ -1,3 +1,8 @@
+Fri Mar  5 18:36:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
+	  Fixed unused variable warning
+
 Fri Mar  5 12:09:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.mpc:
@@ -10,7 +15,7 @@ Fri Mar  5 12:09:11 2004  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/tests/Notify/Test_Filter/Test_Filter.mpc:
         * orbsvcs/tests/Notify/lib/Notify_lib.mpc:
 
-          Switch to using the notification base project instead of notify. 
+          Switch to using the notification base project instead of notify.
           The notify base project only inherited from notification and
           provided nothing else.
 
