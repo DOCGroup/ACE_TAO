@@ -156,7 +156,7 @@ private:
   // Decode only if RTCORBA is enabled.  Furthermore, we may not find
   // TAO_TAG_ENDPOINTS component, e.g., if we are talking to nonRT
   // version of TAO or some other ORB.  This is not an error, and we
-  // must proceed.
+  // must proceed.  Return 0 on success and -1 on failure.
 
   TAO_SHMIOP_Endpoint endpoint_;
   // Head of this profile's list of endpoints.  This endpoint is not
