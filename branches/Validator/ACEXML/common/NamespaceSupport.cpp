@@ -2,18 +2,15 @@
 
 #include "ACEXML/common/NamespaceSupport.h"
 
-static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = {'x', 'm', 'l', 'n', 's', 0};
+static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
+
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
 
 static const ACEXML_Char ACEXML_DEFAULT_NS_PREFIX[] = {0};
 
-static const ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = {'x', 'm', 'l', 0};
+static const ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = ACE_TEXT ("xml");
 
-static const ACEXML_Char ACEXML_XMLNS_URI_name[] = {
-  'h', 't', 't', 'p', ':', '/', '/',
-  'w', 'w', 'w', '.', 'w', '3', '.', 'o', 'r', 'g', '/',
-  'X', 'M', 'L', '/', '1', '9', '9', '8', '/',
-  'n', 'a', 'm', 'e', 's', 'p', 'a', 'c', 'e', 0};
+static const ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/XML/1998/namespace");
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
 #if !defined (__ACEXML_INLINE__)
@@ -250,7 +247,8 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
 int
 ACEXML_NamespaceSupport::reset (void)
 {
-  // Not implemented.
+  while (this->popContext() != -1)
+    ;
   return 0;
 }
 

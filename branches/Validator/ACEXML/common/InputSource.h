@@ -63,7 +63,7 @@ public:
    * Notice that ACEXML_InputSource assumes the ownership
    * of <stream>
    */
-  ACEXML_InputSource (ACEXML_CharStream *stream);
+  ACE_EXPLICIT ACEXML_InputSource (ACEXML_CharStream *stream);
 
   /*
    * Create a new input source with a system identifier.
@@ -78,22 +78,22 @@ public:
   /*
    * Get the ACEXML_Char stream for this input source.
    */
-  virtual ACEXML_CharStream *getCharStream (void);
+  virtual ACEXML_CharStream *getCharStream (void) const;
 
   /*
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding (void);
+  virtual const ACEXML_Char *getEncoding (void) const;
 
   /*
    * Get the public identifier for this input source.
    */
-  virtual const ACEXML_Char *getPublicId (void);
+  virtual const ACEXML_Char *getPublicId (void) const;
 
   /*
    * Get the system identifier for this input source.
    */
-  virtual const ACEXML_Char *getSystemId (void);
+  virtual const ACEXML_Char *getSystemId (void) const;
 
   /*
    * Set the ACEXML_Char stream for this input source.

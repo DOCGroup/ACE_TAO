@@ -22,8 +22,7 @@ ACEXML_InputSource::ACEXML_InputSource (ACEXML_CharStream *stm)
 
   /*
    * Create a new input source with a character stream.
-   * /
-    InputSource (Reader);
+   *
   */
 
 ACEXML_InputSource::ACEXML_InputSource (const ACEXML_Char *systemId)
@@ -40,31 +39,25 @@ ACEXML_InputSource::~ACEXML_InputSource (void)
 }
 
 ACEXML_CharStream *
-ACEXML_InputSource::getCharStream (void)
+ACEXML_InputSource::getCharStream (void) const
 {
   return this->charStream_;
 }
 
-  /*
-   * Get the character stream for this input source.
-   * /
-   virtual Reader *getCharacterStream (void);
-  */
-
 const ACEXML_Char *
-ACEXML_InputSource::getEncoding (void)
+ACEXML_InputSource::getEncoding (void) const
 {
   return this->encoding_;
 }
 
 const ACEXML_Char *
-ACEXML_InputSource::getPublicId (void)
+ACEXML_InputSource::getPublicId (void) const
 {
   return this->publicId_;
 }
 
 const ACEXML_Char *
-ACEXML_InputSource::getSystemId (void)
+ACEXML_InputSource::getSystemId (void) const
 {
   return this->systemId_;
 }
@@ -75,11 +68,6 @@ ACEXML_InputSource::setCharStream (ACEXML_CharStream *stm)
   delete this->charStream_;
   this->charStream_ = stm;
 }
-
-  /*
-   * Set the character stream for this input source.
-   *
-  */
 
 void
 ACEXML_InputSource::setEncoding (const ACEXML_Char *encoding)

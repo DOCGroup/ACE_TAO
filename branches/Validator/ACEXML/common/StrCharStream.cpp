@@ -73,9 +73,6 @@ ACEXML_StrCharStream::determine_encoding (void)
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (!temp)
     return -1;
-  if (ACE_OS::strcmp (temp,
-                      ACEXML_Encoding::encoding_names_[ACEXML_Encoding::OTHER]) == 0)
-    return -1;
   else
     {
       this->encoding_ = ACE::strnew (temp);
@@ -110,7 +107,7 @@ ACEXML_StrCharStream::read (ACEXML_Char *str,
   if (this->start_ != 0 &&
       this->ptr_ != this->end_)
     {
-      if ((int) len > this->end_ - this->ptr_)
+      if (len * sizeof (ACEXML_Char) > (size_t) (this->end_ - this->ptr_))
         len = this->end_ - this->ptr_;
 
       ACE_OS_String::strncpy (str, this->ptr_, len);

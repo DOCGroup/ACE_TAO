@@ -77,6 +77,11 @@ public:
   virtual void rewind (void);
 
   /**
+   *  Determine the encoding of the file.
+   */
+  virtual int determine_encoding (void);
+
+  /**
    * Get the encoding of the file
    */
   virtual const ACEXML_Char* getEncoding (void);

@@ -2470,7 +2470,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Service_Repository.h \
   $(ACE_ROOT)/ace/Service_Repository.i \
   $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/Connector.cpp
+  $(ACE_ROOT)/ace/Connector.cpp \
+  Encoding.h
 
 .obj/StreamFactory.o .obj/StreamFactory.so .shobj/StreamFactory.o .shobj/StreamFactory.so: StreamFactory.cpp \
   StreamFactory.h \

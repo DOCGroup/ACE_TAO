@@ -66,7 +66,13 @@ public:
    */
   ACEXML_LocatorImpl (void);
 
-  /*
+  /**
+   * Construct a locator with systemId and publicId
+   *
+   */
+  ACEXML_LocatorImpl (const ACEXML_Char* systemId,
+                      const ACEXML_Char* publicId);
+  /**
    * Copy constructor.  Create a persistent copy of the current state
    * of a locator. When the original locator changes, this copy will
    * still keep the original values (and it can be used outside the

@@ -210,7 +210,7 @@ public:
 
   /**
    * Reset this Namespace support object for reuse.
-   * @todo Not implemented.
+   *
    */
   int reset (void);
 

@@ -24,17 +24,16 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
       ACE_NEW_RETURN (hstream, ACEXML_HttpCharStream, 0);
       if (hstream->open (uri) != -1)
         return hstream;
-      else
-        return 0;
     }
   else
     {
+      if (ACE_OS::strstr (uri, ACE_TEXT ("file://")) != 0)
+        uri += 7; // Skip over file://
       ACE_NEW_RETURN (fstream, ACEXML_FileCharStream, 0);
       if (fstream->open (uri) != -1)
         return fstream;
-      else
-        return 0;
     }
+  return 0;
 }
 
 ACEXML_StreamFactory::~ACEXML_StreamFactory ()
