@@ -1,3 +1,27 @@
+Mon Jul  9 15:39:26 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/vxworks/utsname.h: 
+          VxWorks does not have a utsname.h so remove it from being
+          included.
+
+        * pace/vxworks/signal.inl:
+          Fixed call to sigwait. Used call to sigtimedwait (as ACE
+          does) since sigwait doesn't appear to be supported by
+          VxWorks.
+
+        * pace/vxworks/pthread.inl: 
+          Moved some functions from inline to non-inline.
+
+        * pace/vxworks/pthread.c:
+          Moved some functions from inline to non-inline.
+
+        * pace/pthread.h: 
+          Changed some functions from inline to non-inline for
+          VxWorks.
+
+        * pace/fcntl.h:
+          Added appropriate return for pace_fcntl on VxWorks.
+
 Fri Jun 29 15:52:28 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/config/platform.h: 

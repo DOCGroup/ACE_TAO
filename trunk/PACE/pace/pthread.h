@@ -126,7 +126,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 16.2.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_attr_init (pace_pthread_attr_t * attr);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_attr_init (pace_pthread_attr_t * attr);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -135,8 +138,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 16.2.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
-                                                    int detachstate);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
+                                        int detachstate);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -155,9 +161,12 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 13.5.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
-                                                   const
-                                                   pace_sched_param * param);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
+                                       const
+                                       pace_sched_param * param);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -206,7 +215,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 18.2.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_cancel (pace_pthread_t thread);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_cancel (pace_pthread_t thread);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -384,9 +396,12 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 13.2.5.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_getschedparam (pace_pthread_t thread,
-                                              int * policy,
-                                              pace_sched_param * param);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_getschedparam (pace_pthread_t thread,
+                                  int * policy,
+                                  pace_sched_param * param);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -395,7 +410,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 17.1.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE void * pace_pthread_getspecific (pace_pthread_key_t key);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  void * pace_pthread_getspecific (pace_pthread_key_t key);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -471,8 +489,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.3.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutex_init (pace_pthread_mutex_t * mutex,
-                                           const pace_pthread_mutexattr_t * attr);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_mutex_init (pace_pthread_mutex_t * mutex,
+                               const pace_pthread_mutexattr_t * attr);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -481,7 +502,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.3.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutex_lock (pace_pthread_mutex_t * mutex);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_mutex_lock (pace_pthread_mutex_t * mutex);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -501,7 +525,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.3.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutex_trylock (pace_pthread_mutex_t * mutex);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_mutex_trylock (pace_pthread_mutex_t * mutex);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -510,7 +537,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.3.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutex_unlock (pace_pthread_mutex_t * mutex);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_mutex_unlock (pace_pthread_mutex_t * mutex);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -560,8 +590,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 13.6.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
-                                                      int protocol);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
+                                          int protocol);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -581,7 +614,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.3.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutexattr_init (pace_pthread_mutexattr_t * attr);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_mutexattr_init (pace_pthread_mutexattr_t * attr);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -590,8 +626,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.3.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
-                                                     int pshared);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
+                                         int pshared);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -624,7 +663,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 18.2.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_setcancelstate (int state, int * oldstate);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_setcancelstate (int state, int * oldstate);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -633,7 +675,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 18.2.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_setcanceltype (int type, int * oldtype);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_setcanceltype (int type, int * oldtype);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -642,9 +687,12 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 13.5.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_setschedparam (pace_pthread_t thread,
-                                              int policy,
-                                              const pace_sched_param * param);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_setschedparam (pace_pthread_t thread,
+                                  int policy,
+                                  const pace_sched_param * param);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -653,7 +701,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 17.1.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_setspecific (pace_pthread_key_t key, const void * value);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_setspecific (pace_pthread_key_t key, const void * value);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -662,9 +713,12 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.3.5.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_pthread_sigmask (int how,
-                                        const pace_sigset_t * set,
-                                        pace_sigset_t * oset);
+#if !(PACE_VXWORKS)
+  PACE_INLINE
+#endif
+  int pace_pthread_sigmask (int how,
+                            const pace_sigset_t * set,
+                            pace_sigset_t * oset);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
