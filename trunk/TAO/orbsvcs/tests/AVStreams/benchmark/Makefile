@@ -57,7 +57,7 @@ server:$(addprefix $(VDIR),$(SERVER_OBJS))
 client:$(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-child:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
+child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
