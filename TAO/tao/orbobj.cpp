@@ -130,7 +130,7 @@ CORBA::ORB_init (int &argc,
       || sizeof (CORBA::Double) != 8
       || sizeof (CORBA::LongDouble) != 16
       || sizeof (CORBA::WChar) < 2
-      || sizeof (void *) != SIZEOF_VOID_P)
+      || sizeof (void *) != ACE_SIZEOF_VOID_P)
     {
       ACE_DEBUG ((LM_DEBUG, "%s; ERROR: unexpected basic type size; "
                             "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
