@@ -35,7 +35,6 @@
 #include "tao/boa.h"
 #include "tao/cdr.h"
 #include "tao/connect.h"
-#include "tao/corba.h"
 #include "tao/corbacom.h"
 #include "tao/debug.h"
 #include "tao/except.h"
