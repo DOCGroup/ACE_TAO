@@ -1,5 +1,14 @@
 Thu Jun 29 15:04:42 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
+        * pace/man/Makefile (index.html):
+          Created PACE_DOC++ as executable to invoke and assigned
+          /project/doc/pkg/bin/doc++ to it.
+
+        * pace/posix/assert.h:
+          Removed extraneous '.' in comment.
+
+Thu Jun 29 15:04:42 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
         * pace/posix/aio.h:
         * pace/posix/assert.h:
         * pace/posix/ctype.h:
