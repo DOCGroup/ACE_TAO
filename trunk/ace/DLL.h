@@ -31,64 +31,68 @@ class ACE_Export ACE_DLL
   //
   // = DESCRIPTION
   //   This class is an wrapper over the various methods for utilizing
-  //   a dynamically linked library (DLL). The operations like open,
-  //   close, symbol have been implemented to help opening and
-  //   extracting symbol information from a DLL.
+  //   a dynamically linked library (DLL), which is called a shared
+  //   library on some platforms.  Operations <open>, <close>, and
+  //   <symbol> have been implemented to help opening/closing and
+  //   extracting symbol information from a DLL, respectively.
 public:
   // = Initialization and termination methods.
 
   ACE_DLL (int close_on_destruction = 0);
-  // Default constructor. Also, by default the close operation
-  // on the object will be done before it is destroyed.
+  // Default constructor.  By default, the <close> operation on the
+  // object will be invoked before it is destroyed.
 
   ACE_DLL (ACE_DL_TYPE dll_name = 0,
            int open_mode = ACE_DEFAULT_SHLIB_MODE,
            int close_on_destruction = 0);
-  // This is the library open operation that uses ACE_SHLIB_HANDLE
-  // object internally to open the library.  The default mode is
-  // RTLD_LAZY which means that the identifier symbols are loaded but
-  // not the symbols for the functions.  They are loaded dynamically
-  // on need.  The other modes include: RTLD_NOW All necessary
-  // relocations are performed when the object is first loaded.
-  // RTLD_GLOBAL The object symbols are made available for the
-  // relocation processing of any other object.
+  // This constructor opens and dynamically links <dll_name>.  The
+  // default mode is <RTLD_LAZY>, which loads identifier symbols but
+  // not the symbols for functions, which are loaded dynamically
+  // on-demand.  Other supported modes include: <RTLD_NOW>, which
+  // performs all necessary relocations when <dll_name> is first
+  // loaded and <RTLD_GLOBAL>, which makes symbols available for
+  // relocation processing of any other DLLs.
 
   int open (ACE_DL_TYPE dll_name, 
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
             int close_on_destruction = 0);
-  // This is the library open operation that uses ACE_SHLIB_HANDLE
-  // object internally to open the library.  The default mode is
-  // RTLD_LAZY which means that the identifier symbols are loaded but
-  // not the symbols for the functions.  They are loaded dynamically
-  // on need.  The other modes include: RTLD_NOW All necessary
-  // relocations are performed when the object is first loaded.
-  // RTLD_GLOBAL The object symbols are made available for the
-  // relocation processing of any other object.
+  // This method opens and dynamically links <dll_name>.  The default
+  // mode is <RTLD_LAZY>, which loads identifier symbols but not the
+  // symbols for functions, which are loaded dynamically on-demand.
+  // Other supported modes include: <RTLD_NOW>, which performs all
+  // necessary relocations when <dll_name> is first loaded and
+  // <RTLD_GLOBAL>, which makes symbols available for relocation
+  // processing of any other DLLs.
   
-  ~ACE_DLL (void);
-  // Called when object is destroyed.
-
   int close (void);
-  // The library is closed.
+  // Call to close the DLL object.
 
-  void *symbol (ACE_DL_TYPE sym_name);
-  // The symbol reference is returned corresponding to the symbol
-  // name.
+  ~ACE_DLL (void);
+  // Called when the DLL object is destroyed -- invokes <close> if the
+  // <close_on_destruction> flag is set in the constructor or <open>
+  // method.
+
+  void *symbol (ACE_DL_TYPE symbol_name);
+  // If <symbol_name> is in the symbol table of the DLL a pointer to
+  // the <symbol_name> is returned.  Otherwise, returns 0.
 
   char *error (void);
-  // The error on any of the dl-procedures.
+  // Returns a pointer to a string explaining why <symbol> or <open>
+  // failed.
 
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0);
-  // Return the handle to the user either forever or for temporary
-  // use.
+  // Return the handle to the caller.  If <become_owner> is non-0 then
+  // caller assumes ownership of the handle and the <ACE_DLL> object
+  // won't call <close> when it goes out of scope, even if
+  // <close_on_destruction> is set.
 
 private:
   ACE_SHLIB_HANDLE handle_;
-  // This is the reference to the library.
+  // This is a handle to the DLL.
   
   int close_on_destruction_;
   // This flag keeps track of whether we should close the handle
-  // automatically when the destructor is run.
+  // automatically when the destructor runs.
 };
 
 #endif /* ACE_DLL_H */
