@@ -427,6 +427,12 @@ const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
 #  define ACE_MAX_DEFAULT_PORT 65535
 #endif /* ACE_MAX_DEFAULT_PORT */
 
+// Default number of <ACE_Event_Handler>s supported by
+// <ACE_Timer_Heap>.
+# if !defined (ACE_DEFAULT_TIMERS)
+#   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
+# endif /* ACE_DEFAULT_TIMERS */
+
 #if defined (ACE_WIN32)
    // We're on WinNT or Win95
 #  define ACE_PLATFORM_A "Win32"

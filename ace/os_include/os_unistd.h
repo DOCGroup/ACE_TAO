@@ -72,16 +72,6 @@ extern "C"
 #endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED
            || _XOPEN_SOURCE && __GNUC__ */
 
-# if !defined (_POSIX_TIMER_MAX)
-#   define _POSIX_TIMER_MAX 44
-# endif /* _POSIX_TIMER_MAX */
-
-// Default number of <ACE_Event_Handler>s supported by
-// <ACE_Timer_Heap>.
-# if !defined (ACE_DEFAULT_TIMERS)
-#   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
-# endif /* ACE_DEFAULT_TIMERS */
-
   // for use by access()
 # if !defined (R_OK)
 #   define R_OK    04      /* Test for Read permission. */
