@@ -6,10 +6,10 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt and Irfan Pyarali
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+ *   Irfan Pyarali <irfan@cs.wustl.edu>.
  */
 //=============================================================================
-
 
 #ifndef ACE_TIMER_QUEUE_H
 #define ACE_TIMER_QUEUE_H
