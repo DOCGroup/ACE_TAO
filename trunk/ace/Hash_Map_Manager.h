@@ -220,8 +220,9 @@ public:
   // Returns a reference to the underlying <ACE_LOCK>.  This makes it
   // possible to acquire the lock explicitly, which can be useful in
   // some cases if you instantiate the <ACE_Atomic_Op> with an
-  // <ACE_Recursive_Mutex> or <ACE_Process_Mutex>.  NOTE: the right
-  // name would be lock_, but HP/C++ will choke on that!
+  // <ACE_Recursive_Mutex> or <ACE_Process_Mutex>, or if you need to
+  // guard the state of an iterator.  NOTE: the right name would be
+  // <lock>, but HP/C++ will choke on that!
 
   void dump (void) const;
   // Dump the state of an object.
@@ -395,9 +396,6 @@ protected:
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next_;
   // Keeps track of how far we've advanced in a linked list in each
   // table slot.
-
-  ACE_Read_Guard<ACE_LOCK> guard_; 
-  // Read guard for the life time of the iterator.
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>

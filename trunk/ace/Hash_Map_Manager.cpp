@@ -597,13 +597,9 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator_Base
                                                                                   int head)
   : map_man_ (&mm),
     index_ (head != 0 ? -1 : ACE_static_cast (ssize_t, mm.total_size_)),
-    next_ (0),
-    guard_ (this->map_man_->lock_)
+    next_ (0)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator_Base");
-
-  if (this->guard_.locked () == 0) 
-    return;
 
   if (mm.table_ != 0)
     this->next_ = &mm.table_[head != 0 ? 0 : mm.total_size_ - 1];
