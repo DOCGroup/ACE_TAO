@@ -1,3 +1,9 @@
+Tue Sep  8 12:45:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/test.cpp: Added #include "ace/OS.h" so that the ACE_RCSID
+ 	  macro is defined.  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for reporting this.
+
 Sat Aug 22 08:44:15 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp : Fixed the typo (-V instead of -v) under 'case
