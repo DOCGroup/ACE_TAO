@@ -22,21 +22,21 @@ DEFINE_GUID (IID_CORBA_SystemException,
 0x77420084, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
-  : _type (tc),
+  : type_ (tc),
     refcount_ (0)
 {
-  if (_type)
-    _type->AddRef ();
-  assert (_type != 0);
+  if (type_)
+    type_->AddRef ();
+  assert (type_ != 0);
 }
 
 CORBA_Exception::CORBA_Exception (const CORBA_Exception	&src)
-  : _type (src._type),
+  : type_ (src.type_),
     refcount_ (0)
 {
-  if (_type)
-    _type->AddRef ();
-  assert (_type != 0);
+  if (type_)
+    type_->AddRef ();
+  assert (type_ != 0);
 }
 
 // NOTE:  It's this code, not anything defined in a subclass, which
@@ -46,7 +46,7 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception	&src)
 CORBA_Exception::~CORBA_Exception (void)
 {
   assert (refcount_ == 0);
-  assert (_type != 0);
+  assert (type_ != 0);
 
   assert (1 == 2);
 }
@@ -54,12 +54,12 @@ CORBA_Exception::~CORBA_Exception (void)
 CORBA_Exception &
 CORBA_Exception::operator = (const CORBA_Exception &src)
 {
-  if (_type)
-    _type->Release ();
-  _type = src._type;
-  if (_type)
-    _type->AddRef ();
-  assert (_type != 0);
+  if (type_)
+    type_->Release ();
+  type_ = src.type_;
+  if (type_)
+    type_->AddRef ();
+  assert (type_ != 0);
 
   return *this;
 }
@@ -69,8 +69,8 @@ CORBA_Exception::id (void) const
 {
   CORBA::Environment env;
 
-  if (_type)
-    return _type->id (env);
+  if (type_)
+    return type_->id (env);
   else
     return 0;
 }
@@ -78,7 +78,7 @@ CORBA_Exception::id (void) const
 TAO_CONST CORBA::TypeCode_ptr
 CORBA_Exception::type (void) const
 {
-  return _type;
+  return type_;
 }
 
 // For COM -- IUnKnown operations
@@ -103,9 +103,9 @@ CORBA_Exception::Release (void)
 
   }
 
-  // CORBA::TypeCode_ptr		tc = _type->_duplicate ();
+  // CORBA::TypeCode_ptr		tc = type_->_duplicate ();
 
-  CORBA::Any free_it_all (_type, this, CORBA::B_TRUE);
+  CORBA::Any free_it_all (type_, this, CORBA::B_TRUE);
 
   // tc->Release ();
 

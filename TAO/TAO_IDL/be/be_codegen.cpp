@@ -128,6 +128,10 @@ TAO_CodeGen::make_state (void)
     case TAO_ATTRIBUTE_UPCALL_SS:
     case TAO_ATTRIBUTE_POST_UPCALL_SS:
       return TAO_BE_STATE_ATTRIBUTE::instance ();
+    case TAO_EXCEPTION_CH:
+    case TAO_EXCEPTION_CS:
+    case TAO_EXCEPTION_CI:
+      return TAO_BE_STATE_EXCEPTION::instance ();
     default:
       return 0;
     }
