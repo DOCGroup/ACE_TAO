@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSL_SOCK_Connector.h"
+#include "ace/SSL/SSL_SOCK_Connector.h"
 #include "SSLIOP_Connect.h"
 #include "tao/Resource_Factory.h"
 

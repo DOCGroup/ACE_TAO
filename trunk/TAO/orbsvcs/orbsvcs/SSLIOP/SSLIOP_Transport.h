@@ -86,7 +86,7 @@ public:
                             int twoway,
                             ACE_Time_Value *max_wait_time);
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
@@ -141,10 +141,10 @@ public:
                                    ACE_Time_Value *max_time_value = 0);
   virtual int register_handler (void);
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg);  
+                       TAO_OutputCDR &msg);
 
   int messaging_init (CORBA::Octet major,
                       CORBA::Octet minor);
@@ -160,7 +160,7 @@ private:
   TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
-  
+
   TAO_ORB_Core *orb_core_;
   // Our ORB core
 

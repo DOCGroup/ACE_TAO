@@ -45,10 +45,16 @@ ifndef TAO_ORBSVCS
       TAO_ORBSVCS += LifeCycle Notify
     endif # ACE_HAS_GNUG_PRE_2_8
 
-    # The Load Balancer requires DSI support, which Minimum CORBA disables.
+    # The Load Balancer requires POA ServantLocator support, which
+    # Minimum CORBA disables.
     TAO_ORBSVCS += LoadBalancing
 
   endif # minimum_corba
+
+  ifeq ($(ssl),1)
+    TAO_ORBSVCS += Security SSLIOP
+  endif # ssl
+
 endif # TAO_ORBSVCS
 
 # The order in this list is important as some libraries depend on
@@ -136,7 +142,16 @@ endif
 ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
   MKLIST += Makefile.DsLogAdmin
 endif
-
+ifneq (,$(findstring  Security, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.Security
+endif
+ifneq (,$(findstring  SSLIOP, $(TAO_ORBSVCS)))
+  # SSLIOP depends on the Security Service library
+  ifeq (,$(findstring  Security, $(TAO_ORBSVCS)))
+    MKLIST += Makefile.Security
+  endif
+  MKLIST += Makefile.SSLIOP
+endif
 
 #----------------------------------------------------------------------------
 #       Local rules

@@ -29,9 +29,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSL_SOCK_Acceptor.h"
+#include "ace/SSL/SSL_SOCK_Acceptor.h"
+#include "orbsvcs/SSLIOPC.h"
 #include "SSLIOP_Connect.h"
-#include "SSLIOPC.h"
 
 // TAO SSLIOP_Acceptor concrete call definition
 
