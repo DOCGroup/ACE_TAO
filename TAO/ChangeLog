@@ -1,3 +1,10 @@
+Thu Aug  5 07:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+          The client also has a servant, so we must specifiy also an
+          -ORBEndPoint for the client process. This fixes bugzilla bug
+          1899.
+
 Thu Aug  5 07:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/PluggableUDP/tests/Performance/run_test.pl:
