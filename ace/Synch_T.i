@@ -172,5 +172,31 @@ ACE_Condition<MUTEX>::broadcast (void)
 // ACE_TRACE ("ACE_Condition<MUTEX>::broadcast");
   return ACE_OS::cond_broadcast (&this->cond_);
 }
+
 #endif /* ACE_HAS_THREADS */
 
+#if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+template <class TYPE> ACE_INLINE
+ACE_TSS<TYPE>::ACE_TSS (TYPE *)
+{
+}
+
+template <class TYPE> ACE_INLINE TYPE *
+ACE_TSS<TYPE>::ts_object (void) const
+{ 
+  return (TYPE *) &this->type_;
+}
+
+template <class TYPE> ACE_INLINE TYPE *
+ACE_TSS<TYPE>::ts_object (TYPE *) 
+{ 
+  return &this->type_;
+}
+
+template <class TYPE> ACE_INLINE TYPE *
+ACE_TSS<TYPE>::ts_get (void) const
+{ 
+  return (TYPE *) &this->type_;
+}
+
+#endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */

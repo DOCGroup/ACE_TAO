@@ -209,8 +209,8 @@ protected:
   virtual ACE_Tokens *create_token (const char *name);
 };
 
-#if defined (__INLINE__)
+#if defined (__ACE_INLINE__)
 #include "ace/Token_Collection.i"
-#endif /* __INLINE__ */
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_TOKEN_COLLECTION_H */

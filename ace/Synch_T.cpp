@@ -245,30 +245,7 @@ ACE_TSS<TYPE>::dump (void) const
 #endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */
 }
 
-#if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
-template <class TYPE> ACE_INLINE
-ACE_TSS<TYPE>::ACE_TSS (TYPE *)
-{
-}
-
-template <class TYPE> ACE_INLINE TYPE *
-ACE_TSS<TYPE>::ts_object (void) const
-{ 
-  return (TYPE *) &this->type_;
-}
-
-template <class TYPE> ACE_INLINE TYPE *
-ACE_TSS<TYPE>::ts_object (TYPE *) 
-{ 
-  return &this->type_;
-}
-
-template <class TYPE> ACE_INLINE TYPE *
-ACE_TSS<TYPE>::ts_get (void) const
-{ 
-  return (TYPE *) &this->type_;
-}
-#else
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 template <class TYPE> 
 ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
   : once_ (0),
