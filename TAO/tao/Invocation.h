@@ -36,7 +36,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB_Core.h"
 #include "tao/Any.h"
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/TAOC.h"
@@ -237,7 +236,7 @@ public:
 
   TAO_InputCDR &inp_stream (void);
   // return the underlying input stream
-  
+
   void reset_reply_received (void);
   // Reset the reply status
 private:

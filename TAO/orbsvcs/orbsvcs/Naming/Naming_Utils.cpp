@@ -1,11 +1,11 @@
 // $Id$
 
-#include "orbsvcs/CosNamingC.h"
-#include "tao/corba.h"
 #include "Naming_Utils.h"
-#include "ace/Arg_Shifter.h"
 #include "Transient_Naming_Context.h"
 #include "Persistent_Context_Index.h"
+#include "orbsvcs/CosNamingC.h"
+#include "tao/IORTable/IORTable.h"
+#include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 
@@ -191,7 +191,7 @@ TAO_Naming_Server::parse_args (int argc,
 }
 
 int
-TAO_Naming_Server::init_with_orb (int argc, 
+TAO_Naming_Server::init_with_orb (int argc,
                                   char *argv [],
                                   CORBA::ORB_ptr orb)
 {
@@ -207,7 +207,7 @@ TAO_Naming_Server::init_with_orb (int argc,
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (poa_object.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -270,7 +270,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 
       if (result < 0)
         return result;
-      
+
       result = this->init (orb,
                            this->ns_poa_.in (),
                            this->context_size_,
@@ -299,7 +299,7 @@ TAO_Naming_Server::init_with_orb (int argc,
                        str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
-  
+
   if (this->pid_file_name_ != 0)
     {
       FILE *pidf = fopen (this->pid_file_name_, "w");
@@ -369,17 +369,28 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         orb->object_to_string (this->naming_context_.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      // Make the Naming Service locatable through iioploc.
-      if (orb->_tao_add_to_IOR_table ("NameService",
-                                      this->naming_context_.in ())
-          == -1)
+
+      CORBA::Object_var table_object =
+        orb->resolve_initial_references ("IORTable", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (adapter.in ()))
         {
-          if (TAO_debug_level >0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO_Naming_Server: cannot add to ior table.\n"));
-          return -1;
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
+      else
+        {
+          CORBA::String_var ior =
+            orb->object_to_string (this->naming_context_.in (),
+                                   ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          adapter->bind ("NameService", ior.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
 #if defined (ACE_HAS_IP_MULTICAST)
       if (enable_multicast)
         {
@@ -477,10 +488,24 @@ TAO_Naming_Server::fini (void)
       this->ns_poa_->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (this->orb_->_tao_del_from_IOR_table ("NameService") != 0
-          && TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, 
-                    "TAO_Naming_Server: cannot remove entry from IOR table\n"));
+
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          adapter->unbind ("NameService", ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
@@ -489,7 +514,7 @@ TAO_Naming_Server::fini (void)
   ACE_ENDTRY;
   return 0;
 }
-  
+
 char*
 TAO_Naming_Server::naming_service_ior (void)
 {
@@ -511,7 +536,7 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
          ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
       delete this->ior_multicast_;
     }
-  delete context_index_; 
+  delete context_index_;
 }
 
 

@@ -115,7 +115,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/be_array.o .obj/be_array.so .shobj/be_array.o .shobj/be_array.so: be/be_array.cpp include/idl.h \
+.obj/be_array.o .obj/be_array.o .obj/be_array.o .obj/be_array.o: be/be_array.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -167,6 +167,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -242,7 +246,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_argument.o .obj/be_argument.so .shobj/be_argument.o .shobj/be_argument.so: be/be_argument.cpp include/idl.h \
+.obj/be_argument.o .obj/be_argument.o .obj/be_argument.o .obj/be_argument.o: be/be_argument.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -294,6 +298,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -369,7 +377,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_attribute.o .obj/be_attribute.so .shobj/be_attribute.o .shobj/be_attribute.so: be/be_attribute.cpp include/idl.h \
+.obj/be_attribute.o .obj/be_attribute.o .obj/be_attribute.o .obj/be_attribute.o: be/be_attribute.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -421,6 +429,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -496,7 +508,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_constant.o .obj/be_constant.so .shobj/be_constant.o .shobj/be_constant.so: be/be_constant.cpp include/idl.h \
+.obj/be_constant.o .obj/be_constant.o .obj/be_constant.o .obj/be_constant.o: be/be_constant.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -548,6 +560,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -623,7 +639,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_enum.o .obj/be_enum.so .shobj/be_enum.o .shobj/be_enum.so: be/be_enum.cpp include/idl.h \
+.obj/be_enum.o .obj/be_enum.o .obj/be_enum.o .obj/be_enum.o: be/be_enum.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -675,6 +691,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -750,7 +770,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_enum_val.o .obj/be_enum_val.so .shobj/be_enum_val.o .shobj/be_enum_val.so: be/be_enum_val.cpp include/idl.h \
+.obj/be_enum_val.o .obj/be_enum_val.o .obj/be_enum_val.o .obj/be_enum_val.o: be/be_enum_val.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -802,6 +822,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -877,7 +901,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_exception.o .obj/be_exception.so .shobj/be_exception.o .shobj/be_exception.so: be/be_exception.cpp include/idl.h \
+.obj/be_exception.o .obj/be_exception.o .obj/be_exception.o .obj/be_exception.o: be/be_exception.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -929,6 +953,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1004,7 +1032,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_expression.o .obj/be_expression.so .shobj/be_expression.o .shobj/be_expression.so: be/be_expression.cpp include/idl.h \
+.obj/be_expression.o .obj/be_expression.o .obj/be_expression.o .obj/be_expression.o: be/be_expression.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1056,6 +1084,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1131,7 +1163,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_field.o .obj/be_field.so .shobj/be_field.o .shobj/be_field.so: be/be_field.cpp include/idl.h \
+.obj/be_field.o .obj/be_field.o .obj/be_field.o .obj/be_field.o: be/be_field.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1183,6 +1215,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1258,7 +1294,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_global.o .obj/be_global.so .shobj/be_global.o .shobj/be_global.so: be/be_global.cpp include/idl.h \
+.obj/be_global.o .obj/be_global.o .obj/be_global.o .obj/be_global.o: be/be_global.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1310,6 +1346,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1385,7 +1425,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_interface.o .obj/be_interface.so .shobj/be_interface.o .shobj/be_interface.so: be/be_interface.cpp include/idl.h \
+.obj/be_interface.o .obj/be_interface.o .obj/be_interface.o .obj/be_interface.o: be/be_interface.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1437,6 +1477,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1539,7 +1583,7 @@ realclean: clean
  be_include/be_visitor_ami_pre_proc.h \
  be_include/be_interface_strategy.h
 
-.obj/be_interface_strategy.o .obj/be_interface_strategy.so .shobj/be_interface_strategy.o .shobj/be_interface_strategy.so: be/be_interface_strategy.cpp include/idl.h \
+.obj/be_interface_strategy.o .obj/be_interface_strategy.o .obj/be_interface_strategy.o .obj/be_interface_strategy.o: be/be_interface_strategy.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1591,6 +1635,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1666,7 +1714,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_interface_fwd.o .obj/be_interface_fwd.so .shobj/be_interface_fwd.o .shobj/be_interface_fwd.so: be/be_interface_fwd.cpp include/idl.h \
+.obj/be_interface_fwd.o .obj/be_interface_fwd.o .obj/be_interface_fwd.o .obj/be_interface_fwd.o: be/be_interface_fwd.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1718,6 +1766,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1793,7 +1845,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_valuetype.o .obj/be_valuetype.so .shobj/be_valuetype.o .shobj/be_valuetype.so: be/be_valuetype.cpp include/idl.h \
+.obj/be_valuetype.o .obj/be_valuetype.o .obj/be_valuetype.o .obj/be_valuetype.o: be/be_valuetype.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1845,6 +1897,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1920,7 +1976,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_valuetype_fwd.o .obj/be_valuetype_fwd.so .shobj/be_valuetype_fwd.o .shobj/be_valuetype_fwd.so: be/be_valuetype_fwd.cpp include/idl.h \
+.obj/be_valuetype_fwd.o .obj/be_valuetype_fwd.o .obj/be_valuetype_fwd.o .obj/be_valuetype_fwd.o: be/be_valuetype_fwd.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1972,6 +2028,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2047,7 +2107,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_module.o .obj/be_module.so .shobj/be_module.o .shobj/be_module.so: be/be_module.cpp include/idl.h \
+.obj/be_module.o .obj/be_module.o .obj/be_module.o .obj/be_module.o: be/be_module.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2099,6 +2159,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2174,7 +2238,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_native.o .obj/be_native.so .shobj/be_native.o .shobj/be_native.so: be/be_native.cpp include/idl.h \
+.obj/be_native.o .obj/be_native.o .obj/be_native.o .obj/be_native.o: be/be_native.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2226,6 +2290,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2301,7 +2369,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_operation.o .obj/be_operation.so .shobj/be_operation.o .shobj/be_operation.so: be/be_operation.cpp include/idl.h \
+.obj/be_operation.o .obj/be_operation.o .obj/be_operation.o .obj/be_operation.o: be/be_operation.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2353,6 +2421,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2428,7 +2500,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_operation_strategy.o .obj/be_operation_strategy.so .shobj/be_operation_strategy.o .shobj/be_operation_strategy.so: be/be_operation_strategy.cpp include/idl.h \
+.obj/be_operation_strategy.o .obj/be_operation_strategy.o .obj/be_operation_strategy.o .obj/be_operation_strategy.o: be/be_operation_strategy.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2480,6 +2552,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2555,7 +2631,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_predefined_type.o .obj/be_predefined_type.so .shobj/be_predefined_type.o .shobj/be_predefined_type.so: be/be_predefined_type.cpp include/idl.h \
+.obj/be_predefined_type.o .obj/be_predefined_type.o .obj/be_predefined_type.o .obj/be_predefined_type.o: be/be_predefined_type.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2607,6 +2683,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2682,7 +2762,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_root.o .obj/be_root.so .shobj/be_root.o .shobj/be_root.so: be/be_root.cpp include/idl.h \
+.obj/be_root.o .obj/be_root.o .obj/be_root.o .obj/be_root.o: be/be_root.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2734,6 +2814,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2809,7 +2893,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_sequence.o .obj/be_sequence.so .shobj/be_sequence.o .shobj/be_sequence.so: be/be_sequence.cpp include/idl.h \
+.obj/be_sequence.o .obj/be_sequence.o .obj/be_sequence.o .obj/be_sequence.o: be/be_sequence.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2861,6 +2945,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2947,7 +3035,7 @@ realclean: clean
  be_include/be_visitor_sequence/cdr_op_ci.h \
  be_include/be_visitor_sequence/cdr_op_cs.h
 
-.obj/be_string.o .obj/be_string.so .shobj/be_string.o .shobj/be_string.so: be/be_string.cpp include/idl.h \
+.obj/be_string.o .obj/be_string.o .obj/be_string.o .obj/be_string.o: be/be_string.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2999,6 +3087,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3074,7 +3166,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_structure.o .obj/be_structure.so .shobj/be_structure.o .shobj/be_structure.so: be/be_structure.cpp include/idl.h \
+.obj/be_structure.o .obj/be_structure.o .obj/be_structure.o .obj/be_structure.o: be/be_structure.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3126,6 +3218,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3201,7 +3297,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_type.o .obj/be_type.so .shobj/be_type.o .shobj/be_type.so: be/be_type.cpp include/idl.h \
+.obj/be_type.o .obj/be_type.o .obj/be_type.o .obj/be_type.o: be/be_type.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3253,6 +3349,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3328,7 +3428,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_typedef.o .obj/be_typedef.so .shobj/be_typedef.o .shobj/be_typedef.so: be/be_typedef.cpp include/idl.h \
+.obj/be_typedef.o .obj/be_typedef.o .obj/be_typedef.o .obj/be_typedef.o: be/be_typedef.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3380,6 +3480,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3455,7 +3559,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_union.o .obj/be_union.so .shobj/be_union.o .shobj/be_union.so: be/be_union.cpp include/idl.h \
+.obj/be_union.o .obj/be_union.o .obj/be_union.o .obj/be_union.o: be/be_union.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3507,6 +3611,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3582,7 +3690,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_union_branch.o .obj/be_union_branch.so .shobj/be_union_branch.o .shobj/be_union_branch.so: be/be_union_branch.cpp include/idl.h \
+.obj/be_union_branch.o .obj/be_union_branch.o .obj/be_union_branch.o .obj/be_union_branch.o: be/be_union_branch.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3634,6 +3742,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3709,7 +3821,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_union_label.o .obj/be_union_label.so .shobj/be_union_label.o .shobj/be_union_label.so: be/be_union_label.cpp include/idl.h \
+.obj/be_union_label.o .obj/be_union_label.o .obj/be_union_label.o .obj/be_union_label.o: be/be_union_label.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3761,6 +3873,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3836,7 +3952,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_generator.o .obj/be_generator.so .shobj/be_generator.o .shobj/be_generator.so: be/be_generator.cpp include/idl.h \
+.obj/be_generator.o .obj/be_generator.o .obj/be_generator.o .obj/be_generator.o: be/be_generator.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3888,6 +4004,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3963,7 +4083,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_produce.o .obj/be_produce.so .shobj/be_produce.o .shobj/be_produce.so: be/be_produce.cpp include/idl.h \
+.obj/be_produce.o .obj/be_produce.o .obj/be_produce.o .obj/be_produce.o: be/be_produce.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4015,6 +4135,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -4090,7 +4214,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_helper.o .obj/be_helper.so .shobj/be_helper.o .shobj/be_helper.so: be/be_helper.cpp include/idl.h \
+.obj/be_helper.o .obj/be_helper.o .obj/be_helper.o .obj/be_helper.o: be/be_helper.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4142,6 +4266,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -4217,7 +4345,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_codegen.o .obj/be_codegen.so .shobj/be_codegen.o .shobj/be_codegen.so: be/be_codegen.cpp include/idl.h \
+.obj/be_codegen.o .obj/be_codegen.o .obj/be_codegen.o .obj/be_codegen.o: be/be_codegen.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4269,6 +4397,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -4344,7 +4476,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_sunsoft.o .obj/be_sunsoft.so .shobj/be_sunsoft.o .shobj/be_sunsoft.so: be/be_sunsoft.cpp include/idl.h \
+.obj/be_sunsoft.o .obj/be_sunsoft.o .obj/be_sunsoft.o .obj/be_sunsoft.o: be/be_sunsoft.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4396,6 +4528,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -4471,7 +4607,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h be_include/be_sunsoft.h
 
-.obj/be_decl.o .obj/be_decl.so .shobj/be_decl.o .shobj/be_decl.so: be/be_decl.cpp include/idl.h \
+.obj/be_decl.o .obj/be_decl.o .obj/be_decl.o .obj/be_decl.o: be/be_decl.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4523,6 +4659,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -4598,7 +4738,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_scope.o .obj/be_scope.so .shobj/be_scope.o .shobj/be_scope.so: be/be_scope.cpp include/idl.h \
+.obj/be_scope.o .obj/be_scope.o .obj/be_scope.o .obj/be_scope.o: be/be_scope.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4650,6 +4790,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -4725,7 +4869,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_stream_factory.o .obj/be_stream_factory.so .shobj/be_stream_factory.o .shobj/be_stream_factory.so: be/be_stream_factory.cpp include/idl.h \
+.obj/be_stream_factory.o .obj/be_stream_factory.o .obj/be_stream_factory.o .obj/be_stream_factory.o: be/be_stream_factory.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4777,6 +4921,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -4852,7 +5000,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h be_include/be_sunsoft.h
 
-.obj/be_visitor_factory.o .obj/be_visitor_factory.so .shobj/be_visitor_factory.o .shobj/be_visitor_factory.so: be/be_visitor_factory.cpp include/idl.h \
+.obj/be_visitor_factory.o .obj/be_visitor_factory.o .obj/be_visitor_factory.o .obj/be_visitor_factory.o: be/be_visitor_factory.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4904,6 +5052,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -5209,7 +5361,7 @@ realclean: clean
  be_include/be_visitor_union_branch/cdr_op_ci.h \
  be_include/be_visitor_union_branch/cdr_op_cs.h
 
-.obj/be_visitor.o .obj/be_visitor.so .shobj/be_visitor.o .shobj/be_visitor.so: be/be_visitor.cpp include/idl.h \
+.obj/be_visitor.o .obj/be_visitor.o .obj/be_visitor.o .obj/be_visitor.o: be/be_visitor.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5261,6 +5413,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -5336,7 +5492,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_visitor_ami_pre_proc.o .obj/be_visitor_ami_pre_proc.so .shobj/be_visitor_ami_pre_proc.o .shobj/be_visitor_ami_pre_proc.so: be/be_visitor_ami_pre_proc.cpp \
+.obj/be_visitor_ami_pre_proc.o .obj/be_visitor_ami_pre_proc.o .obj/be_visitor_ami_pre_proc.o .obj/be_visitor_ami_pre_proc.o: be/be_visitor_ami_pre_proc.cpp \
  be_include/be_visitor_ami_pre_proc.h include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -5389,6 +5545,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -5463,7 +5623,7 @@ realclean: clean
  be_include/be_visitor_context.h be_include/be_interface_strategy.h \
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h
 
-.obj/be_visitor_argument.o .obj/be_visitor_argument.so .shobj/be_visitor_argument.o .shobj/be_visitor_argument.so: be/be_visitor_argument.cpp include/idl.h \
+.obj/be_visitor_argument.o .obj/be_visitor_argument.o .obj/be_visitor_argument.o .obj/be_visitor_argument.o: be/be_visitor_argument.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5515,6 +5675,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -5622,7 +5786,7 @@ realclean: clean
  be/be_visitor_argument/request_info_result.cpp \
  be/be_visitor_argument/request_info_arglist.cpp
 
-.obj/be_visitor_array.o .obj/be_visitor_array.so .shobj/be_visitor_array.o .shobj/be_visitor_array.so: be/be_visitor_array.cpp include/idl.h \
+.obj/be_visitor_array.o .obj/be_visitor_array.o .obj/be_visitor_array.o .obj/be_visitor_array.o: be/be_visitor_array.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5674,6 +5838,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -5762,7 +5930,7 @@ realclean: clean
  be/be_visitor_array/any_op_cs.cpp be/be_visitor_array/cdr_op_ch.cpp \
  be/be_visitor_array/cdr_op_ci.cpp be/be_visitor_array/cdr_op_cs.cpp
 
-.obj/be_visitor_attribute.o .obj/be_visitor_attribute.so .shobj/be_visitor_attribute.o .shobj/be_visitor_attribute.so: be/be_visitor_attribute.cpp include/idl.h \
+.obj/be_visitor_attribute.o .obj/be_visitor_attribute.o .obj/be_visitor_attribute.o .obj/be_visitor_attribute.o: be/be_visitor_attribute.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5814,6 +5982,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -5891,7 +6063,7 @@ realclean: clean
  be_include/be_visitor_attribute/attribute.h \
  be/be_visitor_attribute/attribute.cpp
 
-.obj/be_visitor_constant.o .obj/be_visitor_constant.so .shobj/be_visitor_constant.o .shobj/be_visitor_constant.so: be/be_visitor_constant.cpp include/idl.h \
+.obj/be_visitor_constant.o .obj/be_visitor_constant.o .obj/be_visitor_constant.o .obj/be_visitor_constant.o: be/be_visitor_constant.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5943,6 +6115,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -6022,7 +6198,7 @@ realclean: clean
  be/be_visitor_constant/constant_ch.cpp \
  be/be_visitor_constant/constant_cs.cpp
 
-.obj/be_visitor_context.o .obj/be_visitor_context.so .shobj/be_visitor_context.o .shobj/be_visitor_context.so: be/be_visitor_context.cpp include/idl.h \
+.obj/be_visitor_context.o .obj/be_visitor_context.o .obj/be_visitor_context.o .obj/be_visitor_context.o: be/be_visitor_context.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6074,6 +6250,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -6149,7 +6329,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_visitor_decl.o .obj/be_visitor_decl.so .shobj/be_visitor_decl.o .shobj/be_visitor_decl.so: be/be_visitor_decl.cpp include/idl.h \
+.obj/be_visitor_decl.o .obj/be_visitor_decl.o .obj/be_visitor_decl.o .obj/be_visitor_decl.o: be/be_visitor_decl.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6201,6 +6381,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -6276,7 +6460,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_visitor_enum.o .obj/be_visitor_enum.so .shobj/be_visitor_enum.o .shobj/be_visitor_enum.so: be/be_visitor_enum.cpp include/idl.h \
+.obj/be_visitor_enum.o .obj/be_visitor_enum.o .obj/be_visitor_enum.o .obj/be_visitor_enum.o: be/be_visitor_enum.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6328,6 +6512,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -6412,7 +6600,7 @@ realclean: clean
  be/be_visitor_enum/any_op_cs.cpp be/be_visitor_enum/cdr_op_ch.cpp \
  be/be_visitor_enum/cdr_op_ci.cpp
 
-.obj/be_visitor_exception.o .obj/be_visitor_exception.so .shobj/be_visitor_exception.o .shobj/be_visitor_exception.so: be/be_visitor_exception.cpp include/idl.h \
+.obj/be_visitor_exception.o .obj/be_visitor_exception.o .obj/be_visitor_exception.o .obj/be_visitor_exception.o: be/be_visitor_exception.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6464,6 +6652,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -6567,7 +6759,7 @@ realclean: clean
  be_include/be_visitor_field/cdr_op_cs.h \
  be/be_visitor_exception/cdr_op_cs.cpp
 
-.obj/be_visitor_field.o .obj/be_visitor_field.so .shobj/be_visitor_field.o .shobj/be_visitor_field.so: be/be_visitor_field.cpp include/idl.h \
+.obj/be_visitor_field.o .obj/be_visitor_field.o .obj/be_visitor_field.o .obj/be_visitor_field.o: be/be_visitor_field.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6619,6 +6811,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -6703,7 +6899,7 @@ realclean: clean
  be/be_visitor_field/field_cs.cpp be/be_visitor_field/cdr_op_ch.cpp \
  be/be_visitor_field/cdr_op_ci.cpp be/be_visitor_field/cdr_op_cs.cpp
 
-.obj/be_visitor_interface.o .obj/be_visitor_interface.so .shobj/be_visitor_interface.o .shobj/be_visitor_interface.so: be/be_visitor_interface.cpp include/idl.h \
+.obj/be_visitor_interface.o .obj/be_visitor_interface.o .obj/be_visitor_interface.o .obj/be_visitor_interface.o: be/be_visitor_interface.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6755,6 +6951,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -6883,7 +7083,7 @@ realclean: clean
  be/be_visitor_interface/interceptors_sh.cpp \
  be/be_visitor_interface/interceptors_ss.cpp
 
-.obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
+.obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.o: be/be_visitor_interface_fwd.cpp \
  include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -6936,6 +7136,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -7020,7 +7224,7 @@ realclean: clean
  be/be_visitor_interface_fwd/cdr_op_ch.cpp \
  be/be_visitor_interface_fwd/cdr_op_ci.cpp
 
-.obj/be_visitor_valuetype.o .obj/be_visitor_valuetype.so .shobj/be_visitor_valuetype.o .shobj/be_visitor_valuetype.so: be/be_visitor_valuetype.cpp include/idl.h \
+.obj/be_visitor_valuetype.o .obj/be_visitor_valuetype.o .obj/be_visitor_valuetype.o .obj/be_visitor_valuetype.o: be/be_visitor_valuetype.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7072,6 +7276,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -7236,7 +7444,7 @@ realclean: clean
  be/be_visitor_valuetype/ami_exception_holder_ch.cpp \
  be/be_visitor_valuetype/ami_exception_holder_cs.cpp
 
-.obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.so .shobj/be_visitor_valuetype_fwd.o .shobj/be_visitor_valuetype_fwd.so: be/be_visitor_valuetype_fwd.cpp \
+.obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.o: be/be_visitor_valuetype_fwd.cpp \
  include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -7289,6 +7497,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -7368,7 +7580,7 @@ realclean: clean
  be_include/be_visitor_valuetype_fwd/valuetype_fwd_ci.h \
  be_include/be_visitor_valuetype_fwd/cdr_op_ci.h
 
-.obj/be_visitor_module.o .obj/be_visitor_module.so .shobj/be_visitor_module.o .shobj/be_visitor_module.so: be/be_visitor_module.cpp include/idl.h \
+.obj/be_visitor_module.o .obj/be_visitor_module.o .obj/be_visitor_module.o .obj/be_visitor_module.o: be/be_visitor_module.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7420,6 +7632,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -7504,7 +7720,7 @@ realclean: clean
  be/be_visitor_module/module_ih.cpp be/be_visitor_module/any_op.cpp \
  be/be_visitor_module/cdr_op.cpp
 
-.obj/be_visitor_operation.o .obj/be_visitor_operation.so .shobj/be_visitor_operation.o .shobj/be_visitor_operation.so: be/be_visitor_operation.cpp include/idl.h \
+.obj/be_visitor_operation.o .obj/be_visitor_operation.o .obj/be_visitor_operation.o .obj/be_visitor_operation.o: be/be_visitor_operation.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7556,6 +7772,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -7732,7 +7952,7 @@ realclean: clean
  be/be_visitor_operation/interceptors_info_rettype.cpp \
  be/be_visitor_operation/interceptors_result.cpp
 
-.obj/be_visitor_root.o .obj/be_visitor_root.so .shobj/be_visitor_root.o .shobj/be_visitor_root.so: be/be_visitor_root.cpp include/idl.h \
+.obj/be_visitor_root.o .obj/be_visitor_root.o .obj/be_visitor_root.o .obj/be_visitor_root.o: be/be_visitor_root.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7784,6 +8004,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -7875,7 +8099,7 @@ realclean: clean
  be/be_visitor_root/root_is.cpp be/be_visitor_root/root_ih.cpp \
  be/be_visitor_root/any_op.cpp be/be_visitor_root/cdr_op.cpp
 
-.obj/be_visitor_scope.o .obj/be_visitor_scope.so .shobj/be_visitor_scope.o .shobj/be_visitor_scope.so: be/be_visitor_scope.cpp include/idl.h \
+.obj/be_visitor_scope.o .obj/be_visitor_scope.o .obj/be_visitor_scope.o .obj/be_visitor_scope.o: be/be_visitor_scope.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7927,6 +8151,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -8002,7 +8230,7 @@ realclean: clean
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
  be_include/be_interface_strategy.h
 
-.obj/be_visitor_sequence.o .obj/be_visitor_sequence.so .shobj/be_visitor_sequence.o .shobj/be_visitor_sequence.so: be/be_visitor_sequence.cpp include/idl.h \
+.obj/be_visitor_sequence.o .obj/be_visitor_sequence.o .obj/be_visitor_sequence.o .obj/be_visitor_sequence.o: be/be_visitor_sequence.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8054,6 +8282,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -8169,7 +8401,7 @@ realclean: clean
  be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp \
  be/be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp
 
-.obj/be_visitor_structure.o .obj/be_visitor_structure.so .shobj/be_visitor_structure.o .shobj/be_visitor_structure.so: be/be_visitor_structure.cpp include/idl.h \
+.obj/be_visitor_structure.o .obj/be_visitor_structure.o .obj/be_visitor_structure.o .obj/be_visitor_structure.o: be/be_visitor_structure.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8221,6 +8453,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -8320,7 +8556,7 @@ realclean: clean
  be_include/be_visitor_field/cdr_op_cs.h \
  be/be_visitor_structure/cdr_op_cs.cpp
 
-.obj/be_visitor_typecode.o .obj/be_visitor_typecode.so .shobj/be_visitor_typecode.o .shobj/be_visitor_typecode.so: be/be_visitor_typecode.cpp include/idl.h \
+.obj/be_visitor_typecode.o .obj/be_visitor_typecode.o .obj/be_visitor_typecode.o .obj/be_visitor_typecode.o: be/be_visitor_typecode.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8372,6 +8608,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -8451,7 +8691,7 @@ realclean: clean
  be/be_visitor_typecode/typecode_decl.cpp \
  be/be_visitor_typecode/typecode_defn.cpp
 
-.obj/be_visitor_typedef.o .obj/be_visitor_typedef.so .shobj/be_visitor_typedef.o .shobj/be_visitor_typedef.so: be/be_visitor_typedef.cpp include/idl.h \
+.obj/be_visitor_typedef.o .obj/be_visitor_typedef.o .obj/be_visitor_typedef.o .obj/be_visitor_typedef.o: be/be_visitor_typedef.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8503,6 +8743,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -8596,7 +8840,7 @@ realclean: clean
  be/be_visitor_typedef/cdr_op_ci.cpp \
  be/be_visitor_typedef/cdr_op_cs.cpp
 
-.obj/be_visitor_union.o .obj/be_visitor_union.so .shobj/be_visitor_union.o .shobj/be_visitor_union.so: be/be_visitor_union.cpp include/idl.h \
+.obj/be_visitor_union.o .obj/be_visitor_union.o .obj/be_visitor_union.o .obj/be_visitor_union.o: be/be_visitor_union.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8648,6 +8892,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -8742,7 +8990,7 @@ realclean: clean
  be/be_visitor_union/any_op_cs.cpp be/be_visitor_union/cdr_op_ch.cpp \
  be/be_visitor_union/cdr_op_ci.cpp be/be_visitor_union/cdr_op_cs.cpp
 
-.obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.so .shobj/be_visitor_union_branch.o .shobj/be_visitor_union_branch.so: be/be_visitor_union_branch.cpp \
+.obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.o: be/be_visitor_union_branch.cpp \
  include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -8795,6 +9043,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \

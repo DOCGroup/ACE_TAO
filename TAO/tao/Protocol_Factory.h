@@ -19,15 +19,17 @@
 #define TAO_PROTOCOL_FACTORY_H
 #include "ace/pre.h"
 
-#include "ace/Service_Object.h"
-#include "ace/Strategies_T.h"
-#include "ace/SString.h"
-#include "tao/Pluggable.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Object.h"
+
+class TAO_Acceptor;
+class TAO_Connector;
+class ACE_CString;
 
 class TAO_Export TAO_Protocol_Factory : public ACE_Service_Object
 {

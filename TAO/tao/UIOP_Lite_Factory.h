@@ -26,11 +26,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Config.h"
+
 class TAO_Acceptor;
 class TAO_Connector;
 
 
-class TAO_Export TAO_UIOP_Lite_Protocol_Factory : 
+class TAO_Export TAO_UIOP_Lite_Protocol_Factory :
   public TAO_Protocol_Factory
 {
 public:
@@ -61,7 +63,7 @@ private:
   int minor_;
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
-  
+
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Lite_Protocol_Factory)

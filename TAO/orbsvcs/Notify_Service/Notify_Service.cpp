@@ -1,13 +1,14 @@
 // $Id$
 
-#include "ace/Arg_Shifter.h"
-#include "ace/Get_Opt.h"
+#include "Notify_Service.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 #include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_EMO_Factory.h"
-#include "Notify_Service.h"
+#include "tao/IORTable/IORTable.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Get_Opt.h"
 
 Notify_Service::Notify_Service (void)
   : bootstrap_ (0),
@@ -118,12 +119,29 @@ Notify_Service::startup (int argc, char *argv[],
   // Make it bootstrappable, if asked.
   if (this->bootstrap_)
     {
-    // add to Object key-IOR table
-      if (this->orb_->_tao_add_to_IOR_table (this->notify_factory_name_.c_str(),
-                                           this->notify_factory_.in ()) != 0)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        "Unable to add IOR to table\n"), -1);
-  }
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          CORBA::String_var ior =
+            this->orb_->object_to_string (this->notify_factory_.in (),
+                                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          adapter->bind (this->notify_factory_name_.c_str (), ior.in (),
+                         ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
 
   // Register with the Name service, if asked
   if (this->use_name_svc_)

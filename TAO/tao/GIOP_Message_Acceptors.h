@@ -23,7 +23,6 @@
 
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Accept_State.h"
-#include "tao/ORB_Core.h"
 
 // @@ Bala: Again, it is not clear what this class has to do with
 // @@ acceptors, it looks more like message parsing for the server

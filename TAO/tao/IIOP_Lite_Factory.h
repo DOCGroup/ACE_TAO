@@ -11,7 +11,7 @@
 //
 // = AUTHOR
 //   Fred Kuhns <fredk@cs.wustl.edu>
-//   
+//
 // ============================================================================
 
 #ifndef TAO_IIOP_LITE_FACTORY_H
@@ -24,15 +24,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Config.h"
+
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_Export TAO_IIOP_Lite_Protocol_Factory : 
+class TAO_Export TAO_IIOP_Lite_Protocol_Factory :
   public TAO_Protocol_Factory
 {
 public:
   TAO_IIOP_Lite_Protocol_Factory (void);
-  
+
   virtual ~TAO_IIOP_Lite_Protocol_Factory (void);
 
   // = Service Configurator hooks.
