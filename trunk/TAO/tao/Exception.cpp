@@ -23,6 +23,7 @@ ACE_RCSID(tao, Exception, "$Id$")
 // Static initializers.
 
 CORBA::ExceptionList *TAO_Exceptions::system_exceptions;
+ACE_Allocator *TAO_Exceptions::global_allocator_;
 
 // TAO specific typecode
 extern CORBA::TypeCode_ptr TC_completion_status;
@@ -303,7 +304,11 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                                             CORBA::Environment &TAO_IN_ENV)
 {
   // Create the TypeCode for the CORBA_UnknownUserException
-  TAO_OutputCDR stream;
+  TAO_OutputCDR stream (0,
+                        ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
+                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
 
   const char* interface_id =
     "IDL:omg.org/CORBA/UnknownUserException:1.0";
@@ -343,7 +348,12 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // Create a CDR stream ... juggle the alignment here a bit, we know
   // it's good enough for the typecode.
 
-  TAO_OutputCDR stream (buffer, buflen);
+  TAO_OutputCDR stream (buffer,
+                        buflen,
+                        ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
+                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
 
   // into CDR stream, stuff (in order):
   //    - byte order flag [4 bytes]
@@ -453,6 +463,10 @@ CORBA::TypeCode_ptr CORBA::_tc_UnknownUserException = 0;
 void
 TAO_Exceptions::init (CORBA::Environment &env)
 {
+  // This routine should only be called once.
+  // Initialize the start up allocator.
+  ACE_NEW (TAO_Exceptions::global_allocator_, ACE_New_Allocator);
+
   // Initialize the list of system exceptions, used when unmarshaling.
   ACE_NEW (TAO_Exceptions::system_exceptions, CORBA::ExceptionList);
 
@@ -496,6 +510,7 @@ TAO_Exceptions::fini (void)
 #undef TAO_SYSTEM_EXCEPTION
 
   delete CORBA::_tc_UnknownUserException;
+  delete TAO_Exceptions::global_allocator_;
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
