@@ -1,0 +1,30 @@
+// $Id$
+project {
+
+  staticname = CodeGenerationKit
+
+  // @@ (diego) This hack is needed because MPC doesn't generate
+  // static-only projects for gnuace
+  verbatim(gnuace, top) {
+        static_libs_only = 1
+  }
+
+  includes += ../.. $(UTILITY_ROOT) $(BOOST_ROOT)
+
+  Source_Files {
+    CommandLine.cpp
+    CommandLineGrammar.cpp
+    CommandLineParser.cpp
+  }
+
+  Header_Files {
+    CommandLine.hpp
+    CommandLineDescriptor.hpp
+    CommandLineGrammar.hpp
+    CommandLineParser.hpp
+    IndentationBuffer.hpp
+    IndentationIDL.hpp
+    IndentationImplanter.hpp
+    Regex.hpp
+  }
+}

@@ -1,0 +1,33 @@
+# file      : Test/IDL2/Compiler/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+root = ../../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
+
+cxx_translation_units := driver.cpp 
+
+translated_units += ../Traversal/Recreate/Generator.o
+
+module_base           := driver
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+#                         -L$(root)/CCF/CompilerElements  \
+#                         -lCompilerElements              \
+                         
+CXX_LINK_LIBS         += -L$(root)/CCF/IDL2              \
+                         -lIDL2                          \
+                         -L$(UTILITY_ROOT)/Utility/Introspection \
+                         -lIntrospection                         \
+                         -L$(BOOST_ROOT)/lib             \
+                         -lboost_filesystem
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.post.rules)
