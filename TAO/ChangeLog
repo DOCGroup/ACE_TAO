@@ -1,3 +1,24 @@
+Tue Jul 22 14:07:36 2003  Bryan Thrall  <thrall@cs.wustl.edu>
+
+        * orbsvcs/examples/RtEC/Kokyu/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Consumer.h:
+        * orbsvcs/examples/RtEC/Kokyu/EC_Schedule_Service.dsp:
+        * orbsvcs/examples/RtEC/Kokyu/Makefile:
+        * orbsvcs/examples/RtEC/Kokyu/README:
+        * orbsvcs/examples/RtEC/Kokyu/Schedule.dsw:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Supplier.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Supplier.h:
+        * orbsvcs/examples/RtEC/Kokyu/svc.conf:
+        * orbsvcs/examples/RtEC/Kokyu/svc.conf.xml:
+
+	Example to test new Event Channel with Kokyu dispatching.
+	Merged orbsvcs/examples/RtEC/Kokyu/* from EC_Kokyu_0 branch. 
+	These files were reported merged earlier, but apparently the 
+	merge didn't stick. See ChangeLogs/ChangeLog-03b line 4873 for
+	the original report:
+	Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+	
 Tue Jul 22 11:24:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Strategies/SHMIOP_Profile.cpp (parse_string_i): Fixed a cut
