@@ -1,3 +1,10 @@
+Thu Nov 12 00:42:06 1998  Seth Widoff  <swidoff@sophocles.cimds.ri.cmu.edu>
+
+	* docs/releasenotes/trader.html:
+	Fixed a typo in the docs: CosTrading::Preferences should read
+	CosTrading::Lookup::Preferences. Thanks to Ivan Leong
+	<ivanl@pacific.net.sg> for detecting this.
+
 Wed Nov 11 22:11:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_Input_Handler.cpp (register_consumer): 
