@@ -1,3 +1,24 @@
+Fri Nov  5 07:02:01 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+        * orbsvcs/tests/Security/Big_Request/run_test.pl:
+        * orbsvcs/tests/Security/Big_Request/server.cpp:
+        * orbsvcs/tests/Security/Callback/client.cpp:
+        * orbsvcs/tests/Security/Callback/run_test.pl:
+        * orbsvcs/tests/Security/Callback/server.cpp:
+        * orbsvcs/tests/Security/Crash_Test/client.cpp:
+        * orbsvcs/tests/Security/Crash_Test/run_test.pl:
+        * orbsvcs/tests/Security/Crash_Test/server.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+
+          Environment variables are not propagated to child processes (at
+          least not Perl's Win32::Process::Create() function.  So, in each
+          test process we set the SSL_CERT_FILE environment variable
+          programatically using ACE_OS::putenv().  This allows these
+          security tests to run on Windows.
+
 Fri Nov  5 07:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:
@@ -26,31 +47,31 @@ Thu Nov  4 22:20:19 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Thu Nov  4 17:42:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp:
 
-	  Changed retrieve method to seek past records with non-matching
-	  id's.  This avoids memory leaks and is more efficient than the
-	  code it replaced.  Thanks to Gary Maxy <gary.maxey@hp.com> for
-	  reporting the problem.
+          Changed retrieve method to seek past records with non-matching
+          id's.  This avoids memory leaks and is more efficient than the
+          code it replaced.  Thanks to Gary Maxy <gary.maxey@hp.com> for
+          reporting the problem.
 
 Thu Nov  4 13:51:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated for recent *.mpc changes, HTIOP, etc.
+          Updated for recent *.mpc changes, HTIOP, etc.
 
-	* orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
 
-	  Added PortableGroup_Simple_DSS.h and
-	  FaultTolerance/FT_ORB_Utils_export.h to Header_Files.
+          Added PortableGroup_Simple_DSS.h and
+          FaultTolerance/FT_ORB_Utils_export.h to Header_Files.
 
-	* orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
 
-	  Added FaultTolerance/fault_tol_export.h to Header_Files.
+          Added FaultTolerance/fault_tol_export.h to Header_Files.
 
-	* orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
 
-	  Added PortableGroup/portablegroup_export.h to Header_Files.
+          Added PortableGroup/portablegroup_export.h to Header_Files.
 
 Thu Nov  4 13:14:24 2004  Chad Elliott  <elliott_c@ociweb.com>
 
