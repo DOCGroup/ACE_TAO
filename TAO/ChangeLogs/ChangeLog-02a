@@ -1,3 +1,11 @@
+Fri Mar  9 15:40:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+        * tests/AMI/client.cpp:
+        * tests/AMI/simple_client.cpp:
+        * tests/AMI/server.cpp:
+          
+          Fixed the custom event loop and cleaned up code.
+
 Fri Mar  9 14:48:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Typecode.h:
