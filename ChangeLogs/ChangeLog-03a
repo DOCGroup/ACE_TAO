@@ -1,3 +1,12 @@
+Sat Sep  1 09:54:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Bound_Ptr_Test.cpp: Added a patch from Chris Kohlhoff that
+	  fixes the problem with VXWORKS builds. The old gcc compiler
+	  seems to have problems with forward declared types as template
+	  parameters. Chris solves the problem by defining a ABC properly
+	  and making the offending class inherit from it. This should fix
+	  our daily VXWORKS builds.
+
 Sat Sep  1 08:07:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Select_Reactor_Base.cpp: Fixed a compilation error  in the

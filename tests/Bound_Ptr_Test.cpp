@@ -25,14 +25,20 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Bound_Ptr.h"
 
-ACE_RCSID (tests,
-           Bound_Ptr_Test,
-           "Bound_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
+ACE_RCSID (tests, Bound_Ptr_Test, "Bound_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
 
 // The following Parent and Child classes illustrate how you might use the
-// ACE_Strong_Bound_Ptr and ACE_Weak_Bound_Ptr together.
+// ACE_Strong_Bound_Ptr and ACE_Weak_Bound_Ptr together in cyclic
+// relationships.
 
-struct Child;
+struct Child_Base
+{
+  virtual ~Child_Base (void);
+
+  // Perform some operation.
+  virtual void do_something (void) = 0;
+};
+
 
 // This class should only be created on the heap. Normally it would be an
 // abstract class, and the implementation would be elsewhere.
@@ -47,7 +53,7 @@ struct Parent
 
   // The parent owns the child. When the parent is destroyed the child will
   // be automatically deleted.
-  ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex> child_;
+  ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> child_;
 
   // Called by the child to perform some operation.
   void do_something (void);
@@ -57,20 +63,25 @@ struct Parent
 
 // This class should only be created on the heap. Normally it would be an
 // abstract class, and the implementation would be elsewhere.
-struct Child
+struct Child : public Child_Base
 {
   Child (ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent);
-  ~Child (void);
+  virtual ~Child (void);
 
   // Back pointer to the parent. The child does not own the parent so has no
   // effect on its lifetime.
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent_;
 
   // Perform some operation. Delegates the work to the parent.
-  void do_something (void);
+  virtual void do_something (void);
 
   static size_t instance_count_;
 };
+
+Child_Base::~Child_Base (void)
+{
+}
+
 
 size_t Parent::instance_count_ = 0;
 
@@ -141,12 +152,12 @@ void Child::do_something (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex>;
 template class ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex>;
-template class ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex>;
+template class ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex>;
 template class ACE_Bound_Ptr_Counter<ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex>
 #pragma instantiate ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex>
-#pragma instantiate ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex>
+#pragma instantiate ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex>
 #pragma instantiate ACE_Bound_Ptr_Counter<ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
