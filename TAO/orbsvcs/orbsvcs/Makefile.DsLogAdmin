@@ -77,9 +77,9 @@ realclean: clean
 
 
 .obj/LogRecordStore.o .obj/LogRecordStore.so .shobj/LogRecordStore.o .shobj/LogRecordStore.so: Log/LogRecordStore.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ Time_Utilities.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -381,38 +381,38 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ Time_Utilities.i \
+ Log/LogRecordStore.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/Log_Constraint_Interpreter.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
+ Trader/trading_export.h \
+ Trader/Constraint_Visitors.h \
+ Trader/Interpreter_Utils.h \
  $(TAO_ROOT)/tao/DynSequence_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h
+ Trader/Interpreter.h \
+ Log/Log_Constraint_Visitors.h
 
 .obj/BasicLogFactory_i.o .obj/BasicLogFactory_i.so .shobj/BasicLogFactory_i.o .shobj/BasicLogFactory_i.so: Log/BasicLogFactory_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLogFactory_i.h \
+ Log/BasicLogFactory_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -519,7 +519,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -715,31 +715,31 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLog_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/LogMgr_i.h \
+ Log/BasicLog_i.h \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/Iterator_i.o .obj/Iterator_i.so .shobj/Iterator_i.o .shobj/Iterator_i.so: Log/Iterator_i.cpp Log/Iterator_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -846,7 +846,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -1042,35 +1042,35 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/LogRecordStore.h \
+ Log/Log_Constraint_Interpreter.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
+ Trader/trading_export.h \
+ Trader/Constraint_Visitors.h \
+ Trader/Interpreter_Utils.h \
  $(TAO_ROOT)/tao/DynSequence_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h
+ Trader/Interpreter.h \
+ Log/Log_Constraint_Visitors.h
 
 .obj/BasicLog_i.o .obj/BasicLog_i.so .shobj/BasicLog_i.o .shobj/BasicLog_i.so: Log/BasicLog_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLog_i.h \
+ Log/BasicLog_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1177,7 +1177,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -1373,29 +1373,29 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h
+ svc_utils_export.h \
+ TimeBaseC.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
+ Log/LogMgr_i.h
 
 .obj/Log_i.o .obj/Log_i.so .shobj/Log_i.o .shobj/Log_i.so: Log/Log_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
+ Log/Log_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Log/LogRecordStore.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1502,7 +1502,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -1698,34 +1698,34 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Iterator_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/Iterator_i.h \
+ Log/Log_Constraint_Interpreter.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
+ Trader/trading_export.h \
+ Trader/Constraint_Visitors.h \
+ Trader/Interpreter_Utils.h \
  $(TAO_ROOT)/tao/DynSequence_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h
+ Trader/Interpreter.h \
+ Log/Log_Constraint_Visitors.h
 
 .obj/LogMgr_i.o .obj/LogMgr_i.so .shobj/LogMgr_i.o .shobj/LogMgr_i.so: Log/LogMgr_i.cpp Log/LogMgr_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ DsLogAdminS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1832,7 +1832,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -2028,29 +2028,29 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLog_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ DsLogAdminC.i \
+ DsLogAdminS_T.h \
+ DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp \
+ DsLogAdminS.i \
+ Log/BasicLog_i.h \
+ Log/Log_i.h \
+ Log/LogRecordStore.h \
  Log/log_export.h
 
 .obj/Log_Constraint_Visitors.o .obj/Log_Constraint_Visitors.so .shobj/Log_Constraint_Visitors.o .shobj/Log_Constraint_Visitors.so: Log/Log_Constraint_Visitors.cpp \
  Log/Log_Constraint_Visitors.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/Constraint_Visitors.h \
+ Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2352,23 +2352,23 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
+ Trader/trading_export.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
  $(TAO_ROOT)/tao/DynSequence_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ DsLogAdminC.i \
  Log/log_export.h
 
 .obj/Log_Constraint_Interpreter.o .obj/Log_Constraint_Interpreter.so .shobj/Log_Constraint_Interpreter.o .shobj/Log_Constraint_Interpreter.so: Log/Log_Constraint_Interpreter.cpp \
  Log/Log_Constraint_Interpreter.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h \
+ Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
  $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2670,17 +2670,17 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter_Utils.h \
+ Trader/trading_export.h \
+ Trader/Constraint_Visitors.h \
+ Trader/Interpreter_Utils.h \
  $(TAO_ROOT)/tao/DynSequence_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Interpreter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
+ Trader/Interpreter.h \
+ DsLogAdminC.h \
+ Log/log_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ DsLogAdminC.i \
  Log/log_export.h Log/Log_Constraint_Visitors.h
 
 .obj/DsLogAdminS.o .obj/DsLogAdminS.so .shobj/DsLogAdminS.o .shobj/DsLogAdminS.so: DsLogAdminS.cpp DsLogAdminS.h \
