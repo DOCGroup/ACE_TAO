@@ -27,19 +27,9 @@ void *
 mmap (void * addr, size_t len, int prot, int flags,
       PACE_HANDLE fildes, pace_off_t off)
 {
-  void * addr_mapping = (void*)0;
+  void *addr_mapping = 0;
   int nt_flags = 0;
-  PACE_HANDLE local_handle = PACE_INVALID_HANDLE;
-  PACE_HANDLE * file_mapping = CreateFileMapping (fildes,
-                                                  0,
-                                                  prot,
-                                                  0,
-                                                  0,
-                                                  0);
-  if (*file_mapping == 0)
-    {
-      PACE_FAIL_RETURN (MAP_FAILED);
-    }
+  PACE_HANDLE file_mapping = PACE_INVALID_HANDLE;
 
   if (PACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
@@ -54,33 +44,41 @@ mmap (void * addr, size_t len, int prot, int flags,
         nt_flags = FILE_MAP_WRITE;
     }
 
+  file_mapping = CreateFileMapping (fildes,
+                                    0,
+                                    prot,
+                                    0,
+                                    0,
+                                    0);
+  if (file_mapping == 0)
+    PACE_FAIL_RETURN (MAP_FAILED);
+
+# if defined (PACE_OS_EXTRA_MMAP_FLAGS)
+  nt_flags |= PACE_OS_EXTRA_MMAP_FLAGS;
+# endif /* PACE_OS_EXTRA_MMAP_FLAGS */
+
 # if !defined (PACE_HAS_WINCE)
-  addr_mapping = MapViewOfFileEx (*file_mapping,
+  addr_mapping = MapViewOfFileEx (file_mapping,
                                   nt_flags,
                                   0,
                                   off,
                                   len,
                                   addr);
 # else
-  /* WinCE doesn't allow specifying <addr>. */
-  PACE_UNUSED_ARG (addr);        
-  addr_mapping = MapViewOfFile (*file_mapping,
+  ACE_UNUSED_ARG (addr);        /* WinCE does not allow specifying <addr>.*/
+  addr_mapping = MapViewOfFile (file_mapping,
                                 nt_flags,
                                 0,
                                 off,
                                 len);
-# endif /* ! ACE_HAS_WINCE */
+# endif /* ! PACE_HAS_WINCE */
 
   /* Only close this down if we used the temporary. */
-  if (file_mapping == &local_handle)
-    {
-      CloseHandle (*file_mapping);
-    }
+  if (file_mapping == PACE_INVALID_HANDLE)
+    CloseHandle (file_mapping);
 
   if (addr_mapping == 0)
-    {
-      PACE_FAIL_RETURN (MAP_FAILED);
-    }
+    PACE_FAIL_RETURN (MAP_FAILED);
 
   else if (PACE_BIT_ENABLED (flags, MAP_FIXED)
            && addr_mapping != addr)
@@ -89,9 +87,7 @@ mmap (void * addr, size_t len, int prot, int flags,
       return MAP_FAILED;
     }
   else
-    {
-      return addr_mapping;
-    }
+    return addr_mapping;
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
