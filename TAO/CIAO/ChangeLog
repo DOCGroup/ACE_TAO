@@ -1,3 +1,17 @@
+Thu May 13 22:56:22 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+
+          Filled in the dump_* functions that pertain to common
+          elements. Howerver, dumping data stored in a CORBA::Any would
+          not be possible unless we know what value is stored in the first
+          place! Hence, we may need to re think this approach for Anys.
+
+        * DnC/Requirement_Handler.cpp:
+
+          Updated the handler to process the <name> tag added to the
+          Deployment schema.
+
 Thu May 13 19:46:24 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * DnC/Deployment.xsd: Reverted an accidental check-in that
