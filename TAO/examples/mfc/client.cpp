@@ -1,9 +1,8 @@
 // $Id$
 
-#include "tao/corba.h"
-#include "w32_testC.h"
-#include "tao/PortableServer/POA.h"
+#include "w32_testS.h"
 #include "ace/streams.h"
+
 
 int
 main (int argc, char *argv[])
