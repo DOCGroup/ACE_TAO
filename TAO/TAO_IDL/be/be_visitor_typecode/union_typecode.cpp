@@ -42,14 +42,12 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
 
   ACE_ASSERT (discriminant_type != 0);
 
-  std::string const case_array_type (
-    std::string ("TAO::TypeCode::Non_Default_Case<")
-    + std::string (discriminant_type->full_name ())
-    + std::string (", char const *>"));
-
   // Generate array containing union non-default case
   // characteristics.
-  os << "static " << case_array_type.c_str () << " const "
+  os << "static "
+     << "TAO::TypeCode::Non_Default_Case<"
+     << discriminant_type->full_name ()
+     << ", char const *> const "
      << fields_name.c_str ()
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
@@ -64,7 +62,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Union<char const *," << be_nl
-    << "                            " << case_array_type.c_str ()
+    << "                            TAO::TypeCode::Case<char const *>"
     << " const *," << be_nl
     << "                            TAO::Null_RefCount_Policy>"
     << be_idt_nl
