@@ -1252,18 +1252,24 @@ validate_properties (const char* type,
               CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY)
             ACE_THROW (CosTrading::MissingMandatoryProperty (type, prop_name));
         }
-      int check = (! prop_type->equal (prop_struct.value_type.in (), ACE_TRY_ENV));
-      ACE_CHECK;
-      if (check)
+      else
         {
-          // Offer cannot redefine the type of an property.
-          const CosTrading::Property* prop = prop_eval.get_property (prop_name);
-          ACE_THROW (CosTrading::PropertyTypeMismatch (type, *prop));
+          int check =
+            (! prop_type->equal (prop_struct.value_type.in (),
+                                 ACE_TRY_ENV));
+          ACE_CHECK;
+          if (check)
+            {
+              // Offer cannot redefine the type of an property.
+              const CosTrading::Property* prop =
+                prop_eval.get_property (prop_name);
+              ACE_THROW (CosTrading::PropertyTypeMismatch (type, *prop));
+            }
+          else if (prop_struct.mode ==
+                   CosTradingRepos::ServiceTypeRepository::PROP_READONLY &&
+                   prop_eval.is_dynamic_property (prop_name))
+            ACE_THROW (CosTrading::ReadonlyDynamicProperty (type, prop_name));
         }
-      else if (prop_struct.mode ==
-               CosTradingRepos::ServiceTypeRepository::PROP_READONLY &&
-               prop_eval.is_dynamic_property (prop_name))
-        ACE_THROW (CosTrading::ReadonlyDynamicProperty (type, prop_name));
     }
 }
 
