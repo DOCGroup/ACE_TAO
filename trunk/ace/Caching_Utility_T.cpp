@@ -50,6 +50,13 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
                      key_to_remove,
                      value_to_remove);
 
+      // Simply verifying that the key is non-zero.
+      // This is important for strategies where the minimum
+      // entry cant be found due to constraints on the type of entry
+      // to remove.
+      if (key_to_remove == 0)
+        return 0;
+
       if (cleanup_s->cleanup (container,
                               key_to_remove,
                               value_to_remove) == -1)
@@ -71,7 +78,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
   ATTRIBUTES min = (*iter).int_id_.second ();
   key_to_remove = &(*iter).ext_id_;
   value_to_remove = &(*iter).int_id_;
-
+  
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
   for (++iter;
@@ -99,39 +106,37 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   ITERATOR end = container.end ();
   ITERATOR iter = container.begin ();
   ATTRIBUTES min = (*iter).int_id_.second ();
-  key_to_remove = &(*iter).ext_id_;
-  value_to_remove = &(*iter).int_id_;
-  
+  key_to_remove = 0;
+  value_to_remove = 0;
+  // Found the minimum entry to be purged?
+  int found = 0;
+
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
-  for (++iter;
+  for (;
        iter != end;
        ++iter)
     {
       // If the <min> entry isnt IDLE_AND_PURGABLE continue until you reach
-      // the first entry which can be purged.
-      if (key_to_remove->state () != ACE_Recyclable::IDLE_AND_PURGABLE)
+      // the first entry which can be purged. This is the minimum with
+      // which you will compare the rest of the purgable entries.   
+      if ((*iter).ext_id_.state () ==
+          ACE_Recyclable::IDLE_AND_PURGABLE)
         {
-           if ((*iter).ext_id_.state () == ACE_Recyclable::IDLE_AND_PURGABLE)
-             {
-               min = (*iter).int_id_.second ();
-               key_to_remove = &(*iter).ext_id_;
-               value_to_remove = &(*iter).int_id_;              
-             }  
+          if (found == 0)
+            {
+              min = (*iter).int_id_.second ();
+              found = 1;
+            }          
+          else if (found == 1)
+            {
+              // Ah! an entry with lower ATTTRIBUTES...
+              if (min > (*iter).int_id_.second ())
+                min = (*iter).int_id_.second ();             
+            }
+          key_to_remove = &(*iter).ext_id_;
+          value_to_remove = &(*iter).int_id_;  
         }
-       else
-         { 
-           if ((*iter).ext_id_.state () == ACE_Recyclable::IDLE_AND_PURGABLE)
-             {
-               if (min > (*iter).int_id_.second ())
-                 {
-                   // Ah! an entry with lower ATTTRIBUTES...
-                   min = (*iter).int_id_.second ();
-                   key_to_remove = &(*iter).ext_id_;
-                   value_to_remove = &(*iter).int_id_;
-                 }
-             }
-         }
     }
 }
 
