@@ -274,8 +274,8 @@ Message_Handler::handle_input (ACE_HANDLE)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "dequeue_head"));
   else
     {
-      delete mb;
       ACE_DEBUG ((LM_DEBUG, "(%t) priority = %d\n", mb->msg_priority ()));
+      delete mb;
     }
 
   return 0;

@@ -162,8 +162,9 @@ main (int argc, char *argv[])
   // since we don't care if the file doesn't exist.
   ACE_OS::unlink (temp_file);  
 
+  // Close things down and free up the semaphores.
+  delete ns_context;
+
   ACE_END_TEST;
   return 0;
 }
-
-
