@@ -16,6 +16,11 @@ Sun Nov 30 20:32:50 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/paltform_osf1_4.0.GNU: added $(ACELIB) to
           SOFLAGS to avoid shared lib build warnings.
 
+        * ace/Thread_Manager.h: declare ACE_THR_MEMBER_FUNC outside of
+          ACE_Thread_Manager class with __GNUG__ instead of with
+          VXWORKS || IRIX5.  The problem is with older versions of g++,
+          not with the OS.
+
 Sun Nov 30 14:13:09 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
         * netsvcs/servers/README: Clarified a bit more about how to
