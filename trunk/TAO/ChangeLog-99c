@@ -18,7 +18,8 @@ Mon Nov 22 20:47:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
           Added a new filter composite.  It accepts only the events that
           its child rejects and rejects the ones the child accepts.  It is
-          useful to express "i don't want this events"
+          useful to express "i don't want this events", thanks to Trey
+	  Grubbs <t-grubbs1@raytheon.com> for asking about this filter
 
         * orbsvcs/tests/Event/Basic/Makefile:
         * orbsvcs/tests/Event/Basic/Negation.h:
