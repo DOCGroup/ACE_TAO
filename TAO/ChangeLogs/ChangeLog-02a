@@ -1,3 +1,12 @@
+Fri Sep 28 15:40:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+
+          Fixed code generation for wstring constants. Thanks to
+          Andreas Huggel <huggel_andreas@isoftel.com> for pointing
+          out this problem.
+
 Fri Sep 28 13:52:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (handle_input): Fixed a unused
