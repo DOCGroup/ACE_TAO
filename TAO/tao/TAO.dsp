@@ -1138,6 +1138,30 @@ SOURCE=.\UB_String_SArguments.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ULongSeqA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ULongSeqC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ULongSeqS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UShortSeqA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UShortSeqC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UShortSeqS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -2299,6 +2323,22 @@ SOURCE=.\UB_String_SArguments.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ULongSeqC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ULongSeqS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UShortSeqC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UShortSeqS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.h
 # End Source File
 # Begin Source File
@@ -3028,6 +3068,22 @@ SOURCE=.\UB_String_Argument_T.inl
 # Begin Source File
 
 SOURCE=.\UB_String_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ULongSeqC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ULongSeqS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\UShortSeqC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\UShortSeqS.i
 # End Source File
 # Begin Source File
 

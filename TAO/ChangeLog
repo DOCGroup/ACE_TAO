@@ -1,3 +1,9 @@
+Sun Mar 14 20:49:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO.dsp:
+
+	  Added the new files into the project file.
+
 Sun Mar 14 10:19:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ULongSeq.pidl:
