@@ -104,5 +104,5 @@ ps $ps_opts | grep Service | grep -v grep
 echo
 echo Note: if you will be running an application that uses the Naming Service,
 echo you might want to set the NameService environment variable, like this:
-echo 't/csh: % setenv NameService `cat /tmp/nameserviceior_'$login'`'
-echo 'bash:  $ export NameService=`cat /tmp/nameserviceior_'$login'`'
+echo 't/csh: % setenv NameServiceIOR `cat /tmp/nameserviceior_'$login'`'
+echo 'bash:  $ export NameServiceIOR=`cat /tmp/nameserviceior_'$login'`'
