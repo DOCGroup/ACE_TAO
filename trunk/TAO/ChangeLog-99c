@@ -1,27 +1,34 @@
+Wed Apr  7 20:28:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+	* orbsvcs/tests/CosEC_Multiple/CosECSupplier.cpp:
+	* orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:  Added trailing
+	  semi-columns after ACE_DECLARE_NEW_CORBA_ENV.
+
 Wed Apr  7 19:34:44 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/{server, client}.dsp:Made the release
-	versions. 
+	versions.
 
 Wed Apr  7 18:49:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Typecode_Constants.cpp: 
+	* tao/Typecode_Constants.cpp:
 	  Added missing _tc_ static in the CORBA module.
 
-	* tao/Object_Adapter.cpp: 
+	* tao/Object_Adapter.cpp:
 	  Removed duplicate template instantiations.
 
-	* tao/MessagingS_T.i: 
+	* tao/MessagingS_T.i:
 	  Commented out code for CORBA::Poller and friends.
 
-	* tao/MessagingC.cpp: 
+	* tao/MessagingC.cpp:
 	  Removed unwanted template instantiations.
 
 Wed Apr  7 17:31:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}: Replaced CDR with ACE_CDR.
-	  Also moved the FRAGMENT_SET_ITERATOR typedef outside the 
-	  TAO_SFP_Fragment_Table_Entry. 
+	  Also moved the FRAGMENT_SET_ITERATOR typedef outside the
+	  TAO_SFP_Fragment_Table_Entry.
           Thanks to David Hooker <DHooker@uniview.net> for reporting this.
 
 Wed Apr  7 16:36:26 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
