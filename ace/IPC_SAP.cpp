@@ -34,9 +34,6 @@ ACE_IPC_SAP::ACE_IPC_SAP (void)
 //  ACE_TRACE ("ACE_IPC_SAP::ACE_IPC_SAP");
 }
 
-// Make the HANDLE_ available for asynchronous I/O (SIGIO), urgent
-// data (SIGURG), or non-blocking I/O (ACE_NONBLOCK).
-
 int
 ACE_IPC_SAP::enable (int signum) const
 {
@@ -50,11 +47,13 @@ ACE_IPC_SAP::enable (int signum) const
   switch (signum)
     {
     case ACE_NONBLOCK:
-    // nonblocking argument (1)
-    // blocking:            (0)
       {
+        // nonblocking argument (1)
+        // blocking:            (0)
         u_long nonblock = 1;
-        return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
+        return ACE_OS::ioctl (this->handle_,
+                              FIONBIO,
+                              &nonblock);
       }
     default:
       ACE_NOTSUP_RETURN (-1);
@@ -64,32 +63,45 @@ ACE_IPC_SAP::enable (int signum) const
     {
 #if defined (SIGURG)
     case SIGURG:
+    case ACE_SIGURG:
 #if defined (F_SETOWN)
-      return ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IPC_SAP::pid_);
+      return ACE_OS::fcntl (this->handle_,
+                            F_SETOWN,
+                            ACE_IPC_SAP::pid_);
 #else
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN */
 #endif /* SIGURG */
-#if defined (SIGIO)             // <==
+#if defined (SIGIO)
     case SIGIO:
+    case ACE_SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
-      if (ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IPC_SAP::pid_) == -1 ||
-          ACE::set_flags (this->handle_, FASYNC) == -1)
+      if (ACE_OS::fcntl (this->handle_,
+                         F_SETOWN,
+                         ACE_IPC_SAP::pid_) == -1 
+          || ACE::set_flags (this->handle_,
+                             FASYNC) == -1)
         return -1;
       else
         return 0;
 #else
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN && FASYNC */
 #endif /* SIGIO <== */
-    case F_SETFD:
-      if (ACE_OS::fcntl (this->handle_, F_SETFD, 1) == -1)
+#if defined (F_SETFD)
+    case ACE_CLOEXEC:
+      // Enables the close-on-exec flag.
+      if (ACE_OS::fcntl (this->handle_,
+                         F_SETFD,
+                         1) == -1)
 	return 1;
       else
 	return 0;
       break;
+#endif /* F_SETFD */
     case ACE_NONBLOCK:
-      if (ACE::set_flags (this->handle_, ACE_NONBLOCK) == ACE_INVALID_HANDLE)
+      if (ACE::set_flags (this->handle_,
+                          ACE_NONBLOCK) == ACE_INVALID_HANDLE)
         return -1;
       else
         return 0;
@@ -100,9 +112,6 @@ ACE_IPC_SAP::enable (int signum) const
 
   /* NOTREACHED */
 }
-
-// Restore the IPC_SAPet by turning off synchronous I/O or urgent
-// delivery.
 
 int
 ACE_IPC_SAP::disable (int signum) const
@@ -117,7 +126,9 @@ ACE_IPC_SAP::disable (int signum) const
       // blocking:            (0)
       {
         u_long nonblock = 0;
-        return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
+        return ACE_OS::ioctl (this->handle_,
+                              FIONBIO,
+                              &nonblock);
       }
     default:
       ACE_NOTSUP_RETURN (-1);
@@ -127,32 +138,45 @@ ACE_IPC_SAP::disable (int signum) const
     {
 #if defined (SIGURG)
     case SIGURG:
+    case ACE_SIGURG:
 #if defined (F_SETOWN)
-      return ACE_OS::fcntl (this->handle_, F_SETOWN, 0);
+      return ACE_OS::fcntl (this->handle_,
+                            F_SETOWN,
+                            0);
 #else
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN */
 #endif /* SIGURG */
-#if defined (SIGIO)             // <==
+#if defined (SIGIO)
     case SIGIO:
+    case ACE_SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
-      if (ACE_OS::fcntl (this->handle_, F_SETOWN, 0) == -1 ||
-          ACE::clr_flags (this->handle_, FASYNC) == -1)
+      if (ACE_OS::fcntl (this->handle_,
+                         F_SETOWN,
+                         0) == -1 
+          || ACE::clr_flags (this->handle_,
+                             FASYNC) == -1)
         return -1;
       else
         return 0;
 #else
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN && FASYNC */
 #endif /* SIGIO <== */
-    case F_SETFD:
-      if (ACE_OS::fcntl (this->handle_, F_SETFD, 0) == -1)
+#if defined (F_SETFD)
+    case ACE_CLOEXEC:
+      // Disables the close-on-exec flag.
+      if (ACE_OS::fcntl (this->handle_,
+                         F_SETFD,
+                         0) == -1)
 	return 1;
       else
 	return 0;
       break;
+#endif /* F_SETFD */
     case ACE_NONBLOCK:
-      if (ACE::clr_flags (this->handle_, ACE_NONBLOCK) == -1)
+      if (ACE::clr_flags (this->handle_,
+                          ACE_NONBLOCK) == -1)
         return -1;
       else
         return 0;

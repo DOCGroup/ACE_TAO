@@ -32,11 +32,16 @@ public:
   // Interface for ioctl. 
 
   // = Common I/O descriptor options related to sockets.
-  int enable (int signum) const;
-  // Enable signal <signum>.
 
-  int disable (int signum) const;
-  // Disable signal <signum>.
+  int enable (int value) const;
+  // Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
+  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
+  // which is passed as the <value>.
+
+  int disable (int value) const;
+  // Disable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
+  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
+  // which is passed as the <value>.
 
   ACE_HANDLE get_handle (void) const;
   // Get the underlying descriptor. 
