@@ -1,3 +1,10 @@
+Tue May 30 11:14:51 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/EC_Mcast/run_test.pl
+          orbsvcs/tests/Event/Basic/run_test.pl
+
+          Added -ORBSvcConf option to run on Chorus.
+
 Tue May 30 10:25:29 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* tao/POA.pidl: Removed a dupliate declaration of CORBA::Policy,
