@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "websvcs_export.h"
+#include "ace/Default_Constants.h"
 
 class ACE_URL_Addr_Visitor;
 

@@ -1,3 +1,33 @@
+Thu May  2 15:51:17 UTC 2002  Don Hinton  <dhinton@ieee.org>
+	
+	* ace/Unbounded_Set.cpp:  Added OS_Errno.h and Trace.h.
+
+	* ace/Dump_T.cpp:  
+	* ace/Event_Handler_T.i: 
+
+	  Added Trace.h.
+
+	* examples/Mem_Map/file-reverse.cpp: 
+	* examples/Misc/test_set.cpp:
+
+	  Added Main_Macros.h.
+
+	* examples/Reactor/Multicast/Log_Wrapper.cpp: 
+	* examples/System_V_IPC/SV_Message_Queues/test.h: 
+
+	  Added OS_String.h and prefaced string functions with ACE_OS_String::.
+
+	* websvcs/lib/URL_Addr.h: Added Default_Constants.h.
+
+	* wevsvcs/lib/URL_Addr.i: Added OS_String.h and ACE.h.
+
+	* apps/JAWS/server/HTTP_Server.h: Added svc_export.h.
+
+	* apps/JAWS/server/HTTP_Request.cpp: Added OS_String.h and used ACE_OS_String.
+
+	* apps/JAWS/server/Parser_Headers.cpp:  Added ace_ctype.h and OS_String.h.
+	  And used ACE_OS_String for string functions.
+
 Thu May  2 12:00:15 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/OS.h:  Uncommented ACE_DEFAULT_MUTEX defs since they are used

@@ -2,6 +2,7 @@
 
 #include "ace/Containers.h"
 #include "ace/Log_Msg.h"
+#include "ace/Main_Macros.h"
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

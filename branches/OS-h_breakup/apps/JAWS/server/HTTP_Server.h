@@ -29,6 +29,7 @@
 #include "ace/Task_T.h"
 #include "ace/Asynch_IO.h"
 #include "HTTP_Handler.h"
+#include "ace/svc_export.h"
 
 // Forward declaration.
 class ACE_Proactor;
