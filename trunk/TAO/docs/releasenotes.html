@@ -361,6 +361,34 @@ Implement Type Repository and Admin Interfaces for Trading Service.</LI>
 </UL>
 </BLOCKQUOTE>
 
+<HR>
+<H3>
+<A NAME="orb"></A>ORB-related ACE Changes</H3>
+Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
+
+    <BLOCKQUOTE>
+      Task List:
+
+      <ul>
+	<li>The current caching connector does not behave properly in
+	the face of a non-blocking connect request.  The "fix" is
+	simply to not support non-blocking connects through the cache.
+	When the <code>connect()</code> fails with
+	<code>EWOULDBLOCK</code>, morph the error to -1 and clean up
+	the request.</li>
+
+	<li>Service handlers obtained from the caching connector are
+	not cleaned up.  The application needs to be able to signal
+	that it's not using it any longer, and, when the application
+	encounters an error, needs to effectively close down that
+	connection for good so that a new connection can be initiated.
+	We're still working through the details on how to accomplish
+	this.</li>
+	 
+      </ul>
+      
+    </BLOCKQUOTE>
+
 <HR ALIGN=LEFT>
 </BODY>
 </HTML>
