@@ -8,6 +8,11 @@ how to run the following tests:
 
           This is a simple test for AMI callback model.
 
+        . AMI_Buffering
+        
+          Test the buffering constraint policy when applied to AMI
+	  requests.
+
         . AMI_Timeouts
         
           This is a simple test for AMI callback model in combination with
