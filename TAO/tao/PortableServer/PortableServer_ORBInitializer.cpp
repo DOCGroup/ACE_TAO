@@ -37,8 +37,6 @@ void
 TAO_PortableServer_ORBInitializer::register_poa_current (PortableInterceptor::ORBInitInfo_ptr info
                                                          ACE_ENV_ARG_DECL)
 {
-  // @@ This is busted.  TAO_ORBInitInfo should do proper reference
-  //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info =
