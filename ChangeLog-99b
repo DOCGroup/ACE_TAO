@@ -1,3 +1,8 @@
+Mon Jul  5 13:08:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Cache_Map_Manager_Test.cpp:
+	  Added ACE_UNUSED_ARG macros for <result> to ward of warnings.
+
 Mon Jul 05 12:51:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Threads/future1.cpp:
