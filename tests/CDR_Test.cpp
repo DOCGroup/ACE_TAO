@@ -170,7 +170,7 @@ test_get (ACE_InputCDR &cdr, const CDR_Test_Types &test_types)
                            "read_string2[%d] failed\n",
                            i),
                           1);
-      ACE_Auto_Basic_Ptr<CDR::Char> auto_xstr (xstr);
+      ACE_Auto_Basic_Array_Ptr<CDR::Char> auto_xstr (xstr);
       if (ACE_OS::strcmp (auto_xstr.get (), test_types.str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "string[%d] differs\n",
@@ -358,9 +358,9 @@ short_stream (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr<CDR::Char>;
+template class ACE_Auto_Basic_Array_Ptr<CDR::Char>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr<CDR::Char>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<CDR::Char>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 int 
