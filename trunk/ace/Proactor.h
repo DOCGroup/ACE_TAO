@@ -108,8 +108,8 @@ protected:
 class ACE_Export ACE_Proactor
 {
 public:
-  ACE_Proactor (size_t number_of_threads = 0, 
-		ACE_Timer_Queue *tq = 0) {}
+  ACE_Proactor (size_t /* number_of_threads */ = 0,
+		ACE_Timer_Queue * /* tq */ = 0) {}
   virtual int handle_events (void) { return -1; }
   virtual int handle_events (ACE_Time_Value &) { return -1; }
 };
