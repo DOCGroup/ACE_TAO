@@ -1,3 +1,12 @@
+Thu Aug  6 16:37:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tests/Param_Test/typecode.{h,cpp}:
+	  Moved the table of typecodes used for random
+	  selection to be local to init_parameters ().
+	  When it was global and static, the CORBA::
+	  typecodes could not be used - they weren't yet
+	  initialized.
+
 Thu Aug  6 14:24:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
