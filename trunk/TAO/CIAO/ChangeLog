@@ -1,3 +1,10 @@
+Mon May 31 18:27:47 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+	 * tools/Segment_Timer/Segment_Timer.h: 
+	 * tools/static_configurator/Static_Configurator.cpp:
+	 
+	   Made some fixes related to DLL exports to get rid of
+	   build errors on Windows.
+	
 Mon May 31 18:25:30 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Any_Handler.cpp:
