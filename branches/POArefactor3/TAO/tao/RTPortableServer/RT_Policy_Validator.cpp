@@ -2,8 +2,8 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/PortableServer/PortableServerC.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTCORBA/RT_ORB.h"
@@ -89,8 +89,8 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
   ACE_CHECK;
 
   TAO_ServerProtocolPolicy *server_protocol =
-    ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                      server_protocol_policy.in ());
+    dynamic_cast <TAO_ServerProtocolPolicy *>
+                      (server_protocol_policy.in ());
 
   RTCORBA::ProtocolList &protocols =
     server_protocol->protocols_rep ();
@@ -162,8 +162,8 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
   // Initialize to the default priority/priority model.
   CORBA::Short priority =
     TAO_INVALID_PRIORITY;
-  TAO_POA_Cached_Policies::PriorityModel rt_priority_model =
-    TAO_POA_Cached_Policies::NOT_SPECIFIED;
+  TAO::Portable_Server::Cached_Policies::PriorityModel rt_priority_model =
+    TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED;
 
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
@@ -181,7 +181,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
       ACE_CHECK;
 
       rt_priority_model =
-        TAO_POA_Cached_Policies::PriorityModel (
+        TAO::Portable_Server::Cached_Policies::PriorityModel (
           priority_model->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER));
       ACE_CHECK;
 
@@ -233,7 +233,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
   if (bands_policy != 0)
     {
       // Checks 0.
-      if (rt_priority_model == TAO_POA_Cached_Policies::NOT_SPECIFIED)
+      if (rt_priority_model == TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
         ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
       RTCORBA::PriorityBands &bands =
@@ -262,7 +262,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
         }
 
       // Check 3.
-      if (rt_priority_model == TAO_POA_Cached_Policies::SERVER_DECLARED)
+      if (rt_priority_model == TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
         {
           int match = 0;
           for (CORBA::ULong i = 0; i < bands.length (); ++i)
@@ -324,7 +324,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
   // model is SERVER_DECLARED, make sure we have at least one thread
   // lane that can provide service for the specified SERVER_DECLARED
   // priority.
-  if (rt_priority_model == TAO_POA_Cached_Policies::SERVER_DECLARED)
+  if (rt_priority_model == TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
       // If this POA is using the default thread pool (which doesn't
       // have lanes) or a thread pool without lanes, we are done with
@@ -580,8 +580,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
   ACE_CHECK_RETURN (0);
 
   TAO_RT_ORB *tao_rt_orb =
-    ACE_dynamic_cast (TAO_RT_ORB *,
-                      rt_orb.in ());
+    dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
   TAO_Thread_Pool_Manager &tp_manager =
     tao_rt_orb->tp_manager ();

@@ -24,6 +24,7 @@
 #include "ace/DLL.h"
 
 #include "Servant_Manager.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 
 class ServantLocator_i : public PortableServer::ServantLocator
 {

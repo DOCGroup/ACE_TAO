@@ -22,17 +22,16 @@ ACE_RCSID (RTPortableServer,
            RT_Servant_Dispatcher,
            "$Id$")
 
-
 TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 {
 }
 
 void
 TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
-  TAO_POA &poa,
+  TAO_Root_POA &poa,
   CORBA::Short servant_priority,
   TAO_ServerRequest &req,
-  TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
   ACE_ENV_ARG_DECL)
 {
   TAO_Service_Context &request_service_context =
@@ -40,7 +39,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Service_Context &reply_service_context = req.reply_service_context ();
 
   TAO_Thread_Pool *thread_pool =
-    (TAO_Thread_Pool *) poa.thread_pool ();
+    static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
 
   if (thread_pool != 0 &&
       thread_pool->with_lanes ())
@@ -57,7 +56,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
           /// Get the lane attribute in TSS.
           TAO_Thread_Lane *lane =
-            (TAO_Thread_Lane *) tss->lane_;
+            static_cast<TAO_Thread_Lane *> (tss->lane_);
 
           ACE_ASSERT (lane->pool ().id () ==
                       thread_pool->id ());
@@ -81,19 +80,17 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
   const char *priority_model;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
-  TAO_POA_Cached_Policies &cached_policies =
-    poa.cached_policies ();
 
   // NOT_SPECIFIED PriorityModel processing.
-  if (cached_policies.priority_model () ==
-      TAO_POA_Cached_Policies::NOT_SPECIFIED)
+  if (poa.priority_model () ==
+      TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
     {
       priority_model = "RTCORBA::NOT_SPECIFIED";
     }
 
   // CLIENT_PROPAGATED PriorityModel processing.
-  else if (cached_policies.priority_model () ==
-      TAO_POA_Cached_Policies::CLIENT_PROPAGATED)
+  else if (poa.priority_model () ==
+      TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
     {
       priority_model = "RTCORBA::CLIENT_PROPAGATED";
 
@@ -105,14 +102,14 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                                                &context) == 1)
         {
           // Extract the target priority
-          TAO_InputCDR cdr (ACE_reinterpret_cast
-                            (const char*,
-                             context->context_data.get_buffer ()),
+          TAO_InputCDR cdr (reinterpret_cast
+                            <const char*>
+                             (context->context_data.get_buffer ()),
                             context->context_data.length ());
           CORBA::Boolean byte_order;
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             ACE_THROW (CORBA::MARSHAL ());
-          cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+          cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> target_priority) == 0)
             ACE_THROW (CORBA::MARSHAL ());
@@ -126,7 +123,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
         {
           // Use default priority if none came in the request.
           // (Request must have come from a non-RT ORB.)
-          target_priority = cached_policies.server_priority ();
+          target_priority = poa.server_priority ();
         }
     }
   else
@@ -213,7 +210,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                                                CORBA::COMPLETED_NO));
 
           pre_invoke_state.state_ =
-            TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+            TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
 
           if (TAO_debug_level > 0)
             {
@@ -269,13 +266,13 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 }
 
 void
-TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
+TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
                                                           CORBA::Short servant_priority,
-                                                          TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                                          TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                                           ACE_ENV_ARG_DECL)
 {
   TAO_Thread_Pool *thread_pool =
-    (TAO_Thread_Pool *) poa.thread_pool ();
+    static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
 
   if (thread_pool == 0 ||
       thread_pool->with_lanes ())
@@ -287,11 +284,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
       return;
     }
 
-  TAO_POA_Cached_Policies &cached_policies =
-    poa.cached_policies ();
-
-  if (cached_policies.priority_model () !=
-      TAO_POA_Cached_Policies::SERVER_DECLARED ||
+  if (poa.priority_model () !=
+      TAO::Portable_Server::Cached_Policies::SERVER_DECLARED ||
       servant_priority == TAO_INVALID_PRIORITY)
     {
       //
@@ -327,20 +321,20 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
                                            CORBA::COMPLETED_NO));
 
       pre_invoke_state.state_ =
-        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
     }
 }
 
 void
-TAO_RT_Servant_Dispatcher::post_invoke (TAO_POA &poa,
-                                        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
+TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
+                                        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
 
 {
   if (pre_invoke_state.state_ ==
-      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED)
+      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED)
     {
       pre_invoke_state.state_ =
-        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::NO_ACTION_REQUIRED;
+        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::NO_ACTION_REQUIRED;
 
       ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -371,24 +365,23 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_POA &poa,
     }
 }
 
-TAO_POA *
-TAO_RT_Servant_Dispatcher::create_POA (const ACE_CString &name,
-                                       TAO_POA_Manager &poa_manager,
-                                       const TAO_POA_Policy_Set &policies,
-                                       TAO_POA *parent,
-                                       ACE_Lock &lock,
-                                       TAO_SYNCH_MUTEX &thread_lock,
-                                       TAO_ORB_Core &orb_core,
-                                       TAO_Object_Adapter *object_adapter
-                                       ACE_ENV_ARG_DECL)
+TAO_Root_POA *
+TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
+                                            TAO_POA_Manager &poa_manager,
+                                            const TAO_POA_Policy_Set &policies,
+                                            ACE_Lock &lock,
+                                            TAO_SYNCH_MUTEX &thread_lock,
+                                            TAO_ORB_Core &orb_core,
+                                            TAO_Object_Adapter *object_adapter
+                                            ACE_ENV_ARG_DECL)
 {
-  TAO_RT_POA *poa;
+  TAO_RT_POA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
                                 poa_manager,
                                 policies,
-                                parent,
+                                0,
                                 lock,
                                 thread_lock,
                                 orb_core,

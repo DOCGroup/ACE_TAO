@@ -229,7 +229,6 @@ namespace POA_Messaging
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:997
 
-#include "MessagingS_T.h"
 
 #if defined (__ACE_INLINE__)
 #include "MessagingS.inl"
