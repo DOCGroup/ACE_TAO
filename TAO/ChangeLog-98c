@@ -1,3 +1,7 @@
+Thu Jan 01 07:56:43 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.50, released Thu Jan 01 07:56:43 1998.
+
 Wed Dec 31 18:29:57 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_sequence, be_state_sequence}.cpp: Changed the way
