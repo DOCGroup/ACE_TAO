@@ -94,9 +94,9 @@ int main (int argc, char* argv[])
 
     fs::path file_path;
 
-    CommandLine::ArgumentIterator i = cl.argument_begin ();
+    CommandLine::ArgumentsIterator i = cl.arguments_begin ();
 
-    if (i != cl.argument_end ())
+    if (i != cl.arguments_end ())
     {
       try
       {
@@ -238,6 +238,30 @@ int main (int argc, char* argv[])
     context.set ("idl3::semantic-action::trace", trace);
     context.set ("cidl::semantic-action::trace", trace);
 
+    // Extract include search paths.
+    //
+
+    std::vector<fs::path> include_paths;
+
+    for (CommandLine::OptionsIterator
+           i (cl.options_begin ()), e (cl.options_end ()); i != e; ++i)
+    {
+      if (i->name () == "I")
+      {
+        include_paths.push_back (fs::path (i->value (), fs::native));
+      }
+      else if (i->name ()[0] == 'I')
+      {
+        std::string opt (i->name ());
+        std::string path (opt.begin () + 1, opt.end ());
+        include_paths.push_back (fs::path (path, fs::native));
+      }
+    }
+
+    context.set ("include-search-paths", include_paths);
+
+    // Instantiate semantic actions factory.
+    //
 
     SemanticAction::Impl::Factory actions (context, diagnostic_stream, tr);
 
@@ -255,7 +279,7 @@ int main (int argc, char* argv[])
     {
       lem_gen.generate (cl, unit);
     }
-    
+
     // Calculate the size type of everything in the AST.
     // This must be executed before the servant code generator.
     {
