@@ -449,9 +449,9 @@ DRV_parse_args(long ac, char **av)
           // If perfect_hasher is an absolute path, try to call this
           // again with 
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_IDL:Note:GPERF could not be executed. Using Dynamich Hashed OpLookup instead of Perfect Hashing\n"
-                      "To make use of Perfect Hashing\n"
-                      "\t-Build the <gperf> program at $ACE_ROOT/apps/gperf\n"
+                      "TAO_IDL: warning, gperf could not be executed, using Dynamic Hash OpLookup instead of Perfect Hashing\n"
+                      "To use Perfect Hashing\n"
+                      "\t-Build gperf at $ACE_ROOT/apps/gperf/src\n"
                       "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
                       "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details")); 
           
