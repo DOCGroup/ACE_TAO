@@ -2,6 +2,7 @@ Fri Mar  4 14:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_codegen.h:
         * TAO_IDL/be_include/be_global.h:
+        * tao/PortableServer/Operation_Table_Parameters.h:
           Removed user defined and active demux enums from the lookup strategy.
           These are not used at all anymore
 
