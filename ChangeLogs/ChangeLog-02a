@@ -1,3 +1,12 @@
+Thu Jun 15 21:30:37 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile.am (pkgincludedir):
+
+	  Corrected value for this variable.  It should have been
+	  "$(includedir)/ace" instead of "$(prefix)/include/ace."  In any
+	  case, this was more of a consistency change than anything else,
+	  since this variable is actually commented out.
+
 Thu Jun 15 20:01:35 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::tempnam): Made the (__IBMCPP__) a 'defined' check
