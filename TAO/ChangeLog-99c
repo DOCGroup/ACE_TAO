@@ -1,99 +1,105 @@
+Fri Apr 16 21:57:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/{bank,echo,grid,time}/Makefile:
+          only build if the orbsvcs library was built with
+          the Naming TAO_ORBSVCS component.
+
 Fri Apr 16 19:40:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.cpp:
-	  Okay, here goes. A recent bug report concerning crashes
-	  upon exit after inserting a union into an Any led to this
-	  discovery. When the Any goes away, it calls free_value()
-	  on the union (since it owns it). This leads eventually to
-	  TAO_Marshal_Union::deep_free(). The union wants to free
-	  its contents, so it goes to its own typecode's
-	  private_member_label() to find out which case is active.
-	  The private_state member_label_list is not constructed
-	  until a member_label is asked for, so one is often constructed
-	  at this point. It is an array of Any_ptrs, and each Any
-	  is constructed on the heap from an output CDR stream
-	  which is formed from a message block read from an input
-	  CDR stream formed from the typecode's buffer_. So far so
-	  good? The output CDR stream was constructed using the
-	  default ORB allocators. Then, when the typecode's destructor 
-	  is called, it wants to free the member_label_list, which means
-	  freeing the Any(s), which means freeing their message blocks,
-	  which means freeing their data blocks. But by this time, the
-	  ORB has gone away, so the data block(s) are hanging, and we
-	  crash. The solution is to construct the output CDR with 
-	  specified allocators, namely ACE_Allocator::instance (). This
-	  class seems to have been designed especially for problems like
-	  this, since it hangs around longer than anybody. As far as I
-	  can tell, there are no more instances in Typecode where a CDR
-	  stream hangs around, so this should be the only place where
-	  this fix is needed (but a better one will come along someday).
-	  Thanks to Irfan for mucho help with this and to Frank Buschmann 
-	  <frank.buschmann@mchp.siemens.de> for reporting the problem.
+        * tao/Typecode.cpp:
+          Okay, here goes. A recent bug report concerning crashes
+          upon exit after inserting a union into an Any led to this
+          discovery. When the Any goes away, it calls free_value()
+          on the union (since it owns it). This leads eventually to
+          TAO_Marshal_Union::deep_free(). The union wants to free
+          its contents, so it goes to its own typecode's
+          private_member_label() to find out which case is active.
+          The private_state member_label_list is not constructed
+          until a member_label is asked for, so one is often constructed
+          at this point. It is an array of Any_ptrs, and each Any
+          is constructed on the heap from an output CDR stream
+          which is formed from a message block read from an input
+          CDR stream formed from the typecode's buffer_. So far so
+          good? The output CDR stream was constructed using the
+          default ORB allocators. Then, when the typecode's destructor
+          is called, it wants to free the member_label_list, which means
+          freeing the Any(s), which means freeing their message blocks,
+          which means freeing their data blocks. But by this time, the
+          ORB has gone away, so the data block(s) are hanging, and we
+          crash. The solution is to construct the output CDR with
+          specified allocators, namely ACE_Allocator::instance (). This
+          class seems to have been designed especially for problems like
+          this, since it hangs around longer than anybody. As far as I
+          can tell, there are no more instances in Typecode where a CDR
+          stream hangs around, so this should be the only place where
+          this fix is needed (but a better one will come along someday).
+          Thanks to Irfan for mucho help with this and to Frank Buschmann
+          <frank.buschmann@mchp.siemens.de> for reporting the problem.
 
 Fri Apr 16 19:02:07 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a few warnings in g++
-	  and also added TAO_McastConfigIf and TAO_Negotiator class declarations.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a few warnings in g++
+          and also added TAO_McastConfigIf and TAO_Negotiator class declarations.
 
 Fri Apr 16 16:39:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Connect: Added a new connection handling strategy that
-	  simply blocks in recv() when waiting for a response from the
-	  server instead of waiting in the Reactor.  This strategy only
-	  works when the application does not have to worry about new
-	  requests showing up when waiting for a response. Therefore, this
-	  strategy is appropriate only for "pure" clients.
+        * tao/Connect: Added a new connection handling strategy that
+          simply blocks in recv() when waiting for a response from the
+          server instead of waiting in the Reactor.  This strategy only
+          works when the application does not have to worry about new
+          requests showing up when waiting for a response. Therefore, this
+          strategy is appropriate only for "pure" clients.
 
-	  Note that applications with nested upcalls are not "pure"
-	  clients. Also note that this strategy will only effect two way
-	  calls, since there is no waiting for one way calls.
+          Note that applications with nested upcalls are not "pure"
+          clients. Also note that this strategy will only effect two way
+          calls, since there is no waiting for one way calls.
 
-	  This strategy can also be used in an application that is both a
-	  client and a server, if the server side is handled by a separate
-	  thread and the client threads are "pure" clients.
+          This strategy can also be used in an application that is both a
+          client and a server, if the server side is handled by a separate
+          thread and the client threads are "pure" clients.
 
-	  Carlos has promised to add policies that will make the selection
-	  of these connection handling policies finer grain than the "all
-	  or nothing" selection that currently exists.  The aim would be
-	  to allow some clients (maybe invocations) to use one connection
-	  handling policy and while others to use other policies.
+          Carlos has promised to add policies that will make the selection
+          of these connection handling policies finer grain than the "all
+          or nothing" selection that currently exists.  The aim would be
+          to allow some clients (maybe invocations) to use one connection
+          handling policy and while others to use other policies.
 
-	  If applications can use this strategy, they can improve their
-	  performance since the Reactor will not get involved in this code
-	  path.
+          If applications can use this strategy, they can improve their
+          performance since the Reactor will not get involved in this code
+          path.
 
-	  Descriptive comparison of the different connection handling
-	  strategies is available in:
-	  http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/Options.html
+          Descriptive comparison of the different connection handling
+          strategies is available in:
+          http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/Options.html
 
-	  Here are some numbers that compare the effect of different
-	  policies on the performance of a simple two way call:
+          Here are some numbers that compare the effect of different
+          policies on the performance of a simple two way call:
 
-	  Policy                                            Performance        Speedup percentage
-	                                                    (calls/second)     (relative to MT)
-	  ------					    -----------        ----------------
+          Policy                                            Performance        Speedup percentage
+                                                            (calls/second)     (relative to MT)
+          ------                                            -----------        ----------------
 
-	  MT Connection Handler (with a Reactor lock)          4346                 0.0
-	  ST Connection Handler (with a Reactor lock)          4416		    1.6
-          ST Connection Handler (without a Reactor lock)       4473		    2.9
-          RW Connection Handler	                               4676		    7.6
+          MT Connection Handler (with a Reactor lock)          4346                 0.0
+          ST Connection Handler (with a Reactor lock)          4416                 1.6
+          ST Connection Handler (without a Reactor lock)       4473                 2.9
+          RW Connection Handler                                4676                 7.6
 
-	  The above numbers were obtained from the
-	  examples/POA/Generic_Servant/client and
-	  examples/POA/Explicit_Activation/server examples (with the other
-	  usual optimizations turned on) using the following configuration
-	  in loopback mode:
+          The above numbers were obtained from the
+          examples/POA/Generic_Servant/client and
+          examples/POA/Explicit_Activation/server examples (with the other
+          usual optimizations turned on) using the following configuration
+          in loopback mode:
 
-	  MSVC 6.0, release mode, NT4.0 SP 3, on a quad CPU Zeon (400 MHz)
+          MSVC 6.0, release mode, NT4.0 SP 3, on a quad CPU Zeon (400 MHz)
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
 
-	  Added the new RW connection handling option to these tests.
+          Added the new RW connection handling option to these tests.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static: Removed
-	  this file is it was now identical to the svc.conf file.
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static: Removed
+          this file is it was now identical to the svc.conf file.
 
 Fri Apr 16 17:16:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
