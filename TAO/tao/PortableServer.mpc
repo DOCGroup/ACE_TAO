@@ -26,4 +26,8 @@ project : taolib, core {
   PIDL_Files {
     PortableServer
   }
+
+  Pkgconfig_Files {
+    PortableServer/TAO_PortableServer.pc.in
+  }
 }

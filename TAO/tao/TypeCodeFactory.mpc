@@ -26,4 +26,8 @@ project : taolib, core, ifr_client {
   PIDL_Files {
     TypeCodeFactory
   }
+
+  Pkgconfig_Files {
+    TypeCodeFactory/TAO_TypeCodeFactory.pc.in
+  }
 }

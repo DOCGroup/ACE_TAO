@@ -26,4 +26,8 @@ project : taolib, core, portableserver, valuetype {
   PIDL_Files {
     Messaging
   }
+
+  Pkgconfig_Files {
+    Messaging/TAO_Messaging.pc.in
+  }
 }
