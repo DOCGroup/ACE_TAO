@@ -1,3 +1,53 @@
+Fri Jun  1 17:00:53 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/Object_Adapter.h (Servant_Upcall):
+
+	  Added "user_id" accessor and attribute members.  The "user_id"
+	  attribute is a pointer to the user/object ID of the target
+	  object (i.e. the same value  returned by
+	  PortableServer::Current::get_object_id()).
+
+	  Renamed "id_" to "system_id_" to make it obvious what this
+	  attribute represents.
+
+	* tao/PortableServer/Object_Adapter.i (id):
+
+	  Return the newly renamed "system_id_" attribute.
+
+	  (user_id):
+
+	  New accessor methods used to set and get the "user_id" member.
+
+	* tao/PortableServer/Object_Adapter.cpp (Servant_Upcall,
+	  prepare_for_upcall):
+
+	  "id_" was renamed to "system_id_."  Updated code that used the
+	  old name, accordingly.
+
+	* tao/PortableServer/POA.cpp (locate_servant_i):
+
+	  Set the "user_id" pointer in the Servant_Upcall object.  A
+	  shallow copy is done.
+
+	* tao/PortableServer/ServerRequestInfo.cpp (object_id):
+
+	  Invoke the new Servant_Upcall::user_id() method to obtain the
+	  proper ObjectId.  This fixes a bug where the system ID (used
+	  internally by TAO) was returned instead.
+
+	  Thanks to Irfan for the above changes.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):
+
+	  Ported the fix for bug 902 (see ChangeLog entry Tue May 29
+	  13:01:54 2001  Phil Mesnier  <mesnier_p@ociweb.com>) to the
+	  SSLIOP pluggable protocol.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (open):
+
+	  Portable Carlos' check for platforms that incorrectly allow the
+	  local addr and remote addr to be the same.
+
 Fri Jun  1 14:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
  
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp

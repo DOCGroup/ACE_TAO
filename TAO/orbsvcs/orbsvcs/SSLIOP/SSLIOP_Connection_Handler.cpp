@@ -95,17 +95,44 @@ TAO_SSLIOP_Connection_Handler::open (void *)
 
   // Called by the <Strategy_Acceptor> when the handler is
   // completely connected.
-  ACE_INET_Addr addr;
-
-  if (this->peer ().get_remote_addr (addr) == -1)
+  ACE_INET_Addr remote_addr;
+  if (this->peer ().get_remote_addr (remote_addr) == -1)
     return -1;
 
-  char client[MAXHOSTNAMELEN + 16];
-  if (addr.addr_to_string (client, sizeof (client)) == -1)
+  ACE_INET_Addr local_addr;
+  if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
+
+  if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
+      && local_addr.get_port_number () == remote_addr.get_port_number ())
+    {
+      if (TAO_debug_level > 0)
+        {
+          char remote_as_string[MAXHOSTNAMELEN + 16];
+          char local_as_string[MAXHOSTNAMELEN + 16];
+
+          (void) remote_addr.addr_to_string (remote_as_string,
+                                             sizeof(remote_as_string));
+          (void) local_addr.addr_to_string (local_as_string,
+                                            sizeof(local_as_string));
+          ACE_ERROR ((LM_ERROR,
+                      "TAO(%P|%t) - TAO_SSLIOP_Connection_Handler::open, "
+                      "Holy Cow! The remote addr and "
+                      "local addr are identical (%s == %s)\n",
+                      remote_as_string, local_as_string));
+        }
+
+      return -1;
+    }
 
   if (TAO_debug_level > 0)
     {
+      char client[MAXHOSTNAMELEN + 16];
+
+      // Verify that we can resolve the peer hostname.
+      if (remote_addr.addr_to_string (client, sizeof (client)) == -1)
+        return -1;
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
                   ACE_TEXT ("client <%s> on %d\n"),
@@ -114,11 +141,12 @@ TAO_SSLIOP_Connection_Handler::open (void *)
     }
 
   // Set the id in the transport now that we're active.
+  // Use C-style cast b/c otherwise we get warnings on lots of
+  // compilers.
   this->transport ()->id ((int) this->get_handle ());
 
   return 0;
 }
-
 
 int
 TAO_SSLIOP_Connection_Handler::activate (long flags,
@@ -179,7 +207,7 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) SSLIOP_Server_Connection_Handler::handle_close "
+                 "TAO (%P|%t) SSLIOP_Connection_Handler::handle_close "
                  "(%d, %d)\n",
                  handle,
                  rm));
@@ -201,7 +229,7 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Close the handle..
       if (this->get_handle () != ACE_INVALID_HANDLE)
         {
-          // Purge the entry too
+          // Mark the entry as invalid.
           this->transport ()->mark_invalid ();
 
           // Signal the transport that we will no longer have
@@ -329,11 +357,11 @@ TAO_SSLIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   result = this->transport ()->read_process_message (max_wait_time);
 
   // Now the message has been read
-  if (result == -1 && TAO_debug_level > 0)
+  if (result == -1 && TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("IIOP_Connection_Handler::read_message \n")));
+                  ACE_TEXT ("SSLIOP_Connection_Handler::read_message \n")));
 
     }
 

@@ -479,6 +479,12 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
   // the user if provided.
   this->ssl_component_.port = ssl_address.get_port_number ();
 
+  (void) this->ssl_acceptor_.acceptor().enable (ACE_CLOEXEC);
+  // This avoids having child processes acquire the listen socket
+  // thereby denying the server the opportunity to restart on a
+  // well-known endpoint.  This does not affect the aberrent behavior
+  // on Win32 platforms.
+
   if (TAO_debug_level > 5)
     {
       for (size_t i = 0; i < this->endpoint_count_; ++i)

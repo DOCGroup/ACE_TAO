@@ -303,7 +303,7 @@ TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
   if (this->servant_upcall_ != 0)
     {
       const PortableServer::ObjectId &id =
-        this->servant_upcall_->id ();
+        this->servant_upcall_->user_id ();
 
       CORBA::OctetSeq *obj_id = 0;
 
