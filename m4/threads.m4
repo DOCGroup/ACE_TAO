@@ -71,7 +71,8 @@ dnl  AC_REQUIRE([AC_LANG])
  AC_SEARCH_LIBS([thr_create], [thread],
    [
     ace_has_sthreads=yes
-    AC_DEFINE([ACE_HAS_STHREADS])
+    AC_DEFINE([ACE_HAS_STHREADS], 1, 
+	      [Define to 1 if platform has UNIX International Threads])
    ],
    [
     ace_has_sthreads=no
@@ -92,7 +93,8 @@ dnl  AC_REQUIRE([AC_LANG])
  ACE_CHECK_POSIX_THREADS(
    [
     ace_has_pthreads=yes
-    AC_DEFINE([ACE_HAS_PTHREADS])
+    AC_DEFINE([ACE_HAS_PTHREADS], 1,
+	      [Define to 1 if platform has POSIX threads])
     AC_MSG_RESULT([none required])
    ],
    [])

@@ -412,10 +412,6 @@ AH_TEMPLATE([ACE_HAS_GETPAGESIZE],
 [Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must
 be defined, except on Win32).])
 
-AH_TEMPLATE([ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS],
-[GNUC 2.7.3 mistakenly takes the template definition as the place
-   where an inline function of an argument class is first used.])
-
 AH_TEMPLATE([ACE_HAS_GNU_CSTRING_H],
 [Denotes that GNU has cstring.h as standard which redefines memchr()])
 
@@ -513,10 +509,6 @@ AH_TEMPLATE([ACE_HAS_NONCONST_SETRLIMIT],
 AH_TEMPLATE([ACE_HAS_NONCONST_WRITEV],
 [Platform omits const qualifier from iovec parameter in writev() prototype.])
 
-AH_TEMPLATE([ACE_HAS_GNUG_PRE_2_8],
-[Platform has "old" GNU compiler,  i.e. does not completely support
-   standard C++. (compiling with g++ prior to version 2.8.0)])
-
 AH_TEMPLATE([ACE_HAS_OLD_MALLOC],
 [Compiler/platform uses old malloc()/free() prototypes (ugh)])
 
@@ -563,8 +555,6 @@ AH_TEMPLATE([ACE_HAS_POWERPC_TIMER],
 [Platform supports PowerPC time-base register.])
 
 AH_TEMPLATE([ACE_HAS_PRUSAGE_T],[Platform supports the prusage_t struct])
-
-AH_TEMPLATE([ACE_HAS_PTHREADS],[Platform supports POSIX Threads])
 
 AH_TEMPLATE([ACE_HAS_PTHREADS_DRAFT4],
 [Platform supports POSIX Threads .4a Draft 4])
@@ -694,8 +684,6 @@ AH_TEMPLATE([ACE_HAS_SPARCWORKS_401_SIGNALS],
 [Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...])
 
 AH_TEMPLATE([ACE_HAS_SSIZE_T],[Compiler supports the ssize_t typedef])
-
-AH_TEMPLATE([ACE_HAS_STHREADS],[Platform supports UNIX International Threads])
 
 AH_TEMPLATE([ACE_HAS_THR_YIELD],[Platform has thr_yield()])
 
