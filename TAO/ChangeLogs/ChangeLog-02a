@@ -1,3 +1,9 @@
+Sun Aug 13 09:23:02 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/IOR_LookupTable.cpp (find_ior): 
+		 Added the function del_ior () to remove the object name
+        from the table.
+	
 Sun Aug 13 09:07:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/IOR_LookupTable.h (TAO_IOR_LookupTable):
