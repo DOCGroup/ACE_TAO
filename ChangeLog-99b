@@ -1,3 +1,9 @@
+Tue Oct 12 12:40:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/Memory_Pool.i:
+	* ace/Memory_Pool.cpp:
+	  Fixed some errors in Win32 specific code.
+
 Tue Oct 12 12:20:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-subsets.html: updated status, and added some
