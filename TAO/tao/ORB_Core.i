@@ -50,6 +50,12 @@ TAO_ORB_Core::object_ref_table (void)
   return this->object_ref_table_;
 }
 
+ACE_INLINE TAO::ObjectKey_Table &
+TAO_ORB_Core::object_key_table (void)
+{
+  return this->object_key_table_;
+}
+
 ACE_INLINE TAO_Flushing_Strategy *
 TAO_ORB_Core::flushing_strategy (void)
 {

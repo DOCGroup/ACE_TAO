@@ -1,3 +1,59 @@
+Sun May 11 10:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	The aim of this checkin is to reduce the runtime memory consumed
+        by the IORs. Every profile held by the ORB had a copy of the
+        ObjectKey which added to the memory consumed by the IORs. This
+        checkin builds a map to store and access the object key
+        efficiently.
+	
+	* tao/ObjectKey_Table.cpp:
+	* tao/ObjectKey_Table.h: Class that builds a map to store the
+	  object key. 
+	
+	* tao/Refcounted_ObjectKey.cpp:
+	* tao/Refcounted_ObjectKey.h:
+	* tao/Refcounted_ObjectKey.inl: A wrapper class for the object key
+	  that provides reference counting and automatic lifetime
+	  management to the object keys.
+	
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+	* tao/Profile.i: Have a pointer to the refcounted object key
+	  instead of the actual object key. After unmarshalling the
+	  object key from the profile we now bind it with the ObjectKey
+	  table which returns a pointer to the refcounted object key
+	  which is cached and  used during invocation. 
+	
+	* tao/IIOP_Profile.cpp: 
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.cpp: Use the refcounted object key
+	  pointer instead of object keys.
+	
+	* tao/IIOP_Transport.cpp: Removed gratuitious inclusion of the
+	  Stub.h. 
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i: ObjectKey_Table would now be a member of the
+	  ORB_Core class, initialized during the init () call and
+	  destroyed during TAO_ORB_Core::fini (). This class also provides
+	  an accessor for accessing the ObjectKey_Table.
+
+	* tao/Resource_Factory.cpp: 
+	* tao/Resource_Factory.h: Added a virtual method
+	  create_object_key_table_lock () that helps in creating the right
+	  type of lock for the ObjectKey_Table.
+	
+	* tao/default_resource.cpp:
+	* tao/default_resource.h: Implementation for
+	  create_object_key_table_lock ().
+	  
+	  Added an option -ORBObjectKeyTableLock that helps the user to
+	  configure the type of lock used.
+
+	* tao/Makefile.tao: Added the new files into the Makefile.
+
 Sun May 11 10:37:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  Checked in updates that sat in my workspace for a long time.

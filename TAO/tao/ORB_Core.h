@@ -35,6 +35,7 @@
 #include "Fault_Tolerance_Service.h"
 #include "Cleanup_Func_Registry.h"
 #include "Object_Ref_Table.h"
+#include "ObjectKey_Table.h"
 
 // Interceptor definitions.
 #include "PortableInterceptorC.h"
@@ -922,6 +923,9 @@ public:
   /// the resolve_initial_references() mechanism.
   TAO_Object_Ref_Table &object_ref_table (void);
 
+  /// Acceessor to the table that stores the object_keys.
+  TAO::ObjectKey_Table &object_key_table (void);
+
   /// Return the current request dispatcher strategy.
   TAO_Request_Dispatcher *request_dispatcher (void);
 
@@ -1095,6 +1099,9 @@ protected:
   /// reference.  It is needed for supporting local objects in the
   /// resolve_initial_references() mechanism.
   TAO_Object_Ref_Table object_ref_table_;
+
+  /// Table that stores the object key instead of caching one per-profile.
+  TAO::ObjectKey_Table object_key_table_;
 
   /// The ORBid for this ORB.
   char *orbid_;

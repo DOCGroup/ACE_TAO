@@ -202,6 +202,9 @@ public:
   /// transport cache needs to be locked  else return 0
   virtual int locked_transport_cache (void);
 
+  /// Creates a lock needed for the table that stores the object keys.
+  virtual ACE_Lock *create_object_key_table_lock (void);
+
   /// Creates the lock for the CORBA Object
   virtual ACE_Lock *create_corba_object_lock (void);
 
