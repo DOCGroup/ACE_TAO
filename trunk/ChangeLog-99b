@@ -1,5 +1,9 @@
 Wed Dec  8 10:15:20 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* bin/clone.cpp: The definition of mk_symbolic_link() was
+	  missing the third argument 'int level'.  Thanks to Jerry De
+ 	  Master <jdemaste@ipdinc.com> for reporting this.
+
 	* ace/Synch.h: Added comments to ACE_Thread_Mutex_Guard and
 	  ACE_Null_Mutex_Guard explaining that they were obsolete and
  	  should be replaced by ACE_Guard<ACE_Thread_Mutex> and
@@ -11,7 +15,8 @@ Tue Dec  7 22:53:01 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* netsvcs/lib/Client_Logging_Handler.cpp (send): Clarified that
 	  *someday* we'll improve the implementation to queue data when a
  	  connection is lost and automagically reinitiate the connection.
-  	  Thanks to <dxc@xprt.net> for motivating this.
+  	  Thanks to David X Callaway <david.x.callaway@intel.com> for
+ 	  motivating this.
 
 Tue Dec 07 22:14:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
