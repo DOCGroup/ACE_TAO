@@ -370,7 +370,7 @@ InputPath=.\CosLoadBalancing.idl
 InputName=CosLoadBalancing
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -GC -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/Loadbalancing_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -GC -I../.. -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/Loadbalancing_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -409,7 +409,7 @@ InputPath=.\CosLoadBalancing.idl
 InputName=CosLoadBalancing
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -GC -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -GC -I../.. -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -464,7 +464,7 @@ InputPath=.\LB_ORT.idl
 InputName=LB_ORT
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -Gv -DCORBA3 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -Gv -DCORBA3 -I../.. -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -502,7 +502,7 @@ InputPath=.\LB_ORT.idl
 InputName=LB_ORT
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -Gv -DCORBA3 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -Gv -DCORBA3 -I../.. -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
