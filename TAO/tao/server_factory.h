@@ -46,13 +46,13 @@ public:
   // Destructor.
 
   // = Server-side factory types.
-  typedef ACE_Creation_Strategy<TAO_OA_Connection_Handler>
+  typedef ACE_Creation_Strategy<TAO_Server_Connection_Handler>
           CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
+  typedef ACE_Accept_Strategy<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
           ACCEPT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<TAO_OA_Connection_Handler>
+  typedef ACE_Concurrency_Strategy<TAO_Server_Connection_Handler>
           CONCURRENCY_STRATEGY;
-  typedef ACE_Scheduling_Strategy<TAO_OA_Connection_Handler>
+  typedef ACE_Scheduling_Strategy<TAO_Server_Connection_Handler>
           SCHEDULING_STRATEGY;
 
   // = Factory methods for the server-side strategies.

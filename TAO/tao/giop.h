@@ -11,8 +11,23 @@
 // = DESCRIPTION
 //     GIOP data structures and support routines
 //
+//     Note that some symbols in this module are part of the
+//     "Internet" Inter-ORB Protocol (IIOP), not the General IOP.
+//     Only addressing information and certain details of connection
+//     usage are specific to IIOP; all other protocol details can be
+//     reused by ORB protocols that are built atop connection
+//     protocols other than TCP.
+//
+//     THREADING NOTE: Threads should never manipulate another
+//     thread's invocations.  In this implementation, all data
+//     structures used to represent invocations (and parts of them)
+//     are owned by the thread which created them.  Multiple threads
+//     may make of course concurrent invocations safely, since the
+//     GIOP code is reentrant.
+//
 // = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
+//     Copyright 1994-1995 by Sun Microsystems Inc., 
+//     Chris Cleeland <cleeland@cs.wustl.edu>
 // 
 // ============================================================================
 
@@ -58,26 +73,30 @@ struct TAO_IOP_TaggedProfile
 typedef CORBA_SEQUENCE <TAO_IOP_TaggedProfile> TAO_IOP_TaggedProfileSeq;
 
 struct TAO_IOP_IOR 
-// InteroperableObjectReference ... a set of protocol-specific
-// protocol profiles, plus a type ID.  Only one object is denoted by
-// all of this information.  It's OK to delete all profiles except
-// the one for the single protocol actually being used.
+  // = TITLE
+  // InteroperableObjectReference
+  //
+  // = DESCRIPTION
+  // ... a set of protocol-specific protocol profiles, plus a type ID.
+  // Only one object is denoted by all of this information.  It's OK
+  // to delete all profiles except the one for the single protocol
+  // actually being used.
 {
   char *type_id;
   TAO_IOP_TaggedProfileSeq profiles;
 };
 
 // Some protocols can be factored into a set of optional components.
-  // Use of such components is defined by the protocol's
-  // specification.
-  //
-  // Email to tag-request@omg.org to allocate tags.
+// Use of such components is defined by the protocol's specification.
+//
+// Email to tag-request@omg.org to allocate tags.
 
 typedef CORBA::ULong TAO_IOP_ComponentId;
 
 enum 
-{
+  // = DESCRIPTION
   // These are all defined by DCE-CIOP in OMG TC document 95-3-10.
+{
   TAO_IOP_TAG_DCE_STRING_BINDING = 100,// string binding handle
   TAO_IOP_TAG_DCE_BINDING_NAME = 101, // CDS/GDS/... name
   TAO_IOP_TAG_DCE_NO_PIPES = 102, // no component data
@@ -86,6 +105,8 @@ enum
   TAO_IOP_TAG_LOCATION_POLICY = 12 // octet/enum
 };
 
+struct TAO_IOP_TaggedComponent 
+  // = DESCRIPTION
   // One way to represent multicomponent profiles, e.g. as done by the
   // DCE-CIOP protocol.  One of these gets encapsulated in
   // TaggedProfile::profile_data.  TAG_MULTIPLE_COMPONENTS may be used
@@ -93,43 +114,38 @@ enum
   // protocol-specific tags facilitate simpler scanning of IORs since
   // you can be assured that each profile only has data used within a
   // single ORB protocol.
-struct TAO_IOP_TaggedComponent 
 {
   TAO_IOP_ComponentId tag;
   TAO_opaque component_data;
 };
 
-typedef CORBA_SEQUENCE <TAO_IOP_TaggedComponent> TAO_IOP_MultipleComponentProfile;
+typedef CORBA_SEQUENCE <TAO_IOP_TaggedComponent> 
+        TAO_IOP_MultipleComponentProfile;
 
 // namespace TAO_GIOP
 
-  // = TITLE
-  // Note that some symbols in this module are part of the "Internet"
-  // Inter-ORB Protocol (IIOP), not the General IOP.  Only addressing
-  // information and certain details of connection usage are specific
-  // to IIOP; all other protocol details can be reused by ORB protocols
-  // that are built atop connection protocols other than TCP.
-  //
-  // THREADING NOTE:  Threads should never manipulate another thread's
-  // invocations.  In this implementation, all data structures used to
-  // represent invocations (and parts of them) are owned by the thread
-  // which created them.  Multiple threads may make of course concurrent
-  // invocations safely, since the GIOP code is reentrant.
 struct TAO_Version
 {
   CORBA::Octet major;
   CORBA::Octet minor;
 };
 
-// GIOP protocol version information
-enum { MY_MAJOR = 1, MY_MINOR = 0 };	// 1.0
+enum 
+  // = DESCRIPTION 
+  // GIOP protocol version 1.0 information.
+{ 
+  MY_MAJOR = 1,
+  MY_MINOR = 0 
+};
 
-// All GIOP messages include a header and message type.
+
 enum TAO_GIOP_MsgType 
+  // = DESCRIPTION
+  // All GIOP messages include a header and message type.
 {
-  // Not really a message type, but needed to bring that information back somehow
+  // Not really a message type, but needed to bring that information
+  // back somehow
   TAO_GIOP_EndOfFile = -1, // "discovered" by either
-
   TAO_GIOP_Request = 0, // sent by client
   TAO_GIOP_Reply = 1, // by server
   TAO_GIOP_CancelRequest = 2, // by client
@@ -147,12 +163,13 @@ struct TAO_GIOP_MessageHeader
   CORBA::Octet message_type; // MsgType above
   CORBA::ULong message_size; // in byte_order!
 };
-// defined by GIOP 1.0 protocol
-#define	TAO_GIOP_HEADER_LEN sizeof(TAO_GIOP_MessageHeader)
 
+// defined by GIOP 1.0 protocol
+#define	TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
 
 // Support for Implicit ORB Service Context
 typedef CORBA::ULong TAO_GIOP_ServiceID;
+
 enum
 // = TITLE
 // Values for TAO_GIOP_ServiceID
@@ -170,17 +187,19 @@ struct TAO_GIOP_ServiceContext
   TAO_opaque context_data;
 };
 
-typedef CORBA_SEQUENCE <TAO_GIOP_ServiceContext> TAO_GIOP_ServiceContextList;
+typedef CORBA_SEQUENCE <TAO_GIOP_ServiceContext> 
+        TAO_GIOP_ServiceContextList;
+
 extern CORBA::TypeCode TC_ServiceContextList;
 
 // = Request, Reply headers
 
 class TAO_GIOP_RequestHeader 
-// = TITLE
-// This class embodies the header of a GIOP request.
-//
-// = NOTES
-// It used to be a <struct>, which is why everything is public.
+  // = TITLE
+  // This class embodies the header of a GIOP request.
+  //
+  // = NOTES
+  // This used to be a <struct>, which is why everything is public.
 {
 public:
   TAO_GIOP_RequestHeader (void);
@@ -211,27 +230,42 @@ public:
 
 enum TAO_GIOP_ReplyStatusType 
 {
-  TAO_GIOP_NO_EXCEPTION,                 // Request completed successfully
-  TAO_GIOP_USER_EXCEPTION,               // Request terminated with user exception
-  TAO_GIOP_SYSTEM_EXCEPTION,             // Request terminated with system exception
-  TAO_GIOP_LOCATION_FORWARD              // @@ More info
+  TAO_GIOP_NO_EXCEPTION,                 
+  // Request completed successfully
+
+  TAO_GIOP_USER_EXCEPTION,               
+  // Request terminated with user exception
+
+  TAO_GIOP_SYSTEM_EXCEPTION,             
+  // Request terminated with system exception
+
+  TAO_GIOP_LOCATION_FORWARD              
+  // @@ More info
 };
 
 struct TAO_GIOP_ReplyHeader 
 {
-  TAO_GIOP_ServiceContextList service_info; // Information 
-  CORBA::ULong request_id;      // Unique identifier of the request for which this is a reply
-  TAO_GIOP_ReplyStatusType reply_status; // Status of the reply (see above enum)
+  TAO_GIOP_ServiceContextList service_info; 
+  // Information 
+
+  CORBA::ULong request_id;      
+  // Unique identifier of the request for which this is a reply
+
+  TAO_GIOP_ReplyStatusType reply_status; 
+  // Status of the reply (see above enum)
 };
 
-// = Cancellation -- applies both to Requests and LocateRequests.
 struct TAO_GIOP_CancelRequestHeader 
+  // = DESCRIPTION
+  // Cancellation -- applies both to Requests and LocateRequests.
 {
-  CORBA::ULong request_id;      // Unique identifier of the request being cancelled
+  CORBA::ULong request_id;      
+  // Unique identifier of the request being cancelled
 };
 
-// = Location service support
 struct TAO_GIOP_LocateRequestHeader 
+  // = DESCRIPTION
+  // Location service support
 {
   CORBA::ULong request_id;
   TAO_opaque object_key;
@@ -252,11 +286,11 @@ struct TAO_GIOP_LocateReplyHeader
 
 class TAO_GIOP_Invocation 
   // = TITLE
-  // Invocation: Sends a Request, optionally reads associated Reply.
-  // Uses transport info passed in, doesn't locate anything.
+  //   Invocation: Sends a Request, optionally reads associated Reply.
+  //   Uses transport info passed in, doesn't locate anything.
   //
   // = NOTES
-  // This should maybe be moved into its own file (invoke.h?)
+  //   This should maybe be moved into its own file (invoke.h?)
 {
 public:
   TAO_GIOP_Invocation (IIOP_Object *data,
@@ -294,7 +328,7 @@ private:
   u_char buffer [CDR::DEFAULT_BUFSIZE];
   CDR stream_;
 
-  TAO_Client_Connection_Handler* handler_;
+  TAO_Client_Connection_Handler *handler_;
   // The handler for the client's connection.
 };
 
@@ -309,21 +343,19 @@ private:
 // creates).
 //
 // The optional <check_forward> routine is used to verify that the
-// request is to be delivered within this process by
-// <handle_request>.  Each call to <handle_request> is preceded by a
-// call to this routine if it's provided.  It's used when handling
-// GIOP "Request" messages as well as GIOP "LocateRequest" messages,
-// and returns an enum to indicate overal status (LocateStatusType)
-// as well as an objref in the case of OBJECT_FORWARD.  That objref
-// is released.
+// request is to be delivered within this process by <handle_request>.
+// Each call to <handle_request> is preceded by a call to this routine
+// if it's provided.  It's used when handling GIOP "Request" messages
+// as well as GIOP "LocateRequest" messages, and returns an enum to
+// indicate overal status (LocateStatusType) as well as an objref in
+// the case of OBJECT_FORWARD.  That objref is released.
 // 
 // Return: 1==success,0==EOF,-1==error
 
 // deprecated
-typedef TAO_GIOP_LocateStatusType
-(*TAO_GIOP_ForwardFunc) (TAO_opaque &,
-                         CORBA::Object_ptr &,
-                         void *);
+typedef TAO_GIOP_LocateStatusType (*TAO_GIOP_ForwardFunc) (TAO_opaque &,
+                                                           CORBA::Object_ptr &,
+                                                           void *);
 
 // deprecated
 typedef void (*TAO_GIOP_RequestHandler) (TAO_GIOP_RequestHeader &,
@@ -355,11 +387,11 @@ public:
                                CORBA::Environment &env);
 #endif /* 0 */
 
-  static CORBA::Boolean send_request (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *&handler,
+  static CORBA::Boolean send_request (TAO_SVC_HANDLER *&handler,
                                       CDR &stream);
   // Send message, returns TRUE if success, else FALSE.
 
-  static TAO_GIOP_MsgType recv_request (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *&handler,
+  static TAO_GIOP_MsgType recv_request (TAO_SVC_HANDLER *&handler,
                                         CDR &msg, 
                                         CORBA::Environment &env);
   // Reads message, returns message type from header.
