@@ -40,7 +40,10 @@ public:
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
 			     const AVStreams::flowSpec &/* the_flows */,
-			     CORBA::Environment &ACE_TRY_ENV);
+			     CORBA::Environment &ACE_TRY_ENV)
+	                    ACE_THROW_SPEC(( CORBA::SystemException,
+					     AVStreams::noSuchFlow,
+					     AVStreams::QoSRequestFailed ));
 protected:
   TAO_AV_Callback callback_;
   // Application callback.
