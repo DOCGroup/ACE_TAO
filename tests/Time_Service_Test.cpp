@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Time_Service_Test
 //
@@ -18,7 +18,7 @@
 //
 // = AUTHOR
 //    Prashant Jain
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -55,9 +55,9 @@ main (int, char *[])
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%n %p.\n", "Server fork failed"), 0);
+    ACE_ERROR_RETURN ((LM_DEBUG, "%n; %p (%s).\n",
+                       "Server fork failed", APPLICATION), -1);
   else
-    ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
 
   ACE_OS::sleep (3);
 
@@ -66,9 +66,10 @@ main (int, char *[])
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Clerk fork failed"), 0);
+    ACE_ERROR_RETURN ((LM_DEBUG, "%n; %p: (%s).\n",
+                       "Clerk fork failed", APPLICATION), -1);
   else
-    ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", clerk.getpid ()));
+    ACE_DEBUG ((LM_DEBUG, "Clerk forked with pid = %d.\n", clerk.getpid ()));
 
   ACE_DEBUG ((LM_DEBUG, "Sleeping...\n"));
   ACE_OS::sleep (10);
