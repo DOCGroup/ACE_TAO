@@ -55,7 +55,6 @@ DIRS  = CDR \
 	Single_Read \
 	QtTests \
 	Multiple \
-	LongWrites \
 	Crashed_Callback \
 	Client_Leaks \
 	Server_Leaks \

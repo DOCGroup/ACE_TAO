@@ -109,6 +109,11 @@ main (int argc, char *argv[])
                   task0.successful_calls (),
                   task0.timed_out_calls ()));
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "Task 1: Successful calls = %d, timed out calls = %d\n",
+                  task1.successful_calls (),
+                  task1.timed_out_calls ()));
+
       // No more than 5 % of the calls are allowed to have a too big
       // difference
       if (task0.too_big_difference_calls () > iterations/20
@@ -137,10 +142,6 @@ main (int argc, char *argv[])
                       "expected for task 0\n"));
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Task 1: Successful calls = %d, timed out calls = %d\n",
-                  task1.successful_calls (),
-                  task1.timed_out_calls ()));
       if (task1.successful_calls () != 0)
         {
           ACE_ERROR ((LM_ERROR,

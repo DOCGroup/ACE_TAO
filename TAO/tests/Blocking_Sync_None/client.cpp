@@ -133,12 +133,19 @@ main (int argc, char *argv[])
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      if (blocked_calls > iterations / 20)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: More than 5% (%d) of the calls blocked\n",
+                      blocked_calls));
+          return 1;
+        }
+
       if (blocked_calls != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "ERROR: Some (%d) SYNC_NONE calls blocked\n",
+                      "Warning: Some (%d) SYNC_NONE calls blocked\n",
                       blocked_calls));
-          return 1;
         }
     }
   ACE_CATCHANY

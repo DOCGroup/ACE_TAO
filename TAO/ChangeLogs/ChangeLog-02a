@@ -1,12 +1,54 @@
+Tue Apr 24 16:31:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Twoways/Session.h:
+          Fixed to compile on single-threaded platforms.
+
+        * tests/Blocking_Sync_None/client.cpp:
+          Only print an error message if more than 5% of the calls block,
+          otherwise just print a warning.
+
+        * tests/MT_Timeout/client.cpp:
+          Re-order debug messages to make them more readable.
+
+        * tests/Oneway_Buffering/client.cpp:
+          Be more tolerant about when the messages are actually flushed.
+
+        * tests/Makefile:
+        * tests/README:
+        * tests/LongWrites/Coordinator.cpp:
+        * tests/LongWrites/Coordinator.h:
+        * tests/LongWrites/LongWrites.dsw:
+        * tests/LongWrites/Makefile:
+        * tests/LongWrites/Makefile.bor:
+        * tests/LongWrites/README:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender_Task.cpp:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/Test.idl:
+        * tests/LongWrites/client.bor:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/run_test.pl:
+        * tests/LongWrites/server.bor:
+        * tests/LongWrites/server.cpp:
+        * tests/LongWrites/server.dsp:
+        * tests/LongWrites/svc.conf:
+          Removed the regression test has been superseeded by Big_Oneways,
+          Big_Twoways and the host of regression tests for bug 132.
+
 Tue Apr 24 17:51:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/tutorials/Quoter/On_Demand_Activation/index.html: Fixed a 
-	  couple of misplaced links.  Thanks to Edan Ayal
- 	  <edanayal@yahoo.com> for reporting this.
-	
-	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_i.cpp (get_stock): 
-	  Renamed two misleading local variables named liked members.
-  	  Thanks to Edan Ayal <edanayal@yahoo.com> for reporting this.
+        * docs/tutorials/Quoter/On_Demand_Activation/index.html: Fixed a
+          couple of misplaced links.  Thanks to Edan Ayal
+          <edanayal@yahoo.com> for reporting this.
+
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_i.cpp (get_stock):
+          Renamed two misleading local variables named liked members.
+          Thanks to Edan Ayal <edanayal@yahoo.com> for reporting this.
 
 Tue Apr 24 15:38:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 

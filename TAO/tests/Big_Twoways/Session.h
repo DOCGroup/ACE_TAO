@@ -93,7 +93,12 @@ private:
   Session_Task task_;
 
   /// Barrier to start all threads simultaenously
-  ACE_Thread_Barrier barrier_;
+#if defined(ACE_HAS_THREADS)
+  typedef ACE_Thread_Barrier Barrier;
+#else
+  typedef ACE_Null_Barrier Barrier;
+#endif /* ACE_HAS_THREADS */
+  Barrier barrier_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
