@@ -970,15 +970,8 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   <TR>
     <TD><CODE>-ORBReactorRegistry</CODE> <EM>registry_type</EM></TD>
     <TD><a name="-ORBReactorRegistry"></a>
-      Select the type of reactor registry.
-      Currently two implementations are provided:
-      <B>single</B> uses a single reactor per ORB, this is the default
-            and is sufficient for most applications.
-      Applications with stringent QoS requirements may prefer
-      the <B>per-priority</B> strategy, in this case threads at
-      different CORBA priorities are assigned different
-      reactors.  This last option is usually used in conjunction with
-      the endpoint-per-priority concurrency model.
+      This option is no longer supported.  The Advanced Resource
+      Factory will show an error if you attempt its use.
     </TD>
   </TR>
 </TABLE>
