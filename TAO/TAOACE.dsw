@@ -1190,6 +1190,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
 }}}
 
 ###############################################################################
