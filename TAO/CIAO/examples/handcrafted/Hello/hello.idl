@@ -6,8 +6,6 @@
 
 interface Hello
 {
-  // Return the greating string as:
-  //   "Greeting from <helloname>.  How are you, <username>?"
   string sayhello (in string username);
 };
 
