@@ -5,6 +5,7 @@
 
 ACE_RCSID(Interceptors, interceptors, "$Id$")
 
+#if (TAO_HAS_INTERCEPTORS == 1)
   //const CORBA::ULong request_ctx_id = 0xdead;
   //const CORBA::ULong reply_ctx_id = 0xbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
@@ -274,3 +275,4 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
               e->_info ()));
 
 }
+#endif /* (TAO_HAS_INTERCEPTORS == 1) */

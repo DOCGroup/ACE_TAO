@@ -16,7 +16,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-// Forward Declarations
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 class Echo_Client_Request_Interceptor
 :  public PortableInterceptor::ClientRequestInterceptor//,
@@ -111,4 +111,6 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif /* (TAO_HAS_INTERCEPTORS == 1) */
 #endif /* TAO_INTERCEPTORS_H */

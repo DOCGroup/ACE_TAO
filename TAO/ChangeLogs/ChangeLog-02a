@@ -1,3 +1,20 @@
+Tue Oct  3 13:42:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Portable_Interceptors/Dynamic/run_test.pl:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl:
+	  Fixed incorrect lib include paths.
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.h:
+	* tests/Portable_Interceptors/Dynamic/client.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.h:
+	* tests/Portable_Interceptors/Dynamic/server.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+	  Fixed Minimum CORBA build errors.
+
 Tue Oct 03 12:48:10 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/MProfile.i (policy_list):
