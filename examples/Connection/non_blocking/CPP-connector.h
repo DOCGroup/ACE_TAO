@@ -24,7 +24,7 @@ public:
 
 protected:
   // = These methods implement the State pattern.
-  int idle (void);
+  int uninitialized (void);
   int connected (void);
   int stdio (void);
 

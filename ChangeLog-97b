@@ -1,4 +1,12 @@
-Sun Oct 26 17:53:56 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+Sun Oct 26 20:03:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/IPC_SAP.cpp,
+	  ace/IO_SAP.cpp: Make sure that we don't use fcntl() when
+	  we're compiling on VXWORKS since it's not defined...
+
+	* examples/Connection/non_blocking/CPP-connector.cpp: Changed the
+ 	  method named idle() to uninitialized() since idle() is now
+ 	  defined on ACE_Svc_Handler.
 
 	* ace/OS.h: Added the TAO_DEFAULT_SERVER_PORT to OS.h.
 
