@@ -51,9 +51,9 @@ receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
   // they were pushed onto the stack since this is an "ending"
   // interception point.
 
-  for (size_t i = this->stack_size_ - 1;
-       i >= 0 && i <= this->len_;
-       --i) 
+  // Unwind the stack.
+  size_t len = this->stack_size_;
+  for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
       // invoked.  This is necessary to prevent an interceptor already
@@ -61,8 +61,9 @@ receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
       // invoked in another "ending" interception point.
       --this->stack_size_;
 
-      this->interceptors_[i]->receive_reply (ri
-                                             TAO_ENV_ARG_PARAMETER);
+      this->interceptors_[this->stack_size_]->receive_reply (
+        ri
+        TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -83,8 +84,8 @@ receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
   // interception point.
 
   // Unwind the flow stack.
-  for (size_t i = this->stack_size_ - 1;
-       i >= 0 && i <= this->len_; --i)
+  size_t len = this->stack_size_;
+  for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
       // invoked.  This is necessary to prevent an interceptor already
@@ -92,8 +93,9 @@ receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
       // invoked in another "ending" interception point.
       --this->stack_size_; 
 
-      this->interceptors_[i]->receive_exception (ri
-                                                 TAO_ENV_ARG_PARAMETER);
+      this->interceptors_[this->stack_size_]->receive_exception (
+        ri
+        TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -160,9 +162,9 @@ send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
   // they were pushed onto the stack since this is an "ending"
   // interception point.
 
-  for (size_t i = this->stack_size_ - 1;
-       i >= 0 && i <= this->len_;
-       --i)
+  // Unwind the stack.
+  size_t len = this->stack_size_;
+  for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
       // invoked.  This is necessary to prevent an interceptor already
@@ -170,8 +172,9 @@ send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
       // invoked in another "ending" interception point.
       --this->stack_size_;      
 
-      this->interceptors_[i]->send_reply (ri
-                                          TAO_ENV_ARG_PARAMETER);
+      this->interceptors_[this->stack_size_]->send_reply (
+        ri
+        TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -191,9 +194,8 @@ send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
   // side interception point.
 
   // Unwind the flow stack.
-  for (size_t i = this->stack_size_ - 1;
-       i >= 0 && i <= this->len_;
-       --i)
+  size_t len = this->stack_size_;
+  for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
       // invoked.  This is necessary to prevent an interceptor already
@@ -201,8 +203,9 @@ send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
       // invoked in another "ending" interception point.
       --this->stack_size_;  
 
-      this->interceptors_[i]->send_exception (ri
-                                              TAO_ENV_ARG_PARAMETER);
+      this->interceptors_[this->stack_size_]->send_exception (
+        ri
+        TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
