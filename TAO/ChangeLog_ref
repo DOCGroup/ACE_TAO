@@ -10,6 +10,8 @@ Wed Sep 17 16:04:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableServer/Operation_Table.h: Added typedef's for the
 	  function pointers used in this class.
 
+	* TAOACE.dsw: Added dependency for the DynamicInterface project. 
+
 Tue Sep 16 16:56:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: The smart
