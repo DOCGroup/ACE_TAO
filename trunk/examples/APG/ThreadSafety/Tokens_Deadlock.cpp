@@ -2,6 +2,7 @@
 
 #include "ace/Local_Tokens.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
