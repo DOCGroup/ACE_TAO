@@ -49,8 +49,8 @@ CORBA_Any::value (void) const
 // Default "Any" constructor -- initializes to nulls per the
 // OMG C++ mapping.
 
-// NOTE: null (zero) typecode pointers are also treated as // the null
-typecode ...
+// NOTE: null (zero) typecode pointers are also treated as the null
+// typecode ...
 
 CORBA_Any::CORBA_Any (void)
   : type_ (CORBA::_tc_null),
