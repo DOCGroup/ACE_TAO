@@ -25,8 +25,8 @@
 #  orbix            Enable use of Orbix.
 #  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
-#  purify           Purify all executables.
-#  quantify         Quantify all executables.
+#  purify           Purify all executables.  purify must be in user's PATH!
+#  quantify         Quantify all executables.  quantify must be in user's PATH!
 #  repo             Use GNU template repository (g++ with repo patches and
 #                     egcs only).
 #  rtti             Enable run-time type identification.  On some platforms,
@@ -92,7 +92,9 @@
 #  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
 #               The base directory in which Pure products will produce
-#               instrumented libraries.
+#               instrumented libraries.  If you don't want that to be below
+#               /tmp, set this variable in your environment or on the make
+#               command line.
 #  PURE_CACHE_DIR
 #               The full name of the directory in which Pure produces will
 #               produce instrumented libraries.
@@ -350,15 +352,19 @@ PURE_CACHE_BASE_DIR = /tmp/purifycache
 PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
 
 ifdef purify
+  #### Pick up Purify directory from the users PATH.
+  ACE_PURIFY_DIR := \
+    $(shell type purify | sed -e 's/.* is //' -e 's%/purify$$%%')
+
   #### You might want to adjust the Purify options below.
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
   #### SIGINT is used by the ACE Thread_Manager_Test.
-  PURELINK += purify -best-effort -chain-length=20 \
-             -cache-dir=$(PURE_CACHE_DIR) \
-             -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
-             -max_threads=100
-  CFLAGS += -DACE_PURIFY
+  PURELINK += purify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
+              -chain-length=20 -fds-inuse-at-exit=no -ignore-signals=SIGINT \
+              -inuse-at-exit -max_threads=100
+  CCFLAGS += -DACE_HAS_PURIFY
+  CPPFLAGS += -I$(ACE_PURIFY_DIR)
 endif # purify
 
 ifeq ($(quantify),0)
@@ -366,12 +372,17 @@ ifeq ($(quantify),0)
 endif # quantify
 
 ifdef quantify
+  #### Pick up Quantify directory from the users PATH.
+  ACE_QUANTIFY_DIR := \
+    $(shell type quantify | sed -e 's/.* is //' -e 's%/quantify$$%%')
+
   #### You might want to adjust the Quantify options below.
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
-  PRELINK += quantify -best-effort -max_threads=100 \
-             -cache-dir=$(PURE_CACHE_DIR)
-  CFLAGS += -DACE_QUANTIFY
+  PRELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
+             -max_threads=100
+  CCFLAGS += -DACE_HAS_QUANTIFY -DACE_QUANTIFY -Dquantify
+  CPPFLAGS += -I$(ACE_QUANTIFY_DIR)
 endif # quantify
 
 ifeq ($(repo),0)
