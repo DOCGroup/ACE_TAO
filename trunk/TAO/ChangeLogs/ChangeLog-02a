@@ -1,3 +1,10 @@
+Fri Jun 15 20:24:19 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Table.cpp:
+
+	  Removed three unnecessary Hash Map related template
+	  instantiations.
+
 Fri Jun 15 21:14:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * tao/RTCORBA/Makefile:
