@@ -9,6 +9,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Reactor.i"
