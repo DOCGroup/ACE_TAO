@@ -6,8 +6,6 @@
 #include "ace/Cache_Heap_T.h"
 #include "ace/Cache_Manager_T.h"
 
-ACE_RCSID(ace, Cache_Heap_T, "$Id$")
-
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::ACE_Cache_Heap (ACE_Allocator *alloc,
                                                        size_t maxsize)
@@ -21,16 +19,17 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::ACE_Cache_Heap (ACE_Allocator *alloc,
   size_t memsize
     = this->maxsize_ * sizeof (Cache_Heap_Item *);
 
-  // @@ James, can you please use the right ACE_* macro here?
   this->heap_ = (Cache_Heap_Item **) this->allocator_->malloc (memsize);
-
   if (this->heap_)
-    for (size_t i = 0; i < this->maxsize_; i++)
-      this->heap_[i] = 0;
+    {
+      for (size_t i = 0; i < this->maxsize_; i++)
+        this->heap_[i] = 0;
+    }
   else
-    // should indicate something.
-    this->maxsize_ = 0;
-
+    {
+      this->maxsize_ = 0;
+      // should indicate something
+    }
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
@@ -39,12 +38,14 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~ACE_Cache_Heap (void)
   if (this->heap_ != 0)
     {
       for (size_t i = 0; i < this->maxsize_; i++)
-        if (this->heap_[i])
-          {
-            ACE_DES_FREE (this->heap_[i], this->allocator_->free,
-                          Cache_Heap_Item);
-            this->heap_[i] = 0;
-          }
+        {
+          if (this->heap_[i])
+            {
+              ACE_DES_FREE (this->heap_[i], this->allocator_->free,
+                            Cache_Heap_Item);
+              this->heap_[i] = 0;
+            }
+        }
       this->allocator_->free (this->heap_);
       this->heap_ = 0;
     }
@@ -61,7 +62,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_empty (void) const
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
 ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_full (void) const
 {
-  return this->size_ == this->maxsize_;
+  return (this->size_ == this->maxsize_);
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> size_t
@@ -85,7 +86,6 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
   size_t memsize
     = new_maxsize * sizeof (Cache_Heap_Item *);
 
-  // @@ JAmes, can you please use the right ACE_*_RETURN macro here?
   Cache_Heap_Item **new_heap
     = (Cache_Heap_Item **) this->allocator_->malloc (memsize);
   if (new_heap)
@@ -99,7 +99,6 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
         else
           new_heap[i] = 0;
 
-      // @@ James, why is this volatile?!
       Cache_Heap_Item ** volatile temp = this->heap_;
       this->heap_ = new_heap;
       this->maxsize_ = new_maxsize;
@@ -142,9 +141,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
   ACE_NEW_MALLOC_RETURN (item,
                          (Cache_Heap_Item *)
                          this->allocator_->malloc (sizeof (Cache_Heap_Item)),
-                         Cache_Heap_Item (ext_id,
-                                          int_id),
-                         -1);
+                         Cache_Heap_Item (ext_id, int_id), -1);
 
   this->insert_i (item);
 
@@ -201,6 +198,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i (size_t pos)
     }
 
   this->heap_[0] = item;
+
   this->remove_i ();
 }
 
@@ -212,14 +210,14 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
     return -1;
 
   Cache_Heap_Item *item = this->heap_[0];
+  item->int_id_->heap_item (0);
 
   this->remove_i ();
 
   ext_id = item->ext_id_;
   int_id = item->int_id_;
 
-  ACE_DES_FREE (item,
-                this->allocator_->free, Cache_Heap_Item);
+  ACE_DES_FREE (item, this->allocator_->free, Cache_Heap_Item);
   item = 0;
   return 0;
 }
@@ -230,13 +228,13 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
   if (item == 0)
     return 0;
 
-  // James, please use the right ACE_*_cast() macro here.
   Cache_Heap_Item *real_item = (Cache_Heap_Item *) item;
 
   // Make sure the item is where it thinks it is.
   if (this->heap_[real_item->heap_idx_] != real_item)
     return -1;
 
+  real_item->int_id_->heap_item (0);
   this->remove_i (real_item->heap_idx_);
 
   ACE_DES_FREE (real_item, this->allocator_->free, Cache_Heap_Item);
@@ -251,7 +249,6 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
   if (item == 0)
     return 0;
 
-  // James, please use the right ACE_*_cast() macro here.
   Cache_Heap_Item *real_item = (Cache_Heap_Item *) item;
 
   // Make sure the item is where it thinks it is.
@@ -263,6 +260,7 @@ ACE_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
 
   return 0;
 }
+
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 ACE_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::
@@ -279,5 +277,6 @@ ACE_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::priority (void)
 {
   return this->int_id_->priority ();
 }
+
 
 #endif /* ACE_CACHE_HEAP_T_CPP */
