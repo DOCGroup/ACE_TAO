@@ -81,7 +81,6 @@ TAO_IIOP_Handler_Base::resume_handler (ACE_Reactor *)
   return -1;
 }
 
-// @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
     orb_core_ (TAO_ORB_Core_instance ()),
@@ -90,13 +89,21 @@ TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
 }
 
-// @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_IIOP_Handler_Base (orb_core),
     orb_core_ (orb_core),
     tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
+}
+
+TAO_Server_Connection_Handler::~TAO_Server_Connection_Handler (void)
+{
+  if (iiop_transport_)
+    {
+      delete iiop_transport_;
+      iiop_transport_ = 0;
+    }
 }
 
 TAO_Transport *
@@ -619,7 +626,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // allocator. It is better to use a message block than a on stack
   // buffer because we cannot minimize memory copies in that case.
   TAO_InputCDR input (this->orb_core_->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
-                      TAO_ENCAP_BYTE_ORDER);
+                      TAO_ENCAP_BYTE_ORDER,
+                      this->orb_core_);
 
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
@@ -715,7 +723,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
               ACE_ERROR ((LM_ERROR,
                           "(%P|%t) exception thrown "
                           "but client is not waiting a response\n"));
-              ACE_TRY_ENV.print_exception ("");
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO: ");
             }
 
           // It is unfotunate that an exception (probably a system
@@ -797,8 +805,11 @@ TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager
 // @@ Need to get rid of the Transport Objects!
 TAO_Client_Connection_Handler::~TAO_Client_Connection_Handler (void)
 {
-  delete this->iiop_transport_;
-  this->iiop_transport_ = 0;
+  if (iiop_transport_)
+    {
+      delete this->iiop_transport_;
+      this->iiop_transport_ = 0;
+    }
 }
 
 TAO_Transport *
@@ -1406,26 +1417,21 @@ TAO_MT_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 
 // ****************************************************************
 
-#define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+// @@ Fred&Ossama: Could somebody please check up the location of
+//    these template instantiations? For example the Hash_Map from
+//    ACE_INET_Addr to TAO_Object_Adapter does not seems to belong in
+//    this file, maybe in ORB.cpp???
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
-template class TAO_SVC_TUPLE;
-template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
+
+
+template class ACE_Unbounded_Set<ACE_INET_Addr>;
+template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
-#pragma instantiate TAO_SVC_TUPLE
-#pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<int, TAO_SVC_TUPLE*>
+
+#pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_INET_Addr>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -32,11 +32,12 @@
 
 // Forward Decls
 class TAO_Transport;
+class TAO_ORB_Core;
+class TAO_ORB_Core_TSS_Resources;
+
 class TAO_IIOP_Transport;
 class TAO_IIOP_Client_Transport;
 class TAO_IIOP_Server_Transport;
-class TAO_ORB_Core;
-class TAO_ORB_Core_TSS_Resources;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -212,6 +213,7 @@ class TAO_Export TAO_Server_Connection_Handler : public TAO_IIOP_Handler_Base
 public:
   TAO_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  ~TAO_Server_Connection_Handler (void);
   // Constructor.
 
   virtual int open (void *);

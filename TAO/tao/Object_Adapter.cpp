@@ -983,6 +983,7 @@ template class ACE_Map_Reverse_Iterator<key, value, ACE_Null_Mutex>;
 template class ACE_Map_Entry<key, value>;
 
 template class ACE_Unbounded_Set<TAO_POA_Manager *>;
+template class ACE_Node<TAO_POA_Manager *>;
 template class ACE_Unbounded_Set_Iterator<TAO_POA_Manager *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -1060,6 +1061,7 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 #pragma instantiate ACE_Map_Entry<key, value>
 
 #pragma instantiate ACE_Unbounded_Set<TAO_POA_Manager *>
+#pragma instantiate ACE_Node<TAO_POA_Manager *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA_Manager *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

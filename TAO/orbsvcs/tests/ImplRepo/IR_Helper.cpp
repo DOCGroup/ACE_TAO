@@ -1,10 +1,11 @@
 // $Id$
 
 #include "IR_Helper.h"
-#include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
 #include "orbsvcs/PingS.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/IIOP_Acceptor.h"
+#include "ace/Get_Opt.h"
+#include "ace/Read_Buffer.h"
 
 class Ping_i: public POA_Ping_Object
   // = TITLE
@@ -166,8 +167,30 @@ IR_Helper::read_ir_ior (CORBA_Environment &ACE_TRY_ENV)
 void
 IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
 {
+  // @@ Don't use the ORB_Core_instance() keep a pointer to the ORB
+  //    and use the orb_core() accessor
+  TAO_Acceptor_Registry* registry =
+    TAO_ORB_Core_instance ()->acceptor_registry ();
+
+  TAO_Acceptor *acceptor = 0;
+  TAO_AcceptorSetItor end = registry->end ();
+  for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
+    {
+      if ((*i)->tag () == TAO_IOP_TAG_INTERNET_IOP)
+        {
+          acceptor = (*i);
+          break;
+        }
+    }
+  if (acceptor == 0)
+    ACE_THROW (CORBA::NO_IMPLEMENT());
+
+  TAO_IIOP_Acceptor* iiop_acceptor =
+    ACE_dynamic_cast (TAO_IIOP_Acceptor*,acceptor);
+
   // Get our host and port and convert it to something we can use.
-  ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
+  const ACE_INET_Addr& my_addr  = iiop_acceptor->address ();
+
   Implementation_Repository::INET_Addr my_ir_addr;
   my_ir_addr.port_ = my_addr.get_port_number ();
   my_ir_addr.host_ = CORBA::string_dup (my_addr.get_host_name ());

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/Dynamic_Service.h"
@@ -45,6 +46,42 @@ TAO_ORB_Core::root_poa (const char *adapter_name,
   return this->root_poa_;
 }
 
+ACE_INLINE void
+TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
+{
+  this->opt_for_collocation_ = opt;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::optimize_collocation_objects (void) const
+{
+  return this->opt_for_collocation_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::using_collocation (CORBA::Boolean b)
+{
+  this->optimize_collocation_objects (b);
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::using_collocation (void) const
+{
+  return this->optimize_collocation_objects ();
+}
+
+ACE_INLINE void
+TAO_ORB_Core::use_global_collocation (CORBA::Boolean opt)
+{
+  this->use_global_collocation_ = opt;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::use_global_collocation (void) const
+{
+  return this->use_global_collocation_;
+}
+
 ACE_INLINE
 TAO_ORB_Parameters *
 TAO_ORB_Core::orb_params(void)
@@ -66,36 +103,37 @@ TAO_ORB_Core::connector_registry (void)
   return TAO_OC_RETRIEVE (connector_registry);
 }
 
-ACE_INLINE TAO_Acceptor *
-TAO_ORB_Core::acceptor (TAO_Acceptor *a)
+ACE_INLINE TAO_Acceptor_Registry *
+TAO_ORB_Core::acceptor_registry (TAO_Acceptor_Registry *ar)
 {
-  TAO_Acceptor *old_acceptor = this->acceptor_;
-  this->acceptor_ = a;
-  return old_acceptor;
+  TAO_Acceptor_Registry *old_ar = this->acceptor_registry_;
+  this->acceptor_registry_ = ar;
+  return old_ar;
 }
 
-ACE_INLINE TAO_Acceptor *
-TAO_ORB_Core::acceptor (void)
+
+ACE_INLINE TAO_ProtocolFactorySet *
+TAO_ORB_Core::protocol_factories (TAO_ProtocolFactorySet *pf)
 {
-  return TAO_OC_RETRIEVE (acceptor);
+  TAO_ProtocolFactorySet *old = this->protocol_factories_;
+  this->protocol_factories_ = pf;
+  return old;
+}
+
+ACE_INLINE TAO_ProtocolFactorySet *
+TAO_ORB_Core::protocol_factories (void)
+{
+  return TAO_OC_RETRIEVE (protocol_factories);
+}
+
+ACE_INLINE TAO_Acceptor_Registry *
+TAO_ORB_Core::acceptor_registry (void)
+{
+  return TAO_OC_RETRIEVE (acceptor_registry);
 }
 
 #undef TAO_OC_RETRIEVE
 #undef TAO_TRF
-
-ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::using_collocation (void)
-{
-  return this->opt_for_collocation_;
-}
-
-ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::using_collocation (CORBA::Boolean use_col)
-{
-  CORBA::Boolean retv = this->opt_for_collocation_;
-  this->opt_for_collocation_ = use_col;
-  return retv;
-}
 
 ACE_INLINE ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
@@ -127,3 +165,9 @@ TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 // ****************************************************************
+
+ACE_INLINE TAO_ORB_Table*
+TAO_ORB_Table::instance (void)
+{
+  return ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>::instance ();
+}

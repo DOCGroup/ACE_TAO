@@ -1,14 +1,17 @@
 // $Id$
 
 #include "tao/default_resource.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/ORB_Core.h"
+#include "tao/debug.h"
+
 #include "ace/Select_Reactor.h"
 #include "ace/XtReactor.h"
 #include "ace/FlReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
+#include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_resource.i"
@@ -19,7 +22,6 @@ ACE_RCSID(tao, default_resource, "$Id$")
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
     poa_source_ (TAO_GLOBAL),
-    collocation_table_source_ (TAO_GLOBAL),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_source_ (TAO_GLOBAL)
 {
@@ -144,23 +146,10 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             else
               ACE_DEBUG ((LM_DEBUG,
                           "TAO_Default_Factory - unknown argument"
-                          " <%s> for -ORBreactorytype\n", name));
+                          " <%s> for -ORBreactortype\n", name));
           }
       }
 
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBcoltable") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name, "global") == 0)
-              collocation_table_source_ = TAO_GLOBAL;
-            else if (ACE_OS::strcasecmp (name, "orb") == 0)
-              collocation_table_source_ = TAO_TSS;
-          }
-      }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBinputcdrallocator") == 0)
       {
         curarg++;
@@ -172,6 +161,20 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->cdr_allocator_source_ = TAO_GLOBAL;
             else if (ACE_OS::strcasecmp (name, "tss") == 0)
               this->cdr_allocator_source_ = TAO_TSS;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBprotocolfactory") == 0)
+      {
+        TAO_ProtocolFactorySet *pset = this->get_protocol_factories ();
+        curarg++;
+        if (curarg < argc)
+          {
+            TAO_Protocol_Item *item = new TAO_Protocol_Item (argv[curarg]);
+            if (pset->insert (item) == -1)
+              {
+                ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) Unable to add protocol factories for %s: %p\n", argv[curarg]));
+              }
           }
       }
 
@@ -200,6 +203,69 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
   return 0;
 }
 
+int
+TAO_Default_Resource_Factory::init_protocol_factories (void)
+{
+  TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
+  TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
+
+  if (factory == end)
+    {
+      TAO_Protocol_Item *item =
+        new TAO_Protocol_Item ("IIOP_Factory");
+      item->factory (
+          ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory"));
+      this->protocol_factories_.insert (item);
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded default protocol <IIOP_Factory>\n"));
+        }
+
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+      item =
+        new TAO_Protocol_Item ("UIOP_Factory");
+      item->factory (
+          ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory"));
+      this->protocol_factories_.insert (item);
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));
+        }
+#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+      return 0;
+    }
+
+  for ( ; factory != end ; factory++)
+    {
+      const ACE_CString& name = (*factory)->protocol_name ();
+      (*factory)->factory (
+        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
+      if ((*factory)->factory () == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to load protocol <%s>, %p\n",
+                             name.c_str (), ""),
+                            -1);
+        }
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded protocol <%s>\n",
+                      name.c_str ()));
+        }
+    }
+  return 0;
+}
+
+TAO_ProtocolFactorySet *
+TAO_Default_Resource_Factory::get_protocol_factories (void)
+{
+  return &protocol_factories_;
+}
+
 #define IMPLEMENT_GET_METHOD(methodname,rtype,membername)\
 rtype TAO_Default_Resource_Factory::methodname(void)\
 {\
@@ -214,11 +280,8 @@ rtype TAO_Default_Resource_Factory::methodname(void)\
 }
 
 IMPLEMENT_GET_METHOD(get_thr_mgr, ACE_Thread_Manager *, tm_)
-IMPLEMENT_GET_METHOD(get_acceptor, TAO_Acceptor *, a_)
+IMPLEMENT_GET_METHOD(get_acceptor_registry, TAO_Acceptor_Registry *, ar_)
 IMPLEMENT_GET_METHOD(get_connector_registry, TAO_Connector_Registry *, cr_)
-IMPLEMENT_GET_METHOD(get_connector, TAO_Connector *, c_)
-IMPLEMENT_GET_METHOD(get_null_creation_strategy, TAO_NULL_CREATION_STRATEGY *, null_creation_strategy_)
-IMPLEMENT_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRATEGY *, null_activation_strategy_)
 
 // @@ TODO We may be changing the state of the global
 //    Allocated_Resources structure, but without any locks?
@@ -318,34 +381,6 @@ TAO_Default_Resource_Factory::object_adapter (void)
                           0);
         }
       return TSS_ALLOCATED::instance ()->object_adapter_;
-      ACE_NOTREACHED (break);
-    }
-  return 0;
-}
-
-TAO_CACHED_CONNECT_STRATEGY *
-TAO_Default_Resource_Factory::get_cached_connect_strategy (void)
-{
-  // @@ Remove this use of ORB_Core_instance() from here!!!!
-  switch (this->resource_source_)
-    {
-    case TAO_GLOBAL:
-      if (GLOBAL_ALLOCATED::instance ()->cached_connect_strategy_ == 0)
-        {
-          ACE_NEW_RETURN (GLOBAL_ALLOCATED::instance ()->cached_connect_strategy_,
-                          TAO_CACHED_CONNECT_STRATEGY (TAO_ORB_Core_instance ()->client_factory ()->create_client_creation_strategy ()),
-                          0);
-        }
-      return GLOBAL_ALLOCATED::instance ()->cached_connect_strategy_;
-      ACE_NOTREACHED (break);
-    case TAO_TSS:
-      if (TSS_ALLOCATED::instance ()->cached_connect_strategy_ == 0)
-        {
-          ACE_NEW_RETURN (TSS_ALLOCATED::instance ()->cached_connect_strategy_,
-                          TAO_CACHED_CONNECT_STRATEGY (TAO_ORB_Core_instance ()->client_factory ()->create_client_creation_strategy ()),
-                          0);
-        }
-      return TSS_ALLOCATED::instance ()->cached_connect_strategy_;
       ACE_NOTREACHED (break);
     }
   return 0;
@@ -505,18 +540,11 @@ TAO_Default_Resource_Factory::create_input_cdr_data_block (size_t size)
   return 0;
 }
 
-TAO_GLOBAL_Collocation_Table *
-TAO_Default_Resource_Factory::get_global_collocation_table (void)
-{
-  return (collocation_table_source_ == TAO_GLOBAL ? GLOBAL_Collocation_Table::instance () : 0);
-}
-
 // ****************************************************************
 
 TAO_Allocated_Resources::TAO_Allocated_Resources (void)
   : r_ (0),
     object_adapter_ (0),
-    cached_connect_strategy_ (0),
     poa_(0),
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
@@ -545,34 +573,9 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
     this->output_cdr_buffer_allocator_->remove ();
   delete this->output_cdr_buffer_allocator_;
 
-  if (this->cached_connect_strategy_ != 0)
-    {
-      // Zap the creation strategy that we created earlier
-      delete this->cached_connect_strategy_->creation_strategy ();
-      delete this->cached_connect_strategy_;
-    }
-
   delete this->object_adapter_;
 
-  this->c_.close ();
-
   delete this->r_;
-}
-
-// ****************************************************************
-
-TAO_Collocation_Table_Lock::TAO_Collocation_Table_Lock (void)
-{
-  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_collocation_table_lock ();
-  // We don't need to worry about the race condition here because this
-  // is called from within the ctor of Hash_Map_Manager which is
-  // placed inside a ACE_Singleton.
-}
-
-TAO_Collocation_Table_Lock::~TAO_Collocation_Table_Lock (void)
-{
-  delete this->lock_;
-  this->lock_ = 0;
 }
 
 // ****************************************************************
@@ -606,18 +609,6 @@ template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >;
 template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
 
-template class ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
-template class ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
-template class ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Recycling_Strategy<TAO_Client_Connection_Handler>;
-template class ACE_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
-
-template class ACE_Node<TAO_Client_Connection_Handler *>;
-
 template class ACE_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>;
 template class ACE_TSS_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_Allocated_Resources>;
@@ -631,18 +622,6 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
 #pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
-
-#pragma instantiate ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
-#pragma instantiate ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
-#pragma instantiate ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_Recycling_Strategy<TAO_Client_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
-
-#pragma instantiate ACE_Node<TAO_Client_Connection_Handler *>
 
 #pragma instantiate ACE_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
