@@ -90,6 +90,12 @@ namespace TAO
           }
         else
           {
+	    if (strat == TAO_CS_THRU_POA_STRATEGY)
+	      {
+		(void) this->set_response_flags (stub,
+						 details);
+	      }
+
             status =
               this->invoke_collocated_i (stub,
                                          details,
