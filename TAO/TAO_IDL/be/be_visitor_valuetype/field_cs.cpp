@@ -307,8 +307,9 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
 
   *os << "this->"
       << bu->field_pd_prefix () << ub->local_name () 
-      << bu->field_pd_postfix ()
-      << " = " << bt->name () << "::_duplicate (val);" << be_uidt_nl;
+      << bu->field_pd_postfix () << " =" << be_idt_nl
+      << "TAO::Objref_Traits< ::" << bt->name () 
+      << ">::duplicate (val);" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   *os << "// Retrieve the member." << be_nl

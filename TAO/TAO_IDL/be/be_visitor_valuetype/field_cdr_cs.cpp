@@ -230,7 +230,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *)
+be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -254,7 +254,12 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *)
       *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
+//      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
+      *os << "TAO::Objref_Traits< ::" << node->name () 
+          << ">::marshal (" << be_idt << be_idt_nl
+          << pre_ << f->local_name () << post_ << ".in (), " << be_nl
+          << "strm" << be_uidt_nl
+          << ")" << be_uidt;
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because an interface cannit be declared inside a
