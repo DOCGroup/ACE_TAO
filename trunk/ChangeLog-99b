@@ -1,3 +1,8 @@
+Thu Nov 25 02:17:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h: Added back some apparent bug fixes during the
+	  alignment change.
+
 Thu Nov 25 01:41:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.h: Removed the alignment change for now.
