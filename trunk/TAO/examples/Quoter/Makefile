@@ -86,7 +86,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs \
 	-I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 realclean: clean
-	-/bin/rm -rf QuoterC.* QuoterS.* QuoterS_T.*
+	-/bin/rm -rf *C.* *S.* *S_T.*
 
 $(IDL_SRC): Quoter.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl Quoter.idl -I$(TAO_ROOT)/orbsvcs/orbsvcs
