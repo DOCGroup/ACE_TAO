@@ -22,7 +22,7 @@
 /**
  * The Event Service Framework uses Worker classes to iterate over
  * collections of proxies.
- * The followin class defines the worker interface, basically users of
+ * The following class defines the worker interface, basically users of
  * the framework implement a worker object and pass it to one
  * collection.  The collection invokes the worker for each element the
  * colection contains.
