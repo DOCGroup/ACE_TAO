@@ -2324,35 +2324,31 @@ be_visitor_operation_rettype_vardecl_ss::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *node)
+be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   os->indent ();
-  *os << bt->name () << "_ptr _tao_retval = " << bt->name () << "::_nil ();\n";
+  // due to the virtual inheritance and the fact that we will be passing the
+  // address of the objref to the marshaling routine, we use the base
+  // CORBA::Object_ptr as the type for the return value even though the actual
+  // return type may be some derived class
+  *os << "CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();\n";
   return 0;
 }
 
 int
 be_visitor_operation_rettype_vardecl_ss::
-visit_interface_fwd (be_interface_fwd *node)
+visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   os->indent ();
-  *os << bt->name () << "_ptr _tao_retval = " << bt->name () << "::_nil ();\n";
+  // due to the virtual inheritance and the fact that we will be passing the
+  // address of the objref to the marshaling routine, we use the base
+  // CORBA::Object_ptr as the type for the return value even though the actual
+  // return type may be some derived class
+  *os << "CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();\n";
   return 0;
 }
 
