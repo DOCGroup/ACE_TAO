@@ -1,20 +1,65 @@
 @echo off
 rem $Id$
 
-rem    To use this either give it no arguments to run all the tests or
-rem    pass it the test name (without the extention) to run only one
-rem    test
+rem    To run this script, the first argument must be either bor
+rem    or msc.  This will determine if the borland tests are run, or
+rem    msvc tests are run.
+rem    You can provide an optional second parameter, the name of
+rem    the test to be run.
+rem    An optional first argument of "purify" can be provided as well.
 
 setlocal
 
-if "%1" == "purify" goto setuppurify
+set arg=
+set deco=
+set exedir=
 set dopure=
-set arg=%1
-goto endsetup
+
+set run_cmd=%0
+
+if "%1" == "help" goto usage
+if "%1" == "?" goto usage
+if "%1" == "/?" goto usage
+if "%1" == "purify" goto setuppurify
+if "%1" == "bor" goto setupbor_arg
+if "%1" == "msc" goto setupmsc_arg
+goto setupmsc
 
 :setuppurify
+shift
 set dopure=purify
-set arg=%2
+if "%1" == "bor" goto setupbor_arg
+if "%1" == "msc" goto setupmsc_arg
+goto setupmsc
+
+:setupbor_arg
+shift
+:setupbor
+set arg=%1
+set exedir=.\bor\bin\
+rem Set deco to whatever decoration you have for the executables
+set deco=
+set platform=bor
+@echo *******************************************************************************
+@echo                           Running BC++ Tests
+@echo *******************************************************************************
+goto endsetup
+
+:setupmsc_arg
+shift
+:setupmsc
+set arg=%1
+set exedir=
+set deco=
+set platform=
+@echo *******************************************************************************
+@echo                           Running MSVC Tests
+@echo *******************************************************************************
+goto endsetup
+
+:usage
+echo "usage: run_tests [purify] bor|msc [program-name]"
+goto done
 
 :endsetup
 
@@ -22,77 +67,76 @@ if not "%arg%" == "" goto runtest
 
 :runall
 
-call %0 %dopure% ACE_Init_Test
-call %0 %dopure% Atomic_Op_Test
-call %0 %dopure% Barrier_Test
-call %0 %dopure% Basic_Types_Test
-call %0 %dopure% Buffer_Stream_Test
-call %0 %dopure% CDR_Test
-call %0 %dopure% Collection_Test
-call %0 %dopure% Conn_Test
-call %0 %dopure% DLL_Test
-call %0 %dopure% DLList_Test
-call %0 %dopure% Enum_Interfaces_Test
-call %0 %dopure% Env_Value_Test
-call %0 %dopure% Future_Test
-call %0 %dopure% Handle_Set_Test
-call %0 %dopure% Hash_Map_Manager_Test
-call %0 %dopure% High_Res_Timer_Test
-call %0 %dopure% IOStream_Test
-call %0 %dopure% Map_Manager_Test
-call %0 %dopure% Cache_Map_Manager_Test
-call %0 %dopure% Map_Test
-call %0 %dopure% Mem_Map_Test
-call %0 %dopure% Message_Block_Test
-call %0 %dopure% Message_Queue_Notifications_Test
-call %0 %dopure% Message_Queue_Test
-call %0 %dopure% MT_Reactor_Timer_Test
-call %0 %dopure% MM_Shared_Memory_Test
-call %0 %dopure% MT_SOCK_Test
-call %0 %dopure% Naming_Test
-call %0 %dopure% New_Fail_Test
-call %0 %dopure% Notify_Performance_Test
-call %0 %dopure% OrdMultiSet_Test
-call %0 %dopure% Pipe_Test
-call %0 %dopure% Priority_Buffer_Test
-call %0 %dopure% Dynamic_Priority_Test
-call %0 %dopure% Priority_Reactor_Test
-call %0 %dopure% Priority_Task_Test
-call %0 %dopure% Process_Mutex_Test
-call %0 %dopure% Process_Strategy_Test
-call %0 %dopure% RB_Tree_Test
-call %0 %dopure% Reactors_Test
-call %0 %dopure% Reactor_Exceptions_Test
-call %0 %dopure% Reactor_Notify_Test
-call %0 %dopure% Reactor_Performance_Test
-call %0 %dopure% Reactor_Timer_Test
-call %0 %dopure% Reader_Writer_Test
-call %0 %dopure% Thread_Pool_Reactor_Test
-call %0 %dopure% Recursive_Mutex_Test
-call %0 %dopure% Reverse_Lock_Test
-call %0 %dopure% Semaphore_Test
-call %0 %dopure% Service_Config_Test
-call %0 %dopure% Sigset_Ops_Test
-call %0 %dopure% Simple_Message_Block_Test
-call %0 %dopure% Svc_Handler_Test
-call %0 %dopure% SOCK_Test
-call %0 %dopure% SOCK_Connector_Test
-call %0 %dopure% SOCK_Send_Recv_Test
-call %0 %dopure% SPIPE_Test
-call %0 %dopure% SString_Test
-call %0 %dopure% SV_Shared_Memory_Test
-call %0 %dopure% Task_Test
-call %0 %dopure% Thread_Manager_Test
-call %0 %dopure% Thread_Mutex_Test
-call %0 %dopure% Thread_Pool_Test
-call %0 %dopure% Timer_Queue_Test
-call %0 %dopure% Timeprobe_Test
-if exist ..\netsvcs\servers\main.exe call %0 %dopure% Time_Service_Test
-call %0 %dopure% Time_Value_Test
-call %0 %dopure% Tokens_Test
-call %0 %dopure% TSS_Test
-call %0 %dopure% UPIPE_SAP_Test
-call %0 %dopure% Upgradable_RW_Test
+call %run_cmd% %dopure% %platform% Basic_Types_Test
+call %run_cmd% %dopure% %platform% Env_Value_Test
+call %run_cmd% %dopure% %platform% Atomic_Op_Test
+call %run_cmd% %dopure% %platform% CDR_Test
+call %run_cmd% %dopure% %platform% Semaphore_Test
+call %run_cmd% %dopure% %platform% TSS_Test
+call %run_cmd% %dopure% %platform% Timeprobe_Test
+call %run_cmd% %dopure% %platform% Time_Value_Test
+call %run_cmd% %dopure% %platform% High_Res_Timer_Test
+call %run_cmd% %dopure% %platform% SString_Test
+call %run_cmd% %dopure% %platform% Collection_Test
+call %run_cmd% %dopure% %platform% DLL_Test
+call %run_cmd% %dopure% %platform% Naming_Test
+call %run_cmd% %dopure% %platform% Handle_Set_Test
+call %run_cmd% %dopure% %platform% OrdMultiSet_Test
+call %run_cmd% %dopure% %platform% Mem_Map_Test
+call %run_cmd% %dopure% %platform% SV_Shared_Memory_Test
+call %run_cmd% %dopure% %platform% MM_Shared_Memory_Test
+call %run_cmd% %dopure% %platform% Sigset_Ops_Test
+call %run_cmd% %dopure% %platform% Timer_Queue_Test
+call %run_cmd% %dopure% %platform% MT_Reactor_Timer_Test
+call %run_cmd% %dopure% %platform% SOCK_Connector_Test
+call %run_cmd% %dopure% %platform% SOCK_Send_Recv_Test
+call %run_cmd% %dopure% %platform% Task_Test
+call %run_cmd% %dopure% %platform% Thread_Manager_Test
+call %run_cmd% %dopure% %platform% Thread_Pool_Test
+call %run_cmd% %dopure% %platform% Future_Test
+call %run_cmd% %dopure% %platform% RB_Tree_Test
+call %run_cmd% %dopure% %platform% Reactors_Test
+call %run_cmd% %dopure% %platform% Reactor_Exceptions_Test
+call %run_cmd% %dopure% %platform% Reactor_Notify_Test
+call %run_cmd% %dopure% %platform% Reactor_Timer_Test
+call %run_cmd% %dopure% %platform% Thread_Pool_Reactor_Test
+call %run_cmd% %dopure% %platform% Reactor_Performance_Test
+call %run_cmd% %dopure% %platform% Notify_Performance_Test
+call %run_cmd% %dopure% %platform% Reader_Writer_Test
+call %run_cmd% %dopure% %platform% Priority_Reactor_Test
+call %run_cmd% %dopure% %platform% SOCK_Test
+call %run_cmd% %dopure% %platform% MT_SOCK_Test
+call %run_cmd% %dopure% %platform% SPIPE_Test
+call %run_cmd% %dopure% %platform% UPIPE_SAP_Test
+call %run_cmd% %dopure% %platform% Barrier_Test
+call %run_cmd% %dopure% %platform% Svc_Handler_Test
+call %run_cmd% %dopure% %platform% Buffer_Stream_Test
+call %run_cmd% %dopure% %platform% Priority_Buffer_Test
+call %run_cmd% %dopure% %platform% Dynamic_Priority_Test
+call %run_cmd% %dopure% %platform% Recursive_Mutex_Test
+call %run_cmd% %dopure% %platform% Reverse_Lock_Test
+if exist ..\netsvcs\servers\main.exe call %run_cmd% %dopure% %platform% Time_Service_Test
+call %run_cmd% %dopure% %platform% Tokens_Test
+call %run_cmd% %dopure% %platform% Map_Test
+call %run_cmd% %dopure% %platform% Message_Queue_Notifications_Test
+call %run_cmd% %dopure% %platform% Message_Queue_Test
+call %run_cmd% %dopure% %platform% Simple_Message_Block_Test
+call %run_cmd% %dopure% %platform% Message_Block_Test
+call %run_cmd% %dopure% %platform% Pipe_Test
+call %run_cmd% %dopure% %platform% Process_Mutex_Test
+call %run_cmd% %dopure% %platform% Thread_Mutex_Test
+call %run_cmd% %dopure% %platform% Process_Strategy_Test
+call %run_cmd% %dopure% %platform% Service_Config_Test
+call %run_cmd% %dopure% %platform% Priority_Task_Test
+call %run_cmd% %dopure% %platform% IOStream_Test
+call %run_cmd% %dopure% %platform% Enum_Interfaces_Test
+call %run_cmd% %dopure% %platform% Upgradable_RW_Test
+call %run_cmd% %dopure% %platform% Conn_Test
+call %run_cmd% %dopure% %platform% New_Fail_Test
+call %run_cmd% %dopure% %platform% Hash_Map_Manager_Test
+call %run_cmd% %dopure% %platform% DLList_Test
+
+
 
 goto done
 
@@ -109,13 +153,14 @@ goto done
 
 :justrun
 
-echo Running %arg%
-if not exist %arg%.exe goto nofile
+set exefile=%exedir%%arg%%deco%
+echo Running %exefile%
+if not exist %exefile%.exe goto nofile
 
-%arg%.exe
+%exefile%.exe
 if errorlevel 0 goto fine
 echo.
-echo %arg% has FAILED!!!
+echo %exefile% has FAILED!!!
 echo.
 type %temp%\log\%arg%.log | find /I "assertion failed"
 type %temp%\log\%arg%.log | find /I "not supported"
@@ -129,7 +174,7 @@ echo.
 goto done
 
 :nofile
-echo %arg%.exe not found
+echo %exefile%.exe not found
 goto done
 
 :fine
