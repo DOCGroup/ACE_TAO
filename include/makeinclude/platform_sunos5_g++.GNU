@@ -10,9 +10,15 @@
 # NOTE: On Solaris86, you'll need to use GNU as instead of /usr/ccs/bin/as,
 #       if you want -gstabs+ and -pipe support.
 
-debug = 1
-optimize = 1
-threads = 1
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(optimize))
+  optimize = 1
+endif
+ifeq (,$(threads))
+  threads = 1
+endif
 
 ifeq ($(threads),0)
   CFLAGS += -DACE_MT_SAFE=0

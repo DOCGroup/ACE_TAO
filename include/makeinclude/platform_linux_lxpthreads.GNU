@@ -8,9 +8,13 @@
 # to compile it yourself (no binaries included) --
 # Jan Rychter <jwr@icm.edu.pl>
 
-debug = 1
-optimize = 1
-xt_reactor = 0
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(optimize))
+  optimize = 1
+endif
+  xt_reactor = 0
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
