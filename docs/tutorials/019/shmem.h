@@ -1,4 +1,3 @@
-
 // $Id$
 
 #ifndef SHMEM_H
@@ -21,23 +20,26 @@
 class SharedData
 {
 public:
-        // Construct the object and optionally initialize buf_.
-    SharedData(int _initialize = 1);
+  // Construct the object and optionally initialize buf_.
+  SharedData (int initialized = 1);
 
-        // Put some data into buf_
-    void set(void);
-        // Show the data in buf_
-    void show(void);
-        // What is the value of available_
-    int available(void);
-        // Set the value of available_
-    void available(int _available);
+  // Put some data into buf_
+  void set (void);
+
+  // Show the data in buf_
+  void show (void);
+
+  // What is the value of available_
+  int available (void);
+
+  // Set the value of available_
+  void available (int not_in_use);
         
 protected:
-        // Big enough for a simple message
-    char buf_[128];
-        // A cheap mutex
-    int available_;
+  // Big enough for a simple message
+  char buf_[128];
+  // A cheap mutex
+  int available_;
 };
 
-#endif // SHMEM_H
+#endif /* SHMEM_H */
