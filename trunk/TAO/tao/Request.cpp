@@ -2,6 +2,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+#  include "Request.i"
+#endif /* __ACE_INLINE__ */
+
 CORBA::ULong
 CORBA_Request::AddRef (void)
 {
