@@ -17,6 +17,10 @@ project(CIAO_Daemon): ciao_server {
 
 project(DaemonController) : ciao_server, acexml {
 
+  libs += CIAO_XML_Helpers
+  libpaths += ../XML_Helpers
+  depends += XML_Helpers
+
   IDL_Files {
     Daemon.idl
   }
@@ -27,10 +31,5 @@ project(DaemonController) : ciao_server, acexml {
     controller_i.cpp
     Daemon_Commands.cpp
     Softpkg_Commands.cpp
-    ../XML_Helpers/XML_Utils.cpp
-    ../XML_Helpers/Softpkg_Handlers.cpp
-    ../XML_Helpers/Cascadable_DocHandler.cpp
-    ../XML_Helpers/Assembly_Handlers.cpp
-    ../XML_Helpers/Assembly_Spec.cpp
   }
 }

@@ -17,6 +17,7 @@
 #include "ace/Containers_T.h"
 #include "ace/SString.h"
 #include "ace/CORBA_macros.h"
+#include "XML_Helpers_Export.h"
 
 namespace CIAO
 {
@@ -55,7 +56,7 @@ namespace CIAO
      *
      * Abstract base class for placement information
      */
-    class Node
+    class CIAO_XML_HELPERS_Export Node
     {
     public:
       /// Default constructor.
@@ -89,8 +90,9 @@ namespace CIAO
      *
      * Abstract base class for container type placement node
      */
-    class Container : public Node,
-                      public ACE_Double_Linked_List<Node>
+    class CIAO_XML_HELPERS_Export Container
+      : public Node,
+        public ACE_Double_Linked_List<Node>
     {
     public:
       Container (const char *id,
@@ -119,7 +121,8 @@ namespace CIAO
     /**
      * @class componentinstantiation
      */
-    class componentinstantiation : public Node
+    class CIAO_XML_HELPERS_Export componentinstantiation
+      : public Node
     {
     public:
       typedef enum _if_register_type
@@ -169,7 +172,8 @@ namespace CIAO
     /**
      * @class homeplacement
      */
-    class homeplacement : public Container
+    class CIAO_XML_HELPERS_Export homeplacement
+      : public Container
     {
     public:
       typedef enum _register_method
@@ -212,7 +216,8 @@ namespace CIAO
     /**
      * @class hostcollocation
      */
-    class hostcollocation : public Container
+    class CIAO_XML_HELPERS_Export hostcollocation
+      : public Container
     {
     public:
       hostcollocation (const char *id,
@@ -230,7 +235,8 @@ namespace CIAO
     /**
      * @class hostcollocation
      */
-    class processcollocation : public Container
+    class CIAO_XML_HELPERS_Export processcollocation
+      : public Container
     {
     public:
       processcollocation (const char *id,
@@ -250,7 +256,7 @@ namespace CIAO
      *
      * Abstract Base class for placement node visitor.
      */
-    class Visitor
+    class CIAO_XML_HELPERS_Export Visitor
     {
     public:
       Visitor ();
@@ -302,7 +308,7 @@ namespace CIAO
         INVALID_CONN
       } Connection_Type;
 
-    class IF_Resolver_Info
+    class CIAO_XML_HELPERS_Export IF_Resolver_Info
     {
     public:
       IF_Resolver_Info (IF_Resolution_Method type,
@@ -340,7 +346,7 @@ namespace CIAO
     /**
      *
      */
-    typedef struct _CII
+    typedef struct CIAO_XML_HELPERS_Export _CII
     {
       _CII ();
 
@@ -367,7 +373,7 @@ namespace CIAO
   /**
    *
    */
-  typedef struct _ASpec
+  typedef struct CIAO_XML_HELPERS_Export _ASpec
   {
     _ASpec ();
 

@@ -13,6 +13,7 @@
 #ifndef CIAO_XML_UTILS_H
 #define CIAO_XML_UTILS_H
 
+#include "XML_Helpers_Export.h"
 #include "Softpkg_Handlers.h"
 #include "Assembly_Spec.h"
 
@@ -23,7 +24,7 @@ namespace CIAO
    *
    * @brief Utils contains a collection of utility functions
    */
-  class XML_Utils
+  class CIAO_XML_HELPERS_Export XML_Utils
   {
   public:
     /**
