@@ -33,16 +33,19 @@ module A
 
 module A 
 {
-  module C 
+  module B
   {
-    interface x2 
+    module C 
     {
-      // 'A::B::' should be implicit
-      void op1 (in x1 obj);
-      // 'A::' should be implicit
-      void op2 (in B::x1 obj);
-      // Just for reference
-      void op3 (in A::B::x1 obj);
+      interface x2 
+      {
+        // 'A::B::' should be implicit
+        void op1 (in x1 obj);
+        // 'A::' should be implicit
+        void op2 (in B::x1 obj);
+        // Just for reference
+        void op3 (in A::B::x1 obj);
+      };
     };
   };
 };
