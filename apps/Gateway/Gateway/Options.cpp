@@ -24,9 +24,10 @@ Options::Options (void)
     socket_queue_size_ (0),
     threading_strategy_ (REACTIVE),
     options_ (0),
-    supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
-    supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
-    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
+    supplier_acceptor_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
+    consumer_acceptor_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
+    supplier_connector_port_ (DEFAULT_PEER_SUPPLIER_PORT),
+    consumer_connector_port_ (DEFAULT_PEER_CONSUMER_PORT),
     max_timeout_ (MAX_TIMEOUT),
     max_queue_size_ (MAX_QUEUE_SIZE)
 {
@@ -151,19 +152,21 @@ Options::parse_args (int argc, char *argv[])
             for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
                  flag != 0;
                  flag = ACE_OS::strtok (0, "|"))
-              if (ACE_OS::strncasecmp (flag, "C:", 2) == 0)
+              if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::CONSUMER_ACCEPTOR);
-                  // Set the Consumer Acceptor port number.
-                  this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
+                  if (ACE_OS::strlen (flag) > 1)
+                    // Set the Consumer Acceptor port number.
+                    this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
                 }
-              else if (ACE_OS::strncasecmp (flag, "S:", 2) == 0)
+              else if (ACE_OS::strncasecmp (flag, "S", 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::SUPPLIER_ACCEPTOR);
-                  // Set the Supplier Acceptor port number.
-                  this->supplier_acceptor_port_ = ACE_OS::atoi (flag + 2);
+                  if (ACE_OS::strlen (flag) > 1)
+                    // Set the Supplier Acceptor port number.
+                    this->supplier_acceptor_port_ = ACE_OS::atoi (flag + 2);
                 }
           }
           break;
@@ -183,19 +186,21 @@ Options::parse_args (int argc, char *argv[])
             for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
                  flag != 0;
                  flag = ACE_OS::strtok (0, "|"))
-              if (ACE_OS::strncasecmp (flag, "C:", 2) == 0)
+              if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::CONSUMER_CONNECTOR);
-                  // Set the Consumer Connector port number.
-                  this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
+                  if (ACE_OS::strlen (flag) > 1)
+                    // Set the Consumer Connector port number.
+                    this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
                 }
-              else if (ACE_OS::strncasecmp (flag, "S:", 2) == 0)
+              else if (ACE_OS::strncasecmp (flag, "S", 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::SUPPLIER_CONNECTOR);
-                  // Set the Supplier Connector port number.
-                  this->supplier_connector_port_ = ACE_OS::atoi (flag + 2);
+                  if (ACE_OS::strlen (flag) > 1)
+                    // Set the Supplier Connector port number.
+                    this->supplier_connector_port_ = ACE_OS::atoi (flag + 2);
                 }
           }
           break;
