@@ -49,7 +49,30 @@ Test_Any::opname (void) const
 void
 Test_Any::dii_req_invoke (CORBA::Request *req, CORBA::Environment &ACE_TRY_ENV)
 {
+  req->add_in_arg ("o1") <<= this->in_;
+  req->add_inout_arg ("o2") <<= this->inout_;
+  req->add_out_arg ("o3") = CORBA::Any (CORBA::_tc_any);
+
+  req->set_return_type (CORBA::_tc_any);
+
   req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  const CORBA::Any *tmp;
+  req->return_value () >>= tmp;
+  this->ret_ = new CORBA::Any (*tmp);
+
+  CORBA::NamedValue_ptr o2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o2->value () >>= tmp;
+  this->inout_ = CORBA::Any (*tmp);
+
+  CORBA::NamedValue_ptr o3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o3->value () >>= tmp;
+  this->out_ = new CORBA::Any (*tmp);
 }
 
 #if 0 /* any_table isn't currently used */
@@ -104,8 +127,8 @@ Test_Any::reset_parameters (void)
                       "Param_Test: ANY_SHORT subtest\n"));
         CORBA::Short s;
         s = gen->gen_short ();
-	      if (TAO_debug_level > 0)
-	        ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
         this->in_ <<= s;
         this->inout_ <<= s;
       }
@@ -117,8 +140,8 @@ Test_Any::reset_parameters (void)
           ACE_DEBUG ((LM_DEBUG,
                       "Param_Test: ANY_STRING subtest\n"));
         char *str = gen->gen_string ();
-	      if (TAO_debug_level > 0)
-	        ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
         this->in_ <<= str;
         this->inout_ <<= str;
         CORBA::string_free (str);
@@ -237,67 +260,6 @@ Test_Any::run_sii_test (Param_Test_ptr objref,
     }
   ACE_ENDTRY;
   return 0;
-}
-
-int
-Test_Any::add_args (CORBA::NVList_ptr param_list,
-                    CORBA::NVList_ptr retval,
-                    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      CORBA::Any in_arg (CORBA::_tc_any,
-                         &this->in_,
-                         0);
-
-      CORBA::Any inout_arg (CORBA::_tc_any,
-                            &this->inout_,
-                            0);
-
-      CORBA::Any out_arg (CORBA::_tc_any,
-                          &this->out_.inout (), // .out () causes crash
-                          0);
-
-      // add parameters
-      param_list->add_value ("o1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("o2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("o3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // add return value
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (CORBA::_tc_any,
-                               &this->ret_.inout (), // see above
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Any::add_args\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
 }
 
 CORBA::Boolean

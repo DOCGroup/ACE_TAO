@@ -661,13 +661,11 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
     || stream.write_string (interface_id) == 0
     || stream.write_string (name) == 0
     || stream.write_ulong (1L) == 0
-    || stream.write_string (field_name) == 0
-    || stream.encode (CORBA::_tc_TypeCode,
-                      &CORBA::_tc_any, 0,
-                      ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
-  ACE_CHECK;
-
+    || stream.write_string (field_name) == 0;
   if (result)
+    ACE_THROW (CORBA_INITIALIZE ());
+
+  if (!(stream << CORBA::_tc_any))
     ACE_THROW (CORBA_INITIALIZE ());
 
   ACE_NEW_THROW_EX (tcp,
@@ -676,7 +674,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                                      stream.buffer (),
                                      1,
                                      sizeof (CORBA_UserException)),
-                    CORBA_NO_MEMORY ());
+                    CORBA_INITIALIZE ());
 }
 
 void
@@ -737,19 +735,14 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     || stream.write_string (full_id) == 0
     || stream.write_string (name) == 0
     || stream.write_ulong (2L) != 1
-    || stream.write_string (minor) == 0
-    || stream.encode (CORBA::_tc_TypeCode,
-                      &CORBA::_tc_ulong, 0,
-                      ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
-  ACE_CHECK; // @@ Maybe we should transform this exception
+    || stream.write_string (minor) == 0;
+
+  result = result || !(stream << CORBA::_tc_ulong);
 
   CORBA::string_free (full_id);  // No longer need the string
 
-  result = result || stream.write_string (completed) == 0
-    || stream.encode (CORBA::_tc_TypeCode,
-                      &TC_completion_status, 0,
-                      ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
-  ACE_CHECK; // @@ Maybe we should transform this exception
+  result = result || stream.write_string (completed) == 0;
+  result = result || !(stream << TC_completion_status);
 
   if (result)
     ACE_THROW (CORBA::INITIALIZE ());
@@ -768,7 +761,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                      stream.buffer (),
                                      1,
                                      sizeof (CORBA_SystemException)),
-                    CORBA_NO_MEMORY ());
+                    CORBA_INITIALIZE ());
   ACE_CHECK;
 
   TAO_Exceptions::system_exceptions->add (tcp);

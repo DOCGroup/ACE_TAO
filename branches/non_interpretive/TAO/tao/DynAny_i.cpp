@@ -431,10 +431,14 @@ TAO_DynAny_i::insert_reference (CORBA::Object_ptr value,
 
       *_tao_object_ptr = CORBA::Object::_duplicate (value);
 
-      this->value_.replace (this->value_.type (),
-                            (void*)_tao_object_ptr,
-                            1,
-                            ACE_TRY_ENV);
+      TAO_OutputCDR stream;
+      stream << *_tao_object_ptr;
+      this->value_._tao_replace (this->value_.type (),
+                                 TAO_ENCAP_BYTE_ORDER,
+                                 stream.begin (),
+                                 1,
+                                 (void*)_tao_object_ptr,
+                                 ACE_TRY_ENV);
       ACE_CHECK;
     }
   else

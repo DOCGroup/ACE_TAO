@@ -74,9 +74,9 @@ public:
   // Default constructor.
 
   CORBA_Any (CORBA::TypeCode_ptr type,
-             void *value = 0,
-             CORBA::Boolean any_owns_data = 0);
-  // Constructor. The any_owns_data flag determines if the Any owns the value
+             CORBA::Environment &ACE_TRY_ENV
+                 = TAO_default_environment ());
+  // Constructor.
 
   // = TAO extension
   CORBA_Any (CORBA::TypeCode_ptr type,
@@ -278,20 +278,31 @@ public:
   // ORBOS/90-01-11, pg 672: For C++ mapping using the CORBA_Environment
   // parameter, two forms of the replace method are provided.
 
+#if 0
+  CORBA_Any (CORBA::TypeCode_ptr type,
+             void *value,
+             CORBA::Boolean any_owns_data,
+             CORBA::Environment &ACE_TRY_ENV
+                 = TAO_default_environment ());
+  CORBA_Any (CORBA::TypeCode_ptr type,
+             void *value,
+             CORBA::Environment &ACE_TRY_ENV
+                = TAO_default_environment ());
+  // Obsolete. Raises CORBA::NO_IMPLEMENT.
+
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA::Boolean any_owns_data,
                 CORBA_Environment &ACE_TRY_ENV =
                   TAO_default_environment ());
-  // Replace the current typecode and data with the specified one -
-  // unsafe.
+  // Obsolete. Raises CORBA::NO_IMPLEMENT.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA_Environment &ACE_TRY_ENV =
                   TAO_default_environment ());
-  // Replace the current typecode and data with the specified one -
-  // unsafe. This uses a default value for the "any_owns_data" parameter
+  // Obsolete. Raises CORBA::NO_IMPLEMENT.
+#endif
 
   CORBA::TypeCode_ptr type (void) const;
   // Return TypeCode of the element stored in the Any.

@@ -438,8 +438,7 @@ TAO_GIOP_Invocation::close_connection (void)
 }
 
 // Handle the GIOP Reply with status = LOCATION_FORWARD
-// Replace the IIOP Profile. The call is then automatically
-// reinvoked by the TAO_Stub::do_static_call method.
+// Replace the IIOP Profile.
 
 int
 TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,

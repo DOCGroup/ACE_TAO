@@ -250,14 +250,22 @@ CORBA::ServiceInformation::_tao_seq_ServiceDetail::~_tao_seq_ServiceDetail (void
 
 #endif /* end #if !defined */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA::ServiceDetail &_tao_elem) // copying
+void operator<<= (CORBA::Any &_tao_any, const CORBA::ServiceDetail &_tao_elem)
 {
   CORBA::ServiceDetail *_any_val;
   ACE_NEW (_any_val, CORBA::ServiceDetail (_tao_elem));
   if (!_any_val) return;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::_tc_ServiceDetail, _any_val, 1, ACE_TRY_ENV); // copy the value
+    _tao_any._tao_replace (CORBA::_tc_ServiceDetail,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _any_val,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -271,7 +279,15 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ServiceDetail *_tao_elem) // non 
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::_tc_ServiceDetail, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+
+    _tao_any._tao_replace (CORBA::_tc_ServiceDetail,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _tao_elem,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
@@ -295,10 +311,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceDetail *&_
       ACE_NEW_RETURN (_tao_elem, CORBA::ServiceDetail, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr (),
                            _tao_any._tao_byte_order ());
-      if (stream.decode (CORBA::_tc_ServiceDetail, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ServiceDetail, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::_tc_ServiceDetail,
+            1,
+            _tao_elem,
+            ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -322,9 +341,17 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::ServiceInformation &_tao_el
   CORBA::ServiceInformation *_any_val;
   ACE_NEW (_any_val, CORBA::ServiceInformation (_tao_elem));
   if (!_any_val) return;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::_tc_ServiceInformation, _any_val, 1, ACE_TRY_ENV); // copy the value
+    _tao_any._tao_replace (CORBA::_tc_ServiceInformation,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _any_val,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -338,7 +365,14 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ServiceInformation *_tao_elem) //
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::_tc_ServiceInformation, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (CORBA::_tc_ServiceDetail,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _tao_elem,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
@@ -362,10 +396,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceInformatio
       ACE_NEW_RETURN (_tao_elem, CORBA::ServiceInformation, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr (),
                            _tao_any._tao_byte_order ());
-      if (stream.decode (CORBA::_tc_ServiceInformation, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ServiceInformation, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::_tc_ServiceInformation,
+            1,
+            _tao_elem,
+            ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }
@@ -384,7 +421,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceInformatio
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (
+CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const CORBA_ServiceDetail::_tao_seq_Octet &_tao_sequence
   )
@@ -411,7 +448,7 @@ ACE_INLINE CORBA::Boolean operator<< (
   return 0; // error
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail::_tao_seq_Octet &_tao_sequence)
+CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail::_tao_seq_Octet &_tao_sequence)
 {
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)

@@ -91,7 +91,15 @@ void operator<<= (
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::ORB::_tc_ObjectIdList, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
+
+    _tao_any._tao_replace (CORBA::ORB::_tc_ObjectIdList,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _tao_any_val,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -135,11 +143,23 @@ operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
   return 0; // error
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem) // non copying
+void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA::ORB::_tc_ObjectIdList, _tao_elem, 0, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+
+    CORBA_ORB_ObjectIdList *_tao_copy;
+    ACE_NEW (_tao_copy,
+             CORBA_ORB_ObjectIdList (*_tao_elem));
+
+    _tao_any._tao_replace (CORBA::ORB::_tc_ObjectIdList,
+                           TAO_ENCAP_BYTE_ORDER,
+                           stream.begin (),
+                           1,
+                           _tao_copy,
+                           ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {}
@@ -163,10 +183,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *
       ACE_NEW_RETURN (_tao_elem, CORBA_ORB_ObjectIdList, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr (),
                            _tao_any._tao_byte_order ());
-      if (stream.decode (CORBA::ORB::_tc_ObjectIdList, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA::ORB::_tc_ObjectIdList, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::ORB::_tc_ObjectIdList,
+            1,
+            _tao_elem,
+            ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
       }

@@ -183,7 +183,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  if (this->object_addr_.set (this->port_, 
+  if (this->object_addr_.set (this->port_,
                               this->host_.in ()) == -1)
     {
       if (TAO_debug_level > 0)
@@ -312,7 +312,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   this->host_ = tmp._retn ();
 
-  if (this->object_addr_.set (this->port_, 
+  if (this->object_addr_.set (this->port_,
                               this->host_.in ()) == -1)
     {
       if (TAO_debug_level > 0)
@@ -410,7 +410,7 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
   this->version_ = src.version_;
 
   this->object_key_ = src.object_key_;
-  
+
   this->object_addr_.set (src.object_addr_);
 
   this->port_ = src.port_;

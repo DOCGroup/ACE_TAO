@@ -55,7 +55,30 @@ void
 Test_ObjRef::dii_req_invoke (CORBA::Request *req,
                              CORBA::Environment &ACE_TRY_ENV)
 {
+  req->add_in_arg ("s1") <<= this->in_.in ();
+  req->add_inout_arg ("s2") <<= this->inout_.in ();
+  req->add_out_arg ("s3") <<= this->out_.in ();
+
+  req->set_return_type (_tc_Coffee);
+
   req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  Coffee_ptr tmp;
+  req->return_value () >>= tmp;
+  this->ret_ = Coffee::_duplicate (tmp);
+
+  CORBA::NamedValue_ptr o2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o2->value () >>= tmp;
+  this->inout_ = Coffee::_duplicate (tmp);
+
+  CORBA::NamedValue_ptr o3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o3->value () >>= tmp;
+  this->out_ = Coffee::_duplicate (tmp);
 }
 
 static const char *Coffee_Flavor [] = {
@@ -182,67 +205,6 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref,
   return -1;
 }
 
-int
-Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
-		       CORBA::NVList_ptr retval,
-		       CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      CORBA::Any in_arg (_tc_Coffee,
-                         this->in_courier,
-                         0);
-
-      CORBA::Any inout_arg (_tc_Coffee,
-                            this->inout_courier,
-                            0);
-
-      CORBA::Any out_arg (_tc_Coffee,
-                          this->out_courier,
-                          0);
-
-      // Add parameters.
-      param_list->add_value ("o1",
-                             in_arg,
-                             CORBA::ARG_IN,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("o2",
-                             inout_arg,
-                             CORBA::ARG_INOUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      param_list->add_value ("o3",
-                             out_arg,
-                             CORBA::ARG_OUT,
-                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Add return value.
-      CORBA::NamedValue *item = retval->item (0,
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      item->value ()->replace (_tc_Coffee,
-                               this->ret_courier,
-                               0, // does not own
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      return 0;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_ObjRef::add_args\n");
-
-    }
-  ACE_ENDTRY;
-  return -1;
-}
-
 CORBA::Boolean
 Test_ObjRef::check_validity (void)
 {
@@ -258,6 +220,11 @@ Test_ObjRef::check_validity (void)
 
   ACE_TRY
     {
+      if (CORBA::is_nil (this->in_.in ())
+          || CORBA::is_nil (this->inout_.in ())
+          || CORBA::is_nil (this->out_.in ())
+          || CORBA::is_nil (this->ret_.in ()))
+        return 0;
       Coffee::Desc_var in_desc =
         this->in_->description (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -309,15 +276,15 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
 
   ACE_TRY
     {
-      this->inout_ = Coffee::_narrow (*this->inout_courier, 
+      this->inout_ = Coffee::_narrow (*this->inout_courier,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->out_ = Coffee::_narrow (*this->out_courier, 
+      this->out_ = Coffee::_narrow (*this->out_courier,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->ret_ = Coffee::_narrow (*this->ret_courier, 
+      this->ret_ = Coffee::_narrow (*this->ret_courier,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
