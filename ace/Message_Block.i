@@ -24,17 +24,6 @@ ACE_Data_Block::size (void) const
   return this->cur_size_;
 }
 
-ACE_INLINE void
-ACE_Data_Block::base (char *msg_data,
-		      size_t msg_length,
-		      ACE_Message_Block::Message_Flags msg_flags)
-{
-  this->max_size_ = msg_length;
-  this->cur_size_ = msg_length;
-  this->base_ = msg_data;
-  this->flags_ = msg_flags;
-}
-
 ACE_INLINE ACE_Message_Block::Message_Flags
 ACE_Data_Block::set_flags (ACE_Message_Block::Message_Flags more_flags)
 {
@@ -217,7 +206,6 @@ ACE_Message_Block::base (void) const
   return this->data_block ()->base ();
 }
 
-#if 0
 ACE_INLINE void
 ACE_Message_Block::base (char *msg_data,
 			 size_t msg_length,
@@ -226,9 +214,8 @@ ACE_Message_Block::base (char *msg_data,
   ACE_TRACE ("ACE_Message_Block::base");
   this->rd_ptr_ = msg_data;
   this->wr_ptr_ = msg_data;
-  this->data_block ()->base (msg_data, msg_lenth, msg_flags);
+  this->data_block ()->base (msg_data, msg_length, msg_flags);
 }
-#endif /* 0 */
 
 ACE_INLINE char *
 ACE_Message_Block::rd_ptr (void) const
