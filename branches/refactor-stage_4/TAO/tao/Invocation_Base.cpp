@@ -38,8 +38,8 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
 
 
   void
-  Invocation_Base::invoke (TAO_Exception_Data * /*ex_data*/,
-                           long /*ex_count*/
+  Invocation_Base::invoke (TAO_Exception_Data *ex_data,
+                           unsigned long ex_count
                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -59,19 +59,25 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
     /*if (stub->orb_core ()->is_service_invocation ())
       return stub->orb_core ()->invoke_services ();
     */
+
+    // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
-    while (status != TAO_INVOKE_SUCCESS)
+    TAO_Operation_Details op_details (this->operation_,
+                                      this->op_len_,
+                                      this->number_args_ != 0,
+                                      ex_data,
+                                      ex_count);
+
+    while (status != TAO_INVOKE_SUCCESS ||
+           status != TAO_INVOKE_FAILURE)
       {
         Profile_Transport_Resolver resolver (stub);
 
         resolver.resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
 
-        TAO_Operation_Details op_details (this->operation_,
-                                          this->op_len_,
-                                          this->number_args_ != 0);
-
+        // Update the request id now that we have a transport
         op_details.request_id (resolver.transport ()->tms ()->request_id ());
 
         if (this->type_ == TAO_ONEWAY_INVOCATION)

@@ -23,7 +23,12 @@
 #include "Service_Context.h"
 #include "target_specification.h"
 
+struct TAO_Exception_Data;
 
+namespace CORBA
+{
+  class Exception;
+}
 /**
  * @class TAO_Operation_Details
  *
@@ -42,7 +47,9 @@ public:
   ///Constructor
   TAO_Operation_Details (const char *name,
                          CORBA::ULong len,
-                         CORBA::Boolean argument_flag);
+                         CORBA::Boolean argument_flag,
+                         TAO_Exception_Data *ex_data = 0,
+                         CORBA::Long ex_count = 0);
 
   /// Operation name
   const char* opname (void) const;
@@ -90,6 +97,18 @@ public:
   /// Set method for the addressing mode
   void addressing_mode (CORBA::Short addr);
 
+  /// Creates and returns a CORBA::Exception object whose repository
+  /// id \a ex matches the exception list that this operation
+  /// specified.
+  /**
+   * This step is important to decode the exception that the client
+   * got from the server. If the exception received from the server
+   * is not found in the list of exceptions specified by the operation
+   * this call would raise an UNKNOWN exception.
+   */
+  CORBA::Exception *corba_exception (const char *ex
+                                     ACE_ENV_ARG_DECL);
+
 private:
 
   /// Name of the operation being invoked.
@@ -127,6 +146,12 @@ private:
 
   /// Addressing  mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_;
+
+  /// The type of exceptions that the operations can throw.
+  TAO_Exception_Data *ex_data_;
+
+  /// Count of the exceptions that operations can throw.
+  CORBA::ULong ex_count_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -5,3 +5,9 @@
 
 . type of exception thrown to the client. Is it CORBA exception or C++
   exception if you receive one? 
+
+. Test Location forwards
+
+. test user exceptions
+
+. Move TAO_Exception_Data elsewhere

@@ -70,7 +70,7 @@ template<typename S>
 CORBA::Boolean
 TAO::Inout_UB_String_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 {
-  return any >>= (const S*) this->x_;
+  return any >>= (const S*&) this->x_;
 }
 
 // ==============================================================
@@ -112,7 +112,7 @@ template<typename S, typename S_var>
 CORBA::Boolean
 TAO::Ret_UB_String_Argument_T<S,S_var>::interceptor_replace (CORBA::Any & any)
 {
-  return any >>= (const S *)this->x_.inout ();
+  return any >>= (const S*&) this->x_.inout ();
 }
 
 template<typename S, typename S_var>

@@ -115,6 +115,11 @@ namespace TAO
 
     int i = 0;
 
+    // At this point it can be assumed that the GIOP/whatever protocol
+    // header and the reply header are already handled.  Further it
+    // can be assumed that the reply body contains the details
+    // required for further processing. All the other details should
+    // have been handled in the reply dispatcher/protocol framework.
     switch (rd.reply_status ())
       {
       case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
@@ -131,12 +136,11 @@ namespace TAO
         return this->location_forward (cdr
                                        ACE_ENV_ARG_PARAMETER);
       case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
-        // return this->handle_user_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-        break;
+        return this->handle_user_exception (cdr
+                                            ACE_ENV_ARG_PARAMETER);
       case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
         // return this->handle_system_exception (ACE_ENV_SINGLE_ARG_PARAMETER)
         break;
-
 #if 0
         {
         // @@ Add the location macros for this exceptions...
@@ -232,11 +236,6 @@ namespace TAO
   {
     CORBA::Object_var forward_reference;
 
-    // It can be assumed that the GIOP header and the reply header
-    // are already handled.  Further it can be assumed that the
-    // reply body contains an object reference to the new object.
-    // This object pointer will be now extracted.
-
     if ((inp_stream >> forward_reference.out ()) == 0)
       {
         ACE_THROW_RETURN (CORBA::MARSHAL (),
@@ -266,8 +265,59 @@ namespace TAO
     return TAO_INVOKE_RESTART;
   }
 
+  Invocation_Status
+  Synch_Twoway_Invocation::handle_user_exception (TAO_InputCDR &cdr
+                                                  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    // Pull the exception from the stream.
+    CORBA::String_var buf;
 
-  /*************************************************************************/
+    if ((cdr >> buf.inout ()) == 0)
+      {
+        // Could not demarshal the exception id, raise an local
+        // CORBA::MARSHAL
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_MAYBE),
+                          TAO_INVOKE_FAILURE);
+      }
+
+    CORBA::Exception *exception =
+      this->detail_.corba_exception (buf.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    exception->_tao_decode (cdr
+                            ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (TAO_debug_level > 5)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO: (%P|%t) Synch_Twoway_Invocation::handle_user_exception - ")
+                    ACE_TEXT ("raising exception %s\n"),
+                    buf.in ()));
+      }
+
+    // @@ Think about a better way to raise the exception here,
+    //    maybe we need some more macros?
+#if defined (TAO_HAS_EXCEPTIONS)
+    // If we have native exceptions, we must manage the memory allocated
+    // by the call above to alloc(). Otherwise the Environment class
+    // manages the memory.
+    auto_ptr<CORBA::Exception> safety (exception);
+
+    // Direct throw because we don't have the ACE_TRY_ENV.
+    exception->_raise ();
+#else
+    // We can not use ACE_THROW here.
+    ACE_TRY_ENV.exception (exception);
+#endif
+
+    return TAO_INVOKE_SUCCESS;
+  }
+
+/*================================================================================*/
 
   Synch_Oneway_Invocation::Synch_Oneway_Invocation (Profile_Transport_Resolver &r,
                                                     TAO_Operation_Details &d)
