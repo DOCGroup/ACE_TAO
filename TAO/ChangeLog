@@ -1,3 +1,21 @@
+Sun Dec  7 09:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IOP_IOR.pidl:
+
+	  Do not use sequence<octet>, use CORBA::OctetSeq instead.
+
+	* tao/IOP_IORC.cpp:
+	* tao/IOP_IORC.h:
+	* tao/IOP_IORC.i:
+
+	  Regenerated the code, since we had all the sequence<octet> code
+	  with has other implications in terms of footprint and
+	  compilation times. 
+
+	* tao/diffs/OctetSeq.diff:
+
+	  Religious update of the diff file, which is very minimal. 
+
 Sun Dec  7 08:49:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h.diff:

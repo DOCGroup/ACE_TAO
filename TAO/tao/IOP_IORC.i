@@ -174,24 +174,6 @@ CORBA::Boolean TAO_Export operator>> (
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentSeq_I_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
-
-#if !defined _TAO_CDR_OP_IOP_ServiceContext__tao_seq_CORBA_Octet__I_
-#define _TAO_CDR_OP_IOP_ServiceContext__tao_seq_CORBA_Octet__I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const IOP::ServiceContext::_tao_seq_CORBA_Octet_ &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    IOP::ServiceContext::_tao_seq_CORBA_Octet_ &
-  );
-
-#endif /* _TAO_CDR_OP_IOP_ServiceContext__tao_seq_CORBA_Octet__I_ */
-
-// TAO_IDL - Generated from
 // be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
