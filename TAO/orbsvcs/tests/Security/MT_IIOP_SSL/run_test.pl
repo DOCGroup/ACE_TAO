@@ -44,28 +44,28 @@ $CL3->Spawn ();
 $client = $CL1->WaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client 1 returned $client\n";
     $status = 1;
 }
 
 $client = $CL2->WaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client 2 returned $client\n";
     $status = 1;
 }
 
 $client = $CL3->WaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client 3 returned $client\n";
     $status = 1;
 }
 
 $client = $CLS->SpawnWaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client S returned $client\n";
     $status = 1
 }
 
