@@ -61,7 +61,7 @@ SmiUINT32 SnmpUInt32::get_syntax()
 }
 
 // object validity 
-SnmpUInt32::valid( void) const
+int SnmpUInt32::valid( void) const
 { 
  return valid_flag; 
 }
@@ -120,7 +120,7 @@ SnmpSyntax* SnmpUInt32::clone() const
 // ASCII format return
 char * SnmpUInt32::to_string() 
 { 
-  sprintf(output_buffer, "%d", this->smival.value.uNumber);
+  sprintf(output_buffer, "%d", (int) (this->smival.value.uNumber));
      return output_buffer;
 }
 
@@ -219,7 +219,7 @@ SnmpSyntax* SnmpInt32::clone() const
 
 char *SnmpInt32::to_string()
 { 
-  sprintf(output_buffer, "%d", (long) this->smival.value.sNumber);
+  sprintf(output_buffer, "%d", (int) (long) this->smival.value.sNumber);
   return output_buffer;
 }
 

@@ -51,7 +51,7 @@ const authenticationFailureOid authenticationFailure;
 const egpNeighborLossOid egpNeighborLoss;
 const snmpTrapEnterpriseOid snmpTrapEnterprise;
 
-Snmp::Snmp(unsigned short port): construct_status_(SNMP_CLASS_ERROR), last_transaction_status_(0)
+Snmp::Snmp(unsigned short port): result_(0), construct_status_(SNMP_CLASS_ERROR), last_transaction_status_(0)
 {
   ACE_TRACE("Snmp::Snmp");
 
@@ -115,7 +115,7 @@ int Snmp::run_transaction(Pdu& pdu, UdpTarget& target)
   int rc, done = 0;
 
   // 1. set unique id to match this packet on return
-  int hold_req_id = req_id_++;
+  size_t hold_req_id = req_id_++;
   set_request_id(&pdu, hold_req_id); 
 
   // 2. write request to agent
@@ -137,6 +137,43 @@ int Snmp::run_transaction(Pdu& pdu, UdpTarget& target)
   return 0;
 }
 
+int Snmp::run_transaction(Pdu& pdu, UdpTarget& target, Snmp_Result * cb)
+{
+  if (!cb)
+     return run_transaction(pdu, target);
+
+  // 1. set unique id to match this packet on return
+  hold_req_id_ = req_id_++;
+  set_request_id(&pdu, hold_req_id_); 
+  pdu_ = &pdu;
+  result_ = cb;
+
+  // 2. write request to agent
+  transaction * trans = new transaction(pdu, target, iv_snmp_session_);
+  return trans->run(this);
+}
+
+void Snmp::result(transaction *t, int rc)
+{
+    t->result(*pdu_);        
+    // verify this is the pdu we are after
+    if (pdu_->get_request_id() == hold_req_id_)
+    {
+	last_transaction_status_ = rc;
+	delete t;
+	result_->result(this, rc);
+    }
+    else
+    {
+	rc = t->run(this);
+	if (rc < 0)
+	{
+	    delete t;
+	    result_->result(this, rc);
+	}
+    }
+}
+
 int Snmp::validate_args(const Pdu& pdu, const UdpTarget& target) const
 {
   // 0. check object status 
@@ -150,7 +187,7 @@ int Snmp::validate_args(const Pdu& pdu, const UdpTarget& target) const
 }
 
 // SYNC API: write request to wire then wait for reply or timeout
-int Snmp::get( Pdu &pdu, UdpTarget &target)  
+int Snmp::get( Pdu &pdu, UdpTarget &target, Snmp_Result * cb)  
 {
    ACE_TRACE("Snmp::get");
   int rc;
@@ -159,10 +196,10 @@ int Snmp::get( Pdu &pdu, UdpTarget &target)
 
   pdu.set_type( sNMP_PDU_GET);
   check_default_port(target);
-  return run_transaction(pdu, target);
+  return run_transaction(pdu, target, cb);
 }
 
-int Snmp::get_next( Pdu &pdu, UdpTarget &target)
+int Snmp::get_next( Pdu &pdu, UdpTarget &target, Snmp_Result * cb)
 {
   ACE_TRACE("Snmp::get_next");
   int rc;
@@ -171,10 +208,10 @@ int Snmp::get_next( Pdu &pdu, UdpTarget &target)
 
   pdu.set_type( sNMP_PDU_GETNEXT);
   check_default_port(target);
-  return run_transaction(pdu, target);
+  return run_transaction(pdu, target, cb);
 }
 
-int Snmp::set( Pdu &pdu, UdpTarget &target)
+int Snmp::set( Pdu &pdu, UdpTarget &target, Snmp_Result * cb)
 {
   ACE_TRACE("Snmp::set");
   int rc;
@@ -183,7 +220,7 @@ int Snmp::set( Pdu &pdu, UdpTarget &target)
 
    pdu.set_type( sNMP_PDU_SET);
    check_default_port(target);
-   return run_transaction(pdu, target);
+   return run_transaction(pdu, target, cb);
 }
 
 // one way, best of luck, non-confirmed alert
@@ -206,4 +243,5 @@ int Snmp::trap( Pdu &pdu, UdpTarget &target)
   return -1;
 }
 
+Snmp_Result::~Snmp_Result() {}
 

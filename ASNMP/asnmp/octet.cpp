@@ -471,7 +471,7 @@ SnmpSyntax * OctetStr::clone() const
 //================[ ASCII format return ]=============================
 char  * OctetStr::to_string()
 {
-  for ( long i=0; i < smival.value.string.len; i++) {
+  for ( unsigned long i=0; i < smival.value.string.len; i++) {
     if (( smival.value.string.ptr[i] != '\r')&& 
 		( smival.value.string.ptr[i] != '\n')&&
 		(isprint((int) (smival.value.string.ptr[i]))==0))

@@ -42,22 +42,22 @@
 //---------------[ Vb::Vb( void) ]--------------------------------------
 // constructor with no arguments
 // makes an vb, unitialized
-Vb::Vb( void): iv_vb_value_(NULL), exception_status_(SNMP_CLASS_SUCCESS), 
-    output_(NULL)
+Vb::Vb( void): output_(NULL), iv_vb_value_(NULL), 
+    exception_status_(SNMP_CLASS_SUCCESS)
 { 
 }
 
 //---------------[ Vb::Vb( const Oid &oid) ]-----------------------------
 // constructor to initialize the oid
 // makes a vb with oid portion initialized
-Vb::Vb( const Oid &oid): iv_vb_oid_(oid), iv_vb_value_(NULL), 
- exception_status_(SNMP_CLASS_SUCCESS), output_(NULL)
+Vb::Vb( const Oid &oid):  output_(NULL), iv_vb_oid_(oid), iv_vb_value_(NULL), 
+ exception_status_(SNMP_CLASS_SUCCESS)
 { 
 }
 
 //---------------[ Vb::Vb( const Oid &oid, const SmiSyntax &val) ]-------
 Vb::Vb( const Oid &oid, const SnmpSyntax &val, const SmiUINT32 status):
-  iv_vb_oid_(oid), iv_vb_value_(NULL), exception_status_(status), output_(NULL)
+  output_(NULL), iv_vb_oid_(oid), iv_vb_value_(NULL), exception_status_(status)
 { 
   // iv_vb_value_ = recast_smi_object(val);  // allocate and construct object
   iv_vb_value_ = val.clone();
@@ -65,7 +65,7 @@ Vb::Vb( const Oid &oid, const SnmpSyntax &val, const SmiUINT32 status):
 
 //---------------[ Vb::Vb( const Vb &vb) ]-----------------------------
 // copy constructor
-Vb::Vb( const Vb &vb): iv_vb_value_(NULL), output_(NULL)
+Vb::Vb( const Vb &vb): output_(NULL), iv_vb_value_(NULL)
 {  
    *this = vb; 
 }

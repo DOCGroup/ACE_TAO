@@ -133,7 +133,7 @@ class ACE_Export SnmpTarget
 
    protected:
      SnmpTarget();
-     SnmpTarget(const& SnmpTarget);
+     //     SnmpTarget(const SnmpTarget &);
 
     int validity_;  
     // used by derived class instances
