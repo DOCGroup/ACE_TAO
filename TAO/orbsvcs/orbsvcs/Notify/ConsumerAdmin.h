@@ -62,7 +62,7 @@ protected:
   obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                               CosNotifyChannelAdmin::ProxyID_out proxy_id,
                                               const CosNotification::QoSProperties & initial_qos
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                                              ACE_ENV_ARG_DECL
                                               )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
