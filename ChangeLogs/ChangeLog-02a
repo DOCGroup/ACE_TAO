@@ -1,3 +1,11 @@
+Thu Jan 24 10:14:47 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_wchar.h: Added definition for ACE_TEXT_SearchPath.
+
+	* ace/Lib_Find.cpp (ldfind): Fixed UNICODE and Fuzz builds
+	  errors.  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+	  the fix.
+
 Wed Jan 23 16:48:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Lib_Find.h:
