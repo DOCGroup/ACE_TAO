@@ -2802,7 +2802,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Basic_Argument_T.cpp \
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \
-  $(TAO_ROOT)/tao/PICurrent_Guard.h \
+  $(TAO_ROOT)/tao/PortableServer/PICurrent_Guard.h \
   $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
   $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
   $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.h \
