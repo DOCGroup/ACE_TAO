@@ -25,11 +25,13 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
 
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::Common_Info::Common_Info (void)
-  : event_handler_ (0),
-    io_entry_ (0),
+  : io_entry_ (0),
+    event_handler_ (0),
     io_handle_ (ACE_INVALID_HANDLE),
     network_events_ (0),
-    delete_event_ (0)
+    delete_event_ (0),
+    delete_entry_ (0),
+    close_masks_ (ACE_Event_Handler::NULL_MASK)
 {
 }
 
@@ -41,6 +43,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::reset (void)
   this->io_handle_ = ACE_INVALID_HANDLE;
   this->network_events_ = 0;
   this->delete_event_ = 0;
+  this->delete_entry_ = 0;
+  this->close_masks_ = ACE_Event_Handler::NULL_MASK;
 }
 
 ACE_INLINE void
@@ -48,13 +52,17 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (int io_entry,
                                                        ACE_Event_Handler *event_handler,
                                                        ACE_HANDLE io_handle,
                                                        long network_events,
-                                                       int delete_event)
+                                                       int delete_event,
+                                                       int delete_entry,
+                                                       ACE_Reactor_Mask close_masks)
 {
   this->event_handler_ = event_handler;
   this->io_entry_ = io_entry;
   this->io_handle_ = io_handle;
   this->network_events_ = network_events;
   this->delete_event_ = delete_event;
+  this->delete_entry_ = delete_entry;
+  this->close_masks_ = close_masks;
 }
 
 ACE_INLINE void
@@ -67,9 +75,7 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (Common_Info &common_info)
 
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::Current_Info (void)
-  : delete_entry_ (0),
-    close_masks_ (0),
-    suspend_entry_ (0)
+  : suspend_entry_ (0)
 {
 }
 
@@ -83,24 +89,20 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (int io_entry,
                                                         ACE_Reactor_Mask close_masks,
                                                         int suspend_entry)
 {
-  this->delete_entry_ = delete_entry;
-  this->close_masks_ = close_masks;
   this->suspend_entry_ = suspend_entry;
   Common_Info::set (io_entry,
                     event_handler,
                     io_handle,
                     network_events,
-                    delete_event);
+                    delete_event,
+                    delete_entry,
+                    close_masks);
 }
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (Common_Info &common_info,
-                                                        int delete_entry,
-                                                        ACE_Reactor_Mask close_masks,
                                                         int suspend_entry)
 {
-  this->delete_entry_ = delete_entry;
-  this->close_masks_ = close_masks;
   this->suspend_entry_ = suspend_entry;
   Common_Info::set (common_info);
 }
@@ -108,8 +110,6 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (Common_Info &common_info
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::reset (void)
 {
-  this->delete_entry_ = 0;
-  this->close_masks_ = 0;
   this->suspend_entry_ = 0;
   Common_Info::reset ();
 }
@@ -118,7 +118,8 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::reset (void)
 
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::To_Be_Added_Info (void)
-  : event_handle_ (ACE_INVALID_HANDLE)
+  : event_handle_ (ACE_INVALID_HANDLE),
+    suspend_entry_ (0)
 {
 }
 
@@ -128,21 +129,29 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_han
                                                             ACE_Event_Handler *event_handler,
                                                             ACE_HANDLE io_handle,
                                                             long network_events,
-                                                            int delete_event)
+                                                            int delete_event,
+                                                            int delete_entry,
+                                                            ACE_Reactor_Mask close_masks,
+                                                            int suspend_entry)
 {
   this->event_handle_ = event_handle;
+  this->suspend_entry_ = suspend_entry;
   Common_Info::set (io_entry,
                     event_handler,
                     io_handle,
                     network_events,
-                    delete_event);
+                    delete_event,
+                    delete_entry,
+                    close_masks);
 }
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle,
-                                                            Common_Info &common_info)
+                                                            Common_Info &common_info,
+                                                            int suspend_entry)
 {
   this->event_handle_ = event_handle;
+  this->suspend_entry_ = suspend_entry;
   Common_Info::set (common_info);
 }
 
@@ -150,6 +159,7 @@ ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::reset (void)
 {
   this->event_handle_ = ACE_INVALID_HANDLE;
+  this->suspend_entry_ = 0;
   Common_Info::reset ();
 }
 
@@ -158,9 +168,7 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::reset (void)
 ACE_INLINE
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::Suspended_Info (void)
   : event_handle_ (ACE_INVALID_HANDLE),
-    resume_entry_ (0),
-    delete_entry_ (0),
-    close_masks_ (0)
+    resume_entry_ (0)
 {
 }
 
@@ -169,8 +177,6 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::reset (void)
 {
   this->event_handle_ = ACE_INVALID_HANDLE;
   this->resume_entry_ = 0;
-  this->delete_entry_ = 0;
-  this->close_masks_ = 0;
   Common_Info::reset ();
 }
 
@@ -181,32 +187,28 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handl
                                                           ACE_HANDLE io_handle,
                                                           long network_events,
                                                           int delete_event,
-                                                          int resume_entry,
                                                           int delete_entry,
-                                                          ACE_Reactor_Mask close_masks)
+                                                          ACE_Reactor_Mask close_masks,
+                                                          int resume_entry)
 {
   this->event_handle_ = event_handle;
   this->resume_entry_ = resume_entry;
-  this->delete_entry_ = delete_entry;
-  this->close_masks_ = close_masks;
   Common_Info::set (io_entry,
                     event_handler,
                     io_handle,
                     network_events,
-                    delete_event);
+                    delete_event,
+                    delete_entry,
+                    close_masks);
 }
 
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handle,
                                                           Common_Info &common_info,
-                                                          int resume_entry,
-                                                          int delete_entry,
-                                                          ACE_Reactor_Mask close_masks)
+                                                          int resume_entry)
 {
   this->event_handle_ = event_handle;
   this->resume_entry_ = resume_entry;
-  this->delete_entry_ = delete_entry;
-  this->close_masks_ = close_masks;
   Common_Info::set (common_info);
 }
 
@@ -296,11 +298,15 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes (void)
   // will be no contention for this method and hence no guards are
   // neccessary.
 
-  // DELETIONS first
-  this->handle_deletions ();
+  // Deletions and suspensions in current_info_
+  this->make_changes_in_current_infos ();
 
-  // ADDITIONS here
-  this->handle_additions ();
+  // Deletions and resumptions in current_suspended_info_
+  this->make_changes_in_suspension_infos ();
+
+  // Deletions in to_be_added_info_, or transfers to current_info_ or
+  // current_suspended_info_ from to_be_added_info_
+  this->make_changes_in_to_be_added_infos ();
 
   return 0;
 }
@@ -555,14 +561,21 @@ ACE_WFMO_Reactor::suspend_handlers (void)
   int result = 0;
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
+  // First suspend all current handles
   int changes_required = 0;
-  int total_handles = this->handler_rep_.max_handlep1_ - 1;
-  for (int i = 0; i < total_handles && error == 0; i++)
+  for (int i = 0; i < this->handler_rep_.max_handlep1_ && error == 0; i++)
     {
       result = this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i], changes_required);
       if (result == -1)
         error = 1;
     }
+
+  if (!error)
+    // Then suspend all to_be_added_handles
+    for (int i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
+      {
+        this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 1;
+      }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
@@ -628,6 +641,13 @@ ACE_WFMO_Reactor::resume_handlers (void)
       if (result == -1)
         error = 1;
     }
+
+  if (!error)
+    // Then resume all to_be_added_handles
+    for (int i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
+      {
+        this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 0;
+      }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
