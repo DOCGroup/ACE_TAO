@@ -30,7 +30,7 @@ module Security {
     const CORBA::ServiceOption SecurityLevel1 = 1;
     const CORBA::ServiceOption SecurityLevel2 = 2;
     const CORBA::ServiceOption NonRepudiation = 3;
-    const CORBA::ServiceOption SecurityORBServiceRaady = 4;
+    const CORBA::ServiceOption SecurityORBServiceReady = 4;
     const CORBA::ServiceOption SecurityServiceReady = 5;
     const CORBA::ServiceOption ReplaceORBServices = 6;
     const CORBA::ServiceOption ReplaceSecurityServices = 7;
