@@ -1,3 +1,9 @@
+Tue Sep  4 07:22:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
+	  Changed the typename declaration to class. The usage of typename
+	  chokes SunCC42. 
+
 Mon Sep  3 18:52:03 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/Multicast/Makefile:

@@ -1,12 +1,12 @@
 // $Id$
 
-template<typename SERVANT> ACE_INLINE
+template<class SERVANT> ACE_INLINE
 Servant_var<SERVANT>::Servant_var (SERVANT *s)
   : ptr_ (s)
 {
 }
 
-template<typename SERVANT> ACE_INLINE
+template<class SERVANT> ACE_INLINE
 Servant_var<SERVANT>::Servant_var (const Servant_var<SERVANT> &rhs)
   : ptr_ (rhs.in ())
 {
@@ -14,7 +14,7 @@ Servant_var<SERVANT>::Servant_var (const Servant_var<SERVANT> &rhs)
     this->ptr_->_add_ref ();
 }
 
-template<typename SERVANT> ACE_INLINE Servant_var<SERVANT>&
+template<class SERVANT> ACE_INLINE Servant_var<SERVANT>&
 Servant_var<SERVANT>::operator= (const Servant_var<SERVANT> &rhs)
 {
   Servant_var<SERVANT> tmp (rhs);
@@ -32,37 +32,37 @@ Servant_var<SERVANT>::operator= (const Servant_var<SERVANT> &rhs)
   return *this;
 }
 
-template<typename SERVANT> ACE_INLINE SERVANT*
+template<class SERVANT> ACE_INLINE SERVANT*
 Servant_var<SERVANT>::operator-> ()
 {
   return this->ptr_;
 }
 
-template<typename SERVANT> ACE_INLINE const SERVANT*
+template<class SERVANT> ACE_INLINE const SERVANT*
 Servant_var<SERVANT>::operator-> () const
 {
   return this->ptr_;
 }
 
-template<typename SERVANT> ACE_INLINE
+template<class SERVANT> ACE_INLINE
 Servant_var<SERVANT>::operator SERVANT *()
 {
   return this->ptr_;
 }
 
-template<typename SERVANT> ACE_INLINE
+template<class SERVANT> ACE_INLINE
 Servant_var<SERVANT>::operator const SERVANT * () const
 {
   return this->ptr_;
 }
 
-template<typename SERVANT> ACE_INLINE SERVANT *
+template<class SERVANT> ACE_INLINE SERVANT *
 Servant_var<SERVANT>::in () const
 {
   return this->ptr_;
 }
 
-template<typename SERVANT> ACE_INLINE SERVANT *&
+template<class SERVANT> ACE_INLINE SERVANT *&
 Servant_var<SERVANT>::out ()
 {
   this->ptr_->_remove_ref ();
@@ -70,7 +70,7 @@ Servant_var<SERVANT>::out ()
   return this->ptr_;
 }
 
-template<typename SERVANT> ACE_INLINE SERVANT *&
+template<class SERVANT> ACE_INLINE SERVANT *&
 Servant_var<SERVANT>::inout ()
 {
   return this->ptr_;
