@@ -258,7 +258,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // Now if we are not completely connected...
   if (r->blocked ())
     {
-      // Now wait until the connection is ready
+      // Wait until the connection is ready
       int result =
         this->active_connect_strategy_->wait (
             base_transport,
@@ -316,7 +316,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     }
 
   // Connection not ready yet, just use this base_transport, if
-  // we need a connected one we will block later one to make sure
+  // we need a connected one we will block later to make sure
   // it is connected
   return base_transport;
 }
