@@ -1,3 +1,12 @@
+Mon Jun 21 11:07:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/AST_Expression.cpp:
+	  Eliminated dependency on <limits.h> and <float.h> by using 
+	  values defined in Basic_Types.h and deleting a broken
+	  #define of MAXCHAR. Thanks to Hata Yoshiaki <hatay@alpha.co.jp>
+	  for pointing out that setting signed short and long
+	  constants to their minimum values was broken.
+
 Mon Jun 21 11:04:03 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/{IORC, IORS, IORManipulation}.cpp:
