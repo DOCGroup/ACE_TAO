@@ -1,3 +1,11 @@
+Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* cubit_i.h (objrefs): Fixed invalid comparison between a signed
+	and unsigned variable.
+	
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Fixed comparison of 
+	">=" on an unsigned variable to compare only ">".
+		
 Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
 
 	* TAO_IDL/fe/y.tab.cpp: Commented out include <values.h>.  This
