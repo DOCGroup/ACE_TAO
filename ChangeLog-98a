@@ -1,3 +1,10 @@
+Thu Mar 19 10:15:27 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i: Changed the dynamic library load/unload code so that
+	  on HP-UX, g++ does the same thing as aC++ (not like HP C++), using
+	  <dl.h> and shl_(un)load.  Thanks to Kirill Rybaltchenko
+	  <Kirill.Rybaltchenko@cern.ch> for this change.
+
 Thu Mar 19 10:13:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/preempt.cpp: 1) Added -f option to fork
