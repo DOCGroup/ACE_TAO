@@ -1,3 +1,16 @@
+Thu Jan 27 18:28:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Proactor_Test.{h cpp}:
+	* tests/Proactor_Test_IPV6.cpp: Rearranged the pieces of this test to
+	  allow the Acceptor and Connector objects to be destroyed during the
+	  test and still have all the stats kept accurately. This is to enable
+	  testing of some Proactor improvements that are coming.
+
+	* tests/Proactor_Scatter_Gather_Test.cpp:
+	* tests/TP_Reactor_Test.cpp: Be careful to use the same address family
+	  when forming the listen and connect addresses. This allows things to
+	  work regardless of IPv4/IPv6 use.
+
 Thu Jan 27 18:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hash_Map_Manager_T.inl:

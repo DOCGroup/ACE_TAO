@@ -891,6 +891,10 @@ public:
   Connector (void);
   virtual ~Connector (void);
 
+  // Address to pass to Sender for secondary connect.
+  void set_address (const ACE_INET_Addr &addr);
+  const ACE_INET_Addr &get_address (void);
+
   void stop (void);
 
   // Virtual from ACE_Asynch_Connector
@@ -901,6 +905,7 @@ private:
   void on_delete_sender (Sender &rcvr);
 
   int sessions_;
+  ACE_INET_Addr addr_;
   Sender *list_senders_[SENDERS];
 };
 
@@ -962,6 +967,19 @@ Connector::Connector (void)
 Connector::~Connector (void)
 {
   this->stop ();
+}
+
+// Address to pass to Sender for secondary connect.
+void
+Connector::set_address (const ACE_INET_Addr &addr)
+{
+  this->addr_ = addr;
+}
+
+const ACE_INET_Addr &
+Connector::get_address (void)
+{
+  return this->addr_;
 }
 
 void
@@ -1073,11 +1091,12 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
   this->socket_handle_[ODD] = handle;
 
   // Open the input file
-  if (ACE_INVALID_HANDLE == (this->input_file_handle_ = ACE_OS::open (input_file,
-                                                                      _O_RDONLY |\
-                                                                      FILE_FLAG_OVERLAPPED |\
-                                                                      FILE_FLAG_NO_BUFFERING,
-                                                                      ACE_DEFAULT_FILE_PERMS)))
+  if (ACE_INVALID_HANDLE == (this->input_file_handle_ =
+                               ACE_OS::open (input_file,
+                                             _O_RDONLY |\
+                                             FILE_FLAG_OVERLAPPED |\
+                                             FILE_FLAG_NO_BUFFERING,
+                                             ACE_DEFAULT_FILE_PERMS)))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
@@ -1085,12 +1104,13 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
     }
   else
     {
-      // now connect (w/o the connector factory) to the even (=second) receiver:
-      // we don't connect thru the factory in order not to instantiate another Sender
+      // Now connect (w/o the connector factory) to the even (=second)
+      // receiver. We don't connect thru the factory in order not to
+      // instantiate another Sender.
       ACE_SOCK_Connector sock_connector;
       ACE_SOCK_Stream    sock_stream;
       if (-1 == sock_connector.connect (sock_stream,
-                                        ACE_INET_Addr (port, host)))
+                                        this->connector_->get_address ()))
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("Sender::open::ACE_SOCK_Connector::connect")));
@@ -1361,6 +1381,17 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   Acceptor  acceptor;
   Connector connector;
+  ACE_INET_Addr addr (port);
+
+  if (!client_only)
+    {
+      // Simplify, initial read with zero size
+      if (-1 == acceptor.open (addr, 0, 1))
+        {
+          ACE_ASSERT (0);
+          return -1;
+        }
+    }
 
   if (!server_only)
     {
@@ -1371,17 +1402,10 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
 
       // connect to first destination
-      if (-1 == connector.connect (ACE_INET_Addr (port, host)))
-        {
-          ACE_ASSERT (0);
-          return -1;
-        }
-    }
-
-  if (!client_only)
-    {
-      // Simplify, initial read with zero size
-      if (-1 == acceptor.open (ACE_INET_Addr (port), 0, 1))
+      if (addr.set (port, host, 1, addr.get_type ()) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), host), -1);
+      connector.set_address (addr);
+      if (-1 == connector.connect (addr))
         {
           ACE_ASSERT (0);
           return -1;
