@@ -74,24 +74,29 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-<P>Current status: (As of July 20th, 1998.)
+<P>Current status: (As of July 31st, 1998.)
 <UL>
+
+  <LI>
+      Anonymous arrays inside structs are supported. However, they are
+      not yet supported inside unions.
+  </LI>
 
   <LI>
       Perfect Hashed Operation Lookup Strategy has been added to the IDL
       Compiler.  -P flag to the <tao_idl> enables the perfect hased
       lookup strategy.
-      
+
       This strategy uses
       <A HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz"> GPERF</A>,
       the GNU's Perfect Hash Function Generator written by Dr.Douglas
       C. Schmidt.
-      
+
       Right now, GPERF works only on Solaris. Any work on porting GPERF
       to other platforms will be highly appreciated.
       </L1>
 
- 
+
 <LI>
 Support for Arrays is refined in terms of the code generated for
     parameters inside stubs and skeletons.
@@ -426,8 +431,8 @@ Point of contact: <A HREF="mailto:brunsch@cs.wustl.edu">Darrell Brunsch</A>
 
 <P>Current status (as of July 23, 1998)</P>
 
-<P>Here is a brief list of my goals (and the dates completed).  For more 
-information, please see the <A HREF="../implrepo.html">Implementation Repository 
+<P>Here is a brief list of my goals (and the dates completed).  For more
+information, please see the <A HREF="../implrepo.html">Implementation Repository
 documentation</A>.</P>
 
 <UL>
@@ -728,8 +733,3 @@ For more information see <A HREF="../locate_request.html">Locate request</A>
 <P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
 </HTML>
-
-
-
-
-

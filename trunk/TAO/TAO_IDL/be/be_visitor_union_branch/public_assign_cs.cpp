@@ -457,7 +457,7 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+      *os << "CORBA::String_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = CORBA::string_dup (u.u_."
