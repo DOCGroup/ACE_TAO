@@ -668,17 +668,16 @@ be_visitor_module_sh::visit_module (be_module *node)
 
       // now generate the class definition. The prefix POA_ is prepended to our
       // name only if we are the outermost module
+      *os << "TAO_NAMESPACE "; // << idl_global->export_macro ()
+
       if (!node->is_nested ())
-        // we are outermost module
-        *os << "class "  << idl_global->export_macro ()
-	    << " POA_" << node->local_name () << be_nl;
+          // we are outermost module
+          *os << " POA_" << node->local_name () << be_nl;
       else
-        // we are inside another module
-        *os << "class "  << idl_global->export_macro ()
-	    << " " << node->local_name () << be_nl;
+          // we are inside another module
+          *os << " " << node->local_name () << be_nl;
 
       *os << "{" << be_nl
-          << "public:"
           << be_idt;
 
       if (this->visit_scope (node) == -1)
