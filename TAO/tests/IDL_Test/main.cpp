@@ -78,6 +78,8 @@ class schmegegging_i : public virtual gleep::schmegegging
 int
 main (int argc , char *argv[])
 {
+  int error_count = 0;
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -107,9 +109,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/hello:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'hello'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'hello'\n"));
         }
 
       goodbye_i g;
@@ -119,9 +121,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'goodbye'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'goodbye'\n"));
         }
 
       sayonara_i s;
@@ -131,9 +133,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'sayonara'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'sayonara'\n"));
         }
 
       ciao_i c;
@@ -143,9 +145,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'ciao'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'ciao'\n"));
         }
 
       aloha_i a;
@@ -155,9 +157,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'aloha'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'aloha'\n"));
         }
 
       // Test of typeprefix, typeid, and #pragma version behavior.
@@ -167,9 +169,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_schmooze._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schmooze:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'schmooze'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'schmooze'\n"));
         }
 
       schmeer_i s_schmeer;
@@ -177,9 +179,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_schmeer._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schmeer:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'schmeer'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'schmeer'\n"));
         }
 
       schlemiel_i s_schlemiel;
@@ -187,9 +189,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_schlemiel._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schlemiel:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'schlemiel'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'schlemiel'\n"));
         }
 
       spilkis_i s_spilkis;
@@ -197,9 +199,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_spilkis._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/spilkis:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'spilkis'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'spilkis'\n"));
         }
 
       schmuck_i s_schmuck;
@@ -207,9 +209,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_schmuck._interface_repository_id (),
                           "ABRA:cadabra/hocus/pocus:1.23"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'schmuck'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'schmuck'\n"));
         }
 
       schmendrick_i s_schmendrick;
@@ -217,9 +219,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_schmendrick._interface_repository_id (),
                           "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'schmendrick'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'schmendrick'\n"));
         }
 
       schlemazel_i s_schlemazel;
@@ -229,9 +231,9 @@ main (int argc , char *argv[])
               "IDL:verklempt_prefix/gleep/floop/verklempt/schlemazel:1.0"
             ))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'schlemazel'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'schlemazel'\n"));
         }
 
       schmegegging_i s_schmegegging;
@@ -239,9 +241,9 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_schmegegging._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schmegegging:1.0"))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "pragma prefix error in object 'schmegegging'\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "pragma prefix error in object 'schmegegging'\n"));
         }
 
       // Testing (de)marshaling of IDL union values 
@@ -258,20 +260,20 @@ main (int argc , char *argv[])
 
       if ((any1 >>= outfield) == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "error in extraction of "
-                             "duplicate case label value\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "error in extraction of "
+                      "duplicate case label value\n"));
         }
 
       const char *str = outfield->value.strValue ();
       
       if (ACE_OS::strcmp (str, "duplicate case label test string") != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "error - corruption of "
-                             "duplicate case label value\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "error - corruption of "
+                      "duplicate case label value\n"));
         }
 
       field.value.defstr (CORBA::string_dup ("default case test string"));
@@ -279,20 +281,20 @@ main (int argc , char *argv[])
 
       if ((any1 >>= outfield) == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "error in extraction of "
-                             "default case label value\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "error in extraction of "
+                      "default case label value\n"));
         }
 
       str = outfield->value.defstr ();
       
       if (ACE_OS::strcmp (str, "default case test string") != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "error - corruption of "
-                             "default case label value\n"),
-                            -1);
+          ++error_count;
+          ACE_DEBUG ((LM_DEBUG,
+                      "error - corruption of "
+                      "default case label value\n"));
         }
 
       root_poa->destroy (1,
@@ -308,5 +310,5 @@ main (int argc , char *argv[])
     }
   ACE_ENDTRY;
 
-  return 0;
+  return error_count;
 }
