@@ -1,3 +1,10 @@
+Sat Aug  2 08:05:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Adapter.h:
+	* tao/Adapter.cpp: Looks like a forwardeclaration of
+	  SystemException was insufficient in builds where native
+	  exceptions are used.
+
 Fri Aug  1 22:45:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.i (is_profile_equivalent): Intialize the default
