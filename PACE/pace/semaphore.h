@@ -55,7 +55,7 @@ extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
 # if defined (PACE_HAS_INLINE)
-# include "pace/semaphore.inl"
+# include "semaphore.inl"
 # endif /* PACE_HAS_INLINE */
 
 
