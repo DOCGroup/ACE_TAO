@@ -95,7 +95,7 @@ public:
   /// Set the record life in seconds (0 infinite).
   void
   set_max_record_life (CORBA::ULong life
-		       ACE_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the maximum size in octets.
@@ -106,7 +106,7 @@ public:
   /// Set the maximum size in octets.
   void
   set_max_size (CORBA::ULongLong size
-		ACE_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidParam));
 
@@ -128,7 +128,7 @@ public:
   /// Set the action to be taken when the log reaches its maximum size.
   void
   set_log_full_action (DsLogAdmin::LogFullActionType action
-		       ACE_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the administrative state of the log.
@@ -139,7 +139,7 @@ public:
   /// Set the administrative state of the log.
   void
   set_administrative_state (DsLogAdmin::AdministrativeState state
-			    ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the forwarding state of the log.
@@ -170,7 +170,7 @@ public:
   /// Set the log duration.
   void
   set_interval (const DsLogAdmin::TimeInterval & interval
-		ACE_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidTime,
                      DsLogAdmin::InvalidTimeInterval));
@@ -208,7 +208,7 @@ public:
   /// Set the weekly scheduling parameters.
   void
   set_week_mask (const DsLogAdmin::WeekMask & masks
-		 ACE_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidTime,
                      DsLogAdmin::InvalidTimeInterval,
@@ -218,9 +218,9 @@ public:
   /// <c>.
   DsLogAdmin::RecordList*
   query (const char * grammar,
-	 const char * c,
-	 DsLogAdmin::Iterator_out i
-	 ACE_ENV_ARG_DECL)
+         const char * c,
+         DsLogAdmin::Iterator_out i
+         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint));
@@ -229,16 +229,16 @@ public:
   /// <i>.
   DsLogAdmin::RecordList*
   retrieve (DsLogAdmin::TimeT from_time,
-	    CORBA::Long how_many,
-	    DsLogAdmin::Iterator_out i
-	    ACE_ENV_ARG_DECL)
+            CORBA::Long how_many,
+            DsLogAdmin::Iterator_out i
+            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the number of records matching constraint <c>.
   CORBA::ULong
   match (const char * grammar,
-	 const char * c
-	 ACE_ENV_ARG_DECL)
+         const char * c
+         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint));
@@ -246,8 +246,8 @@ public:
   /// Delete records matching constraint <c>.
   CORBA::ULong
   delete_records (const char * grammar,
-		  const char * c
-		  ACE_ENV_ARG_DECL)
+                  const char * c
+                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint));
@@ -255,14 +255,14 @@ public:
   /// Delete records matching ids in <ids>
   CORBA::ULong
   delete_records_by_id (const DsLogAdmin::RecordIdList & ids
-			ACE_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   /// Write records to the log storage.
   void
   write_records (const DsLogAdmin::Anys & records
-		 ACE_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::LogFull,
                      DsLogAdmin::LogLocked,
@@ -272,7 +272,7 @@ public:
   /// and DsLogAdmin::LogLocked
   void
   write_recordlist (const DsLogAdmin::RecordList & list
-		    ACE_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::LogFull,
                      DsLogAdmin::LogLocked,
@@ -281,8 +281,8 @@ public:
   /// Set single record attributes.
   void
   set_record_attribute (DsLogAdmin::RecordId id,
-			const DsLogAdmin::NVList & attr_list
-			ACE_ENV_ARG_DECL)
+                        const DsLogAdmin::NVList & attr_list
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidRecordId,
                      DsLogAdmin::InvalidAttribute));
@@ -291,9 +291,9 @@ public:
   /// constraints with same attr_list.
   CORBA::ULong
   set_records_attribute (const char * grammar,
-			 const char * c,
-			 const DsLogAdmin::NVList & attr_list
-			 ACE_ENV_ARG_DECL)
+                         const char * c,
+                         const DsLogAdmin::NVList & attr_list
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint,
@@ -303,7 +303,7 @@ public:
   /// DsLogAdmin::InvalidRecordId
   DsLogAdmin::NVList*
   get_record_attribute (DsLogAdmin::RecordId id
-			ACE_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidRecordId));
 
@@ -316,7 +316,7 @@ public:
   //@}
 
   /// Check that valid threshold values have been given.
-  static bool validate_capacity_alarm_thresholds (
+  static CORBA::Boolean validate_capacity_alarm_thresholds (
     const DsLogAdmin::CapacityAlarmThresholdList & threshs
    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -1,3 +1,13 @@
+Fri Oct 18 16:11:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (Log_i): Patch to prevent compile
+	  errors on OpenBSD. Thanks to Frank
+	  Hunleth<frank@hunleth.com> for the fix. The problem is because
+	  of a type conversion from unsigned long to time_t. Looks like
+	  time_t is an int on OpenBSD.
+	  
+	* orbsvcs/orbsvcs/Log/Log_i.h: Some cosmetic fixes.
+
 Fri Oct 18 16:09:37 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/ImplRepo_Service/README.txt: 
