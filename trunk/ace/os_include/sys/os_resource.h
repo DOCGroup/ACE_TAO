@@ -39,6 +39,11 @@
 #  include /**/ <sys/syscall.h>
 #endif /* ACE_HAS_SYSCALL_H */
 
+// prusage_t is defined in <sys/procfs.h>
+#if defined (ACE_HAS_PROC_FS)
+#  include /**/ <sys/procfs.h>
+#endif  /* ACE_HAS_PROC_FS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
