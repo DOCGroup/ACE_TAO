@@ -1,3 +1,14 @@
+Sun Feb  8 15:33:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+	* include/makeinclude/rules.lib.GNU:
+	* include/makeinclude/rules.local.GNU: Rename
+	  ACE_LDSO_Major_Minor_Version_Number to ACE_LDSO_Version_Number.
+
+	* include/makeinclude/rules.local.GNU: Put back checking of
+	  current directory into library installation rules but with an
+	  extra check for null ACE_LDSO_Version_Number.
+
 Sun Feb 08 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added Scott Snyder's egcs 1.0.1 patch, which
