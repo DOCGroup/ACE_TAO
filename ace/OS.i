@@ -542,7 +542,7 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
 {
   ACE_TRACE ("ACE_OS::fcntl");
 #if defined (ACE_HAS_PACE)
-  return pace_fcntl ((handle, cmd, arg));
+  return pace_fcntl (handle, cmd, arg);
 # elif defined (ACE_LACKS_FCNTL)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (cmd);
