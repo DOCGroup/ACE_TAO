@@ -14,7 +14,7 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 /* Our goal here is to develop a client that can send a datagram to a
    server running on a known host.  We'll use a command-line argument
    to specify the hostname instead of hard-coding it.  */
-int 
+int
 main (int argc,char *argv[])
 {
   /* All datagrams must have a point of origin.  Since we intend to
@@ -30,7 +30,7 @@ main (int argc,char *argv[])
 
   /* And here is our datagram object.  */
   ACE_SOCK_Dgram dgram;
-	
+
   /* Notice that this looks a lot like the server application.
     There's no difference in creating server datagrams an client
     datagrams.  You can even use a zero-constructed address for your
@@ -102,6 +102,6 @@ main (int argc,char *argv[])
               "(%P|%t) The server can be found at:  (%s:%d)\n",
               remote.get_host_name(),
               PORT));
-  
+
   return 0;
 }

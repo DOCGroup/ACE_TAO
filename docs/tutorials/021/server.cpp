@@ -19,10 +19,10 @@ int
 main (int, char *[])
 {
   /*
-    Construction of an Allocator will create the memory pool and 
+    Construction of an Allocator will create the memory pool and
     provide it with a name.  The Constants class is also
     declared in mpool.h to keep server and client on the same
-    page.  The name is used to generate a unique semaphore which 
+    page.  The name is used to generate a unique semaphore which
     prevents simultaneous access to the pools housekeeping
     information.  (Note that you still have to provide your own
     synch mechanisms for the data *you* put in the poo.)
@@ -46,9 +46,9 @@ main (int, char *[])
   ACE_DEBUG ((LM_INFO,
               "Shared memory is at 0x%x\n",
               shm));
-  
+
   /*
-    Something that we can do with a memory pool is map a name to 
+    Something that we can do with a memory pool is map a name to
     a region provided by malloc.  By doing this, we can
     communicate that name to the client as a rendezvous
     location.  Again, a member of Constants is used to keep the
@@ -62,7 +62,7 @@ main (int, char *[])
                       100);
 
   /*
-    One of the best ways to synch between different processes is 
+    One of the best ways to synch between different processes is
     through the use of semaphores.  ACE_SV_Semaphore_Complex
     hides the gory details and lets us use them rather easily.
 
@@ -74,7 +74,7 @@ main (int, char *[])
 
     Both semaphores are created in an initially locked state.
     */
-    
+
   ACE_SV_Semaphore_Complex mutex;
   ACE_ASSERT (mutex.open (Constants::SEM_KEY_1,
                           ACE_SV_Semaphore_Complex::ACE_CREATE,
@@ -111,7 +111,7 @@ main (int, char *[])
                 "(%P) %p",
                 "server synch.acquire"));
   /*
-    This will remove all of the memory pool's resources.  In the 
+    This will remove all of the memory pool's resources.  In the
     case where a memory mapped file is used, the physical file
     will also be removed.
     */
@@ -121,10 +121,10 @@ main (int, char *[])
                 "server allocator.remove"));
   /*
     We now have to cleanup the semaphores we created.  Use the
-    ipcs command to see that they did, indeed, go away after the 
+    ipcs command to see that they did, indeed, go away after the
     server exits.
     */
-    
+
   if (mutex.remove () == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P) %p\n",

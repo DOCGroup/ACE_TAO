@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -65,7 +66,7 @@ int <font color=#008888>Compressor::send</font>(ACE_Message_Block *message, ACE_
     return( 0 );
 }
 
-<font color=red>/* And here's the decompression side.  We've written Xmit/Recv so that 
+<font color=red>/* And here's the decompression side.  We've written Xmit/Recv so that
    we're guaranteed to get an entire block of compressed data.  If
    we'd used recv() in the Recv object then we might have gotten a
    partial block and that may not decompress very nicely.
@@ -95,7 +96,7 @@ int <font color=#008888>Compressor::recv</font>(ACE_Message_Block *message, ACE_
 
         <font color=red>// Skip past the signature before going any further.</font>
     message->rd_ptr( 3 );
-    
+
         <font color=red>// Perform a bogus decompression algorithm.  This is where you </font>
         <font color=red>// would feed to libz or your favorite decompressor.  (It's</font>
         <font color=red>// costly but you could invoke popen() on gzip!)</font>

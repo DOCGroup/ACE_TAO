@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -21,7 +22,7 @@ However, there doesn't seem to be a way to put data in such that it
 will travel upstream.  To get around that, I've added a get() method
 to Recv that will trigger a read on the socket.  Recv will then put
 the data to the next upstream module and we're on our way.  As noted
-earlier, that data will eventually show up either in the <i>reader</i> 
+earlier, that data will eventually show up either in the <i>reader</i>
 (if installed on the stream open()) or the stream head reader task's
 message queue.
 <HR>

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -16,7 +17,7 @@ That's it for the code, now let's take a quick look at some output.
 The first set of output is from the Token test, the second is Mutex
 test.  Notice how the threads are evenly utilized in the Token test.
 Each thread gets to see exactly two messages.  There's also an
-interesting side-effect that the messages are processed in order.  (You 
+interesting side-effect that the messages are processed in order.  (You
 can't rely on that, it just happend in this particular run.)
 <P>
 With the Mutex test, however, we see that the first thread gets no
@@ -25,11 +26,11 @@ governor in svc() it might have gotten them all!
 <P>
 Why does this happen?
 <P>
-Primarily because of time slicing.  Even though each thread takes time 
-to do work (1 second in our test), it can still own the timeslice when 
+Primarily because of time slicing.  Even though each thread takes time
+to do work (1 second in our test), it can still own the timeslice when
 it gets back to the mutex acquire.  Since the other threads are still
 switched out, the current thread regets the lock and continues.  On
-the other hand, the ACE_Token is very careful about the order in which 
+the other hand, the ACE_Token is very careful about the order in which
 the acquisition is allowed and more evenly distributes the work.
 <P>
 Play around with the sleep() call in svc().  You'll find that as you

@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-17 14:27 EST by <jcej@chiroptera.tragus.org>.
-# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/003'.
+# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/003'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -12,7 +12,7 @@
 # length mode       name
 # ------ ---------- ------------------------------------------
 #    607 -rw-rw-r-- hdr
-#     17 -rw-rw-r-- bodies
+#     18 -rw-rw-r-- bodies
 #   1155 -rw-rw-r-- page01.pre
 #    447 -rw-rw-r-- page01.pst
 #
@@ -61,7 +61,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh00333; then
+if mkdir _sh04727; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -122,12 +122,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'bodies:' 'MD5 check failed'
-773a1437ce449e55856a43c0538ca5b2  bodies
+d02fcd98e57e40350f82497be4ac0e0c  bodies
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
-    test 17 -eq "$shar_count" ||
-    $echo 'bodies:' 'original size' '17,' 'current size' "$shar_count!"
+    test 18 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '18,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pre ==============
@@ -213,5 +213,5 @@ SHAR_EOF
     $echo 'page01.pst:' 'original size' '447,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh00333
+rm -fr _sh04727
 exit 0

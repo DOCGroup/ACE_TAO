@@ -37,7 +37,7 @@ Client_Handler::~Client_Handler (void)
    should return int so that it can tell the caller there was a
    problem.  Even as void you could at least throw an exception which
    you would never want to do in a destructor.  */
-void 
+void
 Client_Handler::destroy (void)
 {
   /* Tell the reactor to forget all about us.  Notice that we use the
@@ -46,7 +46,7 @@ Client_Handler::destroy (void)
     handle_close() being called.  Since we likely got here due to
     handle_close(), that could cause a bit of nasty recursion!  */
   this->reactor ()->remove_handler (this,
-                                    ACE_Event_Handler::READ_MASK 
+                                    ACE_Event_Handler::READ_MASK
                                     | ACE_Event_Handler::DONT_CALL);
 
   /* This is how we're able to tell folks not to use delete.  By
@@ -59,7 +59,7 @@ Client_Handler::destroy (void)
    Client_Acceptor when a new client connection has been accepted.
    The Client_Acceptor instance pointer is cast to a void* and given
    to us here.  We'll use that to avoid some global data...  */
-int 
+int
 Client_Handler::open (void *void_acceptor)
 {
   /* We need this to store the address of the client that we are now
@@ -148,7 +148,7 @@ Client_Handler::open (void *void_acceptor)
    threaded context is to invoke it's close() method.  Since we
    already have a handle_close() method built to cleanup after us,
    we'll just forward the request on to that object.  */
-int 
+int
 Client_Handler::close(u_long flags)
 {
   ACE_UNUSED_ARG (flags);
@@ -173,7 +173,7 @@ Client_Handler::close(u_long flags)
    list of possible virtual functions we would have to override.
 
    Again, this is not used if we're in thread-per-connection mode.  */
-int 
+int
 Client_Handler::handle_input (ACE_HANDLE handle)
 {
   /* Some compilers don't like it when you fail to use a parameter.
@@ -199,7 +199,7 @@ Client_Handler::handle_input (ACE_HANDLE handle)
    framework will take care of removing us (due to the -1), so we
    don't need to use the destroy() method.  Instead, we just delete
    ourselves directly.  */
-int 
+int
 Client_Handler::handle_close (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask)
 {
@@ -219,7 +219,7 @@ Client_Handler::handle_close (ACE_HANDLE handle,
    Of course, this is only valid if we're in thread-per-connection
    mode.  If we're using the reactor model, then svc() never comes
    into play.  */
-int 
+int
 Client_Handler::svc(void)
 {
   /* Like handle_input(), we create a buffer for loading the data.
@@ -256,7 +256,7 @@ Client_Handler::svc(void)
    appliation, you will probably have a bit more in main() to deal
    with command line options but after that point, all of the action
    takes place here.  */
-int 
+int
 Client_Handler::process (char *rdbuf,
                          int rdbuf_len)
 {
@@ -272,7 +272,7 @@ Client_Handler::process (char *rdbuf,
   switch (this->peer ().recv (rdbuf, rdbuf_len))
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) %p bad read\n",
                          "client"),
                         -1);

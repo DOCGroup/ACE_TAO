@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
   moduleEnd = new Module("Module End", taskEnd);
 
   // Now we push the Modules onto the Stream.
-  // Pushing adds the module to the head, or 
+  // Pushing adds the module to the head, or
   // otherwise prepends it to whatever modules
   // are already installed.
 
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
   if (theStream.push(moduleEnd) == -1) {
            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), -1);
-  } 
+  }
 
   if (theStream.push(moduleFour) == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), -1);
@@ -158,11 +158,11 @@ int main(int argc, char *argv[])
   // The Stream will automagically delete the Modules and
   // the contained Tasks.  We don't have to do that.
   //
-  // This call will block (due to the way we've written our 
+  // This call will block (due to the way we've written our
   // Task class) until all Message_Blocks have cleared the
   // entire Stream, and all associated threads have exited.
 
-  theStream.close();  
+  theStream.close();
 
   return 0;
 }

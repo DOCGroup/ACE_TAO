@@ -22,7 +22,7 @@ ACE_Reactor *g_reactor;
   we're satisfied with simply hard-coding a random but known value.  */
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-int 
+int
 main (int, char *[])
 {
   /* Create a Reactor instance.  Again, a global pointer isn't exactly
@@ -55,7 +55,7 @@ main (int, char *[])
     connections via the 'addr' object.  We're also telling it that we
     want it to be registered with our 'g_reactor' instance.  */
   if (peer_acceptor->open (addr, g_reactor) == -1 )
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "Opening Acceptor\n"),
                       -1);
 

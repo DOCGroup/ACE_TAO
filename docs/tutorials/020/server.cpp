@@ -17,7 +17,7 @@ main (int, char *[])
 
     ACE_DEBUG ((LM_INFO, "(%P|%t) Memory Mapped file is at 0x%x\n",
                 shm ));
-    
+
     for (char c = 'a'; c <= 'z'; c++)
         *s++ = c;
 
@@ -32,7 +32,7 @@ main (int, char *[])
     }
 
     putchar ('\n');
-    
+
     if (shm_server.remove () < 0)
         ACE_ERROR ((LM_ERROR, "%p\n", "remove"));
 

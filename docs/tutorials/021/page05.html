@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -67,11 +68,11 @@ const char * <font color=#008888>Constants::RegionName</font> = "<font color=gre
   exception!
   The other concern is thread safety.  If two threads call here at
   about the same time, we may create the pool twice.  We can't use a
-  Singleton because we want to have multiple Allocator instances.  The 
+  Singleton because we want to have multiple Allocator instances.  The
   Singleton techniques can be used though.
  */</font>
 
-<font color=#008888>Allocator::pool_t</font> & 
+<font color=#008888>Allocator::pool_t</font> &
 <font color=#008888>Allocator::pool</font> (void)
 {
   if (pool_ == 0)

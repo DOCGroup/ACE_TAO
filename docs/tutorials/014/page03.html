@@ -58,21 +58,17 @@ Like our other tutorials, svc() looks for a hangup and processes data.
   ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) %s <font color=#008888>Task::~Task</font>() -- once per Task\n</font>", d_nameOfTask));
 }
 
-int <font color=#008888>Task::open</font>(void *arg) 
+int <font color=#008888>Task::open</font>(void *arg)
 {
   ACE_UNUSED_ARG(arg);
 
   ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) %s <font color=#008888>Task::open</font>() -- once per Task\n</font>", d_nameOfTask));
-  
+
   <font color=red>// call <font color=#008888>ACE_Task::activate</font>() to spawn the threads using</font>
   <font color=red>// our <font color=#008888>Task::svc</font>() as the function to be run.</font>
 
-  <font color=red>// FMM -- Frequently Made Mistake --</font>
-  <font color=red>//  </font>
-  <font color=red>// If you specify the flag THR_DETACHED when activating the</font>
-  <font color=red>// Task, you will get an assert() violation during close(),</font>
-  <font color=red>// since the Task waits for all of its threads to rejoin.</font>
-  <font color=red>// </font>
+  <font color=red>// No need to use THR_DETACHED here, we're going to wait()</font>
+  <font color=red>// for the threads to exit later.  No leaks.</font>
 
   return this->activate(THR_NEW_LWP, d_numberOfThreads);
 }
@@ -85,7 +81,7 @@ int <font color=#008888>Task::put</font>(ACE_Message_Block *message,
   <font color=red>// directly to our putq() method, so that Messages put() to us</font>
   <font color=red>// will appear in the Message_Queue that is checked by the</font>
   <font color=red>// service threads.</font>
-  
+
   return this->putq(message, timeout);
 }
 
@@ -111,24 +107,24 @@ int <font color=#008888>Task::close</font>(u_long flags)
 
     ACE_Message_Block *hangupBlock = new ACE_Message_Block();
 
-    <font color=red>// And make it of the type MB_HANGUP.  </font>
+    <font color=red>// And make it of the type MB_HANGUP.</font>
 
     hangupBlock->msg_type(<font color=#008888>ACE_Message_Block::MB_HANGUP</font>);
 
-    <font color=red>// We then send this Block into the Message_Queue to be seen by the </font>
+    <font color=red>// We then send this Block into the Message_Queue to be seen by the</font>
     <font color=red>// service threads.</font>
 
     <font color=red>// Once again we duplicate() the Block as send it off...</font>
-    
+
     if (this->putq(hangupBlock->duplicate()) == -1) {
       ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green><font color=#008888>Task::close</font>() putq</font>"), -1);
     }
-    
+
     <font color=red>// ..and we're free to release() our copy of it.</font>
 
     hangupBlock->release();
 
-    <font color=red>// Now, all we have to do is wait() for the service threads to all </font>
+    <font color=red>// Now, all we have to do is wait() for the service threads to all</font>
     <font color=red>// exit.  This is where using THR_DETACHED in the activate() method</font>
     <font color=red>// will come back to haunt you.</font>
 
@@ -178,7 +174,7 @@ int <font color=#008888>Task::svc</font>(void)
     }
 
     if (messageBlock->msg_type() == <font color=#008888>ACE_Message_Block::MB_HANGUP</font>) {
-      
+
       <font color=red>// If the Message_Block is of type MB_HANGUP, then we're being asked</font>
       <font color=red>// to shut down nicely.</font>
 
@@ -199,7 +195,7 @@ int <font color=#008888>Task::svc</font>(void)
       break;
     }
 
-    <font color=red>// If we're here, then we've received a Message_Block that was </font>
+    <font color=red>// If we're here, then we've received a Message_Block that was</font>
     <font color=red>// not informing us to quit, so we're assuming it's a valid</font>
     <font color=red>// meaningful Block.</font>
 
@@ -216,13 +212,13 @@ int <font color=#008888>Task::svc</font>(void)
 
     <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (0, 250));
 
-    <font color=red>// Since we're part of a Stream, we duplicate the Block, and </font>
+    <font color=red>// Since we're part of a Stream, we duplicate the Block, and</font>
     <font color=red>// send it on to the next Task.</font>
 
     if (put_next(messageBlock->duplicate()) == -1) {
       ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green><font color=#008888>Task::svc</font>() put_next</font>"), -1);
     }
-    
+
     <font color=red>// And then we release our copy of it.</font>
 
     messageBlock->release();

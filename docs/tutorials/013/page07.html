@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -16,23 +17,23 @@
 <P>
 I've been trying to justify the chain of tasks by talking about a
 Work object that implements a state machine.  The idea is that your
-Work object has to perform a series of discrete steps to complete it's 
+Work object has to perform a series of discrete steps to complete it's
 function.  Traditionally, all of those steps would take place in one
 thread of execution.  That thread would probably be one from a Task
 thread pool.
 <P>
-Suppose, however, that some of those steps spend a lot of time waiting 
-for disk IO.  You could find that all of your thread-pool threads 
+Suppose, however, that some of those steps spend a lot of time waiting
+for disk IO.  You could find that all of your thread-pool threads
 are just sitting there waiting for the disk.  You might then be
 tempted to increase the thread pool size to get more work through.
-However, if some of the stages are memory intensive, you could run out 
+However, if some of the stages are memory intensive, you could run out
 of memory if all of the workers get to that state at the same time.
 <P>
 One solution might be to have different thread pools for each state.
 Each pool could have it's size tuned appropriately for the work that
-would be done there.  That's where the chain of Tasks comes in.  
- In this tutorial's implementation I've taken the 
-easy route and set all of the thread pools to the same size but a more 
+would be done there.  That's where the chain of Tasks comes in.
+ In this tutorial's implementation I've taken the
+easy route and set all of the thread pools to the same size but a more
 realistic solution would be to set each thread pool in the chain to a
 specific size as needed by that state of operation.
 <P>
@@ -123,7 +124,7 @@ protected:
 <font color=blue>#include</font> "<font color=green>work.h</font>"
 
 <font color=red>/*
-   Initialize the state to zero 
+   Initialize the state to zero
  */</font>
 <font color=#008888>Unit_Of_Work::Unit_Of_Work</font> (void)
         : state_ (0)
@@ -137,7 +138,7 @@ protected:
 }
 
 <font color=red>/*
-   Display our instance value 
+   Display our instance value
  */</font>
 void <font color=#008888>Unit_Of_Work::who_am_i</font> (void)
 {
@@ -145,7 +146,7 @@ void <font color=#008888>Unit_Of_Work::who_am_i</font> (void)
 }
 
 <font color=red>/*
-   Dispay our type name 
+   Dispay our type name
  */</font>
 void <font color=#008888>Unit_Of_Work::what_am_i</font> (void)
 {
@@ -153,7 +154,7 @@ void <font color=#008888>Unit_Of_Work::what_am_i</font> (void)
 }
 
 <font color=red>/*
-   Return failure.  You should always derive from Unit_Of_Work... 
+   Return failure.  You should always derive from Unit_Of_Work...
  */</font>
 int <font color=#008888>Unit_Of_Work::process</font> (void)
 {
@@ -161,7 +162,7 @@ int <font color=#008888>Unit_Of_Work::process</font> (void)
 }
 
 <font color=red>/*
-   ditto 
+   ditto
  */</font>
 int <font color=#008888>Unit_Of_Work::fini</font> (void)
 {
@@ -169,7 +170,7 @@ int <font color=#008888>Unit_Of_Work::fini</font> (void)
 }
 
 <font color=red>/*
-   Default constructor has no "<font color=green>message number</font>" 
+   Default constructor has no "<font color=green>message number</font>"
  */</font>
 <font color=#008888>Work::Work</font> (void)
         :message_ (-1)
@@ -179,7 +180,7 @@ int <font color=#008888>Unit_Of_Work::fini</font> (void)
 
 <font color=red>/*
    The useful constructor remembers which message it is and will tell you if
-   you ask. 
+   you ask.
  */</font>
 <font color=#008888>Work::Work</font> (int message)
         : message_ (message)
@@ -193,7 +194,7 @@ int <font color=#008888>Unit_Of_Work::fini</font> (void)
 }
 
 <font color=red>/*
-   This objects type name is different from the baseclass 
+   This objects type name is different from the baseclass
  */</font>
 void <font color=#008888>Work::what_am_i</font> (void)
 {
@@ -202,7 +203,7 @@ void <font color=#008888>Work::what_am_i</font> (void)
 
 <font color=red>/*
    A very simple state machine that just walks through three stages. If it is
-   called more than that, it will tell you not to bother. 
+   called more than that, it will tell you not to bother.
  */</font>
 int <font color=#008888>Work::process</font> (void)
 {
@@ -227,8 +228,8 @@ int <font color=#008888>Work::process</font> (void)
 
 <font color=red>/*
    If you don't have enough subtasks in the chain then the state machine won't
-   progress to the end.  The fini() hook will allow us to  recover from that by 
-   executing the remaining states in the final task of the chain. 
+   progress to the end.  The fini() hook will allow us to  recover from that by
+   executing the remaining states in the final task of the chain.
  */</font>
 int <font color=#008888>Work::fini</font> (void)
 {
@@ -247,9 +248,9 @@ int <font color=#008888>Work::fini</font> (void)
 <P>
 And that is that.  For a more complex machine that may want to "jump
 states" you would have to set some "state information" (sorry, bad
-choice of terminology again) so that process() could decide what to do 
+choice of terminology again) so that process() could decide what to do
 at each call.  You might also modify Task::svc() so that it will
-respect the return value of process() and do something useful with the 
+respect the return value of process() and do something useful with the
 information.
 <P>
 <P><HR WIDTH="100%">

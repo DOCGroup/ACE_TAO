@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -26,10 +27,10 @@ In a more robust system, one might want to process the data before
       compression, applying checksums or any number of other actions.
 <P>
 In this tutorial a Protocol_Stream object is created to encrypt and
-      compress* data being sent between peers.  Both client and server 
+      compress* data being sent between peers.  Both client and server
       applications are presented as well.  I present the application
 level code first and then go into the details of the protocol stream
-and it's helper objects.  If the stream stuff in the application logic 
+and it's helper objects.  If the stream stuff in the application logic
 is confusing then just read on by and come back to it after the later
 discussions.
 <P>
@@ -58,7 +59,7 @@ conformance details. The underlying SOCK_Stream is used to set up the
 connection using the ACE_SOCK_Connector class. Once the connector
 completes its job, the SOCK_Stream pointer is passed on to the
 Protocol Stream which now takes over. The Client has put() and get()
-methods to send and receive data from the server. 
+methods to send and receive data from the server.
 <P>
 The server is implemented using the ACE_Acceptor to listen at the port
 for connections and a reactor for delegating events to the appropriate

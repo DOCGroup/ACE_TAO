@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -12,7 +13,7 @@
 
 <P>
 <HR WIDTH="100%">
-      Before we move on to shmem.h, I want to show a different approach.  In 
+      Before we move on to shmem.h, I want to show a different approach.  In
       this new client/server pair, I use placement new to stuff an object
       (instead of a blob of bytes) into the shared memory segment.
     <P>
@@ -21,7 +22,7 @@
     <ul>
       <li>Be sure your pointers point into the shared memory and not
         local process memory.
-      <li>Only in very special cases will objects with virtual methods 
+      <li>Only in very special cases will objects with virtual methods
         work (because of the VTable pointers).
     </ul>
 <P>
@@ -34,7 +35,7 @@ That's not to say you shouldn't try...  Just try carefully and test a lot!
 <font color=blue>#include</font> "<font color=green>shmem.h</font>"
 
 <font color=blue>#if defined</font> (<font color=purple>ACE_LACKS_SYSV_SHMEM</font>)
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -42,19 +43,19 @@ main (int, char *[])
                     100);
 }
 #else <font color=red>// ACE_LACKS_SYSV_SHMEM</font>
-int 
+int
 main (int, char *argv[])
 {
   <font color=red>// Be sure the segment is sized to hold our object.</font>
   ACE_Shared_Memory_SV shm_server (SHM_KEY,
-                                   sizeof (SharedData), 
+                                   sizeof (SharedData),
                                    <font color=#008888>ACE_Shared_Memory_SV::ACE_CREATE</font>);
   char *shm = (char *) shm_server.malloc ();
 
   if (shm == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "<font color=green>%p\n\t(%P|%t) Cannot create shared memory segment.\n</font>"
-                       "<font color=green>\tUse 'ipcs' to see if it already exists\n</font>", 
+                       "<font color=green>\tUse 'ipcs' to see if it already exists\n</font>",
                        argv[0]),
                       100);
 
@@ -77,7 +78,7 @@ main (int, char *argv[])
 
   <font color=red>/*
     Another cheesy busy loop while we wait for the object to
-    become available.  The cool way would be to hide a semaphore 
+    become available.  The cool way would be to hide a semaphore
     or two behind this method call & eliminate the sleep.
     */</font>
   while (sd->available () == 0)
@@ -103,7 +104,7 @@ main (int, char *argv[])
 <font color=blue>#include</font> "<font color=green>shmem.h</font>"
 
 <font color=blue>#if defined</font>(<font color=purple>ACE_LACKS_SYSV_SHMEM</font>)
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -111,12 +112,12 @@ main (int, char *[])
                     100);
 }
 #else <font color=red>// ACE_LACKS_SYSV_SHMEM</font>
-int 
+int
 main (int, char *[])
 {
   ACE_Shared_Memory_SV shm_client (SHM_KEY,
                                    sizeof (SharedData));
-    
+
   char *shm = (char *) shm_client.malloc ();
 
   ACE_DEBUG ((LM_INFO,
@@ -125,7 +126,7 @@ main (int, char *[])
 
   <font color=red>/*
     More placement new.  The constructor parameter prevents
-    clobbering what the server may have written with it's show() 
+    clobbering what the server may have written with it's show()
     method.
     */</font>
   SharedData *sd = new (shm) SharedData (0);
@@ -140,7 +141,7 @@ main (int, char *[])
   sd->available (1);
 
   shm_client.close ();
-        
+
   return 0;
 }
 

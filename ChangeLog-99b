@@ -1,3 +1,11 @@
+1999-09-21  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/Makefile
+	* docs/tutorials/???/*
+	Added a number of notes about proper usage of THR_NEW_LWP and
+	THR_DETACHED.  Rebuilt all of the .html and .shar files.  Probably 
+	touched too many along the way but better safe than sorry.
+	
 Tue Sep 21 21:56:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-subsets.html: replaced absolute link to

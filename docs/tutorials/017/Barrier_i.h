@@ -49,7 +49,7 @@ protected:
   // The ACE_Barrier that does all of the work
   ACE_Barrier *barrier_;
 
-  // If we mutate the number of threads we have to do some black magic 
+  // If we mutate the number of threads we have to do some black magic
   // to make sure there isn't a memory leak.  These two member
   // variables are a part of that magic.
   ACE_Barrier *new_barrier_;
@@ -62,5 +62,5 @@ protected:
   // An internal method that constructs the barrier_ as needed.
   int make_barrier (int wait);
 };
-    
+
 #endif /* BARRIER_H */

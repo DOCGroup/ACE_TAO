@@ -24,7 +24,7 @@ int main (int, char **)
         // To keep things simple, I'll create it on the stack.
     ACE_Select_Reactor mySelectReactor;
 
-        // Next, we need an ACE_Reactor that is the bridge between the 
+        // Next, we need an ACE_Reactor that is the bridge between the
         // code and the real reactor.  It is given a pointer to the
         // real reactor.
     ACE_Reactor myReactor (&mySelectReactor);

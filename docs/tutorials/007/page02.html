@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -51,7 +52,7 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
    though we're not going to use the parameters, we still have to
    specify them.  */</font>
 
-int 
+int
 main (int argc, char *argv[])
 {
   <font color=red>/* In our earlier servers, we used a global pointer to get to the
@@ -93,7 +94,7 @@ main (int argc, char *argv[])
   <font color=red>/* Like ACE_ERROR_RETURN, the ACE_DEBUG macro gets used quite a bit.
     It's a handy way to generate uniform debug output from your
     program.  */</font>
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "<font color=green>(%P|%t) starting up server daemon\n</font>"));
 
   <font color=red>/* This will loop "<font color=green>forever</font>" invoking the handle_events() method of
@@ -111,7 +112,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "<font color=green>(%P|%t) shutting down server daemon\n</font>"));
- 
+
   return 0;
 }
 

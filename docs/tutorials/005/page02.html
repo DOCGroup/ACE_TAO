@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -25,7 +26,7 @@ This tutorial is a re-cap of the client-server hookup tutorial with much
 process() which does the task of reading in data from the client).
 <P>
 We again enroll the services of the ACE_Reactor to handle events. Everything
-occurs in a single thread. 
+occurs in a single thread.
 <P>
 This tutorial is a stepping stone towards a mutithreaded server model.
 </ul>
@@ -67,7 +68,7 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
    though we're not going to use the parameters, we still have to
    specify them.  */</font>
 
-int 
+int
 main (int argc, char *argv[])
 {
   <font color=red>/* In our earlier servers, we used a global pointer to get to the
@@ -132,7 +133,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "<font color=green>(%P|%t) shutting down server daemon\n</font>"));
-  
+
   return 0;
 }
 

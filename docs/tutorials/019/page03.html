@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -12,8 +13,8 @@
 
 <P>
 <HR WIDTH="100%">
-The client app looks much like the server.  We could have included the 
-CREATE flag with no ill effects but note the use of close() instead of 
+The client app looks much like the server.  We could have included the
+CREATE flag with no ill effects but note the use of close() instead of
 remove().  Picking the correct detachment method is rather important!
 <HR>
 <PRE>
@@ -23,7 +24,7 @@ remove().  Picking the correct detachment method is rather important!
 <font color=blue>#include</font> "<font color=green>shmem.h</font>"
 
 <font color=blue>#if defined</font>(<font color=purple>ACE_LACKS_SYSV_SHMEM</font>)
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -31,7 +32,7 @@ main (int, char *[])
                     100);
 }
 #else <font color=red>// ACE_LACKS_SYSV_SHMEM</font>
-int 
+int
 main (int, char *[])
 {
   <font color=red>/*
@@ -45,9 +46,9 @@ main (int, char *[])
   char *shm = (char *) shm_client.malloc ();
 
   <font color=red>/*
-    If the segment identified by SHM_KEY didn't exist then we'll 
+    If the segment identified by SHM_KEY didn't exist then we'll
     get back a 0 from malloc().  You should do this check even
-    if you include the CREATE flag 'cause you never know when it 
+    if you include the CREATE flag 'cause you never know when it
     might fail.
     */</font>
   if (shm == 0)
@@ -71,7 +72,7 @@ main (int, char *[])
       putchar (*s);
       *s = toupper(*s);
     }
-    
+
   putchar ('\n');
 
   <font color=red>/*

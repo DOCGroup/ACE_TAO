@@ -35,7 +35,7 @@ public:
   virtual int put (ACE_Message_Block *message,
                    ACE_Time_Value *timeout);
 
-  // We're obligated to provide this signature even though we won't be 
+  // We're obligated to provide this signature even though we won't be
   // allowing this object to be activated.
   virtual int svc (void);
 

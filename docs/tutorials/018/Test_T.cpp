@@ -15,7 +15,7 @@
 
 /* Construction time...
    Initialize the baseclass, the name and the barrier.  Since the
-   client will probably invoke run() next, we go ahead an announce our 
+   client will probably invoke run() next, we go ahead an announce our
    creation to make the output more readable.
  */
 template <class MUTEX>
@@ -31,7 +31,7 @@ Test_T<MUTEX>::Test_T (const char *name)
 
 /* Activate the threads and create some test data...
  */
-template <class MUTEX> int 
+template <class MUTEX> int
 Test_T<MUTEX>::run (void)
 {
   // Try to activate the set of threads that will test the mutex
@@ -71,7 +71,7 @@ Test_T<MUTEX>::run (void)
 
 /* Send a message to the thread pool
  */
-template <class MUTEX> int 
+template <class MUTEX> int
 Test_T<MUTEX>::send (ACE_Message_Block *message)
 {
   // If no message was provided, create a hangup message.
@@ -101,7 +101,7 @@ Test_T<MUTEX>::send (ACE_Message_Block *message)
 
 /* A farily typical open().  Just activate the set of threads and return.
  */
-template <class MUTEX> int 
+template <class MUTEX> int
 Test_T<MUTEX>::open (void *arg)
 {
   ACE_UNUSED_ARG(arg);
@@ -109,10 +109,10 @@ Test_T<MUTEX>::open (void *arg)
                          TEST_THREAD_COUNT);
 }
 
-/* svc() is also fairly typical.  The new part is the use of the guard 
+/* svc() is also fairly typical.  The new part is the use of the guard
    to simulate protection of shared resources.
  */
-template <class MUTEX> int 
+template <class MUTEX> int
 Test_T<MUTEX>::svc (void)
 {
   // Keep a simple thread identifier.  We could always use the
@@ -185,7 +185,7 @@ Test_T<MUTEX>::svc (void)
   // this then wait() will never exit since all of the other threads
   // are still blocked on getq().
   this->send ();
-    
+
   return 0;
 };
 

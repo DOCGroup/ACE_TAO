@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -70,9 +71,9 @@ protected:
 {
 }
 
-<font color=red>/* As usual, our open() will create one or more threads where we'll do 
+<font color=red>/* As usual, our open() will create one or more threads where we'll do
    the interesting work.
-*/</font>  
+*/</font>
 int <font color=#008888>Test::open</font>(void * _unused)
 {
     ACE_UNUSED_ARG(_unused);
@@ -156,7 +157,7 @@ int <font color=#008888>Test::svc</font>(void)
         <font color=#008888>ACE_OS::sleep</font>(abs(delay)+1);
 
         ACE_DEBUG(( LM_INFO, "<font color=green>(%P|%t|%T)\tThread %.2d of %.2d iteration %.2d\n</font>", me, threads_, i ));
- 
+
             <font color=red>// If the local threads_ variable doesn't match the number </font>
             <font color=red>// in the barrier, then the controller must have changed</font>
             <font color=red>// the thread count.  We'll wait() for everyone and then</font>

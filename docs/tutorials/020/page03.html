@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -28,7 +29,7 @@ int main (int, char *[])
 
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) Memory Mapped file is at 0x%x\n</font>",
                 shm ));
-    
+
     if( ! shm )
     {
         ACE_ERROR_RETURN ((LM_ERROR,"<font color=green>(%P|%t) Could not get the mmapped file!\n</font>"),100);
@@ -39,7 +40,7 @@ int main (int, char *[])
         putchar (*s);
         *s = toupper(*s);
     }
-    
+
     putchar ('\n');
     *shm = '*';
 

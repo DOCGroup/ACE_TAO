@@ -1,5 +1,5 @@
 
-// $Id$ 
+// $Id$
 
 #include "mpool.h"
 
@@ -50,11 +50,11 @@ Allocator::~Allocator (void)
   exception!
   The other concern is thread safety.  If two threads call here at
   about the same time, we may create the pool twice.  We can't use a
-  Singleton because we want to have multiple Allocator instances.  The 
+  Singleton because we want to have multiple Allocator instances.  The
   Singleton techniques can be used though.
  */
 
-Allocator::pool_t & 
+Allocator::pool_t &
 Allocator::pool (void)
 {
   if (pool_ == 0)

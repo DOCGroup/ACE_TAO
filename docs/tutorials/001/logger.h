@@ -44,7 +44,7 @@ public:
 
     if (reactor->register_handler (this,
                                    ACE_Event_Handler::READ_MASK) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) can't register with reactor\n"),
                         -1);
     return 0;
@@ -89,7 +89,7 @@ protected:
   virtual int handle_input (ACE_HANDLE)
   {
     /*
-      Create and initialize a small receive buffer.  The extra byte is 
+      Create and initialize a small receive buffer.  The extra byte is
       there to allow us to have a null-terminated string when it's over.
      */
     char buf[BUFSIZ + 1];

@@ -17,7 +17,7 @@ Task::Task (void)
 
 /*
   You'll see in the svc() method that when we get a shutdown request,
-  we always putq() it back into our message queue.  The last thread in 
+  we always putq() it back into our message queue.  The last thread in
   the pool will do this also and result in there always being one
   shutdown request left in the queue when we get here.  Just to be
   polite, we'll go ahead and get that message and release it.
@@ -38,7 +38,7 @@ Task::~Task (void)
 
 /*
   The ACE_Barrier needs to know how many threads it will be working
-  for.  For that reason, we have to put off it's construction until we 
+  for.  For that reason, we have to put off it's construction until we
   get here.  We then pass the thread count through to our base class'
   activate().
 */
@@ -119,7 +119,7 @@ int Task::svc (void)
     unit_of_work = message_block->data();
 
     /*
-       Invoke a couple of method calls on the object we constructed. 
+       Invoke a couple of method calls on the object we constructed.
      */
     unit_of_work->who_am_i ();
     unit_of_work->what_am_i ();
@@ -128,14 +128,14 @@ int Task::svc (void)
 
      /*
        Pretend that the work takes a little time to process.  This
-       prevents one thread from getting all of the action.  In a real 
+       prevents one thread from getting all of the action.  In a real
        system you wouldn't need to do this since the work really
        would take time to complete.
      */
     ACE_OS::sleep (ACE_Time_Value (0, 5000));
 
      /*
-       Release the message block and allow the unit of work to also go 
+       Release the message block and allow the unit of work to also go
        away.
      */
     message->release ();

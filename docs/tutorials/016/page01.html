@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -13,17 +14,17 @@
 <P>
 <HR WIDTH="100%">
 The ACE framework has quite a few objects for syncronizing your
-threads and even processes.  We've mentioned a few in passing already: 
+threads and even processes.  We've mentioned a few in passing already:
  ACE_Thread_Mutex and ACE_Barrier for instance.
 <P>
 Another interesting one is the ACE_Condition template.  By using an
-ACE_Condition you can have your code wait for an arbitrary condition 
+ACE_Condition you can have your code wait for an arbitrary condition
 to occur.  That condition is "embodied" in a variable of your choice.
 That variable can, in turn, be any data type you wish.  This makes
 ACE_Condition much more flexible than a simple mutex, barrier or
 semaphore.
 <P>
-In this tutorial, I'll create a wrapper class around the ACE_Condition 
+In this tutorial, I'll create a wrapper class around the ACE_Condition
 and the assorted housekeeping items necessary to make it work.  I'll
 use a simple integer as the condition variable but keep in mind that
 you can use any data type you want.
@@ -33,11 +34,11 @@ Kirthika's abstract:
 An ACE_Condition class is a synchronisation mechanism employed in
 situations where one or more threads cannot access the shared resource
 unless some 'condition' becomes true. The ACE_Condition is associated
-with a Mutex-lock which is released before blocking internally in the 
-wait call. Once the blocked thread is signaled to wake up again it 
-internally re-acquires the lock before checking the condition. 
-Unless the condition is true and it has the lock, it cant go ahead. 
-Once the shared resource is freed, a signal is sent to the waiting 
+with a Mutex-lock which is released before blocking internally in the
+wait call. Once the blocked thread is signaled to wake up again it
+internally re-acquires the lock before checking the condition.
+Unless the condition is true and it has the lock, it cant go ahead.
+Once the shared resource is freed, a signal is sent to the waiting
 threads which can now contend for the lock and access the resource.
 <P>
 Pizza-delivery metaphor: (courtesy Dr.Schmidt)
@@ -53,15 +54,15 @@ unavailable, the boys go to sleep. When the van returns and the keys
 are returned, the current user of the van nudges the other sleeping boys
 to wake up and fight for the keys. Once the keys are obtained and the
 pizza
-is ready and out of the kitchen, the boy with the pizza and the keys can 
+is ready and out of the kitchen, the boy with the pizza and the keys can
 now deliver it.
 </ul>
 <P>
-This tutorial makes use of  a wrapper class around the ACE_Condition and 
+This tutorial makes use of  a wrapper class around the ACE_Condition and
 uses a integer value as the condition. The four kinds of condition
 implemented
 are: !=, >=, <=, == by using C++ operator overloading. Guards are used
-within 
+within
 the methods to make sure that the method is thread-safe. Once the thread
 completes
 its job, it broadcasts to the waiting on it.
@@ -73,7 +74,7 @@ Five threads are spwaned which in turn increment the condition
 variable, which is initialised to 1 by 2. Remember that you are waiting
 on
 the <= condition. So once 3 threads have been thru it, the value becomes
-6 
+6
 and the condition becomes true!
 <P>
 This simple example shows us how to program and use the Condition

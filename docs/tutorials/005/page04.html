@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -95,7 +96,7 @@ public:
     side-effect, the reactor will also invoke remove_handler() for the
     object on the mask that caused the -1 return.  This means that we
     don't have to do that ourselves!  */</font>
-  int handle_close (ACE_HANDLE handle, 
+  int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask mask);
 
 protected:

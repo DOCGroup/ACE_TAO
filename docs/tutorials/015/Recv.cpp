@@ -27,7 +27,7 @@ Recv::~Recv(void)
 
 /* By putting the tickler to ourselves we cause things to happen in
    the baseclass that will invoke recv().  If we know we're single
-   threaded we could directly call recv() and be done with it but then 
+   threaded we could directly call recv() and be done with it but then
    we'd have to do something else if we're multi-threaded.  Just let
    the baseclass worry about those things!
 */
@@ -88,6 +88,6 @@ int Recv::recv(ACE_Message_Block * message, ACE_Time_Value *timeout)
         // Something bad happend on the recv_n().  Set an error flag
         // and return error.
     error_ = 1;
-    
+
     return( -1 );
 }

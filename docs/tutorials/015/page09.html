@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -17,8 +18,8 @@ responsible for getting data from the peer() and doing something with
 it.  In this case, we have a Protocol_Stream to deal with.  We'll use
 the stream for the actual I/O but we are ultimately responsible for
 processing the data from the peer.  To do that, we've created a
-Handler_Task that fits within the Protocol_Stream framework to process 
-data that has been received.  Handler::handle_input() will tell the stream that 
+Handler_Task that fits within the Protocol_Stream framework to process
+data that has been received.  Handler::handle_input() will tell the stream that
 it's time to read data and that data will eventually show up at
 Handler_Task::recv() where we'll process it as required by our
 application logic.
@@ -31,7 +32,7 @@ application logic.
 <font color=blue>#include</font> "<font color=green>Protocol_Task.h</font>"
 
 <font color=red>/* The Protocol_Stream gives us the option to insert a Protocol_Task
-   to process data received by the stream.  We'll get into the details 
+   to process data received by the stream.  We'll get into the details
    more when we talk about the stream in detail.  For now it's enough
    to know that <font color=#008888>Handler_Task::recv</font>() will be invoked by the stream
    after data from the client has been received and processed (eg --
@@ -100,7 +101,7 @@ int <font color=#008888>Handler::open</font> (void *)
     {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) Cannot open the protocol stream.\n</font>"), -1);
     }
-    
+
         <font color=red>// Now that we know the client is valid and that the stream is </font>
         <font color=red>// ready for business we can register with the gloabl reactor</font>
         <font color=red>// instance.  Here again is an opportunity for improvement if</font>
@@ -139,8 +140,8 @@ int <font color=#008888>Handler::handle_close</font>(ACE_HANDLE, ACE_Reactor_Mas
     return 0;
 }
 
-<font color=red>/* Unlike a "<font color=green>traditional</font>" handle_input() ours is very simple.  Because 
-   of the use of the protocol stream, we delegate the read function to 
+<font color=red>/* Unlike a "<font color=green>traditional</font>" handle_input() ours is very simple.  Because
+   of the use of the protocol stream, we delegate the read function to
    the stream's get() and rely on our Handler_Task to do the real work.
 */</font>
 int <font color=#008888>Handler::handle_input</font> (ACE_HANDLE)
@@ -153,7 +154,7 @@ int <font color=#008888>Handler::handle_input</font> (ACE_HANDLE)
     {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>(%P|%t) Cannot get data from protocol stream\n</font>"), -1);
     }
-    
+
     return 0;
 }
 
@@ -208,7 +209,7 @@ int <font color=#008888>Handler_Task::recv</font>(ACE_Message_Block * message,
 <P>
 That's it for the server-specific code.  I think I've been fairly
 successful in keeping it simple and to the point.  There are a couple
-of places where the as-yet-undescribed Protocol_Stream pops up and may 
+of places where the as-yet-undescribed Protocol_Stream pops up and may
 cause confusion.  We're going to discuss that mystery now but before
 we do here's the list of server files if you want to review:
 

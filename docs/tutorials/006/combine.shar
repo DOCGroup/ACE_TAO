@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-18 20:31 EST by <jcej@chiroptera.tragus.org>.
-# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/006'.
+# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/006'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    605 -rw-rw-r-- hdr
 #     72 -rw-rw-r-- bodies
-#   1973 -rw-rw-r-- page01.pre
+#   1974 -rw-rw-r-- page01.pre
 #    252 -rw-rw-r-- page02.pre
 #    507 -rw-rw-r-- page03.pre
 #    227 -rw-rw-r-- page04.pre
@@ -22,7 +22,7 @@
 #     89 -rw-rw-r-- page02.pst
 #    168 -rw-rw-r-- page03.pst
 #    175 -rw-rw-r-- page04.pst
-#    528 -rw-rw-r-- page05.pst
+#   1420 -rw-rw-r-- page05.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -69,7 +69,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh23703; then
+if mkdir _sh04795; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -197,12 +197,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-c4255ba9e01891294697e95d6edbc326  page01.pre
+b66014851d6db1c8d89a07d024be2ecb  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1973 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1973,' 'current size' "$shar_count!"
+    test 1974 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1974,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -460,6 +460,22 @@ else
   $echo 'x -' extracting 'page05.pst' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page05.pst' &&
 <HR WIDTH="100%">
+<P>
+X      Did you notice the <i>THR_DETACHED</i> flag on the call to
+X      <i>activate()</i>?  Threads, like any system resource, are a
+X      limited resource.  Unless we intend to <i>join()</i> or
+X      <i>wait()</i> for the new thread later, we want use THR_DETACHED 
+X      so that we don't cause a leak.  In fact, in most cases, you'll
+X      want to specify THR_DETACHED because it's just easier.
+<p>
+X      Another handy flag for use with <i>activate()</i> is
+X      <i>THR_NEW_LWP</i>.  That's short for <i>Light Weight
+X	Process</i>.  If you've got a multiprocessor, this flag will
+X      allocate a new schedulable process and decrease the odds of your 
+X      threads all fighting for the same process.  Of course, if you
+X      have a uni-processor, it will neither help nor hurt.  Since I
+X      developed these on a uni-processor, I've been a bit inconsistent 
+X      in the use of <i>THR_NEW_LWP</i>.
 X
 <P>Well, that's it!&nbsp; After all the talk &amp; the hype, you would
 have expected it to be more difficult to create a multi-threaded server.&nbsp;
@@ -473,20 +489,20 @@ X
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0118202399 'page05.pst' &&
+  $shar_touch -am 0921222699 'page05.pst' &&
   chmod 0664 'page05.pst' ||
   $echo 'restore of' 'page05.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pst:' 'MD5 check failed'
-c09a518d674612c988d52bba9333a943  page05.pst
+fab2e03eb2f115f89a58d70be291e87e  page05.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
-    test 528 -eq "$shar_count" ||
-    $echo 'page05.pst:' 'original size' '528,' 'current size' "$shar_count!"
+    test 1420 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '1420,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh23703
+rm -fr _sh04795
 exit 0

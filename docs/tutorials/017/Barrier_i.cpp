@@ -56,7 +56,7 @@ int Barrier::threads( u_int _threads, int _wait )
     }
 
     threads_ = _threads;
-    
+
     return make_barrier(_wait);
 }
 
@@ -79,7 +79,7 @@ int Barrier::wait(void)
     {
             // mutex so that only one thread can do this part.
         ACE_Guard<ACE_Mutex> mutex(barrier_mutex_);
- 
+
             // We only want the first thread to plug in the new barrier...
         if( new_barrier_ )
         {

@@ -10,7 +10,7 @@ int main (int, char *[])
 
     ACE_DEBUG ((LM_INFO, "(%P|%t) Memory Mapped file is at 0x%x\n",
                 shm ));
-    
+
     if( ! shm )
     {
         ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t) Could not get the mmapped file!\n"),100);
@@ -21,7 +21,7 @@ int main (int, char *[])
         putchar (*s);
         *s = toupper(*s);
     }
-    
+
     putchar ('\n');
     *shm = '*';
 
