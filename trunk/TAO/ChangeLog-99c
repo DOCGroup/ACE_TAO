@@ -1,3 +1,24 @@
+Mon Jul 12 21:42:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_request):
+	* tao/IOR_LookupTable.cpp (find_ior):
+	* tao/ORB.cpp (_tao_find_in_IOR_table):
+
+	  Debugging output was attempting to print the name of the object
+	  found in the object key, which isn't null terminated.  However,
+	  due to performance considerations, that string is not copied.
+	  Only pointer to the object_key is used during the IOR lookup.
+	  Hence, the string *cannot* be null terminated since doing so
+	  would modify the contents of the object key.  For the moment,
+	  the only solution is to remove the debugging output
+	  entirely. [Bug 56]
+
+	* tao/POA.cpp (encode_sequence_to_string):
+
+	  CORBA::string_alloc() is being used to allocate space for a
+	  string so there is no need to explicitly allocate space for a
+	  null terminator since CORBA::string_alloc() already does it.
+
 Mon Jul 12 21:44:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/deep_free.cpp:
