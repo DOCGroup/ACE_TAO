@@ -1,3 +1,12 @@
+Tue Sep 30 16:43:12 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/releasenotes.html: Added some notes on the ORB Core.
+
+Mon Sep 29 14:39:51 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/{index,components,releasenotes}.html: Added additional
+ 	documentation.
+
 Mon Sep 29 13:50:34 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO ORB changes:
