@@ -326,12 +326,18 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
 
   if (pos_colon1 == 0)
     {
-      this->mcast_address_ = ACE_DEFAULT_MULTICAST_ADDR;
+	  const char *default_addr = ACE_DEFAULT_MULTICAST_ADDR;
+	  this->mcast_address_ = CORBA::string_alloc (ACE_OS::strlen (default_addr));
+	  this->mcast_address_ = default_addr;
+
     }
   else
-    this->mcast_address_ = mcast_name_cstring.substring (0,
-                                                         pos_colon1).c_str ();
-
+    {
+      this->mcast_address_ = CORBA::string_alloc (pos_colon1);
+      this->mcast_address_ =
+        mcast_name_cstring.substring (0,
+                                      pos_colon1).c_str ();
+    }
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon1 + 1,
                                   mcast_name_cstring.length() -
@@ -352,10 +358,12 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                            trial_port,
                            10);
 
+	  this->mcast_port_ = CORBA::string_alloc (ACE_OS::strlen ((const char *) trial_port));
       this->mcast_port_ = (const char *) trial_port;
     }
   else
     {
+      this->mcast_port_ = CORBA::string_alloc (pos_colon2);
       this->mcast_port_ = mcast_name_cstring.substring (0,
                                                         pos_colon2).c_str ();
     }
@@ -363,18 +371,24 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon2 + 1,
                                   mcast_name_cstring.length() - pos_colon2);
-  
+
+
   int pos_colon3 = mcast_name_cstring.find (':', 0);
 
   if (pos_colon3 == 0)
     {
       // The default NIC to be eth0.
-      this->mcast_nic_ = "eth0";
+	  const char *default_nic = "eth0";
+	  this->mcast_nic_ = CORBA::string_alloc (ACE_OS::strlen (default_nic));
+      this->mcast_nic_ = default_nic;
     }
   else
-    this->mcast_nic_ =
-      mcast_name_cstring.substring (0,
-                                    pos_colon3).c_str ();
+    {
+      this->mcast_nic_ = CORBA::string_alloc (pos_colon3);
+      this->mcast_nic_ =
+        mcast_name_cstring.substring (0,
+                                      pos_colon3).c_str ();
+    }
 
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon3 + 1,
@@ -384,19 +398,26 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
 
   if (pos_colon4 == 0)
     {
-      // And, the default TTL to be 1.
-      this->mcast_ttl_ = "1";
+      // And, the default TTL to be 1
+	  const char *default_ttl = "1";
+	  this->mcast_ttl_ = CORBA::string_alloc (ACE_OS::strlen (default_ttl));
+      this->mcast_ttl_ = default_ttl;
     }
   else
-    this->mcast_ttl_ =
-      mcast_name_cstring.substring (0,
-                                    pos_colon4).c_str ();
-  
+    {
+      this->mcast_ttl_ = CORBA::string_alloc (pos_colon4);
+      this->mcast_ttl_ =
+        mcast_name_cstring.substring (0,
+                                      pos_colon4).c_str ();
+    }
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon4,
                                   mcast_name_cstring.length() - pos_colon4);
 
-  this->service_name_ = 
+  this->service_name_ =
+    CORBA::string_alloc (mcast_name_cstring.length ());
+
+  this->service_name_ =
     mcast_name_cstring.substring (1,
                                   mcast_name_cstring.length()
                                   -1).c_str ();
