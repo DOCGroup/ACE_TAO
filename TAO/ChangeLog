@@ -1,3 +1,9 @@
+Thu Jan  1 15:56:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/RTScheduling/FP_SchedulingC.{h,cpp}:
+	* examples/RTScheduling/MIF_SchedulingC.{h,cpp}:
+          Removed not needed ; after c++ namespace closure.
+
 Thu Jan  1 15:51:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/Bug_1334_Regression/test.mpc:
