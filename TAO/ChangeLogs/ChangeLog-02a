@@ -1,3 +1,12 @@
+Fri May 25 13:32:55 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* TAO_IDL/include/idl_global.h: Moved template instantiations into 
+	utl_global.cpp.  The instantiations in the header files caused
+	problems on, at the very least, Linux builds using g++.
+
+	* TAO_IDL/util/utl_global.cpp: Added template instantiations that
+	were originally in idl_global.h.
+
 Fri May 25 10:52:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_visitor_interface/collocated_ami_handler_ch.h:
