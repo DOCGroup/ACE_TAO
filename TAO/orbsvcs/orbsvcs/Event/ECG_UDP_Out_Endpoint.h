@@ -47,6 +47,12 @@ public:
   /// Constructor
   ~TAO_ECG_UDP_Out_Endpoint (void);
 
+  /// Copy Constructor
+  TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs);
+
+  /// Assignment operator
+  TAO_ECG_UDP_Out_Endpoint& operator= (const TAO_ECG_UDP_Out_Endpoint& rhs);
+
   /// Obtain the datagram associated with this endpoint. Clients of
   /// this class must open, and register (if necessary) this datagram.
   ACE_SOCK_Dgram& dgram (void);

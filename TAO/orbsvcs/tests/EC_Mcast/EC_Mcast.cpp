@@ -281,7 +281,11 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec
               ignore_from.get_port_number ()));
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
-      this->all_federations_[i]->open (&this->endpoint_,
+      TAO_ECG_UDP_Out_Endpoint* clone;
+      ACE_NEW (clone,
+               TAO_ECG_UDP_Out_Endpoint (this->endpoint_));
+
+      this->all_federations_[i]->open (clone,
                                        ec
                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -305,8 +309,12 @@ ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
+      TAO_ECG_UDP_Out_Endpoint* clone;
+      ACE_NEW (clone,
+               TAO_ECG_UDP_Out_Endpoint (this->endpoint_));
+
       this->local_federations_[i]->open_receiver (ec,
-                                                  &this->endpoint_
+                                                  clone
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
