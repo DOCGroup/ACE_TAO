@@ -58,7 +58,7 @@ int main (int argc, char *argv[])
   return 0;
 }                                                       
 #else
-int main (void)
+int main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, 
 		     "your platform must support ACE_TLI\n"), 1);

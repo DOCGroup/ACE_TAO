@@ -41,7 +41,7 @@ main (int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int main (void)
+int main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "this feature is not supported"), -1);
 }

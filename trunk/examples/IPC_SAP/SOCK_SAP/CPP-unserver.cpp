@@ -71,7 +71,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int main (void)
+int main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, 
 		     "this platform does not support UNIX-domain sockets\n"), -1);

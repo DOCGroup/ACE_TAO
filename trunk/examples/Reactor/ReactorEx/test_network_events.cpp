@@ -170,7 +170,7 @@ Network_Listener::handle_close (ACE_HANDLE handle,
 }
 
 int 
-main (void)
+main (int, char *[])
 {
   Network_Listener listener;
 

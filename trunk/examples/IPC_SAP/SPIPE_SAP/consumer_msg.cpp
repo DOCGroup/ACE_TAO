@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int main (void)
+int main (int, char *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

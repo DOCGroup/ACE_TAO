@@ -1,6 +1,6 @@
 #include "ace/Naming_Context.h"
 
-int main ()
+int main (int, char *[])
 {
   int i;
     

@@ -99,7 +99,7 @@ worker (void)
 }
 
 int
-main (void)
+main (int, char *[])
 {
   ACE_ReactorEx reactorEx;
   Event_Handler handler (reactorEx);
