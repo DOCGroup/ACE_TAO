@@ -42,13 +42,13 @@ endif
 # $(DEFS:%=$(INSINC)/%) \
 
 ifdef shared_libs_only
-  INSTALL = $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+  INSTALL = $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Major_Minor_Version_Number))
 else
 ifdef static_libs_only
   INSTALL = $(VLIB:%.a=$(INSLIB)/%.a)
 else
   INSTALL = $(VLIB:%.a=$(INSLIB)/%.a) \
-	    $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+	    $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(ACE_LDSO_Major_Minor_Version_Number))
 endif # static_libs_only
 endif # shared_libs_only
 
