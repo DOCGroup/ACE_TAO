@@ -221,7 +221,7 @@ main (int argc, char* argv[])
       long timer_id = rt.reactor()->schedule_timer(ginit,0,gateway_delay);
       if (timer_id < 0)
         {
-          ACE_DEBUG((LM_DEBUG,"Node1_EC (%t) could not schedule Gateway_Initializer timer\n"));
+          ACE_ERROR_RETURN((LM_ERROR,"Node4_EC (%t) could not schedule Gateway_Initializer timer\n"),-1);
         }
 
 #ifdef ACE_HAS_DSUI
@@ -233,7 +233,7 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
-      ACE_Time_Value stop_time(340,0); //5min + allowance for gateway init and synchronous EC start
+      ACE_Time_Value stop_time(134,0); //5min + allowance for gateway init and synchronous EC start
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -241,7 +241,7 @@ main (int argc, char* argv[])
 #ifdef ACE_HAS_DSUI
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Node1_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
+      ACE_OS::printf("Node1_EC STOP at %u\n",ACE_OS::gettimeofday().msec());
       DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 #endif //ACE_HAS_DSUI
 
