@@ -101,7 +101,7 @@ do {\
   ACE_OS::unlink (temp); 
 
 
-const int ACE_NS_MAX_ENTRIES = 2000;
+const int ACE_NS_MAX_ENTRIES = 1000;
 const int ACE_MAX_TIMERS = 4;
 const int ACE_MAX_THREADS = 4;
 const int ACE_MAX_DELAY = 10;

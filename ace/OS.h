@@ -2350,7 +2350,7 @@ public:
 
   // = A set of wrappers for timers and resource stats.
   static u_int alarm (u_int delay);
-  static hrtime_t gethrtime (void);
+  static ACE_hrtime_t gethrtime (void);
   static ACE_Time_Value gettimeofday (void);
   static int getrusage (int who, struct rusage *rusage);
   static int getrlimit (int resource, struct rlimit *rl);
