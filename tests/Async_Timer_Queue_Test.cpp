@@ -168,6 +168,8 @@ parse_commands (const char *buf)
   u_int choice;
   long value;
 
+  // @@ Should make sure to use signal-safe logic here...
+
   if (sscanf (buf, "%u %ld", &choice, &value) != 2)
     ACE_ERROR_RETURN ((LM_ERROR, "invalid input %s", buf), -1);
 
@@ -238,9 +240,10 @@ register_signal_handlers (void)
 
 static char menu[] = 
 "****\n"
-"1) schedule_timer <usecs> \n"
-"2) cancel_timer <timer_id>\n"
-"^C list_timers\n"
+"1) schedule timer <usecs> \n"
+"2) cancel timer <timer_id>\n"
+"^C list timers\n"
+"^\ exit program\n"
 "please enter your choice: ";
 
 int
