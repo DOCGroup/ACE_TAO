@@ -1,3 +1,13 @@
+Wed Nov 20 15:23:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	  (gen_marshal_and_invoke):
+
+	  Initialize the invocation status variable in the generated stub
+	  code.  Previously, that variable was uninitialized, which caused
+	  some invalid code execution paths to occur.  Fixes some problems
+	  exhibited by TAO's basic AMI regression test.
+
 Wed Nov 20 15:15:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo_i.h (setup_picurrent):
