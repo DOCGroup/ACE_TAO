@@ -1,3 +1,15 @@
+Sun Oct 28 20:36:56 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Map_T.i (clone):
+
+	  Fixed syntax errors.
+
+	* ace/Svc_Handler.cpp (new):
+
+	  Reverted Michael's change.  It incorrectly altered the semantics
+	  of the new operator, particularly when compiling with native
+	  exception support enabled.  Fixes a warning.
+
 Sun Oct 28 16:44:20 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Timer_Hash_T.cpp (ACE_Timer_Hash_T):

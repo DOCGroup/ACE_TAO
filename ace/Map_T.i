@@ -245,7 +245,7 @@ ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone (void) const
 {
   ACE_Iterator_Impl<T> *temp = 0;
   ACE_NEW_RETURN (temp,
-                  (ACE_Map_Impl_Iterator_Adapter  <T, IMPLEMENTATION, ENTRY > (*this)),
+                  (ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>) (*this),
                   0);
   return temp;
 }
@@ -302,7 +302,7 @@ ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone (void) co
 {
   ACE_Reverse_Iterator_Impl<T> *temp = 0;
   ACE_NEW_RETURN (temp,
-                  (ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> (*this)),
+                  (ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>) (*this),
                   0);
   return temp;
 }
@@ -1054,7 +1054,7 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE ACE_Iterator_Impl<T> *
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::clone (void) const
 {
-  ACE_INLINE ACE_Iterator_Impl<T> *temp = 0;
+  ACE_Iterator_Impl<T> *temp = 0;
   ACE_NEW_RETURN (temp,
                   (ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>) (*this),
                   0);
