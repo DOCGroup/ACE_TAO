@@ -22,7 +22,8 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
                                               ACE_Task_Base *task,
                                               ACE_hthread_t thread_handles[],
                                               void *stack[],
-                                              size_t stack_size[])
+                                              size_t stack_size[],
+                                              ACE_thread_t thread_names[])
 {
   // Macros to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (n_threads);
@@ -32,5 +33,5 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
   // Make sure that we only allow a single thread to be spawned for
   // our adapter.  Otherwise, too many weird things can happen.
   return ACE_Task_Base::activate (flags, 1, 0, priority, grp_id, task, 0,
-                                  stack, stack_size);
+                                  stack, stack_size, thread_names);
 }
