@@ -1,9 +1,9 @@
 (This is file $Id$)
 
 The files in this directory contain the source code from the book
-``C++ Network Programming: Mastering Complexity Using ACE and
-Patterns'' (C++NPv1) by Douglas C. Schmidt and Stephen D. Huston
-(Addison-Wesley 2001, ISBN 0-201-60464-7).
+``C++ Network Programming: Systematic Reuse with ACE and Frameworks''
+(C++NPv2) by Douglas C. Schmidt and Stephen D. Huston (Addison-Wesley
+2001, ISBN 0-201-79525-6).
 
 We have compiled and run these files on the following platforms:
 
@@ -19,27 +19,15 @@ how to build the ACE toolkit.
 Mapping Source Files to Book Chapters
 -------------------------------------
 
-The files in this directory map to the chapters in C++NPv1 as follows:
+The files in this directory map to the chapters in C++NPv2 as follows:
 
-Chapter 4       Logging_Client.h
-                Logging_Client.cpp
-                Logging_Handler.h
-                Logging_Handler.cpp
-                Iterative_Logging_Server.h
-                Iterative_Logging_Server.cpp
-
-Chapter 7       Reactive_Logging_Server.h
-                Reactive_Logging_Server.cpp
-                Reactive_Logging_Server_Ex.h
-                Reactive_Logging_Server_Ex.cpp
-
-Chapter 8       Process_Per_Connection_Logging_Server.h
-                Process_Per_Connection_Logging_Server.cpp
-
-Chapter 9       Thread_Per_Connection_Logging_Server.h
-                Thread_Per_Connection_Logging_Server.cpp
-                RT_Thread_Per_Connection_Logging_Server.h
-                RT_Thread_Per_Connection_Logging_Server.cpp
+Chapter 3
+Chapter 4
+Chapter 5
+Chapter 6
+Chapter 7
+Chapter 8
+Chapter 9
 
 Microsoft Visual C++ users:
 ---------------------------
