@@ -1,3 +1,16 @@
+Mon Jul 17 12:14:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/RT_Policy_i.cpp (destroy): 
+	* tao/RT_Policy_i.h:
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	* tao/LocalObject.cpp: Fixed compile errors from KCC builds. They
+	  were mostly due to mismatched exception specifications. Futher,
+	  fixed link errors from minimum_corba builds and exception
+	  builds. I have tested this with g++ 2.95.2 for minimum_corba and
+	  for native exception cases. Hopefully they should work fine on
+	  Linux too.
+
 Mon Jul 17 11:17:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/IDL_Test.dsp:
