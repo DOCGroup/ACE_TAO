@@ -203,19 +203,19 @@ endif
 
 ifeq ($(findstring g++,$(CXX)),g++)
   ifndef ACE_HAS_GNUG_PRE_2_8
-    ifeq ($(CXX),g++)
+    ifeq ($(notdir $(CXX)),g++)
       ACE_HAS_GNUG_PRE_2_8 := \
         $(shell \
           if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
           echo 1; else echo 0; fi)
     else  # ! g++
-    ifeq (eg++,$(findstring eg++,$(CXX)))
+    ifeq (eg++,$(notdir $(CXX)),eg++)
       # Assume that eg++ is egcs.
       ACE_HAS_GNUG_PRE_2_8 := 0
     else  # ! plain g++ or eg++
       # CXX is something like g++386.  Assume, for now, that it's an old g++.
       ACE_HAS_GNUG_PRE_2_8 := 1
-    endif # ! plain g++ or eg++eg++
+    endif # ! plain g++ or eg++
     endif # ! g++
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # g++
