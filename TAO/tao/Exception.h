@@ -71,6 +71,10 @@ public:
   // Print the exception <ex> to output determined by <f>.  This
   // function is not CORBA compliant.
 
+  ACE_CString _info (void) const;
+  // Returns a string containing information about the exception. This
+  // function is not CORBA compliant.
+
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -177,6 +181,10 @@ public:
 
   void _tao_print_system_exception (FILE *f = stdout) const;
   // Print the system exception <ex> to output determined by f.  This
+  // function is not CORBA compliant.
+
+  ACE_CString _info (void) const;
+  // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
   static CORBA::ULong _tao_minor_code (u_int location,
