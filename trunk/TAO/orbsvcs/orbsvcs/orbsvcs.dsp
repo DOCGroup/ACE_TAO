@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="orbsvcs" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
@@ -18,19 +18,16 @@ CFG=orbsvcs - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "orbsvcs - Win32 Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "orbsvcs - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "orbsvcs - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "orbsvcs - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "orbsvcs - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "orbsvcs - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "orbsvcs - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
@@ -50,8 +47,8 @@ CPP=cl.exe
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -77,11 +74,11 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /WX /YX
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -106,14 +103,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\\ /I " ..\..\\ /I "..\..\..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\\ /I " ..\..\\ /I "..\..\..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -138,14 +135,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MTd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /I " ..\..\\ /I "..\..\..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MTd /c
 # SUBTRACT BASE CPP /WX /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MDd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\ /I " ..\..\\ /I "..\..\..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_ORBSVCS_BUILD_DLL" /FD /MDd /c
 # SUBTRACT CPP /WX /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -507,6 +504,10 @@ DEP_CPP_CC_LO=\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
 	".\Concurrency\CC_LockSet.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_CC_LO=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -514,10 +515,6 @@ DEP_CPP_CC_LO=\
 	".\CosConcurrencyControlS_T.cpp"\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_CC_LO=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -827,6 +824,10 @@ DEP_CPP_CC_LOC=\
 	"..\..\tao\varout.i"\
 	".\Concurrency\CC_LockSet.h"\
 	".\Concurrency\CC_LockSetFactory.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_CC_LOC=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -834,10 +835,6 @@ DEP_CPP_CC_LOC=\
 	".\CosConcurrencyControlS_T.cpp"\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_CC_LOC=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -1146,6 +1143,10 @@ DEP_CPP_CONCU=\
 	"..\..\tao\varout.i"\
 	".\Concurrency\CC_LockSetFactory.h"\
 	".\Concurrency\Concurrency_Utils.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_CONCU=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -1153,10 +1154,6 @@ DEP_CPP_CONCU=\
 	".\CosConcurrencyControlS_T.cpp"\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_CONCU=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -1649,24 +1646,8 @@ DEP_CPP_CONFI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
-	".\RtecSchedulerS.h"\
-	".\RtecSchedulerS.i"\
-	".\RtecSchedulerS_T.cpp"\
-	".\RtecSchedulerS_T.h"\
-	".\RtecSchedulerS_T.i"\
 	".\Sched\Config_Scheduler.h"\
 	".\Sched\Config_Scheduler.i"\
 	".\Sched\DynSched.h"\
@@ -1686,6 +1667,22 @@ DEP_CPP_CONFI=\
 	
 NODEP_CPP_CONFI=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -2044,13 +2041,6 @@ DEP_CPP_CONST=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Interpreter.h"\
 	".\Trader\Constraint_Nodes.h"\
@@ -2061,6 +2051,13 @@ DEP_CPP_CONST=\
 	
 NODEP_CPP_CONST=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -2405,13 +2402,6 @@ DEP_CPP_CONSTR=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Interpreter.h"\
 	".\Trader\Constraint_Nodes.h"\
@@ -2422,6 +2412,13 @@ DEP_CPP_CONSTR=\
 	
 NODEP_CPP_CONSTR=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -2766,13 +2763,6 @@ DEP_CPP_CONSTRA=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Nodes.h"\
 	".\Trader\Constraint_Tokens.h"\
@@ -2782,6 +2772,13 @@ DEP_CPP_CONSTRA=\
 	
 NODEP_CPP_CONSTRA=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -3125,13 +3122,6 @@ DEP_CPP_CONSTRAI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Interpreter.h"\
 	".\Trader\Constraint_Nodes.h"\
@@ -3151,6 +3141,13 @@ DEP_CPP_CONSTRAI=\
 	
 NODEP_CPP_CONSTRAI=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -3504,13 +3501,6 @@ DEP_CPP_CONSTRAIN=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Interpreter.h"\
 	".\Trader\Constraint_Nodes.h"\
@@ -3521,6 +3511,13 @@ DEP_CPP_CONSTRAIN=\
 	
 NODEP_CPP_CONSTRAIN=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -3865,6 +3862,10 @@ DEP_CPP_COSCO=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCO=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -3872,10 +3873,6 @@ DEP_CPP_COSCO=\
 	".\CosConcurrencyControlS_T.cpp"\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSCO=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -4114,6 +4111,10 @@ DEP_CPP_COSCO=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCO=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -4121,10 +4122,6 @@ DEP_CPP_COSCO=\
 	".\CosConcurrencyControlS_T.cpp"\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSCO=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -4374,6 +4371,10 @@ DEP_CPP_COSCON=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCON=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -4381,10 +4382,6 @@ DEP_CPP_COSCON=\
 	".\CosConcurrencyControlS_T.cpp"\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSCON=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -4623,6 +4620,10 @@ DEP_CPP_COSCON=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSCON=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosConcurrencyControlC.h"\
 	".\CosConcurrencyControlC.i"\
 	".\CosConcurrencyControlS.h"\
@@ -4630,10 +4631,6 @@ DEP_CPP_COSCON=\
 	".\CosConcurrencyControlS_T.cpp"\
 	".\CosConcurrencyControlS_T.h"\
 	".\CosConcurrencyControlS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSCON=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -4883,6 +4880,10 @@ DEP_CPP_COSLI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -4897,10 +4898,6 @@ DEP_CPP_COSLI=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSLI=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -5139,6 +5136,10 @@ DEP_CPP_COSLI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLI=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -5153,10 +5154,6 @@ DEP_CPP_COSLI=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSLI=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5406,6 +5403,10 @@ DEP_CPP_COSLIF=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -5420,10 +5421,6 @@ DEP_CPP_COSLIF=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSLIF=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -5662,6 +5659,10 @@ DEP_CPP_COSLIF=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSLIF=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -5676,10 +5677,6 @@ DEP_CPP_COSLIF=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSLIF=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5929,6 +5926,12 @@ DEP_CPP_COSNA=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\Naming\CosNaming_i.h"\
+	".\Naming\Entries.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -5936,12 +5939,6 @@ DEP_CPP_COSNA=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\Naming\CosNaming_i.h"\
-	".\Naming\Entries.h"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSNA=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -6434,6 +6431,10 @@ DEP_CPP_COSNAM=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAM=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -6441,10 +6442,6 @@ DEP_CPP_COSNAM=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSNAM=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -6683,6 +6680,10 @@ DEP_CPP_COSNAM=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAM=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -6690,10 +6691,6 @@ DEP_CPP_COSNAM=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSNAM=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -6943,6 +6940,10 @@ DEP_CPP_COSNAMI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAMI=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -6950,10 +6951,6 @@ DEP_CPP_COSNAMI=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSNAMI=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -7192,6 +7189,10 @@ DEP_CPP_COSNAMI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSNAMI=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosNamingS.h"\
@@ -7199,10 +7200,6 @@ DEP_CPP_COSNAMI=\
 	".\CosNamingS_T.cpp"\
 	".\CosNamingS_T.h"\
 	".\CosNamingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSNAMI=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -7452,6 +7449,10 @@ DEP_CPP_COSTI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTI=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -7459,10 +7460,6 @@ DEP_CPP_COSTI=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTI=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -7701,6 +7698,10 @@ DEP_CPP_COSTI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTI=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -7708,10 +7709,6 @@ DEP_CPP_COSTI=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTI=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -7961,6 +7958,10 @@ DEP_CPP_COSTIM=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTIM=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -7968,10 +7969,6 @@ DEP_CPP_COSTIM=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTIM=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -8210,6 +8207,10 @@ DEP_CPP_COSTIM=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTIM=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -8217,10 +8218,6 @@ DEP_CPP_COSTIM=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTIM=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -8470,6 +8467,10 @@ DEP_CPP_COSTR=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTR=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -8477,10 +8478,6 @@ DEP_CPP_COSTR=\
 	".\CosTradingS_T.cpp"\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTR=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -8719,6 +8716,10 @@ DEP_CPP_COSTR=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTR=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -8726,10 +8727,6 @@ DEP_CPP_COSTR=\
 	".\CosTradingS_T.cpp"\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTR=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -8979,6 +8976,10 @@ DEP_CPP_COSTRA=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTRA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -8986,10 +8987,6 @@ DEP_CPP_COSTRA=\
 	".\CosTradingS_T.cpp"\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTRA=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -9228,6 +9225,10 @@ DEP_CPP_COSTRA=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_COSTRA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -9235,10 +9236,6 @@ DEP_CPP_COSTRA=\
 	".\CosTradingS_T.cpp"\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_COSTRA=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -9511,15 +9508,6 @@ DEP_CPP_DISPA=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
 	".\Event\CORBA_Utils_T.i"\
@@ -9539,6 +9527,23 @@ DEP_CPP_DISPA=\
 	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_DISPA=\
+	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\Event\ace\ReactorEx.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -9560,14 +9565,6 @@ DEP_CPP_DISPA=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Scheduler_Factory.h"\
-	".\Scheduler_Factory.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_DISPA=\
-	"..\..\..\ace\sys_conf.h"\
-	".\Event\ace\ReactorEx.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -10107,12 +10104,8 @@ DEP_CPP_DYNSC=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
 	".\Sched\DynSched.h"\
 	".\Sched\DynSched.i"\
 	".\Sched\SchedEntry.h"\
@@ -10122,6 +10115,10 @@ DEP_CPP_DYNSC=\
 	
 NODEP_CPP_DYNSC=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -10475,6 +10472,16 @@ DEP_CPP_EC_GA=\
 	".\Channel_Clients_T.cpp"\
 	".\Channel_Clients_T.h"\
 	".\Channel_Clients_T.i"\
+	".\Event\EC_Gateway.h"\
+	".\Event_Service_Constants.h"\
+	".\Event_Utilities.h"\
+	".\Event_Utilities.i"\
+	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_EC_GA=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -10482,11 +10489,6 @@ DEP_CPP_EC_GA=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\Event\EC_Gateway.h"\
-	".\Event_Service_Constants.h"\
-	".\Event_Utilities.h"\
-	".\Event_Utilities.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventCommC.h"\
@@ -10498,11 +10500,6 @@ DEP_CPP_EC_GA=\
 	".\RtecEventCommS_T.i"\
 	".\RtecSchedulerC.h"\
 	".\RtecSchedulerC.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_EC_GA=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -10840,6 +10837,16 @@ DEP_CPP_EC_GAT=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\Event\EC_Gateway_UDP.h"\
+	".\Event_Service_Constants.h"\
+	".\Event_Utilities.h"\
+	".\Event_Utilities.i"\
+	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_EC_GAT=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -10847,11 +10854,6 @@ DEP_CPP_EC_GAT=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\Event\EC_Gateway_UDP.h"\
-	".\Event_Service_Constants.h"\
-	".\Event_Utilities.h"\
-	".\Event_Utilities.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -10873,11 +10875,6 @@ DEP_CPP_EC_GAT=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_EC_GAT=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -11222,13 +11219,13 @@ DEP_CPP_ENTRI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
 	".\Naming\Entries.h"\
 	".\orbsvcs_export.h"\
 	
 NODEP_CPP_ENTRI=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -11744,15 +11741,6 @@ DEP_CPP_EVENT=\
 	".\Channel_Clients_T.cpp"\
 	".\Channel_Clients_T.h"\
 	".\Channel_Clients_T.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
 	".\Event\CORBA_Utils_T.i"\
@@ -11776,6 +11764,23 @@ DEP_CPP_EVENT=\
 	".\Event_Utilities.h"\
 	".\Event_Utilities.i"\
 	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_EVENT=\
+	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\Event\ace\ReactorEx.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -11797,14 +11802,6 @@ DEP_CPP_EVENT=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Scheduler_Factory.h"\
-	".\Scheduler_Factory.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_EVENT=\
-	"..\..\..\ace\sys_conf.h"\
-	".\Event\ace\ReactorEx.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -12347,23 +12344,23 @@ DEP_CPP_EVENT_=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\Event_Service_Constants.h"\
 	".\Event_Utilities.h"\
 	".\Event_Utilities.i"\
 	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_EVENT_=\
+	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventCommC.h"\
 	".\RtecEventCommC.i"\
 	".\RtecSchedulerC.h"\
 	".\RtecSchedulerC.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_EVENT_=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -13196,6 +13193,10 @@ DEP_CPP_LIFEC=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -13217,10 +13218,6 @@ DEP_CPP_LIFEC=\
 	".\LifeCycleServiceS_T.cpp"\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LIFEC=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -13459,6 +13456,10 @@ DEP_CPP_LIFEC=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFEC=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -13480,10 +13481,6 @@ DEP_CPP_LIFEC=\
 	".\LifeCycleServiceS_T.cpp"\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LIFEC=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -13733,6 +13730,10 @@ DEP_CPP_LIFECY=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -13754,10 +13755,6 @@ DEP_CPP_LIFECY=\
 	".\LifeCycleServiceS_T.cpp"\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LIFECY=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -13996,6 +13993,10 @@ DEP_CPP_LIFECY=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LIFECY=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosLifeCycleC.h"\
 	".\CosLifeCycleC.i"\
 	".\CosLifeCycleS.h"\
@@ -14017,10 +14018,6 @@ DEP_CPP_LIFECY=\
 	".\LifeCycleServiceS_T.cpp"\
 	".\LifeCycleServiceS_T.h"\
 	".\LifeCycleServiceS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LIFECY=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -14270,6 +14267,15 @@ DEP_CPP_LOCAL=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_LOCAL=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -14279,10 +14285,6 @@ DEP_CPP_LOCAL=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\Event\Local_ESTypes.h"\
-	".\Event\Local_ESTypes.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -14304,11 +14306,6 @@ DEP_CPP_LOCAL=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_LOCAL=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -14806,6 +14803,10 @@ DEP_CPP_LOGGE=\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
 	".\Log\Logger_i.h"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGE=\
+	"..\..\..\ace\sys_conf.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -14813,10 +14814,6 @@ DEP_CPP_LOGGE=\
 	".\LoggerS_T.cpp"\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LOGGE=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -15106,6 +15103,10 @@ DEP_CPP_LOGGER=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGER=\
+	"..\..\..\ace\sys_conf.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15113,10 +15114,6 @@ DEP_CPP_LOGGER=\
 	".\LoggerS_T.cpp"\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LOGGER=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -15355,6 +15352,10 @@ DEP_CPP_LOGGER=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGER=\
+	"..\..\..\ace\sys_conf.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15362,10 +15363,6 @@ DEP_CPP_LOGGER=\
 	".\LoggerS_T.cpp"\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LOGGER=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -15615,6 +15612,10 @@ DEP_CPP_LOGGERS=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGERS=\
+	"..\..\..\ace\sys_conf.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15622,10 +15623,6 @@ DEP_CPP_LOGGERS=\
 	".\LoggerS_T.cpp"\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LOGGERS=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -15864,6 +15861,10 @@ DEP_CPP_LOGGERS=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_LOGGERS=\
+	"..\..\..\ace\sys_conf.h"\
 	".\LoggerC.h"\
 	".\LoggerC.i"\
 	".\LoggerS.h"\
@@ -15871,10 +15872,6 @@ DEP_CPP_LOGGERS=\
 	".\LoggerS_T.cpp"\
 	".\LoggerS_T.h"\
 	".\LoggerS_T.i"\
-	".\orbsvcs_export.h"\
-	
-NODEP_CPP_LOGGERS=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -16145,15 +16142,6 @@ DEP_CPP_MEMOR=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
 	".\Event\CORBA_Utils_T.i"\
@@ -16173,6 +16161,21 @@ DEP_CPP_MEMOR=\
 	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_MEMOR=\
+	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\Event\ace\ReactorEx.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -16194,12 +16197,6 @@ DEP_CPP_MEMOR=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_MEMOR=\
-	"..\..\..\ace\sys_conf.h"\
-	".\Event\ace\ReactorEx.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -16754,15 +16751,6 @@ DEP_CPP_MODUL=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
 	".\Event\CORBA_Utils_T.i"\
@@ -16781,6 +16769,21 @@ DEP_CPP_MODUL=\
 	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_MODUL=\
+	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\Event\ace\ReactorEx.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -16802,12 +16805,6 @@ DEP_CPP_MODUL=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_MODUL=\
-	"..\..\..\ace\sys_conf.h"\
-	".\Event\ace\ReactorEx.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -17345,13 +17342,6 @@ DEP_CPP_NAMIN=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosNamingS.h"\
-	".\CosNamingS.i"\
-	".\CosNamingS_T.cpp"\
-	".\CosNamingS_T.h"\
-	".\CosNamingS_T.i"\
 	".\IOR_Multicast.h"\
 	".\Naming\CosNaming_i.h"\
 	".\Naming\Entries.h"\
@@ -17360,6 +17350,13 @@ DEP_CPP_NAMIN=\
 	
 NODEP_CPP_NAMIN=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosNamingS.h"\
+	".\CosNamingS.i"\
+	".\CosNamingS_T.cpp"\
+	".\CosNamingS_T.h"\
+	".\CosNamingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -17860,13 +17857,6 @@ DEP_CPP_OFFER=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Offer_Iterators.h"\
 	".\Trader\Trader.h"\
@@ -17874,6 +17864,13 @@ DEP_CPP_OFFER=\
 	
 NODEP_CPP_OFFER=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -18236,6 +18233,21 @@ DEP_CPP_REACT=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\Event\Fast_Reactor.h"\
+	".\Event\Local_ESTypes.h"\
+	".\Event\Local_ESTypes.i"\
+	".\Event\ReactorTask.h"\
+	".\Event\RT_Task.h"\
+	".\Event\RT_Task.i"\
+	".\Event_Service_Constants.h"\
+	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_REACT=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -18245,14 +18257,7 @@ DEP_CPP_REACT=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\Event\Fast_Reactor.h"\
-	".\Event\Local_ESTypes.h"\
-	".\Event\Local_ESTypes.i"\
-	".\Event\ReactorTask.h"\
-	".\Event\RT_Task.h"\
-	".\Event\RT_Task.i"\
-	".\Event_Service_Constants.h"\
-	".\orbsvcs_export.h"\
+	".\Event\ace\ReactorEx.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -18274,14 +18279,6 @@ DEP_CPP_REACT=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Scheduler_Factory.h"\
-	".\Scheduler_Factory.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_REACT=\
-	"..\..\..\ace\sys_conf.h"\
-	".\Event\ace\ReactorEx.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -18829,15 +18826,6 @@ DEP_CPP_RT_TA=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\Event\CORBA_Utils_T.cpp"\
 	".\Event\CORBA_Utils_T.h"\
 	".\Event\CORBA_Utils_T.i"\
@@ -18858,6 +18846,23 @@ DEP_CPP_RT_TA=\
 	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_RT_TA=\
+	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\Event\ace\ReactorEx.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -18879,14 +18884,6 @@ DEP_CPP_RT_TA=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Scheduler_Factory.h"\
-	".\Scheduler_Factory.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_RT_TA=\
-	"..\..\..\ace\sys_conf.h"\
-	".\Event\ace\ReactorEx.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -19425,6 +19422,10 @@ DEP_CPP_RTECE=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECE=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -19432,7 +19433,6 @@ DEP_CPP_RTECE=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -19454,9 +19454,6 @@ DEP_CPP_RTECE=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	
-NODEP_CPP_RTECE=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -19695,6 +19692,10 @@ DEP_CPP_RTECE=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECE=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -19702,7 +19703,6 @@ DEP_CPP_RTECE=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -19724,9 +19724,6 @@ DEP_CPP_RTECE=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	
-NODEP_CPP_RTECE=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -19976,6 +19973,10 @@ DEP_CPP_RTECEV=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEV=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -19983,7 +19984,6 @@ DEP_CPP_RTECEV=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -20005,9 +20005,6 @@ DEP_CPP_RTECEV=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	
-NODEP_CPP_RTECEV=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -20246,6 +20243,10 @@ DEP_CPP_RTECEV=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEV=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -20253,7 +20254,6 @@ DEP_CPP_RTECEV=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -20275,9 +20275,6 @@ DEP_CPP_RTECEV=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	
-NODEP_CPP_RTECEV=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -20527,6 +20524,10 @@ DEP_CPP_RTECEVE=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEVE=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -20534,7 +20535,6 @@ DEP_CPP_RTECEVE=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventCommC.h"\
 	".\RtecEventCommC.i"\
 	".\RtecEventCommS.h"\
@@ -20542,9 +20542,6 @@ DEP_CPP_RTECEVE=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
-	
-NODEP_CPP_RTECEVE=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -20783,6 +20780,10 @@ DEP_CPP_RTECEVE=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEVE=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -20790,7 +20791,6 @@ DEP_CPP_RTECEVE=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventCommC.h"\
 	".\RtecEventCommC.i"\
 	".\RtecEventCommS.h"\
@@ -20798,9 +20798,6 @@ DEP_CPP_RTECEVE=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
-	
-NODEP_CPP_RTECEVE=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -21050,6 +21047,10 @@ DEP_CPP_RTECEVEN=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEVEN=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21057,7 +21058,6 @@ DEP_CPP_RTECEVEN=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventCommC.h"\
 	".\RtecEventCommC.i"\
 	".\RtecEventCommS.h"\
@@ -21065,9 +21065,6 @@ DEP_CPP_RTECEVEN=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
-	
-NODEP_CPP_RTECEVEN=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -21306,6 +21303,10 @@ DEP_CPP_RTECEVEN=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECEVEN=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21313,7 +21314,6 @@ DEP_CPP_RTECEVEN=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecEventCommC.h"\
 	".\RtecEventCommC.i"\
 	".\RtecEventCommS.h"\
@@ -21321,9 +21321,6 @@ DEP_CPP_RTECEVEN=\
 	".\RtecEventCommS_T.cpp"\
 	".\RtecEventCommS_T.h"\
 	".\RtecEventCommS_T.i"\
-	
-NODEP_CPP_RTECEVEN=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -21573,6 +21570,10 @@ DEP_CPP_RTECS=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECS=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21580,7 +21581,6 @@ DEP_CPP_RTECS=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecSchedulerC.h"\
 	".\RtecSchedulerC.i"\
 	".\RtecSchedulerS.h"\
@@ -21588,9 +21588,6 @@ DEP_CPP_RTECS=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	
-NODEP_CPP_RTECS=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -21829,6 +21826,10 @@ DEP_CPP_RTECS=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECS=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -21836,7 +21837,6 @@ DEP_CPP_RTECS=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecSchedulerC.h"\
 	".\RtecSchedulerC.i"\
 	".\RtecSchedulerS.h"\
@@ -21844,9 +21844,6 @@ DEP_CPP_RTECS=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	
-NODEP_CPP_RTECS=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ENDIF 
@@ -22096,6 +22093,10 @@ DEP_CPP_RTECSC=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECSC=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -22103,7 +22104,6 @@ DEP_CPP_RTECSC=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecSchedulerC.h"\
 	".\RtecSchedulerC.i"\
 	".\RtecSchedulerS.h"\
@@ -22111,9 +22111,6 @@ DEP_CPP_RTECSC=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	
-NODEP_CPP_RTECSC=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -22352,6 +22349,10 @@ DEP_CPP_RTECSC=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	
+NODEP_CPP_RTECSC=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTimeBaseC.h"\
 	".\CosTimeBaseC.i"\
 	".\CosTimeBaseS.h"\
@@ -22359,7 +22360,6 @@ DEP_CPP_RTECSC=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecSchedulerC.h"\
 	".\RtecSchedulerC.i"\
 	".\RtecSchedulerS.h"\
@@ -22368,9 +22368,36 @@ DEP_CPP_RTECSC=\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
 	
-NODEP_CPP_RTECSC=\
-	"..\..\..\ace\sys_conf.h"\
-	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecUDPAdminC.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RtecUDPAdminS.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -22619,23 +22646,7 @@ DEP_CPP_RUNTI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
-	".\RtecSchedulerS.h"\
-	".\RtecSchedulerS.i"\
-	".\RtecSchedulerS_T.cpp"\
-	".\RtecSchedulerS_T.h"\
-	".\RtecSchedulerS_T.i"\
 	".\Runtime_Scheduler.h"\
 	".\Runtime_Scheduler.i"\
 	".\Scheduler_Factory.h"\
@@ -22645,6 +22656,22 @@ DEP_CPP_RUNTI=\
 	
 NODEP_CPP_RUNTI=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
+	".\RtecSchedulerS.h"\
+	".\RtecSchedulerS.i"\
+	".\RtecSchedulerS_T.cpp"\
+	".\RtecSchedulerS_T.h"\
+	".\RtecSchedulerS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -22940,12 +22967,8 @@ DEP_CPP_SCHED=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
 	".\Sched\SchedEntry.h"\
 	".\Sched\SchedEntry.i"\
 	".\Time_Utilities.h"\
@@ -22953,6 +22976,10 @@ DEP_CPP_SCHED=\
 	
 NODEP_CPP_SCHED=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -23282,12 +23309,8 @@ DEP_CPP_SCHEDU=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
 	".\Sched\Scheduler.h"\
 	".\Sched\Scheduler.i"\
 	".\Time_Utilities.h"\
@@ -23295,6 +23318,10 @@ DEP_CPP_SCHEDU=\
 	
 NODEP_CPP_SCHEDU=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -23643,6 +23670,14 @@ DEP_CPP_SCHEDUL=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Runtime_Scheduler.h"\
+	".\Runtime_Scheduler.i"\
+	".\Scheduler_Factory.h"\
+	".\Scheduler_Factory.i"\
+	
+NODEP_CPP_SCHEDUL=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosNamingC.h"\
 	".\CosNamingC.i"\
 	".\CosTimeBaseC.h"\
@@ -23652,7 +23687,6 @@ DEP_CPP_SCHEDUL=\
 	".\CosTimeBaseS_T.cpp"\
 	".\CosTimeBaseS_T.h"\
 	".\CosTimeBaseS_T.i"\
-	".\orbsvcs_export.h"\
 	".\RtecSchedulerC.h"\
 	".\RtecSchedulerC.i"\
 	".\RtecSchedulerS.h"\
@@ -23660,13 +23694,6 @@ DEP_CPP_SCHEDUL=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Runtime_Scheduler.h"\
-	".\Runtime_Scheduler.i"\
-	".\Scheduler_Factory.h"\
-	".\Scheduler_Factory.i"\
-	
-NODEP_CPP_SCHEDUL=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -23978,12 +24005,8 @@ DEP_CPP_SCHEDULE=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
 	".\Sched\Scheduler.h"\
 	".\Sched\Scheduler.i"\
 	".\Sched\Scheduler_Generic.h"\
@@ -23993,6 +24016,10 @@ DEP_CPP_SCHEDULE=\
 	
 NODEP_CPP_SCHEDULE=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -24343,16 +24370,16 @@ DEP_CPP_SCHEDULER=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
 	".\Scheduler_Utilities.h"\
 	".\Scheduler_Utilities.i"\
 	
 NODEP_CPP_SCHEDULER=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -24644,6 +24671,12 @@ DEP_CPP_SERVI=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Service_Type_Repository.h"\
+	".\Trader\Trader.h"\
+	
+NODEP_CPP_SERVI=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -24651,12 +24684,6 @@ DEP_CPP_SERVI=\
 	".\CosTradingS_T.cpp"\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
-	".\orbsvcs_export.h"\
-	".\Trader\Service_Type_Repository.h"\
-	".\Trader\Trader.h"\
-	
-NODEP_CPP_SERVI=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -24999,12 +25026,8 @@ DEP_CPP_STRAT=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
-	".\RtecSchedulerC.h"\
-	".\RtecSchedulerC.i"\
 	".\Sched\DynSched.h"\
 	".\Sched\DynSched.i"\
 	".\Sched\SchedEntry.h"\
@@ -25016,6 +25039,10 @@ DEP_CPP_STRAT=\
 	
 NODEP_CPP_STRAT=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\RtecSchedulerC.h"\
+	".\RtecSchedulerC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -25382,15 +25409,6 @@ DEP_CPP_TASK_=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosNamingC.h"\
-	".\CosNamingC.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
-	".\CosTimeBaseS.h"\
-	".\CosTimeBaseS.i"\
-	".\CosTimeBaseS_T.cpp"\
-	".\CosTimeBaseS_T.h"\
-	".\CosTimeBaseS_T.i"\
 	".\Event\Fast_Reactor.h"\
 	".\Event\Local_ESTypes.h"\
 	".\Event\Local_ESTypes.i"\
@@ -25401,6 +25419,21 @@ DEP_CPP_TASK_=\
 	".\Event\Task_Manager.i"\
 	".\Event_Service_Constants.h"\
 	".\orbsvcs_export.h"\
+	".\Time_Utilities.h"\
+	".\Time_Utilities.i"\
+	
+NODEP_CPP_TASK_=\
+	"..\..\..\ace\sys_conf.h"\
+	".\CosNamingC.h"\
+	".\CosNamingC.i"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
+	".\CosTimeBaseS.h"\
+	".\CosTimeBaseS.i"\
+	".\CosTimeBaseS_T.cpp"\
+	".\CosTimeBaseS_T.h"\
+	".\CosTimeBaseS_T.i"\
+	".\Event\ace\ReactorEx.h"\
 	".\RtecEventChannelAdminC.h"\
 	".\RtecEventChannelAdminC.i"\
 	".\RtecEventChannelAdminS.h"\
@@ -25422,12 +25455,6 @@ DEP_CPP_TASK_=\
 	".\RtecSchedulerS_T.cpp"\
 	".\RtecSchedulerS_T.h"\
 	".\RtecSchedulerS_T.i"\
-	".\Time_Utilities.h"\
-	".\Time_Utilities.i"\
-	
-NODEP_CPP_TASK_=\
-	"..\..\..\ace\sys_conf.h"\
-	".\Event\ace\ReactorEx.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -25945,14 +25972,14 @@ DEP_CPP_TIME_=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTimeBaseC.h"\
-	".\CosTimeBaseC.i"\
 	".\orbsvcs_export.h"\
 	".\Time_Utilities.h"\
 	".\Time_Utilities.i"\
 	
 NODEP_CPP_TIME_=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTimeBaseC.h"\
+	".\CosTimeBaseC.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -26245,13 +26272,6 @@ DEP_CPP_TRADE=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Interpreter.h"\
 	".\Trader\Constraint_Nodes.h"\
@@ -26271,6 +26291,13 @@ DEP_CPP_TRADE=\
 	
 NODEP_CPP_TRADE=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -26625,6 +26652,12 @@ DEP_CPP_TRADER=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
+	".\orbsvcs_export.h"\
+	".\Trader\Trader.h"\
+	".\Trader\Trader_Utils.h"\
+	
+NODEP_CPP_TRADER=\
+	"..\..\..\ace\sys_conf.h"\
 	".\CosTradingC.h"\
 	".\CosTradingC.i"\
 	".\CosTradingS.h"\
@@ -26632,12 +26665,6 @@ DEP_CPP_TRADER=\
 	".\CosTradingS_T.cpp"\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
-	".\orbsvcs_export.h"\
-	".\Trader\Trader.h"\
-	".\Trader\Trader_Utils.h"\
-	
-NODEP_CPP_TRADER=\
-	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -27088,14 +27115,14 @@ SOURCE=.\CosConcurrencyControl.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27129,13 +27156,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27158,14 +27184,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27197,14 +27223,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSCONC="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosConcurrencyControl.idl
 InputName=CosConcurrencyControl
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27234,14 +27260,14 @@ SOURCE=.\CosLifeCycle.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27275,13 +27301,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27304,14 +27329,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27343,14 +27368,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSLIFE="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27380,14 +27405,14 @@ SOURCE=.\CosNaming.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27421,13 +27446,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27450,14 +27474,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27489,14 +27513,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSNAMIN="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27526,14 +27550,14 @@ SOURCE=.\CosTimeBase.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27567,13 +27591,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27596,14 +27619,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27635,14 +27658,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTIME="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosTimeBase.idl
 InputName=CosTimeBase
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27672,14 +27695,14 @@ SOURCE=.\CosTrading.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27713,13 +27736,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27751,14 +27773,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27790,14 +27812,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTRAD="..\..\tao_idl\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27836,14 +27858,14 @@ SOURCE=.\LifeCycleService.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27877,13 +27899,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27906,14 +27927,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27945,14 +27966,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LIFECYC="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -27982,14 +28003,14 @@ SOURCE=.\Logger.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28023,13 +28044,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28052,14 +28072,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28091,14 +28111,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LOGGER_="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Logger.idl
 InputName=Logger
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28128,14 +28148,14 @@ SOURCE=.\RtecEventChannelAdmin.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENT="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28168,15 +28188,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEVENT="..\..\TAO_IDL\tao_idl.exe"	"RtecEventComm.idl"\
-	"RtecScheduler.idl"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+USERDEP__RTECEVENT="..\..\TAO_IDL\tao_idl.exe"	"RtecEventComm.idl"	"RtecScheduler.idl"	
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28199,14 +28217,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENT="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28238,15 +28256,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
-USERDEP__RTECEVENT="..\..\TAO_IDL\tao_idl.exe"	"RtecEventComm.idl"\
-	"RtecScheduler.idl"	
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECEVENT="..\..\TAO_IDL\tao_idl.exe"	"RtecEventComm.idl"	"RtecScheduler.idl"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28276,14 +28293,14 @@ SOURCE=.\RtecEventComm.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28317,13 +28334,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28346,14 +28362,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28385,14 +28401,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECEVENTC="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28422,14 +28438,14 @@ SOURCE=.\RtecScheduler.idl
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28463,13 +28479,12 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\TAO_IDL\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28492,14 +28507,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\Release\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28531,14 +28546,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECSCH="..\..\TAO_IDL\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export\
-                                -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -28562,6 +28577,49 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\RtecUDPAdmin.idl
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECU="..\..\TAO_IDL\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL compiler on $(InputPath)
+InputPath=.\RtecUDPAdmin.idl
+InputName=RtecUDPAdmin
+
+BuildCmds= \
+	..\..\tao_idl\tao_idl -Wb,export_macro=TAO_ORBSVCS_Export                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
 # End Group
 # Begin Group "Template Files"
 
@@ -28578,7 +28636,7 @@ SOURCE=.\CosTradingS_T.cpp
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
 
-DEP_CPP_COSTRADI=\
+NODEP_CPP_COSTRADI=\
 	".\CosTradingS_T.h"\
 	".\CosTradingS_T.i"\
 	
@@ -28837,13 +28895,6 @@ DEP_CPP_OFFER_=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Offer_Database.h"\
 	".\Trader\Offer_Iterators.h"\
@@ -28852,6 +28903,13 @@ DEP_CPP_OFFER_=\
 	
 NODEP_CPP_OFFER_=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -29108,13 +29166,6 @@ DEP_CPP_OFFER_I=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Offer_Database.cpp"\
 	".\Trader\Offer_Database.h"\
@@ -29125,6 +29176,13 @@ DEP_CPP_OFFER_I=\
 	
 NODEP_CPP_OFFER_I=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -29381,13 +29439,6 @@ DEP_CPP_TRADER_=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Interpreter.h"\
 	".\Trader\Constraint_Nodes.h"\
@@ -29406,6 +29457,13 @@ DEP_CPP_TRADER_=\
 	
 NODEP_CPP_TRADER_=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -29662,13 +29720,6 @@ DEP_CPP_TRADER_T=\
 	"..\..\tao\varout.cpp"\
 	"..\..\tao\varout.h"\
 	"..\..\tao\varout.i"\
-	".\CosTradingC.h"\
-	".\CosTradingC.i"\
-	".\CosTradingS.h"\
-	".\CosTradingS.i"\
-	".\CosTradingS_T.cpp"\
-	".\CosTradingS_T.h"\
-	".\CosTradingS_T.i"\
 	".\orbsvcs_export.h"\
 	".\Trader\Constraint_Interpreter.h"\
 	".\Trader\Constraint_Nodes.h"\
@@ -29687,6 +29738,13 @@ DEP_CPP_TRADER_T=\
 	
 NODEP_CPP_TRADER_T=\
 	"..\..\..\ace\sys_conf.h"\
+	".\CosTradingC.h"\
+	".\CosTradingC.i"\
+	".\CosTradingS.h"\
+	".\CosTradingS.i"\
+	".\CosTradingS_T.cpp"\
+	".\CosTradingS_T.h"\
+	".\CosTradingS_T.i"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
