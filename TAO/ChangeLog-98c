@@ -27,6 +27,9 @@ Sat Aug 15 08:19:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Trading/Offer_Importer.cpp (perform_directed_queries):
           dereference link_info->target with .in ().
 
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+          added a few .in () dereferences.
+
         * orbsvcs/tests/Trading/Makefile: added LIBS, for use when
           building libTTest.
 
