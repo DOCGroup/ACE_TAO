@@ -93,7 +93,7 @@ namespace TAO_Notify
   ///
   /// Topology objects must be derived from this class to allow themselves
   /// to be persisted.
-  class TAO_Notify_Serv_Export Topology_Object : public virtual TAO_Notify_Object, public Topology_Savable
+  class TAO_Notify_Serv_Export Topology_Object : public virtual TAO_Notify_Object, public virtual Topology_Savable
   {
   public:
     /// The constructor.
