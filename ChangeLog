@@ -1,8 +1,36 @@
+Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Only inherit from qt_reactor instead of qt_moc and qt_reactor.
+
+        * ace/qt_reactor.mpb:
+
+          Inherit from ace_qt and qt_moc.
+
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/qt.mpb:
+
+          Inherit from the ace_qt base project as part of the reorganization 
+          of qt and qt_moc.
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Allow features to inherit from other base projects just as
+          projects do.
+
+        * bin/MakeProjectCreator/config/qt-min.mpb:
+        * bin/MakeProjectCreator/config/qt-min_moc.mpb:
+
+          Removed these files.
+
 Wed Jan 28 10:26:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* ace/TMCast/README:
+        * ace/TMCast/README:
 
-	  Fixed a few typos.
+          Fixed a few typos.
 
 Wed Jan 28 09:17:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 

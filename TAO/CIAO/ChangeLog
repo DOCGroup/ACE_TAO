@@ -1,3 +1,12 @@
+Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+
+          Use the new qt and qt_moc base projects.  The qt-min* base
+          projects have been removed and the functionality moved into qt and
+          qt_moc.  The original qt and qt_moc base projects were dispersed
+          and became different base projects.
+
 Wed Jan 28 13:02:28 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
