@@ -27,6 +27,7 @@ namespace CIAO
       SWapping_Container * c
     )
     : Swapping_Servant_Impl_Base (c),
+      activator_ (),
       executor_ (EXEC::_duplicate (exe))
   {
   }
@@ -201,10 +202,9 @@ namespace CIAO
                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    if (this->component_map_.bind (oid.in (), svt) == 0)
-      {
-        safe._retn ();
-      }
+    Dynamic_Component_Servant_Base *svt = new Dynamic_Servant_T<COMP_SVNT> ();
+
+    this->activator_.update_map (oid.in (), svt);
 
     return ho._retn ();
   }
