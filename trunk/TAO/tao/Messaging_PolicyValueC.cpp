@@ -30,7 +30,6 @@
 
 
 #include "Messaging_PolicyValueC.h"
-#include "tao/ORB_Core.h"
 #include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
@@ -49,6 +48,7 @@ namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
 
@@ -56,53 +56,70 @@ static const CORBA::Long _oc_Messaging_PolicyValue[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x56616c75),
-  ACE_NTOHL (0x653a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x56616c75), 
+  ACE_NTOHL (0x653a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/PolicyValue:1.0
     12,
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63795661),
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63795661), 
   ACE_NTOHL (0x6c756500),  // name = PolicyValue
   2, // member count
     6,
-  ACE_NTOHL (0x70747970),
+  ACE_NTOHL (0x70747970), 
   ACE_NTOHL (0x65000000),  // name = ptype
     CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x54797065),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f506f), 
+    ACE_NTOHL (0x6c696379), 
+    ACE_NTOHL (0x54797065), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/PolicyType:1.0
         11,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63795479),
+    ACE_NTOHL (0x506f6c69), 
+    ACE_NTOHL (0x63795479), 
     ACE_NTOHL (0x70650000),  // name = PolicyType
         CORBA::tk_ulong,
 
 
   7,
-  ACE_NTOHL (0x7076616c),
+  ACE_NTOHL (0x7076616c), 
   ACE_NTOHL (0x75650000),  // name = pvalue
-    CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
+    CORBA::tk_alias, // typecode kind for typedefs
+  76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_octet,
+    31,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f4f63), 
+    ACE_NTOHL (0x74657453), 
+    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+        9,
+    ACE_NTOHL (0x4f637465), 
+    ACE_NTOHL (0x74536571), 
+    ACE_NTOHL (0x0),  // name = OctetSeq
+        CORBA::tk_sequence, // typecode kind
+    12, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      CORBA::tk_octet,
 
-    0U,
+      0U,
+
 
 };
 
@@ -120,10 +137,10 @@ namespace Messaging
     &_tc_TAO_tc_Messaging_PolicyValue;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 Messaging::PolicyValue::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -133,60 +150,7 @@ Messaging::PolicyValue::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:65
-
-#if !defined (_MESSAGING_POLICYVALUE__TAO_SEQ_CORBA_OCTET__CS_)
-#define _MESSAGING_POLICYVALUE__TAO_SEQ_CORBA_OCTET__CS_
-
-Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (void)
-{}
-
-Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (
-    CORBA::ULong max
-  )
-  : TAO_Unbounded_Sequence<
-        CORBA::Octet
-      >
-    (max)
-{}
-
-Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Octet * buffer,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Sequence<
-        CORBA::Octet
-      >
-    (max, length, buffer, release)
-{}
-
-Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_seq_CORBA_Octet_ (
-    const _tao_seq_CORBA_Octet_ &seq
-  )
-  : TAO_Unbounded_Sequence<
-        CORBA::Octet
-      >
-    (seq)
-{}
-
-Messaging::PolicyValue::_tao_seq_CORBA_Octet_::~_tao_seq_CORBA_Octet_ (void)
-{}
-
-void Messaging::PolicyValue::_tao_seq_CORBA_Octet_::_tao_any_destructor (
-    void * _tao_void_pointer
-  )
-{
-  _tao_seq_CORBA_Octet_ * _tao_tmp_pointer =
-    ACE_static_cast (_tao_seq_CORBA_Octet_ *, _tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_MESSAGING_POLICYVALUESEQ_CS_)
@@ -263,10 +227,10 @@ static const CORBA::Long _oc_Messaging_PolicyValueSeq[] =
   ACE_NTOHL (0x6c756553), 
   ACE_NTOHL (0x65710000),  // name = PolicyValueSeq
     CORBA::tk_sequence, // typecode kind
-  200, // encapsulation length
+  264, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    184, // encapsulation length
+    248, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       38,
       ACE_NTOHL (0x49444c3a), 
@@ -310,12 +274,29 @@ static const CORBA::Long _oc_Messaging_PolicyValueSeq[] =
       7,
       ACE_NTOHL (0x7076616c), 
       ACE_NTOHL (0x75650000),  // name = pvalue
-            CORBA::tk_sequence, // typecode kind
-      12, // encapsulation length
+            CORBA::tk_alias, // typecode kind for typedefs
+      76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        CORBA::tk_octet,
+        31,
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x412f4f63), 
+        ACE_NTOHL (0x74657453), 
+        ACE_NTOHL (0x65713a31), 
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+                9,
+        ACE_NTOHL (0x4f637465), 
+        ACE_NTOHL (0x74536571), 
+        ACE_NTOHL (0x0),  // name = OctetSeq
+                CORBA::tk_sequence, // typecode kind
+        12, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          CORBA::tk_octet,
 
-        0U,
+          0U,
+
 
 
     0U,
@@ -335,100 +316,6 @@ namespace Messaging
   ::CORBA::TypeCode_ptr _tc_PolicyValueSeq =
     &_tc_TAO_tc_Messaging_PolicyValueSeq;
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
-
-#if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_CORBA_Octet__CPP_
-#define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_CORBA_Octet__CPP_
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::PolicyValue::_tao_seq_CORBA_Octet_ &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      {
-        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-          ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_CORBA_Octet_ *)&_tao_sequence);
-        if (oseq->mb ())
-          return strm.write_octet_array_mb (oseq->mb ());
-        else
-          return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-      }
-      
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    }
-  
-  return 0;
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Messaging::PolicyValue::_tao_seq_CORBA_Octet_ &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return 0;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return 1;
-        }
-      
-      // Retrieve all the elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      if (ACE_BIT_DISABLED (strm.start ()->flags (),
-      ACE_Message_Block::DONT_DELETE))
-      {
-        TAO_ORB_Core* orb_core = strm.orb_core ();
-        if (orb_core != 0 &&
-        strm.orb_core ()->resource_factory ()->
-        input_cdr_allocator_type_locked () == 1)
-        {
-          TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-            ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-          oseq->replace (_tao_seq_len, strm.start ());
-          oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-          strm.skip_bytes (_tao_seq_len);
-          return 1;
-        }
-      }
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    
-    }
-  
-  return 0;
-}
-
-#endif /* _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_CORBA_Octet__CPP_ */
 
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/cdr_op_cs.cpp:95
