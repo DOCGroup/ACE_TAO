@@ -782,7 +782,7 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
   // ACE_TRACE ("ACE_OS::fstat");
 #if defined (ACE_HAS_WINCE)
   BY_HANDLE_FILE_INFORMATION fdata;
-  
+
   if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
     {
       errno = ::GetLastError ();
@@ -4335,7 +4335,7 @@ ACE_OS::fflush (FILE *fp)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL(::FlushFileBuffers (fp),
                                          ace_result_),
                         int, -1);
-#endif /* ! ACE_HAS_WINCE */  
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE size_t
@@ -4356,7 +4356,7 @@ ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
       // only return length of multiple of <size>
       len = (len / size) * size ;
       // then rewind file pointer.
-      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT); 
+      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT);
     }
   return len;
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
@@ -4384,7 +4384,7 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
       // only return length of multiple of <size>
       len = (len / size) * size ;
       // then rewind file pointer.
-      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT); 
+      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT);
     }
   return len;
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
@@ -4557,15 +4557,15 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 }
 #endif /* ! VXWORKS */
 
-// @@ gets is evil anyway.  
-#if !defined (ACE_HAS_WINCE)
+// @@ gets is evil anyway.
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_GETS)
 ACE_INLINE char *
 ACE_OS::gets (char *str)
 {
   // ACE_TRACE ("ACE_OS::gets");
   ACE_OSCALL_RETURN (::gets (str), char *, 0);
 }
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ! ACE_HAS_WINCE && ! ACE_LACKS_GETS */
 
 ACE_INLINE struct servent *
 ACE_OS::getservbyname_r (const char *svc, const char *proto,
@@ -4720,7 +4720,7 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     // @@ Don't know how to implement signal on WinCE (yet.)
     ACE_UNUSED_ARG (signum);
     ACE_UNUSED_ARG (func);
-    ACE_NOTSUP_RETURN (0);     // Should return SIG_ERR but it is not defined on WinCE. 
+    ACE_NOTSUP_RETURN (0);     // Should return SIG_ERR but it is not defined on WinCE.
 #endif /* ! ACE_HAS_WINCE */
 }
 
@@ -7110,7 +7110,7 @@ ACE_OS::gmtime (const time_t *t)
   // ACE_TRACE ("ACE_OS::localtime");
   ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
 #else
-  // @@ WinCE doesn't have gmtime also.  
+  // @@ WinCE doesn't have gmtime also.
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
 #endif /* ! ACE_HAS_WINCE */
@@ -7150,7 +7150,7 @@ ACE_OS::asctime (const struct tm *t)
   // ACE_TRACE ("ACE_OS::asctime");
   ACE_OSCALL_RETURN (::asctime (t), char *, 0);
 #else
-  // @@ WinCE doesn't have gmtime also.  
+  // @@ WinCE doesn't have gmtime also.
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
 #endif /* ! ACE_HAS_WINCE */
@@ -8437,7 +8437,7 @@ ACE_OS::getenv (const wchar_t *symbol)
 ACE_INLINE int
 ACE_OS::access (const wchar_t *path, int amode)
 {
-#if !defined (ACE_HAS_WINCE) 
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::access");
   ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
 #else
@@ -8533,7 +8533,7 @@ ACE_OS::stat (const wchar_t *file, struct stat *stp)
 #if defined (ACE_HAS_WINCE)
   WIN32_FIND_DATA fdata;
   HANDLE fhandle;
-  
+
   fhandle = ::FindFirstFile (file, &fdata);
   if (fhandle == INVALID_HANDLE_VALUE)
     {

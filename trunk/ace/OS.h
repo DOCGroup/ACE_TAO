@@ -3952,7 +3952,9 @@ public:
   // CE doesn't support these function at all. (And it doesn't
   // mean anything to provide these interfaces at all.)
   static int printf (const char *format, ...);
+#if !defined (ACE_LACKS_GETS)
   static char *gets (char *str);
+#endif /* ACE_LACKS_GETS */
   static int puts (const char *s);
 #endif /* ! ACE_HAS_WINCE */
 
