@@ -2,7 +2,9 @@ Mon Jun 23 18:28:55 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/ACE.cpp: added auto_basic_array_ptr specialization.
 
-	* ace/Service_Config.cpp: added auto_basic_ptr specialization.
+	* ace/Service_Config.cpp, tests/Future_Test.cpp,
+	  examples/Threads/future[12].cpp: added auto_basic_ptr
+	  specializations.
 
 	* include/makeinclude/platform_vxworks5.2_g++.GNU:
 	  reworked to supported different targets, instead of only PowerPC.
