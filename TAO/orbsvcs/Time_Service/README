@@ -1,0 +1,71 @@
+$Id $
+
+============================ TAO Time Service==============================
+
+This is a complete implementation of the CORBA time service spec. The
+service offers a globally synchronized time to a requesting
+client. The Time Service interface has been implemented as two servants:
+the clerk and the server. Clients who wish to use the service talk to
+clerks and the clerks in turn keep their time synchronized
+globally. The clerks do this by talking to the servers running on
+different machines.
+
+There needs to be atleast one time server running in the network. The Clerks
+update their time periofically from the servers. The servers and clerks
+export their IORs through the
+  * Naming Service.
+  * Files
+The Servers can also be activated on demand by the Clerks if they have been
+registered with an Implementation Repository.
+
+If Naming Service is being used the clerks and servers are registered in
+different Naming Contexts as :
+
+For the clerks : ClerkContext->Clerk:<local_host_name>
+For the server : ServerContext->Server:<local_host_name>
+
+The machine name is included to make the object name unique and distinguish
+between the various servers and clerks.
+
+A sample run of the TimeService can be done as follows :
+
+* Using the Naming Service :
+
+1. Run TAO/orbsvcs/Time_Service/server on different machines.
+2. Run TAO/orbsvcs/Time_Service/clerk -t 5 on some machines.
+3. Run the TAO/orbsvcs/tests/Time/client on one of the machines where a clerk
+   is running.
+
+* Using Files :
+
+1. Run TAO/orbsvcs/Time_Service/server -o server_ior on different machines.
+2. Run TAO/orbsvcs/Time_Service/clerk -t 5 -f server_ior -o clerk_ior on some
+   machines.
+3. Run the TAO/orbsvcs/tests/Time/client -f clerk_ior on one of the machines
+   where a clerk is running.
+
+* Using the Implementation Repository :
+
+1. Run the Implementation Repository service as :
+
+   TAO/orbsvcs/Time_Service> ../ImplRepo_Service/ImplRepo_Service -ORBsvcconf
+                             implrepo.conf -ORBobjrefstyle url -d 1
+
+2. Run the Server as
+
+   TAO/orbsvcs/Time_Service> server -o server_ior -r -i
+
+3. Run the Clerk as
+
+   TAO/orbsvcs/Time_Service> clerk -f server_ior -t 5 -o clerk_ior
+
+4. Run the client as
+
+   TAO/orbsvcs/tests/Time/client -f clerk_ior
+
+Algorithms
+----------
+
+Currently, updating the system time involves taking the average of all
+the times received from the servers. This can be extended by using a
+more elaborate distributed time synchronization algorithm.
