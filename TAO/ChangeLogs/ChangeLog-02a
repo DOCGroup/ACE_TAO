@@ -1,3 +1,65 @@
+Wed Mar 13 21:41:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * TAO/tao/BiDir_Adapter.h:
+        * TAO/tao/default_client.cpp:
+        * TAO/tao/default_client.h:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/default_resource.h:
+        * TAO/tao/default_server.cpp:
+        * TAO/tao/default_server.h:
+        * TAO/tao/IIOP_Factory.cpp:
+        * TAO/tao/IIOP_Factory.h:
+        * TAO/tao/IIOP_Lite_Factory.cpp:
+        * TAO/tao/IIOP_Lite_Factory.h:
+        * TAO/tao/Object_Loader.h:
+        * TAO/tao/Protocol_Factory.cpp:
+        * TAO/tao/Protocol_Factory.h:
+          Changed parameter type from 'char'-base to 'ACE_TCHAR'-base for
+          the interface defined in base class that is in the ACE layer.
+
+        * TAO/tao/Resource_Factory.cpp:
+        * TAO/tao/Resource_Factory.h:
+          Changed ACE_CString to ACE_TString to reduce type conversions on
+          wide-character/Unicode builds.
+
+        * TAO/tao/DLL_ORB.cpp:
+          Added argv type conversion only for WinCE.
+
+        * TAO/tao/Services.cpp:
+        * TAO/tao/Services.h:
+        * TAO/tao/Services.i:
+          Made virtual Dtor's empty body as inline to make WinCE compiler happy.
+
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/ORB_Core.h:
+        * TAO/tao/ORB_Core.i:
+          Changed all char* type names to ACE_CString to have its own copies of
+          strings instead of storing argv pointers.  This is required to make TAO
+          compatible with wide-character/Unicode platforms because of possible
+          type conversions of argv parameters.
+
+        * TAO/tao/TAO_Internal.cpp:
+        * TAO/tao/TAO_Internal.h:
+          Changed open_services() to use ACE_TCHAR to reduce the amount of
+          conversion using ACE library.
+
+        * TAO/tao/Exception.cpp:
+        * TAO/tao/Exception.h:
+        * TAO/tao/FILE_Parser.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/GIOP_Message_State.cpp:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/IIOP_Connection_Handler.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+        * TAO/tao/Object.cpp:
+        * TAO/tao/ORB.cpp:
+        * TAO/tao/Transport.cpp:
+          Modified to be compatible with wide-character/Unicode platforms.
+
+        * TAO/TAOACE_WinCE.vcw:
+        * TAO/tao/TAO.vcp:
+          eMbedded Visual C++ 3.0 project file for main TAO.dll for WinCE build.
+
 Wed Mar 13 14:39:06 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
