@@ -1,3 +1,10 @@
+Sun Dec 22 20:22:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* performance-tests/Latency/Thread_Per_Connection/svc.conf: Used
+	  the blocked connect strategy instead of the default
+	  strategy. This is needed to work around the problem outlined in
+	  BUG 1408. 
+
 Sun Dec 22 11:26:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	Fix for Bug 1276. Please see 
