@@ -12,6 +12,14 @@ Sat Mar 22 07:30:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Mar 21 15:10:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Makefile (FILES): Moved Log_Msg to the beginning of the
+ 	  source list in the ace Makefile.  This is nice because it forces
+ 	  the compilation of OS.i and that, obviously, is where you get
+ 	  the complaints for the port.  It's nice to have it at the
+ 	  beginning so you catch the errors very early on before you've
+ 	  compiled 30 or 40 files.  Thanks to Scott Halstead
+ 	  <scott.halstead@gs.com> for this suggestion.
+
 	* ace/Memory_Pool.cpp: Added #if !defined
 	  (ACE_LACKS_SYSV_SHMEM) to handle systems like Chorus that
 	  lack this feature.  
