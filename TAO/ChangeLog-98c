@@ -3,6 +3,16 @@ Mon Feb 02 08:59:57 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/tao_util.cpp (init): added .in () to poa_object in call to
          _narrow, so that it will compile with g++.
 
+        * orbsvcs/tests/Logger/Makefile,
+          orbsvcs/orbsvcs/Makefile,
+          tests/POA/FindPOA/Makefile,
+          tests/POA/{Default,Generic}_Servant/Makefile,
+          tests/POA/NewPOA/Makefile,
+          tests/Cubit/TAO/{IDL,MT}_Cubit/Makefile,
+          tests/Param_Test/Makefile,
+          tests/Thruput/TAO/Makefile:
+          inserted (or moved) TAO_ROOT definition to top of file.
+
 Sat Jan 31 01:08:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
