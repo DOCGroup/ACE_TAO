@@ -3619,7 +3619,7 @@ ACE_OS::thr_yield (void)
   ::pthread_yield (NULL);
 #else
   ::pthread_yield ();
-#endif	/*  ACE_HAS_IRIX62_THREADS */ */
+#endif	/*  ACE_HAS_IRIX62_THREADS */
 #elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
 #elif defined (VXWORKS)
