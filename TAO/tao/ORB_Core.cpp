@@ -1647,12 +1647,16 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
                 ASYS_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                      leader_follower.lock (), -1);
+  TAO_LF_Server_Thread_Helper server_thread_helper (leader_follower);
 
-    leader_follower.set_server_thread ();
-  }
+  int result = server_thread_helper.set_server_thread (tv);
+  if (result != 0)
+    {
+      if (errno == ETIME)
+        return 0;
+      else
+        return result;
+    }
 
   ACE_Reactor *r = this->reactor ();
 
@@ -1672,7 +1676,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (ret == -1)
     return -1;
 
-  int result = 1;
+  result = 1;
   // 1 to detect that nothing went wrong
 
   // Loop handling client requests until the ORB is shutdown.
@@ -1712,18 +1716,13 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
         break;
     }
 
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                      leader_follower.lock (), -1);
-
-    leader_follower.reset_server_thread ();
-
-    if (leader_follower.elect_new_leader () == -1)
+  if (server_thread_helper.reset_server_thread () == -1)
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("TAO (%P|%t) Failed to wake up ")
                          ASYS_TEXT ("a follower thread\n")),
                         -1);
-  }
+    }
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - end of run/perform_work %d\n"), result));

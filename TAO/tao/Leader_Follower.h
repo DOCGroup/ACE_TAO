@@ -33,7 +33,7 @@ public:
   ~TAO_Leader_Follower (void);
   // Destructor
 
-  void set_server_thread (void);
+  int set_server_thread (ACE_Time_Value *max_wait_time);
   // The current thread has become a server thread (i.e. called
   // ORB::run), update any flags and counters.
 
@@ -102,6 +102,9 @@ private:
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
   // Shortcut to obtain the TSS resources of the orb core.
 
+  int wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time);
+  // Wait for the client leader to complete.
+
 private:
   TAO_ORB_Core *orb_core_;
   // The orb core
@@ -127,6 +130,9 @@ private:
 
   ACE_Reactor *reactor_;
   // The reactor
+
+  int client_thread_is_leader_;
+  // Is a client thread the current leader?
 };
 
 class TAO_Export TAO_LF_Client_Thread_Helper
@@ -155,6 +161,31 @@ public:
 private:
   TAO_Leader_Follower &leader_follower_;
   // Reference to leader/followers object.
+};
+
+class TAO_Export TAO_LF_Server_Thread_Helper
+{
+public:
+  TAO_LF_Server_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  // Constructor
+
+  ~TAO_LF_Server_Thread_Helper (void);
+  // Destructor
+
+  int set_server_thread (ACE_Time_Value *max_wait_time);
+  // Calls <set_server_thread> on the leader/followers object.
+
+  int reset_server_thread (void);
+  // Calls <reset_server_thread> and <elect_new_leader> on the
+  // leader/followers object.
+
+private:
+  TAO_Leader_Follower &leader_follower_;
+  // Reference to leader/followers object.
+
+  int auto_reset_;
+  // Remembers whether we have to call the reset method in the
+  // destructor.
 };
 
 #if defined (__ACE_INLINE__)

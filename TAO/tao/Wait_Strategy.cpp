@@ -406,8 +406,8 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("TAO (%P|%t): TAO_Wait_On_LF::wait - ")
-                       ASYS_TEXT ("handle_events failed.\n")),
+                       ASYS_TEXT ("TAO (%P|%t): TAO_Wait_On_LF::wait: %p.\n"),
+                       ASYS_TEXT ("handle_events failed")),
                       -1);
 
   // Return an error if there was a problem receiving the reply...
