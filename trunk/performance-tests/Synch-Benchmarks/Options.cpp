@@ -323,8 +323,7 @@ Options::print_results (void)
                   rusage.pr_majf,
                   rusage.pr_minf,
                   ACE_Thread::getconcurrency ()));
-#else
-      // need to write dump ops for rusage...
+#elif defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
       ACE_DEBUG ((LM_INFO,
                   "\n%8d PEs\n"
                   "%8.2f Mbit/sec\n"
@@ -346,7 +345,15 @@ Options::print_results (void)
                   rusage.ru_majflt,
                   rusage.ru_minflt,
                   ACE_Thread::getconcurrency ()));
-
+#else defined (ACE_HAS_GETRUSAGE) && defined (ACE_WIN32)
+      // Need more stuff for Win32.
+      ACE_DEBUG ((LM_INFO,
+                  "\n%8d PEs\n"
+                  "%8.2f Mbit/sec\n"
+                  "%8d (number of LWPs)\n",
+                  this->thr_count (),
+                  (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
+                  ACE_Thread::getconcurrency ()));
 #endif /* ACE_HAS_PRUSAGE_T */
     }
   else
@@ -404,8 +411,7 @@ Options::print_results (void)
                   rusage.pr_ioch,
                   ACE_Thread::getconcurrency (),
                   et.real_time, et.user_time, et.system_time));
-#else
-      // need to write dump ops for rusage...
+#elif defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
       ACE_DEBUG ((LM_INFO,
                   "%8d = minor page faults\n"
                   "%8d = major page faults\n"
@@ -433,6 +439,17 @@ Options::print_results (void)
                   rusage.ru_nvcsw,
                   rusage.ru_nivcsw,
                   rusage.ru_nvcsw + rusage.ru_nivcsw,
+                  ACE_Thread::getconcurrency (),
+                  et.real_time, et.user_time, et.system_time));
+#elif defined (ACE_HAS_GETRUSAGE) && defined (ACE_WIN32)
+      // need to write more dump ops for rusage on Win32
+      ACE_DEBUG ((LM_INFO,
+                  "%8d = number of LWPs\n"
+                  "---------------------\n"
+                  "real time   = %.3f\n"
+                  "user time   = %.3f\n"
+                  "system time = %.3f\n"
+                  "---------------------\n",
                   ACE_Thread::getconcurrency (),
                   et.real_time, et.user_time, et.system_time));
 #endif /* ACE_HAS_PRUSAGE_T */
