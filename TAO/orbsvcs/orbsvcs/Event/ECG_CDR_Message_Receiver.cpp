@@ -289,6 +289,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 
   if (this->check_crc_)
     {
+      iov[1].iov_len = n - iov[0].iov_len;
       iov[0].iov_len -= 4;  // don't include crc
 
       crc = ACE::crc32 (iov, 2);

@@ -1,3 +1,11 @@
+Sun Nov 23 23:16:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+
+	  In  TAO_ECG_CDR_Message_Receiver::handle_input (), use the
+	  modified iov.iov_len before calculating the CRC. Thanks to
+	  Keith Nicewarner for providing this patch.
+	
 Sun Nov 23 22:53:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RTCORBA_includeC.h:
