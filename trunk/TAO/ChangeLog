@@ -77,7 +77,8 @@ Mon Feb 14 23:05:55 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  - Changed error checking to allow a struct/union/sequence/array
 	    defined inside an interface to contain that interface
 	    as a member or element type, that is, this is no longer
-	    regarded by the IDL compiler as illegal recursion.
+	    regarded by the IDL compiler as illegal recursion. Thanks to
+	    Don Sharp <dws@prismtech.com> for bringing this up.
 
 	  - Fixed bug that aborted the IDL compiler when an eventtype
 	    contained a constant declaration. Thanks to Steven Baker
@@ -85,8 +86,8 @@ Mon Feb 14 23:05:55 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 	    
 	* tests/IDL_Test/interface.idl:
 	
-	  Expanded sample IDL file sent in by Steven Baker in the
-	  last list item above and added it to the test suite.
+	  Expanded sample IDL file sent in by Don Sharp in the
+	  second list item above and added it to the test suite.
 
         * TAO_IDL/be/be_visitor_eventtype.cpp:
         * TAO_IDL/be/be_visitor_eventtype_fwd.cpp:
