@@ -1,3 +1,10 @@
+Fri Jan 12 07:59:19 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * Makefile:
+          Add the PACE directory back into the build. PACE should
+          not generate any build failures for the platforms
+          currently supported.
+
 Wed Jan 10 23:30:21 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/FILE_Addr.cpp (set): Replace (sizeof this->filename_)

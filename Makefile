@@ -21,13 +21,8 @@ DIRS    = ace \
           apps \
           examples \
           performance-tests \
-          websvcs
-
-# PACE still does not compile under several platforms.  Disabled
-# unless pace=1 is set
-ifeq ($(pace),1)
-DIRS += PACE
-endif
+          websvcs \
+          PACE
 
 CLONE   = Makefile \
           ace \
