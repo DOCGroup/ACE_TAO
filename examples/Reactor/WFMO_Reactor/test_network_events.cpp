@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_network_events.cpp
 //
@@ -20,15 +20,15 @@
 //    the remote side shuts down. Multiple clients can connect at the
 //    same time.
 //
-//    Events tested in this example includes ACCEPT, READ, and CLOSE masks. 
+//    Events tested in this example includes ACCEPT, READ, and CLOSE masks.
 //
 //    To run this example, start an instance of this example and
 //    connect to it using telnet (to port
-//    ACE_DEFAULT_SERVER_PORT(10002)). 
+//    ACE_DEFAULT_SERVER_PORT(10002)).
 //
 // = AUTHOR
 //    Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #include "ace/Reactor.h"
@@ -37,7 +37,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 
-ACE_RCSID(ReactorEx, test_network_events, "$Id$")
+ACE_RCSID(WFMO_Reactor, test_network_events, "$Id$")
 
 class Network_Handler : public ACE_Event_Handler
 {
@@ -47,7 +47,7 @@ public:
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
   virtual ACE_HANDLE  get_handle (void) const;
 
   ACE_SOCK_Stream stream_;
@@ -63,7 +63,7 @@ Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
   ACE_ASSERT (result == 0);
 }
 
-ACE_HANDLE  
+ACE_HANDLE
 Network_Handler::get_handle (void) const
 {
   return this->stream_.get_handle ();
@@ -102,11 +102,11 @@ Network_Handler::handle_input (ACE_HANDLE handle)
 
 int
 Network_Handler::handle_close (ACE_HANDLE handle,
-			       ACE_Reactor_Mask close_mask)
+                               ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_close handle = %d\n", handle));
 
-  this->stream_.close ();  
+  this->stream_.close ();
   delete this;
   return 0;
 }
@@ -121,7 +121,7 @@ public:
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
   ACE_HANDLE get_handle (void) const;
 
   ACE_INET_Addr local_address_;
@@ -133,7 +133,7 @@ Network_Listener::Network_Listener (void)
     acceptor_ (local_address_, 1)
 {
   this->reactor (ACE_Reactor::instance ());
-  int result = this->reactor ()->register_handler (this, 
+  int result = this->reactor ()->register_handler (this,
                                                    ACE_Event_Handler::ACCEPT_MASK);
   ACE_ASSERT (result == 0);
 }
@@ -145,7 +145,7 @@ Network_Listener::~Network_Listener (void)
   this->handle_close (this->get_handle (), ACE_Event_Handler::ALL_EVENTS_MASK);
 }
 
-ACE_HANDLE  
+ACE_HANDLE
 Network_Listener::get_handle (void) const
 {
   return this->acceptor_.get_handle ();
@@ -178,13 +178,13 @@ Network_Listener::handle_input (ACE_HANDLE handle)
 
   Network_Handler *handler;
   ACE_NEW_RETURN (handler, Network_Handler (stream), -1);
-  
+
   return 0;
 }
 
 int
 Network_Listener::handle_close (ACE_HANDLE handle,
-				ACE_Reactor_Mask close_mask)
+                                ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Network_Listener::handle_close handle = %d\n", handle));
 
@@ -192,9 +192,9 @@ Network_Listener::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-int 
+int
 main (int, char *[])
-{  
+{
   Network_Listener listener;
 
   ACE_Reactor::run_event_loop ();

@@ -1,3 +1,23 @@
+Tue Mar 13 20:56:10 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (remove_to_be_added_handler_i): 
+	* ace/WFMO_Reactor.cpp (remove_suspended_handler_i): 
+	* ace/WFMO_Reactor.cpp (remove_handler_i): 
+
+	  If a user tried to (a) remove a "to be suspended handle" from
+	  either the current info set or the to be added set, the handle
+	  was correctly removed but the "to be suspended handle" count was
+	  not reduced; (b) remove a "to be resumed handle" from the
+	  suspended set, the handle was correctly removed but the "to be
+	  resumed handle" count was not reduced.  Since the "to be resumed
+	  handle" and the "to be suspended handle" were not adjusted
+	  properly, the reactor kept waking up thinking that changes were
+	  required. Thanks to Lu Yunhai <luyunhai@huawei.com> for
+	  reporting this problem.
+
+	* examples/Reactor/WFMO_Reactor/test_suspended_removals.cpp: Added
+	  an extensive example for regression testing the above use cases.
+
 Tue Mar 13 15:23:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Manager.cpp (list_services): Fixed Unicode bugs.

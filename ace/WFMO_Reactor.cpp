@@ -283,6 +283,16 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t slot,
     // Make sure that the <to_be_removed_masks> is the NULL_MASK
     to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
 
+  // If this event was marked for suspension, undo the suspension flag
+  // and reduce the to be suspended count.
+  if (this->current_info_[slot].suspend_entry_)
+    {
+      // Undo suspension
+      this->current_info_[slot].suspend_entry_ = 0;
+      // Decrement the handle count
+      this->handles_to_be_suspended_--;
+    }
+
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
@@ -341,6 +351,16 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t slot,
     // Make sure that the <to_be_removed_masks> is the NULL_MASK
     to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
 
+  // If this event was marked for resumption, undo the resumption flag
+  // and reduce the to be resumed count.
+  if (this->current_suspended_info_[slot].resume_entry_)
+    {
+      // Undo resumption
+      this->current_suspended_info_[slot].resume_entry_ = 0;
+      // Decrement the handle count
+      this->handles_to_be_resumed_--;
+    }
+
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
@@ -397,6 +417,16 @@ ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t slot,
   else
     // Make sure that the <to_be_removed_masks> is the NULL_MASK
     to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+
+  // If this event was marked for suspension, undo the suspension flag
+  // and reduce the to be suspended count.
+  if (this->to_be_added_info_[slot].suspend_entry_)
+    {
+      // Undo suspension
+      this->to_be_added_info_[slot].suspend_entry_ = 0;
+      // Decrement the handle count
+      this->handles_to_be_suspended_--;
+    }
 
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the

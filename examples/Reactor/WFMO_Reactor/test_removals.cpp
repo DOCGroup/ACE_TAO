@@ -24,7 +24,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 
-ACE_RCSID(ReactorEx, test_removals, "$Id$")
+ACE_RCSID(WFMO_Reactor, test_removals, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 // = TITLE
@@ -37,22 +37,22 @@ class Event_Handler : public ACE_Event_Handler
 {
 public:
   Event_Handler (int event_number,
-		 int close_down)
+                 int close_down)
     : event_number_ (event_number),
     close_down_ (close_down)
     {
       if (ACE_Reactor::instance ()->register_handler (this,
-						      this->event_.handle ()) == -1)
-	ACE_ERROR ((LM_ERROR, "%p\tevent handler %d cannot be added to Reactor\n", "", event_number_));
+                                                      this->event_.handle ()) == -1)
+        ACE_ERROR ((LM_ERROR, "%p\tevent handler %d cannot be added to Reactor\n", "", event_number_));
       this->event_.signal ();
     }
 
   virtual int handle_signal (int index, siginfo_t *, ucontext_t *)
     {
       if (this->close_down_)
-	return -1;
+        return -1;
       else
-	return 0;
+        return 0;
     }
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
@@ -92,12 +92,12 @@ main (int argc, char *argv[])
     {
       result = ACE_Reactor::instance ()->handle_events (time);
       if (result == 0 && errno == ETIME)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "No more work left: timing out\n"));
-	  break;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, "No more work left: timing out\n"));
+          break;
+        }
       if (result == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
     }
   return 0;
 }

@@ -27,7 +27,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(ReactorEx, test_multithreading, "$Id$")
+ACE_RCSID(WFMO_Reactor, test_multithreading, "$Id$")
 
 static int concurrent_threads = 1;
 static int number_of_handles = ACE_Reactor::instance ()->size ();
@@ -40,9 +40,9 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "usage: \n\t"
-	      "[-t (# of threads - default 1)] \n\t"
-	      "[-h (# of handlers) - default 62] \n\t"
+              "usage: \n\t"
+              "[-t (# of threads - default 1)] \n\t"
+              "[-h (# of handlers) - default 62] \n\t"
               "[-i (# time interval between signals) - default 2] \n\t"
               "[-s (# of handles to signal) - default 1] \n\t"
               "[-e (# of iterations) - default 10] \n\t"));
@@ -60,23 +60,23 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 't':
-	concurrent_threads = atoi (get_opt.optarg);
-	break;
+        concurrent_threads = atoi (get_opt.optarg);
+        break;
       case 'e':
-	iterations = atoi (get_opt.optarg);
-	break;
+        iterations = atoi (get_opt.optarg);
+        break;
       case 'h':
-	number_of_handles = atoi (get_opt.optarg);
-	break;
+        number_of_handles = atoi (get_opt.optarg);
+        break;
       case 'i':
-	interval = atoi (get_opt.optarg);
-	break;
+        interval = atoi (get_opt.optarg);
+        break;
       case 's':
-	number_of_handles_to_signal = atoi (get_opt.optarg);
-	break;
+        number_of_handles_to_signal = atoi (get_opt.optarg);
+        break;
       default:
-	print_usage_and_die ();
-	break;
+        print_usage_and_die ();
+        break;
       }
 }
 
@@ -84,21 +84,21 @@ class Task_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   Task_Handler (size_t number_of_handles,
-		size_t concurrent_threads);
+                size_t concurrent_threads);
   // Constructor.
 
   ~Task_Handler (void);
   // Destructor.
 
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
   // Called when object is removed from the ACE_Reactor
 
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Handle events being signaled by the main thread.
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg = 0);
+                              const void *arg = 0);
   // Called when timer expires.
 
   int svc (void);
@@ -122,7 +122,7 @@ Task_Handler::svc (void)
 }
 
 Task_Handler::Task_Handler (size_t number_of_handles,
-			    size_t concurrent_threads)
+                            size_t concurrent_threads)
 {
   ACE_NEW (this->events_, ACE_Auto_Event [number_of_handles]);
 
@@ -136,9 +136,9 @@ Task_Handler::Task_Handler (size_t number_of_handles,
 
   // Make us an active object.
   if (this->activate (THR_NEW_LWP,
-		      concurrent_threads) == -1)
+                      concurrent_threads) == -1)
     ACE_ERROR ((LM_ERROR, "%p\t cannot activate task\n",
-		"activate"));
+                "activate"));
 }
 
 Task_Handler::~Task_Handler (void)
@@ -154,38 +154,38 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
   // This will force Reactor to update its internal handle tables
 
   if (ACE_Reactor::instance ()->remove_handler (siginfo->si_handle_,
-						ACE_Event_Handler::DONT_CALL) == -1)
+                                                ACE_Event_Handler::DONT_CALL) == -1)
     return -1;
   // ACE_ERROR_RETURN ((LM_ERROR,
-  //		       "(%t) %p\tTask cannot be unregistered from Reactor: handle value = %d\n",
-  //		       "Task_Handler::handle_signal",
-  //		       siginfo->si_handle_), -1);
+  //                   "(%t) %p\tTask cannot be unregistered from Reactor: handle value = %d\n",
+  //                   "Task_Handler::handle_signal",
+  //                   siginfo->si_handle_), -1);
 
   if (ACE_Reactor::instance ()->register_handler (this,
-						  siginfo->si_handle_) == -1)
+                                                  siginfo->si_handle_) == -1)
     return -1;
   // ACE_ERROR_RETURN ((LM_ERROR,
-  // 		       "(%t) %p\tTask cannot be registered with Reactor: handle value = %d\n",
-  //		       "Task_Handler::handle_signal",
-  //		       siginfo->si_handle_), -1);
+  //                   "(%t) %p\tTask cannot be registered with Reactor: handle value = %d\n",
+  //                   "Task_Handler::handle_signal",
+  //                   siginfo->si_handle_), -1);
   return 0;
 }
 
 int
 Task_Handler::handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask)
+                            ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_close() called: handle value = %d\n",
-	      handle));
+              handle));
   return 0;
 }
 
 int
 Task_Handler::handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg)
+                              const void *arg)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_timeout() called: iteration value = %d\n",
-	      int (arg)));
+              int (arg)));
   return 0;
 }
 
@@ -200,7 +200,7 @@ main (int argc, char **argv)
 {
   parse_args (argc, argv);
   Task_Handler task (number_of_handles,
-		     concurrent_threads);
+                     concurrent_threads);
 
   ACE_OS::srand (ACE_OS::time (0L));
 
@@ -212,19 +212,19 @@ main (int argc, char **argv)
       // Randomly generate events
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
       ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events : iteration = %d\n",
-		  number_of_handles_to_signal,
-		  i));
+                  number_of_handles_to_signal,
+                  i));
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
 
       // Setup a timer for the task
       if (ACE_Reactor::instance ()->schedule_timer (&task,
-						    (void *) i,
-						    0) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+                                                    (void *) i,
+                                                    0) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
       for (int i = 0; i < number_of_handles_to_signal; i++)
-	// Randomly select a handle to signal.
-	task.signal (ACE_OS::rand() % number_of_handles);
+        // Randomly select a handle to signal.
+        task.signal (ACE_OS::rand() % number_of_handles);
     }
 
   // Sleep for a while
