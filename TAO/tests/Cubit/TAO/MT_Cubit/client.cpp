@@ -20,10 +20,6 @@
 #include "quantify.h"
 #endif /* NO_ACE_QUANTIFY */
 
-#if defined (VXWORKS)
-#include "kernelLib.h"
-#endif /* VXWORKS */
-
 double csw = 0.0;
   
 #if defined (VXWORKS) 
@@ -79,6 +75,7 @@ initialize (void)
   return 0;
 }
 
+#if defined (VXWORKS)
 void
 output_taskinfo (void)
 {
@@ -89,8 +86,7 @@ output_taskinfo (void)
     perror ("open");
   
   ACE_OS::fprintf(stderr,
-                  "--->Output file for taskinfo data is \"%s\"\n",
-                  latency_file);
+                  "--->Output file for taskinfo data is \"taskinfo.txt\"\n");
 
   // This loop visits each client.  thread_count_ is the number of clients.
   for (u_int j = 0; j < SWITCHES; j ++)
@@ -105,6 +101,7 @@ output_taskinfo (void)
   
   ACE_OS::fclose (file_handle);
 }
+#endif /* VXWORKS */
 
 void
 output_latency (Task_State &ts)
