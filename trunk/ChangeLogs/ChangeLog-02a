@@ -1,3 +1,8 @@
+Sun Aug 19 20:33:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/nightlybuilds/builds.lst:
+          Update build list
+
 Sun Aug 19 15:36:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
