@@ -14,7 +14,8 @@ DIRS  = \
   Dynamic \
   Benchmark \
   Service_Context_Manipulation \
-  IORInterceptor
+  IORInterceptor \
+  ForwardRequest
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
