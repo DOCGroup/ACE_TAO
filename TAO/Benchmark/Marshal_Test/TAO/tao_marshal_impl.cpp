@@ -100,7 +100,7 @@ Marshal_SSI_Impl::test_any (const CORBA_Any &a1,
   a2 = new CORBA_Any (a1.type (), (void *)a1.value ()); // will do a deep copy
 }
 
-void 
+void
 Marshal_SSI_Impl::test_sequence (const Marshal::AnySeq& as1,
 				 Marshal::AnySeq *& as2,
 			      CORBA_Environment &env)
@@ -109,7 +109,7 @@ Marshal_SSI_Impl::test_sequence (const Marshal::AnySeq& as1,
 }
 
 #if 0
-void 
+void
 Marshal_SSI_Impl::test_recursive (const Marshal::Marshal_Recursive &mr1,
 				  Marshal::Marshal_Recursive *&mr2,
 			      CORBA_Environment &env)
@@ -147,13 +147,13 @@ Marshal_DSI_Impl::Marshal_DSI_Impl (CORBA_ORB_ptr orb, const char *obj_name)
   // cleanly integrate ourselves with the dispatch mechanism of the OA.
 
   const CORBA_String repoID = "IDL:Marshal:1.0"; // repository ID
-  IIOP_Object *data;  // IIOP object 
+  STUB_Object *data;  // IIOP object
   CORBA_BOA_ptr oa = TAO_OA_PARAMS::instance()->oa(); // underlying BOA
   this->optable_ = &tao_Marshal_DSI_optable;     // operation database
   CORBA_Long i;
 
   // setup an IIOP object
-  data = new IIOP_Object (CORBA_string_dup (repoID));
+  data = new STUB_Object (CORBA_string_dup (repoID));
   data->profile.iiop_version.major = IIOP::MY_MAJOR;
   data->profile.iiop_version.minor = IIOP::MY_MINOR;
   data->profile.host = ACE_OS::strdup (oa->get_addr ().get_host_name ());
@@ -203,8 +203,8 @@ Marshal_DSI_Impl::invoke (CORBA_ServerRequest& req, CORBA_Environment &env)
 }
 
 // simulate the skeletons
-void Marshal_DSI_Impl::_Marshal_is_a_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_is_a_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
   CORBA_NVList_ptr		nvlist;
@@ -238,8 +238,8 @@ void Marshal_DSI_Impl::_Marshal_is_a_skel(CORBA_ServerRequest &req,
   dexc (env, "_is_a, result");
 }
 
-void Marshal_DSI_Impl::_Marshal_test_short_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_short_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -271,8 +271,8 @@ void Marshal_DSI_Impl::_Marshal_test_short_skel(CORBA_ServerRequest &req,
   req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_long_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_long_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -304,8 +304,8 @@ void Marshal_DSI_Impl::_Marshal_test_long_skel(CORBA_ServerRequest &req,
   req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_octet_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_octet_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -337,8 +337,8 @@ void Marshal_DSI_Impl::_Marshal_test_octet_skel(CORBA_ServerRequest &req,
   req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_char_skel(CORBA_ServerRequest &req, 
-					       CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_char_skel(CORBA_ServerRequest &req,
+					       CORBA_Object_ptr obj,
 					       CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -370,8 +370,8 @@ void Marshal_DSI_Impl::_Marshal_test_char_skel(CORBA_ServerRequest &req,
   req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_double_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_double_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -403,8 +403,8 @@ void Marshal_DSI_Impl::_Marshal_test_double_skel(CORBA_ServerRequest &req,
   req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_struct_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_struct_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -443,8 +443,8 @@ void Marshal_DSI_Impl::_Marshal_test_struct_skel(CORBA_ServerRequest &req,
   //  req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_union_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_union_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -477,8 +477,8 @@ void Marshal_DSI_Impl::_Marshal_test_union_skel(CORBA_ServerRequest &req,
   //  req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_any_skel(CORBA_ServerRequest &req, 
-					      CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_any_skel(CORBA_ServerRequest &req,
+					      CORBA_Object_ptr obj,
 					      CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -510,8 +510,8 @@ void Marshal_DSI_Impl::_Marshal_test_any_skel(CORBA_ServerRequest &req,
   //  req.result(any, env);
 }
 
-void Marshal_DSI_Impl::_Marshal_test_sequence_skel(CORBA_ServerRequest &req, 
-						   CORBA_Object_ptr obj, 
+void Marshal_DSI_Impl::_Marshal_test_sequence_skel(CORBA_ServerRequest &req,
+						   CORBA_Object_ptr obj,
 						   CORBA_Environment &env)
 {
   CORBA_NVList_ptr        nvlist;
@@ -635,7 +635,7 @@ Marshal_DSI_Impl::test_any (const CORBA_Any &a1,
   a2 = new CORBA_Any (a1.type (), (void *)a1.value ()); // will do a deep copy
 }
 
-void 
+void
 Marshal_DSI_Impl::test_sequence (const Marshal::AnySeq& as1,
 				 Marshal::AnySeq *& as2,
 				 CORBA_Environment &env)
@@ -644,11 +644,10 @@ Marshal_DSI_Impl::test_sequence (const Marshal::AnySeq& as1,
 }
 
 #if 0
-void 
+void
 Marshal_DSI_Impl::test_recursive (const Marshal::Marshal_Recursive &mr1,
 				  Marshal::Marshal_Recursive *&mr2,
 				  CORBA_Environment &env)
 {
 }
 #endif
-

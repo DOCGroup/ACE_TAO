@@ -201,7 +201,6 @@ catior (CORBA::String str,
   // we unmarshal objrefs.
 
   CORBA::ULong profiles = 0;
-  // IIOP_Object *objdata = 0;
 
   continue_decoding = stream.read_ulong (profiles);
 
