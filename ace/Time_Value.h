@@ -265,10 +265,15 @@ public:
   // Call <stop>.
 
   int start (void);
-  // Cache the start value.
+  // Cache the current time and enter a start state.
 
   int stop (void);
-  // Compute the elapsed time.
+  // Subtract the elapsed time from max_wait_time_ and enter a stopped
+  // state.
+
+  int update (void);
+  // Calls stop and then start.  max_wait_time_ is modified by the
+  // call to stop.
 
 private:
   ACE_Time_Value *max_wait_time_;

@@ -793,7 +793,8 @@ ACE_Service_Config::run_proactor_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Service_Config::run_proactor_event_loop");
 
-  while (ACE_Service_Config::end_proactor_event_loop_ == 0)
+  while ((ACE_Service_Config::end_proactor_event_loop_ == 0) &&
+	 (tv != ACE_Time_Value::zero))
     {
       int result = ACE_Service_Config::proactor ()->handle_events (tv);
       if (ACE_Service_Config::reconfig_occurred_)
@@ -844,12 +845,14 @@ ACE_Service_Config::run_reactorEx_event_loop (void)
   return 0;
 }
 
+
 int
 ACE_Service_Config::run_reactorEx_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Service_Config::run_reactorEx_event_loop");
 
-  while (ACE_Service_Config::end_reactorEx_event_loop_ == 0)
+  while ((ACE_Service_Config::end_reactorEx_event_loop_ == 0) &&
+	 (tv != ACE_Time_Value::zero))
     {
       int result = ACE_Service_Config::reactorEx ()->handle_events (tv);
       if (ACE_Service_Config::reconfig_occurred_)

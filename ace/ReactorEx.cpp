@@ -12,7 +12,6 @@
 
 ACE_ReactorEx::ACE_ReactorEx (ACE_Timer_Queue *tq)
   : active_handles_ (0),
-    timer_skew_ (0, ACE_TIMER_SKEW),
     token_ (*this)
 {
   this->timer_queue_ = tq;
@@ -52,7 +51,7 @@ ACE_ReactorEx::register_handler (ACE_Event_Handler *eh,
   if (handle == ACE_INVALID_HANDLE)
     handle = eh->get_handle ();
   this->handles_[this->active_handles_] = handle;
-  this->handlers_[this->active_handles_] = eh;
+  this->event_handlers_[this->active_handles_] = eh;
   this->active_handles_++;
 
   // Assign *this* <ReactorEx> to the <Event_Handler>.
@@ -79,7 +78,7 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
       if (this->handles_[index] == handle)
 	{
 	  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
-	    handlers_[index]->handle_close (handle,
+	    event_handlers_[index]->handle_close (handle,
 					    ACE_Event_Handler::NULL_MASK);
 
 	  // If there was only one handle, reset the pointer to 0.
@@ -98,7 +97,7 @@ ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
 	  else
 	    {
 	      this->handles_[index] = this->handles_[--this->active_handles_];
-	      this->handlers_[index] = this->handlers_[this->active_handles_];
+	      this->event_handlers_[index] = this->event_handlers_[this->active_handles_];
 	    }
 	}
     }
@@ -114,131 +113,132 @@ ACE_ReactorEx::schedule_timer (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_ReactorEx::schedule_timer");
 
+  ACE_GUARD_RETURN (ACE_ReactorEx_Token, ace_mon, this->token_, -1);
+
   return this->timer_queue_->schedule 
     (handler, arg, ACE_OS::gettimeofday () + delta_time, interval);
 }
 
+// Waits for and dispatches all events.  Returns -1 on error, 0 if
+// how_long expired, and 1 if events were dispatched.
 int 
 ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
 			      int wait_all)
 {
   ACE_TRACE ("ACE_ReactorEx::handle_events");
 
-  // @@ Need to implement -wait_all-.
+  // Stash the current time -- the destructor of this object will
+  // automatically compute how much time elapsed since this method was
+  // called.
+  ACE_Countdown_Time countdown (how_long);
 
-  // Tim, is this the right place for the token lock?
+#if defined (ACE_MT_SAFE)
   ACE_GUARD_RETURN (ACE_ReactorEx_Token, ace_mon, this->token_, -1);
 
-  // Tim, this function is too long.  It should be broken up into
-  // another several methods (e.g., wait_for_multi_events() and
-  // dispatch(), just like the ACE_Reactor.
-  
-  DWORD wait_status;
-  int handles_skipped = 0;
+  // Update the countdown to reflect time waiting for the mutex.
+  countdown.update ();
+#endif /* ACE_MT_SAFE */
 
-  // These relative_things are moved through the handles_ each time
-  // handle_events is called.  Set relative index = -1 so we can check
-  // in case of timeouts.
-  int relative_index = -1;
-  ACE_HANDLE *relative_handles = this->handles_;
-  ACE_Event_Handler **relative_handlers = this->handlers_;
+  if (active_handles_ < 1)
+    {
+      // @@ What should this be?
+      errno = ENOENT;
+      return -1;
+    }
 
-  // Stash the current time.
-  ACE_Time_Value prev_time = ACE_OS::gettimeofday ();
   // Check for pending timeout events.
-  how_long = timer_queue_->calculate_timeout (how_long);
+  ACE_Time_Value *wait_time = timer_queue_->calculate_timeout (how_long);
   // Translate into Win32 time value.
-  int timeout = how_long == 0 ? INFINITE : how_long->msec ();
+  int timeout = wait_time == 0 ? INFINITE : wait_time->msec ();
 
-  int active_handles = this->active_handles_;
+  // Wait for any of handles_ to be active, or until timeout expires.
+  // If wait_all is true, then wait for all handles_ to be active.
+  DWORD wait_status = ::WaitForMultipleObjects (active_handles_,
+						handles_,
+						wait_all,
+						timeout);
+  // Expire all pending timers.
+  this->timer_queue_->expire ();
 
-  while (active_handles > 0)
+  switch (wait_status)
     {
-      wait_status = ::WaitForMultipleObjects (active_handles,
-					      relative_handles,
-					      wait_all,
-					      timeout);
-      if (!this->timer_queue_->is_empty ())
-	// Fudge factor accounts for problems with Solaris timers...
-	this->timer_queue_->expire (ACE_OS::gettimeofday () + this->timer_skew_);
+    case WAIT_FAILED: // Failure.
+      errno = ::GetLastError ();
+      return -1;
+    case WAIT_TIMEOUT: // Timeout.
+      errno = ETIME;
+      return 0;
+    case WAIT_ABANDONED_0:
+      // We'll let dispatch_all worry about abandoned mutexes.
+    default:  // Dispatch.
+      return this->dispatch_all (wait_status - WAIT_OBJECT_0, wait_all);
+    }
+}
 
-      // Compute the time while the ReactorEx was processing.
-      ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - prev_time;
+// Dispatches any active handles from handles_[-index-] to
+// handles_[active_handles_] using WaitForMultipleObjects to poll
+// through our handle set looking for active handles.
+int
+ACE_ReactorEx::dispatch_all (int index, int wait_all)
+{
+  while (1)
+    {
+      if (this->dispatch_handler (index) == 0)
+	index++;
 
-      // Update -how_long- to reflect the amount of time since
-      // handle_events was called.  This is computed in case we return
-      // from the switch.
-      if (how_long != 0)
+      // Check if we're all out of handles.
+      if (index == active_handles_)
+	return 0;
+
+      // If wait_all is TRUE, then we know that every handle is active
+      // and there's no need to call WaitForMultipleObjects; We just
+      // iterate through and dispatch each handler.
+      if (wait_all == 0)
 	{
-	  if (*how_long > elapsed_time)
-	    *how_long = *how_long - elapsed_time;
-	  else
-	    *how_long = ACE_Time_Value::zero; // Used all of timeout.
-	}
+	  DWORD wait_status = 
+	    ::WaitForMultipleObjects (active_handles_ - index,
+				      &(handles_[index]),
+				      FALSE, 0); // We're polling.
 
-      switch (wait_status)
-	{
-	case WAIT_TIMEOUT:
-	  errno = ETIME;
-	  // If we timed out on the first call, return 0, otherwise
-	  // an event must have occured; return 1.
-	  return relative_index == -1 ? 0 : 1;
-	case WAIT_FAILED:
-	  errno = ::GetLastError ();
-	  return -1;
-	default:
-	  {
-	    // @@ Need to implement WAIT_ABANDONED_0 stuff.
-	    relative_index = wait_status - WAIT_OBJECT_0;
-	    // Assign the ``signaled'' HANDLE so that callers can get
-	    // it.
-	    siginfo_t sig (relative_handles[relative_index]);
-	    
-	    if (relative_handlers[relative_index]->handle_signal 
-		(0, &sig) == -1)
-	      // If we remove a handler, then the index should stay
-	      // the same since it may have been replaced with the end
-	      // handle by remove_handler.
-	      this->remove_handler (relative_handlers[relative_index]);
-	    else
-	      // If we did not remove the handler, then move the index
-	      // up one so that we skip this handler on the next
-	      // iteration.
-	      relative_index++;
-
-	    // Update the relative pointers.
-	    relative_handles = &relative_handles[relative_index];
-	    relative_handlers = &relative_handlers[relative_index];
-
-	    // The number of remaining active handles is
-	    // active_handles_ less the number of handles we skipped
-	    // over.
-	    handles_skipped += relative_index;
-	    active_handles = this->active_handles_ - handles_skipped;
-
-	    // Make the timeout be zero so that we don't block on any
-	    // subsequent calls to WaitForMultipleObjects.  Rather, we
-	    // just poll through the rest looking for signaled handles.
-	    timeout = 0; 
-	  }
+	  switch (wait_status)
+	    {
+	    case WAIT_FAILED: // Failure.
+	      errno = ::GetLastError ();
+	      return -1;
+	    case WAIT_TIMEOUT:
+	      // There are no more handles ready, we can return.
+	      return 0;
+	    default:  // Dispatch.
+	      // Check if a handle successfully became signaled.
+	      if ((wait_status >= WAIT_OBJECT_0) &&
+		  (wait_status < WAIT_OBJECT_0 + active_handles_))
+		index += (wait_status - WAIT_OBJECT_0);
+	      else
+		// Otherwise, a handle was abandoned.
+		index += (wait_status - WAIT_ABANDONED_0);
+	    }
 	}
     }
+}
 
-  // Compute the time while the ReactorEx was processing.  Note that
-  // this is recomputed to reflect time spent dispatching handlers.
-  ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - prev_time;
 
-  // Update how_long to reflect the amount of time since handle_events
-  // was called.
-  if (how_long != 0)
+// Dispatches a single handler.  Returns 0 on success, -1 if the
+// handler was removed.
+int
+ACE_ReactorEx::dispatch_handler (int index)
+{
+  // Assign the ``signaled'' HANDLE so that callers can get
+  // it.
+  siginfo_t sig (handles_[index]);
+
+  // Dispatch the handler.
+  if (event_handlers_[index]->handle_signal (0, &sig) == -1)
     {
-      if (*how_long > elapsed_time)
-	*how_long = *how_long - elapsed_time;
-      else
-	*how_long = ACE_Time_Value::zero; // Used all of timeout.
+      this->remove_handler (event_handlers_[index]);
+      return -1;
     }
-
-  return 0;
+  else
+    return 0;
 }
 
 // ************************************************************
