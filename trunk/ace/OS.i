@@ -1569,276 +1569,6 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 }
 
 ACE_INLINE int 
-ACE_OS::sema_destroy (ACE_sema_t *s)
-{
-  // ACE_TRACE ("ACE_OS::sema_destroy");
-#if defined (ACE_HAS_POSIX_SEM)
-  int result;
-  if (s->name_)
-    {
-      ACE_OS::free ((void *) s->name_);
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_unlink (s->name_), result), int, -1, result);
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_close (s->sema_), ace_result_), int, -1);
-    }
-  else
-    {
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
-      delete s->sema_;
-      s->sema_ = 0;
-      return result;
-    }
-#elif defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), ace_result_), int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  int r1 = ACE_OS::mutex_destroy (&s->lock_);
-  int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
-  return r1 != 0 || r2 != 0 ? -1 : 0;
-#elif defined (ACE_HAS_WTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
-#endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_POSIX_SEM */
-}
-
-ACE_INLINE int 
-ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type, 
-		   LPCTSTR name, void *arg, int max)
-{
-  // ACE_TRACE ("ACE_OS::sema_init");
-#if defined (ACE_HAS_POSIX_SEM)
-  ACE_UNUSED_ARG (arg);
-  ACE_UNUSED_ARG (max);
-  if (name)
-    {
-      s->name_ = ACE_OS::strdup (name);
-      s->sema_ = ::sem_open (s->name_, O_CREAT, ACE_DEFAULT_FILE_PERMS, count);
-      return (int) s->sema_ == -1 ? -1 : 0;
-    }
-  else
-    {
-      s->name_ = 0;
-      ACE_NEW_RETURN (s->sema_, sem_t, -1);
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_init (s->sema_, type != USYNC_THREAD, count), ace_result_), 
-			 int, -1);
-    }
-#elif defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (max);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_init (s, count, type, arg), ace_result_), 
-		     int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  int result = -1;
-
-  if (ACE_OS::mutex_init (&s->lock_, type, name, arg) == 0
-      && ACE_OS::cond_init (&s->count_nonzero_, type, name, arg) == 0
-      && ACE_OS::mutex_lock (&s->lock_) == 0)
-    {
-      s->count_ = count;
-      s->waiters_ = 0;
-
-      if (ACE_OS::mutex_unlock (&s->lock_) == 0)
-	result = 0;
-    }
-
-  if (result == -1)
-    {
-      ACE_OS::mutex_destroy (&s->lock_);
-      ACE_OS::cond_destroy (&s->count_nonzero_);
-    }
-  return result;
-#elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG (arg);
-  ACE_UNUSED_ARG (type);
-  // Create the semaphore with its value initialized to <count> and
-  // its maximum value initialized to <max>.
-  *s = ::CreateSemaphore (0, count, max, name);
-
-  if (*s == 0)
-    ACE_FAIL_RETURN (-1);
-  /* NOTREACHED */
-  else
-    return 0;
-#endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (count);
-  ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (arg);
-  ACE_UNUSED_ARG (max);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_POSIX_SEM */
-}
-
-ACE_INLINE int 
-ACE_OS::sema_post (ACE_sema_t *s)
-{
-  // ACE_TRACE ("ACE_OS::sema_post");
-#if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_post (s->sema_), ace_result_), int, -1);
-#elif defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), ace_result_), int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  int result = -1;
-
-  if (ACE_OS::mutex_lock (&s->lock_) == 0)
-    {
-      // Always allow a waiter to continue if there is one.
-      if (s->waiters_ > 0)
-	result = ACE_OS::cond_signal (&s->count_nonzero_);
-      else
-	result = 0;
-
-      s->count_++;
-      ACE_OS::mutex_unlock (&s->lock_);
-    }
-  return result;
-#elif defined (ACE_HAS_WTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, 1, 0), 
-				       ace_result_), 
-		     int, -1);
-#endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_POSIX_SEM */
-}
-
-ACE_INLINE int 
-ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
-{
-#if defined (ACE_WIN32)
-  // Win32 supports this natively.
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
-				       ace_result_), int, -1);
-#else
-  // On POSIX platforms we need to emulate this ourselves.
-  for (size_t i = 0; i < release_count; i++)
-    if (ACE_OS::sema_post (s) == -1)
-      return -1;
-
-  return 0;
-#endif /* ACE_WIN32 */  
-}
-
-ACE_INLINE int
-ACE_OS::sema_trywait (ACE_sema_t *s)
-{
-  // ACE_TRACE ("ACE_OS::sema_trywait");
-#if defined (ACE_HAS_POSIX_SEM)
-  // POSIX semaphores set errno to EAGAIN if trywait fails
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_trywait (s->sema_), ace_result_), 
-		     int, -1);
-#elif defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
-  // STHREADS semaphores set errno to EBUSY if trywait fails
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_trywait (s), 
-				       ace_result_), 
-		     int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-
-  int result = -1;
-
-  if (ACE_OS::mutex_lock (&s->lock_) == 0)
-    {
-      if (s->count_ > 0)
-	{
-	  --s->count_;
-	  result = 0;
-	}
-      else
-	errno = EBUSY;
-
-      ACE_OS::mutex_unlock (&s->lock_);
-    }
-  return result;
-#elif defined (ACE_HAS_WTHREADS)
-  int result = ::WaitForSingleObject (*s, 0);
-
-  if (result == WAIT_OBJECT_0)
-    return 0;
-  else
-    {
-      errno = result == WAIT_TIMEOUT ? EBUSY : ::GetLastError ();
-      // This is a hack, we need to find an appropriate mapping...
-      return -1;
-    }
-
-#endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_POSIX_SEM */
-}
-
-ACE_INLINE int 
-ACE_OS::sema_wait (ACE_sema_t *s)
-{
-  // ACE_TRACE ("ACE_OS::sema_wait");
-#if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_wait (s->sema_), ace_result_), int, -1);
-#elif defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_wait (s), ace_result_), int, -1);
-#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  int result = 0;
-
-  ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
-
-  if (ACE_OS::mutex_lock (&s->lock_) != 0)
-    result = -1;
-  else
-    {
-      // Keep track of the number of waiters so that we can signal
-      // them properly in <ACE_OS::sema_post>.
-      s->waiters_++;
-
-      // Wait until the semaphore count is > 0.
-      while (s->count_ == 0)
-	if (ACE_OS::cond_wait (&s->count_nonzero_, &s->lock_) == -1)
-	  {
-	    result = -2;
-	    break;
-	  }
-
-      --s->waiters_;
-    }
-
-  if (result == 0)
-    --s->count_;
-
-  if (result != -1)
-    ACE_OS::mutex_unlock (&s->lock_);
-  pthread_cleanup_pop (1);
-  return result;
-
-#elif defined (ACE_HAS_WTHREADS)
-  switch (::WaitForSingleObject (*s, INFINITE))
-    {
-    case WAIT_OBJECT_0:
-      return 0;
-    case WAIT_ABANDONED:
-      errno = WAIT_ABANDONED;
-      return -1;
-    default:
-      // This is a hack, we need to find an appropriate mapping...
-      errno = ::GetLastError ();
-      return -1;
-    }
-  /* NOTREACHED */
-#endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_POSIX_SEM */
-}
-
-ACE_INLINE int 
 ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
   // ACE_TRACE ("ACE_OS::cond_destroy");
@@ -2402,6 +2132,276 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #endif /* ACE_HAS_THREADS */		     
 }
 #endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
+
+ACE_INLINE int 
+ACE_OS::sema_destroy (ACE_sema_t *s)
+{
+  // ACE_TRACE ("ACE_OS::sema_destroy");
+#if defined (ACE_HAS_POSIX_SEM)
+  int result;
+  if (s->name_)
+    {
+      ACE_OS::free ((void *) s->name_);
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_unlink (s->name_), result), int, -1, result);
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_close (s->sema_), ace_result_), int, -1);
+    }
+  else
+    {
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
+      delete s->sema_;
+      s->sema_ = 0;
+      return result;
+    }
+#elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), ace_result_), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  int r1 = ACE_OS::mutex_destroy (&s->lock_);
+  int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
+  return r1 != 0 || r2 != 0 ? -1 : 0;
+#elif defined (ACE_HAS_WTHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_POSIX_SEM */
+}
+
+ACE_INLINE int 
+ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type, 
+		   LPCTSTR name, void *arg, int max)
+{
+  // ACE_TRACE ("ACE_OS::sema_init");
+#if defined (ACE_HAS_POSIX_SEM)
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
+  if (name)
+    {
+      s->name_ = ACE_OS::strdup (name);
+      s->sema_ = ::sem_open (s->name_, O_CREAT, ACE_DEFAULT_FILE_PERMS, count);
+      return (int) s->sema_ == -1 ? -1 : 0;
+    }
+  else
+    {
+      s->name_ = 0;
+      ACE_NEW_RETURN (s->sema_, sem_t, -1);
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_init (s->sema_, type != USYNC_THREAD, count), ace_result_), 
+			 int, -1);
+    }
+#elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (max);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_init (s, count, type, arg), ace_result_), 
+		     int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  int result = -1;
+
+  if (ACE_OS::mutex_init (&s->lock_, type, name, arg) == 0
+      && ACE_OS::cond_init (&s->count_nonzero_, type, name, arg) == 0
+      && ACE_OS::mutex_lock (&s->lock_) == 0)
+    {
+      s->count_ = count;
+      s->waiters_ = 0;
+
+      if (ACE_OS::mutex_unlock (&s->lock_) == 0)
+	result = 0;
+    }
+
+  if (result == -1)
+    {
+      ACE_OS::mutex_destroy (&s->lock_);
+      ACE_OS::cond_destroy (&s->count_nonzero_);
+    }
+  return result;
+#elif defined (ACE_HAS_WTHREADS)
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (type);
+  // Create the semaphore with its value initialized to <count> and
+  // its maximum value initialized to <max>.
+  *s = ::CreateSemaphore (0, count, max, name);
+
+  if (*s == 0)
+    ACE_FAIL_RETURN (-1);
+  /* NOTREACHED */
+  else
+    return 0;
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (count);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_POSIX_SEM */
+}
+
+ACE_INLINE int 
+ACE_OS::sema_post (ACE_sema_t *s)
+{
+  // ACE_TRACE ("ACE_OS::sema_post");
+#if defined (ACE_HAS_POSIX_SEM)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_post (s->sema_), ace_result_), int, -1);
+#elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), ace_result_), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  int result = -1;
+
+  if (ACE_OS::mutex_lock (&s->lock_) == 0)
+    {
+      // Always allow a waiter to continue if there is one.
+      if (s->waiters_ > 0)
+	result = ACE_OS::cond_signal (&s->count_nonzero_);
+      else
+	result = 0;
+
+      s->count_++;
+      ACE_OS::mutex_unlock (&s->lock_);
+    }
+  return result;
+#elif defined (ACE_HAS_WTHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, 1, 0), 
+				       ace_result_), 
+		     int, -1);
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_POSIX_SEM */
+}
+
+ACE_INLINE int 
+ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
+{
+#if defined (ACE_WIN32)
+  // Win32 supports this natively.
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
+				       ace_result_), int, -1);
+#else
+  // On POSIX platforms we need to emulate this ourselves.
+  for (size_t i = 0; i < release_count; i++)
+    if (ACE_OS::sema_post (s) == -1)
+      return -1;
+
+  return 0;
+#endif /* ACE_WIN32 */  
+}
+
+ACE_INLINE int
+ACE_OS::sema_trywait (ACE_sema_t *s)
+{
+  // ACE_TRACE ("ACE_OS::sema_trywait");
+#if defined (ACE_HAS_POSIX_SEM)
+  // POSIX semaphores set errno to EAGAIN if trywait fails
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_trywait (s->sema_), ace_result_), 
+		     int, -1);
+#elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS)
+  // STHREADS semaphores set errno to EBUSY if trywait fails
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_trywait (s), 
+				       ace_result_), 
+		     int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+
+  int result = -1;
+
+  if (ACE_OS::mutex_lock (&s->lock_) == 0)
+    {
+      if (s->count_ > 0)
+	{
+	  --s->count_;
+	  result = 0;
+	}
+      else
+	errno = EBUSY;
+
+      ACE_OS::mutex_unlock (&s->lock_);
+    }
+  return result;
+#elif defined (ACE_HAS_WTHREADS)
+  int result = ::WaitForSingleObject (*s, 0);
+
+  if (result == WAIT_OBJECT_0)
+    return 0;
+  else
+    {
+      errno = result == WAIT_TIMEOUT ? EBUSY : ::GetLastError ();
+      // This is a hack, we need to find an appropriate mapping...
+      return -1;
+    }
+
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_POSIX_SEM */
+}
+
+ACE_INLINE int 
+ACE_OS::sema_wait (ACE_sema_t *s)
+{
+  // ACE_TRACE ("ACE_OS::sema_wait");
+#if defined (ACE_HAS_POSIX_SEM)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_wait (s->sema_), ace_result_), int, -1);
+#elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_wait (s), ace_result_), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  int result = 0;
+
+  ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
+
+  if (ACE_OS::mutex_lock (&s->lock_) != 0)
+    result = -1;
+  else
+    {
+      // Keep track of the number of waiters so that we can signal
+      // them properly in <ACE_OS::sema_post>.
+      s->waiters_++;
+
+      // Wait until the semaphore count is > 0.
+      while (s->count_ == 0)
+	if (ACE_OS::cond_wait (&s->count_nonzero_, &s->lock_) == -1)
+	  {
+	    result = -2;
+	    break;
+	  }
+
+      --s->waiters_;
+    }
+
+  if (result == 0)
+    --s->count_;
+
+  if (result != -1)
+    ACE_OS::mutex_unlock (&s->lock_);
+  pthread_cleanup_pop (1);
+  return result;
+
+#elif defined (ACE_HAS_WTHREADS)
+  switch (::WaitForSingleObject (*s, INFINITE))
+    {
+    case WAIT_OBJECT_0:
+      return 0;
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
+      // This is a hack, we need to find an appropriate mapping...
+      errno = ::GetLastError ();
+      return -1;
+    }
+  /* NOTREACHED */
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_POSIX_SEM */
+}
 
 ACE_INLINE int 
 ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
