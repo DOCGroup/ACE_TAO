@@ -9,7 +9,8 @@ cat <<@EOM
 The first official beta release of The ACE ORB (TAO) has been released
 by the Distributed Object Computing (DOC) Group at Washington
 University in St. Louis.  TAO is a freely available CORBA
-2.x-compliant ORB that can be downloaded from the Internet at
+2.x-compliant ORB with real-time extensions that can be downloaded
+from the Internet at
 
 http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO.tar.gz
 
@@ -51,9 +52,10 @@ Other HTML documentation is available in the '$TAO_ROOT/docs/'
 directory.
 
 We welcome suggestions for improvement, bug fixes, portability
-enhancements, etc.  If you have any problems with TAO, please send
-email to Douglas C. Schmidt (schmidt@cs.wustl.edu) and Chris Cleeland
-(cleeland@cs.wustl.edu).
+enhancements, etc.  If you have any questions or problems with TAO,
+please post them to the ACE mailing list (ace-users@cs.wustl.edu) or
+send email to Douglas C. Schmidt (schmidt@cs.wustl.edu) and Chris
+Cleeland (cleeland@cs.wustl.edu).
 
 The TAO Team
 @EOM
