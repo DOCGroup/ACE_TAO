@@ -1,3 +1,29 @@
+Fri Mar 14 10:49:48 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac (bsearch, mktemp, qsort, rand_r):
+
+	  Temporarily select C as the test language when detecting these
+	  functions to work around a bug in some versions of Autoconf when
+	  C++ is selected as the test language.  This fixes problems where
+	  the following macros were incorrectly defined:
+
+		ACE_LACKS_BSEARCH
+		ACE_LACKS_MKTEMP
+		ACE_LACKS_QSORT
+		ACE_HAS_REENTRANT_FUNCTIONS
+
+	  The correct definition of the ACE_HAS_REENTRANT_FUNCTIONS macro
+	  should also correct problems exhibited by the ACE one-button
+	  tests on multi-CPU hosts.
+
+	  (ACE_LACKS_STRUCT_DIR):
+
+	  Added test that determines if this macro should be defined.
+
+	* m4/config_h.m4 (ACE_HAS_SCANDIR, ACE_LACKS_STRUCT_DIR):
+
+	  Added templates for these preprocessor macros.
+
 Thu Mar 13 15:49:21 2003  Ossama Othman  <ossama@uci.edu>
 
 	* bin/bootstrap:
