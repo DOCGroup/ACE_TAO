@@ -3350,6 +3350,23 @@ TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
   return impl->get_object_id (ACE_TRY_ENV);
 }
 
+TAO_POA_Current_Impl *
+TAO_POA_Current::implementation (void)
+{
+  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
+}
+
+TAO_POA_Current_Impl *
+TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
+{
+  TAO_ORB_Core_TSS_Resources *tss =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+
+  TAO_POA_Current_Impl *old = tss->poa_current_impl_;
+  tss->poa_current_impl_ = new_current;
+  return old;
+};
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array<PortableServer::ObjectId>;
 template class ACE_Array_Base<PortableServer::ObjectId>;
