@@ -12,6 +12,7 @@ package Preprocessor;
 
 use strict;
 use FileHandle;
+use File::Basename;
 
 # ************************************************************
 # Subroutine Section
@@ -33,6 +34,7 @@ sub new {
 sub locateFile {
   my($self) = shift;
   my($file) = shift;
+  my($loc)  = shift;
 
   if (exists $self->{'ifound'}->{$file}) {
     return $self->{'ifound'}->{$file};
@@ -43,6 +45,13 @@ sub locateFile {
         $self->{'ifound'}->{$file} = "$dir/$file";
         return $self->{'ifound'}->{$file};
       }
+    }
+
+    ## If the file we're currently looking at contains a directory name
+    ## then, we need to look for include files in that directory.
+    if (-r "$loc/$file") {
+      $self->{'ifound'}->{$file} = "$loc/$file";
+      return $self->{'ifound'}->{$file};
     }
   }
 
@@ -63,6 +72,7 @@ sub process {
     my(@zero)    = ();
     my($files)   = $self->{'files'};
     my($recurse) = ++$self->{'recurse'};
+    my($dir)     = dirname($file);
 
     $$files{$file} = [];
     while(<$fh>) {
@@ -93,7 +103,7 @@ sub process {
         }
         elsif (!defined $zero[0] &&
                /#\s*include\s+[<"]([^">]+)[">]/o) {
-          my($inc) = $self->locateFile($1);
+          my($inc) = $self->locateFile($1, $dir);
           if (defined $inc) {
             $inc =~ s/\\/\//go;
             if (!$noinline ||
