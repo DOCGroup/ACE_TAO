@@ -177,7 +177,7 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
 
       size_t new_size = table.size ();
       if (this->slot_table_.size (id >= new_size ? id + 1 : new_size) != 0)
-        ACE_THROW (CORBA::INTERNAL ());        
+        ACE_THROW (CORBA::INTERNAL ());
 
       // Note that the number of elements to copy is bounded by the
       // size of the source array, not the destination array.
