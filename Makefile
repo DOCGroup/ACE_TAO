@@ -127,18 +127,7 @@ CONTROLLED_FILES = \
         AUTHORS \
         BIBLIOGRAPHY \
         COPYING \
-        ChangeLog \
-        ChangeLog-99b \
-        ChangeLog-99a \
-        ChangeLog-98a \
-        ChangeLog-98b \
-        ChangeLog-97b \
-        ChangeLog-97a \
-        ChangeLog-96b \
-        ChangeLog-96a \
-        ChangeLog-95 \
-        ChangeLog-94 \
-        ChangeLog-93 \
+        ChangeLog* \
         FAQ \
         Makefile \
         Makefile.am \
