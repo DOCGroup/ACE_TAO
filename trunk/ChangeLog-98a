@@ -1,3 +1,9 @@
+Thu Apr 23 06:11:27 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_chorus.GNU: include dtool/htgt-cf.rf
+          from $(MERGEDIR) instead of $(CLASSIXDIR).  Thanks to
+          Wei Chiang <chiang@horizon.nokia.com> for this update.
+
 Wed Apr 22 22:13:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace/ace_bcc.ide: Added a new IDE for the Borland C++ compiler.
