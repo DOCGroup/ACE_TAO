@@ -71,7 +71,7 @@ Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Invocation.cpp (perform_call):
 
-	  Use version of ACE_Connector_Registry::get_connector() that
+	  Use version of TAO_Connector_Registry::get_connector() that
 	  accepts an endpoint tag value instead of a pointer to an
 	  endpoint.  The latter is redundant and has been removed.
 
