@@ -1,3 +1,17 @@
+Wed Oct 27 07:22:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+	  Changed create() method to find a unused/unique id instead of
+	  simply using the last id allocated.  That could result in an
+	  LogIdAlreadyExists exception being thrown if the id had been
+	  taken for another log via create_with_id().
+
 Wed Oct 27 09:08:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP.idl:

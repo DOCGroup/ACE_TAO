@@ -165,7 +165,7 @@ TAO_RTEventLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_rec_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id
+        DsLogAdmin::LogId_out id_out
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -174,11 +174,14 @@ TAO_RTEventLogFactory_i::create (
         DsLogAdmin::InvalidThreshold
       ))
 {
-  // Get an id for this Log.
-  this->max_id_++;
+  DsLogAdmin::LogId id;
+
+  // Get an unused/unique id for this Log.
+  while (hash_map_.find ((id = this->next_id_++)) == 0)
+    ;
 
   RTEventLogAdmin::EventLog_ptr eventlog =
-    this->create_with_id (this->max_id_,
+    this->create_with_id (id,
                           full_action,
                           max_rec_size,
                           thresholds
@@ -186,7 +189,7 @@ TAO_RTEventLogFactory_i::create (
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
   // Set the id to return..
-  id = this->max_id_;
+  id_out = id;
 
   return eventlog;
 }
