@@ -15,7 +15,10 @@ Wed Aug  8 12:16:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  resources. This would lead to the client hanging on select ()
 	  even after the connection is closed by the server. I am
 	  surprised that this has not been found out so far. God save
-	  people who have been using the Muxed strategy :-).
+	  people who have been using the Muxed strategy :-). 
+
+	  BTW, the above fix should fix problems seen in the Faults and
+	  Crashed_Callback tests in the daily builds.
 
 Tue Aug 07 21:54:31 2001  Ossama Othman  <ossama@uci.edu>
 
