@@ -99,6 +99,9 @@ IDL_GlobalData::IDL_GlobalData()
       pd_include_file_names(NULL),
       pd_n_include_file_names(0),
       pd_n_alloced_file_names(0),
+      included_idl_files_ (0),
+      n_included_idl_files_ (0),
+      n_allocated_idl_files_ (0),
       pd_parse_state(PS_NoState),
       pd_idl_src_file (0),
       export_macro_ (0),
@@ -421,8 +424,7 @@ void
 IDL_GlobalData::store_include_file_name(String *n)
 {
   String	**o_include_file_names;
-  unsigned long	  o_n_alloced_file_names,
-		  i;
+  unsigned long o_n_alloced_file_names, i;
 
   /*
    * Check if we need to store it at all or whether we've seen it already
@@ -479,6 +481,58 @@ unsigned long
 IDL_GlobalData::n_include_file_names()
 {
   return pd_n_include_file_names;
+}
+
+// Access methods to deal with other IDL files included in the main
+// IDL file.  
+
+void 
+IDL_GlobalData::add_to_included_idl_files (char* file_name)
+{
+  // Is there enough space there to store one more file.
+  if (this->n_included_idl_files_ == this->n_allocated_idl_files_)
+    {
+      // Allocating more space.
+      if (this->n_allocated_idl_files_ == 0)
+        {
+          // First time creation.
+          this->n_allocated_idl_files_ = INCREMENT;
+          ACE_NEW (this->included_idl_files_,
+                   char *[this->n_allocated_idl_files_]);
+        }
+      else
+        {
+          // Adding more storage.
+
+          char** old_included_idl_files;
+          size_t n_old_allocated_idl_files;
+          
+          old_included_idl_files = this->included_idl_files_;
+          n_old_allocated_idl_files = this->n_allocated_idl_files_;
+          this->n_included_idl_files_ += INCREMENT;
+          ACE_NEW (this->included_idl_files_,
+                   char *[this->n_allocated_idl_files_]);
+          for (size_t i = 0; i < n_old_allocated_idl_files; i++)
+            this->included_idl_files_ [i] = old_included_idl_files [i];
+          delete [] old_included_idl_files;
+        }
+    }
+  
+  // Store it.
+  this->included_idl_files_ [this->n_included_idl_files_++] =
+    file_name; 
+}
+
+char**
+IDL_GlobalData::included_idl_files (void)
+{
+  return this->included_idl_files_;
+}
+
+size_t
+IDL_GlobalData::n_included_idl_files (void)
+{
+  return this->n_included_idl_files_;
 }
 
 void

@@ -22,7 +22,7 @@
 
 ACE_RCSID(be, be_codegen, "$Id$")
 
-TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
+  TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
 
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
@@ -146,16 +146,24 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           // We must include all the skeleton headers corresponding to
           // IDL files included by the current IDL file.
+          // We will use the included IDL file names as they appeared
+          // in the original main IDL file, not the one  which went
+          // thru CC preprocessor.
           for (size_t j = 0;
-               j < idl_global->n_include_file_names ();
-               ++j)
+               j < idl_global->n_included_idl_files ();
+               j++)
             {
-              String* idl_name =
-                idl_global->include_file_names ()[j];
-
+              char* idl_name =
+                idl_global->included_idl_files ()[j];
+              
+              // Make a String out of it.
+              String idl_name_str = idl_name;
+              
+              // Get the clnt header from the IDL file name.
               const char* client_hdr =
-                IDL_GlobalData::be_get_client_hdr (idl_name);
-
+                IDL_GlobalData::be_get_client_hdr (&idl_name_str);
+              
+              // Sanity check and then print. 
               if (client_hdr != 0)
                 {
                   this->client_header_->print ("#include \"%s\"\n",
@@ -165,7 +173,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                 {
                   ACE_ERROR ((LM_WARNING,
                               "WARNING, invalid file '%s' included\n",
-                              idl_name->get_string ()));
+                              idl_name));
                 }
             }
           *this->client_header_ << "\n";
@@ -306,14 +314,17 @@ TAO_CodeGen::start_server_header (const char *fname)
           // We must include all the skeleton headers corresponding to
           // IDL files included by the current IDL file.
           for (size_t j = 0;
-               j < idl_global->n_include_file_names ();
+               j < idl_global->n_included_idl_files ();
                ++j)
             {
-              String* idl_name =
-                idl_global->include_file_names()[j];
+              char* idl_name =
+                idl_global->included_idl_files ()[j];
 
+              // String'ifying the name.
+              String idl_name_str (idl_name);
+              
               const char* server_hdr =
-                IDL_GlobalData::be_get_server_hdr (idl_name);
+                IDL_GlobalData::be_get_server_hdr (&idl_name_str);
 
               this->server_header_->print ("#include \"%s\"\n",
                                            server_hdr);
@@ -451,7 +462,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
     }
 
   if (this->server_template_skeletons_->open (fname,
-                                           TAO_OutStream::TAO_SVR_TMPL_IMPL)
+                                              TAO_OutStream::TAO_SVR_TMPL_IMPL)
       == -1)
     return -1;
   else
