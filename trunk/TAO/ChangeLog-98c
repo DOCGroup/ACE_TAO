@@ -1,6 +1,115 @@
+Tue Jul 21 17:29:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs_lib.dsp: 
+	* orbsvcs/orbsvcs/orbsvcs.dsw
+	  Removed orbsvcs_lib since it isn't needed anymore and it is 
+	  very out-of-date.  
+
+	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsp:
+	  tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw:
+	  The perl script run_tests.pl replaces the executable.
+
+	* TAOACE.dsw: 
+	  Added Naming Service to the list, since it is used by many
+	  tests (and I was forgetting to rebuild it all the time).
+
+	* tests/Simple/run_test.pl:
+	* tests/Quoter/run_test.pl:
+	* tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	  Uses common Uniqueid now.
+
+	* tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsw:
+	  The included project was renamed.
+
+	* tests/TAO_Tests.dsw:
+	  New Workspace that includes all the project files for TAO tests.
+	
+	* orbsvcs/orbsvcs.dsw:
+	  Moved some tests out and some servers in.
+
+	* TAO_IDL/tao_idl.dsp
+	* orbsvcs/Concurrency_Service/Concurrency_Service.dsp:
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp:
+	* orbsvcs/Event_Service/Event_Service.dsp:
+	* orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
+	* orbsvcs/Trading_Service/Trading_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/tests/Concurrency/CC_client.dsp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsp:
+	* orbsvcs/tests/Logger/client.dsp:
+	* orbsvcs/tests/Logger/server.dsp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+	* orbsvcs/tests/Simple_Naming/client.dsp:
+	* orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.dsp:
+	* orbsvcs/tests/Simulator/DOVEMIB/DOVEMIBx.dsp:
+	* orbsvcs/tests/Simulator/DOVEMIB/TestClient.dsp:
+	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp:
+	* orbsvcs/tests/Trading/Colocated_Test.dsp:
+	* orbsvcs/tests/Trading/Export_Test.dsp:
+	* orbsvcs/tests/Trading/Import_Test.dsp:
+	* orbsvcs/tests/Trading/TradingLib.dsp:
+	* tao/TAO.dsp:
+	* tests/CDR/basic_types.dsp:
+	* tests/CDR/growth.dsp:
+	* tests/CDR/tc.dsp:
+	* tests/Cubit/TAO/DII_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* tests/Cubit/TAO/MT_Cubit/client.dsp:
+	* tests/Cubit/TAO/MT_Cubit/server.dsp:
+	* tests/NestedUpcall/MT_Client_Test/client.dsp:
+	* tests/NestedUpcall/MT_Client_Test/server.dsp:
+	* tests/NestedUpcall/Reactor/client.dsp:
+	* tests/NestedUpcall/Reactor/server.dsp:
+	* tests/NestedUpcall/Triangle_Test/initiator.dsp:
+	* tests/NestedUpcall/Triangle_Test/server_A.dsp:
+	* tests/NestedUpcall/Triangle_Test/server_B.dsp:
+	* tests/OctetSeq/OctetSeq.dsp:
+	* tests/POA/DSI/client.dsp:
+	* tests/POA/DSI/server.dsp:
+	* tests/POA/Default_Servant/client.dsp:
+	* tests/POA/Default_Servant/server.dsp:
+	* tests/POA/Explicit_Activation/server.dsp:
+	* tests/POA/FindPOA/FindPOA.dsp:
+	* tests/POA/Forwarding/client.dsp:
+	* tests/POA/Forwarding/server.dsp:
+	* tests/POA/Generic_Servant/client.dsp:
+	* tests/POA/Generic_Servant/server.dsp:
+	* tests/POA/NewPOA/NewPOA.dsp:
+	* tests/POA/On_Demand_Activation/server.dsp:
+	* tests/POA/RootPOA/RootPOA.dsp:
+	* tests/POA/TIE/client.dsp:
+	* tests/POA/TIE/server.dsp:
+	* tests/POA/locking/locking.dsp:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/server.dsp:
+	* tests/Quoter/Factory_Finder.dsp:
+	* tests/Quoter/Generic_Factory.dsp:
+	* tests/Quoter/client.dsp:
+	* tests/Quoter/server.dsp:
+	* tests/Simple/client.dsp:
+	* tests/Simple/server.dsp:
+	  Changed the libraries to use the *d.dll naming convention so
+	  all the projects needed to be changed.  While I was there, 
+	  also cleaned things up by adding some folders and added the 
+	  dependency to the tao_idl compiler, so if the compiler changes,
+	  the idl files get recompiled.
+
+	  In the future I'll work on the release versions of the projects
+	  to set them up correctly.  Until now, most often the release
+	  version in the project was ignored since it was a major hassle 
+	  to test it.
+
 Tue Jul 21 17:41:26 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
         * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
@@ -30,14 +139,14 @@ Tue Jul 21 16:57:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Jul 21 15:49:34 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added a new Server
-	class and moved all the static functions and variables to that
-	class.
+	  class and moved all the static functions and variables to that
+	  class.
 
 Tue Jul 21 15:46:49 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): changed 
-	char*const* argv to char **argv so that it compiles on platforms
-	like IRIX . Thanks to Carlos for reporting this.
+	  char*const* argv to char **argv so that it compiles on platforms
+	  like IRIX . Thanks to Carlos for reporting this.
 
 Tue Jul 21 14:53:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
