@@ -15,6 +15,7 @@ require Uniqueid;
 # amount of delay between running the servers
 
 $sleeptime = 6;
+$status = 0;
 
 # variables for parameters
 
@@ -33,7 +34,7 @@ sub server
 {
     my $args = "-ORBnameserviceport $nsport";
     print ("\nServer: server$EXE_EXT $args\n");
-    $SV = Process::Create ('.' . $DIR_SEPARATOR . "server " .$EXE_EXT . $args);
+    $SV = Process::Create ('.' . $DIR_SEPARATOR . "server " .$EXE_EXT, $args);
 }
 
 
@@ -41,7 +42,7 @@ sub client
 {
     my $args = "-ORBnameserviceport $nsport";
     print ("\nclient: client $args\n");
-    $CL = Process::Create ('.' . $DIR_SEPARATOR . "client " .$EXE_EXT . $args);
+    $CL = Process::Create ('.' . $DIR_SEPARATOR . "client " .$EXE_EXT, $args);
 }
 
 name_server ();
@@ -51,7 +52,14 @@ server ();
 sleep $sleeptime;
 
 client ();
-$CL->Wait ();
+if ($CL->TimedWait (60) == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $status = 1;
+  $CL->Kill (); $CL->TimedWait (1);
+}
 
-$NS->Kill (); $NS->Wait ();
-$SV->Kill (); $SV->Wait ();
+$NS->Kill (); $NS->TimedWait (1);
+$SV->Kill (); $SV->TimedWait (1);
+
+exit $status;
+
