@@ -1,3 +1,11 @@
+Mon Feb 24 15:35:23 2003  Edward Scott  <eas@prismtechnologies.com>
+
+	* tao/DynamicAny/DynUnion_i.h: 
+	* tao/DynamicAny/DynStruct_i.h: 
+
+	  Fixed incorrect environment macro usage. Thanks to
+	  vince@mounts.cc for reporting the problem.
+
 Sat Feb 22 09:50:31 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/Collocated_Object.cpp (_get_component):
