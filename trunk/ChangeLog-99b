@@ -1,50 +1,56 @@
+Sat Jul 03 14:04:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: call ace_components via sh, and use single
+          instead of double quotes, so that it works with Cygwin
+          on NT host.
+
 Sat Jul  3 12:05:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Future_Set_Test.cpp (main): We were casting a const ASYS_TCHAR *
-	  to u_int, yikes!	  
+        * tests/Future_Set_Test.cpp (main): We were casting a const
+          ASYS_TCHAR * to u_int, yikes!
 
-	* ace/RB_Tree.cpp: Cleaned up the code so it's conformant with the
-	  ACE programming style, particularly for dynamic memory
- 	  allocation (which wasn't using ACE_NEW).
+        * ace/RB_Tree.cpp: Cleaned up the code so it's conformant with the
+          ACE programming style, particularly for dynamic memory
+          allocation (which wasn't using ACE_NEW).
 
-	* ace/ACE.cpp (get_ip_interfaces): Cleaned up the code so it conforms
-	  to the ACE programming guidelines.
+        * ace/ACE.cpp (get_ip_interfaces): Cleaned up the code so it conforms
+          to the ACE programming guidelines.
 
-	* ace/Timer_Hash_T.cpp: Fixed a number mistakes where the return
-	  value of new wasn't being checked.
+        * ace/Timer_Hash_T.cpp: Fixed a number mistakes where the return
+          value of new wasn't being checked.
 
-	* ace/Timer_Heap_T.cpp,
-  	  ace/Timer_Wheel_T.cpp: Removed the apparently extraneous parens
- 	  used in the ACE_NEW* macros in order to keep EGCS 2.95 happy.
-  	  Thanks to Jody Hagins and Arturo Montes
- 	  <mitosys@colomsat.com.co> for reporting this.  BTW, if this
- 	  causes problems on any compilers please let me know.
+        * ace/Timer_Heap_T.cpp,
+          ace/Timer_Wheel_T.cpp: Removed the apparently extraneous parens
+          used in the ACE_NEW* macros in order to keep EGCS 2.95 happy.
+          Thanks to Jody Hagins and Arturo Montes
+          <mitosys@colomsat.com.co> for reporting this.  BTW, if this
+          causes problems on any compilers please let me know.
 
-	* ace: Reformatted all the ACE_NEW* macros so they conform to
-	  ACE programming style.
+        * ace: Reformatted all the ACE_NEW* macros so they conform to
+          ACE programming style.
 
-	* ace/Priority_Reactor.cpp: Cleaned up the code to conform to
-	  the ACE programming style.
+        * ace/Priority_Reactor.cpp: Cleaned up the code to conform to
+          the ACE programming style.
 
-	* ace/OS.cpp (tss_base): Cleaned up a loop a bit so it conforms
-	  to the ACE programming style.
+        * ace/OS.cpp (tss_base): Cleaned up a loop a bit so it conforms
+          to the ACE programming style.
 
 Sat Jul  3 11:09:51 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-  
-	* ace/WIN32_Asynch_IO.cpp
-	* ace/WIN32_Proactor.cpp
-      	  Addressed Doug's @@ Alex comments. It was simply making some
-	  debug statements conditional upon ACE::debug () flag.  
+
+        * ace/WIN32_Asynch_IO.cpp
+        * ace/WIN32_Proactor.cpp
+          Addressed Doug's @@ Alex comments. It was simply making some
+          debug statements conditional upon ACE::debug () flag.
 
 Fri Jul  2 19:50:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: There was a typo in the ACE_WIN32CALL_RETURN() macro
-	  for Borland C++.  Thanks to Jody Hagins <jody@atdesk.com> for
- 	  reporting this.
+        * ace/OS.h: There was a typo in the ACE_WIN32CALL_RETURN() macro
+          for Borland C++.  Thanks to Jody Hagins <jody@atdesk.com> for
+          reporting this.
 
         * ace/config-win32-borland.h: Clarified the fact that this file
-	  shouldn't be #included directly.  Thanks to Thaddeus Olczyk
- 	  <olczyk@interaccess.com> for motivating this.
+          shouldn't be #included directly.  Thanks to Thaddeus Olczyk
+          <olczyk@interaccess.com> for motivating this.
 
 Fri Jul 02 22:22:12 1999  Steve Huston  <shuston@riverace.com>
 
@@ -62,12 +68,12 @@ Fri Jul 02 22:22:12 1999  Steve Huston  <shuston@riverace.com>
 Fri Jul  2 19:37:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/Future_Test.cpp:
-	  The timeout variable was declared in one scope but used in
-	  another one.  Added another timeout variable to keep it happy.
+          The timeout variable was declared in one scope but used in
+          another one.  Added another timeout variable to keep it happy.
 
-	* tests/Message_Queue_Test.cpp:
-	  A pointer was initialize using "0x" i think it was a typo and
-	  should be "0".
+        * tests/Message_Queue_Test.cpp:
+          A pointer was initialize using "0x" i think it was a typo and
+          should be "0".
 
 Fri Jul 02 18:28:31 1999  Steve Huston  <shuston@riverace.com>
 
@@ -84,90 +90,90 @@ Fri Jul 02 18:28:31 1999  Steve Huston  <shuston@riverace.com>
           override the config default (see config-hpux11.h, above).
 
 Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-  
-  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
-	  Strategy Connector can automagically as well as explicitly cache
- 	  and purge connection from its connection cache using different
- 	  caching strategies.
-	
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
-	  "purge_connections ()" which allows explicit purging of
- 	  connnections from the connection cache.
+
+        * tests/Cached_Conn_Test.cpp: This is a test which shows how the
+          Strategy Connector can automagically as well as explicitly cache
+          and purge connection from its connection cache using different
+          caching strategies.
+
+        * ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
+          "purge_connections ()" which allows explicit purging of
+          connnections from the connection cache.
 
 Fri Jul  2 13:54:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Future_Set.cpp,
-	  ace/Future.cpp: Added ACE_TYPENAME at a couple of places
-	  to make HP/UX aCC happy.  Thanks to Eric Mitchell
- 	  <emitchell@altaira.com> for reporting this.
+        * ace/Future_Set.cpp,
+          ace/Future.cpp: Added ACE_TYPENAME at a couple of places
+          to make HP/UX aCC happy.  Thanks to Eric Mitchell
+          <emitchell@altaira.com> for reporting this.
 
-	* ace/SOCK_Dgram: Added send() and recv() methods that take 
-	  ACE_OVERLAPPED structures.  Thanks to Vidya Narayanan
- 	  <CVN065@lmpsil02.comm.mot.com> for suggesting this.
-	
-	* ace/OS.h: Added an ACE_OVERLAPPED_FLAG that's used to abstract
-	  away from the WSA_FLAG_OVERLAPPED macro on Win32.  Thanks to
- 	  Vidya Narayanan <CVN065@lmpsil02.comm.mot.com> for suggesting
- 	  this.
+        * ace/SOCK_Dgram: Added send() and recv() methods that take
+          ACE_OVERLAPPED structures.  Thanks to Vidya Narayanan
+          <CVN065@lmpsil02.comm.mot.com> for suggesting this.
 
-	* ace/OS.cpp: Removed unnecessary ';' after ACE_BEGINTHREADEX() and 
-	  ACE_ENDTHREADEX().  Thanks to Kris Johnson
- 	  <kjohnson@gardnersys.com> for reporting this.
-  
-	* ace/Service_Config.cpp (open_i): It appears that
+        * ace/OS.h: Added an ACE_OVERLAPPED_FLAG that's used to abstract
+          away from the WSA_FLAG_OVERLAPPED macro on Win32.  Thanks to
+          Vidya Narayanan <CVN065@lmpsil02.comm.mot.com> for suggesting
+          this.
 
-	  if (ACE::debug ())
-	    ACE_Log_Msg::disable_debug_messages ();
+        * ace/OS.cpp: Removed unnecessary ';' after ACE_BEGINTHREADEX() and
+          ACE_ENDTHREADEX().  Thanks to Kris Johnson
+          <kjohnson@gardnersys.com> for reporting this.
+
+        * ace/Service_Config.cpp (open_i): It appears that
+
+          if (ACE::debug ())
+            ACE_Log_Msg::disable_debug_messages ();
 
           should really be
 
-	  if (ACE::debug () == 0)
-	    ACE_Log_Msg::disable_debug_messages ();
+          if (ACE::debug () == 0)
+            ACE_Log_Msg::disable_debug_messages ();
 
           Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for
-	  reporting this.
+          reporting this.
 
-	* tests/Future_Test.cpp   (main): Make sure to use absolute time
-	  rather than relative time for the timeouts.  Thanks to Peter
- 	  Brandstrom <peter.brandstrom@ericsson.com> for reporting this.
+        * tests/Future_Test.cpp   (main): Make sure to use absolute time
+          rather than relative time for the timeouts.  Thanks to Peter
+          Brandstrom <peter.brandstrom@ericsson.com> for reporting this.
 
 Fri Jul  2 11:49:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * Initialized some variables to zero to avoid some silly warnings
-	  from egcs (with exceptions):
+          from egcs (with exceptions):
 
-  	  - ace/Free_List.cpp
-  	  - ace/Malloc.i
-  	  - tests/DLL_Test.cpp
-  	  - tests/Mem_Map_Test.cpp
-  	  - tests/Message_Queue_Test.cpp
-  	  - tests/Reactor_Notify_Test.cpp
+          - ace/Free_List.cpp
+          - ace/Malloc.i
+          - tests/DLL_Test.cpp
+          - tests/Mem_Map_Test.cpp
+          - tests/Message_Queue_Test.cpp
+          - tests/Reactor_Notify_Test.cpp
 
 Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy): Made "virtual"
-	  methods which were getting overriden in the derived
-	  Cached_Connect_Strategy_Ex class.
-	
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
-	  "purge_connections ()" which allows explicit purging of
- 	  connnections from the connection cache.
-	
-  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the
-	  Strategy Connector can automagically as well as explicitly cache
- 	  and purge connection from its connection cache using different
- 	  caching strategies.
-	
+        * ace/Strategies_T.h (ACE_Cached_Connect_Strategy): Made "virtual"
+          methods which were getting overriden in the derived
+          Cached_Connect_Strategy_Ex class.
+
+        * ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
+          "purge_connections ()" which allows explicit purging of
+          connnections from the connection cache.
+
+        * tests/Cached_Conn_Test.cpp: This is a test which shows how the
+          Strategy Connector can automagically as well as explicitly cache
+          and purge connection from its connection cache using different
+          caching strategies.
+
 Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-  
-  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
-	  Strategy Connector can automagically as well as explicitly cache
- 	  and purge connection from its connection cache using different
- 	  caching strategies.
-	
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
-	  "purge_connections ()" which allows explicit purging of
- 	  connnections from the connection cache.
+
+        * tests/Cached_Conn_Test.cpp: This is a test which shows how the
+          Strategy Connector can automagically as well as explicitly cache
+          and purge connection from its connection cache using different
+          caching strategies.
+
+        * ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
+          "purge_connections ()" which allows explicit purging of
+          connnections from the connection cache.
 
 Fri Jul 02 11:50:21 1999  Steve Huston  <shuston@riverace.com>
 
@@ -319,23 +325,23 @@ Fri Jul 02 11:50:21 1999  Steve Huston  <shuston@riverace.com>
 
 Thu Jul  1 21:49:39 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* ace/Containers_T.i,h,cpp
-	  Added reset () methods to the derived classes of
-	  ACE_Double_Linked_List_Iterator because the behavior of the base
-	  class's version was not sufficient (and would cause way fun
-	  segfaults when used).
+        * ace/Containers_T.i,h,cpp
+          Added reset () methods to the derived classes of
+          ACE_Double_Linked_List_Iterator because the behavior of the base
+          class's version was not sufficient (and would cause way fun
+          segfaults when used).
 
-	* tests/Map_Manager_Test.cpp
-	* tests/DLList_Test.cpp
-	  ACE_const_cast'ed some string literals to char *'s to appease
-	  the evil monstrosity that is SC 5.0.
+        * tests/Map_Manager_Test.cpp
+        * tests/DLList_Test.cpp
+          ACE_const_cast'ed some string literals to char *'s to appease
+          the evil monstrosity that is SC 5.0.
 
 Wed Jun 30 18:11:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.i (strncasecmp):
+        * ace/OS.i (strncasecmp):
 
-	  Corrected ACE_TRACE statement to contain "strncasecmp" instead
-	  of "strcasecmp."
+          Corrected ACE_TRACE statement to contain "strncasecmp" instead
+          of "strcasecmp."
 
 Thu Jul 01 21:07:22 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -387,47 +393,47 @@ Thu Jul 01 00:24:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Jun 30 16:13:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Future_Set_Test.cpp: Added missing template instantiation
-	  for ACE_Hash_Map_Reverse_Iterator_Ex.  Also, added some fixes
-	  from John Tucker <jtucker@infoglide.com>.
+        * tests/Future_Set_Test.cpp: Added missing template instantiation
+          for ACE_Hash_Map_Reverse_Iterator_Ex.  Also, added some fixes
+          from John Tucker <jtucker@infoglide.com>.
 
 Wed Jun 30 12:09:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_bcc.ide:
-	* tests/tests_bcc.ide:
-	* *.{bpr,bpg}: Removed unused BCB project files.
+        * ace/ace_bcc.ide:
+        * tests/tests_bcc.ide:
+        * *.{bpr,bpg}: Removed unused BCB project files.
 
 Tue Jun 29 23:12:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Use ACE_CAST_CONST to keep the silly Sun/CC 4.2 from
-	  complaining.
+        * ace/OS.i:
+          Use ACE_CAST_CONST to keep the silly Sun/CC 4.2 from
+          complaining.
 
 Tue Jun 29 22:48:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (strncasecmp): Changed <n> to <len>.
+        * ace/OS.i (strncasecmp): Changed <n> to <len>.
 
 Tue Jun 29 22:33:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Fixed warnings in green hills and possibly othre EDG-based
-	  compilers.
+        * ace/OS.i:
+          Fixed warnings in green hills and possibly othre EDG-based
+          compilers.
 
-	* tests/run_tests.sh:
-	* tests/run_tests.vxworks:
-	  Take Future_Set_Test out, it does not work in too many
-	  platforms.
+        * tests/run_tests.sh:
+        * tests/run_tests.vxworks:
+          Take Future_Set_Test out, it does not work in too many
+          platforms.
 
 Tue Jun 29 21:24:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK.cpp (open): Removed an unused variable.  Thanks
-	  to Carlos for reporting this.
+        * ace/SOCK.cpp (open): Removed an unused variable.  Thanks
+          to Carlos for reporting this.
 
 Tue Jun 29 20:53:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix5.3-g++.h:
-	  IRIX 5.3 (!) has a DIRENT structure, thanks to Isaac Stoddard
-	  <i_stoddard@hso.link.com> for providing this fix.
+        * ace/config-irix5.3-g++.h:
+          IRIX 5.3 (!) has a DIRENT structure, thanks to Isaac Stoddard
+          <i_stoddard@hso.link.com> for providing this fix.
 
 Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
@@ -438,83 +444,83 @@ Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 Tue Jun 29 18:48:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Functor_T.h (class ACE_Pointer_Hash): Added new class for
-	  hashing pointers on their values.
+        * ace/Functor_T.h (class ACE_Pointer_Hash): Added new class for
+          hashing pointers on their values.
 
-	* ace/Future_Set: Restored future map to be a
-	  ACE_Hash_Map_Manager_Ex.
+        * ace/Future_Set: Restored future map to be a
+          ACE_Hash_Map_Manager_Ex.
 
 Tue Jun 29 14:45:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/run_tests.bat: Removed New_Fail_Test from the
-	  run_tests.bat (the script for NT).  This tests takes too long to
-	  run and swaps out the entire machine making is impossible to do
-	  useful things while the test is running.  Note that the test is
-	  still there and can be run by hand (i.e., on its own, without
-	  the run_tests.bat script).
+        * tests/run_tests.bat: Removed New_Fail_Test from the
+          run_tests.bat (the script for NT).  This tests takes too long to
+          run and swaps out the entire machine making is impossible to do
+          useful things while the test is running.  Note that the test is
+          still there and can be run by hand (i.e., on its own, without
+          the run_tests.bat script).
 
-	* ace/Future: Changed the observer collection to be an unbounded
-	  set and changed the future map to map manager.  These are
-	  temporary changes to get things compiling again.  Once we figure
-	  out the correct hashing functions, we can restore the original
-	  code.
+        * ace/Future: Changed the observer collection to be an unbounded
+          set and changed the future map to map manager.  These are
+          temporary changes to get things compiling again.  Once we figure
+          out the correct hashing functions, we can restore the original
+          code.
 
 Tue Jun 29 13:38:52 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* AUTHORS:
+        * AUTHORS:
 
-	  Added an AUTHORS file to bring ACE closer to recent software
-	  distribution conventions.
+          Added an AUTHORS file to bring ACE closer to recent software
+          distribution conventions.
 
-	* Makefile:
+        * Makefile:
 
-	  Added Carlos' websvcs directory to the release, in addition to
-	  the missing top-level ACE Configuration project files and
-	  directories.
+          Added Carlos' websvcs directory to the release, in addition to
+          the missing top-level ACE Configuration project files and
+          directories.
 
-	* config.guess:
-	* config.sub:
-	* ltconfig:
-	* ltmain.sh:
-	* missing:
-	* mkinstalldirs:
+        * config.guess:
+        * config.sub:
+        * ltconfig:
+        * ltmain.sh:
+        * missing:
+        * mkinstalldirs:
 
-	  Updated from latest GNU libtool and GNU automake.
+          Updated from latest GNU libtool and GNU automake.
 
 Tue Jun 29 12:07:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* README:
-	* THANKS:
+        * README:
+        * THANKS:
 
-	  Moved list of contributors to the file `THANKS' to bring the
-	  distribution closer to conventional distribution standards.
+          Moved list of contributors to the file `THANKS' to bring the
+          distribution closer to conventional distribution standards.
 
-	* Makefile:
+        * Makefile:
 
-	  Added the THANKS file to the list of controlled files so that it
-	  gets distributed with ACE.
+          Added the THANKS file to the list of controlled files so that it
+          gets distributed with ACE.
 
 Tue Jun 29 11:27:23 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* ace/Containers_T.i: Modified next method in ACE_DLList_Iterator
-	  to avoid segfaults (a bad thing).
+        * ace/Containers_T.i: Modified next method in ACE_DLList_Iterator
+          to avoid segfaults (a bad thing).
 
 Tue Jun 29 10:54:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Sun/CC was not pleased with a cast from "void* const" to "const
-	  char*", and rightly so.
+        * ace/OS.i:
+          Sun/CC was not pleased with a cast from "void* const" to "const
+          char*", and rightly so.
 
 Tue Jun 29 09:21:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/SOCK_Dgram.h:
-	* ace/SOCK_Dgram.i:
-	  Fixed the unix version ACE_OS::sendto() call.
-	  Also fixed the Win32 version and the Win32 version of
-	  ACE_OS::recvfrom, had to change the signatures to make them safe
-	  and fit the WinSock2 interfaces.
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/SOCK_Dgram.h:
+        * ace/SOCK_Dgram.i:
+          Fixed the unix version ACE_OS::sendto() call.
+          Also fixed the Win32 version and the Win32 version of
+          ACE_OS::recvfrom, had to change the signatures to make them safe
+          and fit the WinSock2 interfaces.
 
 Tue Jun 29 07:07:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
