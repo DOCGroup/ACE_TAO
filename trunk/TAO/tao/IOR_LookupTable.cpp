@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/IOR_LookupTable.h"
-#include "ObjectIDList.h"
+#include "tao/ObjectIDList.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IOR_TableLookup, "$Id$")
