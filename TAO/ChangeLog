@@ -14,6 +14,10 @@ Tue Nov 25 15:52:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  A new test to check for race conditions.
 
+	* tests/Makefile:
+
+	  Added Servant_To_Reference_Test into the daily builds.
+
 Tue Nov 25 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosNaming.mpc:
