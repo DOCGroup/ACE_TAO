@@ -104,9 +104,9 @@ class FT_Properties;
 class FT_Properties_var;
 class FT_Properties_out;
 
-class FT_Location;
-class FT_Location_var;
-class FT_Location_out;
+//class FT_Location;
+//class FT_Location_var;
+//class FT_Location_out;
 
 class FT_Locations;
 class FT_Locations_var;
