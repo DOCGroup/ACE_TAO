@@ -151,3 +151,6 @@ main (int, char *[])
 #endif /* ACE_HAS_THREADS */
 
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class auto_builtin_ptr <char>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

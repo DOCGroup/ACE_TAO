@@ -435,3 +435,17 @@ ACE_Event_Channel::open (void *)
 		    -1);
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Lock_Adapter<REF_COUNT_MUTEX>;
+template class ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
+template class ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
+template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+#if defined (ACE_HAS_THREADS)
+template class ACE_Task<ACE_SYNCH>;
+#endif /* ACE_HAS_THREADS */
+template class ACE_Module<ACE_NULL_SYNCH>;
+template class ACE_Task<ACE_NULL_SYNCH>;
+template class ACE_Thru_Task<ACE_NULL_SYNCH>;
+template class ACE_Unbounded_Set_Iterator<Proxy_Handler *>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

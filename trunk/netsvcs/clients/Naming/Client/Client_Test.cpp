@@ -560,3 +560,7 @@ Client_Test::find (char *key)
     }
 }
 
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Dynamic_Service<ACE_Naming_Context>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
