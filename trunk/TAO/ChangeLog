@@ -1,3 +1,9 @@
+Fri Jul 25 08:21:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Exception.h: Fix for the undefined symbol error that showed
+	  up in our daily builds. Strange that it never showed up in my
+	  workspace before I checked stuff in.
+
 Fri Jul 25 13:09:56 UTC 2003  Johnny Willlemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
