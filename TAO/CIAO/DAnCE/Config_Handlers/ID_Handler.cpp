@@ -1,28 +1,43 @@
-//$Id$
+// $Id$
+
 
 #include "ID_Handler.h"
-#include "tao/Exception.h"
-#include "Utils.h"
+#include "Basic_Deployment_Data.hpp"
+#include "ciao/Deployment_DataC.h"
 
-using CIAO::Config_Handler::Utils;
-
-void
-CIAO::Config_Handler::ID_Handler::
-process_ImplementationDependency (DOMNodeIterator * iter,
-                                  Deployment::ImplementationDependency &ret_struct)
+namespace CIAO
 {
-  //Check if the Schema IDs for both the elements match
-  DOMNode * node = iter->nextNode ();
-  XStr name (node->getNodeName ());
-
-  if (name != XStr (ACE_TEXT ("elementType")))
+  namespace Config_Handlers
+  {
+    ID_Handler::ID_Handler (void)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Config_Handlers::ID_Handler::process_ImplDependency \
-                   element mismatch expected <elementType>"));
-      ACE_THROW (CORBA::INTERNAL ());
     }
 
-  // Populate the structure
-  ret_struct.requiredType = Utils::parse_string (iter);
+    ID_Handler::~ID_Handler (void)
+    {
+    }
+
+
+    void
+    ID_Handler::get_ImplementationDependency (
+                    Deployment::ImplementationDependency& toconfig,
+                    const ImplementationDependency& desc)
+    {
+      toconfig.requiredType=
+           CORBA::string_dup (desc.requiredType ().c_str ());
+    }
+
+    ImplementationDependency
+    ID_Handler::impl_dependency (
+        const ::Deployment::ImplementationDependency& src)
+    {
+      XMLSchema::string< char > reqtype ((src.requiredType));
+
+      ImplementationDependency id (reqtype);
+
+      return id;
+    }
+
+  }
+
 }
