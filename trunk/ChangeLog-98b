@@ -46,16 +46,12 @@ Tue Oct 06 02:53:28 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Tue Oct  6 02:16:01 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/Asynch_Acceptor.cpp:
-
         * ace/Asynch_IO.cpp (handle_input):
-
-        * ace/Proactor.cpp: Changed the behavior of the POSIX
-        implementation of Asynch_Accept further more to make it behave
-        exactly like the NT implementation. The Message Block now will
-        contain <Local Address, Remote Addess> in that order as it looks
-        in NT. THANKS a lot to Irfan for this change, so things will be
-        robust even if Asynch_Accpet is used directly not only through
-        Asynch_Acceptor.
+        * ace/Proactor.cpp:
+ 	In POSIX implementation of  Asynch_Accept, We dont have to read
+	initial data to read on to the Message Block given to the
+	Asynch_Accept. So we dont use it at all. We get local and peer
+	address from using socket and pass back to the application. 
 
 Mon Oct 05 23:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
