@@ -1,4 +1,4 @@
-#include "orbsvcs/LoadBalancing/LB_LoadMonitor.h"
+#include "orbsvcs/LoadBalancing/LB_CPU_Monitor.h"
 
 #include "ace/Get_Opt.h"
 
@@ -8,7 +8,7 @@ ACE_RCSID (LoadBalancer,
            "$Id$")
 
 
-static const char * lm_ior_file = "lm.ior";
+static const char * monitor_ior_file = "monitor.ior";
 
 void
 usage (const ACE_TCHAR * cmd)
@@ -20,13 +20,13 @@ usage (const ACE_TCHAR * cmd)
               ACE_TEXT ("-m <CPU|Disk|Memory|Network> ")
               ACE_TEXT ("-o <ior_output_file> ")
               ACE_TEXT ("-h ")
-              ACE_TEXT ("\n\n")
+              ACE_TEXT ("\n\n"),
               cmd));
 }
 
 void
 parse_args (int argc,
-            ACE_TCHAR *argv[],
+            ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:m:o:h"));
@@ -38,7 +38,7 @@ parse_args (int argc,
       switch (c)
         {
         case 'o':
-          ::lm_ior_file = get_opts.opt_arg ();
+          ::monitor_ior_file = get_opts.opt_arg ();
           break;
 
         case 'l':
@@ -92,16 +92,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // "built-in" strategies are the following:
-      //   0 = RoundRobin
-      //   1 = Random
-      //   2 = LeastLoaded
-      int default_strategy = 0;
-
       // Check the non-ORB arguments.
       ::parse_args (argc,
-                    argv,
-                    default_strategy
+                    argv
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -116,42 +109,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableGroup::Properties props (1);
-      props.length (1);
-      props[0].nam.length (1);
-      props[0].nam[0].id =
-        CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy");
-
-      switch (default_strategy)
-        {
-        case 0:
-          props[0].val <<= "RoundRobin";
-          break;
-        case 1:
-          props[0].val <<= "Random";
-          break;
-        case 2:
-          props[0].val <<= "LeastLoaded";
-          break;
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT ("ERROR: LoadBalancer internal error.\n")
-                            ACE_TEXT ("       Unknown built-in strategy.\n")),
-                            -1);
-        }
-
-      load_manager->set_default_properties (props
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
       CORBA::String_var str =
         orb->object_to_string (load_manager.in ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
-      ACE_OS::fprintf (lm_ior, "%s", str.in ());
-      ACE_OS::fclose (lm_ior);
+      FILE * monitor_ior = ACE_OS::fopen (monitor_ior_file, "w");
+      ACE_OS::fprintf (monitor_ior, "%s", str.in ());
+      ACE_OS::fclose (monitor_ior);
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
