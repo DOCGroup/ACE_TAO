@@ -70,8 +70,8 @@ static const int opt_wfmo_reactor = 1;
 static int opt_select_reactor = 1;
 static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
 
-typedef ACE_Atomic_Op <ACE_SYNCH::MUTEX, u_short> WaitingCounter;
-typedef ACE_Singleton <WaitingCounter, ACE_SYNCH::RECURSIVE_MUTEX> Waiting;
+typedef ACE_Atomic_Op <ACE_SYNCH_MUTEX, u_short> WaitingCounter;
+typedef ACE_Singleton <WaitingCounter, ACE_SYNCH_RECURSIVE_MUTEX> Waiting;
 
 // Number of connections that are currently open
 static u_short connection_count = 0;
@@ -473,8 +473,8 @@ main (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Svc_Handler <ACE_MEM_STREAM, ACE_SYNCH>;
 template class ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
-template class ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>;
-template class ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>, ACE_SYNCH::RECURSIVE_MUTEX>;
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>;
+template class ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>;
 template class ACE_Creation_Strategy<Echo_Handler>;
 template class ACE_Reactive_Strategy<Echo_Handler>;
@@ -487,8 +487,8 @@ template class ACE_Thread_Strategy<Echo_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Svc_Handler <ACE_MEM_STREAM, ACE_SYNCH>
 #pragma instantiate ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>
-#pragma instantiate ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>, ACE_SYNCH::RECURSIVE_MUTEX>
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>
+#pragma instantiate ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<Echo_Handler>
 #pragma instantiate ACE_Reactive_Strategy<Echo_Handler>
