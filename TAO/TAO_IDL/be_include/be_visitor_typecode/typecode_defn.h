@@ -51,7 +51,7 @@ public:
   //virtual int visit_members (AST_Structure *node);
   // for use with structs, exceptions, and unions.
 
-  virtual int visit_members (be_valuetype *node);
+//   virtual int visit_members (be_valuetype *node);
   // for use with valuetypes.
 
   virtual int visit_type (be_type *node);
@@ -92,11 +92,11 @@ public:
   virtual int visit_union (be_union *node);
   // visit a union
 
-  virtual int visit_valuetype (be_valuetype *node);
-  // visit a valuetype
+//   virtual int visit_valuetype (be_valuetype *node);
+//   // visit a valuetype
 
-  virtual int visit_eventtype (be_eventtype *node);
-  // visit a valuetype
+//   virtual int visit_eventtype (be_eventtype *node);
+//   // visit a valuetype
 
 
   // = visit methods for the scope elements
@@ -142,7 +142,7 @@ public:
 
   int gen_typecode (be_union *node);
 
-  int gen_typecode (be_valuetype *node);
+//   int gen_typecode (be_valuetype *node);
 
   // = methods to generate encapsulations for typecodes
 
@@ -174,7 +174,7 @@ public:
 
   int gen_encapsulation (be_union_branch *node);
 
-  int gen_encapsulation (be_valuetype *node);
+//   int gen_encapsulation (be_valuetype *node);
 
   // = methods for computing typecode sizes
 
@@ -200,7 +200,7 @@ public:
 
   ACE_CDR::Long compute_tc_size (be_union *node);
 
-  ACE_CDR::Long compute_tc_size (be_valuetype *node);
+//   ACE_CDR::Long compute_tc_size (be_valuetype *node);
 
   // methods for computing the encapsulation length
 
@@ -232,7 +232,7 @@ public:
 
   ACE_CDR::Long compute_encap_length (be_union_branch *node);
 
-  ACE_CDR::Long compute_encap_length (be_valuetype *node);
+//   ACE_CDR::Long compute_encap_length (be_valuetype *node);
 
   // helpers to generate the repoID and name
 

@@ -74,30 +74,67 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
       // Generate array containing struct field characteristics.
       os << "static TAO::TypeCode::Value_Field<char const *> const "
-         << fields_name.c_str ()
-         << "[] =" << be_idt_nl
-         << "{" << be_idt_nl;
+         << fields_name.c_str ();
 
-      if (this->visit_members (node) != 0)
-        return -1;
+      if (count == 0)
+        {
+          os << " * const = 0;" << be_nl;
+        }
+      else
+        {
+          os << "[] =" << be_idt_nl
+             << "{" << be_idt_nl;
 
-      os << be_uidt_nl
-         << "};" << be_uidt_nl << be_nl;
+          if (this->visit_members (node) != 0)
+            return -1;
+
+          os << be_uidt_nl
+             << "};" << be_uidt_nl;
+        }
 
       // Generate the TypeCode instantiation.
-      os
-        << "static TAO::TypeCode::Value<char const *," << be_nl
-        << "                            TAO::TypeCode::Value_Field<char const *> const *," << be_nl
-        << "                            CORBA::tk_"
-        << (dynamic_cast<be_eventtype *> (node) ? "event" : "value") << "," << be_nl
-        << "                            TAO::Null_RefCount_Policy> const"
-        << be_idt_nl
-        << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-        << "\"" << node->repoID () << "\"," << be_nl
-        << "\"" << node->original_local_name () << "\"," << be_nl
-        << "_tao_fields_" << node->flat_name () << "," << be_nl
-        << count << ");" << be_uidt_nl
-        << be_uidt_nl;
+
+      os << be_nl
+         << "static TAO::TypeCode::Value<char const *," << be_nl
+         << "                            TAO::TypeCode::Value_Field<char const *> const *," << be_nl
+         << "                            CORBA::tk_"
+         << (dynamic_cast<be_eventtype *> (node) ? "event" : "value") << "," << be_nl
+         << "                            TAO::Null_RefCount_Policy> const"
+         << be_idt_nl
+         << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
+         << "\"" << node->repoID () << "\"," << be_nl
+         << "\"" << node->original_local_name () << "\"," << be_nl;
+
+      // ValueModifier
+      //
+      // TAO doesn't support CUSTOM or TRUNCATABLE valuetypes.  Go
+      // with VM_NONE or VM_ABSTRACT.
+      os << "CORBA::"
+         << (node->is_abstract () ? "VM_ABSTRACT" : "VM_NONE") << "," << be_nl;
+
+      // Concrete base type.
+      AST_ValueType * const concrete_base =
+        node->inherits_concrete ();
+
+      if (concrete_base)
+        {
+          be_type * const base_type =
+            be_type::narrow_from_decl (concrete_base);
+
+          ACE_ASSERT (base_type);
+
+          os << "&" << base_type->tc_name () << "," << be_nl;
+        }
+      else
+        {
+          // No concrete base.
+          os << "&CORBA::tk_null," << be_nl;
+        }
+
+      // Fields
+      os << "_tao_fields_" << node->flat_name () << "," << be_nl
+         << count << ");" << be_uidt_nl
+         << be_uidt_nl;
     }
 
   return
@@ -163,9 +200,7 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
                             -1);
         };
 
-      os
-         <<
-         << " }";
+      os << " }";
 
 
       if (i < count - 1)

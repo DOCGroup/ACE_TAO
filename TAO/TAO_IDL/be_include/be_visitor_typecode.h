@@ -32,6 +32,7 @@
 #include "be_visitor_typecode/enum_typecode.h"
 #include "be_visitor_typecode/objref_typecode.h"
 #include "be_visitor_typecode/struct_typecode.h"
+#include "be_visitor_typecode/value_typecode.h"
 
 
 #endif /* TAO_BE_VISITOR_TYPECODE_H */

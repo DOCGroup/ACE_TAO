@@ -58,9 +58,7 @@ namespace TAO
              CORBA::ValueModifer modifier,
              CORBA::TypeCode_ptr * concrete_base,
              Value_Field<StringType> const * fields,
-             CORBA::ULong nfields,
-             CORBA::ValueModifier type_modifier,
-             CORBA::TypeCode_ptr concrete_base_type);
+             CORBA::ULong nfields);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
