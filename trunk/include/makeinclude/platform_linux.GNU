@@ -47,8 +47,7 @@ PLATFORM_WX_LIBS    = $(shell wx-config --libs)     $(PLATFORM_GTK_LIBS)
 PLATFORM_WX_LDFLAGS = $(shell wx-config --ldflags)  $(PLATFORM_GTK_LDFLAGS)
 
 PLATFORM_AIO_SUPPORT := \
-       $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -DACE_
-HAS_AIO_CALLS)
+       $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
 
 ssl ?= 0
 ifeq ($(ssl),1)
