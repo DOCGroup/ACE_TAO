@@ -1,3 +1,10 @@
+Fri Aug 20 02:15:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Updated to account for addition of Wait_On_LF_No_Upcall.*
+	  plus some improvements in MPC's automake support.
+
 Fri Aug 20 09:27:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * tests/ORT/ORT.mpc:
