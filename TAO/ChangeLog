@@ -1,3 +1,9 @@
+Fri May  9 11:05:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/corba.h:
+
+          Added "Pseudo_VarOut_T.h" to the #includes.
+
 Fri May 09 16:53:10 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * examples/PluggableUDP/tests/Basic/client.dsp:
