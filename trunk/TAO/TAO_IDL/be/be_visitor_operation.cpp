@@ -221,7 +221,17 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       *os << node->flatname ()
 	  << "_calldata = " << be_nl
 	  << "{"
-	  << "\"" << node->local_name () << "\", ";
+	  << "\"";
+      // check if we are an attribute node in disguise
+      if (this->ctx_->attribute ())
+        {
+          // now check if we are a "get" or "set" operation
+          if (node->nmembers () == 1) // set
+            *os << "_set_";
+          else
+            *os << "_get_";
+        }
+      *os << node->local_name () << "\", ";
 
       // are we oneway or two operation?
       if (node->flags () == AST_Operation::OP_oneway)
@@ -716,7 +726,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ss::"
                          "visit_operation - "
                          "visit scope failed\n"),
                         -1);
@@ -740,7 +750,17 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << node->flatname ()
       << "_calldata = " << be_nl
       << "{"
-      << "\"" << node->local_name () << "\", ";
+      << "\"";
+  // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "_set_";
+      else
+        *os << "_get_";
+    }
+  *os << node->local_name () << "\", ";
 
       // are we oneway or two operation?
   if (node->flags () == AST_Operation::OP_oneway)
