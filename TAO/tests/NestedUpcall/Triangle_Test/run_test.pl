@@ -19,7 +19,7 @@ unlink $ior2file;
 $SV1 = Process::Create ($EXEPREFIX."server_A".$EXE_EXT,
                         "-o $ior1file");
 
-if (ACE::waitforfile_timed ($ior1file, 5) == -1) {
+if (ACE::waitforfile_timed ($ior1file, 15) == -1) {
     print STDERR "ERROR: cannot find file <$ior1file>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
