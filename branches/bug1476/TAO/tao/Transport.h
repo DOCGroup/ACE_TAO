@@ -457,8 +457,10 @@ public:
   /// Modifier for the is_connected_ member
   void is_connected (bool connect);
 
-  public:
-//protected: // for test
+  /// Get the connection handler for this transport
+  TAO_Connection_Handler * connection_handler (void);
+
+protected:
 
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
 

@@ -245,7 +245,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       {
         // We have a tranport that is not connected, we have to do something
         // here
-		  this->active_connect_strategy_->wait(base_transport->connection_handler_i(), 0);
+		  this->active_connect_strategy_->wait(base_transport->connection_handler(), 0);
 // todo
 // what now then thsi is closed, then we should close it, zap it from the cache and make
 		  // a new connection

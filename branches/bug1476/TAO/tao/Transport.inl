@@ -156,6 +156,13 @@ TAO_Transport::is_connected (bool connect)
 {
   is_connected_ = connect;
 }
+
+ACE_INLINE TAO_Connection_Handler *
+TAO_Transport::connection_handler (void)
+{
+  return this->connection_handler_i();
+}
+
 /*****************************************************/
 
 ACE_INLINE
