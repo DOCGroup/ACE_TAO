@@ -7,19 +7,23 @@
 
 ACE_RCSID(orbsvcs, DSI_ForwardingProxy, "$Id$")
 
-DSI_ForwardingProxy::DSI_ForwardingProxy (LoadBalancer_Impl *lb,
-                                          const char *id)
+TAO_LB_DSI_ForwardingProxy::TAO_LB_DSI_ForwardingProxy (
+                                      TAO_LB_LoadBalancer *lb,
+                                      const char *id)
   : load_balancer_ (lb), // Hopefully these pointers won't be zero!
     interface_id_ (id)
 {
   // @@ Ossama: why is this comment useful?
+  // @@ Carlos: You are correct.  It servers no purpose other than to
+  //    take up space.  It is simply there to make it easier for me to
+  //    spot the function body.  It is just my coding style.
 
   // Nothing else
 }
 
 void
-DSI_ForwardingProxy::invoke (CORBA::ServerRequest_ptr /* request */,
-                             CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_DSI_ForwardingProxy::invoke (CORBA::ServerRequest_ptr /* request */,
+                                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -37,7 +41,7 @@ DSI_ForwardingProxy::invoke (CORBA::ServerRequest_ptr /* request */,
 }
 
 CORBA::RepositoryId
-DSI_ForwardingProxy::_primary_interface (
+TAO_LB_DSI_ForwardingProxy::_primary_interface (
                          const PortableServer::ObjectId &,
                          PortableServer::POA_ptr,
                          CORBA::Environment &)

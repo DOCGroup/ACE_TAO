@@ -9,18 +9,18 @@
 ACE_RCSID(orbsvcs, Minimum_Dispersion, "$Id$")
 
 
-Minimum_Dispersion_Strategy::Minimum_Dispersion_Strategy (void)
+TAO_LB_Minimum_Dispersion_Strategy::TAO_LB_Minimum_Dispersion_Strategy (void)
   : proxies_ ()
 {
 }
 
-Minimum_Dispersion_Strategy::~Minimum_Dispersion_Strategy (void)
+TAO_LB_Minimum_Dispersion_Strategy::~TAO_LB_Minimum_Dispersion_Strategy (void)
 {
   // @@ Ossama: more code that is not thread safe
-  ReplicaProxySetIterator begin = this->proxies_.begin ();
-  ReplicaProxySetIterator end = this->proxies_.end ();
+  TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
+  TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
 
-  for (ReplicaProxySetIterator i = begin;
+  for (TAO_LB_ReplicaProxySetIterator i = begin;
        i != end;
        ++i)
     {
@@ -30,16 +30,16 @@ Minimum_Dispersion_Strategy::~Minimum_Dispersion_Strategy (void)
 }
 
 CORBA::Object_ptr
-Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ Ossama: more code that is not thread safe
   while (!this->proxies_.is_empty ())
     {
-      ReplicaProxySetIterator begin = this->proxies_.begin ();
-      ReplicaProxySetIterator end = this->proxies_.end ();
+      TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
+      TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
 
-      ReplicaProxySetIterator i = begin;
-      ReplicaProxy_Impl * proxy = (*i);
+      TAO_LB_ReplicaProxySetIterator i = begin;
+      TAO_LB_ReplicaProxy * proxy = (*i);
       float d = (*i)->current_load ();
 
       for (++i ; i != end; ++i)
@@ -80,44 +80,43 @@ Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
   // @@ What do we do if the set is empty?
   ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                     CORBA::Object::_nil ());
-
 }
 
 int
-Minimum_Dispersion_Strategy::insert (ReplicaProxy_Impl *proxy)
+TAO_LB_Minimum_Dispersion_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 {
   // @@ Ossama: more code that is not thread safe
   return this->proxies_.insert (proxy);
 }
 
 int
-Minimum_Dispersion_Strategy::remove (ReplicaProxy_Impl *proxy)
+TAO_LB_Minimum_Dispersion_Strategy::remove (TAO_LB_ReplicaProxy *proxy)
 {
   // @@ Ossama: more code that is not thread safe
   return this->proxies_.remove (proxy);
 }
 
 void
-Minimum_Dispersion_Strategy::load_changed (ReplicaProxy_Impl *proxy,
-                                           CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_Minimum_Dispersion_Strategy::load_changed (TAO_LB_ReplicaProxy *proxy,
+                                               CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ Ossama: more code that is not thread safe
   if (this->proxies_.is_empty ())
     return;
 
-  ReplicaProxySetIterator begin = this->proxies_.begin ();
-  ReplicaProxySetIterator end = this->proxies_.end ();
+  TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
+  TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
 
   float s = 0;
   CORBA::ULong n = 0;
-  ReplicaProxySetIterator i = begin;
+  TAO_LB_ReplicaProxySetIterator i = begin;
   for (;i != end; ++i)
     {
       s += (*i)->current_load ();
       n++;
     }
 
-  float avg = s / n;
+  float avg = (n == 0 ? s : s / n);
   float cl = proxy->current_load ();
 
   if (avg == 0)

@@ -19,6 +19,11 @@
 #define TAO_REPLICAPROXY_H
 
 #include "orbsvcs/LoadBalancingS.h"
+#include "LoadBalancing_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#  pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -27,17 +32,17 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class LoadBalancer_Impl;
+class TAO_LB_LoadBalancer;
 // Forward declaration
 
-class TAO_LoadBalancing_Export ReplicaProxy_Impl :
+class TAO_LoadBalancing_Export TAO_LB_ReplicaProxy :
   public virtual POA_LoadBalancing::ReplicaProxy,
   public virtual PortableServer::RefCountServantBase
 {
-  friend LoadBalancer_Impl;
+  friend TAO_LB_LoadBalancer;
 public:
 
-  ReplicaProxy_Impl (void);
+  TAO_LB_ReplicaProxy (void);
 
   CORBA::Float current_load (void) const;
   // Read the stored load of the Object being load balanced from the
@@ -78,7 +83,7 @@ public:
 
 private:
 
-  void connect (LoadBalancer_Impl *balancer,
+  void connect (TAO_LB_LoadBalancer *balancer,
                 LoadBalancing::ReplicaControl_ptr control,
                 CORBA::Object_ptr replica,
                 CORBA::Environment &ACE_TRY_ENV)
@@ -92,7 +97,7 @@ private:
   CORBA::Object_var replica_;
   // Reference to the Object being load balanced.
 
-  LoadBalancer_Impl *balancer_;
+  TAO_LB_LoadBalancer *balancer_;
   // Pointer to the Load Balancer this ReplicaProxy is registered
   // with.
 

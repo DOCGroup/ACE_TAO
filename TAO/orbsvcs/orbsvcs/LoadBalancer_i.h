@@ -19,14 +19,15 @@
 #define TAO_LOADBALANCER_I_H
 
 #include "orbsvcs/LoadBalancingS.h"
-#include "orbsvcs/LoadBalancing/ReplicaProxy.h"
-#include "orbsvcs/LoadBalancing/DSI_ForwardingProxy.h"
-#include "orbsvcs/LoadBalancing/LoadBalancing_Strategy.h"
+#include "ReplicaProxy.h"
+#include "DSI_ForwardingProxy.h"
+#include "LoadBalancing_Strategy.h"
+#include "LoadBalancing_export.h"
 
-// @@ Ossama: please always remember the #pragma once.
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @@ Ossama: The name of this class should be TAO_XXX_LoadBalancer,
-// or something similar (i vote for XXX == LB)
 // @@ Ossama: the name of the file and the class are inconsistent.
 // @@ Ossama: now is when your idea of keeping the strategy separate
 // pays off: we could add strategies to detect misbehaving replicas,
@@ -35,16 +36,16 @@
 // removing.  I'm sure there are other aspects of the system that
 // could be strategized.
 
-class TAO_LoadBalancing_Export LoadBalancer_Impl : public virtual POA_LoadBalancing::LoadBalancer
+class TAO_LoadBalancing_Export TAO_LB_LoadBalancer : public virtual POA_LoadBalancing::LoadBalancer
 {
 public:
-  LoadBalancer_Impl (const char *interface_id,
-                     Load_Balancing_Strategy *strategy,
-                     PortableServer::POA_ptr poa);
+  TAO_LB_LoadBalancer (const char *interface_id,
+                       TAO_LB_LoadBalancing_Strategy *strategy,
+                       PortableServer::POA_ptr poa);
   // Constructor that initializes this Load Balancer for use with a
   // Replica that has the specified interface repository ID.
 
-  ~LoadBalancer_Impl (void);
+  ~TAO_LB_LoadBalancer (void);
   // Destructor.
 
   // Local methods
@@ -55,13 +56,13 @@ public:
   // that should let us keep the average load (and other similar
   // things) pre-computed.
   //
-  void load_changed (ReplicaProxy_Impl *proxy,
+  void load_changed (TAO_LB_ReplicaProxy *proxy,
                      CORBA::Environment &ACE_TRY_ENV);
   // The load for <proxy> has changed, the LoadBalancer can use this
   // opportunity to determine if the load on one of the services is
   // too high.
 
-  void disconnect (ReplicaProxy_Impl *proxy,
+  void disconnect (TAO_LB_ReplicaProxy *proxy,
                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnect proxy from the Load Balancer.
@@ -83,11 +84,15 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  DSI_ForwardingProxy redirector_;
+  int init (void);
+  // Initialize the <redirector_> DSI forwarding proxy.
+
+private:
+  TAO_LB_DSI_ForwardingProxy redirector_;
   // The object that tells the invoking client to forward its requests
   // from the LoadBalancer to an actual replica.
 
-  Load_Balancing_Strategy *strategy_;
+  TAO_LB_LoadBalancing_Strategy *strategy_;
   // The underlying load balancing strategy.
 
   PortableServer::POA_var poa_;
@@ -99,7 +104,6 @@ private:
 
 #if defined (__ACE_INLINE__)
 #include "LoadBalancer_i.i"
-// @@ Ossama: notice that i use relative paths!
 #endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_LOADBALANCER_I_H */
