@@ -1,3 +1,12 @@
+Wed Oct 23 11:21:50 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Abstract_Interface/Abstract_Interface_Client.dsp:
+	* tests/Abstract_Interface/Abstract_Interface_Server.dsp: Renamed
+	  projects.
+
+	* tests/Abstract_Interface/Abstract_Interface.dsw: Fixed project
+	  paths.
+
 Wed Oct 23 10:26:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/arglist.cpp
@@ -15,7 +24,7 @@ Wed Oct 23 10:26:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
         * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp
 
-	  Modified code generation to generate the typedef name for 
+	  Modified code generation to generate the typedef name for
 	  typedef'd strings, along with the typedef name for the
 	  corresponding _var and _out classes, when used in operation
 	  parameters and inside generated function bodies. Generated
