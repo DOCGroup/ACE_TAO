@@ -7,7 +7,6 @@
 #ifndef TAO_TWO_OBJECTS_WORKER_H
 #define TAO_TWO_OBJECTS_WORKER_H
 
-#include "ace/pre.h"
 #include "ace/Task.h"
 #include "Two_ObjectsS.h"
 
