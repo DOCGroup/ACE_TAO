@@ -1,3 +1,14 @@
+Wed Sep 15 17:26:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.idl:
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Log/BasicLog_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Log/Log_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Log/Iterator_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_i.{h,cpp}:
+	  Created the files listed above for the Telecom Log Service.
+
 Wed Sep 15 15:04:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/ORB_init/run_test.pl:
@@ -21,7 +32,7 @@ Wed Sep 15 15:01:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  IDL exceptions. Only the repository ID is output
 	  at present. This is not part of the spec, so as
 	  it becomes clearer what folks want from this,
-	  some or all of the exception members may be 
+	  some or all of the exception members may be
 	  output as well. The code is generated within the
 	  CDR operator context, since it didn't seem necessary
 	  to create two new types of visitor and two new files
@@ -80,7 +91,7 @@ Tue Sep 14 18:18:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
 	* tests/IDL_Test/typedef.idl:
 	  The method documented in my last ChangeLog entry
-	  for generating CDR operators for sequences of 
+	  for generating CDR operators for sequences of
 	  arrays also works for arrays of arrays. This means
 	  that a portion of the typedef.idl file that was
 	  commented out can now be uncommented.
@@ -91,10 +102,10 @@ Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 	  Modified client to use TAO::ClientPriorityPolicy to make sure
 	  profiles with correct priorities will be used  for invocations
 	  to preserve priorities end-to-end.
-	
+
 	* tests/Endpoint_Per_Priority/server.cpp:
 	  Added comments.
-	
+
 	* tests/Endpoint_Per_Priority/run_test.pl:
 	  Fixed the script to use the right command-line arguments.
 
@@ -130,8 +141,8 @@ Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 	  The policy interface is in TAO.pidl.  New idl interface had to
 	  be defined for this policy since none of the policies
 	  from the RT spec provided the right semantics.  For an example
-	  of how to use the policy and multiple endpoints, see example in 
-	  tests/Endpoint_Per_Priority. 
+	  of how to use the policy and multiple endpoints, see example in
+	  tests/Endpoint_Per_Priority.
 
 	* tao/Invocation.cpp:
 	* tao/Invocation.h:
@@ -140,10 +151,10 @@ Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 	  Right now this feature works correctly for cases where the
 	  following two assumptions are true: 1) no location forwarding, 2) no
 	  certain types of errors during the invocation.
-	
+
 	* tao/Profile.h:
-	  Minor comment fixes.  
-	
+	  Minor comment fixes.
+
 	* tao/TAO.cpp:
 	  Changed the use of CORBA::String to CORBA::String_var, which is
 	  offers better memory management and standard mapping.
@@ -151,7 +162,7 @@ Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/TAO.h:
 	  Removed TAO class which provided namespace which contained
 	  TAO_ORB_Manager and TAO_Object_Key.  Those classes are not
-	  used through TAO::, but rather directly.  
+	  used through TAO::, but rather directly.
 
 Tue Sep 14 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -171,7 +182,7 @@ Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB_Core.i:
 
 	  CORBA 2.3 Updates:
-	
+
 	  No longer destroy the ORB_Core in the ORB's destructor.  Let the
 	  ORB_Table handle ORB_Core deallocation.  CORBA::ORB::destroy()
 	  will also destroy the ORB's underlying ORB_Core.  It is the
@@ -180,8 +191,8 @@ Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  All ORB methods that access the ORB_Core in some way now check
 	  that the ORB_Core hasn't been shutdown or destroyed before
 	  continuing.
-	
-	  Moved exception and type code destruction to the ORB_Table since 
+
+	  Moved exception and type code destruction to the ORB_Table since
 	  exceptions must be kept around during the lifetime of the
 	  application.
 
