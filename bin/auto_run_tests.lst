@@ -20,7 +20,9 @@ TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: MINIMUM
 TAO/tests/OctetSeq/run_test.pl
 TAO/tests/Leader_Followers/run_test.pl: ST
 TAO/tests/Multiple_Inheritance/run_test.pl
-#HANGS TAO/tests/Endpoint_Per_Priority/run_test.pl
+TAO/tests/Endpoint_Per_Priority/run_test.pl: MINIMUM
+TAO/tests/RTCORBA/Client_Propagated/run_test.pl: MINIMUM
+TAO/tests/RTCORBA/Server_Protocol/run_test.pl: MINIMUM
 TAO/tests/MT_Client/run_test.pl: ST
 TAO/tests/MT_Server/run_test.pl: ST
 TAO/tests/Faults/run_test.pl: MINIMUM
