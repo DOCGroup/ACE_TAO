@@ -483,7 +483,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
           // the typecode for the default
 
           if (default_index >= 0 && default_index-- == 0)
-            default_tc = member_tc;
+            default_tc = member_tc.in ();
           if (discrim_matched)
             {
               // marshal according to the matched typecode

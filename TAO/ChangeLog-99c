@@ -1,3 +1,12 @@
+Sat Sep 03 00:13:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/append.cpp,
+	  tao/decode.cpp,
+	  tao/encode.cpp,
+	  tao/skip.cpp: 
+	  Fixed a compilation ambiguity by using "in ()" on 
+	  the "vars" assigned to "ptrs".
+
 Fri Sep  3 23:31:11 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/deep_free.cpp:
@@ -138,10 +147,10 @@ Thu Sep 03 05:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Thu Sep 03 01:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp
-	  tests/NestedUpcall/Triangle_Test/Object_A_i.h
-	  tests/NestedUpcall/Triangle_Test/Object_B_i.cpp
-	  tests/NestedUpcall/Triangle_Test/Object_B_i.h
+	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp,
+	  tests/NestedUpcall/Triangle_Test/Object_A_i.h,
+	  tests/NestedUpcall/Triangle_Test/Object_B_i.cpp,
+	  tests/NestedUpcall/Triangle_Test/Object_B_i.h,
 	  tests/NestedUpcall/Triangle_Test/Triangle_Test.idl:
 	  According to the changes in the IDL compiler, which
 	  made it conforming to the CORBA spec, some minor
