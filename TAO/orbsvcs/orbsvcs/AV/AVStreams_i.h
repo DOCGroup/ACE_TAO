@@ -130,6 +130,8 @@ public:
                                     CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
 };
 
+class TAO_MCastConfigIf;
+
 class TAO_ORBSVCS_Export TAO_StreamCtrl
   : public virtual POA_AVStreams::StreamCtrl,
     public virtual TAO_Basic_StreamCtrl
