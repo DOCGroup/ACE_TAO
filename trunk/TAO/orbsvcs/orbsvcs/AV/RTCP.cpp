@@ -436,7 +436,7 @@ TAO_AV_RTCP_Object::destroy (void)
 {
   this->callback_->handle_destroy ();
   delete this;
-  
+
   return 0;
 }
 
@@ -519,8 +519,6 @@ int
 TAO_AV_RTCP_Callback::handle_stop (void)
 {
   return this->send_report(1);
-
-  return 0;
 }
 
 int
