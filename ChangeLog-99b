@@ -1,3 +1,11 @@
+Wed Jun  9 15:59:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/version_tests/version_tests.dsw:
+	* tests/run_tests.bat:
+	* tests/run_tests.psosim:
+	* tests/run_tests.vxworks:
+	  Added Svc_Handler_Test to these.
+
 Wed Jun  9 13:06:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++.GNU,
