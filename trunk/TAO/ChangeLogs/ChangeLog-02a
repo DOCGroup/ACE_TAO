@@ -21,6 +21,12 @@ Tue Jan 29 08:14:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
         * orbsvcs/tests/Notify/Basic/Makefile.bor:
           Added new BCB makefile to build these tests
 
+        * orbsvcs/tests/Notify/performance-tests/Makefile.bor:
+          Added new BCB makefile to build subdirectories
+
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.bor:
+          Added new BCB makefile to build this test
+
 Mon Jan 28 20:21:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CORBALOC_Parser.cpp
