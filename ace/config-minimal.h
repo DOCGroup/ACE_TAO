@@ -13,15 +13,6 @@
 #define ACE_MAIN_OBJECT_MANAGER \
   ACE_OS_Object_Manager ace_os_object_manager;
 
-#if defined (ACE_HAS_TSS_EMULATION)
-# undef ACE_HAS_TSS_EMULATION
-#endif /* ACE_HAS_TSS_EMULATION */
-
-#if !defined(ACE_USE_THREAD_MANAGER_ADAPTER)
-  // To prevent use of ACE_Thread_Exit functions in
-  // ACE_Thread_Adapter::invoke ().
-# define ACE_USE_THREAD_MANAGER_ADAPTER
-#endif /* ! ACE_USE_THREAD_MANAGER_ADAPTER */
 
 #if defined (ACE_ASSERT)
 # undef ACE_ASSERT
