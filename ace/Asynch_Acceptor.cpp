@@ -16,6 +16,7 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 // This only works on platforms that support async i/o.
 
 #include "ace/OS_Errno.h"
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"

@@ -4,6 +4,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
@@ -130,9 +131,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   // an ACE_Auto_Array_Ptr.)
   {
     sockaddr_in *addr_structs_bootstrap = 0;
-    ACE_NEW_RETURN(addr_structs_bootstrap,
-                   sockaddr_in[size],
-                   -1);
+    ACE_NEW_RETURN (addr_structs_bootstrap, sockaddr_in[size], -1);
     addr_structs.reset(addr_structs_bootstrap);
   }
 
@@ -267,9 +266,7 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
   // an ACE_Auto_Array_Ptr.)
   {
     sockaddr_in *addr_structs_bootstrap = 0;
-    ACE_NEW_RETURN(addr_structs_bootstrap,
-                   sockaddr_in[size],
-                   -1);
+    ACE_NEW_RETURN (addr_structs_bootstrap, sockaddr_in[size], -1);
     addr_structs.reset(addr_structs_bootstrap);
   }
 

@@ -33,6 +33,7 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -650,7 +651,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr remote_addr;
 
-  if (isdigit(argv[getopt.opt_ind ()][0]))
+  if (ACE_OS::ace_isdigit(argv[getopt.opt_ind ()][0]))
     {
       if (remote_addr.set (dstport,
                            (ACE_UINT32) ACE_OS::inet_addr

@@ -5,6 +5,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_fcntl.h"
@@ -133,8 +134,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       // representations of the primary and secondary
       // addresses.
       sockaddr_in*  local_inet_addrs = 0;
-      ACE_NEW_NORETURN(local_inet_addrs,
-                       sockaddr_in[num_addresses]);
+      ACE_NEW_NORETURN (local_inet_addrs, sockaddr_in[num_addresses]);
       if (!local_inet_addrs)
         return -1;
 

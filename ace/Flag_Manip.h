@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
+#include "ace/os_include/os_fcntl.h"   /* For values passed to these methods */
 
 class ACE_Export ACE_Flag_Manip
 {
