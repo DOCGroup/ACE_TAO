@@ -90,6 +90,10 @@ public:
   //    the Acceptor_Registry? Is there just one per orb core? Should
   //    tbe acceptor registry know which ORB_Core it belongs to?
 
+  size_t endpoint_count (void);
+  // returns the total number of endpoints, i.e. the number of profiles
+  // that will be created.
+
   int make_mprofile (const TAO_ObjectKey &object_key,
                                       TAO_MProfile  *&mprofile)
   // add profiles to the mprofile object for all open endpoints.
