@@ -20,8 +20,28 @@
 PrintVisitor::PrintVisitor (const char *file_name) {
   
   TAO_TRY {
-    output_ =  stdout;//ACE_OS::fopen(file_name, "w");
-    TAO_CHECK_ENV;
+    if (file_name != 0) {
+      output_ =  ACE_OS::fopen(file_name, "w");
+      TAO_CHECK_ENV;
+
+       // print it on the screen if file could be opened
+      if (output_ == 0) {
+
+        output_ = stdout;
+
+        ACE_DEBUG ((LM_DEBUG,"PrintVisitor: Use stdout for output.\n"));
+      }
+
+      // everything is ok
+      ACE_DEBUG ((LM_DEBUG,"PrintVisitor: Opened file <%s> successfully.\n",
+                  file_name));
+    }
+    else {
+       output_ = stdout;
+       ACE_DEBUG ((LM_DEBUG,"PrintVisitor: Use stdout for output.\n"));
+
+    }
+
   }
   TAO_CATCHANY
     {

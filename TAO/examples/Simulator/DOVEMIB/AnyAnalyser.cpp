@@ -24,8 +24,13 @@ AnyAnalyser::AnyAnalyser (const char *file_name)
 
 AnyAnalyser::~AnyAnalyser () { }
 
+void
+AnyAnalyser::close () { 
+  delete printVisitor_ptr_;
+}
+
 void 
-AnyAnalyser::printAny (CORBA::Any any) {
+AnyAnalyser::printAny (CORBA::TypeCode_ptr any_type, const void *any_value) {
 
   // Analyse the any and store the results in a tree structure
   RecurseInfo recurseInfo_ = {PARENT_IS_NO_STRUCT,// identifies parent
@@ -33,12 +38,14 @@ AnyAnalyser::printAny (CORBA::Any any) {
                               0,                  // member count
                               0};                 // recursion level
 
-  unsigned char *value_ptr_ = (unsigned char *)any.value ();
+  // have a variable with can be incremented by all 
+  // recursive analyse calls
+  const unsigned char *value_ptr_ = (const unsigned char *)any_value;
 
   // analyse the any
-  Node *node_ptr_ = analyse (any.type (), 
-                             value_ptr_, 
-                             recurseInfo_);
+  Node *node_ptr_ = analyse (any_type,      // typecode information
+                             value_ptr_,    // pointer to the memory
+                             recurseInfo_); // recurse information
 
   // print the results
   node_ptr_->Accept ((NodeVisitor *)printVisitor_ptr_);
@@ -46,12 +53,12 @@ AnyAnalyser::printAny (CORBA::Any any) {
 
 Node *
 AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr, 
-		      unsigned char *&value_ptr,
+		      const unsigned char *&value_ptr,
           RecurseInfo ri)
 {
   CORBA::Long size, alignment, align_offset;
   CORBA::TypeCode_ptr param;  
-  unsigned char *start_addr = value_ptr;
+  const unsigned char *start_addr = value_ptr;
 
   TAO_TRY {
     Node *node_ptr_ = 0;
@@ -63,7 +70,7 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
       	case CORBA::tk_struct:
 	        {	
             // to hold a pointer to the start of the struct
-            unsigned char *start_addr = value_ptr;
+            start_addr = value_ptr;
 
             // create a new Node
 	          StructNode *structNode_ptr_ = new StructNode (tc_ptr->name (TAO_TRY_ENV), 
@@ -104,8 +111,6 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
               value_ptr = (unsigned char *) ((ptr_arith_t) value_ptr +
                                            ((align_offset == alignment) ?
                                             0 : align_offset));              
-
-              printf ("%d\n", (unsigned long)value_ptr);
            
 	            structNode_ptr_->addChild (analyse (param, 
                                                   value_ptr,
@@ -146,10 +151,6 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 	        break;
 	  
 	      case CORBA::tk_ulong:
-          cout << "Name:" << ri.parent_tc_ptr->member_name(ri.member_number,TAO_TRY_ENV)
-               << " Value: " << (CORBA::ULong)*value_ptr << endl;
-          printf ("%X\n", (unsigned long)value_ptr);
-
           if (ri.kind == PARENT_IS_STRUCT) {
   	        node_ptr_ = (Node *) new ULongNode ((CORBA::ULong *)value_ptr,
  					                                       ri.parent_tc_ptr->member_name(ri.member_number,
