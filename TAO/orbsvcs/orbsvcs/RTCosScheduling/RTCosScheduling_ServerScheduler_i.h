@@ -239,7 +239,8 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
         PortableServer::POA_ptr parent,
         const char * adapter_name,
         PortableServer::POAManager_ptr a_POAManager,
-        const CORBA::PolicyList & policies)
+        const CORBA::PolicyList & policies
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , PortableServer::POA::AdapterAlreadyExists

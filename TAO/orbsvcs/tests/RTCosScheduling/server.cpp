@@ -41,10 +41,22 @@ ORB_Thread(CORBA::ORB_var orb) : orb_(orb)
 
 int
 svc(void) {
-    orb_->run();
-    ACE_TRY_CHECK;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-    exit(0);
+  ACE_TRY
+    {
+      orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "svc");
+      return 1;
+    }
+  ACE_ENDTRY;
+
+  exit(0);
+  return 0;
 }
 
 
@@ -102,7 +114,8 @@ parse_args (int argc, char *argv[])
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       if (parse_args (argc, argv) != 0)
         {
@@ -129,7 +142,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
 
       /// Create a manager for the POA
       PortableServer::POAManager_var poa_manager =
-        rootPOA->the_POAManager (ACE_ENV_ARG_PARAMETER);
+        rootPOA->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList poa_policy_list;
@@ -145,7 +158,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
                          node_,
                          file_,
                          shared_file_,
-                         num_threads_),
+                         num_threads_ ),
                        CORBA::NO_MEMORY());
 
       /// Create the POA so RT Policies are set
@@ -187,18 +200,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       if (use_realtime_)
         {
           /// Schedule the object
-          ACE_TRY_NEW_ENV
+          ACE_TRY_EX(INNER)
             {
               server_sched->schedule_object(testObject.inout(),
-                                            object_);
+                                            object_ ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK_EX(INNER);
             }
           ACE_CATCH(RTCosScheduling::UnknownName, ex)
             {
               ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
                                  "Unknown object passed to schedule_object\n");
             }
-          ACE_ENDTRY
-          ACE_TRY_CHECK;
+          ACE_ENDTRY;
         }
 
 
