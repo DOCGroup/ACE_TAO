@@ -34,7 +34,8 @@ CPP_SRCS += \
   Collocated_Object \
   DomainS \
   PolicyS \
-  FT_CORBAS
+  FT_CORBAS \
+  ORB_Manager
 
 ifeq ($(minimum_corba),0)
 
