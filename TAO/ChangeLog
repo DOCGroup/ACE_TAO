@@ -1,3 +1,8 @@
+Thu Oct  3 07:08:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/LogNotification.h:
+          Fixed fuzz error about incorrect @file tag
+
 Thu Oct  3 05:46:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/LoadBalancer/LoadMonitor.bor:
