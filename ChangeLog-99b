@@ -1,3 +1,21 @@
+Thu May  6 21:48:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+	* configure.in:
+	* ace/OS.h:
+	* ace/README:
+	* ace/config-hpux11.h: 
+	* ace/config-irix6.x-g++.h: 
+	* ace/config-irix6.x-kcc.h: 
+	* ace/config-irix6.x-sgic++.h: 
+	* ace/config-linux-lxpthreads.h: 
+	* ace/config-osf1-4.0.h: 
+	* ace/config-sco-5.0.0-mit-pthread.h: 
+	* ace/config-sunos5.5.h: 
+
+	  Removed all references to ACE_HAS_PTHREAD_SIGMASK.  This macro
+	  has been deprecated.
+
 Thu May  6 20:12:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h:

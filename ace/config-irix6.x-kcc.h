@@ -20,7 +20,6 @@
 // IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
-#define ACE_HAS_PTHREAD_SIGMASK
 
 #include "ace/config-irix6.x-common.h"
 
@@ -30,9 +29,6 @@
 
 #define PTHREAD_MIN_PRIORITY PX_PRIO_MIN
 #define PTHREAD_MAX_PRIORITY PX_PRIO_MAX
-
-// Platforms has pthread_thr_sigsetmask
-#define ACE_HAS_PTHREAD_SIGMASK
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
