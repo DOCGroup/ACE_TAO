@@ -11,13 +11,13 @@ associations. If the POA has the RETAIN value for the servant
 retention, the POA expects the Servant Manager to supply the Servant
 Activator interface.
 
-In this example, the Servant Activator interface is used.
-The servant is an dynamically linkable library Dir_Service.
-This is an servant which provides directory assistance.
+In this example, the Servant Activator interface is used.  The servant
+is an dynamically linkable library Dir_Service.  This is an servant
+that provides directory assistance.
 
 The client asks for directory assistance and at the server end the
 Servant Actiavtor loads the dynamic linkable library on demand,
-obtains the servant object which then answers the client's request.
+obtains the servant object that then answers the client's request.
 
 Note that the server need not be built with the library. The library
 name and the factory method which will be used to obtain the servant
