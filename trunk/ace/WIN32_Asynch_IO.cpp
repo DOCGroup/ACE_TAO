@@ -73,6 +73,12 @@ ACE_WIN32_Asynch_Result::priority (void) const
 }
 
 int
+ACE_WIN32_Asynch_Result::signal_number (void) const
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
+int
 ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
 {
   // Get to the platform specific implementation.
@@ -95,7 +101,8 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result (ACE_Handler &handler,
                                                   ACE_HANDLE event,
                                                   u_long offset,
                                                   u_long offset_high,
-                                                  int priority)
+                                                  int priority,
+                                                  int signal_number)
   : ACE_Asynch_Result_Impl (),
     OVERLAPPED (),
     handler_ (handler),
@@ -113,6 +120,7 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result (ACE_Handler &handler,
   this->hEvent = event;
 
   ACE_UNUSED_ARG (priority);
+  ACE_UNUSED_ARG (signal_number);
 }
 
 // ****************************************************************
@@ -200,10 +208,11 @@ ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (ACE_Ha
                                                                           u_long bytes_to_read,
                                                                           const void* act,
                                                                           ACE_HANDLE event,
-                                                                          int priority)
+                                                                          int priority,
+                                                                          int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
     handle_ (handle)
@@ -294,6 +303,12 @@ ACE_WIN32_Asynch_Read_Stream_Result::priority (void) const
 }
 
 int
+ACE_WIN32_Asynch_Read_Stream_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
+int
 ACE_WIN32_Asynch_Read_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
 {
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
@@ -312,7 +327,8 @@ int
 ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                     u_long bytes_to_read,
                                     const void *act,
-                                    int priority)
+                                    int priority,
+                                    int signal_number)
 {
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
@@ -323,7 +339,8 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                                        bytes_to_read,
                                                        act,
                                                        this->win32_proactor_->get_handle (),
-                                                       priority),
+                                                       priority,
+                                                       signal_number),
                   -1);
 
   // Shared read
@@ -431,10 +448,11 @@ ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (ACE_
                                                                             u_long bytes_to_write,
                                                                             const void* act,
                                                                             ACE_HANDLE event,
-                                                                            int priority)
+                                                                            int priority,
+                                                                            int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
     handle_ (handle)
@@ -525,6 +543,12 @@ ACE_WIN32_Asynch_Write_Stream_Result::priority (void) const
 }
 
 int
+ACE_WIN32_Asynch_Write_Stream_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
+int
 ACE_WIN32_Asynch_Write_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
 {
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
@@ -543,7 +567,8 @@ int
 ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       u_long bytes_to_write,
                                       const void *act,
-                                      int priority)
+                                      int priority,
+                                      int signal_number)
 {
   ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -553,7 +578,8 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                                         bytes_to_write,
                                                         act,
                                                         this->win32_proactor_->get_handle (),
-                                                        priority),
+                                                        priority,
+                                                        signal_number),
                   -1);
 
   // Shared write
@@ -644,18 +670,20 @@ ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handle
                                                                       u_long offset,
                                                                       u_long offset_high,
                                                                       ACE_HANDLE event,
-                                                                      int priority)
+                                                                      int priority,
+                                                                      int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     ACE_WIN32_Asynch_Read_Stream_Result (handler,
                                          handle,
                                          message_block,
                                          bytes_to_read,
                                          act,
                                          event,
-                                         priority)
+                                         priority,
+                                         signal_number)
 {
   this->Offset = offset;
   this->OffsetHigh = offset_high;
@@ -744,6 +772,12 @@ ACE_WIN32_Asynch_Read_File_Result::priority (void) const
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
+int
+ACE_WIN32_Asynch_Read_File_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
 // The following methods belong to
 // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
 // warnings. These methods route their call to the
@@ -789,7 +823,8 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   u_long offset,
                                   u_long offset_high,
                                   const void *act,
-                                  int priority)
+                                  int priority,
+                                  int signal_number)
 {
   ACE_WIN32_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -801,7 +836,8 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      offset,
                                                      offset_high,
                                                      this->win32_proactor_->get_handle (),
-                                                     priority),
+                                                     priority,
+                                                     signal_number),
                   -1);
 
   // Shared read
@@ -822,12 +858,14 @@ int
 ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   u_long bytes_to_read,
                                   const void *act,
-                                  int priority)
+                                  int priority,
+                                  int signal_number)
 {
   return ACE_WIN32_Asynch_Read_Stream::read (message_block,
                                              bytes_to_read,
                                              act,
-                                             priority);
+                                             priority,
+                                             signal_number);
 }
 
 // Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -868,7 +906,8 @@ ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Hand
                                                                         u_long offset,
                                                                         u_long offset_high,
                                                                         ACE_HANDLE event,
-                                                                        int priority)
+                                                                        int priority,
+                                                                        int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_Asynch_Write_File_Result_Impl (),
@@ -878,7 +917,8 @@ ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Hand
                                           bytes_to_write,
                                           act,
                                           event,
-                                          priority)
+                                          priority,
+                                          signal_number)
 {
   this->Offset = offset;
   this->OffsetHigh = offset_high;
@@ -967,6 +1007,12 @@ ACE_WIN32_Asynch_Write_File_Result::priority (void) const
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
+int
+ACE_WIN32_Asynch_Write_File_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
 // The following methods belong to
 // ACE_WIN32_Asynch_Write_Stream_Result. They are here to avoid VC++
 // warnings. These methods route their call to the
@@ -1012,7 +1058,8 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     u_long offset,
                                     u_long offset_high,
                                     const void *act,
-                                    int priority)
+                                    int priority,
+                                    int signal_number)
 {
   ACE_WIN32_Asynch_Write_File_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -1024,7 +1071,8 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                       offset,
                                                       offset_high,
                                                       this->win32_proactor_->get_handle (),
-                                                      priority),
+                                                      priority,
+                                                      signal_number),
                   -1);
 
   // Shared write
@@ -1045,12 +1093,14 @@ int
 ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     u_long bytes_to_write,
                                     const void *act,
-                                    int priority)
+                                    int priority,
+                                    int signal_number)
 {
   return ACE_WIN32_Asynch_Write_Stream::write (message_block,
                                                bytes_to_write,
                                                act,
-                                               priority);
+                                               priority,
+                                               signal_number);
 }
 
 // Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -1114,10 +1164,11 @@ ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (ACE_Handler &han
                                                                 u_long bytes_to_read,
                                                                 const void* act,
                                                                 ACE_HANDLE event,
-                                                                int priority)
+                                                                int priority,
+                                                                int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Accept_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
     listen_handle_ (listen_handle),
@@ -1209,6 +1260,12 @@ ACE_WIN32_Asynch_Accept_Result::priority (void) const
 }
 
 int
+ACE_WIN32_Asynch_Accept_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
+int
 ACE_WIN32_Asynch_Accept_Result::post_completion (ACE_Proactor_Impl *proactor)
 {
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
@@ -1228,7 +1285,8 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
                                   u_long bytes_to_read,
                                   ACE_HANDLE accept_handle,
                                   const void *act,
-                                  int priority)
+                                  int priority,
+                                  int signal_number)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   // Sanity check: make sure that enough space has been allocated by
@@ -1269,7 +1327,8 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
                                                   bytes_to_read,
                                                   act,
                                                   this->win32_proactor_->get_handle (),
-                                                  priority),
+                                                  priority,
+                                                  signal_number),
                   -1);
 
   u_long bytes_read;
@@ -1395,10 +1454,11 @@ ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (AC
                                                                               u_long flags,
                                                                               const void *act,
                                                                               ACE_HANDLE event,
-                                                                              int priority)
+                                                                              int priority,
+                                                                              int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Transmit_File_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, offset, offset_high, priority),
+    ACE_WIN32_Asynch_Result (handler, act, event, offset, offset_high, priority, signal_number),
     socket_ (socket),
     file_ (file),
     header_and_trailer_ (header_and_trailer),
@@ -1505,6 +1565,12 @@ ACE_WIN32_Asynch_Transmit_File_Result::priority (void) const
 }
 
 int
+ACE_WIN32_Asynch_Transmit_File_Result::signal_number (void) const
+{
+  return ACE_WIN32_Asynch_Result::signal_number ();
+}
+
+int
 ACE_WIN32_Asynch_Transmit_File_Result::post_completion (ACE_Proactor_Impl *proactor)
 {
   return ACE_WIN32_Asynch_Result::post_completion (proactor);
@@ -1528,7 +1594,8 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                u_long bytes_per_send,
                                                u_long flags,
                                                const void *act,
-                                               int priority)
+                                               int priority,
+                                               int signal_number)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   ACE_WIN32_Asynch_Transmit_File_Result *result = 0;
@@ -1544,7 +1611,8 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                          flags,
                                                          act,
                                                          this->win32_proactor_->get_handle (),
-                                                         priority),
+                                                         priority,
+                                                         signal_number),
                   -1);
 
   ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers = 0;

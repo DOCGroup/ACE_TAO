@@ -97,6 +97,9 @@ public:
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
 
+  int signal_number (void) const;
+  // Returns 0.
+
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor's completion port.
 
@@ -109,7 +112,8 @@ protected:
                            ACE_HANDLE event,
                            u_long offset,
                            u_long offset_high,
-                           int priority);
+                           int priority,
+                           int signal_number = 0);
   // Constructor.
 
   ACE_Handler &handler_;
@@ -241,6 +245,9 @@ public:
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
 
+  int signal_number (void) const;
+  // No-op. Returns 0.
+
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor's completion port.
 
@@ -251,7 +258,8 @@ protected:
                                        u_long bytes_to_read,
                                        const void* act,
                                        ACE_HANDLE event,
-                                       int priority);
+                                       int priority,
+                                       int signal_number = 0);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Read_Stream factory.
 
@@ -297,7 +305,8 @@ public:
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number = 0);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.
 
@@ -392,6 +401,9 @@ public:
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
 
+  int signal_number (void) const;
+  // No-op. Returns 0.
+  
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor's completion port.
 
@@ -402,7 +414,8 @@ protected:
                                         u_long bytes_to_write,
                                         const void* act,
                                         ACE_HANDLE event,
-                                        int priority);
+                                        int priority,
+                                        int signal_number = 0);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Write_Stream factory.
 
@@ -449,7 +462,8 @@ public:
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number = 0);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be written from the <message_block>.
 
@@ -535,6 +549,9 @@ public:
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
 
+  int signal_number (void) const;
+  // No-op. Returns 0.
+  
   // The following methods belong to
   // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
   // dominance warnings. These methods route their call to the
@@ -562,7 +579,8 @@ protected:
                                      u_long offset,
                                      u_long offset_high,
                                      ACE_HANDLE event,
-                                     int priority);
+                                     int priority,
+                                     int signal_number = 0);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Read_File factory.
 
@@ -604,7 +622,8 @@ public:
             u_long offset,
             u_long offset_high,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number = 0);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file.
@@ -637,7 +656,8 @@ private:
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
             const void *act,
-            int priority);
+            int priority,
+            int signal_number = 0);
   // This method belongs to ACE_WIN32_Asynch_Read_Stream. It is here
   // to avoid the compiler warnings. We forward this call to the
   // ACE_WIN32_Asynch_Read_Stream class.
@@ -704,6 +724,9 @@ public:
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
 
+  int signal_number (void) const;
+  // No-op. Returns 0.
+  
   // The following methods belong to
   // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
   // warnings. These methods route their call to the
@@ -731,7 +754,8 @@ protected:
                                       u_long offset,
                                       u_long offset_high,
                                       ACE_HANDLE event,
-                                      int priority);
+                                      int priority,
+                                      int signal_number = 0);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Write_File factory.
 
@@ -770,7 +794,8 @@ public:
              u_long offset,
              u_long offset_high,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number = 0);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file.
@@ -803,7 +828,8 @@ private:
   int write (ACE_Message_Block &message_block,
              u_long bytes_to_write,
              const void *act,
-             int priority);
+             int priority,
+             int signal_number = 0);
   // This method belongs to ACE_WIN32_Asynch_Write_Stream. It is here
   // to avoid compiler warnings. This method is forwarded to the
   // ACE_WIN32_Asynch_Write_Stream class.
@@ -876,6 +902,9 @@ public:
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
 
+  int signal_number (void) const;
+  // No-op. Returns 0.
+  
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor's completion port.
 
@@ -887,7 +916,8 @@ protected:
                                   u_long bytes_to_read,
                                   const void* act,
                                   ACE_HANDLE event,
-                                  int priority);
+                                  int priority,
+                                  int signal_number = 0);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Accept factory.
 
@@ -937,7 +967,8 @@ public:
               u_long bytes_to_read,
               ACE_HANDLE accept_handle,
               const void *act,
-              int priority);
+              int priority,
+              int signal_number = 0);
   // This starts off an asynchronous accept.  The asynchronous accept
   // call also allows any initial data to be returned to the
   // <handler>.  Upto <bytes_to_read> will be read and stored in the
@@ -1047,6 +1078,9 @@ public:
   // The priority of the asynchronous operation. Currently, this is
   // not supported on Win32.
 
+  int signal_number (void) const;
+  // No-op. Returns 0.
+  
   int post_completion (ACE_Proactor_Impl *proactor);
   // Post <this> to the Proactor's completion port.
 
@@ -1062,7 +1096,8 @@ protected:
 					 u_long flags,
 					 const void *act,
 					 ACE_HANDLE event,
-					 int priority);
+					 int priority,
+                                         int signal_number = 0);
   // Constructor is protected since creation is limited to
   // ACE_Asynch_Transmit_File factory.
 
@@ -1131,7 +1166,8 @@ public:
                      u_long bytes_per_send,
                      u_long flags,
                      const void *act,
-                     int priority);
+                     int priority,
+                     int signal_number = 0);
   // This starts off an asynchronous transmit file. The <file> is a
   // handle to an open file.  <header_and_trailer> is a pointer to a
   // data structure that contains pointers to data to send before and
