@@ -20,6 +20,9 @@ Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  allow the resetting of the <act_holder> in an atomic manner wrt
 	  the lock of the connector.
 
+	  The above changes should fix BUG 310. Thanks to Eric Mitchell
+	  <emitchell@altaira.com> for reporting it.
+
 Fri Nov 12 12:13:29 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Made _BSD_INCLUDES and ACE_HAS_CHARPTR_DL
