@@ -131,6 +131,7 @@ BIN =   \
         UPIPE_SAP_Test \
         Unbounded_Set_Test_Ex \
         Upgradable_RW_Test \
+        UUIDTest \ 	
         WFMO_Reactor_Test
 
 BIN2 =  Naming_Test \
