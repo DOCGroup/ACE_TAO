@@ -186,6 +186,10 @@ SOURCE=.\ARGV.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Argv_Type_Converter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.cpp
 # End Source File
 # Begin Source File
@@ -1099,6 +1103,10 @@ SOURCE=.\Arg_Shifter.h
 # Begin Source File
 
 SOURCE=.\ARGV.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Argv_Type_Converter.h
 # End Source File
 # Begin Source File
 
@@ -2283,6 +2291,10 @@ SOURCE=.\Addr.i
 # Begin Source File
 
 SOURCE=.\ARGV.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Argv_Type_Converter.inl
 # End Source File
 # Begin Source File
 
