@@ -1,3 +1,10 @@
+Sat Jul 10 10:18:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.h:
+	* ace/SSL/SSL_Asynch_Stream.h:
+
+	  Clarified "context" parameter copying semantics.
+
 Thu Jul  10 09:38:44 2004  Frank Hunleth <frank@hunleth.com>
 
 	* ace/config-openbsd.h:
