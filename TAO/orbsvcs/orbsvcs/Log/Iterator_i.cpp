@@ -60,10 +60,11 @@ Iterator_i::get (CORBA::ULong position,
   how_many = how_many ? 0 : 1;
 
   if (how_many > this->max_rec_list_len_ - position)
-    ACE_THROW_RETURN (DsLogAdmin::InvalidParam, 0);
+    ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
 
+  CORBA::ULong i = 0;
   // move the iterator to "position"
-  for (CORBA::ULong i = 0;
+  for (;
        i < position && iter_.advance () != -1;
        ++i)
     {

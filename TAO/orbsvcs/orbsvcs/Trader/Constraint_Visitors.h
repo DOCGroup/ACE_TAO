@@ -17,7 +17,7 @@
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
 
-#include "Interpreter_Utils.h"
+#include "orbsvcs/orbsvcs/Trader/Interpreter_Utils.h"
 
 class TAO_Constraint;
 class TAO_Unary_Constraint;
@@ -82,7 +82,7 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal) = 0;
 };
 
-#include "Constraint_Nodes.h"
+#include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
 
 class TAO_Constraint_Validator : public TAO_Constraint_Visitor
 {
@@ -192,8 +192,6 @@ private:
   TAO_Constraint_Validator (const TAO_Constraint_Validator&);
   TAO_Constraint_Validator& operator= (const TAO_Constraint_Validator&);
 };
-
-// #include "Trader_Utils.h"
 
 class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {

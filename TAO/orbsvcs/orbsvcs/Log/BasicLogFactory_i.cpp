@@ -31,12 +31,12 @@ BasicLogFactory_i::activate (PortableServer::POA_ptr poa,
 
   // narrow and store the result..
   this->log_mgr_ =
-    DsLogAdmin::LogMgr::_narrow (obj,
+    DsLogAdmin::LogMgr::_narrow (obj.in (),
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (v_return._retn ());
 
   v_return =
-    DsLogAdmin::BasicLogFactory::_narrow (obj,
+    DsLogAdmin::BasicLogFactory::_narrow (obj.in (),
                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
@@ -49,7 +49,7 @@ BasicLogFactory_i::create (DsLogAdmin::LogFullAction full_action,
                            DsLogAdmin::LogId_out id,
                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::NoResources,
+                   DsLogAdmin::NoResources
                    ))
 {
   // Get an id for this Log.
@@ -75,7 +75,7 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    DsLogAdmin::NoResources,
-                   DsLogAdmin::LogIdAlreadyExists,
+                   DsLogAdmin::LogIdAlreadyExists
                    ))
 {
   // Make sure the id not used up.

@@ -469,6 +469,7 @@ int
 TAO_Constraint_Evaluator::
 visit_property (TAO_Property_Constraint* literal)
 {
+  ACE_UNUSED_ARG (literal);
   return -1;
   // A derived class decides how to do this.
 }
