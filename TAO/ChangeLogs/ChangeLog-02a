@@ -1,3 +1,18 @@
+Sat Mar 16 01:58:21 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+
+	  Include "tao/Invocation.h" to pull in TAO_GIOP_Invocation class
+	  declaration.  Necessitated by header reduction in IFR_BaseC.h.
+	  Fixes minimum CORBA builds.
+
+	* tao/IFR_Client/diffs/IFR_BaseC.cpp.diff:
+	* tao/IFR_Client/diffs/IFR_BaseC.h.diff:
+	* tao/IFR_Client/diffs/IFR_ComponentsC.cpp.diff:
+
+	  Regenerated these diff files.
+
 Sat Mar 16 01:27:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IFR_Client/IFR_BaseC.h:
