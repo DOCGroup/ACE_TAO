@@ -34,7 +34,7 @@ ACE_OS::flock_t::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-void 
+void
 ACE_OS::mutex_lock_cleanup (void *mutex)
 {
 // ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
@@ -533,40 +533,46 @@ ACE_TSS_Cleanup::dump (void)
     key_info->dump ();
 }
 
-// Special thread startup argument (used below in <thr_create>).
+#endif // WIN32
 
-class ACE_Win32_Thread_Adapter
+class ACE_Thread_Adapter
+  // = TITLE
+  //     Converts a C++ function into a function <ace_thread_adapter>
+  //     function that can be called from a thread creation routine
+  //     (e.g., pthread_create() or _beginthreadex()) that expects an
+  //     extern "C" entry point.
+  // 
+  // = DESCRIPTION
+  //     This is used below in <ACE_OS::thr_create> for Win32 and
+  //     MVS. 
 {
 public:
-  ACE_Win32_Thread_Adapter (ACE_THR_FUNC f, void *a);
-  // Constructor
+  ACE_Thread_Adapter (ACE_THR_FUNC f, void *a);
+  // Constructor.
 
-  static void *svc_run (ACE_Win32_Thread_Adapter *);
-  // Run the thread exit point.
-
-private:
+  // private:
   // = Arguments to thread startup.
   ACE_THR_FUNC func_;
-  // Thread startup function.
+  // Thread startup function (C++ linkage).
 
   void *arg_;
   // Argument to thread startup function.
 };
 
-ACE_Win32_Thread_Adapter::ACE_Win32_Thread_Adapter (ACE_THR_FUNC f, void *a)
-  : func_(f), 
-    arg_(a) 
-{
-// ACE_TRACE ("ACE_Win32_Thread_Adapter::ACE_Win32_Thread_Adapter");
-}
+// Run the thread exit point.  This must be an extern "C" to make
+// certain compilers happy...
 
-void *
-ACE_Win32_Thread_Adapter::svc_run (ACE_Win32_Thread_Adapter *thread_args)
+extern "C" 
+void *ace_thread_adapter (void *args)
 {
-// ACE_TRACE ("ACE_Win32_Thread_Adapter::svc_run");
+  // ACE_TRACE ("ACE_Thread_Adapter::svc_run");
+  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
+
   ACE_THR_FUNC func = thread_args->func_;
   void *arg = thread_args->arg_;
   delete thread_args;
+
+#if defined (ACE_WIN32)
   void *status;
 
   ACE_SEH_TRY {
@@ -583,12 +589,19 @@ ACE_Win32_Thread_Adapter::svc_run (ACE_Win32_Thread_Adapter *thread_args)
   // If dropped off end, call destructors for thread-specific storage
   // and exit.
   ACE_TSS_Cleanup::instance ()->exit (status);
-
   /* NOTREACHED */
   return status;
+#else
+  return (*func) (arg);  // Call thread entry point.
+#endif /* ACE_WIN32 */
 }
 
-#endif // WIN32
+ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
+  : func_(f), 
+    arg_(a) 
+{
+// ACE_TRACE ("ACE_Thread_Adapter::ACE_Thread_Adapter");
+}
 
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,
@@ -615,6 +628,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (::pthread_attr_init (&attr) != 0)
 #endif /* ACE_HAS_SETKIND_NP */
     return -1;
+#if !defined (ACE_LACKS_SETSCHED)
   else if (priority != 0)
     {
       struct sched_param sparam;
@@ -652,8 +666,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  pthread_attr_destroy (&attr);
 	  return -1;
 	}
-#endif	//  ACE_HAS_FSU_PTHREADS
+#endif	/* ACE_HAS_FSU_PTHREADS */
     }
+#endif /* ACE_LACKS_SETSCHED */
 
 #if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
     if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
@@ -708,7 +723,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #if defined (ACE_HAS_SETKIND_NP)
 	    if (::pthread_attr_setdetach_np (&attr, dstate) != 0)
 #else /* ACE_HAS_SETKIND_NP */
+#if defined (ACE_HAS_PTHREAD_DSTATE_PTR)
+	    if (::pthread_attr_setdetachstate (&attr, &dstate) != 0)
+#else
 	    if (::pthread_attr_setdetachstate (&attr, dstate) != 0)
+#endif /* ACE_HAS_PTHREAD_DSTATE_PTR */
 #endif /* ACE_HAS_SETKIND_NP */
 	      {
 #if defined (ACE_HAS_SETKIND_NP)
@@ -720,6 +739,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	      }
 	  }
 #endif /* ACE_LACKS_SETDETACH */
+#if !defined (ACE_LACKS_SETSCHED)
 	if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
 	    || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
 	    || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
@@ -791,6 +811,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 		return -1;
 	      }
 	  }
+#endif /* ACE_LACKS_SETSCHED */
 #if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
 	if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
 	    || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
@@ -823,18 +844,28 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       p_thr = (thr_id == 0 ? &tmp_thr : thr_id);
 
 #if defined (ACE_HAS_SETKIND_NP)
+#if defined (ACE_HAS_THR_C_FUNC)
+      ACE_Thread_Adapter *thread_args;
+      ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
+
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, attr,
+						      ACE_THR_C_FUNC (&ace_thread_adapter), 
+						      thread_args),
+				    result),
+		  int, -1, result);
+#else
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, attr, func, args), 
 				    result),
 		  int, -1, result);
+#endif /* ACE_HAS_THR_C_FUNC */
+
       ::pthread_attr_delete (&attr);
-      if (thr_handle != 0)
-	*thr_handle = ACE_OS::NULL_hthread;
 #else /* !ACE_HAS_SETKIND_NP */
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, &attr, func, args), 
 				    result),
 		  int, -1, result);
       ::pthread_attr_destroy (&attr);
-
+#endif /* ACE_HAS_SETKIND_NP */
 #if defined (ACE_HAS_STHREADS)
       // This is the Solaris implementation of pthreads, where
       // ACE_thread_t and ACE_hthread_t are the same.
@@ -844,7 +875,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (thr_handle != 0)
 	*thr_handle = ACE_OS::NULL_hthread;
 #endif /* ACE_HAS_STHREADS */
-#endif /* ACE_HAS_SETKIND_NP */
       return result;
 #elif defined (ACE_HAS_STHREADS)
       int result;
@@ -863,17 +893,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (thr_handle == 0)
 	thr_handle = &handle;
 
-      ACE_Win32_Thread_Adapter *thread_args;
-  
-      ACE_NEW_RETURN (thread_args, ACE_Win32_Thread_Adapter (func, args), -1);
-
-      typedef unsigned (__stdcall *ThreadFunc) (void*);
+      ACE_Thread_Adapter *thread_args;
+      ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
 
 #if defined (ACE_HAS_MFC)
       if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
   	{
   	  CWinThread *cwin_thread = 
-  	    ::AfxBeginThread ((ThreadFunc) (ACE_Win32_Thread_Adapter::svc_run),
+  	    ::AfxBeginThread (ACE_THR_C_FUNC (&ace_thread_adapter)),
  			      thread_args, 0, 0, flags | THR_SUSPENDED);
  	  // Have to duplicate the handle because
  	  // CWinThread::~CWinThread() closes the original handle.
@@ -898,7 +925,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	*thr_handle = (void *) ::_beginthreadex 
 	  (NULL,
 	   stacksize,
-	   (ThreadFunc) (ACE_Win32_Thread_Adapter::svc_run),
+	   ACE_THR_C_FUNC (&ace_thread_adapter),
 	   thread_args,
 	   flags,
 	   (unsigned int *) thr_id);
@@ -906,7 +933,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #if 0
       *thr_handle = ::CreateThread 
 	 (NULL, stacksize,
-	  LPTHREAD_START_ROUTINE (ACE_Win32_Thread_Adapter::svc_run),
+	  LPTHREAD_START_ROUTINE (ACE_THR_C_FUNC (ace_thread_adapter),
 	  thread_args, flags, thr_id);
 #endif /* 0 */
 
@@ -1333,3 +1360,12 @@ siginfo_t::siginfo_t (ACE_HANDLE handle)
 {
 }
 #endif /* ACE_HAS_SIGINFO_T */
+
+// This is necessary to work around nasty problems with MVS C++.
+
+extern "C" void *
+ace_mutex_lock_cleanup_adapter (void *args)
+{
+  ACE_OS::mutex_lock_cleanup (args);
+  return 0;
+}

@@ -130,7 +130,7 @@ void
 ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
 {
   ACE_TRACE ("ACE_Profile_Timer::elapsed_rusage");
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_LIMITED_RUSAGE_T)
   // integral shared memory size
   usage.ru_ixrss = this->end_usage_.ru_ixrss - this->last_usage_.ru_ixrss;
   // integral unshared data "

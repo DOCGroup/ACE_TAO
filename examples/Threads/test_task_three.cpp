@@ -136,7 +136,7 @@ Test_Task::handle_input (ACE_HANDLE)
   return -1;
 }
 
-void * 
+static void *
 dispatch (void *arg)
 {
   // every thread must register the same stream to write to file
@@ -188,7 +188,7 @@ main (int argc, char **argv)
   Test_Task t1[TASK_COUNT];
   Test_Task t2[TASK_COUNT];
 
-  ACE_Thread::spawn (dispatch, reactor2);
+  ACE_Thread::spawn (ACE_THR_FUNC (dispatch), reactor2);
 
   reactor1->owner (ACE_OS::thr_self ());
 

@@ -591,6 +591,10 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #endif /* PTHREAD_CREATE_UNDETACHED */
 #endif /* PTHREAD_CREATE_JOINABLE */
 
+#if !defined (PTHREAD_CREATE_DETACHED)
+#define PTHREAD_CREATE_DETACHED 1
+#endif /* PTHREAD_CREATE_DETACHED */
+
 #if !defined (PTHREAD_PROCESS_PRIVATE)
 #if defined (PTHREAD_MUTEXTYPE_FAST)
 #define PTHREAD_PROCESS_PRIVATE PTHREAD_MUTEXTYPE_FAST
@@ -1755,12 +1759,19 @@ union semun
 #define ACE_MAXCLIENTIDLEN MAXHOSTNAMELEN + 20
 
 // Create some useful typedefs.
-#if defined (VXWORKS)
-typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
-#else /* ! VXWORKS */
-typedef void *(*ACE_THR_FUNC)(void *);
-#endif /* ! VXWORKS */
 typedef const char **SYS_SIGLIST;
+typedef void *(*ACE_THR_FUNC)(void *);
+
+extern "C"
+{
+#if defined (VXWORKS)
+typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
+#elif defined (ACE_WIN32)
+typedef unsigned (__stdcall *ACE_THR_C_FUNC) (void*);
+#else
+typedef void *(*ACE_THR_C_FUNC)(void *);
+#endif /* ! VXWORKS */
+}
 
 #if !defined (MAP_FAILED)
 #define MAP_FAILED ((void *) -1)
@@ -2307,11 +2318,12 @@ public:
   // Keeps track of whether we've already initialized WinSock...
 #endif /* ACE_WIN32 */
 
+  static void mutex_lock_cleanup (void *mutex);
+  // Handle asynchronous thread cancellation cleanup.
+
 private:
   ACE_OS (void);
   // Ensure we can't define an instance of this class.
-
-  static void mutex_lock_cleanup (void *lock);
 };
 
 #include "ace/Trace.h"

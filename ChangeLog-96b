@@ -1,4 +1,31 @@
+Mon Nov 25 00:23:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create): Came up with a remarkably clever scheme
+ 	  that should make it possible to utilize the ACE library *without
+ 	  change* on MVS, where the frigging C++ compiler requires all
+ 	  functions passed to pthread_create() have an extern "C" linkage.
+  	  The trick was to generalize the thread adapter mechanism used
+ 	  for Win32.
+
+	* ace/OS: Added a new macro called ACE_PTHREAD_CLEANUP_PUSH that
+ 	  selects the right mechanism (e.g., ace_spawn_adapter or not) for
+ 	  passing functions to pthread_cleanup_push().
+	
+	* ace/config-mvs.h: Added a new macro called ACE_HAS_THR_C_FUNC
+ 	  which expresses the fact that the MVS C++ compiler *must* have
+ 	  an extern "C" function passed to pthread_create().
+
+	* ace/OS.h: Modified all uses of ACE_OS::mutex_lock_cleanup() to
+ 	  use the extern "C" ace_spawn_adapter() on platforms MVS like MVS
+ 	  that can't deal with non-C functions to pthread_create.  Thanks
+ 	  to Chuck Gehr for reporting this.
+
+	* ace/OS.cpp (thr_create): Added Chuck Gehr's patches for MVS.
+
 Sun Nov 24 12:30:45 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Added Chuck Gehr's <gehr@sweng.stortek.com> config-mvs.h
+ 	  file!
 
 	* ace: Began adding support for WinSock 2.0.  Thanks to Luca for
  	  this.

@@ -134,6 +134,14 @@ extern "C" char *mktemp (char *);
 // put them inside of here to reduce compiler overhead if we're not
 // inlining...
 
+#if defined (ACE_HAS_THR_C_FUNC)
+// This is necessary to work around nasty problems with MVS C++.
+extern "C" void *ace_mutex_lock_cleanup_adapter (void *args);
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_THR_C_FUNC (ace_mutex_lock_cleanup_adapter), (void *) A));
+#else
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_THR_FUNC (ACE_OS::mutex_lock_cleanup), (void *) A));
+#endif /* ACE_HAS_THR_C_FUNC */
+
 #if defined (ACE_HAS_REGEX)
 #include /**/ <regexpr.h>
 #endif /* ACE_HAS_REGEX */
@@ -677,27 +685,20 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   int result = -1;
 
 #if defined (ACE_HAS_SETKIND_NP)
-#if defined (ACE_HAS_PTHREAD_ATTR_INIT)                 
   if (::pthread_mutexattr_init (&attributes) == 0
       && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
       && ::pthread_mutex_init (m, &attributes) == 0)
 #else
-  if (::pthread_mutexattr_create (&attributes) == 0
-      && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
-      && ::pthread_mutex_init (m, attributes) == 0)
-#endif /* ACE_HAS_PTHREAD_ATTR_INIT */
-#else
   if (::pthread_mutexattr_init (&attributes) == 0
+#if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
+      && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
+#endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
       && ::pthread_mutex_init (m, &attributes) == 0)
 #endif /* ACE_HAS_SETKIND_NP */
     result = 0;
 
 #if defined (ACE_HAS_SETKIND_NP)
-#if defined (ACE_HAS_PTHREAD_ATTR_DESTROY)              
-  ::pthread_mutexattr_destroy (&attributes);
-#else
   ::pthread_mutexattr_delete (&attributes);
-#endif /* ACE_HAS_PTHREAD_ATTR_DESTROY */
 #else
   ::pthread_mutexattr_destroy (&attributes);
 #endif /* ACE_HAS_SETKIND_NP */
@@ -1044,13 +1045,11 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   int result = -1;
 
 #if defined (ACE_HAS_SETKIND_NP)
-#if defined (ACE_HAS_PTHREAD_ATTR_INIT)               
   if (::pthread_condattr_init (&attributes) == 0
       && ::pthread_cond_init (cv, &attributes) == 0
-#else
-  if (::pthread_condattr_create (&attributes) == 0
-      && ::pthread_cond_init (cv, attributes) == 0
-#endif /* ACE_HAS_PTHREAD_ATTR_INIT */
+#if defined (ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP)
+      && ::pthread_condattr_setkind_np (&attributes, type) == 0
+#endif /* ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP */
 #else
   if (::pthread_condattr_init (&attributes) == 0
       && ::pthread_cond_init (cv, &attributes) == 0
@@ -1062,11 +1061,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   result = 0;
 
 #if defined (ACE_HAS_SETKIND_NP)                
-#if defined (ACE_HAS_PTHREAD_ATTR_DESTROY)        
-  ::pthread_condattr_destroy (&attributes);
-#else
   ::pthread_condattr_delete (&attributes);
-#endif /* ACE_HAS_PTHREAD_ATTR_DESTROY */
 #else
   ::pthread_condattr_destroy (&attributes);
 #endif /* ACE_HAS_SETKIND_NP */
@@ -1347,7 +1342,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), ace_result_), int, -1);
 #else // NT, POSIX, and VxWorks don't support this natively.
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) &rw->lock_);
+  ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* ACE_HAS_DCETHREADS */
   int result = 0;
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
@@ -1503,8 +1498,8 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), ace_result_), int, -1);
 #else // NT, POSIX, and VxWorks don't support this natively.
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) &rw->lock_);
-#endif
+  ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
+#endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   int result = 0; 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
     result = -1; // -1 means didn't get the mutex.
@@ -1529,7 +1524,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
     ACE_OS::mutex_unlock (&rw->lock_);
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   pthread_cleanup_pop (0);
-#endif
+#endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   return 0;
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -2815,7 +2810,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   int result = 0;
 
-  pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) &s->lock_);
+  ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
 
   if (ACE_OS::mutex_lock (&s->lock_) != 0)
     result = -1;
@@ -2914,7 +2909,7 @@ ACE_INLINE int
 ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 {
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#if defined (ACE_HAS_TID_T) && !defined (ACE_HAS_SETKIND_NP)
+#if defined (ACE_HAS_TID_T) && !defined (ACE_HAS_SETKIND_NP) && !defined (ACE_HAS_PTHREAD_EQUAL)
   return t1 == t2; // I hope these aren't structs!
 #elif defined (pthread_equal)
 // If it's a macro we can't say "::pthread_equal"...
@@ -2974,9 +2969,9 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_SETKIND_NP)
+#if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_SETKIND_NP) && !defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
   *data = ::pthread_getspecific (key);
-#elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP)
+#elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
   ::pthread_getspecific (key, data);
 #else /* ACE_HAS_FSU_PTHREADS */
   // Is this really used anywhere?
@@ -3157,7 +3152,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 				       ace_result_),
 		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#if defined (ACE_HAS_SETKIND_NP)
+#if defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_ONEARG_SIGWAIT)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigwait (set), 
                                        ace_result_), 
                      int, -1);
@@ -3271,8 +3266,11 @@ ACE_OS::thr_min_stack (void)
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_SETKIND_NP)
 #if defined (ACE_HAS_IRIX62_THREADS)
   return (size_t) ACE_OS::sysconf (_SC_THREAD_STACK_MIN);
-#else
+#if defined (PTHREAD_STACK_MIN)
   return PTHREAD_STACK_MIN;
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* PTHREAD_STACK_MIN */
 #endif /* ACE_HAS_IRIX62_THREADS */
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_SETKIND_NP)
   ACE_NOTSUP_RETURN (0);

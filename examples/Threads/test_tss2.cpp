@@ -33,7 +33,7 @@ public:
   ~TSS_Obj (void);
 
 private:
-  static int        count_;
+  static int count_;
   static ACE_Thread_Mutex  lock_;
 };
 
@@ -65,8 +65,7 @@ public:
 
   int open (void *arg);
 
-  static void* svc (void *arg);
-
+  void *svc (void *arg);
   static int wait_count_;
   static int max_count_;
 
@@ -105,17 +104,8 @@ Test_Task::~Test_Task (void)
   wait_count_--;
 }
 
-int Test_Task::open (void *arg)
-{
-
-  ACE_Thread::spawn (Test_Task::svc, arg);
-
-  return 0;
-}
-
-
-void * 
-Test_Task::svc (void *arg)
+int
+Test_Task::svc (void *)
 {
   ACE_TSS<TSS_Obj> tss (new TSS_Obj);
 
@@ -150,6 +140,14 @@ Test_Task::svc (void *arg)
     }
 
   delete (Test_Task *) arg;
+
+  return 0;
+}
+
+int 
+Test_Task::open (void *arg)
+{
+  ACE_Thread::spawn (Task_Task::svc, arg);
 
   return 0;
 }
