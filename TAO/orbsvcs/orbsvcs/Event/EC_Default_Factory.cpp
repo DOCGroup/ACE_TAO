@@ -37,7 +37,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       if (ACE_OS::strcmp (arg, "-ECdispatching") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -65,7 +65,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECfiltering") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -91,7 +91,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECtimeout") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -119,7 +119,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECobserver") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -145,7 +145,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECpushsupplierset") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -171,7 +171,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECproxyconsumerlock") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -201,7 +201,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECproxysupplierlock") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -231,7 +231,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECconsumeradminlock") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -261,7 +261,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
       else if (ACE_OS::strcmp (arg, "-ECsupplieradminlock") == 0)
         {
           arg_shifter.consume_arg ();
-          
+
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
@@ -462,38 +462,6 @@ void
 TAO_EC_Default_Factory::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set *x)
 {
   delete x;
-}
-
-PortableServer::POA_ptr
-TAO_EC_Default_Factory::consumer_poa (CORBA::Environment&)
-{
-  return PortableServer::POA::_duplicate (this->consumer_poa_.in ());
-}
-
-PortableServer::POA_ptr
-TAO_EC_Default_Factory::supplier_poa (CORBA::Environment&)
-{
-  return PortableServer::POA::_duplicate (this->supplier_poa_.in ());
-}
-
-int
-TAO_EC_Default_Factory::consumer_poa (PortableServer::POA_ptr poa)
-{
-  if (!CORBA::is_nil (this->consumer_poa_.in ()))
-    return -1;
-
-  this->consumer_poa_ = PortableServer::POA::_duplicate (poa);
-  return 0;
-}
-
-int
-TAO_EC_Default_Factory::supplier_poa (PortableServer::POA_ptr poa)
-{
-  if (!CORBA::is_nil (this->supplier_poa_.in ()))
-    return -1;
-
-  this->supplier_poa_ = PortableServer::POA::_duplicate (poa);
-  return 0;
 }
 
 ACE_Lock*

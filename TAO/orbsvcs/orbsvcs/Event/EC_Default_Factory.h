@@ -36,15 +36,14 @@ class TAO_EC_SupplierFiltering;
 class TAO_ORBSVCS_Export TAO_EC_Default_Factory : public TAO_EC_Factory
 {
   // = TITLE
-  //   The factory for a simple event channel.
+  //   A generic factory for EC experimentation.
   //
   // = DESCRIPTION
-  //   An slightly more advanced configuration than the
-  //   EC_Null_Factory, this class configure an event channel that can
-  //   support filtering and correlation. Still dispatching is not
-  //   prioritized and all the filtering is done at the consumer level.
-  //   A fixed POA is used for servant activation.
-  //   This object creates a single instance of the Supplier
+  //   This class allows the user to experiment with different EC
+  //   configurations.  Using a command-line like interface the user
+  //   can specify which strategies will this factory generate.
+  //   Since the class can be dynamically loaded the strategies can be 
+  //   set in the service configurator file.
   //
   // = MEMORY MANAGMENT
   //   A single event channel instance can be used with an instance of
@@ -63,7 +62,7 @@ public:
 
   TAO_EC_SupplierFiltering*
       supplier_filtering (TAO_EC_Event_Channel *ec);
-  // Helper method, the supplier filtering could be shared between all 
+  // Helper method, the supplier filtering could be shared between all
   // the ProxyPushConsumer objects. In that case it is created and
   // owned by the factory.
   // Alternatively each ProxyPushConsumer could have its own, in that
@@ -107,15 +106,6 @@ public:
   virtual void
       destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
 
-  virtual PortableServer::POA_ptr
-       consumer_poa (CORBA::Environment& env);
-  virtual PortableServer::POA_ptr
-       supplier_poa (CORBA::Environment& env);
-  virtual int
-       consumer_poa (PortableServer::POA_ptr);
-  virtual int
-       supplier_poa (PortableServer::POA_ptr);
-
   virtual ACE_Lock* create_consumer_lock (void);
   virtual void destroy_consumer_lock (ACE_Lock*);
   virtual ACE_Lock* create_supplier_lock (void);
@@ -137,10 +127,6 @@ private:
   int consumer_admin_lock_;
   int supplier_admin_lock_;
   // Several flags to control the kind of object created.
-  
-  PortableServer::POA_var consumer_poa_;
-  PortableServer::POA_var supplier_poa_;
-  // The POAs
 
   TAO_EC_SupplierFiltering* supplier_filtering_;
   // The filtering strategy

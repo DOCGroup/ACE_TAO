@@ -14,9 +14,14 @@
 
 ACE_RCSID(Event, EC_Event_Channel, "$Id$")
 
-TAO_EC_Event_Channel::TAO_EC_Event_Channel (TAO_EC_Factory* factory,
-                                            int own_factory)
-  : factory_ (factory),
+TAO_EC_Event_Channel::
+TAO_EC_Event_Channel (PortableServer::POA_ptr supplier_poa,
+                      PortableServer::POA_ptr consumer_poa,
+                      TAO_EC_Factory* factory,
+                      int own_factory)
+  : supplier_poa_ (PortableServer::POA::_duplicate (supplier_poa)),
+    consumer_poa_ (PortableServer::POA::_duplicate (consumer_poa)),
+    factory_ (factory),
     own_factory_ (own_factory)
 {
   if (this->factory_ == 0)
@@ -73,12 +78,12 @@ TAO_EC_Event_Channel::activate (CORBA::Environment& ACE_TRY_ENV)
   this->timeout_generator_->activate ();
 
   PortableServer::POA_var supplier_poa =
-    this->factory_->supplier_poa (ACE_TRY_ENV);
+    this->supplier_poa (ACE_TRY_ENV);
   ACE_CHECK;
   this->supplier_admin_->set_default_POA (supplier_poa.in ());
 
   PortableServer::POA_var consumer_poa =
-    this->factory_->consumer_poa (ACE_TRY_ENV);
+    this->consumer_poa (ACE_TRY_ENV);
   ACE_CHECK;
   this->consumer_admin_->set_default_POA (consumer_poa.in ());
 }

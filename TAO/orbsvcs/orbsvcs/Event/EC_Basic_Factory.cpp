@@ -140,18 +140,6 @@ TAO_EC_Basic_Factory::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_
   delete x;
 }
 
-PortableServer::POA_ptr
-TAO_EC_Basic_Factory::consumer_poa (CORBA::Environment&)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
-}
-
-PortableServer::POA_ptr
-TAO_EC_Basic_Factory::supplier_poa (CORBA::Environment&)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
-}
-
 ACE_Lock*
 TAO_EC_Basic_Factory::create_consumer_lock (void)
 {

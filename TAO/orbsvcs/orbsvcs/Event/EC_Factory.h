@@ -120,17 +120,6 @@ public:
       destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*) = 0;
   // Create and destroy a ProxyPushSupplier_Set
 
-  virtual PortableServer::POA_ptr
-       consumer_poa (CORBA::Environment& env) = 0;
-  virtual PortableServer::POA_ptr
-       supplier_poa (CORBA::Environment& env) = 0;
-  // The Event Channel uses this methods to control the activation of
-  // the run-time servants.
-
-  virtual int consumer_poa (PortableServer::POA_ptr);
-  virtual int supplier_poa (PortableServer::POA_ptr);
-  // Modifier, return -1 on failure.
-
   virtual ACE_Lock* create_consumer_lock (void) = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;
   virtual ACE_Lock* create_supplier_lock (void) = 0;
