@@ -1,3 +1,19 @@
+Wed Jul  7 12:49:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+	* orbsvcs/tests/Concurrency/CC_client.cpp:
+	* orbsvcs/tests/Concurrency/CC_command.cpp:
+	* orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+	* orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+	* orbsvcs/tests/Concurrency/CC_tests.cpp:
+	  The concurrency service compiles now, and does not use any of
+	  the old TAO_TRY macros.  It is still disabled because it is so
+	  rarely used.
+
+	* tests/NestedUpcall/Simple/Makefile:
+	  Updated dependencies
+
 Wed Jul 07 12:41:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/compiler.html: Added documentation on how to control the
