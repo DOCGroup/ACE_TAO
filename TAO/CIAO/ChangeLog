@@ -1,3 +1,15 @@
+
+Mon May 24 14:13:51 2004  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager.cpp:
+
+        * DnC/DomainApplication/DomainApplication.h:
+        * DnC/DomainApplication/DomainApplication.cpp:
+
+          Added these files.
+
+
 Mon May 24 21:18:07 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/Hello/descriptors/run_test_remote.pl:
@@ -33,6 +45,7 @@ Mon May 24 11:50:15 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * DnC/Config_Handlers/Plan_Handler.cpp:
 
           Added changes to reflect the changes made in the IDL file.
+
 
 Sun May 23 14:31:51 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
