@@ -1,3 +1,8 @@
+Fri Jan 23 15:04:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Fixed ACE_WCSDUP_EQUIVALENT for CBuilderX Preview
+
 Fri Jan 23 07:20:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
