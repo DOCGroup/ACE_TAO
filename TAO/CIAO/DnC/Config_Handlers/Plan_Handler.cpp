@@ -36,6 +36,7 @@ void Plan_Handler::process_plan(Deployment::DeploymentPlan& plan)
     {
       XStr node_name (node->getNodeName ());
 
+
       if (node_name == XStr
           (ACE_TEXT ("Deployment:DeploymentPlan")))
         {

@@ -30,6 +30,8 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
   // Get name of the current element
   XStr name (node->getNodeName ());
 
+
+
   // Initialize the ORB so that CORBA::Any will work
   int argc = 0;
   char ** argv = 0;
