@@ -1,3 +1,14 @@
+Fri Jul 26 10:37:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_pss.doxygen:
+          Added doxygen config file to generate the new TAO PSS.
+
+        * bin/generate_doxygen_pl:
+          Added tao_pss.doxygen to the list of files to generate.
+
+        * htlm/index.html:
+          Added link for the new PPS doxygen documentation.
+
 Thu Jul 25 22:58:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Synch.cpp: Removed explicit instantiation of
