@@ -19,7 +19,7 @@
 #include "options.h"
 
 // @@ Naga, can you please generalize this so we don't use a fixed
-// sized constant?! 
+// sized constant?!
 #define MAX_IOR_SIZE 512
 
 // Constructor.p
@@ -99,6 +99,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_STRUCT_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "objref"))
           this->test_type_ = Options::TEST_OBJREF;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "typecode"))
+          this->test_type_ = Options::TEST_TYPECODE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "any"))
           this->test_type_ = Options::TEST_ANY;
         break;
