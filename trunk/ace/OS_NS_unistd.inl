@@ -114,7 +114,8 @@ ACE_OS::chdir (const char *path)
   ACE_NOTSUP_RETURN (-1);
 
 #elif defined (ACE_PSOS)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), ace_result_),
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), result),
                      int, -1);
 
 // This #elif seems weird... is Visual Age on NT not setting ACE_WIN32?
@@ -1252,13 +1253,14 @@ ACE_OS::unlink (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
 # if defined (VXWORKS)
-    ACE_OSCALL_RETURN (::unlink (const_cast<char *> (path)), int, -1);
+  ACE_OSCALL_RETURN (::unlink (const_cast<char *> (path)), int, -1);
 # elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
-    ACE_OSCALL_RETURN (::remove_f ((char *) path), int , -1);
+  ACE_OSCALL_RETURN (::remove_f ((char *) path), int , -1);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_C_LIBRARY)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path),
-                                                   ace_result_),
-                       int, -1);
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path),
+                                       result),
+                     int, -1);
 # elif defined (ACE_HAS_WINCE)
   // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),

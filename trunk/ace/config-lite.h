@@ -376,39 +376,41 @@
 # endif /* ACE_HAS_ALLOC_HOOKS */
 
 // ============================================================================
-// ACE_OSCALL_* macros
-//
-// The following two macros ensure that system calls are properly
-// restarted (if necessary) when interrupts occur.
+/**
+ * ACE_OSCALL* macros
+ *
+ * @deprecated ACE_OSCALL_RETURN and ACE_OSCALL should not be used.
+ *             Please restart system calls in your application code.
+ *             See the @c sigaction(2) man page for documentation
+ *             regarding enabling restartable system calls across
+ *             signals via the @c SA_RESTART flag.
+ *
+ * The following two macros used ensure that system calls are properly
+ * restarted (if necessary) when interrupts occur.  However, that
+ * capability was never enabled by any of our supported platforms.
+ * In fact, some parts of ACE would not function properly when that
+ * ability was enabled.  Furthermore, they assumed that ability to
+ * restart system calls was determined statically.  That assumption
+ * does not hold for modern platforms, where that ability is
+ * determined dynamically at run-time.
+ */
 // ============================================================================
 
-#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
-#   define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
+#define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
   do \
-    RESULT = (TYPE) OP; \
-  while (RESULT == FAILVALUE && errno == EINTR)
-#   define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) \
-  do { \
-    TYPE ace_result_; \
-    do \
-      ace_result_ = (TYPE) OP; \
-    while (ace_result_ == FAILVALUE && errno == EINTR); \
-    return ace_result_; \
-  } while (0)
-# elif defined (ACE_WIN32)
-#   define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
-  do \
-    return (TYPE) X; \
+    return static_cast< TYPE > (X); \
   while (0)
-#   define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
+#define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
   do \
-    RESULT = (TYPE) X; \
+    RESULT = static_cast< TYPE > (X); \
   while (0)
+
+#if defined (ACE_WIN32)
 #   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x550)
 #   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_; \
-    TYPE ace_local_result_ = (TYPE) X; \
+    TYPE ace_local_result_ = static_cast< TYPE > (X); \
     ace_result_ = ace_local_result_; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
@@ -417,8 +419,7 @@
 #   else
 #     define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
-    TYPE ace_result_; \
-    ace_result_ = (TYPE) X; \
+    TYPE ace_result_ = static_cast< TYPE > (X); \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
@@ -426,14 +427,11 @@
 #   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x550) */
 #   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
-    RESULT = (TYPE) X; \
+    RESULT = static_cast< TYPE > (X); \
     if (RESULT == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
   } while (0)
-#else /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
-#   define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
-#   define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
-#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
+#endif  /* ACE_WIN32 */
 
 // ============================================================================
 // at_exit declarations
