@@ -43,5 +43,7 @@
 #define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 #endif
 
+#define ACE_NEEDS_DL_UNDERSCORE
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */

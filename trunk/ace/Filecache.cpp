@@ -13,7 +13,7 @@ ACE_RCSID(ace, Filecache, "$Id$")
 #else
 #define R_MASK S_IRUSR|S_IRGRP|S_IROTH
 #define W_MASK S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH
-#endif /* __BORLANDC__ */
+#endif /* ACE_WIN32 */
 
 #if defined (ACE_WIN32)
 // See if you can get rid of some of these.

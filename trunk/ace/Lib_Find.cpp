@@ -192,7 +192,7 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
                                                searchfilename,
                                                dll_suffix,
                                                ACE_static_cast (DWORD,
-                                                               maxpathnamelen),
+                                                                maxpathnamelen),
                                                pathname,
                                                &file_component);
           if (pathlen >= maxpathnamelen)
@@ -378,7 +378,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
 {
   ACE_TRACE ("ACE_Lib_Find::ldname");
 
-#if defined (__BORLANDC__) || defined(ACE_NEEDS_DL_UNDERSCORE)
+#if defined(ACE_NEEDS_DL_UNDERSCORE)
   size_t size =
     1 // leading '_'
     + ACE_OS::strlen (entry_point)
@@ -393,7 +393,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
   ACE_OS::strcat (new_name, entry_point);
 
   return new_name;
-#else /* __BORLANDC__ || ACE_NEEDS_DL_UNDERSCORE */
+#else /* ACE_NEEDS_DL_UNDERSCORE */
   size_t size =
     ACE_OS::strlen (entry_point)
     + 1;
@@ -406,7 +406,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
   ACE_OS::strcpy (new_name, entry_point);
 
   return new_name;
-#endif /* __BORLANDC__ || ACE_NEEDS_DL_UNDERSCORE */
+#endif /* ACE_NEEDS_DL_UNDERSCORE */
 }
 
 int

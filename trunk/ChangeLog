@@ -1,3 +1,25 @@
+Tue Jun 17 05:37:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Added remedy info
+
+        * ace/DLL.cpp:
+          Removed duplicate space in debug line
+
+        * ace/DLL_Manager.cpp:
+          Corrected incorrect classname in debug line and when having problems
+          loading a DLL, report also the name of the dll.
+
+        * ace/Filecache.cpp:
+          Corrected incorrect comment
+
+        * ace/config-win32-borland.h:
+          Added define ACE_NEEDS_DL_UNDERSCORE
+
+        * ace/Lib_Find.cpp:
+          Removed special borland check because for borland we set now
+          ACE_NEEDS_DL_UNDERSCORE
+
 Mon Jun 16 22:24:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Priority_Reactor.h: Fixed typos in the operator= and copy
@@ -13,7 +35,7 @@ Mon Jun 16 11:13:22 2003  Chris Cleeland  <cleeland@ociweb.com>
 Fri Jun 13 13:13:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release: Remeved the generation of a README file in
-	  TAO/orbsvcs. 
+	  TAO/orbsvcs.
 
 Fri Jun 13 06:02:32 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -32,12 +54,12 @@ Thu Jun 12 15:20:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ace/Template_Instantiations.cpp: This file now contains some
 	  useful template definitions that would be used by ACE+TAO and
 	  its applications. We have started by doing
-	  ACE_Unbounded_Queue<long>. In future we will add other basic 
+	  ACE_Unbounded_Queue<long>. In future we will add other basic
 	  types on a case by case basis.
 
 	* ace/Stats.cpp: Removed the template instantiations of
 	  ACE_Unbounded_Queue<long> since it has now been moved to another
-	  file. 
+	  file.
 
 	* ace/Makefile.ace: Compile the file Template_Instantiations.cpp
 	  in normal builds.
@@ -56,7 +78,7 @@ Wed Jun 11 16:27:41 2003  Steve Huston  <shuston@riverace.com>
 
 Wed Jun 11 07:28:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-lynxos.h: 
+	* ace/config-lynxos.h:
 	* examples/C++NPv1/Logging_Client.cpp:
 	* examples/C++NPv2/Select_Reactor_Logging_Server.cpp: Applied
 	  patches from Olli Savia <ops@iki.fi> to get the C++NPv examples

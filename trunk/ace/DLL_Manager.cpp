@@ -108,7 +108,8 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::open: Invalid handle: %s\n"),
+                                 ACE_LIB_TEXT ("ACE_DLL_Handle::open: Invalid handle when opening DLL %s: %s\n"),
+                                 this->dll_name_,
                                  this->error ()->c_str ()),
                                 -1);
             }
@@ -334,7 +335,8 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
           // the handle_vector_ will be cleaned up automatically later.
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("ACE_DLL_Manager::open_dll: Could not ")
-                             ACE_LIB_TEXT ("open dll.\n")),
+                             ACE_LIB_TEXT ("open dll %s.\n"),
+                             dll_name),
                             0);
         }
     }
