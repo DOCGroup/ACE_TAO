@@ -5133,7 +5133,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; i++)
     {
        result = ACE_OS::sendto (handle,
-                                ACE_reinterpret_cast(char*,
+                                ACE_reinterpret_cast(char* ACE_CAST_CONST,
                                                      buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,
