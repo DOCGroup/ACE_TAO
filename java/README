@@ -33,7 +33,8 @@ service, and test).  The solutions and projects are in
 MSVJProjects.zip.
 
 If you don't have VJ++ and are using the JDK from the command line,
-you can compile JACE with the batch files in makebat.zip.
+you can compile JACE with the batch files in makebat.zip in the JACE
+subdirectory.
 
 Generate the javadoc documentation with the makedoc.bat file (also
 in makebat.zip).
