@@ -451,11 +451,7 @@ namespace CCF
         }
 
         void
-        add_edge_left (Names& e)
-        {
-          names_.push_back (&e);
-          names_map_[e.name ()].push_back (&e);
-        }
+        add_edge_left (Names& e);
 
         void
         add_edge_left (Extends& e)
@@ -466,7 +462,6 @@ namespace CCF
         void
         add_edge_right (Extends& e)
         {
-          extends_.push_back (&e);
         }
 
         using Nameable::add_edge_right;
