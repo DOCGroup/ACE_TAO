@@ -1,3 +1,11 @@
+Sun Jun 27 17:56:19 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp,
+	  tao/Sequence.i: Updated all ACE_TEMPLATE_SPECIALIZATION
+	  macros that are used for *methods* to be
+ 	  ACE_TEMPLATE_METHOD_SPECIALIZATION to make certain compilers
+ 	  like SunC++ 5.0 happy.
+
 Sun Jun 27 17:10:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/TAO-Tests.dsw:
