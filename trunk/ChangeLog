@@ -1,3 +1,12 @@
+Fri Sep  5 13:39:07 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/client.mpb:
+        * bin/MakeProjectCreator/config/server.mpb:
+
+          I realized that many more mpc projects use client and server. 
+          They should be converted to use taoserver and taoclient, but until
+          that happens I will put these back.
+
 Fri Sep  5 08:20:15 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/avstreams.mpb:
