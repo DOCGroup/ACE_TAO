@@ -1,4 +1,8 @@
-Thu Feb 26 03:18:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Feb 26 05:39:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/NestedUpcall/NestedUpcall.dsw:
+	* tests/NestedUpcall/client.dsp:
+	* tests/nestedupcall/server.dsp: New project files for NT.
 
 	* tests/Cubit/TAO/IDL_Cubit/server.cpp (init_naming_service,main):
 	  Appended a return at the end.
