@@ -484,7 +484,7 @@ DRV_pre_proc (const char *myfile)
   
   ACE_HANDLE fd = ACE_OS::open (tmp_file, 
                                 O_WRONLY | O_CREAT | O_TRUNC, 
-                                0777);
+                                ACE_DEFAULT_FILE_PERMS);
 
   if (fd == ACE_INVALID_HANDLE)
     {

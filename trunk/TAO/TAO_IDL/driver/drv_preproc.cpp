@@ -483,12 +483,7 @@ DRV_pre_proc (const char *myfile)
 
   ACE_HANDLE fd = ACE_OS::open (tmp_file,
                                 O_WRONLY | O_CREAT | O_TRUNC,
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-                                ACE_DEFAULT_FILE_PERMS | FILE_SHARE_DELETE
-# else
-                                ACE_DEFAULT_FILE_PERMS
-#endif /* ACE_WIN32 && ! ACE_HAS_WINCE */
-                                );
+                                ACE_DEFAULT_FILE_PERMS);
 
   if (fd == ACE_INVALID_HANDLE)
     {
