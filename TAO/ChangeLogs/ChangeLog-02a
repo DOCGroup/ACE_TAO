@@ -1,3 +1,8 @@
+Sat Apr 14 23:57:01 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	  Reverted changes, they would not compile on any platform.
+
 2001-04-14  Yamuna Krishnamurthy  <yamuna@localhost.localdomain>
 
 	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile: 
