@@ -20,7 +20,7 @@ NestedUpCalls_Server::parse_args (void)
       case 'd':  // debug flag.
         TAO_debug_level++;
         break;
-	  case 'o': // output the IOR to a file.
+          case 'o': // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -100,8 +100,8 @@ NestedUpCalls_Server::init_naming_service (CORBA::Environment& env)
   orb = this->orb_manager_.orb ();
   child_poa = this->orb_manager_.child_poa ();
 
-  result = this->my_name_server_.init (orb,
-                                       child_poa);
+  result = this->my_name_server_.init (orb.in (),
+                                       child_poa.in ());
   if (result < 0)
     return result;
   reactor_ = this->reactor_impl_._this (env);
@@ -121,8 +121,8 @@ NestedUpCalls_Server::init_naming_service (CORBA::Environment& env)
   reactor_name.length (1);
   reactor_name[0].id = CORBA::string_dup ("nested_up_calls_reactor");
   this->naming_context_->bind (reactor_name,
-							   reactor_.in (),
-			                   env);
+                                                           reactor_.in (),
+                                           env);
   TAO_CHECK_ENV_RETURN (env,-1);
   return 0;
 }
