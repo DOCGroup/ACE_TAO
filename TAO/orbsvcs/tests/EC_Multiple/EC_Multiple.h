@@ -163,10 +163,10 @@ public:
     MAX_EVENTS = 1024,
     // Maximum number of events to send...
 
-    MAX_CONSUMERS = 100,
+    MAX_CONSUMERS = 1024,
     // Maximum number of consumers.
 
-    MAX_SUPPLIERS = 100
+    MAX_SUPPLIERS = 1024
     // Maximum number of suppliers.
   };
 
