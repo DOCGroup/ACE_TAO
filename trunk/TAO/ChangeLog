@@ -1,3 +1,32 @@
+Fri Jul 26 08:08:47 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Callback/Callback.mpc:
+        * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+        * performance-tests/Cubit/TAO/DII_Cubit/cubit.idl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Latency/AMH/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/AMI/AMI.mpc:
+        * performance-tests/Latency/DII/DII.mpc:
+        * performance-tests/Latency/DSI/DSI.mpc:
+        * performance-tests/Latency/Deferred/Deferred.mpc:
+        * performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
+        * performance-tests/Latency/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/POA/Create_Reference/Create_Reference.mpc:
+        * performance-tests/POA/Demux/Demux.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+        * performance-tests/POA/Object_Creation_And_Registration/Object_Creation_And_Registration.mpc:
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
+        * performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Throughput/Throughput.mpc:
+
+          Added mpc files for the TAO performance tests.
+
 Fri Jul 26 10:27:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Exceptions/server.cpp:

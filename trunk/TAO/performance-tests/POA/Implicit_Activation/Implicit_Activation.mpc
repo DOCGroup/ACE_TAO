@@ -1,0 +1,24 @@
+project: server {
+  Source_Files {
+    Factory.cpp
+    Simple.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+
+project(collocated): server {
+  exename = collocated
+
+  Source_Files {
+    Simple.cpp
+    collocated.cpp
+  }
+}
+
