@@ -1,5 +1,8 @@
 Mon Feb 16 17:22:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: Changed LDFLAGS to link orbsvcs
+	library.
+
 	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: Added code to register 
 	IDL_Cubit/cubit_factory name with the naming service.
 
