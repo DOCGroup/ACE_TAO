@@ -1,3 +1,16 @@
+Tue Sep  8 21:47:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Simple/grid/Grid_i.cpp: Changed some RANGE_ERRORs
+	  to Grid::RANGE_ERROR to compile on MSVC.
+
+	* tests/Simple/grid/run_test.pl: Some changes with ACE
+	  object, and use lib.
+
+	* tests/Simple/grid/Grid.dsw:
+	* tests/Simple/grid/client.dsp:
+	* tests/Simple/grid/server.dsp:
+	  MSVC 5/6 project files.
+
 Tue Sep  8 21:45:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* *.{dsp,dsw}: Updated for VC 6.
