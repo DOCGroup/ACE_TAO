@@ -71,7 +71,7 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
 
 class Dumb_String
   // = DESCRIPTION
-  //     Desperate times call for desparate measures.  Bug your compiler
+  //     Desperate times call for desperate measures.  Bug your compiler
   //     vendor to support template specialization.
 {
 public:
