@@ -5322,7 +5322,10 @@ ACE_OS::ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
 {
   // buflen must be at least 26 wchar_t long.
   if (buflen < 26)              // Again, 26 is a magic number.
-    return 0;
+    {
+      errno = ERANGE;
+      return 0;
+    }
   // This is really stupid, converting FILETIME to timeval back and
   // forth.  It assumes FILETIME and DWORDLONG are the same structure
   // internally.

@@ -8646,16 +8646,16 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
-  ACE_TCHAR *result ;
-  ACE_TCHAR result_buf[ctime_buf_size];
-
+  if (buflen < ctime_buf_size)
+    {
+      errno = ERANGE;
+      return 0;
+    }
 #      if defined (DIGITAL_UNIX)
-  ACE_OSCALL (::_Pctime_r (t, result_buf), ACE_TCHAR *, 0, result);
+  ACE_OSCALL_RETURN (::_Pctime_r (t, buf), ACE_TCHAR *, 0);
 #      else /* DIGITAL_UNIX */
-  ACE_OSCALL (::ctime_r (t, result_buf), ACE_TCHAR *, 0, result);
+  ACE_OSCALL_RETURN (::ctime_r (t, buf), ACE_TCHAR *, 0);
 #      endif /* DIGITAL_UNIX */
-  if (result != 0)
-    ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
@@ -8671,13 +8671,18 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   ACE_OS::strsncpy (buf, "ctime-return", buflen);
   return buf;
 #   else /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
+  if (buflen < ctime_buf_size)
+    {
+      errno = ERANGE;
+      return 0;
+    }
 
   ACE_TCHAR *result;
 #     if defined (ACE_USES_WCHAR)
   ACE_OSCALL (::_wctime (t), wchar_t *, 0, result);
-#     else /* ACE_WIN32 */
+#     else /* ACE_USES_WCHAR */
   ACE_OSCALL (::ctime (t), char *, 0, result);
-#     endif /* ACE_WIN32 */
+#     endif /* ACE_USES_WCHAR */
   if (result != 0)
     ACE_OS::strsncpy (buf, result, buflen);
   return buf;
