@@ -1,3 +1,10 @@
+Tue Aug 12 17:49:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: 
+	* examples/RTScheduling/MIF_Scheduler/run_test.pl: 
+
+	  Added scripts to run the RTScheduler examples.
+
 Tue Aug 12 06:27:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: Missed the
