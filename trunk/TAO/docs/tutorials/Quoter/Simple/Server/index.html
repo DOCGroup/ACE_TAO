@@ -13,17 +13,17 @@
     <h3>Introduction - A very simple server</h3>
 
     <P>Now that we know how to implement a
-      <A HREF="../Client/index.html">simple client</A> we need to
+      <A HREF="../Client/index.html">simple client</A>, we need to
       implement a server to test it out.
       We have to provide implementations for both the <CODE>Stock</CODE>
       and <CODE>Stock_Factory</CODE> interfaces,
-      and then create an executable that implements those interfaces.
+      and then create an executable that incorporates those implementations.
     </P>
 
     <H3>Implementing the <CODE>Stock</CODE> interface</H3>
 
-    <P>To keep things simple why don't we implement a <CODE>Stock</CODE>
-      object with a fixed price, the constructor will receive all the
+    <P>To keep things simple, let's implement a <CODE>Stock</CODE>
+      object with a fixed price.  The constructor will receive all the
       parameters:
     </P>
 <PRE>
@@ -40,7 +40,7 @@ private:
 };
 </PRE>
     <P>In a server, CORBA objects and functions are implemented and
-      represented by programming language functions and data. These 
+      represented by programming language data and functions. These 
       programming entities that implement and represent CORBA objects 
       are called <I>servants</I>. <I>Object Adapters</I> link the world of 
       CORBA objects to the world of programming language servants. They 
@@ -48,23 +48,23 @@ private:
       references and for dispatching requests to the appropriate
       servants. 
     </P>
-    <P>Notice the name of the base class, TAO implements the CORBA 2.2
-      specification, that includes the Portable Object Adapter (hence
+    <P>Notice the name of the base class.  TAO implements the CORBA 2.2
+      specification, which includes the Portable Object Adapter (hence
       the POA prefix).  This new Object Adapter fixes many problems
       with the previous versions of the CORBA specification, where the
-      so-called Basic Object Adapter was used.  Unfortunately the
+      so-called Basic Object Adapter was used.  Unfortunately, the
       specification was ambiguous and lead to incompatible (yet
-      compliant) specifications.
+      compliant) implementations.
       Code based on the POA, and conforming to the CORBA 2.2
-      specification is almost completely portable,
-      the only incompatibilities arise from the names of the
-      generated header files and and other minors things like that.
+      specification, is almost completely portable,
+      the only incompatibilities arising from the names of the
+      generated header files and and other minor things.
       Those problems can be easily wrapped in helper classes, and the
       file names can be controlled through IDL compiler options in
       most cases.
     </P>
-    <P>A server application may contain multiple POA instances. But, all 
-      these server applications have atleast one POA called the <I>RootPOA</I>.
+    <P>A server application may contain multiple POA instances, but all 
+      server applications have at least one POA called the <I>RootPOA</I>.
     <P>We have to implement the operations and attributes:
     </P>
 <PRE>
@@ -88,7 +88,7 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
     </P>
     <P>The first question is what are those <CODE>throw()</CODE>
       specifications doing there?  Any CORBA operation or attribute
-      can raise a <CODE>CORBA::SystemException</CODE> the IDL compiler
+      can raise a <CODE>CORBA::SystemException</CODE>.  The IDL compiler
       must generate a throw specification that includes the CORBA
       system exceptions and any user exceptions listed in the
       <CODE>raise</CODE> clause.  In turn, the C++ specification requires
@@ -102,22 +102,22 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
 
     <P>It is important to copy the strings before returning them,
       because the ORB will use <CODE>CORBA::string_free</CODE> to release
-      them. The rationale is that over the network the string must be
+      them. The rationale is that over the network, the string must be
       copied anyway, hence, the client must be responsible for releasing
       the received string.  When both client and servers are in the same
       address space the ORB can optimize the path and invoke the server
       operation directly, without marshaling or demarshaling.  If the
-      client is going to work with both local and remote servers it
-      should always expect to own the string, in consequence the server
+      client is going to work with both local and remote servers, it
+      should always expect to own the string.  In consequence, the server
       implementation must always allocate a copy and return the copy,
       because the server-side must also work identically for local and
       remote clients.  The memory management rules in CORBA are a bit
       subtle, but there are some simple rules to follow:
       <UL>
-        <LI>You must make a copy of the memory that you return, the
+        <LI>You must make a copy of the memory that you return.  The
           caller is going to release it.
         </LI>
-        <LI>Conversely, you must release the memory returned to you, the
+        <LI>Conversely, you must release the memory returned to you.  The
         callee made a copy.
         </LI>
         <LI>You don't own the memory that you receive as input
@@ -127,19 +127,19 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
         after you return.
         </LI>
       </UL>
-      The complete memory management rules can be found in Henning and
+      The complete memory management rules can be found in the Henning and
       Vinoski book or the CORBA specification.
     </P>
 
-    <P>Typing all this code seems tedious, can't the IDL compiler
-      help with this? After all it seems like the method declarations
+    <P>Typing all this code seems tedious.  Can't the IDL compiler
+      help with this?  After all, it seems as if the method declarations
       are completely specified!  The answer is yes, TAO's IDL compiler
-      can generate empty implementations that you can modify, simply
+      can generate empty implementations that you can modify.  Simply
       use the <KBD>-GI</KBD> option:
 <PRE>
 $ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GI Quoter.idl
 </PRE>
-      the empty implementations are generated in the
+      The empty implementations are generated in the
       <CODE>QuoterI.h</CODE> and <CODE>QuoterI.cpp</CODE> files.
       Be advised that the <CODE>-GI</CODE> option overwrites these files
       every time, so it is better to copy your implementation to
@@ -186,11 +186,11 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
 
     <P>So what is that <CODE>_this()</CODE> method?  In the POA mapping
       the client-side stubs and server-side skeletons are not related
-      through inheritance, you must either explicitly activate the
+      through inheritance.  You must either explicitly activate the
       servant (your implementation object) or use <CODE>_this()</CODE> to
       activate it with its default POA.  <CODE>_this()</CODE> creates and 
       registers a CORBA object under the RootPOA, and returns the created 
-      object reference for the ne wobject. We will discuss more about
+      object reference for the new object. We will discuss more about
       explicit and implicit activation later, but at this point it is
       important to remove any thoughts about converting pointers to
       servants to object references or vice-versa, it just does not
@@ -199,8 +199,8 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
 
     <H3>Implementing a CORBA server</H3>
 
-    <P>Now that we have all the object implementations in place we
-      must create the server executable, we start with the ORB
+    <P>Now that we have all the object implementations in place, we
+      must create the server executable.  We start with the ORB
       initialization:
     </P>
 <PRE>
@@ -213,15 +213,15 @@ int main (int argc, char* argv[])
                        "" /* the ORB name, it can be anything! */);
 </PRE>
 
-    <P>On startup the ORB starts the POA in the {\em holding state},
+    <P>On startup, the ORB starts the POA in the {<em>holding state</em>},
       where all requests received are not processed until the POA is
       activated.  Meanwhile the requests are stored to some
-      implementation limit, TAO sets this limit to 0, because queueing
+      implementation limit.  TAO sets this limit to 0, because queueing
       is a severe source of overhead and unpredictability in real-time
       systems.
     </P>
-    <P>What does this means for us? Well we have to activate the POA,
-      the process is a bit tedious, first we gain access to the
+    <P>What does this means for us? Well, we have to activate the POA.
+      The process is a bit tedious.  First we gain access to the
       RootPOA:
 <PRE>
     CORBA::Object_var poa_object =
@@ -229,14 +229,14 @@ int main (int argc, char* argv[])
     PortableServer::POA_var poa =
       PortableServer::POA::_narrow (poa_object.in ());
 </PRE>
-    <P>The <CODE>resolve_initial_references()</CODE> is used to bootstrap
-      all kinds of services, like the Naming Service, the Trading
+    <P><CODE>resolve_initial_references()</CODE> is used to bootstrap
+      all kinds of services, like the Naming Service and the Trading
       Service, but it is also used to gain access to other ORB
-      interfaces, such as the RootPOA, the Current objects and the
+      interfaces, such as the RootPOA, the Current objects, and the
       Policy Managers.
     </P>
-    <P>Now that we have gained access to the Root POA we must obtain
-      its POA manager, the POA managers provide interfaces to activate
+    <P>Now that we have gained access to the Root POA, we must obtain
+      its POA manager.  The POA managers provide interfaces to activate
       and deactivate one or more POAs:
     </P>
 <PRE>
@@ -250,8 +250,8 @@ int main (int argc, char* argv[])
 </PRE>
 
     <P>The shutdown process is similar to the client side, but now we
-      must also remember to destroy the POA, putting all the code
-      above together we get:
+      must also remember to destroy the POA.  Putting all the code
+      above together, we get:
     </P>
 <PRE>
 int main (int argc, char* argv[])
@@ -291,7 +291,7 @@ int main (int argc, char* argv[])
     Quoter::Stock_Factory_var stock_factory =
       stock_factory_i._this ();
 </PRE>
-    <P>next we convert the object reference into an IOR string, so it
+    <P>Next we convert the object reference into an IOR string, so it
       can be used by the client:
     </P>
 <PRE>
@@ -299,7 +299,7 @@ int main (int argc, char* argv[])
     std::cerr << ior.in () << std::endl;
 </PRE>
 
-    <P>There is only one final detail, we must run the ORB event loop
+    <P>There is only one final detail.  We must run the ORB event loop
       to start processing requests from the client:
     </P>
 <PRE>
@@ -308,16 +308,16 @@ int main (int argc, char* argv[])
 
     <P>There are many details that we have left out from this server,
       such as how to terminate the event loop, how to perform servant
-      memory management, orderly deactivation of servants and the fact
-      is that it is not very flexible.  But we have covered a number
+      memory management, orderly deactivation of servants, and the fact
+      is that it is not very flexible, but we have covered a number
       of other things, and more importantly we can test the client
       now!
     </P>
 
     <H3>Exercise 1</H3>
 
-    <P>Flesh out the implementation, you don't have to do it from
-      scratch, we provide you with the following files:
+    <P>Flesh out the implementation.  You don't have to do it from
+      scratch, as we provide you with the following files:
       <A HREF="Stock_i.h">Stock_i.h</A>,
       <A HREF="Stock_i.cpp">Stock_i.cpp</A>,
       <A HREF="Stock_Factory_i.h">Stock_Factory_i.h</A>
@@ -342,14 +342,14 @@ int main (int argc, char* argv[])
 $ server > ior_file
 $ client file://ior_file MSFT RHAT
 </PRE>
-      also test invalid symbols!
+      Also test invalid symbols!
     </P>
 
     <hr>
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Feb 17 16:05:23 PST 2000
+Last modified: Sun Apr  1 15:03:38 PDT 2001
 <!-- hhmts end -->
   </body>
 </html>

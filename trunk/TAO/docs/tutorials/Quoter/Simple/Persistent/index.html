@@ -23,37 +23,37 @@
       to create an object with a persistent object reference.
     </P>
     <P>
-      The characteristics of a POA are controlled via POA policies,
+      The characteristics of a POA are controlled via POA policies
       that are specified when the POA is created.
-      POA policies are have the same form: their values are specified
+      POA policies all have the same form:  their values are specified
       at creation time using an enumerated type.
       In our example we will use the <CODE>LifeSpanPolicy</CODE>
       that controls how the lifetime of object references relates to
-      the lifetime of the POAs that generate the object reference
-      and the <CODE>IdAssingmentPolicy</CODE> that controls how are
-      object ids assigned.
+      the lifetime of the POAs that generate the object references
+      and the <CODE>IdAssignmentPolicy</CODE> that controls how
+      object ids are assigned.
     </P>
 
     <P>
       CORBA Objects that can live irrespective of any particular
       process in which they are created or activated are called
-      <EM>Persistent Objects</EM>,
-      likewise,
-      shorter-lived objects whose life time is bound to the
+      <EM>Persistent Objects</EM>.
+      Likewise,
+      shorter-lived objects whose lifetimes are bound to the
       lifetime of the POA in which they are created are called
       <EM>Transient Objects</EM>.
-      Notice that this has nothing to do with the state of the object,
+      Notice that this has nothing to do with the state of the object:
       an application can create transient objects to access some
       persistent information maintained in a database.
       For exammple,
-      such  objects can represent a different session or transaction view
-      of the data,
-      similarly, some persistent object references may have no state
-      or no persistent state,
-      for example, a logging facility is persistent because it is
+      such objects can represent a different session or transaction view
+      of the data.
+      Similarly, some persistent object references may have no state
+      or no persistent state.
+      For example, a logging facility is persistent because it is
       always available, but it may maintain no state or simply cache
       some state for the current activation.
-      In general though,
+      In general, though,
       objects that have persistent state are accessed throught
       persistent object references.
     </P>
@@ -100,7 +100,7 @@
     <H3>Child POA Creation</H3>
      
     <P>
-      As before we first initialize the ORB,
+      As before, we first initialize the ORB,
       and obtain a reference to the Root POA.
     </P>
  <PRE>
@@ -112,7 +112,7 @@
  </PRE>    
 
     <P>
-      Next get the <CODE>POAManager</CODE> of the <CODE>RootPOA</CODE>
+      Next we get the <CODE>POAManager</CODE> of the <CODE>RootPOA</CODE>
       and use it to activate the <CODE>RootPOA</CODE>
     </P>
  <PRE>
@@ -131,7 +131,7 @@
       poa->create_lifespan_policy (PortableServer::PERSISTENT);
 </PRE>
     <P>
-      and next we create <CODE>IdAssignmentPolicy</CODE> object with
+      and next we create an <CODE>IdAssignmentPolicy</CODE> object with
       the <CODE>USER_ID</CODE> value:
     </P>
 <PRE>    
@@ -164,7 +164,7 @@
                         policies);
  </PRE>
     <P>The values which we pass to this <CODE>create_POA</CODE> operation are
-      the name of the child POA, the POAManager of the child POA and the 
+      the name of the child POA, the POAManager of the child POA, and the 
       <CODE>CORBA::PolicyList</CODE>.
       We can create a child controlled by a new
       <CODE>POAManager</CODE> by passing
@@ -172,9 +172,9 @@
       but commonly the <CODE>POAManager</CODE> of the parent is used.
     </P>
     <P>Finally, we can now destroy the life span policy and id assignment 
-      policy objects since they are no longer needed. The 
+      policy objects, since they are no longer needed. The 
       <CODE>create_POA</CODE> operation will make a copy of the objects in the 
-      policy list. And the newly created POA will refer to the copies of the 
+      policy list and the newly created POA will refer to the copies of the 
       objects passed to the <CODE>create_POA</CODE>.
     </P>
  <PRE>
@@ -228,8 +228,8 @@
     std::cout << ior.in () << std::endl;
  </PRE>
     <P>As we know already, the final step before a client's request can 
-      get processed would be to run the ORB event loop.And then to destroy
-      the POA waiting until the destruction terminates.
+      get processed would be to run the ORB event loop.  Last, we destroy
+      the POA, waiting until the destruction terminates.
     </P>
  <PRE>
     orb->run ();
@@ -263,8 +263,8 @@
     $ ./server -ORBEndPoint iiop://localhost:12345 > server.ref &
  </PRE>
 
-    <P>Normally the ORB selects a listening endpoint at random,
-      this is inadequate for applications with persistent object
+    <P>Normally the ORB selects a listening endpoint at random.
+      This is inadequate for applications with persistent object
       references because the references will become invalid if the
       server restarts in a new listening endpoint.
       In TAO we can control the listening endpont(s) using the
@@ -279,7 +279,7 @@
       <A HREF="../Impl-Repo/index.html">
 	tutorial
       </A>
-      we will learn how we can use
+      we will learn how we can use the
       <!-- @@ Priyanka: can you add a URL for the document that
       describes the implementation repository?
       -->
@@ -324,14 +324,14 @@
     <!-- @@ Priyanka: check my comments on what a TRANSIENT exception
     means
     -->
-    <P>A CORBA TRANSIENT exception is raised,
-      this indicates that some of the resources required to perform
-      the request are not available,
-      in this case the client ORB cannot find the server on the
-      expected port number,
-      without an Implementation Repository the client ORB cannot
-      locate the server in its new port,
-      it has to assume that the server is temporarly down,
+    <P>A CORBA TRANSIENT exception is raised.
+      This indicates that some of the resources required to perform
+      the request are not available.
+      In this case the client ORB cannot find the server on the
+      expected port number.
+      Without an Implementation Repository the client ORB cannot
+      locate the server in its new port.
+      It has to assume that the server is temporarly down,
       and could be restarted in the future,
       thus the TRANSIENT exception.
     </P> 
@@ -359,7 +359,7 @@
 	TAO
       </A>
       distribution includes several
-      <A HREF="../../../../../examples/POA">
+      <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/examples/POA">
 	examples
       </A>
       that illustrate how to use the POA policies.
@@ -369,7 +369,7 @@
     <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
 <!-- Created: Wed Mar  1 20:29:59 PST 2000 -->
 <!-- hhmts start -->
-Last modified: Thu May 11 12:27:24 PDT 2000
+Last modified: Sun Apr  1 15:02:23 PDT 2001
 <!-- hhmts end -->
   </body>
 </html>
