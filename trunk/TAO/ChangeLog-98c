@@ -1,3 +1,7 @@
+Thu Dec 11 00:01:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* TAO version 0.0.42, released Thu Dec 11 00:01:41 1997.
+
 Wed Dec 10 23:04:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
