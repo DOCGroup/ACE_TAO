@@ -277,10 +277,14 @@ depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
 
+ifeq ($(DEPGEN),)
+  DEPGEN = $(ACE_ROOT)/bin/g++dep
+endif
+
 depend.local: $(MAKEFILE)
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
-	SOEXT=$(SOEXT) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(ACE_ROOT)/bin/g++dep -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
+	SOEXT=$(SOEXT) VDIR=.obj/ VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "Makefile dependencies unchanged." ;\
 	else \
