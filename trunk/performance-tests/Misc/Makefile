@@ -13,7 +13,6 @@ BIN     = basic_perf \
 	  context_switch_time \
 	  preempt \
 	  test_mutex \
-	  test_guard \
 	  test_singleton \
 	  test_naming
 
