@@ -774,7 +774,7 @@ forward_query (const char* next_hop,
       TAO_CHECK_ENV;
 
       CORBA::Boolean self_loop =
-        remote_lookup->_is_equivalent (us.in ());
+        remote_lookup->_is_equivalent (us.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (! self_loop)
