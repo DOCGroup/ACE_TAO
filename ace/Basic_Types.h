@@ -140,7 +140,7 @@
 # else
 #   error: unsupported long long size, must be updated for this platform!
 # endif /* ULLONG_MAX */
-#else /* ! ACE_WIN32 && ! ULLONG_MAX && ! __GNUG__ && ! ULONGLONG_MAX */
+#else /* ! ACE_WIN32 && ! ULLONG_MAX && ! ULONGLONG_MAX */
 # if defined (ACE_HAS_LONGLONG_T)
   // Assume 8-byte long longs.  It would be better to #define
   // ACE_HAS_LONGLONG_T to the number of bytes in a long,
@@ -218,12 +218,13 @@
       ACE_UINT32 lo_;
     };
 
+#   define ACE_USES_ACE_U_LONGLONG
 #   define ACE_SIZEOF_LONG_LONG 8
 #   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
       typedef ACE_U_LongLong ACE_UINT64;
 #   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
 # endif /* ! ACE_HAS_LONGLONG_T */
-#endif /* ! ACE_WIN32 && ! ULLONG_MAX && ! __GNUG__ */
+#endif /* ! ACE_WIN32 && ! ULLONG_MAX && ! ULONGLONG_MAX */
 
 // The number of bytes in a void *.
 #define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
