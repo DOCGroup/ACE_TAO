@@ -374,7 +374,7 @@ public:
   ACE_thread_t thr_self (void);
   // Return the unique ID of the thread.  This is not strictly
   // necessary (because a thread can always just call
-  // <ACE_Thread::thr_self>).  However, we put it here to be complete.
+  // <ACE_Thread::self>).  However, we put it here to be complete.
 
   ACE_Task_Base *task (void);
   // Returns a pointer to the current <ACE_Task_Base> we're executing
