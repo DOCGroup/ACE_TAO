@@ -312,6 +312,11 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous)
       return -1;
     }
 
+  (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
+  // This avoids having child processes acquire the listen socket thereby
+  // denying the server the opportunity to restart on a well-known endpoint.
+  // This does not affect the aberrent behavior on Win32 platforms. 
+
   // @@ If Profile creation is slow we may need to cache the
   //    rendezvous point here
 
