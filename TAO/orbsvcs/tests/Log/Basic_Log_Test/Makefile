@@ -26,14 +26,6 @@ CLIENT_OBJS = \
 
 BIN2 = client
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Log,$(findstring Log,$(TAO_ORBSVCS)))
-  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-    BIN = $(BIN2)
-  endif # Naming
-endif # Log
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -42,6 +34,14 @@ endif # Log
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Log,$(findstring Log,$(TAO_ORBSVCS)))
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Naming
+endif # Log
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

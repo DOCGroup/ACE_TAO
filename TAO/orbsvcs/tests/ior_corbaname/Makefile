@@ -26,10 +26,6 @@ CLIENT_OBJS = $(addsuffix .o, client ior_corbaname_client_i status_i) $(IDL_SRC:
 
 TAO_IDLFLAGS += -Ge 1
 
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Naming
 
 #----------------------------------------------------------------------------
 # Include macros and targets
@@ -38,6 +34,10 @@ endif # Naming
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Naming
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

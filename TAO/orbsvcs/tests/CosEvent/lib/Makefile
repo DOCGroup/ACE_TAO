@@ -13,11 +13,6 @@ LIBNAME  = libCECTests
 LIB2      = $(LIBNAME).a
 SHLIB2    = $(LIBNAME).$(SOEXT)
 
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
-  LIB = $(LIB2)
-  SHLIB = $(SHLIB2)
-endif # NativeCosEvent
 
 ACE_SHLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 LDLIBS  = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
@@ -35,6 +30,11 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+endif # NativeCosEvent
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU

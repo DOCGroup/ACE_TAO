@@ -14,16 +14,6 @@ endif # ! TAO_ROOT
 
 BIN2 =   Service
 
-#### If the orbsvcs library wasn't built with all components, don't
-#### try to build certain tests.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
-  ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
-    ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
-      BIN = $(BIN2)
-    endif # RTOLDEvent
-  endif # Sched
-endif # Event
 
 PSRC= Service.cpp Supplier.cpp Consumer.cpp
 LDLIBS = -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging $(TAO_SRVR_LIBS)
@@ -43,6 +33,16 @@ Service_OBJS=$(addsuffix .o, Service Supplier Consumer)
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the orbsvcs library wasn't built with all components, don't
+#### try to build certain tests.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
+  ifeq (Sched,$(findstring Sched,$(TAO_ORBSVCS)))
+    ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
+      BIN = $(BIN2)
+    endif # RTOLDEvent
+  endif # Sched
+endif # Event
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

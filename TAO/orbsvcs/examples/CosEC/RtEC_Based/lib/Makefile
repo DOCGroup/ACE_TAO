@@ -12,15 +12,6 @@ LIBNAME  = libTAO_RTEC_COSEC
 LIB2      = $(LIBNAME).a
 SHLIB2    = $(LIBNAME).$(SOEXT)
 
-#### If the orbsvcs library wasn't built with all components, don't
-#### try to build certain tests.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
-ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-LIB = $(LIB2)
-SHLIB = $(SHLIB2)
-endif # RTEvent
-endif # CosEvent
 
 ACE_SHLIBS = -lTAO_RTEvent -lTAO_CosEvent \
              -lTAO_Svc_Utils -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
@@ -49,6 +40,15 @@ LSRC  = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the orbsvcs library wasn't built with all components, don't
+#### try to build certain tests.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+  ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
+    ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
+      LIB = $(LIB2)
+      SHLIB = $(SHLIB2)
+    endif # RTEvent
+  endif # CosEvent
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
