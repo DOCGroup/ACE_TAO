@@ -1,3 +1,10 @@
+Wed Nov  5 01:00:31 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Leader_Follower.cpp:
+        * tao/Transport.cpp:
+        * tao/PortableServer/POA.cpp:
+          Added #include of OS_NS_sys_time.h.
+
 Tue Nov  4 17:02:39 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
