@@ -42,7 +42,7 @@ public:
                          int policy = ACE_SCHED_OTHER,
                          int poolsize = 1,
                          int flags =
-                             THR_NEW_LWP|THR_JOINABLE|THR_SCHED_DEFAULT);
+                             THR_BOUND|THR_NEW_LWP|THR_JOINABLE);
   // Constructor
 
   virtual ~TAO_Pool_Per_Endpoint (void);
