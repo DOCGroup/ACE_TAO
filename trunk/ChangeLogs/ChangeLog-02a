@@ -1,3 +1,10 @@
+Mon Aug 28 10:27:45 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_chorus4.x_g++.GNU
+          Modified the platform macros file to use the new variable
+          definitions provide by the "Paths" make include file.  Also,
+          removed the use of the old (3.x) chorus macros file.
+
 Sat Aug 26 17:39:53 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/config-all.h: Added new ACE_CONST_WHEN_MUTABLE macro.
