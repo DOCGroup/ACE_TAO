@@ -19,6 +19,7 @@ SHOBJ	= $(addsuffix .so,$(FILES))
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
+LDFLAGS += -L./JAWS
 LDLIBS  = -lJAWS
 
 BUILD 	= $(VBIN)
