@@ -82,6 +82,34 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
       *os << node->name () << "_forany &);" << be_nl;
     }
 
+      // If we contain an anonymous sequence, 
+      // generate code for the sequence here.
+
+      // retrieve the type
+      be_type *bt = be_type::narrow_from_decl (node->base_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_cdr_op_ch::"
+                             "visit_array - "
+                             "bad base type\n"),
+                            -1);
+        }
+
+      if (bt->node_type () == AST_Decl::NT_sequence)
+        {
+          if (this->gen_anonymous_base_type (bt, 
+                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH) 
+              == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_array_cdr_op_ch::"
+                                 "visit_array - "
+                                 "gen_anonymous_base_type failed\n"),
+                                -1);
+            }              
+        }
+
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }

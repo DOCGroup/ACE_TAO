@@ -48,8 +48,19 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     {
       os = this->ctx_->stream ();
 
-      // default constructor
       os->indent ();
+
+      // generate stub code  required of any anonymous types of members
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_exception::"
+                             "visit_exception -"
+                             "code for stub failed\n"), 
+                            -1);
+        }
+
+      // default constructor
       *os << "// default constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
       *os << "  : CORBA_UserException ("
@@ -67,10 +78,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       // copy constructor
       os->indent ();
       *os << "// copy constructor" << be_nl;
-      *os << node->name () << "::" << node->local_name () << " (const " <<
-        node->name () << " &_tao_excp)" << be_nl;
-      *os << "  : CORBA_UserException (" <<
-        "_tao_excp._type ())" << be_nl;
+      *os << node->name () << "::" << node->local_name () << " (const " 
+          << node->name () << " &_tao_excp)" << be_nl;
+      *os << "  : CORBA_UserException (" 
+          << "_tao_excp._type ())" << be_nl;
       *os << "{\n";
       os->incr_indent ();
       // assign each individual member
@@ -94,10 +105,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "// assignment operator" << be_nl;
       *os << node->name () << "&" << be_nl;
       *os << node->name () << "::operator= (const "
-	  << node->name () << " &_tao_excp)" << be_nl
-	  << "{\n" << be_idt_nl
-	  << "this->CORBA_UserException::operator= "
-	  << "(_tao_excp);\n";
+	        << node->name () << " &_tao_excp)" << be_nl
+	        << "{\n" << be_idt_nl
+	        << "this->CORBA_UserException::operator= "
+	        << "(_tao_excp);\n";
       // assign each individual member
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
@@ -113,7 +124,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       delete visitor;
       os->indent ();
       *os << "return *this;" << be_uidt_nl
-	  << "}\n\n";
+	        << "}\n\n";
 
       // narrow method
       os->indent ();
@@ -122,20 +133,20 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << node->name () << "::_narrow (CORBA::Exception *exc)" << be_nl;
       *os << "{\n";
       os->incr_indent ();
-      *os << "if (!ACE_OS::strcmp (\"" << node->repoID () <<
-        "\", exc->_id ())) // same type" << be_nl;
-      *os << "  return ACE_dynamic_cast (" << node->name () << "_ptr, exc);" <<
-        be_nl;
+      *os << "if (!ACE_OS::strcmp (\"" << node->repoID () 
+          << "\", exc->_id ())) // same type" << be_nl;
+      *os << "  return ACE_dynamic_cast (" << node->name () << "_ptr, exc);" 
+          << be_nl;
       *os << "else" << be_nl;
       *os << "  return 0;\n";
       os->decr_indent ();
       *os << "}\n\n";
 
       *os << be_nl
-	  << "void " << node->name () << "::_raise ()" << be_nl
-	  << "{" << be_idt_nl
-	  << "TAO_RAISE(*this);" << be_uidt_nl
-	  << "}\n\n";
+	        << "void " << node->name () << "::_raise ()" << be_nl
+	        << "{" << be_idt_nl
+	        << "TAO_RAISE(*this);" << be_uidt_nl
+	        << "}\n\n";
 
       // generate the _alloc method
       os->indent ();
