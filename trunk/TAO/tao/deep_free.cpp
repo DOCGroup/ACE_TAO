@@ -115,7 +115,7 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
   return retval;
 }
 
-// deep copy for primitives
+// deep free for primitives
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
                                   const void *,
@@ -297,6 +297,12 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   CORBA::ULong i;
   CORBA::TypeCode_ptr default_tc = 0;
   CORBA::Boolean discrim_matched = 0;
+  TAO_Base_Union *base_union;
+  void *member_val;
+
+  base_union = ACE_reinterpret_cast (TAO_Base_Union *,
+                                     ACE_const_cast (void *, 
+                                                     data));
 
   discrim_tc = tc->discriminator_type (env);
   // get the discriminator type
@@ -304,24 +310,16 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
   //  if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
-  // deep_free the discriminator value
-  retval = DEEP_FREE (discrim_tc, data, data2, env);
-  TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
-
-  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env, CORBA::TypeCode::TRAVERSE_STOP);
-
   discrim_size_with_pad = tc->TAO_discrim_pad_size (env);
   // @@EXC@@ Why are we changing the exception thrown here?
   // if (env.exception ()) TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), env,  CORBA::TypeCode::TRAVERSE_STOP);
   TAO_CHECK_ENV_RETURN (env,  CORBA::TypeCode::TRAVERSE_STOP);
 
-  discrim_val = data;
-  // save the pointer to the discriminator value
+  discrim_val = base_union->_discriminant ();
+  // get a pointer to the discriminator value
 
-  data = (char *)data + discrim_size_with_pad;
-  data2 = (char *)data2 + discrim_size_with_pad;
-  // move the pointer to point to the actual value
+  member_val = base_union->_access (0);
+  // get a pointer to the member, but don't allocate any storage
 
   default_index = tc->default_index (env);
   // now get ready to marshal the actual union value
@@ -350,35 +348,45 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
       switch (type->kind (env))
         {
         case CORBA::tk_short:
-        case CORBA::tk_ushort:
-          if (*(CORBA::Short *)member_label->value () ==
+          if (*(CORBA::Short *)member_label->_tao_get_cdr ()->base () ==
               *(CORBA::Short *)discrim_val)
             discrim_matched = 1;
           break;
+        case CORBA::tk_ushort:
+          if (*(CORBA::UShort *)member_label->_tao_get_cdr ()->base () ==
+              *(CORBA::UShort *)discrim_val)
+            discrim_matched = 1;
+          break;
         case CORBA::tk_long:
+          if (*(CORBA::Long *)member_label->_tao_get_cdr ()->base () ==
+              *(CORBA::Long *)discrim_val)
+            discrim_matched = 1;
+          break;
         case CORBA::tk_ulong:
         case CORBA::tk_enum:
-          if (*(CORBA::ULong *)member_label->value () ==
+          if (*(CORBA::ULong *)member_label->_tao_get_cdr ()->base () ==
               *(CORBA::ULong *)discrim_val)
             discrim_matched = 1;
           break;
         case CORBA::tk_char:
-          if (*(CORBA::Char *)member_label->value () ==
+          if (*(CORBA::Char *)member_label->_tao_get_cdr ()->base () ==
               *(CORBA::Char *)discrim_val)
             discrim_matched = 1;
           break;
         case CORBA::tk_wchar:
-          if (*(CORBA::WChar *)member_label->value () ==
+          if (*(CORBA::WChar *)member_label->_tao_get_cdr ()->base () ==
               *(CORBA::WChar *)discrim_val)
             discrim_matched = 1;
           break;
         case CORBA::tk_boolean:
-          if (*(CORBA::Boolean *)member_label->value () ==
+          if (*(CORBA::Boolean *)member_label->_tao_get_cdr ()->base () ==
               *(CORBA::Boolean *)discrim_val)
             discrim_matched = 1;
           break;
         default:
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, CORBA::TypeCode::TRAVERSE_STOP);
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 
+                                env, 
+                                CORBA::TypeCode::TRAVERSE_STOP);
         }// end of switch
 
       // get the member typecode
@@ -394,15 +402,51 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
           default_tc = member_tc;
         }
       if (discrim_matched)
-        // marshal according to the matched typecode
-        // @@EXC@@ No need to check env.
-        return DEEP_FREE (member_tc, data,
-                          data2, env);
-    } // end of while
+        {
+          // deep_free the discriminator value
+          retval = DEEP_FREE (discrim_tc, 
+                              discrim_val, 
+                              data2, 
+                              env);
+
+          TAO_CHECK_ENV_RETURN (env, 
+                                CORBA::TypeCode::TRAVERSE_STOP);
+
+          if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+            TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), 
+                                  env, 
+                                  CORBA::TypeCode::TRAVERSE_STOP);
+
+          // marshal according to the matched typecode
+          // @@EXC@@ No need to check env.
+          return DEEP_FREE (member_tc, 
+                            member_val,
+                            data2, 
+                            env);
+        } // end of if
+    } // end of for
 
   // we are here only if there was no match
+
+  // deep_free the discriminator value
+  retval = DEEP_FREE (discrim_tc, 
+                      discrim_val, 
+                      data2, 
+                      env);
+
+  TAO_CHECK_ENV_RETURN (env, 
+                        CORBA::TypeCode::TRAVERSE_STOP);
+
+  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    TAO_THROW_ENV_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE), 
+                          env, 
+                          CORBA::TypeCode::TRAVERSE_STOP);
+
   if (default_tc)
-    return DEEP_FREE (default_tc, data, data2, env);
+    return DEEP_FREE (default_tc, 
+                      member_val, 
+                      data2, 
+                      env);
   else
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
