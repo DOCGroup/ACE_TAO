@@ -2,9 +2,10 @@ Wed May 09 16:19:55 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/DynamicInterface/Server_Request.cpp:
 
-          Added a 'const' to an ACE_static_cast target type, to
-          match the type qualifier of the cast source type.
-
+          Changed an ACE_static_cast of const char* to
+          CORBA::Octet* to an ACE_reinterpret_cast to
+          const CORBA::Octet*.
+          
 Wed May  9 14:01:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (add_transport_to_cache):
