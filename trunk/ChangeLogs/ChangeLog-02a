@@ -1,6 +1,7 @@
 Wed Oct  2 12:18:37 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Logging_Server.cpp: Fixed spelling error.
+        * examples/C++NPv1/Logging_Handler.cpp: Comment length adjustment.
 
 Tue Oct  2 21:52:31 2001  Steve Huston  <shuston@riverace.com>
 
