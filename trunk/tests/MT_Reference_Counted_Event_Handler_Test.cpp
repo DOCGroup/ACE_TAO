@@ -965,6 +965,7 @@ Close_Socket_Thread::svc (void)
                         "Close socket thread closing client handle %d\n",
                         client_handle));
 
+          ACE_OS::shutdown (client_handle, SHUT_RDWR);
           ACE_OS::closesocket (client_handle);
         }
       else
@@ -974,7 +975,7 @@ Close_Socket_Thread::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "Close socket thread closing server handle %d\n",
                         server_handle));
-
+          ACE_OS::shutdown (server_handle, SHUT_RDWR);
           ACE_OS::closesocket (server_handle);
         }
     }
@@ -1169,7 +1170,7 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
            nested_upcalls == test_configs[i][4]))
         {
 
-#if defined (linux)
+#if 0 // defined (linux)
 
           // @@ I am not sure why but when <make_invocations> is 0 and
           // there is no purger thread, the receiver thread does not
