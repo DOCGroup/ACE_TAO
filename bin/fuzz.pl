@@ -171,6 +171,7 @@ sub check_for_id_string ()
             while (<FILE>) {
                 if (/\$Id\:/ or /\$Id\$/) {
                     $found = 1;
+                    last;
                 }
             }
             close (FILE);
