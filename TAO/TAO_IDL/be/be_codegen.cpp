@@ -22,7 +22,7 @@
 
 ACE_RCSID(be, be_codegen, "$Id$")
 
-TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
+TAO_CodeGen *tao_cg = 0;
 
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
@@ -102,10 +102,10 @@ TAO_CodeGen::upcase (const char *str)
 int
 TAO_CodeGen::start_client_header (const char *fname)
 {
-  // @@ We are making use of "included_idl_files" that is in the 
+  // @@ We are making use of "included_idl_files" that is in the
   // idl_global. We need to make sure the validity of those files.
   idl_global->validate_included_idl_files ();
-  
+
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -132,10 +132,10 @@ TAO_CodeGen::start_client_header (const char *fname)
           if (fname == 0)
             // bad file name
             return -1;
-          else 
+          else
             suffix = fname;
         }
-      
+
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
       // convert letters in fname to upcase
       for (int i=0; i < (suffix - fname); i++)
@@ -147,13 +147,13 @@ TAO_CodeGen::start_client_header (const char *fname)
           else
             macro_name[i+9] = '_';
         }
-      
+
       ACE_OS::strcat (macro_name, "_H_");
-      
+
       // generate the #ifndef ... #define statements
       this->client_header_->print ("#if !defined (%s)\n", macro_name);
       this->client_header_->print ("#define %s\n\n", macro_name);
-      
+
       *this->client_header_ << "#include \"tao/corba.h\"\n";
 
       if (idl_global->export_include () != 0)
@@ -174,14 +174,14 @@ TAO_CodeGen::start_client_header (const char *fname)
         {
           char* idl_name =
                 idl_global->included_idl_files ()[j];
-          
+
           // Make a String out of it.
           String idl_name_str = idl_name;
-          
+
           // Make sure this file was actually got included, not
           // ignored by some #if defined compiler directive.
-          
-          
+
+
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
             IDL_GlobalData::be_get_client_hdr (&idl_name_str, 1);
@@ -200,7 +200,7 @@ TAO_CodeGen::start_client_header (const char *fname)
             }
         }
       *this->client_header_ << "\n";
-      
+
       // generate the TAO_EXPORT_MACRO macro
       *this->client_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
       *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
@@ -208,11 +208,11 @@ TAO_CodeGen::start_client_header (const char *fname)
       *this->client_header_ << "#define TAO_EXPORT_MACRO "
                             << idl_global->export_macro ()
                             << be_nl;
-      
+
       *this->client_header_ << "#if defined(_MSC_VER)\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
-      
+
       return 0;
     }
 }
@@ -295,10 +295,10 @@ TAO_CodeGen::client_inline (void)
 int
 TAO_CodeGen::start_server_header (const char *fname)
 {
-  // @@ We are making use of "included_idl_files" that is in the 
+  // @@ We are making use of "included_idl_files" that is in the
   // idl_global. We need to make sure the validity of those files.
   idl_global->validate_included_idl_files ();
-  
+
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -325,7 +325,7 @@ TAO_CodeGen::start_server_header (const char *fname)
           if (fname == 0)
             // bad file name
             return -1;
-          else 
+          else
             suffix = fname;
         }
 
@@ -338,12 +338,12 @@ TAO_CodeGen::start_server_header (const char *fname)
           macro_name[i+9] = fname[i];
         else
           macro_name[i+9] = '_';
-      
+
       ACE_OS::strcat (macro_name, "_H_");
 
       this->server_header_->print ("#if !defined (%s)\n", macro_name);
       this->server_header_->print ("#define %s\n\n", macro_name);
-      
+
       // We must include all the skeleton headers corresponding to
       // IDL files included by the current IDL file.
       // We will use the included IDL file names as they appeared
@@ -355,24 +355,24 @@ TAO_CodeGen::start_server_header (const char *fname)
             {
               char* idl_name =
                 idl_global->included_idl_files ()[j];
-              
+
               // String'ifying the name.
               String idl_name_str (idl_name);
-              
+
               const char* server_hdr =
                 IDL_GlobalData::be_get_server_hdr (&idl_name_str, 1);
-              
+
               this->server_header_->print ("#include \"%s\"\n",
                                            server_hdr);
             }
       // the server header should include the client header
       *this->server_header_ << "#include \"" <<
         idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
-      
+
       *this->server_header_ << "#if defined(_MSC_VER)\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
-      
+
       return 0;
     }
 }
@@ -414,7 +414,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
           if (fname == 0)
             // bad file name
             return -1;
-          else 
+          else
             suffix = fname;
         }
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
@@ -428,15 +428,15 @@ TAO_CodeGen::start_server_template_header (const char *fname)
           macro_name[i+9] = '_';
 
       ACE_OS::strcat (macro_name, "_H_");
-      
+
       this->server_template_header_->print ("#if !defined (%s)\n",
                                             macro_name);
       this->server_template_header_->print ("#define %s\n\n", macro_name);
-      
+
       *this->server_template_header_ << "#if defined(_MSC_VER)\n"
                                      << "#pragma warning(disable:4250)\n"
                                      << "#endif /* _MSC_VER */\n\n";
-      
+
       return 0;
     }
 }
@@ -519,7 +519,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
           if (fname == 0)
             // bad file name
             return -1;
-          else 
+          else
             suffix = fname;
         }
 
