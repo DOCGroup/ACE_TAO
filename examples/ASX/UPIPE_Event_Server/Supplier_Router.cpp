@@ -130,14 +130,14 @@ Supplier_Router::info (char **strp, size_t length) const
 template class Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>;
 template class ACE_Acceptor<Supplier_Handler, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>;
-template class ACE_TSS<ACE_Dynamic>;
 template class Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>;
 template class Peer_Router<Supplier_Handler, SUPPLIER_KEY>;
-template class ACE_Map_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_ACE_RW_Mutex>;
-template class ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_ACE_RW_Mutex>;
-template class ACE_Read_Guard<ACE_ACE_RW_Mutex>;
-template class ACE_Write_Guard<ACE_ACE_RW_Mutex>;
-template class ACE_Guard<ACE_ACE_RW_Mutex>;
+template class ACE_Map_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
+template class ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_TSS<ACE_Dynamic>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_HAS_THREADS */
