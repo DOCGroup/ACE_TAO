@@ -104,9 +104,9 @@ public:
 private:
   // Disallow instantiation of this class.
   ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object ())
-  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (const ACE_Managed_Object &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object &operator=
-                            (const ACE_Managed_Object &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (const ACE_Managed_Object<TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object<TYPE> &operator=
+                            (const ACE_Managed_Object<TYPE> &))
 
   friend class this_prevents_compiler_warning_about_only_private_constructors;
 };
