@@ -1,3 +1,14 @@
+Wed Mar  9 23:04:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Leader_Follower.cpp (wait_for_event):
+	  
+	  Propogate the result of failure of handle_event () to the
+	  application. 
+
+	* tao/Leader_Follower.h:
+
+	  Added some documention for wait_for_event ()'s return value. 
+
 Wed Mar  9 14:20:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
