@@ -7,19 +7,19 @@
 CFG=CIAO_Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "CIAO_Server.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "CIAO_Server.mak" CFG="CIAO_Server - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "CIAO_Server - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "CIAO_Server - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -81,7 +81,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib CIAO_Containerd.lib TAO_Securityd.lib TAO_PortableServerd.lib TAO_CosNamingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Serverd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -100,15 +100,15 @@ SOURCE=.\CCM_DeploymentS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrar_i.cpp
+SOURCE=.\HomeRegistrar_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrarC.cpp
+SOURCE=.\HomeRegistrarC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrarS.cpp
+SOURCE=.\HomeRegistrarS.cpp
 # End Source File
 # Begin Source File
 
@@ -128,15 +128,15 @@ SOURCE=.\CCM_DeploymentS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrar_i.h
+SOURCE=.\HomeRegistrar_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrarC.h
+SOURCE=.\HomeRegistrarC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrarS.h
+SOURCE=.\HomeRegistrarS.h
 # End Source File
 # Begin Source File
 
@@ -212,19 +212,19 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrar.idl
+SOURCE=.\HomeRegistrar.idl
 
 !IF  "$(CFG)" == "CIAO_Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
-InputPath=.\CIAO_HomeRegistrar.idl
-InputName=CIAO_HomeRegistrar
+InputPath=.\HomeRegistrar.idl
+InputName=HomeRegistrar
 
 BuildCmds= \
 	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
@@ -252,8 +252,8 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
-InputPath=.\CIAO_HomeRegistrar.idl
-InputName=CIAO_HomeRegistrar
+InputPath=.\HomeRegistrar.idl
+InputName=HomeRegistrar
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
@@ -277,7 +277,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
@@ -294,15 +294,15 @@ SOURCE=.\CCM_DeploymentS.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrar_i.inl
+SOURCE=.\HomeRegistrar_i.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrarC.i
+SOURCE=.\HomeRegistrarC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_HomeRegistrarS.i
+SOURCE=.\HomeRegistrarS.i
 # End Source File
 # End Group
 # End Target

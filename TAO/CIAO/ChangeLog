@@ -1,10 +1,11 @@
 Tue Dec 17 22:49:32 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ciao/CIAO_Server.dsp:
 	* ciao/HomeRegistrar.idl:
-	* ciao/HomeRegistrar_i.{h,inl,cpp}: A NameService based HomeFinder
-	  extension.  This interface defines the registration operation,
-	  which is not defined in the CCM specification.  This is part of
-	  the CIAO_Server library.
+	* ciao/HomeRegistrar_i.{h,inl,cpp}: Added a NameService based
+	  HomeFinder extension.  This interface defines the registration
+	  operation, which is not defined in the CCM specification.  This
+	  is part of the CIAO_Server library.
 
 	* tools/CIAO_single_com_server/CIAO_single_com_server.cpp: Changed
 	  to register installed components with the HomeRegistrar instead
@@ -23,6 +24,12 @@ Tue Dec 17 22:49:32 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* examples/handcrafted/Hello/client.cpp: Changed to use acquire
 	  the home object reference thru the HomeFinder interface, instead
 	  of passing it in explicitly.
+
+	* examples/handcrafted/Hello/hello.dsw:
+	* examples/handcrafted/Hello/server.cpp:
+	* examples/handcrafted/Hello/server.dsp: Removed server from the
+	  workspace.  As we now have a true component server, we no longer
+	  need a server process for this example.
 
 
 Mon Dec 16 10:56:46 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
