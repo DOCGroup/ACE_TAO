@@ -7,8 +7,8 @@
 
 #### The "release" and "releaseall" targets can be used to create
 #### the ACE and ACE+TAO kits.  By default, each creates a new beta
-#### release.  To create a new minor or major release, add "REL=minor"
-#### or "REL=major", respectively, to the make invocation.
+#### release.  To create a new minor or major release, add REL=minor
+#### or REL=major, respectively, to the make invocation.
 ####
 #### NOTE: the REL modifier applies to _both_ ACE and TAO in
 #### releaseall!
@@ -19,7 +19,11 @@
 ####   % make release
 ####
 #### To see what make release* would do without actually doing it, add
-#### "CHECK=-n" to the invocation.
+#### CHECK=-n to the invocation.
+####
+#### By default, make release* will regenerate the contents of the man
+#### directory.  To suppress that, add GENERATE_MAN_PAGES= to your
+#### make release or make releaseall invocation.
 
 #----------------------------------------------------------------------------
 #       Local macros
@@ -119,10 +123,11 @@ RELEASE_LIB_FILES = \
 
 REL = beta
 CHECK =
+GENERATE_MAN_PAGES = $(ACE_ROOT)/bin/generate_man_pages
 
 #### The release target creates the ACE (only) kit.
 release: ACE-INSTALL
-	@$(ACE_ROOT)/bin/generate_man_pages
+	@$(GENERATE_MAN_PAGES)
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
            -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
            -l "$(RELEASE_LIB_FILES)"
