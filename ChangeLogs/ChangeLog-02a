@@ -1,3 +1,9 @@
+Tue Jun 27 13:01:37 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/CDR_Array_Test.cpp: Moved the 'digits' array inside the
+          function which used it. With the array at module scope, the template
+          instantiation didn't find it for debug=0 optimize=1 on Sun C++ 4.2.
+
 Tue Jun 27 11:11:41 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp: Remove more output which triggers false fails
