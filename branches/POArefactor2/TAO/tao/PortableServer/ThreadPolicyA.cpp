@@ -33,40 +33,42 @@
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:290
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f54), 
-  ACE_NTOHL (0x68726561), 
-  ACE_NTOHL (0x64506f6c), 
-  ACE_NTOHL (0x69637956), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x3a322e33), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f54),
+  ACE_NTOHL (0x68726561),
+  ACE_NTOHL (0x64506f6c),
+  ACE_NTOHL (0x69637956),
+  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x3a322e33),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/ThreadPolicyValue:2.3
   18,
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x56616c75), 
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x56616c75),
   ACE_NTOHL (0x65000000),  // name = ThreadPolicyValue
   2, // member count
   15,
-  ACE_NTOHL (0x4f52425f), 
-  ACE_NTOHL (0x4354524c), 
-  ACE_NTOHL (0x5f4d4f44), 
+  ACE_NTOHL (0x4f52425f),
+  ACE_NTOHL (0x4354524c),
+  ACE_NTOHL (0x5f4d4f44),
   ACE_NTOHL (0x454c0000),  // name = ORB_CTRL_MODEL
   20,
-  ACE_NTOHL (0x53494e47), 
-  ACE_NTOHL (0x4c455f54), 
-  ACE_NTOHL (0x48524541), 
-  ACE_NTOHL (0x445f4d4f), 
+  ACE_NTOHL (0x53494e47),
+  ACE_NTOHL (0x4c455f54),
+  ACE_NTOHL (0x48524541),
+  ACE_NTOHL (0x445f4d4f),
   ACE_NTOHL (0x44454c00),  // name = SINGLE_THREAD_MODEL
   };
 
@@ -87,27 +89,25 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:290
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f54), 
-  ACE_NTOHL (0x68726561), 
-  ACE_NTOHL (0x64506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f54),
+  ACE_NTOHL (0x68726561),
+  ACE_NTOHL (0x64506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/ThreadPolicy:2.3
     13,
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = ThreadPolicy
   };
 
@@ -149,7 +149,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ThreadPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ThreadPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -246,6 +246,6 @@ operator>>= (
         PortableServer::ThreadPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
