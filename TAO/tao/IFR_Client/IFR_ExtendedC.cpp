@@ -574,9 +574,7 @@ CORBA::UShort CORBA::FixedDef::digits (
   
   if (this->the_TAO_FixedDef_Proxy_Broker_ == 0)
     {
-      CORBA_FixedDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_FixedDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::UShort>::ret_val _tao_retval;
@@ -619,9 +617,7 @@ void CORBA::FixedDef::digits (
   
   if (this->the_TAO_FixedDef_Proxy_Broker_ == 0)
     {
-      CORBA_FixedDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_FixedDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -663,9 +659,7 @@ CORBA::Short CORBA::FixedDef::scale (
   
   if (this->the_TAO_FixedDef_Proxy_Broker_ == 0)
     {
-      CORBA_FixedDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_FixedDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::Short>::ret_val _tao_retval;
@@ -708,9 +702,7 @@ void CORBA::FixedDef::scale (
   
   if (this->the_TAO_FixedDef_Proxy_Broker_ == 0)
     {
-      CORBA_FixedDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_FixedDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -735,22 +727,22 @@ void CORBA::FixedDef::scale (
   ACE_CHECK;
 }
 
-CORBA::FixedDef::FixedDef (int collocated)
+CORBA::FixedDef::FixedDef (void)
  : the_TAO_FixedDef_Proxy_Broker_ (0)
 {
-  this->CORBA_FixedDef_setup_collocation (collocated);
+  this->CORBA_FixedDef_setup_collocation ();
 }
 
 void
-CORBA::FixedDef::CORBA_FixedDef_setup_collocation (int collocated)
+CORBA::FixedDef::CORBA_FixedDef_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_FixedDef_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_FixedDef_Proxy_Broker_ =
         ::CORBA__TAO_FixedDef_Proxy_Broker_Factory_function_pointer (this);
     }
   
-  this->CORBA_IDLType_setup_collocation (collocated);
+  this->CORBA_IDLType_setup_collocation ();
 }
 
 CORBA::FixedDef::~FixedDef (void)
@@ -981,9 +973,7 @@ CORBA::TypeCode_ptr CORBA::ValueMemberDef::type (
   
   if (this->the_TAO_ValueMemberDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueMemberDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueMemberDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::TypeCode>::ret_val _tao_retval;
@@ -1025,9 +1015,7 @@ CORBA::TypeCode_ptr CORBA::ValueMemberDef::type (
   
   if (this->the_TAO_ValueMemberDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueMemberDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueMemberDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
@@ -1070,9 +1058,7 @@ void CORBA::ValueMemberDef::type_def (
   
   if (this->the_TAO_ValueMemberDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueMemberDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueMemberDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1114,9 +1100,7 @@ CORBA::Visibility CORBA::ValueMemberDef::access (
   
   if (this->the_TAO_ValueMemberDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueMemberDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueMemberDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::Visibility>::ret_val _tao_retval;
@@ -1159,9 +1143,7 @@ void CORBA::ValueMemberDef::access (
   
   if (this->the_TAO_ValueMemberDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueMemberDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueMemberDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1186,22 +1168,22 @@ void CORBA::ValueMemberDef::access (
   ACE_CHECK;
 }
 
-CORBA::ValueMemberDef::ValueMemberDef (int collocated)
+CORBA::ValueMemberDef::ValueMemberDef (void)
  : the_TAO_ValueMemberDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ValueMemberDef_setup_collocation (collocated);
+  this->CORBA_ValueMemberDef_setup_collocation ();
 }
 
 void
-CORBA::ValueMemberDef::CORBA_ValueMemberDef_setup_collocation (int collocated)
+CORBA::ValueMemberDef::CORBA_ValueMemberDef_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_ValueMemberDef_Proxy_Broker_ =
         ::CORBA__TAO_ValueMemberDef_Proxy_Broker_Factory_function_pointer (this);
     }
   
-  this->CORBA_Contained_setup_collocation (collocated);
+  this->CORBA_Contained_setup_collocation ();
 }
 
 CORBA::ValueMemberDef::~ValueMemberDef (void)
@@ -1366,9 +1348,7 @@ TAO::Collocation_Proxy_Broker *
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::InterfaceDefSeq>::ret_val _tao_retval;
@@ -1411,9 +1391,7 @@ void CORBA::ValueDef::supported_interfaces (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1455,9 +1433,7 @@ void CORBA::ValueDef::supported_interfaces (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::InitializerSeq>::ret_val _tao_retval;
@@ -1500,9 +1476,7 @@ void CORBA::ValueDef::initializers (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1544,9 +1518,7 @@ void CORBA::ValueDef::initializers (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::ValueDef>::ret_val _tao_retval;
@@ -1589,9 +1561,7 @@ void CORBA::ValueDef::base_value (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1633,9 +1603,7 @@ void CORBA::ValueDef::base_value (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::ValueDefSeq>::ret_val _tao_retval;
@@ -1678,9 +1646,7 @@ void CORBA::ValueDef::abstract_base_values (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1722,9 +1688,7 @@ CORBA::Boolean CORBA::ValueDef::is_abstract (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
@@ -1767,9 +1731,7 @@ void CORBA::ValueDef::is_abstract (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1811,9 +1773,7 @@ CORBA::Boolean CORBA::ValueDef::is_custom (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
@@ -1856,9 +1816,7 @@ void CORBA::ValueDef::is_custom (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1900,9 +1858,7 @@ CORBA::Boolean CORBA::ValueDef::is_truncatable (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
@@ -1945,9 +1901,7 @@ void CORBA::ValueDef::is_truncatable (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -1990,9 +1944,7 @@ CORBA::Boolean CORBA::ValueDef::is_a (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
@@ -2049,9 +2001,7 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::ValueDef::FullValueDescription>::ret_val _tao_retval;
@@ -2098,9 +2048,7 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::ValueMemberDef>::ret_val _tao_retval;
@@ -2157,9 +2105,7 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::AttributeDef>::ret_val _tao_retval;
@@ -2219,9 +2165,7 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
   
   if (this->the_TAO_ValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::OperationDef>::ret_val _tao_retval;
@@ -2262,24 +2206,24 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
   return _tao_retval.retn ();
 }
 
-CORBA::ValueDef::ValueDef (int collocated)
+CORBA::ValueDef::ValueDef (void)
  : the_TAO_ValueDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ValueDef_setup_collocation (collocated);
+  this->CORBA_ValueDef_setup_collocation ();
 }
 
 void
-CORBA::ValueDef::CORBA_ValueDef_setup_collocation (int collocated)
+CORBA::ValueDef::CORBA_ValueDef_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_ValueDef_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_ValueDef_Proxy_Broker_ =
         ::CORBA__TAO_ValueDef_Proxy_Broker_Factory_function_pointer (this);
     }
   
-  this->CORBA_Container_setup_collocation (collocated);
-  this->CORBA_Contained_setup_collocation (collocated);
-  this->CORBA_IDLType_setup_collocation (collocated);
+  this->CORBA_Container_setup_collocation ();
+  this->CORBA_Contained_setup_collocation ();
+  this->CORBA_IDLType_setup_collocation ();
 }
 
 CORBA::ValueDef::~ValueDef (void)
@@ -2465,9 +2409,7 @@ TAO::Collocation_Proxy_Broker *
   
   if (this->the_TAO_ExtValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ExtValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ExtValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::ExtInitializerSeq>::ret_val _tao_retval;
@@ -2510,9 +2452,7 @@ void CORBA::ExtValueDef::ext_initializers (
   
   if (this->the_TAO_ExtValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ExtValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ExtValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2567,9 +2507,7 @@ CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor (
   
   if (this->the_TAO_ExtValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ExtValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ExtValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::ExtValueDef::ExtFullValueDescription>::ret_val _tao_retval;
@@ -2618,9 +2556,7 @@ CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor (
   
   if (this->the_TAO_ExtValueDef_Proxy_Broker_ == 0)
     {
-      CORBA_ExtValueDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ExtValueDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::ExtAttributeDef>::ret_val _tao_retval;
@@ -2659,22 +2595,22 @@ CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor (
   return _tao_retval.retn ();
 }
 
-CORBA::ExtValueDef::ExtValueDef (int collocated)
+CORBA::ExtValueDef::ExtValueDef (void)
  : the_TAO_ExtValueDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ExtValueDef_setup_collocation (collocated);
+  this->CORBA_ExtValueDef_setup_collocation ();
 }
 
 void
-CORBA::ExtValueDef::CORBA_ExtValueDef_setup_collocation (int collocated)
+CORBA::ExtValueDef::CORBA_ExtValueDef_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_ExtValueDef_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_ExtValueDef_Proxy_Broker_ =
         ::CORBA__TAO_ExtValueDef_Proxy_Broker_Factory_function_pointer (this);
     }
   
-  this->CORBA_ValueDef_setup_collocation (collocated);
+  this->CORBA_ValueDef_setup_collocation ();
 }
 
 CORBA::ExtValueDef::~ExtValueDef (void)
@@ -2851,9 +2787,7 @@ TAO::Collocation_Proxy_Broker *
   
   if (this->the_TAO_ValueBoxDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueBoxDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueBoxDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::IDLType>::ret_val _tao_retval;
@@ -2896,9 +2830,7 @@ void CORBA::ValueBoxDef::original_type_def (
   
   if (this->the_TAO_ValueBoxDef_Proxy_Broker_ == 0)
     {
-      CORBA_ValueBoxDef_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ValueBoxDef_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2923,22 +2855,22 @@ void CORBA::ValueBoxDef::original_type_def (
   ACE_CHECK;
 }
 
-CORBA::ValueBoxDef::ValueBoxDef (int collocated)
+CORBA::ValueBoxDef::ValueBoxDef (void)
  : the_TAO_ValueBoxDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ValueBoxDef_setup_collocation (collocated);
+  this->CORBA_ValueBoxDef_setup_collocation ();
 }
 
 void
-CORBA::ValueBoxDef::CORBA_ValueBoxDef_setup_collocation (int collocated)
+CORBA::ValueBoxDef::CORBA_ValueBoxDef_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_ValueBoxDef_Proxy_Broker_ =
         ::CORBA__TAO_ValueBoxDef_Proxy_Broker_Factory_function_pointer (this);
     }
   
-  this->CORBA_TypedefDef_setup_collocation (collocated);
+  this->CORBA_TypedefDef_setup_collocation ();
 }
 
 CORBA::ValueBoxDef::~ValueBoxDef (void)

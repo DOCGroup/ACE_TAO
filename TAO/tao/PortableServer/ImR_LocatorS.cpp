@@ -29,8 +29,8 @@
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:631
 
-#ifndef _TAO_IDL_ORIG_IMR_LOCATORS_CPP_
-#define _TAO_IDL_ORIG_IMR_LOCATORS_CPP_
+#ifndef _TAO_IDL_IMR_LOCATORS_CPP_
+#define _TAO_IDL_IMR_LOCATORS_CPP_
 
 
 #include "ImR_LocatorS.h"
@@ -219,7 +219,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\latest\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {

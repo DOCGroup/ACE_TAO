@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:411
 
-#ifndef _TAO_IDL_ORIG_IMR_LOCATORS_H_
-#define _TAO_IDL_ORIG_IMR_LOCATORS_H_
+#ifndef _TAO_IDL_IMR_LOCATORS_H_
+#define _TAO_IDL_IMR_LOCATORS_H_
 
 #include /**/ "ace/pre.h"
 

@@ -47,7 +47,7 @@ CORBA::Policy::Policy (
       ),
     the_TAO_Policy_Proxy_Broker_ (0)
 {
-  this->CORBA_Policy_setup_collocation (_tao_collocated);
+  this->CORBA_Policy_setup_collocation ();
 }
 
 ACE_INLINE

@@ -47,7 +47,7 @@ CORBA::FixedDef::FixedDef (
       ),
     the_TAO_FixedDef_Proxy_Broker_ (0)
 {
-  this->CORBA_FixedDef_setup_collocation (_tao_collocated);
+  this->CORBA_FixedDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -83,7 +83,7 @@ CORBA::ValueMemberDef::ValueMemberDef (
       ),
     the_TAO_ValueMemberDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ValueMemberDef_setup_collocation (_tao_collocated);
+  this->CORBA_ValueMemberDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -119,7 +119,7 @@ CORBA::ValueDef::ValueDef (
       ),
     the_TAO_ValueDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ValueDef_setup_collocation (_tao_collocated);
+  this->CORBA_ValueDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -155,7 +155,7 @@ CORBA::ExtValueDef::ExtValueDef (
       ),
     the_TAO_ExtValueDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ExtValueDef_setup_collocation (_tao_collocated);
+  this->CORBA_ExtValueDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -191,7 +191,7 @@ CORBA::ValueBoxDef::ValueBoxDef (
       ),
     the_TAO_ValueBoxDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ValueBoxDef_setup_collocation (_tao_collocated);
+  this->CORBA_ValueBoxDef_setup_collocation ();
 }
 
 ACE_INLINE

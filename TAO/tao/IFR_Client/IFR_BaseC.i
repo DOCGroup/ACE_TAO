@@ -47,7 +47,7 @@ CORBA::IRObject::IRObject (
       ),
     the_TAO_IRObject_Proxy_Broker_ (0)
 {
-  this->CORBA_IRObject_setup_collocation (_tao_collocated);
+  this->CORBA_IRObject_setup_collocation ();
 }
 
 ACE_INLINE
@@ -83,7 +83,7 @@ CORBA::Contained::Contained (
       ),
     the_TAO_Contained_Proxy_Broker_ (0)
 {
-  this->CORBA_Contained_setup_collocation (_tao_collocated);
+  this->CORBA_Contained_setup_collocation ();
 }
 
 ACE_INLINE
@@ -119,7 +119,7 @@ CORBA::Container::Container (
       ),
     the_TAO_Container_Proxy_Broker_ (0)
 {
-  this->CORBA_Container_setup_collocation (_tao_collocated);
+  this->CORBA_Container_setup_collocation ();
 }
 
 ACE_INLINE
@@ -155,7 +155,7 @@ CORBA::IDLType::IDLType (
       ),
     the_TAO_IDLType_Proxy_Broker_ (0)
 {
-  this->CORBA_IDLType_setup_collocation (_tao_collocated);
+  this->CORBA_IDLType_setup_collocation ();
 }
 
 ACE_INLINE
@@ -191,7 +191,7 @@ CORBA::TypedefDef::TypedefDef (
       ),
     the_TAO_TypedefDef_Proxy_Broker_ (0)
 {
-  this->CORBA_TypedefDef_setup_collocation (_tao_collocated);
+  this->CORBA_TypedefDef_setup_collocation ();
 }
 
 ACE_INLINE

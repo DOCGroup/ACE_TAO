@@ -580,11 +580,11 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 
       *os << be_nl << "{" << be_idt_nl
           << "this->" << this->flat_name ()
-          << "_setup_collocation (_tao_collocated);";
+          << "_setup_collocation ();";
 
       if (this->is_abstract ())
         {
-          *os << be_nl 
+          *os << be_nl
               << "ACE_UNUSED_ARG (oc);";
         }
 
@@ -645,7 +645,7 @@ TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
 
 // =================================================================
 
-class TAO_IDL_Gen_OpTable_Worker 
+class TAO_IDL_Gen_OpTable_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
@@ -681,7 +681,7 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
 
 // =================================================================
 
-class Pure_Virtual_Regenerator 
+class Pure_Virtual_Regenerator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:

@@ -47,7 +47,7 @@ ImplementationRepository::ServerObject::ServerObject (
       ),
     the_TAO_ServerObject_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_ServerObject_setup_collocation (_tao_collocated);
+  this->ImplementationRepository_ServerObject_setup_collocation ();
 }
 
 ACE_INLINE
@@ -83,7 +83,7 @@ ImplementationRepository::Administration::Administration (
       ),
     the_TAO_Administration_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_Administration_setup_collocation (_tao_collocated);
+  this->ImplementationRepository_Administration_setup_collocation ();
 }
 
 ACE_INLINE
@@ -119,7 +119,7 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
       ),
     the_TAO_ServerInformationIterator_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_ServerInformationIterator_setup_collocation (_tao_collocated);
+  this->ImplementationRepository_ServerInformationIterator_setup_collocation ();
 }
 
 ACE_INLINE

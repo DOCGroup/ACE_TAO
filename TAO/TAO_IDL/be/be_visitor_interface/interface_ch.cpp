@@ -191,7 +191,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-    
+
   if (node->is_local ())
     {
       if (node->convert_parent_ops (this) == -1)
@@ -253,7 +253,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (! node->is_abstract ())
         {
           *os << "// Concrete interface only." << be_nl
-              << node->local_name () << " (int collocated = 0);"
+              << node->local_name () << " (void);"
               << be_nl << be_nl;
         }
 
@@ -262,7 +262,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "// parents piece of the given class in the right mode."
           << be_nl
           << "virtual void " << node->flat_name ()
-          << "_setup_collocation (int collocated);" << be_nl << be_nl;
+          << "_setup_collocation (void);" << be_nl << be_nl;
     }
 
   if (node->is_abstract () || node->is_local ())

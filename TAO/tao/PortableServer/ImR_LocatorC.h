@@ -319,11 +319,11 @@ namespace ImplementationRepository
   
   protected:
     // Concrete interface only.
-    Locator (int collocated = 0);
+    Locator (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void ImplementationRepository_Locator_setup_collocation (int collocated);
+    virtual void ImplementationRepository_Locator_setup_collocation (void);
     
     // Concrete non-local interface only.
     Locator (

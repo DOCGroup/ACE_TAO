@@ -116,7 +116,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Get the AMI version from the strategy class.
   be_operation *ami_op = node->arguments ();
-  
+
   if (ami_op->accept (&oa_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -168,10 +168,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "_Proxy_Broker_ == 0)" << be_idt_nl
           << "{" << be_idt_nl
           << parent->flat_name () << "_setup_collocation ("
-          << be_idt << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
-          << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl
           << "}" << be_uidt;
     }
 
@@ -188,9 +185,9 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << "&_tao_retval";
 
   AST_Argument *arg = 0;
-  UTL_ScopeActiveIterator arg_list_iter (ami_op, 
+  UTL_ScopeActiveIterator arg_list_iter (ami_op,
                                          UTL_Scope::IK_decls);
-  
+
   // For a sendc_* operation, skip the reply handler (first argument).
   arg_list_iter.next ();
 
@@ -206,10 +203,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << "};" << be_uidt;
 
   be_interface *intf = be_interface::narrow_from_decl (parent);
-  
+
   // Includes the reply handler, but we have to add 1 for the retval anyway.
   int nargs = ami_op->argument_count ();
-  
+
   const char *lname = node->local_name ()->get_string ();
   long opname_len = ACE_OS::strlen (lname);
   ACE_CString opname;

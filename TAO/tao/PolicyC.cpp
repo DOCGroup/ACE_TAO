@@ -368,7 +368,7 @@ TAO::Objref_Traits<CORBA::Policy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -394,9 +394,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
   
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
     {
-      CORBA_Policy_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_Policy_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::PolicyType>::ret_val _tao_retval;
@@ -438,9 +436,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
   
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
     {
-      CORBA_Policy_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_Policy_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::Policy>::ret_val _tao_retval;
@@ -482,9 +478,7 @@ void CORBA::Policy::destroy (
   
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
     {
-      CORBA_Policy_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_Policy_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -507,16 +501,16 @@ void CORBA::Policy::destroy (
   ACE_CHECK;
 }
 
-CORBA::Policy::Policy (int collocated)
+CORBA::Policy::Policy (void)
  : the_TAO_Policy_Proxy_Broker_ (0)
 {
-  this->CORBA_Policy_setup_collocation (collocated);
+  this->CORBA_Policy_setup_collocation ();
 }
 
 void
-CORBA::Policy::CORBA_Policy_setup_collocation (int collocated)
+CORBA::Policy::CORBA_Policy_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_Policy_Proxy_Broker_ =
         ::CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer (this);
@@ -651,7 +645,7 @@ TAO::Objref_Traits<CORBA::PolicyManager>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -796,7 +790,7 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.

@@ -49,21 +49,21 @@ namespace TAO
   public:
     /// Constructor used by TAO::Invocation_Adapter
     /**
-     * @param et, The effective target in which this invocation is now
+     * @param t The target on which invocation first started.
+     *
+     * @param et The effective target in which this invocation is now
      * flowing
      *
-     * @param t, The target on which invocation first started.
+     * @param stub Stub for effective target @et
      *
-     * @param stub, Stub for target @t
-     *
-     * @param detail, operation details of the invocation including
+     * @param detail operation details of the invocation including
      * the service context list
      *
-     * @param response_expected, flag to indicate whether the
+     * @param response_expected flag to indicate whether the
      * operation encapsulated by @a detail returns a response or not.
      */
-    Collocated_Invocation (CORBA::Object_ptr et,
-                           CORBA::Object_ptr t,
+    Collocated_Invocation (CORBA::Object_ptr t,
+                           CORBA::Object_ptr et,
                            TAO_Stub *stub,
                            TAO_Operation_Details &detail,
                            bool response_expected = true);

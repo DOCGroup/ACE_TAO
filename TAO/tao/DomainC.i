@@ -47,7 +47,7 @@ CORBA::DomainManager::DomainManager (
       ),
     the_TAO_DomainManager_Proxy_Broker_ (0)
 {
-  this->CORBA_DomainManager_setup_collocation (_tao_collocated);
+  this->CORBA_DomainManager_setup_collocation ();
 }
 
 ACE_INLINE
@@ -83,7 +83,7 @@ CORBA::ConstructionPolicy::ConstructionPolicy (
       ),
     the_TAO_ConstructionPolicy_Proxy_Broker_ (0)
 {
-  this->CORBA_ConstructionPolicy_setup_collocation (_tao_collocated);
+  this->CORBA_ConstructionPolicy_setup_collocation ();
 }
 
 ACE_INLINE

@@ -47,7 +47,7 @@ CORBA::Repository::Repository (
       ),
     the_TAO_Repository_Proxy_Broker_ (0)
 {
-  this->CORBA_Repository_setup_collocation (_tao_collocated);
+  this->CORBA_Repository_setup_collocation ();
 }
 
 ACE_INLINE
@@ -83,7 +83,7 @@ CORBA::ModuleDef::ModuleDef (
       ),
     the_TAO_ModuleDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ModuleDef_setup_collocation (_tao_collocated);
+  this->CORBA_ModuleDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -119,7 +119,7 @@ CORBA::ConstantDef::ConstantDef (
       ),
     the_TAO_ConstantDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ConstantDef_setup_collocation (_tao_collocated);
+  this->CORBA_ConstantDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -155,7 +155,7 @@ CORBA::StructDef::StructDef (
       ),
     the_TAO_StructDef_Proxy_Broker_ (0)
 {
-  this->CORBA_StructDef_setup_collocation (_tao_collocated);
+  this->CORBA_StructDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -191,7 +191,7 @@ CORBA::UnionDef::UnionDef (
       ),
     the_TAO_UnionDef_Proxy_Broker_ (0)
 {
-  this->CORBA_UnionDef_setup_collocation (_tao_collocated);
+  this->CORBA_UnionDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -227,7 +227,7 @@ CORBA::EnumDef::EnumDef (
       ),
     the_TAO_EnumDef_Proxy_Broker_ (0)
 {
-  this->CORBA_EnumDef_setup_collocation (_tao_collocated);
+  this->CORBA_EnumDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -263,7 +263,7 @@ CORBA::AliasDef::AliasDef (
       ),
     the_TAO_AliasDef_Proxy_Broker_ (0)
 {
-  this->CORBA_AliasDef_setup_collocation (_tao_collocated);
+  this->CORBA_AliasDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -299,7 +299,7 @@ CORBA::NativeDef::NativeDef (
       ),
     the_TAO_NativeDef_Proxy_Broker_ (0)
 {
-  this->CORBA_NativeDef_setup_collocation (_tao_collocated);
+  this->CORBA_NativeDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -335,7 +335,7 @@ CORBA::PrimitiveDef::PrimitiveDef (
       ),
     the_TAO_PrimitiveDef_Proxy_Broker_ (0)
 {
-  this->CORBA_PrimitiveDef_setup_collocation (_tao_collocated);
+  this->CORBA_PrimitiveDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -371,7 +371,7 @@ CORBA::StringDef::StringDef (
       ),
     the_TAO_StringDef_Proxy_Broker_ (0)
 {
-  this->CORBA_StringDef_setup_collocation (_tao_collocated);
+  this->CORBA_StringDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -407,7 +407,7 @@ CORBA::WstringDef::WstringDef (
       ),
     the_TAO_WstringDef_Proxy_Broker_ (0)
 {
-  this->CORBA_WstringDef_setup_collocation (_tao_collocated);
+  this->CORBA_WstringDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -443,7 +443,7 @@ CORBA::SequenceDef::SequenceDef (
       ),
     the_TAO_SequenceDef_Proxy_Broker_ (0)
 {
-  this->CORBA_SequenceDef_setup_collocation (_tao_collocated);
+  this->CORBA_SequenceDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -479,7 +479,7 @@ CORBA::ArrayDef::ArrayDef (
       ),
     the_TAO_ArrayDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ArrayDef_setup_collocation (_tao_collocated);
+  this->CORBA_ArrayDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -515,7 +515,7 @@ CORBA::ExceptionDef::ExceptionDef (
       ),
     the_TAO_ExceptionDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ExceptionDef_setup_collocation (_tao_collocated);
+  this->CORBA_ExceptionDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -551,7 +551,7 @@ CORBA::AttributeDef::AttributeDef (
       ),
     the_TAO_AttributeDef_Proxy_Broker_ (0)
 {
-  this->CORBA_AttributeDef_setup_collocation (_tao_collocated);
+  this->CORBA_AttributeDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -587,7 +587,7 @@ CORBA::ExtAttributeDef::ExtAttributeDef (
       ),
     the_TAO_ExtAttributeDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ExtAttributeDef_setup_collocation (_tao_collocated);
+  this->CORBA_ExtAttributeDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -623,7 +623,7 @@ CORBA::OperationDef::OperationDef (
       ),
     the_TAO_OperationDef_Proxy_Broker_ (0)
 {
-  this->CORBA_OperationDef_setup_collocation (_tao_collocated);
+  this->CORBA_OperationDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -659,7 +659,7 @@ CORBA::InterfaceDef::InterfaceDef (
       ),
     the_TAO_InterfaceDef_Proxy_Broker_ (0)
 {
-  this->CORBA_InterfaceDef_setup_collocation (_tao_collocated);
+  this->CORBA_InterfaceDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -695,7 +695,7 @@ CORBA::InterfaceAttrExtension::InterfaceAttrExtension (
       ),
     the_TAO_InterfaceAttrExtension_Proxy_Broker_ (0)
 {
-  this->CORBA_InterfaceAttrExtension_setup_collocation (_tao_collocated);
+  this->CORBA_InterfaceAttrExtension_setup_collocation ();
 }
 
 ACE_INLINE
@@ -731,7 +731,7 @@ CORBA::ExtInterfaceDef::ExtInterfaceDef (
       ),
     the_TAO_ExtInterfaceDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ExtInterfaceDef_setup_collocation (_tao_collocated);
+  this->CORBA_ExtInterfaceDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -767,7 +767,7 @@ CORBA::AbstractInterfaceDef::AbstractInterfaceDef (
       ),
     the_TAO_AbstractInterfaceDef_Proxy_Broker_ (0)
 {
-  this->CORBA_AbstractInterfaceDef_setup_collocation (_tao_collocated);
+  this->CORBA_AbstractInterfaceDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -803,7 +803,7 @@ CORBA::ExtAbstractInterfaceDef::ExtAbstractInterfaceDef (
       ),
     the_TAO_ExtAbstractInterfaceDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ExtAbstractInterfaceDef_setup_collocation (_tao_collocated);
+  this->CORBA_ExtAbstractInterfaceDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -839,7 +839,7 @@ CORBA::LocalInterfaceDef::LocalInterfaceDef (
       ),
     the_TAO_LocalInterfaceDef_Proxy_Broker_ (0)
 {
-  this->CORBA_LocalInterfaceDef_setup_collocation (_tao_collocated);
+  this->CORBA_LocalInterfaceDef_setup_collocation ();
 }
 
 ACE_INLINE
@@ -875,7 +875,7 @@ CORBA::ExtLocalInterfaceDef::ExtLocalInterfaceDef (
       ),
     the_TAO_ExtLocalInterfaceDef_Proxy_Broker_ (0)
 {
-  this->CORBA_ExtLocalInterfaceDef_setup_collocation (_tao_collocated);
+  this->CORBA_ExtLocalInterfaceDef_setup_collocation ();
 }
 
 ACE_INLINE

@@ -347,9 +347,7 @@ void ImplementationRepository::Locator::activate_server_in_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -416,9 +414,7 @@ void ImplementationRepository::Locator::remove_server_in_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -479,9 +475,7 @@ void ImplementationRepository::Locator::shutdown_server_in_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -542,9 +536,7 @@ void ImplementationRepository::Locator::server_is_shutting_down_in_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -605,9 +597,7 @@ CORBA::Long ImplementationRepository::Locator::register_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::Long>::ret_val _tao_retval;
@@ -657,9 +647,7 @@ void ImplementationRepository::Locator::unregister_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -708,9 +696,7 @@ void ImplementationRepository::Locator::server_is_running_in_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -776,9 +762,7 @@ void ImplementationRepository::Locator::find_in_activator (
   
   if (this->the_TAO_Locator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Locator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Locator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -821,22 +805,22 @@ void ImplementationRepository::Locator::find_in_activator (
   ACE_CHECK;
 }
 
-ImplementationRepository::Locator::Locator (int collocated)
+ImplementationRepository::Locator::Locator (void)
  : the_TAO_Locator_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_Locator_setup_collocation (collocated);
+  this->ImplementationRepository_Locator_setup_collocation ();
 }
 
 void
-ImplementationRepository::Locator::ImplementationRepository_Locator_setup_collocation (int collocated)
+ImplementationRepository::Locator::ImplementationRepository_Locator_setup_collocation ()
 {
-  if (collocated)
+  if (::ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_Locator_Proxy_Broker_ =
         ::ImplementationRepository__TAO_Locator_Proxy_Broker_Factory_function_pointer (this);
     }
   
-  this->ImplementationRepository_Administration_setup_collocation (collocated);
+  this->ImplementationRepository_Administration_setup_collocation ();
 }
 
 ImplementationRepository::Locator::~Locator (void)
