@@ -3,7 +3,7 @@ Fri Aug  9 15:26:30 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/ast/ast_constant.cpp:
         * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
 
-          Fixed an overlooked item in my previous fix to enum
+          Fixed an overlooked item in my previous fix to an enum
           constant typedef problem.
 
 Fri Aug  9 11:57:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
