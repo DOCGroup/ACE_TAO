@@ -527,3 +527,9 @@ ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
 
   return number_of_cancellations;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Unbounded_Set<ACE_Timer_Node *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node *>;
+template class ACE_Set_Node<ACE_Timer_Node *>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
