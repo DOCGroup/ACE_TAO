@@ -5,33 +5,36 @@
 
 #define ENABLE_RT_CLASS 0
 
-void RT_Task::set_current()
+namespace {
+  bool enable_rt_class;
+};
+
+void RT_Task::enable()
 {
-#if ENABLE_RT_CLASS == 1
+  enable_rt_class = true;
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   long prio = ACE_Sched_Params::priority_max(ACE_SCHED_FIFO);
   if (ACE_OS::thr_setprio(thr_handle, prio, ACE_SCHED_FIFO) == -1){
     ACE_DEBUG((LM_DEBUG, "Cannot set the thread to RT class\n"));
   }
-#endif
 }
 
 int RT_Task::activate(ACE_Task_Base* task)
 {
-#if ENABLE_RT_CLASS == 1
-  long priority = ACE_Sched_Params::priority_max(ACE_SCHED_FIFO);
-  long flags = THR_NEW_LWP;
+  if (enable_rt_class) {
+    long priority = ACE_Sched_Params::priority_max(ACE_SCHED_FIFO);
+    long flags = THR_NEW_LWP;
 
-  // To get FIFO scheduling with PTHREADS.
-  ACE_SET_BITS (flags,
-                THR_SCHED_FIFO);
+    // To get FIFO scheduling with PTHREADS.
+    ACE_SET_BITS (flags,
+      THR_SCHED_FIFO);
 
- // Become an active object.
-  if (task->activate (flags,
-                      1,
-                      0,
-                      priority) == -1)
+    // Become an active object.
+    if (task->activate (flags,
+      1,
+      0,
+      priority) == -1)
     {
       ACE_DEBUG((LM_DEBUG, "Cannot activate the thread in RT class\n"));
 
@@ -43,37 +46,37 @@ int RT_Task::activate(ACE_Task_Base* task)
 
       long fallback_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
-                                        ACE_SCOPE_THREAD);
+        ACE_SCOPE_THREAD);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) task activation at priority %d with ")
-                  ACE_TEXT ("flags 0x%X failed; retry at priority %d with ")
-                  ACE_TEXT ("flags 0x%X (errno is %d%p)\n"),
-                  priority,
-                  flags,
-                  fallback_priority,
-                  THR_NEW_LWP,
-                  errno,
-                  ACE_TEXT ("")));
+        ACE_TEXT ("(%t) task activation at priority %d with ")
+        ACE_TEXT ("flags 0x%X failed; retry at priority %d with ")
+        ACE_TEXT ("flags 0x%X (errno is %d%p)\n"),
+        priority,
+        flags,
+        fallback_priority,
+        THR_NEW_LWP,
+        errno,
+        ACE_TEXT ("")));
 
       flags = THR_NEW_LWP;
       priority = fallback_priority;
 
       if (task->activate (flags,
-                          1,
-                          1,
-                          priority) == -1)
-        {
+        1,
+        1,
+        priority) == -1)
+      {
 
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%t) task activation at priority %d failed, ")
-                        ACE_TEXT ("exiting!\n%a"),
-                        priority,
-                        -1));
-        }
+        ACE_DEBUG ((LM_ERROR,
+          ACE_TEXT ("(%t) task activation at priority %d failed, ")
+          ACE_TEXT ("exiting!\n%a"),
+          priority,
+          -1));
+      }
     }
-  return 0;
-#else
-  return task->activate();
-#endif
+    return 0;
+  }
+  else
+    return task->activate();
 }
