@@ -24,7 +24,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
   // If we've got a ACE_Thread Manager then use it to suspend all the
   // threads.  This will enable us to get an accurate count.
 
-  if (Options::instance ()->threading_strategy () 
+  if (Options::instance ()->threading_strategy ()
       != Options::REACTIVE)
     {
       if (ACE_Thread_Manager::instance ()->suspend_all () == -1)
@@ -69,7 +69,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 	      total_bytes_out));
   ACE_DEBUG ((LM_DEBUG,
               "(%t) %f Mbits/sec received.\n",
-	      (float) (total_bytes_in * 8 / 
+	      (float) (total_bytes_in * 8 /
                        (float) (1024 * 1024 * Options::instance ()->performance_window ()))));
   ACE_DEBUG ((LM_DEBUG,
               "(%t) %f Mbits/sec sent.\n",
@@ -79,7 +79,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 
   // Resume all the threads again.
 
-  if (Options::instance ()->threading_strategy () 
+  if (Options::instance ()->threading_strategy ()
       != Options::REACTIVE)
     {
       if (ACE_Thread_Manager::instance ()->resume_all () == -1)
@@ -290,7 +290,7 @@ void
 ACE_Event_Channel::initiate_acceptors (void)
 {
   if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR)
-      && this->consumer_acceptor_.open 
+      && this->consumer_acceptor_.open
       (Options::instance ()->consumer_acceptor_port (),
        ACE_Reactor::instance (),
        Options::instance ()->blocking_semantics ()) == -1)
@@ -298,7 +298,7 @@ ACE_Event_Channel::initiate_acceptors (void)
 		"cannot register acceptor"));
 
   if (Options::instance ()->enabled (Options::SUPPLIER_CONNECTOR)
-      && this->supplier_acceptor_.open 
+      && this->supplier_acceptor_.open
       (Options::instance ()->supplier_acceptor_port (),
        ACE_Reactor::instance (),
        Options::instance ()->blocking_semantics ()) == -1)
@@ -312,7 +312,7 @@ ACE_Event_Channel::initiate_acceptors (void)
 int
 ACE_Event_Channel::close (u_long)
 {
-  if (Options::instance ()->threading_strategy () 
+  if (Options::instance ()->threading_strategy ()
       != Options::REACTIVE)
     {
       if (ACE_Thread_Manager::instance ()->suspend_all () == -1)
@@ -453,7 +453,7 @@ ACE_Event_Channel::open (void *)
   // <ACE_Message_Block> reference counting operations are
   // thread-safe.  Therefore, we create an <ACE_Lock_Adapter> that is
   // parameterized by <ACE_SYNCH_MUTEX> to prevent race conditions.
-  if (Options::instance ()->threading_strategy () 
+  if (Options::instance ()->threading_strategy ()
       != Options::REACTIVE)
     {
       ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *la;
@@ -471,6 +471,7 @@ ACE_Event_Channel::open (void *)
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 template class ACE_Map_Entry<ACE_INT32, Proxy_Handler *>;
 template class ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Map_Iterator_Base<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Unbounded_Set_Iterator<Proxy_Handler *>;
@@ -478,8 +479,8 @@ template class ACE_Unbounded_Set_Iterator<Proxy_Handler *>;
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_INT32, Proxy_Handler *>
 #pragma instantiate ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
 #pragma instantiate ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>
 #pragma instantiate ACE_Unbounded_Set_Iterator<Proxy_Handler *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

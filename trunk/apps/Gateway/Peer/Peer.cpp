@@ -633,7 +633,7 @@ Peer_Connector::open_connector (Peer_Handler *&peer_handler,
                   Peer_Handler,
                   -1);
 
-  ACE_INET_Addr addr (port, 
+  ACE_INET_Addr addr (port,
                       Options::instance ()->connector_host ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -757,7 +757,7 @@ Peer_Factory::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
-      && this->consumer_acceptor_.open 
+      && this->consumer_acceptor_.open
       (Options::instance ()->supplier_acceptor_port ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -789,6 +789,7 @@ template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
@@ -799,6 +800,7 @@ template class ACE_Svc_Tuple<Peer_Handler>;
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Svc_Tuple<Peer_Handler>

@@ -245,6 +245,7 @@ Proxy_Handler_Factory::make_proxy_handler (const Proxy_Config_Info &pci)
 template class ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *>;
 template class ACE_Map_Iterator_Base<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
+template class ACE_Map_Reverse_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #if defined (ACE_HAS_THREADS)
@@ -253,6 +254,7 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *>
 #pragma instantiate ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
 #pragma instantiate ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -260,4 +262,3 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
