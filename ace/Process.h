@@ -279,8 +279,6 @@ protected:
   // Argv-style command-line arguments.
 };
 
-// ************************************************************
-
 class ACE_Export ACE_Process
 {
   // = TITLE
@@ -303,7 +301,9 @@ public:
   // Destructor.
 
   pid_t spawn (ACE_Process_Options &options);
-  // Launch the process described by <options>.
+  // Launch a new process as described by <options>.  Returns the
+  // process id of the newly spawned child on success or -1 on
+  // failure.
 
   pid_t wait (int *status = 0,
               int wait_options = 0);

@@ -18,7 +18,7 @@
 //
 //         This test uses a version of <wait> requires the parent to
 //         use the signal handling mechanism in
-//         <one_child_synchronous_signal_handler> to keep track of the counting of
+//         <one_child_sig_handler> to keep track of the counting of
 //         remaining processes.  Therefore, this <wait> method is less
 //         portable than the version that's used in the
 //         <ACE_TEST_MULTIPLE_CHILDREN> test.
@@ -68,13 +68,13 @@ static ACE_Atomic_Op<ACE_Thread_Mutex, int> shut_down (0);
 // control for the <ACE_TEST_ONE_CHILD> test.
 
 static void *
-one_child_synchronous_signal_handler (void *)
+one_child_sig_handler (void *)
 {
   ACE_Sig_Set sigset;
 
   // Register ourselves as a "dummy" signal handler so that this
   // processes' disposition isn't SIG_IGN (which is the default).
-  ACE_Sig_Action sa ((ACE_SignalHandler) one_child_synchronous_signal_handler, SIGCHLD);
+  ACE_Sig_Action sa ((ACE_SignalHandler) one_child_sig_handler, SIGCHLD);
   ACE_UNUSED_ARG (sa);
 
   // Register signal handlers.
@@ -215,7 +215,7 @@ one_child_worker_child (void *)
 // control for the <ACE_TEST_MULTIPLE_CHILDREN> test.
 
 static void *
-multiple_children_synchronous_signal_handler (void *)
+multiple_children_sig_handler (void *)
 {
   ACE_Sig_Set sigset;
 
@@ -405,7 +405,7 @@ multiple_children_worker_parent (void *)
 }
 
 // This function runs the parent process in a separate worker thread
-// for the <ACE_TEST_ONE_CHILD> test.
+// for the <ACE_TEST_ONE_CHILDR> test.
 
 static void *
 one_child_worker_parent (void *)
@@ -425,7 +425,7 @@ one_child_worker_parent (void *)
 
   // Perform a barrier wait until all our child processes have exited.
   // Note that this <wait> requires the parent to use the signal
-  // handling mechanism in <one_child_synchronous_signal_handler> to keep track of
+  // handling mechanism in <one_child_sig_handler> to keep track of
   // the counting of remaining processes.  Therefore, this <wait>
   // method is less portable than the version that's shown below in
   // the <multiple_children_worker_parent> function.
@@ -495,11 +495,11 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_OS::atexit (exithook);
 
       if (child_test == ACE_TEST_ONE_CHILD)
-        run_test (one_child_synchronous_signal_handler,
+        run_test (one_child_sig_handler,
                   one_child_worker_child);
 
       else if (child_test == ACE_TEST_MULTIPLE_CHILDREN)
-        run_test (multiple_children_synchronous_signal_handler,
+        run_test (multiple_children_sig_handler,
                   multiple_children_worker_child);
 
       ACE_END_LOG;
@@ -510,15 +510,13 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_INIT_LOG (ASYS_TEXT ("Process_Manager_Test-children"));
 
       // Run the parent logic for the <ACE_TEST_ONE_CHILD> test.
-      run_test (one_child_synchronous_signal_handler, 
+      run_test (one_child_sig_handler, 
                 one_child_worker_parent);
 
-#if 0
       // Run the parent logic for the <ACE_TEST_MULTIPLE_CHILDREN>
       // test.
-      run_test (multiple_children_synchronous_signal_handler,
+      run_test (multiple_children_sig_handler,
                 multiple_children_worker_parent);
-#endif
 
       ACE_END_TEST;
       return 0;
