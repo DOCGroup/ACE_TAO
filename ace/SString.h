@@ -32,112 +32,58 @@ typedef ACE_USHORT16 ACE_WSTRING_TYPE;
 
 typedef ACE_String_Base<char> ACE_CString;
 
-template ACE_CString operator + (const ACE_CString &,
-                                 const ACE_CString &);
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_CString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+typedef ACE_String_Base<ACE_WSTRING_TYPE> ACE_WString;
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+ACE_Export ostream &operator << (ostream &, const ACE_WString &);
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
 /**
- * @class ACE_WString
  *
- * @brief This class provides a wrapper facade for C wide strings.
  *
- * This class uses an <ACE_Allocator> to allocate memory.  The
- * user can make this a persistant class by providing an
- * <ACE_Allocator> with a persistable memory pool.  This class is
- * optimized for efficiency, so it doesn't provide any internal
- * locking.
+ *
  */
-class ACE_Export ACE_WString
+class ACE_Export ACE_NS_WString : public ACE_WString
 {
 public:
-  /// No position constant
-  static const int npos;
-
   /// Default constructor.
-  ACE_WString (ACE_Allocator *alloc = 0);
+  ACE_NS_WString (ACE_Allocator *alloc = 0);
 
   /// Constructor that copies <s> into dynamically allocated memory.
-  ACE_WString (const char *s,
-               ACE_Allocator *alloc = 0);
+  ACE_NS_WString (const char *s,
+                  ACE_Allocator *alloc = 0);
 
   /// Constructor that copies <s> into dynamically allocated memory.
-  ACE_WString (const ACE_WSTRING_TYPE *s,
-               ACE_Allocator *alloc = 0);
+  ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+                  ACE_Allocator *alloc = 0);
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
   /// Constructor that takes in a ushort16 string (mainly used by the
   /// ACE Name_Space classes)
-  ACE_WString (const ACE_USHORT16 *s,
-               size_t len,
-               ACE_Allocator *alloc = 0);
+  ACE_NS_WString (const ACE_USHORT16 *s,
+                  size_t len,
+                  ACE_Allocator *alloc = 0);
 #endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
   /// Constructor that copies <len> ACE_WSTRING_TYPE's of <s> into dynamically
   /// allocated memory (will NUL terminate the result).
-  ACE_WString (const ACE_WSTRING_TYPE *s,
-               size_t len,
-               ACE_Allocator *alloc = 0);
+  ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+                  size_t len,
+                  ACE_Allocator *alloc = 0);
 
   /// Constructor that dynamically allocates memory for <len> + 1
   /// ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
-  ACE_WString (size_t len, ACE_Allocator *alloc = 0);
+  ACE_NS_WString (size_t len, ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
-  ACE_WString (const ACE_WString &s);
+  ACE_NS_WString (const ACE_NS_WString &s);
 
   /// Constructor that copies <c> into dynamically allocated memory.
-  ACE_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = 0);
-
-  /// Deletes the memory...
-  ~ACE_WString (void);
-
-  /// Return the <slot'th> character in the string (doesn't perform
-  /// bounds checking).
-  ACE_WSTRING_TYPE operator [] (size_t slot) const;
-
-  /// Return the <slot'th> character by reference in the string
-  /// (doesn't perform bounds checking).
-  ACE_WSTRING_TYPE &operator [] (size_t slot);
-
-  /// Assignment operator (does copy memory).
-  ACE_WString &operator = (const ACE_WString &);
-
-  /// Copy <s>
-  void set (const ACE_WSTRING_TYPE *s);
-
-  /// Copy <len> bytes of <s> (will NUL terminate the result)
-  void set (const ACE_WSTRING_TYPE *s,
-            size_t len);
-
-  /**
-   * Return a substring given an offset and length, if length == -1
-   * use rest of str return empty substring if offset or offset/length
-   * are invalid.
-   */
-  ACE_WString substring (size_t offset, ssize_t length = -1) const;
-
-  /// Same as substring
-  ACE_WString substr (size_t offset, ssize_t length = -1) const;
-
-  /// Concat operator (does copy memory).
-  ACE_WString &operator += (const ACE_WString &);
-
-  /// Concat operator (does copy memory)
-  ACE_WString &operator += (const ACE_WSTRING_TYPE *);
-
-  /// Returns a hash value for this string.
-  u_long hash (void) const;
-
-  /// Return the length of the string.
-  size_t length (void) const;
-
-  /// Return the size of the buffer.
-  size_t buffer_size(void) const;
-
-  /// Gets a copy of the underlying pointer.
-  ACE_WSTRING_TYPE *rep (void) const;
+  ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = 0);
 
   /// Transform into a copy of the ASCII character representation.
   /// (caller must delete)
@@ -146,98 +92,7 @@ public:
   /// Transform into a copy of a USHORT16 representation (caller must
   /// delete).  Note, behavior is undefined when sizeof (wchar_t) != 2.
   ACE_USHORT16 *ushort_rep (void) const;
-
-  /// Get at the underlying representation directly!
-  const ACE_WSTRING_TYPE *fast_rep (void) const;
-
-  /// Same as STL String's <c_str> and <fast_rep>.
-  const ACE_WSTRING_TYPE *c_str (void) const;
-
-  /// Comparison operator that will match substrings.  Returns the
-  /// slot of the first location that matches, else -1.
-  int strstr (const ACE_WString &s) const;
-
-  /// Find <str> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
-  int find (const ACE_WString &str, int pos = 0) const;
-
-  /// Find <s> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
-  int find (const ACE_WSTRING_TYPE *s, int pos = 0) const;
-
-  /// Find <c> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
-  int find (ACE_WSTRING_TYPE c, int pos = 0) const;
-
-  /// Find <c> starting at pos (counting from the end).  Returns the
-  /// slot of the first location that matches, else npos.
-  int rfind (ACE_WSTRING_TYPE c, int pos = npos) const;
-
-  /// Equality comparison operator (must match entire string).
-  int operator == (const ACE_WString &s) const;
-
-  /// Less than comparison operator.
-  int operator < (const ACE_WString &s) const;
-
-  /// Greater than comparison operator.
-  int operator > (const ACE_WString &s) const;
-
-  /// Inequality comparison operator.
-  int operator != (const ACE_WString &s) const;
-
-  /// Performs a <strcmp>-style comparison.
-  int compare (const ACE_WString &s) const;
-
-  /// Dump the state of an object.
-  void dump (void) const;
-
-  /// Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-
-  /// Computes the length of a "0" terminated ACE_WSTRING_TYPE *.
-  static size_t strlen (const ACE_WSTRING_TYPE *);
-
-  /// Traditional style strstr
-  static const ACE_WSTRING_TYPE *strstr (const ACE_WSTRING_TYPE *s1,
-                                         const ACE_WSTRING_TYPE *s2);
-
-  /**
-   * This method is designed for high-performance. Please use with
-   * care ;-) If the current size of the string is less than <len>,
-   * the string is resized to the new length. The data is zero'd
-   * out after this operation.
-   */
-  void resize (size_t len);
-
-private:
-  /**
-   * This method checks the size of the buffer. If the size of the
-   * buffer is not large enough the buffer will be resized. All new
-   * allocated space is zero'd out after this operation.
-   */
-  void check_allocate (size_t len);
-
-  /// Pointer to a memory allocator.
-  ACE_Allocator *allocator_;
-
-  /// Size of the buffer of the ACE_WString
-  size_t buf_len_;
-
-  /// Length of the ACE_WString.
-  size_t len_;
-
-  /// Pointer to data.
-  ACE_WSTRING_TYPE *rep_;
-
-  /// Represents the "NULL" string to simplify the internal logic.
-  static ACE_WSTRING_TYPE NULL_WString_;
 };
-
-ACE_Export ACE_INLINE ACE_WString operator+ (const ACE_WString &,
-                                             const ACE_WString &);
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ACE_Export ostream &operator << (ostream &, const ACE_WString &);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 /**
  * @class ACE_SString

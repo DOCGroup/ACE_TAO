@@ -34,7 +34,7 @@ public:
   void list_options (void);
   // Print name options
 
-  int bind (const char *key, 
+  int bind (const char *key,
             const char *value,
             const char *type = "");
   // Bind a key to a value
@@ -129,8 +129,8 @@ Client_Test::open (void)
   this->display_menu ();
 
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "register_stdin_handler"),
@@ -438,7 +438,7 @@ Client_Test::unbind (const char *key)
 }
 
 int
-Client_Test::rebind (const char *key, 
+Client_Test::rebind (const char *key,
                      const char *value,
                      const char *type)
 {
@@ -460,7 +460,7 @@ Client_Test::list_names (const char *pattern)
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
 
-      for (ACE_WString *name = 0;
+      for (ACE_NS_WString *name = 0;
            set_iterator.next (name) !=0;
            set_iterator.advance())
         ACE_DEBUG ((LM_DEBUG,
@@ -484,7 +484,7 @@ Client_Test::list_values (const char *pattern)
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
 
-      for (ACE_WString *value = 0;
+      for (ACE_NS_WString *value = 0;
            set_iterator.next (value) !=0;
            set_iterator.advance())
         ACE_DEBUG ((LM_DEBUG,
@@ -508,7 +508,7 @@ Client_Test::list_types (const char *pattern)
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
 
-      for (ACE_WString *type = 0;
+      for (ACE_NS_WString *type = 0;
            set_iterator.next (type) !=0;
            set_iterator.advance())
         ACE_DEBUG ((LM_DEBUG,
