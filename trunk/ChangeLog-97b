@@ -1,5 +1,13 @@
 Sun Nov  2 15:31:45 1997  Douglas C. Schmidt  <schmidt@polka.cs.wustl.edu>
 
+	* ace/Select_Reactor.i (cancel_timer): Make sure that we don't try
+ 	  to call cancel() through a NULL this->timer_queue_.  Thanks to
+ 	  Stephen Coy <stevec@wsa.com.au> for reporting this.
+
+	* ace/ACE.cpp (set_handle_limit): Fixed a subtle bug that occurs
+ 	  if the OS doesn't like non-initialized rlimit structs.  Thanks
+ 	  to Stephen Coy <stevec@wsa.com.au> for reporting this.
+
 	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp (main):
  	  Renamed allocator to my_alloc to work around wonderful STL and
  	  GCC problems...  Thanks to Ben Eng <ben@jetpen.com> for
@@ -97,7 +105,7 @@ Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
 Fri Oct 31 00:53:52 1997    <irfan@TWOSTEP>
 
 	* The following five changes were suggested by Stephen Coy
- 	  <stevec@wsa.com.au>. Thanks Stephen.
+ 	  <stevec@wsa.com.au>.  Thanks Stephen.
 
 	* ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed friend
  	  ace_dewarn_gplusplus to friend class ace_dewarn_gplusplus.
