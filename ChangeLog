@@ -1,3 +1,9 @@
+Wed Oct 15 10:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+          Fixed unused argument warning when ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+          is defined
+
 Tue Oct 14 21:54:07 2003  Nanbor Wang  <nanbor@.cs.wustl.edu>
 
 	* Makefile (CIAO_CORE_DIRS): Added Kokyu to the list of base
@@ -23,7 +29,7 @@ Tue Oct 14 17:13:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
  	  copying.  Thanks to Adam Fanello <yahoo@fanello.net> for
  	  reporting this.
 
-	* ace/OS.cpp: Added patches to support PHARLAP.  Thanks 
+	* ace/OS.cpp: Added patches to support PHARLAP.  Thanks
 	  to Ira Burton <imburton@micron.com> for supplying these.
 
 Tue Oct 14 13:54:19 2003  Steve Huston  <shuston@riverace.com>
@@ -51,12 +57,12 @@ Tue Oct 14 03:43:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  qualification to instance variables in base class to fix
 	  compile warnings in HPUX build.
 
-	* Kokyu/Default_Dispatcher_Impl.cpp: 
+	* Kokyu/Default_Dispatcher_Impl.cpp:
 	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
 	* Kokyu/Dispatcher_Task.cpp:
 	* Kokyu/Dispatcher_Task.h:
 	* Kokyu/Kokyu.h:
-	* Kokyu/Kokyu_defs.i: Removed/added comments 
+	* Kokyu/Kokyu_defs.i: Removed/added comments
 
 Tue Oct 14 05:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
