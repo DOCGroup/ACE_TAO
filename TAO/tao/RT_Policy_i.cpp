@@ -2,6 +2,7 @@
 
 #include "tao/RT_Policy_i.h"
 
+
 #if ! defined (__ACE_INLINE__)
 #include "tao/RT_Policy_i.i"
 #endif /* __ACE_INLINE__ */
@@ -262,16 +263,16 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy()
 }
 
 CORBA::Boolean 
-TAO_PriorityBandedConnectionPolicy::_tao_encode(TAO_OutputCDR &out_cdr)
+TAO_PriorityBandedConnectionPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
   
-  return 1;
+  return out_cdr << priority_bands_;
 }
 
 CORBA::Boolean 
-TAO_PriorityBandedConnectionPolicy::_tao_decode(TAO_InputCDR &in_cdr)
+TAO_PriorityBandedConnectionPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return 1;
+  return in_cdr >> priority_bands_;
 }
 
 // ****************************************************************
@@ -371,14 +372,14 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
 // Method for serialization support.
 
 CORBA::Boolean 
-TAO_TCP_Properties::_tao_encode(TAO_OutputCDR &out_cdr)
+TAO_TCP_Properties::_tao_encode(TAO_OutputCDR &)
 {
   
   return 1;
 }
 
 CORBA::Boolean 
-TAO_TCP_Properties::_tao_decode(TAO_InputCDR &in_cdr)
+TAO_TCP_Properties::_tao_decode(TAO_InputCDR &)
 {
   return 1;
 }
@@ -453,13 +454,13 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy()
 
 
 CORBA::Boolean 
-TAO_ServerProtocolPolicy::_tao_encode(TAO_OutputCDR &out_cdr)
+TAO_ServerProtocolPolicy::_tao_encode(TAO_OutputCDR &)
 {
   return 1;
 }
 
 CORBA::Boolean 
-TAO_ServerProtocolPolicy::_tao_decode(TAO_InputCDR &in_cdr)
+TAO_ServerProtocolPolicy::_tao_decode(TAO_InputCDR &)
 {
   return 1;
 }
