@@ -48,16 +48,16 @@ public:
 int 
 main (void)
 {
-  SOCK sock;
+  SOCK outer_sock;
   // Note that the SOCK superclass is *not* printed.
-  SOCK_Stream stream;
-  SOCK_Acceptor acceptor;
+  SOCK_Stream outer_stream;
+  SOCK_Acceptor outer_acceptor;
   ACE_ODB::instance ()->dump_objects ();
   {
-    SOCK sock;
+    SOCK inner_sock;
     // Note that the SOCK superclass is *not* printed.
-    SOCK_Stream stream;
-    SOCK_Acceptor acceptor;
+    SOCK_Stream inner_stream;
+    SOCK_Acceptor inner_acceptor;
     ACE_ODB::instance ()->dump_objects ();
   }
   ACE_ODB::instance ()->dump_objects ();  

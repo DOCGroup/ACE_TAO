@@ -6,33 +6,35 @@
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
-/* Maximum per-process open I/O descriptors */
-const int MAX_FDS = 200;
-const int PERMS	  = 0666;
+// Maximum per-process open I/O descriptors.
+const int MAX_HANDLES = 200;
+const int PERMS = 0666;
 
 int
 main (int argc, char *argv[])
 {
   ACE_SPIPE_Acceptor peer_acceptor;
   ACE_SPIPE_Stream new_stream;
-  int		 s_handle;
-  struct pollfd	 poll_array[MAX_FDS];
+  struct pollfd poll_array[MAX_HANDLES];
+
+  for (handle = 0; handle < MAX_HANDLES; handle++) 
+    {
+      poll_array[handle].fd = -1;
+      poll_array[handle].events = POLLIN;
+    }
 
   if (argc > 1)
     rendezvous = argv[1];
 
   ACE_OS::fdetach (rendezvous);
-
   ACE_SPIPE_Addr addr (rendezvous);
 
-  if ((s_handle = peer_acceptor.open (addr)) == -1)
-    ACE_OS::perror ("peer_acceptor.open"), ACE_OS::exit (1);
+  ACE_HANDLE s_handle = peer_acceptor.open (addr);
 
-  for (int fd = 0; fd < MAX_FDS; fd++) 
-    {
-      poll_array[fd].fd = -1;
-      poll_array[fd].events = POLLIN;
-    }
+  if (s_handle == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "peer_acceptor.open"), -1);
+
+  ACE_HANDLE handle;
 
   poll_array[0].fd = s_handle;
 
@@ -42,63 +44,63 @@ main (int argc, char *argv[])
       while (ACE_OS::poll (poll_array, width) == -1 && errno == EINTR)
         continue;
 
-      /* Handle pending logging messages first (s_handle + 1 
-         is guaranteed to be lowest client descriptor) */
+      // Handle pending logging messages first (s_handle + 1 is
+      // guaranteed to be lowest client descriptor).
 
-      for (int fd = s_handle + 1; fd < width; fd++)
-	if ((poll_array[fd].revents & POLLIN) 
-	    || (poll_array[fd].revents & POLLHUP))
+      for (handle = s_handle + 1; handle < width; handle++)
+	if (ACE_BIT_ENABLED (poll_array[handle].revents, POLLIN)
+	    || ACE_BIT_ENABLED (poll_array[handle].revents, POLLHUP))
 	  {
 	    char buf[BUFSIZ];
-	    int	 n;
+	    ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
 
-	    /* recv will not block in this case! */
-	    if ((n = ACE_OS::read (fd, buf, sizeof buf)) == -1)
-	      ACE_OS::perror ("read failed");
+	    // recv will not block in this case!
+	    if (n == -1)
+	      ACE_DEBUG ((LM_DEBUG, "%p\n", "read failed"));
 	    else if (n == 0)
 	      {
-		/* Handle client connection shutdown */
-		if (ACE_OS::close (poll_array[fd].fd) == -1)
-		  ACE_OS::perror ("close");
-		poll_array[fd].fd = -1;
+		// Handle client connection shutdown.
+		if (ACE_OS::close (poll_array[handle].fd) == -1)
+		  ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
+		poll_array[handle].fd = -1;
 
-		if (fd + 1 == width)
+		if (handle + 1 == width)
 		  {
-		    while (poll_array[fd].fd == -1)
-		      fd--;
-		    width = fd + 1;
+		    while (poll_array[handle].fd == -1)
+		      handle--;
+		    width = handle + 1;
 		  }
 	      }
 	    else
-	      {
-		::printf ("%*s\n", n, buf);
-		fflush (stdout);
-	      }
+	      ACE_DEBUG ((LM_DEBUG, "%*s\n", n, buf));
 	  } 
 
-      if (poll_array[0].revents & POLLIN)
+      if (ACE_BIT_ENABLED (poll_array[0].revents, POLLIN))
 	{
-	  int arg;
-	  int n_handle;
-	  ACE_SPIPE_Addr client;
- 
 	  if (peer_acceptor.accept (new_stream) == -1)
-	    ACE_OS::perror ("local_accept");
+	    ACE_DEBUG ((LM_DEBUG, "%p\n", "accept failed"));
   
-	  n_handle = new_stream.get_handle ();
+	  ACE_SPIPE_Addr client;
+	  ACE_HANDLE n_handle = new_stream.get_handle ();
 
 	  if (new_stream.get_remote_addr (client) == -1)
-	    ACE_OS::perror ("get_remote_addr");
+	    ACE_DEBUG ((LM_DEBUG, "%p\n", 
+			"get_remote_addr failed"));
 
-	  ACE_OS::printf ("n_handle = %d, uid = %d, gid = %d\n", 
-		    n_handle, client.user_id (), client.group_id ());
+	  ACE_DEBUG ((LM_DEBUG, 
+		      "n_handle = %d, uid = %d, gid = %d\n", 
+		      n_handle, 
+		      client.user_id (), 
+		      client.group_id ()));
 
-	  arg = RMSGN | RPROTDAT;
+	  int arg = RMSGN | RPROTDAT;
 
-	  if (ACE_OS::ioctl (n_handle, I_SRDOPT, (void *) arg) == -1)
-	    ACE_OS::perror ("I_RRDOPT");
+	  if (ACE_OS::ioctl (n_handle, 
+			     I_SRDOPT, (void *) arg) == -1)
+	    ACE_DEBUG ((LM_DEBUG, "%p\n", "ioctl failed"));
 
 	  poll_array[n_handle].fd = n_handle;
+
 	  if (n_handle >= width)
 	    width = n_handle + 1;
 	}
