@@ -1,3 +1,8 @@
+Tue Dec 14 13:51:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* utils/nslist/nslist.dsp: Fixed the release build settings.
+	  Thanks to Mike Vitalo <mvitalo@sprynet.com> for reporting this.
+
 Tue Dec 14 09:40:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/IOR-parser/ior-handler.h: Changed "class IOR" to
