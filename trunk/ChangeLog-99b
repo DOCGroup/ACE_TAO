@@ -1,3 +1,15 @@
+Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+          Split the Options class to a new file, CPP-inclient.h,
+          to make IBM C++ (xlC) like it.
+
+        * examples/IPC_SAP/SOCK_SAP/Makefile: On AIX w/ IBM C++, delete the
+          tempinc directory before compiling each new program. Keeps the
+          template instantiations from one program from conflicting with
+          the others.
+
 Fri Jun 25 12:40:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added/expanded/moved discussions of
@@ -9,6 +21,23 @@ Fri Jun 25 11:16:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/Makefile: Updated dependencies for Cache_Map_Manager_Test
           and Map_Manager_Test.
+
+Fri Jun 25 07:41:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added guideline to include
+          directories containing files with template definitions
+          in a -I.
+
+Thu Jun 24 22:42:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe): fixed UNICOS
+          preprocessor usage so that it's not in the middle
+          of the ACE_reintepret_cast.
+
+Thu Jun 24 22:18:52 1999  Doug Anderson  <doug@clark.net>
+
+        * ace/CDR_Stream.*,ace/SOCK_Dgram_Mcast.cpp,ace/config-cray.h:
+          updates for Cray UNICOS port.
 
 Thu Jun 24 21:33:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
