@@ -322,9 +322,10 @@ run_event_loop (u_short port)
   for (;;)
     {
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
+      ACE_Handle_Set temp = handle_set;
 
       int result = ACE_OS::select (int (oneway_acceptor.get_handle ()) + 1,
-                                   (fd_set *) handle_set,
+                                   (fd_set *) &temp,
                                    0,
                                    0,
                                    timeout);
@@ -337,7 +338,7 @@ run_event_loop (u_short port)
                     "(%P|%t) select timed out\n"));
       else
         {
-          if (handle_set.is_set (twoway_acceptor.get_handle ()))
+          if (temp.is_set (twoway_acceptor.get_handle ()))
             {
               if (twoway_acceptor.accept (new_stream) == -1)
                 {
@@ -354,7 +355,7 @@ run_event_loop (u_short port)
               run_server (twoway_server,
                           new_stream.get_handle ());
             }
-          if (handle_set.is_set (oneway_acceptor.get_handle ()))
+          if (temp.is_set (oneway_acceptor.get_handle ()))
             {
               if (oneway_acceptor.accept (new_stream) == -1)
                 {
