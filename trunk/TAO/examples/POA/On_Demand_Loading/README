@@ -24,12 +24,15 @@ On the other hand, the Servant_Locator is called per operation request
 from the client and the associations too are made per request and the
 servant is destroyed per request too.
 
+Also, the level of granualarity is at the object level. That is, every object
+is associated with an dll which had to be loaded into memory on demand.
 
-Note that the server need not be built with the library. The library
+Note that the server need not be built with the dll. The dll
 name and the factory method which will be used to obtain the servant
 is known to the server only at runtime. This gives us the flexibility
 of modifying and loading the servant without having to build the
-server along with the library.
+server along with the dll.
+
 
 Execution:
 ---------
