@@ -476,7 +476,7 @@ class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
   /// Constructor
-  ACE_WFMO_Reactor_Notify (void);
+  ACE_WFMO_Reactor_Notify (size_t max_notifies = 1024);
 
   /// Initialization. <timer_queue> is stored to call <gettimeofday>.
   virtual int open (ACE_Reactor_Impl *wfmo_reactor,
@@ -637,7 +637,8 @@ public:
 
   /// Initialize <ACE_WFMO_Reactor> with the default size.
   ACE_WFMO_Reactor (ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0);
+                    ACE_Timer_Queue * = 0,
+                    ACE_Reactor_Notify * = 0);
 
   /**
    * Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should
@@ -648,7 +649,8 @@ public:
   ACE_WFMO_Reactor (size_t size,
                     int unused = 0,
                     ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0);
+                    ACE_Timer_Queue * = 0,
+                    ACE_Reactor_Notify * = 0);
 
   /**
    * Initialize <ACE_WFMO_Reactor> with size <size>.  <size> should

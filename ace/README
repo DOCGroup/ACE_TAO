@@ -403,11 +403,6 @@ ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5,
 ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R   Uses ctime_r & asctime_r with
                                         only two parameters
                                         vs. three.
-ACE_HAS_OPTIMIZED_MESSAGE_QUEUE         Use the semaphore
-                                        implementation of
-                                        ACE_Message_Queue rather than
-                                        the emulated condition
-                                        variable (NT and VxWorks).
 ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
                                         timod STREAMS module
 ACE_HAS_3_PARAM_WCSTOK                  Platform has 3-parameter version
