@@ -1,3 +1,4 @@
+// $Id$
 // This may look like C, but it's really -*- C++ -*-
 
 ACE_INLINE void *
@@ -303,4 +304,10 @@ ACE_INLINE CORBA_Any *&
 CORBA_Any_out::ptr (void)
 {
   return this->ptr_;
+}
+
+ACE_INLINE CORBA::Boolean
+CORBA_Any::any_owns_data (void) const
+{
+  return this->any_owns_data_;
 }

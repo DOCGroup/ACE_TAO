@@ -247,8 +247,8 @@ IIOP_ServerRequest::demarshal (CORBA::Environment &env,  // exception reporting
 
   CORBA::NVList_ptr nvlist;
 
-  // Create an NVList of the appropriate size.
-  this->orb ()->create_list (list_size, nvlist);
+  // Create an NVList
+  this->orb ()->create_list (0, nvlist);
 
   // Now, put all "in" and "inout" parameters into the NVList.
   CORBA::ULong i;

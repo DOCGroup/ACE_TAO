@@ -78,6 +78,7 @@ Test_Short::add_args (CORBA::NVList_ptr &param_list,
                       CORBA::NVList_ptr &retval,
                       CORBA::Environment &env)
 {
+  // we provide top level memory to the ORB to retrieve the data
   CORBA::Any in_arg (CORBA::_tc_short, &this->in_, 0);
   CORBA::Any inout_arg (CORBA::_tc_short, &this->inout_, 0);
   CORBA::Any out_arg (CORBA::_tc_short, &this->out_, 0);
@@ -87,9 +88,10 @@ Test_Short::add_args (CORBA::NVList_ptr &param_list,
   (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
   (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
-  // add return value
+  // add return value. Let the ORB allocate storage. We simply tell the ORB
+  // what type we are expecting.
   (void)retval->item (0, env)->value ()->replace (CORBA::_tc_short,
-                                                  &this->ret_,
+                                                  0, // no value
                                                   0, // does not own
                                                   env);
   return 0;
@@ -110,9 +112,15 @@ CORBA::Boolean
 Test_Short::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
-  this->inout_ = *(CORBA::Short *) req->arguments ()->item (1, env)->value ()->value ();
-  this->out_ = *(CORBA::Short *) req->arguments ()->item (2, env)->value ()->value ();
-  this->ret_ = *(CORBA::Short *)req->result ()->value ()->value ();
+#if 0
+  // commented out since we really don't need to this as we have provided the
+  // ORB with the memory
+  *req->arguments ()->item (1, env)->value () >>= this->inout_;
+  *req->arguments ()->item (2, env)->value () >>= this->out_;
+#endif
+  // we must retrieve the return value since we aske dthe ORB to allocate the
+  // memory.
+  *req->result ()->value () >>= this->ret_;
   return this->check_validity ();
 }
 
@@ -227,7 +235,7 @@ Test_Unbounded_String::add_args (CORBA::NVList_ptr &param_list,
 
   // add return value
   (void)retval->item (0, env)->value ()->replace (CORBA::_tc_string,
-                                                  &this->ret_,
+                                                  0, // ORB will allocate
                                                   0, // does not own
                                                   env);
   return 0;
@@ -252,9 +260,9 @@ CORBA::Boolean
 Test_Unbounded_String::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
-  this->inout_ = *(char **) req->arguments ()->item (1, env)->value ()->value ();
-  this->out_ = *(char **) req->arguments ()->item (2, env)->value ()->value ();
-  this->ret_ = *(char **)req->result ()->value ()->value ();
+  // only retrieve the return value. No need to retrieve the out and inout
+  // because we had provided the memory and we own it.
+  *req->result ()->value () >>= this->ret_;
   return this->check_validity ();
 }
 
@@ -336,6 +344,7 @@ Test_Fixed_Struct::add_args (CORBA::NVList_ptr &param_list,
                              CORBA::NVList_ptr &retval,
                              CORBA::Environment &env)
 {
+  // We provide the top level memory
   // the Any does not own any of these
   CORBA::Any in_arg (Param_Test::_tc_Fixed_Struct, &this->in_, 0);
   CORBA::Any inout_arg (Param_Test::_tc_Fixed_Struct, &this->inout_, 0);
@@ -346,9 +355,9 @@ Test_Fixed_Struct::add_args (CORBA::NVList_ptr &param_list,
   (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
   (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
-  // add return value
+  // add return value type
   (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Struct,
-                                                  &this->ret_,
+                                                  0, // let the ORB allocate
                                                   0, // does not own
                                                   env);
   return 0;
@@ -387,11 +396,12 @@ CORBA::Boolean
 Test_Fixed_Struct::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
-  this->inout_ = *(Param_Test::Fixed_Struct *) req->arguments ()->item (1, env)
-    ->value ()->value ();
-  this->out_ = *(Param_Test::Fixed_Struct *) req->arguments ()->item (2, env)
-    ->value ()->value ();
-  this->ret_ = *(Param_Test::Fixed_Struct *)req->result ()->value ()->value ();
+
+  // we have forced the ORB to allocate memory for the return value so that we
+  // can test the >>= operator
+  Param_Test::Fixed_Struct *ret;
+  *req->result ()->value () >>= ret;
+  this->ret_ = *ret;
   return this->check_validity ();
 }
 
@@ -554,16 +564,17 @@ Test_String_Sequence::add_args (CORBA::NVList_ptr &param_list,
 {
   CORBA::Any in_arg (Param_Test::_tc_StrSeq, (void *) &this->in_.in (), 0);
   CORBA::Any inout_arg (Param_Test::_tc_StrSeq, &this->inout_.inout (), 0);
-  CORBA::Any out_arg (Param_Test::_tc_StrSeq, this->out_.out (), 0);
+  // ORB will allocate
+  CORBA::Any out_arg (Param_Test::_tc_StrSeq, 0, 0);
 
   // add parameters
   (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
   (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
   (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
-  // add return value
+  // add return value type
   (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_StrSeq,
-                                                  &this->ret_,
+                                                  0,
                                                   0, // does not own
                                                   env);
   return 0;
@@ -595,12 +606,15 @@ CORBA::Boolean
 Test_String_Sequence::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
-  this->inout_ = new Param_Test::StrSeq (*(Param_Test::StrSeq *) req->arguments
-                                         ()->item (1, env)->value ()->value ());
-  this->out_ = new Param_Test::StrSeq (*(Param_Test::StrSeq *) req->arguments
-                                       ()->item (2, env)->value ()->value ());
-  this->ret_ = new Param_Test::StrSeq (*(Param_Test::StrSeq *)req->result
-                                       ()->value ()->value ());
+
+  Param_Test::StrSeq *out, *ret;
+
+  *req->arguments ()->item (2, env)->value () >>= out;
+  *req->result ()->value () >>= ret;
+
+  this->out_ = out;
+  this->ret_ = ret;
+
   return this->check_validity ();
 }
 

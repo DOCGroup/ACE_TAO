@@ -859,32 +859,68 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                               switch (member_label->type ()->kind (env))
                                 {
                                 case CORBA::tk_short:
+                                  {
+                                    CORBA::Short s;
+                                    *member_label >>= s;
+                                    if (s == *(CORBA::Short *) discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  }
+                                  break;
                                 case CORBA::tk_ushort:
-                                  if (*(CORBA::Short *) member_label->value () ==
-                                      *(CORBA::Short *) discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                  {
+                                    CORBA::UShort s;
+                                    *member_label >>= s;
+                                    if (s == *(CORBA::UShort *) discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  }
                                   break;
                                 case CORBA::tk_long:
+                                  {
+                                    CORBA::Long l;
+                                    *member_label >>= l;
+                                    if (l == *(CORBA::Long *) discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  }
+                                  break;
                                 case CORBA::tk_ulong:
+                                  {
+                                    CORBA::ULong l;
+                                    *member_label >>= l;
+                                    if (l == *(CORBA::ULong *) discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  }
+                                  break;
                                 case CORBA::tk_enum:
-                                  if (*(CORBA::ULong *) member_label->value () ==
-                                      *(CORBA::ULong *) discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                  {
+                                    CORBA::Long l;
+                                    TAO_InputCDR stream ((ACE_Message_Block *)
+                                                         member_label->value
+                                                         ());
+                                    (void)stream.decode (discrim_tc, &l, 0, env);
+                                    if (l == *(CORBA::Long *) discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  }
                                   break;
                                 case CORBA::tk_char:
-                                  if (*(CORBA::Char *) member_label->value () ==
-                                      *(CORBA::Char *) discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                  {
+                                    CORBA::Char c;
+                                    *member_label >>= CORBA::Any::to_char (c);
+                                    if (c == *(CORBA::Char *) discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  }
                                   break;
                                 case CORBA::tk_wchar:
-                                  if (*(CORBA::WChar *) member_label->value () ==
-                                      *(CORBA::WChar *) discrim_val)
+                                  // @@ ASG TO-DO
+                                  if (*(CORBA::WChar *) member_label->value () == *(CORBA::WChar *) discrim_val)
                                     discrim_matched = CORBA::B_TRUE;
                                   break;
                                 case CORBA::tk_boolean:
-                                  if (*(CORBA::Boolean *) member_label->value () ==
-                                      *(CORBA::Boolean *) discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                  {
+                                    CORBA::Boolean b;
+                                    *member_label >>= CORBA::Any::to_boolean (b);
+                                    if (b == *(CORBA::Boolean *) discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  }
                                   break;
                                 default:
                                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));

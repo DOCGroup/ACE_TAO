@@ -11,7 +11,7 @@
 CORBA::ULong
 CORBA_NamedValue::AddRef (void)
 {
-  return refcount_++;
+  return this->refcount_++;
 }
 
 CORBA::ULong
@@ -24,10 +24,7 @@ CORBA_NamedValue::Release (void)
       return this->refcount_;
   }
 
-  //  delete this;
-  // this is causing free mismatched memory error
-  this->~CORBA_NamedValue ();
-  ACE_OS::free (this);
+  delete this;
   return 0;
 }
 
@@ -53,10 +50,8 @@ CORBA_NamedValue::~CORBA_NamedValue (void)
       CORBA::string_free (this->name_);
       this->name_ = 0;
     }
-  // the Any will be destroyed on its own as we hold an instance and not a
-  // pointer to Any
+  // the any will be destroyed by itself
 }
-
 
 // =Methods on class NVList
 
@@ -97,15 +92,17 @@ CORBA::is_nil (CORBA::NVList_ptr nvl)
 
 CORBA_NVList::~CORBA_NVList (void)
 {
-  // destroy each NamedValue element
-  for (CORBA::ULong i = 0; i < this->max_; i++)
-    (&this->values_[i])->~CORBA_NamedValue ();
+  // initialize an iterator and delete each NamedValue
+  ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> iter (this->values_);
 
-  if (this->values_)
-    ACE_OS::free ((char *)values_);
+  for (iter.first (); !iter.done (); iter.advance ())
+    {
+      CORBA::NamedValue_ptr *nv;
+      (void) iter.next (nv);
+      delete *nv;
+    }
 
-  this->values_ = 0;
-  this->len_ = this->max_ = 0;
+  this->max_ = 0;
 }
 
 // add an element and just initialize its flags
@@ -113,15 +110,8 @@ CORBA::NamedValue_ptr
 CORBA_NVList::add (CORBA::Flags flags,
                    CORBA::Environment &env)
 {
-  CORBA::ULong len = this->len_; // next slot
-
   // call the helper to allocate a NamedValue element (if necessary)
-  if (!this->add_element (flags, env))
-    return 0;
-
-  // now initialize the fields
-  this->values_[len].flags_ = flags;
-  return &this->values_[len];
+  return this->add_element (flags, env);
 }
 
 // add an element and just initialize its flags and name
@@ -130,16 +120,17 @@ CORBA_NVList::add_item (const char *name,
                         CORBA::Flags flags,
                         CORBA::Environment &env)
 {
-  CORBA::ULong len = this->len_; // next slot
+  // call the helper to allocate a NamedValue element
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
 
-  // call the helper to allocate a NamedValue element (if necessary)
-  if (!this->add_element (flags, env))
+  if (nv)
+    {
+      // now initialize the fields
+      nv->name_ = CORBA::string_dup (name);
+      return nv;
+    }
+  else
     return 0;
-
-  // now initialize the fields
-  this->values_[len].flags_ = flags;
-  this->values_[len].name_ = CORBA::string_dup (name);
-  return &this->values_[len];
 }
 
 // add a value. If necessary, increment the list
@@ -149,46 +140,35 @@ CORBA_NVList::add_value (const char *name,
                          CORBA::Flags flags,
                          CORBA::Environment &env)
 {
-  CORBA::ULong len = this->len_; // next slot
+  // call the helper to allocate a NamedValue element
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
 
-  // call the helper to allocate a NamedValue element (if necessary)
-  if (!this->add_element (flags, env))
-    return 0;
+  if (nv)
+    {
+      // now initialize the fields
+      nv->name_ = CORBA::string_dup (name);
+      if (ACE_BIT_ENABLED (flags, CORBA::IN_COPY_VALUE))
+        // IN_COPY_VALUE means that the parameter is not "borrowed" by
+        // the ORB, but rather that the ORB copies its value.
+        //
+        // Initialize the newly allocated memory using a copy
+        // constructor that places the new "Any" value at just the right
+        // place, and makes a "deep copy" of the data.
+        nv->any_ = value;
+      else
 
-  // now initialize the fields
-  this->values_[len].flags_ = flags;
-  this->values_[len].name_ = CORBA::string_dup (name); // make a copy
+        // The normal behaviour for parameters is that the ORB "borrows"
+        // their memory for the duration of calls.
+        //
 
-  if (ACE_BIT_ENABLED (flags, CORBA::IN_COPY_VALUE))
-    // IN_COPY_VALUE means that the parameter is not "borrowed" by
-    // the ORB, but rather that the ORB copies its value.
-    //
-    // Initialize the newly allocated memory using a copy
-    // constructor that places the new "Any" value at just the right
-    // place, and makes a "deep copy" of the data.
-    (void) new (&this->values_[len].any_) CORBA::Any (value);
+        nv->any_.replace (value.type (),
+                          (void *) value.value_,
+                          0, env);
+
+      return nv;
+    }
   else
-
-    // The normal behaviour for parameters is that the ORB "borrows"
-    // their memory for the duration of calls.
-    //
-    // Initialize the newly allocated "Any" using a normal
-    // constructor that places the new "Any" value at just the right
-    // place, yet doesn't copy the memory (except for duplicating
-    // the typecode).
-    //
-    // NOTE: DSI has yet to be updated so that it's OK to use such
-    // application-allocated memory.  It needs at least a "send the
-    // response now" call.
-    //
-    (void) new (&this->values_[len].any_) CORBA::Any (value.type (),
-                                                      (void *)value.value (),
-                                                      CORBA::B_FALSE); // does
-                                                                       // not
-                                                                       // own
-
-  // return pointer to the newly inserted member
-  return &this->values_[len];
+    return 0;
 }
 
 // add an element and just initialize its flags and name
@@ -197,30 +177,47 @@ CORBA_NVList::add_item_consume (char *name,
                                 CORBA::Flags flags,
                                 CORBA::Environment &env)
 {
-  CORBA::ULong len = this->len_; // next slot
 
-  // call the helper to allocate a NamedValue element (if necessary)
-  if (!this->add_element (flags, env))
+  // call the helper to allocate a NamedValue element
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
+
+  if (nv)
+    {
+      // now initialize the fields
+
+      // consume the name
+      nv->name_ = name;
+      return nv;
+    }
+  else
     return 0;
-
-  // now initialize the fields
-  this->values_[len].flags_ = flags;
-  this->values_[len].name_ = name; // we consume it
-  return &this->values_[len];
 }
 
 // add a value. If necessary, increment the list
 CORBA::NamedValue_ptr
-CORBA_NVList::add_value_consume (char * /*name*/,
-                                 CORBA::Any * /*value*/,
-                                 CORBA::Flags /*flags*/,
-                                 CORBA::Environment &/*env*/)
+CORBA_NVList::add_value_consume (char * name,
+                                 CORBA::Any * value,
+                                 CORBA::Flags flags,
+                                 CORBA::Environment & env)
 {
-  // not implemented because we need to see how we can consume the value
-  // One soln is to make the any_ member of NamedValue to be a Any_ptr or
-  // Any_var
-  // @@ (ASG) - TODO
-  return 0;
+  // call the helper to allocate a NamedValue element
+  CORBA::NamedValue_ptr nv = this->add_element (flags, env);
+
+  if (nv)
+    {
+      // now initialize the fields
+
+      // consume name
+      nv->name_ = name;
+
+      // consume the value @@ (ASG) have we? we may need to destroy the in
+      // parameter
+      nv->any_ = *value;
+      return nv;
+    }
+  else
+    return 0;
+
 }
 
 //CORBA::Status
@@ -233,7 +230,7 @@ CORBA_NVList::remove (CORBA::ULong /*n*/, CORBA::Environment &/*env*/)
 }
 
 // Helper method
-CORBA::Boolean
+CORBA::NamedValue_ptr
 CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
 {
   env.clear ();
@@ -243,44 +240,24 @@ CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
       return 0;
     }
 
-  // We track "len_" and "max_" like sequences do; mixing the
-  // "add_arg" and nvlist[i] style accessors produces undefined
-  // behaviour.
-  CORBA::ULong len = this->len_++; // len_ points to the next available
-                                   // slot. Access is by zero based indexing
+  CORBA::NamedValue_ptr nv;
 
-  // Extend the array with an _initialized_ element ... relying on
-  // zeroed memory to be sufficiently initialized.
-  //
+  // allocate a new NamedValue
+  ACE_NEW_RETURN (nv, CORBA::NamedValue, 0);
 
-  if (this->values_ == 0) // list was created as an empty list
+  // set the flags and enqueue in the queue
+  nv->flags_ = flags;
+  if (this->values_.enqueue_tail (nv) == -1)
     {
-      this->values_ = (CORBA::NamedValue_ptr)
-        ACE_OS::calloc (this->len_, sizeof (CORBA::NamedValue));
-      this->max_ = this->len_;
-    }
-  else if (len >= max_) // need reallocation
-    {
-      // reallocate a larger buffer
-      this->values_ = (CORBA::NamedValue_ptr) ACE_OS::realloc
-        ((char *)this->values_, sizeof (CORBA::NamedValue) * this->len_);
-      // now zero the elements that have been newly allocated
-      (void) ACE_OS::memset (&this->values_[this->max_], 0,
-                             sizeof (values_[this->max_]) * (this->len_ - this->max_));
-      this->max_ = this->len_; // set the new maximum size
-    }
-  if (!this->values_)
-    {
-      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      delete nv;
       return 0;
     }
 
-  return 1; // success
+  this->max_++;
+  return nv; // success
 }
 
-// This was inline, but didn't survive the removal of .i #includes
-// from corba.h.  env.exception wasn't known.  Maybe the circular
-// #includes between corba.h and ORB.h need to be removed.
+// return the item at location n
 CORBA::NamedValue_ptr
 CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
 {
@@ -291,5 +268,18 @@ CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
       return 0;
     }
   else
-    return &this->values_ [n];
+    {
+      CORBA::NamedValue_ptr *nv;
+
+      this->values_.get (nv, n);
+      return *nv;
+    }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Queue<CORBA::NamedValue_ptr>;
+template class ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Queue<CORBA::NamedValue_ptr>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

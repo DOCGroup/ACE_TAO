@@ -60,8 +60,14 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-<P>Current status: (As of March 15th, 1998.)
+<P>Current status: (As of April 23rd, 1998.)
 <UL>
+
+<LI>
+The &lt;&lt;= and >>= operators for user-defined types are now generated
+yet.
+</LI>
+
 <LI>
 Completely redesigned the IDL compiler using the Visitor patterns. Many
 incomplete issues have been resolved. These include support for "sequence
@@ -165,6 +171,7 @@ added. Two backend options control the name of the export macro, and the
 name of an extra include file were the macro is defined; the options are
 <TT>-Wp,export_macro=MACRO_NAME</TT> <TT>-Wp,export_include=INCLUDE_NAME</TT>.</LI>
 </UL>
+
 Known bugs/unimplemented constructs:
 <UL>
 <LI>
@@ -179,10 +186,6 @@ is still a problem.</LI>
 
 <LI>
 Unions with default cases yet to be handled</LI>
-
-<LI>
-The &lt;&lt;= and >>= operators for user-defined types are not generated
-yet.</LI>
 
 <LI>
 Deal with names in the IDL definition that are C++ keywords.</LI>
@@ -370,12 +373,12 @@ Point of contact: <A HREF="mailto:sbw1@cs.wustl.edu">Seth Widoff</A>
 Development is complete, and testing and debugging have commenced on
 the TAO Trading Service. Currently, it
 meets the Linked Trader conformance requirements, in that it supports
-the Lookup, Register, Admin, and Link interfaces. The Lookup interface supports 
-subtype searching, preference sorting, dynamic property evaluation, federated queries, 
+the Lookup, Register, Admin, and Link interfaces. The Lookup interface supports
+subtype searching, preference sorting, dynamic property evaluation, federated queries,
 and concurrent queries as a multi-threaded servant.
 <p>
-The Trading Service uses the Object Space implementation of the Standard 
-Template Library.	
+The Trading Service uses the Object Space implementation of the Standard
+Template Library.
 <p>
 Future Work: <p>
 
@@ -386,7 +389,7 @@ Future Work: <p>
 
 
 <P>For general documentation of the Trading Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#trader">The
-Trading Service Specification.</A> 
+Trading Service Specification.</A>
 
 
 <P>
@@ -531,9 +534,9 @@ Have a DOVE Browser running using Java Beans as vizualization components.
 Have the Event Channel as DOVE Agent running with an Event Consumer
 in the DOVE Browser.
 <LI>
-Having a DOVE Management Information Base (MIB), which dumps all 
+Having a DOVE Management Information Base (MIB), which dumps all
 events transfered on the Event Channel
-into a file on persistent storage for later reuse. 
+into a file on persistent storage for later reuse.
 </LI>
 </UL>
 <P>
@@ -541,9 +544,9 @@ The DOVE Browser uses independent visualization components (Java Beans)
 and the Event Channel as DOVE Agent. Connections can be established
 between monitored metrics and the visualization components.
 <P>
-We have three major components: 
+We have three major components:
 Observables (monitored metrics), Observers (a Java Bean
-for displaying the metric) and a DataHandler (for demultiplexing the 
+for displaying the metric) and a DataHandler (for demultiplexing the
 monitored metrics to the appropriate Observables).
 Each component inherits from a base class, so that a certain behavior
 of the components can be assured for each component. Relationships
@@ -551,15 +554,15 @@ between components are based on these base classes.
 <P>
 The used Java Beans are required to conform to some standards, as
 they have to support a function called "getProperty" which allows
-the DOVE Browser to determine if the vizualization capabilities of 
+the DOVE Browser to determine if the vizualization capabilities of
 a specific Java Bean are sufficient to display the metric.
 A JavaBean is for example a Java Panel which shows a Graph of
-the delivered doubles. So all metrics can be displayed by this visualization 
+the delivered doubles. So all metrics can be displayed by this visualization
 component which can be expressed by a single double.
 <P>
 The DataHandler is connected to the Event Push Consumer (PUSH, because
 we use the push concept of the Event Service). The Event Push Consumer
-does not know what kind of data is transported. The only component 
+does not know what kind of data is transported. The only component
 knowing all the details about the dependencies of the metrics is
 the DataHandler. This separation allows easy extension and change
 of the demo.
@@ -571,8 +574,8 @@ are available about this new concept.
 Event Service events are used as communication between DOVE Applications
 and the DOVE Browser. The DOVE MIB analyses the event data field of all events
 and stores this information into a file. The event data filed is of
-type CORBA::Any and the DOVE MIB has no notion of what is conveyed in 
-this field. So the DOVE MIB has to discover the content via the 
+type CORBA::Any and the DOVE MIB has no notion of what is conveyed in
+this field. So the DOVE MIB has to discover the content via the
 embedded type code information.
 
 Future work includes:

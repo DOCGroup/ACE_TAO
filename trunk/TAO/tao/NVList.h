@@ -137,18 +137,15 @@ private:
   // constructor - cannot be instantiated directly other than through the
   // ORB::create_list method
 
-  CORBA::Boolean add_element (CORBA::Flags, CORBA::Environment &);
+  CORBA::NamedValue_ptr add_element (CORBA::Flags, CORBA::Environment &);
   // helper to increase the list size. This is used by all the add_ methods of
   // the NVList class
 
-  CORBA::NamedValue *values_;
-  // list of parameters stored as NamedValues
+  ACE_Unbounded_Queue<CORBA::NamedValue_ptr> values_;
+  // internal list of parameters stored as NamedValues
 
   CORBA::ULong max_;
   // maximum length of list
-
-  CORBA::ULong len_;
-  // current length of list
 
   CORBA::ULong refcount_;
   // maintains how many references exist to this object

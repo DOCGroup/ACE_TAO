@@ -92,12 +92,14 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
       CORBA::Environment env;
       TAO_OutputCDR stream;
 
-      // encode the value
-      stream.encode (this->type_, this->value_, 0, env);
+      if (this->value_)
+        {
+          // encode the value
+          stream.encode (this->type_, this->value_, 0, env);
 
-      // retrieve the start of the message block chain and save it
-      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                 stream.start ());
+          // retrieve the start of the message block chain and save it
+          this->cdr_ = stream.start ()->clone ();
+        }
     }
 }
 
@@ -129,8 +131,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 
       stream.encode (this->type_, src.value_, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                 stream.start ());
+      this->cdr_ = stream.start ()->clone ();
     }
 }
 
@@ -182,8 +183,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
       stream.encode (this->type_, src.value_, 0, env);
       // retrieve the start of the message block chain and duplicate it
-      this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                   stream.start ());
+      this->cdr_ = stream.start ()->clone ();
     }
   return *this;
 }

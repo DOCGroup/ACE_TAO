@@ -139,14 +139,11 @@ CORBA_ORB::create_list (CORBA::Long count,
   // if count is greater than 0, create a list of NamedValues
   if (count != 0)
     {
-      retval->len_ = 0;
       retval->max_ = (CORBA::ULong) count;
-      retval->values_ = (CORBA::NamedValue_ptr) ACE_OS::calloc ((u_int) count,
-                                                                sizeof (CORBA::NamedValue));
       for (CORBA::Long i=0; i < count; i++)
         {
-          // initilaize the NamedValue
-          (void) new (&retval->values_[i]) CORBA::NamedValue;
+          CORBA::NamedValue_ptr nv = new CORBA::NamedValue;
+          retval->values_.enqueue_tail (nv);
         }
     }
 }
