@@ -82,8 +82,6 @@ sub write_comps {
 
   ## Only use the list if there is more than one project
   if ($#list > 0) {
-    my(@dirs)  = ();
-    my(%added) = ();
     my($count) = 0;
 
     ## Print out the info for using -k
@@ -110,11 +108,6 @@ sub write_comps {
                 "else$crlf" .
                 "\t$cmd" .
                 "endif$crlf";
-      my($dname) = dirname($project);
-      if ($dname ne '.' && !defined $added{$dname}) {
-        push(@dirs, $dname);
-        $added{$dname} = 1;
-      }
       ++$count;
     }
 
@@ -133,18 +126,23 @@ sub write_comps {
         }
       }
     }
-    print $fh $crlf;
 
     ## Print out the reverseclean target
-    if (defined $dirs[0]) {
-      print $fh $crlf .
-                'DIRS = \\' . $crlf;
-      for(my $i = 0; $i <= $#dirs; ++$i) {
-        print $fh "  $dirs[$i]" . ($i != $#dirs ? ' \\' : '') . $crlf;
+    {
+      my($target) = "reverseclean";
+      my($tlen) = length($target);
+      my($rlen) = length("realclean");
+      my($cutoff) = int((80 - ($rlen + 1)) / ($rlen + 8));
+      my($splitter) = 0;
+      print $fh "$crlf$crlf$target:";
+      for(my $i = $count - 1; $i >= 0; --$i) {
+        print $fh " realclean.tgt$i";
+        ++$splitter;
+        if ($i != 0 && $splitter == $cutoff) {
+          print $fh " \\$crlf " . (' ' x $tlen);
+          $splitter = 0;
+        }
       }
-      print $fh $crlf .
-                "reverseclean:$crlf" .
-                "\t\@\$(ACE_ROOT)/bin/reverse_clean \$(DIRS)$crlf";
     }
   }
   else {
