@@ -219,21 +219,8 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 
       this->slot_table_.size (new_size);
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
-        {
-          for (size_t i = 0; i < new_size; ++i)
-            this->slot_table_[i] = t[i];  // Deep copy
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level > 0)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "(%P|%t) Error during PICurrent "
-                                 "slot table copy.");
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
+      for (size_t i = 0; i < new_size; ++i)
+        this->slot_table_[i] = t[i];  // Deep copy
 
       rhs.dirty (0);
 

@@ -1,3 +1,11 @@
+Tue Feb 12 16:01:25 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PICurrent.cpp (copy):
+
+	  Now that the code has been greatly simplified, an ACE_TRY block
+	  is no longer necessary.  Fixes an "unused label" warning in
+	  emulated exception builds.
+
 Tue Feb 12 15:02:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ObjectReferenceTemplateC.i: Regenerated the code after the
