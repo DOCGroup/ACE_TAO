@@ -1,3 +1,9 @@
+Thu Mar 14 09:17:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp (ACE_TMAIN): Added
+	  '\n' to the end of command strings so that the client won't hang.  Thanks to 
+	  Marc M Adkins <Marc.M.Adkins@doorways.org> for this fix.
+
 Wed Mar 13 15:55:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS.h: EACCESS was misspelled!  Thanks to Eric Eide
@@ -31,6 +37,8 @@ Wed Mar 13 11:57:41 2002  Steve Huston  <shuston@riverace.com>
 Wed Mar 13 10:36:02 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/config-freebsd-pthread.h: Fix test for POSIX RT signals.
+	  Thanks to Denis Otchenashko <oko@bank.gov.ua> for reporting
+	  these problems.
 
 Wed Mar 13 10:21:49 2002  Steve Huston  <shuston@riverace.com>
 

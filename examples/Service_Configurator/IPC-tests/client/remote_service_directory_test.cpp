@@ -56,7 +56,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   parse_args (argc, argv);
   // Default is to ask the server for ``help.''
-  static char buf[BUFSIZ] = "help";
+  static char buf[BUFSIZ] = "help\n";
   int n;
   ACE_SOCK_Stream   sc;
   ACE_SOCK_Connector con;
@@ -72,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (remote_reconfigure)
     // Remotely instruct the server to reconfigure itself.
-    ACE_OS::strcpy (buf, "reconfigure");
+    ACE_OS::strcpy (buf, "reconfigure\n");
 
   // Send the command.
 

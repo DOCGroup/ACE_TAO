@@ -2617,7 +2617,6 @@ Mon Feb 18 09:26:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
           <elliott_c@ociweb.com> for reporting the problem with
           fields of the structured event.
 
-
 Mon Feb 18 09:14:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_array.cpp:
