@@ -1,3 +1,13 @@
+Fri Jan 15 17:24:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/tests/Time/Client_i.cpp (init): Checked the return value
+	of the obtain_initial_references () for the client to die gracefully
+	in the absence of a clerk. Thanks to Ulf for pointing out this.
+
+	* orbsvcs/tests/Time/Client_i.h : Removed explicit qualification
+	of the method test_for_secure_universal_time (). Thanks to Ulf for
+	pointing out this.
+
 Fri Jan 15 14:25:29 1999  Seth Widoff  <swidoff@thalia.cimds.ri.cmu.edu>
 
 	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
@@ -18,7 +28,7 @@ Fri Jan 15 14:25:29 1999  Seth Widoff  <swidoff@thalia.cimds.ri.cmu.edu>
 	when the memory mangement of string sequences changed
 	recently. Resorted to good, ol' fashioned copying. There shouldn't
 	be any more of these lurking around.
-	
+
 Fri Jan 15 08:21:55 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.51 released.
