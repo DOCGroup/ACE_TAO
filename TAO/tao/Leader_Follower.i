@@ -23,6 +23,12 @@ TAO_Leader_Follower::get_tss_resources (void) const
 }
 
 ACE_INLINE int
+TAO_Leader_Follower::TAO_Follower_Queue::is_empty (void) const
+{
+  return this->head_ == 0;
+}
+
+ACE_INLINE int
 TAO_Leader_Follower::follower_available (void) const
 {
   return !this->follower_set_.is_empty ();
@@ -179,11 +185,7 @@ TAO_Leader_Follower::has_clients (void) const
   return this->clients_;
 }
 
-ACE_INLINE int
-TAO_Leader_Follower::TAO_Follower_Queue::is_empty (void) const
-{
-  return this->head_ == 0;
-}
+
 
 ACE_INLINE
 TAO_LF_Client_Thread_Helper::TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower)
