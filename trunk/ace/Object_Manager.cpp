@@ -23,17 +23,17 @@ template <class TYPE>
 class ACE_Managed_Cleanup : public ACE_Cleanup
 {
 public:
-  ACE_Managed_Cleanup (TYPE *object) : object_ (object) {}
-  virtual ~ACE_Managed_Cleanup ();
+  ACE_Managed_Cleanup ();
+  TYPE &object () { return object_; }
 private:
-  TYPE *object_;
+  TYPE object_;
 };
 
 
 template <class TYPE>
-ACE_Managed_Cleanup<TYPE>::~ACE_Managed_Cleanup ()
+ACE_Managed_Cleanup<TYPE>::ACE_Managed_Cleanup ()
+  : object_ ()
 {
-  delete (TYPE *) object_;
 }
 
 
@@ -53,18 +53,16 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // Allocate the preallocated (hard-coded) object instances, and
   // register them for destruction.
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *mutex;
-  ACE_Managed_Cleanup<ACE_Thread_Mutex> *object;
+  ACE_Managed_Cleanup<ACE_Thread_Mutex> *mutex;
 
-  ACE_NEW (mutex, ACE_Thread_Mutex);
-  ACE_NEW (object, ACE_Managed_Cleanup<ACE_Thread_Mutex> (mutex));
-  managed_object[ACE_MT_CORBA_HANDLER_LOCK] = object;
-  at_exit (object);
+  ACE_NEW (mutex, ACE_Managed_Cleanup<ACE_Thread_Mutex>);
+  managed_object[ACE_MT_CORBA_HANDLER_LOCK] = mutex;
 
-  ACE_NEW (mutex, ACE_Thread_Mutex);
-  ACE_NEW (object, ACE_Managed_Cleanup<ACE_Thread_Mutex> (mutex));
-  managed_object[ACE_DUMP_LOCK] = object;
-  at_exit (object);
+  ACE_NEW (mutex, ACE_Managed_Cleanup<ACE_Thread_Mutex>);
+  managed_object[ACE_DUMP_LOCK] = mutex;
+
+  ACE_NEW (mutex, ACE_Managed_Cleanup<ACE_Thread_Mutex>);
+  managed_object[ACE_TSS_CLEANUP_LOCK] = mutex;
 # endif /* ACE_MT_SAFE */
 
   next_managed_object = ACE_END_OF_PREALLOCATED_OBJECTS;
@@ -77,11 +75,9 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
-  // Acquire the mutex here.  This should be called from the main
-  // thread.  Any other threads that attempt to acquire the mutex will
-  // block.  They should be killed when the Thread_Manager is
-  // destroyed, below; so they should never proceed beyond that.
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock_));
+  // No mutex here.  The application is responsible for making
+  // sure that all threads are killed before the main thread
+  // terminates.
 
   ACE_Cleanup_Info info;
 
@@ -96,7 +92,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
     {
       if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
         {
-          //
+          // The object is an ACE_Cleanup.
           ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
         }
       else
@@ -130,6 +126,17 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Close the thread's local TS storage.
   ACE_TSS_Emulation::tss_close (ts_storage_);
 #endif /* ACE_HAS_TSS_EMULATION */
+
+# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  // Cleanup the preallocated objects.
+  for (u_int i = 0; i < ACE_END_OF_PREALLOCATED_OBJECTS; ++i)
+    {
+      // The object is an ACE_Managed_Cleanup<ACE_Thread_Mutex).
+      ace_cleanup_destroyer (
+        (ACE_Managed_Cleanup<ACE_Thread_Mutex> *) managed_object[i], 0);
+      managed_object[i] = 0;
+    }
+# endif /* ACE_MT_SAFE */
 }
 
 ACE_Object_Manager *
@@ -242,13 +249,16 @@ ACE_Managed_Object<TYPE>::get_object (u_int &id)
 
   if (id == 0 || id >= ACE_Object_Manager::next_managed_object)
     {
+      // Unknown managed object id.
+      errno = ENOENT;
       return 0;
     }
   else
     {
       // id is known, so return the object.  Cast its type based
       // on the type of the function template parameter.
-      return (TYPE *) ACE_Object_Manager::managed_object[id];
+      return &((ACE_Managed_Cleanup<TYPE> *)
+               ACE_Object_Manager::managed_object[id])->object ();
     }
 }
 
