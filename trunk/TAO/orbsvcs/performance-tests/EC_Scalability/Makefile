@@ -11,7 +11,7 @@ endif
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
-BIN = client server
+BIN_UNCHECKED = client server
 
 server_OBJS=$(addsuffix .o,server)
 client_OBJS=$(addsuffix .o,client Consumer Supplier Client_Task)
@@ -24,6 +24,11 @@ SRC = $(server_OBJS:.o=.cpp) $(client_OBJS:.o=.cpp)
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+BIN=$(BIN_UNCHECKED)
+endif
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

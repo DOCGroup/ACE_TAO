@@ -188,7 +188,7 @@ main (int argc, char *argv [])
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
       ACE_Sample_History history (iterations);
-      for (size_t j = 0; j != iterations; ++j)
+      for (int j = 0; j != iterations; ++j)
         {
           ACE_UINT64 value = 0;
           for (int i = 0; i != consumer_count; ++i)

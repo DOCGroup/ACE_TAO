@@ -109,7 +109,7 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
   ACE_CHECK_RETURN (0);
   for (int i = 0; i != consumer_count; ++i)
     {
-      consumer[i] = 
+      consumer[i] =
         Servant_var<ECFS_Consumer> (new ECFS_Consumer (experiment_id,
                                                        iterations));
       consumer[i]->connect (this->event_channel_.in (), ACE_TRY_ENV);
@@ -167,7 +167,7 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
   gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
-  return new Control::Samples (samples);
+  return samples._retn ();
 }
 
 void
