@@ -99,6 +99,8 @@ sub run_program ($)
 {
     my $program = shift;
 
+    $program = s/\s//;
+
     unlink <log/$program*.log>;
     unlink "core";
 

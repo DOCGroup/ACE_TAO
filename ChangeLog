@@ -1,3 +1,14 @@
+Sun Sep 19 20:36:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/run_test.pl:
+
+	  Fix for BUG 1924. Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1924
+
+	  for details. Thanks to Paul <paul at reeder dot cs> for the
+	  patch. 
+
 Sun Sep 19 14:51:32 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* bin/tao_orb_tests.lst:
