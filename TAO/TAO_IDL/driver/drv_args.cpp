@@ -110,12 +110,24 @@ DRV_usage()
   cerr << idl_global->prog_name()
        << GTDEVEL(": usage: ")
        << idl_global->prog_name()
-       << GTDEVEL(" [flag | file]*\n");
-  cerr << GTDEVEL("Legal flags:\n");
-  cerr << GTDEVEL(" -A...\t\t\tlocal implementation-specific escape\n");
-  cerr << GTDEVEL(" -Dname[=value]\t\tdefines name for preprocessor\n");
-  cerr << GTDEVEL(" -E\t\t\truns preprocessor only, prints on stdout\n");
-  cerr << GTDEVEL(" -Idir\t\t\tincludes dir in search path for preprocessor\n");
+       << GTDEVEL (" [flag | file]*\n");
+  cerr << GTDEVEL ("Legal flags:\n");
+  cerr << GTDEVEL (" -A...\t\t\tlocal implementation-specific escape\n");
+  cerr << GTDEVEL (" -cs\t\t\tClient stub's file name ending. Default is C.cpp\n");
+  cerr << GTDEVEL (" -ci\t\t\tClient inline file name ending. Default is C.i\n");
+  cerr << GTDEVEL (" -Dname[=value]\t\tdefines name for preprocessor\n");
+  cerr << GTDEVEL (" -E\t\t\truns preprocessor only, prints on stdout\n");
+  cerr << GTDEVEL (" -Idir\t\t\tincludes dir in search path for preprocessor\n");
+  cerr << GTDEVEL (" -g <perfect_hasher>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
+  cerr << GTDEVEL (" -hc\t\t\tClient's header file name ending. Default is C.h\n");
+  cerr << GTDEVEL (" -hs\t\t\tServer's header file name ending. Default is S.h\n");
+  cerr << GTDEVEL (" -hT\t\t\tServer's template hdr file name ending. Default is S_T.h\n");
+  cerr << GTDEVEL (" -H dynamic\t\tTo force dynamic-hashed operation lookup strategy. Default is perfect hashing\n");
+  cerr << GTDEVEL (" -o <output_dir>\tOutput directory for the generated files. Default is current directory\n");
+  cerr << GTDEVEL (" -ss\t\t\tServer's skeleton file name ending. Default is S.cpp\n");
+  cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
+  cerr << GTDEVEL (" -si\t\t\tServer's inline file name ending. Default is S.i\n");
+  cerr << GTDEVEL (" -st\t\t\tServer's template inline file name ending. Default S_T.i\n");
   cerr << GTDEVEL(" -Uname\t\t\tundefines name for preprocessor\n");
   cerr << GTDEVEL(" -V\t\t\tprints version info then exits\n");
   cerr << GTDEVEL(" -W[p|b],arg1,argn\tpasses args to preprocessor or BE\n");
