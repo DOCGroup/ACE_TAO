@@ -941,6 +941,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
       return 1;
     }
 
+  this->good_bit_ = 0;
   x = 0;
   return 0;
 }
@@ -1017,7 +1018,7 @@ ACE_InputCDR::read_boolean_array (ACE_CDR::Boolean *x,
 ACE_CDR::Boolean
 ACE_InputCDR::read_1 (ACE_CDR::Octet *x)
 {
-  if (this->rd_ptr () < this->end ())
+  if (this->rd_ptr () < this->wr_ptr ())
     {
       *x = *ACE_reinterpret_cast (ACE_CDR::Octet*,this->rd_ptr());
       this->start_.rd_ptr (1);
@@ -1159,7 +1160,7 @@ ACE_InputCDR::skip_string (void)
   ACE_CDR::ULong len;
   if (this->read_ulong (len))
     {
-      if (this->rd_ptr () + len <= this->end ())
+      if (this->rd_ptr () + len <= this->wr_ptr ())
         {
           this->rd_ptr (len);
           return 1;
@@ -1193,7 +1194,7 @@ ACE_InputCDR::skip_wstring (void)
 ACE_CDR::Boolean
 ACE_InputCDR::skip_bytes (size_t len)
 {
-  if (this->rd_ptr () + len <= this->end ())
+  if (this->rd_ptr () + len <= this->wr_ptr ())
     {
       this->rd_ptr (len);
       return 1;

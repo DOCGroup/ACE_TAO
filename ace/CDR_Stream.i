@@ -882,6 +882,12 @@ ACE_InputCDR::rd_ptr (void)
   return this->start_.rd_ptr ();
 }
 
+ACE_INLINE char*
+ACE_InputCDR::wr_ptr (void)
+{
+  return this->start_.wr_ptr ();
+}
+
 ACE_INLINE int
 ACE_InputCDR::adjust (size_t size,
                       size_t align,
@@ -889,7 +895,7 @@ ACE_InputCDR::adjust (size_t size,
 {
   buf = ACE_ptr_align_binary (this->rd_ptr (), align);
   char *end = buf + size;
-  if (end <= this->end ())
+  if (end <= this->wr_ptr ())
     {
       this->start_.rd_ptr (end);
       return 0;
@@ -1329,7 +1335,7 @@ ACE_InputCDR::align_read_ptr (size_t alignment)
   char *buf = ACE_ptr_align_binary (this->rd_ptr (),
                                     alignment);
 
-  if (buf <= this->end ())
+  if (buf <= this->wr_ptr ())
     {
       this->start_.rd_ptr (buf);
       return 0;
