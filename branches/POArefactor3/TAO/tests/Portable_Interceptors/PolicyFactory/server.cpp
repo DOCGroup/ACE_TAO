@@ -5,12 +5,11 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "testC.h"
 
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PolicyFactory,
            server,
            "$Id$")
-
 
 int
 main (int argc, char *argv[])

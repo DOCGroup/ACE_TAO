@@ -21,6 +21,7 @@
 #include "client.h"
 #include "local_server.h"
 #include "tao/debug.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"

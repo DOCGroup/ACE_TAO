@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Jeff Parsons and Carlos O'Ryan
+ *  @author Jeff Parsons
+ *  @author Carlos O'Ryan
  */
 //=============================================================================
 
@@ -16,14 +17,14 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "tao/PortableServer/ServerRequestInfo.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "ServerInterceptorAdapter.h"
 #include "tao/SArgument_T.h"
+#include "tao/TAO_Server_Request.h"
 
 /**
  * @class TAO_Upcall_Wrapper

@@ -13,7 +13,7 @@ ACE_RCSID (PortableServer,
 #endif /* __ACE_INLINE__ */
 
 #include "ServerRequestInfo.h"
-#include "tao/PortableServer/PICurrent_Guard.h"
+#include "PICurrent_Guard.h"
 
 
 TAO_ServerRequestInterceptor_Adapter::~TAO_ServerRequestInterceptor_Adapter (void)
