@@ -1,8 +1,14 @@
-Tue Oct 14 03:08:49 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+Tue Oct 14 03:10:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ACE version 4.3.17, released Tue Oct 14 03:08:49 1997.
+	* ace/Service_Types.cpp (fini): Backed out the following change
+ 	  until we figure out how to keep existing code from dying...
+  	  Thanks to Nanbor for reporting this.
 
-Tue Oct 14 00:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/Service_Types.cpp: Changed the implementation so that we
+ 	  bypass the default cleanup originally done in
+ 	  ACE_Service_Type_Impl::fini() and instead perform the cleanup in
+ 	  ACE_Service_Object_Type::fini (void).  Thanks to Alex Chan
+ 	  <Alex.Chan@Aspect.com> for reporting this.
 
 	* ace/Svc_Conf.y: Make sure that the Module has the same name as
  	  the Module_Type object from the svc.conf file.  We need to do
@@ -23,12 +29,6 @@ Tue Oct 14 00:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* ace/Service_Config.cpp (process_directives): Avoid reporting
  	  lex/yacc leakage since there is nothing we could do about it.
   	  Thanks to Alex Chan <Alex.Chan@Aspect.com> for reporting this.
-
-	* ace/Service_Types.cpp: Changed the implementation so that we
- 	  bypass the default cleanup originally done in
- 	  ACE_Service_Type_Impl::fini() and instead perform the cleanup in
- 	  ACE_Service_Object_Type::fini (void).  Thanks to Alex Chan
- 	  <Alex.Chan@Aspect.com> for reporting this.
 
 	* ace/Svc_Conf.y: Removed duplicate call to symbol() to avoid the
  	  problem that dynamic service objects are created twice.  Thanks

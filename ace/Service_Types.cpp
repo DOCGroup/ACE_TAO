@@ -52,7 +52,7 @@ ACE_Service_Type_Impl::fini (void) const
   delete [] (char *) this->name_;
   ((ACE_Service_Type_Impl *) this)->name_ = 0;
 
-#if 0
+#if 1
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
     operator delete ((void *) this->object ());	// cast to remove const-ness
 #endif /* 0 */
@@ -364,7 +364,7 @@ ACE_Service_Object_Type::fini (void) const
     {
       so->fini ();
 
-#if 1
+#if 0
       if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
 	delete so;
 #endif /* 1 */
