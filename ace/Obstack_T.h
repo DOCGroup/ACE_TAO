@@ -67,7 +67,7 @@ public:
   /// Return the maximum @a length or @a size of a string that can be put
   /// into this Obstack. @a size = @a length * sizeof (CHAR).
   ///
-  /// Deprecated : No need to use this function as you can put objects of
+  /// @deprecated No need to use this function as you can put objects of
   /// arbitrary lengths into the obstack now.
   size_t length (void) const;
   size_t size (void) const;

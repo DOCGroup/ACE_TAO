@@ -616,7 +616,7 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Null_Mutex>
         SUBSECTION_HASH;
 
-// Deprecated typedef.  Use the SUBSECTION_HASH::ENTRY trait instead.
+/// @deprecated Deprecated typedef.  Use the SUBSECTION_HASH::ENTRY trait instead.
 typedef SUBSECTION_HASH::ENTRY SUBSECTION_ENTRY;
 
 /**
