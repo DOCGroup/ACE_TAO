@@ -3,6 +3,11 @@ Fri Dec 04 13:46:12 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Stats.cpp (std_dev): fixed difference calculation so
           that it always calculates a non-negative value.
 
+        * performance-tests/Misc/context_switch_time.cpp
+          (High_Priority_Synchronized_Task::svc): check if nsec is >=
+          mutex_acquire_release_time, to avoid adding in negative
+          context_switch_times.
+
         * ace/config-vxworks5.x.h,
           include/makeinclude/platform_vxworks5.x_g++.GNU,
           include/makeinclude/platform_vxworks5.x_ghs.GNU: moved -DVXWORKS
