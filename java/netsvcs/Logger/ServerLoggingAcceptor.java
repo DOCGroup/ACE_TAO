@@ -13,7 +13,6 @@ package netsvcs.Logger;
 
 import JACE.SOCK_SAP.*;
 import JACE.Connection.*;
-import netsvcs.Logger.*;
 import JACE.OS.*;
 import java.io.*;
 import java.net.*;
