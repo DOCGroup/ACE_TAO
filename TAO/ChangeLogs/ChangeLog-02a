@@ -1,3 +1,27 @@
+Tue Jun 12 18:16:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+
+          Moved section on the interface repository to the new
+          document listed below. Also added link to the new
+          dynamic any documentation listed below.
+
+        * docs/dynany/index.html:
+
+          New file - documemtation for TAO's dynamic any
+          implementation.
+
+        * docs/interfacerepo/index.html:
+
+          New file - contains documentation for TAO's interface
+          repository implementation that was previously in the
+          main releasenotes file.
+
+        * docs/interfacerepo/tao_ifr.html:
+
+          New file - user's guide to tao_ifr, the TAO interface repository
+          loader, including a table of the command line options.
+
 Tue Jun 12 18:12:13 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/DynAny_Test/da_tests.idl:
