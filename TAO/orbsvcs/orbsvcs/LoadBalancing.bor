@@ -26,7 +26,7 @@ OBJFILES = \
 	$(OBJDIR)\ReplicaProxy.obj \
 	$(OBJDIR)\Round_Robin_Strategy.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\LoadBalancing.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

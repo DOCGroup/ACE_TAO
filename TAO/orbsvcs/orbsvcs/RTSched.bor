@@ -27,7 +27,7 @@ OBJFILES = \
 	$(OBJDIR)\Scheduler_Utilities.obj \
 	$(OBJDIR)\Strategy_Scheduler.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\RTSched.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

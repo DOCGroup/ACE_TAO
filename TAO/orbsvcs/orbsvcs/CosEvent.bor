@@ -44,7 +44,7 @@ OBJFILES = \
 #	$(OBJDIR)\ProxyPushSupplier_i.obj \
 #	$(OBJDIR)\SupplierAdmin_i.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosEvent.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

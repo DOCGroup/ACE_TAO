@@ -34,6 +34,8 @@ OBJFILES = \
 	$(OBJDIR)\NULL_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\LF_Strategy_Null.obj
 
+RESOURCE = $(OBJDIR)\TAO_Strategies.res
+
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_STRATEGIES_CFLAGS)
 !else

@@ -21,7 +21,7 @@ OBJFILES = \
 	$(OBJDIR)\RtecBaseC.obj \
 	$(OBJDIR)\RtecBaseS.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\Svc_Utils.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

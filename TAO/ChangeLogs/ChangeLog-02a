@@ -1,3 +1,20 @@
+Thu Jan  3 07:18:22 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.bor:
+          Added library required for a statically linked build.
+
+        * orbsvcs/Notify_Service/NT_Notify_Service.bor:
+        * orbsvcs/Notify_Service/Notify_Service.bor:
+          Reverted the changes made to these files in
+          Sun Dec 30 20:30:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+          as the trading library is required for a static build.
+
+        * orbsvcs/orbsvcs/*.bor:
+        * orbsvcs/orbsvcs/Security.rc:
+        * tao/*/Makefile.bor:
+        * tao/*/*.rc:
+          Added Borland makefile support for the new resource files.
+
 Wed Jan  2 20:48:36 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 	* TAO-INSTALL.html: Fixed a couple of missing links.  Thanks to

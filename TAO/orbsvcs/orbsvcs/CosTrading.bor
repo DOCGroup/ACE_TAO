@@ -37,7 +37,7 @@ OBJFILES = \
 	$(OBJDIR)\Trader_Utils.obj \
 	$(OBJDIR)\Trading_Loader.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosTrading.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

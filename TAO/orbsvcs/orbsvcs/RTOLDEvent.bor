@@ -17,7 +17,7 @@ OBJFILES = \
 	$(OBJDIR)\RT_Task.obj \
 	$(OBJDIR)\Timer_Module.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\RTOldEvent.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

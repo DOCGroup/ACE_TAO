@@ -30,7 +30,7 @@ OBJFILES = \
 	$(OBJDIR)\InvocationCredentialsPolicy.obj \
         $(OBJDIR)\QOPPolicy.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\Security.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

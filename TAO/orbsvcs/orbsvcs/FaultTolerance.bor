@@ -28,7 +28,7 @@ OBJFILES = \
         $(OBJDIR)\FT_Service_Callbacks.obj \
         $(OBJDIR)\FT_ORBInitializer.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\FaultTolerance.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
