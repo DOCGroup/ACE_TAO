@@ -1,3 +1,9 @@
+Tue Nov 23 11:06:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/CDR_File_Test.cpp (run_test): Changed <filename> to
+	  LPCTSTR so the test compile with UNICODE.  Thanks to Ivan Murphy
+	  for reporting this.
+
 Mon Nov 22 18:02:19 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T.cpp:
