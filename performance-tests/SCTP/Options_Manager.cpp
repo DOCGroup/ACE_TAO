@@ -468,6 +468,11 @@ void Options_Manager::_show_usage(ostream& out, ACE_TCHAR const * const opts_set
 
     out << endl;
 
+    out << "   -C   int            client-port                 assigned by kernel"     << endl;
+    out << "   -i   str            client-connect-addr         INADDR_ANY" << endl;
+
+    out << endl;
+
     out << "   -p   int            server-port                 45453"     << endl;
     out << "   -H   str            server-host                 localhost" << endl;
 
