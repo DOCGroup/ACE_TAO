@@ -178,7 +178,6 @@ TAO_StreamEndPoint<IF>::add_fep (CORBA::Object_ptr the_fep,
   if (this->fep_map_.bind (fep_name_key,the_fep) != 0)
     {
       ACE_THROW_RETURN (AVStreams::streamOpFailed (),0);
-      return 0;
     }
   ACE_TRY_EX (flows)
     {
@@ -242,7 +241,7 @@ TAO_StreamEndPoint<IF>::remove_fep (const char *flow_name,
 template <class IF>
 void
 TAO_StreamEndPoint<IF>::set_negotiator (AVStreams::Negotiator_ptr new_negotiator,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                        CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
