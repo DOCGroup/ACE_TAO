@@ -1,6 +1,10 @@
 // $Id$
 
+
+
 #include "Servant_Impl_Base.h"
+#include "StandardConfigurator_Impl.h"
+#include "Container_Base.h"
 
 namespace CIAO
 {
@@ -52,5 +56,33 @@ namespace CIAO
         safe._retn ();
       }
   }
+
+
+  Components::StandardConfigurator* 
+ Servant_Impl_Base::get_standard_configurator (){
+  //create the configurator servant
+  StandardConfigurator_Impl* config_impl;
+  ACE_NEW_RETURN (config_impl,
+                      StandardConfigurator_Impl(this),
+					  Components::StandardConfigurator::_nil ());
+
+  
+  Components::StandardConfigurator_var configurator =
+        config_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  return configurator._retn ();
+ }
+
+  
+  PortableServer::POA_ptr
+  Servant_Impl_Base::_default_POA (
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    {
+
+      return
+        PortableServer::POA::_duplicate (container_->_ciao_the_POA ());
+    }
+
 }
 

@@ -88,6 +88,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
     Servant_Impl_Base.cpp
     Server_init.cpp
     ServerActivator_Impl.cpp
+    StandardConfigurator_Impl.cpp
   }
 
   Header_Files {

@@ -78,6 +78,5 @@ namespace CIAO
 
 }
 
-
 #include /**/ "ace/post.h"
 #endif /* CIAO_STANDARDCONFIGURATOR_IMPL_H */
