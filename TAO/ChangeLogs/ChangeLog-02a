@@ -1,3 +1,40 @@
+Mon Nov  5 13:08:29 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/tutorials/Quoter/AMI/Stock_i.h:
+        * docs/tutorials/Quoter/Naming_Service/Stock_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Persistent/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Server/Stock_i.h:
+
+          Added a check to not use the std::string if on HP-UX and not
+          using the standard C++ library.
+
+        * examples/Load_Balancing/run_test.pl:
+        * examples/POA/DSI/run_test.pl:
+        * examples/Quoter/run_test.pl:
+        * examples/Simple/time/run_test.pl:
+        * examples/Simple/time-date/run_test.pl:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * tests/DSI_Gateway/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
+        * tests/Leader_Followers/run_test.pl:
+        * tests/Nested_Event_Loop/run_test.pl:
+
+          Increase wait time for startup of servers.  Slower machines have
+          problems running the tests with such stringent time constraints.
+
 Mon Nov  5 13:07:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/typedef.idl:

@@ -19,7 +19,7 @@ $num_threads = 4;
 
 # amount of delay between running the servers
 
-$sleeptime = 2;
+$sleeptime = 8;
 
 # other variables
 

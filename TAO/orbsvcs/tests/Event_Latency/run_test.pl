@@ -9,7 +9,7 @@ use lib '../../../../bin';
 use PerlACE::Run_Test;
 
 $NS_ior = PerlACE::LocalFile ("NameService.ior");
-$sleeptime = 3;
+$sleeptime = 10;
 $status = 0;
 
 unlink $NS_ior;
@@ -24,7 +24,7 @@ $T  = new PerlACE::Process ("Event_Latency",
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($NS_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($NS_ior, 10) == -1) {
     print STDERR "ERROR: waiting for naming service IOR file\n";
     $NS->Kill (); 
     exit 1;
