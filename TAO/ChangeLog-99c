@@ -1,3 +1,10 @@
+Thu Sep 23 15:40:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB.h (CORBA_ORB): Added "= TAO_default_environment ()" to 
+	  the various create_dyn_*() methods so that they can be used more
+ 	  portably.  Thanks to Philippe Merle <Philippe.Merle@lifl.fr> for
+ 	  reporting this.
+
 Thu Sep 23 23:51:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
@@ -11,10 +18,9 @@ Thu Sep 23 21:53:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/RtecEventComm.idl:
         * orbsvcs/orbsvcs/RtecDefaultEventData.idl:
           Separate the user EventData to another file, this will make it
-          easier for users to send their own data through the Event
-          Service.
-          Thanks to Tom Ziomek <tomz@cc.comm.mot.com> for bringing up the
-          problem again and providing possible solutions.
+ 	  easier for users to send their own data through the Event
+ 	  Service.  Thanks to Tom Ziomek <tomz@cc.comm.mot.com> for
+ 	  bringing up the problem again and providing possible solutions.
 
         * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
         * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
@@ -35,26 +41,26 @@ Thu Sep 23 21:53:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Sep 23 19:26:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Makefile:
-        * orbsvcs/orbsvcs/Makefile.av:
-        * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
-        * orbsvcs/tests/AVStreams/Latency/Makefile:
-        * orbsvcs/tests/AVStreams/Multicast/Makefile:
-        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
-        * orbsvcs/tests/AVStreams/Pluggable/Makefile:
-        * orbsvcs/tests/AVStreams/benchmark/Makefile:
-        * orbsvcs/tests/AVStreams/mpeg/source/client/Makefile:
-        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile:
-        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile:
-        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile:
-        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
-        * orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
-        * orbsvcs/tests/AVStreams/server_discovery/Makefile:
-          Separate the AV streaming service into a new library, use that
-          library to build the examples, tests and applications that
-          depend on the service.
-          This isolates the rest of the system from problems in the
-          AV/Streaming service.
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.av:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Latency/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* orbsvcs/tests/AVStreams/benchmark/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/client/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
+	* orbsvcs/tests/AVStreams/server_discovery/Makefile:
+	  Separate the AV streaming service into a new library, use that
+ 	  library to build the examples, tests and applications that
+ 	  depend on the service.  This isolates the rest of the system
+	  from any build problems (such as long compile-times) in the
+	  AV/Streaming service.
 
 Thu Sep 23 14:26:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
