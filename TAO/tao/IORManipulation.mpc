@@ -1,5 +1,5 @@
 //$Id$
-project(TAO_IORManip): taolib, core {
+project : taolib, core {
   sharedname   = TAO_IORManip
   dynamicflags = TAO_IORMANIP_BUILD_DLL
 

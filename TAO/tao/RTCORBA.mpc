@@ -1,5 +1,5 @@
 //$Id$
-project(TAO_RTCORBA): taolib, core {
+project : taolib, core {
   sharedname   = TAO_RTCORBA
   dynamicflags = TAO_RTCORBA_BUILD_DLL
   requires    += rt_corba
