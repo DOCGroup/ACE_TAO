@@ -1,3 +1,13 @@
+Fri Oct 16 14:51:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create): Made sure if users don't specify
+	  whether to spawn threads detached or joinable, we'd change the
+	  creation flag for them so that they are always joinable (not
+	  detached.)  This is important for unify the thread behavior on
+	  different platforms that have various default thread creation
+	  policies.  Thanks to Susan Liebeskind
+	  <shl@janis.gtri.gatech.edu> for motivating the change.
+
 Fri Oct 16 01:28:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.58 released.
