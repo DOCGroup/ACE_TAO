@@ -1,0 +1,103 @@
+// $Id$
+#include "Options.h"
+#include "new.h"
+#include "HT_Server.h"
+#include "PMS_Ruser.h"
+
+/* This function packs the located friends userids, plus the machines
+   they are logged into (along with the inactive and active counts on
+   each machine) into a buffer that is subsequently transmitted back
+   to the client across the network.  Note that this function encodes
+   the REAL_NAME of the user in the packet. */
+
+int
+PMS_Ruser::encode (char *packet, int &packet_length)
+{
+  if (Options::get_opt (Options::DEBUG) != 0)
+    fprintf (stderr, "in PMS_Ruser::encode");
+
+  Protocol_Record *frp;
+  char          *buf_ptr = packet;
+
+  sprintf (buf_ptr, "Users   %d", this->get_total_users ());
+  buf_ptr += strlen (buf_ptr) + 1;
+
+  /* We only send back info on hosts that we actually see. */
+
+  for (; (frp = this->get_next_friend ()) != 0; *buf_ptr++ = '\t')
+    buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr, frp->get_host ()), frp->get_drwho_list ());
+  
+  *buf_ptr++	= '\n';
+  packet_length = buf_ptr - packet;
+
+  if (Options::get_opt (Options::DEBUG) != 0)
+    {
+      fprintf (stderr, ", packet_length = %d\n", packet_length);
+      write (2, packet, packet_length);
+      putc ('\n', stderr);
+    }
+  return 1;
+}
+
+/* This function takes a packet received from the client and crusers
+   the appropriate Protocol_Manager routine to build the local table of
+   friends. */
+
+int
+PMS_Ruser::decode (char *packet, int &packet_length)
+{
+  if (Options::get_opt (Options::DEBUG) != 0)
+    fprintf (stderr, "in PMS_Ruser::decode, packet_length = %d\n", packet_length);
+
+  if (*packet)
+    Options::set_opt (Options::PRINT_LOGIN_NAME);
+
+  this->ss = new (PRIVATE_POOL) HT_Server;
+  return 1;
+}
+
+Protocol_Record *
+PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
+{
+  Drwho_Node	*current_node = protocol_record.get_drwho_list ();
+  Protocol_Record *frp	      = this->ss->insert (current_node->get_host_name (), MAXHOSTNAMELEN);
+  Drwho_Node	*np	      = this->get_drwho_node (ACE::strnnew (protocol_record.get_login (), MAXUSERIDNAMELEN), frp->drwho_list);
+
+  if (Options::get_opt (Options::PRINT_LOGIN_NAME))
+    np->set_real_name ("");
+  else
+    {
+      passwd	*pwent	= getpwnam (np->get_login_name ());
+      char	*cp;
+
+      if ((cp = strchr (np->set_real_name (pwent == 0 ? np->get_login_name () : ACE::strnew (pwent->pw_gecos)), ',')) != 0)
+	*cp = '\0';
+    }
+
+  if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
+    np->inactive_count++;
+  else
+    np->active_count++;
+  
+  return frp;
+}
+
+char *
+PMS_Ruser::handle_protocol_entries (char *buf_ptr, Drwho_Node *np)
+{
+
+  for (; np != 0; np = np->next)
+    {
+      sprintf (buf_ptr, "%d %d ", np->get_inactive_count (), np->get_active_count ());
+      buf_ptr += strlen (buf_ptr);
+
+      buf_ptr = ACE::strecpy (ACE::strecpy (buf_ptr, np->get_login_name ()), np->get_real_name ());
+    }
+
+  return buf_ptr;
+}     
+
+#ifndef __OPTIMIZE__
+PMS_Ruser::PMS_Ruser (void)
+{}
+#endif /* __OPTIMIZE__ */
