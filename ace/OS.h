@@ -2908,7 +2908,7 @@ typedef unsigned int size_t;
 # include "ace/Basic_Types.h"
 
 /* This should work for linux, solaris 5.6 and above, IRIX, OSF */
-# if defined (ACE_HAS_LLSEEK)
+# if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
 #   if ACE_SIZEOF_LONG == 8
       typedef off_t ACE_LOFF_T;
 #   elif defined (__sgi)
@@ -2918,7 +2918,7 @@ typedef unsigned int size_t;
 #   else
       typedef loff_t ACE_LOFF_T;
 #   endif
-# endif /* ACE_HAS_LLSEEK */
+# endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
@@ -2964,9 +2964,16 @@ extern "C" char *strptime (const char *s, const char *fmt, struct tm *tp);
 extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
 #endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
 
-#if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && !defined (_LARGEFILE64_SOURCE)
+#if !defined (_LARGEFILE64_SOURCE)
+# if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && \
+     defined (ACE_LACKS_LLSEEK_PROTOTYPE)
+#   error Define either ACE_LACKS_LSEEK64_PROTOTYPE or ACE_LACKS_LLSEEK_PROTOTYPE, not both!
+# elif defined (ACE_LACKS_LSEEK64_PROTOTYPE)
 extern "C" ACE_LOFF_T lseek64 (int fd, ACE_LOFF_T offset, int whence);
-#endif
+# elif defined (ACE_LACKS_LLSEEK_PROTOTYPE)
+extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
+# endif
+#endif  /* _LARGEFILE64_SOURCE */
 
 #if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) != 500
 // _XOPEN_SOURCE == 500    Single Unix conformance
@@ -5988,7 +5995,7 @@ public:
   static off_t lseek (ACE_HANDLE handle,
                       off_t offset,
                       int whence);
-#if defined (ACE_HAS_LLSEEK)
+#if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
   ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
 #endif /* ACE_HAS_LLSEEK */
   static ACE_HANDLE open (const char *filename,

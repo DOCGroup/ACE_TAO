@@ -10396,22 +10396,24 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_LLSEEK)
+#if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
 ACE_INLINE ACE_LOFF_T
 ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 {
   ACE_TRACE ("ACE_OS::llseek");
 
 #if ACE_SIZEOF_LONG == 8
-  /* The native lseek is 64 bit, use it. */
+  /* The native lseek is 64 bit.  Use it. */
   return ACE_OS::lseek (handle, offset, whence);
-#elif defined (__sgi) || defined (linux)
+#elif defined (ACE_HAS_LLSEEK) && defined (ACE_HAS_LSEEK64)
+# error Either ACE_HAS_LSEEK64 and ACE_HAS_LLSEEK should be defined, not both!
+#elif defined (ACE_HAS_LSEEK64)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
-#else
+#elif defined (ACE_HAS_LLSEEK)
   ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
 #endif
 }
-#endif /* ACE_HAS_LLSEEK */
+#endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
 
 ACE_INLINE int
 ACE_OS::fseek (FILE *fp, long offset, int whence)

@@ -474,7 +474,12 @@
 /* Optimize ACE_Handle_Set::count_bits for select() operations (common case) */
 #undef ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-/* Platform supports ::llseek() */
+/* Platform supports lseek64().  This should not be defined if
+   ACE_HAS_LLSEEK is defined. */
+#undef ACE_HAS_LSEEK64
+
+/* Platform supports llseek(). This should not be defined if
+   ACE_HAS_LSEEK64 is defined.*/
 #undef ACE_HAS_LLSEEK
 
 /* Compiler/platform supports SunOS high resolution timers */
@@ -1200,8 +1205,13 @@
 /* Platform/compiler lacks the strtok_r() prototype */
 #undef ACE_LACKS_STRTOK_R_PROTOTYPE
 
-/* Platform/compiler lacks the lseek64() prototype */
+/* Platform/compiler lacks the lseek64() prototype.  This should not
+   be defined if ACE_LACKS_LLSEEK_PROTOTYPE is defined. */
 #undef ACE_LACKS_LSEEK64_PROTOTYPE
+
+/* Platform/compiler lacks the llseek() prototype.  This should not
+   be defined if ACE_LACKS_LSEEK64_PROTOTYPE is defined. */
+#undef ACE_LACKS_LLSEEK_PROTOTYPE
 
 /* Platform/compiler lacks the pread() and pwrite() prototypes */
 #undef ACE_LACKS_PREAD_PROTOTYPE

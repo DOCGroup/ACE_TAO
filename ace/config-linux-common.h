@@ -85,14 +85,18 @@
 #   define ACE_LACKS_MSG_ACCRIGHTS
 #endif /* ! __GLIBC__ */
 
-// Linux has lseek64()
-#define ACE_HAS_LLSEEK
-// Don't define _LARGEFILE64_SOURCE in ACE to make lseek64() prototype
-// visible.  ACE shouldn't depend on feature test macros to make
-// prototypes visible.
-#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
-# define ACE_LACKS_LSEEK64_PROTOTYPE
-#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
+// Don't define _LARGEFILE64_SOURCE in ACE to make llseek() or
+// lseek64() prototype visible.  ACE shouldn't depend on feature test
+// macros to make prototypes visible.
+#if __GLIBC__ > 1 
+#  if __GLIBC_MINOR__ == 0
+#    define ACE_HAS_LLSEEK
+#    define ACE_LACKS_LLSEEK_PROTOTYPE
+#  else  /* __GLIBC_MINOR__ > 0 */
+#    define ACE_HAS_LSEEK64
+#    define ACE_LACKS_LSEEK64_PROTOTYPE
+#  endif
+#endif /* __GLIBC__ > 1 */
 
 #if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
 # define ACE_HAS_P_READ_WRITE
