@@ -706,7 +706,7 @@ protected:
   // Key used for encryption.
 
   u_short mcast_port_;
-  ACE_UINT32 mcast_addr_;
+  ACE_CString mcast_addr_;
   ACE_Hash_Map_Manager <TAO_String_Hash_Key, TAO_FlowSpec_Entry*,ACE_Null_Mutex> mcast_entry_map_;
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
@@ -1115,7 +1115,7 @@ public:
                      AVStreams::notConnected));
   // drops a flow endpoint from the flow.
 
-  int set_mcast_addr (ACE_UINT32 addr,u_short port);
+  int set_mcast_addr (ACE_CString addr,u_short port);
   void set_protocol (const char *protocol);
 protected:
   typedef ACE_Unbounded_Set<AVStreams::FlowProducer_ptr> FlowProducer_Set;
@@ -1135,7 +1135,7 @@ protected:
   TAO_MCastConfigIf *mcastconfigif_i_;
   AVStreams::MCastConfigIf_var mcastconfigif_;
   u_short mcast_port_;
-  ACE_UINT32 mcast_addr_;
+  ACE_CString mcast_addr_;
   CORBA::String_var protocol_;
 };
 
