@@ -91,7 +91,7 @@ INSLIB = ../proto/lib
 
 # The first value is a nasty hack because $(VSHLIB) was not working
 # for some reason :-(
-INSTALL = $(INSLIB)/libcorba.so \
+INSTALL = $(INSLIB)/libTAO.so \
 	$(addprefix $(INSINC)/,$(addsuffix .h,$(OTHERS_HDRS)) $(addsuffix .i,$(OTHERS_INLN)) $(addsuffix .h,$(basename $(COMPATFILES)) ) ) \
 	$(addprefix $(INSINC)/corba/, $(addsuffix .h,$(CORBA_SRCS) $(CORBA_HDRS) debug)) \
 

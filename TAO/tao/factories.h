@@ -97,16 +97,23 @@ public:
   typedef ACE_Concurrency_Strategy<TAO_OA_Connection_Handler> CONCURRENCY_STRATEGY;
   typedef ACE_Scheduling_Strategy<TAO_OA_Connection_Handler> SCHEDULING_STRATEGY;
 
-  // @@ Please add comments for these methods.
-
   CREATION_STRATEGY *creation_strategy (void);
+  // return concrete creation strategy
+
   ACCEPT_STRATEGY *accept_strategy (void);
+  // return concrete acceptor strategy
+
   CONCURRENCY_STRATEGY *concurrency_strategy (void);
+  // return the concurrency strategy used
+
   SCHEDULING_STRATEGY *scheduling_strategy (void);
+  // return the scheduling strategy used
+
   TAO_Object_Table *object_lookup_strategy (void);
-  void object_lookup_strategy (TAO_Object_Table *ot);
+  // return the concrete object lookup strategy
 
   TAO_Server_Factory (void);
+  // constructor
   
 private:
   // = COMMON
@@ -117,7 +124,10 @@ private:
 
   // = SERVER
   CONCURRENCY_STRATEGY *concurrency_strategy_;
+  // concrete concurrency strategy
+
   TAO_Object_Table *objtable_;
+  // instance of object table
 #if 0
   // Someday we'll need these!
   CREATION_STRATEGY *creation_strategy_;

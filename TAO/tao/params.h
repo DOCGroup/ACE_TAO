@@ -127,7 +127,7 @@ public:
   // Specify the demultiplexing strategy to be used via <{strategy}>.
   // Valid values are one of (case matters) "linear", "dynamic_hash",
   // "user_def", or "active_demux".  If the value is not valid, then
-  // <LINEAR> is used as a default.
+  // <Dynamic Hash> is used as a default.
   
   void demux_strategy (DEMUX_STRATEGY s);
   // Specify the demultiplexing strategy to be used.
@@ -135,8 +135,18 @@ public:
   DEMUX_STRATEGY demux_strategy (void);
   // Return the demultiplexing strategy being used.
 
+  void userdef_lookup_strategy (TAO_Object_Table *&ot);
+  // provide a way for user defined object key lookup strategies to be plugged
+  // in 
+
+  TAO_Object_Table *userdef_lookup_strategy (void);
+  // return the lookup strategy
+
   void tablesize (CORBA_ULong tablesize);
+  // set the table size for lookup table
+
   CORBA_ULong tablesize (void);
+  // get the table size for the lookup table
 
 protected:
   static TAO_OA_Parameters *instance_;
@@ -177,6 +187,9 @@ private:
 
   CORBA_ULong tablesize_;       
   // size of object lookup table
+
+  TAO_Object_Table *ot_;
+  // concrete lookup table instance
 };
 
 // Create a type for the singleton

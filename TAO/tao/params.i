@@ -99,33 +99,6 @@ TAO_OA_Parameters::demux_strategy (DEMUX_STRATEGY strategy)
   this->demux_ = strategy;      // Trust that the value is valid!
 }
 
-ACE_INLINE void 
-TAO_OA_Parameters::demux_strategy (const char* strategy)
-{
-  // Determine the demux strategy based on the given name
-  if (!ACE_OS::strcmp (strategy, "linear"))
-    {
-      this->demux_ = TAO_LINEAR;
-    }
-  else if (!ACE_OS::strcmp (strategy, "dynamic_hash"))
-    {
-      this->demux_ = TAO_DYNAMIC_HASH;
-    }
-  else if (!ACE_OS::strcmp (strategy, "user_def"))
-    {
-      this->demux_ = TAO_USER_DEFINED;
-    }
-  else if (!ACE_OS::strcmp (strategy, "active_demux"))
-    {
-      this->demux_ = TAO_ACTIVE_DEMUX;
-    }
-  else
-    {
-      // Provide fallback!
-      this->demux_ = TAO_LINEAR;
-    }
-}
-
 ACE_INLINE TAO_OA_Parameters::DEMUX_STRATEGY
 TAO_OA_Parameters::demux_strategy (void)
 {
@@ -142,6 +115,22 @@ ACE_INLINE CORBA_ULong
 TAO_OA_Parameters::tablesize (void)
 {
   return this->tablesize_;
+}
+
+ACE_INLINE void 
+TAO_OA_Parameters::userdef_lookup_strategy (TAO_Object_Table *&ot)
+{
+  // provide a way for user defined object key lookup strategies to be plugged
+  // in
+  ot_ = ot;
+  ot = 0;  // we own it now
+}
+
+ACE_INLINE TAO_Object_Table *
+TAO_OA_Parameters::userdef_lookup_strategy (void)
+{
+  // return the lookup strategy
+  return ot_;
 }
 
 ACE_INLINE TAO_OA_Parameters *&

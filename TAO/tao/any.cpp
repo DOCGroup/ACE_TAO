@@ -494,7 +494,8 @@ CORBA_Any::replace (CORBA_TypeCode_ptr tc,
   if (_orb_owns_data) 
     {
       //      (void) deep_free (_type, _value, 0, 0, env);
-      DEEP_FREE (_type, _value, 0, env);
+      if (_value)
+	DEEP_FREE (_type, _value, 0, env);
       delete _value;
     }
 
