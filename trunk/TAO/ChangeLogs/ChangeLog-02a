@@ -1,3 +1,8 @@
+Sat Mar 17 14:28:24 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Client_Leaks/client.cpp:
+          Cosmetic fixes.
+
 Sat Mar 17 16:15:14 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
@@ -15,45 +20,45 @@ Sat Mar 17 16:15:14 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Sat Mar 17 11:54:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile: Updated
-	  dependencies. 
+        * orbsvcs/tests/AVStreams/Simple/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile: Updated
+          dependencies.
 
 Sat Mar 17 10:47:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/Makefile.EX:
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-	* orbsvcs/IFR_Service/Makefile.IFR_Service:
-	* orbsvcs/IFR_Service/Makefile.tao_ifr: Updated dependencies 
+        * orbsvcs/IFR_Service/Makefile.EX:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/IFR_Service/Makefile.tao_ifr: Updated dependencies
 
 Sat Mar 17 10:26:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_NestedUpcall/test_i.cpp (test_method):
-	  Changed connection_cache () as transport_cache (). This fixes
-	  some of the compile errors in g++.
-	
+        * tests/BiDirectional_NestedUpcall/test_i.cpp (test_method):
+          Changed connection_cache () as transport_cache (). This fixes
+          some of the compile errors in g++.
+
 Sat Mar 17 10:23:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional/test_i.cpp: Changed connection_cache () as
-	  transport_cache () 
+        * tests/BiDirectional/test_i.cpp: Changed connection_cache () as
+          transport_cache ()
 
 Sat Mar 17 09:55:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Client_Leaks/Makefile: Fixed dependencies
+        * tests/Client_Leaks/Makefile: Fixed dependencies
 
 Sat Mar 17 09:23:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp: 
-	* tao/Transport_Cache_Manager.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnings with
-	  g++. 
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnings with
+          g++.
 
 Fri Mar 16 18:25:54 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Cache_Entries.h:
         * tao/Cache_Entries.inl:
-        * tao/Cache_Entries.cpp:     
+        * tao/Cache_Entries.cpp:
           Modified the Cache_Entries to support caching the Transport
           instead of the Connection_Handler. [Bug 814]
 
@@ -63,7 +68,7 @@ Fri Mar 16 18:25:54 2001  Chad Elliott  <elliott_c@ociweb.com>
           Removed the reference counting altogether.  The lifecycle of the
           connection handler now follows the reactor. [Bug 814]
 
-        * tao/IIOP_Connection_Handler.h: 
+        * tao/IIOP_Connection_Handler.h:
         * tao/IIOP_Connection_Handler.i:
         * tao/IIOP_Connection_Handler.cpp:
         * tao/Strategies/SHMIOP_Connection_Handler.h:
