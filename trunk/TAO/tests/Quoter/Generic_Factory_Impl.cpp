@@ -19,8 +19,6 @@
 #include "Generic_Factory_Impl.h"
 #include "QuoterC.h"
 
-static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
-
 // Constructor
 Quoter_Generic_Factory_Impl::Quoter_Generic_Factory_Impl (void)
 {
