@@ -30,7 +30,7 @@ class ImR_Iterator
 public:
   /// Constructor
   /// Ownership of iterator is transfered to this class (we'll delete it)
-  ImR_Iterator (Server_Repository::HASH_IMR_ITER *iterator,
+  ImR_Iterator (Server_Repository::HASH_IMR_MAP::ITERATOR *iterator,
                 PortableServer::POA_ptr poa);
 
   /// Destructor
@@ -51,9 +51,8 @@ public:
 
 private:
   /// Our very own iterator for transversing the server repository.
-  Server_Repository::HASH_IMR_ITER *iterator_;
+  Server_Repository::HASH_IMR_MAP::ITERATOR *iterator_;
 
-  /// Our lovely POA.
   PortableServer::POA_var poa_;
 };
 

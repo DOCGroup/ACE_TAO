@@ -1,5 +1,5 @@
 #include "Repository_Configuration.h"
-#include "NT_Service.h"
+#include "Activator_NT_Service.h"
 
 #include "ace/Configuration.h"
 #include "ace/OS_NS_stdio.h"
@@ -13,7 +13,6 @@ ACE_RCSID (ImplRepo_Service,
 Repository_Configuration::Repository_Configuration (const char *repository_mode)
   : config_ (0)
 {
-  /// Default Constructor
   if (ACE_OS::strcmp (repository_mode, "x") == 0)
     {
       /// XML Mode : Dont do anything special
@@ -25,15 +24,13 @@ Repository_Configuration::Repository_Configuration (const char *repository_mode)
       HKEY root =
         ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE,
                                                      "Software\\TAO\\IR");
-      ACE_NEW (this->config_,
-               ACE_Configuration_Win32Registry(root));
+      ACE_NEW (this->config_, ACE_Configuration_Win32Registry(root));
 
 #endif /* ACE_WIN32 */
     }
  else if (ACE_OS::strcmp (repository_mode, "h") == 0)
     {
-      ACE_NEW (this->config_,
-               ACE_Configuration_Heap);
+      ACE_NEW (this->config_, ACE_Configuration_Heap);
 
       if (this->config_ == 0)
         {
@@ -45,14 +42,13 @@ Repository_Configuration::Repository_Configuration (const char *repository_mode)
 
 Repository_Configuration::~Repository_Configuration (void)
 {
-  /// Destructor
-  if (this->config_ != 0)
-    delete this->config_;
+  delete this->config_;
 }
 
 const ACE_Configuration_Section_Key &
 Repository_Configuration::root_section ()
 {
+  ACE_ASSERT(this->config_ != 0);
   return this->config_->root_section ();
 }
 
@@ -74,7 +70,7 @@ Repository_Configuration::open (void)
       ACE_Configuration_Heap *heap =
         ACE_dynamic_cast (ACE_Configuration_Heap *,
                           this->config_);
-
+      ACE_ASSERT(heap != 0);
       return heap->open ();
     }
   return 0;
@@ -107,7 +103,7 @@ Repository_Configuration::open (const char *file_name)
       ACE_Configuration_Heap *heap =
         ACE_dynamic_cast (ACE_Configuration_Heap *,
                           this->config_);
-
+      ACE_ASSERT(heap != 0);
       return heap->open (file_name);
     }
   return 0;

@@ -60,8 +60,6 @@ ifeq ($(minimum_corba),0)
 CPP_SRCS += \
   ImR_LocatorC \
   ImR_LocatorS \
-  ImR_ActivatorC \
-  ImR_ActivatorS \
   ImplRepoC \
   ImplRepoS
 

@@ -15,8 +15,6 @@ project : taolib, core, objreftemplate, valuetype, iorinterceptor {
     ImplRepo_i.cpp
     ImplRepoC.cpp
     ImplRepoS.cpp
-    ImR_ActivatorC.cpp
-    ImR_ActivatorS.cpp
     ImR_LocatorC.cpp
     ImR_LocatorS.cpp
     IORInfo.cpp

@@ -10,20 +10,7 @@
  *
  * The command used to generate code from this file is:
  *
- *   tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1 -GT
- *        -Wb,export_macro=TAO_PortableServer_Export
- *        -Wb,export_include=portableserver_export.h
- *        -Wb,pre_include="ace/pre.h"
- *        -Wb,post_include="ace/post.h"
- *        ImplRepo.pidl
- *
- * after the file is generated a patch must be applied. T he patch
- * disables the code under certain configurations, and eliminates
- * cycles in the include dependencies.
- * Those changes are required because the generated code is part of
- * the TAO library, it hardly makes any sense to change the IDL
- * compiler to support changes that are very occasional.
+ *   tao_idl.exe -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
  *
  */
 //=============================================================================
@@ -68,7 +55,8 @@ module ImplementationRepository
   };
   
   typedef string Address;
-  // Specifies the location of the server.
+  // This is used in places that require a partial IOR with
+  // just the ObjectKey missing. 
 
   typedef sequence<EnvironmentVariable> EnvironmentList;
   // Complete Environment.
@@ -91,8 +79,8 @@ module ImplementationRepository
     /// Activation Mode
     ActivationMode activation;
 
-    /// Location of the activator
-    string location;
+    /// Name of the activator
+    string activator;
   };
 
   struct ServerInformation
@@ -109,7 +97,6 @@ module ImplementationRepository
     
     /// Where the server is located currently.
     Address location;
-   
   };
 
   typedef sequence <ServerInformation> ServerInformationList;
@@ -127,8 +114,7 @@ module ImplementationRepository
     //    the Implementation Repository.
   {
     void activate_server (in string server)
-      raises (NotFound,
-              CannotActivate);
+      raises (NotFound, CannotActivate);
     // Activate server that is named <server>.
     //
     // The <NotFound> exception is raised when <server> is not found
@@ -137,24 +123,30 @@ module ImplementationRepository
     // activated.
 
     string activate_server_with_startup (in string server,
-					 in long check_startup)
-      raises (NotFound,
-              CannotActivate);
+                                         in long check_startup)
+      raises (NotFound, CannotActivate);
 
     void register_server (in string server,
                           in StartupOptions options)
-      raises (AlreadyRegistered);
+      raises (AlreadyRegistered, NotFound);
     // Register the <options> to specify how the <server> should be
     // restarted when a client asks for it.
     //
     // The <AlreadyRegistered> exception is raised when <server> has
     // already been registered with the Implementation Repository.
+    // The <NotFound> exception is raised when the activator specified
+    // in the options is not registered.
 
     void reregister_server (in string server,
-                            in StartupOptions options);
+                            in StartupOptions options)
+                            raises(AlreadyRegistered, NotFound);
     // Update the <options> to specify how the <server> should be
     // restarted when a client asks for it.  Will register the server
     // if not already registered.
+    // The <AlreadyRegistered> exception is raised when <server> has
+    // already been registered with a different activator.
+    // The <NotFound> exception is raised when the activator specified
+    // in the options is not registered.
 
     void remove_server (in string server)
       raises (NotFound);
@@ -170,7 +162,7 @@ module ImplementationRepository
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
     
-    Address server_is_running (in string server,
+    void server_is_running (in string server,
                                in Address addr,
                                in ServerObject server_object)
       raises (NotFound);
@@ -203,6 +195,10 @@ module ImplementationRepository
     // are additional servers, they can be received through the
     // <server_iterator>.  If there are no more servers, then
     // <server_iterator> is null.
+
+    string find_ior (in string object_name)
+      raises (NotFound);
+
   };
 
   interface ServerInformationIterator

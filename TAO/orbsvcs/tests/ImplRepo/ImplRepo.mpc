@@ -1,6 +1,4 @@
-project(airplane server) : taoserver, orbsvcsexe, minimum_corba, iortable {
-  exename  = airplane_server
-
+project(airplane server) : portableserver, orbsvcsexe, minimum_corba, iortable {
   IDL_Files {
     Airplane.idl
   }
@@ -14,9 +12,7 @@ project(airplane server) : taoserver, orbsvcsexe, minimum_corba, iortable {
   }
 }
 
-project(airplane client) : taoserver, orbsvcsexe, minimum_corba, iortable {
-  exename  = airplane_client
-
+project(airplane client) : portableserver, orbsvcsexe, minimum_corba, iortable {
   IDL_Files {
     Airplane.idl
   }
@@ -29,9 +25,7 @@ project(airplane client) : taoserver, orbsvcsexe, minimum_corba, iortable {
   }
 }
 
-project(nestea server) : taoserver, orbsvcsexe, minimum_corba, iortable {
-  exename  = nestea_server
-
+project(nestea server) : portableserver, orbsvcsexe, minimum_corba, iortable {
   IDL_Files {
     Nestea.idl
   }
@@ -45,9 +39,7 @@ project(nestea server) : taoserver, orbsvcsexe, minimum_corba, iortable {
   }
 }
 
-project(nestea client) : taoserver, orbsvcsexe, minimum_corba, iortable {
-  exename  = nestea_client
-
+project(nestea client) : portableserver, orbsvcsexe, minimum_corba, iortable {
   IDL_Files {
     Nestea.idl
   }

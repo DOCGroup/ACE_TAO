@@ -211,15 +211,6 @@ SOURCE=.\ImplRepoS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImR_ActivatorC.cpp
-# ADD CPP /GR
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImR_LocatorC.cpp
 # ADD CPP /GR
 # End Source File
@@ -376,18 +367,6 @@ SOURCE=.\ImplRepoS_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImR_ActivatorC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorS_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImR_LocatorC.h
 # End Source File
 # Begin Source File
@@ -520,10 +499,6 @@ SOURCE=.\ImplRepoS_T.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ImR_ActivatorC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImR_LocatorC.i
 # End Source File
 # Begin Source File
@@ -581,11 +556,6 @@ SOURCE=.\ServerRequestInfo.inl
 # Begin Source File
 
 SOURCE=.\ImplRepoS_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImR_ActivatorS_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

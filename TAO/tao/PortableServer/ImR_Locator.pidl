@@ -10,13 +10,7 @@
  *
  * The command used to generate code from this file is:
  *
- *   tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1 -GT
- *        -Wb,export_macro=TAO_PortableServer_Export
- *        -Wb,export_include=portableserver_export.h
- *        -Wb,pre_include="ace/pre.h"
- *        -Wb,post_include="ace/post.h"
- *        ImR_Locator.pidl
+ * tao_idl.exe -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImR_Locator.pidl
  *
  * after the file is generated a patch must be applied. T he patch
  * disables the code under certain configurations, and eliminates
@@ -34,35 +28,37 @@ module ImplementationRepository
 {
   interface Locator : Administration
   {
-    void activate_server_in_location (in string server,
-				      in Address location)
+    typedef sequence <string> ServerNameList;
+
+    void activate_server_in_activator (in string server,
+                                       in string activator)
       raises (NotFound,
               CannotActivate);
-    // Activate server that is named <server> in the location <location>
+    // Activate server that is named <server> in the ImR_Activator <activator>
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.  The <CannotActivate> exception
     // is raised when <server> is found in the Repository but could not be
     // activated.
 
-    void remove_server_in_location (in string server,
-				    in Address location)
+    void remove_server_in_activator (in string server,
+                                     in string activator)
       raises (NotFound);
     // Remove <server> from the Implementation Repository.
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
     
-    void shutdown_server_in_location (in string server,
-				      in Address location)
+    void shutdown_server_in_activator (in string server,
+                                       in string activator)
       raises (NotFound);
     // Tries to shutdown the server, first gracefully, then ungracefully.
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
     
-    void server_is_shutting_down_in_location (in string server,
-					      in Address location)
+    void server_is_shutting_down_in_activator (in string server,
+                                               in string activator)
       raises (NotFound);
     // Used to tell the Implementation Repository that <server> is shutting
     // down.
@@ -70,12 +66,23 @@ module ImplementationRepository
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
 
-    unsigned long register_activator (in string location,
-				      in Object object_ref)
-      raises (AlreadyRegistered);
+    long register_activator (in string activator, 
+                             in Administration admin,
+                             in ServerNameList servers);
+    // returns a token that can be used (along with activator name) to unregister the activator. 
     
-    unsigned long unregister_activator (in string location,
-					in Object object_ref)
+    void unregister_activator (in string activator, in long token);
+    // You must pass in the token returned from register_activator. 
+      
+    void server_is_running_in_activator (in string server,
+                                            in string activator,
+                                            in Address addr,
+                                            in ServerObject server_object)
+      raises (NotFound);
+    
+    void find_in_activator (in string server,
+               in string activator,
+               out ServerInformation info)
       raises (NotFound);
   };
 
