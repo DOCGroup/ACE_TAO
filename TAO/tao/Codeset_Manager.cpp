@@ -80,7 +80,7 @@ TAO_Codeset_Manager::~TAO_Codeset_Manager ()
 
   this->wchar_factories_.reset ();
 
-  delete this->utf16_bom_translator_;
+  // Note: do not delete utf16_bom_translator_  The service manager owns it
 }
 
 void
@@ -461,10 +461,8 @@ TAO_Codeset_Manager::get_char_trans (CONV_FRAME::CodeSetId tcs)
         {
           if (this->utf16_bom_translator_ == 0)
             {
-              ACE_NEW_RETURN (this->utf16_bom_translator_,
-                              UTF16_BOM_Factory,
-                              0);
-              this->utf16_bom_translator_->init(0,0);
+              this->utf16_bom_translator_ =
+                ACE_Dynamic_Service <UTF16_BOM_Factory>::instance ("UTF16_BOM_Factory");
             }
           return this->utf16_bom_translator_;
         }
