@@ -39,7 +39,7 @@ extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
 # if defined (PACE_HAS_INLINE)
-# include "pace/netinet/in.inl"
+# include "in.inl"
 # endif /* PACE_HAS_INLINE */
 
 
