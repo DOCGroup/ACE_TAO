@@ -1,0 +1,61 @@
+// $Id$
+//=============================================================================
+/**
+ * @file BasicSP.idl
+ *
+ * Definition of events, and common interfaces used in the BasicSP module.
+ *
+ * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef CIAO_BASIC_SP_IDL
+#define CIAO_BASIC_SP_IDL
+
+#include <Components.idl>
+
+// @@NOTE: Do we need a pragma prefix. Anyway its broken now in TAO..
+// #pragma prefix ""
+
+
+module BasicSP
+{
+
+  /**
+   * @NOTE: Not sure whether this is a good abstraction. Just copying
+   *  the stuff from Cadena folks.
+   */
+  /**
+   * @interface ReadData
+   *
+   */
+
+  interface ReadData {
+    string get_data ();
+  };
+
+  interface RTEventChannel
+  {
+      void connect_consumer (in string event_type,
+                             in string sink_name,
+                             in string consumer_oid);
+
+      void connect_supplier (in string event_type,
+                             in string source_name,
+                             in string supplier_oid);
+
+  };
+
+  /**
+   * @eventtype Events that represent timeouts
+   */
+  eventtype TimeOut {};
+
+  /**
+   * @eventtype Events that represent data availability
+   */
+  eventtype DataAvailable {};
+
+};
+
+#endif /*CIAO_BASIC_SP_IDL*/

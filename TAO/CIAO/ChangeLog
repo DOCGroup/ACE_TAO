@@ -1,3 +1,16 @@
+Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+       Added files:
+       * examples/handcrafted/BasicSP_EC2/*.*:
+       * examples/handcrafted/BasicSP_EC2/BMClosedED/*.*:
+       * examples/handcrafted/BasicSP_EC2/BMDevice/*.*:
+       * examples/handcrafted/BasicSP_EC2/EC/*.*:
+       * examples/handcrafted/BasicSP_EC2/descriptors/*.*:
+       * examples/handcrafted/BasicSP_EC2/BMDisplay/*.*:
+
+       Added new event channel example. The event service is
+       integrated as a separate component.
+
 2003-08-04  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
 	* performance-tests/Benchmark/RountTripClient/run_test.pl:
