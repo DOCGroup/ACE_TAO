@@ -280,11 +280,12 @@ public:
 
   void msg_ostream (ACE_OSTREAM_TYPE *);
   ACE_OSTREAM_TYPE *msg_ostream (void) const;
-  // Set/Get the ostream that is used to print error messages.
+  // Get the ostream that is used to print error messages.
 
-  void msg_callback (ACE_Log_Msg_Callback *c);
+  ACE_Log_Msg_Callback *msg_callback (ACE_Log_Msg_Callback *c);
   ACE_Log_Msg_Callback *msg_callback (void) const;
-  // Set/Get the callback object.
+  // Set a new callback object and return the existing callback to
+  // allow "chaining".
 
   // = Nesting depth increment and decrement.
   int inc (void);

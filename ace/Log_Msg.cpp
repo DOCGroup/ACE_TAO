@@ -593,28 +593,40 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
 
   // Remember, ACE_Log_Msg::STDERR bit is on by default...
   if (status != -1
-      && ACE_BIT_ENABLED (flags, ACE_Log_Msg::STDERR) == 0)
-    ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
+      && ACE_BIT_ENABLED (flags,
+                          ACE_Log_Msg::STDERR) == 0)
+    ACE_CLR_BITS (ACE_Log_Msg::flags_,
+                  ACE_Log_Msg::STDERR);
 
   // VERBOSE takes precedence over VERBOSE_LITE...
-  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE_LITE))
-    ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE_LITE);
-  else if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE))
-    ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE);
+  if (ACE_BIT_ENABLED (flags,
+                       ACE_Log_Msg::VERBOSE_LITE))
+    ACE_SET_BITS (ACE_Log_Msg::flags_,
+                  ACE_Log_Msg::VERBOSE_LITE);
+  else if (ACE_BIT_ENABLED (flags,
+                            ACE_Log_Msg::VERBOSE))
+    ACE_SET_BITS (ACE_Log_Msg::flags_,
+                  ACE_Log_Msg::VERBOSE);
 
-  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::OSTREAM))
+  if (ACE_BIT_ENABLED (flags,
+                       ACE_Log_Msg::OSTREAM))
     {
-      ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::OSTREAM);
+      ACE_SET_BITS (ACE_Log_Msg::flags_,
+                    ACE_Log_Msg::OSTREAM);
       // Only set this to cerr if it hasn't already been set.
       if (this->msg_ostream () == 0)
         this->msg_ostream (ACE_DEFAULT_LOG_STREAM);
     }
 
-  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::MSG_CALLBACK))
-    ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::MSG_CALLBACK);
+  if (ACE_BIT_ENABLED (flags,
+                       ACE_Log_Msg::MSG_CALLBACK))
+    ACE_SET_BITS (ACE_Log_Msg::flags_,
+                  ACE_Log_Msg::MSG_CALLBACK);
 
-  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::SILENT))
-    ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT);
+  if (ACE_BIT_ENABLED (flags,
+                       ACE_Log_Msg::SILENT))
+    ACE_SET_BITS (ACE_Log_Msg::flags_,
+                  ACE_Log_Msg::SILENT);
 
   return status;
 }
@@ -656,8 +668,9 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
   va_start (argp, format_str);
 
-  int result = this->log (format_str, log_priority, argp);
-
+  int result = this->log (format_str,
+                          log_priority,
+                          argp);
   va_end (argp);
 
   return result;
@@ -1082,7 +1095,8 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
   log_record.msg_data (this->msg ());
 
   // Write the <log_record> to the appropriate location.
-  ssize_t result = this->log (log_record, abort_prog);
+  ssize_t result = this->log (log_record,
+                              abort_prog);
 
   if (abort_prog)
     {
@@ -1176,7 +1190,8 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 
       // Make sure that the lock is held during all this.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Log_Msg_Manager::get_lock (), -1));
+                                *ACE_Log_Msg_Manager::get_lock (),
+                                -1));
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::STDERR)
@@ -1186,24 +1201,28 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 #if defined (ACE_HAS_WINCE)
                           );
 #else
-                          , stderr);
+      , stderr);
 #endif /* ACE_HAS_WINCE */
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::LOGGER))
         {
 #if defined (ACE_HAS_STREAM_PIPES)
-          ACE_Str_Buf log_msg (ACE_static_cast (void *, &log_record),
-                               ACE_static_cast (int, log_record.length ()));
+          ACE_Str_Buf log_msg (ACE_static_cast (void *,
+                                                &log_record),
+                               ACE_static_cast (int,
+                                                log_record.length ()));
 
           // Try to use the <putpmsg> API if possible in order to
           // ensure correct message queueing according to priority.
           result =
-            ACE_Log_Msg_Manager::message_queue_->send (
-              ACE_reinterpret_cast (const ACE_Str_Buf *, 0),
-              &log_msg,
-              ACE_static_cast (int, log_record.priority ()),
-              MSG_BAND);
+            ACE_Log_Msg_Manager::message_queue_->send 
+            (ACE_reinterpret_cast (const ACE_Str_Buf *,
+                                   0),
+             &log_msg,
+             ACE_static_cast (int,
+                              log_record.priority ()),
+             MSG_BAND);
 #else
           // We're running over sockets, so we'll need to indicate the
           // number of bytes to send.
@@ -1215,7 +1234,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       // Format the message and print it to stderr and/or ship it off
       // to the log_client daemon, and/or print it to the ostream.
       // This must come last, after the other two print operations
-      // (see the ACE_Log_Record::print method for details).
+      // (see the <ACE_Log_Record::print> method for details).
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::OSTREAM)
@@ -1223,19 +1242,28 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
         log_record.print (ACE_Log_Msg::local_host_,
                           ACE_Log_Msg::flags_,
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-                          ACE_static_cast (FILE *, this->msg_ostream ()));
+                          ACE_static_cast (FILE *,
+                                           this->msg_ostream ())
 #else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-                          *this->msg_ostream ());
+                          *this->msg_ostream ()
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-
+                          );
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::MSG_CALLBACK)
           && this->msg_callback () != 0)
-        this->msg_callback ()->log (log_record);
-
+        {
+          // Use a "reverse lock" to avoid holding the lock during the
+          // callback so we don't have deadlock if the callback uses
+          // the logger.
+          ACE_MT (ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> reverse_lock
+                  (*ACE_Log_Msg_Manager::get_lock ()));
+          ACE_MT (ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>,
+                                    ace_mon_1, reverse_lock, -1));
+          this->msg_callback ()->log (log_record);
+        }
       if (tracing)
         this->start_tracing ();
-    }
+   }
 
   return result;
 }
@@ -1256,22 +1284,32 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 
   buf[0] = 0; // in case size = 0
 
-  int len = ACE::format_hexdump (buffer, size, buf,
+  int len = ACE::format_hexdump (buffer,
+                                 size,
+                                 buf,
                                  sizeof (buf) / sizeof (ASYS_TCHAR));
 
   int sz = 0;
 
   if (text)
-    sz = ACE_OS::sprintf (msg_buf, ASYS_TEXT ("%s - "), text);
+    sz = ACE_OS::sprintf (msg_buf,
+                          ASYS_TEXT ("%s - "),
+                          text);
 
-  sz += ACE_OS::sprintf (msg_buf + sz, ASYS_TEXT ("HEXDUMP %d bytes"), size);
+  sz += ACE_OS::sprintf (msg_buf + sz,
+                         ASYS_TEXT ("HEXDUMP %d bytes"), 
+                         size);
 
   if (len < size)
-    ACE_OS::sprintf (msg_buf + sz, ASYS_TEXT (" (showing first %d bytes)"),
+    ACE_OS::sprintf (msg_buf + sz,
+                     ASYS_TEXT (" (showing first %d bytes)"),
                      len);
 
   // Now print out the formatted buffer.
-  this->log (log_priority, ASYS_TEXT ("%s\n%s"), msg_buf, buf);
+  this->log (log_priority,
+             ASYS_TEXT ("%s\n%s"),
+             msg_buf,
+             buf);
   return 0;
 }
 
@@ -1520,10 +1558,12 @@ ACE_Log_Msg::msg_callback (void) const
   return this->msg_callback_;
 }
 
-void
+ACE_Log_Msg_Callback *
 ACE_Log_Msg::msg_callback (ACE_Log_Msg_Callback *c)
 {
+  ACE_Log_Msg_Callback *old = this->msg_callback_;
   this->msg_callback_ = c;
+  return old;
 }
 
 ACE_OSTREAM_TYPE *
@@ -1574,9 +1614,13 @@ ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
     template class ACE_Cleanup_Adapter<ACE_Log_Msg>;
+#else
+template class ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>;
 # endif /* ! ACE_MT_SAFE */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Log_Msg>
+#else
+#pragma instantiate ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>
 # endif /* ! ACE_MT_SAFE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

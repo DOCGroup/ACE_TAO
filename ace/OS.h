@@ -1747,7 +1747,9 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 // More generic dynamic/static service macros.
 # define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *);
 # define ACE_FACTORY_DEFINE(CLS,X) \
-extern "C" void _gobble_##X (void *p) { X *_p = (X *) p; delete _p; } \
+extern "C" void _gobble_##X (void *p) { \
+  X *_p = ACE_static_cast (X *, ACE_reinterpret_cast (ACE_Service_Object *, p)); \
+  delete _p; } \
 extern "C" ACE_Service_Object *_make_##X (ACE_Service_Object_Exterminator *gobbler) \
 { ACE_TRACE (#X); \
 if (gobbler != 0) *gobbler = (ACE_Service_Object_Exterminator) _gobble_##X; return new X; }

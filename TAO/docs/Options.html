@@ -16,22 +16,22 @@ bgcolor="#ffffff">
 <H3>Overview</H3>
 <blockquote>
 
-<P>Certain components in TAO such as the ORB Core or Object Adapter
-can be tuned by users by providing value for options or environment
-variables to them.  These options are commonly specified as (1)
-environment variables or (2) strings passed on the command-line.  They
-are generally passed to component initialization methods for
-consumption.</P>
+<p>TAO can be configured in several ways.  Certain components in TAO,
+such as the ORB Core or Object Adapter, can be tuned by users by
+providing value for options or environment variables to them.  These
+options are commonly specified as (1) environment variables or (2)
+strings passed on the command-line.  Command-line options and
+environment variables to control global ORB features, such as the IOR
+format or ORB's bootstraping methods.  They are generally passed to
+component initialization methods for consumption. <P>
 
-<p>Both command-line options and environment variables are used to
-control the global ORB features like the IOR format or ORB's
-bootstraping methods.  Options in <code>svc.conf</code> file on the
-other hand provides a mechanism to fine-tune the internal components
-in TAO and they are specific to individual components.
-<code>svc.conf</code> files are not required to run TAO programs.
-However, if you know the behavior of your programs, you can tune-up
-your programs and use various optimization provided by TAO thru the
-use of svc.conf files.</p>
+In addition, options in <code>svc.conf</code> file provide a mechanism
+to fine-tune internal components in TAO that are specific to
+particular configurations.  If your program use-cases have particular
+characteristics, you can use the <code>svc.conf</code> file to
+customize your programs and use various optimization provided by TAO .
+However, a <code>svc.conf</code> file is not required to run TAO
+programs. </p>
 
 <P><EM>Programmer's Note:</EM> the internal structure for options is
 the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
