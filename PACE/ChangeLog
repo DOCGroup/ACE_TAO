@@ -1,3 +1,11 @@
+Mon Jun 26 13:27:02 2000    <luther@cs.wustl.edu>
+
+	* pace/pace/win32/pace.dsw:
+	* pace/pace/win32/pace_dll.dsp:	
+	* pace/pace/win32/pace_lib.dsp:	
+
+	  Added to repository.
+
 Mon Jun 26 12:24:36 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/pace/posix/TODO:
