@@ -11,10 +11,6 @@
 
 #include "ace/Strategies.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Caching_Utility_T.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ace, Caching_Utility_T, "$Id$")
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
