@@ -79,10 +79,6 @@ public:
   int close (ALLOCATOR* allocator);
   
 private:
-#if defined (ACE_WIN32)
-  int remap (EXCEPTION_POINTERS *ep, ALLOCATOR *allocator);
-  // Remap the backing store
-#endif /* ACE_WIN32 */
 };
 
 template <ACE_MEM_POOL_1, class LOCK>
@@ -132,12 +128,16 @@ public:
   // didn't exist yet. (Wide charcter strings interface).
   
   virtual int unbind (const ACE_WString &name);
+  virtual int unbind_i (const ACE_WString &name);
   // Delete a name from a ACE_Local_Name_Space (Wide charcter strings
   // Interface).
   
   virtual int resolve (const ACE_WString &name, 
 		       ACE_WString &value, 
 		       char *&type);
+  virtual int resolve_i (const ACE_WString &name, 
+			 ACE_WString &value, 
+			 char *&type);
   // Get value and type of a given name binding (Wide chars).  The
   // caller is responsible for deleting <type>!
   
@@ -178,11 +178,19 @@ public:
   // Dump the state of the object
 
 private:
+#if defined (ACE_WIN32)
+  int remap (EXCEPTION_POINTERS *ep);
+  // Remap the backing store
+#endif /* ACE_WIN32 */
+
   int shared_bind (const ACE_WString &name, const ACE_WString &value,
 		   const char *type, int rebind);
+  int shared_bind_i (const ACE_WString &name, const ACE_WString &value,
+		     const char *type, int rebind);
   // Factor out code from bind() and rebind().
 
   int create_manager (void);
+  int create_manager_i (void);
   // Allocate the appropriate type of map manager that stores the
   // key/value binding.
 

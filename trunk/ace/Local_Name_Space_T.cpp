@@ -16,10 +16,64 @@ ACE_Name_Space_Map<ALLOCATOR>::ACE_Name_Space_Map (ALLOCATOR *allocator)
   ACE_TRACE ("ACE_Name_Space_Map::ACE_Name_Space_Map");
 }
 
-#if defined (ACE_WIN32)
 template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::remap (EXCEPTION_POINTERS *ep,
-				      ALLOCATOR* allocator)
+ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR* allocator)
+{
+  ACE_TRACE ("ACE_Name_Space_Map::close");
+
+  this->allocator_ = allocator;
+  return this->close_i ();
+}
+
+template <class ALLOCATOR> int 
+ACE_Name_Space_Map<ALLOCATOR>::bind (const ACE_NS_String &ext_id,
+				     const ACE_NS_Internal &int_id,
+				     ALLOCATOR *allocator)
+{
+  ACE_TRACE ("ACE_Name_Space_Map::bind");
+
+  this->allocator_ = allocator;
+  return this->bind_i (ext_id, int_id);
+}
+
+template <class ALLOCATOR> int 
+ACE_Name_Space_Map<ALLOCATOR>::unbind (const ACE_NS_String &ext_id, 
+				       ACE_NS_Internal &int_id,
+				       ALLOCATOR *allocator)
+{
+  ACE_TRACE ("ACE_Name_Space_Map::unbind");
+
+  this->allocator_ = allocator;
+  return this->unbind_i (ext_id, int_id);
+}
+
+template <class ALLOCATOR> int 
+ACE_Name_Space_Map<ALLOCATOR>::rebind (const ACE_NS_String &ext_id,
+				       const ACE_NS_Internal &int_id,
+				       ACE_NS_String &old_ext_id, 
+				       ACE_NS_Internal &old_int_id,
+				       ALLOCATOR *allocator)
+{
+  ACE_TRACE ("ACE_Name_Space_Map::rebind");
+
+  this->allocator_ = allocator;
+  return this->rebind_i (ext_id, int_id, old_ext_id, old_int_id);
+}
+
+template <class ALLOCATOR> int 
+ACE_Name_Space_Map<ALLOCATOR>::find (const ACE_NS_String &ext_id,
+				     ACE_NS_Internal &int_id,
+				     ALLOCATOR *allocator)
+{
+  ACE_TRACE ("ACE_Name_Space_Map::find");
+
+  this->allocator_ = allocator;
+  return this->find_i (ext_id, int_id);
+}
+
+#if defined (ACE_WIN32)
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::remap (EXCEPTION_POINTERS *ep)
 {
   ACE_TRACE ("ACE_Name_Space_Map::remap");
 
@@ -28,7 +82,7 @@ ACE_Name_Space_Map<ALLOCATOR>::remap (EXCEPTION_POINTERS *ep,
   // The following requires Memory Pool to have ::remap()
   // defined. Thus currently this will only work for
   // ACE_MMap_Memory_Pool.
-  if (allocator->allocator ().memory_pool ().remap (addr) == -1)
+  if (this->allocator_->allocator ().memory_pool ().remap (addr) == -1)
     // Kick it upstairs...
     return (DWORD) EXCEPTION_CONTINUE_SEARCH; 
 
@@ -45,104 +99,31 @@ ACE_Name_Space_Map<ALLOCATOR>::remap (EXCEPTION_POINTERS *ep,
 }
 #endif /* ACE_WIN32 */
 
-template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR* allocator)
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::shared_bind (const ACE_WString &name,
+							 const ACE_WString &value, 
+							 const char *type,
+							 int rebind)
 {
-  ACE_TRACE ("ACE_Name_Space_Map::close");
-
-  this->allocator_ = allocator;
-  return this->close_i ();
-}
-
-template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::bind (const ACE_NS_String &ext_id,
-				     const ACE_NS_Internal &int_id,
-				     ALLOCATOR *allocator)
-{
-  ACE_TRACE ("ACE_Name_Space_Map::bind");
-  int result = 0;
-
-  this->allocator_ = allocator;
-
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  ACE_SEH_TRY {
-    result = this->bind_i (ext_id, int_id);
-  } 
-  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation (), allocator)) {
-  }
-  return result;
-}
-
-template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::unbind (const ACE_NS_String &ext_id, 
-				       ACE_NS_Internal &int_id,
-				       ALLOCATOR *allocator)
-{
-  ACE_TRACE ("ACE_Name_Space_Map::unbind");
-  int result = 0;
-  this->allocator_ = allocator;
-  
-  // Note that we *must* use structured exception handling here
-  // because (1) we may need to commit virtual memory pages and (2)
-  // C++ exception handling doesn't support resumption.
-  ACE_SEH_TRY {
-    result = this->unbind_i (ext_id, int_id);
-  }
-  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation (), allocator)) {
-  }
-  return result;
-}
-
-template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::rebind (const ACE_NS_String &ext_id,
-				       const ACE_NS_Internal &int_id,
-				       ACE_NS_String &old_ext_id, 
-				       ACE_NS_Internal &old_int_id,
-				       ALLOCATOR *allocator)
-{
-  ACE_TRACE ("ACE_Name_Space_Map::rebind");
-  int result = 0;
-  this->allocator_ = allocator;
-  
-  // Note that we *must* use structured exception handling here
-  // because (1) we may need to commit virtual memory pages and (2)
-  // C++ exception handling doesn't support resumption.
-  ACE_SEH_TRY {
-    result = this->rebind_i (ext_id, int_id, old_ext_id, old_int_id);
-  }
-  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation (), allocator)) {
-  }
-  return result;
-}
-
-template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::find (const ACE_NS_String &ext_id,
-				     ACE_NS_Internal &int_id,
-				     ALLOCATOR *allocator)
-{
-  ACE_TRACE ("ACE_Name_Space_Map::find");
-  int result = 0;
-  this->allocator_ = allocator;
-
-  // Note that we *must* use structured exception handling here
-  // because (1) we may need to commit virtual memory pages and (2)
-  // C++ exception handling doesn't support resumption.
-  ACE_SEH_TRY {
-    result =  this->find_i (ext_id, int_id);
-  }
-  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation (), allocator)) {
-  }
-  return result;
+  ACE_SEH_TRY 
+    {
+      return this->shared_bind_i (name, value, type, rebind);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
-ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::shared_bind (const ACE_WString &name,
-						   const ACE_WString &value, 
-						   const char *type,
-						   int rebind)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::shared_bind_i (const ACE_WString &name,
+							   const ACE_WString &value, 
+							   const char *type,
+							   int rebind)
 {
+
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind");
   size_t name_len = (name.length () + 1) * sizeof (ACE_USHORT16);
   size_t value_len = (value.length () + 1) * sizeof (ACE_USHORT16);
@@ -213,6 +194,22 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::shared_bind (const ACE_WString &name
 template <ACE_MEM_POOL_1, class LOCK> int  
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::unbind (const ACE_WString &name)
 {
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->unbind_i (name);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int  
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::unbind_i (const ACE_WString &name)
+{
   ACE_TRACE ("ACE_Local_Name_Space::unbind");
 
   ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
@@ -257,6 +254,24 @@ template <ACE_MEM_POOL_1, class LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve (const ACE_WString &name,
 						     ACE_WString &value, 
 						     char *&type)
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->resolve_i (name, value, type);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve_i (const ACE_WString &name,
+						       ACE_WString &value, 
+						       char *&type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::resolve");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
@@ -330,6 +345,22 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::~ACE_Local_Name_Space (void)
 template <ACE_MEM_POOL_1, class LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager (void)
 {
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->create_manager_i ();
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
+{
   ACE_TRACE ("ACE_Local_Name_Space::create_manager");
   // Get directory name
   const char *dir = this->name_options_->namespace_dir ();
@@ -356,7 +387,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager (void)
   // Create the allocator with the appropriate options.
   ACE_NEW_RETURN (this->allocator_, ALLOCATOR (this->context_file_, 0, &options), -1);
 
-  if (ACE_LOG_MSG->errnum ())
+  if (ACE_LOG_MSG->op_status ())
     ACE_ERROR_RETURN ((LM_ERROR, "Allocator::Allocator\n"), -1);    
   
   // Now check if the backing store has been created successfully
@@ -407,9 +438,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager (void)
   return 0;
 }
 
+
 template <ACE_MEM_POOL_1, class LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
-						  const ACE_WString &pattern)
+							const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, this->lock_, -1);
@@ -674,3 +706,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
 }
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_C */
+
+
+
