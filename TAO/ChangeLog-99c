@@ -1,3 +1,14 @@
+Tue Dec 14 20:22:37 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Factory.h:
+	* tao/Pluggable.h:
+	* tao/Profile.h:
+	* tao/Protocol_Factory.h:
+	* tao/UIOP_Factory.cpp:
+	* tao/UIOP_Factory.h:
+
+	  Cosmetic updates, spelling corrections, etc.
+
 Tue Dec 14 13:51:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* utils/nslist/nslist.dsp: Fixed the release build settings.
