@@ -128,7 +128,7 @@ Wed Oct 20 00:04:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Made pointer to Servant_Upcall object const.  It's value should
 	  never change.
-	
+
 	  (ServerRequestInfo):
 	* tao/PortableServer/ServerInterceptorAdapter.h
 	  (ServerRequestInterceptor_Adapter):
