@@ -97,7 +97,7 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
 
   if (this->is_set (handle))
     {
-      FD_CLR ((SOCKET) handle, &this->mask_);
+      FD_CLR ((ACE_SOCKET) handle, &this->mask_);
       this->size_--;
       
 #if !defined (ACE_WIN32)
