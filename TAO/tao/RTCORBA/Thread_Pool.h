@@ -20,8 +20,8 @@
 
 #include "ace/Task.h"
 #include "RTCORBA.h"
-#include "tao/ORB.h"
 #include "ace/Hash_Map_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 
 class TAO_Thread_Lane;
 
@@ -38,14 +38,17 @@ class TAO_RTCORBA_Export TAO_Thread_Pool_Threads : public ACE_Task_Base
 public:
 
   /// Constructor.
-  TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane,
-                           ACE_Thread_Manager &tm);
+  TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
   /// Method executed when a thread is spawned.
   int svc (void);
 
   /// Accessor to the lane to which this thread belongs to.
   TAO_Thread_Lane &lane (void) const;
+
+  /// Set TSS resources for the current thread.
+  static void set_tss_resources (TAO_ORB_Core &orb_core,
+                                 TAO_Thread_Lane &thread_lane);
 
 private:
 
@@ -72,7 +75,17 @@ public:
                    CORBA::ULong id,
                    CORBA::Short lane_priority,
                    CORBA::ULong static_threads,
-                   CORBA::ULong dynamic_threads);
+                   CORBA::ULong dynamic_threads,
+                   CORBA::Environment &ACE_TRY_ENV);
+
+  /// Destructor.
+  ~TAO_Thread_Lane (void);
+
+  /// Open the lane.
+  void open (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Finalize the resources.
+  void fini (void);
 
   /// Create the static threads - only called once.
   int create_static_threads (void);
@@ -84,20 +97,24 @@ public:
   /// @name Accessors
   // @{
 
+  TAO_Thread_Pool &pool (void) const;
+  CORBA::ULong id (void) const;
+
   CORBA::Short lane_priority (void) const;
   CORBA::ULong static_threads (void) const;
   CORBA::ULong dynamic_threads (void) const;
 
-  CORBA::ULong id (void) const;
-
-  TAO_Thread_Pool &thread_pool (void) const;
   TAO_Thread_Pool_Threads &threads (void);
 
+  TAO_Thread_Lane_Resources &resources (void);
   // @}
 
 private:
 
-  TAO_Thread_Pool &thread_pool_;
+  /// Validate the lane's priority and map priority it to a native value.
+  void validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV);
+
+  TAO_Thread_Pool &pool_;
   CORBA::ULong id_;
 
   CORBA::Short lane_priority_;
@@ -105,7 +122,13 @@ private:
   CORBA::ULong dynamic_threads_;
 
   TAO_Thread_Pool_Threads threads_;
+
+  TAO_Thread_Lane_Resources resources_;
+
+  CORBA::Short native_priority_;
 };
+
+class TAO_Thread_Pool_Manager;
 
 /**
  * @class TAO_Thread_Pool
@@ -123,7 +146,8 @@ class TAO_RTCORBA_Export TAO_Thread_Pool
 public:
 
   /// Constructor (for pools without lanes).
-  TAO_Thread_Pool (CORBA::ULong id,
+  TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
+                   CORBA::ULong id,
                    CORBA::ULong stack_size,
                    CORBA::ULong static_threads,
                    CORBA::ULong dynamic_threads,
@@ -131,27 +155,38 @@ public:
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   CORBA::ORB_ptr orb);
+                   CORBA::Environment &ACE_TRY_ENV);
 
   /// Constructor (for pools with lanes).
-  TAO_Thread_Pool (CORBA::ULong id,
+  TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
+                   CORBA::ULong id,
                    CORBA::ULong stack_size,
                    const RTCORBA::ThreadpoolLanes &lanes,
                    CORBA::Boolean allow_borrowing,
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   CORBA::ORB_ptr orb);
+                   CORBA::Environment &ACE_TRY_ENV);
 
   /// Destructor.
   ~TAO_Thread_Pool (void);
 
+  /// Open the pool.
+  void open (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Finalize the resources.
+  void fini (void);
+
   /// Create the static threads - only called once.
   int create_static_threads (void);
+
+  /// Check if this thread pool has (explicit) lanes.
+  int with_lanes (void) const;
 
   /// @name Accessors
   // @{
 
+  TAO_Thread_Pool_Manager &manager (void) const;
   CORBA::ULong id (void) const;
 
   CORBA::ULong stack_size (void) const;
@@ -160,9 +195,6 @@ public:
   CORBA::ULong max_buffered_requests (void) const;
   CORBA::ULong max_request_buffer_size (void) const;
 
-  ACE_Thread_Manager &thread_manager (void);
-
-  CORBA::ORB_ptr orb (void) const;
   TAO_Thread_Lane **lanes (void);
   CORBA::ULong number_of_lanes (void) const;
 
@@ -170,6 +202,7 @@ public:
 
 private:
 
+  TAO_Thread_Pool_Manager &manager_;
   CORBA::ULong id_;
 
   CORBA::ULong stack_size_;
@@ -180,11 +213,10 @@ private:
 
   TAO_Thread_Lane **lanes_;
   CORBA::ULong number_of_lanes_;
-
-  ACE_Thread_Manager &thread_manager_;
-
-  CORBA::ORB_var orb_;
+  int with_lanes_;
 };
+
+class TAO_ORB_Core;
 
 /**
  * @class TAO_Thread_Pool_Manager
@@ -199,10 +231,13 @@ class TAO_RTCORBA_Export TAO_Thread_Pool_Manager
 public:
 
   /// Constructor.
-  TAO_Thread_Pool_Manager (TAO_ORB_Core *orb_core);
+  TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_Thread_Pool_Manager (void);
+
+  /// Finalize the resources.
+  void fini (void);
 
   /// Create the static threads - only called once.
   int
@@ -217,7 +252,8 @@ public:
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
                      CORBA::ULong max_request_buffer_size,
-                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                     int call_open,
+                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a threadpool with lanes.
@@ -228,15 +264,19 @@ public:
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
                                 CORBA::ULong max_request_buffer_size,
-                                CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                                int call_open,
+                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy a threadpool.
   void
   destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
-                      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
+
+  /// ORB_Core accessor.
+  TAO_ORB_Core &orb_core (void) const;
 
   /// Collection of thread pools.
   typedef ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Null_Mutex> THREAD_POOLS;
@@ -257,6 +297,7 @@ private:
                        CORBA::Boolean allow_request_buffering,
                        CORBA::ULong max_buffered_requests,
                        CORBA::ULong max_request_buffer_size,
+                       int call_open,
                        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -267,6 +308,7 @@ private:
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
+                                  int call_open,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -277,12 +319,13 @@ private:
 
   RTCORBA::ThreadpoolId
   create_threadpool_helper (TAO_Thread_Pool *thread_pool,
+                            int call_open,
                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @}
 
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;
   RTCORBA::ThreadpoolId thread_pool_id_counter_;

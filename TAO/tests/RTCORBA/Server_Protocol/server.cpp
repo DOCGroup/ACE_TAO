@@ -167,9 +167,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -181,15 +179,9 @@ main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Panic <RootPOA> is nil\n"),
-                          -1);
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
@@ -295,3 +287,4 @@ main (int argc, char *argv[])
 
   return 0;
 }
+

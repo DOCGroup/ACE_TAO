@@ -34,7 +34,6 @@
 #include "MessagingC.h"
 #include "CurrentC.h"
 #include "IOPC.h"
-#include "PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -102,7 +101,7 @@ TAO_NAMESPACE  PortableInterceptor
     static Interceptor_ptr nil (void);
     static Interceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     Interceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -355,7 +354,7 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     static Current_ptr nil (void);
     static Current_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     Current_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -497,7 +496,7 @@ class TAO_Export Current: public virtual CORBA::Current
     static RequestInfo_ptr nil (void);
     static RequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     RequestInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -738,7 +737,7 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
     static ClientRequestInfo_ptr nil (void);
     static ClientRequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     ClientRequestInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -936,7 +935,7 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     static ServerRequestInfo_ptr nil (void);
     static ServerRequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     ServerRequestInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1128,7 +1127,7 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     static ClientRequestInterceptor_ptr nil (void);
     static ClientRequestInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     ClientRequestInterceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1292,7 +1291,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     static ServerRequestInterceptor_ptr nil (void);
     static ServerRequestInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     ServerRequestInterceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1457,7 +1456,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     static IORInfo_ptr nil (void);
     static IORInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     IORInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1606,7 +1605,7 @@ class TAO_Export IORInfo : public virtual CORBA_Object
     static IORInterceptor_ptr nil (void);
     static IORInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     IORInterceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1735,7 +1734,7 @@ class TAO_Export IORInterceptor: public virtual Interceptor
     static PolicyFactory_ptr nil (void);
     static PolicyFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     PolicyFactory_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1866,7 +1865,7 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
     static ORBInitInfo_ptr nil (void);
     static ORBInitInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     ORBInitInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2169,7 +2168,7 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
     static ORBInitializer_ptr nil (void);
     static ORBInitializer_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-
+  
   private:
     ORBInitializer_ptr ptr_;
     // Unimplemented - prevents widening assignment.

@@ -64,15 +64,7 @@ public:
     TAO_REACTOR_TP
   };
 
-  // = Reactor mappings strategy
-  enum
-  {
-    TAO_SINGLE_REACTOR,
-    TAO_REACTOR_PER_PRIORITY
-  };
-
   // = Resource Retrieval
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
   virtual int init_protocol_factories (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
@@ -87,11 +79,6 @@ protected:
 
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
-
-  void report_option_value_error (const char* option_name,
-                                  const char* option_value);
-
-  void report_unsupported_error (const char* option_name);
 
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ace/WFMO_Reactor.h"
 
 #include "ace/Handle_Set.h"
@@ -12,7 +11,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, WFMO_Reactor, "$Id$")
-
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
@@ -1622,33 +1620,15 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
   // mut and event.
   countdown.update ();
 
-  do
-    {
-      // Calculate timeout
-      int timeout = this->calculate_timeout (max_wait_time);
+  // Calculate timeout
+  int timeout = this->calculate_timeout (max_wait_time);
 
-      // Wait for event to happen
-      int wait_status = this->wait_for_multiple_events (timeout,
-                                                        alertable);
+  // Wait for event to happen
+  int wait_status = this->wait_for_multiple_events (timeout,
+                                                    alertable);
 
-      // Upcall
-      result = this->safe_dispatch (wait_status);
-      if (0 == result)
-        {
-          // wait_for_multiple_events timed out without dispatching
-          // anything.  Because of rounding and conversion errors and
-          // such, it could be that the wait loop timed out, but
-          // the timer queue said it wasn't quite ready to expire a
-          // timer. In this case, max_wait_time won't have quite been
-          // reduced to 0, and we need to go around again. If max_wait_time
-          // is all the way to 0, just return, as the entire time the
-          // caller wanted to wait has been used up.
-          countdown.update ();     // Reflect time waiting for events
-          if (0 == max_wait_time || max_wait_time->usec () == 0)
-            break;
-        }
-    }
-  while (result == 0);
+  // Upcall
+  result = this->safe_dispatch (wait_status);
 
   return result;
 }
@@ -2367,8 +2347,7 @@ ACE_WFMO_Reactor_Notify::max_notify_iterations (void)
 }
 
 int
-ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
-                                                      ACE_Reactor_Mask mask)
+ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::purge_pending_notifications");
 
@@ -2407,30 +2386,19 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
         ACE_reinterpret_cast (ACE_Notification_Buffer *, mb->base ());
 
       // If this is not a Reactor notify (it is for a particular handler),
-      // and it matches the specified handler (or purging all),
-      // and applying the mask would totally eliminate the notification, then
+      // and it matches the specified handler (or purging all), then
       // release it and count the number purged.
-      if ((0 != buffer->eh_) &&
-          (0 == eh || eh == buffer->eh_) &&
-          ACE_BIT_DISABLED (buffer->mask_, ~mask)) // the existing notification mask
-                                                   // is left with nothing when
-                                                   // applying the mask
-      {
-        mb->release ();
-        ++number_purged;
-      }
+      if (0 != buffer->eh_ && (0 == eh || eh == buffer->eh_))
+        {
+          mb->release ();
+          ++number_purged;
+        }
       else
-      {
-        // To preserve it, move it to the local_queue.
-        // But first, if this is not a Reactor notify (it is for a particularhandler),
-        // and it matches the specified handler (or purging all), then
-        // apply the mask
-        if ((0 != buffer->eh_) &&
-            (0 == eh || eh == buffer->eh_))
-          ACE_CLR_BITS(buffer->mask_, mask);
-        if (-1 == local_queue.enqueue_head (mb))
-          return -1;
-      }
+        {
+          // To preserve it, move it to the local_queue.
+          if (-1 == local_queue.enqueue_head (mb))
+            return -1;
+        }
     }
 
   if (this->message_queue_.message_count ())
@@ -2493,20 +2461,11 @@ ACE_WFMO_Reactor::max_notify_iterations (void)
 }
 
 int
-ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
-                                               ACE_Reactor_Mask mask)
+ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::purge_pending_notifications");
-  return this->notify_handler_->purge_pending_notifications (eh, mask);
+  return this->notify_handler_->purge_pending_notifications (eh);
 }
-
-int
-ACE_WFMO_Reactor::resumable_handler (void)
-{
-  ACE_TRACE ("ACE_WFMO_Reactor::resumable_handler");
-  return 0;
-}
-
 
 // No-op WinSOCK2 methods to help WFMO_Reactor compile
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)

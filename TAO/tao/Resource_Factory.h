@@ -29,7 +29,6 @@
 
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
-class TAO_Reactor_Registry;
 
 class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
@@ -125,10 +124,6 @@ public:
   ///    Locked_Data_Blocks
   virtual int use_locked_data_blocks (void) const;
 
-  /// Create the reactor holder, an strategy to control the number of
-  /// reactors in the ORB
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
-
   /// Return an <ACE_Reactor> to be utilized.
   virtual ACE_Reactor *get_reactor (void);
 
@@ -200,12 +195,6 @@ public:
   /// caller.
   virtual TAO_LF_Strategy *create_lf_strategy (void) = 0;
 
-  /// Disables the factory.  When a new factory is installed and used,
-  /// this function should be called on the previously used (default)
-  /// factory.  This should result in proper error reporting if the
-  /// user attempts to set options on an unused factory.
-  virtual void disable_factory (void) = 0;
-
 protected:
   /**
    * Loads the default protocols. This method is used so that the
@@ -213,7 +202,6 @@ protected:
    * without calling unnecessary functions.
    */
   virtual int load_default_protocols (void);
-
 };
 
 #include "ace/post.h"

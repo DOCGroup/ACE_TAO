@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Muxed_TMS.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/GIOP_Message_Version.h"
@@ -9,7 +8,6 @@
 #include "Transport.h"
 
 ACE_RCSID(tao, Muxed_TMS, "$Id$")
-
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),
@@ -51,7 +49,8 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
       return -1;
     }
 
-  return 0;
+  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
+                                                      rd);
 }
 
 void
@@ -105,6 +104,28 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   // sending the request.
 }
 
+/*TAO_GIOP_Message_State *
+TAO_Muxed_TMS::get_message_state (void)
+{
+  if (this->message_state_ == 0)
+    {
+      // Create the next message state.
+      ACE_NEW_RETURN (this->message_state_,
+                      TAO_GIOP_Message_State
+                      (this->transport_->orb_core ()),
+                      0);
+    }
+
+  return this->message_state_;
+}
+
+void
+TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
+{
+  delete this->message_state_;
+  this->message_state_ = 0;
+}*/
+
 int
 TAO_Muxed_TMS::idle_after_send (void)
 {
@@ -125,10 +146,11 @@ void
 TAO_Muxed_TMS::connection_closed (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
   // @@ This should be done using a mutex, the table
 
   REQUEST_DISPATCHER_TABLE::ITERATOR end =
-    this->dispatcher_table_.end ();
+    this->dispatcher_table_.begin ();
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
        i != end;

@@ -50,6 +50,8 @@ public:
 
   // virtual TAO_GIOP_Message_State *message_state (void);
 
+  virtual void dispatcher_bound (TAO_Transport *t);
+
   virtual void connection_closed (void);
 
     /// Inform that the reply timed out
@@ -69,12 +71,8 @@ protected:
    */
   IOP::ServiceContextList reply_service_info_;
 
-  /// The buffer that is used to initialise the data block
-  char buf_[ACE_CDR::DEFAULT_BUFSIZE];
-
-  /// datablock that is created on teh stack to initialise the CDR
-  /// stream underneath.
-  ACE_Data_Block db_;
+  // TAO_GIOP_Message_State *message_state_;
+  // CDR stream for reading the input.
 
   /// CDR stream which has the reply information that needs to be
   /// demarshalled by the stubs

@@ -91,8 +91,8 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 
 
   ACE_HANDLE new_handle = temp_stream.get_handle ();
-  new_stream.set_handle (new_handle);
   new_stream.disable (ACE_NONBLOCK);
+  new_stream.set_handle (new_handle);
   // Do not close the handle.
 
   // now we should setup the mmap malloc.
@@ -108,10 +108,10 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                       -1);
 
     // If either side don't support MT, we will not use it.
-#if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   if (! (this->preferred_strategy_ == ACE_MEM_IO::MT &&
          server_strategy == ACE_MEM_IO::MT))
-#endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
     server_strategy = ACE_MEM_IO::Reactive;
 
   if (ACE::send (new_handle, &server_strategy,

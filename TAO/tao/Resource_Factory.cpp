@@ -65,12 +65,6 @@ TAO_Resource_Factory::use_locked_data_blocks (void) const
   return 0;
 }
 
-TAO_Reactor_Registry *
-TAO_Resource_Factory::get_reactor_registry (void)
-{
-  return 0;
-}
-
 ACE_Reactor *
 TAO_Resource_Factory::get_reactor (void)
 {
@@ -181,7 +175,7 @@ TAO_Resource_Factory::create_cached_connection_lock (void)
 }
 
 int
-TAO_Resource_Factory::load_default_protocols (void)
+TAO_Resource_Factory:: load_default_protocols (void)
 {
   return 0;
 }

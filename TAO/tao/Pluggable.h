@@ -43,7 +43,6 @@ class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
-class TAO_GIOP_Invocation;
 class TAO_Pluggable_Messaging_Interface;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
@@ -71,11 +70,9 @@ public:
   /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag (void) const;
 
-  /// The priority for this endpoint.
-  CORBA::Short priority (void) const;
-
   /// Method to initialize acceptor for address.
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
@@ -90,6 +87,7 @@ public:
    *    removed in the near future.
    */
   virtual int open_default (TAO_ORB_Core *,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0) = 0;
@@ -103,9 +101,9 @@ public:
    * in the mprofile that is of the same type.  Currently, this
    * is used when RT CORBA is enabled.
    */
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile) = 0;
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority) = 0;
 
   /// Return 1 if the <endpoint> has the same address as the acceptor.
   virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
@@ -126,10 +124,6 @@ public:
    */
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key) = 0;
-
-protected:
-  /// The priority for this endpoint
-  CORBA::Short priority_;
 
 private:
   /// IOP protocol tag.
@@ -180,8 +174,9 @@ public:
    * method so it can be called from the GIOP code independant of the
    * actual transport protocol in use.
    */
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
+  virtual int connect (TAO_Transport_Descriptor_Interface *desc,
+                       TAO_Transport *&,
+                       ACE_Time_Value *max_wait_time,
                        CORBA::Environment &ACE_TRY_ENV) = 0;
 
   /// Initial set of connections to be established.

@@ -102,8 +102,7 @@ The following environment variables are supported by TAO:
 
 <UL>
   <LI><A HREF="#ORB"><CODE>CORBA::ORB</CODE></A>
-  <LI><A HREF="#DefaultResourceFactory"><CODE>TAO_Default_Resource_Factory</CODE></A>
-  <LI><A HREF="#AdvancedResourceFactory"><CODE>TAO_Advanced_Resource_Factory</CODE></A>
+  <LI><A HREF="#ResourceFactory"><CODE>TAO_Resource_Factory</CODE></A>
   <LI><A HREF="#DefaultServer"><CODE>TAO_Default_Server_Strategy_Factory</CODE></A>
   <LI><A HREF="#DefaultClient" TARGET="_top"><CODE>TAO_Default_Client_Strategy_Factory</CODE></A>
   <LI><A HREF="#RT_ORB_Loader"><CODE>RT_ORB_Loader</CODE></A>
@@ -116,7 +115,7 @@ options are set via the service configurator (svc.conf) file.
 </blockquote>
 
 <blockquote>
-<H3><A NAME="ORB"></A><CODE>CORBA::ORB</CODE></H3>
+<H3><CODE>CORBA::ORB</CODE><A NAME="ORB"></A></H3>
 
 <p><em>Note:</em> <code>-ORBGlobalCollocation</code> flag has been
 merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
@@ -135,20 +134,15 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         default, a service configurator-based application will look
         for a file named "svc.conf" in the current directory.</TD>
   </TR>
-  <!-- <TR NAME="ORBsvcconf"> -->
   <tr>
     <TD><CODE>-ORBSvcConfDirective</CODE> <EM>directivestring</EM></TD>
     <TD>Specifies a service configuration directive, which is passed to ACE's Service Configurator.</TD>
   </TR>
   <tr>
-    <TD><CODE><A
-    NAME="-ORBServiceConfigLoggerKey">-ORBServiceConfigLoggerKey</A></CODE>
-    <EM>logger key</EM></TD>
-    <TD>Set the logger key in the <CODE>ACE_Service_Config</CODE>
-    framework.  Equivalent to the <CODE>-k</CODE> option on the ACE
-    service configurator class.
-    </TD>
+    <TD><CODE>-ORBServiceConfigLoggerKey</CODE> <EM>loggerkey string</EM></TD>
+    <TD>Specifies the logger key that is passed to ACE's Service Configurator.</TD>
   </TR>
+
   <TR>
     <TD><CODE>-ORBDaemon</CODE></TD>
     <TD>Specifies that the ORB should <I>daemonize</I> itself.</TD>
@@ -306,16 +300,9 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   </TR>
   <TR>
     <TD><CODE>-ORBSkipServiceConfigOpen</CODE></TD>
-    <TD><A name="-ORBSkipServiceConfigOpen"></a>Do not call the
-<code>ACE_Service_Config::open</code> method when initializing the
-ORB.  This option is generally only useful when dynamically loading
-the ORB.
-     <P>
-      <FONT COLOR=RED>This option is <STRONG>deprecated</STRONG>.  It
-        is no longer needed since the Service Configurator is now
-        reentrant and thread-safe.</FONT>
-
-   </TD>
+    <TD><A name="-ORBSkipServiceConfigOpen"></a>Do not call the <code>ACE_Service_Config::open</code>
+        method, which is necessary if the ORB is being linked dynamically via the ACE Service Configurator
+        which is not reentrant. Default is </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBGIOPlite</CODE></TD>
@@ -400,7 +387,10 @@ the ORB.
 </P>
 </blockquote>
 
-<H3><A NAME="DefaultResourceFactory"></A><CODE>TAO_Default_Resource_Factory</CODE></H3>
+<H3><CODE>TAO_Resource_Factory</CODE><A NAME="ResourceFactory"></A></H3>
+
+<p><em>Note:</em> <code>-ORBReactorLock</code> flag has been
+superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 
 <blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
@@ -413,11 +403,51 @@ the ORB.
     <TD>Specify whether each thread uses a global
         (<em>which</em> = <code>global</code>) or a thread-specific
         (<em>which</em> = <code>tss</code>) instance for the resources it
-        returns. The default is <CODE>global</CODE>.
+        returns. The default is <CODE>global </CODE>.
         <B>NOTE:</B> This option controls the default value for
         the ORB option of the same name.</A>.
     </TD>
   </TR>
+  <TR>
+    <TD><CODE>-ORBReactorType</CODE> <EM>which</EM></TD>
+    <TD><a name="-ORBReactorType"></a>Specify what kind of reactor does the
+        ORB use, the default option is the ACE_TP_Reactor.
+        <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
+          <TR><TH><em>which</em></TH><TH>Reactor</TH>
+        </TR>
+        <TR>
+          <TD><CODE>select_mt</CODE></TD>
+          <TD>Use the multi-thread select-based reactor.</TD>
+        </TR>
+
+        <TR>
+          <TD><CODE>select_st</CODE></TD>
+          <TD>Use the single-thread select-based reactor.</TD>
+        </TR>
+
+        <TR>
+          <TD><CODE>fl</CODE></TD>
+          <TD>Use the FLReactor (FLTK-based).</TD>
+        </TR>
+
+        <TR>
+          <TD><CODE>wfmo</CODE></TD>
+          <TD>Use the WFMO reactor (Win32 only).</TD>
+        </TR>
+
+        <TR>
+          <TD><CODE>msg_wfmo</CODE></TD>
+          <TD>Use the MsgWFMO reactor (Win32 only).</TD>
+        </TR>
+
+        <TR>
+          <TD><CODE>tp</CODE></TD>
+          <TD>Use the <CODE>ACE_TP_Reactor</CODE>, a select based
+              thread-pool reactor.</TD>
+        </TR>
+      </TABLE>
+</TD>
+</TR>
   <TR>
     <TD><CODE>-ORBReactorMaskSignals</CODE> <EM>0/1</EM></TD>
     <TD>ACE select reactors mask signals during upcalls to the event
@@ -462,6 +492,24 @@ the ORB.
   </TD>
 </TR>
 <TR>
+  <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
+  <TD><a name="-ORBInputCDRAllocator"></a>
+      Specify whether the ORB uses locked
+      (<em>which</em> = <code>thread</code>)
+      or lock-free (<em>which</em> = <code>null</code>)
+      allocators for the incoming CDR buffers.
+      Though <CODE>null</CODE> should give the
+      optimal performance;
+      we made the default <CODE>thread</CODE>.
+      TAO optimizations for octet sequences will not work in all cases when
+      if the allocator does not have locks (for example if the
+      octet sequences are part of a return value.
+      Using locked allocators also allows the users to
+      take advantage of the TAO octet sequence
+      extensions to preserve the buffer after the upcall.
+  </TD>
+</TR>
+<TR>
   <TD><CODE>-ORBConnectionCachingStrategy</CODE> <EM>type</EM></TD>
   <TD><a name="-ORBConnectionCachingStrategy"></a>
       Opened connections are added to the transport cache so they can be
@@ -471,8 +519,8 @@ the ORB.
       purged if it has reached the limit specified by the
       -ORBConnectionCacheMax option or the system default if that option was
       not used.  The possible values for type are lru, lfu, fifo and null.
-      The default is LRU (Least Recently Used).  The others LFU (Least
-      Frequently Used), FIFO (First In First Out), and null (No connections
+      The default is lru (Least Recently Used).  The others lfu (Least
+      Frequently Used), fifo (First In First Out) and null (No connections
       are purged) are contained within the TAO Strategies library.
   </TD>
 </TR>
@@ -519,106 +567,12 @@ the ORB.
 <TR>
   <TD><CODE>-ORBFlushingStrategy</CODE> <EM>type</EM></TD>
   <TD><a name="-ORBFlshingStrategy"></a>
-      By default TAO provides three strategies to flush queued
-      messages.
-      The <CODE>leader_follower</CODE> strategy uses the Reactor and
-      non-blocking I/O to send the outgoing messages,
-      this strategy participates in the Leader/Followers protocol to
-      synchronize access to the Reactor.
-      The <CODE>reactive</CODE> strategy uses the Reactor but does not
-      take part in the Leader/Followers
-      protocol, thus it is better used only
-      in single threaded applications.
-      Finally, the <CODE>blocking</CODE> strategy flushes the
+      By default TAO provides two strategies to flush queued messages.
+      The <CODE>reactive</CODE> strategy uses the Reactor and
+      non-blocking I/O to drain the queue.
+      In contrast, the <CODE>blocking</CODE> strategy flushes the
       queue as soon as it becomes "full", and blocks the
       thread until all the data is sent.
-  </TD>
-</TR>
-</TABLE>
-</P>
-</blockquote>
-
-<H3><A NAME="AdvancedResourceFactory"></A><CODE>TAO_Advanced_Resource_Factory</CODE></H3>
-
-<p>This factory is located in the TAO_Strategies library.
-It accepts the options below as well as those described above in the
-<A HREF="#DefaultResourceFactory"><CODE>TAO_Default_Resource_Factory</CODE></A>.
-This factory can be loaded dynamically using a service configurator
-directive of the form (all on one line):
-<p><code>dynamic Advanced_Resource_Factory Service_Object * TAO_Strategies:_make_TAO_Advanced_Resource_Factory () "-ORBReactorType select_st"</code>
-
-<p>It can also be loaded statically by doing the following:
-<UL>
-   <LI>Add a <code>#include "tao/Strategies/advanced_resource.h"</code> to the file containing <code>main()</code>
-   <LI>Link the TAO_Strategies library into the executable
-   <LI>Specify a service configurator directive of the form: <code>static Advanced_Resource_Factory "-ORBReactorType select_st"</code>
-</UL>
-<p>Once you have loaded the Advanced_Resource_Factory, then directives for the Resource_Factory have no effect.
-<p><em>Note:</em> <code>-ORBReactorLock</code> flag has been
-superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
-
-<blockquote>
-<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
-  <TR>
-    <TH>Option</TH>
-    <TH>Description</TH>
-  </TR>
-  <TR>
-    <TD><CODE>-ORBReactorType</CODE> <EM>which</EM></TD>
-    <TD><a name="-ORBReactorType"></a>Specify what kind of reactor does the
-        ORB use, the default option is the ACE_TP_Reactor.
-        <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
-          <TR><TH><em>which</em></TH><TH>Reactor</TH>
-        </TR>
-        <TR>
-          <TD><CODE>select_mt</CODE></TD>
-          <TD>Use the multi-thread select-based reactor.</TD>
-        </TR>
-
-        <TR>
-          <TD><CODE>select_st</CODE></TD>
-          <TD>Use the single-thread select-based reactor.</TD>
-        </TR>
-
-        <TR>
-          <TD><CODE>fl</CODE></TD>
-          <TD>Use the FLReactor (FLTK-based).</TD>
-        </TR>
-
-        <TR>
-          <TD><CODE>wfmo</CODE></TD>
-          <TD>Use the WFMO reactor (Win32 only).</TD>
-        </TR>
-
-        <TR>
-          <TD><CODE>msg_wfmo</CODE></TD>
-          <TD>Use the MsgWFMO reactor (Win32 only).</TD>
-        </TR>
-
-        <TR>
-          <TD><CODE>tp</CODE></TD>
-          <TD>Use the <CODE>ACE_TP_Reactor</CODE>, a select based
-              thread-pool reactor.</TD>
-        </TR>
-      </TABLE>
-</TD>
-</TR>
-<TR>
-  <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
-  <TD><a name="-ORBInputCDRAllocator"></a>
-      Specify whether the ORB uses locked
-      (<em>which</em> = <code>thread</code>)
-      or lock-free (<em>which</em> = <code>null</code>)
-      allocators for the incoming CDR buffers.
-      Though <CODE>null</CODE> should give the
-      optimal performance;
-      we made the default <CODE>thread</CODE>.
-      TAO optimizations for octet sequences will not work in all cases when
-      if the allocator does not have locks (for example if the
-      octet sequences are part of a return value.
-      Using locked allocators also allows the users to
-      take advantage of the TAO octet sequence
-      extensions to preserve the buffer after the upcall.
   </TD>
 </TR>
 <TR>
@@ -639,7 +593,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 </P>
 </blockquote>
 
-<H3><A NAME="DefaultServer"></A><CODE>TAO_Default_Server_Strategy_Factory</CODE></H3>
+<H3><CODE>TAO_Default_Server_Strategy_Factory</CODE><A NAME="DefaultServer"></A></H3>
 
 <p><em>Note:</em> <code>-ORBDemuxStrategy</code> flag has been changed to <code>-ORBSystemidPolicyDemuxStrategy</code> and <code>-ORBUseridPolicyDemuxStrategy</code>.
 <p><em>Note:</em> <code>-ORBTableSize</code> flag has been changed to <code>-ORBActiveObjectMapSize</code>.
@@ -840,7 +794,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 </P>
 </blockquote>
 
-<H3><A NAME="DefaultClient"></A><CODE>TAO_Default_Client_Strategy_Factory</CODE></H3>
+<H3><CODE>TAO_Default_Client_Strategy_Factory</CODE><A NAME="DefaultClient"></A></H3>
 
 <BLOCKQUOTE>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
@@ -921,7 +875,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 </P>
 </BLOCKQUOTE>
 
-<H3><A NAME="RT_ORB_Loader"></A><CODE>RT_ORB_Loader</CODE></H3>
+<H3><CODE>RT_ORB_Loader</CODE><A NAME="RT_ORB_Loader"></A></H3>
 
 <BLOCKQUOTE>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >

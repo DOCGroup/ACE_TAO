@@ -11,9 +11,7 @@
 #include "debug.h"
 #include "MProfile.h"
 #include "Stub.h"
-#include "Reactor_Registry.h"
 #include "Leader_Follower.h"
-#include "Transport_Cache_Manager.h"
 #include "Connector_Registry.h"
 #include "Acceptor_Registry.h"
 
@@ -23,10 +21,16 @@
 
 #include "ObjectIDList.h"
 
+#include "ace/Object_Manager.h"
+#include "ace/Env_Value_T.h"
+#include "ace/Dynamic_Service.h"
+#include "ace/Arg_Shifter.h"
 #include "Services_Activate.h"
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
 
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Thread_Lane_Resources_Manager.h"
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
@@ -40,14 +44,6 @@
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#include "tao/LF_Event_Loop_Thread_Helper.h"
-
-#include "ace/Object_Manager.h"
-#include "ace/Env_Value_T.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
-
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -73,6 +69,8 @@ TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
 
 const char * TAO_ORB_Core::endpoint_selector_factory_name_ =
   "Default_Endpoint_Selector_Factory";
+const char * TAO_ORB_Core::thread_lane_resources_manager_name_ =
+  "Default_Thread_Lane_Resources_Manager";
 const char * TAO_ORB_Core::stub_factory_name_ =
   "Default_Stub_Factory";
 const char * TAO_ORB_Core::resource_factory_name_ =
@@ -95,7 +93,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     protocols_hooks_ (0),
     lock_ (),
     connector_registry_ (0),
-    acceptor_registry_ (0),
+    thread_lane_resources_manager_ (0),
     stub_factory_ (0),
     protocol_factories_ (0),
     implrepo_service_ (CORBA::Object::_nil ()),
@@ -104,6 +102,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
+    rt_orb_ (CORBA::Object::_nil ()),
+    rt_current_ (CORBA::Object::_nil ()),
+    rt_priority_mapping_manager_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (),
     orb_params_ (),
@@ -149,12 +150,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     use_tss_resources_ (0),
     tss_resources_ (),
     orb_resources_ (),
-    reactor_registry_ (0),
-    reactor_ (0),
     has_shutdown_ (1),
     thread_per_connection_use_timeout_ (1),
-    open_lock_ (),
-    open_called_ (0),
     endpoint_selector_factory_ (0),
     // Start the ORB in a  "shutdown" state.  Only after
     // CORBA::ORB_init() is called will the ORB no longer be shutdown.
@@ -173,7 +170,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptors_ (),
     parser_registry_ (),
-    transport_cache_ (0),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
     flushing_strategy_ (0),
@@ -217,7 +213,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
   delete this->flushing_strategy_;
-  delete this->transport_cache_;
 
   ACE_OS::free (this->orbid_);
 
@@ -909,10 +904,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   else
     this->use_tss_resources_ = use_tss_resources;
 
-  this->reactor_registry_ =
-    trf->get_reactor_registry ();
-  this->reactor_registry_->open (this);
-
   // @@ ????
   // Make sure the reactor is initialized...
   ACE_Reactor *reactor = this->reactor ();
@@ -993,6 +984,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // being done at this level.
   this->orb_->_use_omg_ior_format (use_ior);
 
+  // @@ Michael: I don't know if this is the best spot,
+  //    we might have to discuss that.
+  //this->leader_follower_lock_ptr_ =  this->client_factory ()
+  //                                       ->create_leader_follower_lock ();
+
   // Set all kinds of orb parameters whose setting needed to be
   // deferred until after the service config entries had been
   // determined.
@@ -1030,11 +1026,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Initialize the flushing strategy
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
-  // Create the purging strategy
-  ACE_NEW_RETURN(this->transport_cache_,
-                 TAO_Transport_Cache_Manager(trf),
-                 -1);
-
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
   // registries!
@@ -1054,19 +1045,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                         CORBA::COMPLETED_NO),
                       -1);
 
-  // Open the Transport Cache
-  // @@ This seems to be a nice place to configure the transport
-  // cache for the number of allowed entries
-  if (this->transport_cache_->open (this) == -1)
-    {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
-
   // Initialize the connector registry and create a connector for each
   // configured protocol.
   if (this->connector_registry ()->open (this) != 0)
@@ -1082,7 +1060,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
     this->connector_registry ()->preconnect (
             this,
             this->orb_params ()->preconnects ());
-
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
@@ -1138,6 +1115,10 @@ TAO_ORB_Core::fini (void)
 
   CORBA::release (this->ior_table_);
 
+  CORBA::release (this->rt_orb_);
+
+  CORBA::release (this->rt_current_);
+
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -1153,55 +1134,14 @@ TAO_ORB_Core::fini (void)
       delete this->connector_registry_;
     }
 
-  // Ask the registry to close all registered acceptors.
-  if (this->acceptor_registry_ != 0)
-    {
-      this->acceptor_registry_->close_all ();
-      delete this->acceptor_registry_;
-    }
+  // Finalize lane resources.
+  this->thread_lane_resources_manager ().finalize ();
 
-  // Set of file descriptors corresponding to open connections.  This
-  // handle set is used to explicitly deregister the connection event
-  // handlers from the Reactor.  This is particularly important for
-  // dynamically loaded ORBs where an application level reactor, such
-  // as the Singleton reactor, is used instead of an ORB created one.
-
-  ACE_Handle_Set handle_set;
-  TAO_EventHandlerSet unregistered;
-
-  // Close the transport cache and return the handle set that needs
-  // to be de-registered from the reactor.
-  if (this->transport_cache_ != 0)
-    {
-      this->transport_cache_->close (handle_set, unregistered);
-    }
-
-  // Shutdown all open connections that are registered with the ORB
-  // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
-  // used here since the reactor should invoke each handle's
-  // corresponding ACE_Event_Handler::handle_close() method to ensure
-  // that the connection is shutdown gracefully prior to destroying
-  // the ORB Core.
-  if (handle_set.num_set () > 0)
-    (void) this->reactor ()->remove_handler (handle_set,
-                                             ACE_Event_Handler::ALL_EVENTS_MASK);
-  if (!unregistered.is_empty ())
-    {
-      ACE_Event_Handler** eh;
-      for (TAO_EventHandlerSetIterator iter(unregistered);
-           iter.next (eh); iter.advance())
-        {
-          (*eh)->handle_close (ACE_INVALID_HANDLE,
-                               ACE_Event_Handler::ALL_EVENTS_MASK);
-        }
-    }
-  // Pass reactor back to the resource factory.
-  if (this->resource_factory_ != 0)
-    this->resource_factory_->reclaim_reactor (this->reactor_);
+  // Release the priority mapping manager here since it can be used when
+  // shutting down the reactor above.
+  CORBA::release (this->rt_priority_mapping_manager_);
 
   (void) TAO_Internal::close_services ();
-
-  delete this->reactor_registry_;
 
   if (this->message_block_dblock_allocator_)
     this->message_block_dblock_allocator_->remove ();
@@ -1261,11 +1201,16 @@ TAO_ORB_Core::corba_priority_normalizer (TAO_CORBA_Priority_Normalizer *new_norm
 }
 
 void
-TAO_ORB_Core::set_stub_factory(const char *stub_factory_name)
+TAO_ORB_Core::set_thread_lane_resources_manager (const char *thread_lane_resources_manager_name)
+{
+  TAO_ORB_Core::thread_lane_resources_manager_name_ = thread_lane_resources_manager_name;
+}
+
+void
+TAO_ORB_Core::set_stub_factory (const char *stub_factory_name)
 {
   TAO_ORB_Core::stub_factory_name_ = stub_factory_name;
 }
-
 
 void
 TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
@@ -1351,6 +1296,24 @@ TAO_ORB_Core::resource_factory (void)
     }
 
   return this->resource_factory_;
+}
+
+TAO_Thread_Lane_Resources_Manager &
+TAO_ORB_Core::thread_lane_resources_manager (void)
+{
+  // Check if there is a cached reference.
+  if (this->thread_lane_resources_manager_ != 0)
+    return *this->thread_lane_resources_manager_;
+
+  // If not, look in the service repository for an instance.
+  this->thread_lane_resources_manager_ =
+    ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager>::instance
+    (TAO_ORB_Core::thread_lane_resources_manager_name_);
+
+  // Initialize the resources.
+  this->thread_lane_resources_manager_->initialize (*this);
+
+  return *this->thread_lane_resources_manager_;
 }
 
 TAO_Stub_Factory *
@@ -1709,30 +1672,6 @@ TAO_ORB_Core::inherit_from_parent_thread (
 
   if (tss_resources == 0)
     return -1;
-#if 0
-  if (tss_resources->reactor_ != 0)
-    {
-      // We'll use the spawning thread's reactor.
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-      if (tss->reactor_ != 0 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) non nil reactor on thread startup!\n"));
-
-          if (tss == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) %p\n",
-                               "TAO_ORB_Core::inherit_from_parent_thread"
-                               " (); no more TSS keys"),
-                              -1);
-
-          if (/* tss->owns_resources_ != 0 && */ !tss->inherited_reactor_)
-            delete tss->reactor_;
-        }
-      tss->reactor_ = tss_resources->reactor_;
-      tss->inherited_reactor_ = 1;
-    }
-#endif /* 0 */
   return 0;
 }
 
@@ -1787,16 +1726,34 @@ TAO_ORB_Core::poa_adapter (void)
   return this->poa_adapter_;
 }
 
+TAO_SYNCH_CONDITION *
+TAO_ORB_Core::leader_follower_condition_variable (void)
+{
+  // Always using TSS.
+
+  // Get tss key.
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+
+  if (tss->leader_follower_condition_variable_ == 0)
+    {
+      // Create a new one and return.
+      ACE_NEW_RETURN (tss->leader_follower_condition_variable_,
+                      TAO_SYNCH_CONDITION (this->leader_follower ().lock ()),
+                      0);
+    }
+
+  return tss->leader_follower_condition_variable_;
+}
+
 TAO_Stub *
-TAO_ORB_Core::create_stub(const char *repository_id,
-                          const TAO_MProfile &profiles,
-                          TAO_ORB_Core *orb_core,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::create_stub (const char *repository_id,
+                           const TAO_MProfile &profiles,
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Stub *retval =
     this->stub_factory ()->create_stub (repository_id,
                                         profiles,
-                                        orb_core,
+                                        this,
                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN(0);
   return retval;
@@ -1804,60 +1761,27 @@ TAO_ORB_Core::create_stub(const char *repository_id,
 
 
 TAO_Stub *
-TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
+TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   const char *type_id,
                                   CORBA::PolicyList *policy_list,
-                                  TAO_Acceptor_Filter *filter,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  (void) this->open (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  TAO_Stub *stub = 0;
-
-  // Create a profile container and have Acceptor_Registry populate it
-  // with profiles as appropriate.
-  TAO_MProfile mp (0);
-  if (this->acceptor_registry ()->make_mprofile (key, mp, filter) == -1)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_MPROFILE_CREATION_ERROR,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        0);
-    }
-
-  // Make sure we have at least one profile.  <mp> may end up being
-  // empty if none of the acceptor endpoints have the right priority
-  // for this object, for example.
-  if (mp.profile_count () == 0)
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_MPROFILE_CREATION_ERROR,
-                            0 ),
-                          CORBA::COMPLETED_NO),
-                        0);
-    }
-
-  //  Add the Polices contained in "policy_list" to each profile
-  //  so that those policies will be exposed to the client in the IOR.
-  //  In particular each CORBA::Policy has to be converted in to
-  //  Messaging::PolicyValue, and then all the Messaging::PolicyValue
-  //  should be embedded inside a Messaging::PolicyValueSeq which became
-  //  in turns the "body" of the IOP::TaggedComponent. This conversion
-  //  is a responsability of the CORBA::Profile class.
-  //  (See orbos\98-05-05.pdf Section 5.4)
-
+  // Add the Polices contained in "policy_list" to each profile so
+  // that those policies will be exposed to the client in the IOR.  In
+  // particular each CORBA::Policy has to be converted in to
+  // Messaging::PolicyValue, and then all the Messaging::PolicyValue
+  // should be embedded inside a Messaging::PolicyValueSeq which
+  // became in turns the "body" of the IOP::TaggedComponent. This
+  // conversion is a responsability of the CORBA::Profile class.  (See
+  // orbos\98-05-05.pdf Section 5.4)
   if (policy_list->length () != 0)
     {
       TAO_Profile * profile;
 
-      for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
+      for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
         {
           // Get the ith profile
-          profile = mp.get_profile (i);
+          profile = mprofile.get_profile (i);
           profile->policies (policy_list, ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
@@ -1866,11 +1790,11 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  this->establish_components (mp, policy_list, ACE_TRY_ENV);
+  this->establish_components (mprofile, policy_list, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // Done creating profiles.  Initialize a TAO_Stub object with them.
-  stub = this->create_stub (type_id, mp, this, ACE_TRY_ENV);
+  TAO_Stub *stub = this->create_stub (type_id, mprofile, ACE_TRY_ENV);
   ACE_CHECK_RETURN (stub);
 
   stub->base_profiles ().policy_list (policy_list);
@@ -2012,7 +1936,7 @@ TAO_ORB_Core::create_collocated_object (TAO_Stub *stub,
 int
 TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
-  if (this->acceptor_registry_ == 0)
+  if (!this->lane_resources ().has_acceptor_registry_been_created ())
     return 0;
 
   // @@ Lots of issues arise when dealing with collocation.  What about
@@ -2026,7 +1950,7 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
   //    address (ORB Host) but not the object_key.  This should be checked
   //    also.
 
-  return this->acceptor_registry_->is_collocated (mprofile);
+  return this->lane_resources ().acceptor_registry ().is_collocated (mprofile);
 }
 
 // ****************************************************************
@@ -2034,13 +1958,13 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 TAO_Leader_Follower &
 TAO_ORB_Core::leader_follower (void)
 {
-  return this->reactor_registry_->leader_follower ();
+  return this->lane_resources ().leader_follower ();
 }
 
 TAO_LF_Strategy &
 TAO_ORB_Core::lf_strategy (void)
 {
-  return this->reactor_registry_->lf_strategy ();
+  return this->thread_lane_resources_manager ().lf_strategy ();
 }
 
 int
@@ -2051,15 +1975,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
-
-  // This method should only be called by servers, so now we set up
-  // for listening!
-
-  int ret = this->open (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  if (ret == -1)
-    return -1;
 
   // Fetch the Reactor
   ACE_Reactor *r = this->reactor ();
@@ -2085,11 +2000,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
       TAO_LF_Strategy &lf_strategy =
         this->lf_strategy ();
+      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower, lf_strategy);
 
-      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower,
-                                              lf_strategy,
-                                              tv);
-      int result = helper.event_loop_return ();
+      result = helper.set_event_loop_thread (tv);
+
       if (result != 0)
         {
           if (errno == ETIME)
@@ -2158,14 +2072,18 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
     {
       this->adapter_registry_.check_close (wait_for_completion,
                                            ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->adapter_registry_.close (wait_for_completion,
                                      ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Set the shutdown flag
       this->has_shutdown_ = 1;
 
       // Shutdown all the reactors....
-      this->reactor_registry_->shutdown_all ();
+      this->thread_lane_resources_manager ().shutdown_all_reactors (ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Grab the thread manager
       ACE_Thread_Manager *tm = this->thr_mgr ();
@@ -2260,38 +2178,69 @@ TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-// Set up listening endpoints.
-int
-TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Lane_Resources &
+TAO_ORB_Core::lane_resources (void)
 {
-  // Double check pattern
-  if (this->open_called_ == 1)
-    return 1;
+  return this->thread_lane_resources_manager ().lane_resources ();
+}
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
+void
+TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
 
-  if (this->open_called_ == 1)
-    return 1;
+  if (loader == 0)
+    {
+      // The Loader has not been statically configured, try to
+      // dynamically load it...
+      ACE_Service_Config::process_directive (
+                                             "dynamic RT_ORB_Loader Service_Object *"
+                                             "TAO_RTCORBA:_make_TAO_RT_ORB_Loader()"
+                                             );
 
-  TAO_Acceptor_Registry *ar = this->acceptor_registry ();
-  // get a reference to the acceptor_registry!
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
+    }
 
-  int ret = ar->open (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  /// Create RT_ORB object.
+  this->rt_orb_ =
+    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+}
 
-  if (ret == -1)
-    return -1;
+void
+TAO_ORB_Core::resolve_rt_current_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_Current_Loader");
 
-  this->open_called_ = 1;
+  if (loader == 0)
+    {
+      // The Loader has not been statically configured, try to
+      // dynamically load it...
+      ACE_Service_Config::process_directive (
+                                             "dynamic RT_Current_Loader Service_Object *"
+                                             "TAO_RTCORBA:_make_TAO_RT_Current_Loader()"
+                                             );
 
-  return 0;
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_Current_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
+    }
+
+  /// Create RT_Current object.
+  this->rt_current_ =
+    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
 }
 
 void
 TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory");
   if (loader == 0)
     {
       ACE_Service_Config::process_directive (
@@ -2299,7 +2248,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
           "TAO_TypeCodeFactory:_make_TAO_TypeCodeFactory_Loader()"
         );
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory");
       if (loader == 0)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
@@ -2400,20 +2349,20 @@ TAO_ORB_Core::resolve_rir (const char *name,
 
   // Get the list of initial reference prefixes specified through
   // -ORBDefaultInitRef.
-  CORBA::String_var default_init_ref =
+  char * default_init_ref =
     this->orb_params ()->default_init_ref ();
 
   // Check if a DefaultInitRef was specified.
-  if (ACE_OS::strlen (default_init_ref.in ()) != 0)
+  if (ACE_OS::strlen (default_init_ref) != 0)
     {
       static const char corbaloc_prefix[] = "corbaloc:";
       char object_key_delimiter = 0;
 
-      ACE_CString list_of_profiles (default_init_ref.in ());
+      ACE_CString list_of_profiles (default_init_ref);
 
       // Check if the protocol is corbaloc:.
       // If it is, set the object_key_delimiter.
-      if (ACE_OS::strncmp (default_init_ref.in (),
+      if (ACE_OS::strncmp (default_init_ref,
                            corbaloc_prefix,
                            sizeof corbaloc_prefix -1) == 0)
         {
@@ -2428,6 +2377,9 @@ TAO_ORB_Core::resolve_rir (const char *name,
                      list_of_profiles.c_str ());
         }
 
+      // Clean up.
+      delete [] default_init_ref;
+
       // Make sure that the default initial reference doesn't end
       // with the object key delimiter character.
       if (list_of_profiles[list_of_profiles.length() - 1] !=
@@ -2439,7 +2391,11 @@ TAO_ORB_Core::resolve_rir (const char *name,
       return this->orb ()->string_to_object (list_of_profiles.c_str (),
                                              ACE_TRY_ENV);
     }
-
+  else
+    {
+      // Clean up.
+      delete [] default_init_ref;
+    }
   return CORBA::Object::_nil ();
 }
 
@@ -2456,8 +2412,8 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
 
   const size_t total_size =
     initial_services_size
-    + this->init_ref_map_.current_size ()
-    + this->object_ref_table_.current_size ();
+    + this->init_ref_map_.current_size ();
+//     + this->object_ref_table_.current_size ();
 
   CORBA::ORB::ObjectIdList_ptr tmp = 0;
 
@@ -2479,15 +2435,14 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
   // Now iterate over the initial references created by the user and
   // add them to the sequence.
 
-  // References registered via
-  // ORBInitInfo::register_initial_reference().
-  TAO_Object_Ref_Table::Iterator obj_ref_end =
-    this->object_ref_table_.end ();
+//   // References registered via
+//   // ORBInitInfo::register_initial_reference().
+//   TAO_Object_Ref_Table::Iterator end = this->object_ref_table_.end ();
 
-  for (TAO_Object_Ref_Table::Iterator i = this->object_ref_table_.begin ();
-       i != obj_ref_end;
-       ++i, ++index)
-    list[index] = CORBA::string_dup ((*i).ext_id_);
+//   for (TAO_Object_Ref_Table::Iterator i = this-> object_ref_table_.begin ();
+//        i != end;
+//        ++i, ++index)
+//     list[index] = (*i).int_id_;
 
   // References registered via INS.
   InitRefMap::iterator end = this->init_ref_map_.end ();
@@ -2495,7 +2450,7 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
   for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
        j != end;
        ++j, ++index)
-    list[index] = (*j).ext_id_.c_str ();
+    list[index] = (*j).int_id_.c_str ();
 
   return list._retn ();
 }
@@ -2854,40 +2809,7 @@ TAO_ORB_Core::create_data_block_i (size_t size,
 ACE_Reactor *
 TAO_ORB_Core::reactor (void)
 {
-  if (this->reactor_registry_ != 0)
-    return this->reactor_registry_->reactor ();
-
-  if (this->reactor_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->reactor_ == 0)
-        {
-          this->reactor_ =
-            this->resource_factory ()->get_reactor ();
-        }
-    }
-  return this->reactor_;
-}
-
-ACE_Reactor *
-TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
-{
-  if (this->reactor_registry_ != 0)
-    return this->reactor_registry_->reactor (acceptor);
-
-  // @@ ????
-  if (this->reactor_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->reactor_ == 0)
-        {
-          this->reactor_ =
-            this->resource_factory ()->get_reactor ();
-        }
-    }
-  return this->reactor_;
+  return this->leader_follower ().reactor ();
 }
 
 CORBA::Object_ptr
@@ -3090,11 +3012,10 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     output_cdr_msgblock_allocator_ (0),
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
-    transport_cache_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
-    reactor_registry_ (0),
-    reactor_registry_cookie_ (0),
+    leader_follower_condition_variable_ (0),
+    lane_ (0),
     ts_objects_ (),
     orb_core_ (0)
 {
@@ -3122,12 +3043,8 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
 
-  // UNIMPLEMENTED delete this->transport_cache__;
-  this->transport_cache_ = 0;
-
-  if (this->reactor_registry_ != 0)
-    this->reactor_registry_->destroy_tss_cookie (
-      this->reactor_registry_cookie_);
+  delete this->leader_follower_condition_variable_;
+  this->leader_follower_condition_variable_ = 0;
 
   //@@ This is broken on platforms that use TSS emulation since this
   //   destructor is invoked after the ORB.  Since we're under

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 ACE_INLINE CORBA::ULong
@@ -84,7 +83,7 @@ TAO_Transport::purging_order (void) const
 {
   return this->purging_order_;
 }
-
+ 
 ACE_INLINE void
 TAO_Transport::purging_order (unsigned long value)
 {

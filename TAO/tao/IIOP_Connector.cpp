@@ -11,12 +11,13 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Invocation.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "ace/Strategies_T.h"
 
 ACE_RCSID (TAO,
            IIOP_Connector,
            "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -114,12 +115,11 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
-                             TAO_Transport_Descriptor_Interface *desc,
+TAO_IIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
+                             TAO_Transport *&transport,
+                             ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
 {
-  TAO_Transport *&transport = invocation->transport ();
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
@@ -157,8 +157,8 @@ TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   // Check the Cache first for connections
   // If transport found, reference count is incremented on assignment
-  if (this->orb_core ()->transport_cache ()->find_transport (desc,
-                                                             base_transport) == 0)
+  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
+                                                                              base_transport) == 0)
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -174,7 +174,7 @@ TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                     ACE_TEXT ("making a new connection\n")));
 
       // Purge connections (if necessary)
-      this->orb_core ()->transport_cache ()->purge ();
+      this->orb_core ()->lane_resources ().transport_cache ().purge ();
 
       // @@ This needs to change in the next round when we implement a
       // policy that will not allow new connections when a connection
@@ -226,8 +226,8 @@ TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->transport_cache ()->cache_transport (desc,
-                                                                base_transport);
+        this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                                 base_transport);
 
       if (retval != 0 && TAO_debug_level > 0)
         {
@@ -372,8 +372,8 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
 
               // Add the handler to Cache
               int retval =
-                this->orb_core ()->transport_cache ()->cache_transport (&prop,
-                                                                        handlers[slot]->transport ());
+                this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
+                                                                                         handlers[slot]->transport ());
               successes++;
 
               if (retval != 0 && TAO_debug_level > 4)

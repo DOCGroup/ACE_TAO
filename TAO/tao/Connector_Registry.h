@@ -36,14 +36,13 @@ class TAO_Transport_Descriptor_Interface;
 class TAO_Stub;
 class TAO_MProfile;
 class TAO_Resource_Factory;
-class TAO_GIOP_Invocation;
 
 typedef TAO_Connector** TAO_ConnectorSetIterator;
 
 /**
  * @class TAO_Connector_Registry
  *
- * @brief Per-ORB TAO Connector Registry
+ * @brief Per ORB TAO Connector Registry
  *
  * Connector Registry and Generic Connector interface definitions.
  * All loaded ESIOP or GIOP connector bridges must register with
@@ -51,7 +50,7 @@ typedef TAO_Connector** TAO_ConnectorSetIterator;
  * This class is able to dynamically load a set of
  * concrete protocol connectors which have registered with the service
  * configurator and added their Factory name to the Resource_Factory
- * line of the svc.conf file.
+ * line of the svc.comf file.
  */
 class TAO_Export TAO_Connector_Registry
 {
@@ -82,8 +81,9 @@ public:
    * TAO_Connector class which in turn will call the concrete
    * connector.
    */
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc,
+  int connect (TAO_Transport_Descriptor_Interface *desc,
+               TAO_Transport *&transport,
+               ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);
 
   /// Parse a string containing a URL style IOR and return an

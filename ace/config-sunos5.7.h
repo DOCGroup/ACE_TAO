@@ -25,6 +25,13 @@
     typedef long          t_scalar_t;  /* historical versions */
     typedef unsigned long t_uscalar_t;
     typedef void          *timeout_id_t;
+
+# elif __GNUC__ >= 3 && __GNUC_MINOR__ >= 0
+#   define ACE_HAS_SOCKLEN_T
+#   define ACE_HAS_POSIX_GETPWNAM_R
+#   define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#   define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+
 # endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
 
 #elif defined (ghs)
@@ -48,7 +55,7 @@ typedef unsigned long long uint64_t;
 // performance-tests/Misc/preempt.
 #undef ACE_NEEDS_LWP_PRIO_SET
 
-// SunOS 5.7 can support Real-Time Signals and POSIX4 AIO operations
+// SunOS 2.7 can support Real-Time Signals and POSIX4 AIO operations
 // are supported.
 
 #if !defined (ACE_HAS_AIO_CALLS)
@@ -65,9 +72,6 @@ typedef unsigned long long uint64_t;
 #ifdef ACE_HAS_LIMITED_SELECT
 #undef ACE_HAS_LIMITED_SELECT
 #endif /* ACE_HAS_LIMITED_SELECT */
-
-// SunOS 5.7 has socklen_t
-#define ACE_HAS_SOCKLEN_T
 
 #if defined (__sparcv9)
 #define ERRMAX 256 /* Needed for following define */

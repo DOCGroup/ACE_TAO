@@ -43,7 +43,7 @@
 class TAO_Strategies_Export TAO_UIOP_Connector : public TAO_Connector
 {
 public:
-
+  // = Initialization and termination methods.
   /**
    * Constructor.
    * @@ Do we want to pass in the tag here or should it be statically
@@ -54,16 +54,13 @@ public:
   /// Destructor
   ~TAO_UIOP_Connector (void);
 
-  /**
-   * @name The TAO_Connector Methods
-   *
-   * Please check the documentation in Pluggable.h.
-   */
-  //@{
+  // = The TAO_Connector methods, please check the documentation on
+  // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc,
+  int connect (TAO_Transport_Descriptor_Interface *desc,
+               TAO_Transport *&transport,
+               ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);
   int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
@@ -71,22 +68,16 @@ public:
   virtual int check_prefix (const char *endpoint);
 
   virtual char object_key_delimiter (void) const;
-  //@}
 
 protected:
 
-  /**
-   * @name More TAO_Connector methods
-   *
-   * Please check the documentation in Pluggable.h.
-   */
-  //@{
+  // = More TAO_Connector methods, please check the documentation on
+  //   Pluggable.h
   virtual TAO_Profile *make_profile (CORBA::Environment &ACE_TRY_ENV);
 
   /// Obtains uiop properties that must be used by this connector, i.e.,
   /// initializes <uiop_properties_>.
   int init_uiop_properties (void);
-  //@}
 
 public:
 

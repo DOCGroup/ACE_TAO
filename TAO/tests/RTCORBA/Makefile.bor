@@ -12,7 +12,6 @@ DIRS = \
 	Private_Connection \
 	Thread_Pool \
 	MT_Client_Protocol_Priority \
-        RTMutex \
-	ORB_init
+        RTMutex
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -62,10 +62,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Initialize the static narrrowing helper variable.
-  *os << "int " << node->full_name () << "::_tao_class_id = 0;" 
-      << be_nl << be_nl;
-
   // Global functions to allow non-defined forward declared interfaces
   // access to some methods in the full definition.
   *os << node->full_name () << "_ptr" << be_nl
@@ -361,49 +357,41 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "!CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&" << be_nl
           << "stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&"
           << be_nl
-          << "obj->_is_collocated () &&" << be_nl
+          << "obj->_is_collocated () &&"
           << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
           << "_Factory_function_pointer != 0" << be_uidt_nl << ")"  // 1 idt
-          << be_nl << "{" // 0 idt
+          << be_uidt_nl << "{" // 0 idt
           << be_idt_nl   // 1 idt
-          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl  // 2 idt
+          << "ACE_NEW_RETURN (" << be_idt_nl  // 2 idt
           << "default_proxy," << be_nl
           << "::" <<  bt->name () 
-          << " (" << be_idt << be_idt_nl  // 3 idt
+          << " (" << be_idt_nl  // 3 idt
           << "stub," << be_nl
           << "1," << be_nl
-          << "obj->_servant ()" << be_uidt_nl << ")," << be_uidt_nl
+          << "obj->_servant ())," << be_nl
+          << be_uidt_nl // 2 idt
           <<  bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ()" << be_uidt_nl << ");"
-          << be_uidt << be_uidt_nl   // 1 idt
-          << "}" << be_uidt_nl << be_nl; // 0 idt
+          << "::_nil ());"
+          << be_uidt_nl   // 1 idt
+          << "}" << be_uidt_nl; // 0 idt
 
 
       // The default proxy will either be returned else be transformed to
       // a smart one!
       *os << "if (CORBA::is_nil (default_proxy))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-          << "default_proxy," << be_nl
-          << "::" << bt->name () << " (" << be_idt << be_idt_nl
-          << "stub," << be_nl
-          << "0," << be_nl
-          << "obj->_servant ()" << be_uidt_nl
-          << ")," << be_uidt_nl 
-          << bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ()" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
+          << "ACE_NEW_RETURN (default_proxy, ::" << bt->name ()
+          << " (stub, 0, obj->_servant ()), " << bt->nested_type_name (this->ctx_->scope ())
+          << "::_nil ());"<< be_uidt_nl;
 
       if (be_global->gen_smart_proxies ())
         {
-          *os << "return TAO_" << node->flat_name ()
+          *os << "  return TAO_" << node->flat_name ()
               << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
-              << be_uidt_nl;
+              << be_nl;
         }
       else
         {
-          *os << "return default_proxy;" << be_uidt_nl;
+          *os << "  return default_proxy;" << be_nl;
         }
 
       *os << "}" << be_uidt_nl
@@ -424,7 +412,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "(" << be_idt_nl
       << "ptr_arith_t," << be_nl
       << "&" << node->local_name () 
-      << "::_tao_class_id" << be_uidt_nl
+      << "::_narrow" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl
       << ");\n" << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt;
@@ -493,7 +481,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                          "_tao_QueryInterface method codegen failed\n"), -1);
     }
 
-  *os << "(type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))"
+  *os << "(type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))"
       << be_idt_nl << "retv = ACE_reinterpret_cast (void *," << be_idt_nl
       << "ACE_static_cast (CORBA::Object_ptr, this));" << be_uidt_nl << be_uidt_nl
       << "if (retv)" << be_idt_nl

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "Invocation.h"
 #include "Principal.h"
 #include "Stub.h"
@@ -248,8 +247,9 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc,
     }
 
   // Obtain a connection.
-  int result = conn_reg->connect (this,
-                                  &desc,
+  int result = conn_reg->connect (&desc,
+                                  this->transport_,
+                                  this->max_wait_time_,
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (1);
 
@@ -630,7 +630,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
 
   int reply_error =
     this->transport_->wait_strategy ()->wait (this->max_wait_time_,
-                                              this->rd_);
+                                              this->rd_.reply_received ());
 
 
   if (TAO_debug_level > 0 && this->max_wait_time_ != 0)
@@ -802,7 +802,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->rd_.state_changed (TAO_LF_Event::LFS_ACTIVE);
+  this->rd_.reply_received () = 0;
 }
 
 // Send request, block until any reply comes back, and unmarshal reply
@@ -842,7 +842,11 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
       for (CORBA::ULong i = 0; i < except_count; ++i)
         {
-          if (ACE_OS::strcmp (buf.in (), excepts[i].id) != 0)
+          CORBA::TypeCode_ptr tcp = excepts[i].tc;
+          const char *xid = tcp->id (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+          if (ACE_OS::strcmp (buf.in (), xid) != 0)
             {
               continue;
             }
@@ -978,7 +982,7 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   this->transport_->generate_locate_request (this->target_spec_,
                                              this->op_details_,
                                              this->out_stream_);
-  this->rd_.state_changed (TAO_LF_Event::LFS_ACTIVE);
+  this->rd_.reply_received () = 0;
 }
 
 // Send request, block until any reply comes back.

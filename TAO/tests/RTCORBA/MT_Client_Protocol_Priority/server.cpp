@@ -3,7 +3,6 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Pool_Per_Endpoint.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
@@ -180,11 +179,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Start ORB event loop.
-      // @@ Currently we are using Reactor per priority to emulate
-      // threadpool with lanes.  Once POA threadpools are implemented,
-      // this code should be replaced with standard threadpool apis.
-      TAO_Pool_Per_Endpoint pool (orb.in ());
-      pool.run (ACE_TRY_ENV);
+      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
@@ -199,4 +194,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

@@ -65,7 +65,7 @@ public:
   /// resources.
   int close (void);
 
-  /// Finalize all the services by calling <fini> and deleting
+  /// Finalize all the services by calling <fini> and deleteing
   /// dynamically allocated services.
   int fini (void);
 
@@ -81,8 +81,7 @@ public:
 
   // = Search structure operations (all acquire locks as necessary).
 
-  /// Insert a new service record.  Returns -1 when the service repository is full
-  /// and 0 on success.
+  /// Insert a new service record.
   int insert (const ACE_Service_Type *);
 
   /**
@@ -108,10 +107,10 @@ public:
   int suspend (const ACE_TCHAR[], const ACE_Service_Type ** = 0);
 
   /// Return the current size of the repository.
-  int current_size (void) const;
+  int current_size (void);
 
   /// Return the total size of the repository.
-  int total_size (void) const;
+  int total_size (void);
 
   /// Dump the state of an object.
   void dump (void) const;

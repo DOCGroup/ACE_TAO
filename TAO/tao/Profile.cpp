@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "Profile.h"
 #include "Object_KeyC.h"
 
@@ -13,7 +12,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Profile, "$Id$")
-
 
 // ****************************************************************
 
@@ -263,9 +261,9 @@ TAO_Profile::verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV)
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot add ")
-                    ACE_TEXT ("IOP::TaggedComponent to profile.\n")
-                    ACE_TEXT ("(%P|%t) Standard profile components ")
-                    ACE_TEXT ("have been disabled or URL style IORs\n")
+		    ACE_TEXT ("IOP::TaggedComponent to profile.\n")
+		    ACE_TEXT ("(%P|%t) Standard profile components ")
+		    ACE_TEXT ("have been disabled or URL style IORs\n")
                     ACE_TEXT ("(%P|%t) are in use.  Try ")
                     ACE_TEXT ("\"-ORBStdProfileComponents 1\" and/or\n")
                     ACE_TEXT ("(%P|%t) \"-ORBObjRefStyle IOR\".\n")));
@@ -278,8 +276,8 @@ TAO_Profile::verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA_SystemException::_tao_minor_code (
                       TAO_DEFAULT_MINOR_CODE,
-                      EINVAL),
-                   CORBA::COMPLETED_NO));
+		      EINVAL),
+		   CORBA::COMPLETED_NO));
     }
 }
 
@@ -294,8 +292,8 @@ TAO_Profile::verify_profile_version (CORBA::Environment &ACE_TRY_ENV)
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot add ")
-                    ACE_TEXT ("IOP::TaggedComponent to GIOP 1.0")
-                    ACE_TEXT ("IOR profile.\n")
+		    ACE_TEXT ("IOP::TaggedComponent to GIOP 1.0")
+		    ACE_TEXT ("IOR profile.\n")
                     ACE_TEXT ("(%P|%t) Try using a GIOP 1.1 or ")
                     ACE_TEXT ("greater endpoint.\n")));
 
@@ -307,8 +305,8 @@ TAO_Profile::verify_profile_version (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
+		     EINVAL),
+		   CORBA::COMPLETED_NO));
     }
 }
 

@@ -2,11 +2,11 @@
 
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
+#include "tao/Wait_Strategy.h"
 #include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/Transport.h"
+#include "Transport.h"
 
 ACE_RCSID(tao, Synch_Reply_Dispatcher, "$Id$")
-
 
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
@@ -14,23 +14,17 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     IOP::ServiceContextList &sc
   )
   : reply_service_info_ (sc),
+    reply_received_ (0),
     orb_core_ (orb_core),
-    db_ (sizeof buf_,
-         ACE_Message_Block::MB_DATA,
-         this->buf_,
-         this->orb_core_->message_block_buffer_allocator (),
-         this->orb_core_->locking_strategy (),
-         ACE_Message_Block::DONT_DELETE,
-         this->orb_core_->message_block_dblock_allocator ()),
-    reply_cdr_ (&db_,
-                ACE_Message_Block::DONT_DELETE,
+    wait_strategy_ (0),
+    reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                0,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
-                orb_core)
+                orb_core),
+    leader_follower_condition_variable_ (0)
 {
-  // As a TAO_LF_Event we start in the active state....
-  this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
 }
 
 // Destructor.
@@ -42,6 +36,12 @@ TAO_InputCDR &
 TAO_Synch_Reply_Dispatcher::reply_cdr (void)
 {
   return this->reply_cdr_;
+}
+
+int&
+TAO_Synch_Reply_Dispatcher::reply_received (void)
+{
+  return this->reply_received_;
 }
 
 int
@@ -61,24 +61,58 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   // dispatcher is used because the request must be re-sent.
   //this->message_state_.reset (0);
 
-  // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  // @@ Somebody could please explain why we ignore the value
-  // returned? And why don't we simply use the normal C++ idioms to
-  // represent that?  Namely:
-  // (void) this->reply_cdr_.close_from (params.input_cdr_);
-  //
-  ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (params.input_cdr_);
+  // Steal the buffer so that no copying is done.
+  this->reply_cdr_.exchange_data_blocks (params.input_cdr_);
 
-  ACE_UNUSED_ARG (db);
+  /*if (&this->message_state_ != message_state)
+    {
+      // The Transport Mux Strategy did not use our Message_State to
+      // receive the event, possibly because it is muxing multiple
+      // requests over the same connection.
 
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+       // Steal the buffer so that no copying is done.
+      this->message_state_.cdr.steal_from (message_state->cdr);
+
+      // There is no need to copy the other fields!
+      }*/
+
+  if (this->wait_strategy_ != 0)
+    {
+      if (this->wait_strategy_->reply_dispatched (
+                    this->reply_received_,
+                    this->leader_follower_condition_variable_
+                  )
+          == -1)
+        {
+          return -1;
+        }
+    }
 
   return 1;
+}
+
+/*TAO_GIOP_Message_State *
+TAO_Synch_Reply_Dispatcher::message_state (void)
+{
+  return &this->message_state_;
+}*/
+
+void
+TAO_Synch_Reply_Dispatcher::dispatcher_bound (TAO_Transport *transport)
+{
+  this->wait_strategy_ = transport->wait_strategy ();
+  this->leader_follower_condition_variable_ =
+    transport->wait_strategy ()->leader_follower_condition_variable ();
 }
 
 void
 TAO_Synch_Reply_Dispatcher::connection_closed (void)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  if (this->wait_strategy_ != 0)
+    {
+      this->wait_strategy_->connection_closed (
+                                this->reply_received_,
+                                this->leader_follower_condition_variable_
+                              );
+    }
 }

@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
@@ -28,6 +29,7 @@
 class ACE_Export ACE_Log_Record
 {
 public:
+
   enum
   {
     /// Maximum size of a logging message.
@@ -138,7 +140,7 @@ public:
   void length (long);
 
   /// Get the time stamp of the <Log_Record>.
-  ACE_Time_Value time_stamp (void) const;
+  const ACE_Time_Value &time_stamp (void) const;
 
   /// Set the time stamp of the <Log_Record>.
   void time_stamp (const ACE_Time_Value &);
@@ -150,14 +152,13 @@ public:
   void pid (long);
 
   /// Get the message data of the <Log_Record>.
-  const ACE_TCHAR *msg_data (void) const;
+  ACE_TCHAR *msg_data (void);
 
   /// Set the message data of the <Log_Record>.
   void msg_data (const ACE_TCHAR *data);
 
-  /// Get the size of the message data of the <Log_Record>, including
-  /// a byte for the NUL.
-  size_t msg_data_len (void) const;
+  /// Set the size of the message data of the <Log_Record>.
+  void msg_data_len (size_t len);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -178,14 +179,13 @@ private:
   ACE_INT32 length_;
 
   /// Type of logging record.
-  ACE_UINT32 type_;
+  long type_;
 
   /// Time that the logging record was generated.
-  ACE_UINT32 secs_;
-  ACE_UINT32 usecs_;
+  ACE_Time_Value time_stamp_;
 
   /// Id of process that generated the logging record.
-  ACE_UINT32 pid_;
+  long pid_;
 
   /// Logging record data
   ACE_TCHAR msg_data_[MAXLOGMSGLEN];

@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 
+
 //=============================================================================
 /**
  *  @file   AVStreams_i.h
@@ -9,6 +10,7 @@
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu> Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================
+
 
 #ifndef AVSTREAMS_I_H
 #define AVSTREAMS_I_H
@@ -232,7 +234,7 @@ public:
 
 class TAO_MCastConfigIf;
 
-class TAO_AV_Export MMDevice_Map_Hash_Key
+class MMDevice_Map_Hash_Key
 {
 public:
   /// default constructor.
@@ -947,7 +949,7 @@ class TAO_AV_Endpoint_Strategy;
  */
 class TAO_AV_Export TAO_MMDevice
   :public virtual POA_AVStreams::MMDevice,
-   public virtual TAO_PropertySet,
+   public TAO_PropertySet,
    public virtual PortableServer::RefCountServantBase
 {
 
@@ -1097,7 +1099,7 @@ class TAO_FlowProducer;
  */
 class TAO_AV_Export TAO_FlowConnection
  : public virtual POA_AVStreams::FlowConnection,
-   public virtual TAO_PropertySet,
+   public TAO_PropertySet,
    public virtual PortableServer::RefCountServantBase
 {
 

@@ -15,7 +15,6 @@
 
 ACE_RCSID(ace, Select_Reactor_Base, "$Id$")
 
-
 #if defined (ACE_WIN32)
 #define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
 #define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)
@@ -480,8 +479,7 @@ ACE_Select_Reactor_Notify::max_notify_iterations (void)
 // Returns the number of entries removed. Returns -1 on error.
 // ACE_NOTSUP_RETURN if ACE_HAS_REACTOR_NOTIFICATION_QUEUE is not defined.
 int
-ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
-                                                        ACE_Reactor_Mask  mask )
+ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::purge_pending_notifications");
 
@@ -507,34 +505,26 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
                           -1);
 
       // If this is not a Reactor notify (it is for a particular handler),
-      // and it matches the specified handler (or purging all),
-      // and applying the mask would totally eliminate the notification, then
+      // and it matches the specified handler (or purging all), then
       // release it and count the number purged.
-      if ((0 != temp->eh_) &&
-          (0 == eh || eh == temp->eh_) &&
-          ACE_BIT_DISABLED (temp->mask_, ~mask)) // the existing notificationmask
-                                                 // is left with nothing when
-                                                 // applying the mask
-      {
-        if (-1 == this->free_queue_.enqueue_head (temp))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("enqueue_head")),
-                            -1);
-        ++number_purged;
-      }
+      if (0 != temp->eh_ && (0 == eh || eh == temp->eh_))
+        {
+          if (-1 == this->free_queue_.enqueue_head (temp))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_LIB_TEXT ("%p\n"),
+                               ACE_LIB_TEXT ("enqueue_head")),
+                              -1);
+          ++number_purged;
+        }
       else
-      {
-        // To preserve it, move it to the local_queue.
-        // But first, if this is not a Reactor notify (it is for a particularhandler),
-        // and it matches the specified handler (or purging all), then
-        // apply the mask
-        if ((0 != temp->eh_) &&
-            (0 == eh || eh == temp->eh_))
-          ACE_CLR_BITS(temp->mask_, mask);
-        if (-1 == local_queue.enqueue_head (temp))
-          return -1;
-      }
+        {
+          // To preserve it, move it to the local_queue.
+          if (-1 == local_queue.enqueue_head (temp))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_LIB_TEXT ("%p\n"),
+                               ACE_LIB_TEXT ("enqueue_head")),
+                              -1);
+        }
     }
 
   if (this->notify_queue_.size ())
@@ -564,7 +554,6 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 
 #else /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
   ACE_UNUSED_ARG (eh);
-  ACE_UNUSED_ARG (mask);
   ACE_NOTSUP_RETURN (-1);
 #endif  /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
 }
@@ -589,7 +578,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
   if (disable_notify_pipe == 0)
     {
-      this->select_reactor_ =
+      this->select_reactor_ = 
         ACE_dynamic_cast (ACE_Select_Reactor_Impl *, r);
 
       if (select_reactor_ == 0)
@@ -607,7 +596,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
       ACE_Notification_Buffer *temp;
-
+      
       ACE_NEW_RETURN (temp,
                       ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                       -1);
@@ -684,16 +673,16 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
       // No pending notifications.
-      if (this->notify_queue_.is_empty ())
+      if (this->notify_queue_.is_empty ()) 
         notification_required = 1;
 
       ACE_Notification_Buffer *temp = 0;
 
-      if (free_queue_.dequeue_head (temp) == -1)
+      if (free_queue_.dequeue_head (temp) == -1) 
         {
           // Grow the queue of available buffers.
           ACE_Notification_Buffer *temp1;
-
+          
           ACE_NEW_RETURN (temp1,
                           ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                           -1);
@@ -704,11 +693,11 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
           // Start at 1 and enqueue only
           // (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE - 1) elements since
           // the first one will be used right now.
-          for (size_t i = 1;
-               i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE;
+          for (size_t i = 1; 
+               i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; 
                i++)
             this->free_queue_.enqueue_head (temp1 + i);
-
+          
           temp = temp1;
         }
 
@@ -1013,15 +1002,6 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
       return -1;
     }
   return omask;
-}
-
-int
-ACE_Select_Reactor_Impl::resumable_handler (void)
-{
-  // The select reactor has no handlers that can be resumed by the
-  // application. So return 0;
-
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

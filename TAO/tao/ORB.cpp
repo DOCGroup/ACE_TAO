@@ -1,7 +1,6 @@
 // $Id$
 
 
-
 #include "ORB.h"
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
@@ -53,8 +52,7 @@
 # else
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
-#   if !defined (_MSC_VER) && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-                                      (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0) 
+#   if !defined (_MSC_VER)
 using std::set_unexpected;
 #   endif /* !_MSC_VER */
 #  else
@@ -70,7 +68,6 @@ using std::set_unexpected;
 
 
 ACE_RCSID(tao, ORB, "$Id$")
-
 
 
 static const char ior_prefix [] = "IOR:";
@@ -1299,6 +1296,11 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     return this->orb_core ()->resolve_typecodefactory (ACE_TRY_ENV);
 
+  else if (ACE_OS::strcmp (name, TAO_OBJID_RTORB) == 0)
+    return this->orb_core ()->resolve_rt_orb (ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
+    return this->orb_core ()->resolve_rt_current (ACE_TRY_ENV);
 
   // -----------------------------------------------------------------
 
@@ -1352,23 +1354,6 @@ CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (0);
 
   return this->orb_core ()->list_initial_references (ACE_TRY_ENV);
-}
-
-TAO_Stub *
-CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
-                               const char *type_id,
-                               CORBA::PolicyList *policy_list,
-                               TAO_Acceptor_Filter *filter,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  return this->orb_core_->create_stub_object (key,
-                                              type_id,
-                                              policy_list,
-                                              filter,
-                                              ACE_TRY_ENV);
 }
 
 void
@@ -1753,7 +1738,6 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                                       CORBA::COMPLETED_NO),
                       0);
 
-
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.
 
@@ -1980,11 +1964,8 @@ CORBA_ORB::ior_string_to_object (const char *str,
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
-  TAO_InputCDR stream (&mb,
-                       byte_order,
-                       TAO_DEF_GIOP_MAJOR,
-                       TAO_DEF_GIOP_MINOR,
-                       this->orb_core_);
+  TAO_InputCDR stream (&mb, byte_order, TAO_DEF_GIOP_MAJOR,
+                       TAO_DEF_GIOP_MINOR, this->orb_core_);
 
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;
@@ -2026,7 +2007,6 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   // Now make the TAO_Stub.
   TAO_Stub *data = this->orb_core_->create_stub ((char *) 0,
                                                  mprofile,
-                                                 this->orb_core_,
                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

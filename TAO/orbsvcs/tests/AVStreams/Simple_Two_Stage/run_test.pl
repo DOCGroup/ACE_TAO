@@ -40,7 +40,7 @@ sleep $sleeptime;
 
 print STDERR "Starting Sender\n";
 
-$sender = $CL->SpawnWaitKill (200);
+$sender = $CL->SpawnWaitKill (60);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";

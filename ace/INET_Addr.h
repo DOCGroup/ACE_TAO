@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_INET_ADDR_H
 #define ACE_INET_ADDR_H
@@ -46,8 +47,7 @@ public:
   ACE_INET_Addr (const sockaddr_in *, int len);
 
   /// Creates an <ACE_INET_Addr> from a <port_number> and the remote
-  /// <host_name>. The port number is assumed to be in host byte order.
-  /// To set a port already in network byte order, please @see set().
+  /// <host_name>.
   ACE_INET_Addr (u_short port_number,
                  const char host_name[]);
 
@@ -63,8 +63,7 @@ public:
   /**
    * Creates an <ACE_INET_Addr> from a <port_number> and an Internet
    * <ip_addr>.  This method assumes that <port_number> and <ip_addr>
-   * are in host byte order. If you have addressing information in
-   * network byte order, @see set().
+   * are in host byte order.
    */
   ACE_INET_Addr (u_short port_number,
 		 ACE_UINT32 ip_addr = INADDR_ANY);
@@ -111,7 +110,7 @@ public:
 
   /**
    * Initializes an <ACE_INET_Addr> from a <port_number> and the
-   * remote <host_name>.  If <encode> is non-zero then <port_number> is
+   * remote <host_name>.  If <encode> is enabled then <port_number> is
    * converted into network byte order, otherwise it is assumed to be
    * in network byte order already and are passed straight through.
    */
@@ -120,11 +119,11 @@ public:
            int encode = 1);
 
   /**
-   * Initializes an <ACE_INET_Addr> from a @param port_number and an
-   * Internet @param ip_addr.  If @param encode is non-zero then the
-   * port number and IP address are converted into network byte order,
-   * otherwise they are assumed to be in network byte order already and
-   * are passed straight through.
+   * Initializes an <ACE_INET_Addr> from a <port_number> and an
+   * Internet <ip_addr>.  If <encode> is enabled then <port_number>
+   * and <ip_addr> are converted into network byte order, otherwise
+   * they are assumed to be in network byte order already and are
+   * passed straight through.
    */
   int set (u_short port_number,
            ACE_UINT32 ip_addr = INADDR_ANY,

@@ -255,9 +255,9 @@ AST_Decl::compute_prefix (void)
 
   if (pragma != 0)
     {
-      // Get pointers to each end of the substring between the quotes.
-      const char* start = ACE_OS::strchr (pragma, '"') + 1;
-      const char* end = ACE_OS::strchr (start, '"');
+      // Skip the space and the " also...
+      const char* tmp = pragma + 16;
+      const char* end = ACE_OS::strchr (tmp, '"');
 
       if (end == 0)
         {
@@ -268,13 +268,13 @@ AST_Decl::compute_prefix (void)
           return;
         }
 
-      int len = end - start;
+      int len = end - tmp;
 
       ACE_NEW (this->prefix_,
                char[len + 1]);
 
       ACE_OS::strncpy (this->prefix_, 
-                       start, 
+                       tmp, 
                        len);
 
       this->prefix_[len] = 0;

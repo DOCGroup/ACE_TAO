@@ -387,14 +387,6 @@ SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Base.cpp
 # End Source File
 # Begin Source File
@@ -424,6 +416,10 @@ SOURCE=.\GIOP_Message_Lite.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -491,10 +487,6 @@ SOURCE=.\IIOPC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.cpp
 # End Source File
 # Begin Source File
@@ -520,26 +512,6 @@ SOURCE=.\IORInfo.cpp
 # Begin Source File
 
 SOURCE=.\Leader_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Adder.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -715,10 +687,6 @@ SOURCE=.\Reactive_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Remote_Object_Proxy_Broker.cpp
 # End Source File
 # Begin Source File
@@ -736,10 +704,6 @@ SOURCE=.\RequestInfo_Util.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resume_Handle.cpp
 # End Source File
 # Begin Source File
 
@@ -764,10 +728,6 @@ SOURCE=.\Services.cpp
 # Begin Source File
 
 SOURCE=.\Services_Activate.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.cpp
 # End Source File
 # Begin Source File
 
@@ -824,6 +784,18 @@ SOURCE=.\TAOC.cpp
 # Begin Source File
 
 SOURCE=.\target_specification.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
@@ -1147,22 +1119,6 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LF_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -1196,6 +1152,10 @@ SOURCE=.\GIOP_Message_Lite.h
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.h
 # End Source File
 # Begin Source File
 
@@ -1263,10 +1223,6 @@ SOURCE=.\IIOPC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
@@ -1308,42 +1264,6 @@ SOURCE=.\IORInfo.h
 # Begin Source File
 
 SOURCE=.\Leader_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower_Flushing_Strategy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Loop_Thread_Helper.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Loop_Thread_Helper.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Adder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Adder.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy.inl
 # End Source File
 # Begin Source File
 
@@ -1551,10 +1471,6 @@ SOURCE=.\Reactive_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Remote_Object_Proxy_Broker.h
 # End Source File
 # Begin Source File
@@ -1572,10 +1488,6 @@ SOURCE=.\RequestInfo_Util.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
@@ -1604,10 +1516,6 @@ SOURCE=.\Services.h
 # Begin Source File
 
 SOURCE=.\Services_Activate.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
 
@@ -1680,6 +1588,18 @@ SOURCE=.\TAOS_T.h
 # Begin Source File
 
 SOURCE=.\target_specification.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
@@ -1955,7 +1875,11 @@ SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_State.inl
+SOURCE=.\GIOP_Message_Reactive_Handler.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
@@ -2007,10 +1931,6 @@ SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
@@ -2040,30 +1960,6 @@ SOURCE=.\IOR_Parser.i
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 
@@ -2207,15 +2103,7 @@ SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reply_Dispatcher.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
@@ -2236,10 +2124,6 @@ SOURCE=.\Service_Context.inl
 # Begin Source File
 
 SOURCE=.\Services.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.i
 # End Source File
 # Begin Source File
 
@@ -2292,6 +2176,18 @@ SOURCE=.\TAOS_T.i
 # Begin Source File
 
 SOURCE=.\target_specification.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Thread_Lane_Resources_Manager.i
 # End Source File
 # Begin Source File
 

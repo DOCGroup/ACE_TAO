@@ -2,7 +2,6 @@
 //
 // $Id$
 
-
 #include "PolicyFactory_Registry.h"
 
 ACE_RCSID(tao, PolicyFactory_Registry, "$Id$")

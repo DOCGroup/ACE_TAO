@@ -164,12 +164,12 @@ ACE_OutputCDR::reset (void)
 
 }
 
-// Encode the CDR stream.
+// Decode the CDR stream.
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_octet (ACE_CDR::Octet x)
 {
-  return this->write_1 (ACE_reinterpret_cast (const ACE_CDR::Octet *, &x));
+  return this->write_1 (ACE_reinterpret_cast (const ACE_CDR::Octet*,&x));
 }
 
 ACE_INLINE ACE_CDR::Boolean

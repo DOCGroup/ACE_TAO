@@ -108,9 +108,8 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
-  /// Send a TRUE value to the reactor, so that the reactor does not
-  /// resume the handler
-  virtual int resume_handler (void);
+  /// Return the underlying handle
+  virtual ACE_HANDLE fetch_handle (void);
 
   /// Use peer() to drain the outgoing message queue
   virtual int handle_output (ACE_HANDLE);
@@ -132,8 +131,16 @@ protected:
   /// ensure that server threads eventually exit.
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0);
 
 private:
+
+  /// Count nested upcalls on this
+  /// svc_handler i.e., the connection can close during nested upcalls,
+  /// you should not delete the svc_handler until the stack unwinds
+  /// from the nested upcalls.
+  long pending_upcalls_;
 
   /// TCP configuration for this connection.
   TAO_IIOP_Properties *tcp_properties_;

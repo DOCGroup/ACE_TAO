@@ -84,11 +84,11 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
+  /// Return the underlying handle
+  virtual ACE_HANDLE fetch_handle (void);
+
   /// Documented in ACE_Event_Handler
   virtual int handle_output (ACE_HANDLE);
-
-  /// Overload for resuming handlers..
-  virtual int resume_handler (void);
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
@@ -104,12 +104,16 @@ protected:
   /// ensure that server threads eventually exit.
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0);
 
 private:
-  /// Flag that we will be passing to the event handler to indicate
-  /// whether the handle will be resumed by the method or not.
-  int resume_flag_;
 
+  /// Count nested upcalls on this
+  /// svc_handler i.e., the connection can close during nested upcalls,
+  /// you should not delete the svc_handler until the stack unwinds
+  /// from the nested upcalls.
+  long pending_upcalls_;
 };
 
 

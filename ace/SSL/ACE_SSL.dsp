@@ -99,14 +99,6 @@ SOURCE=.\SSL_Accept_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSL_Asynch_BIO.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSL_Asynch_Stream.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\SSL_Connect_Handler.cpp
 # End Source File
 # Begin Source File
@@ -136,10 +128,6 @@ SOURCE=.\SSL_SOCK_Stream.cpp
 # Begin Source File
 
 SOURCE=.\SSL_Accept_Handler.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSL_Asynch_Stream.h
 # End Source File
 # Begin Source File
 

@@ -71,6 +71,8 @@ public:
   void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies,
                                           CORBA::Environment &ACE_TRY_ENV);
 
+  TAO_Policy_Set &policies (void);
+
 protected:
   TAO_Policy_Set impl_;
 };

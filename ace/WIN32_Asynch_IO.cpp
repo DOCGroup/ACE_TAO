@@ -88,18 +88,6 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
   return win32_proactor->post_completion (this);
 }
 
-void
-ACE_WIN32_Asynch_Result::set_bytes_transferred (u_long nbytes)
-{
-  this->bytes_transferred_ = nbytes;
-}
-
-void
-ACE_WIN32_Asynch_Result::set_error (u_long errcode)
-{
-  this->error_ = errcode;
-}
-
 ACE_WIN32_Asynch_Result::~ACE_WIN32_Asynch_Result (void)
 {
 }
@@ -376,8 +364,6 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
 {
   u_long bytes_read;
 
-  result->set_error (0); // Clear error before starting IO.
-
   // Initiate the read
   int initiate_result = ::ReadFile (result->handle (),
                                     result->message_block ().wr_ptr (),
@@ -615,8 +601,6 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
 {
   u_long bytes_written;
 
-  result->set_error (0); // Clear error before starting IO.
-
   // Initiate the write
   int initiate_result = ::WriteFile (result->handle (),
                                      result->message_block ().rd_ptr (),
@@ -691,6 +675,7 @@ ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handle
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
+    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     ACE_WIN32_Asynch_Read_Stream_Result (handler,
                                          handle,
                                          message_block,
@@ -1938,14 +1923,14 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
-  iovec iov[ACE_IOV_MAX];
+  iovec iov[IOV_MAX];
   int iovcnt = 0;
   for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
   {
     iov[iovcnt].iov_base  = msg->wr_ptr ();
     iov[iovcnt].iov_len   = msg->size ();
     ++iovcnt;
-    if (iovcnt >= ACE_IOV_MAX)
+    if (iovcnt >= IOV_MAX)
     {
       delete result;
       return -1;
@@ -2168,7 +2153,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (u_long bytes_transferred,
     }
     else
     {
-      size_t len = mb->length ();
+      size_t len = mb->length (); 
       mb->rd_ptr (len);
       bytes_transferred -= len;
     }
@@ -2218,14 +2203,14 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
-  iovec iov[ACE_IOV_MAX];
+  iovec iov[IOV_MAX];
   int iovcnt = 0;
   for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
   {
     iov[iovcnt].iov_base  = msg->rd_ptr ();
     iov[iovcnt].iov_len   = msg->length ();
     ++iovcnt;
-    if (iovcnt >= ACE_IOV_MAX)
+    if (iovcnt >= IOV_MAX)
     {
       delete result;
       return -1;

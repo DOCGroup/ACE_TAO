@@ -19,11 +19,11 @@
 #include "StringSeqC.h"
 
 #include "Object_Loader.h"
-#include "ace/Dynamic_Service.h"
 
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
+#include "Default_Thread_Lane_Resources_Manager.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -186,12 +186,6 @@ TAO_Internal::open_services_i (int &argc,
 
   if (TAO_Internal::service_open_count_++ == 0)
     {
-      // The ORB requires that a resource factory exist in order to
-      // reclaim the reactor during finalization.  The default
-      // resource factory must be inserted into the Service Repository
-      // so that Service Configurator directives such as 'static
-      // Resource_Factory "-ORBResources global"' actually work
-      // properly.
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Resource_Factory);
       ACE_Service_Config::static_svcs ()->
@@ -225,24 +219,16 @@ TAO_Internal::open_services_i (int &argc,
         insert (&ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_Default_Protocols_Hooks);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager);
 
       int result = 0;
 
       if (skip_service_config_open == 0)
-        {
-            result = ACE_Service_Config::open (argc, argv,
-                                               ACE_DEFAULT_LOGGER_KEY,
-                                               0, // Don't ignore static services.
-                                               ignore_default_svc_conf_file);
-        }
-
-      // Handle RTCORBA library special case.  Since RTCORBA needs
-      // its init method call to register several hooks, call it here
-      // if it hasn't already been called.
-      TAO_Object_Loader *rt_loader = 
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
-      if (rt_loader != 0)
-          rt_loader->init (0, 0);
+        result = ACE_Service_Config::open (argc, argv,
+                                           ACE_DEFAULT_LOGGER_KEY,
+                                           0, // Don't ignore static services.
+                                           ignore_default_svc_conf_file);
 
       // @@ What the heck do these things do and do we need to avoid
       // calling them if we're not invoking the svc.conf file?

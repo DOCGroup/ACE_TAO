@@ -6,8 +6,6 @@
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 
-#include "tao/Strategies/advanced_resource.h"
-
 typedef ACE_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
 
 // constructor.

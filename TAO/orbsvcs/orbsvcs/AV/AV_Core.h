@@ -16,7 +16,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/AVStreamsC.h"
-#include "orbsvcs/AV/AV_export.h"
+#include "AV_export.h"
 
 #include "ace/Singleton.h"
 
@@ -134,17 +134,7 @@ protected:
 
 typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
 
-#if defined (__BORLANDC__)
-# if !defined (TAO_AV_BUILD_DLL)
-#   pragma option push -Jgx
-# endif
-#endif
 TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
-#if defined (__BORLANDC__)
-# if !defined(TAO_AV_BUILD_DLL)
-#   pragma option pop
-# endif
-#endif
 
 #include "ace/post.h"
 #endif /* TAO_AV_CORE_H */

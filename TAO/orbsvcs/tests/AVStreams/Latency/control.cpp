@@ -3,7 +3,6 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/Strategies/advanced_resource.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"

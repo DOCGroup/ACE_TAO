@@ -57,7 +57,7 @@ started_by_inetd (void)
   int size = sizeof sin;
 
   return ACE_OS::getsockname (0,
-                              ACE_reinterpret_cast (sockaddr *, &sin),
+                              (sockaddr *) &sin,
                               &size) == 0;
 }
 

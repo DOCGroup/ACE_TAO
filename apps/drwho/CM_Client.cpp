@@ -52,8 +52,7 @@ CM_Client::receive (int timeout)
                                     this->recv_packet_,
                                     UDP_PACKET_SIZE,
                                     0,
-                                    ACE_reinterpret_cast (sockaddr *,
-                                                          &this->sin_),
+                                    (sockaddr *) &this->sin_,
                                     &sin_len);
           if (n < 0)
             return -1;
@@ -116,7 +115,7 @@ CM_Client::send (void)
                   this->send_packet_,
                   packet_length,
                   0,
-                  ACE_reinterpret_cast (sockaddr *, &this->sin_),
+                  (sockaddr *) &this->sin_,
                   sizeof this->sin_) < 0)
         return -1;
     }

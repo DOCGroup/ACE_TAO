@@ -50,8 +50,9 @@ public:
 
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc,
+  int connect (TAO_Transport_Descriptor_Interface *desc,
+               TAO_Transport *&transport,
+               ACE_Time_Value *max_wait_time,
                CORBA::Environment &ACE_TRY_ENV);
   int preconnect (const char *preconnections);
 

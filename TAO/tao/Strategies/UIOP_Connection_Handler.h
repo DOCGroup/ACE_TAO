@@ -103,11 +103,8 @@ public:
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
 
-  /// Overload for resuming handlers..
-  virtual int resume_handler (void);
-
-  /// Use peer() to drain the outgoing message queue
-  virtual int handle_output (ACE_HANDLE);
+  /// Return the underlying handle
+  virtual ACE_HANDLE fetch_handle (void);
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
@@ -119,10 +116,20 @@ protected:
   /// Reads a message from the <peer()>, dispatching and servicing it
   /// appropriately.
   /// handle_input() just delegates on handle_input_i() which timeouts
-  /// after <max_wait_time>
+  /// after <max_wait_time>, this is used in thread-per-connection to
+  /// ensure that server threads eventually exit.
+
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0);
 
 private:
+
+  /// Count nested upcalls on this
+  /// svc_handler i.e., the connection can close during nested upcalls,
+  /// you should not delete the svc_handler until the stack unwinds
+  /// from the nested upcalls.
+  long pending_upcalls_;
 
   /// TCP configuration for this connection.
   TAO_UIOP_Properties *uiop_properties_;

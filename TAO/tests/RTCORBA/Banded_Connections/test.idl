@@ -4,13 +4,8 @@
 
 interface Test
 {
-  void test_method (in short priority);
-  // Takes target object priority in effect for this invocation.
-  // Prints out object priority, priority bands in effect, and the
-  // priority of the server thread servicing the request.  Checks that
-  // object and server thread priorities match one of the
-  // priority bands.
+  void test_method (in boolean client_propagated,
+                    in short client_priority);
 
   oneway void shutdown ();
-  // Shut down the ORB.
 };

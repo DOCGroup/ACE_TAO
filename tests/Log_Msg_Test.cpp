@@ -341,10 +341,6 @@ test_ostream (void)
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("fourth message\n")));
-  // Set the ostream back to the test's log file.
-  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
-  // Now close the ostream file and check its contents.
-  myostream.close ();
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
@@ -353,6 +349,8 @@ test_ostream (void)
   if (connector.connect (file,
                          ACE_FILE_Addr (filename)) == -1)
     {
+      // Set the ostream back to NULL to prevent "later functions using myostream".
+      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("connect failed for %p\n"),
                          filename),
@@ -367,6 +365,8 @@ test_ostream (void)
   ACE_FILE_Info info;
   if (file.get_info (info) == -1)
     {
+      // Set the ostream back to NULL to prevent "later functions using myostream".
+      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("get_info failed on %p\n"),
                          filename),
@@ -386,6 +386,8 @@ test_ostream (void)
                             info.size_);
   if (size != info.size_)
     {
+      // Set the ostream back to NULL to prevent "later functions using myostream".
+      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
                          size,
@@ -395,6 +397,8 @@ test_ostream (void)
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
 
+  // Set the ostream back to NULL to prevent "confusion".
+  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s"),
@@ -410,116 +414,12 @@ test_ostream (void)
   return 0;
 }
 
-
-// For testing the format specifiers, a class is defined as a callback
-// mechanism. It will get the formatted messages and check them for
-// correctness. The test_format_specs() function will set the first
-// few characters to say which test is being run, and the Log_Spec_Verify
-// class will use that to decide how to verify the results.
-
-class Log_Spec_Verify : public ACE_Log_Msg_Callback
-{
-public:
-  Log_Spec_Verify () : fail_ (0) {};
-
-  void log (ACE_Log_Record &log_record);
-  // Logging callback
-
-  int  result ();
-
-private:
-  int fail_;
-  // Count how many tests failed.
-};
-
-void
-Log_Spec_Verify::log (ACE_Log_Record &log_record)
-{
-  const ACE_TCHAR *b = log_record.msg_data ();
-  const ACE_TCHAR *expect = 0;
-
-  if (ACE_OS::strncmp (b, ACE_TEXT ("l1:"), 3) == 0)
-    {
-      expect = ACE_TEXT ("42");
-      b += 4;  //3
-    }
-  else if (ACE_OS::strncmp (b, ACE_TEXT ("l2:"), 3) == 0)
-    {
-      expect = ACE_TEXT ("   42");
-      b += 3;
-    }
-  else if (ACE_OS::strncmp (b, ACE_TEXT ("l3N1:"), 4) == 0)
-    {
-      expect = ACE_TEXT ("0042,Log_Msg");
-      b += 4;
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Log_Spec_Verify, unrecognized test: %s\n"),
-                  b));
-      this->fail_++;
-    }
-
-  if (b != log_record.msg_data () && ACE_OS::strcmp (b, expect) != 0)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test %s failed; expected %s\n"),
-                  log_record.msg_data (), expect));
-      this->fail_++;
-    }
-
-  return;
-}
-
-int
-Log_Spec_Verify::result ()
-{
-  if (this->fail_ == 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
-  else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
-                this->fail_));
-  return this->fail_;
-}
-
-static int
-test_format_specs ()
-{
-#if 0
-  Log_Spec_Verify  verifier;
-  ACE_Log_Msg      logger;
-
-  if (logger.open (ACE_TEXT ("Log_Msg_Test"), ACE_Log_Msg::MSG_CALLBACK) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("%T: test_format_specs open")),
-                      1);
-  logger.msg_callback (&verifier);
-
-  logger.linenum (42);
-  logger.file (ACE_TEXT ("Log_Msg_Test.cpp"));
-  logger.log (LM_DEBUG, ACE_TEXT ("l1:%l"));
-  logger.log (LM_DEBUG, ACE_TEXT ("l2:%5l"));
-  logger.log (LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N"), 4);
-  return verifier.result ();
-#else
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l1:%l\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l2:%5l\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N\n"), 4));
-  return 0;
-#endif
-
-}
-
-
 // Main function.
 
 int
 main (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Log_Msg_Test"));
-
-  int status = 0;
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("**** running ostream test\n")));
 
@@ -539,18 +439,11 @@ main (int, ACE_TCHAR *argv[])
   // Test various features of the <ACE_Log_Msg>.
   test_log_msg_features (argv[0]);
 
-  // Test the format specifiers
-
-  // Restore this mask so diags and the shutdown message will print correctly!
+  // Restore this mask so the shutdown message will print correctly!
   ACE_LOG_MSG->priority_mask (ACE_LOG_MSG->priority_mask () | LM_DEBUG,
                               ACE_Log_Msg::PROCESS);
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("**** running format specifiers test\n")));
-  if (test_format_specs () != 0)
-    status = 1;
-
   ACE_END_TEST;
-  return status;
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

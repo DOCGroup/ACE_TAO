@@ -1,16 +1,22 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file     SSLIOP_Endpoint.h
- *
- *  $Id$
- *
- *  SSLIOP implementation of PP Framework Endpoint interface.
- *
- *  @author Marina Spivak <marina@cs.wustl.edu>
- */
-//=============================================================================
+
+// ============================================================================
+//
+// = LIBRARY
+//     TAO
+//
+// = FILENAME
+//     SSLIOP_Endpoint.h
+//
+// = DESCRIPTION
+//     SSLIOP implementation of PP Framework Endpoint interface.
+//
+// = AUTHOR
+//     Marina Spivak <marina@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_SSLIOP_ENDPOINT_H
 #define TAO_SSLIOP_ENDPOINT_H
@@ -23,15 +29,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INET_Addr.h"
-
 #include "tao/ORB.h"
-#include "tao/IIOP_Endpoint.h"
+#include "tao/Endpoint.h"
 #include "orbsvcs/SSLIOPC.h"
 
 // Tag for storing multiple ssl endpoints within a single profile.
 #define TAO_TAG_SSL_ENDPOINTS 0x54414f01U
 
+class TAO_SSLIOP_Client_Connection_Handler;
+class TAO_IIOP_Endpoint;
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Endpoint : public TAO_Endpoint
 {
@@ -66,6 +72,9 @@ public:
   const SSLIOP::SSL &ssl_component (void) const;
   // Return SSL component corresponding to this endpoint.
 
+  // TAO_SSLIOP_Client_Connection_Handler *&ssl_hint (void);
+  // Access to our <hint_>.
+
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
   // Return true if this endpoint is equivalent to <other_endpoint>.  Two
   // endpoints are equivalent iff their iiop counterparts are
@@ -82,18 +91,15 @@ public:
   virtual CORBA::ULong hash (void);
   // Return a hash value for this object.
 
-  /// Return the SSLIOP-specific ACE_INET_Addr.
-  const ACE_INET_Addr &object_addr (void) const;
-
 private:
 
   SSLIOP::SSL ssl_component_;
   // Cache the SSL tagged component in a decoded format. Notice that
   // we do not need to marshal this object!
 
-  /// Cached instance of @param ACE_INET_Addr> for use in making
-  /// invocations, etc.
-  ACE_INET_Addr object_addr_;
+  // TAO_SSLIOP_Client_Connection_Handler *ssl_hint_;
+  // Hint indicating the last successfully used connection handler for
+  // a connection established through this endpoint's acceptor.
 
   TAO_SSLIOP_Endpoint *next_;
   // IIOP Endpoints can be stringed into a list.  Return the next

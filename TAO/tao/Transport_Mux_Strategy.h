@@ -53,7 +53,7 @@ public:
   /// Bind the dispatcher with the request id. Commonalities in the
   /// derived class implementations is kept here.
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rd) = 0;
+                               TAO_Reply_Dispatcher *rd);
 
   /**
    * Unbind the dispatcher, the client is no longer waiting for the
@@ -62,11 +62,21 @@ public:
    * request.
    * A later reply for that request should be ignored.
    */
-  virtual void unbind_dispatcher (CORBA::ULong request_id) = 0;
+  virtual void unbind_dispatcher (CORBA::ULong request_id);
 
   /// Dispatch the reply for <request_id>, cleanup any resources
   /// allocated for that request.
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
+
+  // = "Factory methods" to obtain the CDR stream, in the Muxed case
+  //    the factory simply allocates a new one, in the Exclusive case
+  //    the factory returns a pointer to the pre-allocated CDR.
+
+  // virtual TAO_GIOP_Message_State *get_message_state (void) = 0;
+  // Get a CDR stream.
+
+  // virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
+  // Destroy a CDR stream.
 
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.

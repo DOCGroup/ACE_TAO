@@ -279,11 +279,6 @@
 
 // Define if your processor does not store words with the most significant
 // byte first.
-
-// @todo: It seems to be that this definition of TAO_ENCAP_BYTE_ORDER
-// should be  removed. We have an equivalent ACE definition in
-// ACE_CDR_BYTE_ORDER. Today both of them are consistent. It would be
-// a havoc if oneday this consistency is gone..
 #if defined (ACE_LITTLE_ENDIAN)
 #  define TAO_ENCAP_BYTE_ORDER 1  /* little endian encapsulation byte order has
                                      the value = 1 */
@@ -400,7 +395,9 @@
         TAO_OBJID_IORMANIPULATION, \
         TAO_OBJID_IORTABLE, \
         TAO_OBJID_DYNANYFACTORY, \
-        TAO_OBJID_TYPECODEFACTORY
+        TAO_OBJID_TYPECODEFACTORY, \
+        TAO_OBJID_RTORB, \
+        TAO_OBJID_RTCURRENT
 // @@ Some initial references are added via other means, such as
 //    ORBInitInfo::register_initial_references().  Those should not be
 //    placed in the above list.  Ideally, we should no longer need the
@@ -448,12 +445,6 @@ enum MCAST_SERVICEID
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 # define TAO_HAS_MINIMUM_CORBA 0
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-// Default DIOP settings
-#if !defined (TAO_HAS_DIOP)
-#    define TAO_HAS_DIOP 1
-#endif  /* !TAO_HAS_DIOP */
-
 
 // UIOP support is enabled by default if the platform supports UNIX
 // domain sockets, and TAO is not configured for minimum CORBA.
@@ -933,14 +924,6 @@ enum TAO_Policy_Scope
 #define TAO_DEF_GIOP_MINOR 2
 #endif /* TAO_DEF_GIOP_MINOR */
 
-#if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
-#   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
-#endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */
-
-#if !defined (TAO_RESUMES_CONNECTION_HANDLER)
-#   define TAO_RESUMES_CONNECTION_HANDLER 1
-#endif /*TAO_RESUMES_CONNECTION_HANDLER*/
-
 // By default TAO generate the OMG standard profile components
 // (ORB_TYPE and CODE_SETS)
 #define TAO_STD_PROFILE_COMPONENTS
@@ -969,19 +952,6 @@ enum TAO_Policy_Scope
 #if !defined (TAO_DEF_FT_CORBA_MINOR)
 #define TAO_DEF_FT_CORBA_MINOR 0
 #endif /* TAO_DEF_FT_CORBA_MINOR */
-
-#if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
-#   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
-#endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */
-
-#if !defined (TAO_RESUMES_CONNECTION_HANDLER)
-#   define TAO_RESUMES_CONNECTION_HANDLER 1
-#endif /*TAO_RESUMES_CONNECTION_HANDLER*/
-
-/// By default we use Muxed Transports
-#if !defined (TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY)
-#  define TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY 1
-#endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */

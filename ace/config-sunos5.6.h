@@ -113,6 +113,7 @@
 #endif /* ACE_HAS_AIO_CALLS */
 
 #define ACE_HAS_POSIX_SEM
+#define ACE_LACKS_NAMED_POSIX_SEM
 
 // Sunos 5.6's aio_* with RT signals is broken.
 #define ACE_POSIX_AIOCB_PROACTOR
@@ -125,10 +126,5 @@
 #if defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE > 2)
 #  define ACE_HAS_SHM_OPEN
 #endif /* _POSIX_C_SOURCE > 2 */
-
-// The struct msghdr is conditional on SunOS 5.6 based on _XPG4_2
-#if defined(_XPG4_2)
-# define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#endif /* _XPG4_2 */
 
 #endif /* ACE_CONFIG_H */

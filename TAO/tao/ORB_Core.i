@@ -31,12 +31,6 @@ TAO_ORB_Core::locking_strategy (void)
   return 0;
 }
 
-ACE_INLINE TAO_Transport_Cache_Manager *
-TAO_ORB_Core::transport_cache (void)
-{
-  return this->transport_cache_;
-}
-
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::bidir_giop_policy (void)
 {
@@ -232,12 +226,6 @@ ACE_INLINE TAO_Connector_Registry *
 TAO_ORB_Core::connector_registry (void)
 {
   return TAO_OC_RETRIEVE (connector_registry);
-}
-
-ACE_INLINE TAO_Acceptor_Registry *
-TAO_ORB_Core::acceptor_registry (void)
-{
-  return TAO_OC_RETRIEVE (acceptor_registry);
 }
 
 ACE_INLINE TAO_Parser_Registry *
@@ -545,42 +533,27 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->rt_orb_.in ()))
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->rt_orb_))
     {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                        CORBA::Object::_nil ());
-      if (CORBA::is_nil (this->rt_orb_.in ()))
-        {
-          // Save a reference to the priority mapping manager.
-          this->rt_orb_ =
-              this->object_ref_table ().resolve_initial_references (
-              TAO_OBJID_RTORB,
-              ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
-        }
+      this->resolve_rt_orb_i (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-
-  return CORBA::Object::_duplicate (this->rt_orb_.in ());
+  return CORBA::Object::_duplicate (this->rt_orb_);
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->rt_current_.in ()))
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->rt_current_))
     {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                        CORBA::Object::_nil ());
-      if (CORBA::is_nil (this->rt_current_.in ()))
-        {
-          // Save a reference to the priority mapping manager.
-          this->rt_current_ =
-              this->object_ref_table ().resolve_initial_references (
-              TAO_OBJID_RTCURRENT,
-              ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
-        }
+      this->resolve_rt_current_i (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
-  return CORBA::Object::_duplicate (this->rt_current_.in ());
+  return CORBA::Object::_duplicate (this->rt_current_);
 }
 
 #if (TAO_HAS_INTERCEPTORS == 1)

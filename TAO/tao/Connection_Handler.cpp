@@ -6,7 +6,6 @@
 #include "tao/debug.h"
 #include "tao/Object.h"
 #include "tao/Messaging_Policy_i.h"
-#include "Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
@@ -17,15 +16,9 @@ ACE_RCSID(tao, Connection_Handler, "$Id$")
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   :orb_core_ (orb_core),
    transport_ (0),
-   tss_resources_ (orb_core->get_tss_resources ()),
-   pending_upcalls_ (1),
-   pending_upcall_lock_ (0)
-
+   tss_resources_ (orb_core->get_tss_resources ())
+  //,   is_registered_ (0)
 {
-  // @@todo: We need to have a distinct option/ method in the resource
-  // factory for this and TAO_Transport.
-  this->pending_upcall_lock_ =
-    this->orb_core_->resource_factory ()->create_cached_connection_lock ();
 }
 
 
@@ -36,8 +29,6 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   this->orb_core_ = 0;
   this->tss_resources_ = 0;
   TAO_Transport::release (this->transport_);
-
-  delete this->pending_upcall_lock_;
 }
 
 
@@ -99,15 +90,10 @@ TAO_Connection_Handler::svc_i (void)
       max_wait_time = &current_timeout;
     }
 
-  TAO_Resume_Handle rh (this->orb_core_,
-                        ACE_INVALID_HANDLE);
-
   while (!this->orb_core_->has_shutdown ()
          && result >= 0)
     {
-      result =
-        this->transport ()->handle_input_i (rh,
-                                            max_wait_time);
+      result = this->handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
 
       if (result == -1 && errno == ETIME)
         {

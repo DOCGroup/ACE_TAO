@@ -930,18 +930,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Service_Config_DLL"=.\Service_Config_DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Service_Config_Test"=.\Service_Config_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -950,9 +938,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name Service_Config_DLL
-    End Project Dependency
 }}}
 
 ###############################################################################

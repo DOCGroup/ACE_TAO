@@ -313,7 +313,6 @@
 
 // Platform has XPG4 wide character support
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
-#define ACE_HAS_WCHAR
 
 // Platform lacks a typedef for timespec_t, but has struct timespec
 #define ACE_LACKS_TIMESPEC_T
@@ -411,7 +410,6 @@
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_POSIX_SEM
-#define ACE_HAS_TERM_IOCTLS
 
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined

@@ -49,25 +49,12 @@ main (int argc, char *argv[])
       int min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
 
-      if (max_priority > min_priority)
+      if ((max_priority + min_priority) / 2 + 2 > max_priority)
         {
-          if ((max_priority + min_priority) / 2 + 2 > max_priority)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Not enough priority levels on this platform"
-                          "to run the test, aborting\n"));
-              return 0;
-            }
-        }
-      else
-        {
-          if ((max_priority + min_priority) / 2 + 2 > min_priority)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Not enough priority levels on this platform"
-                          "to run the test, aborting\n"));
-              return 0;
-            }
+          ACE_DEBUG ((LM_DEBUG,
+                      "Not enough priority levels on this platform"
+                      "to run the test, aborting\n"));
+          return 0;
         }
 
       // Register the interceptors to check for the RTCORBA
@@ -193,13 +180,6 @@ main (int argc, char *argv[])
       // Shut down Server ORB.
       server->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::DATA_CONVERSION, ex)
-    {
-      ACE_PRINT_EXCEPTION(ex,
-                          "Most likely, this is due to the in-ability "
-                          "to set the thread priority.");
-      return 1;
     }
   ACE_CATCHANY
     {

@@ -8,16 +8,11 @@
 
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
-#include "tao/Single_Reactor.h"
 
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
-#include "tao/Leader_Follower_Flushing_Strategy.h"
-
 #include "tao/Leader_Follower.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
-
-#include "tao/LF_Strategy_Complete.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -28,9 +23,9 @@
 # include "tao/default_resource.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           default_resource,
-           "$Id$")
+ACE_RCSID(tao, default_resource, "$Id$")
+
+
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
@@ -43,10 +38,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
-    options_processed_ (0),
-    factory_disabled_ (0),
     cached_connection_lock_type_ (TAO_THREAD_LOCK),
-    flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
+    flushing_strategy_type_ (TAO_REACTIVE_FLUSHING)
 {
 }
 
@@ -67,24 +60,13 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
        ++i)
     CORBA::string_free (this->parser_names_[i]);
 
-  delete [] this->parser_names_;
+  delete []this->parser_names_;
 }
 
 int
-TAO_Default_Resource_Factory::init (int argc, char *argv[])
+TAO_Default_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Default_Resource_Factory::init");
-
-  // If this factory has already been disabled then
-  // print a warning and exit because any options
-  // are useless
-  if (this->factory_disabled_) {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
-                ACE_TEXT ("Default Resource Factory is disabled\n")));
-    return 0;
-  }
-  this->options_processed_ = 1;
 
   this->parser_names_count_ = 0;
 
@@ -102,9 +84,8 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
     if (curarg == (argc-1) && this->parser_names_count_ != 0)
       {
         // This is the last loop..
-        ACE_NEW_RETURN (this->parser_names_,
-                        char *[this->parser_names_count_],
-                        -1);
+        this->parser_names_ =
+          new char *[this->parser_names_count_];
 
         for (int i = 0;
              i < this->parser_names_count_;
@@ -131,8 +112,6 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
             else if (ACE_OS::strcasecmp (name,
                                          "tss") == 0)
               this->use_tss_resources_ = 1;
-            else
-              this->report_option_value_error ("-ORBResources", name);
           }
       }
 
@@ -148,8 +127,6 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
               this->reactor_mask_signals_ = 0;
             else if (ACE_OS::strcasecmp (name, "1") == 0)
               this->reactor_mask_signals_= 1;
-            else
-              this->report_option_value_error ("-ORBReactorMaskSignals", name);
           }
       }
 
@@ -196,7 +173,9 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
               this->connection_caching_type_ =
                   TAO_Resource_Factory::NOOP;
             else
-              this->report_option_value_error ("-ORBConnectionCachingStrategy", name);
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO_Default_Factory - unknown argument")
+                          ACE_TEXT (" <%s> for -ORBConnectionCachingStrategy\n"), name));
           }
       }
 
@@ -207,7 +186,9 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
         if (curarg < argc)
             this->cache_maximum_ = ACE_OS::atoi (argv[curarg]);
         else
-          this->report_option_value_error ("-ORBConnectionCacheMax", argv[curarg]);
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
+                       ACE_TEXT ("for -ORBConnectionCacheMax\n")));
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
@@ -217,8 +198,9 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
         if (curarg < argc)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
-          this->report_option_value_error ("-ORBConnectionCachePurgePercentage",
-                                           argv[curarg]);
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
+                       ACE_TEXT ("for -ORBConnectionCachePurgePercentage\n")));
       }
 
    else if (ACE_OS::strcasecmp (argv[curarg],
@@ -233,8 +215,9 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
         if (curarg < argc)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
-          this->report_option_value_error ("-ORBPurgePercentage",
-                                           argv[curarg]);
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO_Default_Factory - unknown argument")
+                       ACE_TEXT ("for -ORBConnectionCachePurgePercentage\n")));
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -263,13 +246,11 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
                                          "null") == 0)
               {
                 // @@ Bug 940 :This is a sort of hack now. We need to put
-                // this in a common place once we get the common
+                // this in a common place once we get teh common
                 // switch that is documented in bug 940...
                 this->use_locked_data_blocks_  = 0;
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
-            else
-              this->report_option_value_error ("-ORBConnectionCacheLock", name);
           }
       }
 
@@ -297,8 +278,6 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
                 this->use_locked_data_blocks_  = 0;
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
-            else
-              this->report_option_value_error ("-ORBConnectionLock", name);
           }
       }
 
@@ -326,8 +305,6 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
                 this->use_locked_data_blocks_  = 0;
                 this->cached_connection_lock_type_ = TAO_NULL_LOCK;
               }
-            else
-              this->report_option_value_error ("-ORBConnectorLock", name);
           }
       }
 
@@ -340,33 +317,12 @@ TAO_Default_Resource_Factory::init (int argc, char *argv[])
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "leader_follower") == 0)
-              this->flushing_strategy_type_ = TAO_LEADER_FOLLOWER_FLUSHING;
-            else if (ACE_OS::strcasecmp (name,
                                     "reactive") == 0)
               this->flushing_strategy_type_ = TAO_REACTIVE_FLUSHING;
             else if (ACE_OS::strcasecmp (name,
                                          "blocking") == 0)
               this->flushing_strategy_type_ = TAO_BLOCKING_FLUSHING;
-            else
-              this->report_option_value_error ("-ORBFlushingStrategy", name);
           }
-      }
-    else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
-      {
-        // Can we assume there is an argument after the option?
-        // curarg++;
-        ACE_ERROR ((LM_ERROR,
-                    "Default_Resource_Factory - "
-                    "unknown option <%s>\n",
-                    argv[curarg]));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "Default_Resource_Factory - "
-                    "ignoring option <%s>\n",
-                    argv[curarg]));
       }
 
   return 0;
@@ -386,7 +342,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
     }
 
   // OK fallback on the hardcoded ones....
-  this->parser_names_count_ = 4; // HOW MANY DO WE HAVE?
+  this->parser_names_count_ = 4; /*HOW MANY DO WE HAVE?*/
 
   this->parser_names_ = new char *[this->parser_names_count_];
 
@@ -395,9 +351,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
        ++i)
     this->parser_names_[i] = 0;
 
-  // Ensure that there is enough space in the parser_names_ array
-
-  size_t index = 0;
+  // Ensure that there is enough space in the parser_names_ array */
 
   // DLL_Parser
   TAO_IOR_Parser *tmp =
@@ -416,8 +370,12 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
         }
     }
 
-  this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
-  index++;
+  int index = 0;
+  if (tmp != 0)
+    {
+      this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
+      index++;
+    }
 
   // FILE_Parser
   tmp =
@@ -436,9 +394,12 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
                              "Error Configuring FILE Parser\n"), -1);
         }
     }
+  if (tmp != 0)
+    {
+      this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
+      index++;
+    }
 
-  this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
-  index++;
 
   // CORBALOC_Parser
   tmp =
@@ -663,7 +624,7 @@ TAO_Default_Resource_Factory::get_protocol_factories (void)
   return &protocol_factories_;
 }
 
-TAO_Acceptor_Registry*
+TAO_Acceptor_Registry *
 TAO_Default_Resource_Factory::get_acceptor_registry (void)
 {
   TAO_Acceptor_Registry *ar = 0;
@@ -675,7 +636,7 @@ TAO_Default_Resource_Factory::get_acceptor_registry (void)
   return ar;
 }
 
-TAO_Connector_Registry*
+TAO_Connector_Registry *
 TAO_Default_Resource_Factory::get_connector_registry (void)
 {
   TAO_Connector_Registry *cr = 0;
@@ -685,17 +646,6 @@ TAO_Default_Resource_Factory::get_connector_registry (void)
                  0);
 
   return cr;
-}
-
-TAO_Reactor_Registry *
-TAO_Default_Resource_Factory::get_reactor_registry (void)
-{
-  TAO_Reactor_Registry *reactor_registry = 0;
-
-  ACE_NEW_RETURN (reactor_registry,
-                  TAO_Single_Reactor,
-                  0);
-  return reactor_registry;
 }
 
 ACE_Reactor_Impl*
@@ -847,11 +797,7 @@ TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy (void)
 {
   TAO_Flushing_Strategy *strategy = 0;
-  if (this->flushing_strategy_type_ == TAO_LEADER_FOLLOWER_FLUSHING)
-    ACE_NEW_RETURN (strategy,
-                    TAO_Leader_Follower_Flushing_Strategy,
-                    0);
-  else if (this->flushing_strategy_type_ == TAO_REACTIVE_FLUSHING)
+  if (this->flushing_strategy_type_ == TAO_REACTIVE_FLUSHING)
     ACE_NEW_RETURN (strategy,
                     TAO_Reactive_Flushing_Strategy,
                     0);
@@ -891,33 +837,10 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
   TAO_LF_Strategy *strategy = 0;
 
   ACE_NEW_RETURN (strategy,
-                  TAO_LF_Strategy_Complete,
+                  TAO_Complete_LF_Strategy,
                   0);
 
   return strategy;
-}
-
-void
-TAO_Default_Resource_Factory::report_option_value_error (
-                                 const char* option_name,
-                                 const char* option_value)
-{
-  ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Default_Resource_Factory - unknown argument")
-             ACE_TEXT (" <%s> for <%s>\n"),
-             option_value, option_name));
-}
-
-void
-TAO_Default_Resource_Factory::disable_factory (void)
-{
-  this->factory_disabled_ = 1;
-  if (this->options_processed_)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
-                  ACE_TEXT ("Default Resource Factory is disabled\n")));
-    }
 }
 
 // ****************************************************************
@@ -926,8 +849,7 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
                        ACE_TEXT ("Resource_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Resource_Factory),
-                       ACE_Service_Type::DELETE_THIS
-                       | ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 

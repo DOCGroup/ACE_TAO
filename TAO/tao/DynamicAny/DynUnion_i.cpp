@@ -75,13 +75,13 @@ TAO_DynUnion_i::init (CORBA_TypeCode_ptr tc,
 
   this->init_common ();
 
-  CORBA::Any_var first_label = tc->member_label (this->current_position_,
+  CORBA::Any_ptr first_label = tc->member_label (this->current_position_,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 
   // Initialize the discriminator to the label value of the first member.
   this->discriminator_ =
-    TAO_DynAnyFactory::make_dyn_any (first_label.in (),
+    TAO_DynAnyFactory::make_dyn_any (*first_label,
                                      ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -188,11 +188,11 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any & any,
   // Get the index.
   for (i = 0; i < count; ++i)
     {
-      CORBA_Any_var label_any = tc->member_label (i,
+      CORBA_Any_ptr label_any = tc->member_label (i,
                                                   ACE_TRY_ENV);
       ACE_CHECK;
 
-      match = this->label_match (label_any.in (),
+      match = this->label_match (*label_any,
                                  disc_any,
                                  ACE_TRY_ENV);
       ACE_CHECK;
@@ -334,7 +334,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
   CORBA::ULong length = this->type_->member_count (ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA_Any_var label_any;
+  CORBA_Any_ptr label_any = 0;
   CORBA::ULong i;
 
   // member_label() does not work with aliased type codes.
@@ -351,7 +351,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
                                               ACE_TRY_ENV);
       ACE_CHECK;
 
-      match = this->label_match (label_any.in (),
+      match = this->label_match (*label_any,
                                  value_any.in (),
                                  ACE_TRY_ENV);
       ACE_CHECK;
@@ -372,7 +372,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
         }
 
       // If we got a match, a named member will be active.
-      this->discriminator_->from_any (label_any.in (),
+      this->discriminator_->from_any (*label_any,
                                       ACE_TRY_ENV);
       ACE_CHECK;
 

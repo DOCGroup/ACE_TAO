@@ -1,47 +1,3 @@
-Sun Jul 29 12:17:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-        * The following changes fix a bug reported by Karl Proese
- 	  <karl.proese@mchp.siemens.de> and Jeff Parsons.
-	
-        * tests: Patched the *.exp files to include the new WORDLIST_SIZE
- 	  macro.
-	
-	* src/Key_List.cpp: Generate a new const/enum that defines the
-	  size of the wordlist array.  This is now used to fix a nasty bug
- 	  where MAX_HASH_VALUE was used instead of WORDLIST_SIZE.
-	
-	* src/Key_List.cpp (output_lookup_array): Reformatted the
-	  debugging output to make it easier to tell what's going on.
-
-	* tests/tao.exp: Updated this file based on the expected output of
- 	  the new test example.
-
-	* tests/tao.gperf: Updated this to use a different set of keys since
-	  they exercise the range of screwy inputs better than the earlier
- 	  contents of this file.  In particular, this should detect
- 	  certain nasty bugs that were plaguing GPERF earlier for keyword
- 	  sets with a large number of duplicates.
-  
-	* src/Key_List.cpp (read_keys): Clarified the debugging message
-	  to indicate the key links are *static*.
-
-	* src/Options.cpp (parse_args): Fixed a stupid typo...
-
-Sun Jul  1 08:33:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-	* tests/Makefile: For some strange reason there was a BIN2 macro
-	  but no BIN macro, which caused problems...
-
-	* tests: Added support to check for the condition that caused
-	  TAO's IDL compiler to break on keylists that have a large number
- 	  of duplicates!
-
-	* src/Key_List.cpp (output_lookup_function): Fixed a tiny mistake
-	  where "slot < MAX_HASH_VALUE" should have been "slot <=
- 	  MAX_HASH_VALUE".  Thanks to Vsevolod Novikov
- 	  <novikov@df.nnov.rfnet.ru> and Jeff Parsons
- 	  <parsons@cs.wustl.edu> for helping to track this down.
-
 Sat Jun  2 13:30:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* src/Makefile (INSTALL): Fixed several minor problems with the
@@ -288,6 +244,7 @@ Tue Oct  6 02:48:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * src/Key_List.h : Added the prototype for
           output_binary_search_function.  Also added the key_sort variable
           to enable sorting based on key values.
+
 
 Mon Oct  5 18:24:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

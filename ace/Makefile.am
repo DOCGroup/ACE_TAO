@@ -323,8 +323,7 @@ libACE_Svcconf_la_SOURCES = \
   Service_Templates.cpp \
   Shared_Object.cpp \
   Svc_Conf_l.cpp \
-  Svc_Conf_y.cpp \
-  Svc_Conf_Lexer_Guard.cpp
+  Svc_Conf_y.cpp
 
 libACE_Streams_la_SOURCES = \
   CDR_Base.cpp \
@@ -477,8 +476,6 @@ TEMPLATE_FILES = \
   Hash_Map_With_Allocator_T.cpp \
   Hash_Cache_Map_Manager_T.cpp \
   IOStream_T.cpp \
-  Intrusive_List.cpp \
-  Intrusive_List_Node.cpp \
   LOCK_SOCK_Acceptor.cpp \
   Local_Name_Space_T.cpp \
   Malloc_T.cpp \
@@ -606,8 +603,6 @@ HEADER_FILES = \
   IO_SAP.h \
   IPC_SAP.h \
   Init_ACE.h \
-  Intrusive_List.h \
-  Intrusive_List_Node.h \
   LOCK_SOCK_Acceptor.h \
   LSOCK.h \
   LSOCK_Acceptor.h \
@@ -874,8 +869,6 @@ INLINE_FILES = \
   IO_SAP.i \
   IPC_SAP.i \
   Init_ACE.i \
-  Intrusive_List.inl \
-  Intrusive_List_Node.inl \
   LSOCK.i \
   LSOCK_CODgram.i \
   LSOCK_Connector.i \

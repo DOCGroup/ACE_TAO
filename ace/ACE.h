@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_ACE_H
 #define ACE_ACE_H
@@ -29,7 +30,6 @@
 // Forward declarations.
 class ACE_Time_Value;
 class ACE_Message_Block;
-class ACE_Handle_Set;
 
 /**
  * @class ACE
@@ -276,9 +276,6 @@ public:
                           const ACE_Time_Value *timeout = 0,
                           size_t *bytes_transferred = 0);
 
-  /// Send all the <message_block>s chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
-  /// operationto reduce the domain-crossing penalty.
   static ssize_t send_n (ACE_HANDLE handle,
                          const ACE_Message_Block *message_block,
                          const ACE_Time_Value *timeout = 0,
@@ -403,6 +400,8 @@ public:
   static const ACE_TCHAR *dirname (const ACE_TCHAR *pathname,
                                    ACE_TCHAR delim =
                                      ACE_DIRECTORY_SEPARATOR_CHAR);
+
+
 
   /**
    * Returns the current timestamp in the form
@@ -540,19 +539,6 @@ public:
   // = Set/get the debug level.
   static char debug (void);
   static void debug (char d);
-
-  /// Wrapper facade for <select> that uses <ACE_Handle_Set>s.
-  static int select (int width,
-                     ACE_Handle_Set *readfds,
-                     ACE_Handle_Set *writefds = 0,
-                     ACE_Handle_Set *exceptfds = 0,
-                     const ACE_Time_Value *timeout = 0);
-
-  /// Wrapper facade for the most common use of <select> that uses
-  /// <ACE_Handle_Set>s.
-  static int select (int width,
-                     ACE_Handle_Set &readfds,
-                     const ACE_Time_Value *timeout = 0);
 
   /// Timed wait for handle to get read ready.
   static int handle_read_ready (ACE_HANDLE handle,

@@ -19,8 +19,7 @@ DIRS  = Banded_Connections \
 	Private_Connection \
 	Thread_Pool \
 	MT_Client_Protocol_Priority \
-        RTMutex \
-	ORB_init
+        RTMutex
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

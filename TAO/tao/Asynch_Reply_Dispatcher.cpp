@@ -1,9 +1,11 @@
 // $Id$
 
+
 #include "tao/Asynch_Reply_Dispatcher.h"
 
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
+#include "tao/Leader_Follower.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
@@ -17,15 +19,8 @@ ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core)
-  : db_ (sizeof buf_,
-         ACE_Message_Block::MB_DATA,
-         this->buf_,
-         orb_core->message_block_buffer_allocator (),
-         orb_core->locking_strategy (),
-         ACE_Message_Block::DONT_DELETE,
-         orb_core->message_block_dblock_allocator ()),
-    reply_cdr_ (&db_,
-                ACE_Message_Block::MB_DATA,
+  : reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                0,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
@@ -53,6 +48,16 @@ TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
   return 0;
 }
 
+/*TAO_GIOP_Message_State *
+TAO_Asynch_Reply_Dispatcher_Base::message_state (void)
+{
+  return this->message_state_;
+} */
+
+void
+TAO_Asynch_Reply_Dispatcher_Base::dispatcher_bound (TAO_Transport *)
+{
+}
 
 void
 TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
@@ -108,11 +113,11 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
 
   this->reply_status_ = params.reply_status_;
 
-  // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (params.input_cdr_);
+  // this->message_state_ = message_state;
 
-  ACE_UNUSED_ARG (db);
+  // Steal the buffer so that no copying is done.
+  this->reply_cdr_.exchange_data_blocks (params.input_cdr_);
+
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
   CORBA::ULong max = params.svc_ctx_.maximum ();
@@ -150,25 +155,22 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
       break;
     }
 
-  if (!CORBA::is_nil (this->reply_handler_.in ()))
+  ACE_TRY_NEW_ENV
     {
-      ACE_TRY_NEW_ENV
-        {
-          // Call the Reply Handler's skeleton.
-          reply_handler_skel_ (this->reply_cdr_,
-                               this->reply_handler_.in (),
-                               reply_error,
-                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level >= 4)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "Exception during reply handler");
-        }
-      ACE_ENDTRY;
+      // Call the Reply Handler's skeleton.
+      reply_handler_skel_ (this->reply_cdr_,
+                           this->reply_handler_.in (),
+                           reply_error,
+                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level >= 4)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "Exception during reply handler");
+    }
+  ACE_ENDTRY;
 
   // This was dynamically allocated. Now the job is done. Commit
   // suicide here.
@@ -200,14 +202,11 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
-      if (!CORBA::is_nil (this->reply_handler_.in ()))
-        {
-          this->reply_handler_skel_ (cdr,
-                                     this->reply_handler_.in (),
-                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION,
-                                     ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      this->reply_handler_skel_ (cdr,
+                                 this->reply_handler_.in (),
+                                 TAO_AMI_REPLY_SYSTEM_EXCEPTION,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -240,19 +239,17 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
       TAO_OutputCDR out_cdr;
 
       timeout_failure._tao_encode (out_cdr, ACE_TRY_ENV);
+
       ACE_TRY_CHECK;
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
-      if (!CORBA::is_nil (this->reply_handler_.in ()))
-        {
-          this->reply_handler_skel_ (cdr,
-                                     this->reply_handler_.in (),
-                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION,
-                                     ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      this->reply_handler_skel_ (cdr,
+                                 this->reply_handler_.in (),
+                                 TAO_AMI_REPLY_SYSTEM_EXCEPTION,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -440,41 +440,16 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value,
     }
   else
     {
-      CORBA::Boolean good_type = 1;
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in (),
                                                        ACE_TRY_ENV);
       ACE_CHECK;
 
       if (kind != CORBA::tk_objref)
         {
-          good_type = 0;
-        }
-      else
-        {
-          const char *value_id = value->_interface_repository_id ();
-
-          if (ACE_OS::strcmp (value_id, "IDL:omg.org/CORBA/Object:1.0") != 0)
-            {
-              const char *my_id = this->type_->id (ACE_TRY_ENV);
-              ACE_CHECK;
-
-              if (ACE_OS::strcmp (value_id, my_id) != 0)
-                {
-                  good_type = value->_is_a (my_id,
-                                            ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-            }
-        }
-      
-      if (good_type)
-        {
-          this->any_ <<= value;
-        }
-      else
-        {
           ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
         }
+      
+      this->any_ <<= value;
     }
 }
 
@@ -1677,6 +1652,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
     case CORBA::tk_value:
     case CORBA::tk_value_box:
       ACE_THROW (CORBA::NO_IMPLEMENT ());
+      break;
     default:
       {
         TAO_DynAny_i *tmp = TAO_DynAny_i::_narrow (component,

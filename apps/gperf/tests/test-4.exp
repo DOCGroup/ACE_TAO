@@ -11,7 +11,6 @@ struct resword { const char *name; short token; enum rid rid; };
 #define MAX_HASH_VALUE 82
 #define HASH_VALUE_RANGE 79
 #define DUPLICATES 3
-#define WORDLIST_SIZE 55
 
 static unsigned int
 hash (str, len)
@@ -145,7 +144,7 @@ in_word_set (str, len)
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < WORDLIST_SIZE)
+          if (slot >= 0 && slot < MAX_HASH_VALUE)
             {
               char *s = wordlist[slot].name;
 

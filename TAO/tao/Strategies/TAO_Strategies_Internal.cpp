@@ -8,7 +8,6 @@
 #include "advanced_resource.h"
 #include "UIOP_Factory.h"
 #include "SHMIOP_Factory.h"
-#include "DIOP_Factory.h"
 
 #include "tao/Object_Loader.h"
 
@@ -60,11 +59,7 @@ TAO_Strategies_Internal::open_services (int &argc,
 #if TAO_HAS_SHMIOP == 1
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
-#endif /* TAO_HAS_SHMIOP == 1 */
-#if TAO_HAS_DIOP == 1
-      ACE_Service_Config::static_svcs ()->
-        insert (&ace_svc_desc_TAO_DIOP_Protocol_Factory);
-#endif /* TAO_HAS_DIOP == 1 */
+#endif /* TAO_HAS_UIOP == 1 */
       int result = 0;
 
       if (skip_service_config_open == 0)

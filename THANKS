@@ -114,7 +114,7 @@ Greg Baker <GBaker@p01.az15m.iac.honeywell.com>
 Alexandre Karev <karev@vxcern.cern.ch>
 Pramod Kumar Singh <pramod@saturn.miel.mot.com>
 Bryon Rigg <bryon_rigg@mail.telecorpsys.com>
-Brad Brown <Brad.A.Brown@usa.alcatel.com>
+Brad Brown <bbrown@rdxsunhost.aud.alcatel.com>
 Patty Genualdi <genualdp@agcs.com>
 Eshel Liran <liran@bimacs.cs.biu.ac.il>
 Mick Adams <eeimas@eei.ericsson.se>
@@ -402,7 +402,7 @@ Maximilian Hoferer <mhoferer@krones.de>
 Kevin Stanley <kstanley1@mdc.com>
 Jeff Greif <jmg@trivida.com>
 Jeff McDaniel <jsmpcdani@gte.net>
-Andreas Geisler <Andreas.Geisler@erl9.siemens.de>
+Andreas Geisler <andreas.geisler@erls.siemens.de>
 Bob McWhirter <bob@werken.com>
 Daniel Winder <Daniel.Winder@cern.ch>
 Zheng Han <zhan@glenvan.glenayre.com>
@@ -604,7 +604,7 @@ Ian MacDonald <ianmacd@bg.com>
 Hans Ridder <ridder@veritas.com>
 Todd Mullanix <Todd.Mullanix@sylantro.com>
 Hai Vu <Hai_Vu@Mitel.Com>
-Paul Francis <francip@navcanada.ca>
+Paul Francis <pfrancis@dkl.com>
 Kristopher Johnson <kjohnson@gardnersys.com>
 Dave Butenhof <butenhof@zko.dec.com>
 Dominic Williams <dom@connected-place.co.uk>
@@ -663,7 +663,7 @@ Gildo Medeiros Junior <gildo@siemens.com.br>
 Brian Peterson <bpeterson@globalmt.com>
 Fabrice Podlyski <podlyski@clrhp04.in2p3.fr>
 Darren DeRidder <darren.deridder@bridgewatersys.com>
-John Tucker <johnny_tucker@yahoo.com>
+John Tucker <jtucker@infoglide.com>
 Oleg Orlov <orlov@diasoft.ru>
 Timothy Canham <Timothy.Canham@jpl.nasa.gov>
 Randy Heiland <heiland@ncsa.uiuc.edu>
@@ -714,7 +714,7 @@ David McCann <david.mccann@alcatel.at>
 Ruediger Franke <Ruediger.Franke@decrc.abb.de>
 Brian Jones <bjones@edgemail.com>
 Michael Garvin <mgarvin@nortelnetworks.com>
-Mike Vitalo <mvitalo@sprynet.com>
+Mike Vitalo <mvitalo@infoglide.com>
 Kirk Davies <Kirk.Davies@pobox.com>
 Arno Pernozzoli <pernozzoli@bigfoot.com>
 Trey Grubbs <t-grubbs1@raytheon.com>
@@ -860,7 +860,7 @@ Pierre Oberson <oberson@nagra-kudelski.ch>
 Chris Uzdavinis <chris@atdesk.com>
 Ishay Green <ishaygreen@hotmail.com>
 Andrey Nechypurenko <andreynech@yahoo.com>
-Charlie Duke <cduke@cuseeme.com>
+Charlie Duke <cduke@wpine.com>
 Jonathan Luellen <jluellen@scires.com>
 Andrew Psaltis <apsaltis@mho.net>
 Erik Jones <ej@pcslink.com>
@@ -931,7 +931,7 @@ Shalabh Bhatnagar <shalabh_b@hotmail.com>
 Charles Scott <Charles.P.Scott@jpl.nasa.gov>
 Espen Harlinn <espen@harlinn.no>
 mulder <mul@iitb.fhg.de>
-Richard L. Johnson <rich@huey.jpl.nasa.gov>
+Richard L. Johnson <Richard.L.Johnson@jpl.nasa.gov>
 Tam Nguyen <tnguyen@viasat.com>
 Jeff Graham <jgraham@lincom-asg.com>
 Ralph Loader <suckfish@ihug.co.nz>
@@ -1237,6 +1237,7 @@ Corey Trager <corey.trager@tradingtechnologies.com>
 Kirat Singh <kirat.singh@gs.com>
 Oleg Pavliv <oleg_pavliv@yahoo.com>
 Frederick Niemi <fniemi@cisco.com>
+Vsevolod Novikov <novikov@ci.nnov.ru>
 Andrew Munro <Andrew.Munro@Australia.Boeing.com>
 Nicolas Huynh <HUYNH_Nicolas@cena.fr>
 Kevin Burge <kcburge@systemware-inc.com>
@@ -1274,40 +1275,8 @@ Rich Newman <RNewman@directv.com>
 Kelly F. Hickel <kfh@mqsoftware.com>
 David Trusty <david.trusty@westwave.com>
 Burkhard Neppert <b.neppert@dr-staedtler.de>
-Crawford Lodge <crawford.lodge@xmlglobal.com>
+Crawford Lodge <crawford.lodge@xmlglobal.com> 
 Scott Gaa <scott_a_gaa@md.northgrum.com>
-Jenny Kowald <jkowald@oz.agile.tv>
-Oren Zeev-Ben-Mordehai <oren@phonedo.com>
-Holger P. Krekel <krekel@merlinux.de>
-Glenn Popelka <gpp@gpopelka.com>
-Marco Kranawetter <Marco.Kranawetter@icn.siemens.de>
-Tibor Kiss <tkiss@mindmaker.hu>
-Robert Davidson <robert@rdavidson.freeserve.co.uk>
-Peter Crowther <peter.crowther@networkinference.com>
-Mouna Seri <seri@crhc.uiuc.edu>
-Vladimir Chovanec <Vladimir.CHOVANEC@asset.sk>
-Alexander Rieger <Alexander.Rieger@inka.de>
-Glen Coakley <gcoakley@mqsoftware.com>
-Scott Plant <splant@softhome.net>
-Wilfried Reinoehl <Wilfried.Reinoehl@WiredMinds.de>
-Sangeetha Ramadurai <Sangeetha.Ramadurai@geind.ge.com>
-Victor Chernenko <v_chernenko@hotmail.com>
-Frank Wolf <fwolf@gum.de>
-Christophe Galerne <christophgalerne@earthlink.net>
-Steve Harris <harris_s@ociweb.com>
-Stefan Kluehspies <Stefan.Kluehspies@gmx.net>
-Egon Wuchner <Egon.Wuchner@mchp.siemens.de>
-Ugendreshwar Kudupudi <ugenderk@rediffmail.com>
-Ekkehard Hoffmann <ehoffman@fzi.de>
-Ted Krovetz <ted@digitalfountain.com>
-Grzegorz Sikora <GSikora1@era.pl>
-Fabris <fabris65@my-deja.com>
-Christina Junru <junruli@lucent.com>
-Patrick Rabau <Patrick.Rabau@htc.com>
-Hyman Rosen <hyrosen@mail.com>
-Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com>
-Robert Burke <rburke2002@yahoo.com>
-Olivier Brunet <obrunet@groupama-ccama.tm.fr>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

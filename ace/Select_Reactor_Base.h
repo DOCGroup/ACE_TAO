@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_SELECT_REACTOR_BASE_H
 #define ACE_SELECT_REACTOR_BASE_H
@@ -175,8 +176,7 @@ public:
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler *,
-                                           ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  virtual int purge_pending_notifications (ACE_Event_Handler *);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -209,12 +209,6 @@ private:
   int max_notify_iterations_;
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  // = This configuration queues up notifications in separate buffers that
-  //   are in user-space, rather than stored in a pipe in the OS
-  //   kernel.  The kernel-level notifications are used only to trigger
-  //   the Reactor to check its notification queue.  This enables many
-  //   more notifications to be stored than would otherwise be the case.
-
   /// Keeps track of allocated arrays of type
   /// <ACE_Notification_Buffer>.
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
@@ -406,14 +400,7 @@ public:
    * <ACE_Event_Handler> object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
-                                           ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
-
-  /// Does the reactor allow the application to resume the handle on
-  /// its own ie. can it pass on the control of handle resumption to
-  /// the application.  The select reactor has no handlers that can be
-  /// resumed by the  application. So return 0;
-  virtual int resumable_handler (void);
+  virtual int purge_pending_notifications (ACE_Event_Handler * = 0);
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.

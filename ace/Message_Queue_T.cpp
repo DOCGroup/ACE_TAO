@@ -712,10 +712,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
       ++this->enqueue_waiters_;
       // @@ Need to add sanity checks for failure...
       mon.release ();
-      result = this->not_full_cond_.acquire (timeout);
-
-      if (result == -1 && errno == ETIME)
-        errno = EWOULDBLOCK;
+      if (timeout == 0)
+        result = this->not_full_cond_.acquire ();
+      else
+        result = this->not_full_cond_.acquire (*timeout);
 
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
@@ -757,11 +757,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
       ++this->dequeue_waiters_;
       // @@ Need to add sanity checks for failure...
       mon.release ();
-      result = this->not_empty_cond_.acquire (timeout);
-
-      if (result == -1 && errno == ETIME)
-        errno = EWOULDBLOCK;
-
+      if (timeout == 0)
+        result = this->not_empty_cond_.acquire ();
+      else
+        {
+          result = this->not_empty_cond_.acquire (*timeout);
+          if (result == -1 && errno == ETIME)
+            errno = EWOULDBLOCK;
+        }
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
       mon.acquire ();

@@ -23,8 +23,6 @@
 
 ACE_RCSID(tao, Object, "$Id$")
 
-int CORBA_Object::_tao_class_id = 0;
-
 CORBA_Object::~CORBA_Object (void)
 {
   if (this->protocol_proxy_)
@@ -213,7 +211,7 @@ CORBA::Object::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (ptr_arith_t,
-                                    &CORBA::Object::_tao_class_id))
+                                    &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *, this);
 
   if (retv)
@@ -596,7 +594,6 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
 
   TAO_Stub *objdata = orb_core->create_stub (type_hint.in (),
                                              mp,
-                                             orb_core,
                                              TAO_default_environment ());
   // @@ RTCORBA_Subsetting FIX THIS!!  ACE_CHECK_RETURN (0);
 

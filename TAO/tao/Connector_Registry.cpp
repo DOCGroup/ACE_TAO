@@ -264,8 +264,9 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 
 
 int
-TAO_Connector_Registry::connect (TAO_GIOP_Invocation *invocation,
-                                 TAO_Transport_Descriptor_Interface *desc,
+TAO_Connector_Registry::connect (TAO_Transport_Descriptor_Interface *desc,
+                                 TAO_Transport *&transport,
+                                 ACE_Time_Value *max_wait_time,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Endpoint *endpoint = desc->endpoint ();
@@ -279,8 +280,9 @@ TAO_Connector_Registry::connect (TAO_GIOP_Invocation *invocation,
   if (connector == 0)
       return -1;
 
-  return connector->connect (invocation,
-                             desc,
+  return connector->connect (desc,
+                             transport,
+                             max_wait_time,
                              ACE_TRY_ENV);
 }
 
@@ -353,7 +355,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Unknown profile tag 0x%x\n"),
+                      ACE_TEXT ("TAO (%P|%t) unknown profile tag %d\n"),
                       tag));
         }
 

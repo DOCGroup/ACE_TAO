@@ -12,7 +12,6 @@ tests/run_test.pl
 TAO/tests/Param_Test/run_test.pl: !MINIMUM
 TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !MINIMUM !ST
-TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: !MINIMUM !ST !STATIC
 TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST
 
 TAO/performance-tests/Single_Threaded_Latency/run_test.pl
@@ -47,12 +46,11 @@ TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
 TAO/tests/Hello/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
 TAO/tests/MT_Server/run_test.pl: !ST
-# DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !Tru64
+# DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !TRU_64
 TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Faults/run_test.pl: !MINIMUM
 TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM
@@ -83,17 +81,12 @@ TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
 # BROKEN TAO/tests/Connection_Purging/run_test.pl: !ST
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
-TAO/tests/LongUpcalls/run_ami_test.pl: !MINIMUM
 TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
-TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM !Tru64
+TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_buffer_size.pl: !MINIMUM
-TAO/tests/Oneway_Buffering/run_timeout.pl: !MINIMUM
+# TAO/tests/Oneway_Buffering/run_timeout.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_timeout_reactive.pl: !MINIMUM
-TAO/tests/AMI_Buffering/run_message_count.pl: !MINIMUM
-TAO/tests/AMI_Buffering/run_buffer_size.pl: !MINIMUM
-TAO/tests/AMI_Buffering/run_timeout.pl: !MINIMUM
-TAO/tests/AMI_Buffering/run_timeout_reactive.pl: !MINIMUM
 TAO/tests/Big_Oneways/run_test.pl: !ST
 TAO/tests/Big_Twoways/run_test.pl: !ST
 TAO/tests/Big_Reply/run_test.pl: !ST
@@ -101,12 +94,11 @@ TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM
 TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST
 TAO/examples/Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Queued_Message_Test/run_test.pl
-TAO/tests/DLL_ORB/run_test.pl
 
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1
-TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !ST !Linux
+TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM
 TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS

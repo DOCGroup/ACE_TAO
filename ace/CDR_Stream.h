@@ -503,9 +503,9 @@ public:
   /// helpful if the applications desires to create a new CDR stream
   /// from a semi-processed datablock.
   ACE_InputCDR (ACE_Data_Block *data,
-                ACE_Message_Block::Message_Flags flag,
-                size_t read_pointer_position,
-                size_t write_pointer_position,
+                ACE_Message_Block::Message_Flags flag = 0,
+                size_t read_pointer_position = 0,
+                size_t write_pointer_position = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   ACE_CDR_GIOP_MAJOR_VERSION,
@@ -728,7 +728,7 @@ public:
   void reset (const ACE_Message_Block *data,
               int byte_order);
 
-  /// Steal the contents from the current CDR.
+  /// Steal the contents from the currect CDR.
   ACE_Message_Block *steal_contents (void);
 
   /// Steal the contents of <cdr> and make a shallow copy into this

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-
-// This configuration file is designed to work with the MacOS X operating system.
+// config-macosx-pthread.h
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -14,7 +13,7 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-//#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
@@ -23,7 +22,6 @@
 // Platform specific directives
 
 #define __MACOSX__
-#define ACE_HAS_MACOSX_DYLIB
 
 #if !defined (_THREAD_SAFE)
 #define _THREAD_SAFE
@@ -32,7 +30,7 @@
 #define ACE_HAS_GPERF
 //#define ACE_HAS_POSIX_SEM
 
-//#define ACE_HAS_SVR4_TLI
+#define ACE_HAS_SVR4_TLI
 
 #define ACE_HAS_MEMCHR
 

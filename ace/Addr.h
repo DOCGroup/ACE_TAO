@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_ADDR_H
 #define ACE_ADDR_H
@@ -57,7 +58,8 @@ public:
   virtual void *get_addr (void) const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (void *, int len);
+  virtual void set_addr (void *,
+                         int len);
 
   // = Equality/inequality tests
   /// Check for address equality.
@@ -67,7 +69,8 @@ public:
   int operator != (const ACE_Addr &sap) const;
 
   /// Initializes instance variables.
-  void base_set (int type, int size);
+  void base_set (int type,
+                 int size);
 
 #if defined (ACE_HAS_BROKEN_SAP_ANY)
   /// Wild-card address.
@@ -81,7 +84,7 @@ public:
 #endif /* ACE_HAS_BROKEN_SAP_ANY */
 
   /// Returns a hash value.  This should be overwritten by a subclass
-  /// that can produce a better hash value.
+  /// which can produce a better hash value.
   virtual u_long hash (void) const;
 
   /// Dump the state of an object.

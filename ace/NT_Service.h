@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+
 #ifndef ACE_NT_SERVICE_H
 #define ACE_NT_SERVICE_H
 #include "ace/pre.h"

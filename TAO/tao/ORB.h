@@ -370,25 +370,19 @@ public:
 
   /**
    * Instructs the ORB to initialize itself and run its event loop in
-   * the current thread, not returning until the ORB has shut down or
-   * the time value specified through <tv> has expired.  If an error
-   * occurs during initialization or at run-time, a CORBA system
-   * exception will be thrown.  <tv> is reduced by the amount of time
-   * spent in this call.
-   **/
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
+   */
   void run (ACE_Time_Value &tv,
             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   /**
    * Instructs the ORB to initialize itself and run its event loop in
-   * the current thread, not returning until the ORB has shut down or
-   * the time value specified through <tv> has expired.  If an error
-   * occurs during initialization or at run-time, a CORBA system
-   * exception will be thrown.  <tv> is reduced by the amount of time
-   * spent in this call.  If <tv> is 0, it means that the timeout is
-   * infinite.  If <tv> is ACE_Time_Value::zero, it specifies to poll
-   * and does not block.
-   **/
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
+   */
   void run (ACE_Time_Value *tv,
             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -398,18 +392,18 @@ public:
                                TAO_default_environment ());
 
   /// Returns an indication of whether the ORB needs to perform some work
-  /// but will look for work pending for no more than the specified time.
+  /// but will look for work to pending for more than the specified time.
   /// This is useful for implementing an event loop with an idle timeout.
   CORBA::Boolean work_pending (ACE_Time_Value &tv,
                                CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
 
   /**
-   * This operation performs an implementation-defined unit of work.
-   * Note that the default behavior is to block if the unit of work is
-   * not present; this behavior can be modified by passing an
-   * appropriate <ACE_Time_Value> as described in run().
-   **/
+   * This operation performs an implementation-defined unit of
+   * work. Note that the default behavior is not to block; this
+   * behavior can be modified by passing an appropriate
+   * <ACE_Time_Value>.
+   */
   void perform_work (CORBA_Environment &ACE_TRY_ENV =
                      TAO_default_environment ());
   void perform_work (ACE_Time_Value &,
@@ -482,13 +476,6 @@ public:
 
   /// Resolve the POA.
   CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV);
-
-  /// Delegates on the ORB_Core to create a TAO_Stub.
-  TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
-                                const char *type_id,
-                                CORBA::PolicyList *policy_list,
-                                TAO_Acceptor_Filter *acceptor_filter,
-                                CORBA_Environment &ACE_TRY_ENV);
 
   /// Initialize the ORB globals correctly, i.e., only when they
   /// haven't been initialized yet.

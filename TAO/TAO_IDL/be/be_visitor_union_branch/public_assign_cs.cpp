@@ -73,7 +73,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (be_union_branch *n
         }
     }
 
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt << "\n";
 
   // first generate the type information
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
@@ -168,6 +168,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
       ACE_OS::sprintf (fname, "%s", bt->full_name ());
     }
 
+  os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
   *os << "// make a deep copy" << be_nl;
   *os << "this->u_." << ub->local_name ()
@@ -197,6 +198,7 @@ be_visitor_union_branch_public_assign_cs::visit_enum (be_enum *)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
   // valid label
   *os << "// set the value" << be_nl
@@ -239,12 +241,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
   idl_bool bt_is_defined = node->is_defined ();
 
-  *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl;
+  os->indent (); // start from current indentation
 
   // So the template will work with the macro.
   *os << "typedef "
@@ -289,8 +286,6 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
-
-  *os << "}" << be_uidt << be_uidt_nl;
 
   return 0;
 }
@@ -329,12 +324,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
   idl_bool bt_is_defined = node->full_definition ()->is_defined ();
 
-  *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl;
+  os->indent (); // start from current indentation
 
   // So the template will work with the macro.
   *os << "typedef "
@@ -380,8 +370,6 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
           << ");" << be_uidt << be_uidt_nl;
     }
 
-  *os << "}" << be_uidt << be_uidt_nl;
-
   return 0;
 }
 
@@ -417,6 +405,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
   switch (node->pt ())
     {
@@ -526,6 +515,8 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->indent (); // start from current indentation
+
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {
       *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
@@ -580,6 +571,8 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->indent (); // start from current indentation
+
   // set the discriminant to the appropriate label
   *os << "this->u_." << ub->local_name () << "_ = ";
 
@@ -626,6 +619,8 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent ();
 
   if (bt->size_type () == be_type::VARIABLE || node->has_constructor ())
     {
@@ -721,6 +716,8 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent (); // start from current indentation
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {

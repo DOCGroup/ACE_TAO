@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_FILE_IO_H
 #define ACE_FILE_IO_H
@@ -24,9 +25,6 @@
 
 // Used in the FILE_IO.h file...
 #include "ace/ACE.h"
-
-// Forward decl.
-class ACE_Message_Block;
 
 /**
  * @class ACE_FILE_IO
@@ -50,13 +48,6 @@ public:
 
   /// Send n bytes, keep trying until n are sent.
   ssize_t send_n (const void *buf, size_t n) const;
-
-  /// Send all the <message_block>s chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
-  /// operationto reduce the domain-crossing penalty.
-  ssize_t send_n (const ACE_Message_Block *message_block,
-                  const ACE_Time_Value *timeout = 0,
-                  size_t *bytes_transferred = 0);
 
   /// Recv n bytes, keep trying until n are received.
   ssize_t recv_n (void *buf, size_t n) const;
@@ -154,7 +145,7 @@ public:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FILE_IO.i"
-#endif /* !defined (ACE_LACKS_INLINE_FUNCTIONS) */
+#endif
 
 #include "ace/post.h"
 #endif /* ACE_FILE_IO_H */

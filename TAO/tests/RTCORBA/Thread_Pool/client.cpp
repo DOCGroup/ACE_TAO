@@ -1,12 +1,12 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "tao/RTCORBA/RTCORBA.h"
 #include "testC.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 ACE_RCSID(Thread_Pools, client, "$Id$")
 
-const char *ior = "file://ior";
+const char *ior = "file://ior_1";
 int iterations = 6;
 int shutdown_server = 0;
 

@@ -13,8 +13,6 @@
 // -- App. Specific Include --
 #include "Policy_Tester.h"
 
-#include "tao/Strategies/advanced_resource.h"
-
 ACE_RCSID(tao, server, "$Id$")
 
 
@@ -27,11 +25,8 @@ main (int argc, char *argv[])
     {
       Policy_Tester policy_tester;
 
-      int result = policy_tester.init (argc, argv, ACE_TRY_ENV);
+      policy_tester.init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (result != 0)
-        return result;
 
       policy_tester.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;

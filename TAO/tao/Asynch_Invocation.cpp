@@ -82,48 +82,36 @@ int
 TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int retval = 0;
+  // Register a reply dispatcher for this Asynch_Invocation. Use the
+  // heap allocated reply dispatcher.
 
-  // Only do the following steps if we have a valid reply dispatcher installed.
-  // In cases where no reply handler got installed, no reply dispatcher will
-  // have been set up. The ORB will drop replies to which it cannot associate
-  // a reply dispatcher.
-
-  if (this->rd_)
+  int retval =
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
+                                               this->rd_);
+  if (retval == -1)
     {
+      // @@ What is the right way to handle this error?
+      this->close_connection ();
 
-      // Register a reply dispatcher for this Asynch_Invocation. Use the
-      // heap allocated reply dispatcher.
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                        TAO_INVOKE_EXCEPTION);
+    }
 
-      retval =
-        this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
-                                                   this->rd_);
-      if (retval == -1)
-        {
-          // @@ What is the right way to handle this error?
-          this->close_connection ();
-
-          ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                             CORBA::COMPLETED_NO),
-                            TAO_INVOKE_EXCEPTION);
-        }
-
-      // Lets remember the transport for later, so that we can idle the transport
-      // when the reply dispatcher goes away.
-      this->rd_->transport (this->transport_);
+  // Lets remember the transport for later, so that we can idle the transport
+  // when the reply dispatcher goes away.
+  this->rd_->transport (this->transport_);
 
 
-      // AMI Timeout Handling Begin
+  // AMI Timeout Handling Begin
 
-      if (this->max_wait_time_ != 0)
-        {
-          this->rd_->schedule_timer (this->op_details_.request_id (),
-                                     *this->max_wait_time_);
-        }
+  if (this->max_wait_time_ != 0)
+    {
+      this->rd_->schedule_timer (this->op_details_.request_id (),
+                                 *this->max_wait_time_);
+    }
 
-      // AMI Timeout Handling End
-
-    } // if (this->rd_)
+  // AMI Timeout Handling End
 
   // Just send the request, without trying to wait for the reply.
   retval = TAO_GIOP_Invocation::invoke (0,

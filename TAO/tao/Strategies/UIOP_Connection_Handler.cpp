@@ -16,7 +16,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Resume_Handle.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Connection_Handler.inl"
@@ -27,6 +27,7 @@ ACE_RCSID(Strategies, UIOP_Connection_Handler, "$Id$")
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
+    pending_upcalls_ (1),
     uiop_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
@@ -39,16 +40,17 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                          CORBA::Boolean flag,
+                                                          CORBA::Boolean /*flag*/,
                                                           void *arg)
   : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
+    pending_upcalls_ (1),
     uiop_properties_ (ACE_static_cast
                      (TAO_UIOP_Properties *, arg))
 {
   TAO_UIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO_UIOP_Transport(this, orb_core, flag));
+          TAO_UIOP_Transport(this, orb_core, 0));
 
   // store this pointer (indirectly increment ref count)
   this->transport(specific_transport);
@@ -162,9 +164,8 @@ TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  long pending = this->decr_pending_upcalls ();
-
-  if (pending <= 0)
+  --this->pending_upcalls_;
+  if (this->pending_upcalls_ <= 0)
     {
       if (this->transport ()->wait_strategy ()->is_registered ())
         {
@@ -195,21 +196,12 @@ TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-
-int
-TAO_UIOP_Connection_Handler::resume_handler (void)
+ACE_HANDLE
+TAO_UIOP_Connection_Handler::fetch_handle (void)
 {
-  return TAO_RESUMES_CONNECTION_HANDLER;
+  return this->get_handle ();
 }
 
-
-int
-TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE)
-{
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
-  return this->transport ()->handle_output ();
-}
 
 int
 TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
@@ -227,51 +219,49 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->transport_cache ()->cache_transport (&prop,
-                                                                 this->transport ());
+  return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
+                                                                                  this->transport ());
 }
 
 
 int
-TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  this->incr_pending_upcalls ();
+  return this->handle_input_i (h);
+}
 
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
 
-  int retval =
-    this->transport ()->handle_input_i (resume_handle);
+int
+TAO_UIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
+                                             ACE_Time_Value *max_wait_time)
+{
+  this->pending_upcalls_++;
 
-  // The upcall is done. Bump down the reference count
-  if (this->decr_pending_upcalls () <= 0)
-    retval = -1;
+  // Call the transport read the message
+  int result = this->transport ()->read_process_message (max_wait_time);
 
-  if (retval == -1)
+  // Now the message has been read
+  if (result == -1 && TAO_debug_level > 0)
     {
-      // This is really a odd case. We could have a race condition if
-      // we dont do this. Looks like this what happens
-      // - imagine we have more than 1 server threads
-      // - The server has got more than one connection from the
-      //   clients
-      // - The clients make requests and they start dissappearing.
-      // - The connections start getting closed
-      // - at that point one of the server threads is woken up to
-      //   and handle_input () is called.
-      // - the handle_input sees no data and so is about return a -1.
-      // - if the handle is resumed, it looks like the oen more thread
-      //   gets access to the handle and the handle_input is called by
-      //   another thread.
-      // - at that point of time if the thread returning -1 to the
-      //   reactor starts closing down the handler, bad things start
-      //   happening.
-      // Looks subtle though. After adding this I dont see anything
-      // bad happenin and so let us stick with it...
-      resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("UIOP_Connection_Handler::read_message \n")));
+
     }
 
-  return retval;
+  // The upcall is done. Bump down the reference count
+  if (--this->pending_upcalls_ <= 0)
+    result = -1;
+
+  if (result == 0 || result == -1)
+    {
+      return result;
+    }
+
+  return 0;
 }
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -83,23 +83,27 @@ TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
 }
 
 int
-TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile,
-                                    CORBA::Boolean share_profile)
+TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+                                   TAO_MProfile &mprofile,
+                                   CORBA::Short priority)
 {
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
-  if (share_profile == 1)
-    return this->create_shared_profile (object_key,
-                                        mprofile);
+  if (priority == TAO_INVALID_PRIORITY)
+    return this->create_new_profile (object_key,
+                                     mprofile,
+                                     priority);
   else
-    return this->create_profile (object_key,
-                                 mprofile);
+    return this->create_shared_profile (object_key,
+                                        mprofile,
+                                        priority);
+
 }
 
 int
-TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
-                                   TAO_MProfile &mprofile)
+TAO_UIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
+                                       TAO_MProfile &mprofile,
+                                       CORBA::Short priority)
 {
   ACE_UNIX_Addr addr;
 
@@ -118,8 +122,7 @@ TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
                                     this->version_,
                                     this->orb_core_),
                   -1);
-
-  pfile->endpoint ()->priority (this->priority_);
+  pfile->endpoint ()->priority (priority);
 
   if (mprofile.give_profile (pfile) == -1)
     {
@@ -128,12 +131,7 @@ TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
       return -1;
     }
 
-  // Do not add any tagged components to the profile if configured
-  // by the user not to do so, or if an UIOP 1.0 endpoint is being
-  // created (IIOP 1.0 did not support tagged components, so we follow
-  // the same convention for UIOP).
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0
-      || (this->version_.major == 1 && this->version_.minor == 0))
+  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
     return 0;
 
   pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
@@ -148,7 +146,8 @@ TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
 
 int
 TAO_UIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
-                                          TAO_MProfile &mprofile)
+                                          TAO_MProfile &mprofile,
+                                          CORBA::Short priority)
 {
   TAO_Profile *pfile = 0;
   TAO_UIOP_Profile *uiop_profile = 0;
@@ -169,7 +168,9 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
     {
       // If <mprofile> doesn't contain UIOP_Profile, we need to create
       // one.
-      return create_profile (object_key, mprofile);
+      return create_new_profile (object_key,
+                                 mprofile,
+                                 priority);
     }
   else
     {
@@ -183,7 +184,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
       ACE_NEW_RETURN (endpoint,
                       TAO_UIOP_Endpoint (addr),
                       -1);
-      endpoint->priority (this->priority_);
+      endpoint->priority (priority);
       uiop_profile->add_endpoint (endpoint);
 
       return 0;
@@ -226,6 +227,7 @@ TAO_UIOP_Acceptor::close (void)
 
 int
 TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                         ACE_Reactor *reactor,
                          int major,
                          int minor,
                          const char *address,
@@ -248,11 +250,13 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
   else
-    return this->open_i (address);
+    return this->open_i (address,
+                         reactor);
 }
 
 int
 TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                 ACE_Reactor *reactor,
                                  int major,
                                  int minor,
                                  const char *options)
@@ -278,11 +282,13 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (tempname.get () == 0)
     return -1;
 
-  return this->open_i (tempname.get ());
+  return this->open_i (tempname.get (),
+                       reactor);
 }
 
 int
-TAO_UIOP_Acceptor::open_i (const char *rendezvous)
+TAO_UIOP_Acceptor::open_i (const char *rendezvous,
+                           ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_,
@@ -303,7 +309,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous)
   this->rendezvous_point (addr, rendezvous);
 
   if (this->base_acceptor_.open (addr,
-                                 this->orb_core_->reactor (this),
+                                 reactor,
                                  this->creation_strategy_,
                                  this->accept_strategy_,
                                  this->concurrency_strategy_) == -1)
@@ -505,22 +511,11 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
           if (name == "priority")
             {
-              CORBA::Short corba_priority =
-                ACE_static_cast (CORBA::Short,
-                                 ACE_OS::atoi (value.c_str ()));
-
-              if (corba_priority >= 0
-                  /* && corba_priority < 32768 */)
-                // priority_ and corba_priority will always be less
-                // than 32768 since CORBA::Short is a signed 16 bit
-                // integer.
-                this->priority_ = corba_priority;
-              else
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "TAO (%P|%t) Invalid UIOP endpoint "
-                                   "priority: <%s>\n",
-                                   value.c_str ()),
-                                  -1);
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
+                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                                 value.c_str ()),
+                                -1);
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,

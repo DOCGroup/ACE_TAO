@@ -100,7 +100,7 @@ private:
  * @class TAO_AV_Flow_Handler
  * @brief
  */
-class TAO_AV_Export TAO_AV_Flow_Handler
+class TAO_AV_Flow_Handler
 {
 public:
   /// Constructor.
@@ -204,7 +204,7 @@ class TAO_FlowSpec_Entry;
  * @class TAO_AV_Acceptor
  * @brief
  */
-class TAO_AV_Export TAO_AV_Acceptor
+class TAO_AV_Acceptor
 {
 public:
   TAO_AV_Acceptor (void);
@@ -231,7 +231,7 @@ protected:
  * @class TAO_AV_Connector
  * @brief
  */
-class TAO_AV_Export TAO_AV_Connector
+class TAO_AV_Connector
 {
 public:
   TAO_AV_Connector (void);

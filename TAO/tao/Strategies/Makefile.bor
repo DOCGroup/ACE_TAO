@@ -5,6 +5,8 @@
 NAME = TAO_Strategies
 
 OBJFILES = \
+	$(OBJDIR)\GIOP_Message_NonReactive_Base.obj \
+	$(OBJDIR)\GIOP_Message_NonReactive_Handler.obj \
 	$(OBJDIR)\UIOP_Factory.obj \
 	$(OBJDIR)\UIOP_Lite_Factory.obj \
 	$(OBJDIR)\UIOP_Profile.obj \
@@ -20,21 +22,13 @@ OBJFILES = \
 	$(OBJDIR)\SHMIOP_Acceptor.obj \
 	$(OBJDIR)\SHMIOP_Connection_Handler.obj \
 	$(OBJDIR)\SHMIOP_Endpoint.obj \
-	$(OBJDIR)\DIOP_Factory.obj \
-	$(OBJDIR)\DIOP_Profile.obj \
-	$(OBJDIR)\DIOP_Transport.obj \
-	$(OBJDIR)\DIOP_Connector.obj \
-	$(OBJDIR)\DIOP_Acceptor.obj \
-	$(OBJDIR)\DIOP_Connection_Handler.obj \
-	$(OBJDIR)\DIOP_Endpoint.obj \
 	$(OBJDIR)\TAO_Strategies_Internal.obj \
 	$(OBJDIR)\uiop_endpoints.obj \
 	$(OBJDIR)\advanced_resource.obj \
 	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\FIFO_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\LFU_Connection_Purging_Strategy.obj \
-	$(OBJDIR)\NULL_Connection_Purging_Strategy.obj \
-	$(OBJDIR)\LF_Strategy_Null.obj
+	$(OBJDIR)\NULL_Connection_Purging_Strategy.obj
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_STRATEGIES_CFLAGS)

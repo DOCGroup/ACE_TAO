@@ -61,12 +61,9 @@ private:
   ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
   // Meeting place for pipe.
 
-  int shutdown_;
+  ACE_Sig_Adapter done_handler_;
   // Keeps track of when we shut down due to receipt of the SIGINT
   // signal.
-
-  int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Signal handler method.
 };
 
 #endif /* SP_ACCEPTOR_H */

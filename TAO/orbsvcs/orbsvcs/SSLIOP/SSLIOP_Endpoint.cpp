@@ -17,7 +17,7 @@ ACE_RCSID (SSLIOP,
 TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
   : TAO_Endpoint (TAO_TAG_IIOP_PROFILE),
-    object_addr_ (),
+    //    ssl_hint_ (0),
     next_ (0),
     iiop_endpoint_ (iiop_endp)
 {
@@ -44,6 +44,8 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
       ACE_SET_BITS (this->ssl_component_.target_requires,
                     Security::Integrity
                     | Security::Confidentiality
+                    | Security::DetectReplay
+                    | Security::DetectMisordering
                     | Security::NoDelegation);
 
       // SSLIOP supports these Security::AssociationOptions by
@@ -55,6 +57,8 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
       ACE_SET_BITS (this->ssl_component_.target_supports,
                     Security::Integrity
                     | Security::Confidentiality
+                    | Security::DetectReplay
+                    | Security::DetectMisordering
                     | Security::EstablishTrustInTarget
                     | Security::NoProtection
                     | Security::NoDelegation);
@@ -110,7 +114,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == 0)
     return 0;
 
-  if (this->ssl_component_.port != 0
+   if (this->ssl_component_.port != 0
       && endpoint->ssl_component_.port != 0
       && this->ssl_component_.port != endpoint->ssl_component_.port)
     return 0;

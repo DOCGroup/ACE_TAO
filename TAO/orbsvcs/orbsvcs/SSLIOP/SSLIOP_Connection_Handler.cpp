@@ -14,7 +14,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Resume_Handle.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connection_Handler.i"
@@ -30,6 +30,7 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
     TAO_Connection_Handler (0),
     current_ (),
     current_impl_ (),
+    pending_upcalls_ (1),
     tcp_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
@@ -49,6 +50,7 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
     TAO_Connection_Handler (orb_core),
     current_ (),
     current_impl_ (),
+    pending_upcalls_ (1),
     tcp_properties_ (ACE_static_cast
                      (TAO_IIOP_Properties *, arg))
 {
@@ -210,8 +212,8 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  long pending = this->decr_pending_upcalls ();
-  if (pending <= 0)
+  --this->pending_upcalls_;
+  if (this->pending_upcalls_ <= 0)
     {
       if (this->transport ()->wait_strategy ()->is_registered ())
         {
@@ -245,18 +247,16 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 }
 
 
-int
-TAO_SSLIOP_Connection_Handler::resume_handler (void)
+ACE_HANDLE
+TAO_SSLIOP_Connection_Handler::fetch_handle (void)
 {
-  return TAO_RESUMES_CONNECTION_HANDLER;
+  return this->get_handle ();
 }
+
 
 int
 TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
-
   return this->transport ()->handle_output ();
 }
 
@@ -330,44 +330,51 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-    // Increase the reference count on the upcall that have passed us.
-  this->incr_pending_upcalls ();
+  return this->handle_input_i (h);
+}
 
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
 
-  int retval = this->transport ()->handle_input_i (resume_handle);
 
-  // The upcall is done. Bump down the reference count
-  if (this->decr_pending_upcalls () <= 0)
-    retval = -1;
+int
+TAO_SSLIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
+                                               ACE_Time_Value *max_wait_time)
+{
+  int result;
 
-  if (retval == -1)
+  // Set up the SSLIOP::Current object.
+  TAO_SSL_State_Guard ssl_state_guard (this,
+                                       this->orb_core (),
+                                       result);
+
+  if (result == -1)
+    return -1;
+
+  this->pending_upcalls_++;
+
+  // Call the transport read the message
+  result = this->transport ()->read_process_message (max_wait_time);
+
+  // Now the message has been read
+  if (result == -1 && TAO_debug_level > 2)
     {
-      // This is really a odd case. We could have a race condition if
-      // we dont do this. Looks like this what happens
-      // - imagine we have more than 1 server threads
-      // - The server has got more than one connection from the
-      //   clients
-      // - The clients make requests and they start dissappearing.
-      // - The connections start getting closed
-      // - at that point one of the server threads is woken up to
-      //   and handle_input () is called.
-      // - the handle_input sees no data and so is about return a -1.
-      // - if the handle is resumed, it looks like the oen more thread
-      //   gets access to the handle and the handle_input is called by
-      //   another thread.
-      // - at that point of time if the thread returning -1 to the
-      //   reactor starts closing down the handler, bad things start
-      //   happening.
-      // Looks subtle though. After adding this I dont see anything
-      // bad happenin and so let us stick with it...
-      resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("SSLIOP_Connection_Handler::read_message \n")));
+
     }
 
-  return retval;
+  // The upcall is done. Bump down the reference count
+  if (--this->pending_upcalls_ <= 0)
+    result = -1;
+
+  if (result == 0 || result == -1)
+    {
+      return result;
+    }
+
+  return 0;
 }
 
 

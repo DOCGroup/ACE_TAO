@@ -6,11 +6,12 @@
  *
  *  $Id$
  *
- *  @author Doug Schmid <schmidt@cs.wustl.edu>
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- *  @author and Darrell Brunsch <brunsch@cs.wustl.edu>
+ *  @author Doug Schmidt
+ *  @author Irfan Pyarali
+ *  @author and Darrell Brunsch
  */
 //=============================================================================
+
 
 #ifndef ACE_TIMER_QUEUE_T_H
 #define ACE_TIMER_QUEUE_T_H

@@ -3,18 +3,28 @@
 # This platform macros file is intended to work with
 # Digital UNIX using the GNU compiler.
 
-# Of late, this platform and compiler combination hasn't been tested. In
-# fact neither compilation nor testing has been done for almost a year.
-# So it's better to avoid this combination, if possible.
+ifndef ACE_DU_VERSION
+  ACE_DU_VERSION := $(shell uname -r)
+endif # ACE_DU_VERSION
 
-# Include the common macros for all compilers
-#
-include $(ACE_ROOT)/include/makeinclude/platform_tru64_pre.GNU
+ifeq (3.,$(findstring 3.,$(ACE_DU_VERSION)))
+  include $(ACE_ROOT)/include/makeinclude/platform_osf1_3.2.GNU
 
-# Include the macro file for osf1_4.x
-#
-include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.x_g++.GNU
+else # ! 3.x
+ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
+  include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0_g++.GNU
 
-# Include the common macros for all compilers
-#
-include $(ACE_ROOT)/include/makeinclude/platform_tru64_post.GNU
+  ifeq (4.0F,$(findstring 4.0F,$(shell /usr/sbin/sizer -v)))
+    CFLAGS += -DDIGITAL_UNIX=0x40F
+  else  # ! 4.0F
+    CFLAGS += -DDIGITAL_UNIX=0x400
+  endif # ! 4.0F
+
+else # ! 4.x
+ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
+  include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0_g++.GNU
+  CFLAGS += -DDIGITAL_UNIX=0x500
+
+endif # 5.x
+endif # ! 4.x
+endif # ! 3.x

@@ -26,6 +26,10 @@ class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator
   : public TAO_POA_Policy_Validator
 {
 public:
+
+  /// Constructor.
+  TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core);
+
   /// Destructor.
   ~TAO_POA_Default_Policy_Validator (void);
 
@@ -35,8 +39,12 @@ protected:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  virtual void validate_impl (TAO_Policy_Set &policies,
-                              CORBA::Environment &ACE_TRY_ENV);
+  void validate_impl (TAO_Policy_Set &policies,
+                      CORBA::Environment &ACE_TRY_ENV);
+
+  /// Add/merge policies.
+  void merge_policies_impl (TAO_Policy_Set &policies,
+                            CORBA::Environment &ACE_TRY_ENV);
 
   /**
    * Return whether the specified policy type is legal for the
@@ -50,5 +58,3 @@ protected:
 
 #include "ace/post.h"
 #endif /* TAO_DEFAULT_POLICY_VALIDATOR_H_ */
-
-

@@ -11,10 +11,13 @@
 
 #if defined (DIGITAL_UNIX)
 # include "ace/config-osf1-4.0.h"
-# define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 # if DIGITAL_UNIX >= 0x40D
 #   define ACE_LACKS_SYSTIME_H
+#   define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 # endif /* DIGITAL_UNIX >= 0x40D */
+# if DIGITAL_UNIX >= 0x500
+#   define _LIBC_POLLUTION_H_
+# endif /* DIGITAL_UNIX >= 0x500 */
 #else  /* ! DIGITAL_UNIX */
 # include "ace/config-osf1-3.2.h"
 #endif /* ! DIGITAL_UNIX */

@@ -70,8 +70,7 @@ DIRS  = CDR \
 	Big_Reply \
 	Big_Request_Muxing \
 	Oneways_Invoking_Twoways \
-	AMI_Buffering \
-	DLL_ORB
+	AMI_Buffering
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

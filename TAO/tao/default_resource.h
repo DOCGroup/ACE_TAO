@@ -37,66 +37,30 @@ class TAO_LF_Strategy;
  * factory can return resource instances which are, e.g., global,
  * stored in thread-specific storage, stored in shared memory,
  * etc.
- *
- * @note When using an ORB created by a dynamically loaded object, it
- *       is generally necessary to pre-load a "Resource_Factory" prior
- *       to initializing the ORB.  In the case of the
- *       TAO_Default_Resource_Factory, this can be done by adding the
- *       following Service Configurator directive to your `svc.conf'
- *       file before your the directive that loads the object that
- *       initialized your ORB:
- * @par
- *           static Resource_Factory ""
- * @par
- *       Alternatively, explicitly pre-load the Resource_Factory using
- *       the following in your code:
- * @par
- *           ACE_Service_Config::process_directive (
- *             ACE_TEXT ("static Resource_Factory \"\"") );
- * @par
- *       In both cases, place the appropriate resource factory
- *       arguments, if any, between the quotes immediately following
- *       "Resource_Factory."
  */
-class TAO_Export TAO_Default_Resource_Factory
-  : public TAO_Resource_Factory
+class TAO_Export TAO_Default_Resource_Factory : public TAO_Resource_Factory
 {
 public:
-
+  // = Initialization and termination methods.
   /// Constructor.
   TAO_Default_Resource_Factory (void);
 
   /// Destructor.
   virtual ~TAO_Default_Resource_Factory (void);
 
-  /**
-   * @name Service Configurator Hooks
-   */
-  //@{
+  // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, char* argv[]);
 
   /// Parse svc.conf arguments
   int parse_args (int argc, char* argv[]);
-  //@}
 
-  /**
-   * @name Member Accessors
-   */
-  //@{
-
+  /// = Member Accessors
   int get_parser_names (char **&names,
                         int &number_of_names);
   enum
   {
     TAO_ALLOCATOR_THREAD_LOCK
-  };
-
-  // = Reactor mappings strategy
-  enum
-  {
-    TAO_SINGLE_REACTOR,
-    TAO_REACTOR_PER_PRIORITY
   };
 
   /// Modify and get the source for the CDR allocators
@@ -105,7 +69,6 @@ public:
   // = Resource Retrieval
   virtual int use_tss_resources (void) const;
   virtual int use_locked_data_blocks (void) const;
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
   virtual ACE_Reactor *get_reactor (void);
   virtual void reclaim_reactor (ACE_Reactor *);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
@@ -129,23 +92,14 @@ public:
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
-  virtual void disable_factory (void);
-
-  //@}
-
 protected:
-
   /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
 
   /// Add a Parser name to the list of Parser names.
   int add_to_ior_parser_names (const char *);
 
-  void report_option_value_error (const char* option_name,
-                                  const char* option_value);
-
 protected:
-
   /// Flag indicating whether resources should be global or
   /// thread-specific.
   int use_tss_resources_;
@@ -195,16 +149,6 @@ protected:
 
   virtual int load_default_protocols (void);
 
-  /// This flag is used to determine whether options have been
-  /// processed via the init() function.  It is necessary to
-  /// properly report errors when the default factory is replaced.
-  int options_processed_;
-
-  /// This flag specifies whether the factory has been disabled.
-  /// If it has been disabled we should print warnings if options
-  /// were processed before (or later).
-  int factory_disabled_;
-
 private:
   enum Lock_Type
   {
@@ -217,7 +161,6 @@ private:
 
   enum Flushing_Strategy_Type
   {
-    TAO_LEADER_FOLLOWER_FLUSHING,
     TAO_REACTIVE_FLUSHING,
     TAO_BLOCKING_FLUSHING
   };

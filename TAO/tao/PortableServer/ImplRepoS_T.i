@@ -124,10 +124,6 @@ ACE_TRY_ENV
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
-
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T &t)
 	: ptr_ (&t),
@@ -362,10 +358,6 @@ how_many,
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
-#if defined (ACE_HAS_USING_KEYWORD)
-
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T &t)
 	: ptr_ (&t),
@@ -474,4 +466,3 @@ ACE_TRY_ENV
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
-

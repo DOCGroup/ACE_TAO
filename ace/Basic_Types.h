@@ -76,12 +76,8 @@
 // So we just define them on a platform basis.
 # if defined (ACE_HAS_WCHAR)
 #   if !defined (ACE_SIZEOF_WCHAR)
-#     if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-#       define ACE_SIZEOF_WCHAR sizeof (wchar_t)
-#     else
 // 0 so the Basic_Types test will catch this.
-#       define ACE_SIZEOF_WCHAR 0
-#     endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
+#     define ACE_SIZEOF_WCHAR 0
 #   endif /* !ACE_SIZEOF_WCHAR */
 # endif /* ACE_HAS_WCHAR */
 
@@ -575,7 +571,7 @@ typedef ACE_UINT16 ACE_USHORT16;
 # else /* ! BYTE_ORDER && ! __BYTE_ORDER */
   // We weren't explicitly told, so we have to figure it out . . .
 #   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__)
+     defined (vax) || defined (__alpha)
     // We know these are little endian.
 #     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN

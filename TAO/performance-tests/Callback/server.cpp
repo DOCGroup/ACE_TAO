@@ -3,7 +3,6 @@
 #include "Server_i.h"
 
 #include "tao/Messaging.h"
-#include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 

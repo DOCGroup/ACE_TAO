@@ -154,6 +154,7 @@ DRV_cpp_init (void)
   // for example, 5.1.14 gets 0x050114
   char version_option[128];
   ACE_OS::sprintf (version_option,
+
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
                    ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_BETA_VERSION);
   DRV_cpp_putarg (version_option);
@@ -420,6 +421,10 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_NEW (tmp,
                UTL_String (tmp_ifile));
+      idl_global->set_filename (tmp);
+
+      ACE_NEW (tmp,
+               UTL_String (tmp_ifile));
       idl_global->set_main_filename (tmp);
 
       ACE_NEW (tmp,
@@ -445,6 +450,10 @@ DRV_pre_proc (const char *myfile)
       fclose (fd);
 
       idl_global->set_read_from_stdin (I_FALSE);
+
+      ACE_NEW (tmp,
+               UTL_String (myfile));
+      idl_global->set_filename (tmp);
 
       ACE_NEW (tmp,
                UTL_String (myfile));
@@ -474,14 +483,8 @@ DRV_pre_proc (const char *myfile)
 
   cpp_options.command_line (arglist);
 
-  /// Remove any existing output file.
-  (void) ACE_OS::unlink (tmp_file);
-
-  // If the following open() fails, then we're either being hit with a
-  // symbolic link attack, or another process opened the file before
-  // us.
   ACE_HANDLE fd = ACE_OS::open (tmp_file,
-                                O_WRONLY | O_CREAT | O_EXCL,
+                                O_WRONLY | O_CREAT | O_TRUNC,
                                 ACE_DEFAULT_FILE_PERMS);
 
   if (fd == ACE_INVALID_HANDLE)
@@ -598,26 +601,15 @@ DRV_pre_proc (const char *myfile)
           ACE_OS::exit (99);
         }
 
-      // ACE_DEBUG sends to stderr - we want stdout for this dump
-      // of the preprocessor output. So we modify the singleton that
-      // was created in this process. Since IDL_CF_ONLY_PREPROC causes
-      // an (almost) immediate exit below, we don't have to restore
-      // the singleton's default parameters.
-      ACE_Log_Msg *out = ACE_Log_Msg::instance ();
-      out->msg_ostream (&cout);
-      out->clr_flags (ACE_Log_Msg::STDERR);
-      out->set_flags (ACE_Log_Msg::OSTREAM);
-
       while ((bytes = ACE_OS::fread (buffer, 
                                      sizeof (char), 
                                      ACE_Log_Record::MAXLOGMSGLEN - 1, 
                                      preproc)) 
           != 0)
         {
-          buffer[bytes] = 0;
+          buffer[bytes] = 0;  // Null char
 
-          ACE_DEBUG ((LM_DEBUG, 
-                      buffer));
+          ACE_DEBUG ((LM_DEBUG, buffer));
         }
 
       ACE_OS::fclose (preproc);

@@ -113,7 +113,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (!node->is_local ())
     {
       // Forward class declaration
-      *os << "// Forward Classes Declaration." << be_nl
+      *os << "// Forward Classes Declaration" << be_nl
           << "class " << node->base_proxy_impl_name () << ";" << be_nl
           << "class " << node->remote_proxy_impl_name () << ";" << be_nl
           << "class " << node->base_proxy_broker_name () << ";" << be_nl
@@ -133,15 +133,27 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       for (i = 0; i < node->n_inherits (); i++)
         {
-          *os << "public virtual " 
-              << node->inherits ()[i]->name ();
+          be_interface *inherited =
+            be_interface::narrow_from_decl (node->inherits ()[i]);
+
+          be_decl *scope = 0;
+
+          if (inherited->is_nested ())
+            {
+              // Inherited node is used in the scope of "node" node
+              scope =
+                be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            }
+
+          *os << "public virtual ";
+          *os << inherited->nested_type_name (scope);
 
           if (i < node->n_inherits () - 1) 
             {
               // Node has multiple inheritance, so put a comma.
-              *os << "," << be_nl;
+              *os << ", " << be_nl;
             }
-        }
+        }  // end of for loop
 
       *os << be_uidt << be_uidt_nl;
     }
@@ -167,11 +179,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << be_uidt_nl
       << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl;
 
-  // Generate the static variable that we use for narrowing.
-  *os << "static int _tao_class_id;" << be_nl << be_nl;
-
-  // Generate the static _duplicate, _narrow, and _nil operations.
-  *os << "// The static operations." << be_nl
+      // Generate the static _duplicate, _narrow, and _nil operations.
+  *os << "// the static operations" << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "

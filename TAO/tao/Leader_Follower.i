@@ -23,9 +23,15 @@ TAO_Leader_Follower::get_tss_resources (void) const
 }
 
 ACE_INLINE int
+TAO_Leader_Follower::TAO_Follower_Queue::is_empty (void) const
+{
+  return this->head_ == 0;
+}
+
+ACE_INLINE int
 TAO_Leader_Follower::follower_available (void) const
 {
-  return !this->follower_set_.empty ();
+  return !this->follower_set_.is_empty ();
 }
 
 ACE_INLINE int
@@ -39,7 +45,9 @@ TAO_Leader_Follower::elect_new_leader (void)
         }
       else if (this->follower_available ())
         {
-          return this->elect_new_leader_i ();
+          TAO_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
+          if (condition_ptr == 0 || condition_ptr->signal () == -1)
+            return -1;
         }
     }
   return 0;
@@ -133,7 +141,7 @@ TAO_Leader_Follower::set_client_leader_thread (void)
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   ++this->leaders_;
-  ++this->client_thread_is_leader_;
+  this->client_thread_is_leader_ = 1;
   ++tss->client_leader_thread_;
 }
 
@@ -143,7 +151,7 @@ TAO_Leader_Follower::reset_client_leader_thread (void)
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   --tss->client_leader_thread_;
   --this->leaders_;
-  --this->client_thread_is_leader_;
+  this->client_thread_is_leader_ = 0;
 }
 
 ACE_INLINE int
@@ -153,16 +161,16 @@ TAO_Leader_Follower::is_client_leader_thread (void) const
   return tss->client_leader_thread_ != 0;
 }
 
-ACE_INLINE void
-TAO_Leader_Follower::add_follower (TAO_LF_Follower *follower)
+ACE_INLINE int
+TAO_Leader_Follower::add_follower (TAO_Follower_Node *follower_node)
 {
-  this->follower_set_.push_back (follower);
+  return this->follower_set_.insert (follower_node);
 }
 
-ACE_INLINE void
-TAO_Leader_Follower::remove_follower (TAO_LF_Follower *follower)
+ACE_INLINE int
+TAO_Leader_Follower::remove_follower (TAO_Follower_Node *follower_node)
 {
-  this->follower_set_.remove (follower);
+  return this->follower_set_.remove (follower_node);
 }
 
 ACE_INLINE ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &
@@ -177,7 +185,7 @@ TAO_Leader_Follower::has_clients (void) const
   return this->clients_;
 }
 
-// ****************************************************************
+
 
 ACE_INLINE
 TAO_LF_Client_Thread_Helper::TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower)
@@ -204,3 +212,36 @@ TAO_LF_Client_Leader_Thread_Helper::~TAO_LF_Client_Leader_Thread_Helper (void)
 {
   this->leader_follower_.reset_client_leader_thread ();
 }
+
+ACE_INLINE int
+TAO_LF_Event_Loop_Thread_Helper::set_event_loop_thread (ACE_Time_Value *max_wait_time)
+{
+  // @@ Michael:
+  // Does this method need to be in that helper? Shouldn't it's contents be invoked
+  // directly?
+  // Does call_reset_ need to be proteced by the mutex?
+
+  int result = this->lf_strategy_.set_event_loop_thread (max_wait_time, leader_follower_);
+
+  if (result == 0)
+    this->call_reset_ = 1;
+
+  return result;
+}
+
+ACE_INLINE
+TAO_LF_Event_Loop_Thread_Helper::TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower,
+                                                                  TAO_LF_Strategy &lf_strategy)
+  : leader_follower_ (leader_follower),
+    lf_strategy_ (lf_strategy),
+    call_reset_ (0)
+{
+}
+
+ACE_INLINE
+TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper (void)
+{ 
+  this->lf_strategy_.reset_event_loop_thread_and_elect_new_leader (this->call_reset_,
+                                                                    this->leader_follower_);
+}
+

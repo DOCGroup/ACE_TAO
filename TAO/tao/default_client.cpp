@@ -24,7 +24,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
 #endif /* TAO_USE_ST_CLIENT_CONNECTION_HANDLER */
 
-#if TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY == 1
+#if defined (TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY)
   this->transport_mux_strategy_ = TAO_MUXED_TMS;
 #else
   this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
@@ -64,8 +64,6 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
               this->profile_lock_type_ = TAO_NULL_LOCK;
-            else
-              this->report_option_value_error ("-ORBProfileLock", name);
           }
         }
 
@@ -107,8 +105,6 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
               else if (ACE_OS::strcasecmp (name,
                                            "RW") == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_READ;
-              else
-                this->report_option_value_error ("-ORBClientConnectionHandler", name);
             }
         }
       else if (ACE_OS::strcmp (argv[curarg],
@@ -125,26 +121,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
               else if (ACE_OS::strcasecmp (name,
                                            "EXCLUSIVE") == 0)
                 this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
-              else
-                this->report_option_value_error ("-ORBTransportMuxStrategy", name);
             }
-        }
-
-      else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
-        {
-          // Can we assume there is an argument after the option?
-          // curarg++;
-          ACE_ERROR ((LM_ERROR,
-                      "Client_Strategy_Factory - "
-                      "unknown option <%s>\n",
-                      argv[curarg]));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Client_Strategy_Factory - "
-                      "ignoring option <%s>\n",
-                      argv[curarg]));
         }
 
 
@@ -234,17 +211,6 @@ TAO_Default_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
                   0);
 
   return the_lock;
-}
-
-void
-TAO_Default_Client_Strategy_Factory::report_option_value_error (
-                                 const char* option_name,
-                                 const char* option_value)
-{
-  ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Client_Strategy_Factory - unknown argument")
-             ACE_TEXT (" <%s> for <%s>\n"),
-             option_value, option_name));
 }
 
 // ****************************************************************

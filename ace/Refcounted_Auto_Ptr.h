@@ -52,7 +52,7 @@ public:
   ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
 
   /// Destructor.
-  virtual ~ACE_Refcounted_Auto_Ptr (void);
+  ~ACE_Refcounted_Auto_Ptr (void);
 
   /// Assignment operator that binds <this> and <r> to the same 
   /// <ACE_Refcounted_Auto_Ptr_Rep>. An <ACE_Refcounted_Auto_Ptr_Rep> 
@@ -85,11 +85,6 @@ public:
 
   /// Get the pointer value.
   X *get (void);
-
-  // = Utility method.
-  
-  /// Allows us to check for NULL on all ACE_Refcounted_Auto_Ptr objects.
-  int null (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -168,9 +163,6 @@ private:
   ACE_LOCK lock_;
 
 private:
-  /// Allows us to check for NULL on all ACE_Refcounted_Auto_Ptr objects.
-  int null (void) const;
-
   // = Constructor and destructor private.
   ACE_Refcounted_Auto_Ptr_Rep (X *p = 0);
   ~ACE_Refcounted_Auto_Ptr_Rep (void);

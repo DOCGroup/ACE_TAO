@@ -47,8 +47,8 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /I "../PACE" /D "NDEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
-# SUBTRACT CPP /Fr /YX
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /I "../PACE" /D "NDEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FR /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -135,8 +135,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
-# SUBTRACT CPP /Fr /YX /Yc /Yu
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FR /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
@@ -287,10 +287,6 @@ SOURCE=.\DEV_IO.cpp
 # Begin Source File
 
 SOURCE=.\Dirent.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Dirent_Selector.cpp
 # End Source File
 # Begin Source File
 
@@ -842,10 +838,6 @@ SOURCE=.\Svc_Conf_l.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Svc_Conf_Lexer_Guard.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Svc_Conf_y.cpp
 # End Source File
 # Begin Source File
@@ -1227,10 +1219,6 @@ SOURCE=.\DEV_IO.h
 # Begin Source File
 
 SOURCE=.\Dirent.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Dirent_Selector.h
 # End Source File
 # Begin Source File
 
@@ -1934,10 +1922,6 @@ SOURCE=.\Svc_Conf.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Svc_Conf_Lexer_Guard.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Svc_Conf_Tokens.h
 # End Source File
 # Begin Source File
@@ -2319,10 +2303,6 @@ SOURCE=.\DEV_IO.i
 # Begin Source File
 
 SOURCE=.\Dirent.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Dirent_Selector.inl
 # End Source File
 # Begin Source File
 

@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_SOCK_H
 #define ACE_SOCK_H
@@ -33,7 +34,7 @@
  * This class provides functions that are common to all of the
  * <ACE_SOCK_*> classes. <ACE_SOCK> provides the ability to get
  * and set socket options, get the local and remote addresses,
- * and open and close a socket handle.
+ * and close the socket.
  */
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
@@ -53,7 +54,7 @@ public:
                   void *optval,
                   int *optlen) const;
 
-  /// Close down the socket handle.
+  /// Close down the socket.
   int close (void);
 
   /// Return the local endpoint address in the referenced <ACE_Addr>.

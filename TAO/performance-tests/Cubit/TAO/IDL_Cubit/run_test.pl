@@ -33,12 +33,13 @@ $giopliteflag = 0;
 
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
-        print "run_test [-h] [-n num] [-debug] [-verbose]\n";
+        print "run_test [-h] [-n num] [-debug] [-orblite] [-verbose]\n";
         print "\n";
         print "-h                  -- prints this information\n";
         print "-n num              -- client uses <num> iterations\n";
         print "-debug              -- sets the debug flag for both client and "
                                       . "server\n";
+        print "-orblite            -- Use the lite version of the orb";
         exit;
     }
     elsif ($ARGV[$i] eq "-debug") {
@@ -49,7 +50,10 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         $clflags .= " -n $ARGV[$i + 1] ";
         $i++;
     }
-    elsif ($ARGV[$i] eq "-verbose") {
+    elsif ($ARGV[$i] eq " -orblite ") {
+        $giopliteflag = 1;
+    }
+    elsif ($ARGV[$i] eq " -verbose ") {
         $quietflag = "";
     }
     else {
@@ -104,6 +108,12 @@ print STDERR "Running IDL_Cubit with the default ORB protocol.\n\n";
 $SV->Arguments ($svflags . $svnsflags);
 $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
 
+if ($giopliteflag) {
+    print STDERR "\nRunning IDL_Cubit with the a lite ORB protocol.\n\n";
+    $SV->Arguments ($SV->Arguments () . " -ORBSvcConf $iiop_lite_conf ");
+    $CL->Arguments ($CL->Arugments () . " -ORBSvcConf $iiop_lite_conf ");
+}
+
 run_test_helper ();
 
 if ($OSNAME ne "MSWin32") {
@@ -112,6 +122,12 @@ if ($OSNAME ne "MSWin32") {
 
     $SV->Arguments ($svflags . $svnsflags . " -ORBEndpoint uiop:// ");
     $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
+
+    if ($giopliteflag) {
+        print STDERR "\nRunning IDL_Cubit with the a UIOP lite ORB protocol.\n\n";
+        $SV->Arguments ($SV->Arguments () . " -ORBSvcConf $uiop_lite_conf ");
+        $CL->Arguments ($CL->Arugments () . " -ORBSvcConf $uiop_lite_conf ");
+    }
 
     run_test_helper ();
 }

@@ -676,6 +676,9 @@ public:
     void using_servant_locator (void);
     // We are using the servant locator for this upcall.
 
+    CORBA::Short priority (void) const;
+    // Get the priority for the current upcall.
+
   protected:
 
     void servant_locator_cleanup (void);

@@ -12,7 +12,6 @@ CFLAGS = \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
         $(TAO_NAMING_CFLAGS) \
-        $(TAO_PROPERTY_CFLAGS) \
         $(TAO_AV_CFLAGS)
 
 LIBFILES = \
@@ -20,7 +19,6 @@ LIBFILES = \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
         $(TAO_NAMING_LIB) \
-        $(TAO_PROPERTY_LIB) \
         $(TAO_AV_LIB)
 
 CPPDIR = .;..

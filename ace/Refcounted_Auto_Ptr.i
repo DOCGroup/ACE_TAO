@@ -5,21 +5,6 @@
 
 #include "Synch_T.h"
 
-template <class X, class ACE_LOCK> inline int
-ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::null (void) const
-{
-  ACE_GUARD_RETURN (ACE_LOCK, guard,
-                    ACE_const_cast (ACE_LOCK&, this->lock_), 0);
-
-  return this->ptr_.get() == 0;
-}
-
-template <class X, class ACE_LOCK> inline int
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::null (void) const
-{
-  return this->rep_->null ();
-}
-
 template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::create (X *p)
 {
@@ -65,19 +50,17 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::assign (ACE_Refcounted_Auto_Ptr_Rep<X,
   ACE_ASSERT (rep != 0);
   ACE_ASSERT (new_rep != 0);
 
-  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *old = 0;
-  {
-    // detached old last for exception safety
-    ACE_GUARD (ACE_LOCK, guard, rep->lock_);
-    old = rep;
-    rep = new_rep;
- 
-    if (old->ref_count_-- > 0)
-      return;
- 
-  } // The lock is released before deleting old rep object below.
- 
-  delete old;
+  ACE_GUARD (ACE_LOCK, guard, rep->lock_);
+
+  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *old = rep;
+  rep = new_rep;
+
+  // detached old last for exception safety
+  if(old->ref_count_-- == 0)
+    // We do not need the lock when deleting the representation.
+    // There should be no side effects from deleting rep and we don
+    // not want to release a deleted mutex.
+    delete old;
 }
 
 template <class X, class ACE_LOCK> inline

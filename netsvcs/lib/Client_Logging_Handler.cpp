@@ -64,11 +64,10 @@ ACE_Client_Logging_Handler::open (void *)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_remote_addr")),
                       -1);
-#if 0
+
   ACE_DEBUG ((LM_DEBUG,
 	      ACE_TEXT ("connected to client on handle %u\n"),
 	      this->peer ().get_handle ()));
-#endif /* 0 */
   return 0;
 }
 
@@ -88,11 +87,9 @@ ACE_Client_Logging_Handler::get_handle (void) const
 int
 ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("in handle_input, handle = %u\n"),
               handle));
-#endif /* 0 */
 
   if (handle == this->logging_output_)
     // We're getting a message from the logging server!
@@ -128,10 +125,8 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 			   ACE_TEXT ("remove_handler")),
                           -1);
       spipe.close ();
-#if 0
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client closing down\n")));
-#endif /* 0 */
       return 0;
     }
 #else
@@ -166,10 +161,8 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
         this->peer ().close ();
       else
         ACE_OS::closesocket (handle);
-#if 0
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client closing down\n")));
-#endif /* 0 */
       return 0;
       /* NOTREACHED */
 
@@ -191,10 +184,8 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                               0);
  
           ACE_OS::closesocket (handle);
-#  if 0
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("client closing down\n")));
-#  endif /* 0 */
           return 0;
         }
 #endif /* ACE_WIN32 */
@@ -215,36 +206,38 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       // seriously wrong, so shutting down the connection is probably
       // the best solution.
       if (retrieved != length)
-        {
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
+       {
+           ACE_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("partial message retrieved, attempting second try...\n")));
-#endif /* 0 */
  
           int remainder = length - retrieved;
-
-          int secondtry = ACE_OS::recv (handle,
-                                        ((char *) &log_record) + retrieved,
-                                        remainder);
-          if (secondtry != remainder)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("%p\n"),
-                          ACE_TEXT ("recv")));
-
-              if (ACE_Reactor::instance ()->remove_handler
-                  (handle,
-                   ACE_Event_Handler::READ_MASK
-                   | ACE_Event_Handler::EXCEPT_MASK
-                   | ACE_Event_Handler::DONT_CALL) == -1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("%n: %p\n"),
-                            ACE_TEXT ("remove_handler")));
-
-              ACE_OS::closesocket (handle);
-              return 0;
-            }
-        }
+ 
+           int secondtry = ACE_OS::recv (handle,
+                                         ((char *) &log_record) + retrieved,
+                                         remainder);
+           if (secondtry != remainder)
+             {
+               ACE_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("second try failed\n")));
+ 
+               if (ACE_Reactor::instance ()->remove_handler
+                   (handle,
+                    ACE_Event_Handler::READ_MASK
+                    | ACE_Event_Handler::EXCEPT_MASK
+                    | ACE_Event_Handler::DONT_CALL) == -1)
+                 ACE_ERROR_RETURN ((LM_ERROR,
+                                    ACE_TEXT ("%n: %p\n"),
+                                    ACE_TEXT ("remove_handler")),
+                                   0);
+ 
+               ACE_OS::closesocket (handle);
+               
+               ACE_ERROR_RETURN ((LM_ERROR,
+                                  ACE_TEXT ("%p\n"),
+                                  ACE_TEXT ("recv")),
+                                 0);
+             }
+       }
     }
 #endif /* ACE_HAS_STREAM_PIPES */
 
@@ -270,6 +263,9 @@ ACE_Client_Logging_Handler::handle_exception (ACE_HANDLE handle)
 int
 ACE_Client_Logging_Handler::close (u_long)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("shutting down!!!\n")));
+
   if (this->logging_output_ != ACE_STDERR)
     ACE_OS::closesocket (this->logging_output_);
 

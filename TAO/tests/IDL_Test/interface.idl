@@ -112,4 +112,3 @@ interface Client
   attribute End::Value v;
 };
 
-

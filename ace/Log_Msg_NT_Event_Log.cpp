@@ -5,7 +5,6 @@
 #if defined (ACE_WIN32)
 
 #include "ace/Log_Msg_NT_Event_Log.h"
-#include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
 
 ACE_RCSID(ace, Log_Msg_NT_Event_Log, "$Id$")
@@ -23,7 +22,6 @@ ACE_Log_Msg_NT_Event_Log::~ACE_Log_Msg_NT_Event_Log (void)
 int
 ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
 {
-  ACE_UNUSED_ARG (logger_key);
   // ACE's "resource module" contains the message resource required
   // for event logging.
   ACE_TCHAR msg_file [MAXPATHLEN];
@@ -35,13 +33,13 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   int msg_file_length = ACE_OS::strlen (msg_file);
 
   // Information is stored in the registry at a location based on the
-  // program name.
+  // logger_key.
   ACE_TCHAR reg_key [MAXPATHLEN];
   ACE_OS::strcpy (reg_key,
                   ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
   int reg_key_length = ACE_OS::strlen(reg_key);
   ACE_OS::strncat (reg_key,
-                   ACE_Log_Msg::program_name (),
+                   logger_key,
                    MAXPATHLEN - reg_key_length);
 
   // Add the event source to the registry. Note that if this fails it
@@ -67,7 +65,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   RegCloseKey (hkey);
 
   // Obtain a handle to the event source.
-  this->evlog_handle_ = ACE_TEXT_RegisterEventSource (0, ACE_Log_Msg::program_name ());
+  this->evlog_handle_ = ACE_TEXT_RegisterEventSource (0, logger_key);
   return this->evlog_handle_ ? 0 : -1;
 }
 

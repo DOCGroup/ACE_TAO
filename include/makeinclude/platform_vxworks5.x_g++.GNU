@@ -1,4 +1,4 @@
-# platform_vxworks5.x_g++.GNU,v 4.83 2001/05/16 07:41:05 mk1 Exp
+# $Id$
 #
 # VxWorks 5.3.1 and later with GNU g++ that is distributed by Wind River.
 
@@ -46,7 +46,7 @@ endif # WIND_HOST_TYPE
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
 
-ifeq (,$(findstring $(HOST_DIR)/bin,$(PATH)))
+ifeq (,$(findstring $(HOST_DIR)/bin,$PATH))
   #### Use := instead of += because += inserts a space.
   PATH := $(PATH):$(HOST_DIR)/bin
 endif # PATH
@@ -76,34 +76,6 @@ ifeq ($(CPU),)
   CPU = PPC604
 endif # default CPU
 
-ifeq ($(CPU),SH7700)
-  BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3
-  CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
-  TOOLENV = sh
-else
-ifeq ($(CPU),SH7700LE)
-  BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3 -ml
-  CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
-  TOOLENV = sh
-else
-ifeq ($(CPU),SH7750)
-  BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4
-  CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
-  TOOLENV = sh
-else
-ifeq ($(CPU),SH7750LE)
-  BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7750 -m4 -ml -mspace
-  CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
-  TOOLENV = sh
-else
 ifeq ($(CPU),PPC403)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC403 -mcpu=403
@@ -225,10 +197,6 @@ endif # PPC860
 endif # PPC603
 endif # PPC604
 endif # PPC403
-endif # SH7750LE
-endif # SH7750
-endif # SH7700LE
-endif # SH7700
 
 #### END target CPU-specific settings
 

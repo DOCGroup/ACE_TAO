@@ -126,45 +126,6 @@ ACE::compiler_beta_version (void)
 }
 
 int
-ACE::select (int width,
-             ACE_Handle_Set *readfds,
-             ACE_Handle_Set *writefds,
-             ACE_Handle_Set *exceptfds,
-             const ACE_Time_Value *timeout)
-{
-  int result = ACE_OS::select (width,
-                               readfds ? readfds->fdset () : 0,
-                               writefds ? writefds->fdset () : 0,
-                               exceptfds ? exceptfds->fdset () : 0,
-                               timeout);
-  if (result > 0) 
-    {
-      if (readfds)
-        readfds->sync ((ACE_HANDLE) width);
-      if (writefds)
-        writefds->sync ((ACE_HANDLE) width);
-      if (exceptfds)
-        exceptfds->sync ((ACE_HANDLE) width);
-    }
-  return result;
-}
-
-int
-ACE::select (int width,
-             ACE_Handle_Set &readfds,
-             const ACE_Time_Value *timeout)
-{
-  int result = ACE_OS::select (width,
-                               readfds.fdset (),
-                               0,
-                               0,
-                               timeout);
-  if (result > 0) 
-    readfds.sync ((ACE_HANDLE) width);
-  return result;
-}
-
-int
 ACE::terminate_process (pid_t pid)
 {
 #if defined (ACE_HAS_PACE)
@@ -1273,7 +1234,7 @@ ACE::recv_n (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec iov[ACE_IOV_MAX];
+  iovec iov[IOV_MAX];
   int iovcnt = 0;
 
   while (message_block != 0)
@@ -1297,10 +1258,10 @@ ACE::recv_n (ACE_HANDLE handle,
               iovcnt++;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
-              // find ACE_IOV_MAX for platforms that do not define it rather
-              // than simply setting ACE_IOV_MAX to some arbitrary value such
+              // find IOV_MAX for platforms that do not define it rather
+              // than simply setting IOV_MAX to some arbitrary value such
               // as 16.
-              if (iovcnt == ACE_IOV_MAX)
+              if (iovcnt == IOV_MAX)
                 {
                   size_t current_transfer = 0;
 
@@ -1331,7 +1292,7 @@ ACE::recv_n (ACE_HANDLE handle,
     }
 
   // Check for remaining buffers to be sent.  This will happen when
-  // ACE_IOV_MAX is not a multiple of the number of message blocks.
+  // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
       size_t current_transfer = 0;
@@ -2077,7 +2038,7 @@ ACE::send_n (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  iovec iov[ACE_IOV_MAX];
+  iovec iov[IOV_MAX];
   int iovcnt = 0;
 
   while (message_block != 0)
@@ -2101,10 +2062,10 @@ ACE::send_n (ACE_HANDLE handle,
               iovcnt++;
 
               // The buffer is full make a OS call.  @@ TODO find a way to
-              // find ACE_IOV_MAX for platforms that do not define it rather
-              // than simply setting ACE_IOV_MAX to some arbitrary value such
+              // find IOV_MAX for platforms that do not define it rather
+              // than simply setting IOV_MAX to some arbitrary value such
               // as 16.
-              if (iovcnt == ACE_IOV_MAX)
+              if (iovcnt == IOV_MAX)
                 {
                   size_t current_transfer = 0;
 
@@ -2135,7 +2096,7 @@ ACE::send_n (ACE_HANDLE handle,
     }
 
   // Check for remaining buffers to be sent.  This will happen when
-  // ACE_IOV_MAX is not a multiple of the number of message blocks.
+  // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
       size_t current_transfer = 0;
@@ -2256,6 +2217,7 @@ ACE::handle_ready (ACE_HANDLE handle,
 
   int result = ACE_OS::poll (&fds, 1, timeout);
 #else
+
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 

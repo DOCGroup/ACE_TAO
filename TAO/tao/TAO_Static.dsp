@@ -323,6 +323,10 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\giop.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
@@ -352,6 +356,10 @@ SOURCE=.\GIOP_Message_Lite.h
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.h
 # End Source File
 # Begin Source File
 
@@ -415,10 +423,6 @@ SOURCE=.\IIOPC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
@@ -460,42 +464,6 @@ SOURCE=.\IORInfo.h
 # Begin Source File
 
 SOURCE=.\Leader_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower_Flushing_Strategy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Loop_Thread_Helper.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Adder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.h
 # End Source File
 # Begin Source File
 
@@ -716,10 +684,6 @@ SOURCE=.\RequestInfo_Util.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
@@ -1095,7 +1059,11 @@ SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_State.inl
+SOURCE=.\GIOP_Message_Reactive_Handler.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
@@ -1147,10 +1115,6 @@ SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
@@ -1180,38 +1144,6 @@ SOURCE=.\IOR_Parser.i
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Loop_Thread_Helper.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Adder.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 
@@ -1356,10 +1288,6 @@ SOURCE=.\Reactor_Registry.i
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 
@@ -1755,6 +1683,10 @@ SOURCE=.\GIOP_Message_Locate_Header.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Reactive_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_State.cpp
 # End Source File
 # Begin Source File
@@ -1819,10 +1751,6 @@ SOURCE=.\IIOPC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Incoming_Message_Queue.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Interceptor_List.cpp
 # End Source File
 # Begin Source File
@@ -1848,42 +1776,6 @@ SOURCE=.\IORInfo.cpp
 # Begin Source File
 
 SOURCE=.\Leader_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Binder.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Adder.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Follower_Auto_Ptr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\LF_Strategy_Complete.cpp
 # End Source File
 # Begin Source File
 
@@ -2080,10 +1972,6 @@ SOURCE=.\RequestInfo_Util.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Resume_Handle.cpp
 # End Source File
 # Begin Source File
 

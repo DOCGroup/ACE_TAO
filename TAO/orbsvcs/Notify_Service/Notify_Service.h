@@ -124,7 +124,7 @@ protected:
   PortableServer::POA_var poa_;
   // Reference to the root poa.
 
-  CosNaming::NamingContextExt_var naming_;
+  CosNaming::NamingContext_var naming_;
   // A naming context.
 
   Worker worker_;

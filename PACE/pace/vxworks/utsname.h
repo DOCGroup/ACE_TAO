@@ -16,6 +16,7 @@
 #ifndef PACE_SYS_UTSNAME_H_VXWORKS
 #define PACE_SYS_UTSNAME_H_VXWORKS
 
+#include <sys/utsname.h>
 #include "pace/stddef.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)

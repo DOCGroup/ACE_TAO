@@ -14,13 +14,12 @@
 
 #ifndef ACE_OS_H
 #define ACE_OS_H
-
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
 
 #if defined (ACE_HAS_VIRTUAL_TIME)
-#include /**/ <sys/times.h>
+#include <sys/times.h>
 #endif /*ACE_HAS_VIRTUAL_TIME*/
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -272,11 +271,6 @@ typedef long      id_t;
 #   endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
-// Used for the UNIX syslog logging interface to ACE_Log_Msg.
-# ifndef ACE_DEFAULT_SYSLOG_FACILITY
-# define ACE_DEFAULT_SYSLOG_FACILITY LOG_USER
-# endif /* ACE_DEFAULT_SYSLOG_FACILITY */
-
 # if !defined (ACE_DEFAULT_LOGGER_KEY)
 
 #     if defined (ACE_HAS_STREAM_PIPES)
@@ -337,14 +331,8 @@ typedef long      id_t;
 # endif /* ACE_DEFAULT_DIR_PERMS */
 
 // Default size of the ACE Reactor.
-# if defined (FD_SETSIZE)
-int const ACE_FD_SETSIZE = FD_SETSIZE;
-# else
-#   define ACE_FD_SETSIZE FD_SETSIZE
-# endif /* ACE_FD_SETSIZE */
-
 # if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
+#   define ACE_DEFAULT_SELECT_REACTOR_SIZE FD_SETSIZE
 # endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
 # if !defined (ACE_DEFAULT_TIMEPROBE_TABLE_SIZE)
@@ -1065,12 +1053,12 @@ typedef struct timespec
 typedef struct timespec timespec_t;
 # endif /* ACE_LACKS_TIMESPEC_T */
 
-# if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
+# if !defined (ACE_HAS_CLOCK_GETTIME) && !defined (_CLOCKID_T)
 typedef int clockid_t;
 #   if !defined (CLOCK_REALTIME)
 #     define CLOCK_REALTIME 0
 #   endif /* CLOCK_REALTIME */
-# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
+# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
 
 // -------------------------------------------------------------------
 // These forward declarations are only used to circumvent a bug in
@@ -1838,7 +1826,7 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 
-# if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 # include /**/ "pace/semaphore.h"
 #   if !defined (SEM_FAILED)
 #     define SEM_FAILED ((pace_sem_t *) -1)
@@ -1880,7 +1868,7 @@ typedef struct
   // remember if we need to delete <sema_> or not.
 #endif /* ACE_LACKS_NAMED_POSIX_SEM */
 } ACE_sema_t;
-# endif /* ACE_HAS_PACE && !ACE_WIN32 */
+# endif /* ACE_HAS_PACE */
 
 struct cancel_state
 {
@@ -2018,17 +2006,7 @@ struct stat
          !defined(_UNICOS) && !defined(UNIXWARE_7_1)
 #       define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #       define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
-#       if defined (HPUX)
-          // HP-UX's other is the SCHED_HPUX class, which uses historical
-          // values that have reverse semantics from POSIX (low value is
-          // more important priority). To use these in pthreads calls,
-          // the values need to be converted. The other scheduling classes
-          // don't need this special treatment.
-#         define ACE_PROC_PRI_OTHER_MIN \
-                      (sched_get_priority_min(SCHED_OTHER))
-#       else
-#         define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#       endif /* HPUX */
+#       define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
 #     else /* UNICOS is missing a sched_get_priority_min() implementation,
               SCO too */
 #       define ACE_PROC_PRI_FIFO_MIN  0
@@ -2039,12 +2017,7 @@ struct stat
 #     if defined (_POSIX_PRIORITY_SCHEDULING) && !defined(UNIXWARE_7_1)
 #       define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
 #       define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#       if defined (HPUX)
-#         define ACE_PROC_PRI_OTHER_MAX \
-                      (sched_get_priority_max(SCHED_OTHER))
-#       else
-#         define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
-#       endif /* HPUX */
+#       define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
 #     else /* SCO missing sched_get_priority_max() implementation */
 #       define ACE_PROC_PRI_FIFO_MAX  59
 #       define ACE_PROC_PRI_RR_MAX    59
@@ -2063,86 +2036,42 @@ struct stat
 
 // THREAD-level values
 #     if defined(PRI_FIFO_MIN) && defined(PRI_FIFO_MAX) && defined(PRI_RR_MIN) && defined(PRI_RR_MAX) && defined(PRI_OTHER_MIN) && defined(PRI_OTHER_MAX)
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) PRI_FIFO_MIN
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) PRI_FIFO_MAX
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) PRI_RR_MIN
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) PRI_RR_MAX
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) PRI_OTHER_MIN
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) PRI_OTHER_MAX
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
+#       define ACE_THR_PRI_FIFO_MIN  (long) PRI_FIFO_MIN
+#       define ACE_THR_PRI_FIFO_MAX  (long) PRI_FIFO_MAX
+#       define ACE_THR_PRI_RR_MIN    (long) PRI_RR_MIN
+#       define ACE_THR_PRI_RR_MAX    (long) PRI_RR_MAX
+#       define ACE_THR_PRI_OTHER_MIN (long) PRI_OTHER_MIN
+#       define ACE_THR_PRI_OTHER_MAX (long) PRI_OTHER_MAX
 #     elif defined (AIX)
         // AIX's priority range is 1 (low) to 127 (high). There aren't
         // any preprocessor macros I can find. PRIORITY_MIN is for
         // process priorities, as far as I can see, and does not apply
         // to thread priority. The 1 to 127 range is from the
         // pthread_attr_setschedparam man page (Steve Huston, 18-May-2001).
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) 1
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) 127
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) 1
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) 127
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) 1
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) 127
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
+#       define ACE_THR_PRI_FIFO_MIN  (long) 1
+#       define ACE_THR_PRI_FIFO_MAX  (long) 127
+#       define ACE_THR_PRI_RR_MIN    (long) 1
+#       define ACE_THR_PRI_RR_MAX    (long) 127
+#       define ACE_THR_PRI_OTHER_MIN (long) 1
+#       define ACE_THR_PRI_OTHER_MAX (long) 127
 #     elif defined (sun)
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) 0
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) 59
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) 0
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) 59
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) 0
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) 127
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
+        // SunOS 5.6 could use sched_get_priority_min/max () for FIFO
+        // and RR.  But for OTHER, it returns negative values, which
+        // can't be used.  sched_get_priority_min/max () aren't
+        // supported in SunOS 5.5.1.
+#       define ACE_THR_PRI_FIFO_MIN  (long) 0
+#       define ACE_THR_PRI_FIFO_MAX  (long) 59
+#       define ACE_THR_PRI_RR_MIN    (long) 0
+#       define ACE_THR_PRI_RR_MAX    (long) 59
+#       define ACE_THR_PRI_OTHER_MIN (long) 0
+#       define ACE_THR_PRI_OTHER_MAX (long) 59
 #     else
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) ACE_PROC_PRI_FIFO_MIN
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) ACE_PROC_PRI_FIFO_MAX
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) ACE_PROC_PRI_RR_MIN
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) ACE_PROC_PRI_RR_MAX
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) ACE_PROC_PRI_OTHER_MIN
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) ACE_PROC_PRI_OTHER_MAX
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
+#       define ACE_THR_PRI_FIFO_MIN  (long) ACE_PROC_PRI_FIFO_MIN
+#       define ACE_THR_PRI_FIFO_MAX  (long) ACE_PROC_PRI_FIFO_MAX
+#       define ACE_THR_PRI_RR_MIN    (long) ACE_PROC_PRI_RR_MIN
+#       define ACE_THR_PRI_RR_MAX    (long) ACE_PROC_PRI_RR_MAX
+#       define ACE_THR_PRI_OTHER_MIN (long) ACE_PROC_PRI_OTHER_MIN
+#       define ACE_THR_PRI_OTHER_MAX (long) ACE_PROC_PRI_OTHER_MAX
 #     endif
 #     if !defined(ACE_THR_PRI_FIFO_DEF)
 #       define ACE_THR_PRI_FIFO_DEF  ((ACE_THR_PRI_FIFO_MIN + ACE_THR_PRI_FIFO_MAX)/2)
@@ -2482,37 +2411,6 @@ struct sockaddr_un {
 #     define USYNC_THREAD            0
 #     define USYNC_PROCESS           1 /* It's all global on VxWorks
                                           (without MMU option). */
-#     if defined (ACE_HAS_PACE)
-#     define THR_INHERIT_SCHED       0
-#     define THR_EXPLICIT_SCHED      0
-#     define THR_SCHED_IO            0
-#     define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
-#     define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
-#     define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
-#     define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#     define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#     define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
-#     if !defined (ACE_THR_PRI_FIFO_MIN)
-#       define ACE_THR_PRI_FIFO_MIN  (long) ACE_PROC_PRI_FIFO_MIN
-#     endif /* !ACE_THR_PRI_FIFO_MIN */
-#     if !defined (ACE_THR_PRI_FIFO_MAX)
-#       define ACE_THR_PRI_FIFO_MAX  (long) ACE_PROC_PRI_FIFO_MAX
-#     endif /* !ACE_THR_PRI_FIFO_MAX */
-#     if !defined (ACE_THR_PRI_RR_MIN)
-#       define ACE_THR_PRI_RR_MIN    (long) ACE_PROC_PRI_RR_MIN
-#     endif /* !ACE_THR_PRI_RR_MIN */
-#     if !defined (ACE_THR_PRI_RR_MAX)
-#       define ACE_THR_PRI_RR_MAX    (long) ACE_PROC_PRI_RR_MAX
-#     endif /* !ACE_THR_PRI_RR_MAX */
-#     if !defined (ACE_THR_PRI_OTHER_MIN)
-#       define ACE_THR_PRI_OTHER_MIN (long) ACE_PROC_PRI_OTHER_MIN
-#     endif /* !ACE_THR_PRI_OTHER_MIN */
-#     if !defined (ACE_THR_PRI_OTHER_MAX)
-#       define ACE_THR_PRI_OTHER_MAX (long) ACE_PROC_PRI_OTHER_MAX
-#     endif /* !ACE_THR_PRI_OTHER_MAX */
-#     define THR_SCOPE_SYSTEM        0
-#     define THR_SCOPE_PROCESS       0
-#     endif /* ACE_HAS_PACE */
 
 #     if !defined (ACE_DEFAULT_SYNCH_TYPE)
  // Types include these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
@@ -2521,14 +2419,7 @@ struct sockaddr_un {
 #       define ACE_DEFAULT_SYNCH_TYPE SEM_Q_FIFO
 #     endif /* ! ACE_DEFAULT_SYNCH_TYPE */
 
-#     if defined (ACE_HAS_PACE)
-typedef pace_pthread_mutex_t ACE_mutex_t;
-typedef pace_pthread_mutexattr_t ACE_mutexattr_t;
-typedef pace_pthread_cond_t ACE_cond_t;
-typedef pace_pthread_condattr_t ACE_condattr_t;
-#     else
 typedef SEM_ID ACE_mutex_t;
-#     endif /* ACE_HAS_PACE */
 // Implement ACE_thread_mutex_t with ACE_mutex_t because there's just
 // one process . . .
 typedef ACE_mutex_t ACE_thread_mutex_t;
@@ -2536,24 +2427,15 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 // Use VxWorks semaphores, wrapped ...
 typedef struct
 {
-#       if defined (ACE_HAS_PACE)
-  pace_pthread_mutex_t sema_;
-#       else
   SEM_ID sema_;
-#       endif /* ACE_HAS_PACE */
   // Semaphore handle.  This is allocated by VxWorks.
 
   char *name_;
   // Name of the semaphore:  always NULL with VxWorks.
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
-#     if defined (ACE_HAS_PACE)
-typedef pace_pthread_t ACE_thread_t;
-typedef pace_pthread_t ACE_hthread_t;
-#     else
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
-#     endif /* ACE_HAS_PACE */
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use u_int, so the ACE TSS emulation is compatible with them.)
@@ -2635,7 +2517,7 @@ public:
 #     define THR_SCHED_DEFAULT       0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
 
-#   if defined (ACE_LACKS_COND_T) && !defined (ACE_HAS_PACE)
+#   if defined (ACE_LACKS_COND_T)
 /**
  * @class ACE_cond_t
  *
@@ -2976,10 +2858,6 @@ typedef unsigned int size_t;
 #  define IOV_MAX 16
 # endif /* IOV_MAX */
 
-# if !defined (ACE_IOV_MAX)
-#define ACE_IOV_MAX IOV_MAX
-# endif /* ACE_IOV_MAX */
-
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
   // Header information snarfed from compiler provided header files
   // that are not included because there is already an identically
@@ -3125,10 +3003,8 @@ extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
 # endif
 #endif  /* _LARGEFILE64_SOURCE */
 
-#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) < 500
+#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) != 500
 // _XOPEN_SOURCE == 500    Single Unix conformance
-// It seems that _XOPEN_SOURCE == 500 means that the prototypes are
-// already defined in the system headers.
 extern "C" ssize_t pread (int fd,
                           void *buf,
                           size_t nbytes,
@@ -3138,7 +3014,7 @@ extern "C" ssize_t pwrite (int fd,
                            const void *buf,
                            size_t n,
                            off_t offset);
-#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) < 500 */
+#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) != 500 */
 
 # if defined (ACE_LACKS_UALARM_PROTOTYPE)
 extern "C" u_int ualarm (u_int usecs, u_int interval);
@@ -3908,9 +3784,6 @@ extern "C"
 #     else  /* ! __QNX__ */
 #       include /**/ <sys/termios.h>
 #     endif /* ! __QNX__ */
-#     if defined (HPUX)
-#       include /**/ <sys/modem.h>
-#     endif /* HPUX */
 #   endif /* ACE_HAS_TERM_IOCTLS */
 
 #if !defined (VMIN)
@@ -4528,6 +4401,10 @@ struct sigaction
 #   define PROT_RDWR (PROT_READ|PROT_WRITE)
 # endif /* PROT_RDWR */
 
+# if !defined (WNOHANG)
+#   define WNOHANG 0
+# endif /* WNOHANG */
+
 # if defined (ACE_HAS_POSIX_NONBLOCK)
 #   define ACE_NONBLOCK O_NONBLOCK
 # else
@@ -4928,10 +4805,6 @@ typedef double ACE_timer_t;
 # else
     typedef int ACE_Rusage;
 # endif /* ACE_HAS_PRUSAGE_T */
-
-# if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
-# include /**/ <syslog.h>
-# endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
 
 #if defined (ACE_HAS_SYS_FILIO_H)
 # include /**/ <sys/filio.h>
@@ -5936,29 +5809,18 @@ public:
   static int mutex_lock (ACE_mutex_t *m,
                          int &abandoned);
 
+  /// This method attempts to acquire a lock, but gives up if the lock
+  /// has not been acquired by the given time.
   /**
-   * This method attempts to acquire a lock, but gives up if the lock
-   * has not been acquired by the given time.  If the lock is not
-   * acquired within the given amount of time, then this method
-   * returns -1 with an <ETIME> errno on platforms that actually
-   * support timed mutexes.  The timeout should be an absolute time.
-   * Note that the mutex should not be a recursive one, i.e., it
-   * should only be a standard mutex or an error checking mutex.
+   * If the lock is not acquired within the given amount of time, then
+   * this method returns with an ETIMEDOUT errno on platforms that
+   * actually support timed mutexes.  The timeout should be an
+   * absolute time.  Note that the mutex should not be a recursive
+   * one, i.e., it should only be a standard mutex or an error
+   * checking mutex.
    */
   static int mutex_lock (ACE_mutex_t *m,
                          const ACE_Time_Value &timeout);
-
-  /**
-   * If <timeout> == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
-   * this method attempts to acquire a lock, but gives up if the lock
-   * has not been acquired by the given time, in which case it returns
-   * -1 with an <ETIME> errno on platforms that actually support timed
-   * mutexes.  The timeout should be an absolute time.  Note that the
-   * mutex should not be a recursive one, i.e., it should only be a
-   * standard mutex or an error checking mutex.
-   */
-  static int mutex_lock (ACE_mutex_t *m,
-                         const ACE_Time_Value *timeout);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
@@ -5987,8 +5849,6 @@ public:
   static int thread_mutex_lock (ACE_thread_mutex_t *m);
   static int thread_mutex_lock (ACE_thread_mutex_t *m,
                                 const ACE_Time_Value &timeout);
-  static int thread_mutex_lock (ACE_thread_mutex_t *m,
-                                const ACE_Time_Value *timeout);
   static int thread_mutex_trylock (ACE_thread_mutex_t *m);
   static int thread_mutex_unlock (ACE_thread_mutex_t *m);
   //@}
@@ -6207,7 +6067,6 @@ public:
   static int mkfifo (const ACE_TCHAR *file,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
   static ACE_TCHAR *mktemp (ACE_TCHAR *t);
-  static ACE_HANDLE mkstemp (ACE_TCHAR *t);
   static ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
   static int rename (const ACE_TCHAR *old_name,
                      const ACE_TCHAR *new_name,
@@ -6288,8 +6147,6 @@ public:
   static int sema_wait (ACE_sema_t *s);
   static int sema_wait (ACE_sema_t *s,
                         ACE_Time_Value &tv);
-  static int sema_wait (ACE_sema_t *s,
-                        ACE_Time_Value *tv);
   //@}
 
   //@{ @name A set of wrappers for System V semaphores.
@@ -6604,8 +6461,7 @@ public:
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
    * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
-   * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
-   * THR_SCOPE_SYSTEM
+   * THR_SCHED_RR, THR_SCHED_DEFAULT
    * = END<INDENT>
    *
    * By default, or if <priority> is set to
@@ -6783,7 +6639,7 @@ public:
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
-
+  
 
 private:
 
@@ -6833,22 +6689,22 @@ private:
 
   static int cond_timedwait_i (ACE_cond_t *cv,
                        ACE_mutex_t *m,
-                       ACE_Time_Value *);
-
+                       ACE_Time_Value *); 
+  
   static u_int alarm_i (u_int secs);
 
   static u_int ualarm_i (u_int usecs, u_int interval = 0);
-
+  
   static u_int ualarm_i (const ACE_Time_Value &tv,
                          const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
-
+  
   static int sleep_i (u_int seconds);
 
   static int sleep_i (const ACE_Time_Value &tv);
-
+  
   static int nanosleep_i (const struct timespec *requested,
                           struct timespec *remaining = 0);
-
+  
   static int select_i (int width,
                        fd_set *rfds,
                        fd_set *wfds,
@@ -6860,11 +6716,11 @@ private:
                        fd_set *wfds,
                        fd_set *efds,
                        const ACE_Time_Value &tv);
-
+  
   static int poll_i (struct pollfd *pollfds,
                      u_long len,
                      const ACE_Time_Value *tv = 0);
-
+    
   static int poll_i (struct pollfd *pollfds,
                      u_long len,
                      const ACE_Time_Value &tv);

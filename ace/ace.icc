@@ -48,7 +48,6 @@ group UTILS_FILES =
   "Configuration.cpp",
   "Configuration_Import_Export.cpp",
   "Dirent.cpp",
-  "Dirent_Selector.cpp",
   "Dynamic.cpp",
   "Dynamic_Service_Base.cpp",
   "Functor.cpp",
@@ -87,7 +86,6 @@ group UTILS_INCLUDES =
   "Configuration.h",
   "Configuration_Import_Export.h",
   "Dirent.h",
-  "Dirent_Selector.h",
   "Dynamic.h",
   "Dynamic_Service_Base.h",
   "Functor.h",
@@ -118,8 +116,6 @@ group LOGGING_FILES =
   "Log_Msg_Callback.cpp",
   "Log_Msg_Backend.cpp",
   "Log_Msg_IPC.cpp",
-  "Log_Msg_NT_Event_Log.cpp",
-  "Log_Msg_UNIX_Syslog.cpp",
   "Log_Record.cpp",
   "Logging_Strategy.cpp",
   "Trace.cpp"
@@ -130,8 +126,6 @@ group LOGGING_INCLUDES =
   "Log_Msg_Callback.h",
   "Log_Msg_Backend.h",
   "Log_Msg_IPC.h",
-  "Log_Msg_NT_Event_Log.h",
-  "Log_Msg_UNIX_Syslog.h",
   "Log_Record.h",
   "Logging_Strategy.h",
   "Trace.h"
@@ -373,8 +367,7 @@ group SVCCONF_FILES =
   "Service_Templates.cpp",
   "Shared_Object.cpp",
   "Svc_Conf_l.cpp",
-  "Svc_Conf_y.cpp",
-  "Svc_Conf_Lexer_Guard.cpp"
+  "Svc_Conf_y.cpp"
 
 group SVCCONF_INCLUDES =
   "DLL.h",
@@ -498,7 +491,6 @@ group TEMPLATE_FILES =
 	   "Hash_Map_With_Allocator_T.cpp",
            "Hash_Cache_Map_Manager_T.cpp",
            "IOStream_T.cpp",
-           "Intrusive_List.cpp",
            "LOCK_SOCK_Acceptor.cpp",
            "Local_Name_Space_T.cpp",
            "Malloc_T.cpp",

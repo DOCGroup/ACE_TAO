@@ -10,9 +10,8 @@
 
 use lib "../../../bin";
 
+use ACEutils;
 use PerlACE::Run_Test;
-
-$TARGETHOSTNAME = "localhost";
 
 $status = 0;
 

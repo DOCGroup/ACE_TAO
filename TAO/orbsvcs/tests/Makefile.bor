@@ -1,10 +1,8 @@
 #
-# Makefile for building the TAO obsvcs tests
-# $Id$
+# Makefile for building the TAO obsvcs examples
 #
 
 DIRS = \
-        AVStreams \
 	FaultTolerance \
 	Event \
 	EC_Throughput \
@@ -14,7 +12,6 @@ DIRS = \
 	EC_Custom_Marshal \
 	Event_Latency \
 	Property \
-        Simple_Naming \
 	Trading
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -51,8 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_Strategies.lib TAO_PortableServer.lib RTCORBA_Common.lib TAO_RTCORBA.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\Common" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\Strategies"
-# SUBTRACT LINK32 /pdb:none
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib RTCORBA_Common.lib TAO_RTCORBA.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\Common" /libpath:"..\..\..\..\tao\RTCORBA"
 
 !ELSEIF  "$(CFG)" == "Orb_Per_Priority Server - Win32 Debug"
 
@@ -77,8 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_Strategiesd.lib TAO_PortableServerd.lib RTCORBA_Commond.lib TAO_RTCORBAd.lib /nologo /subsystem:console /debug /machine:I386 /out:"server.exe" /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\Common" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\Strategies"
-# SUBTRACT LINK32 /pdb:none
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib RTCORBA_Commond.lib TAO_RTCORBAd.lib /nologo /subsystem:console /debug /machine:I386 /out:"server.exe" /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\Common" /libpath:"..\..\..\..\tao\RTCORBA"
 
 !ENDIF 
 

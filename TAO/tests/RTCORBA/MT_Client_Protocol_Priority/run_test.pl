@@ -30,15 +30,11 @@ if ($^O eq "MSWin32") {
     $priority2 = 1;
     $priority3 = 5;
 }
-elsif ($^O eq "dec_osf") {
+
+if ($^O eq "dec_osf") {
     $priority1 = 20;
     $priority2 = 25;
     $priority3 = 30;
-}
-elsif ($^O eq "hpux") {
-    $priority1 = 17;
-    $priority2 = 22;
-    $priority3 = 29;
 }
 
 # Clean up leftovers from previous runs.
@@ -49,12 +45,7 @@ $server_conf = PerlACE::LocalFile ("server.conf");
 
 $server_args =
     "-o $iorfile -ORBdebuglevel 1 -ORBsvcconf $server_conf "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority1 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority2 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority3 "
-    ."-ORBendpoint shmiop://0/priority=$priority1 "
-    ."-ORBendpoint shmiop://0/priority=$priority2 "
-    ."-ORBendpoint shmiop://0/priority=$priority3 ";
+    ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
 
 $client_args =
     "-o file://$iorfile  "

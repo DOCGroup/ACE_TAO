@@ -159,15 +159,14 @@ Notify_Service::init (int argc, char *argv[],
   if (this->use_name_svc_)
   {
     // Register the Factory
-    ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
+    ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
 
-    CosNaming::Name_var name =
-      this->naming_->to_name (this->notify_factory_name_.c_str (),
-                              ACE_TRY_ENV);
-    ACE_CHECK_RETURN (-1);
+    CosNaming::Name name (1);
+    name.length (1);
+    name[0].id =
+      CORBA::string_dup (this->notify_factory_name_.c_str ());
 
-
-    this->naming_->rebind (name.in (),
+    this->naming_->rebind (name,
                            this->notify_factory_.in (),
                            ACE_TRY_ENV);
     ACE_CHECK_RETURN (-1);
@@ -189,13 +188,10 @@ Notify_Service::init (int argc, char *argv[],
                                                  initial_admin,
                                                  id,
                                                  ACE_TRY_ENV);
-        name = this->naming_->to_name (
-          this->notify_channel_name_.c_str (),
-          ACE_TRY_ENV);
-        ACE_CHECK_RETURN (-1);
+        name[0].id =
+          CORBA::string_dup (this->notify_channel_name_.c_str ());
 
-
-        this->naming_->rebind (name.in (),
+        this->naming_->rebind (name,
                                ec.in (),
                                ACE_TRY_ENV);
         ACE_CHECK_RETURN (-1);
@@ -225,8 +221,8 @@ Notify_Service::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
                       -1);
 
   this->naming_ =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in (),
-                                          ACE_TRY_ENV);
+    CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -277,14 +273,12 @@ Notify_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
   if (this->use_name_svc_)
   {
     // Unbind from the naming service.
-    CosNaming::Name_var name =
-      this->naming_->to_name (this->notify_factory_name_.c_str (),
-                              ACE_TRY_ENV);
-    ACE_CHECK;
+    CosNaming::Name name (1);
+    name.length (1);
+    name[0].id = CORBA::string_dup (this->notify_factory_name_.c_str ());
 
-    this->naming_->unbind (name.in (),
+    this->naming_->unbind (name,
                            ACE_TRY_ENV);
-    ACE_CHECK;
   }
 
   // shutdown the ORB.
@@ -293,7 +287,7 @@ Notify_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-Notify_Service::parse_args (int argc, char *argv[])
+Notify_Service::parse_args(int argc, char *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -302,7 +296,7 @@ Notify_Service::parse_args (int argc, char *argv[])
     {
       if ((current_arg = arg_shifter.get_the_parameter ("-Factory")))
         {
-          this->notify_factory_name_.set (current_arg);
+          this->notify_factory_name_.set(current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-Boot") == 0)

@@ -65,18 +65,20 @@ public:
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile);
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint* endpoint);
   virtual CORBA::ULong endpoint_count (void);
@@ -84,7 +86,8 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 private:
-  int open_i (const char *rendezvous);
+  int open_i (const char *rendezvous,
+              ACE_Reactor *reactor);
   // Implement the common part of the open*() methods
 
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);
@@ -98,14 +101,14 @@ private:
   // Obtains uiop properties that must be used by this acceptor, i.e.,
   // initializes <uiop_properties_>.
 
-  int create_profile (const TAO_ObjectKey &object_key,
-                      TAO_MProfile &mprofile);
-  // Create a UIOP profile representing this acceptor.  This method
-  // factors out common functionality of <create_mprofile> and
-  // <create_endpoint_for_mprofile>.
+  int create_new_profile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile,
+                          CORBA::Short priority);
+  // Create a UIOP profile representing this acceptor.
 
   int create_shared_profile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile);
+                             TAO_MProfile &mprofile,
+                             CORBA::Short priority);
   // Add the endpoints on this acceptor to a shared profile.
 
 private:

@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_SOCK_STREAM_H
 #define ACE_SOCK_STREAM_H
@@ -21,9 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/INET_Addr.h"
-
-// Forward declarations.
-class ACE_Message_Block;
 
 /**
  * @class ACE_SOCK_Stream
@@ -81,42 +79,35 @@ public:
 
   // = I/O functions.
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly <len> bytes into <buf> from <handle>.
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly <len> bytes into <buf> from <handle>.
   ssize_t recv_n (void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Receive an <iovec> of size <iovcnt> from the connected socket.
+  /// Receive an <iovec> of size <iovcnt> to the connected socket.
   ssize_t recvv_n (iovec iov[],
                    size_t iovcnt,
                    const ACE_Time_Value *timeout = 0,
                    size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connection socket.
+  /// Try to send exactly <len> bytes into <buf> from <handle>.
   ssize_t send_n (const void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connected socket.
+  /// Try to send exactly <len> bytes into <buf> from <handle>.
   ssize_t send_n (const void *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout = 0,
-                  size_t *bytes_transferred = 0) const;
-
-  /// Send all the <message_block>s chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
-  /// operation to reduce the domain-crossing penalty.
-  ssize_t send_n (const ACE_Message_Block *message_block,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 

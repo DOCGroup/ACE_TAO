@@ -8,21 +8,14 @@
 
 #include "UIOP_Factory.h"
 #include "SHMIOP_Factory.h"
-#include "DIOP_Factory.h"
 
-#include "Reactor_Per_Priority.h"
 #include "LFU_Connection_Purging_Strategy.h"
 #include "FIFO_Connection_Purging_Strategy.h"
 #include "NULL_Connection_Purging_Strategy.h"
 
-#include "LF_Strategy_Null.h"
-
 #include "tao/debug.h"
-#include "tao/Single_Reactor.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
-#include "tao/LF_Strategy_Complete.h"
 #include "tao/Leader_Follower.h"
-#include "tao/StringSeqC.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
@@ -48,19 +41,12 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 #if TAO_HAS_SHMIOP == 1
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
-#endif /* TAO_HAS_SHMIOP == 1 */
-
-#if TAO_HAS_DIOP == 1
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_DIOP_Protocol_Factory);
-#endif /* TAO_HAS_DIOP == 1 */
-
+#endif /* TAO_HAS_UIOP == 1 */
 }
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
-  :reactor_registry_type_ (TAO_SINGLE_REACTOR),
-   reactor_type_ (TAO_REACTOR_TP),
-   cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
+  : reactor_type_ (TAO_REACTOR_TP),
+    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
 {
   // Constructor
 }
@@ -75,162 +61,131 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Advanced_Resource_Factory::init");
 
-  // If this factory has already been disabled then
-  // print a warning and exit because any options
-  // are useless
-  if (this->factory_disabled_) {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
-                ACE_TEXT ("Default Resource Factory is disabled\n")));
-    return 0;
-  }
-  this->options_processed_ = 1;
-
-  // If the default resource factory exists, then disable it.
-  // This causes any directives for the "Resource_Factory" to
-  // report warnings.
-  // Note: this is also being done in init_protocol_factories()
-  // to cover the case where init() is not called.
-  TAO_Resource_Factory *default_resource_factory =
-    ACE_Dynamic_Service<TAO_Resource_Factory>::instance ("Resource_Factory");
-  if (default_resource_factory != 0)
-    {
-      default_resource_factory->disable_factory();
-    }
-
   int curarg = 0;
-  int unused_argc = 0;
-  CORBA::StringSeq unused_argv (argc);
-  unused_argv.length (argc);
 
   for (curarg = 0; curarg < argc; curarg++)
-    {
-      if (ACE_OS::strcasecmp (argv[curarg],
-                              "-ORBReactorRegistry") == 0)
-        {
+    if (ACE_OS::strcasecmp (argv[curarg],
+                            "-ORBReactorRegistry") == 0)
+      {
+        curarg++;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("TAO_Advanced_Resource_Factory::init - ")
+                           ACE_TEXT ("-ORBReactorRegistry no longer supported\n")),
+                          -1);
+      }
 
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBReactorLock") == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO_Default_Resource obsolete -ORBReactorLock ")
+                    ACE_TEXT ("option, please use -ORBReactorType\n")));
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name,
-                                      "single") == 0)
-                this->reactor_registry_type_ = TAO_SINGLE_REACTOR;
-              else if (ACE_OS::strcasecmp (name,
-                                           "per-priority") == 0)
-                this->reactor_registry_type_ = TAO_REACTOR_PER_PRIORITY;
-              else
-                this->report_option_value_error ("-ORBReactorRegistry", name);
-            }
-        }
+            if (ACE_OS::strcasecmp (name, "null") == 0)
+              this->reactor_type_ = TAO_REACTOR_SELECT_ST;
+            else if (ACE_OS::strcasecmp (name, "token") == 0)
+              this->reactor_type_= TAO_REACTOR_SELECT_MT;
+          }
+      }
 
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-ORBReactorLock") == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO_Advanced_Resource_Factory - obsolete -ORBReactorLock ")
-                      ACE_TEXT ("option, please use -ORBReactorType\n")));
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBReactorType") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, "null") == 0)
-                this->reactor_type_ = TAO_REACTOR_SELECT_ST;
-              else if (ACE_OS::strcasecmp (name, "token") == 0)
-                this->reactor_type_= TAO_REACTOR_SELECT_MT;
-            }
-        }
-
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-ORBReactorType") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
-
-              if (ACE_OS::strcasecmp (name,
-                                      "select_mt") == 0)
-                this->reactor_type_ = TAO_REACTOR_SELECT_MT;
-              else if (ACE_OS::strcasecmp (name,
-                                           "select_st") == 0)
-                this->reactor_type_ = TAO_REACTOR_SELECT_ST;
-              else if (ACE_OS::strcasecmp (name,
-                                           "fl") == 0)
+            if (ACE_OS::strcasecmp (name,
+                                    "select_mt") == 0)
+              this->reactor_type_ = TAO_REACTOR_SELECT_MT;
+            else if (ACE_OS::strcasecmp (name,
+                                         "select_st") == 0)
+              this->reactor_type_ = TAO_REACTOR_SELECT_ST;
+            else if (ACE_OS::strcasecmp (name,
+                                         "fl") == 0)
 #if defined(ACE_HAS_FL)
-                this->reactor_type_ = TAO_REACTOR_FL;
+              this->reactor_type_ = TAO_REACTOR_FL;
 #else
-                this->report_unsupported_error ("FlReactor");
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO_Advanced_Factory - FlReactor")
+                          ACE_TEXT (" not supported on this platform\n")));
 #endif /* ACE_HAS_FL */
-              else if (ACE_OS::strcasecmp (name, "tk_reactor") == 0)
+            else if (ACE_OS::strcasecmp (name, "tk_reactor") == 0)
 #if defined(ACE_HAS_TK)
-                this->reactor_type_ = TAO_REACTOR_TK;
+              this->reactor_type_ = TAO_REACTOR_TK;
 #else
-                this->report_unsupported_error ("TkReactor");
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO_Advanced_Factory - TkReactor")
+                          ACE_TEXT (" not supported on this platform\n")));
 #endif /* ACE_HAS_TK */
-              else if (ACE_OS::strcasecmp (name,
+            else if (ACE_OS::strcasecmp (name,
                                          "wfmo") == 0)
 #if defined(ACE_WIN32)
-                this->reactor_type_ = TAO_REACTOR_WFMO;
+              this->reactor_type_ = TAO_REACTOR_WFMO;
 #else
-                this->report_unsupported_error ("WFMO Reactor");
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Advanced_Factory - WFMO Reactor"
+                          " not supported on this platform\n"));
 #endif /* ACE_WIN32 */
-              else if (ACE_OS::strcasecmp (name,
-                                           "msg_wfmo") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "msg_wfmo") == 0)
 #if defined(ACE_WIN32)
-                this->reactor_type_ = TAO_REACTOR_MSGWFMO;
+              this->reactor_type_ = TAO_REACTOR_MSGWFMO;
 #else
-                this->report_unsupported_error ("MsgWFMO Reactor");
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Advanced_Factory - MsgWFMO Reactor"
+                          " not supported on this platform\n"));
 #endif /* ACE_WIN32 */
 
-              else if (ACE_OS::strcasecmp (name,
-                                           "tp") == 0)
-                this->reactor_type_ = TAO_REACTOR_TP;
-              else
-                this->report_option_value_error ("-ORBReactorType", name);
-            }
-        }
+            else if (ACE_OS::strcasecmp (name,
+                                         "tp") == 0)
+              this->reactor_type_ = TAO_REACTOR_TP;
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO_Advanced_Factory - unknown argument")
+                          ACE_TEXT (" <%s> for -ORBreactortype\n"), name));
+          }
+      }
 
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-ORBInputCDRAllocator") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBInputCDRAllocator") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name,
-                                      "null") == 0)
-                {
-                  this->cdr_allocator_type_ = TAO_ALLOCATOR_NULL_LOCK;
-                  this->use_locked_data_blocks_ = 0;
-                }
-              else if (ACE_OS::strcasecmp (name,
-                                           "thread") == 0)
-                {
-                  this->cdr_allocator_type_ = TAO_ALLOCATOR_THREAD_LOCK;
-                  this->use_locked_data_blocks_ = 1;
-                }
-              else
-                {
-                  this->report_option_value_error ("-ORBInputCDRAllocator", name);
-                }
-            }
-        }
-      else
-        {
-          unused_argv[unused_argc] = CORBA::string_dup (argv[curarg]);
-          unused_argc++;
-        }
-    }
+            if (ACE_OS::strcasecmp (name,
+                                    "null") == 0)
+              {
+                this->cdr_allocator_type_ = TAO_ALLOCATOR_NULL_LOCK;
+                this->use_locked_data_blocks_ = 0;
+              }
+            else if (ACE_OS::strcasecmp (name,
+                                         "thread") == 0)
+              {
+                this->cdr_allocator_type_ = TAO_ALLOCATOR_THREAD_LOCK;
+                this->use_locked_data_blocks_ = 1;
+              }
+          }
+      }
+    else
+      {
+        if (TAO_debug_level > 0)
+          {
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO_Advanced_Factory: Unknown option ")
+                        ACE_TEXT ("<%s>.\n"),
+                        argv[curarg]));
+          }
+      }
 
-  unused_argv.length (unused_argc);  // "Trim" the string sequence to
-                                     // the actual size.
-
-  this->TAO_Default_Resource_Factory::init (unused_argc,
-                                            unused_argv.get_buffer ());
+  this->TAO_Default_Resource_Factory::init (argc, argv);
   return 0;
 }
 
@@ -252,18 +207,6 @@ TAO_Advanced_Resource_Factory::load_default_protocols (void)
 int
 TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 {
-  // If the default resource factory exists, then disable it.
-  // This causes any directives for the "Resource_Factory" to
-  // report warnings.
-  // This is needed to ensure warnings when no static directive
-  // for this factory is used (and init() is not called).
-  TAO_Resource_Factory *default_resource_factory =
-    ACE_Dynamic_Service<TAO_Resource_Factory>::instance ("Resource_Factory");
-  if (default_resource_factory != 0)
-    {
-      default_resource_factory->disable_factory();
-    }
-
   TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
   TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
 
@@ -410,69 +353,6 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
         }
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-      protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("DIOP_Factory");
-
-      if (protocol_factory == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        "DIOP Protocol Factory"));
-
-          ACE_NEW_RETURN (protocol_factory,
-                          TAO_DIOP_Protocol_Factory,
-                          -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
-        }
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("DIOP_Factory"), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
-
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Unable to add ")
-                      ACE_TEXT ("<%s> to protocol factory set.\n"),
-                      item->protocol_name ().c_str ()));
-
-          delete item;
-
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
-        }
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Loaded default ")
-                      ACE_TEXT ("protocol <DIOP_Factory>\n")));
-        }
-#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
-
       return 0;
 
     }
@@ -508,31 +388,7 @@ TAO_Advanced_Resource_Factory::get_protocol_factories (void)
   return &protocol_factories_;
 }
 
-TAO_Reactor_Registry *
-TAO_Advanced_Resource_Factory::get_reactor_registry (void)
-{
-  TAO_Reactor_Registry *reactor_registry = 0;
-  switch (this->reactor_registry_type_)
-    {
-    default:
-    case TAO_SINGLE_REACTOR:
-      ACE_NEW_RETURN (reactor_registry,
-                      TAO_Single_Reactor,
-                      0);
-      break;
-
-    case TAO_REACTOR_PER_PRIORITY:
-      ACE_NEW_RETURN (reactor_registry,
-                      TAO_Reactor_Per_Priority,
-                      0);
-      break;
-
-    }
-
-  return reactor_registry;
-}
-
-ACE_Reactor_Impl*
+ACE_Reactor_Impl *
 TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 {
   ACE_Reactor_Impl *impl = 0;
@@ -714,37 +570,16 @@ TAO_Advanced_Resource_Factory::create_lf_strategy (void)
   if (this->reactor_type_ == TAO_REACTOR_SELECT_ST)
     {
       ACE_NEW_RETURN (strategy,
-                      TAO_LF_Strategy_Null,
+                      TAO_Null_LF_Strategy,
                       0);
     }
   else
     {
       ACE_NEW_RETURN (strategy,
-                      TAO_LF_Strategy_Complete,
+                      TAO_Complete_LF_Strategy,
                       0);
     }
   return strategy;
-}
-
-void
-TAO_Advanced_Resource_Factory::report_option_value_error (
-                                 const char* option_name,
-                                 const char* option_value)
-{
-  ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Advanced_Resource_Factory - unknown argument")
-             ACE_TEXT (" <%s> for <%s>\n"),
-             option_value, option_name));
-}
-
-void
-TAO_Advanced_Resource_Factory::report_unsupported_error (
-                                 const char* option_name)
-{
-  ACE_DEBUG((LM_DEBUG,
-             ACE_TEXT ("Advanced_Resource_Factory - <%s>")
-             ACE_TEXT (" not supported on this platform\n"),
-             option_name));
 }
 
 // ****************************************************************

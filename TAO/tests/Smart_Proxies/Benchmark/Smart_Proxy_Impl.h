@@ -1,6 +1,7 @@
 // $Id$
 
 #include "testC.h"
+#if (TAO_HAS_SMART_PROXIES == 1)
 class Smart_Test_Factory : public virtual TAO_Test_Default_Proxy_Factory
 {
 public:
@@ -26,3 +27,4 @@ public:
  private:
   CORBA::Short price_;
 };
+#endif /*(TAO_HAS_SMART_PROXIES == 1)*/

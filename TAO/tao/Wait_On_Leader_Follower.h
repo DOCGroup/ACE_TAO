@@ -49,9 +49,12 @@ public:
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
   virtual int wait (ACE_Time_Value *max_wait_time,
-                    TAO_Synch_Reply_Dispatcher &rd);
+                    int &reply_received);
   virtual int register_handler (void);
   virtual int non_blocking (void);
+  virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  virtual int reply_dispatched (int &, TAO_SYNCH_CONDITION *);
+  virtual void connection_closed (int &, TAO_SYNCH_CONDITION *);
 };
 
 #include "ace/post.h"

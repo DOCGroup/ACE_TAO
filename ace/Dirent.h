@@ -6,11 +6,13 @@
  *
  *  $Id$
  *
- *  Define a portable C++ interface to <ACE_OS_Dirent> directory-entry manipulation.
+ *  Define a portable directory-entry manipulation interface.
+ *
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
+
 
 #ifndef ACE_DIRENT_H
 #define ACE_DIRENT_H
@@ -25,7 +27,7 @@
 /**
  * @class ACE_Dirent
  *
- * @brief Define a portable C++ directory-entry iterator based on the POSIX API.
+ * @brief Define a portable UNIX directory-entry iterator.
  */
 class ACE_Export ACE_Dirent
 {

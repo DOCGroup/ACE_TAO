@@ -7,7 +7,6 @@
 #endif /* VXWORKS */
 
 #include "ace/Sched_Params.h"
-#include "tao/Strategies/advanced_resource.h"
 #include "server.h"
 #include "client.h"
 #include "Globals.h"
