@@ -423,8 +423,8 @@ TAO_GIOP_Message_Connector_12::
     // Until more flags are defined by the OMG.
     return 0;
 
-  // The reseved field
-  CORBA::Octet reserved[3];
+  // The reserved field
+  CORBA::Octet reserved[3] = {0, 0, 0};
 
   msg.write_octet_array (reserved, 3);
 
