@@ -47,6 +47,22 @@ public:
   CORBA_Environment *env (void);
   // Return the <Environment> for this request.
 
+  // Argument manipulation helper functions.
+
+  // Arg adders, one for each type of parameter,
+  // with and without optional name. Returns
+  // reference to Any for insertion using <<=.
+  CORBA_Any &add_in_arg (void);
+  CORBA_Any &add_in_arg (const char* name);
+  CORBA_Any &add_inout_arg (void);
+  CORBA_Any &add_inout_arg (const char* name);
+  CORBA_Any &add_out_arg (void);
+  CORBA_Any &add_out_arg (const char* name);
+  // Initialize the return type.
+  void set_return_type (CORBA::TypeCode_ptr tc);
+  // Returns reference to Any for extraction using >>=.
+  CORBA_Any &return_value (void);
+
   void invoke (void);
   // Perform method resolution and invoke an appropriate method. If
   // the method returns successfully, its result is placed in the

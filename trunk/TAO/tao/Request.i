@@ -72,6 +72,21 @@ CORBA_Request::env (void)
   return &env_; 
 }
 
+// Set the return type.
+ACE_INLINE void
+CORBA_Request::set_return_type (CORBA::TypeCode_ptr tc)
+{
+  CORBA_Any newtype (tc);
+  this->result_->any_ = newtype;
+}
+
+// Return the result Any for extraction.
+ACE_INLINE CORBA_Any &
+CORBA_Request::return_value (void )
+{
+  return *this->result_->value ();
+}
+
 // *************************************************************
 // Inline operations for class CORBA_NVList_var
 // *************************************************************
