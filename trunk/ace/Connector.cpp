@@ -92,6 +92,14 @@ ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r)
   return 0;
 }
 
+template <class SH, PR_CO_1> 
+ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r)
+  :
+{
+  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
+  this->open (r);
+}
+
 // Register the SVC_HANDLER with the map of pending connections so
 // that it can be activated when the connection completes.
 
@@ -174,13 +182,6 @@ ACE_Svc_Tuple<SH>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\narg_ = %x", this->arg_));
   ACE_DEBUG ((LM_DEBUG, "\ncancellation_id_ = %d", this->cancellation_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-template <class SH, PR_CO_1> 
-ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r)
-{
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
-  this->reactor (r);
 }
 
 // This method is called if a connection times out before completing.
@@ -585,6 +586,12 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
    ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *conn_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s)
+    : creation_strategy_ (0),
+      delete_creation_strategy_ (0),
+      connect_strategy_ (0),
+      delete_connect_strategy_ (0),
+      concurrency_strategy_ (0),
+      delete_concurrency_strategy_ (0)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
 

@@ -127,6 +127,11 @@ public:
   ALLOCATOR &alloc (void);
   // Returns the underlying allocator.
 
+#if defined (ACE_MALLOC_STATS)
+  virtual void print_stats (void) const;
+  // Dump statistics of how malloc is behaving.
+#endif /* ACE_MALLOC_STATS */
+
   virtual void dump (void) const;
   // Dump the state of the object.
 
@@ -271,7 +276,7 @@ public:
   //          that would fit in the currently allocated memory.
 
 #if defined (ACE_MALLOC_STATS)
-  void print_stats (void);
+  void print_stats (void) const;
   // Dump statistics of how malloc is behaving.
 #endif /* ACE_MALLOC_STATS */  
 

@@ -144,7 +144,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected:
+private:
   ACE_OS::ace_flock_t lock_;
   // Locking structure for OS record locks.
 
@@ -592,7 +592,7 @@ public:
   int release (void) { return 0; }
   void dump (void) const { }
 
-protected:
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Null_Mutex_Guard &) {}
   ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &) {}
@@ -854,7 +854,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected:
+private:
   ACE_Thread_Mutex &lock_;
   // Reference to the mutex.
 
