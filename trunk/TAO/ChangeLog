@@ -1,3 +1,10 @@
+Sat Jun 19 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * interop-tests/wchar/client.cpp:
+        * interop-tests/wchar/server.cpp:
+          Removed include of ace/streams.h, these are not needed and this
+          fixes also the compile errors in the SuSE 90 builds.
+
 Sat Jun 19 12:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
