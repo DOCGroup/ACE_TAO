@@ -1,10 +1,20 @@
+Fri Mar  5 10:56:35 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          More code optimizations.  A significant time reduction has
+          occurred with the use of -hierarchy.
+
 Fri Mar  5 09:47:55 2004  Olli Savia  <ops@iki.fi>
 
-	* ACE-INSTALL.html
-	  Updated LynxOS section and fixed some HTML errors.
+        * ACE-INSTALL.html
+          Updated LynxOS section and fixed some HTML errors.
 
-	* include/makeinclude/platform_lynxos.GNU
-	  Compile flag -Wall is now used on all versions of LynxOS.
+        * include/makeinclude/platform_lynxos.GNU
+          Compile flag -Wall is now used on all versions of LynxOS.
 
 Fri Mar  5 01:41:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -20,21 +30,21 @@ Fri Mar  5 01:41:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Thu Mar  4 17:45:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_aix_ibm.GNU: For AIX 5.2, add a compile
-	  flag, -U__C99_RESTRICT, to work around a compiler problem that is
-	  tickled by aio.h. This can be removed when IBM supplies a compiler
-	  fix for Visual Age C++, which they intend to do in May 2004.
+        * include/makeinclude/platform_aix_ibm.GNU: For AIX 5.2, add a compile
+          flag, -U__C99_RESTRICT, to work around a compiler problem that is
+          tickled by aio.h. This can be removed when IBM supplies a compiler
+          fix for Visual Age C++, which they intend to do in May 2004.
 
-	* ace/POSIX_Asynch_IO.cpp: Add #include "ace/ACE.h" to see
-	  ACE::set_flags(), and "ace/OS_NS_sys_stat.h" to see
-	  ACE_OS::filesize() on AIX.
+        * ace/POSIX_Asynch_IO.cpp: Add #include "ace/ACE.h" to see
+          ACE::set_flags(), and "ace/OS_NS_sys_stat.h" to see
+          ACE_OS::filesize() on AIX.
 
 Thu Mar  4 07:39:52 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Node.h: Added ACE_Unbounded_Queue_Const_Iterator as a
-	  friend to ACE_Node.  Thanks to Matthew Harris
- 	  <mharris@hynomics.com> for reporting this.  This closes BUGID
- 	  1759.
+        * ace/Node.h: Added ACE_Unbounded_Queue_Const_Iterator as a
+          friend to ACE_Node.  Thanks to Matthew Harris
+          <mharris@hynomics.com> for reporting this.  This closes BUGID
+          1759.
 
 Thu Mar  4 16:14:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -405,26 +405,52 @@ sub process_foreach {
 }
 
 
-sub handle_end {
+sub handle_endif {
   my($self) = shift;
   my($name) = shift;
   my($end)  = pop(@{$self->{'sstack'}});
   pop(@{$self->{'lstack'}});
 
   if (!defined $end) {
-    return 0, "Unmatched $name\n";
+    return 0, "Unmatched $name";
   }
-  elsif ($end eq 'endif') {
-    $self->{'if_skip'} = 0;
-  }
-  elsif ($end eq 'endfor') {
-    my($index) = $self->{'foreach'}->{'count'};
-    my($status, $error) = $self->process_foreach();
-    if ($status) {
-      --$self->{'foreach'}->{'count'};
-      $self->append_current($self->{'foreach'}->{'text'}->[$index]);
+  else {
+    my($in) = index($end, $name);
+    if ($in == 0) {
+      $self->{'if_skip'} = 0;
     }
-    return $status, $error;
+    elsif ($in == -1) {
+      return 0, "Unmatched $name";
+    }
+  }
+
+  return 1, undef;
+}
+
+
+sub handle_endfor {
+  my($self) = shift;
+  my($name) = shift;
+  my($end)  = pop(@{$self->{'sstack'}});
+  pop(@{$self->{'lstack'}});
+
+  if (!defined $end) {
+    return 0, "Unmatched $name";
+  }
+  else {
+    my($in) = index($end, $name);
+    if ($in == 0) {
+      my($index) = $self->{'foreach'}->{'count'};
+      my($status, $error) = $self->process_foreach();
+      if ($status) {
+        --$self->{'foreach'}->{'count'};
+        $self->append_current($self->{'foreach'}->{'text'}->[$index]);
+      }
+      return $status, $error;
+    }
+    elsif ($in == -1) {
+      return 0, "Unmatched $name";
+    }
   }
 
   return 1, undef;
@@ -790,14 +816,14 @@ sub process_name {
     }
 
     if (defined $keywords{$name}) {
-      if ($name eq 'endif' || $name eq 'endfor') {
-        ($status, $errorString) = $self->handle_end($name);
+      if ($name eq 'endif') {
+        ($status, $errorString) = $self->handle_endif($name);
       }
       elsif ($name eq 'if') {
         $self->handle_if($val);
       }
-      elsif ($name eq 'else') {
-        $self->handle_else();
+      elsif ($name eq 'endfor') {
+        ($status, $errorString) = $self->handle_endfor($name);
       }
       elsif ($name eq 'foreach') {
         ($status, $errorString) = $self->handle_foreach($val);
@@ -806,35 +832,38 @@ sub process_name {
              $name eq 'fornotfirst' || $name eq 'forfirst') {
         $self->handle_special($name, $self->process_special($val));
       }
-      elsif ($name eq 'comment') {
-        ## Ignore the contents of the comment
+      elsif ($name eq 'else') {
+        $self->handle_else();
       }
       elsif ($name eq 'flag_overrides') {
         $self->handle_flag_overrides($val);
       }
-      elsif ($name eq 'marker') {
-        $self->handle_marker($val);
-      }
-      elsif ($name eq 'uc') {
-        $self->handle_uc($val);
-      }
-      elsif ($name eq 'lc') {
-        $self->handle_lc($val);
-      }
-      elsif ($name eq 'ucw') {
-        $self->handle_ucw($val);
-      }
       elsif ($name eq 'noextension') {
         $self->handle_noextension($val);
       }
-      elsif ($name eq 'dirname') {
-        $self->handle_dirname($val);
+      elsif ($name eq 'basenoextension') {
+        $self->handle_basenoextension($val);
       }
       elsif ($name eq 'basename') {
         $self->handle_basename($val);
       }
-      elsif ($name eq 'basenoextension') {
-        $self->handle_basenoextension($val);
+      elsif ($name eq 'marker') {
+        $self->handle_marker($val);
+      }
+      elsif ($name eq 'dirname') {
+        $self->handle_dirname($val);
+      }
+      elsif ($name eq 'comment') {
+        ## Ignore the contents of the comment
+      }
+      elsif ($name eq 'uc') {
+        $self->handle_uc($val);
+      }
+      elsif ($name eq 'ucw') {
+        $self->handle_ucw($val);
+      }
+      elsif ($name eq 'lc') {
+        $self->handle_lc($val);
       }
     }
     else {
@@ -1032,7 +1061,7 @@ sub parse_file {
 
   if (!$status) {
     my($linenumber) = $self->get_line_number();
-    $errorString = "$input: line $linenumber:\n$errorString\n";
+    $errorString = "$input: line $linenumber:\n$errorString";
   }
 
   return $status, $errorString;
