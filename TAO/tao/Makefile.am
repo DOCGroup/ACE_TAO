@@ -711,6 +711,7 @@ nobase_include_HEADERS = \
   Queued_Message.inl \
   Reactive_Connect_Strategy.h \
   Reactive_Flushing_Strategy.h \
+  RefCount_Policy_Traits.h \
   Refcounted_ObjectKey.h \
   Refcounted_ObjectKey.inl \
   Remote_Invocation.h \

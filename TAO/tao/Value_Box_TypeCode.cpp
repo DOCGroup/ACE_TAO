@@ -9,12 +9,28 @@
 # include "tao/Value_Box_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+#include "tao/RefCount_Policy_Traits.h"
+
 
 template <typename StringType, class RefCountPolicy>
 TAO::TypeCode::Value_Box<StringType, RefCountPolicy>::~Value_Box (void)
 {
+#if !defined (_MSC_VER) || (_MSC_VER >= 1310)
+
   if (this->content_type_)
+    TAO::RefCount_Policy_Traits<RefCountPolicy,
+                                CORBA::TypeCode_ptr>::release (
+      *this->content_type_);
+
+#else
+
+  // MSVC++ 6 can't handle partial template specializations.
+
+  if (TAO::RefCount_Policy_Traits<RefCountPolicy>::is_refcounted ()
+      && this->content_type_)
     CORBA::release (*this->content_type_);
+
+#endif  /* !_MSC_VER ||_MSC_VER >= 1310 */
 }
 
 template <typename StringType, class RefCountPolicy>
