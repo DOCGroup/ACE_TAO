@@ -663,9 +663,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_AttributeDef_i> safety (impl);
 
-      POA_CORBA_AttributeDef_tie<TAO_AttributeDef_i> *impl_tie = 0;
+      POA_CORBA::AttributeDef_tie<TAO_AttributeDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_AttributeDef_tie<TAO_AttributeDef_i> (impl,
+                        POA_CORBA::AttributeDef_tie<TAO_AttributeDef_i> (impl,
                                                                         poa,
                                                                         1),
                         CORBA::NO_MEMORY ());
@@ -685,9 +685,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ConstantDef_i> safety (impl);
 
-      POA_CORBA_ConstantDef_tie<TAO_ConstantDef_i> *impl_tie = 0;
+      POA_CORBA::ConstantDef_tie<TAO_ConstantDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_ConstantDef_tie<TAO_ConstantDef_i> (impl,
+                        POA_CORBA::ConstantDef_tie<TAO_ConstantDef_i> (impl,
                                                                       poa,
                                                                       1),
                         CORBA::NO_MEMORY ());
@@ -707,9 +707,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ExceptionDef_i> safety (impl);
 
-      POA_CORBA_ExceptionDef_tie<TAO_ExceptionDef_i> *impl_tie = 0;
+      POA_CORBA::ExceptionDef_tie<TAO_ExceptionDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_ExceptionDef_tie<TAO_ExceptionDef_i> (impl,
+                        POA_CORBA::ExceptionDef_tie<TAO_ExceptionDef_i> (impl,
                                                                         poa,
                                                                         1),
                         CORBA::NO_MEMORY ());
@@ -729,9 +729,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_InterfaceDef_i> safety (impl);
 
-      POA_CORBA_InterfaceDef_tie<TAO_InterfaceDef_i> *impl_tie = 0;
+      POA_CORBA::InterfaceDef_tie<TAO_InterfaceDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_InterfaceDef_tie<TAO_InterfaceDef_i> (impl,
+                        POA_CORBA::InterfaceDef_tie<TAO_InterfaceDef_i> (impl,
                                                                         poa,
                                                                         1),
                         CORBA::NO_MEMORY ());
@@ -751,10 +751,10 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_AbstractInterfaceDef_i> safety (impl);
 
-      POA_CORBA_AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i> *impl_tie = 0;
+      POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (
           impl_tie,
-          POA_CORBA_AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i> (impl,
+          POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i> (impl,
                                                                           poa,
                                                                           1),
           CORBA::NO_MEMORY ()
@@ -775,10 +775,10 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_LocalInterfaceDef_i> safety (impl);
 
-      POA_CORBA_LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i> *impl_tie = 0;
+      POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (
           impl_tie,
-          POA_CORBA_LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i> (impl,
+          POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i> (impl,
                                                                     poa,
                                                                     1),
           CORBA::NO_MEMORY ()
@@ -799,9 +799,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ModuleDef_i> safety (impl);
 
-      POA_CORBA_ModuleDef_tie<TAO_ModuleDef_i> *impl_tie = 0;
+      POA_CORBA::ModuleDef_tie<TAO_ModuleDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_ModuleDef_tie<TAO_ModuleDef_i> (impl,
+                        POA_CORBA::ModuleDef_tie<TAO_ModuleDef_i> (impl,
                                                                   poa,
                                                                   1),
                         CORBA::NO_MEMORY ());
@@ -821,9 +821,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_OperationDef_i> safety (impl);
 
-      POA_CORBA_OperationDef_tie<TAO_OperationDef_i> *impl_tie = 0;
+      POA_CORBA::OperationDef_tie<TAO_OperationDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_OperationDef_tie<TAO_OperationDef_i> (impl,
+                        POA_CORBA::OperationDef_tie<TAO_OperationDef_i> (impl,
                                                                         poa,
                                                                         1),
                         CORBA::NO_MEMORY ());
@@ -843,9 +843,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_AliasDef_i> safety (impl);
 
-      POA_CORBA_AliasDef_tie<TAO_AliasDef_i> *impl_tie = 0;
+      POA_CORBA::AliasDef_tie<TAO_AliasDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_AliasDef_tie<TAO_AliasDef_i> (impl,
+                        POA_CORBA::AliasDef_tie<TAO_AliasDef_i> (impl,
                                                                 poa,
                                                                 1),
                         CORBA::NO_MEMORY ());
@@ -865,9 +865,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_StructDef_i> safety (impl);
 
-      POA_CORBA_StructDef_tie<TAO_StructDef_i> *impl_tie = 0;
+      POA_CORBA::StructDef_tie<TAO_StructDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_StructDef_tie<TAO_StructDef_i> (impl,
+                        POA_CORBA::StructDef_tie<TAO_StructDef_i> (impl,
                                                                   poa,
                                                                   1),
                         CORBA::NO_MEMORY ());
@@ -887,9 +887,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_UnionDef_i> safety (impl);
 
-      POA_CORBA_UnionDef_tie<TAO_UnionDef_i> *impl_tie = 0;
+      POA_CORBA::UnionDef_tie<TAO_UnionDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_UnionDef_tie<TAO_UnionDef_i> (impl,
+                        POA_CORBA::UnionDef_tie<TAO_UnionDef_i> (impl,
                                                                 poa,
                                                                 1),
                         CORBA::NO_MEMORY ());
@@ -909,9 +909,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_EnumDef_i> safety (impl);
 
-      POA_CORBA_EnumDef_tie<TAO_EnumDef_i> *impl_tie = 0;
+      POA_CORBA::EnumDef_tie<TAO_EnumDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_EnumDef_tie<TAO_EnumDef_i> (impl,
+                        POA_CORBA::EnumDef_tie<TAO_EnumDef_i> (impl,
                                                               poa,
                                                               1),
                         CORBA::NO_MEMORY ());
@@ -931,9 +931,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_PrimitiveDef_i> safety (impl);
 
-      POA_CORBA_PrimitiveDef_tie<TAO_PrimitiveDef_i> *impl_tie = 0;
+      POA_CORBA::PrimitiveDef_tie<TAO_PrimitiveDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_PrimitiveDef_tie<TAO_PrimitiveDef_i> (impl,
+                        POA_CORBA::PrimitiveDef_tie<TAO_PrimitiveDef_i> (impl,
                                                                         poa,
                                                                         1),
                         CORBA::NO_MEMORY ());
@@ -953,9 +953,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_StringDef_i> safety (impl);
 
-      POA_CORBA_StringDef_tie<TAO_StringDef_i> *impl_tie = 0;
+      POA_CORBA::StringDef_tie<TAO_StringDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_StringDef_tie<TAO_StringDef_i> (impl,
+                        POA_CORBA::StringDef_tie<TAO_StringDef_i> (impl,
                                                                   poa,
                                                                   1),
                         CORBA::NO_MEMORY ());
@@ -975,9 +975,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_SequenceDef_i> safety (impl);
 
-      POA_CORBA_SequenceDef_tie<TAO_SequenceDef_i> *impl_tie = 0;
+      POA_CORBA::SequenceDef_tie<TAO_SequenceDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_SequenceDef_tie<TAO_SequenceDef_i> (impl,
+                        POA_CORBA::SequenceDef_tie<TAO_SequenceDef_i> (impl,
                                                                       poa,
                                                                       1),
                         CORBA::NO_MEMORY ());
@@ -997,9 +997,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ArrayDef_i> safety (impl);
 
-      POA_CORBA_ArrayDef_tie<TAO_ArrayDef_i> *impl_tie = 0;
+      POA_CORBA::ArrayDef_tie<TAO_ArrayDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_ArrayDef_tie<TAO_ArrayDef_i> (impl,
+                        POA_CORBA::ArrayDef_tie<TAO_ArrayDef_i> (impl,
                                                                 poa,
                                                                 1),
                         CORBA::NO_MEMORY ());
@@ -1019,9 +1019,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_WstringDef_i> safety (impl);
 
-      POA_CORBA_WstringDef_tie<TAO_WstringDef_i> *impl_tie = 0;
+      POA_CORBA::WstringDef_tie<TAO_WstringDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_WstringDef_tie<TAO_WstringDef_i> (impl,
+                        POA_CORBA::WstringDef_tie<TAO_WstringDef_i> (impl,
                                                                     poa,
                                                                     1),
                         CORBA::NO_MEMORY ());
@@ -1041,9 +1041,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_FixedDef_i> safety (impl);
 
-      POA_CORBA_FixedDef_tie<TAO_FixedDef_i> *impl_tie = 0;
+      POA_CORBA::FixedDef_tie<TAO_FixedDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_FixedDef_tie<TAO_FixedDef_i> (impl,
+                        POA_CORBA::FixedDef_tie<TAO_FixedDef_i> (impl,
                                                                 poa,
                                                                 1),
                         CORBA::NO_MEMORY ());
@@ -1063,9 +1063,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ValueDef_i> safety (impl);
 
-      POA_CORBA_ValueDef_tie<TAO_ValueDef_i> *impl_tie = 0;
+      POA_CORBA::ValueDef_tie<TAO_ValueDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_ValueDef_tie<TAO_ValueDef_i> (impl,
+                        POA_CORBA::ValueDef_tie<TAO_ValueDef_i> (impl,
                                                                 poa,
                                                                 1),
                         CORBA::NO_MEMORY ());
@@ -1085,9 +1085,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ValueBoxDef_i> safety (impl);
 
-      POA_CORBA_ValueBoxDef_tie<TAO_ValueBoxDef_i> *impl_tie = 0;
+      POA_CORBA::ValueBoxDef_tie<TAO_ValueBoxDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_ValueBoxDef_tie<TAO_ValueBoxDef_i> (impl,
+                        POA_CORBA::ValueBoxDef_tie<TAO_ValueBoxDef_i> (impl,
                                                                       poa,
                                                                       1),
                         CORBA::NO_MEMORY ());
@@ -1107,10 +1107,10 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_ValueMemberDef_i> safety (impl);
 
-      POA_CORBA_ValueMemberDef_tie<TAO_ValueMemberDef_i> *impl_tie = 0;
+      POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (
           impl_tie,
-          POA_CORBA_ValueMemberDef_tie<TAO_ValueMemberDef_i> (impl,
+          POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i> (impl,
                                                               poa,
                                                               1),
           CORBA::NO_MEMORY ()
@@ -1131,9 +1131,9 @@ IFR_Servant_Factory::create_tie (
 
       auto_ptr<TAO_NativeDef_i> safety (impl);
 
-      POA_CORBA_NativeDef_tie<TAO_NativeDef_i> *impl_tie = 0;
+      POA_CORBA::NativeDef_tie<TAO_NativeDef_i> *impl_tie = 0;
       ACE_NEW_THROW_EX (impl_tie,
-                        POA_CORBA_NativeDef_tie<TAO_NativeDef_i> (impl,
+                        POA_CORBA::NativeDef_tie<TAO_NativeDef_i> (impl,
                                                                   poa,
                                                                   1),
                         CORBA::NO_MEMORY ());
