@@ -17,10 +17,10 @@
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
 
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Strategies_T.h"
 #include "ace/Thread.h"
-#include "ace/Containers_T.h"
 #include "ace/Message_Queue.h"
-
 #include "ace/Future.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -41,7 +41,7 @@ class ACE_Future_Set : public ACE_Future_Observer<T>
   //     reader threads as they become available.
 public:
   // = Initialization and termination methods.
-	
+        
   ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
   // Constructor.
 
@@ -52,9 +52,12 @@ public:
   // Return 1 if their are no ACE_Future objects left on its queue and
   // 0 otherwise
 
-  void insert (ACE_Future<T> &future);
-  // Enqueus the given ACE_Future into this objects queue when it is
+  int insert (ACE_Future<T> &future);
+  // Enqueues the given ACE_Future into this objects queue when it is
   // readable.
+  //
+  // Returns 0 if the future is successfully inserted, 1 if the
+  // future is already inserted, and -1 if failures occur.
 
   int next_readable (ACE_Future<T> &result,
                      ACE_Time_Value *tv = 0);
@@ -78,19 +81,35 @@ private:
   ACE_Future_Set (const ACE_Future_Set &r);
   // Copy constructor binds <this> and <r> to the same
   // <ACE_Future_Set>. An <ACE_Future_Set> is created if necessary.
-	
-  typedef ACE_DLList_Future_Node<T> 
-          FUTURE_NODE;
-  typedef ACE_Double_Linked_List<FUTURE_NODE> 
-          FUTURE_LIST;
+        
+  typedef ACE_Future<T>
+          FUTURE;
 
-  FUTURE_LIST future_list_;
-  // List of ACE_Futures, subjects, which have not been written to by
+  typedef ACE_Future_Rep<T>
+          FUTURE_REP;
+
+  typedef ACE_Future_Holder<T>
+          FUTURE_HOLDER;
+
+  typedef ACE_Hash_Addr<FUTURE_REP*>
+          FUTURE_REP_HASH_ADDR;
+
+  typedef ACE_Hash_Map_Manager<FUTURE_REP_HASH_ADDR, FUTURE_HOLDER *, ACE_Null_Mutex>
+          FUTURE_HASH_MAP;
+
+  typedef ACE_Hash_Map_Iterator<FUTURE_REP_HASH_ADDR, FUTURE_HOLDER *, ACE_Null_Mutex>
+          FUTURE_HASH_ITERATOR;
+
+  typedef ACE_Hash_Map_Entry<FUTURE_REP_HASH_ADDR, FUTURE_HOLDER *>
+          FUTURE_HASH_ENTRY;
+
+  FUTURE_HASH_MAP future_map_;
+  // Map of ACE_Futures, subjects, which have not been written to by
   // client's writer thread.
 
   ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
-  // Message queue for notifying reader thread of ACE_Futures written
-  // to by client's writer thread.
+  // Message queue for notifying the reader thread of ACE_Futures which
+  // have been written to by client's writer thread.
 
   int delete_queue_;
   // Keeps track of whether we need to delete the message queue.

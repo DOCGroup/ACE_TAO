@@ -362,10 +362,10 @@ public:
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
 
-  virtual size_t current_size (void) = 0;
+  virtual size_t current_size (void) const = 0;
   // Return the current size of the map.
 
-  virtual size_t total_size (void) = 0;
+  virtual size_t total_size (void) const = 0;
   // Return the total size of the map.
 
   virtual void dump (void) const = 0;
@@ -616,10 +616,10 @@ public:
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
 
-  virtual size_t current_size (void);
+  virtual size_t current_size (void) const;
   // Return the current size of the map.
 
-  virtual size_t total_size (void);
+  virtual size_t total_size (void) const;
   // Return the total size of the map.
 
   virtual void dump (void) const;
@@ -866,10 +866,10 @@ public:
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
 
-  virtual size_t current_size (void);
+  virtual size_t current_size (void) const;
   // Return the current size of the map.
 
-  virtual size_t total_size (void);
+  virtual size_t total_size (void) const;
   // Return the total size of the map.
 
   virtual void dump (void) const;
@@ -1128,10 +1128,10 @@ public:
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
 
-  virtual size_t current_size (void);
+  virtual size_t current_size (void) const;
   // Return the current size of the map.
 
-  virtual size_t total_size (void);
+  virtual size_t total_size (void) const;
   // Return the total size of the map.
 
   virtual void dump (void) const;
@@ -1382,10 +1382,10 @@ public:
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
 
-  virtual size_t current_size (void);
+  virtual size_t current_size (void) const;
   // Return the current size of the map.
 
-  virtual size_t total_size (void);
+  virtual size_t total_size (void) const;
   // Return the total size of the map.
 
   virtual void dump (void) const;

@@ -12,6 +12,7 @@ vacbld -SEV=E Dynamic_Priority_Test.icc
 vacbld -SEV=E Enum_Interfaces_Test.icc
 vacbld -SEV=E Env_Value_Test.icc
 vacbld -SEV=E Future_Test.icc
+vacbld -SEV=E Future_Set_Test.icc
 vacbld -SEV=E Handle_Set_Test.icc
 vacbld -SEV=E Hash_Map_Manager_Test.icc
 vacbld -SEV=E High_Res_Timer_Test.icc

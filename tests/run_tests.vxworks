@@ -135,6 +135,10 @@ ld < Future_Test
 write 2, "Future_Test ", 12
 ace_main; unld "Future_Test"
 
+ld < Future_Set_Test
+write 2, "Future_Set_Test ", 12
+ace_main; unld "Future_Set_Test"
+
 ld < Reactors_Test
 write 2, "Reactors_Test ", 14
 ace_main; unld "Reactors_Test"

@@ -23,6 +23,7 @@ BIN =   Aio_Platform_Test \
         Enum_Interfaces_Test \
         Env_Value_Test \
         Future_Test \
+        Future_Set_Test \
         Handle_Set_Test \
         High_Res_Timer_Test \
         OrdMultiSet_Test \

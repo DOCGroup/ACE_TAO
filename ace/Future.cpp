@@ -11,9 +11,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Future, "$Id$")
+ACE_RCSID (ace, Future, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+
+template <class T>
+ACE_Future_Holder<T>::ACE_Future_Holder (void)
+{
+}
+
+template <class T>
+ACE_Future_Holder<T>::ACE_Future_Holder (const ACE_Future<T> &item)
+  : item_ (item)
+{
+}
+
+template <class T>
+ACE_Future_Holder<T>::~ACE_Future_Holder (void)
+{
+}
 
 template <class T>
 ACE_Future_Observer<T>::ACE_Future_Observer (void)
@@ -35,10 +51,10 @@ ACE_Future_Rep<T>::dump (void) const
               "ref_count_ = %d\n",
               (int) this->ref_count_));
   ACE_DEBUG ((LM_INFO,"value_: \n"));
-  if(this->value_)
+  if (this->value_)
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (NON-NULL)\n")));
   else
-    ACE_DEBUG   ((LM_DEBUG, ASYS_TEXT (" (NULL)\n")));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (NULL)\n")));
 
   ACE_DEBUG ((LM_INFO,"value_ready_: \n"));
   this->value_ready_.dump ();
@@ -51,7 +67,7 @@ template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::create (void)
 {
   // Yes set ref count to zero.
-  return new ACE_Future_Rep<T>();
+  return new ACE_Future_Rep<T> ();
 }
 
 template <class T> ACE_Future_Rep<T> *
@@ -59,7 +75,7 @@ ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 {
   ACE_ASSERT (rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
-  ACE_MT (ACE_Guard<ACE_Thread_Mutex> r_mon(rep->value_ready_mutex_));
+  ACE_MT (ACE_Guard<ACE_Thread_Mutex> r_mon (rep->value_ready_mutex_));
   ++rep->ref_count_;
   return rep;
 }
@@ -67,11 +83,11 @@ ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 template <class T> void
 ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
 {
-  ACE_ASSERT(rep != 0);
+  ACE_ASSERT (rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, rep->value_ready_mutex_));
 
-  if(rep->ref_count_-- == 0)
+  if (rep->ref_count_-- == 0)
     {
       ACE_MT (r_mon.release ());
       // We do not need the lock when deleting the representation.
@@ -84,8 +100,8 @@ ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
 template <class T> void
 ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
 {
-  ACE_ASSERT(rep != 0);
-  ACE_ASSERT(new_rep != 0);
+  ACE_ASSERT (rep != 0);
+  ACE_ASSERT (new_rep != 0);
   // Use value_ready_mutex_ for both condition and ref count management
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, rep->value_ready_mutex_));
 
@@ -93,7 +109,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
   rep = new_rep;
 
   // detached old last for exception safety
-  if(old->ref_count_-- == 0)
+  if (old->ref_count_-- == 0)
     {
       ACE_MT (r_mon.release ());
       // We do not need the lock when deleting the representation.
@@ -128,27 +144,30 @@ ACE_Future_Rep<T>::set (const T &r,
                         ACE_Future<T> &caller)
 {
   // If the value is already produced, ignore it...
-  if(this->value_ == 0)
+  if (this->value_ == 0)
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
       // Otherwise, create a new result value.  Note the use of the
       // Double-checked locking pattern to avoid multiple allocations.
 
-      if(this->value_ == 0)
+      if (this->value_ == 0)
         ACE_NEW_RETURN (this->value_,
                         T (r),
                         -1);
 
+      OBSERVER_HASH_ENTRY *map_entry = 0;
+
       // Remove and notify all subscribed observers.
-      for (OBSERVER_NODE *node = this->observer_list_.delete_head();
-           node;
-           node = this->observer_list_.delete_head())
+
+      for (OBSERVER_HASH_ITERATOR map_iterator (this->observer_hash_);
+           map_iterator.next (map_entry) != 0;
+           map_iterator.advance ())
         {
-          OBSERVER *observer = ACE_reinterpret_cast (OBSERVER *,
-                                                     node->item_);
-          delete node;
+          OBSERVER *observer = map_entry->int_id_;
           observer->update (caller);
         }
+
+      this->observer_hash_.close ();
 
       // Signal all the waiting threads.
       return this->value_ready_.broadcast ();
@@ -172,7 +191,7 @@ ACE_Future_Rep<T>::get (T &value,
 
       while (this->value_ == 0)
         // Perform a timed wait.
-        if(this->value_ready_.wait (tv) == -1)
+        if (this->value_ready_.wait (tv) == -1)
           return -1;
 
       // Destructor releases the lock.
@@ -182,64 +201,46 @@ ACE_Future_Rep<T>::get (T &value,
   return 0;
 }
 
-template <class T> void
-ACE_Future_Rep<T>::attach(ACE_Future_Observer<T> *observer,
+template <class T> int
+ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
                           ACE_Future<T> &caller)
 {
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, r_mon, this->value_ready_mutex_));;
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
 
   // Otherwise, create a new result value.  Note the use of the
   // Double-checked locking pattern to avoid corrupting the list.
 
+  int result = 1;
+
   // If the value is already produced, then notify observer
   if (this->value_ == 0)
     {
-      OBSERVER_NODE *node;
-      ACE_NEW (node,
-               OBSERVER_NODE ((void *&) observer));
-
-      this->observer_list_.insert_tail (node);
+      OBSERVER_HASH_ADDR observer_hash_addr (observer);
+      result = this->observer_hash_.bind (observer_hash_addr, observer);
     }
   else
-    observer->update(caller);
+      observer->update (caller);
+
+  return result;
 }
 
 template <class T> int
-ACE_Future_Rep<T>::detach(ACE_Future_Observer<T> *observer)
+ACE_Future_Rep<T>::detach (ACE_Future_Observer<T> *observer)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, 0));
-
-  int result = 0;
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, -1));
 
   // Remove all occurrences of the specified observer from this
-  // objects list.  Note the use of the Double-checked locking pattern
-  // to avoid corrupting the list.
+  // objects hash map.
+  OBSERVER_HASH_ADDR observer_hash_addr (observer);
 
-  OBSERVER_NODE *node = 0;
-  for (OBSERVER_LIST::ITERATOR iter (this->observer_list_);
-      (node = iter.next ()) != 0;
-      iter.advance ())
-    {
-      OBSERVER *curr_observer =
-        ACE_reinterpret_cast (OBSERVER *,
-                              node->item_);
-
-      if (curr_observer == observer)
-        {
-          this->observer_list_.remove (node);
-          delete node;
-          result = 1;
-        }
-    }
-
-  return result;
+  return this->observer_hash_.unbind (observer_hash_addr);
 }
 
 template <class T>
 ACE_Future_Rep<T>::operator T ()
 {
   // If the value is already produced, return it.
-  if(this->value_ == 0)
+  if (this->value_ == 0)
     {
       // Constructor of ace_mon acquires the mutex.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, 0));
@@ -264,13 +265,13 @@ ACE_Future_Rep<T>::operator T ()
 
 template <class T>
 ACE_Future<T>::ACE_Future (void)
-: future_rep_ (FUTURE_REP::create ())
+  : future_rep_ (FUTURE_REP::create ())
 {
 }
 
 template <class T>
 ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
-: future_rep_ (FUTURE_REP::attach (((ACE_Future<T> &) r).future_rep_))
+  : future_rep_ (FUTURE_REP::attach (( (ACE_Future<T> &) r).future_rep_))
 {
 }
 
@@ -343,14 +344,14 @@ ACE_Future<T>::get (T &value,
   return this->future_rep_->get (value, tv);
 }
 
-template <class T> void
-ACE_Future<T>::attach(ACE_Future_Observer<T> *observer)
+template <class T> int
+ACE_Future<T>::attach (ACE_Future_Observer<T> *observer)
 {
-  this->future_rep_->attach (observer, *this);
+  return this->future_rep_->attach (observer, *this);
 }
 
 template <class T> int
-ACE_Future<T>::detach(ACE_Future_Observer<T> *observer)
+ACE_Future<T>::detach (ACE_Future_Observer<T> *observer)
 {
   return this->future_rep_->detach (observer);
 }
@@ -399,6 +400,12 @@ ACE_Future<T>::dump (void) const
               ACE_END_DUMP));
 }
 
+template <class T> ACE_Future_Rep<T> *
+ACE_Future<T>::get_rep ()
+{
+  return this->future_rep_;
+}
+
 template <class T> void *
 ACE_Future<T>::operator new (size_t)
 {
@@ -411,7 +418,7 @@ ACE_Future<T>::operator delete (void *)
 }
 
 template <class T> void
-ACE_Future<T>::operator &()
+ACE_Future<T>::operator & ()
 {
 }
 
