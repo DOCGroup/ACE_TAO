@@ -32,7 +32,7 @@ static const char *TAO_IIOP_Object_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_IIOP_OBJECT_DO_STATIC_CALL_START = 500,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_END,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
@@ -393,7 +393,7 @@ IIOP_Object::IIOP_Object (char *repository_id,
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
                                 ->client_factory ()
-                                  ->create_iiop_profile_lock ();  
+                                  ->create_iiop_profile_lock ();
 }
 
 // THREADING NOTE: Code below this point is of course thread-safe (at
@@ -482,105 +482,105 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
       // messages.
       //
       for (;;)
-	{
-	  // Start the call by constructing the request message header.
-	  call.start (env);
-	  ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
-	  if (env.exception () != 0) return;
+        {
+          // Start the call by constructing the request message header.
+          call.start (env);
+          ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+          if (env.exception () != 0) return;
 
-	  va_list argp;
-	  va_start (argp, info);
-	  this->put_params (env, info, call, argp);
-	  va_end (argp);
-	  if (env.exception () != 0) return;
+          va_list argp;
+          va_start (argp, info);
+          this->put_params (env, info, call, argp);
+          va_end (argp);
+          if (env.exception () != 0) return;
 
-	  ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
-	  TAO_GIOP_ReplyStatusType status =
-	    call.invoke (info->excepts, info->except_count,env);
-	  
-	  if (status == TAO_GIOP_SYSTEM_EXCEPTION
-	      || status == TAO_GIOP_USER_EXCEPTION)
-	    return;
-	  else if (status == TAO_GIOP_NO_EXCEPTION)
-	    {
-	      // Now, get all the "return", "out", and "inout"
-	      // parameters from the response message body.
-	      
-	      va_start (argp, info);
-	      const TAO_Param_Data *pdp = info->params;
-	      for (u_int i = 0;
-		   i < info->param_count;
-		   i++, pdp++)
-		{
-		  void *ptr = va_arg (argp, void *);
+          ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
+          TAO_GIOP_ReplyStatusType status =
+            call.invoke (info->excepts, info->except_count,env);
 
-		  // if it is an inout parameter, it would become
-		  // necessary to first release the "in" memory
-		  if (pdp->mode == PARAM_INOUT)
-		    {
-		      // @@ TODO - add others as we test each case
-		      // (ASG) will do 03/22/98.
-		      // @@ IMHO this should be handled in the stub
-		      // (coryan)
-		      switch (pdp->tc->kind (env))
-			{
-			case CORBA::tk_string:
-			  {
-			    CORBA::string_free (*(char **)ptr);
-			    *(char **)ptr = 0;
-			  }
-			break;
-			default:
-			  break;
-			}
-		    }
-		  if (pdp->mode == PARAM_RETURN
-		      || pdp->mode == PARAM_OUT
-		      || pdp->mode == PARAM_INOUT)
-		    {
-		      // The language mapping's memory allocation
-		      // policy says that some data is heap-allocated.
-		      // This interpreter is told about the relevant
-		      // policy by whoever built the operation
-		      // description (e.g. the IDL compiler) so it
-		      // doesn't have to know the policy associated
-		      // with a particular language binding
-		      // (e.g. C/C++ differ, and C++ even has
-		      // different policies for different kinds of
-		      // structures). 
-		      if (pdp->value_size == 0)
-			call.get_value (pdp->tc, ptr, env);
-		      else
-			{
-			  // @@ (ASG) -  I think we must completely
-			  // get rid of this case because IDL compiler
-			  // generated stubs will use this function
-			  // and they better allocate all the memory. 
+          if (status == TAO_GIOP_SYSTEM_EXCEPTION
+              || status == TAO_GIOP_USER_EXCEPTION)
+            return;
+          else if (status == TAO_GIOP_NO_EXCEPTION)
+            {
+              // Now, get all the "return", "out", and "inout"
+              // parameters from the response message body.
 
-			  // assert (value_size == tc->size());
-			  *(void **)ptr = new CORBA::Octet [pdp->value_size];
-			  call.get_value (pdp->tc, *(void **)ptr, env);
-			}
+              va_start (argp, info);
+              const TAO_Param_Data *pdp = info->params;
+              for (u_int i = 0;
+                   i < info->param_count;
+                   i++, pdp++)
+                {
+                  void *ptr = va_arg (argp, void *);
 
-		      if (env.exception ())
-			{
-			  dexc (env, "do_static_call, get reply parameter");
-			  return;
-			}
-		    }
-		}
-	      va_end (argp);
-	      return;
-	    }
-	  // ... or maybe this request got forwarded to someplace
-	  // else; send the request there instead.
-	  if (status != TAO_GIOP_LOCATION_FORWARD)
-	    {
-	      // @@ What is the right exception to throw in this case?
-	      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
-	      return;
-	    }
-	}
+                  // if it is an inout parameter, it would become
+                  // necessary to first release the "in" memory
+                  if (pdp->mode == PARAM_INOUT)
+                    {
+                      // @@ TODO - add others as we test each case
+                      // (ASG) will do 03/22/98.
+                      // @@ IMHO this should be handled in the stub
+                      // (coryan)
+                      switch (pdp->tc->kind (env))
+                        {
+                        case CORBA::tk_string:
+                          {
+                            CORBA::string_free (*(char **)ptr);
+                            *(char **)ptr = 0;
+                          }
+                        break;
+                        default:
+                          break;
+                        }
+                    }
+                  if (pdp->mode == PARAM_RETURN
+                      || pdp->mode == PARAM_OUT
+                      || pdp->mode == PARAM_INOUT)
+                    {
+                      // The language mapping's memory allocation
+                      // policy says that some data is heap-allocated.
+                      // This interpreter is told about the relevant
+                      // policy by whoever built the operation
+                      // description (e.g. the IDL compiler) so it
+                      // doesn't have to know the policy associated
+                      // with a particular language binding
+                      // (e.g. C/C++ differ, and C++ even has
+                      // different policies for different kinds of
+                      // structures).
+                      if (pdp->value_size == 0)
+                        call.get_value (pdp->tc, ptr, env);
+                      else
+                        {
+                          // @@ (ASG) -  I think we must completely
+                          // get rid of this case because IDL compiler
+                          // generated stubs will use this function
+                          // and they better allocate all the memory.
+
+                          // assert (value_size == tc->size());
+                          *(void **)ptr = new CORBA::Octet [pdp->value_size];
+                          call.get_value (pdp->tc, *(void **)ptr, env);
+                        }
+
+                      if (env.exception ())
+                        {
+                          dexc (env, "do_static_call, get reply parameter");
+                          return;
+                        }
+                    }
+                }
+              va_end (argp);
+              return;
+            }
+          // ... or maybe this request got forwarded to someplace
+          // else; send the request there instead.
+          if (status != TAO_GIOP_LOCATION_FORWARD)
+            {
+              // @@ What is the right exception to throw in this case?
+              env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+              return;
+            }
+        }
     }
   else
     {
@@ -599,7 +599,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
       if (env.exception () != 0) return;
 
       ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
-      TAO_GIOP_ReplyStatusType status = call.invoke (env);
+      /* TAO_GIOP_ReplyStatusType status = */ call.invoke (env);
 
       // @@ TODO We do not get any LOCATION_FORWARD in this case,
       // IMHO this is a good case for use of a LocateRequest,
@@ -610,9 +610,9 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
 
 void
 IIOP_Object::put_params (CORBA::Environment &env,
-			 const TAO_Call_Data *info,
-			 TAO_GIOP_Invocation &call,
-			 va_list argp)
+                         const TAO_Call_Data *info,
+                         TAO_GIOP_Invocation &call,
+                         va_list argp)
 {
   if (env.exception ())
     {
@@ -637,19 +637,19 @@ IIOP_Object::put_params (CORBA::Environment &env,
       void *ptr = va_arg (argp, void *);
 
       if (pdp->mode == PARAM_IN)
-	call.put_param (pdp->tc, ptr, env);
+        call.put_param (pdp->tc, ptr, env);
       else if (pdp->mode == PARAM_INOUT)
-	{
-	  if (pdp->value_size == 0)
-	    call.put_param (pdp->tc, ptr, env);
-	  else
-	    call.put_param (pdp->tc, *(void **)ptr, env);
-	}
+        {
+          if (pdp->value_size == 0)
+            call.put_param (pdp->tc, ptr, env);
+          else
+            call.put_param (pdp->tc, *(void **)ptr, env);
+        }
       if (env.exception ())
-	{
-	  dexc (env, "do_static_call, put request parameter");
-	  return;
-	}
+        {
+          dexc (env, "do_static_call, put request parameter");
+          return;
+        }
     }
 }
 
@@ -676,184 +676,184 @@ IIOP_Object::do_dynamic_call (const char *opname,
       // Loop as needed for forwarding; see above.
 
       for (;;)
-	{
-	  call.start (env);
-	  if (env.exception () != 0) return;
+        {
+          call.start (env);
+          if (env.exception () != 0) return;
 
-	  this->put_params (call, args, env);
-	  if (env.exception () != 0) return;
+          this->put_params (call, args, env);
+          if (env.exception () != 0) return;
 
-	  // Make the call ... blocking for the response.
-	  TAO_GIOP_ReplyStatusType status =
-	    call.invoke (exceptions, env);
-	  if (env.exception ())
-	    {
-	      dexc (env, "do_dynamic_call, invoke");
-	      return;
-	    }
-	  if (status == TAO_GIOP_SYSTEM_EXCEPTION
-	      || status == TAO_GIOP_USER_EXCEPTION)
-	    return;
+          // Make the call ... blocking for the response.
+          TAO_GIOP_ReplyStatusType status =
+            call.invoke (exceptions, env);
+          if (env.exception ())
+            {
+              dexc (env, "do_dynamic_call, invoke");
+              return;
+            }
+          if (status == TAO_GIOP_SYSTEM_EXCEPTION
+              || status == TAO_GIOP_USER_EXCEPTION)
+            return;
 
-	  // Now, get all the "return", "out", and "inout" parameters
-	  // from the response message body ... return parameter is
-	  // first, the rest are in the order defined in the IDL spec
-	  // (which is also the order that DII users are required to
-	  // use).
+          // Now, get all the "return", "out", and "inout" parameters
+          // from the response message body ... return parameter is
+          // first, the rest are in the order defined in the IDL spec
+          // (which is also the order that DII users are required to
+          // use).
 
-	  if (status == TAO_GIOP_NO_EXCEPTION)
-	    {
-	      if (result != 0)
-		{
+          if (status == TAO_GIOP_NO_EXCEPTION)
+            {
+              if (result != 0)
+                {
 #if 0
-		  // @@ (ASG) I need to look into this OUT_LIST_MEMORY stuff
-		  // (4/21/98).
+                  // @@ (ASG) I need to look into this OUT_LIST_MEMORY stuff
+                  // (4/21/98).
 
-		  // If caller didn't set OUT_LIST_MEMORY flag, allocate
-		  // memory for return value ...
+                  // If caller didn't set OUT_LIST_MEMORY flag, allocate
+                  // memory for return value ...
 
-		  if (!(flags & CORBA::OUT_LIST_MEMORY))
-		    {
-		      CORBA::TypeCode_ptr tcp;
-		      size_t size;
-		      
-		      tcp = result->value ()->type ();
-		      size = tcp->size (env);
-		      dexc (env, "do_dynamic_call, get result size");
-		  
-		      if (size != 0)
-			{
-			  void *ptr = new CORBA::Octet [size];
+                  if (!(flags & CORBA::OUT_LIST_MEMORY))
+                    {
+                      CORBA::TypeCode_ptr tcp;
+                      size_t size;
 
-			  tcp->AddRef ();
-			  result->value ()->replace (tcp, ptr,
-						     CORBA::B_TRUE, env);
-			  dexc (env, "do_dynamic_call, set result mem");
-			}
-		    }
+                      tcp = result->value ()->type ();
+                      size = tcp->size (env);
+                      dexc (env, "do_dynamic_call, get result size");
+
+                      if (size != 0)
+                        {
+                          void *ptr = new CORBA::Octet [size];
+
+                          tcp->AddRef ();
+                          result->value ()->replace (tcp, ptr,
+                                                     CORBA::B_TRUE, env);
+                          dexc (env, "do_dynamic_call, set result mem");
+                        }
+                    }
 #endif
-		  if (!result->value ()->value_)
-		    {
-		      // storage was not allocated. In this case, we
-		      // simply grab the portion of the CDR stream
-		      // that contained this parameter, The
-		      // application should use the appropriate >>=
-		      // operator to retrieve the value
-		      char *begin, *end;
-		      TAO_InputCDR temp (call.inp_stream ());
-		      CORBA::TypeCode::traverse_status retval;
-		      CORBA::Any *any = result->value ();
+                  if (!result->value ()->value_)
+                    {
+                      // storage was not allocated. In this case, we
+                      // simply grab the portion of the CDR stream
+                      // that contained this parameter, The
+                      // application should use the appropriate >>=
+                      // operator to retrieve the value
+                      char *begin, *end;
+                      TAO_InputCDR temp (call.inp_stream ());
+                      CORBA::TypeCode::traverse_status retval;
+                      CORBA::Any *any = result->value ();
 
-		      begin = call.inp_stream ().rd_ptr ();
-		      // skip the parameter to get the ending position
-		      retval = temp.skip (any->type (), env);
-		      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-			{
-			  end = temp.rd_ptr ();
-			  any->cdr_ = new ACE_Message_Block (end - begin);
-			  TAO_OutputCDR out (any->cdr_);
+                      begin = call.inp_stream ().rd_ptr ();
+                      // skip the parameter to get the ending position
+                      retval = temp.skip (any->type (), env);
+                      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        {
+                          end = temp.rd_ptr ();
+                          any->cdr_ = new ACE_Message_Block (end - begin);
+                          TAO_OutputCDR out (any->cdr_);
 
-			  retval = out.append (any->type (),
-					       &call.inp_stream (), env);
-			  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-			    {
-			      any->any_owns_data_ = 1;
-			      any->value_ = 0;
-			    }
-			}
-		    }
-		  else
-		    {
-		      // the application had allocated the top level
-		      // storage. We simply retrieve the data
-		      call.get_value (result->value ()->type (),
-				      (void *) result->value ()->value_, env);
-		    }
-		}
+                          retval = out.append (any->type (),
+                                               &call.inp_stream (), env);
+                          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                            {
+                              any->any_owns_data_ = 1;
+                              any->value_ = 0;
+                            }
+                        }
+                    }
+                  else
+                    {
+                      // the application had allocated the top level
+                      // storage. We simply retrieve the data
+                      call.get_value (result->value ()->type (),
+                                      (void *) result->value ()->value_, env);
+                    }
+                }
 
-	      for (u_int i = 0; i < args->count (); i++)
-		{
-		  CORBA::NamedValue_ptr value = args->item (i, env);
-		  CORBA::Any *any = value->value ();
+              for (u_int i = 0; i < args->count (); i++)
+                {
+                  CORBA::NamedValue_ptr value = args->item (i, env);
+                  CORBA::Any *any = value->value ();
 
-		  if (value->flags () == CORBA::ARG_OUT
-		      || value->flags () == CORBA::ARG_INOUT)
-		    {
+                  if (value->flags () == CORBA::ARG_OUT
+                      || value->flags () == CORBA::ARG_INOUT)
+                    {
 #if 0
-		      // @@  (ASG) need to deal with this
+                      // @@  (ASG) need to deal with this
 
-		      // If caller didn't set OUT_LIST_MEMORY flag, allocate
-		      // memory for this parameter ...
-		      if (!(flags & CORBA::OUT_LIST_MEMORY))
-			{
-			  CORBA::TypeCode_ptr tcp;
-			  size_t size;
+                      // If caller didn't set OUT_LIST_MEMORY flag, allocate
+                      // memory for this parameter ...
+                      if (!(flags & CORBA::OUT_LIST_MEMORY))
+                        {
+                          CORBA::TypeCode_ptr tcp;
+                          size_t size;
 
-			  tcp = value->value ()->type ();
-			  size = tcp->size (env);
-			  dexc (env, "do_dynamic_call, get param size");
+                          tcp = value->value ()->type ();
+                          size = tcp->size (env);
+                          dexc (env, "do_dynamic_call, get param size");
 
-			  if (size != 0)
-			    {
-			      CORBA::Octet *ptr = new CORBA::Octet [size];
-			      
-			      tcp->AddRef ();
-			      value->value ()->replace (tcp, ptr,
-							CORBA::B_TRUE, env);
-			      dexc (env, "do_dynamic_call, set result mem");
-			    }
-			}
+                          if (size != 0)
+                            {
+                              CORBA::Octet *ptr = new CORBA::Octet [size];
+
+                              tcp->AddRef ();
+                              value->value ()->replace (tcp, ptr,
+                                                        CORBA::B_TRUE, env);
+                              dexc (env, "do_dynamic_call, set result mem");
+                            }
+                        }
 #endif
-		      if (!any->value_)
-			{
-			  // storage was not allocated. In this case,
-			  // we simply grab the portion of the CDR
-			  // stream that contained this parameter, The
-			  // application should use the appropriate
-			  // >>= operator to retrieve the value
-			  char *begin, *end;
-			  TAO_InputCDR temp (call.inp_stream ());
-			  CORBA::TypeCode::traverse_status retval;
+                      if (!any->value_)
+                        {
+                          // storage was not allocated. In this case,
+                          // we simply grab the portion of the CDR
+                          // stream that contained this parameter, The
+                          // application should use the appropriate
+                          // >>= operator to retrieve the value
+                          char *begin, *end;
+                          TAO_InputCDR temp (call.inp_stream ());
+                          CORBA::TypeCode::traverse_status retval;
 
-			  begin = call.inp_stream ().rd_ptr ();
-			  // skip the parameter to get the ending position
-			  retval = temp.skip (any->type (), env);
-			  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-			    {
-			      end = temp.rd_ptr ();
-			      any->cdr_ = new ACE_Message_Block (end - begin);
-			      TAO_OutputCDR out (any->cdr_);
+                          begin = call.inp_stream ().rd_ptr ();
+                          // skip the parameter to get the ending position
+                          retval = temp.skip (any->type (), env);
+                          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                            {
+                              end = temp.rd_ptr ();
+                              any->cdr_ = new ACE_Message_Block (end - begin);
+                              TAO_OutputCDR out (any->cdr_);
 
-			      retval = out.append (any->type (),
-						   &call.inp_stream (), env);
-			      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-				{
-				  any->any_owns_data_ = 1;
-				  any->value_ = 0;
-				}
-			    }
-			}
-		      else
-			{
-			  // the application had allocated the top level
-			  // storage. We simply retrieve the data
-			  call.get_value (any->type (),
-					  (void *) any->value_, env);
-			}
-		      if (env.exception ())
-			{
-			  dexc (env, "do_dynamic_call, get response parameter");
-			  return;
-			}
-		    }
-		}
-	      return;
-	    }
-	  // ... or maybe this request got forwarded to someplace else.
-	  assert (status == TAO_GIOP_LOCATION_FORWARD);
-	  // @@ TODO We should not use assert because it crashes the
-	  // application, raise an exception 
-	}
+                              retval = out.append (any->type (),
+                                                   &call.inp_stream (), env);
+                              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                {
+                                  any->any_owns_data_ = 1;
+                                  any->value_ = 0;
+                                }
+                            }
+                        }
+                      else
+                        {
+                          // the application had allocated the top level
+                          // storage. We simply retrieve the data
+                          call.get_value (any->type (),
+                                          (void *) any->value_, env);
+                        }
+                      if (env.exception ())
+                        {
+                          dexc (env, "do_dynamic_call, get response parameter");
+                          return;
+                        }
+                    }
+                }
+              return;
+            }
+          // ... or maybe this request got forwarded to someplace else.
+          assert (status == TAO_GIOP_LOCATION_FORWARD);
+          // @@ TODO We should not use assert because it crashes the
+          // application, raise an exception
+        }
     }
   else
     {
@@ -871,8 +871,8 @@ IIOP_Object::do_dynamic_call (const char *opname,
 
 void
 IIOP_Object::put_params (TAO_GIOP_Invocation &call,
-			 CORBA::NVList_ptr args,
-			 CORBA::Environment &env)
+                         CORBA::NVList_ptr args,
+                         CORBA::Environment &env)
 {
   // Now, put all "in" and "inout" parameters into the request
   // message body.
@@ -882,27 +882,27 @@ IIOP_Object::put_params (TAO_GIOP_Invocation &call,
       CORBA::NamedValue_ptr value = args->item (i, env);
 
       if (value->flags () == CORBA::ARG_IN
-	  || value->flags () == CORBA::ARG_INOUT)
-	{
-	  // if the Any owns the data, then we already have a CDR encoded
-	  // data
-	  if (value->value ()->any_owns_data_)
-	    {
-	      TAO_OutputCDR &cdr = call.out_stream ();
-	      TAO_InputCDR in (value->value ()->cdr_);
-	      cdr.append (value->value ()->type (), &in, env);
-	    }
-	  else
-	    {
-	      call.put_param (value->value ()->type (),
-			      (void *) value->value ()->value_, env);
-	    }
-	  if (env.exception ())
-	    {
-	      dexc (env, "do_dynamic_call, put request parameter");
-	      return;
-	    }
-	}
+          || value->flags () == CORBA::ARG_INOUT)
+        {
+          // if the Any owns the data, then we already have a CDR encoded
+          // data
+          if (value->value ()->any_owns_data_)
+            {
+              TAO_OutputCDR &cdr = call.out_stream ();
+              TAO_InputCDR in (value->value ()->cdr_);
+              cdr.append (value->value ()->type (), &in, env);
+            }
+          else
+            {
+              call.put_param (value->value ()->type (),
+                              (void *) value->value ()->value_, env);
+            }
+          if (env.exception ())
+            {
+              dexc (env, "do_dynamic_call, put request parameter");
+              return;
+            }
+        }
     }
 }
 
