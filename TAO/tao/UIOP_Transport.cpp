@@ -22,7 +22,7 @@ static const char *TAO_UIOP_Transport_Timeprobe_Description[] =
     "UIOP_Transport::send - end",
 
     "UIOP_Transport::receive - start",
-    "UIOP_Transport::recieve - end",
+    "UIOP_Transport::receive - end",
 
     "UIOP_Client_Transport::send_request - start",
     "UIOP_Client_Transport::send_request - end"
@@ -30,7 +30,7 @@ static const char *TAO_UIOP_Transport_Timeprobe_Description[] =
 
 enum
   {
-    TAO_UIOP_TRANSPORT_SEND_START = 1200,
+    TAO_UIOP_TRANSPORT_SEND_START = 1300,
     TAO_UIOP_TRANSPORT_SEND_END,
 
     TAO_UIOP_TRANSPORT_RECEIVE_START,
