@@ -1,3 +1,18 @@
+Mon Jan 21 17:15:18 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Because things like 'CORBA::ULong' and 'CORBA::Float'
+          are added to the AST automatically, the IDL compiler
+          was wrongly accepting types like 'ULong' and "Float'.
+          This was fixed in lookup_by_name_local() and a new
+          method lookup_pseudo() was added to specialize the
+          cases 'Object' and 'TypeCode', where we want to find
+          a match. Thanks to Jerome Julius <julius@erols.com> for
+          sending in the example IDL file that uncovered this 
+          problem.
+
 Mon Jan 21 20:59:09 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
         * tests/OBV/Any/Makefile:
