@@ -34,7 +34,8 @@ if (ACE::waitforfile_timed ($ior, $sleeptime) == -1) {
 }
 
 $E = Process::Create ($EXEPREFIX."export_test".$EXE_EXT,
-                      "-ORBInitRef TradingService=file://$ior");
+                      "-ORBInitRef TradingService=file://$ior"
+		      . " -quiet");
 
 if (ACE::waitforfile_timed ($ready_file, 120) == -1) {
   print STDERR "ERROR: waiting for the export test to finish\n";
@@ -44,7 +45,8 @@ if (ACE::waitforfile_timed ($ready_file, 120) == -1) {
 }
 
 $I = Process::Create ($EXEPREFIX."import_test".$EXE_EXT,
-                      "-ORBInitRef TradingService=file://$ior");
+                      "-ORBInitRef TradingService=file://$ior"
+		      . " -quiet");
 
 if ($I->TimedWait (60) == -1) {
   $status = 1;

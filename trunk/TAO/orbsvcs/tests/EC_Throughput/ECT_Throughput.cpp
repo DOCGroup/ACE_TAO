@@ -91,43 +91,46 @@ ECT_Throughput::run (int argc, char* argv[])
       if (this->parse_args (argc, argv))
         return 1;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Execution parameters:\n"
-                  "  consumers = <%d>\n"
-                  "  suppliers = <%d>\n"
-                  "  burst count = <%d>\n"
-                  "  burst size = <%d>\n"
-                  "  event size = <%d>\n"
-                  "  burst pause = <%d>\n"
-                  "  consumer type start = <%d>\n"
-                  "  consumer type count = <%d>\n"
-                  "  consumer type shift = <%d>\n"
-                  "  supplier type start = <%d>\n"
-                  "  supplier type count = <%d>\n"
-                  "  supplier type shift = <%d>\n"
-                  "  pid file name = <%s>\n"
-                  "  reactive EC = <%d>\n"
-                  "  new EC = <%d>\n"
-                  "  concurrency HWM = <%d>\n",
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Execution parameters:\n"
+                      "  consumers = <%d>\n"
+                      "  suppliers = <%d>\n"
+                      "  burst count = <%d>\n"
+                      "  burst size = <%d>\n"
+                      "  event size = <%d>\n"
+                      "  burst pause = <%d>\n"
+                      "  consumer type start = <%d>\n"
+                      "  consumer type count = <%d>\n"
+                      "  consumer type shift = <%d>\n"
+                      "  supplier type start = <%d>\n"
+                      "  supplier type count = <%d>\n"
+                      "  supplier type shift = <%d>\n"
+                      "  pid file name = <%s>\n"
+                      "  reactive EC = <%d>\n"
+                      "  new EC = <%d>\n"
+                      "  concurrency HWM = <%d>\n",
 
-                  this->n_consumers_,
-                  this->n_suppliers_,
-                  this->burst_count_,
-                  this->burst_size_,
-                  this->event_size_,
-                  this->burst_pause_,
-                  this->consumer_type_start_,
-                  this->consumer_type_count_,
-                  this->consumer_type_shift_,
-                  this->supplier_type_start_,
-                  this->supplier_type_count_,
-                  this->supplier_type_shift_,
+                      this->n_consumers_,
+                      this->n_suppliers_,
+                      this->burst_count_,
+                      this->burst_size_,
+                      this->event_size_,
+                      this->burst_pause_,
+                      this->consumer_type_start_,
+                      this->consumer_type_count_,
+                      this->consumer_type_shift_,
+                      this->supplier_type_start_,
+                      this->supplier_type_count_,
+                      this->supplier_type_shift_,
 
-                  this->pid_file_name_?this->pid_file_name_:"nil",
-                  this->reactive_ec_,
-                  this->new_ec_,
-                  this->ec_concurrency_hwm_
-                  ) );
+                      this->pid_file_name_?this->pid_file_name_:"nil",
+                      this->reactive_ec_,
+                      this->new_ec_,
+                      this->ec_concurrency_hwm_
+                      ) );
+        }
 
       if (this->pid_file_name_ != 0)
         {

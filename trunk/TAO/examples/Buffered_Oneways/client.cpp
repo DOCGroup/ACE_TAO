@@ -13,9 +13,10 @@
 //
 // ================================================================
 
+#include "testC.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "testC.h"
 
 ACE_RCSID(Buffered_Oneways, client, "$Id$")
 
@@ -285,10 +286,14 @@ main (int argc, char **argv)
                                                     ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "client: Iteration %d @ %T\n",
+                              i));
+                }
+
               // Invoke the oneway method.
-              ACE_DEBUG ((LM_DEBUG,
-                          "client: Iteration %d @ %T\n",
-                          i));
               test_object->method (i,
                                    ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -301,9 +306,12 @@ main (int argc, char **argv)
             }
           else
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "client: Iteration %d @ %T\n",
-                          i));
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "client: Iteration %d @ %T\n",
+                              i));
+                }
 
               // Invoke the oneway method.
               test_object->method (i,

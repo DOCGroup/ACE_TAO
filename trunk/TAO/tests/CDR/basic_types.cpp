@@ -94,7 +94,7 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
                            i),
                           1);
 #endif
-      if (cdr << test_types.any)
+      if (!(cdr << test_types.any))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "encode Any [%d] failed\n",
                            i),

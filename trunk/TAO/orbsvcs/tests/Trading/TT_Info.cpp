@@ -318,7 +318,11 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
             ACE_ERROR ((LM_ERROR, "Couldn't load ior.\n"));
         }
       else
-        arg_shifter.ignore_arg ();
+        {
+          ACE_DEBUG ((LM_DEBUG, "Ignoring argument <%s>\n",
+                      current_arg));
+          arg_shifter.consume_arg ();
+        }
     }
 }
 

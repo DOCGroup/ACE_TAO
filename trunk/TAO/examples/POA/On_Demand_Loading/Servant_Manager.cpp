@@ -57,8 +57,9 @@ ServantManager_i::obtain_servant (const char *str,
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (str);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "before bind\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "before bind\n"));
   // Make an HASH_MAP entry by binding the object_id and the DLL
   // object associated with it together.
   if (this->servant_map_.bind (oid.in (),
@@ -125,10 +126,11 @@ ServantManager_i::parse_string (const char *s)
   // the location of ':'.
   this->create_symbol_ = str.substr (index + 1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "the servant dll:%s\n the factory_function:%s\n ",
-              this->dllname_.c_str (),
-              this->create_symbol_.c_str ()));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "the servant dll:%s\n the factory_function:%s\n ",
+                this->dllname_.c_str (),
+                this->create_symbol_.c_str ()));
 }
 
 // This method returns an ObjectId when given a DLL name and the

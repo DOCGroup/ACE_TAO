@@ -72,26 +72,29 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       if (this->parse_args (argc, argv))
         return 1;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Execution parameters:\n"
-                  "  suppliers = <%d>\n"
-                  "  burst count = <%d>\n"
-                  "  burst size = <%d>\n"
-                  "  event size = <%d>\n"
-                  "  burst pause = <%d>\n"
-                  "  type start = <%d>\n"
-                  "  type count = <%d>\n"
-                  "  pid file name = <%s>\n",
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Execution parameters:\n"
+                      "  suppliers = <%d>\n"
+                      "  burst count = <%d>\n"
+                      "  burst size = <%d>\n"
+                      "  event size = <%d>\n"
+                      "  burst pause = <%d>\n"
+                      "  type start = <%d>\n"
+                      "  type count = <%d>\n"
+                      "  pid file name = <%s>\n",
 
-                  this->n_suppliers_,
-                  this->burst_count_,
-                  this->burst_size_,
-                  this->event_size_,
-                  this->burst_pause_,
-                  this->type_start_,
-                  this->type_count_,
+                      this->n_suppliers_,
+                      this->burst_count_,
+                      this->burst_size_,
+                      this->event_size_,
+                      this->burst_pause_,
+                      this->type_start_,
+                      this->type_count_,
 
-                  this->pid_file_name_?this->pid_file_name_:"nil") );
+                      this->pid_file_name_?this->pid_file_name_:"nil") );
+        }
 
       if (this->pid_file_name_ != 0)
         {

@@ -75,7 +75,7 @@ main (int argc, char *argv[])
 
       Structure the_in_structure;
       the_in_structure.seq.length (10);
-      
+
       for (int i = 0; i != niterations; ++i)
         {
           the_in_structure.i = i;
@@ -91,16 +91,19 @@ main (int argc, char *argv[])
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "DSI_Simpler_Server ====\n"
-                      "    x = %d\n"
-                      "    i = %d\n"
-                      "    length = %d\n"
-                      "    name = <%s>\n",
-                      r,
-                      the_out_structure->i,
-                      the_out_structure->seq.length (),
-                      name.in ()));
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "DSI_Simpler_Server ====\n"
+                          "    x = %d\n"
+                          "    i = %d\n"
+                          "    length = %d\n"
+                          "    name = <%s>\n",
+                          r,
+                          the_out_structure->i,
+                          the_out_structure->seq.length (),
+                          name.in ()));
+            }
 
           if (r != i)
             {

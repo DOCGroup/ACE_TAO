@@ -123,24 +123,30 @@ main (int argc, char *argv[])
 
                 CORBA::ULong length = 0;
                 // tc->length (TAO_TRY_ENV);
-                            // ACE_TRY_CHECK;
+                // ACE_TRY_CHECK;
 
-                ACE_DEBUG ((LM_DEBUG,
-                            "ID = '%s'\n"
-                            "%{%{ NAME = %s%$"
-                            " KIND = %d%$"
-                            " LENGTH = %d"
-                            "%}%}\n",
-                            (id?id:"empty ID"),
-                            (name?name:"empty name"),
-                            k,
-                            length));
+                if (TAO_debug_level > 0)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,
+                                "ID = '%s'\n"
+                                "%{%{ NAME = %s%$"
+                                " KIND = %d%$"
+                                " LENGTH = %d"
+                                "%}%}\n",
+                                (id?id:"empty ID"),
+                                (name?name:"empty name"),
+                                k,
+                                length));
+                  }
                 break;
               }
             default:
-              ACE_DEBUG ((LM_DEBUG,
-                          "basic type: %d\n",
-                          k));
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "basic type: %d\n",
+                              k));
+                }
               break;
             }
         }

@@ -13,7 +13,6 @@ PingObject_i::ping (PingObject_ptr callback,
       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "PingObject_i::ping (%P|%t)\n"));
   callback->pong (ACE_TRY_ENV);
 }
 
@@ -21,7 +20,6 @@ void
 PingObject_i::pong (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "PingObject_i::pong (%P|%t)\n"));
 }
 
 void
