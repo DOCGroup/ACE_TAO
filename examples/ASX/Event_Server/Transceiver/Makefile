@@ -11,6 +11,8 @@
 BIN   	= transceiver
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
+#### -lGateway is needed for template instantiations with g++ -fno-implicit-templates
+LIBS	= -lGateway
 
 BUILD 	= $(VBIN)
 
