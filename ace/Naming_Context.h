@@ -80,6 +80,9 @@ public:
   // Deletes the instance of Name Space. Must be called before
   // switching name spaces.
 
+  int close_down (void);
+  // Release all resources. Gets called by destructor and fini.
+
   ~ACE_Naming_Context (void);
   // destructor, do some cleanup :TBD: last dtor should "compress"
   // file
