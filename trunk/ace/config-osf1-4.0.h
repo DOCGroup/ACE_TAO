@@ -20,6 +20,7 @@
 #define ACE_HAS_STRING_CLASS
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_SIGNED_CHAR
+#define ACE_HAS_UALARM
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__

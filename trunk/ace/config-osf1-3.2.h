@@ -21,7 +21,8 @@
 
 // Platform supports tid_t
 #define ACE_HAS_TID_T
- 
+#define ACE_HAS_UALARM 
+
 // Platform lacks support for shared condition variables
 #define ACE_LACKS_CONDATTR_PSHARED
 

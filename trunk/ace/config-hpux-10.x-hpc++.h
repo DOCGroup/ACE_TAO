@@ -72,6 +72,7 @@
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
+#define ACE_HAS_UALARM
 
 #include "ace/config-hpux-10.x.h"	/* OS information */
 

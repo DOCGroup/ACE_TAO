@@ -9,7 +9,7 @@
 //    Async_Timer_Queue_Test.cpp
 //
 // = DESCRIPTION
-//      This test exercises <ACE_Timer_Heap> in the context of
+//      This test exercises <ACE_Timer_List> in the context of
 //      signal-based timer handling.  
 //
 // = AUTHORS
@@ -27,8 +27,12 @@ static int lines = 0;
 // Were we interrupted by a SIGINT?
 sig_atomic_t sigint = 0;
 
+// This is our main timer list.  Right now, it doesn't know anything
+// about signals. 
 static ACE_Timer_List timer_list;
 
+// This is our signal handler function.  It gets invoked
+// asynchronously when SIGINT, SIGALRM, or SIGQUIT gets called.
 static void 
 handler (int signum)
 {

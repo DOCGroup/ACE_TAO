@@ -222,3 +222,5 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
+#define ACE_HAS_UALARM

@@ -22,3 +22,7 @@ in handle_output
 
 There are a number of other options that you can provide.  Please see
 the source code for details.
+
+Note that only the sock tests work on all platforms.  The other tests
+reply on features (in particular, non-blocking connections and TLI)
+that are mostly found on UNIX platforms.
