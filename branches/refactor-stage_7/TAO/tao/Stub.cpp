@@ -27,22 +27,23 @@ ACE_RCSID (tao,
 TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
                     TAO_ORB_Core *orb_core)
-  : type_id (repository_id),
-    orb_core_ (orb_core),
-    orb_ (),
-    servant_orb_ (),
-    base_profiles_ ((CORBA::ULong) 0),
-    forward_profiles_ (0),
-    profile_in_use_ (0),
-    profile_lock_ptr_ (0),
-    profile_success_ (0),
-    refcount_lock_ (),
-    refcount_ (1),
+  : type_id (repository_id)
+  , orb_core_ (orb_core)
+  , orb_ ()
+  , servant_orb_ ()
+  , base_profiles_ ((CORBA::ULong) 0)
+  , forward_profiles_ (0)
+  , profile_in_use_ (0)
+  , profile_lock_ptr_ (0)
+  , profile_success_ (0)
+  , refcount_lock_ ()
+  , refcount_ (1)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-    policies_ (0),
+  , policies_ (0)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-    ior_info_ (0),
-    forwarded_ior_info_ (0)
+  , ior_info_ (0)
+  , forwarded_ior_info_ (0)
+  , collocation_opt_ (orb_core->optimize_collocation_objects ())
 {
   if (this->orb_core_.get() == 0)
     {

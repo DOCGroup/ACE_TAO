@@ -66,7 +66,7 @@ namespace TAO
   class TAO_Export Invocation_Adapter
   {
   public:
-    /// The only constructor used by the IDL compiler and onlly way to
+    /// The only constructor used by the IDL compiler, and only way to
     /// create this adapter.
     /**
      *
