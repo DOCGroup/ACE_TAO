@@ -7,13 +7,23 @@ use Process;
 
 $client_port = 0;
 $server_port = 0;
-$ior_file = "cubit_ior";
+$iorfile = "cubit_ior";
 
 $SV = Process::Create ("server".$Process::EXE_EXT, 
-                       "-s -ORBport ".$server_port." -o ".$ior_file." -ORBobjrefstyle url");
+                       "-s -ORBport ".$server_port." -o ".$iorfile." -ORBobjrefstyle url");
 
 sleep (2);
 
-system ("client".$Process::EXE_EXT." -x -s -f ".$ior_file." -ORBport ".$client_port );
+system ("client".$Process::EXE_EXT." -x -s -f ".$iorfile." -ORBport ".$client_port );
 
 $SV->Kill ();
+
+
+if ($^O eq "MSWin32")
+{
+  system ("del ".$iorfile);
+}
+else
+{
+  system ("rm ".$iorfile);
+}
