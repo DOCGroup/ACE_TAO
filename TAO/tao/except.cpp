@@ -433,7 +433,7 @@ print_exception (const CORBA::Exception *x,
 {
   CORBA::String id = x->id ();
 
-  ACE_DEBUG ((LM_ERROR, "EXCEPTION, %s\n", info));
+  ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
 
   // XXX get rid of this logic, and rely on some member function
   // on Exception to say if it's user or system exception.
@@ -450,29 +450,16 @@ print_exception (const CORBA::Exception *x,
       // (yeech) or (preferably) to represent the exception type
       // directly in the exception value so it can be queried.
 
-      ACE_DEBUG ((LM_ERROR, "ACE_OS::system exception, ID '%s'\n", id));
-      ACE_DEBUG ((LM_ERROR, "minor code = %#lx, completed = ", x2->minor ()));
-
-      switch (x2->completion ()) 
-	{
-	case CORBA::COMPLETED_YES:
-	  fputs ("YES", stream);
-	  break;
-	case CORBA::COMPLETED_NO:
-	  fputs ("NO", stream);
-	  break;
-	case CORBA::COMPLETED_MAYBE:
-	  fputs ("MAYBE", stream);
-	  break;
-	default:
-	  fputs ("**garbage**", stream);
-	  break;
-	}
-      fputc ('\n', stream);
+      ACE_DEBUG ((LM_ERROR, "(%P|%t) system exception, ID '%s'\n", id));
+      ACE_DEBUG ((LM_ERROR, "(%P|%t) minor code = %#lx, completed = %s", x2->minor (),
+                  (x2->completion () == CORBA::COMPLETED_YES) ? "YES" :
+                  (x2->completion () == CORBA::COMPLETED_NO) ? "NO" :
+                  (x2->completion () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                  "garbage"));
     }
   else 
     // XXX we can use the exception's typecode to dump all the data
     // held within it ...
 
-    ACE_DEBUG ((LM_ERROR, "user exception, ID '%s'\n", id));
+    ACE_DEBUG ((LM_ERROR, "(%P|%t) user exception, ID '%s'\n", id));
 }
