@@ -92,9 +92,10 @@
       <li><P><em>Catching exceptions:</em><br>
           Use <code>ACE_TRY</code> to catch exceptions if there's an
           <code>ACE_TRY_ENV</code> available.  Otherwise, use
-          <code>ACE_TRY_NEW_ENV</code>.  If there are more than one try
-          blocks in a function, use <code>ACE_TRY_EX</code> for all
-          subsequence try blocks to avoid name clashing of labels.
+          <code>ACE_TRY_NEW_ENV</code> which will defines a new
+          <code>ACE_TRY_ENV</code> within it's scope.  If there are
+          more than one try blocks in a function, use <code>ACE_TRY_EX</code>
+          for all subsequence try blocks to avoid name clashing of labels.
         </p>
         <ul>
           <li><P>Within a <code>ACE_TRY</code> block, use the variable
