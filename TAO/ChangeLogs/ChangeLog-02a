@@ -1,3 +1,16 @@
+Tue Nov 28 00:29:40 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Count the number of addrs in each "-ORBEndpoint" option.  The
+	  sum of those values should be the maximum number of acceptors
+	  the acceptor registry should allocate space for.  Previously,
+	  a single addr was assumed to exist in each -ORBEndpoint option.
+	  This fixes a segmentation fault that was occuring when multiple
+	  addrs were specified in a single "-ORBEndpoint" command line
+	  ORB option.
+	  Reported by Jeff Greif <jgreif@befree.com>.
+
 Mon Nov 27 17:24:14 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Latency/client.cpp: 
