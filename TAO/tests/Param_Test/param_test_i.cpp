@@ -762,7 +762,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
 {
   CORBA::Any *ret;
   CORBA::Short short_in;
-  char *str_in;
+  const char *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
   Param_Test::Short_Seq *ub_short_sequence;
@@ -919,7 +919,7 @@ Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
   Param_Test::Var_Array_slice *ret;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%N| %l) \n"));
+              "(%N| %l) \n"));
   Param_Test::Var_Array_copy (a2, a1);
   a3 = Param_Test::Var_Array_dup (a1);
   ret = Param_Test::Var_Array_dup (a1);

@@ -142,36 +142,26 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (TAO)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ClientPriorityPolicy, &_tc_TAO_tc_TAO_ClientPriorityPolicy)
 TAO_NAMESPACE_END
+
 void operator<<= (CORBA::Any &_tao_any, const TAO::PrioritySpecification &_tao_elem) // copying
 {
-  TAO::PrioritySpecification *_any_val = 0;
-  ACE_NEW (_any_val, TAO::PrioritySpecification (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         TAO::_tc_PrioritySpecification,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void TAO::PrioritySpecification::_tao_any_destructor (void *x)
+{
+  TAO::PrioritySpecification *tmp = ACE_static_cast(TAO::PrioritySpecification*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, TAO::PrioritySpecification *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -180,16 +170,8 @@ void operator<<= (CORBA::Any &_tao_any, TAO::PrioritySpecification *_tao_elem) /
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        TAO::PrioritySpecification::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::PrioritySpecification *&_tao_elem)
@@ -221,9 +203,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::PrioritySpecificati
             TAO::_tc_PrioritySpecification,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            TAO::PrioritySpecification::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -237,7 +218,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::PrioritySpecificati
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -272,9 +253,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::PrioritySpeci
             TAO::_tc_PrioritySpecification,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (TAO::PrioritySpecification *&, _tao_elem)),
-            ACE_TRY_ENV
+            TAO::PrioritySpecification::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -288,10 +268,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::PrioritySpeci
   {
     delete ACE_const_cast (TAO::PrioritySpecification *&, _tao_elem);
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
+}
+
+void TAO::ClientPriorityPolicy::_tao_any_destructor (void *x)
+{
+  TAO::ClientPriorityPolicy *tmp = ACE_static_cast(TAO::ClientPriorityPolicy*,x);
+  CORBA::release (tmp);
 }
 
 TAO::ClientPriorityPolicy_ptr (*_TAO_collocation_TAO_ClientPriorityPolicy_Stub_Factory_function_pointer) (
@@ -299,47 +285,28 @@ TAO::ClientPriorityPolicy_ptr (*_TAO_collocation_TAO_ClientPriorityPolicy_Stub_F
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, TAO::ClientPriorityPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = TAO::ClientPriorityPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          TAO::_tc_ClientPriorityPolicy, 
+          TAO::_tc_ClientPriorityPolicy,
           TAO_ENCAP_BYTE_ORDER,
           stream.begin (),
           1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          _tao_elem,
+          TAO::ClientPriorityPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::ClientPriorityPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = TAO::ClientPriorityPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (TAO::_tc_ClientPriorityPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -352,24 +319,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::ClientPriorityPolic
     {
       _tao_elem = TAO::ClientPriorityPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           TAO::_tc_ClientPriorityPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          TAO::ClientPriorityPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = TAO::ClientPriorityPolicy::_nil ();
     return 0;
   }
@@ -524,36 +484,26 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (TAO)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_BufferingConstraintPolicy, &_tc_TAO_tc_TAO_BufferingConstraintPolicy)
 TAO_NAMESPACE_END
+
 void operator<<= (CORBA::Any &_tao_any, const TAO::BufferingConstraint &_tao_elem) // copying
 {
-  TAO::BufferingConstraint *_any_val = 0;
-  ACE_NEW (_any_val, TAO::BufferingConstraint (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
-    stream << *_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (
         TAO::_tc_BufferingConstraint,
         TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
+        stream.begin ()
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+}
+
+void TAO::BufferingConstraint::_tao_any_destructor (void *x)
+{
+  TAO::BufferingConstraint *tmp = ACE_static_cast(TAO::BufferingConstraint*,x);
+  delete tmp;
 }
 
 void operator<<= (CORBA::Any &_tao_any, TAO::BufferingConstraint *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
     TAO_OutputCDR stream;
     stream << *_tao_elem;
     _tao_any._tao_replace (
@@ -562,16 +512,8 @@ void operator<<= (CORBA::Any &_tao_any, TAO::BufferingConstraint *_tao_elem) // 
         stream.begin (),
         1,
         _tao_elem,
-        ACE_TRY_ENV
+        TAO::BufferingConstraint::_tao_any_destructor
       );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint *&_tao_elem)
@@ -603,9 +545,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
             TAO::_tc_BufferingConstraint,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            TAO::BufferingConstraint::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -619,7 +560,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -654,9 +595,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::BufferingCons
             TAO::_tc_BufferingConstraint,
             1,
             ACE_reinterpret_cast (void *, ACE_const_cast (TAO::BufferingConstraint *&, _tao_elem)),
-            ACE_TRY_ENV
+            TAO::BufferingConstraint::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -670,10 +610,16 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::BufferingCons
   {
     delete ACE_const_cast (TAO::BufferingConstraint *&, _tao_elem);
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
+}
+
+void TAO::BufferingConstraintPolicy::_tao_any_destructor (void *x)
+{
+  TAO::BufferingConstraintPolicy *tmp = ACE_static_cast(TAO::BufferingConstraintPolicy*,x);
+  CORBA::release (tmp);
 }
 
 TAO::BufferingConstraintPolicy_ptr (*_TAO_collocation_TAO_BufferingConstraintPolicy_Stub_Factory_function_pointer) (
@@ -681,47 +627,28 @@ TAO::BufferingConstraintPolicy_ptr (*_TAO_collocation_TAO_BufferingConstraintPol
   ) = 0;
 void operator<<= (CORBA::Any &_tao_any, TAO::BufferingConstraintPolicy_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
-  ACE_TRY_NEW_ENV
-  {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = TAO::BufferingConstraintPolicy::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          TAO::_tc_BufferingConstraintPolicy, 
+          TAO::_tc_BufferingConstraintPolicy,
           TAO_ENCAP_BYTE_ORDER,
           stream.begin (),
           1,
-          _tao_obj_ptr,
-          ACE_TRY_ENV
+          _tao_elem,
+          TAO::BufferingConstraintPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_obj_ptr;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraintPolicy_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = TAO::BufferingConstraintPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (TAO::_tc_BufferingConstraintPolicy, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -734,24 +661,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
     {
       _tao_elem = TAO::BufferingConstraintPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           TAO::_tc_BufferingConstraintPolicy,
           1,
-          tmp,
-          ACE_TRY_ENV
+          _tao_elem,
+          TAO::BufferingConstraintPolicy::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
       return 1;
-    }
-    else    // failure
-    {
-      delete tmp;
     }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = TAO::BufferingConstraintPolicy::_nil ();
     return 0;
   }

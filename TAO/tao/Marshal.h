@@ -35,18 +35,6 @@
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
-CORBA::TypeCode::traverse_status
-DEEP_COPY (CORBA::TypeCode_ptr  param,
-           const void *source,
-           const void *dest,
-           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-CORBA::TypeCode::traverse_status
-DEEP_FREE (CORBA::TypeCode_ptr  param,
-           const void *source,
-           const void *dest,
-           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
 // = Forward declarations.
 class TAO_Marshal_Object;
 class TAO_Marshal_Primitive;
@@ -115,23 +103,9 @@ class TAO_Export TAO_Marshal_Object
   //    The Marshaling object that provides a common interface to the
   //    CDR object for marshaling different IDL data types
   //
-  //    Provides a set of virtual methods for encoding, decoding
-  //    and deep_freeing.
+  //    Provides a set of virtual methods for appending and skipping
+  //    data over a CDR stream.
 public:
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
-  // encoding operation
-
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
-  // decoding operation
-
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
@@ -161,20 +135,6 @@ public:
 
   virtual ~TAO_Marshal_Primitive (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -199,20 +159,6 @@ public:
 
   virtual ~TAO_Marshal_Any (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *source,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -237,20 +183,6 @@ public:
 
   virtual ~TAO_Marshal_TypeCode (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -275,20 +207,6 @@ public:
 
   virtual ~TAO_Marshal_Principal (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -313,20 +231,6 @@ public:
 
   virtual ~TAO_Marshal_ObjRef (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -351,20 +255,6 @@ public:
 
   virtual ~TAO_Marshal_Struct (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -389,20 +279,6 @@ public:
 
   virtual ~TAO_Marshal_Union (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -427,20 +303,6 @@ public:
 
   virtual ~TAO_Marshal_String (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -465,20 +327,6 @@ public:
 
   virtual ~TAO_Marshal_Sequence (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -503,20 +351,6 @@ public:
 
   virtual ~TAO_Marshal_Array (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -541,20 +375,6 @@ public:
 
   virtual ~TAO_Marshal_Alias (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -578,20 +398,6 @@ public:
   TAO_Marshal_Except (void);
   ~TAO_Marshal_Except (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
@@ -615,20 +421,6 @@ public:
   TAO_Marshal_WString (void);
   ~TAO_Marshal_WString (void);
 
-  virtual CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *parent_typecode,
-                                                  void *context,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  static CORBA::TypeCode::traverse_status deep_free (CORBA::TypeCode_ptr tc,
-                                                  const void *data,
-                                                  const void *,
-                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  void *context,
                                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());

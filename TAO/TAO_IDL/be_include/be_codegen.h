@@ -71,14 +71,9 @@ public:
     TAO_ARGUMENT_MARSHAL_SS,                 // passing argument node to the
     TAO_ARGUMENT_DEMARSHAL_SS,               // demarshal and marshal
                                              // operations
-    TAO_ARGUMENT_POST_MARSHAL_SS,
-    TAO_ARGUMENT_PRE_UPCALL_SS,              // preprocessing of argument
-                                             // variable before upcall
     TAO_ARGUMENT_UPCALL_SS,                  // passing argument variable to upcall
-    TAO_ARGUMENT_COLLOCATED_UPCALL_SS, // passing argument
-                                                        // variable to upcall
-    TAO_ARGUMENT_POST_UPCALL_SS,             // postprocessing of argument
-                                             // variable after upcall
+    TAO_ARGUMENT_COLLOCATED_UPCALL_SS,       // passing argument
+                                             // variable to upcall
 
     // emitting code for attributes.
     TAO_ATTRIBUTE_CH,                        // in client header
@@ -260,7 +255,6 @@ public:
     TAO_OPERATION_RETVAL_INVOKE_CS,          // passing the return type
                                              //   variable to do_static_call
     TAO_OPERATION_ARG_INVOKE_CS,             // passing argument variable to do_static_call
-    TAO_OPERATION_RETVAL_POST_INVOKE_CS,     // processing  of return type
                                              //   after do_static_call
     TAO_OPERATION_ARG_POST_INVOKE_CS,        // processing of arg after do_static_call
     TAO_OPERATION_RETVAL_RETURN_CS,          // returning the return type
@@ -268,18 +262,14 @@ public:
     TAO_OPERATION_EXCEPTLIST_CS,             // generating the exception list
     TAO_OPERATION_RETVAL_DECL_SS,            // return type decl in skeleton
     TAO_OPERATION_ARG_DECL_SS,               // argument decl in skeleton
-    TAO_OPERATION_RETVAL_DEMARSHAL_SS,       // passing return type variable
     TAO_OPERATION_ARG_DEMARSHAL_SS,          //   and argument variables to the
     TAO_OPERATION_RETVAL_MARSHAL_SS,         //   marshal and demarshal operations
     TAO_OPERATION_ARG_MARSHAL_SS,
-    TAO_OPERATION_ARG_POST_MARSHAL_SS,
     TAO_OPERATION_RETVAL_ASSIGN_SS,          // assigning to return type
                                              // variable
-    TAO_OPERATION_ARG_PRE_UPCALL_SS,         // pre upcall processing
     TAO_OPERATION_ARG_UPCALL_SS,             // variables to upcall
     TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS,  // variables to upcall for
                                              // collocated op
-    TAO_OPERATION_RETVAL_POST_UPCALL_SS,     // post upcall processing for
     TAO_OPERATION_ARG_POST_UPCALL_SS,        //   return and argument variables
     TAO_OPERATION_RESULT_SS,                 // XXXASG rm?
     TAO_OPERATION_TIE_SH,

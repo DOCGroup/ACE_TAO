@@ -180,11 +180,7 @@ catior (char* str,
   // object reference.
   char* type_hint;
 
-  continue_decoding = stream.decode (CORBA::_tc_string,
-                                     &type_hint,
-                                     0,
-                                     env);
-  if (continue_decoding == 0)
+  if (!(stream >> type_hint))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read type id\n"));

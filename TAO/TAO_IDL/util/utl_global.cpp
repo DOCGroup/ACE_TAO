@@ -139,7 +139,6 @@ IDL_GlobalData::IDL_GlobalData (void)
 #else
       obv_support_ (I_FALSE), // ever
 #endif
-      compiled_marshaling_ (I_TRUE),
       gen_impl_files_ (I_FALSE),
       gen_copy_ctor_ (I_FALSE),
       gen_assign_op_ (I_FALSE),
@@ -1379,18 +1378,6 @@ idl_bool
 IDL_GlobalData::obv_support (void)
 {
   return this->obv_support_;
-}
-
-void
-IDL_GlobalData::compiled_marshaling (idl_bool val)
-{
-  this->compiled_marshaling_ = val;
-}
-
-idl_bool
-IDL_GlobalData::compiled_marshaling (void)
-{
-  return this->compiled_marshaling_;
 }
 
 void

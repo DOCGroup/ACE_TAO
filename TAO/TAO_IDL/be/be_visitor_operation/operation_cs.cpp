@@ -136,7 +136,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       // Generate any "pre" stub information such as tables or declarations
       // This is a template method and the actual work will be done by the
       // derived class
-      if (this->gen_pre_stub_info (node, bt) == -1)
+      if (this->gen_pre_stub_info (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
@@ -294,412 +294,7 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
 }
 
 int
-be_visitor_operation_cs::gen_raise_exception (be_type *bt,
-                                              const char *excep,
-                                              const char *completion_status)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->void_return_type (bt))
-    {
-      *os << "ACE_THROW ("
-          << excep << " (" << completion_status << "));\n";
-    }
-  else
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "ACE_THROW_RETURN (" << excep
-              << " (" << completion_status << "), 0);\n";
-        }
-      else
-        {
-          *os << "ACE_THROW_RETURN (" << excep
-              << " (" << completion_status << "), _tao_retval);\n";
-        }
-    }
-  return 0;
-}
-
-int
-be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
-                                                          const char *excep,
-                                                          const char *completion_status)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->void_return_type (bt))
-    {
-      *os << "TAO_INTERCEPTOR_THROW ("
-          << excep << " ("
-          << completion_status << ")"
-          << ");";
-    }
-  else
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << excep
-              << " (" << completion_status << "), 0);\n";
-        }
-      else
-        {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << excep
-              << " (" << completion_status << "), _tao_retval);\n";
-        }
-    }
-  return 0;
-}
-
-int
-be_visitor_operation_cs::gen_check_exception (be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-  // check if there is an exception
-  if (this->void_return_type (bt))
-    {
-      *os << "ACE_CHECK;\n";
-      //<< "_tao_environment);\n";
-    }
-  else
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "ACE_CHECK_RETURN (0);\n";
-        }
-      else
-        {
-          *os << "ACE_CHECK_RETURN  (_tao_retval);\n";
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_operation_cs::gen_check_interceptor_exception (be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-  // check if there is an exception
-  if (this->void_return_type (bt))
-    {
-      *os << "TAO_INTERCEPTOR_CHECK;\n";
-      //<< "_tao_environment);\n";
-    }
-  else
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "TAO_INTERCEPTOR_CHECK_RETURN (0);\n";
-        }
-      else
-        {
-          *os << "TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);\n";
-        }
-    }
-
-  return 0;
-}
-
-const char*
-be_visitor_operation_cs::compute_operation_name (be_operation *node)
-{
-  if (this->operation_name_ == 0)
-    {
-      size_t len = 3;           // length for two double quotes
-                                // and the null termination char.
-      if (this->ctx_->attribute ())
-        len += 5;               // "Added length for "_set_" or "_get_".
-
-      len += ACE_OS::strlen (node->original_local_name ()->get_string ());
-
-      ACE_NEW_RETURN (this->operation_name_,
-                      char [len],
-                      0);
-
-      ACE_OS::strcpy (this->operation_name_, "\"");
-      if (this->ctx_->attribute ())
-        {
-          // now check if we are a "get" or "set" operation
-          if (node->nmembers () == 1) // set
-            ACE_OS::strcat (this->operation_name_, "_set_");
-          else
-            ACE_OS::strcat (this->operation_name_, "_get_");
-        }
-      ACE_OS::strcat (this->operation_name_,
-                      node->original_local_name ()->get_string ());
-      ACE_OS::strcat (this->operation_name_, "\"");
-    }
-  return this->operation_name_;
-}
-// ************************************************************
-// Operation visitor for interpretive client stubs
-// ************************************************************
-
-be_interpretive_visitor_operation_cs::
-be_interpretive_visitor_operation_cs (be_visitor_context *ctx)
-  : be_visitor_operation_cs (ctx)
-{
-}
-
-be_interpretive_visitor_operation_cs::~be_interpretive_visitor_operation_cs (void)
-{
-}
-
-// concrete implementation of the template methods
-
-int
-be_interpretive_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
-                                                         be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
-
-  // Generate the TAO_Param_Data table
-  os->indent ();
-  *os << "static const TAO_Param_Data ";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flat_name () <<
-    "_paramdata [] = " << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-
-  // entry for the return type
-  *os << "{" << bt->tc_name () << ", PARAM_RETURN, 0}";
-  if (node->nmembers () > 0)
-    *os << ",\n";
-
-      // generate entries for the param data table for arguments
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_cs::"
-                         "gen_pre_stub_info - "
-                         "visit scope failed\n"),
-                        -1);
-    }
-  *os << "\n";
-  os->decr_indent ();
-  *os << "}; // " << node->flat_name () << "_paramdata\n\n";
-
-  // Check if this operation raises any exceptions. In that case, we must
-  // generate a list of exception typecodes. This is not valid for
-  // attributes
-  if (!this->ctx_->attribute ())
-    {
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) "
-                             "be_interpretive_visitor_operation_cs::"
-                             "gen_pre_stub_info - "
-                             "Exceptionlist generation error\n"),
-                            -1);
-        }
-    }
-
-  // now generate the calldata table
-  os->indent ();
-  *os << "static const TAO_Call_Data ";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flat_name ()
-      << "_calldata = " << be_nl
-      << "{" << this->compute_operation_name (node)
-      << ", ";
-
-  // are we oneway or two operation?
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      *os << "0, "; // for false
-    }
-  else
-    {
-      *os << "1, "; // for true
-    }
-  // insert the size of the paramdata table i.e., number of arguments + 1
-  // for return type
-  *os << (node->argument_count () + 1) << ", ";
-
-      // insert the address of the paramdata table
-      // first check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flat_name () << "_paramdata, ";
-
-      // insert exception list (if any) - node for attributes
-  if (this->ctx_->attribute ())
-    *os << "0, 0};\n\n";
-  else
-    {
-      if (node->exceptions ())
-        {
-          *os << node->exceptions ()->length ()
-              << ", _tao_" << node->flat_name () << "_exceptiondata};\n\n";
-        }
-      else
-        *os << "0, 0};\n\n";
-    }
-  return 0;
-}
-
-int
-be_interpretive_visitor_operation_cs::gen_marshal_and_invoke (be_operation
-                                                              *node,
-                                                              be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
-
-  os->indent ();
-  *os << "void* _tao_arguments["
-      << node->argument_count () + 1 << "];" << be_nl
-      << "const void** _tao_arg = ACE_const_cast (const void**,_tao_arguments);" << be_nl
-      << "*_tao_arg = ";
-
-  // pass the appropriate return value to docall
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (bt->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for return var in do_static_call failed\n"),
-                        -1);
-    }
-  *os << "; _tao_arg++;\n";
-
-  // pass each argument to do_static_call
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for return var in do_static_call failed\n"),
-                        -1);
-    }
-
-  // call do_static_call with appropriate number of arguments
-  os->indent ();
-  *os << "istub->do_static_call (" << be_idt_nl
-      << "ACE_TRY_ENV, " << be_nl
-      << "&";
-  // check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
-      else
-        *os << "_get_";
-    }
-  *os << node->flat_name () << "_calldata," << be_nl
-      << "_tao_arguments" << be_uidt_nl
-      << ");\n";
-
-  os->indent ();
-  // check if there is an exception
-  if (this->gen_check_exception (bt) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interpretive_visitor_operation_cs::"
-                         "gen_marshal_and_invoke - "
-                         "codegen for checking exception failed\n"),
-                        -1);
-
-    }
-
-  // do any post processing for the arguments
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for args post do_static_call failed\n"),
-                        -1);
-    }
-
-  // do any post processing for the retval
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_INVOKE_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (bt->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for return type post do_static_call failed\n"),
-                        -1);
-    }
-
-  return 0;
-}
-
-// ************************************************************
-// Operation visitor for compiled client stubs
-// ************************************************************
-
-be_compiled_visitor_operation_cs::
-be_compiled_visitor_operation_cs (be_visitor_context *ctx)
-  : be_visitor_operation_cs (ctx)
-{
-}
-
-be_compiled_visitor_operation_cs::~be_compiled_visitor_operation_cs (void)
-{
-}
-
-// concrete implementation of the template methods
-
-int
-be_compiled_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
-                                                     be_type *)
+be_visitor_operation_cs::gen_pre_stub_info (be_operation *node)
 {
 
   // Check if this operation raises any exceptions. In that case, we must
@@ -725,9 +320,8 @@ be_compiled_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
 }
 
 int
-be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
-                                                          *node,
-                                                          be_type *bt)
+be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
+                                                 be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
@@ -1000,13 +594,13 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
           ctx = *this->ctx_;
           be_visitor_context *new_ctx =
             new be_visitor_context (ctx);
-          be_visitor_operation_compiled_rettype_post_docall vis2 (new_ctx);
+          be_visitor_operation_rettype_post_invoke_cs vis2 (new_ctx);
           if (bt->accept (&vis2) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_compiled_visitor_operation_cs::"
                                  "gen_pre_stub_info - "
-                                 "codegen rettype [post docall] failed\n"),
+                                 "codegen rettype [post invoke] failed\n"),
                                 -1);
             }
         }
@@ -1138,3 +732,152 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
   return 0;
 }
+
+int
+be_visitor_operation_cs::gen_raise_exception (be_type *bt,
+                                              const char *excep,
+                                              const char *completion_status)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  if (this->void_return_type (bt))
+    {
+      *os << "ACE_THROW ("
+          << excep << " (" << completion_status << "));\n";
+    }
+  else
+    {
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
+        {
+          *os << "ACE_THROW_RETURN (" << excep
+              << " (" << completion_status << "), 0);\n";
+        }
+      else
+        {
+          *os << "ACE_THROW_RETURN (" << excep
+              << " (" << completion_status << "), _tao_retval);\n";
+        }
+    }
+  return 0;
+}
+
+int
+be_visitor_operation_cs::gen_raise_interceptor_exception (be_type *bt,
+                                                          const char *excep,
+                                                          const char *completion_status)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  if (this->void_return_type (bt))
+    {
+      *os << "TAO_INTERCEPTOR_THROW ("
+          << excep << " ("
+          << completion_status << ")"
+          << ");";
+    }
+  else
+    {
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
+        {
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << excep
+              << " (" << completion_status << "), 0);\n";
+        }
+      else
+        {
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << excep
+              << " (" << completion_status << "), _tao_retval);\n";
+        }
+    }
+  return 0;
+}
+
+int
+be_visitor_operation_cs::gen_check_exception (be_type *bt)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent ();
+  // check if there is an exception
+  if (this->void_return_type (bt))
+    {
+      *os << "ACE_CHECK;\n";
+      //<< "_tao_environment);\n";
+    }
+  else
+    {
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
+        {
+          *os << "ACE_CHECK_RETURN (0);\n";
+        }
+      else
+        {
+          *os << "ACE_CHECK_RETURN  (_tao_retval);\n";
+        }
+    }
+
+  return 0;
+}
+
+int
+be_visitor_operation_cs::gen_check_interceptor_exception (be_type *bt)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  os->indent ();
+  // check if there is an exception
+  if (this->void_return_type (bt))
+    {
+      *os << "TAO_INTERCEPTOR_CHECK;\n";
+      //<< "_tao_environment);\n";
+    }
+  else
+    {
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
+        {
+          *os << "TAO_INTERCEPTOR_CHECK_RETURN (0);\n";
+        }
+      else
+        {
+          *os << "TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);\n";
+        }
+    }
+
+  return 0;
+}
+
+const char*
+be_visitor_operation_cs::compute_operation_name (be_operation *node)
+{
+  if (this->operation_name_ == 0)
+    {
+      size_t len = 3;           // length for two double quotes
+                                // and the null termination char.
+      if (this->ctx_->attribute ())
+        len += 5;               // "Added length for "_set_" or "_get_".
+
+      len += ACE_OS::strlen (node->original_local_name ()->get_string ());
+
+      ACE_NEW_RETURN (this->operation_name_,
+                      char [len],
+                      0);
+
+      ACE_OS::strcpy (this->operation_name_, "\"");
+      if (this->ctx_->attribute ())
+        {
+          // now check if we are a "get" or "set" operation
+          if (node->nmembers () == 1) // set
+            ACE_OS::strcat (this->operation_name_, "_set_");
+          else
+            ACE_OS::strcat (this->operation_name_, "_get_");
+        }
+      ACE_OS::strcat (this->operation_name_,
+                      node->original_local_name ()->get_string ());
+      ACE_OS::strcat (this->operation_name_, "\"");
+    }
+  return this->operation_name_;
+}
+

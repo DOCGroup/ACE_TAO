@@ -1184,13 +1184,9 @@ TAO_CodeGen::node (void)
 void
 TAO_CodeGen::config_visitor_factory (void)
 {
-  // What strategy are we interested in? Interpreted or Compiled Marshaling?
-  // This is the top level distinction we make and strategize our visitor
-  // factory object accordingly
-  if (idl_global->compiled_marshaling ())
-    this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
-  else
-    this->visitor_factory_ = TAO_INTERPRETIVE_VISITOR_FACTORY::instance ();
+  // We have removed interpreted marshaling from TAO, so
+  // TAO_INTERPRETIVE_VISITOR_FACTORY is no more.
+  this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
 }
 
 void

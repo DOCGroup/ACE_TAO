@@ -112,7 +112,7 @@ private:
 #if !defined (_CORBA_CURRENT_CH_)
 #define _CORBA_CURRENT_CH_
 
-class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
+class  CORBA_Current : public virtual CORBA_Object
 {
  public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -126,6 +126,7 @@ class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
                                     CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
   static CORBA_Current_ptr _nil (void);
+  static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (const CORBA::Char *type_id,
                                 CORBA_Environment &ACE_TRY_ENV =
@@ -148,9 +149,9 @@ class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
 #endif /* end #if !defined */
 
 // Any operators for interface CORBA_Current
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_Current_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA_Current *&);
 
 #if defined (__ACE_INLINE__)

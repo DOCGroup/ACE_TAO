@@ -64,7 +64,7 @@ Param_Test_Client<T>::run_sii_test (void)
   // Declare the Env
   ACE_DECLARE_NEW_CORBA_ENV;
   // Initialize parameters for the test.
-  int check = this->test_object_->init_parameters (this->param_test_, 
+  int check = this->test_object_->init_parameters (this->param_test_,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -73,7 +73,7 @@ Param_Test_Client<T>::run_sii_test (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) client.cpp - run_sii_test:"
                          "init_parameters failed for opname - %s",
-                         opname), 
+                         opname),
                         -1);
     }
 
@@ -91,7 +91,7 @@ Param_Test_Client<T>::run_sii_test (void)
           this->results_.start_timer ();
 
           // make the call
-          this->test_object_->run_sii_test (this->param_test_, 
+          this->test_object_->run_sii_test (this->param_test_,
                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -142,14 +142,14 @@ Param_Test_Client<T>::run_sii_test (void)
   if (this->results_.error_count () != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "********** Error running %s SII *********\n",
-		  opname));
+                  "********** Error running %s SII *********\n",
+                  opname));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "********** Finished running %s SII *********\n",
-		  opname));
+                  "********** Finished running %s SII *********\n",
+                  opname));
     }
   return this->results_.error_count ()? -1:0;
 }
@@ -172,7 +172,7 @@ Param_Test_Client<T>::run_dii_test (void)
   // Environment variable
   ACE_DECLARE_NEW_CORBA_ENV;
   // initialize parameters for the test
-  int check = this->test_object_->init_parameters (this->param_test_, 
+  int check = this->test_object_->init_parameters (this->param_test_,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -181,7 +181,7 @@ Param_Test_Client<T>::run_dii_test (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) client.cpp - run_dii_test:"
                          "init_parameters failed for opname - %s",
-                         opname), 
+                         opname),
                         -1);
     }
 
@@ -194,50 +194,20 @@ Param_Test_Client<T>::run_dii_test (void)
       // time required to create and populate the NVList
       this->results_.start_timer ();
 
-      // first create the argument list (length 0 because args are *added*)
-      CORBA::NVList_ptr nvlist;
-
-      this->orb_->create_list (0, nvlist);
-
-      // then the result holder (length 1 because value is *replaced*)
-      CORBA::NVList_var retval;
-      this->orb_->create_list (1, 
-                               retval.out ());
-
       // create the request
       CORBA::Request_var req;
 
       ACE_TRY
         {
-          // add arguments and typecode for return valueto the NVList
-          this->test_object_->add_args (nvlist,
-					                              retval.in (),
-					                              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          CORBA::NamedValue_ptr result =
-            CORBA::NamedValue::_duplicate (retval->item (0, 
-                                                         ACE_TRY_ENV));
-          ACE_TRY_CHECK;
-
-          this->param_test_->_create_request (CORBA_Context::_nil (),
-                                              opname,
-                                              nvlist,
-                                              result,
-                                              req.out (),
-                                              0, //CORBA::OUT_LIST_MEMORY,
-                                              ACE_TRY_ENV);
-          // The OUT_LIST_MEMORY is to be used when the ORB assumes that
-          // we will provide the top-level storage. With 0, the returned
-          // values for ret, inout, and out parameters are all owned by
-          // the ORB and hence we must not free them explicitly.
+          req = this->param_test_->_request (opname,
+                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           if (opt->debug ())
             ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
 
           // Make the invocation, verify the result.
-          this->test_object_->dii_req_invoke (req.in (), 
+          this->test_object_->dii_req_invoke (req.in (),
                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -282,14 +252,14 @@ Param_Test_Client<T>::run_dii_test (void)
   if (this->results_.error_count () != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "********** Error running %s DII *********\n",
-		  opname));
+                  "********** Error running %s DII *********\n",
+                  opname));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "********** Finished running %s DII *********\n",
-		  opname));
+                  "********** Finished running %s DII *********\n",
+                  opname));
     }
   return this->results_.error_count () ? -1 : 0;
 }

@@ -103,27 +103,20 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
   // Typecode of the element that makes the Any.
   CORBA::TypeCode_var elem_tc;
 
-  // Status of append operation.
-  // Decode the typecode description for the element so that we can append the
-  // data appropriately
+  if (!(*src >> elem_tc.inout ()))
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_MAYBE),
+                      CORBA::TypeCode::TRAVERSE_STOP);
+
+  if (!(*dest << elem_tc.in ()))
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_MAYBE),
+                      CORBA::TypeCode::TRAVERSE_STOP);
+
+  // append the data
   CORBA::TypeCode::traverse_status retval =
-    src->decode (CORBA::_tc_TypeCode,
-                 &elem_tc.inout (),
-                 0,
-                 ACE_TRY_ENV);
+    dest->append (elem_tc.in (), src, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    {
-      // encode the typecode
-      retval = dest->encode (CORBA::_tc_TypeCode, &elem_tc, 0, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-        {
-          // append the data
-          retval = dest->append (elem_tc.in (), src, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-        }
-    }
 
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
@@ -357,163 +350,221 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
 
 // Encode unions.
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
+TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-  CORBA::TypeCode_ptr discrim_tc;
-  CORBA::TypeCode_var member_tc;
-  CORBA::Any_ptr member_label;
-  CORBA::ULongLong discrim_val;
-  CORBA::ULong member_count;
-  CORBA::Long  default_index;
-  CORBA::ULong i;
-  CORBA::TypeCode_ptr default_tc = 0;
-  CORBA::Boolean discrim_matched = 0;
-
-  // get the discriminator type
-  discrim_tc = tc->discriminator_type (ACE_TRY_ENV);
+  CORBA::TypeCode_ptr discrim_tc =
+    tc->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-  // decode the discriminator value
-  retval = src->decode (discrim_tc, &discrim_val, 0, ACE_TRY_ENV);
+  CORBA::ULong kind =
+    discrim_tc->kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+
+  // Save the discriminator value in a temporary variable...
+  CORBA::Short short_v;
+  CORBA::UShort ushort_v;
+  CORBA::Long long_v;
+  CORBA::ULong ulong_v;
+  CORBA::ULong enum_v;
+  CORBA::Char char_v;
+  CORBA::WChar wchar_v;
+  CORBA::Boolean boolean_v;
+
+  switch (kind)
     {
-      // write the discriminant back to the dest
-      retval = dest->encode (discrim_tc, &discrim_val, 0, ACE_TRY_ENV);
+    case CORBA::tk_short:
+      {
+        if (!src->read_short (short_v)
+            || !dest->write_short (short_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    case CORBA::tk_ushort:
+      {
+        if (!src->read_ushort (ushort_v)
+            || !dest->write_ushort (ushort_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    case CORBA::tk_long:
+      {
+        if (!src->read_long (long_v)
+            || !dest->write_long (long_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    case CORBA::tk_ulong:
+      {
+        if (!src->read_ulong (ulong_v)
+            || !dest->write_ulong (ulong_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    case CORBA::tk_enum:
+      {
+        if (!src->read_ulong (enum_v)
+            || !dest->write_ulong (enum_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    case CORBA::tk_char:
+      {
+        if (!src->read_char (char_v)
+            || !dest->write_char (char_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    case CORBA::tk_wchar:
+      {
+        if (!src->read_wchar (wchar_v)
+            || !dest->write_wchar (wchar_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    case CORBA::tk_boolean:
+      {
+        if (!src->read_boolean (boolean_v)
+            || !dest->write_boolean (boolean_v))
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
+      break;
+
+    default:
+      return CORBA::TypeCode::TRAVERSE_STOP;
+    }
+
+  CORBA::ULong member_count =
+    tc->member_count (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  CORBA::ULong current_member = ~0UL;
+  CORBA::ULong default_member = ~0UL;
+  for (CORBA::ULong i = 0;
+       i != member_count && current_member == ~0UL;
+       ++i)
+    {
+      CORBA::Any *any =
+        tc->member_label (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+
+      CORBA::Octet o;
+      if ((*any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
-          // now get ready to marshal the actual union value
-          default_index = tc->default_index (ACE_TRY_ENV);
+          CORBA::ULong default_index =
+            tc->default_index (ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-          member_count = tc->member_count (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-          // check which label value matches with the discriminator
-          // value. Accordingly, marshal the corresponding
-          // member_type. If none match, check if default exists
-          // and marshal accordingly. Otherwise it is an error.
-
-          for (i = 0; member_count-- != 0; i++)
-            {
-              member_label = tc->member_label (i, ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-              CORBA::TypeCode_var type = member_label->type ();
-              // do the matching
-              switch (type->kind (ACE_TRY_ENV))
-                {
-                case CORBA::tk_short:
-                  {
-                    CORBA::Short s;
-                    *member_label >>= s;
-                    if (s == *(CORBA::Short *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                case CORBA::tk_ushort:
-                  {
-                    CORBA::UShort s;
-                    *member_label >>= s;
-                    if (s == *(CORBA::UShort *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                case CORBA::tk_long:
-                  {
-                    CORBA::Long l;
-                    *member_label >>= l;
-                    if (l == *(CORBA::Long *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                case CORBA::tk_ulong:
-                  {
-                    CORBA::ULong l;
-                    *member_label >>= l;
-                    if (l == *(CORBA::ULong *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                case CORBA::tk_enum:
-                  {
-                    CORBA::Long l;
-                    TAO_InputCDR stream (member_label->_tao_get_cdr (),
-                                         member_label->_tao_byte_order ());
-                    (void)stream.decode (discrim_tc, &l, 0, ACE_TRY_ENV);
-                    if (l == *(CORBA::Long *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                case CORBA::tk_char:
-                  {
-                    CORBA::Char c;
-                    *member_label >>= CORBA::Any::to_char (c);
-                    if (c == *(CORBA::Char *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                case CORBA::tk_wchar:
-                  {
-                    CORBA::WChar wc;
-                    *member_label >>= CORBA::Any::to_wchar (wc);
-                    if (wc == *(CORBA::WChar *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                case CORBA::tk_boolean:
-                  {
-                    CORBA::Boolean b;
-                    *member_label >>= CORBA::Any::to_boolean (b);
-                    if (b == *(CORBA::Boolean *) &discrim_val)
-                      discrim_matched = 1;
-                  }
-                  break;
-                default:
-                  ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                    CORBA::TypeCode::TRAVERSE_STOP);
-                }// end of switch
-
-              // get the member typecode
-              member_tc = tc->member_type (i, ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-              if (default_index >= 0 && default_index-- == 0)
-                // have we reached the default label?, if so,
-                // save a handle to the typecode for the default
-                default_tc = member_tc.in ();
-              if (discrim_matched)
-                {
-                  // marshal according to the matched typecode
-                  return dest->append (member_tc.in (), src, ACE_TRY_ENV);
-                }
-            } // end of for loop
-          // we are here only if there was no match
-          if (default_tc)
-            {
-              return dest->append (default_tc, src, ACE_TRY_ENV);
-            }
-          else
-            return CORBA::TypeCode::TRAVERSE_CONTINUE;
+          if (i != default_index)
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+                              CORBA::TypeCode::TRAVERSE_STOP);
+          // Found the default branch, save its position and continue
+          // trying to find the current value...
+          default_member = i;
+          continue;
         }
-      else
+
+      switch (kind)
         {
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_MAYBE),
-                            CORBA::TypeCode::TRAVERSE_STOP);
+        case CORBA::tk_short:
+          {
+            CORBA::Short d;
+            if ((*any >>= d) && d == short_v)
+              current_member = i;
+          }
+          break;
+
+        case CORBA::tk_ushort:
+          {
+            CORBA::UShort d;
+            if ((*any >>= d) && d == ushort_v)
+              current_member = i;
+          }
+          break;
+
+        case CORBA::tk_long:
+          {
+            CORBA::Long d;
+            if ((*any >>= d) && d == long_v)
+              current_member = i;
+          }
+          break;
+
+        case CORBA::tk_ulong:
+          {
+            CORBA::ULong d;
+            if ((*any >>= d) && d == ulong_v)
+              current_member = i;
+          }
+          break;
+
+        case CORBA::tk_enum:
+          {
+            CORBA::ULong d;
+            // @@ Will this work????
+            if ((*any >>= d) && d == enum_v)
+              current_member = i;
+          }
+          break;
+
+        case CORBA::tk_char:
+          {
+            CORBA::Char d;
+            if ((*any >>= CORBA::Any::to_char (d)) && d == char_v)
+              current_member = i;
+          }
+          break;
+
+        case CORBA::tk_wchar:
+          {
+            CORBA::WChar d;
+            if ((*any >>= CORBA::Any::to_wchar (d)) && d == wchar_v)
+              current_member = i;
+          }
+          break;
+
+        case CORBA::tk_boolean:
+          {
+            CORBA::Boolean d;
+            if ((*any >>= CORBA::Any::to_boolean (d)) && d == boolean_v)
+              current_member = i;
+          }
+          break;
+
+        default:
+          return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                    CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+  if (current_member == ~0UL)
+    {
+      // Cannot find the current member, check if there is a
+      // default...
+      if (default_member != ~0UL)
+        {
+          // Good, use the default to append...
+          CORBA::TypeCode_ptr member_tc =
+            tc->member_type (default_member, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          return dest->append (member_tc, src, ACE_TRY_ENV);
+        }
+      return CORBA::TypeCode::TRAVERSE_STOP;
+    }
+
+  // If we found the member successfully then just use that one...
+  CORBA::TypeCode_ptr member_tc =
+    tc->member_type (current_member, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  return dest->append (member_tc, src, ACE_TRY_ENV);
 }
 
 // decode string

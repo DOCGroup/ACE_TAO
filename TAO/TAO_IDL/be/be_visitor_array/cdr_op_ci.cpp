@@ -72,15 +72,15 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
                             -1);
         }
 
-      // If we contain an anonymous sequence, 
+      // If we contain an anonymous sequence,
       // generate code for the sequence here.
 
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
           // CDR operators for sequences are now declared in the .i file,
           // so we pass this state to the function.
-          if (this->gen_anonymous_base_type (bt, 
-                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH) 
+          if (this->gen_anonymous_base_type (bt,
+                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH)
               == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,7 +88,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
                                  "visit_array - "
                                  "gen_anonymous_base_type failed\n"),
                                 -1);
-            }              
+            }
         }
 
       // for anonymous arrays, the type name has a _ prepended. We compute the
@@ -557,7 +557,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
           switch (bt->node_type ())
             {
-              // the following have a _var type and must be 
+              // the following have a _var type and must be
               // handled in a special way
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
@@ -569,7 +569,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                 {
                   // we need to separately handle this case of pseudo
                   // objects because they have a _var type
-                  be_predefined_type *pt = 
+                  be_predefined_type *pt =
                     be_predefined_type::narrow_from_decl (bt);
                   if (!pt)
                     {
@@ -624,7 +624,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
           switch (bt->node_type ())
             {
-              // the following have a _var type and must be 
+              // the following have a _var type and must be
               // handled in a special way
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
@@ -636,7 +636,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                 {
                   // we need to separately handle this case of pseudo
                   // objects because they have a _var type
-                  be_predefined_type *pt = 
+                  be_predefined_type *pt =
                     be_predefined_type::narrow_from_decl (bt);
                   if (!pt)
                     {

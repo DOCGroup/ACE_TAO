@@ -121,8 +121,6 @@ DRV_usage (void)
   cerr << GTDEVEL (" -g <gperf_path>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
   cerr << GTDEVEL (" -Cw\t\t\tWarning if identifier spellings differ only in case (default is error)\n");
   cerr << GTDEVEL (" -Ce\t\t\tError if identifier spellings differ only in case (default)\n");
-  cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default)\n");
-  cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default is compiled)\n");
   cerr << GTDEVEL (" -Ge [0|1]\t\t\tDisable/Enable generation of CORBA::Environment arguments (enabled by default if ACE_HAS_EXCEPTIONS)\n");
   cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
 #ifdef IDL_HAS_VALUETYPE
@@ -607,20 +605,10 @@ DRV_parse_args (long ac, char **av)
               break;
             case 'G':
               // Enable generation of ...
-              if (av[i][2] == 'c')
-                {
-                  // compiled marshaling support
-                  idl_global->compiled_marshaling (1);
-                }
-              else if (av[i][2] == 'C')
+              if (av[i][2] == 'C')
                 {
                   // AMI with Call back.
                   idl_global->ami_call_back (I_TRUE);
-                }
-              else if (av[i][2] == 'i')
-                {
-                  // interpretive marshaling support
-                  idl_global->compiled_marshaling (0);
                 }
               else if (av[i][2] == 'e')
                 {
@@ -632,13 +620,11 @@ DRV_parse_args (long ac, char **av)
                 }
               else if (av[i][2] == 'l')
                 {
-                  // optimized typecode support
-                  idl_global->gen_locality_constraint (1);
-
                   // Automatically switch on the generation of
                   // direct collocated stubs and supress the generation
                   // of thru_poa collocated stubs and ami_call_back stuff
                   // if we are building for locality constraint interfaces.
+                  idl_global->gen_locality_constraint (1);
                   idl_global->gen_thru_poa_collocation (0);
                   idl_global->gen_direct_collocation (1);
                   idl_global->ami_call_back (0);

@@ -348,7 +348,7 @@ TAO_Literal_Constraint (CORBA::Any* any)
     break;
     case TAO_STRING:
       {
-	char* s;
+	const char* s;
 	any_ref >>= s;
 	this->op_.str_ = CORBA::string_dup (s);
       }

@@ -74,7 +74,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << node->local_name () << " (void); // default ctor" << be_nl;
       *os << node->local_name () << " (const " << node->local_name ()
           << " &); // copy ctor" << be_nl;
-      *os << "~" << node->local_name () << " (void); // dtor" << be_nl;
+      *os << "~" << node->local_name () << " (void);" << be_nl;
+
+      *os << "static void _tao_any_destructor (void*);" << be_nl;
 
       // assignment operator
       *os << node->local_name () << " &operator= (const "

@@ -246,6 +246,13 @@ public:
   // Deprecated, CORBA 1.2, not fully usable. Returns the number of
   // parameters that the typecode takes.
 
+  static void _tao_decode (const CORBA_TypeCode *parent,
+                           TAO_InputCDR &cdr,
+                           CORBA_TypeCode *&child,
+                           CORBA::Environment &ACE_TRY_ENV);
+  // CDR decoding: the >> operator is not enough because we must also
+  // respect the parent/child relationship among TypeCodes.
+
   // private:
   //
   // = The guts of the typecode implementation class

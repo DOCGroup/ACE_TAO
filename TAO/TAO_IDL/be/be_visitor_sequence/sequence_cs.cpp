@@ -306,7 +306,15 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // destructor
   *os << node->name () << "::~" << node->local_name ()
       << " (void) // dtor" << be_nl
-      << "{}\n\n";
+      << "{}" << be_nl
+
+      << "void "
+      << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+      << "{" << be_idt_nl
+      << node->name () << " *tmp = ACE_static_cast ("
+      << node->name () << "*,x);" << be_nl
+      << "delete tmp;" << be_uidt_nl
+      << "}\n\n";
 
   os->gen_endif ();
   node->cli_stub_gen (1);
@@ -341,13 +349,13 @@ be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
     case be_sequence::MNG_STRING: // sequence of strings
       if (!node->unbounded ())
         this->gen_bounded_str_sequence (node);
-      // else 
+      // else
       //   inheriting from the right class is enough
       break;
     case be_sequence::MNG_WSTRING: // sequence of strings
       if (!node->unbounded ())
         this->gen_bounded_wstr_sequence (node);
-      // else 
+      // else
       //   inheriting from the right class is enough
       break;
     default: // not a managed type
@@ -358,9 +366,9 @@ be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
 	        be_predefined_type *predef = 0;
 	        if (bt->base_node_type () == AST_Type::NT_pre_defined)
 	          {
-	            be_typedef* alias = 
+	            be_typedef* alias =
 		            be_typedef::narrow_from_decl (bt);
-	      
+
 	            if (alias == 0)
 		            {
 		              predef =
@@ -368,7 +376,7 @@ be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
 		            }
 	            else
 		            {
-		              predef = 
+		              predef =
                     be_predefined_type::narrow_from_decl (
                         alias->primitive_base_type ()
                       );
@@ -395,4 +403,3 @@ be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
 
   return 0;
 }
-

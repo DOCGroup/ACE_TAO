@@ -297,7 +297,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
   // Obtain unique request id from the RMS.
   this->op_details_.request_id (
-        this->transport_->tms ()->request_id ());  
+        this->transport_->tms ()->request_id ());
 
 }
 
@@ -310,7 +310,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   //
   // The target specification mode
   this->target_spec_.target_specifier (this->profile_->object_key ());
-  
+
   // Update the response flags
   this->op_details_.response_flags (response_flags);
 
@@ -429,8 +429,7 @@ TAO_GIOP_Invocation::close_connection (void)
 }
 
 // Handle the GIOP Reply with status = LOCATION_FORWARD
-// Replace the IIOP Profile. The call is then automatically
-// reinvoked by the TAO_Stub::do_static_call method.
+// Replace the IIOP Profile.
 
 int
 TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
@@ -926,7 +925,7 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
   // Make sure that you have the right object key
   this->target_spec_.target_specifier (this->profile_->object_key ());
-  
+
   this->transport_->start_request (this->orb_core_,
                                    this->target_spec_,
                                    this->out_stream_,
@@ -1131,7 +1130,7 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
   // Just make sure that you pass in the object key
   this->target_spec_.target_specifier (this->profile_->object_key ());
-  
+
   this->transport_->start_locate (this->orb_core_,
                                   this->target_spec_,
                                   this->op_details_,
