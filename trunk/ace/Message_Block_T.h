@@ -61,7 +61,7 @@ private:
   // The lock
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &))
 };
 
