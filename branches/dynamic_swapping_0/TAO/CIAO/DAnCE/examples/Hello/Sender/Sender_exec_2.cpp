@@ -90,6 +90,11 @@ Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", c->length ()));
 
+  if (CORBA::is_nil (this->context_.in ()))
+       ACE_THROW (CORBA::INTERNAL ());
+  ACE_CHECK;
+  ACE_DEBUG ((LM_DEBUG, "obtained the context\n"));
+
   CORBA::Object_var o =
     this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 

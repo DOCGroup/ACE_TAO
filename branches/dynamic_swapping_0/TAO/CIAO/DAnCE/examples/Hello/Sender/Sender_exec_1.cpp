@@ -102,16 +102,12 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   CORBA::Object_var comp_object =
     this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
   Hello::Sender_var sender = Hello::Sender::_narrow (comp_object.in ()
                                                     ACE_ENV_ARG_PARAMETER);
-
   ::Components::ConsumerDescriptions_var cons_desc =
     sender->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
-
-  ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", cons_desc->length ()));
-
+  // ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", cons_desc->length ()));
   this->base_exec_->consumers (cons_desc._retn ());
 }
 
