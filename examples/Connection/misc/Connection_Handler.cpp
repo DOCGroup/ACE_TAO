@@ -209,7 +209,7 @@ main (int argc, char *argv[])
   ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   // Register the signal handler adapter.
-  if (daemon.reactor ()->register_handler (SIGINT, &sa) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGINT, &sa) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "register_handler"),
@@ -217,7 +217,7 @@ main (int argc, char *argv[])
 
   // Open the Acceptor.
   else if (peer_acceptor.open (ACE_INET_Addr (port),
-                               daemon.reactor ()) == -1)
+                               ACE_Reactor::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open"),

@@ -1,3 +1,45 @@
+Sat Jan 19 22:30:26 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* apps/JAWS2/JAWS/Hash_Bucket_T.h: 
+	* apps/JAWS2/JAWS/Assoc_Array.h: Added missing keyword "class" to 
+	  friend declarations.
+	
+	* ace/SString.cpp: Removed unneeded include of Service_Config.h.
+
+	* ace/Service_Config.{h|cpp}:
+	* examples/Connection/misc/Connection_Handler.cpp:
+
+	  Removed static methods from ACE_Service_Config that delegated to 
+	  ACE_Reactor::instance(), and fixed a few instances where they were 
+	  still called. 
+		
+	* ace/Object_Manager.cpp:
+	* ace/Service_Config.cpp: 
+	* ace/Proactor.cpp:
+	* ace/Reactor.cpp:  
+
+	  Added call to instance() methods that registers the singleton with 
+	  the new ACE_Framework_Repository so it can handle destruction, and
+	  replaced explicit references to ACE_Reactor and ACE_Proactor with
+	  calls to ACE_Framework_Repository.  
+	
+	* ace/Framework_Component.{h|inl|cpp}:
+	* ace/Framework_Component_T.{h|inl|cpp}:
+	* ace/Makefile:
+	* tests/Framework_Component_Test.cpp:
+	* tests/Makefile:
+	* tests/run_test.lst:
+
+	  Added ACE_Framework_Repository to manage ACE_Framework_Component's,
+	  e.g., singletons like ACE_Reactor or ACE_Proactor.  It uses
+	  External Polymorphism obviating any interface changes.  The
+	  components register themselves with repository in their instance
+	  methods.  This allows the Object_Manager and Service_Config to
+	  manage these components without having to know about them a priori.
+
+	  This was needed to reduce footprint for applications like TAO that
+	  don't need to use all the available components, e.g., ACE_Proactor.
+
 Sat Jan 19 10:23:39 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Makefile (TEMPLATE_FILES): 

@@ -2,7 +2,7 @@
 
 #include "ace/Malloc.h"
 #if !defined (ACE_HAS_WINCE)
-# include "ace/Service_Config.h"
+//# include "ace/Service_Config.h"
 #endif /* !ACE_HAS_WINCE */
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
