@@ -69,18 +69,35 @@
 // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 # if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
-// These were suggested by Robert Hanzlik <robi@codalan.cz> to get
-// ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8.
+    // These were suggested by Robert Hanzlik <robi@codalan.cz> to get
+    // ACE to compile on Linux using glibc 2.1 and libg++/gcc 2.8.
 #   undef ACE_HAS_BYTESEX_H
 #   define ACE_HAS_SIGINFO_T
 #   define ACE_LACKS_SIGINFO_H
 #   define ACE_HAS_UCONTEXT_T
+
+    // Pre-glibc (RedHat 5.2) doesn't have sigtimedwait.
+#   define ACE_HAS_SIGTIMEDWAIT
 # endif /* __GLIBC__ 2.1+ */
 #else  /* ! __GLIBC__ */
     // Fixes a problem with some non-glibc versions of Linux...
 #   define ACE_LACKS_MADVISE
 #   define ACE_LACKS_MSG_ACCRIGHTS
 #endif /* ! __GLIBC__ */
+
+// Linux has lseek64()
+#define ACE_HAS_LLSEEK
+// Don't define _LARGEFILE64_SOURCE in ACE to make lseek64() prototype
+// visible.  ACE shouldn't depend on feature test macros to make
+// prototypes visible.
+#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
+# define ACE_LACKS_LSEEK64_PROTOTYPE
+#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
+
+#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
+# define ACE_HAS_P_READ_WRITE
+# define ACE_LACKS_PREAD_PROTOTYPE
+#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
 
 
 // Then the compiler specific parts
@@ -102,7 +119,6 @@
 // Platform/compiler has the sigwait(2) prototype
 # define ACE_HAS_SIGWAIT
 
-# define ACE_HAS_SIGTIMEDWAIT
 # define ACE_HAS_SIGSUSPEND
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
@@ -191,22 +207,6 @@
 #define ACE_HAS_GPERF
 
 #define ACE_HAS_DIRENT
-
-// Linux has lseek64()
-#define ACE_HAS_LLSEEK
-// Don't define _LARGEFILE64_SOURCE in ACE to make lseek64() prototype
-// visible.  ACE shouldn't depend on feature test macros to make
-// prototypes visible.
-#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
-# define ACE_LACKS_LSEEK64_PROTOTYPE
-#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
-
-#if __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1
-# define ACE_HAS_P_READ_WRITE
-# define ACE_LACKS_PREAD_PROTOTYPE
-#endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
-
-
 
 # define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
 
