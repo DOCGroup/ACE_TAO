@@ -62,7 +62,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
   new_io.set_handle (handle);
   new_io.remote_addr_ = remote_sap; // class copy.
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   DWORD pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT;
 
   // Set named pipe mode and buffering characteristics.
