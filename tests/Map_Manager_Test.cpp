@@ -33,7 +33,7 @@ typedef size_t TYPE;
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 
 // We need this template specialization since TYPE is defined as a
-// size_t, which doesn't have a hash() method defined on it.
+// size_t, which doesn't have a hash () method defined on it.
 
 u_long
 ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>::hash (const TYPE& ext_id)
@@ -58,6 +58,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
   HASH_MAP_MANAGER map (table_size);
   TYPE i;
   TYPE j;
+  ssize_t k;
 
   for (i = 0; i < iterations; i++)
     ACE_ASSERT (map.bind (i, i) != -1);
@@ -100,38 +101,38 @@ test_hash_map_manager (size_t table_size, size_t iterations)
   }
 
   {
-    i = iterations - 1;
+    k = iterations - 1;
 
     for (HASH_REVERSE_ITERATOR iter = map.rbegin (), rend = map.rend ();
          iter != rend;
-         iter++, i--)
+         iter++, k--)
       {
         HASH_ENTRY &entry = *iter;
         ACE_DEBUG ((LM_DEBUG,
                     "(%d|%d|%d)",
-                    i,
+                    k,
                     entry.ext_id_,
                     entry.int_id_));
       }
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
 
   {
     HASH_REVERSE_ITERATOR iterator (map);
 
     HASH_ENTRY *entry = 0;
-    for (entry = 0, i = iterations - 1;
+    for (entry = 0, k = iterations - 1;
          iterator.next (entry) != 0;
-         iterator.advance (), i--)
+         iterator.advance (), k--)
       ACE_DEBUG ((LM_DEBUG,
                   "(%d|%d|%d)",
-                  i,
+                  k,
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
 
   {
@@ -168,37 +169,37 @@ test_hash_map_manager (size_t table_size, size_t iterations)
   }
 
   {
-    i = iterations - 1;
+    k = iterations - 1;
 
     for (HASH_MAP_MANAGER::reverse_iterator iter = map.rbegin (), rend = map.rend ();
          iter != rend;
-         iter++, i--)
+         iter++, k--)
       {
         HASH_MAP_MANAGER::ENTRY &entry = *iter;
         ACE_UNUSED_ARG (entry);
         ACE_DEBUG ((LM_DEBUG,
                     "(%d|%d|%d)",
-                    i,
+                    k,
                     entry.ext_id_,
                     entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
   {
     HASH_MAP_MANAGER::REVERSE_ITERATOR iterator (map);
 
     HASH_MAP_MANAGER::ENTRY *entry = 0;
-    for (entry = 0, i = iterations - 1;
+    for (entry = 0, k = iterations - 1;
          iterator.next (entry) != 0;
-         iterator.advance (), i--)
+         iterator.advance (), k--)
       ACE_DEBUG ((LM_DEBUG,
                   "(%d|%d|%d)",
-                  i,
+                  k,
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
 
   for (i = 0; i < iterations; i++)
@@ -219,6 +220,7 @@ test_map_manager (size_t table_size, size_t iterations)
   MAP_MANAGER map (table_size);
   TYPE i;
   TYPE j;
+  ssize_t k;
 
   for (i = 0; i < iterations; i++)
     ACE_ASSERT (map.bind (i, i) != -1);
@@ -256,31 +258,31 @@ test_map_manager (size_t table_size, size_t iterations)
 
   {
     ENTRY entry;
-    i = iterations - 1;
+    k = iterations - 1;
     for (REVERSE_ITERATOR iter = map.rbegin (), rend = map.rend ();
          iter != rend;
-         i--, iter ++)
+         k--, iter ++)
       {
         entry = *iter;
         ACE_DEBUG ((LM_DEBUG, "%u ", entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
   {
     REVERSE_ITERATOR iterator (map);
 
     ENTRY *entry = 0;
-    for (entry = 0, i = iterations - 1;
+    for (entry = 0, k = iterations - 1;
          iterator.next (entry) != 0;
-         iterator.advance (), i--)
+         iterator.advance (), k--)
       ACE_DEBUG ((LM_DEBUG,
                   "(%d|%d|%d)",
-                  i,
+                  k,
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
   {
     MAP_MANAGER::ENTRY entry;
@@ -312,33 +314,33 @@ test_map_manager (size_t table_size, size_t iterations)
   }
   {
     ENTRY entry;
-    i = iterations - 1;
+    k = iterations - 1;
 
     for (MAP_MANAGER::reverse_iterator iter = map.rbegin (), rend = map.rend ();
          iter != rend;
-         i--, iter ++)
+         k--, iter ++)
       {
         entry = *iter;
         ACE_DEBUG ((LM_DEBUG, "%u ", entry.int_id_));
       }
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
 
   {
     MAP_MANAGER::REVERSE_ITERATOR iterator (map);
 
     MAP_MANAGER::ENTRY *entry = 0;
-    for (entry = 0, i = iterations - 1;
+    for (entry = 0, k = iterations - 1;
          iterator.next (entry) != 0;
-         iterator.advance (), i--)
+         iterator.advance (), k--)
       ACE_DEBUG ((LM_DEBUG,
                   "(%d|%d|%d)",
-                  i,
+                  k,
                   entry->ext_id_,
                   entry->int_id_));
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    ACE_ASSERT (i == -1);
+    ACE_ASSERT (k == -1);
   }
 
   for (i = 0; i < iterations; i++)
