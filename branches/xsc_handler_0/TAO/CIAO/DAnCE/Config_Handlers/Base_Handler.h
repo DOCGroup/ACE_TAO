@@ -21,47 +21,61 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+namespace CORBA
+{
+  struct String_var;
+  struct StringSeq;
+}
+
 namespace CIAO
 {
 
   namespace Config_Handlers
   {  
    
-   /*
-    * @class Base_Handler
-    *
-    * @brief base class for Type handlers.
-    *
-    * 
-    *
-    */
+    /*
+     * @class Base_Handler
+     *
+     * @brief base class for Type handlers.
+     *
+     * 
+     *
+     */
     
     class Config_Handlers_Export Base_Handler{
      
-      public:
+    public:
       
-        typedef ACE_Hash_Map_Manager<ACE_TString, size_t, ACE_Null_Mutex> IDREF_MAP;
+      typedef ACE_Hash_Map_Manager<ACE_TString, size_t, ACE_Null_Mutex> IDREF_MAP;
        
-        Base_Handler (void);
-        virtual ~Base_Handler (void);
-        
-        /// The Deployment spec references elements by 
-        /// their position within their parent sequence.
-        /// These two methods allow an element's index
-        /// to be stored/retrieved.
-        
-        /// Map the index <index> of an element to its IDREF <id>.
-        void bind_ref (ACE_TString& id, size_t index);
-        
-        /// Retrieve the index of an element with its IDREF <id>.
-        /// Returns 0 if the <id> was found.
-        int get_ref (ACE_TString& id, size_t val);         
-
-      private:
+      Base_Handler (void);
+      virtual ~Base_Handler (void);
       
-        /// The map used to store and look up the indexes
-        /// of elements referenced by their index.
-        IDREF_MAP idref_map_;  
+      /// Populates a CORBA string with the provided XMLString.
+      void handle_string (const ::XMLSchema::string <char> &str, 
+                          CORBA::String_var &tofill);
+      
+      /// Appends the string provided to the provided StringSeq.
+      void handle_string_seq (::XMLSchema::string <char> &str, 
+                              CORBA::StringSeq &tofill);
+      
+      /// The Deployment spec references elements by 
+      /// their position within their parent sequence.
+      /// These two methods allow an element's index
+      /// to be stored/retrieved.
+        
+      /// Map the index <index> of an element to its IDREF <id>.
+      void bind_ref (ACE_TString& id, size_t index);
+        
+      /// Retrieve the index of an element with its IDREF <id>.
+      /// Returns 0 if the <id> was found.
+      int get_ref (ACE_TString& id, size_t val);         
+
+    private:
+      
+      /// The map used to store and look up the indexes
+      /// of elements referenced by their index.
+      IDREF_MAP idref_map_;  
 
     };
   }

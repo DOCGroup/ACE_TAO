@@ -1,7 +1,8 @@
 // $Id$
 
 #include "Base_Handler.h"
-
+#include "tao/CORBA_String.h"
+#include "tao/StringSeqC.h"
 
 namespace CIAO
 {
@@ -15,6 +16,27 @@ namespace CIAO
     Base_Handler::~Base_Handler (void)
     {
     }
+
+    // This should probably be inline.
+    // Copies the string provided into the provided CORBA string.
+    void 
+    Base_Handler::handle_string (const ::XMLSchema::string <char> &str, 
+                                 CORBA::String_var &tofill)
+    {
+      tofill = CORBA::string_dup (str.c_str ());
+    }
+    
+    
+    /// Appends the string provided to the provided StringSeq.
+    void 
+    Base_Handler::handle_string_seq (::XMLSchema::string <char> &str, 
+                                     CORBA::StringSeq &tofill)
+    {
+      tofill.length (tofill.length () + 1);
+      tofill[tofill.length () - 1] = 
+        CORBA::string_dup (str.c_str ());
+    }
+    
     
     /// The Deployment spec references elements by 
     /// their position within their parent sequence.
