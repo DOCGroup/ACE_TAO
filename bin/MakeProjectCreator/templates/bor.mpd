@@ -23,8 +23,8 @@ OBJFILES = \
 
 LFLAGS = \
 <%foreach(libpaths)%>
-	-L"<%libpath%>\$(CONFIG_SUBDIR)" \
-	-j"<%libpath%>\$(CONFIG_SUBDIR)" <%fornotlast(" \\")%>
+        -L"<%libpath%>" \
+        -j"<%libpath%>" <%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 <%if(libs || lit_libs || pure_libs)%>
@@ -158,11 +158,6 @@ INSTALL_THIS_TARGET = 1
 
 <%endif%>
 <%marker(macros)%>
-STATIC_DIR=.
-DEBUG_DIR=.
-UNICODE_DIR=.
-
-INSTALL_DLLDIR=$(INSTALL_DIR)\lib
 INCLUDES_INSTALL=1
 <%if(exename)%>
 

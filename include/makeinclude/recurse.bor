@@ -24,10 +24,10 @@ all: $(DIRS)
 # automatically restored when the sub-directory is finished.
 $(DIRS):
 	@echo Entering directory $<
-	@$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f&&!
+        @$(MAKE) $(MAKE_FLAGS) -f&&!
 all:
 	@cd $<
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -fMakefile.bor
+        $(MAKE) $(MAKE_FLAGS) -fMakefile.bor
 !
 
 # This ugliness is to remove extra spaces from between the items in the list.
@@ -43,10 +43,10 @@ clean: $(DIRS_CLEAN)
 # automatically restored when the sub-directory is finished.
 $(DIRS_CLEAN):
 	@echo Cleaning directory $(<:.Clean=)
-	@$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f&&!
+        @$(MAKE) $(MAKE_FLAGS) -f&&!
 all:
 	@cd $(<:.Clean=)
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -fMakefile.bor clean
+        $(MAKE) $(MAKE_FLAGS) -fMakefile.bor clean
 !
 
 # This ugliness is to remove extra spaces from between the items in the list.
@@ -62,10 +62,10 @@ realclean: $(DIRS_REALCLEAN)
 # automatically restored when the sub-directory is finished.
 $(DIRS_REALCLEAN):
 	@echo Cleaning directory $(<:.RealClean=)
-	@$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f&&!
+        @$(MAKE) $(MAKE_FLAGS) -f&&!
 all:
 	@cd $(<:.RealClean=)
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -fMakefile.bor realclean
+        $(MAKE) $(MAKE_FLAGS) -fMakefile.bor realclean
 !
 
 # This ugliness is to remove extra spaces from between the items in the list.
@@ -81,10 +81,10 @@ install: $(DIRS_INSTALL)
 # automatically restored when the sub-directory is finished.
 $(DIRS_INSTALL):
        @echo Installing directory $(<:.Install=)
-       @$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f&&!
+       @$(MAKE) $(MAKE_FLAGS) -f&&!
 all:
        @cd $(<:.Install=)
-       $(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -fMakefile.bor install
+       $(MAKE) $(MAKE_FLAGS) -fMakefile.bor install
 !
 
 !endif
@@ -101,7 +101,7 @@ MAKEFILES_ALL = $(MAKEFILES_ALL_4:%=.All )
 all: $(MAKEFILES_ALL)
 
 $(MAKEFILES_ALL):
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.All=)
+        $(MAKE) $(MAKE_FLAGS) -f$(<:.All=)
 
 # This ugliness is to remove extra spaces from between the items in the list.
 MAKEFILES_CLEAN_1 = $(MAKEFILES) $(BLANK_SPACE)
@@ -113,7 +113,7 @@ MAKEFILES_CLEAN = $(MAKEFILES_CLEAN_4:%=.Clean )
 clean: $(MAKEFILES_CLEAN)
 
 $(MAKEFILES_CLEAN):
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.Clean=) clean
+        $(MAKE) $(MAKE_FLAGS) -f$(<:.Clean=) clean
 
 # This ugliness is to remove extra spaces from between the items in the list.
 MAKEFILES_REALCLEAN_1 = $(MAKEFILES) $(BLANK_SPACE)
@@ -125,7 +125,7 @@ MAKEFILES_REALCLEAN = $(MAKEFILES_REALCLEAN_4:%=.RealClean )
 realclean: $(MAKEFILES_REALCLEAN)
 
 $(MAKEFILES_REALCLEAN):
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.RealClean=) realclean
+        $(MAKE) $(MAKE_FLAGS) -f$(<:.RealClean=) realclean
 
 # This ugliness is to remove extra spaces from between the items in the list.
 MAKEFILES_INSTALL_1 = $(MAKEFILES) $(BLANK_SPACE)
@@ -137,7 +137,7 @@ MAKEFILES_INSTALL = $(MAKEFILES_INSTALL_4:%=.Install )
 install: $(MAKEFILES_INSTALL)
 
 $(MAKEFILES_INSTALL):
-       $(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.Install=) install
+       $(MAKE) $(MAKE_FLAGS) -f$(<:.Install=) install
 
 !endif
 
@@ -164,7 +164,7 @@ NAMES_ALL = $(NAMES_ALL_4:%=.All )
 all: $(NAMES_ALL)
 
 $(NAMES_ALL):
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.All=)
+        $(MAKE) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.All=)
 
 # This ugliness is to remove extra spaces from between the items in the list.
 NAMES_CLEAN_1 = $(NAMES) $(BLANK_SPACE)
@@ -176,7 +176,7 @@ NAMES_CLEAN = $(NAMES_CLEAN_4:%=.Clean )
 clean: $(NAMES_CLEAN)
 
 $(NAMES_CLEAN):
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.Clean=) clean
+        $(MAKE) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.Clean=) clean
 
 # This ugliness is to remove extra spaces from between the items in the list.
 NAMES_REALCLEAN_1 = $(NAMES) $(BLANK_SPACE)
@@ -188,7 +188,7 @@ NAMES_REALCLEAN = $(NAMES_REALCLEAN_4:%=.RealClean )
 realclean: $(NAMES_REALCLEAN)
 
 $(NAMES_REALCLEAN):
-	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.RealClean=) realclean
+        $(MAKE) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.RealClean=) realclean
 
 # This ugliness is to remove extra spaces from between the items in the list.
 NAMES_INSTALL_1 = $(NAMES) $(BLANK_SPACE)
@@ -200,7 +200,7 @@ NAMES_INSTALL = $(NAMES_INSTALL_4:%=.Install )
 install: $(NAMES_INSTALL)
 
 $(NAMES_INSTALL):
-       $(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.Install=) install
+       $(MAKE) $(MAKE_FLAGS) -f$(MAKEFILE) -DTARGET_NAME=$(<:.Install=) install
 
 !endif
 
