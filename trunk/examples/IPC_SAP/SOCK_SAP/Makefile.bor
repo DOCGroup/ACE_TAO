@@ -1,0 +1,37 @@
+#
+ # Makefile for building the RMCast Send_File ace examples
+ #
+
+ !include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+ TESTS = \
+        CPP-inclient \
+	CPP-unclient \
+	CPP-inserver \
+#        CPP-inserver-fancy \
+	CPP-inserver-poll \
+	CPP-unserver \
+	FD-unclient \
+	FD-unserver \
+	C-inclient \
+	C-inserver
+
+all_tests: $(TESTS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+        $(ACE_RMCAST_LIB)
+
+$(TESTS):
+	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB) \
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
