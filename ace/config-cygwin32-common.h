@@ -59,10 +59,6 @@
 // It's there on all libc 5 systems I checked.
 #include /**/ <features.h>
 
-
-// First the machine specific part
-// #define ACE_HAS_CYGWIN32_SOCKET_H
-
 // Then the compiler specific parts
 
 // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so

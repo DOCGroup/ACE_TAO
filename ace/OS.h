@@ -3170,8 +3170,6 @@ extern "C"
     char    **h_addr_list;  /* (first, only) address from name server */
 #     define h_addr h_addr_list[0]   /* the first address */
   };
-#   elif defined (ACE_HAS_CYGWIN32_SOCKET_H)
-#     include /**/ <cygwin32/socket.h>
 #   else
 #     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #       define queue _Queue_
