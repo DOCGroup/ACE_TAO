@@ -17,11 +17,9 @@
 #include /**/ "ace/pre.h"
 #include "bidirgiop_export.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "BiDirGIOP.h"
 #include "tao/LocalObject.h"
@@ -82,12 +80,6 @@ private:
   /// The attribute
   BiDirPolicy::BidirectionalPolicyValue value_;
 };
-
-
-
-#if defined (__ACE_INLINE__)
-#include "BiDir_Policy_i.inl"
-#endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
