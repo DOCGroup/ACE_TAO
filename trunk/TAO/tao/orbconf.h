@@ -100,7 +100,7 @@
 // The default number of times the ORB will attempt to get a reply
 // from a service using multicast.
 #if !defined (TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS)
-#define TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS 2
+#define TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS 3
 #endif /* TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS */
 
 // The default UDP multicast port number for locating the TAO Naming
