@@ -188,6 +188,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Process.i \
@@ -224,8 +226,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -463,9 +463,9 @@ AVSVC_COMPONENTS:
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
   AV/Flows_T.cpp AV/sfp.h \
   sfpC.h \
-  sfpC.i AV/Policy.h \
-  AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h AV/Protocol_Factory.h \
-  AV/MCast.i AV/UDP.h AV/UDP.i AV/RTCP.h \
+  sfpC.i \
+  AV/Policy.h AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h \
+  AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/RTCP.h \
   AV/source.h \
   AV/source.i \
   AV/UDP.h \
@@ -908,7 +908,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl AV/AV_Core.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  AV/AV_Core.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -1106,7 +1107,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp AV/Transport.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -1195,12 +1197,14 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
-  AV/FlowSpec_Entry.i $(TAO_ROOT)/tao/debug.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i \
+  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h
 
 .obj/Flows_T.o .obj/Flows_T.so .shobj/Flows_T.o .shobj/Flows_T.so: AV/Flows_T.cpp AV/Flows_T.h \
-  $(ACE_ROOT)/ace/pre.h AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/pre.h \
+  AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -1274,6 +1278,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Process.i \
@@ -1310,8 +1316,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -1549,7 +1553,8 @@ AVSVC_COMPONENTS:
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.cpp
 
 .obj/Endpoint_Strategy.o .obj/Endpoint_Strategy.so .shobj/Endpoint_Strategy.o .shobj/Endpoint_Strategy.so: AV/Endpoint_Strategy.cpp AV/Endpoint_Strategy.h \
-  $(ACE_ROOT)/ace/pre.h AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/pre.h \
+  AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -1623,6 +1628,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Process.i \
@@ -1659,8 +1666,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -1890,7 +1895,8 @@ AVSVC_COMPONENTS:
   AV/Transport.i \
   AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
-  AV/Flows_T.cpp $(TAO_ROOT)/tao/debug.h \
+  AV/Flows_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   AV/Endpoint_Strategy_T.h AV/Endpoint_Strategy_T.cpp \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
@@ -1923,7 +1929,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Endpoint_Strategy_T.o .obj/Endpoint_Strategy_T.so .shobj/Endpoint_Strategy_T.o .shobj/Endpoint_Strategy_T.so: AV/Endpoint_Strategy_T.cpp \
-  AV/Endpoint_Strategy_T.h $(ACE_ROOT)/ace/pre.h \
+  AV/Endpoint_Strategy_T.h \
+  $(ACE_ROOT)/ace/pre.h \
   AV/Endpoint_Strategy.h AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1998,6 +2005,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Process.i \
@@ -2034,8 +2043,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -2265,7 +2272,8 @@ AVSVC_COMPONENTS:
   AV/Transport.i \
   AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
-  AV/Flows_T.cpp $(TAO_ROOT)/tao/debug.h \
+  AV/Flows_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   AV/Endpoint_Strategy_T.cpp \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl
@@ -2345,6 +2353,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Process.i \
@@ -2381,8 +2391,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Free_List.h \
@@ -2620,20 +2628,22 @@ AVSVC_COMPONENTS:
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
   AV/Flows_T.cpp AV/sfp.h \
   sfpC.h \
-  sfpC.i AV/Policy.h \
-  AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h AV/Protocol_Factory.h \
-  AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \
-  AV/Protocol_Factory.h \
-  AV/RTCP.h AV/source.h \
+  sfpC.i \
+  AV/Policy.h AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h \
+  AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \ \
+  AV/RTCP.h \
+  AV/source.h \
   AV/source.i \
   AV/UDP.h \
-  AV/RTP.h AV/TCP.h \
+  AV/RTP.h \
+  AV/TCP.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/TCP.o .obj/TCP.so .shobj/TCP.o .shobj/TCP.so: AV/TCP.cpp AV/TCP.h $(ACE_ROOT)/ace/pre.h \
+.obj/TCP.o .obj/TCP.so .shobj/TCP.o .shobj/TCP.so: AV/TCP.cpp AV/TCP.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -2656,7 +2666,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i AV/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/OS.i \
+  AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE.h \
@@ -2674,8 +2685,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/Service_Object.i AV/Policy.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  AV/Policy.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2846,7 +2857,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp AV/Transport.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -2931,8 +2943,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
-  AV/FlowSpec_Entry.i AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i \
+  AV/Transport.i AV/FlowSpec_Entry.i AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
   $(ACE_ROOT)/ace/ATM_Addr.h \
@@ -2980,7 +2992,8 @@ AVSVC_COMPONENTS:
   AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp
 
-.obj/UDP.o .obj/UDP.so .shobj/UDP.o .shobj/UDP.so: AV/UDP.cpp AV/UDP.h $(ACE_ROOT)/ace/pre.h \
+.obj/UDP.o .obj/UDP.so .shobj/UDP.o .shobj/UDP.so: AV/UDP.cpp AV/UDP.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -3003,7 +3016,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i AV/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/OS.i \
+  AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE.h \
@@ -3021,8 +3035,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/Service_Object.i AV/Policy.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  AV/Policy.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -3193,7 +3207,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp AV/Transport.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -3278,8 +3293,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
-  AV/FlowSpec_Entry.i AV/UDP.i AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i \
+  AV/Transport.i AV/FlowSpec_Entry.i AV/UDP.i AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
   $(ACE_ROOT)/ace/ATM_Addr.h \
@@ -3327,7 +3342,8 @@ AVSVC_COMPONENTS:
   AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp AV/MCast.h AV/MCast.i
 
-.obj/Policy.o .obj/Policy.so .shobj/Policy.o .shobj/Policy.so: AV/Policy.cpp AV/Policy.h $(ACE_ROOT)/ace/pre.h \
+.obj/Policy.o .obj/Policy.so .shobj/Policy.o .shobj/Policy.so: AV/Policy.cpp AV/Policy.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
@@ -3536,7 +3552,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp AV/Transport.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -3625,8 +3642,9 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
-  AV/FlowSpec_Entry.i $(TAO_ROOT)/tao/debug.h
+  $(ACE_ROOT)/ace/SOCK_Dgram.i \
+  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(TAO_ROOT)/tao/debug.h
 
 .obj/Protocol_Factory.o .obj/Protocol_Factory.so .shobj/Protocol_Factory.o .shobj/Protocol_Factory.so: AV/Protocol_Factory.cpp AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -3670,8 +3688,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/Service_Object.i AV/Policy.h \
-  $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  AV/Policy.h $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -3842,7 +3860,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp AV/Transport.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -3927,14 +3946,16 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
-  AV/FlowSpec_Entry.i $(TAO_ROOT)/tao/debug.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i \
+  AV/Transport.i AV/FlowSpec_Entry.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/MCast.o .obj/MCast.so .shobj/MCast.o .shobj/MCast.so: AV/MCast.cpp AV/MCast.h $(ACE_ROOT)/ace/pre.h \
+.obj/MCast.o .obj/MCast.so .shobj/MCast.o .shobj/MCast.so: AV/MCast.cpp AV/MCast.h \
+  $(ACE_ROOT)/ace/pre.h \
   AV/FlowSpec_Entry.h \
   AV/AV_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -3944,7 +3965,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl AV/AV_Core.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  AV/AV_Core.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -4142,7 +4164,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp AV/Transport.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -4231,12 +4254,14 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram.i AV/Transport.i \
-  AV/FlowSpec_Entry.i AV/Protocol_Factory.h AV/Policy.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram.i \
+  AV/Transport.i AV/FlowSpec_Entry.i AV/Protocol_Factory.h AV/Policy.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
-  AV/Policy.i $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i AV/Nil.h \
-  AV/AVStreams_i.h $(ACE_ROOT)/ace/ATM_Addr.h \
+  AV/Policy.i \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+  AV/MCast.i AV/Nil.h AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/ATM_Addr.h \
   $(ACE_ROOT)/ace/ATM_Addr.i \
   $(ACE_ROOT)/ace/Process.h \
   $(ACE_ROOT)/ace/Process.i \
@@ -4281,7 +4306,8 @@ AVSVC_COMPONENTS:
   AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp
 
-.obj/source.o .obj/source.so .shobj/source.o .shobj/source.so: AV/source.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/source.o .obj/source.so .shobj/source.o .shobj/source.so: AV/source.cpp \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -4448,6 +4474,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -4466,8 +4494,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Object.i \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Test_and_Set.h \
@@ -4639,7 +4665,8 @@ AVSVC_COMPONENTS:
   AV/UDP.i \
   AV/RTP.h \
   AV/MCast.h \
-  AV/MCast.i AV/source.h
+  AV/MCast.i \
+  AV/source.h
 
 .obj/media-timer.o .obj/media-timer.so .shobj/media-timer.o .shobj/media-timer.so: AV/media-timer.cpp AV/media-timer.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -4667,7 +4694,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i
 
-.obj/RTCP.o .obj/RTCP.so .shobj/RTCP.o .shobj/RTCP.so: AV/RTCP.cpp AV/ntp-time.h $(ACE_ROOT)/ace/pre.h \
+.obj/RTCP.o .obj/RTCP.so .shobj/RTCP.o .shobj/RTCP.so: AV/RTCP.cpp AV/ntp-time.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -4834,6 +4862,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -4852,8 +4882,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Service_Object.i \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Test_and_Set.h \
@@ -5028,7 +5056,8 @@ AVSVC_COMPONENTS:
   AV/MCast.i \
   AV/media-timer.h
 
-.obj/RTP.o .obj/RTP.so .shobj/RTP.o .shobj/RTP.so: AV/RTP.cpp AV/RTP.h $(ACE_ROOT)/ace/pre.h \
+.obj/RTP.o .obj/RTP.so .shobj/RTP.o .shobj/RTP.so: AV/RTP.cpp AV/RTP.h \
+  $(ACE_ROOT)/ace/pre.h \
   AV/AV_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -5336,7 +5365,8 @@ AVSVC_COMPONENTS:
   AV/FlowSpec_Entry.i \
   AV/Policy.h AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i AV/RTCP.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+  AV/MCast.i AV/RTCP.h \
   AV/source.h \
   AV/source.i \
   AV/AVStreams_i.h \
@@ -5385,9 +5415,11 @@ AVSVC_COMPONENTS:
   AV/Flows_T.cpp \
   AV/UDP.h \
   AV/UDP.i \
-  AV/RTP.h AV/Nil.h
+  AV/RTP.h \
+  AV/Nil.h
 
-.obj/sfp.o .obj/sfp.so .shobj/sfp.o .shobj/sfp.so: AV/sfp.cpp AV/sfp.h $(ACE_ROOT)/ace/pre.h \
+.obj/sfp.o .obj/sfp.so .shobj/sfp.o .shobj/sfp.so: AV/sfp.cpp AV/sfp.h \
+  $(ACE_ROOT)/ace/pre.h \
   AV/AV_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -5584,7 +5616,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
-  $(ACE_ROOT)/ace/INET_Addr.i AV/Policy.h \
+  $(ACE_ROOT)/ace/INET_Addr.i \
+  AV/Policy.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -5606,7 +5639,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp AV/Transport.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -5687,11 +5721,12 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
-  $(ACE_ROOT)/ace/Connector.cpp AV/Transport.i \
-  AV/FlowSpec_Entry.i AV/Protocol_Factory.h \
+  $(ACE_ROOT)/ace/Connector.cpp \
+  AV/Transport.i AV/FlowSpec_Entry.i AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
-  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i \
-  AV/AVStreams_i.h $(ACE_ROOT)/ace/ATM_Addr.h \
+  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+  AV/MCast.i AV/AVStreams_i.h \
+  $(ACE_ROOT)/ace/ATM_Addr.h \
   $(ACE_ROOT)/ace/ATM_Addr.i \
   $(ACE_ROOT)/ace/Process.h \
   $(ACE_ROOT)/ace/Process.i \
@@ -5739,7 +5774,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/ARGV.i
 
 .obj/AVStreamsS.o .obj/AVStreamsS.so .shobj/AVStreamsS.o .shobj/AVStreamsS.so: AVStreamsS.cpp AVStreamsS.h CosPropertyServiceS.h \
-  $(ACE_ROOT)/ace/pre.h CosPropertyServiceC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -6073,7 +6109,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Null_MediaCtrlS.o .obj/Null_MediaCtrlS.so .shobj/Null_MediaCtrlS.o .shobj/Null_MediaCtrlS.so: Null_MediaCtrlS.cpp Null_MediaCtrlS.h \
-  Null_MediaCtrlC.h $(TAO_ROOT)/tao/corba.h \
+  Null_MediaCtrlC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -6404,7 +6441,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/sfpS.o .obj/sfpS.so .shobj/sfpS.o .shobj/sfpS.so: sfpS.cpp sfpS.h sfpC.h $(TAO_ROOT)/tao/corba.h \
+.obj/sfpS.o .obj/sfpS.so .shobj/sfpS.o .shobj/sfpS.so: sfpS.cpp sfpS.h sfpC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -7010,6 +7048,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -7303,6 +7343,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -7321,7 +7363,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/sfpC.o .obj/sfpC.so .shobj/sfpC.o .shobj/sfpC.so: sfpC.cpp sfpC.h $(TAO_ROOT)/tao/corba.h \
+.obj/sfpC.o .obj/sfpC.so .shobj/sfpC.o .shobj/sfpC.so: sfpC.cpp sfpC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -7506,7 +7549,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  AV/AV_export.h sfpC.i $(TAO_ROOT)/tao/Stub.h \
+  AV/AV_export.h sfpC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -7594,6 +7638,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \

@@ -57,8 +57,7 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Sender_i.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -332,8 +331,7 @@ realclean: clean
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Receiver_i.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -608,8 +606,7 @@ realclean: clean
 
 .obj/Sender_i.o .obj/Sender_i.so .shobj/Sender_i.o .shobj/Sender_i.so: Sender_i.cpp Sender_i.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -809,8 +806,7 @@ realclean: clean
 
 .obj/Receiver_i.o .obj/Receiver_i.so .shobj/Receiver_i.o .shobj/Receiver_i.so: Receiver_i.cpp Receiver_i.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1800,6 +1796,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \

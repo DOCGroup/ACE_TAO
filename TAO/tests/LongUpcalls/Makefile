@@ -351,6 +351,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -407,8 +409,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -464,8 +465,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Get_Opt.i \
-  Manager.h TestS.h \
+  $(ACE_ROOT)/ace/Get_Opt.i Manager.h \
+  TestS.h \
   $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -707,6 +708,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -763,8 +766,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -1073,6 +1075,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1129,8 +1133,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -1439,6 +1442,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1495,8 +1500,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -1805,6 +1809,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1861,8 +1867,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -2171,6 +2176,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -2227,8 +2234,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -2534,6 +2540,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -2590,8 +2598,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -2887,6 +2894,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -2943,8 +2952,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -3250,6 +3258,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -3306,8 +3316,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -3613,6 +3622,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -3669,8 +3680,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -3974,6 +3984,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -4313,6 +4325,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -4369,8 +4383,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \

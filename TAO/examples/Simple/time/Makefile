@@ -365,6 +365,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -957,8 +959,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IORTable/iortable_export.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.i \
-  $(TAO_ROOT)/tao/debug.h \
-  TimeC.h TimeC.i
+  $(TAO_ROOT)/tao/debug.h TimeC.h \
+  TimeC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -1650,8 +1652,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IORTable/iortable_export.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.i \
-  $(TAO_ROOT)/tao/debug.h \
-  TimeC.h TimeC.i
+  $(TAO_ROOT)/tao/debug.h TimeC.h \
+  TimeC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \

@@ -57,8 +57,7 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Coordinator.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -260,8 +259,7 @@ realclean: clean
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Peer.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -476,8 +474,7 @@ realclean: clean
 
 .obj/Coordinator.o .obj/Coordinator.so .shobj/Coordinator.o .shobj/Coordinator.so: Coordinator.cpp Coordinator.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -677,8 +674,7 @@ realclean: clean
 
 .obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Peer.cpp Peer.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -950,8 +946,7 @@ realclean: clean
 
 .obj/Session.o .obj/Session.so .shobj/Session.o .shobj/Session.so: Session.cpp Session.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1224,8 +1219,7 @@ realclean: clean
 
 .obj/Session_Control.o .obj/Session_Control.so .shobj/Session_Control.o .shobj/Session_Control.so: Session_Control.cpp Session_Control.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1970,6 +1964,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \

@@ -331,6 +331,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -386,7 +388,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Invocation.i QuoterC.h \
+  $(TAO_ROOT)/tao/Asynch_Invocation.i \
+  QuoterC.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -401,8 +404,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i QuoterS_T.h \
-  QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_Locator_i.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -867,6 +870,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -919,7 +924,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Invocation.i QuoterC.i \
+  $(TAO_ROOT)/tao/Asynch_Invocation.i \
+  QuoterC.i \
   $(TAO_ROOT)/tao/ClientRequestInfo.inl \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
@@ -1198,6 +1204,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1253,7 +1261,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Invocation.i QuoterC.h \
+  $(TAO_ROOT)/tao/Asynch_Invocation.i \
+  QuoterC.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -1268,8 +1277,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i QuoterS_T.h \
-  QuoterS_T.i QuoterS_T.cpp QuoterS.i \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(ACE_ROOT)/ace/Map.h \
   $(ACE_ROOT)/ace/Map_T.h \
@@ -1582,6 +1591,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1637,7 +1648,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Invocation.i QuoterC.h \
+  $(TAO_ROOT)/tao/Asynch_Invocation.i \
+  QuoterC.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -1652,8 +1664,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i QuoterS_T.h \
-  QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1930,6 +1942,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1985,7 +1999,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Invocation.i QuoterC.h \
+  $(TAO_ROOT)/tao/Asynch_Invocation.i \
+  QuoterC.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -2000,11 +2015,12 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i QuoterS_T.h \
-  QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_Factory_i.o .obj/Stock_Factory_i.so .shobj/Stock_Factory_i.o .shobj/Stock_Factory_i.so: Stock_Factory_i.cpp Stock_Factory_i.h Stock_i.h \
-  QuoterS.h $(TAO_ROOT)/tao/orbconf.h \
+  QuoterS.h \
+  $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -2278,6 +2294,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -2333,7 +2351,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Invocation.i QuoterC.h \
+  $(TAO_ROOT)/tao/Asynch_Invocation.i \
+  QuoterC.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/Principal.h \
@@ -2348,11 +2367,12 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectIDList.h \
   $(TAO_ROOT)/tao/ObjectIDList.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i QuoterC.i QuoterS_T.h \
-  QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_Factory_Locator_i.o .obj/Stock_Factory_Locator_i.so .shobj/Stock_Factory_Locator_i.o .shobj/Stock_Factory_Locator_i.so: Stock_Factory_Locator_i.cpp \
-  Stock_Factory_Locator_i.h $(TAO_ROOT)/tao/corba.h \
+  Stock_Factory_Locator_i.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -2646,6 +2666,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -2699,7 +2721,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Messaging.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
-  $(TAO_ROOT)/tao/Asynch_Invocation.i QuoterC.h \
-  QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+  $(TAO_ROOT)/tao/Asynch_Invocation.i \
+  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
