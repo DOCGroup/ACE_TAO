@@ -1,3 +1,13 @@
+Tue Nov 30 00:22:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Malloc_Test.cpp: Changed to store the mmap allocator in an
+	  auto_ptr instead of as a static object so we can be absolutely
+	  sure about the creation order.
+
+	  Added an init_test method which creates a mmap memory pool and
+	  releases it immediately to make sure the test won't
+	  crash/deadlock due to previous crashes.
+
 Mon Nov 29 16:36:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.h (ACE_MALLOC_PADDING): Changed the default value of
