@@ -13,8 +13,6 @@
  *
  * ============================================================================= */
 
-#include "pace/time.h"
-
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
