@@ -22,115 +22,105 @@
 #include <tao/Typecode.h>
 #include <tao/IIOP_Object.h>
 
-#if 0 /* not currently used */
-// Destringify URL style IIOP objref.
-
-static CORBA::Object_ptr
-iiop_string_to_object (CORBA::String string,
-                       CORBA::Environment &env)
+static CORBA::Boolean
+catiiop (CORBA::String string,
+         CORBA::Environment &env)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
-
+  
   if (!string || !*string)
-    return 0;
-
+    return CORBA::B_FALSE;
+  
   // Type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
-
-  IIOP_Object *data;
-
-  // null type ID.
-  ACE_NEW_RETURN (data,
-                  IIOP_Object ((char *) 0),
-                  0);
-
+    
   // Remove the "N.N//" prefix, and verify the version's one that we
   // accept
 
-  if (isdigit (string [0])
-      && isdigit (string [2])
+  CORBA::Short  iiop_version_major, iiop_version_minor;
+  if (isdigit (string [0]) 
+      && isdigit (string [2]) 
       && string [1] == '.'
-      && string [3] == '/'
+      && string [3] == '/' 
       && string [4] == '/')
     {
-      data->profile.iiop_version.major = (char) (string [0] - '0');
-      data->profile.iiop_version.minor = (char) (string [2] - '0');
+      iiop_version_major = (char) (string [0] - '0');
+      iiop_version_minor = (char) (string [2] - '0');
       string += 5;
     }
   else
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->_decr_refcnt ();
-      return 0;
+      return CORBA::B_FALSE;
     }
 
-  if (data->profile.iiop_version.major != IIOP::MY_MAJOR
-      || data->profile.iiop_version.minor > IIOP::MY_MINOR)
+  if (iiop_version_major != IIOP::MY_MAJOR
+      || iiop_version_minor > IIOP::MY_MINOR)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->_decr_refcnt ();
-      return 0;
+      return CORBA::B_FALSE;
     }
 
-  // Pull off the "hostname:port/" part of the objref
+  ACE_DEBUG ((LM_DEBUG,
+              "IIOP Version:\t%d.%d\n",
+              iiop_version_major,
+              iiop_version_minor));
 
+  // Pull off the "hostname:port/" part of the objref Get host and
+  // port.
+  CORBA::UShort port_number;
+  CORBA::String hostname;  
   char *cp = ACE_OS::strchr (string, ':');
 
   if (cp == 0)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      data->_decr_refcnt ();
-      return 0;
+      return CORBA::B_FALSE;
     }
+  
+  hostname = CORBA::string_alloc (1 + cp - string);
 
-  data->profile.host = CORBA::string_alloc (1 + cp - string);
-
-  for (cp = data->profile.host;
+  for (cp = hostname;
        *string != ':';
        *cp++ = *string++)
     continue;
-
+  
   *cp = 0;
   string++;
-
+  
   cp = ACE_OS::strchr ((char *) string, '/');
-
+  
   if (cp == 0)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      CORBA::string_free (data->profile.host);
-      data->profile.host = 0;
-      data->_decr_refcnt ();
-      return 0;
+      CORBA::string_free (hostname);
+      return CORBA::B_FALSE;
     }
-
-  data->profile.port = (short) ACE_OS::atoi ((char *) string);
-  data->profile.object_addr (0);
+  
+  port_number = (short) ACE_OS::atoi ((char *) string);
   string = ++cp;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "Host Name:\t%s\n",
+              hostname));
+  ACE_DEBUG ((LM_DEBUG,
+              "Port Number:\t%d\n",
+              port_number));
+  CORBA::string_free (hostname); 
+		
   // Parse the object key.
-  TAO_POA::decode_string_to_sequence (data->profile.object_key,
-                                      string);
+  // dump the object key to stdout
+  //  TAO_POA::decode_string_to_sequence (data->profile.object_key,
+  //                                      string);
+  ACE_DEBUG ((LM_DEBUG,
+              "\nThe Object Key as string:\n%s\n",
+              string));
 
-  // Create the CORBA level proxy.
-  TAO_ServantBase *servant =
-    TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (data);
-
-  // This will increase the ref_count on data by one.
-  CORBA_Object *obj;
-
-  ACE_NEW_RETURN (obj,
-                  CORBA_Object (data, servant, servant != 0),
-                  0);
-
-  // Set the ref_count on data to 1, which is correct, because only
-  // obj has now a reference to it.  data->_decr_refcnt ();
-  return obj;
+  return CORBA::B_TRUE;
 }
-#endif /* 0 */
 
 static CORBA::Boolean
 catior (CORBA::String str,
@@ -141,7 +131,6 @@ catior (CORBA::String str,
 
   ACE_Message_Block mb (ACE_OS::strlen ((char *) str)  / 2 + 1
                         + CDR::MAX_ALIGNMENT);
-
   CDR::mb_align (&mb);
 
   char *buffer = mb.rd_ptr ();
@@ -395,9 +384,10 @@ main (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "f:n:");
 
-  /* CORBA::ORB_ptr orb_ptr = */ CORBA::ORB_init (argc, argv);
-
   CORBA::Environment env;
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO");
+
+  CORBA::Boolean  b;
 
   char opt;
   while ((opt = get_opt ()) != EOF)
@@ -405,7 +395,7 @@ main (int argc, char *argv[])
       switch (opt)
         {
         case 'n':
-            //  read the CosName from the NamingService convert the
+            //  Read the CosName from the NamingService convert the
             //  object_ptr to a CORBA::String_var via the call to
             //  object_to_string.
             ACE_DEBUG ((LM_DEBUG,
@@ -415,7 +405,7 @@ main (int argc, char *argv[])
             break;
         case 'f':
           {
-            //  read the file into a CORBA::String_var
+            //  Read the file into a CORBA::String_var.
             ACE_DEBUG ((LM_DEBUG,
                         "reading the file %s\n",
                         get_opt.optarg));
@@ -456,6 +446,7 @@ main (int argc, char *argv[])
                                      aString.length () - prefixLength);
                 subString[subString.length () - 1] = '\0';
                 str = subString.rep ();
+				b = catior(str, env);
               }
             else if (aString.find ("iiop:") == 0)
               {
@@ -463,21 +454,20 @@ main (int argc, char *argv[])
                             "decoding an IIOP IOR\n"));
 
                 ACE_CString prefix = "IIOP:";
-                short prefixLength = prefix.length () + 1;
+                short prefixLength = prefix.length ();
 
-                ACE_DEBUG ((LM_DEBUG,
-                            "prefix length = %d\n%s\n",
-                            prefixLength,
-                            aString.substring (prefixLength,
-                                               aString.length () - prefixLength).fast_rep ()));
-                str = aString.rep ();
+                ACE_CString subString =
+                  aString.substring (prefixLength,
+                                     aString.length () - prefixLength);
+                subString[subString.length () - 1] = '\0';
+                str = subString.rep ();
+				b = catiiop(str, env);
               }
             else
               ACE_ERROR_RETURN ((LM_DEBUG,
                                  "Don't know how to decode this IOR\n"),
                                 -1);
 
-            CORBA::Boolean  b = catior (str, env);
 
             if (b == 1)
               ACE_DEBUG ((LM_DEBUG,
