@@ -147,6 +147,7 @@ run Timer_Queue_Test                    # tests ACE_Event_Handler, ACE_Timer_Que
 run MT_Reactor_Timer_Test               # tests ACE_Reactor's timer mechanism.
 
 run SOCK_Connector_Test                 # tests ACE_SOCK_Connector
+run SOCK_Send_Recv_Test                 # tests ACE_SOCK_Stream
 
 run Task_Test                           # tests ACE_Thread_Manager, ACE_Task
 # Thread_Manager_Test: UNICOS fails due to no pthread_kill nor pthread_cancel
