@@ -4,6 +4,11 @@
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 
+// We need to include Sequence.h and Sequence_T.h before the
+// IIOP_Interpreter to workaround a Greenhills (1.8.8 and 1.8.9)
+// compiler bug.
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
 #include "tao/IIOP_Interpreter.h"
 #include "tao/Any.h"
 #include "tao/varout.h"
@@ -11,8 +16,6 @@
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/Union.h"
-#include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 
 ACE_RCSID(tao, IIOP_Interpreter, "$Id$")
 
