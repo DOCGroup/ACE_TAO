@@ -1,3 +1,13 @@
+Sun Jun 21 00:16:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.{h,cpp}: Changed the parent class of
+	  ACE_WFMO_Reactor_Notify from ACE_Event_Handler to
+	  ACE_Reactor_Notify.
+	  (dump): Added this virtual function implementation for
+	  ACE_WFMO_Reactor_Notify. 
+
+	* Ace/Proactor.cpp (timeout): Fixed a typo.
+
 Sat Jun 20 16:51:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Reactor*: Made a slew of changes to the Reactor and it's
