@@ -1,0 +1,183 @@
+--- orig/TypeCodeFactory.pidl	Mon Apr 23 23:32:24 2001
++++ TypeCodeFactory.pidl	Mon Apr 23 23:31:30 2001
+@@ -57,113 +57,120 @@
+ #ifndef _TYPECODEFACTORY_IDL_
+ #define _TYPECODEFACTORY_IDL_
+ 
+-#include "tao/IFR_Client/orig/IFR_Extended.pidl"
++#include "tao/IFR_Client/IFR_Extended.pidl"
+ 
+ #pragma prefix "omg.org"
+ 
+-  local interface CORBA_TypeCodeFactory  // PIDL
++module CORBA
+   {
+-    CORBA::TypeCode create_struct_tc (
+-        in string id,
+-        in string name,
+-        in CORBA_StructMemberSeq members
++  typedef string Identifier;
++  typedef string RepositoryId;
++  typedef short ValueModifier;
++
++  local interface TypeCodeFactory  // PIDL
++  {
++    TypeCode create_struct_tc (
++        in RepositoryId id,
++        in Identifier name,
++        in StructMemberSeq members
+       );
+ 
+-    CORBA::TypeCode create_union_tc (
+-        in string id,
+-        in string name,
+-        in CORBA::TypeCode discriminator_type,
+-        in CORBA_UnionMemberSeq members
++    TypeCode create_union_tc (
++        in RepositoryId id,
++        in Identifier name,
++        in TypeCode discriminator_type,
++        in UnionMemberSeq members
+       );
+ 
+-    CORBA::TypeCode create_enum_tc (
+-        in string id,
+-        in string name,
+-        in CORBA_EnumMemberSeq members
++    TypeCode create_enum_tc (
++        in RepositoryId id,
++        in Identifier name,
++        in EnumMemberSeq members
+       );
+ 
+-    CORBA::TypeCode create_alias_tc (
+-        in string id,
+-        in string name,
+-        in CORBA::TypeCode original_type
++    TypeCode create_alias_tc (
++        in RepositoryId id,
++        in Identifier name,
++        in TypeCode original_type
+       );
+ 
+-    CORBA::TypeCode create_exception_tc (
+-        in string id,
+-        in string name,
+-        in CORBA_StructMemberSeq members
++    TypeCode create_exception_tc (
++        in RepositoryId id,
++        in Identifier name,
++        in StructMemberSeq members
+       );
+ 
+-    CORBA::TypeCode create_interface_tc (
+-        in string id,
+-        in string name
++    TypeCode create_interface_tc (
++        in RepositoryId id,
++        in Identifier name
+       );
+ 
+-    CORBA::TypeCode create_string_tc (
++    TypeCode create_string_tc (
+         in unsigned long bound
+       );
+ 
+-    CORBA::TypeCode create_wstring_tc (
++    TypeCode create_wstring_tc (
+         in unsigned long bound
+       );
+ 
+-    CORBA::TypeCode create_fixed_tc (
++    TypeCode create_fixed_tc (
+         in unsigned short digits,
+         in unsigned short scale
+       );
+ 
+-    CORBA::TypeCode create_sequence_tc (
++    TypeCode create_sequence_tc (
+         in unsigned long bound,
+-        in CORBA::TypeCode element_type
++        in TypeCode element_type
+       );
+ 
+-    CORBA::TypeCode create_array_tc (
++    TypeCode create_array_tc (
+         in unsigned long length,
+-        in CORBA::TypeCode element_type
++        in TypeCode element_type
+       );
+ 
+-    CORBA::TypeCode create_value_tc (
+-        in string id,
+-        in string name,
+-        in short type_modifier,
+-        in CORBA::TypeCode concrete_base,
+-        in CORBA_ValueMemberSeq members
++    TypeCode create_value_tc (
++        in RepositoryId id,
++        in Identifier name,
++        in ValueModifier type_modifier,
++        in TypeCode concrete_base,
++        in ValueMemberSeq members
+       );
+ 
+-    CORBA::TypeCode create_value_box_tc (
+-        in string id,
+-        in string name,
+-        in CORBA::TypeCode boxed_type
++    TypeCode create_value_box_tc (
++        in RepositoryId id,
++        in Identifier name,
++        in TypeCode boxed_type
+       );
+ 
+-    CORBA::TypeCode create_native_tc (
+-        in string id,
+-        in string name
++    TypeCode create_native_tc (
++        in RepositoryId id,
++        in Identifier name
+       );
+ 
+-    CORBA::TypeCode create_recursive_tc (
+-        in string id
++    TypeCode create_recursive_tc (
++        in RepositoryId id
+       );
+ 
+-    CORBA::TypeCode create_abstract_interface_tc (
+-        in string id,
+-        in string name
++    TypeCode create_abstract_interface_tc (
++        in RepositoryId id,
++        in Identifier name
+       );
+ 
+-    CORBA::TypeCode create_local_interface_tc (
+-        in string id,
+-        in string name
++    TypeCode create_local_interface_tc (
++        in RepositoryId id,
++        in Identifier name
+       );
+-    CORBA::TypeCode create_component_tc (
+-        in string id,
+-        in string name
++    TypeCode create_component_tc (
++        in RepositoryId id,
++        in Identifier name
+       );
+ 
+-    CORBA::TypeCode create_home_tc (
+-        in string id,
+-        in string name
++    TypeCode create_home_tc (
++        in RepositoryId id,
++        in Identifier name
+       );
+   };
++};
+ 
+ #pragma prefix ""
+ #endif // _TYPECODEFACTORY_IDL_

@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  specific {
+    install_headers = 1
+    install_this_target = 1
+  }
+}

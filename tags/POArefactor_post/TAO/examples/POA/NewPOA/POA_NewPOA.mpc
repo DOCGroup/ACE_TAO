@@ -1,0 +1,3 @@
+//$Id$
+project : taoserver, minimum_corba {
+}
