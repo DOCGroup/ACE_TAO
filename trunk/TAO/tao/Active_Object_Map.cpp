@@ -121,15 +121,14 @@ TAO_Linear_Active_Object_Map::find (const PortableServer::ObjectId &id,
   for (TAO_Active_Object_Map_Entry *i = this->map_;
        i != this->map_ + this->next_;
        ++i)
-    {
-      if (i->is_free_)
-        continue;
-      else if (i->id_ == id)
-        {
-          servant = i->servant_;
-          return 0;
-        }
-    }
+    if (i->is_free_)
+      continue;
+    else if (i->id_ == id)
+      {
+        servant = i->servant_;
+        return 0;
+      }
+
   return -1;
 }
 
@@ -140,16 +139,15 @@ TAO_Linear_Active_Object_Map::unbind (const PortableServer::ObjectId &id,
   for (TAO_Active_Object_Map_Entry *i = this->map_;
        i != this->map_ + this->next_;
        ++i)
-    {
-      if (i->is_free_)
-        continue;
-      else if (i->id_ == id)
-        {
-          servant = i->servant_;
-          i->is_free_ = 1;
-          return 0;
-        }
-    }
+    if (i->is_free_)
+      continue;
+    else if (i->id_ == id)
+      {
+        servant = i->servant_;
+        i->is_free_ = 1;
+        return 0;
+      }
+
   return -1;
 }
 

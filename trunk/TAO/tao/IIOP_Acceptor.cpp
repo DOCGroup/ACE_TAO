@@ -23,8 +23,8 @@ TAO_IIOP_Acceptor::tag (void)
 }
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
-  :  base_acceptor_ (),
-     tag_(TAO_IOP_TAG_INTERNET_IOP)
+  : base_acceptor_ (),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP)
 {
 }
 
@@ -34,7 +34,7 @@ TAO_IIOP_Acceptor::create_profile (TAO_ObjectKey &)
   return 0;
 }
 
-ACE_Event_Handler*
+ACE_Event_Handler *
 TAO_IIOP_Acceptor::acceptor (void)
 {
   return &base_acceptor_;
