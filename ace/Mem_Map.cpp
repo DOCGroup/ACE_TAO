@@ -5,6 +5,15 @@
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
 
+#if defined (ACE_WIN32) \
+    && (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
+# define ACE_USE_MAPPING_NAME 1
+#endif /* ACE_WIN32 */
+
+#if defined (ACE_USE_MAPPING_NAME)
+#include "ace/SString.h"
+#endif /* ACE_USE_MAPPING_NAME */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Mem_Map.i"
 #endif /* __ACE_INLINE__ */
@@ -12,6 +21,35 @@
 ACE_RCSID(ace, Mem_Map, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
+
+#if defined (ACE_USE_MAPPING_NAME)
+// Gets a mapping object name from a file name.  TODO: The file name
+// is used as the key to the mapping. We should try to avoid mapping
+// the same object name to different files (there is a mapping object
+// name length limitation).
+
+static void
+to_mapping_name (ACE_TCHAR *mapobjname,
+		 const ACE_TCHAR *filename,
+		 size_t len)
+{
+  --len;
+  size_t i = 0;
+
+  while (*filename && i < len)
+    {
+      if (*filename == ACE_LIB_TEXT ('\\'))
+        // Can't use backslash in mapping object name.
+        mapobjname[i] = ACE_LIB_TEXT ('.');
+      else
+        mapobjname[i] = *filename;
+      ++filename;
+      ++i;
+    }
+
+  mapobjname[i] = 0;
+}
+#endif /* ACE_USE_MAPPING_NAME */
 
 void
 ACE_Mem_Map::dump (void) const
@@ -157,14 +195,39 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   write_enabled_ = ACE_BIT_ENABLED (prot, PROT_WRITE);
 #endif /* __Lynx__ */
 
-  this->base_addr_ = ACE_OS::mmap (this->base_addr_,
-                                   this->length_,
-                                   prot,
-                                   share,
-                                   this->handle_,
-                                   offset,
-                                   &this->file_mapping_,
-                                   sa);
+#if defined (ACE_USE_MAPPING_NAME)
+  if (ACE_BIT_ENABLED (share, MAP_SHARED))
+    {
+# if defined(__MINGW32__)
+      const int max_mapping_name_length = 32;
+# else
+      const int max_mapping_name_length = 31;
+# endif /* __MINGW32__ */
+      ACE_TCHAR file_mapping_name[max_mapping_name_length + 1];
+      to_mapping_name (file_mapping_name,
+                       filename_,
+                       max_mapping_name_length + 1);
+
+      this->base_addr_ = ACE_OS::mmap (this->base_addr_,
+				       this->length_,
+				       prot,
+				       share,
+				       this->handle_,
+				       offset,
+				       &this->file_mapping_,
+				       sa,
+				       file_mapping_name);
+    }
+  else
+#endif /* ACE_USE_MAPPING_NAME */
+    this->base_addr_ = ACE_OS::mmap (this->base_addr_,
+                                     this->length_,
+                                     prot,
+                                     share,
+                                     this->handle_,
+                                     offset,
+                                     &this->file_mapping_,
+                                     sa);
 
   return this->base_addr_ == MAP_FAILED ? -1 : 0;
 }

@@ -5732,7 +5732,8 @@ public:
                      ACE_HANDLE handle,
                      off_t off = 0,
                      ACE_HANDLE *file_mapping = 0,
-                     LPSECURITY_ATTRIBUTES sa = 0);
+                     LPSECURITY_ATTRIBUTES sa = 0,
+                     const ACE_TCHAR *file_mapping_name = 0);
   static int mprotect (void *addr,
                        size_t len,
                        int prot);

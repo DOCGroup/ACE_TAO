@@ -144,7 +144,7 @@ public:
   /// Removes all the entries in <Map_Manager_Ex>.
   int unbind_all (void);
 
-  /// Initialize a <Hash_Map_Manager_Ex> with size <length>.
+  /// Cleanup the <Hash_Map_Manager_Ex>.
   ~ACE_Hash_Map_Manager_Ex (void);
 
   /**
