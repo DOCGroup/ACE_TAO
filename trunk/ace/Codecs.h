@@ -36,6 +36,7 @@
  */
 class ACE_Export ACE_Base64
 {
+  friend class ace_dewarn_gplusplus;
 public:
 
   //@{
