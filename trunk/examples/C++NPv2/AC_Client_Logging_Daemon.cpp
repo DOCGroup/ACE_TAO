@@ -56,7 +56,8 @@ protected:
 class AC_Input_Handler 
   : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> {
 public:
-  AC_Input_Handler () : output_handler_ (0) { ACE_ASSERT (0); }  // Never used
+  AC_Input_Handler ()
+    : output_handler_ (output_handler_) { ACE_ASSERT (0); }
   AC_Input_Handler (AC_Output_Handler &handler)
     : output_handler_ (handler) {}
   virtual int open (void *); // Initialization hook method.
