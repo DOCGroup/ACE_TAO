@@ -374,7 +374,7 @@ ACE_Location_Node::open_handle (void)
   ASYS_TCHAR dl_pathname[MAXPATHLEN + 1];
   const ASYS_TCHAR *name = ASYS_WIDE_STRING (this->pathname ());
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ASYS_TCHAR dl_exppathname[MAXPATHLEN];
   if (::ExpandEnvironmentStringsA (name,
                                    dl_exppathname,
