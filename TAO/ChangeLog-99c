@@ -1,3 +1,12 @@
+Thu Dec 30 14:30:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/POA/Makefile,orbsvcs/orbsvcs/Makefile,
+          orbsvcs/tests/Makefile,orbsvcs/Makefile,
+          performance-tests/Cubit/TAO/Makefile,performance-tests/Makefile,
+          tests/Makefile: moved include of rules.tao.GNU before first
+          use of $(minimum_corba), so that it is defined before that
+          use.  Thanks to Nanbor for diagnosing this problem.
+
 Wed Dec 29 15:38:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp (open):

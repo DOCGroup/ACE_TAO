@@ -24,7 +24,7 @@ DIRS  = orbsvcs \
 
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+  TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 #----------------------------------------------------------------------------
@@ -32,6 +32,7 @@ endif
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(minimum_corba),0)
 
@@ -47,7 +48,6 @@ ifeq ($(minimum_corba),0)
 endif # minimum_corba
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
