@@ -1,24 +1,31 @@
+Wed Dec  1 07:18:37 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+
+          Fixed build warnings about mismatch parameter types with fprintf.
+
 Tue Nov 30 16:33:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Add replace_key.cpp to FTRT_EventChannel sources.
+          Add replace_key.cpp to FTRT_EventChannel sources.
 
 Tue Nov 30 11:42:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Arg_Traits.h:
-        
+
           New file, containing template specializations of the
           stub and skeleton arg traits classes for CORBA::Any.
           These specializations were formerly in generated code.
-          
+
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_decl.cpp:
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
         * TAO_IDL/be_include/be_visitor_arg_traits.h:
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Added check for an Any used as an operation parameter, and
           code to include the new file above if one is seen. This
           was the only predefined type for which arg traits class

@@ -273,7 +273,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->set(%d);\n", operand);
+            ACE_OS::fprintf (stdout, "FT Client: ->set(%ld);\n", operand);
           }
           this->replica_->set(operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -290,12 +290,12 @@ int FTClientMain::pass (
           ACE_CHECK_RETURN (-1);
           if (value == operand)
           {
-            ACE_OS::fprintf (stdout, "FT Client: Good: Read %d expecting %d\n", value, operand);
+            ACE_OS::fprintf (stdout, "FT Client: Good: Read %ld expecting %ld\n", value, operand);
             counter = operand;
           }
           else
           {
-            ACE_OS::fprintf (stdout, "FT Client: Error: Read %d expecting %d\n", value, operand);
+            ACE_OS::fprintf (stdout, "FT Client: Error: Read %ld expecting %ld\n", value, operand);
           }
           echo = 0;
           break;
@@ -305,7 +305,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->counter(%d);\n", operand);
+            ACE_OS::fprintf (stdout, "FT Client: ->counter(%ld);\n", operand);
           }
           this->replica_->counter(operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -316,7 +316,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->increment(%d);\n", operand);
+            ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", operand);
           }
           this->replica_->increment(operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -327,7 +327,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->increment(%d);\n", -operand);
+            ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", -operand);
           }
           this->replica_->increment(-operand ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -342,7 +342,7 @@ int FTClientMain::pass (
           }
           long attribute = this->replica_->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-          ACE_OS::fprintf (stdout, "FT Client: Attribute: %d\n", attribute);
+          ACE_OS::fprintf (stdout, "FT Client: Attribute: %ld\n", attribute);
           echo = 0;
           break;
         }
@@ -361,7 +361,7 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= LOUD)
           {
-            ACE_OS::fprintf (stdout, "FT Client: ->die(%d);\n", operand);
+            ACE_OS::fprintf (stdout, "FT Client: ->die(%ld);\n", operand);
           }
           this->replica_->die(ACE_static_cast (FT_TEST::TestReplica::Bane, operand) ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -494,12 +494,12 @@ int FTClientMain::pass (
         {
           if (this->verbose_ >= NORMAL)
           {
-            ACE_OS::fprintf (stdout, "FT Client: %d\n", counter);
+            ACE_OS::fprintf (stdout, "FT Client: %ld\n", counter);
           }
         }
         else
         {
-          ACE_OS::fprintf (stdout, "FT Client: Error: read %d expecting %d\n", value, counter);
+          ACE_OS::fprintf (stdout, "FT Client: Error: read %ld expecting %ld\n", value, counter);
           result = -1;
         }
       }
@@ -529,7 +529,9 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
   }
   else
   {
-    ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** %s\n", this->replica_pos_);
+    ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** "
+                             ACE_SIZE_T_FORMAT_SPECIFIER
+                             "\n", this->replica_pos_);
   }
   return result;
 }
@@ -553,7 +555,7 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
 
     if (this->verbose_ >= NORMAL)
     {
-      ACE_OS::fprintf (stdout, "FT Client: Initial counter %d\n", counter);
+      ACE_OS::fprintf (stdout, "FT Client: Initial counter %ld\n", counter);
     }
     if (ACE_OS::isatty(fileno(stdin)))
     {
