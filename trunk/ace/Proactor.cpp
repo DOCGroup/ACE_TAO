@@ -56,8 +56,13 @@ public:
   ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
   // Constructor.
 
-  ~ACE_Proactor_Timer_Handler (void);
+  virtual ~ACE_Proactor_Timer_Handler (void);
   // Destructor.
+
+  int destroy (void);
+  // Proactor calls this to shut down the timer handler
+  // gracefully. Just calling the destructor alone doesnt do what
+  // <destroy> does. <destroy> make sure the thread exits properly. 
 
 protected:
   virtual int svc (void);
@@ -89,6 +94,9 @@ ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
 
   // Signal timer event.
   this->timer_event_.signal ();
+  
+  // Wait for the Timer Handler thread to exit. 
+  this->thr_mgr ()->wait ();
 }
 
 int
@@ -402,15 +410,15 @@ ACE_Proactor::close (void)
       delete this->implementation ();
       this->implementation_ = 0;
     }
-  
-  // Take care of the timer handler
+
+  // Delete the timer handler.
   if (this->timer_handler_)
     {
       delete this->timer_handler_;
       this->timer_handler_ = 0;
     }
   
-  // Take care of the timer queue
+  // Delete the timer queue.
   if (this->delete_timer_queue_)
     {
       delete this->timer_queue_;
