@@ -964,7 +964,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
@@ -1036,7 +1036,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
 
@@ -1211,7 +1211,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
@@ -1319,7 +1319,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
