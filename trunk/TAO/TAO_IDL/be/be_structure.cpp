@@ -107,7 +107,7 @@ be_structure::gen_var_defn (char *)
     }
 
   // Arrow operator.
-  *ch << local_name () << " *operator-> (void);" << nl;
+  *ch << this->local_name () << " *operator-> (void);" << nl;
   *ch << "const " << this->local_name ()
       << " *operator-> (void) const;" << nl;
   *ch << nl;
@@ -131,16 +131,16 @@ be_structure::gen_var_defn (char *)
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << "const " << this->local_name () << " &in (void) const;" << nl;
-      *ch << local_name () << " &inout (void);" << nl;
-      *ch << local_name () << " &out (void);" << nl;
-      *ch << local_name () << " _retn (void);" << nl;
+      *ch << this->local_name () << " &inout (void);" << nl;
+      *ch << this->local_name () << " &out (void);" << nl;
+      *ch << this->local_name () << " _retn (void);" << nl;
     }
   else
     {
       *ch << "const " << this->local_name () << " &in (void) const;" << nl;
-      *ch << local_name () << " &inout (void);" << nl;
-      *ch << local_name () << " *&out (void);" << nl;
-      *ch << local_name () << " *_retn (void);" << nl;
+      *ch << this->local_name () << " &inout (void);" << nl;
+      *ch << this->local_name () << " *&out (void);" << nl;
+      *ch << this->local_name () << " *_retn (void);" << nl;
     }
 
   // Generate an additional member function

@@ -92,4 +92,6 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       os->gen_endif ();
       node->cli_hdr_gen (I_TRUE);
     }
-  return 0;}
+
+  return 0;
+}

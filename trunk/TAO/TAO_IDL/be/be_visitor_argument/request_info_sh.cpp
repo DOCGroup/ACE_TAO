@@ -69,7 +69,7 @@ int be_visitor_args_request_info_sh::visit_argument (be_argument *node)
     }
 
   // As we visit each type we print out the &.
-  *os <<" "<< node->local_name () << "_;\n";
+  *os <<" "<< node->local_name () << "_;" << be_nl;
   return 0;
 }
 int be_visitor_args_request_info_sh::visit_array (be_array *node)
