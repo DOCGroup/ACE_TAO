@@ -71,6 +71,10 @@ components:
   highest priority for conjunctions, instead of just the priority of
   the last event.
 
+    Another feature that can be implemented using filters is a
+  per-consumer buffering policy, thanks to John Aughey
+  <jaughey@mdc.com> for putting this idea in my head.
+
 - The Dispatching module: as in the original event channel
   implementation there are multiple ways to dispatch events, this
   feature is preserved with only a few syntactic changes.
