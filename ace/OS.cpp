@@ -3544,6 +3544,12 @@ ACE_Thread_ID::ACE_Thread_ID (ACE_thread_t thread_id,
 {
 }
 
+ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
+  : thread_id_ (id.thread_id_),
+    thread_handle_ (id.thread_handle_)
+{
+}
+
 ACE_thread_t
 ACE_Thread_ID::id (void)
 {
