@@ -2,9 +2,6 @@
 
 #include "tao/corba.h"
 
-// Timeprobes class
-#include "tao/Timeprobe.h"
-
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
