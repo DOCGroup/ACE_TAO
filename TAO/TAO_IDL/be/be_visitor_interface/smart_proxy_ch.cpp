@@ -89,12 +89,12 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "public:" << be_idt_nl << be_nl
           << "friend class TAO_Singleton<TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
-          << "int register_proxy_factory (" << be_idt << be_idt_nl
+          << "void register_proxy_factory (" << be_idt << be_idt_nl
           << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
           << "int one_shot_factory = 1" << be_nl
           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
-          << "int unregister_proxy_factory (" << be_idt << be_idt_nl
+          << "void unregister_proxy_factory (" << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
           << node->local_name ()
@@ -116,12 +116,11 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "_Default_Proxy_Factory *proxy_factory_;" << be_nl
           << "int one_shot_factory_;" << be_nl
           << "int disable_factory_;"<<be_nl
-          << "TAO_SYNCH_RECURSIVE_MUTEX lock_;"<<be_nl << be_uidt_nl
-          << "};\n\n";
+          << "TAO_SYNCH_RECURSIVE_MUTEX lock_;" << be_uidt_nl
+          << "};";
 
-      os->indent ();
-
-      *os << "typedef TAO_Singleton<TAO_"<<node->flat_name ()
+      *os << be_nl << be_nl
+          << "typedef TAO_Singleton<TAO_"<<node->flat_name ()
           << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX> TAO_"
           << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl << be_nl;
 
