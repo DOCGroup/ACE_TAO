@@ -1,3 +1,13 @@
+Tue May 18 14:25:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Property_Handler.h:
+        * DnC/Config_Handlers/Property_Handler.cpp:
+
+          Added a xercesc::DOMNode * as a formal argument. Though this
+          argument is unnecessary in the process_property () function,
+          this was necessary to have a common signature for all the
+          process_* functions, so that they could be templatized.
+
 Tue May 18 12:01:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CAD_Handler.cpp:
