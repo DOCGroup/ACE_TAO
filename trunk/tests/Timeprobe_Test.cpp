@@ -66,8 +66,8 @@ main (int, ASYS_TCHAR *[])
   
   ACE_TIMEPROBE ("Ending Test");
 
-  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_0, 0);
   ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_1, 100);
+  ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_0, 0);
 
   ACE_TIMEPROBE_PRINT;
 
