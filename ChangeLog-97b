@@ -1,3 +1,15 @@
+Fri Nov 21 17:12:48 1997    <nw1@CHA-CHA>
+
+	* ace/Thread_Manager.{h,cpp} (wait): Added codes to remove detached
+ 	  threads.  This function can be activated selectively.  I added
+ 	  this so we can ignore detached threads when closing down the
+ 	  default thread manager.  
+
+	  (close): Activated the code to wait (join) all threads managed
+ 	  by the thread manager.  It will ask wait function to remove all
+ 	  detached thread first (and so they won't be counted into threads
+ 	  we are waiting for.)
+
 Fri Nov 21 13:22:25 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.55, released Fri Nov 21 13:22:25 1997.
