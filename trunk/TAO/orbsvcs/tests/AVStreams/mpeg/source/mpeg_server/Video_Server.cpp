@@ -214,6 +214,7 @@ Video_Control_Handler::init_video (const Video_Control::INITvideoPara &para,
                                    Video_Control::INITvideoReply_out reply,
                                    CORBA::Environment&)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Video_Control_Handler::init_video called\n"));
   return this->state_->init_video (para,reply);
 }
 
@@ -429,7 +430,7 @@ Video_Server::init (int ctr_fd,
   VIDEO_SINGLETON::instance ()->lastRef[0] = VIDEO_SINGLETON::instance ()->lastRef[1] = -1;
   VIDEO_SINGLETON::instance ()->lastRefPtr = 0;
 
-  VIDEO_SINGLETON::instance ()->init_video ();
+  //  VIDEO_SINGLETON::instance ()->init_video ();
   // This is commented so that the client will do a CORBA call now.
 
   if (rttag) {

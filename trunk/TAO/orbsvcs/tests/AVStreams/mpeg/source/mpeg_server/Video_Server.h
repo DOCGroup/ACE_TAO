@@ -134,7 +134,6 @@ private:
 };
 
 // Video_Control_Handler instance singleton.
-//@@ Does this really need to be a thread-specific singleton?
 typedef ACE_Singleton <Video_Control_Handler_Instance,
                            ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_HANDLER_INSTANCE; 

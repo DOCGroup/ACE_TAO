@@ -22,8 +22,9 @@ Video_Control_i::init_video (const Video_Control::INITvideoPara &para,
     {
       vch = VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->get_video_control_handler () ;
       ACE_DEBUG ((LM_DEBUG,
-                  "Video_Control_Handler_instance address %x,%x",
-                  vchi,vch));
+                  "Video_Control_Handler_instance address %x,%x\n",
+                  vchi,
+                  vch));
 
     }
   else
@@ -35,9 +36,11 @@ Video_Control_i::init_video (const Video_Control::INITvideoPara &para,
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "(%P|%t)Video_Control_Handler_Instance::get_video_Control_handler returned null \n"),
                       -1);
+
   
-  else
-    return vch->init_video (para,reply,env);
+  CORBA::Boolean result = vch->init_video (para,reply,env);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Video_Control_State::init_video returned %d\n", result));
+  return result;
 
 }
 
@@ -89,6 +92,8 @@ Video_Control_i::step (const Video_Control::STEPpara &para,
 }
 
 
+// this gets called by the client, when it wants
+// to start playback
 CORBA::Boolean 
 Video_Control_i::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts,
@@ -99,21 +104,21 @@ Video_Control_i::play (const Video_Control::PLAYpara &para,
               "(%P|%t)Video_Control_i::play () called \n"));
   Video_Control_Handler *vch ;
   
-  if ((vchi = VIDEO_CONTROL_HANDLER_INSTANCE::instance () )!= 0)
+  if ((vchi = VIDEO_CONTROL_HANDLER_INSTANCE::instance ())!= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Video_Control_Handler_instance address %x",
+                  "Video_Control_Handler_instance address %x\n",
                   vchi));
     vch = VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->get_video_control_handler () ;
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t)Video_control_Handler_instance is null \n"),
+                       "(%P|%t) Video_control_Handler_instance is null \n"),
                       -1);
 
   if (vch == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       "(%P|%t)Video_Control_Handler_Instance::get_video_Control_handler returned null \n"),
+                       "(%P|%t) Video_Control_Handler_Instance::get_video_Control_handler returned null \n"),
                       -1);
   
   else
