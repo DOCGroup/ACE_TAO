@@ -768,7 +768,7 @@ ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
                                         Pthreads).*/
 //#define ACE_HAS_PTHREADS_UNIX98_EXT 1
                                         /*Platform has the UNIX98 extensions to
-                                        Pthreads (susp/cont, rwlocks)*/
+                                        Pthreads (rwlocks)*/
 //#define ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
                                         /*Platform has pthread_condattr_setkind_np().*/
 //#define ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP 1
