@@ -329,7 +329,7 @@ private:
   ACE_HANDLE handle_;
 
   /// Used to compare against the real file to test if an update is needed.
-  struct stat stat_;
+  ACE_stat stat_;
   size_t size_;
 
   /// Status indicators.
