@@ -1,13 +1,12 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ***** This configuration file is still under debugging. *****
-// ***** It still doesn't work quite the way it expected to. *****
-
 // The following configuration file is designed to work for FreeBSD
 // platforms using GNU C++ and the POSIX (pthread) threads package
-// by John Birrell.  You must at least have 3.0-current as of 2/9/1997 to
-// take the advantage of latest pthread library.
+// by John Birrell.
+
+// Currently, only this test is failing,
+//    tests/MT_SOCK_Test
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
