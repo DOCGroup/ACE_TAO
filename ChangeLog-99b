@@ -8,6 +8,10 @@ Fri Nov 12 21:26:58 1999  David L. Levine  <levine@cs.wustl.edu>
           file.  Thanks to Timothy Canham <Timothy.Canham@jpl.nasa.gov>
           for reporting this.
 
+          Also, changed a couple of <ace/sys_conf.h> #includes
+          to "ace/sys_conf.h", because that file is not a system
+          header.
+
 Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp (connect_i): Since we should change <sh> only
