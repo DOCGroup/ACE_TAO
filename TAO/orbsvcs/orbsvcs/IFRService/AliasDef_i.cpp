@@ -1,14 +1,16 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "AliasDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
-           AliasDef_i, 
+
+ACE_RCSID (IFRService,
+           AliasDef_i,
            "$Id$")
+
 
 TAO_AliasDef_i::TAO_AliasDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -60,7 +62,7 @@ TAO_AliasDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "original_type",
                                             original_type);
 
-  TAO_IDLType_i *impl = 
+  TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (original_type,
                                             this->repo_);
   if (0 == impl)
@@ -98,7 +100,7 @@ TAO_AliasDef_i::original_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "original_type",
                                             original_type);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (original_type,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);

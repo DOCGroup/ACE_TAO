@@ -1,13 +1,19 @@
 #include "PG_Utils.h"
+
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 
+#include "ace/OS_NS_string.h"
+
+
 ACE_RCSID (PortableGroup,
            PG_Utils,
            "$Id$")
+
+
 namespace TAO
 {
   /*static*/ CORBA::Boolean

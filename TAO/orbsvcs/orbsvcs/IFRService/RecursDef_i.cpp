@@ -1,11 +1,14 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "RecursDef_i.h"
 
+#include "ace/SString.h"
+
+
 ACE_RCSID (IFRService,
            RecursDef_i,
            "RecursDef_i.cpp,v 1.1 2004/10/18 09:00:00 SMA Exp")
+
 
 //-----------------------------------------------------------------------------
 // Class TAO_RecursiveDef_OuterScopes is a support class for StructDef_i.h and

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "Repository_i.h"
@@ -13,10 +12,13 @@
 #include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
 
 ACE_RCSID (IFRService,
            Container_i,
            "$Id$")
+
 
 const char *TAO_Container_i::tmp_name_holder_ = 0;
 
@@ -2358,8 +2360,8 @@ TAO_Container_i::update_refs (const char *path,
                                           "refs",
                                           0,
                                           refs_key);
-     
-  // If this container has no "refs" section, there is nothing to do.                                        
+
+  // If this container has no "refs" section, there is nothing to do.
   if (status != 0)
     {
       return;
@@ -2387,7 +2389,7 @@ TAO_Container_i::update_refs (const char *path,
       this->repo_->config ()->get_string_value (ref_key,
                                                 "name",
                                                 ref_name);
-                                                
+
       int pos = ref_name.find (this->repo_->extension ());
 
       // If one of the names has been mangled by move(), fix it.
@@ -2415,8 +2417,8 @@ TAO_Container_i::update_refs (const char *path,
           return;
         }
     }
-    
-  // If we're just changing the path after doing a 'move', we're done.  
+
+  // If we're just changing the path after doing a 'move', we're done.
   if (name == 0)
     {
       return;

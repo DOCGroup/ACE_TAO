@@ -1,15 +1,18 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "StructDef_i.h"
 #include "RecursDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IFRService, 
-           StructDef_i, 
+#include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           StructDef_i,
            "$Id$")
+
 
 TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -289,7 +292,7 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
                                                 "name",
                                                 members[i].name.in ());
 
-      path = 
+      path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,

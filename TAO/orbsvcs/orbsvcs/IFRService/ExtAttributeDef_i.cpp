@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ExtAttributeDef_i.h"
@@ -6,9 +5,13 @@
 #include "ExceptionDef_i.h"
 #include "IFR_Service_Utils.h"
 
-ACE_RCSID (IFRService, 
-           ExtAttributeDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           ExtAttributeDef_i,
            "$Id$")
+
 
 TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -55,7 +58,7 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
   return safe_retval._retn ();
 }
 
-void 
+void
 TAO_ExtAttributeDef_i::get_exceptions (
     const CORBA::ExcDescriptionSeq &get_exceptions
     ACE_ENV_ARG_DECL
@@ -71,7 +74,7 @@ TAO_ExtAttributeDef_i::get_exceptions (
                           ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_ExtAttributeDef_i::get_exceptions_i (
     const CORBA::ExcDescriptionSeq &get_exceptions
     ACE_ENV_ARG_DECL_NOT_USED
@@ -116,7 +119,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
   return safe_retval._retn ();
 }
 
-void 
+void
 TAO_ExtAttributeDef_i::set_exceptions (
     const CORBA::ExcDescriptionSeq &set_exceptions
     ACE_ENV_ARG_DECL
@@ -132,7 +135,7 @@ TAO_ExtAttributeDef_i::set_exceptions (
                           ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 TAO_ExtAttributeDef_i::set_exceptions_i (
     const CORBA::ExcDescriptionSeq &set_exceptions
     ACE_ENV_ARG_DECL_NOT_USED
@@ -176,7 +179,7 @@ TAO_ExtAttributeDef_i::describe_attribute_i (
   return safe_retval._retn ();
 }
 
-void 
+void
 TAO_ExtAttributeDef_i::fill_description (
     CORBA::ExtAttributeDescription &desc
     ACE_ENV_ARG_DECL
@@ -276,7 +279,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
     }
 }
 
-void 
+void
 TAO_ExtAttributeDef_i::exceptions (const char *sub_section,
                                    const CORBA::ExcDescriptionSeq &exceptions)
 {

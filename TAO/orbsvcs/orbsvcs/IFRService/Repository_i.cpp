@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "concrete_classes.h"
@@ -13,6 +11,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Lock_Adapter_T.h"
+#include "ace/SString.h"
 
 
 ACE_RCSID (IFR_Service,

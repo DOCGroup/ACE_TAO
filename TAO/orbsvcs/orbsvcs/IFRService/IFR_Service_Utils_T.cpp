@@ -7,10 +7,9 @@
 #include "IFR_Service_Utils.h"
 #include "Repository_i.h"
 
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService,
-           IFR_Service_Utils_T,
-           "$Id$")
+
 
 template<typename T>
 void
@@ -69,7 +68,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
     {
       return;
     }
-    
+
   ACE_Configuration_Section_Key initializers_key;
   config->open_section (key,
                         "initializers",
@@ -110,7 +109,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
 
           for (CORBA::ULong j = 0; j < arg_count; ++j)
             {
-              char *stringified = 
+              char *stringified =
                 TAO_IFR_Service_Utils::int_to_string (j);
               config->open_section (params_key,
                                     stringified,
@@ -121,7 +120,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
                   "arg_name",
                   initializers[i].members[j].name.in ()
                 );
-              arg_path = 
+              arg_path =
                 TAO_IFR_Service_Utils::reference_to_path (
                     initializers[i].members[j].type_def.in ()
                   );
@@ -161,8 +160,8 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
   ACE_CHECK;
 }
 
-template<typename T_strseq>                       
-void 
+template<typename T_strseq>
+void
 TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
     const char *section_name,
     ACE_Configuration *config,
@@ -175,21 +174,21 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
                                      section_name,
                                      0,
                                      section_key);
-                                    
+
   if (status != 0)
     {
       seq.length (0);
       return;
     }
-    
+
   CORBA::ULong count = 0;
   config->get_integer_value (section_key,
                              "count",
                              count);
-  seq.length (count);           
+  seq.length (count);
   char *stringified = 0;
   ACE_TString holder;
-                             
+
   for (CORBA::ULong i = 0; i < count; ++i)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
@@ -199,9 +198,9 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
       seq[i] = holder.fast_rep ();
     }
 }
-                              
+
 template<typename T_desc_seq>
-void 
+void
 TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
     T_desc_seq &desc_seq,
     ACE_Configuration *config,
@@ -275,7 +274,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
 }
 
 template<typename T_desc_seq>
-void 
+void
 TAO_Port_Desc_Seq_Utils<T_desc_seq>::get_is_multiple (
     T_desc_seq &desc_seq,
     ACE_Configuration *config,
@@ -291,7 +290,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::get_is_multiple (
 }
 
 template<typename T_desc_seq>
-void 
+void
 TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_base_type (T_desc_seq &desc_seq,
                                                      ACE_TString &holder,
                                                      CORBA::ULong index)
@@ -327,7 +326,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                           sub_section
                                           ACE_ENV_ARG_PARAMETER);
 
-  const char *tmp = 
+  const char *tmp =
     TAO_IFR_Service_Utils::reference_to_path (port_base_type);
 
   ACE_Configuration_Section_Key base_type_key;
@@ -351,7 +350,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                       repo->config (),
                                       new_key);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (path,
                                               repo
                                               ACE_ENV_ARG_PARAMETER);
@@ -374,4 +373,3 @@ TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean is_multiple,
 }
 
 #endif /* TAO_IFR_SERVICE_UTILS_T_CPP */
-

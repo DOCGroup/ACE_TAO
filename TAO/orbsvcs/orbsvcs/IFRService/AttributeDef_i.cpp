@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "AttributeDef_i.h"
@@ -7,10 +6,13 @@
 #include "ExceptionDef_i.h"
 #include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
-           AttributeDef_i, 
+
+ACE_RCSID (IFRService,
+           AttributeDef_i,
            "$Id$")
+
 
 TAO_AttributeDef_i::TAO_AttributeDef_i (
     TAO_Repository_i *repo
@@ -91,7 +93,7 @@ TAO_AttributeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  TAO_IDLType_i *impl = 
+  TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (type_path,
                                             this->repo_);
 
@@ -119,7 +121,7 @@ TAO_AttributeDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (type_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -390,5 +392,3 @@ TAO_AttributeDef_i::put_exceptions (ACE_ENV_SINGLE_ARG_DECL)
 
   return retval._retn ();
 }
-
-
