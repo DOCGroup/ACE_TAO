@@ -1,3 +1,7 @@
+// -*- MPC -*-
+//
+// $Id$
+
 project(*Server): taoexe, naming, iortable, portableserver, htiop {
   Source_Files {
     Test_Output.cpp

@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // ===================================================================
 /**
- *  @file   Connector_Impl.h
+ *  @file   HTIOP_Connector_Impl.h
  *
  *  $Id$
  *
@@ -12,7 +12,7 @@
 
 #ifndef HTIOP_CONNECTOR_IMPL_H
 #define HTIOP_CONNECTOR_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HTIOP_Export.h"
 
@@ -121,5 +121,5 @@ namespace TAO
 #pragma implementation ("HTIOP_Connector_Impl.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*HTIOP_CONNECTOR_IMPL_H*/

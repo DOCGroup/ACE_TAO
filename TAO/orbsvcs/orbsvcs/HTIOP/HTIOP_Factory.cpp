@@ -5,8 +5,8 @@
 #include "HTIOP_Connector.h"
 #include "HTIOP_Profile.h"
 
-#include <ace/HTBP/HTBP_Environment.h>
-#include <tao/IOPC.h>
+#include "ace/HTBP/HTBP_Environment.h"
+#include "tao/IOPC.h"
 
 ACE_RCSID (HTIOP,
            TAOHTIOP_Factory,

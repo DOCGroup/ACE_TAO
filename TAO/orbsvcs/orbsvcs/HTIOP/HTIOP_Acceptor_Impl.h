@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   Acceptor_Impl.h
+ *  @file   HTIOP_Acceptor_Impl.h
  *
  *  $Id$
  *
@@ -13,7 +13,7 @@
 
 #ifndef HTIOP_ACCEPTOR_IMPL_H
 #define HTIOP_ACCEPTOR_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
@@ -148,5 +148,5 @@ private:
 #pragma implementation ("HTIOP_Acceptor_Impl.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* HTIOP_AccePTOR_IMPL_H */

@@ -17,7 +17,7 @@
 
 #ifndef HTIOP_ENDPOINT_H
 #define HTIOP_ENDPOINT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HTIOP_Export.h"
 
@@ -156,5 +156,5 @@ namespace TAO
 # include "HTIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* HTIOP_PROFILE_H */

@@ -13,7 +13,7 @@
 
 #ifndef HTIOP_FACTORY_H
 #define HTIOP_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HTIOP_Export.h"
 
@@ -89,5 +89,5 @@ namespace TAO
 ACE_STATIC_SVC_DECLARE_EXPORT (HTIOP, TAO_HTIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (HTIOP, TAO_HTIOP_Protocol_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* HTIOP_FACTORY_H */
