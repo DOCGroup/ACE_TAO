@@ -138,20 +138,6 @@ ACE_Allocator_Adapter<MALLOC>::sync (void *addr, size_t len, int flags)
   return this->allocator_.sync (addr, len, flags);
 }
 
-template <class MALLOC> ACE_INLINE int
-ACE_Allocator_Adapter<MALLOC>::protect (ssize_t len, int flags)
-{
-  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::protect");
-  return this->allocator_.protect (len, flags);
-}
-
-template <class MALLOC> ACE_INLINE int
-ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
-{
-  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::protect");
-  return this->allocator_.protect (addr, len, flags);
-}
-
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE ACE_MEM_POOL &
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::memory_pool (void)
 {
