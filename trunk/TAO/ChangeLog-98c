@@ -3,6 +3,11 @@ Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Simulator/{Event_Supplier,DOVEMIB}/Makefile:
           cleaned up to work on both Solaris and VxWorks.
 
+        * orbsvcs/tests/Simulator/DOVEBrowser/Makefile: added.
+
+        * orbsvcs/tests/Simulator/Makefile,README: added DOVEBrowser
+          module to top-level Simulator Makefile.
+
         * orbsvcs/tests/Simulator/DOVEMIB}/AnyAnalyser.cpp (analyze):
           removed unused variable "size".  ghs complained that it
           was defined but not used.
