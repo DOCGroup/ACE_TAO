@@ -322,7 +322,7 @@ operator= (const TAO_Unbounded_Object_Sequence<T,T_var> &rhs)
 template <class T, class T_var> T **
 TAO_Unbounded_Object_Sequence<T,T_var>::allocbuf (CORBA::ULong nelems)
 {
-  T **buf;
+  T **buf = 0;
 
   ACE_NEW_RETURN (buf, T*[nelems], 0);
 
@@ -484,7 +484,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator=
 template <class T, class T_var, size_t MAX> T **
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::allocbuf (CORBA::ULong)
 {
-  T **buf;
+  T **buf = 0;
 
   ACE_NEW_RETURN (buf, T*[MAX], 0);
 
@@ -636,7 +636,7 @@ operator= (const TAO_Unbounded_Pseudo_Sequence<T,T_var> &rhs)
 template <class T, class T_var> T **
 TAO_Unbounded_Pseudo_Sequence<T,T_var>::allocbuf (CORBA::ULong nelems)
 {
-  T **buf;
+  T **buf = 0;
 
   ACE_NEW_RETURN (buf, T*[nelems], 0);
 
@@ -664,7 +664,7 @@ TAO_Unbounded_Pseudo_Sequence<T,T_var>::freebuf (T **buffer)
   // Mark the length in the first four bytes? For the moment we let
   // that be.
 
-  delete[] buffer;
+  delete [] buffer;
 }
 
 template<class T, class T_var> void
@@ -780,7 +780,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator=
 template <class T, class T_var, size_t MAX> T **
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::allocbuf (CORBA::ULong)
 {
-  T **buf;
+  T **buf = 0;
 
   ACE_NEW_RETURN (buf, T*[MAX], 0);
 
@@ -913,7 +913,7 @@ TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong slot) const
 template<size_t MAX> char **
 TAO_Bounded_String_Sequence<MAX>::allocbuf (CORBA::ULong)
 {
-  char **buf;
+  char **buf = 0;
 
   ACE_NEW_RETURN (buf, char *[MAX], 0);
 

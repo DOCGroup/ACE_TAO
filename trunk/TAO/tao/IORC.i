@@ -350,7 +350,7 @@ TAO_IOP::TAO_IOR_Manipulation_out::operator-> (void)
   ACE_INLINE CORBA::Object **
   TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::allocbuf (CORBA::ULong nelems)
   {
-    CORBA::Object **buf;
+    CORBA::Object **buf = 0;
 
     ACE_NEW_RETURN (buf, CORBA::Object*[nelems], 0);
 
