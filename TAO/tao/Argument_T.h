@@ -29,7 +29,8 @@ namespace TAO
    * @class Const_Argument_T
    *
    * @brief Type-specific base class subclassed by stub and skeleton
-   *        and argument class templates.
+   *        and argument class templates that have a @c const @c
+   *        arg() method.
    *
    * The purpose of this class is to make it possible to
    * polymorphically retrieve an argument from either stub or skeleton
@@ -65,7 +66,7 @@ namespace TAO
    * since that would be parameter type for the corresponding C++
    * @c Foo::op() function.
    *
-   * @note This class template is generally only suitable for IDL "in"
+   * @note This class template is generally only suitable for IDL "@c in"
    *       parameters since they are read-only.
    *
    * @see Mutable_Argument_T
@@ -82,9 +83,17 @@ namespace TAO
   /**
    * @class Mutable_Argument_T
    *
-   * @brief
+   * @brief Type-specific base class subclassed by stub and skeleton
+   *        and argument class templates that have a non- @c const @c
+   *        arg() method.
    *
+   * This class template serves the same purpose as the
+   * @c Const_Argument_T class template except that it is suitable for
+   * argument subclasses corresponding to mutable parameters (e.g. IDL
+   * "@c inout", "@c out" and return values.  It is not meant for use
+   * with IDL "@c in" parameters.
    *
+   * @see Const_Argument_T
    */
   template <typename T>
   class Mutable_Argument_T : public Argument
