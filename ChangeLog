@@ -1,3 +1,58 @@
+Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
+
+	* THANKS:
+
+	  Added Daniel Lang <dl@leo.org> to the list of contributors.
+
+	* acconfig.h (ACE_HAS_ALT_CUSERID):
+
+	  Added this ACE macro to the list of macros.
+
+	* configure.in:
+
+	  Thanks to Daniel Lang <dl@leo.org> for motivating the following
+	  ACE+autoconf related FreeBSD 4 fixes.
+
+	  (ACE_LACKS_SEMBUF_T):
+
+	  Improved the test for this macro by including <sys/types.h> and
+	  <sys/ipc.h> prior to <sys/sem.h>.   It incorrectly failed on
+	  FreeBSD.  Presumably this change should correct the problem.
+
+	  (ACE_HAS_ALT_CUSERID):
+
+	  Added test for this macro.  It should get defined for platforms
+	  that lack support for or have deprecated support for the
+	  cuserid() function, and have POSIX password file functions.
+
+	  (ACE_LACKS_PWD_FUNCTIONS):
+
+	  Added getpwuid() to list of functions necessary for
+	  ACE_LACKS_PWD_FUNCTIONS to *not* be defined.
+
+	  (ACE_LACKS_PTHREAD_CANCEL):
+
+	  Added check for the pthread_cancel() prototype.  If it doesn't
+	  exist then don't use pthread_cancel(), i.e. define
+	  ACE_LACKS_PTHREAD_CANCEL.  It it probably a bad idea to create a
+	  prototype for pthread_cancel in ACE, so just don't use
+	  pthread_cancel().  FreeBSD 4 appears to have the
+	  pthread_cancel() function but no prototype for it.
+
+	* ace/OS.i (cuserid):
+
+	  Changed Linux implementation so that it can be used for other
+	  platforms by simply defining ACE_HAS_ALT_CUSERID.
+
+	  Added preprocessor error if ACE_HAS_ALT_CUSERID and
+	  ACE_LACKS_PWD_FUNCTIONS are both defined.  ACE's alternate
+	  cuserid() implementation requires that password file related
+	  functions exist.
+
+	* m4/acinclude.m4:
+
+	  Cosmetic updates.
+
 Tue Jan 18 22:53:18 2000  Toshio HORI <toshi@etl.go.jp>
 
         * include/makeinclude/platform_vxworks_5.x_g++.GNU:
