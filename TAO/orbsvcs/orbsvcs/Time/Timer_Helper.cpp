@@ -1,9 +1,12 @@
-// -*- C++ -*-
-// $Id$
-
 #include "Timer_Helper.h"
 #include "TAO_Time_Service_Clerk.h"
 #include "ace/OS.h"
+
+
+ACE_RCSID (Time,
+           Timer_Helper,
+           "$Id$")
+
 
 // Constructor.
 Timer_Helper::Timer_Helper (void)
@@ -36,7 +39,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 #if defined (ACE_LACKS_LONGLONG_T)
   CORBA::ULongLong lowest_time (0xFFFFFFFF, 0xFFFFFFFF);
 #else
-  CORBA::ULongLong lowest_time = ACE_UINT64_LITERAL(0xFFFFFFFFFFFFFFFF);
+  CORBA::ULongLong lowest_time = ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF);
 #endif
 
   CORBA::ULongLong highest_time  = 0;
@@ -49,14 +52,12 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
            server_iterator.next (value) != 0;
            server_iterator.advance ())
         {
-
           // This is a remote call.
           CosTime::UTO_var UTO_server =
             (*value)->universal_time (ACE_ENV_SINGLE_ARG_PARAMETER);
-
           ACE_TRY_CHECK;
 
-          #if defined (ACE_LACKS_LONGLONG_T)
+#if defined (ACE_LACKS_LONGLONG_T)
 
           ACE_DEBUG ((LM_DEBUG,
                       "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
@@ -69,7 +70,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
                       (UTO_server->utc_time ()).inacchi,
                       (UTO_server->utc_time ()).tdf));
 
-          #else
+#else
 
           ACE_DEBUG ((LM_DEBUG,
                       "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
@@ -81,9 +82,10 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
                       (UTO_server->utc_time ()).inacclo,
                       (UTO_server->utc_time ()).inacchi,
                       (UTO_server->utc_time ()).tdf));
-          #endif
+#endif
 
-          CORBA::ULongLong curr_server_time = UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER);
+          CORBA::ULongLong curr_server_time =
+            UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           sum += curr_server_time;
@@ -121,19 +123,22 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
       else
         clerk_->inaccuracy (0);
 
+      const ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
+
       // Record the current time in a timestamp to know when global
       // updation of time was done.
-      clerk_->update_timestamp_ = ACE_static_cast (CORBA::ULongLong,
-                                                   ACE_OS::gettimeofday ().sec ()) *
-                                  ACE_static_cast (ACE_UINT32,
-                                                   10000000) +
-                                  ACE_static_cast (CORBA::ULongLong,
-                                                   ACE_OS::gettimeofday ().usec () * 10);
-
+      clerk_->update_timestamp_ =
+        ACE_static_cast (CORBA::ULongLong,
+                         timeofday.sec ()) *
+        ACE_static_cast (ACE_UINT32,
+                         10000000) +
+        ACE_static_cast (CORBA::ULongLong,
+                         timeofday.usec () * 10);
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in the handle_timeout ()\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in the handle_timeout ()\n");
       return -1;
     }
   ACE_ENDTRY;
