@@ -18,7 +18,7 @@ FTRT_ClientORB_Initializer::FTRT_ClientORB_Initializer (int transaction_depth)
 void
 FTRT_ClientORB_Initializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
