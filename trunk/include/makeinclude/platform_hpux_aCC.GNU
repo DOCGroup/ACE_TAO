@@ -98,7 +98,7 @@ endif
 # errors by quickly scanning the output. 829 is suppressed because the
 # system headers have offending string literals assigned to char *.
 ifeq ($(word 2,$(HPVERS_WORDS)), 10)
-CCFLAGS         += +W495,667,829
+CCFLAGS         += +W495,667,829,908
 endif
 DCCFLAGS	+= -g
 DLD		= $(CXX) $(CCFLAGS)
