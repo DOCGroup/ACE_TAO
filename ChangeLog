@@ -1,3 +1,14 @@
+Fri May  7 09:11:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_Export.h:
+          Removed this file, with the rework in ACE_OS the ACE_OS_Export has
+          been deprecated and not used. This file is only used in the ACE
+          library itself and not by users, so it is safe to remove this.
+
+        * ace/ace.mpc:
+        * ace/config-win32-ghs.h:
+          Removed usage of ACE_OS_BUILD_DLL and ACE_OS_HAS_DLL
+
 Thu May  6 22:15:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/taoidldefaults.mpb:
