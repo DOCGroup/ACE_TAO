@@ -162,7 +162,7 @@ public:
   // retrieve the fully qualified collocated class name.
 
   // end of overridden methods
-private:
+protected:
 
   const char *prefix_;
   // The prefix to the interface
