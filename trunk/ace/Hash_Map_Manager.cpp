@@ -145,13 +145,13 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
               temp_ptr = temp_ptr->next_;
 
-              // Explicitly call the destructor.
-              hold_ptr->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
-              this->allocator_->free (hold_ptr);
+              ACE_DES_FREE_TEMPLATE (hold_ptr, this->allocator_->free,
+                                     ACE_Hash_Map_Entry, <EXT_ID, INT_ID>);
             }
           // Now deal with the sentinal
           // Explicitly call the destructor.
-          this->table_[i].ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
+          ACE_DES_NOFREE_TEMPLATE (&table[i], ACE_Hash_Map_Entry,
+                                   <EXIT_ID, INT_ID>);
         }
 
       // Free table memory
