@@ -348,8 +348,8 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                     }
                   else if (valueType == BINARY)
                     {
-                      void* thisData;
-                      void* rhsData;
+                      void* thisData = 0;
+                      void* rhsData = 0;
                       u_int thisLength, rhsLength;
                       if (nonconst_this->get_binary_value (thisSection,
                                                            valueName.c_str (),
@@ -383,6 +383,9 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                               rc = (* (thisCharData + count) == * (rhsCharData + count));
                             }
                         }// end if the length's match
+
+                      delete[] thisData;
+                      delete[] rhsData;
                     }
                   // We should never have valueTypes of INVALID, therefore
                   // we're not comparing them.  How would we since we have
@@ -768,7 +771,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
 
   ACE_TCHAR *temp = 0;
   ACE_NEW_RETURN (temp,
-                  ACE_TCHAR[buffer_length], 
+                  ACE_TCHAR[buffer_length],
                   0);
 
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (temp);
