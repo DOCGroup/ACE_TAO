@@ -48,8 +48,6 @@
 // The HP/UX compiler doesn't support volatile!!!!
 #  define volatile
 
-#  define ACE_LACKS_SIGNED_CHAR
-
 #else  // aC++ definitions
 
 // Compiler can't handle calls like foo->operator T *()
@@ -78,6 +76,9 @@
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
+// Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
+#define ACE_LACKS_SIGNED_CHAR
 
 #include "ace/config-hpux-10.x.h"	/* OS information */
 
