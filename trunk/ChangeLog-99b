@@ -1,3 +1,14 @@
+Tue Apr  6 14:17:06 1999  Joe Hoffert  <joeh@tango.cs.wustl.edu>
+
+	* ace/OS.h: Added support for the FORE ATM XTI interface.
+
+	* ace/TLI_{Acceptor,Connector}: Added support for the FORE ATM XTI
+ 	  interface.
+
+	* ace/ATM_Addr: Added support for ATM address for the XTI ATM
+ 	  driver.  Eventually, this class will be generalized to work on
+ 	  WinSock 2 ATM support, as well.
+
 Tue Apr 06 13:56:18 1999  Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov>
 
         * include/makeinclude/rules.local.GNU: added -f to ln -s commands,
