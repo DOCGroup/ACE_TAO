@@ -5,7 +5,7 @@
 #define TAO_TRF (this->resource_factory ())
 #define TAO_OC_RETRIEVE(member) \
   ( (this->##member##_ == 0) ? (this->##member##_ = this->resource_factory ()->get_##member ()) : (this->##member##_) )
-  
+
 ACE_INLINE void
 TAO_ORB_Core::reactor (ACE_Reactor *r)
 {
@@ -107,9 +107,11 @@ TAO_ORB_Core::poa_current (TAO_POA_Current *new_current)
 // to work better.
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-ACE_INLINE size_t
-ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
-{
-  return addr.get_ip_address () + addr.get_port_number ();
-}
+# if defined (__ACE_INLINE__)
+    ACE_INLINE size_t
+    ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
+    {
+      return addr.get_ip_address () + addr.get_port_number ();
+    }
+# endif /* __ACE_INLINE__ */
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
