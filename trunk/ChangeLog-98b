@@ -1,3 +1,8 @@
+Thu Aug 06 14:11:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Message_Queue_T.i (is_empty_i): Reverted the changes of
+	  r4.3.  '&&' is the right condition.
+
 Thu Aug  6 09:41:22 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* ace/ARGV.{h,cpp} : Added a new
