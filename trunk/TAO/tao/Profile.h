@@ -96,6 +96,13 @@ public:
    * In almost all cases, this is TAO_Target_Specification::Key_Addr.
    */
   CORBA::Short addressing_mode (void) const;
+
+  /// @@ deprecated. return a reference to the Object Key.
+  const TAO::ObjectKey &object_key (void) const;
+
+  /// Obtain the object key, return 0 if the profile cannot be parsed.
+  /// The memory is owned by the caller!
+  TAO::ObjectKey *_key (void) const;
   //@}
 
 
@@ -190,12 +197,7 @@ public:
    */
   virtual int encode_endpoints (void) = 0;
 
-  /// @@ deprecated. return a reference to the Object Key.
-  virtual const TAO::ObjectKey &object_key (void) const = 0;
 
-  /// Obtain the object key, return 0 if the profile cannot be parsed.
-  /// The memory is owned by the caller!
-  virtual TAO::ObjectKey *_key (void) const = 0;
 
   /**
    * Return pointer to this profile's endpoint.  If the profile

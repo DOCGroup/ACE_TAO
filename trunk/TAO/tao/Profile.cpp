@@ -102,6 +102,19 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
   this->tagged_components_.set_component (component);
 }
 
+TAO::ObjectKey *
+TAO_Profile::_key (void) const
+{
+  TAO::ObjectKey *key = 0;
+
+  ACE_NEW_RETURN (key,
+                  TAO::ObjectKey (this->object_key_),
+                  0);
+
+  return key;
+}
+
+
 int
 TAO_Profile::encode (TAO_OutputCDR &stream) const
 {
