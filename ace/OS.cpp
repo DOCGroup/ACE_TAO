@@ -2732,8 +2732,323 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   define  ACE_THREAD_ARGUMENT  thread_args
 # endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
+#if defined (ACE_HAS_PACE)
   ACE_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
+  {
+    ACE_NEW_RETURN (thread_args,
+                    ACE_Thread_Adapter (func, args,
+                                        (ACE_THR_C_FUNC) ace_thread_adapter),
+                    -1);
+  }
+  else
+    thread_args = thread_adapter;
+
+# if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+  if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+    stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
+# endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+
+  ACE_thread_t tmp_thr;
+
+  if (thr_id == 0)
+    thr_id = &tmp_thr;
+
+  ACE_hthread_t tmp_handle;
+  if (thr_handle == 0)
+    thr_handle = &tmp_handle;
+
+  int result;
+  pace_pthread_attr_t attr;
+  if (::pace_pthread_attr_init (&attr) != 0)
+    return -1;
+
+  if (stacksize != 0)
+  {
+    size_t size = stacksize;
+#   if defined (PACE_PTHREAD_STACK_MIN)
+      if (size < ACE_static_cast (pace_size_t, PACE_PTHREAD_STACK_MIN))
+       size = PACE_PTHREAD_STACK_MIN;
+#   endif /* PACE_PTHREAD_STACK_MIN */
+
+    if (ACE_ADAPT_RETVAL(::pace_pthread_attr_setstacksize (&attr, size), result) == -1)
+    {
+      ::pace_pthread_attr_destroy (&attr);
+      return -1;
+    }
+  }
+
+  // *** Set Stack Address
+  if (stack != 0)
+  {
+    if (::pace_pthread_attr_setstackaddr (&attr, stack) != 0)
+    {
+      ::pace_pthread_attr_destroy (&attr);
+      return -1;
+    }
+  }
+
+  // *** Deal with various attributes
+  if (flags != 0)
+  {
+    // *** Set Detach state
+    if (ACE_BIT_ENABLED (flags, THR_DETACHED)
+        || ACE_BIT_ENABLED (flags, THR_JOINABLE))
+    {
+      int dstate = PACE_PTHREAD_CREATE_JOINABLE;
+
+      if (ACE_BIT_ENABLED (flags, THR_DETACHED))
+        dstate = PACE_PTHREAD_CREATE_DETACHED;
+      if (ACE_ADAPT_RETVAL(::pace_pthread_attr_setdetachstate (&attr, dstate),
+                           result) != 0)
+      {
+        ::pace_pthread_attr_destroy (&attr);
+        return -1;
+      }
+    }
+
+    // *** Set Policy
+    // If we wish to set the priority explicitly, we have to enable
+    // explicit scheduling, and a policy, too.
+    if (priority != ACE_DEFAULT_THREAD_PRIORITY)
+    {
+      ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
+      if (ACE_BIT_DISABLED (flags, THR_SCHED_FIFO)
+          && ACE_BIT_DISABLED (flags, THR_SCHED_RR)
+          && ACE_BIT_DISABLED (flags, THR_SCHED_DEFAULT))
+        ACE_SET_BITS (flags, THR_SCHED_DEFAULT);
+    }
+
+    if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
+        || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
+        || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
+      {
+        int spolicy;
+
+#       if defined (ACE_HAS_ONLY_SCHED_OTHER)
+          // SunOS, thru version 5.6, only supports SCHED_OTHER.
+            spolicy = SCHED_OTHER;
+#       else
+            // Make sure to enable explicit scheduling, in case we didn't
+            // enable it above (for non-default priority).
+          ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
+
+          if (ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
+            spolicy = SCHED_OTHER;
+          else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
+            spolicy = SCHED_FIFO;
+#         if defined (SCHED_IO)
+          else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
+            spolicy = SCHED_IO;
+#         else
+          else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
+            {
+              errno = ENOSYS;
+              return -1;
+            }
+#         endif /* SCHED_IO */
+          else
+            spolicy = SCHED_RR;
+
+          ACE_ADAPT_RETVAL(::pace_pthread_attr_setschedpolicy (&attr, spolicy),
+                           result);
+          if (result != 0)
+          {
+            ::pace_pthread_attr_destroy (&attr);
+            return -1;
+          }
+      }
+
+    // *** Set Priority (use reasonable default priorities)
+#   if defined(ACE_HAS_PTHREADS_STD)
+    // If we wish to explicitly set a scheduling policy, we also
+    // have to specify a priority.  We choose a "middle" priority as
+    // default.  Maybe this is also necessary on other POSIX'ish
+    // implementations?
+    if ((ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
+         || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
+         || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
+        && priority == ACE_DEFAULT_THREAD_PRIORITY)
+    {
+      if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
+        priority = ACE_THR_PRI_FIFO_DEF;
+      else if (ACE_BIT_ENABLED (flags, THR_SCHED_RR))
+        priority = ACE_THR_PRI_RR_DEF;
+      else // THR_SCHED_DEFAULT
+        priority = ACE_THR_PRI_OTHER_DEF;
+    }
+#   endif /* ACE_HAS_PTHREADS_STD */
+    if (priority != ACE_DEFAULT_THREAD_PRIORITY)
+    {
+      pace_sched_param sparam;
+      ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
+      // The following code forces priority into range.
+      if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
+        sparam.sched_priority =
+          ACE_MIN (ACE_THR_PRI_FIFO_MAX,
+                   ACE_MAX (ACE_THR_PRI_FIFO_MIN, priority));
+      else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
+        sparam.sched_priority =
+          ACE_MIN (ACE_THR_PRI_RR_MAX,
+                   ACE_MAX (ACE_THR_PRI_RR_MIN, priority));
+      else // Default policy, whether set or not
+        sparam.sched_priority =
+          ACE_MIN (ACE_THR_PRI_OTHER_MAX,
+                   ACE_MAX (ACE_THR_PRI_OTHER_MIN, priority));
+#     if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
+      // SunOS, through 5.6, POSIX only allows priorities > 0 to
+      // ::pthread_attr_setschedparam.  If a priority of 0 was
+      // requested, set the thread priority after creating it, below.
+      if (priority > 0)
+#     endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
+      {
+        ACE_ADAPT_RETVAL(::pace_pthread_attr_setschedparam (&attr, &sparam),
+                         result);
+        if (result != 0)
+        {
+          ::pace_pthread_attr_destroy (&attr);
+          return -1;
+        }
+      }
+    }
+
+    if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
+        || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
+    {
+      int sched = PTHREAD_EXPLICIT_SCHED;
+      if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
+        sched = PTHREAD_INHERIT_SCHED;
+      if (::pace_pthread_attr_setinheritsched (&attr, sched) != 0)
+      {
+        ::pace_pthread_attr_destroy (&attr);
+        return -1;
+      }
+    }
+
+    // *** Set Scope
+#   if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
+    if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
+        || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
+    {
+      int scope = PTHREAD_SCOPE_PROCESS;
+      if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
+        scope = PTHREAD_SCOPE_SYSTEM;
+
+      if (::pace_pthread_attr_setscope (&attr, scope) != 0)
+      {
+        ::pace_pthread_attr_destroy (&attr);
+        return -1;
+      }
+    }
+#   endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
+
+    if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
+    {
+      // Increment the number of LWPs by one to emulate the
+      // SunOS semantics.
+      int lwps = ACE_OS::thr_getconcurrency ();
+      if (lwps == -1)
+      {
+        if (errno == ENOTSUP)
+        {
+          // Suppress the ENOTSUP because it's harmless.
+          errno = 0;
+        }
+        else
+        {
+          // This should never happen on SunOS:
+          // ::thr_getconcurrency () should always succeed.
+          return -1;
+        }
+      }
+      else
+      {
+        if (ACE_OS::thr_setconcurrency (lwps + 1) == -1)
+        {
+          if (errno == ENOTSUP)
+          {
+            // Unlikely:  ::thr_getconcurrency () is supported but
+            // ::thr_setconcurrency () is not?
+          }
+          else
+          {
+            return -1;
+          }
+        }
+      }
+    }
+  }
+
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pace_pthread_create (thr_id,
+                                                       &attr,
+                                                       thread_args->entry_point (),
+                                                       thread_args),
+                                result),
+              int, -1, result);
+  ::pace_pthread_attr_destroy (&attr);
+# endif /* ACE_HAS_PTHREADS_DRAFT4 */
+
+  // This is a SunOS or POSIX implementation of pthreads,
+  // where we assume that ACE_thread_t and ACE_hthread_t are the same.
+  // If this *isn't* correct on some platform, please let us know.
+  if (result != -1)
+    *thr_handle = *thr_id;
+
+# if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
+  // SunOS prior to 5.7:
+
+  // If the priority is 0, then we might have to set it now
+  // because we couldn't set it with
+  // ::pthread_attr_setschedparam, as noted above.  This doesn't
+  // provide strictly correct behavior, because the thread was
+  // created (above) with the priority of its parent.  (That
+  // applies regardless of the inherit_sched attribute: if it
+  // was PTHREAD_INHERIT_SCHED, then it certainly inherited its
+  // parent's priority.  If it was PTHREAD_EXPLICIT_SCHED, then
+  // "attr" was initialized by the SunOS ::pthread_attr_init
+  // () to contain NULL for the priority, which indicated to
+  // SunOS ::pthread_create () to inherit the parent
+  // priority.)
+  if (priority == 0)
+  {
+    // Check the priority of this thread, which is the parent
+    // of the newly created thread.  If it is 0, then the
+    // newly created thread will have inherited the priority
+    // of 0, so there's no need to explicitly set it.
+    struct sched_param sparam;
+    int policy = 0;
+    ACE_OSCALL (ACE_ADAPT_RETVAL (::pace_pthread_getschedparam (thr_self (),
+                                                                &policy,
+                                                                &sparam),
+                                  result), int,
+                -1, result);
+
+    // The only policy supported by by SunOS, thru version 5.6,
+    // is SCHED_OTHER, so that's hard-coded here.
+    policy = ACE_SCHED_OTHER;
+
+    if (sparam.sched_priority != 0)
+    {
+      ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
+      // The memset to 0 sets the priority to 0, so we don't need
+      // to explicitly set sparam.sched_priority.
+
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setschedparam (
+                                                                         *thr_id,
+                                                                         policy,
+                                                                         &sparam),
+                                           result),
+                         int, -1);
+    }
+  }
+# endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
+  return result;
+
+#else /* ACE_HAS_PACE */
+
+  ACE_Thread_Adapter *thread_args;
+  if (thread_adapter == 0)
+
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_Thread_Adapter (func, args,
@@ -3557,13 +3872,16 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_UNUSED_ARG (stacksize);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_PACE */
 }
 
 void
 ACE_OS::thr_exit (void *status)
 {
-ACE_TRACE ("ACE_OS::thr_exit");
-# if defined (ACE_HAS_THREADS)
+  ACE_TRACE ("ACE_OS::thr_exit");
+#if defined (ACE_HAS_PACE)
+  ::pace_pthread_exit (status);
+# elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
     ::pthread_exit (status);
 #   elif defined (ACE_HAS_STHREADS)
@@ -3632,7 +3950,7 @@ ACE_TRACE ("ACE_OS::thr_exit");
 #   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (status);
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_PACE */
 }
 
 int
@@ -3742,7 +4060,11 @@ int
 ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 {
   // ACE_TRACE ("ACE_OS::thr_setspecific");
-# if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_PACE)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setspecific (key, data),
+                                       ace_result_),
+                     int, -1);
+# elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     ACE_KEY_INDEX (key_index, key);
 
@@ -3801,14 +4123,20 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_PACE */
 }
 
 int
 ACE_OS::thr_keyfree (ACE_thread_key_t key)
 {
-ACE_TRACE ("ACE_OS::thr_keyfree");
-# if defined (ACE_HAS_THREADS)
+  ACE_TRACE ("ACE_OS::thr_keyfree");
+# if defined (ACE_HAS_PACE)
+#   if defined (ACE_HAS_TSS_EMULATION)
+    return ACE_TSS_Cleanup::instance ()->remove (key);
+#   else
+    return ::pace_pthread_key_delete (key);
+#   endif /* AACE_HAS_TSS_EMULATION */
+# elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     return ACE_TSS_Cleanup::instance ()->remove (key);
 #   elif defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
@@ -3838,7 +4166,7 @@ ACE_TRACE ("ACE_OS::thr_keyfree");
 # else
   ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_PACE */
 }
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -3852,7 +4180,12 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
                        void *inst)
 {
     // ACE_TRACE ("ACE_OS::thr_keycreate");
-#   if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_PACE)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
+                                       ace_result_),
+                     int, -1);
+
+#   elif defined (ACE_HAS_THREADS)
 #     if defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
 
@@ -3893,7 +4226,7 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
   ACE_UNUSED_ARG (dest);
   ACE_UNUSED_ARG (inst);
   ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_THREADS */
+#   endif /* ACE_HAS_PACE */
 }
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
@@ -3907,7 +4240,28 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
                        void *inst)
 {
   // ACE_TRACE ("ACE_OS::thr_keycreate");
-# if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_PACE)
+# if defined (ACE_HAS_TSS_EMULATION)
+  if (ACE_TSS_Emulation::next_key (*key) == 0)
+  {
+    ACE_TSS_Emulation::tss_destructor (*key, dest);
+
+    // Extract out the thread-specific table instance and stash away
+    // the key and destructor so that we can free it up later on...
+    return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);
+  }
+  else
+  {
+    errno = EAGAIN;
+    return -1;
+  }
+# else
+  ACE_UNUSED_ARG (inst);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
+                                       ace_result_),
+                     int, -1);
+# endif /* ACE_HAS_TSS_EMULATION */
+# elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     if (ACE_TSS_Emulation::next_key (*key) == 0)
       {
@@ -3983,7 +4337,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
   ACE_UNUSED_ARG (dest);
   ACE_UNUSED_ARG (inst);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_PACE */
 }
 
 int
