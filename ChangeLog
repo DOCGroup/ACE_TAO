@@ -1,3 +1,12 @@
+Fri May 10 12:19:59 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* netsvc/clients/Naming/Client/Client_Test.cpp:
+	* examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
+	* examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
+	* examples/Map_Manager/test_hash_map_manager.cpp:
+
+	  Changed assert to ACE_ASSERT.
+
 Fri May 10 10:52:50 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/os_include/signal.h:

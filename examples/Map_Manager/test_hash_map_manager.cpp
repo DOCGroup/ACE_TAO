@@ -53,8 +53,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_TString name (key);
           ACE_TString value;
-          assert (hash.find (name, value) != -1);
-          assert (name == value);
+          ACE_ASSERT (hash.find (name, value) != -1);
+          ACE_ASSERT (name == value);
         }
 
       if (!ACE_OS::freopen (argv[3], ACE_TEXT("r"), stdin))
@@ -63,10 +63,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       while (ACE_OS::fgets (key, sizeof key, stdin))
         {
           ACE_TString string (key);
-          assert (hash.unbind (string) != -1);
+          ACE_ASSERT (hash.unbind (string) != -1);
         }
 
-      assert (hash.current_size () == 0);
+      ACE_ASSERT (hash.current_size () == 0);
 
       fclose (stdin);
     }

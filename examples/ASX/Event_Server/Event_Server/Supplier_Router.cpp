@@ -10,7 +10,7 @@ ACE_RCSID(Event_Server, Supplier_Router, "$Id$")
 int 
 Supplier_Router::svc (void)
 {
-  assert (this->is_writer ());
+  ACE_ASSERT (this->is_writer ());
 
   ACE_DEBUG ((LM_DEBUG, "(%t) starting svc in Supplier_Router\n"));
 

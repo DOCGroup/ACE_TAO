@@ -59,7 +59,7 @@ Consumer_Router::close (u_long)
 int 
 Consumer_Router::svc (void)
 {
-  assert (this->is_writer ());
+  ACE_ASSERT (this->is_writer ());
 
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) starting svc in Consumer_Router\n"));
