@@ -294,6 +294,11 @@ ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
     data_block_allocator;
   this->message_block_allocator_ =
     message_block_allocator;
+
+  if (this->cont () != 0)
+    this->cont ()->reset_allocators (allocator_strategy,
+                                     data_block_allocator,
+                                     message_block_allocator);
 }
 
 ACE_INLINE char *
