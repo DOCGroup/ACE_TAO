@@ -1,3 +1,8 @@
+Fri Feb 13 23:17:40 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* ace/OS.h (ACE_MAX_DGRAM_SIZE): Moved the #define
+ 	ACE_MAX_DGRAM_SIZE from the PSOS specific part of OS.h.
+
 Fri Feb 13 19:25:55 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Log_Record.cpp (ACE_Log_Record): Changed the "set" method
