@@ -270,6 +270,18 @@ protected:
   // ACE_Time_Value::zero is passed - it checks the state once but doesn't
   // wait after that.
 
+  virtual void stop_requested (DWORD control_code);
+  // Called by handle_control () when a stop/shutdown was requested.
+
+  virtual void pause_requested (DWORD control_code);
+  // Called by handle_control () when a pause was requested.
+
+  virtual void continue_requested (DWORD control_code);
+  // Called by handle_control () when a continue was requested.
+
+  virtual void interrogate_requested (DWORD control_code);
+  // Called by handle_control () when a interrogate was requested.
+
 protected:
   DWORD                  start_time_;   // Estimate of init time needed
   SERVICE_STATUS_HANDLE  svc_handle_;   // Service handle - doesn't need close.

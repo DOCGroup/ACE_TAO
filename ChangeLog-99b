@@ -1,3 +1,12 @@
+Mon Mar  8 17:35:04 1999  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* ace/NT_Service.cpp: 
+	* ace/NT_Service.h: 
+	  Now the handle_control method calls separate protected virtual
+	  methods to do its work. That way, it is easier to override what
+	  must be done on each case, just by overriding one of the new
+	  methods.
+
 Mon Mar 08 15:41:08 1999  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux.GNU: Added -DACE_LACKS_PRAGMA_ONCE.
