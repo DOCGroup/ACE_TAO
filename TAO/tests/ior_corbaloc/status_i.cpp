@@ -1,16 +1,14 @@
 // $Id$
 
-//
-
 #include "status_i.h"
 
-corbaloc_Status_i::corbaloc_Status_i (CORBA::Environment & = TAO_default_environment())
+corbaloc_Status_i::corbaloc_Status_i (CORBA::Environment &)
 {
   // Constructor
 }
 
 CORBA::Boolean
-corbaloc_Status_i::print_status (CORBA::Environment & = TAO_default_environment())
+corbaloc_Status_i::print_status (CORBA::Environment &)
   throw (CORBA::SystemException)
 {
 

@@ -1,3 +1,12 @@
+Tue Mar  6 21:22:51 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ior_corbaloc/status_i.cpp: 
+	  The default arguments were also set in the implementation file. 
+	  Corrected it.
+
+	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
+	  for reporting this.
+	
 Tue Mar  6 21:21:45 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/IIOP_Acceptor.h (port_span_): Added data member to track the
@@ -349,6 +358,11 @@ Mon Mar  5 18:40:58 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/AMI/server.cpp:
           Fixed misuse of ACE_CHECK_RETURN
 
+Mon Mar  5 14:21:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Strategies/server.cpp : 
+	  Added ACE_TRY_ENV parameter to resolve_initial_references call.
+
 Mon Mar 05 20:29:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Collocation/Coll_Tester.cpp (init): Adding missing
@@ -367,6 +381,7 @@ Mon Mar  5 14:21:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
         * tests/Strategies/server.cpp :
           Added ACE_TRY_ENV parameter to resolve_initial_references call.
 
+>>>>>>> 1.2719
 Mon Mar  5 14:21:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Container_i.cpp:
