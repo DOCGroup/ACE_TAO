@@ -149,7 +149,7 @@ Leader_Follower_Task::svc (void)
           // Process message here.
           //
 
-          for (int j = 0; j < message_size; ++j)
+          for (size_t j = 0; j < message_size; ++j)
             {
               // Eat a little CPU
               /* takes about 40.2 usecs on a 167 MHz Ultra2 */
@@ -244,6 +244,12 @@ main (int argc, ASYS_TCHAR *argv[])
                   Leader_Follower_Task *[number_of_threads],
                   -1);
 
+  int priority =
+    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
+     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+
+  long flags = THR_BOUND | THR_SCHED_FIFO;
+
   // Create and activate them.
   size_t i;
   for (i = 0; i < number_of_threads; ++i)
@@ -254,10 +260,23 @@ main (int argc, ASYS_TCHAR *argv[])
                       -1);
 
       // Activate the leader_followers.
-      result = leader_followers[i]->activate (THR_BOUND);
+      result = leader_followers[i]->activate (flags,
+                                              1,
+                                              1,
+                                              priority);
       if (result != 0)
         {
-          return result;
+          flags = THR_BOUND;
+          priority = ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
+                                                     ACE_SCOPE_THREAD);
+          result = leader_followers[i]->activate (flags,
+                                                  1,
+                                                  1,
+                                                  priority);
+          if (result != 0)
+            {
+              return result;
+            }
         }
     }
 
