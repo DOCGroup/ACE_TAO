@@ -6,10 +6,13 @@
 #include "Base_Server.h"
 #include "AMH_Servant.h"
 
-char *
-usage ()
+void
+usage (char *message)
 {
-  return "invoke as: mt_server -o <ior_output_file> \n -n <num_threads>\n -s <sleep_time (in microseconds)> \n";
+  static const char * usage = 
+  "invoke as: mt_server -o <ior_output_file> \n -n <num_threads>\n -s <sleep_time (in microseconds)> \n";
+
+  ACE_ERROR ((LM_ERROR, "%s : %s", message, usage));
 }
 
 class MT_AMH_Server
@@ -29,7 +32,7 @@ public:
     // Let the base server parse it's argumrents first
     if (Base_Server::parse_args () != 1)
       {
-        ACE_ERROR ((LM_ERROR, "%s", usage ()));
+        usage (ACE_const_cast (char *, ""));
         ACE_OS::exit (1);
       }
 
@@ -96,20 +99,18 @@ main (int argc, char *argv[])
 
   if (amh_server.parse_args () != 1)
     {
-        ACE_ERROR ((LM_ERROR, "%s", usage ()));
+        usage (ACE_const_cast (char*, ""));
         ACE_OS::exit (1);
     }
 
-  AMH_Servant *servant = new AMH_Servant (amh_server.orb ());
+  AMH_Servant servant (amh_server.orb ());
 
-  if (servant->parse_args (&argc, argv) != 1)
+  if (servant.parse_args (&argc, argv) != 1)
     {
-        ACE_ERROR ((LM_ERROR, "%s : %s", "sleep time unspecified", usage ()));
+        usage (ACE_const_cast (char*, "sleep time unspecified"));
         ACE_OS::exit (1);
     }
 
-  // Server takes over memory responsibility for servant,
-  // no need to deallocate it at end
-  amh_server.register_servant (servant);
+  amh_server.register_servant (&servant);
   amh_server.start_threads ();
 }

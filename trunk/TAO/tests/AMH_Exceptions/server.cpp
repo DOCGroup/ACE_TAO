@@ -55,7 +55,6 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG, "Throwing exception\n"));
       _tao_rh->test_method_excep (&holder ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -117,14 +116,12 @@ private:
 ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_ (ACE_OS::strdup ("test.ior"))
 {
+  this->ior_output_file_ = ACE_const_cast (char*, "test.ior");
 }
 
 ST_AMH_Server::~ST_AMH_Server ()
 {
-  delete this->ior_output_file_;
-
   ACE_TRY_NEW_ENV
     {
       this->root_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
