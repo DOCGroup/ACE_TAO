@@ -76,7 +76,7 @@ TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::equivalent_i (
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (tc_kind != static_cast<CORBA::TCKind> (Objref_Traits<Kind>::kind))
+  if (tc_kind != Kind)
     return 0;
 
   char const * const this_id = this->attributes_.id ();
@@ -94,7 +94,7 @@ CORBA::TCKind
 TAO::TypeCode::Objref<StringType, Kind, RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return static_cast<CORBA::TCKind> (Objref_Traits<Kind>::kind);
+  return Kind;
 }
 
 template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>

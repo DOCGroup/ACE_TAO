@@ -32,21 +32,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template <CORBA::TCKind KIND> struct Struct_Traits;
-
-    template <>
-    struct Struct_Traits<CORBA::tk_struct>
-    {
-      enum { kind = CORBA::tk_struct };
-    };
-
-    template <>
-    struct Struct_Traits<CORBA::tk_except>
-    {
-      enum { kind = CORBA::tk_except };
-    };
-
-
     /**
      * @class Struct
      *
