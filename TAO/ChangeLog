@@ -1,3 +1,8 @@
+Tue Oct 22 23:31:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Added proper include paths for
+	  the release builds.
+
 Tue Oct 22 18:22:24 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/Logging_Service/*/*.dsp: Fixed the project files. There
