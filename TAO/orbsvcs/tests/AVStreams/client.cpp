@@ -44,16 +44,16 @@ Client::init (int argc,
   TAO_CHECK_ENV_RETURN (env, 1);
 
   // create the local streamctrl
-  TAO_StreamCtrl *stream_ctrl = new TAO_StreamCtrl;
+  TAO_StreamCtrl *stream_ctrl = new TAO_StreamCtrl (manager_.orb ());
   this->stream_ctrl_ = stream_ctrl->_this (env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // bind to a remote mmdevice, as supplied by argc argv
-  //  this->bind_to_remote_mmdevice (argc, argv, env);
+  this->bind_to_remote_mmdevice (argc, argv, env);
 
   // create a local mmdevice for now..
-  mmdevice_impl = new TAO_MMDevice;
-  this->remote_mmdevice_ = mmdevice_impl->_this (env);
+  //  mmdevice_impl = new TAO_MMDevice;
+  //  this->remote_mmdevice_ = mmdevice_impl->_this (env);
 
   TAO_CHECK_ENV_RETURN (env, 1);
 }
@@ -62,12 +62,45 @@ Client::init (int argc,
 int
 Client::run (CORBA::Environment &env)
 {
-  AVStreams::streamQoS the_qos;
-  AVStreams::flowSpec the_flows;
+  AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
+  AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
+
+  struct AVStreams::QoS qos_list;
+  qos_list.QoSType = CORBA::string_alloc (64);
+  qos_list.QoSParams = CORBA::string_alloc (64);
+  strcpy (qos_list.QoSType, "foo");
+  strcpy (qos_list.QoSParams, "bar");
+
+  the_qos->length (1);
+  the_qos [0] = qos_list;
+
+  const char *flow_list [] =
+  {
+    "alpha",
+    "beta",
+    "gamma"
+  };
+
+  CORBA::ULong len = sizeof (flow_list)/sizeof (char *);
+
+  // set the length of the sequence
+  the_flows->length (len);
+
+
+  // now set each individual element
+  for (CORBA::ULong i=0; i < the_flows->length (); i++)
+    {
+      // generate some arbitrary string to be filled into the ith location in
+      // the sequence
+      //      char *str = gen->gen_string ();
+      //this->in_[i] = str;
+      the_flows [i] = flow_list [i];
+    }
+
   this->stream_ctrl_->bind_devs (local_mmdevice_,
                                  remote_mmdevice_,
-                                 the_qos,
-                                 the_flows,
+                                 the_qos.inout (),
+                                 the_flows.in (),
                                  env);
   TAO_CHECK_ENV_RETURN (env, 1);
   return 0;
@@ -149,7 +182,7 @@ main (int argc, char **argv)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Cubit::init");
+      TAO_TRY_ENV.print_exception ("AVStreams: client");
       return -1;
     }
   TAO_ENDTRY;
