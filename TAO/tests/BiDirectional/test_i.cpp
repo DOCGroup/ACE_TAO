@@ -48,7 +48,7 @@ Simple_Server_i::callback_object (Callback_ptr callback,
   this->callback_ = Callback::_duplicate (callback);
 }
 
-void
+int
 Simple_Server_i::call_client (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->flag_)
@@ -56,11 +56,21 @@ Simple_Server_i::call_client (CORBA::Environment &ACE_TRY_ENV)
       for (int times = 0; times < this->no_iterations_; ++times)
         {
           this->callback_->callback_method (ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (0);
+
+          TAO_ORB_Core *orb_core = this->orb_->orb_core ();
+          if (orb_core->connection_cache ().total_size () > 1)
+            ACE_ASSERT (-1);
         }
 
+      this->callback_->shutdown (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       this->flag_ = 0;
+
+      return 1;
     }
+
+  return 0;
 }
 
 
