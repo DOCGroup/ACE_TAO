@@ -1,3 +1,11 @@
+Wed Jun 18 07:35:22 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where scoped assignment additions for custom types
+          would override the values given in the Define_Custom section.
+
 Wed Jun 18 07:16:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
@@ -20,10 +28,10 @@ Wed Jun 18 03:22:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Jun 17 21:50:13 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Synch.{h,i,cpp}: Changed the ACE_Recursive_Thread_Mutex's
-	  "recursive_mutex_" data member to "lock_" so that it would work
- 	  with the ACE_Guard properly.  Thanks to Arturo Montes
- 	  <mitosys@colomsat.net.co> for this fix.
+        * ace/Synch.{h,i,cpp}: Changed the ACE_Recursive_Thread_Mutex's
+          "recursive_mutex_" data member to "lock_" so that it would work
+          with the ACE_Guard properly.  Thanks to Arturo Montes
+          <mitosys@colomsat.net.co> for this fix.
 
 Wed Jun 18 02:14:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -34,10 +42,10 @@ Wed Jun 18 02:14:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Jun 17 15:25:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Sock_Connect.cpp (get_windows_version):
-	* ace/WIN32_Asynch_IO.cpp (readv,writev): Fixed compilation errors
-	  when ACE_HAS_WINSOCK2=0.  Thanks to Raymond Hoofman
-	  <raymond@charm.nl> for submitting the patches.
+        * ace/Sock_Connect.cpp (get_windows_version):
+        * ace/WIN32_Asynch_IO.cpp (readv,writev): Fixed compilation errors
+          when ACE_HAS_WINSOCK2=0.  Thanks to Raymond Hoofman
+          <raymond@charm.nl> for submitting the patches.
 
 Tue Jun 17 18:34:39 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
