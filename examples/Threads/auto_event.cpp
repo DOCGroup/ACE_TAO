@@ -84,11 +84,11 @@ main (int argc, char **argv)
   ACE_Thread_Manager& tm = *ACE_Thread_Manager::instance ();
 
   // Create reader thread.
-  if (tm.spawn (reader, (void *) &data) == -1)
+  if (tm.spawn ((ACE_THR_FUNC) reader, (void *) &data) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for reader failed"), -1);
 
   // Create writer thread.
-  if (tm.spawn (writer, (void *) &data) == -1)
+  if (tm.spawn ((ACE_THR_FUNC) writer, (void *) &data) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for writer failed"), -1);
 
   // Wait for both.

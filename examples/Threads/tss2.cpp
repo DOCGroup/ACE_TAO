@@ -104,7 +104,7 @@ Test_Task::svc (void *arg)
 int
 Test_Task::open (void *arg)
 {
-  if (ACE_Thread::spawn (Test_Task::svc, arg) == -1)
+  if (ACE_Thread::spawn ((ACE_THR_FUNC) Test_Task::svc, arg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread::spawn"), 0);
 
   return 0;
