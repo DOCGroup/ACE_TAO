@@ -67,7 +67,6 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 int
 TAO_Connector_Registry::close_all (void)
 {
-
   TAO_ConnectorSetItor end =
                 this->connectors_.end ();
   TAO_ConnectorSetItor connector =
@@ -75,7 +74,7 @@ TAO_Connector_Registry::close_all (void)
 
   for (;
        connector != end ;
-       connector++)
+       ++connector)
     {
       if (*connector)
         (*connector)->close ();
