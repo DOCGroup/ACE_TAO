@@ -1,3 +1,9 @@
+Wed Nov 24 18:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
+          The TAO_ETCL_Literal_Constraint constructor accepts an Any*, so
+          instead of passing an Any_var, use .ptr() to pass an Any*.
+
 Wed Nov 24 08:06:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
@@ -16,7 +22,7 @@ Wed Nov 24 08:06:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 Wed Nov 24 10:02:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Made generation of POA-related includes in the skeleton header
           file, and includes of AMI and AMH related files, conditional
           depending on whether a non-local interface has been seen
