@@ -1,8 +1,12 @@
-// This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // Implementation of Named Value List and NamedValue classes
 
 #include "tao/corba.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/NVList.i"
+#endif /* ! __ACE_INLINE__ */
 
 CORBA::ULong
 CORBA_NamedValue::AddRef (void)
@@ -272,4 +276,20 @@ CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
     }
 
   return 1; // success
+}
+
+// This was inline, but didn't survive the removal of .i #includes
+// from corba.h.  env.exception wasn't known.  Maybe the circular
+// #includes between corba.h and ORB.h need to be removed.
+CORBA::NamedValue_ptr
+CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
+{
+  env.clear ();
+  if (n >= this->max_) // 0 based indexing
+    {
+      env.exception (new CORBA::TypeCode::Bounds ());
+      return 0;
+    }
+  else
+    return &this->values_ [n];
 }

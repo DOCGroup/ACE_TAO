@@ -157,4 +157,8 @@ private:
   friend class CORBA_Request;
 };
 
+#if defined (__ACE_INLINE__)
+# include "tao/NVList.i"
+#endif /* __ACE_INLINE__ */
+
 #endif /* TAO_NVLIST_H */
