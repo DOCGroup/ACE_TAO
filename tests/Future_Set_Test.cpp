@@ -404,12 +404,14 @@ template class ACE_Hash_Map_Entry<u_long_key, u_long_value>;
 template class ACE_Hash_Map_Manager_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>;
 template class ACE_Pointer_Hash<char_star_key>;
 template class ACE_Equal_To<char_star_key>;
 template class ACE_Hash_Map_Entry<char_star_key, char_star_value>;
 template class ACE_Hash_Map_Manager_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -438,12 +440,14 @@ template class ACE_Hash_Map_Iterator_Ex<char_star_key, char_star_value, ACE_Poin
 #pragma instantiate ACE_Hash_Map_Manager_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Pointer_Hash<char_star_key>
 #pragma instantiate ACE_Equal_To<char_star_key>
 #pragma instantiate ACE_Hash_Map_Entry<char_star_key, char_star_value>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
