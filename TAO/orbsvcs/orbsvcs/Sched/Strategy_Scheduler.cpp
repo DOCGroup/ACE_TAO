@@ -223,7 +223,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
         dispatches [i]->dynamic_subpriority (dynamic_subpriority_level);
         dispatches [i]->static_subpriority (static_subpriority_level);
 
-	// advance the static subpriority level
+        // advance the static subpriority level
         static_subpriority_level++;
 
         break;
@@ -684,11 +684,9 @@ long
 ACE_MUF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
                                                  RtecScheduler::Time current_time)
 {
-  long laxity = 
-	ACE_static_cast (
-	  long,
-      entry.deadline () - current_time -
-        entry.task_entry ().rt_info ()->worst_case_execution_time);
+  long laxity =
+    ACE_U64_TO_U32 (entry.deadline () - current_time -
+      entry.task_entry ().rt_info ()->worst_case_execution_time);
 
   return (laxity > 0) ? LONG_MAX - laxity : laxity;
 }
@@ -705,18 +703,13 @@ ACE_MUF_Scheduler_Strategy::dynamic_subpriority_comp
    const Dispatch_Entry &second_entry)
 {
   // order by descending dynamic priority according to ascending laxity
-  u_long laxity1 = 
-    ACE_static_cast (
-	  long,
-      first_entry.deadline () - first_entry.arrival () -
-        first_entry.task_entry ().rt_info ()->worst_case_execution_time);
+  u_long laxity1 =
+    ACE_U64_TO_U32 (first_entry.deadline () - first_entry.arrival () -
+      first_entry.task_entry ().rt_info ()->worst_case_execution_time);
 
   u_long laxity2 =
-    ACE_static_cast (
-	  long,
-      second_entry.deadline () - first_entry.arrival () -
-        second_entry.task_entry ().rt_info ()->worst_case_execution_time);
-
+    ACE_U64_TO_U32 (second_entry.deadline () - first_entry.arrival () -
+      second_entry.task_entry ().rt_info ()->worst_case_execution_time);
 
   if (laxity1 < laxity2)
   {
@@ -753,7 +746,7 @@ ACE_MUF_Scheduler_Strategy::minimum_critical_priority ()
   // = returns minimum critical priority number
 
 
-ACE_DynScheduler::Dispatching_Type 
+ACE_DynScheduler::Dispatching_Type
 ACE_MUF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
 {
   ACE_UNUSED_ARG (entry);
@@ -872,7 +865,7 @@ ACE_RMS_Scheduler_Strategy::minimum_critical_priority ()
   // = returns minimum critical priority number
 
 
-ACE_DynScheduler::Dispatching_Type 
+ACE_DynScheduler::Dispatching_Type
 ACE_RMS_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
 {
   ACE_UNUSED_ARG (entry);
@@ -941,10 +934,8 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
                                                  RtecScheduler::Time current_time)
 {
   long laxity =
-    ACE_static_cast (
-	  long,
-      entry.deadline () - current_time -
-        entry.task_entry ().rt_info ()->worst_case_execution_time);
+    ACE_U64_TO_U32 (entry.deadline () - current_time -
+      entry.task_entry ().rt_info ()->worst_case_execution_time);
 
   return (laxity > 0) ? LONG_MAX - laxity : laxity;
 }
@@ -959,16 +950,12 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority_comp
   // order by laxity (ascending)
   // order by descending dynamic priority according to ascending laxity
   u_long laxity1 =
-	ACE_static_cast (
-	  long,
-      first_entry.deadline () - first_entry.arrival () -
-        first_entry.task_entry ().rt_info ()->worst_case_execution_time);
+    ACE_U64_TO_U32 (first_entry.deadline () - first_entry.arrival () -
+      first_entry.task_entry ().rt_info ()->worst_case_execution_time);
 
   u_long laxity2 =
-    ACE_static_cast (
-	  long,
-	  second_entry.deadline () - first_entry.arrival () -
-        second_entry.task_entry ().rt_info ()->worst_case_execution_time);
+    ACE_U64_TO_U32 (second_entry.deadline () - first_entry.arrival () -
+      second_entry.task_entry ().rt_info ()->worst_case_execution_time);
 
   if (laxity1 < laxity2)
   {
@@ -997,7 +984,7 @@ ACE_MLF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 }
   // comparison function to pass to qsort
 
-ACE_DynScheduler::Dispatching_Type 
+ACE_DynScheduler::Dispatching_Type
 ACE_MLF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
 {
   ACE_UNUSED_ARG (entry);
@@ -1065,8 +1052,8 @@ long
 ACE_EDF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
                                                  RtecScheduler::Time current_time)
 {
-  long time_to_deadline = 
-    ACE_static_cast (long, entry.deadline () - current_time);
+  long time_to_deadline =
+      ACE_U64_TO_U32 (entry.deadline () - current_time);
 
   return (time_to_deadline > 0)
          ? LONG_MAX - time_to_deadline : time_to_deadline;
@@ -1109,7 +1096,7 @@ ACE_EDF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 }
   // comparison function to pass to qsort
 
-ACE_DynScheduler::Dispatching_Type 
+ACE_DynScheduler::Dispatching_Type
 ACE_EDF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
 {
   ACE_UNUSED_ARG (entry);
@@ -1216,14 +1203,12 @@ ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
       RtecScheduler::HIGH_CRITICALITY)
   {
     long laxity =
-      ACE_static_cast (
-	    long,
-        entry.deadline () - current_time -
-          entry.task_entry ().rt_info ()->worst_case_execution_time);
+      ACE_U64_TO_U32 (entry.deadline () - current_time -
+        entry.task_entry ().rt_info ()->worst_case_execution_time);
 
      return (laxity > 0) ? LONG_MAX - laxity : laxity;
   }
- 
+
   return 0;
 }
   // = returns a dynamic subpriority value for the given entry and the
@@ -1250,16 +1235,12 @@ ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority_comp
     // for VERY_LOW_CRITICALITY, LOW_CRITICALITY and MEDIUM_CRITICALITY,
     // order second by laxity (ascending)
     u_long laxity1 =
-      ACE_static_cast (
-	    long,
-        first_entry.deadline () - first_entry.arrival () -
-          first_entry.task_entry ().rt_info ()->worst_case_execution_time);
+      ACE_U64_TO_U32 (first_entry.deadline () - first_entry.arrival () -
+        first_entry.task_entry ().rt_info ()->worst_case_execution_time);
 
     u_long laxity2 =
-      ACE_static_cast (
-	    long,
-        second_entry.deadline () - first_entry.arrival () -
-          second_entry.task_entry ().rt_info ()->worst_case_execution_time);
+      ACE_U64_TO_U32 (second_entry.deadline () - first_entry.arrival () -
+        second_entry.task_entry ().rt_info ()->worst_case_execution_time);
 
     if (laxity1 < laxity2)
     {
@@ -1299,8 +1280,8 @@ ACE_RMS_Dyn_Scheduler_Strategy::minimum_critical_priority ()
 }
   // = returns 0 for minimum critical priority number
 
- 
-ACE_DynScheduler::Dispatching_Type 
+
+ACE_DynScheduler::Dispatching_Type
 ACE_RMS_Dyn_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
 {
   if (entry.task_entry ().rt_info ()->criticality >= RtecScheduler::HIGH_CRITICALITY)
