@@ -1,14 +1,16 @@
+// $Id$
+
 // ============================================================================
 //
 // = TAO tests
 //    Throughput measurement using the TTCP benchmark adapted to work using TAO
-// 
+//
 // = FILENAME
 //   utils.cpp
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 // This file has all the helper functions that do the computation of
@@ -17,7 +19,7 @@
 #include "ttcpC.h"
 #include "ttcp_decl.h"
 
-// the error function. 
+// the error function.
 // displays the error message and exits
 int err (CORBA::String s)
 {
@@ -34,7 +36,7 @@ void mes (CORBA::String s)
 }
 
 // does the formatting for the desired units in which the result is to be
-// displayed 
+// displayed
 CORBA::String
 outfmt (CORBA::Double b)
 {
@@ -64,8 +66,8 @@ outfmt (CORBA::Double b)
   return obuf;
 }
 
-static struct itimerval itime0;	/* Time at which timing started */
-static struct rusage ru0;	/* Resource utilization at the start */
+static struct itimerval itime0; /* Time at which timing started */
+static struct rusage ru0;       /* Resource utilization at the start */
 
 /*
  *                    P R E P _ T I M E R
@@ -76,7 +78,7 @@ prep_timer (void)
 {
   itime0.it_interval.tv_sec = 0;
   itime0.it_interval.tv_usec = 0;
-  itime0.it_value.tv_sec = LONG_MAX / 22;	/* greatest possible value , itimer() count backwards */
+  itime0.it_value.tv_sec = (ACE_INT32) LONG_MAX / 22;   /* greatest possible value , itimer() count backwards */
   itime0.it_value.tv_usec = 0;
 
 
@@ -93,7 +95,7 @@ prep_timer (void)
 
 /*
  *                    R E A D _ T I M E R
- * 
+ *
  */
 // This implements the internals of the "stop_timer" method
 double
@@ -132,8 +134,8 @@ read_timer (CORBA::Char *str, CORBA::Long len)
 
 // prints the rusage stats
 void
-prusage (register struct rusage *r0, struct rusage *r1, 
-	 struct timeval *e, struct timeval *b, char *outp)
+prusage (register struct rusage *r0, struct rusage *r1,
+         struct timeval *e, struct timeval *b, char *outp)
 {
   struct timeval tdiff;
   register time_t t;
@@ -151,7 +153,7 @@ prusage (register struct rusage *r0, struct rusage *r1,
 #if defined(SYSV)
   cp = "%Uuser %Ssys %Ereal %P";
 #else
-#if defined(sgi)		/* IRIX 3.3 will show 0 for %M,%F,%R,%C */
+#if defined(sgi)                /* IRIX 3.3 will show 0 for %M,%F,%R,%C */
   cp = "%Uuser %Ssys %Ereal %P %Mmaxrss %F+%Rpf %Ccsw";
 #else
   cp = "%Uuser %Ssys %Ereal %P %Xi+%Dd %Mmaxrss %F+%Rpf %Ccsw";
@@ -160,89 +162,89 @@ prusage (register struct rusage *r0, struct rusage *r1,
   for (; *cp; cp++)
     {
       if (*cp != '%')
-	*outp++ = *cp;
+        *outp++ = *cp;
       else if (cp[1])
-	switch (*++cp)
-	  {
+        switch (*++cp)
+          {
 
-	  case 'U':
-	    tvsub (&tdiff, &r1->ru_utime, &r0->ru_utime);
-	    ACE_OS::sprintf (outp, "%d.%01d", tdiff.tv_sec, tdiff.tv_usec / 100000);
-	    END (outp);
-	    break;
+          case 'U':
+            tvsub (&tdiff, &r1->ru_utime, &r0->ru_utime);
+            ACE_OS::sprintf (outp, "%d.%01d", tdiff.tv_sec, tdiff.tv_usec / 100000);
+            END (outp);
+            break;
 
-	  case 'S':
-	    tvsub (&tdiff, &r1->ru_stime, &r0->ru_stime);
-	    ACE_OS::sprintf (outp, "%d.%01d", tdiff.tv_sec, tdiff.tv_usec / 100000);
-	    END (outp);
-	    break;
+          case 'S':
+            tvsub (&tdiff, &r1->ru_stime, &r0->ru_stime);
+            ACE_OS::sprintf (outp, "%d.%01d", tdiff.tv_sec, tdiff.tv_usec / 100000);
+            END (outp);
+            break;
 
-	  case 'E':
-	    psecs (ms / 100, outp);
-	    END (outp);
-	    break;
+          case 'E':
+            psecs (ms / 100, outp);
+            END (outp);
+            break;
 
-	  case 'P':
-	    ACE_OS::sprintf (outp, "%d%%", (int) (t * 100 / ((ms ? ms : 1))));
-	    END (outp);
-	    break;
+          case 'P':
+            ACE_OS::sprintf (outp, "%d%%", (int) (t * 100 / ((ms ? ms : 1))));
+            END (outp);
+            break;
 
 #if !defined(SYSV)
-	  case 'W':
-	    i = r1->ru_nswap - r0->ru_nswap;
-	    ACE_OS::sprintf (outp, "%d", i);
-	    END (outp);
-	    break;
+          case 'W':
+            i = r1->ru_nswap - r0->ru_nswap;
+            ACE_OS::sprintf (outp, "%d", i);
+            END (outp);
+            break;
 
-	  case 'X':
-	    ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (r1->ru_ixrss - r0->ru_ixrss) / t);
-	    END (outp);
-	    break;
+          case 'X':
+            ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (r1->ru_ixrss - r0->ru_ixrss) / t);
+            END (outp);
+            break;
 
-	  case 'D':
-	    ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-		     (r1->ru_idrss + r1->ru_isrss - (r0->ru_idrss + r0->ru_isrss)) / t);
-	    END (outp);
-	    break;
+          case 'D':
+            ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
+                     (r1->ru_idrss + r1->ru_isrss - (r0->ru_idrss + r0->ru_isrss)) / t);
+            END (outp);
+            break;
 
-	  case 'K':
-	    ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-		     ((r1->ru_ixrss + r1->ru_isrss + r1->ru_idrss) -
-		      (r0->ru_ixrss + r0->ru_idrss + r0->ru_isrss)) / t);
-	    END (outp);
-	    break;
+          case 'K':
+            ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
+                     ((r1->ru_ixrss + r1->ru_isrss + r1->ru_idrss) -
+                      (r0->ru_ixrss + r0->ru_idrss + r0->ru_isrss)) / t);
+            END (outp);
+            break;
 
-	  case 'M':
-	    ACE_OS::sprintf (outp, "%d", r1->ru_maxrss / 2);
-	    END (outp);
-	    break;
+          case 'M':
+            ACE_OS::sprintf (outp, "%d", r1->ru_maxrss / 2);
+            END (outp);
+            break;
 
-	  case 'F':
-	    ACE_OS::sprintf (outp, "%d", r1->ru_majflt - r0->ru_majflt);
-	    END (outp);
-	    break;
+          case 'F':
+            ACE_OS::sprintf (outp, "%d", r1->ru_majflt - r0->ru_majflt);
+            END (outp);
+            break;
 
-	  case 'R':
-	    ACE_OS::sprintf (outp, "%d", r1->ru_minflt - r0->ru_minflt);
-	    END (outp);
-	    break;
+          case 'R':
+            ACE_OS::sprintf (outp, "%d", r1->ru_minflt - r0->ru_minflt);
+            END (outp);
+            break;
 
-	  case 'I':
-	    ACE_OS::sprintf (outp, "%d", r1->ru_inblock - r0->ru_inblock);
-	    END (outp);
-	    break;
+          case 'I':
+            ACE_OS::sprintf (outp, "%d", r1->ru_inblock - r0->ru_inblock);
+            END (outp);
+            break;
 
-	  case 'O':
-	    ACE_OS::sprintf (outp, "%d", r1->ru_oublock - r0->ru_oublock);
-	    END (outp);
-	    break;
-	  case 'C':
-	    ACE_OS::sprintf (outp, "%d+%d", r1->ru_nvcsw - r0->ru_nvcsw,
-		     r1->ru_nivcsw - r0->ru_nivcsw);
-	    END (outp);
-	    break;
+          case 'O':
+            ACE_OS::sprintf (outp, "%d", r1->ru_oublock - r0->ru_oublock);
+            END (outp);
+            break;
+          case 'C':
+            ACE_OS::sprintf (outp, "%d+%d", r1->ru_nvcsw - r0->ru_nvcsw,
+                     r1->ru_nivcsw - r0->ru_nivcsw);
+            END (outp);
+            break;
 #endif /* !SYSV */
-	  }
+          }
     }
   *outp = '\0';
 }
@@ -319,27 +321,27 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
        register short *SeqPtr = (short *)cp;
        num = bufLen/sizeof(short);
        for (i=0; i < num; i++)
-		SeqPtr[i] = (short)lrand48(); 
+                SeqPtr[i] = (short)lrand48();
        sseq = new ttcp_sequence::ShortSeq(num,num, SeqPtr);
-    } 
+    }
     break;
   case SEND_LONG:
     {
        register CORBA::Long *SeqPtr = (CORBA::Long *)cp;
        num = bufLen/sizeof(long);
        for (i=0; i < num; i++)
-		SeqPtr[i] = lrand48(); 
+                SeqPtr[i] = lrand48();
        lseq = new ttcp_sequence::LongSeq(num, num, SeqPtr);
-    } 
+    }
     break;
   case SEND_DOUBLE:
     {
        register double *SeqPtr = (double *)cp;
        num = bufLen/sizeof(double);
        for (i=0; i < num; i++)
-		SeqPtr[i] = drand48(); 
+                SeqPtr[i] = drand48();
        dseq = new ttcp_sequence::DoubleSeq(num, num, SeqPtr);
-    } 
+    }
     break;
   case SEND_CHAR:
     {
@@ -352,7 +354,7 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
          SeqPtr[i] = (c++ & 0x7f);
        }
        cseq = new ttcp_sequence::CharSeq(num, num, SeqPtr);
-    } 
+    }
     break;
   case SEND_STRUCT:
     {
@@ -371,8 +373,8 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
            SeqPtr[i].o = (unsigned char)(c++ & 0x7f);
        }
        Sseq = new ttcp_sequence::StructSeq(num, num, SeqPtr);
- 
-    } 
+
+    }
     break;
   case SEND_OCTET:
   default:
@@ -404,7 +406,7 @@ void PrintStats (void)
       double tmp;
       FILE *outFile;
       char filename[BUFSIZ];
- 
+
       strcpy(filename, title);
       switch(dt){
       case SEND_SHORT:
