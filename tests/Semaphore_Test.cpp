@@ -32,10 +32,16 @@ static ACE_Thread_Semaphore s (0);
 // Default number of iterations.
 static size_t n_iterations = 10;
 
+// Number of worker threads.
 static size_t n_workers = 10;
 
-static size_t n_semcount = 3;
+// Amount to release the semaphore.
+static size_t n_release_count = 3;
 
+// Number of times to call test_timeout().
+static size_t test_timeout_count;
+
+// Number of timeouts.
 static size_t timeouts = 0;
 
 // Explain usage and exit.
@@ -43,7 +49,7 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "usage: %n [-s n_semcount] [-w n_workers] [-n iteration_count]\n"));
+	      "usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
 
@@ -58,7 +64,7 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
     case 's':
-      n_semcount = ACE_OS::atoi (get_opt.optarg);
+      n_release_count = ACE_OS::atoi (get_opt.optarg);
       break;
     case 'w':
       n_workers = ACE_OS::atoi (get_opt.optarg);
@@ -72,7 +78,7 @@ parse_args (int argc, char *argv[])
   }
 }
 
-
+#if !defined (ACE_HAS_STHREADS)
 // Tests the amount of time spent in a timed wait.
 
 static int 
@@ -110,7 +116,9 @@ worker (void *)
        iterations <= n_iterations;
        iterations++)
     {
-      if (s.acquire (ACE_Time_Value (0, (ACE_OS::rand () % 1000) * 1000)))
+      ACE_Time_Value tv (0, (ACE_OS::rand () % 1000) * 1000);
+
+      if (s.acquire (tv))
         ++timeouts;
       else
         {
@@ -125,6 +133,7 @@ worker (void *)
   return 0;
 }
 
+#endif /* !ACE_HAS_STHREADS */
 #endif /* ACE_HAS_THREADS */
 
 // Test semaphore functionality
@@ -136,14 +145,14 @@ int main (int argc, char *argv[])
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
   ACE_OS::srand (ACE_OS::time (0L));
-#if !defined (ACE_HAS_STHREADS)
 
+#if !defined (ACE_HAS_STHREADS)
   // Test timed waits.
-  for (size_t i = 0; i < 5; i++)
+  for (size_t i = 0; i < test_timeout_count; i++)
     test_timeout ();
 
-  // Initialize the semaphore to a certain number.
-  s.release (n_semcount);
+  // Release the semaphore a certain number of times.
+  s.release (n_release_count);
 
   if (ACE_Thread_Manager::instance ()->spawn_n 
       (n_workers, ACE_THR_FUNC (worker), 0, THR_NEW_LWP) == -1)
