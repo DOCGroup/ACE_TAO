@@ -1,3 +1,12 @@
+Wed Jul  4 15:35:47 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/run_tests.vxworks:
+          Removed invocation of CDR_Array_Test. According to the ace
+          config files the compiler we are using is pre 2.8 (i.e.,
+          ACE_HAS_GNUG_PRE_2_8 is defined). Therefore don't run
+          CDR_Array_Test since the Makefile doesn't build it (due to
+          the ACE_HAS_GNUG_PRE_2_8 macro).
+
 Wed Jul 04 14:26:10 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch_T.h (class ACE_Acquire_Method): Moved the enums from
