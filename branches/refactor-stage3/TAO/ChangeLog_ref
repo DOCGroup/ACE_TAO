@@ -1,3 +1,23 @@
+Wed Jun 25 08:36:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+
+          Added the TAO::Object_Cast<> template struct that contains static
+          wrappers for the _narrow() and upcast() methods for interfaces.
+          This template is used instead of the existing tao_*_cast structs
+          in generated code by sequences of interfaces. Specializations of
+          this template will be added to generated code, however, to deal 
+          with the case when an undefined forward declared interface is
+          used in a sequence.
+
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+
+          Hand-crafted additions of TAO::Objref_Traits<> and 
+          TAO::Object_Cast<> for CORBA::Policy, since it is forward declared
+          in Policy_Forward.pidl and defined in Policy.pidl.
+
 Tue Jun 24 18:12:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Arg_Traits_T.h:

@@ -240,6 +240,32 @@ TAO_NAMESPACE  CORBA
 }
 TAO_NAMESPACE_CLOSE // module CORBA
 
+// =====================================================
+// Hand-crafted
+
+namespace TAO
+{
+  template<>
+  struct Objref_Traits<CORBA::Policy>
+  {
+    static CORBA::Policy_ptr tao_duplicate (CORBA::Policy_ptr);
+    static void tao_release (CORBA::Policy_ptr);
+    static CORBA::Policy_ptr tao_nil (void);
+  };
+
+  template<>
+  struct Object_Cast<CORBA::Policy>
+  {
+    static CORBA::Policy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
+};
+
+// ==========================================================
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/any_op_ch.cpp:65
 
