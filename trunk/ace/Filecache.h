@@ -114,7 +114,6 @@ public:
   // The size of the file.
 
 protected:
-
   ACE_Filecache_Handle (void);
   // Default do nothing constructor.  Prevent it from being called.
 
@@ -122,8 +121,7 @@ protected:
   // Common initializations for constructors.
 
 public:
-
-  // These come from ACE_Filecache_Object, which is an internal class.
+  // = These come from ACE_Filecache_Object, which is an internal class.
   enum
   {
     ACE_SUCCESS = 0,

@@ -1,3 +1,16 @@
+Wed Sep  2 11:10:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/TS_Server_Handler.cpp (abandon): changed the use of
+ 	  FAILURE to -1 to be consistent with the following change.
+
+	* ace/Time_Request_Reply: Removed the FAILURE constant enum.  This
+ 	  was rather pointless...
+
+	* ace/Name_Request_Reply.h (ACE_Name_Reply): Changed the type of
+ 	  ACE_UINT32 type_ to ACE_INT32 so that it can hold values 0 and
+ 	  -1.  This will allow us to get rid of the horrible "SUCCESS" and
+ 	  "FAILURE" macros...
+
 Wed Sep 02 10:07:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Name_Request_Reply.{h,cpp}: reverted ACE_SUCCESS to SUCCESS
