@@ -247,7 +247,7 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
 
   JAWS_Data_Block *db = ioh->message_block ();
   JAWS_IO_Handler *nioh =
-    db->policy ()->ioh_factory ()->create_io_handler ();
+    ioh->factory ()->create_io_handler ();
   if (nioh == 0)
     {
       delete ndb;
@@ -275,7 +275,11 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
 
   if (aa.open (*(aioh->handler ()), listen_handle) == -1
       || aa.accept (*ndb, bytes_to_read) == -1)
-    aioh->accept_error ();
+    {
+      ioh->factory ()->destroy_io_handler (nioh);
+      delete ndb;
+      ioh->accept_error ();
+    }
 }
 
 void

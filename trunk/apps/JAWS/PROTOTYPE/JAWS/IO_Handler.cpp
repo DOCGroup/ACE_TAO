@@ -213,6 +213,7 @@ JAWS_Synch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 JAWS_Asynch_Handler::JAWS_Asynch_Handler (JAWS_IO_Handler *ioh)
   : ioh_ (ioh)
 {
+  this->proactor (ACE_Proactor::instance ());
 }
 
 JAWS_Asynch_Handler::~JAWS_Asynch_Handler (void)
