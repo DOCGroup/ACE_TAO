@@ -7,7 +7,7 @@
 #include "IOGR_Maker.h"
 #include "GroupInfoPublisher.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            TAO_FTEC_Group_Manager,
            "$Id$")
 

@@ -5,7 +5,7 @@
 #include "FTEC_Event_Channel.h"
 #include "Request_Context_Repository.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Basic_Replication_Strategy,
            "$Id$")
 

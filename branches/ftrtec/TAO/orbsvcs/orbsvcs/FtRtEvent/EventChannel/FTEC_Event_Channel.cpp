@@ -15,7 +15,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "GroupInfoPublisher.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            TAO_FTEC_Event_Channel,
            "$Id$")
 

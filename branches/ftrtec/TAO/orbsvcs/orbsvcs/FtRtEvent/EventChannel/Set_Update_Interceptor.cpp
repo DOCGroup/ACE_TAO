@@ -4,7 +4,7 @@
 #include "orbsvcs/FTRTC.h"
 #include "Request_Context_Repository.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Set_Update_Intercetpor,
            "$Id$")
 

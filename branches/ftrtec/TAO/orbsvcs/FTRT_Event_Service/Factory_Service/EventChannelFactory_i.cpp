@@ -8,8 +8,8 @@
 #include "orbsvcs/FtRtEvent/Utils/ScopeGuard.h"
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 
-ACE_RCSID (FTRTEC_Factory_Service,
-           EventChannelFactory_i.cpp,
+ACE_RCSID (Factory_Service,
+           EventChannelFactory_i,
            "$Id$")
 
 

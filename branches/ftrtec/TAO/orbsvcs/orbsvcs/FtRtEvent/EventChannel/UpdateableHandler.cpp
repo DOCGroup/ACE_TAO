@@ -5,7 +5,7 @@
 #include "AMI_Primary_Replication_Strategy.h"
 #include "../Utils/resolve_init.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            UpdateableHandler,
            "$Id$")
 

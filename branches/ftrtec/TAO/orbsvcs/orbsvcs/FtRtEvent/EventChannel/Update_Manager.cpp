@@ -2,7 +2,7 @@
 
 #include "Update_Manager.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Update_Manager,
            "$Id$")
 

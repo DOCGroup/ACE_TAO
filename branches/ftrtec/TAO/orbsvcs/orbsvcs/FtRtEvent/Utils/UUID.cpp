@@ -1,11 +1,9 @@
 //$Id$
 #include "UUID.h"
 
-ACE_RCSID
-  (
-    FtRtEvent, UUID.cpp,
-      "$Id$"
-  )
+ACE_RCSID (Utils, 
+           UUID,
+           "$Id$")
 #if !defined(__ACE_INLINE__)
 #include "UUID.inl"
 #endif /* __ACE_INLINE__ */

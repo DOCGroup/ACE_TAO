@@ -4,7 +4,7 @@
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            FtEventServiceInterceptor,
            "$Id$")
 

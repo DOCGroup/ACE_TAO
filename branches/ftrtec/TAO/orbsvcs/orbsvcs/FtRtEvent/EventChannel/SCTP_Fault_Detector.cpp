@@ -3,7 +3,7 @@
 #include "FTEC_Fault_Listener.h"
 #include "SCTP_Fault_Detector.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            SCTP_Fault_Detector,
            "$Id$")
 

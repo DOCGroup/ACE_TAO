@@ -10,7 +10,7 @@
 #include "Update_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            AMI_Primary_Replication_Strategy,
            "$Id$")
 

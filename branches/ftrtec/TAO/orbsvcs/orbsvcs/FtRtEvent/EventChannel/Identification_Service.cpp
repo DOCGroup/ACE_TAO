@@ -3,7 +3,7 @@
 #include "Identification_Service.h"
 #include "../Utils/UUID.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            Identification_Service,
            "$Id$")
 

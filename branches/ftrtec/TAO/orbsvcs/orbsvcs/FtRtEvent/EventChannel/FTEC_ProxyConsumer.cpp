@@ -6,7 +6,7 @@
 #include "../Utils/activate_with_id.h"
 #include "../Utils/ScopeGuard.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushConsumer,
            "$Id$")
 

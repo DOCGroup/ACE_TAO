@@ -5,7 +5,7 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            ProxySupplierStateWorker,
            "$Id$")
 

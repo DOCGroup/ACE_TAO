@@ -4,7 +4,7 @@
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
 
-ACE_RCSID (FTRT_ClientORB,
+ACE_RCSID (ClientORB,
            FTRT_ClientORB_Interceptor,
            "$Id$")
 

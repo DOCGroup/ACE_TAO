@@ -2,7 +2,7 @@
 
 #include "create_persistent_poa.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            create_persistent_poa,
            "$Id$")
 

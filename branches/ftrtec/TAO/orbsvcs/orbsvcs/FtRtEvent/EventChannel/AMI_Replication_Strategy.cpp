@@ -3,7 +3,7 @@
 #include "AMI_Replication_Strategy.h"
 #include "AMI_Primary_Replication_Strategy.h"
 
-ACE_RCSID (FTRT_EventChannel,
+ACE_RCSID (EventChannel,
            AMI_Replication_Strategy,
            "$Id$")
 
