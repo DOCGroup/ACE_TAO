@@ -1,3 +1,19 @@
+Tue Feb 16 17:15:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vb.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ab.{h,cpp}
+	  Defined a new VideoBuffer () class for the Video buffering
+	  process and AudioBuffer class for the audio buffering process
+	  and used the reactor for i/o handling instead of 
+	  blocking i/o calls. Also uses a socketpair between the control
+	  process for exit notifications which eliminates the SIGUSR*
+	  signals. Also replaced the exit () calls with reactor
+	  end_event_loop so that the processes exit cleanly.
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vd.cpp:
+	  Replaced the SIGUSR signals code with socket notification code.
+	
 Tue Feb 16 16:48:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Exception.{h,cpp} (print_exception): Added this
