@@ -1,3 +1,13 @@
+Sat Apr 29 15:59:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile.am (HEADER_FILES):
+
+	  Removed `inc_user_config.h' from the list of headers.  It no
+	  longer exists.
+
+	  Added `config-all.h', `ACE_export.h' and `svc_export.h' to the
+	  list of headers.
+
 Sat Apr 29 17:13:55 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/Makefile.am: Added the SOCK_Dgram_Mcast_QoS.{cpp,h,i}
