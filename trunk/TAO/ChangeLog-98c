@@ -1,3 +1,14 @@
+Tue Sep 22 02:40:33 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* examples/Simple/Makefile (DIRS): Enabled all the "Simple" test
+ 	  examples in the Makefile so we can see if they compile on other
+ 	  platforms.
+
+	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Added
+ 	  the -S1 flag, which generates a switch statement if duplicate
+ 	  keys are encountered.  This works around a bug with gperf that
+ 	  needs to be fixed soon...
+
 Mon Sep 22 01:08:51 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* changed examples/Simple/echo/Client_i.cpp 
