@@ -717,6 +717,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA::UShort_out ServiceType_out;
   typedef ServiceType_out CORBA_ServiceType_out;
   static CORBA::TypeCode_ptr _tc_ServiceType;
+  static const ServiceType Security;
 
   typedef CORBA::ULong ServiceOption;
   typedef ServiceOption CORBA_ServiceOption;
@@ -741,9 +742,6 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_ServiceInformation_out ServiceInformation_out;
   typedef CORBA_ServiceInformation *ServiceInformation_ptr;
   static CORBA::TypeCode_ptr _tc_ServiceInformation;
-
-  const CORBA::UShort Security;
-  
 
   typedef CORBA_PolicyTypeSeq PolicyTypeSeq;
   typedef CORBA_PolicyTypeSeq_var PolicyTypeSeq_var;
