@@ -9,6 +9,10 @@ Sat Sep 18 15:11:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Removed unnecessary auto_ptr<CORBA_Object> instantiations,
 	  further reducing TAO's footprint.
 
+	  Changed instances of CORBA::String to CORBA::String_var and
+	  adjusted code that expected a CORBA::String accordingly.  This
+	  fixes some potential memory leaks.
+
 Sat Sep 18 14:15:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IORManipulation.cpp (merge_iors, remove_profiles):
