@@ -106,7 +106,6 @@ public:
 
         // Invoke the request
         int result = request->call ();
-        delete request;
         if (result == -1)
           break;
 
@@ -269,6 +268,7 @@ Manager::shut_down (void)
                   ACE_TEXT ("(%t) Worker %d shut down.\n"),
                   thread_id (worker)));
 
+      delete req;
       delete worker;
 
     }
