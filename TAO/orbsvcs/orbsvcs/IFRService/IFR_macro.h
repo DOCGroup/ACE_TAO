@@ -14,7 +14,7 @@
                             monitor, \
                             this->repo_->lock (), \
                             CORBA::INTERNAL ( \
-                              CORBA_SystemException::_tao_minor_code ( \
+                              CORBA::SystemException::_tao_minor_code ( \
                                 TAO_GUARD_FAILURE, \
                                 0), \
                               CORBA::COMPLETED_NO)); \
@@ -25,7 +25,7 @@
                             monitor, \
                             this->repo_->lock (), \
                             CORBA::INTERNAL ( \
-                              CORBA_SystemException::_tao_minor_code ( \
+                              CORBA::SystemException::_tao_minor_code ( \
                                 TAO_GUARD_FAILURE, \
                                 0), \
                               CORBA::COMPLETED_NO)); \
@@ -36,7 +36,7 @@
                            monitor, \
                            this->repo_->lock (), \
                            CORBA::INTERNAL ( \
-                             CORBA_SystemException::_tao_minor_code ( \
+                             CORBA::SystemException::_tao_minor_code ( \
                                TAO_GUARD_FAILURE, \
                                0), \
                              CORBA::COMPLETED_NO)); \

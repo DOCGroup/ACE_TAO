@@ -30,7 +30,7 @@ TAO_OperationDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::dk_Operation;
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_OperationDef_i::describe (ACE_ENV_SINGLE_ARG_DECL )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -39,17 +39,17 @@ TAO_OperationDef_i::describe (ACE_ENV_SINGLE_ARG_DECL )
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_Contained::Description *
+CORBA::Contained::Description *
 TAO_OperationDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA_Contained::Description *desc_ptr = 0;
+  CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
-                    CORBA_Contained::Description,
+                    CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  CORBA_Contained::Description_var retval = desc_ptr;
+  CORBA::Contained::Description_var retval = desc_ptr;
 
   retval->kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -94,16 +94,16 @@ TAO_OperationDef_i::result_i (ACE_ENV_SINGLE_ARG_DECL)
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_IDLType_ptr
+CORBA::IDLType_ptr
 TAO_OperationDef_i::result_def (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA_IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
   return this->result_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_IDLType_ptr
+CORBA::IDLType_ptr
 TAO_OperationDef_i::result_def_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -130,14 +130,14 @@ TAO_OperationDef_i::result_def_i (ACE_ENV_SINGLE_ARG_DECL)
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     result_path.c_str ()
                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
+  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
-  return CORBA_IDLType::_narrow (obj.in ()
+  return CORBA::IDLType::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_OperationDef_i::result_def (CORBA_IDLType_ptr result_def
+TAO_OperationDef_i::result_def (CORBA::IDLType_ptr result_def
                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -148,7 +148,7 @@ TAO_OperationDef_i::result_def (CORBA_IDLType_ptr result_def
 }
 
 void
-TAO_OperationDef_i::result_def_i (CORBA_IDLType_ptr result_def
+TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -165,7 +165,7 @@ TAO_OperationDef_i::result_def_i (CORBA_IDLType_ptr result_def
                                             result_path.in ());
 }
 
-CORBA_ParDescriptionSeq *
+CORBA::ParDescriptionSeq *
 TAO_OperationDef_i::params (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -174,7 +174,7 @@ TAO_OperationDef_i::params (ACE_ENV_SINGLE_ARG_DECL)
   return this->params_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_ParDescriptionSeq *
+CORBA::ParDescriptionSeq *
 TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -213,9 +213,9 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
 
   size_t size = key_queue.size ();
 
-  CORBA_ParDescriptionSeq *pd_seq = 0;
+  CORBA::ParDescriptionSeq *pd_seq = 0;
   ACE_NEW_THROW_EX (pd_seq,
-                    CORBA_ParDescriptionSeq (size),
+                    CORBA::ParDescriptionSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -224,7 +224,7 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
   if (size == 0)
     return pd_seq;
 
-  CORBA_ParDescriptionSeq_var retval = pd_seq;
+  CORBA::ParDescriptionSeq_var retval = pd_seq;
 
   for (i = 0; i < size; ++i)
     {
@@ -280,7 +280,7 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      retval[i].type_def = CORBA_IDLType::_narrow (obj.in ()
+      retval[i].type_def = CORBA::IDLType::_narrow (obj.in ()
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
@@ -289,7 +289,7 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_OperationDef_i::params (const CORBA_ParDescriptionSeq &params
+TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params
                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -300,7 +300,7 @@ TAO_OperationDef_i::params (const CORBA_ParDescriptionSeq &params
 }
 
 void
-TAO_OperationDef_i::params_i (const CORBA_ParDescriptionSeq &params
+TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params
                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -396,7 +396,7 @@ TAO_OperationDef_i::mode_i (CORBA::OperationMode mode
                                              mode);
 }
 
-CORBA_ContextIdSeq *
+CORBA::ContextIdSeq *
 TAO_OperationDef_i::contexts (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -405,7 +405,7 @@ TAO_OperationDef_i::contexts (ACE_ENV_SINGLE_ARG_DECL)
   return this->contexts_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_ContextIdSeq *
+CORBA::ContextIdSeq *
 TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -441,9 +441,9 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
 
   size_t size = context_queue.size ();
 
-  CORBA_ContextIdSeq *ci_seq = 0;
+  CORBA::ContextIdSeq *ci_seq = 0;
   ACE_NEW_THROW_EX (ci_seq,
-                    CORBA_ContextIdSeq (size),
+                    CORBA::ContextIdSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -461,7 +461,7 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_OperationDef_i::contexts (const CORBA_ContextIdSeq &contexts
+TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts
                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -472,7 +472,7 @@ TAO_OperationDef_i::contexts (const CORBA_ContextIdSeq &contexts
 }
 
 void
-TAO_OperationDef_i::contexts_i (const CORBA_ContextIdSeq &contexts
+TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts
                                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -501,7 +501,7 @@ TAO_OperationDef_i::contexts_i (const CORBA_ContextIdSeq &contexts
     }
 }
 
-CORBA_ExceptionDefSeq *
+CORBA::ExceptionDefSeq *
 TAO_OperationDef_i::exceptions (ACE_ENV_SINGLE_ARG_DECL )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -510,7 +510,7 @@ TAO_OperationDef_i::exceptions (ACE_ENV_SINGLE_ARG_DECL )
   return this->exceptions_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_ExceptionDefSeq *
+CORBA::ExceptionDefSeq *
 TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -568,9 +568,9 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
 
   size_t size = kind_queue.size ();
 
-  CORBA_ExceptionDefSeq *ed_seq = 0;
+  CORBA::ExceptionDefSeq *ed_seq = 0;
   ACE_NEW_THROW_EX (ed_seq,
-                    CORBA_ExceptionDefSeq (size),
+                    CORBA::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -579,7 +579,7 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
   if (index == 0)
     return ed_seq;
 
-  CORBA_ExceptionDefSeq_var retval = ed_seq;
+  CORBA::ExceptionDefSeq_var retval = ed_seq;
 
   for (CORBA::ULong i = 0; i < size; ++i)
     {
@@ -595,7 +595,7 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      retval[i] = CORBA_ExceptionDef::_narrow (obj.in ()
+      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
@@ -604,7 +604,7 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
 }
 
 void
-TAO_OperationDef_i::exceptions (const CORBA_ExceptionDefSeq &exceptions
+TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions
                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -615,7 +615,7 @@ TAO_OperationDef_i::exceptions (const CORBA_ExceptionDefSeq &exceptions
 }
 
 void
-TAO_OperationDef_i::exceptions_i (const CORBA_ExceptionDefSeq &exceptions
+TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -653,12 +653,12 @@ TAO_OperationDef_i::exceptions_i (const CORBA_ExceptionDefSeq &exceptions
 
 }
 
-CORBA_OperationDescription
+CORBA::OperationDescription
 TAO_OperationDef_i::make_description (
       ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA_OperationDescription od;
+  CORBA::OperationDescription od;
 
   od.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (od);
@@ -682,12 +682,12 @@ TAO_OperationDef_i::make_description (
   od.mode = this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (od);
 
-  CORBA_ContextIdSeq_var cid_seq = this->contexts_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ContextIdSeq_var cid_seq = this->contexts_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (od);
 
   od.contexts = cid_seq.in ();
 
-  CORBA_ParDescriptionSeq_var pd_seq = this->params_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ParDescriptionSeq_var pd_seq = this->params_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (od);
 
   od.parameters = pd_seq.in ();
@@ -782,4 +782,3 @@ TAO_OperationDef_i::make_description (
 
   return od;
 }
-
