@@ -1,3 +1,19 @@
+Wed Mar 31 03:24:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POAS.{h,cpp}:
+	* tao/POAC.{h,i,cpp}:  Brought these files in-synch with TAO_IDL
+	  generated files.  Major changes are:
+	  Use of namespace on platforms that support it.
+	  Use of perfect-hash optable.
+	  Use of compile marshalling.
+	  Added _interface_repository_id accessors.
+	  Added _non_existent_skel for skeletons.
+	  Repository ID changed to start with IDL:omg.org/.
+	  Remote operation invocation now understand MP.
+	  Use of ACE_TRY macros.
+
+	  Thanks to Jeff for the reminder.
+
 Wed Mar 31 000:42:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
@@ -20,10 +36,10 @@ Wed Mar 31 00:25:17 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 Wed Mar 31 00:14:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Default_Servant/File_i.cpp (destroy): 
+	* examples/POA/Default_Servant/File_i.cpp (destroy):
 	* examples/POA/Default_Servant/server.cpp
 	* examples/POA/Default_Servant/client.cpp
-	
+
 	* examples/POA/DSI/Database_i.cpp
           examples/POA/DSI/server.cpp
           examples/POA/DSI/client.cpp
