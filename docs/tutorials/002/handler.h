@@ -16,7 +16,7 @@
   there is a way to get to the reactor it uses.  We'll take the easy
   way out and grab the global pointer.  (There is a way to get back to
   the acceptor's reactor that we'll see later on.)  */
-extern ACE_Reactor * g_reactor;
+extern ACE_Reactor *g_reactor;
 
 /* This time we're deriving from ACE_Svc_Handler instead of
   ACE_Event_Handler.  The big reason for this is because it already

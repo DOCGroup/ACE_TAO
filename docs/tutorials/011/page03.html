@@ -22,7 +22,6 @@ I've only commented the changes.
 <HR WIDTH="100%">
 <HR width=50%><P><center>task.h</center><HR width=50%>
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>TASK_H</font>
@@ -34,45 +33,51 @@ I've only commented the changes.
 # pragma once
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-class Task : public ACE_Task &lt; ACE_MT_SYNCH >
+class Task : public ACE_Task &lt;ACE_MT_SYNCH>
 {
 public:
 
-  typedef ACE_Task &lt; ACE_MT_SYNCH > inherited;
+  typedef ACE_Task &lt;ACE_MT_SYNCH> inherited;
 
-    Task (void);
-   ~Task (void);
+  Task (size_t n_threads);
+  ~Task (void);
 
-  int start (int threads = 1);
+  int open (void * = 0);
 
   int svc (void);
 
   int close (u_long flags = 0);
 
 protected:
-    ACE_Barrier * barrier_;
+  ACE_Barrier *barrier_;
+  
+  size_t n_threads_;
 };
 
-<font color=blue>#endif</font>
+<font color=blue>#endif</font> <font color=red>/* TASK_H */</font>
 </PRE>
 <HR width=50%><P><center>task.cpp</center><HR width=50%>
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#include</font> "<font color=green>task.h</font>"
 <font color=blue>#include</font> "<font color=green>block.h</font>"
 <font color=blue>#include</font> "<font color=green>data.h</font>"
 
-<font color=#008888>Task::Task</font> (void)
-: barrier_ (0)
+<font color=#008888>Task::Task</font> (size_t n_threads)
+  : barrier_ (0),
+    n_threads_ (n_threads)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task ctor 0x%x\n</font>", (void *) this));
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) Task ctor 0x%x\n</font>",
+              (void *) this));
 }
 
 <font color=#008888>Task::~Task</font> (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task dtor 0x%x\n</font>", (void *) this));
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) Task dtor 0x%x\n</font>",
+              (void *) this));
 
   ACE_Message_Block *message;
   this->getq (message);
@@ -81,83 +86,99 @@ protected:
   delete barrier_;
 }
 
-int <font color=#008888>Task::start</font> (int threads)
+int 
+<font color=#008888>Task::open</font> (void *)
 {
-  barrier_ = new ACE_Barrier (threads);
-  return this->activate (THR_NEW_LWP, threads);
+  barrier_;
+
+  ACE_NEW_RETURN (barrier_,
+                  ACE_Barrier (this->n_threads_),
+                  -1);
+
+  return this->activate (THR_NEW_LWP,
+                         threads);
 }
-int <font color=#008888>Task::close</font> (u_long flags)
+
+int 
+<font color=#008888>Task::close</font> (u_long flags)
 {
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task close 0x%x\n</font>", (void *) this));
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) Task close 0x%x\n</font>",
+              (void *) this));
   return <font color=#008888>inherited::close</font> (flags);
 }
 
-int <font color=#008888>Task::svc</font> (void)
+int 
+<font color=#008888>Task::svc</font> (void)
 {
   this->barrier_->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Task 0x%x starts in thread %d\n</font>", (void *) this, <font color=#008888>ACE_Thread::self</font> ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) Task 0x%x starts in thread %d\n</font>",
+              (void *) this,
+              <font color=#008888>ACE_Thread::self</font> ()));
 
   ACE_Message_Block *message;
-  while (1)
-  {
-    if (this->getq (message) == -1)
+
+  for (;;)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>getq</font>"), -1);
+      if (this->getq (message) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "<font color=green>%p\n</font>",
+                           "<font color=green>getq</font>"),
+                          -1);
+
+      if (message->msg_type () == <font color=#008888>ACE_Message_Block::MB_HANGUP</font>)
+        {
+          this->putq (message);
+
+          break;
+        }
+
+      const char *cp = message->rd_ptr ();
+      <font color=red>// Don't forget to skip the NULL we inserted</font>
+      message->rd_ptr (<font color=#008888>ACE_OS::strlen</font> (cp) + 1);  
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "<font color=green>(%P|%t) Block 0x%x contains (%s)\n</font>",
+                  (void *) message,
+                  cp));
+
+      <font color=red>/* Create a Data object into which we can extract the message
+        block contents.  */</font>
+      Data data;
+
+      <font color=red>/* Use the rd_ptr() to access the message block data.  Note that
+        we've already moved it past the text string in the block.  */</font>
+      <font color=#008888>ACE_OS::memmove</font> ((char *) &data,
+                       message->rd_ptr (),
+                       sizeof (data));
+      message->rd_ptr (sizeof (data));  <font color=red>// Move the rd_ptr() beyond the data.</font>
+
+      <font color=red>/* Invoke a couple of method calls on the object we constructed.  */</font>
+      data.who_am_i ();
+      data.what_am_i ();
+
+      <font color=red>/* An alternate approach:
+
+        Data * data;
+        data = (Data *)message->rd_ptr();
+        data->who_am_i();
+        data->what_am_i();
+        message->rd_ptr(sizeof(Data));
+
+        Even though this cuts down on the number of copies &
+        constructions, I'm not real fond of it.  You can get into
+        trouble in a hurry by treating memory blocks as multiple data
+        types...  */</font>
+
+
+      <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (0, 5000));
+
+      message->release ();
     }
 
-    if (message->msg_type () == <font color=#008888>ACE_Message_Block::MB_HANGUP</font>)
-    {
-      this->putq (message);
-
-      break;
-    }
-
-    const char *cp = message->rd_ptr ();
-    message->rd_ptr (strlen (cp) + 1);  <font color=red>// Don't forget to skip the NULL we</font>
-                                        <font color=red>// inserted</font>
-
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Block 0x%x contains (%s)\n</font>", (void *) message, cp));
-
-    <font color=red>/*
-       Create a Data object into which we can extract the message block
-       contents. 
-     */</font>
-    Data data;
-    <font color=red>/*
-       Use the rd_ptr() to access the message block data.  Note that we've
-       already moved it past the text string in the block. 
-     */</font>
-    <font color=#008888>ACE_OS::memmove</font> ((char *) &data, message->rd_ptr (), sizeof (data));
-    message->rd_ptr (sizeof (data));  <font color=red>// Move the rd_ptr() beyond the data.</font>
-
-    <font color=red>/*
-       Invoke a couple of method calls on the object we constructed. 
-     */</font>
-    data.who_am_i ();
-    data.what_am_i ();
-
-    <font color=red>/*
-       An alternate approach:
-
-       Data * data;
-       data = (Data *)message->rd_ptr();
-       data->who_am_i();
-       data->what_am_i();
-       message->rd_ptr(sizeof(Data));
-
-       Even though this cuts down on the number of copies & constructions, I'm
-       not real fond of it.  You can get into trouble in a hurry by treating
-       memory blocks as multiple data types... 
-     */</font>
-
-
-    <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (0, 5000));
-
-    message->release ();
-  }
-
-  return (0);
+  return 0;
 }
 </PRE>
 <HR WIDTH="100%">

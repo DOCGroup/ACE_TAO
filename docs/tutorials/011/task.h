@@ -1,4 +1,3 @@
-
 // $Id$
 
 #ifndef TASK_H
@@ -10,23 +9,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class Task : public ACE_Task < ACE_MT_SYNCH >
+class Task : public ACE_Task <ACE_MT_SYNCH>
 {
 public:
 
-  typedef ACE_Task < ACE_MT_SYNCH > inherited;
+  typedef ACE_Task <ACE_MT_SYNCH> inherited;
 
-    Task (void);
-   ~Task (void);
+  Task (size_t n_threads);
+  ~Task (void);
 
-  int start (int threads = 1);
+  int open (void * = 0);
 
   int svc (void);
 
   int close (u_long flags = 0);
 
 protected:
-    ACE_Barrier * barrier_;
+  ACE_Barrier *barrier_;
+  
+  size_t n_threads_;
 };
 
-#endif
+#endif /* TASK_H */

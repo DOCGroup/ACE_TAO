@@ -79,7 +79,7 @@ public:
     object on the mask that caused the -1 return.  This means that we
     don't have to do that ourselves!  */
   virtual int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK );
+                            ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
 protected:
 
