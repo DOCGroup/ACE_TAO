@@ -1,3 +1,9 @@
+Mon Jun 25 13:56:47 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Trading/Makefile:
+
+          Removed a warning about overriding commands for libTTest.a.
+
 Mon Jun 25 12:05:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Incoming_Message_Queue.h:
