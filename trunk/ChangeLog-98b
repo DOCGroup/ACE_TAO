@@ -1,3 +1,8 @@
+Sun Dec 06 23:59:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* config-sunos5.5.h: Added back ACE_HAS_TIMER_SKEW.  It is really
+ 	  required. See me for an example that illustrates this need.
+
 Sun Dec 06 16:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         Changes for pSOS port: ACE now compiles for pSOSystem 68k targets using
