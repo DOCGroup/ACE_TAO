@@ -200,7 +200,7 @@ close_message [TAO_GIOP_HEADER_LEN] =
   MY_MAJOR,
   MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
-  TAO_GIOP_CloseConnection,
+  TAO_GIOP::CloseConnection,
   0, 0, 0, 0
 };
 
