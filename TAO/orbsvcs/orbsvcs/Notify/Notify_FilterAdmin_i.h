@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 // ==========================================================================
 //
@@ -19,12 +18,12 @@
 #ifndef NOTIFY_FILTERADMIN_H
 #define NOTIFY_FILTERADMIN_H
 
+#include "Notify_ID_Pool_T.h"
+#include "orbsvcs/CosNotifyFilterS.h"
 #include "ace/Hash_Map_Manager.h"
-#include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
-#include "orbsvcs/orbsvcs/Notify/ID_Pool_T.h"
 
-class TAO_ORBSVCS_Export TAO_Notify_FilterAdmin_i :
-public virtual POA_CosNotifyFilter::FilterAdmin
+class TAO_ORBSVCS_Export TAO_Notify_FilterAdmin_i /*:
+                                                    public virtual POA_CosNotifyFilter::FilterAdmin */
 {
   // = TITLE
   //   TAO_Notify_FilterAdmin_i
@@ -116,7 +115,7 @@ private:
                                               CosNotifyFilter::Filter_var>
   FILTER_ENTRY;
 
-  ID_Pool<CosNotifyFilter::FilterID> filter_ids_;
+  TAO_Notify_ID_Pool<CosNotifyFilter::FilterID> filter_ids_;
   // Id generator for proxy suppliers
 };
 

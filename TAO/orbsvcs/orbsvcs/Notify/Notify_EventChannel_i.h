@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 // ==========================================================================
 //
@@ -9,48 +8,28 @@
 //   Notify_EventChannel_i.h
 //
 // = DESCRIPTION
-//
+//   Implements the CosNotifyChannelAdmin::EventChannel interface.
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ==========================================================================
 
-#ifndef NOTIFY_EVENTCHANNEL_I_H_
-#define NOTIFY_EVENTCHANNEL_I_H_
+#ifndef TAO_NOTIFY_EVENTCHANNEL_I_H_
+#define TAO_NOTIFY_EVENTCHANNEL_I_H_
 
-
-// @@ Pradeep: This will not work unless you #include something
-// else before.
+#include "Notify_ID_Pool_T.h"
+#include "Notify_QoSAdmin_i.h"
+#include "Notify_Event_Manager.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @@ Pradeep: Please read my comments in the
-// Notify_EventChannelFactory_i.h file about inclusion order.
-
-#include "ace/Hash_Map_Manager.h"
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h"
-#include "orbsvcs/orbsvcs/Notify/ID_Pool_T.h"
-
-// @@ Pradeep: are you sure you need auto_ptr in the .h file? Please
-// don't #include stuff you don't need, it only increases the
-// compilation and re-compilation time.
-
-#include "ace/Auto_Ptr.h"
-
-// @@ Pradeep: sometimes you use "Foo.h" and sometimes
-// "orbsvcs/orbsvcs/Notify/Foo.h" (it could also be
-// "orbsvcs/Notify/Foo.h"), any of them is OK, but please pick one and
-// stick to it (i.e. be consistent).
-
-#include "Notify_Dispatcher.h"
-
 class TAO_Notify_EventChannelFactory_i;
-class TAO_Notify_ConsumerAdmin_i;
-class TAO_Notify_SupplierAdmin_i;
+class TAO_Notify_Resource_Manager;
 
 // @@ Pradeep, where is this code coming from?!
 
@@ -61,44 +40,40 @@ class TAO_Notify_SupplierAdmin_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-// @@ Pradeep, this *WON'T* work, it is illegal to inherit multiple
-// times from skeleton interfaces.  If you need to share
-// implementation between to T_i classes please use delegation instead
-// of multiple inheritance.  Talk to Irfan to find out why.
-
-class TAO_ORBSVCS_Export TAO_Notify_EventChannel_i :
-public virtual POA_CosNotifyChannelAdmin::EventChannel,
-public virtual TAO_Notify_QoSAdmin_i
+class TAO_ORBSVCS_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotifyChannelAdmin::EventChannel, public PortableServer::RefCountServantBase
 {
   // = TITLE
+  //
   //   TAO_Notify_EventChannel_i
+  //
   // = DESCRIPTION
   //
   //
  public:
-  TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFactory_i& my_factory);
-  // Constructor
+  TAO_Notify_EventChannel_i (CosNotifyChannelAdmin::EventChannelFactory_ptr my_factory, TAO_Notify_Resource_Manager* resource_manager);
+  // Constructor.
+  // <my_factory> is the parent.
 
   virtual ~TAO_Notify_EventChannel_i (void);
   // Destructor
 
-  // @@ Please add the comments!
-
   void init (const CosNotification::QoSProperties& initial_qos,
              const CosNotification::AdminProperties& initial_admin,
+             PortableServer::POA_ptr my_POA,
              CORBA::Environment &ACE_TRY_ENV);
-  //
+  // Initialize this object.
+  // checks if the <initial_qos> and <initial admin> are valid.
+  // creates default filter, consumer admin and supplier admin.
+  // If any part of the initialization fails, the <cleanup_i> method
+  // is called to undo any resource allocations.
 
-  TAO_Notify_Dispatcher& get_dispatcher (void);
-  //
+  CosNotifyChannelAdmin::EventChannel_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  // Get the CORBA object for this servant
 
-  // @@ Please read Notify_EventChannelFactory_i.h as to why this is
-  // not such a good idea....
-  CosNotifyChannelAdmin::EventChannel_ptr
-  get_ref (CORBA::Environment &ACE_TRY_ENV);
-  // Activate with the default POA
+  TAO_Notify_Event_Manager* get_event_manager (void);
+  // Get the event manager.
 
-  // = EventChannel methods.
+  // = Interface methods
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -177,6 +152,32 @@ virtual CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (
     CORBA::SystemException
   ));
 
+virtual CosNotification::QoSProperties * get_qos (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+virtual void set_qos (
+    const CosNotification::QoSProperties & qos,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ));
+
+virtual void validate_qos (
+    const CosNotification::QoSProperties & required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ));
+
 virtual CosNotification::AdminProperties * get_admin (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -193,80 +194,66 @@ virtual void set_admin (
     CosNotification::UnsupportedAdmin
   ));
 
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (
+virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (
+virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual void destroy (
+virtual void destroy (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
+                   CORBA::SystemException
   ));
 
  protected:
+// = Helper Methods
+ CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV);
+ // Create the default filter factory.
 
-  // @@ Pradeep, do you need a reference? They generate all kinds of
-  // trouble when used as members, naturally you may want those
-  // troubles (disable copy ctor, operator=, and in general
-  // rebinding), but maybe a comment could help.
+ void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+ // Cleanup all resources used by this object.
 
-  TAO_Notify_EventChannelFactory_i& my_factory_;
-  // The factory that created us.
+ // = Data Members
+ CosNotifyChannelAdmin::EventChannelFactory_var my_factory_;
+ // The factory that created us.
 
-  // @@ Pradeep: are these ID generators thread-safe? IMHO they should
-  // not be and each client class should take take of synchronization,
-  // for the same reasons that the map class in
-  // Notify_EventChannelFactory_i.h
+ PortableServer::POA_var my_POA_;
+ // The POA in which i live.
 
-  // should not be and
-  typedef ID_Pool<CosNotifyChannelAdmin::AdminID> IDGEN;
+ PortableServer::POA_var CA_POA_;
+ // The POA in which we should activate ConsumerAdmins in.
+ // We create and own this.
 
-  IDGEN consumer_admin_ids;
-  // Id generator for consumer admins.
+ PortableServer::POA_var SA_POA_;
+ // The POA in which we should activate SupplierAdmins in.
+ // We create and own this.
 
-  IDGEN supplier_admin_ids;
-  // Id generator for supplier admins.
+ CosNotifyFilter::FilterFactory_var default_filter_factory_;
+ // The default filter factory.
+ // We create and own this.
 
-  typedef
-  ACE_Hash_Map_Manager <CosNotifyChannelAdmin::AdminID,
-                                               TAO_Notify_ConsumerAdmin_i*,
-                                               ACE_SYNCH_MUTEX>
-  CONSUMERADMIN_MAP;
+ TAO_Notify_Resource_Manager* resource_manager_;
+ // We get this factory from the EventChannelFactory who owns it.
+ // This factory is accessible to all the objects created in this
+ // Event Channel.
 
-  CONSUMERADMIN_MAP consumer_admin_map_;
-  //
+ TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID,
+   CosNotifyChannelAdmin::AdminIDSeq> consumer_admin_ids_;
+ // Id generator for consumer admins.
 
-  typedef
-  ACE_Hash_Map_Manager <CosNotifyChannelAdmin::AdminID,
-                                               TAO_Notify_SupplierAdmin_i*,
-                                               ACE_SYNCH_MUTEX>
-  SUPPLIERADMIN_MAP;
-
-  SUPPLIERADMIN_MAP supplier_admin_map_;
-  //
-
-  TAO_Notify_Dispatcher *dispatcher_;
-  //
-
-  CosNotifyFilter::FilterFactory_var filter_factory_;
-  // The default filter factory
-
-  CosNotifyChannelAdmin::ConsumerAdmin_var default_consumeradmin_;
-  // The default Consumer Admin
-
-  CosNotifyChannelAdmin::SupplierAdmin_var default_supplieradmin_;
-  // The default Supplier Admin
+ TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID,
+   CosNotifyChannelAdmin::AdminIDSeq> supplier_admin_ids_;
+ // Id generator for supplier admins.
 
   const CosNotifyChannelAdmin::InterFilterGroupOperator default_op_;
   // Default InterFilterGroupOperator operator used when creating
@@ -275,11 +262,15 @@ virtual void set_admin (
   const CosNotifyChannelAdmin::AdminID default_id_;
   // Default id's to CosEventChannelAdmin::ConsumerAdmin, SupplierAdmin.
 
+  CORBA::Boolean is_destroyed_;
+  // Flag to tell if we have be destroyed.
+
   // @@ Pradeep can you explain why there is any maximum for these
   // values? Should they be configurable by the user so the resource
   // requirements can be bounded?
 
   // = Admin. properties
+  // for all these properties the default O implies no limit
   CORBA::Long max_queue_length_;
   // The maximum number of events that will be queued by the channel before
   // the channel begins discarding events or rejecting new events upon
@@ -293,10 +284,15 @@ virtual void set_admin (
   // The maximum number of suppliers that can be connected to the channel at
   // any given time.
 
+  TAO_Notify_QoSAdmin_i qos_admin_;
+  // Handle QoS admin methods.
+
+  TAO_Notify_Event_Manager* event_manager_;
+  // The event manager.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* NOTIFY_EVENTCHANNEL_I_H_ */
+#endif /* TAO_NOTIFY_EVENTCHANNEL_I_H_ */

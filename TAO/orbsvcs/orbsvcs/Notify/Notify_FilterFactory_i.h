@@ -21,8 +21,7 @@
 
 #include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
 
-class TAO_ORBSVCS_Export TAO_Notify_FilterFactory_i :
-public POA_CosNotifyFilter::FilterFactory
+class TAO_ORBSVCS_Export TAO_Notify_FilterFactory_i : public POA_CosNotifyFilter::FilterFactory, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //
