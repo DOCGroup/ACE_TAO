@@ -1,3 +1,12 @@
+Thu Mar 27 10:57:02 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/DOVEMIB: New version of the DOVE
+		  MIB.
+
+		* orbsvcs/tests/Simulator/README: Updated.
+
+		* docs/releasenotes/index.html: Updated.
+
 Thu Mar 26 21:24:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.*,corba.h (CORBA_ORB::shutdown): uninlined, so that
