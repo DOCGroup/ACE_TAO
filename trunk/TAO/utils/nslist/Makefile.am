@@ -7,7 +7,7 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.nsadd.am 
 
-noinst_PROGRAMS = nsadd
+bin_PROGRAMS = nsadd
 
 nsadd_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -34,7 +34,7 @@ nsadd_LDADD = \
 
 ## Makefile.nsdel.am 
 
-noinst_PROGRAMS += nsdel
+bin_PROGRAMS += nsdel
 
 nsdel_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -61,7 +61,7 @@ nsdel_LDADD = \
 
 ## Makefile.nslist.am 
 
-noinst_PROGRAMS += nslist
+bin_PROGRAMS += nslist
 
 nslist_CPPFLAGS = \
   -I$(ACE_ROOT) \

@@ -1,3 +1,15 @@
+Fri Sep  3 11:54:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* utils/catior/Makefile.am:
+	* utils/nslist/Makefile.am:
+
+	  Updated.
+
+	* utils/catior/caitor.mpc:
+	* utils/nslist/nslist.mpc:
+
+	  Changed to inherit from core.mpb so utilities will be installed.
+
 Fri Sep  3 21:46:10 2004  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/be/be_tmplinst.cpp:
