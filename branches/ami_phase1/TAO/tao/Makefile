@@ -1,4 +1,4 @@
-#----------------------------------------------------------------------------
+'#----------------------------------------------------------------------------
 #       $Id$
 #
 #       Makefile for TAO
@@ -29,9 +29,9 @@ PUB_HDRS = \
   Server_Strategy_Factory \
   Client_Strategy_Factory \
   ORB_Core \
-  IIOP_Wait_Strategy \
-  IIOP_RMS \
-  IIOP_Reply_Dispatcher
+  Wait_Strategy \
+  Request_Mux_Strategy \
+  Reply_Dispatcher
 
 POA_FILES = \
   Object_Adapter \
@@ -107,9 +107,9 @@ ORB_CORE_FILES = \
   Typecode_Constants \
   IOR_LookupTable \
   TAO \
-  IIOP_Wait_Strategy \
-  IIOP_RMS \
-  IIOP_Reply_Dispatcher	
+  Wait_Strategy \
+  Request_Mux_Strategy \
+  Reply_Dispatcher	
 
 DYNAMIC_ANY_FILES =
 
