@@ -1,3 +1,9 @@
+Thu Jan 15 16:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Bounded_Packet_Relay/Bounded_Packet_Relay.mpc:
+        * examples/Synch/Synch.mpc:
+          Added new mpc files for these examples
+
 Thu Jan 15 08:14:08 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
