@@ -1,5 +1,10 @@
 Sat Jul 17 12:20:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/High_Res_Timer: Added integrated support for Alpha and
+	  Pentium that will eliminate the 5sec startup delay for Linux/PII
+ 	  clients using the ACE high resolution timer.  Thanks to Thomas
+ 	  Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for these fixes.
+
 	* netsvcs/servers/main.cpp (main): Fixed a typo caused by recent
 	  integration of Jerry De Master's fixes.
 
