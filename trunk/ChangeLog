@@ -1,3 +1,23 @@
+Tue Apr 13 00:47:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Global_Macros.h (ACE_NEW_MALLOC_RETURN, ACE_NEW_MALLOC):
+	  (ACE_NEW_MALLOC_NORETURN, ACE_NEW_MALLOC_ARRAY_RETURN):
+	  (ACE_NEW_MALLOC_ARRAY):
+
+	  Explicitly cast the return value of the placement new operator
+	  call to "void" to address a "statement has no effect" warning
+	  exhibited by GNU g++ 3.4 (pre-release).
+
+	* ace/Arg_Shifter.cpp:
+	* ace/OS_NS_strings.h:
+	* ace/Unbounded_Set.h:
+
+	  Nuked trailing whitespace.
+
+	* ace/README:
+
+	  Updated autoconf support comments.
+
 Mon Apr 12 17:43:51 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-linux-common.h: In the newer-glibc section, add a
