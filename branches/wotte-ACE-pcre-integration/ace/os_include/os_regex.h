@@ -28,6 +28,10 @@
 
 #if !defined (ACE_LACKS_REGEX_H)
 # include /**/ <regex.h>
+# define ACE_HAS_POSIX_REGEX
+#elif defined (ACE_HAS_PCRE)
+# include /**/ "pcre/pcreposix.h"
+# define ACE_HAS_POSIX_REGEX
 #endif /* !ACE_LACKS_REGEX_H */
 
 #if defined (ACE_HAS_REGEX)
