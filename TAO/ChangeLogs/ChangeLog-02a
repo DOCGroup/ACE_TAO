@@ -1,3 +1,14 @@
+Fri Apr 28 21:32:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * MessagingC.i:
+        * MessagingC.cpp:
+        * MessagingS.cpp:
+        * diffs/MessagingC.i.diff:
+        * diffs/MessagingC.cpp.diff:
+        * diffs/MessagingS.cpp.diff:
+          Fixed problems when not all the fancy features (ami, callbacks,
+          messaging, smart proxies) are enabled.
+
 Fri Apr 28 23:29:03 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
