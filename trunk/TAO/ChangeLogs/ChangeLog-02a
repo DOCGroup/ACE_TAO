@@ -1,3 +1,11 @@
+Wed Jan 19 12:07:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	  Fixed demarshaling for unions having members with
+	  multiple case labels. Thanks to
+	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting
+	  the bug.
+
 Tue Jan 18 20:45:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Timed_Buffered_Oneways/run_test.pl:
