@@ -21,9 +21,6 @@ public:
 
   void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
-  void ping (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -50,13 +47,6 @@ Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
              "(%P|%t) Shutting down \n"));
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-}
-
-void
-Test_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // no-op
 }
 
 //*************************************************************************
@@ -263,4 +253,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
