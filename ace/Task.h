@@ -181,9 +181,14 @@ public:
                         ACE_thread_t thread_ids[] = 0);
 
   /**
-   * Block until there are no more threads spawned by this task
-   * running .  Returns 0 on success and -1 on failure.  Note that
-   * this method will not wait on detached threads.
+   * Block until there are no more threads running in this task.
+   * This method will not wait for either detached or daemon threads;
+   * the threads must have been spawned with the @c THR_JOINABLE flag.
+   * Upon successful completion, the threads have been joined, so further
+   * attempts to join with any of the waited-for threads will fail.
+   *
+   * @retval 0  Success.
+   * @retval -1 Failure (consult errno for further information).
    */
   virtual int wait (void);
 
