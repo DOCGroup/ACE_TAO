@@ -41,7 +41,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
   : TAO_UIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
     orb_core_ (TAO_ORB_Core_instance ())
 {
-  uiop_transport_ = new TAO_UIOP_Server_Transport(this);
+  uiop_transport_ = new TAO_UIOP_Server_Transport (this);
 }
 
 // @@ For pluggable protocols, added a reference to the
@@ -50,7 +50,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
   : TAO_UIOP_Handler_Base (orb_core),
     orb_core_ (orb_core)
 {
-  uiop_transport_ = new TAO_UIOP_Server_Transport(this);
+  uiop_transport_ = new TAO_UIOP_Server_Transport (this);
 }
 
 TAO_Transport *
@@ -97,8 +97,7 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
 
   char client[MAXPATHLEN + 1];
 
-  if (addr.get_path_name (client, MAXPATHLEN) == -1)
-    addr.addr_to_string (client, sizeof (client));
+  addr.addr_to_string (client, sizeof (client));
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
@@ -293,7 +292,7 @@ TAO_UIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                                    CORBA::ULong &request_id,
                                                    CORBA::Environment &env)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
 
   // This will extract the request header, set <response_required> as
   // appropriate.
@@ -465,7 +464,7 @@ TAO_UIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 void
 TAO_UIOP_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
   TAO_GIOP::send_request (this->uiop_transport_,
                           output,
@@ -478,7 +477,7 @@ void
 TAO_UIOP_Server_Connection_Handler::send_error (CORBA::ULong request_id,
                                            CORBA::Exception *x)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
   // The request_id is going to be not 0, if it was sucessfully read
   if (request_id != 0)
@@ -532,7 +531,7 @@ TAO_UIOP_Server_Connection_Handler::send_error (CORBA::ULong request_id,
               // Write the exception
               CORBA::TypeCode_ptr except_tc = x->_type ();
 
-              CORBA::ExceptionType extype = CORBA::USER_EXCEPTION;
+              CORBA::exception_type extype = CORBA::USER_EXCEPTION;
               if (CORBA::SystemException::_narrow (x) != 0)
                 extype = CORBA::SYSTEM_EXCEPTION;
 
@@ -573,7 +572,7 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // 2. construct a complete request
   // 3. dispatch that request and return any required reply and errors
 
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
@@ -601,7 +600,7 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
       TAO_GIOP::Message_Type type =
         TAO_GIOP::recv_request (this->uiop_transport_, input, this->orb_core_);
 
-      TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
+      //      TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
 
       // Check to see if we've been cancelled cooperatively.
       if (this->orb_core_->orb ()->should_shutdown () != 0)
@@ -738,7 +737,7 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
       return -1;
     }
 
-  TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
+  //  TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
 
   return result;
 }
@@ -904,21 +903,21 @@ TAO_UIOP_Client_Connection_Handler::close (u_long)
 
 // ****************************************************************
 
-TAO_RW_Client_Connection_Handler::TAO_RW_Client_Connection_Handler (ACE_Thread_Manager *t)
+TAO_RW_UIOP_Client_Connection_Handler::TAO_RW_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_Client_Connection_Handler (t)
 {
 }
 
-TAO_RW_Client_Connection_Handler::~TAO_RW_Client_Connection_Handler (void)
+TAO_RW_UIOP_Client_Connection_Handler::~TAO_RW_UIOP_Client_Connection_Handler (void)
 {
 }
 
 int
-TAO_RW_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
+TAO_RW_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                 TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  // TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -937,7 +936,7 @@ TAO_RW_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                   stream,
                                                   orb_core));
 
-  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+  //  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
   if (!success)
     return -1;
@@ -946,7 +945,7 @@ TAO_RW_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
 }
 
 int
-TAO_RW_Client_Connection_Handler::resume_handler (ACE_Reactor *)
+TAO_RW_UIOP_Client_Connection_Handler::resume_handler (ACE_Reactor *)
 {
   // Since we don't suspend, we don't have to resume.
   return 0;
@@ -954,17 +953,17 @@ TAO_RW_Client_Connection_Handler::resume_handler (ACE_Reactor *)
 
 // ****************************************************************
 
-TAO_ST_Client_Connection_Handler::TAO_ST_Client_Connection_Handler (ACE_Thread_Manager *t)
+TAO_ST_UIOP_Client_Connection_Handler::TAO_ST_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_Client_Connection_Handler (t)
 {
 }
 
-TAO_ST_Client_Connection_Handler::~TAO_ST_Client_Connection_Handler (void)
+TAO_ST_UIOP_Client_Connection_Handler::~TAO_ST_UIOP_Client_Connection_Handler (void)
 {
 }
 
 int
-TAO_ST_Client_Connection_Handler::open (void *something)
+TAO_ST_UIOP_Client_Connection_Handler::open (void *something)
 {
   int result = TAO_UIOP_Client_Connection_Handler::open (something);
 
@@ -982,11 +981,11 @@ TAO_ST_Client_Connection_Handler::open (void *something)
 //    GIOP object.  Some of this mothod's functionality should be moved
 //    to GIOP. fredk
 int
-TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
+TAO_ST_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                 TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -1003,7 +1002,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
   int success  = (int) TAO_GIOP::send_request (this->uiop_transport_,
                                                stream,
                                                orb_core);
-  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+  //  TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
   if (!success)
     return -1;
@@ -1039,7 +1038,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
 }
 
 int
-TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_ST_UIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
   int retval = 0;
 
@@ -1058,7 +1057,7 @@ TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-TAO_ST_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
+TAO_ST_UIOP_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 {
   return reactor->resume_handler (this);
 }
@@ -1113,7 +1112,7 @@ TAO_MT_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                      TAO_OutputCDR &stream,
                                                      int is_twoway)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // Save the ORB_Core for the handle_input callback...
   this->orb_core_ = orb_core;
@@ -1136,7 +1135,7 @@ TAO_MT_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                    stream,
                                                    this->orb_core_);
 
-      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+      //      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
       if (!success)
         return -1;
@@ -1171,7 +1170,7 @@ TAO_MT_UIOP_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                   stream,
                                                   orb_core);
 
-      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
+      //      TAO_MINIMAL_TIMEPROBE (GIOP_SEND_REQUEST_RETURN);
 
       if (!success)
         {
@@ -1357,7 +1356,6 @@ TAO_MT_UIOP_Client_Connection_Handler::resume_handler (ACE_Reactor *reactor)
 // ****************************************************************
 
 #define TAO_UIOP_SVC_TUPLE ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>
-#define UIOP_CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 #define UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -1369,6 +1367,36 @@ template class ACE_Map_Iterator_Base<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTE
 template class ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>;
+
+template class ACE_Hash_Map_Manager<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Manager_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Entry<ACE_UNIX_Addr, TAO_Object_Adapter *>;
+template class ACE_Hash<ACE_UNIX_Addr>;
+template class ACE_Equal_To<ACE_UNIX_Addr>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>;
+
+template class ACE_Hash_Map_Entry<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *>;
+template class ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+template class ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+template class ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR
@@ -1378,6 +1406,35 @@ template class ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>;
 #pragma instantiate ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>
+
+#pragma instantiate ACE_Hash_Map_Manager<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_UNIX_Addr, TAO_Object_Adapter *>
+#pragma instantiate ACE_Hash<ACE_UNIX_Addr>
+#pragma instantiate ACE_Equal_To<ACE_UNIX_Addr>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_UNIX_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UNIX_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_UNIX_Addr>, ACE_Equal_To<ACE_UNIX_Addr>, TAO_Collocation_Table_Lock>
+
+#pragma instantiate ACE_Hash_Map_Entry<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *>
+#pragma instantiate ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>
+#pragma instantiate ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>
+#pragma instantiate ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

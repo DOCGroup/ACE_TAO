@@ -24,6 +24,8 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
+#include "tao/Connector_Registry.h"
+#include "tao/Acceptor_Registry.h"
 
 class TAO_Client_Connection_Handler;
 class TAO_POA;
@@ -85,10 +87,12 @@ public:
   TAO_Connector_Registry *connector_registry (TAO_Connector_Registry *c);
   TAO_Connector_Registry *connector_registry (void);
 
-  // = Set/get the acceptor.
-  TAO_Acceptor *acceptor (TAO_Acceptor *a);
-  TAO_Acceptor *acceptor (void);
-  // Accessor which returns the acceptor.
+  // = Set/get the acceptor registry - used to just be the acceptor!
+  TAO_Acceptor_Registry  *acceptor_registry  (TAO_Acceptor_Registry  *a);
+  TAO_Acceptor_Registry  *acceptor_registry  (void);
+
+  TAO_ProtocolFactorySet *protocol_factories (TAO_ProtocolFactorySet *pf);
+  TAO_ProtocolFactorySet *protocol_factories (void);
 
   // = Set/get pointer to the ORB.
   CORBA::ORB_ptr orb (CORBA::ORB_ptr);
@@ -151,14 +155,6 @@ public:
 
   int add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table);
   // Add the init_ref (objectID->IOR) to the Lookup Table.
-
-#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-  CORBA::Boolean arl_same_port_connect (void);
-  // Access function to query whether we want this feature or not.
-  // This is a specialization only for the ARL at Wash U.
-  // This setting this flag will for the connect use the same port
-  // that the server uses.
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
   int leader_available (void);
   // returns the refcount on the leader
@@ -262,10 +258,10 @@ public:
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 protected:
-  int set_endpoint (int dotted_decimal_addresses,
-                    CORBA::UShort port,
-                    ACE_CString &host,
-                    ACE_INET_Addr &rendezvous);
+  int set_iiop_endpoint (int dotted_decimal_addresses,
+                         CORBA::UShort port,
+                         ACE_CString &host,
+                         ACE_CString &iiop_endpoint);
   // Set the endpoint
 
   int init (int& argc, char ** argv);
@@ -295,6 +291,13 @@ protected:
   // The connector registry which all active connecters must register
   // themselves with.
 
+  TAO_Acceptor_Registry *acceptor_registry_;
+  // The registry which maintains a list of acceptor factories for each
+  // loaded protocol. 
+
+  TAO_ProtocolFactorySet *protocol_factories_;
+  // Pointer to the list of protocol loaded into this ORB instance.
+
   CORBA::ORB_ptr orb_;
   // @@ Should we keep a single ORB pointer? This is good because
   //    multiple calls to ORB_init() with the same ORBid can use the
@@ -317,15 +320,14 @@ protected:
   // The address of the endpoint on which we're listening for
   // connections and requests.
 
-  TAO_Acceptor *acceptor_;
-  // The acceptor passively listening for connection requests.
-
   TAO_Resource_Factory *resource_factory_;
   // Handle to the factory for resource information..
 
   CORBA::Boolean resource_factory_from_service_config_;
   // TRUE if <resource_factory_> was obtained from the Service
   // Configurator.
+  // @@ This is not needed since the default resource factory
+  //    is staticaly added to the service configurator.
 
   TAO_Client_Strategy_Factory *client_factory_;
   // Handle to the factory for Client-side strategies.
@@ -333,6 +335,8 @@ protected:
   CORBA::Boolean client_factory_from_service_config_;
   // TRUE if <client_factory_> was obtained from the Service
   // Configurator.
+  // @@ This is not needed since the client facotry factory
+  //    is staticaly added to the service configurator.
 
   TAO_Server_Strategy_Factory *server_factory_;
   // Handle to the factory for Server-side strategies.
@@ -340,17 +344,12 @@ protected:
   CORBA::Boolean server_factory_from_service_config_;
   // TRUE if <server_factory_> was obtained from the Service
   // Configurator.
+  // @@ This is not needed since the server factory factory
+  //    is staticaly added to the service configurator.
 
   CORBA::Boolean opt_for_collocation_;
   // TRUE if we want to take advantage of collocation optimization in
   // this ORB.
-
-#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-  CORBA::Boolean arl_same_port_connect_;
-  // This is a specialization only for the ARL at Wash U.
-  // This setting this flag will for the connect use the same port
-  // that the server uses.
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
   char *preconnections_;
   // A string of comma-separated <{host}>:<{port}> pairs used to

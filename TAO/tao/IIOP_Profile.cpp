@@ -6,7 +6,6 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
-#include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/POA.h"
 #include "tao/debug.h"
@@ -21,9 +20,9 @@ static const char *prefix_ = "iiop:";
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const char *object_key)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
@@ -44,9 +43,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const TAO_ObjectKey& object_key)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
@@ -62,9 +61,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const TAO_IOP_Version& version,
                                     const char *object_key)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (version),
     object_key_ (),
@@ -86,9 +85,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (version),
     object_key_ (object_key),
@@ -104,9 +103,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const TAO_ObjectKey& object_key)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (port),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
@@ -130,9 +129,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const TAO_ObjectKey& object_key,
 				    const ACE_INET_Addr& addr)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (port),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
@@ -156,9 +155,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (port),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
@@ -177,9 +176,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
-  : host_(0),
+  : TAO_Profile (pfile->tag ()),
+    host_(0),
     port_(pfile->port_),
-    tag_(pfile->tag_),
     body_(pfile->body_),
     version_(pfile->version_),
     object_key_(pfile->object_key_),
@@ -197,9 +196,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
-  : host_(0),
+  : TAO_Profile (pfile.tag ()),
+    host_(0),
     port_(pfile.port_),
-    tag_(pfile.tag_),
     body_(pfile.body_),
     version_(pfile.version_),
     object_key_(pfile.object_key_),
@@ -217,9 +216,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IOP_Version &version)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (version),
     object_key_ (),
@@ -230,10 +229,11 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IOP_Version &version)
 {
 }
 
-TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string, CORBA::Environment &env)
-  : host_ (0),
+TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
+                                    CORBA::Environment &env)
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
@@ -246,9 +246,9 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string, CORBA::Environment &env)
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (void)
-  : host_ (0),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
+    host_ (0),
     port_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
     body_ (),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
@@ -373,7 +373,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   if (!string || !*string)
     return 0;
 
-  // Remove the "N.N//" prefix, and verify the version's one
+  // Remove the "N.N//" prefix, and verify the version is one
   // that we accept
 
   if (isdigit (string [0])
@@ -387,12 +387,19 @@ TAO_IIOP_Profile::parse_string (const char *string,
       this->version_.set_version ((char) (string [0] - '0'),
                                   (char) (string [2] - '0'));
       string += 5;
+      // Skip over the "N.N//"
     }
   else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+    {
+      // ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+      // The version is optional so don't throw an exception.
+ 
+      string += 2;
+      // Skip over the "//"
+    }
 
-  if (this->version_.major != TAO_IIOP_Profile::DEF_IIOP_MAJOR
-      || this->version_.minor  > TAO_IIOP_Profile::DEF_IIOP_MINOR)
+  if (this->version_.major != TAO_IIOP_Profile::DEF_IIOP_MAJOR ||
+      this->version_.minor >  TAO_IIOP_Profile::DEF_IIOP_MINOR)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
@@ -439,6 +446,11 @@ TAO_IIOP_Profile::parse_string (const char *string,
     }
 
   this->port_ = (CORBA::UShort) ACE_OS::atoi (start);
+  // @@ This call to atoi appears to pass in a string that
+  //    still has the object key appended to it.
+  //    Shouldn't we actually parse the port from the string
+  //    rather than pass a `port/object_key' combined string?
+  //                      -Ossama
 
   this->object_addr_.set (this->port_, this->host_);
 
@@ -668,11 +680,8 @@ TAO_IIOP_Profile::prefix (void)
 int
 TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
 {
-  // UNSIGNED LONG, tag for this protocol profile;
-  // @@ it seems like this is not a good separation of concerns, why
-  // do we write the TAG here? That's generic code and should be
-  // handled by the object reference writer (IMHO).
-  stream.write_ulong (TAO_IOP_TAG_INTERNET_IOP);
+  // UNSIGNED LONG, protocol tag
+  stream.write_ulong (this->tag ());
 
   // UNSIGNED LONG, number of succeeding bytes in the
   // encapsulation.  We don't actually need to make the

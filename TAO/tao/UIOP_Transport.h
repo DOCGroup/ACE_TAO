@@ -29,6 +29,7 @@
 class TAO_UIOP_Handler_Base;
 class TAO_UIOP_Client_Connection_Handler;
 class TAO_UIOP_Server_Connection_Handler;
+class TAO_ORB_Core;
 
 class TAO_Export TAO_UIOP_Transport : public TAO_Transport
 {
@@ -111,9 +112,6 @@ protected:
   TAO_UIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
   // communication protocols.
-
-  CORBA::ULong tag_;
-  // UIOP tag.
 };
 
 class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
@@ -125,15 +123,15 @@ class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
-  TAO_UIOP_Client_Transport (TAO_Client_Connection_Handler *handler);
+  TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler);
   // Constructor.  Note, TAO_UIOP_Handler_Base is the base class for
-  // both TAO_Client_Connection_Handler and
-  // TAO_Server_Connection_Handler.
+  // both TAO_UIOP_Client_Connection_Handler and
+  // TAO_UIOP_Server_Connection_Handler.
 
   ~TAO_UIOP_Client_Transport (void);
   // destructor
 
-  TAO_Client_Connection_Handler *client_handler (void);
+  TAO_UIOP_Client_Connection_Handler *client_handler (void);
   // return a pointer to the client's connection handler.
 
   int send_request (TAO_ORB_Core *orb_core,
@@ -145,7 +143,7 @@ public:
   // pattern.
 
 private:
-  TAO_Client_Connection_Handler *client_handler_;
+  TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
 };
 
@@ -156,23 +154,22 @@ class TAO_Export TAO_UIOP_Server_Transport : public TAO_UIOP_Transport
   //   connected client.
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Specialization of the TAO_UIOP_Transport class for the server side.
+  //   methods for reading messages (requests) and sending replies live
+  //   here.
 public:
 
-  TAO_UIOP_Server_Transport (TAO_Server_Connection_Handler *handler);
+  TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler);
   //  Default creator method.
 
   ~TAO_UIOP_Server_Transport (void);
   // Default destructor
 
-  TAO_Server_Connection_Handler *server_handler (void);
+  TAO_UIOP_Server_Connection_Handler *server_handler (void);
   //  Return a pointer to the underlying connection handler. 
 
-//  virtual int send_response (TAO_OutputCDR &response);
-  // @@ Fred, should this method be removed?
-
 private:
-  TAO_Server_Connection_Handler *server_handler_;
+  TAO_UIOP_Server_Connection_Handler *server_handler_;
   // Pointer to the corresponding connection handler.
 };
 

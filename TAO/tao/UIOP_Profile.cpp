@@ -8,7 +8,6 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
-#include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/POA.h"
 #include "tao/debug.h"
@@ -23,8 +22,8 @@ static const char *prefix_ = "uiop:";
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const char *object_key)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP), // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
@@ -45,8 +44,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const TAO_ObjectKey& object_key)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP), // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
@@ -62,8 +61,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const TAO_IOP_Version& version,
                                     const char *object_key)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (version),
     object_key_ (),
@@ -85,8 +84,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (version),
     object_key_ (object_key),
@@ -101,8 +100,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
                                     const TAO_ObjectKey& object_key)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
@@ -125,8 +124,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
                                     const TAO_ObjectKey& object_key,
                                     const ACE_UNIX_Addr& addr)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
@@ -149,8 +148,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
                                     const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
@@ -169,8 +168,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile)
-  : rendezvous_point_(0),
-    tag_(pfile->tag_),
+  : TAO_Profile (pfile->tag ()),
+    rendezvous_point_(0),
     body_(pfile->body_),
     version_(pfile->version_),
     object_key_(pfile->object_key_),
@@ -188,8 +187,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile)
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
-  : rendezvous_point_(0),
-    tag_(pfile.tag_),
+  : TAO_Profile (pfile.tag ()),
+    rendezvous_point_(0),
     body_(pfile.body_),
     version_(pfile.version_),
     object_key_(pfile.object_key_),
@@ -207,8 +206,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (version),
     object_key_ (),
@@ -221,8 +220,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     CORBA::Environment &env)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
@@ -235,8 +234,8 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (void)
-  : rendezvous_point_ (0),
-    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),  // @@ FIXME --- for IIOP?
+    rendezvous_point_ (0),
     body_ (),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
@@ -251,30 +250,16 @@ int
 TAO_UIOP_Profile::set (const ACE_UNIX_Addr& addr)
 {
   char temp_rendezvous_point[MAXPATHLEN + 1];
-  const char *temp_rendezvous_point2 = 0;
 
-//   if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
-//     {
-//       temp_rendezvous_point2 = addr.get_rendezvous_point_addr ();
-//       if (temp_rendezvous_point2 == 0)
-//         return -1;
-//     }
-//   else
-//     {
-      if (addr.get_rendezvous_point_name (temprendezvous_point,
-                                          sizeof (temp_rendezvous_point)) != 0)
-        return -1;
-
-      temp_rendezvous_point2 = temp_rendezvous_point;
-//     }
+  addr.addr_to_string (temp_rendezvous_point, sizeof (temp_rendezvous_point));
 
   ACE_NEW_RETURN (this->rendezvous_point_,
-                  char[ACE_OS::strlen (temp_rendezvous_point2) + 1],
+                  char[ACE_OS::strlen (temp_rendezvous_point) + 1],
                   -1);
-  ACE_OS::strcpy (this->rendezvous_point_, temp_rendezvous_point2);
 
-  return 0;
+  ACE_OS::strcpy (this->rendezvous_point_, temp_rendezvous_point);
 
+  return 0;  // Success
 }
 
 TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
@@ -525,7 +510,7 @@ TAO_UIOP_Profile::rendezvous_point (const char *r)
       this->rendezvous_point_ = 0;
     }
 
-  if (h)
+  if (r)
     {
       ACE_NEW_RETURN (this->rendezvous_point_,
                       char[ACE_OS::strlen (r) + 1],

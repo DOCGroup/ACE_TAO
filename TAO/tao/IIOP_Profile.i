@@ -1,10 +1,5 @@
+// -*- C++ -*-
 // $Id$
-
-ACE_INLINE CORBA::ULong
-TAO_IIOP_Profile::tag (void) const
-{
-  return this->tag_;
-}
 
 ACE_INLINE const TAO_ObjectKey &
 TAO_IIOP_Profile::object_key (void) const

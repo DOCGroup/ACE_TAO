@@ -13,6 +13,7 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Auto_Ptr.h"
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
@@ -202,33 +203,15 @@ CORBA_ORB::open (void)
   //    Pluggable.h file for a description on how to do that],
   //    activate the acceptor with the reactor and insert it in the
   //    Acceptor Registry.
-  TAO_IIOP_BASE_ACCEPTOR *iiop_acceptor =
-    ACE_dynamic_cast (TAO_IIOP_BASE_ACCEPTOR *,
-                      this->orb_core_->acceptor ()->acceptor ());
+  TAO_Acceptor_Registry *ar = this->orb_core_->acceptor_registry ();
+  // get a reference to the acceptor_registry!
 
-  // Initialize the endpoint ... or try!
+  // Initialize the endpoint ... the registry will use the orb_core_
+  // to obtain a list of endpoints and strategies!
 
-  if (iiop_acceptor->open (this->orb_core_->orb_params ()->addr (),
-                           this->orb_core_->reactor(),
-                           f->creation_strategy (),
-                           f->accept_strategy (),
-                           f->concurrency_strategy (),
-                           f->scheduling_strategy ()) == -1)
+  if (ar->open (this->orb_core_) == -1)
     // Need to return an error somehow!!  Maybe set do_exit?
     return -1;
-
-  // The following step is necessary since the user may have specified
-  // a 0 for a port number.  Once we open the acceptor, we can recheck
-  // the address and get the accurate port number.
-  ACE_INET_Addr new_address;
-  if (iiop_acceptor->acceptor ().get_local_addr (new_address) == -1)
-    return -1;
-
-  // Reset the address
-  this->orb_core_->orb_params ()->addr (new_address);
-
-  iiop_acceptor->acceptor ().enable (ACE_CLOEXEC);
-  this->orb_core_->add_to_collocation_table ();
 
   return 0;
 }
@@ -971,24 +954,24 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   // First we create a profile list, well actually a list of one!
   // @@ should go to the acceptor for this, the orb delegates to the acceptor
   // to create Profiles!
-
-  // @@ Fred, please change this code to use auto_ptr<> and
-  //    automatically deallocate the temporary objects. Alternatively
-  //    consider about using references ;-)
   TAO_MProfile mp (1);
 
   TAO_ORB_Parameters *orb_params =
     this->orb_core_->orb_params ();
 
+  // @@ Ug, broken.  Again, we need to go to the acceptor registry
+  //  (when we got one) for this!!! [fredk]
   TAO_IIOP_Profile *pfile;
   ACE_NEW_THROW_EX (pfile,
                     TAO_IIOP_Profile (orb_params->host (),
                                       orb_params->addr ().get_port_number (),
                                       key,
                                       orb_params->addr ()),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, 
+                                      CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
-
+  // we give up the profile to the mp object.  If the mp object is deleted,
+  // the pfile will be taken care of (reference decremented by one!).
   mp.give_profile (pfile);
 
   ACE_NEW_THROW_EX (stub,
@@ -1424,32 +1407,46 @@ CORBA_ORB::string_to_object (const char *str,
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  // Use the prefix code to choose which destringify algorithm to use.
-  const size_t iiop_prefix_len =
-    ACE_OS::strlen (TAO_IIOP_Profile::prefix ());
   if (ACE_OS::strncmp (str,
-                       TAO_IIOP_Profile::prefix (),
-                       iiop_prefix_len) == 0)
-    obj = this->iiop_string_to_object (str + iiop_prefix_len,
+                       file_prefix,
+                       sizeof file_prefix - 1) == 0)
+    obj = this->file_string_to_object (str + sizeof file_prefix - 1,
                                        ACE_TRY_ENV);
-
-  else if (ACE_OS::strncmp (str,
-                            file_prefix,
-                            sizeof file_prefix - 1) == 0)
-    obj = this->file_string_to_object (str + sizeof file_prefix -1,
-                                       ACE_TRY_ENV);
-
   else if (ACE_OS::strncmp (str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     obj = this->ior_string_to_object (str + sizeof ior_prefix - 1,
                                       ACE_TRY_ENV);
+  else
+    {
+      TAO_MProfile mprofile (1);
+      // It is safe to declare this on the stack since the contents of
+      // mprofile get copied.
 
-  else if (ACE_OS::strncmp (str,
-                            iioploc_prefix,
-                            sizeof iioploc_prefix - 1) == 0)
-    obj = this->iioploc_string_to_object (str + sizeof iioploc_prefix - 1,
-                                          ACE_TRY_ENV);
+      if (this->orb_core_->connector_registry ()->make_mprofile (str,
+                                                                 mprofile,
+                                                                 ACE_TRY_ENV)
+          != 0)
+        {
+          ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Object::_nil ());
+        }
+
+      // Now make the TAO_Stub.
+      TAO_Stub *data;
+      ACE_NEW_RETURN (data,
+                      TAO_Stub ((char *) 0, mprofile, this->orb_core_),
+                      CORBA::Object::_nil ());
+
+      // Create the CORBA level proxy.
+      TAO_ServantBase *servant = this->_get_collocated_servant (data);
+
+      // This will increase the ref_count on data by one
+      ACE_NEW_RETURN (obj,
+                      CORBA_Object (data,
+                                    servant,
+                                    servant != 0),
+                      CORBA::Object::_nil ());
+    }
 
   return obj;
 }
@@ -1509,135 +1506,6 @@ CORBA_ORB::ior_string_to_object (const char *str,
   stream >> objref;
 
   return objref;
-}
-
-// Destringify URL style IIOP objref.
-CORBA::Object_ptr
-CORBA_ORB::iiop_string_to_object (const char *string,
-                                  CORBA::Environment &ACE_TRY_ENV)
-{
-  // NIL objref encodes as just "iiop:" ... which has already been
-  // removed, so we see it as an empty string.
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  if (!string || !*string)
-    return obj;
-
-  // type ID not encoded in this string ... makes narrowing rather
-  // expensive, though it does ensure that type-safe narrowing code
-  // gets thoroughly excercised/debugged!  Without a typeID, the
-  // _narrow will be required to make an expensive remote "is_a" call.
-
-  // Allocate a Multiple Profile with the given no. of profiles.
-  TAO_MProfile mp (1);
-
-  TAO_Profile* pfile;
-  ACE_NEW_RETURN (pfile,
-                  TAO_IIOP_Profile (string, ACE_TRY_ENV),
-                  obj);
-  ACE_CHECK_RETURN (obj);
-  // pfile refcount == 1
-
-  mp.give_profile (pfile);
-
-  // Now make the TAO_Stub ...
-  TAO_Stub *data;
-  ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, mp, this->orb_core_),
-                  obj);
-  // pfile refcount == 2
-
-  // Create the CORBA level proxy.
-  TAO_ServantBase *servant =
-    this->_get_collocated_servant (data);
-
-  ACE_NEW_RETURN (obj,
-                  CORBA_Object (data,
-                                servant,
-                                servant != 0),
-                  obj);
-
-  // Set the ref_count on data to 1, which is correct, because only
-  // obj has now a reference to it.
-  // data->_decr_refcnt ();
-
-  return obj;
-}
-
-// DeStringifies the iioploc style IORs. This function creates a Stub
-// object with multiple profiles and then the object reference.
-CORBA::Object_ptr
-CORBA_ORB::iioploc_string_to_object (const char *string,
-                                     CORBA::Environment &env)
-{
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - iioploc_string_to_object <%s>\n",
-                string));
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  // NIL objref encodes as just "iioploc:" ... which has already been
-  // removed, so we see it as an empty string.
-
-  if (!string || !*string)
-    return CORBA::Object::_nil ();
-
-  // We want to modify list_of_profiles.
-  char *list_of_profiles = ACE_OS::strdup (string);
-
-  // Count the No. of profiles in the given list.
-  int profile_count = 1;
-
-  for (size_t i = 0;
-       i < ACE_OS::strlen (list_of_profiles);
-       i++)
-    {
-      if (*(list_of_profiles + i) == ',')
-        profile_count++;
-    }
-
-  TAO_MProfile mp (profile_count);
-
-  // Extract the comma separated profiles in the list and
-  // populate the Multiple Profile.
-  TAO_IIOP_Profile *pfile;
-  char *lasts = 0;
-
-  for (char *str = ACE_OS::strtok_r (list_of_profiles, ",", &lasts);
-       str != 0 ;
-       str = ACE_OS::strtok_r (0, ",",&lasts))
-
-    {
-      ACE_NEW_RETURN (pfile,
-                      TAO_IIOP_Profile (str,
-                                        env),
-                      CORBA::Object::_nil ());
-
-      // Give up ownership of the profile.
-      mp.give_profile (pfile);
-    }
-
-  // Dont need the list of profiles any more.
-  ACE_OS::free (list_of_profiles);
-
-  // Now make the TAO_Stub ...
-  TAO_Stub *data;
-  ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, mp, this->orb_core_),
-                  CORBA::Object::_nil ());
-
-  // Create the CORBA level proxy.
-  TAO_ServantBase *servant =
-    this->_get_collocated_servant (data);
-
-  // This will increase the ref_count on data by one
-  ACE_NEW_RETURN (obj,
-                  CORBA_Object (data,
-                                servant,
-                                servant != 0),
-                  CORBA::Object::_nil ());
-
-  return obj;
 }
 
 CORBA::Object_ptr
@@ -1985,28 +1853,7 @@ template class TAO_Unbounded_Sequence<CORBA::Octet>;
 
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
-template class CACHED_CONNECT_STRATEGY;
 template class ACE_Guard<TAO_Cached_Connector_Lock>;
-template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>;
-template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
-
-template class ACE_Unbounded_Set<ACE_INET_Addr>;
-template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -2016,27 +1863,6 @@ template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
-#pragma instantiate CACHED_CONNECT_STRATEGY
 #pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>
-#pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>
-#pragma instantiate ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>
-#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
-
-#pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_INET_Addr>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -26,12 +26,23 @@
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
 #include "tao/Pluggable.h"
-#include "tao/Connect.h"
+#include "tao/UIOP_Connect.h"
 
-typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
+// *******************************************************************
+//
+// @@ More hacks until we get things better strategized.
+//                                    -Ossama
+// = Server-side factory types.
+typedef ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_CREATION_STRATEGY;
+typedef ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> UIOP_ACCEPT_STRATEGY;
+typedef ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_CONCURRENCY_STRATEGY;
+typedef ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_SCHEDULING_STRATEGY;
+// *******************************************************************
+
+typedef ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler,
                               ACE_LSOCK_ACCEPTOR>
         TAO_UIOP_BASE_ACCEPTOR;
-// was defined in Connect.h
+// was defined in UIOP_Connect.h
 
 // TAO UIOP_Acceptor concrete call defination
 
@@ -49,8 +60,8 @@ public:
   TAO_UIOP_Acceptor (void);
   // Create Acceptor object using addr.
 
-  CORBA::ULong tag (void);
-  // The tag, each concrete class will have a specific tag value.
+  int open (TAO_ORB_Core *orb_core, ACE_CString &address);
+  // initialize acceptor for this address.
 
   virtual TAO_Profile *create_profile (TAO_ObjectKey& object_key);
   // create profile object for this Acceptor using the SAP
@@ -63,8 +74,11 @@ private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
 
-  CORBA::ULong tag_;
-  //  the IOP specific tag.
+  // = Server-side factory types.
+  static UIOP_CREATION_STRATEGY UIOP_Creation_Strategy_;
+  static UIOP_ACCEPT_STRATEGY UIOP_Accept_Strategy_;
+  static UIOP_CONCURRENCY_STRATEGY UIOP_Concurrency_Strategy_;
+  static UIOP_SCHEDULING_STRATEGY UIOP_Scheduling_Strategy_;
 };
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -66,18 +66,33 @@ TAO_ORB_Core::connector_registry (void)
   return TAO_OC_RETRIEVE (connector_registry);
 }
 
-ACE_INLINE TAO_Acceptor *
-TAO_ORB_Core::acceptor (TAO_Acceptor *a)
+ACE_INLINE TAO_Acceptor_Registry *
+TAO_ORB_Core::acceptor_registry (TAO_Acceptor_Registry *ar)
 {
-  TAO_Acceptor *old_acceptor = this->acceptor_;
-  this->acceptor_ = a;
-  return old_acceptor;
+  TAO_Acceptor_Registry *old_ar = this->acceptor_registry_;
+  this->acceptor_registry_ = ar;
+  return old_ar;
 }
 
-ACE_INLINE TAO_Acceptor *
-TAO_ORB_Core::acceptor (void)
+
+ACE_INLINE TAO_ProtocolFactorySet *
+TAO_ORB_Core::protocol_factories (TAO_ProtocolFactorySet *pf)
 {
-  return TAO_OC_RETRIEVE (acceptor);
+  TAO_ProtocolFactorySet *old = this->protocol_factories_;
+  this->protocol_factories_ = pf;
+  return old;
+}
+
+ACE_INLINE  TAO_ProtocolFactorySet *
+TAO_ORB_Core::protocol_factories (void)
+{
+  return TAO_OC_RETRIEVE (protocol_factories);
+}
+
+ACE_INLINE TAO_Acceptor_Registry *
+TAO_ORB_Core::acceptor_registry (void)
+{
+  return TAO_OC_RETRIEVE (acceptor_registry);
 }
 
 #undef TAO_OC_RETRIEVE

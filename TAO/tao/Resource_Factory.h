@@ -25,8 +25,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager.h"
+#include "tao/Pluggable.h"
+#include "tao/Protocol_Factory.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/corbafwd.h"
+#include "tao/orbconf.h"
+#include "ace/Containers_T.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Connector_Registry.h"
 
 class TAO_Client_Connection_Handler;
 class TAO_POA;
@@ -72,6 +78,40 @@ typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
 
 // ****************************************************************
+class TAO_Export TAO_Protocol_Item 
+{
+public:
+  TAO_Protocol_Item (const ACE_CString &name);
+  // creator method, the protocol name can only be set when the
+  // object is created.
+
+  const ACE_CString &protocol_name (void);
+  // return a reference to the character representation of the protocol
+  // factories name.
+
+  const TAO_Protocol_Factory *factory (void);
+  // return a pointer to the protocol factory.
+
+  void factory (TAO_Protocol_Factory *factory);
+  // set the factory pointer's valus.
+
+private:
+  ACE_CString name_;
+  // protocol factory name.
+
+  TAO_Protocol_Factory *factory_;
+  // pointer to factory object.
+};
+
+// typedefs for containers containing the list of loaded protocol 
+// factories.
+typedef ACE_Unbounded_Set<TAO_Protocol_Item*> 
+        TAO_ProtocolFactorySet;
+
+typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*> 
+        TAO_ProtocolFactorySetItor;
+
+// ****************************************************************
 
 class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
 {
@@ -95,8 +135,8 @@ public:
   virtual ACE_Thread_Manager *get_thr_mgr (void);
   // Return an <ACE_Thread_Manager> to be utilized.
 
-  virtual TAO_Connector *get_connector (void);
-  // Return an Connector to be utilized.
+  virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
+  // return a reference to the acceptor registry.
 
   virtual TAO_Connector_Registry *get_connector_registry (void);
   // Return an Connector to be utilized.
@@ -111,9 +151,6 @@ public:
   virtual TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
   // This no-op activation strategy prevents the cached connector from
   // calling the service handler's <open> method multiple times.
-
-  virtual TAO_Acceptor *get_acceptor (void);
-  // Return an Acceptor to be utilized.
 
   virtual TAO_POA *get_root_poa (void);
   // Return a root poa to be utilized.
@@ -137,6 +174,20 @@ public:
   virtual ACE_Data_Block *create_input_cdr_data_block (size_t size);
   // The Message Blocks used for input CDRs must have appropiate
   // locking strategies.
+
+  virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  // The protocol factory list is implemented in this class since
+  // a) it will be a global resource and 
+  // b) it is initialized at start up and then not altered.
+  // Returns a container holding the list of loaded protocols.
+
+  virtual int init_protocol_factories (void);
+  // this method will loop through the protocol list and
+  // using the protocol name field this method will
+  // retrieve a pointer to the associated protocol factory
+  // from the service configurator.  It is assumed
+  // that only one thread will call this method at ORB initialization.
+  // NON-THREAD-SAFE
 };
 
 #endif /* TAO_RESOURCE_FACTORY_H */

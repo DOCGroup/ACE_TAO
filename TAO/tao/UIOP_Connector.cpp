@@ -25,14 +25,12 @@
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 
-CORBA::ULong
-TAO_UIOP_Connector::tag (void)
-{
-  return this->tag_;
-}
+TAO_UIOP_CACHED_CONNECT_STRATEGY TAO_UIOP_Connector::UIOP_Cached_Connect_Strategy_;
+TAO_UIOP_NULL_CREATION_STRATEGY TAO_UIOP_Connector::UIOP_Null_Creation_Strategy_;
+TAO_UIOP_NULL_ACTIVATION_STRATEGY TAO_UIOP_Connector::UIOP_Null_Activation_Strategy_;
 
 TAO_UIOP_Connector::TAO_UIOP_Connector (void)
-  : tag_(TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP), // @@ FIXME -- IIOP specific?
     base_connector_ ()
 {
 }
@@ -41,7 +39,7 @@ int
 TAO_UIOP_Connector::connect (TAO_Profile *profile,
                              TAO_Transport *& transport)
 {
-  if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
+  if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP) // @@ FIXME: IIOP specific?
     return -1;
 
   TAO_UIOP_Profile *uiop_profile =
@@ -50,38 +48,9 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
   if (uiop_profile == 0)
     return -1;
 
-// Establish the connection and get back a <Client_Connection_Handler>.
-// @@ We do not have the ORB core
-// #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-//   if (this->orb_core_->arl_same_port_connect ())
-//     {
-//       ACE_UNIX_Addr local_addr (this->orb_core_->orb_params ()->addr ());
-//       local_addr.set_port_number (server_addr_p->get_port_number ());
-//
-//       // Set the local port number to use.
-//       if (con->connect (uiop_profile->hint (),
-//                         uiop_profile->object_addr (),
-//                         0,
-//                         local_addr,
-//                         1) == -1);
-//       {
-//         // Give users a clue to the problem.
-//       ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
-//                    "%s failed (%p)\n",
-//                    __FILE__,
-//                    __LINE__,
-//                    uiop_profile->addr_to_string (),
-//                    "errno"));
-//
-//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (), env);
-//        }
-//    }
-//  else
-//#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-
   const ACE_UNIX_Addr &oa = uiop_profile->object_addr ();
 
-  TAO_Client_Connection_Handler* result;
+  TAO_UIOP_Client_Connection_Handler* result;
 
   // the connect call will set the hint () stored in the Profile
   // object; but we obtain the transport in the <result>
@@ -111,16 +80,10 @@ int
 TAO_UIOP_Connector::open (TAO_Resource_Factory *trf,
                           ACE_Reactor *reactor)
 {
-  // @@ Fred: why not just
-  //
-  // return this->base_connector_.open (....); ????
-  //
-  if (this->base_connector_.open (reactor,
-                                  trf->get_null_creation_strategy (),
-                                  trf->get_cached_connect_strategy (),
-                                  trf->get_null_activation_strategy ()) != 0)
-    return -1;
-  return 0;
+  return this->base_connector_.open (reactor,
+                                     &UIOP_Null_Creation_Strategy_,
+                                     &UIOP_Cached_Connect_Strategy_,
+                                     &UIOP_Null_Activation_Strategy_);
 }
 
 int
@@ -137,8 +100,8 @@ TAO_UIOP_Connector::preconnect (char *preconnections)
   if (preconnections)
     {
       ACE_UNIX_Addr dest;
-      TAO_Client_Connection_Handler *handler;
-      ACE_Unbounded_Stack<TAO_Client_Connection_Handler *> handlers;
+      TAO_UIOP_Client_Connection_Handler *handler;
+      ACE_Unbounded_Stack<TAO_UIOP_Client_Connection_Handler *> handlers;
 
       char *nextptr = 0;
       char *where = 0;
@@ -214,14 +177,14 @@ TAO_UIOP_Connector::preconnect (char *preconnections)
       // array of eventual handlers.
       size_t num_connections = dests.size ();
       ACE_UNIX_Addr *remote_addrs = 0;
-      TAO_Client_Connection_Handler **handlers = 0;
+      TAO_UIOP_Client_Connection_Handler **handlers = 0;
       char *failures = 0;
 
       ACE_NEW_RETURN (remote_addrs,
                       ACE_UNIX_Addr[num_connections],
                       -1);
       ACE_NEW_RETURN (handlers,
-                      TAO_Client_Connection_Handler *[num_connections],
+                      TAO_UIOP_Client_Connection_Handler *[num_connections],
                       -1);
       ACE_NEW_RETURN (failures,
                       char[num_connections],
@@ -255,18 +218,96 @@ TAO_UIOP_Connector::preconnect (char *preconnections)
   return successes;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+int
+TAO_UIOP_Connector::make_profile (const char *endpoint,
+                                  TAO_Profile *&profile,
+                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  // The endpoint should be of the form:
+  //
+  //    N.n//rendesvouz_point/object_key
+  //
+  // or:
+  //
+  //    //rendesvouz_point/object_key 
+
+  ACE_NEW_RETURN (profile,
+                  TAO_UIOP_Profile (endpoint, ACE_TRY_ENV),
+                  -1);
+
+  return 0;  // Success
+}
+
+
+int
+TAO_UIOP_Connector::check_prefix (const char *endpoint)
+{
+  // Parse the given URL style IOR and create an mprofile from it.
+
+  // Check for a valid string
+  if (!endpoint || !*endpoint)
+    return 1;  // Failure
+
+  const char protocol[] = "uiop";
+  // This is valid for any protocol beginning with `iiop'.
+
+
+  // Check for the proper prefix in the IOR.  If the proper prefix isn't
+  // in the IOR then it is not an IOR we can use.
+  if (ACE_OS::strncasecmp (endpoint,
+                           protocol,
+                           ACE_OS::strlen (protocol)) == 0)
+    {
+      return 0;  // Success
+    }
+  else
+    {
+      return 1;
+      // Failure: not an UIOP IOR
+      // DO NOT throw an exception here.
+    }
+}
+
+
+# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<ACE_UNIX_Addr>;
 template class ACE_Unbounded_Stack<ACE_UNIX_Addr>;
 template class ACE_Unbounded_Stack_Iterator<ACE_UNIX_Addr>;
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+template class ACE_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>;
+template class ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR, TAO_Cached_Connector_Lock>;
+template class ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
+                               ACE_LSOCK_CONNECTOR>;
+
+template class ACE_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>;
+template class ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>;
+
+template class ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>;
+template class ACE_NOOP_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>;
+template class ACE_Recycling_Strategy<TAO_UIOP_Client_Connection_Handler>;
+
+# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node<ACE_UNIX_Addr>
 #pragma instantiate ACE_Unbounded_Stack<ACE_UNIX_Addr>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_UNIX_Addr>
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#pragma instantiate ACE_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>
+#pragma instantiate ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR, TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
+                               ACE_LSOCK_CONNECTOR>
+
+#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
+
+#pragma instantiate ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
+
+#pragma instantiate ACE_Recycling_Strategy<TAO_UIOP_Client_Connection_Handler>
+
+# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

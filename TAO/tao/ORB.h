@@ -685,18 +685,8 @@ private:
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 
-  CORBA::Object_ptr iiop_string_to_object (const char* url,
-                                           CORBA::Environment& env);
-  // Read an IOR from a file and then parse it, returning the object
-  // reference.
-
   CORBA::Object_ptr ior_string_to_object (const char* ior,
                                           CORBA::Environment& env);
-  // Read an IOR from a file and then parse it, returning the object
-  // reference.
-
-  CORBA::Object_ptr iioploc_string_to_object (const char* string,
-                                              CORBA::Environment& env);
   // Read an IOR from a file and then parse it, returning the object
   // reference.
 

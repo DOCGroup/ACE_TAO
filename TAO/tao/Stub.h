@@ -432,7 +432,10 @@ private:
 private:
   TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
+
   TAO_MProfile     *forward_profiles_;
+  // The list of forwarding profiles.  This is actually iimplemented as a
+  // linked list of TAO_MProfile objects.
 
   TAO_Profile *profile_in_use_;
   // this is the profile that we are currently sending/receiving with
@@ -473,6 +476,30 @@ private:
   // This de-warns.
   friend class everyone_needs_a_friend;
 #endif /* __GNUG__ */
+};
+
+// Define a TAO_Stub auto_ptr class
+class TAO_Stub_Auto_Ptr
+{
+  // = TITLE
+  //     Implements the draft C++ standard auto_ptr abstraction.
+  //     This class allows one to work Stub Objects *Only*!
+public:
+  // = Initialization and termination methods
+  /* explicit */ TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
+  TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
+  TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);
+  ~TAO_Stub_Auto_Ptr (void);
+
+  // = Accessor methods.
+  TAO_Stub &operator *() const;
+  TAO_Stub *get (void) const;
+  TAO_Stub *release (void);
+  void reset (TAO_Stub *p = 0);
+  TAO_Stub *operator-> () const;
+
+protected:
+  TAO_Stub *p_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -39,8 +39,6 @@ public:
   // = Initialization and termination methods.
   TAO_IIOP_Connector (void);
   // Constructor.
-  // @@ Do we want to pass in the tag here or should it be statically
-  // defined?
 
   int open (TAO_Resource_Factory *trf, ACE_Reactor *reactor);
   //  Initialize object and register with reactor.
@@ -51,21 +49,21 @@ public:
   int preconnect (char *preconnections);
   // Initial set of connections to be established.
 
-  CORBA::ULong tag (void);
-  // The tag identifying the specific ORB transport layer protocol.
-  // For example TAO_IOP_TAG_INTERNET_IOP = 0.  The tag is used in the
-  // IOR to identify the type of profile included. IOR -> {{tag0,
-  // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
-  // CORBA::ULong TAO_IOP_Profile_ID;
-
   int connect (TAO_Profile *profile,
                TAO_Transport *&transport);
   // Connect will be called from TAO_GIOP_Invocation::start
 
-private:
-  CORBA::ULong tag_;
-  // IIOP tag.
+protected:
+  virtual int make_profile (const char *endpoint,
+                            TAO_Profile *&,
+                            CORBA::Environment &ACE_TRY_ENV);
+  // Create a profile with a given endpoint.
 
+  virtual int check_prefix (const char *endpoint);
+  // Check that the prefix of the provided endpoint is valid for use
+  // with a given pluggable protocol.
+
+private:
   TAO_IIOP_BASE_CONNECTOR  base_connector_;
   // The connector initiating connection requests for IIOP.
 };
