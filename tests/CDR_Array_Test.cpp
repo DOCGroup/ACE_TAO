@@ -852,7 +852,7 @@ struct CharHelper
     }
 };
 
-void usage (ACE_TCHAR* cmd)
+void usage (const ACE_TCHAR* cmd)
 {
   ACE_ERROR((LM_ERROR,
              ACE_TEXT ("Usage: %s ")
@@ -932,7 +932,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               int v = ACE_OS::atoi (get_opt.opt_arg ());
               if (!(opts[i].checkf) (v))
                 {
-                  usage("CDR_Array_Test");
+                  usage(ACE_TEXT("CDR_Array_Test"));
                 }
 
               *(opts[i].v) = v;
@@ -943,7 +943,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       if (!got)
         {
-          usage("CDR_Array_Test");
+          usage(ACE_TEXT("CDR_Array_Test"));
         }
     }
 
