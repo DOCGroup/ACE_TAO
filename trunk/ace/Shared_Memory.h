@@ -1,7 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Shared_Memory.h
  *
@@ -9,18 +8,21 @@
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_SHARED_MEMORY_H
 #define ACE_SHARED_MEMORY_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_Shared_Memory
@@ -48,4 +50,5 @@ public:
 };
 
 #include "ace/post.h"
+
 #endif /* ACE_SHARED_MEMORY_H */

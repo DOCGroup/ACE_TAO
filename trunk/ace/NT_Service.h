@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    NT_Service.h
  *
@@ -8,10 +8,11 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_NT_SERVICE_H
 #define ACE_NT_SERVICE_H
+
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -22,6 +23,7 @@
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
+#include "ace/ACE.h"
 #include "ace/OS_Log_Msg_Attributes.h"
 #include "ace/Service_Object.h"
 #include "ace/Synch.h"
@@ -430,4 +432,5 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
 #endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
 
 #include "ace/post.h"
+
 #endif /* ACE_SERVICE_OBJECT_H */

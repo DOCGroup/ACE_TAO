@@ -73,6 +73,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
   int result = ACE_Lib_Find::ldfind (dll_filename,
                                      dll_pathname,
                                      (sizeof dll_pathname / sizeof (ACE_TCHAR)));
+
   // Check for errors
   if (result != 0)
     return result;

@@ -1,24 +1,27 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file   Synch_Options.h
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@uci.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_SYNCH_OPTIONS_H
 #define ACE_SYNCH_OPTIONS_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_Synch_Options
@@ -150,4 +153,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_SYNCH_OPTIONS_H */

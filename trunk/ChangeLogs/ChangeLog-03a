@@ -1,3 +1,151 @@
+Wed May  1 21:07:23 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-win32-msvc-6.h:
+
+	  Moved library "decorator" related macros to
+	  config-win32-msvc.h.
+
+	* ace/config-win32-msvc.h:
+
+	  Support "decorated" library names for MSVC 6 or better.  Fixes
+	  run-time library search problems in MS Visual Studio .NET
+	  builds.
+
+	* ace/ATM_Addr.h:
+	* ace/ATM_Params.h:
+	* ace/MEM_Addr.h:
+	* ace/Module.h:
+	* ace/Name_Space.h:
+	* ace/Naming_Context.h:
+	* ace/Remote_Name_Space.h:
+
+	  Include "ACE_export.h" instead of "ACE.h."  The latter is
+	  overkill.
+
+	* ace/PI_Malloc.h:
+
+	  Include "ACE_export.h" instead of "ACE.h."  The latter is
+	  overkill.
+
+	  No need to include "ace/Malloc_T.h" and "ace/Memory_Pool.h"
+
+	* ace/Date_Time.h:
+	* ace/Event_Handler.h:
+	* ace/High_Res_Timer.h:
+	* ace/Malloc.h:
+	* ace/Malloc_Allocator.h:
+	* ace/Malloc_T.h:
+	* ace/Mem_Map.h:
+	* ace/Pipe.h:
+	* ace/Profile_Timer.h:
+	* ace/Read_Buffer.h:
+	* ace/Shared_Memory.h:
+	* ace/Shared_Object.h:
+	* ace/SOCK.h:
+	* ace/SPIPE_Addr.h:
+	* ace/Stats.h:
+	* ace/SV_Message.h:
+	* ace/SV_Semaphore_Simple.h:
+	* ace/SV_Shared_Memory.h:
+	* ace/Synch.h:
+	* ace/Synch_Options.h:
+	* ace/Thread.h:
+	* ace/Typed_SV_Message.h:
+
+	  Include "OS.h" and "ACE_export.h" instead of "ACE.h."  The
+	  latter is overkill.
+
+	* ace/Configuration.h:
+	* ace/DEV_Addr.h:
+	* ace/FIFO.h:
+	* ace/Get_Opt.h:
+	* ace/Vector_T.h:
+
+	  No need to include "ACE.h."
+
+	* ace/Dynamic.h:
+
+	  No need to include "ACE.h", "Synch_T.h" and "Singleton.h."
+	  "ACE_export.h" is enough.
+
+	* ace/INET_Addr.h:
+
+	  Include "Sock_Connect.h" instead of "ACE.h".  The latter is
+	  overkill.
+
+	* ace/Message_Block.h:
+
+	  Include "ace/OS.h" and "ace/ACE_export.h" instead "ace/ACE.h".
+	  The latter is overkill.
+
+	  No need to include "Malloc.h"
+
+	* ace/IO_Cntl_Msg.h:
+	* ace/Sock_Connect.h:
+
+	  Include "ACE_export.h" to pull in ACE_Export macro definition.
+
+	* ace/Activation_Queue.cpp:
+	* ace/Message_Block.cpp:
+
+	  Include "ace/Malloc_Base.h" to pull in ACE_Allocator class
+	  declaration.
+
+	* ace/DEV_IO.h:
+	* ace/FIFO_Recv.h:
+	* ace/FIFO_Send.h:
+	* ace/NT_Service.h:
+	* ace/SOCK_Dgram.cpp:
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SOCK_IO.h:
+	* ace/SPIPE_Stream.h:
+	* ace/SV_Semaphore_Simple.cpp:
+	* ace/Service_Types.h:
+	* tests/test_config.h:
+
+	  Include "ace/ACE.h" pull in methods in the "ACE"
+	  class/namespace.
+
+	* ace/Stream.h:
+	* ace/SV_Message_Queue.h:
+
+	  Include "config-all.h" instead of "ACE.h."  The latter is
+	  overkill.
+
+	* ace/OS_Memory.h:
+	* ace/config-all.h:
+
+	  Moved default definition of the
+	  ACE_HAS_POSITION_INDEPENDENT_POINTERS macro to
+	  "ace/config-all.h".  Allows for additional reductions in
+	  inter-header dependencies.
+
+	* ace/PI_Malloc.cpp:
+
+	  Moved non-essential includes within the
+	  "ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1" block.  No need to
+	  include them if the implementation won't be compiled.
+
+	* ace/Select_Reactor_T.cpp:
+
+	  Include "ace/ACE.h" pull in methods in the "ACE"
+	  class/namespace.
+
+	  (handle_events):
+
+	  Moved ACE_Countdown_Time declaration within the ACE_MT_SAFE
+	  block.  It is only used for the multi-threaded case.
+
+	  (work_pending):
+
+	  As part of the timeout take into account the time taken to
+	  acquire the lock.
+
+	  Copy the timeout value.  Do not ignore the interface by casting
+	  away the const-ness.
+
+	  Do not bother continuing if the reactor has been deactivated.
+
 Wed May  1 15:49:33 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/DLL_Test_Impl.{h cpp}: Add a nothrow variant of operator new
@@ -1999,7 +2147,6 @@ Mon Apr  1 18:27:46 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_String.inl (strtok_r): Corrected decision to call
           wcstok() or wcstok_r(). This fixes builds on HP-UX 11.
-
 Mon Apr  1 16:35:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Containers_T.h (ACE_Array): Added performance characteristics

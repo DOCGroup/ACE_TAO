@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Shared_Object.h
  *
@@ -8,17 +8,20 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_SHARED_OBJECT_H
 #define ACE_SHARED_OBJECT_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_Shared_Object
@@ -48,4 +51,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_SHARED_OBJECT_H */

@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Pipe.h
  *
@@ -8,18 +8,21 @@
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_PIPE_H
 #define ACE_PIPE_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_Pipe
@@ -83,4 +86,5 @@ private:
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
+
 #endif /* ACE_PIPE_H */

@@ -1,7 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Typed_SV_Message.h
  *
@@ -9,18 +8,21 @@
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_TYPED_SV_MESSAGE_H
 #define ACE_TYPED_SV_MESSAGE_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_Typed_SV_Message
@@ -99,4 +101,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_TYPED_SV_MESSAGE_H */

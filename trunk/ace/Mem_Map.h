@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Mem_Map.h
  *
@@ -8,17 +8,20 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_MEM_MAP_H
 #define ACE_MEM_MAP_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_Mem_Map
@@ -210,4 +213,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_MEM_MAP_H */

@@ -36,10 +36,6 @@
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
 # endif /* ACE_MALLOC_ALIGN */
 
-# if !defined (ACE_HAS_POSITION_INDEPENDENT_POINTERS)
-#   define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
-# endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
-
 // Allow an installation to replace the lowest-level allocation
 // functions without changing the source of ACE.
 //

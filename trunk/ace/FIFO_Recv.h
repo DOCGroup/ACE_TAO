@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    FIFO_Recv.h
  *
@@ -8,11 +8,12 @@
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_FIFO_RECV_H
 #define ACE_FIFO_RECV_H
+
 #include "ace/pre.h"
 
 #include "ace/FIFO.h"
@@ -20,6 +21,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE.h"
 
 /**
  * @class ACE_FIFO_Recv
@@ -73,4 +76,5 @@ private:
 #endif
 
 #include "ace/post.h"
+
 #endif /* ACE_FIFO_RECV_H */

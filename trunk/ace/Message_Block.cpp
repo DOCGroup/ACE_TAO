@@ -1,6 +1,5 @@
-// $Id$
-
 #include "ace/Message_Block.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Synch_T.h"
 
 //#define ACE_ENABLE_TIMEPROBES
@@ -10,9 +9,11 @@
 #include "ace/Message_Block.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Message_Block, "$Id$")
+ACE_RCSID (ace,
+           Message_Block,
+           "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Message_Block)
+ACE_ALLOC_HOOK_DEFINE (ACE_Message_Block)
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

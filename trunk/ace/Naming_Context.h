@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    Naming_Context.h
  *
@@ -10,13 +10,13 @@
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author and Prashant Jain <pjain@uci.edu>
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_NAMING_CONTEXT_H
 #define ACE_NAMING_CONTEXT_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

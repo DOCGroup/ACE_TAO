@@ -14,7 +14,7 @@
 #define ACE_INET_ADDR_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/Sock_Connect.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

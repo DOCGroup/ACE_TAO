@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    SV_Message.h
  *
@@ -8,18 +8,21 @@
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
+//==========================================================================
 
 
 #ifndef ACE_SV_MESSAGE_H
 #define ACE_SV_MESSAGE_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_SV_Message
@@ -55,4 +58,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* ACE_SV_MESSAGE_H */

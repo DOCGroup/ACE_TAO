@@ -1,17 +1,14 @@
-// $Id$
-
-// FILENAME
-//   PI_Malloc.cpp
-//
-// AUTHOR
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// =========================================================================
-
-#if !defined (ACE_PI_MALLOC_CPP)
+#ifndef ACE_PI_MALLOC_CPP
 #define ACE_PI_MALLOC_CPP
 
 #include "ace/PI_Malloc.h"
+
+ACE_RCSID (ace,
+           PI_Malloc,
+           "$Id$")
+
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 #include "ace/Object_Manager.h"
 #include "ace/Process_Mutex.h"
 
@@ -21,9 +18,6 @@
 
 #include "ace/Synch_T.h"
 
-ACE_RCSID(ace, PI_Malloc, "$Id$")
-
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 void
 ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
 {
@@ -155,9 +149,8 @@ ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Malloc_Header>;
 template class ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Name_Node>;
@@ -171,6 +164,7 @@ template class ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>;
 #pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Malloc_Header>
 #pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1*/
 
 #endif /* ACE_PI_MALLOC_CPP */

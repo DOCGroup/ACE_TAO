@@ -1,26 +1,30 @@
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file   PI_Malloc.h
  *
  *  $Id$
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ *  @author Based on code that existed in other ACE files.
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_PI_MALLOC_H
 #define ACE_PI_MALLOC_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
-#include "Malloc.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
+#include "ace/Malloc.h"
 #include "ace/Based_Pointer_T.h"
 
 // prepare for position independent malloc
@@ -199,15 +203,13 @@ public:
 private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
 };
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #if defined (__ACE_INLINE__)
 #include "ace/PI_Malloc.i"
 #endif /* __ACE_INLINE__ */
 
-// Include the ACE_Malloc templates and ACE_Memory_Pool classes at this point.
-#include "ace/Malloc_T.h"
-#include "ace/Memory_Pool.h"
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #include "ace/post.h"
+
 #endif /* ACE_PI_MALLOC_H */

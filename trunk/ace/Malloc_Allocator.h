@@ -1,20 +1,22 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file   Malloc_Allocator.h
  *
  *  $Id$
  * 
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ *  @author Based on code that formerly existed in another ACE file.
  */
-//=============================================================================
+//==========================================================================
 
-#ifndef MALLOC_ALLOCATOR_H
-#define MALLOC_ALLOCATOR_H
+#ifndef ACE_MALLOC_ALLOCATOR_H
+#define ACE_MALLOC_ALLOCATOR_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -158,4 +160,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* MALLOC_ALLOCATOR_H */

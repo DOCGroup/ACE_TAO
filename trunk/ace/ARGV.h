@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
-//=============================================================================
+//==========================================================================
 /**
  *  @file    ARGV.h
  *
@@ -9,18 +9,19 @@
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  *  @author Everett Anderson
  */
-//=============================================================================
+//==========================================================================
 
 #ifndef ACE_ARGUMENT_VECTOR_H
 #define ACE_ARGUMENT_VECTOR_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS.h"
 #include "ace/Unbounded_Queue.h"
 
 /**
