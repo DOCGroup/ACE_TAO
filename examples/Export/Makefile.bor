@@ -1,3 +1,0 @@
-MAKEFILES = export_dll.bor test.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

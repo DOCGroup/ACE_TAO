@@ -1,8 +1,0 @@
-#
-# Makefile for building the ior_corbaname test
-#
-
-MAKEFILES = client.bor server.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
-
