@@ -1890,6 +1890,7 @@ ACE::set_handle_limit (int new_limit)
       // We give a chance to platforms without RLIMIT to work.
       // Instead of ACE_NOTSUP_RETURN (0), just return 0 because
       // new_limit is <= cur_limit, so it's a no-op.
+      return 0;
 #endif /* ACE_LACKS_RLIMIT */
     }
 }
