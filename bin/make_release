@@ -281,6 +281,11 @@ if ($update_versions  &&  "$kit" ne 'ace+tao+ciao') {
       die "$0: failed cvs export of $ciao_tag in $stage_dir\n";
   }
 
+  $status = &generate_makefiles ();
+  
+  if ($status != 0) {
+      die "$0: failed to generate makefiles\n";
+  }
 
   $status = &create_kit ();
 
@@ -741,7 +746,7 @@ sub diff () {
 ######## Generate Makefiles and workspace/project files.
 ########
 sub generate_makefiles () {
-  if ($kit =~ /^ace/) {
+
     # At this point, the only mwc/mpc files are in ace and tests. When more
     # are available, this needs to be updated, maybe by cycling through
     # all non-TAO directories looking for mwc (or mpc?) files.
@@ -753,22 +758,20 @@ sub generate_makefiles () {
     #
     # Need todo a common chmod on the file lists!
     my $here = Cwd::getcwd();
-    &ex ("cd ACE_wrappers/ace; \
-        ../bin/mwc.pl -type vc6 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
-        ../bin/mwc.pl -type vc71 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
-        ../bin/mwc.pl -type em3 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
-        chmod 0644 *.dsp *.dsw *.vcproj *.vcp *.sln *.vcw");
-    &ex ("cd ACE_wrappers/tests; \
-      ../bin/mwc.pl -type vc6 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
-      ../bin/mwc.pl -type vc71 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
-      ../bin/mwc.pl -type em3 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
-        chmod 0644 *.dsp *.dsw *.vcproj *.vcp *.sln *.vcw");
-  }
-  if ($kit =~ /^tao/) {
-    # A TAO-knowledgable person needs to decide what, if anything, is to be
-    # done here.
-    0;
-  }
+
+    &ex ("cd ACE_wrappers; \
+          ../bin/mwc.pl -type vc6 -static -recurse -hierarchy -name_modifier *_Static -apply_project -relative ACE_ROOT=$here/ACE_wrappers;\
+        ../bin/mwc.pl -type vc71 -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
+        chmod 0644 *.dsp *.dsw *.vcproj *.sln");
+}
+
+sub generate_em3 () {
+
+    my $here = Cwd::getcwd();
+
+  &ex ("cd ACE_wrappers; \
+      ../bin/mwc.pl -type em3 -exclude TAO -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
+        chmod 0644 *.vcp *.vcw");
 }
 
 ########
@@ -889,7 +892,7 @@ sub create_kit () {
   }
 
   # Dispose of ACE+TAO now
-  my $checksum_command =
+  $checksum_command =
     "$shell_cd $dest; " .
       "for p in $archives; do " .
       "$rm \${p}.${cksum_ext}; " .
@@ -901,12 +904,11 @@ sub create_kit () {
 
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
 
-      $status = &generate_makefiles ();
-      
-      if ($status != 0) {
-          die "$0: failed to generate makefiles\n";
-      }
-      
+        $status = &generate_em3 ();
+  
+        if ($status != 0) {
+            die "$0: failed to generate em3 files\n";
+        }
       $status = &bootstrap_autotools ();
       
       if ($status != 0) {
@@ -951,7 +953,7 @@ sub create_kit () {
   }
   
   # Now dispose of ACE in all its glory
-  my $checksum_command =
+  $checksum_command =
     "$shell_cd $dest; " .
       "for p in $archives; do " .
       "$rm \${p}.${cksum_ext}; " .
