@@ -1,5 +1,5 @@
---- orig/DomainC.h	Mon Apr 16 19:23:19 2001
-+++ DomainC.h	Fri Apr 13 23:59:15 2001
+--- orig/DomainC.h	Tue Apr 24 23:48:52 2001
++++ DomainC.h	Tue Apr 24 13:44:40 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -191,7 +191,7 @@
  
 -// External declarations for undefined interface
 -// CORBA_InterfaceDef
--extern TAO_Export
+-TAO_Export
 -CORBA_InterfaceDef_ptr
 -tao_CORBA_InterfaceDef_duplicate (
 -    CORBA_InterfaceDef_ptr

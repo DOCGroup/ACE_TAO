@@ -1,5 +1,5 @@
---- orig/PolicyC.h	Mon Apr 16 19:17:11 2001
-+++ PolicyC.h	Fri Apr 13 21:49:35 2001
+--- orig/PolicyC.h	Tue Apr 24 23:49:03 2001
++++ PolicyC.h	Tue Apr 24 13:44:40 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //

@@ -1,5 +1,5 @@
---- orig/TAOC.h	Tue Apr 17 00:03:03 2001
-+++ TAOC.h	Tue Apr 17 00:58:39 2001
+--- orig/TAOC.h	Wed Apr 25 00:17:55 2001
++++ TAOC.h	Tue Apr 24 13:44:43 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //

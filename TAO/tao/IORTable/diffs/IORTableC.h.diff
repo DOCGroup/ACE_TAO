@@ -1,5 +1,5 @@
---- orig/IORTableC.h	Wed Apr 18 22:30:43 2001
-+++ IORTableC.h	Wed Apr 18 22:22:14 2001
+--- orig/IORTableC.h	Wed Apr 25 00:32:42 2001
++++ IORTableC.h	Tue Apr 24 13:44:52 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
