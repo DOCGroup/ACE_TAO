@@ -9,7 +9,7 @@ ACE_RCSID(Simple, server, "$Id$")
 static int quiet = 0;
 // The test is quiet...
 
-static char *ior_file = "test.ior";
+static const char *ior_file = "test.ior";
 // File of file to which the ior is written
 
 static int number_of_threads = 1;
