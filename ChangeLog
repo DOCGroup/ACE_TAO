@@ -11,7 +11,7 @@ Thu Apr 10 15:35:00 2003  Gautam Thaker  <gthaker@atl.lmco.com>
         * include/makeinclude/wrapper_macros.GNU:
 
           Above files modified.
-          
+        
         * ace/Multihomed_INET_Addr.cpp ace/Multihomed_INET_Addr.h:
         * ace/Multihomed_INET_Addr.i ace/SOCK_SEQPACK_Acceptor.cpp:
         * ace/SOCK_SEQPACK_Acceptor.i ace/SOCK_SEQPACK_Association.cpp:
@@ -47,7 +47,7 @@ Thu Apr 10 15:35:00 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
           Above files added.
 
-	  Jason Cohen <jcohen@atl.lmco.com>:
+          Jason Cohen <jcohen@atl.lmco.com>:
           First SCTP checkin for ACE.  The major contrib of this
           checkin include the SOCK_SEQPACK classes, Multihomed_INET_Addr,
           SCTP performance tests, and READMEs.
