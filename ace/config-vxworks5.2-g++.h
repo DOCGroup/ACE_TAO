@@ -7,6 +7,10 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_SYS_NERR
 #define ACE_LACKS_COND_T
@@ -18,11 +22,6 @@
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_GNU_CSTRING_H
-
-#if defined (__ACE_INLINE__)
-#define ACE_HAS_INLINED_OSCALLS
-#endif /* __ACE_INLINE__ */
-
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_POSIX_NONBLOCK

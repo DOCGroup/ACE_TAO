@@ -7,13 +7,11 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#define ACE_HAS_UNICODE
-
+#if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
 
-#if defined (__ACE_INLINE__)
-#define ACE_HAS_INLINED_OSCALLS
-#endif /* __ACE_INLINE__ */
+#define ACE_HAS_UNICODE
 
 #define ACE_HAS_TERM_IOCTLS
 
