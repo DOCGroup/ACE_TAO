@@ -1,3 +1,21 @@
+Tue Oct 31 20:03:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+
+	  Added decision to use ACE_NESTED_CLASS macro for interceptors
+	  request info subclasses' return type code, similiar to 
+	  previous changes made for arguments. Also changed the name
+	  of the visitor context substate enum value to be more 
+	  general, since it isn't used just for arguments any more.
+	  Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
+	  for reporting this bug and sending in an example IDL file.
+
 Tue Oct 31 17:34:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	
 	* tao/PortableInterceptorC.h: 
