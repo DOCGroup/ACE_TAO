@@ -1,3 +1,9 @@
+Wed Jan 26 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Adapter_Activator.cpp:
+          When the_activator() call fails after calling destroy on the just
+          created child POA, delete it to prevent a memory leak
+
 Wed Jan 26 18:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/IdAssignmentPolicyFactory.h
