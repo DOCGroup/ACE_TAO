@@ -19,8 +19,16 @@
 
 #include "ace/OS.h"
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  class ACE_Thread_Mutex;
+#endif /* ACE_MT_SAFE */
+
 // Forward declaration.
 template <class T> class ACE_Unbounded_Queue;
+
+#if !defined (ACE_MAX_MANAGED_OBJECTS)
+# define ACE_MAX_MANAGED_OBJECTS 256
+#endif /* ACE_MAX_MANAGED_OBJECTS */
 
 class ACE_Export ACE_Object_Manager
   // = TITLE
@@ -49,13 +57,15 @@ class ACE_Export ACE_Object_Manager
 {
 public:
   static int at_exit (ACE_Cleanup *object, void *param = 0);
-  // Register an ACE_Cleanup object for cleanup at process
-  // termination.  The object is deleted via the ace_cleanup_destroyer
-  // ().  If you need more flexiblity, see the other at_exit () method
-  // below.  For OS's that do not have processes, this function is the
-  // same as at_thread_exit ().  Returns 0 on success, non-zero on
-  // failure: -1 if virtual memory is exhausted or 1 if the object (or
-  // array) had already been registered.  Not thread safe.
+  // Register an ACE_Cleanup object for cleanup at process termination.
+  // The object is deleted via the ace_cleanup_destroyer ().  If you
+  // need more flexiblity, see the other at_exit () method below.  For
+  // OS's that do not have processes, cleanup takes place at the end of
+  // main ().  Returns 0 on success.  On failure, returns -1 and sets
+  // errno to:
+  //   EAGAIN if shutting down,
+  //   ENOMEM if insufficient virtual memory, or
+  //   EEXIST if the object (or array) had already been registered.
 
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
@@ -68,10 +78,11 @@ public:
   // "cleanup_hook" function; the first parameter is the object (or
   // array) to be destroyed.  "cleanup_hook", for example, may delete
   // the object (or array).  For OS's that do not have processes, this
-  // function is the same as at_thread_exit ().  Returns 0 on success,
-  // non-zero on failure: -1 if virtual memory is exhausted or 1 if
-  // the object (or array) had already been registered.
-  // Not thread safe.
+  // function is the same as at_thread_exit ().  Returns 0 on success.
+  // On failure, returns -1 and sets errno to:
+  //   EAGAIN if shutting down,
+  //   ENOMEM if insufficient virtual memory, or
+  //   EEXIST if the object (or array) had already been registered.
 
 #if 0 /* not implemented yet */
   static int at_thread_exit (void *object,
@@ -88,20 +99,36 @@ private:
   ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
   // Keeps track of all registered objects.
 
-  int shutting_down_; 
+  int shutting_down_;
   // Non-zero if this being destroyed
+
+public:
+  ACE_MT (ACE_Thread_Mutex *lock_);
+  // Lock that is used to guard internal structures.  Just a pointer
+  // is declared here in order to minimize the headers that this one
+  // includes.
 
   static ACE_Object_Manager *instance (void);
   // Accessor to singleton instance.  Because static member functions
-  // are provided in the interface, this does not need to be public.
+  // are provided in the interface, this should not be public.  However,
+  // it is public so that ACE_Managed_Object<TYPE> can access it.
 
+  static void *managed_object[ACE_MAX_MANAGED_OBJECTS];
+  // Table of managed objects.
+
+  static u_int next_managed_object;
+  // Index of the next available managed object table slot.
+
+private:
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
   // Register an object or array for deletion at program termination.
   // See description of static version above for return values.
 
 public:
   // Application code should not use these explicitly, so they're
-  // hidden here.
+  // hidden here.  They're public so that the ACE_Object_Manager can
+  // be constructed/destructed in main () with
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER.
   ACE_Object_Manager (void);
   ~ACE_Object_Manager (void);
 private:
@@ -119,6 +146,67 @@ private:
   ACE_Object_Manager (const ACE_Object_Manager &);
   ACE_Object_Manager &operator= (const ACE_Object_Manager &);
 };
+
+
+template <class TYPE>
+class ACE_Managed_Object
+  // = TITLE
+  //     Wrapper for interface to allocate an object managed by the
+  //     ACE_Object_Manager.
+  //
+  // = DESCRIPTION
+  //     This template class wraps an interface that is used to
+  //     allocate and access an object that is managed by the
+  //     ACE_Object_Manager.  Because static template member functions
+  //     are not supported by most compilers, it is a separate
+  //     (template) class.
+  //
+  //     This interface is typically used to replace a static object
+  //     with one that is dynamically allocated.  It helps to avoid
+  //     problems with order of static object construction/destruction.
+  //     Managed objects won't be allocated until needed, but should
+  //     be allocated when first needed.  And they are destroyed in
+  //     the reverse order of construction.
+  //
+  //     To use the get_object () interface, the caller must provide
+  //     an identifier and an object pointer.  The identifer (usually)
+  //     has a value of 0 the first time get_object () is called, in
+  //     which case a new instance of the object is allocated on the
+  //     heap.  (See the description of get_object () for return
+  //     values.)
+  //
+  //     Subsequent calls to get_object (), with that identifier, will
+  //     return the pointer to the identified object.  The caller is
+  //     responsible for ensuring type safety by not casting the pointer
+  //     that it holds in calls to get_object ().
+{
+public:
+  static int get_object (u_int &id, TYPE *&object);
+  // Get the object identified by "id".  If "id" is 0, allocates a new
+  // instance, and sets "id" to the new identifier for that instance.
+  // Returns 0 on success.  On failure, returns -1 and sets errno to:
+  //   ENOENT if the id is non-zero and unknown,
+  //   ENOMEM if insufficient virtual memory to allocate a new instance, or
+  //   ENOSPC if no more table slots are available:  see the
+  //      ACE_MAX_MANAGED_OBJECTS config variable.
+
+  enum Preallocated_Objects
+    {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+      ACE_MT_CORBA_HANDLER_LOCK,
+      ACE_DUMP_LOCK,
+#endif /* ACE_MT_SAFE */
+
+      ACE_END_OF_PREALLOCATED_OBJECTS  // This enum value must be last!
+    };
+
+  static TYPE *get_object (u_int &id);
+  // Get the object identified by "id".  Returns a pointer to the
+  // object, or 0 if any error was encountered.  Because no other
+  // error indication is provided, it should _only_ be used for
+  // accessing preallocated objects.
+};
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/Object_Manager.i"
