@@ -1,3 +1,18 @@
+Wed Aug  6 16:31:29 1997  Chris Cleeland  <cleeland@swarm.cs.wustl.edu>
+
+	* tao/*: Changed 'const' to 'TAO_CONST' in contexts where the
+ 	const didn't make sense.  For example, this occurred in situations
+ 	where methods declared their return type as 'const CORBA_String',
+ 	which does not translate to 'const char*' but rather 'char*
+ 	const'.
+
+	* tao/corbacom.h: Added #define for TAO_CONST.  See above for
+ 	explanation.
+
+	* tao/{connect,factories,giop,iiopobj,marshal,objtable,
+ 	optable,orbobj,roa}.cpp: Removed errant trailing semi-colon on all
+ 	the #pragma instantiate directives.
+
 Wed Aug  6 13:56:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/{connect,factories,giop,iiopobj,marshal,objtable,

@@ -129,18 +129,18 @@ public:
   CORBA_TCKind  kind (CORBA_Environment &) const;
   // For all TypeCode kinds, returns the "kind" of the typecode
 
-  const CORBA_String id (CORBA_Environment &) const;
+  TAO_CONST CORBA_String id (CORBA_Environment &) const;
   // For tk_{objref,struct,union,enum,alias,except}. Returns the repository ID,
   // raises BadKind.
 
-  const CORBA_String name (CORBA_Environment &) const;
+  TAO_CONST CORBA_String name (CORBA_Environment &) const;
   // returns name (), raises (BadKind)
 
   CORBA_ULong member_count (CORBA_Environment &) const;
   // returns member_count (), raises (BadKind). Useful for tk_struct, tk_union,
   // tk_enum, tk_alias, and tk_except.
 
-  const CORBA_String member_name (CORBA_ULong index, CORBA_Environment &) const;
+  TAO_CONST CORBA_String member_name (CORBA_ULong index, CORBA_Environment &) const;
   // returns member_name (...), raises (BadKind, Bounds); Useful for tk_struct, tk_union,
   // tk_enum, tk_alias, and tk_except.
 
@@ -304,11 +304,11 @@ private:
   CORBA_Boolean private_equal (CORBA_TypeCode_ptr tc, CORBA_Environment &env) const;
   // compares the typecodes
 
-  const CORBA_String private_id (CORBA_Environment &) const;
+  TAO_CONST CORBA_String private_id (CORBA_Environment &) const;
   // For tk_{objref,struct,union,enum,alias,except}. Returns the repository ID,
   // raises BadKind.
 
-  const CORBA_String private_name (CORBA_Environment &) const;
+  TAO_CONST CORBA_String private_name (CORBA_Environment &) const;
   // returns name (), raises (BadKind)
 
   CORBA_ULong private_member_count (CORBA_Environment &) const;
