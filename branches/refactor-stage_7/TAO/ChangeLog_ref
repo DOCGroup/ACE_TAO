@@ -1,3 +1,27 @@
+Mon Oct 06 05:11:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.h: 
+	* tao/PortableServer/Operation_Table.h: Changed the function
+	  pointer declaration of TAO_Collocated_Skel
+
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/PolicyS.h:
+	* tao/PortableServer/PolicyS.i	:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImR_LocatorS.h:
+	* tao/PortableServer/ImR_LocatorS.i:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ImplRepoS.i: Regenerated the code forced by a
+	  change in the IDL compiler.
+
+	* tao/PortableServer/Servant_Base.h: Moved the _find () methods to
+	  the public section so that they can be used by the generated
+	  code. 
+
+	* tao/PortableServer/TAO_PortableServer.dsp: Added an inlined file
+	  to the project file.
+
 Mon Oct 06 05:04:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
