@@ -394,7 +394,7 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) TAO - UIOP_Profile::create_profile_body ",
+                  "(%P|%t) TAO - UIOP_Profile::create_profile_body "
                   "no object key marshalled \n"));
     }
 

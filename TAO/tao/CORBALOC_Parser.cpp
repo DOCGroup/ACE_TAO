@@ -66,7 +66,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * s,
           if (TAO_debug_level > 0)
             ACE_ERROR((LM_ERROR,
                        ACE_TEXT ("TAO (%P|%t) Invalid Syntax: %s\n"),
-                       s));
+                       ACE_TEXT_CHAR_TO_TCHAR (s)));
 
           ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                        CORBA::COMPLETED_NO));

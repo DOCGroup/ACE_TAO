@@ -1,3 +1,64 @@
+Thu Jan 29 14:10:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO/tao/Acceptor_Impl.cpp:
+	* TAO/tao/Asynch_Queued_Message.cpp:
+	* TAO/tao/CORBALOC_Parser.cpp:
+	* TAO/tao/Codeset_Manager.cpp:
+	* TAO/tao/Connection_Handler.cpp:
+	* TAO/tao/DLL_ORB.cpp:
+	* TAO/tao/Environment.cpp:
+	* TAO/tao/GIOP_Message_Base.cpp:
+	* TAO/tao/GIOP_Message_Generator_Parser.cpp:
+	* TAO/tao/GIOP_Message_Lite.cpp:
+	* TAO/tao/IIOP_Acceptor.cpp:
+	* TAO/tao/IIOP_Connector.cpp:
+	* TAO/tao/IIOP_Profile.cpp:
+	* TAO/tao/Incoming_Message_Queue.cpp:
+	* TAO/tao/Invocation_Adapter.cpp:
+	* TAO/tao/MCAST_Parser.cpp:
+	* TAO/tao/NVList.cpp:
+	* TAO/tao/ORB.cpp:
+	* TAO/tao/ORB_Core.cpp:
+	* TAO/tao/Object_Ref_Table.cpp:
+	* TAO/tao/Profile.cpp:
+	* TAO/tao/Sequence.cpp:
+	* TAO/tao/Synch_Invocation.cpp:
+	* TAO/tao/Synch_Queued_Message.cpp:
+	* TAO/tao/Synch_Reply_Dispatcher.cpp:
+	* TAO/tao/TAO_Internal.cpp:
+	* TAO/tao/Thread_Per_Connection_Handler.cpp:
+	* TAO/tao/Transport.cpp:
+	* TAO/tao/Transport_Cache_Manager.cpp:
+	* TAO/tao/Transport_Connector.cpp:
+	* TAO/tao/Typecode.cpp:
+	* TAO/tao/default_resource.cpp:
+	* TAO/tao/skip.cpp:
+	* TAO/tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* TAO/tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+	* TAO/tao/PortableServer/Operation_Table.cpp:
+	* TAO/tao/PortableServer/POA.cpp:
+	* TAO/tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+	* TAO/tao/RTScheduling/Request_Interceptor.cpp:
+	* TAO/tao/Strategies/DIOP_Acceptor.cpp:
+	* TAO/tao/Strategies/DIOP_Connection_Handler.cpp:
+	* TAO/tao/Strategies/DIOP_Profile.cpp:
+	* TAO/tao/Strategies/DIOP_Transport.cpp:
+	* TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+	* TAO/tao/Strategies/SCIOP_Profile.cpp:
+	* TAO/tao/Strategies/SCIOP_Transport.cpp:
+	* TAO/tao/Strategies/SHMIOP_Acceptor.cpp:
+	* TAO/tao/Strategies/SHMIOP_Connector.cpp:
+	* TAO/tao/Strategies/SHMIOP_Profile.cpp:
+	* TAO/tao/Strategies/UIOP_Acceptor.cpp:
+	* TAO/tao/Strategies/UIOP_Connector.cpp:
+	* TAO/tao/Strategies/UIOP_Profile.cpp:
+	* TAO/tao/Strategies/advanced_resource.cpp:
+	* TAO/tao/Utils/Server_Main.cpp:
+
+  	  Thanks to Duane Binder<duane.binder@veritas.com> for providing
+	  patches to fix some of the messages printed out using
+	  ACE_Log_Msg. 
+
 Thu Jan 29 14:03:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/ec_typed_events.mpb:

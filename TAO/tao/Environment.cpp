@@ -183,7 +183,7 @@ CORBA::Environment::print_exception (const char *info,
 
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %s\n"),
-                  info));
+                  ACE_TEXT_CHAR_TO_TCHAR (info)));
 
       CORBA::SystemException *x2 =
         CORBA::SystemException::_downcast (this->exception_);
@@ -196,11 +196,11 @@ CORBA::Environment::print_exception (const char *info,
 
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO: (%P|%t) user exception, ID '%s'\n"),
-                    id));
+                    ACE_TEXT_CHAR_TO_TCHAR (id)));
     }
   else
     ACE_DEBUG ((LM_ERROR,
-                ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), info));
+                ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), ACE_TEXT_CHAR_TO_TCHAR (info)));
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

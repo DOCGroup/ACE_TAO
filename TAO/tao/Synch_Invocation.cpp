@@ -493,10 +493,10 @@ namespace TAO
     if (TAO_debug_level > 5)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                    "handle_user_exception - "
-                    "raising exception %s\n",
-                    buf.in ()));
+                    ACE_LIB_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                    ACE_LIB_TEXT ("handle_user_exception - ")
+                    ACE_LIB_TEXT ("raising exception %s\n"),
+                    ACE_TEXT_CHAR_TO_TCHAR (buf.in ())));
       }
 
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);

@@ -131,7 +131,7 @@ namespace TAO
 
             {
               ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ",
+                "TAO (%P|%t) - Invocation_Adapter::invoke_collocated, "
                 "handling forwarded locations \n"));
             }
 
