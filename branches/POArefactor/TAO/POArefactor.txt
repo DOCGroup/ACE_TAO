@@ -1,3 +1,16 @@
+Thu Oct  7 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+          Replaced all ACE casts with their C++ versions
+
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Made changes to these files because of the changes in the
+          PortableServer library
+
 Thu Oct  7 12:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Policy_Strategies.{h,cpp}:
