@@ -54,8 +54,8 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
 {
   offers = new CosTrading::OfferSeq;
 
-  CORBA::ULong offers_in_sequence =
-    min (n, (CORBA::ULong)this->offers_.size ());
+  CORBA::ULong sequence_size = this->offers_.size ();
+  CORBA::ULong offers_in_sequence = (n < sequence_size) ? n : sequence_size;
   offers->length (offers_in_sequence);
   
   // populate the sequence.
