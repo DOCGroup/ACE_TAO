@@ -13,16 +13,16 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class Component;
-      class Provides;
-      class Uses;
-      class Publishes;
-      class Emits;
-      class Consumes;
-      class EventType;
-      class Home;
-      class HomeFactory;
-      class HomeFinder;
+      struct Component;
+      struct Provides;
+      struct Uses;
+      struct Publishes;
+      struct Emits;
+      struct Consumes;
+      struct EventType;
+      struct Home;
+      struct HomeFactory;
+      struct HomeFinder;
 
 
       struct Factory : virtual IDL2::SemanticAction::Factory
