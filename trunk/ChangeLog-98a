@@ -41,7 +41,8 @@ Mon Mar 02 17:06:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  ACE_Thread_Manager::exit recursively.  After this is done
 	  (returned from the second call,) this function will then call
 	  ACE_OS::exit, which clean up the TSS objects and then really
-	  exit the thread.
+	  exit the thread.  Thanks to Gordon Watts <gwatts@FNAL.GOV> for
+	  pointing this out.
 
 	* ace/OS.cpp (thr_exit): Added Win32 thread exit functionality.
 	  ACE_OS::thr_exit now will try to clean up TSS objects by calling
