@@ -1,3 +1,13 @@
+Tue Jun  8 19:48:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module.cpp:
+	  Added TCKind to the CORBA:: scoped names added to the
+	  symbol table when module CORBA is first added to the
+	  scopes. I noticed that CORBA::TCKind is used as a
+	  return type in the forthcoming Dynamic Any spec and
+	  so it couldn't hurt to add IDL compiler recognition
+	  of it now.
+
 Tue Jun  8 18:57:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/Default_Servant/server.cpp
