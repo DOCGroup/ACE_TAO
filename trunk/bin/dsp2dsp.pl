@@ -1,3 +1,5 @@
+# $Id$
+#
 # File: dsp2dsp.pl
 # Description: This perl script is used to "create" new dsp files
 #              by modifying an existing dsp file.
@@ -25,4 +27,3 @@ while (<FROM>)
 }
 
 close (TO);
-
