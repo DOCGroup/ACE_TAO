@@ -25,6 +25,9 @@ CPPDIR = .
 
 IDLDIR = .
 
+IDLFILES = \
+        $(IDLDIR)\ami_test.idl
+
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
 #
