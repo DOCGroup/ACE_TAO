@@ -7,6 +7,13 @@ Fri Nov  3 10:48:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Set the parameters for compiling the IDL file in
 	  the release version of these projects.
 
+	* tests/DSI_Gateway/test.idl:
+
+	  Renamed typedef LongSeq as DSI_LongSeq. The generated
+	  #if defined guard around the class constructor definitions
+	  and the Any destructor definition (_LONGSEQ_CS_) was
+	  conflicting with something defined elsewhere.
+
 Thu Nov  2 14:44:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
