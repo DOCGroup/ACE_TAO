@@ -1,0 +1,11 @@
+// $Id:
+
+workspace(CCF) {
+  requries += cidl
+  cmdline += -static
+  ./CIDL/CIDL.mpc
+  ./IDL2/IDL2.mpc
+  ./CodeGenerationKit/CodeGenerationKit.mpc
+  ./CompilerElements/CompilerElements.mpc
+  ./IDL3/IDL3.mpc
+}
