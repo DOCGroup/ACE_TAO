@@ -6,6 +6,12 @@ Sun Dec 15 13:01:17 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler.cpp: removed ACE_INLINE's
 
+	* tests/MM_Shared_Memory_Test.cpp: declare shm_key as char[]
+	  instead of char *, so that the string gets put into the data
+	  segment rather than the text segment.  The string gets modified,
+	  which causes a core dump with the g++/SunOS5.5 build if the string
+	  is in the text segment.
+
 Sun Dec 15 10:29:20 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/servers/svc.conf: Removed the "lib" prefix for the
