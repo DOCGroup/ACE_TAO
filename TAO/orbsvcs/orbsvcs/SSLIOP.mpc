@@ -3,7 +3,7 @@ project(SSLIOP) : orbsvcslib, corba_messaging, core, security, portableserver, s
   sharedname   = TAO_SSLIOP
   idlflags    += -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP/SSLIOP_Export.h
   dynamicflags = TAO_SSLIOP_BUILD_DLL
-  tagchecks    = SSLIOP
+  tagchecks   += SSLIOP
 
   IDL_Files {
     SSLIOP.idl
