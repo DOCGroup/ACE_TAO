@@ -155,7 +155,6 @@ protected:
   // This is a helper function for <list> method.
   // It is necessary due to inability to have 2 TRY blocks in one function.
 
-private:    
   HASH_MAP context_;
   // This implementation of <NamingContext> uses <ACE_Hash_Map> for
   // storage and manipulation of name-object bindings.
@@ -172,6 +171,9 @@ private:
 
   PortableServer::POA_var poa_;
   // Implement a different _default_POA()
+
+  u_long counter_;
+  // This counter is used to generate names for children
 };
 
 class TAO_ORBSVCS_Export TAO_BindingIterator : public POA_CosNaming::BindingIterator

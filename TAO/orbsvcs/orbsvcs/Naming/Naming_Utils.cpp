@@ -99,24 +99,17 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       poa->activate_object_with_id (id.in (),
                                     this->naming_context_impl_,
                                     TAO_TRY_ENV);
-
       TAO_CHECK_ENV;
 
       this->naming_context_ =
         this->naming_context_impl_->_this (TAO_TRY_ENV);      
       TAO_CHECK_ENV;
 
-
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
-      // client.  Then release the object.
-      CORBA::Object_var obj =
-        poa->id_to_reference (id.in (),
-                              TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
+      // client.
       this->naming_service_ior_=
-        orb->object_to_string (obj.in (),
+        orb->object_to_string (this->naming_context_.in (),
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
