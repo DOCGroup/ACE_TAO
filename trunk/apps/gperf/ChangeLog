@@ -1,3 +1,15 @@
+Tue Jun 30 15:43:16 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Options.h		:
+	* src/Options.cpp	:
+	* src/Key_List.cpp	: Added the following options to gperf.
+		- 	"-m" To mute warnings. (If -D option is enabled,
+			gperf doesnt say anything about duplicate hash
+			values etc.
+		- 	"-M" To skip class definition while in C++ mode.
+		-	"-J" To skip the line "#include <string.h>" in the
+			output.
+
 Thu May 14 16:37:39 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* src: ACE'ifed most of the gperf source code, yow!
@@ -74,7 +86,7 @@ Mon Oct 25 18:40:51 1993  Per Bothner  (bothner@kalessin.cygnus.com)
 	to increase hash table size to power of 2.
 
 	* options.h (LARGE_STACK_ARRAYS):  New flag.  Defaults to zero.
-	* gen-perf.cc, key-list.cc, read-line.cc:	
+	* gen-perf.cc, key-list.cc, read-line.cc:
 	Only stack-allocate large arrays if LARGE_STACK_ARRAYS is set.
 	* main.cc (main):  Only call setrlimit (RLIMIT_STACK, ...)
 	if LARGE_STACK_ARRAYS.
@@ -293,7 +305,7 @@ Mon Jul 29 22:05:40 1991  Douglas C. Schmidt  (schmidt at net4.ics.uci.edu)
 	  correctly.  Now if you put a backslash character ('\') in front
 	  of the # it treats the first character as a #.  Naturally, to
 	  put a '\' character on the front of the line you need to escape
-	  it also, i.e., 
+	  it also, i.e.,
 	  \\I'm a line that starts with only one \
 	  # I'm a comment line
 	  \#define I'm walking a fine line... ;-)
@@ -329,9 +341,9 @@ Thu Jun 28 16:17:27 1990  Doug Schmidt  (schmidt at brilliant)
 	* Wow, first fix on the new job!  There was a dumb error
 	  in Key_List::output_lookup_function, where I printed the
 	  string "&wordlist[key]" instead of the correct "&wordlist[index]".
-	  
+
 	* Added a couple of #ifdefs for USG support.
-	  	
+
 Sun Jun  3 17:16:36 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 
         * Updated the version number to 2.5 and sent to Doug Lea for release
@@ -377,8 +389,8 @@ Mon Apr 30 17:37:24 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           the MIN_HASH_VALUE is no longer subtracted off when calculating
           the hash value for a keyword.  This required changing some other
           code by substituting MAX_HASH_VALUE for TOTAL_KEYS in several places.
-          Finally, this means that the generated tables may contain leading 
-          null entries, but I suppose it is better to trade-off space to get 
+          Finally, this means that the generated tables may contain leading
+          null entries, but I suppose it is better to trade-off space to get
           faster performance...
 
 Mon Mar 26 13:08:43 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
@@ -387,13 +399,13 @@ Mon Mar 26 13:08:43 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 
         * Changed the main program so that it always prints out gperf's
           execution timings to the generated output file.
-          
+
 Sun Mar 25 12:39:30 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 
         * Added the -Z option so that users can specify the name of the
           generated class explicitly.  Updated documentation to reflect
           this change.
-          
+
         * Modified the generated C++ class interface so that the functions
           are declared static (to remove the overhead of passing the `this'
           pointer).  This means that operator()() can no longer be used,
@@ -415,7 +427,7 @@ Tue Mar  6 18:17:42 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
         * Added the -E option that defines constant values using an enum
           local to the lookup function rather than with #defines.  This
           also means that different lookup functions can reside in the
-          same file.  Thanks to James Clark (jjc@ai.mit.edu). 
+          same file.  Thanks to James Clark (jjc@ai.mit.edu).
 
 Sat Mar  3 20:19:00 1990  Doug Schmidt  (schmidt at zola.ics.uci.edu)
 
@@ -430,7 +442,7 @@ Fri Feb 23 14:21:28 1990  Doug Schmidt  (schmidt at zola.ics.uci.edu)
           to get_max_keysig_size, since this is more precise...
 
         * Changed all occurrences of charset to keysig (stands for ``key
-          signature'') to reflect the new naming convention used in the 
+          signature'') to reflect the new naming convention used in the
           USENIX paper.
 
 Thu Feb 22 11:28:36 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
@@ -504,7 +516,7 @@ Tue Nov 14 21:45:30 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
         * Continued to refine the great hack.  The latest trick is to
           try and replace most uses of dynamic memory (i.e., calls to
           new) with uses of gcc dynamic arrays (i.e., an alloca solution).
-          This makes life much easier for the overall process-size, since 
+          This makes life much easier for the overall process-size, since
           it reduces the amount of overhead for memory management.  As a
           side-effect from this change there is no reason to have the
           Bool_Array::dispose member function, so it's outta here!
@@ -524,16 +536,16 @@ Mon Nov 13 19:38:27 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           compilers, even though a large, sparse array must be created.
           Here's the general idea:
 
-             a. Generate the wordlist as a contiguous block of keywords, 
+             a. Generate the wordlist as a contiguous block of keywords,
                 just as before when using a switch statement.  This
-                wordlist *must* be sorted by hash value. 
+                wordlist *must* be sorted by hash value.
 
              b. Generate the lookup array, which is an array of signed
                 {chars,shorts,ints}, (which ever allows full coverage of
                 the wordlist dimensions).  If the value v, where v =
                 lookup[hash(str,len)], is >= 0 and < TOTAL_KEYWORDS, then we
-                simply use this result as a direct access into the wordlist 
-                array to snag the keyword for comparison.  
+                simply use this result as a direct access into the wordlist
+                array to snag the keyword for comparison.
 
              c. Otherwise, if v is < -TOTAL_KEYWORDS or > TOTAL_KEYWORDS
                 this is an indication that we'll need to search through
@@ -545,13 +557,13 @@ Mon Nov 13 19:38:27 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 Sun Nov 12 13:48:10 1989  Doug Schmidt  (schmidt at zola.ics.uci.edu)
 
         * Simplified Key_List::output_min_max considerably by recognizing
-          that since the keyword list was already sorted by hash value finding 
+          that since the keyword list was already sorted by hash value finding
           the min and max values is trivial!
 
         * Improved the debugging diagnostics considerably in classes Key_List,
           Hash_Table, and Gen_Perf.
 
-        * Modified the `-s' option so that a negative argument is now 
+        * Modified the `-s' option so that a negative argument is now
           interpreted to mean `allow the maximum associated value to be
           about x times *smaller* than the number of input keys.'  This
           should help prevent massive explosion of generated hash table
@@ -566,7 +578,7 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           memory allocated to Bool_Array::storage_array.  This space may
           be needed for subsequent options, so it made sense to free it as
           soon as possible...
-          
+
         * Renamed file/class Alpha_Vectors to Vectors, to avoid problems
           with 14 character length filenames on SYSV.  Also changed file
           adapredefined.gperf to adadefs.gperf in the ./tests directory.
@@ -579,7 +591,7 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           cleans up client code.
 
         * Merged all the cperf changes into gperf.
-        
+
         * Made sure to explicitly initialize perfect.fewest_collisions to
           0.
 
@@ -632,8 +644,8 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           needed.  Since this array is generally very large it makes sense
           to return the memory to the freelist when it is no longer in use.
 
-        * Changed the interface to constructor Hash_Table::Hash_Table.  This 
-          constructor now passed a pointer to a power-of-two sized buffer that 
+        * Changed the interface to constructor Hash_Table::Hash_Table.  This
+          constructor now passed a pointer to a power-of-two sized buffer that
           serve as storage for the hash table.  Although this weakens information
           hiding a little bit it greatly reduces dynamic memory fragmentation,
           since we can now obtain the memory via a call to alloca, rather
@@ -644,11 +656,11 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           compilation section was added in main.c. Taken from GNU GCC,
           this code gets rid of any avoidable limit on stack size so that
           alloca does not fail.  It is only used if the -DRLIMIT_STACK
-          symbol is defined when gperf is compiled. 
+          symbol is defined when gperf is compiled.
 
         * Added warnings in option.c so that user's would be informed
           that -r superceeds -i on the command-line.
-          
+
         * Rewrote Gen_Perf::affects_prev.  First, the code structure
           was cleaned up considerably (removing the need for a dreaded
           goto!).  Secondly, a major change occurred so that Gen_Perf::affects_prev
@@ -660,7 +672,7 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           suggested by Nels Olson and seems to *greatly* increase the
           speed of gperf for large keyfiles.  Thanks Nels!
 
-        * In a similar vein, inside the Gen_Perf::change routine 
+        * In a similar vein, inside the Gen_Perf::change routine
           the variable `perfect.fewest_collisions is no longer initialized
           with the length of the keyword list.  Instead it starts out at
           0 and is incremented by 1 every time change () is called.
@@ -687,12 +699,12 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           uses of uniq_set in perfect.c and keylist.c.  Due to changes
           to Gen_Perf::compute_disjoint_sets this field was no longer
           necessary, and its removal makes the program smaller and
-          potentially faster. 
-          
+          potentially faster.
+
         * Added lots of changes/fixes suggested by Nels Olson
           (umls.UUCP!olson@mis.ucsf.edu).  In particular:
           1.  Changed Bool_Array so that it would dynamically create
-              an array of unsigned shorts rather than ints if the 
+              an array of unsigned shorts rather than ints if the
               LO_CAL symbol was defined during program compilation.
               This cuts the amount of dynamic memory usage in half,
               which is important for large keyfile input.
@@ -707,7 +719,7 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           5.  Changed the behavior of Key_List::read_keys so that it would
               honor -D unequivocally, i.e., it doesn't try to turn off dup
               handling if the user requests it, even if there are no
-              immediate links in the keyfile input. 
+              immediate links in the keyfile input.
           6.  Modified the -j option so that -j 0 means `try random values
               when searching for a way to resolve collisions.'
           7.  Added a field `num_done' to the Gen_Perf struct.  This is used
@@ -723,7 +735,7 @@ Sat Nov 11 11:31:13 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           10. Fixed a silly bug in Gen_Perf::change.  This problem caused
               gperf to seg fault when the -k* option was given and the
               keyfile file had long keywords.
-        
+
 Sun Oct 29 00:18:55 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
 
         * Modified class-specific new operations for Read_Line and
@@ -736,13 +748,13 @@ Sun Oct 22 13:49:43 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Updated gperf version number to 2.0.  Send to Doug Lea for
           incorporation into the long-awaited `official' libg++ 1.36
-          release! 
+          release!
 
         * Thanks to Nels Olson a silly bug in Gen_Perf::change ()
           was fixed.  This problem caused gperf to seg fault when
           the -k* option was given and the keyfile file had long
           keywords.
-          
+
         * Modified Key_List::print_hash_function so that it output
           max_hash_value + 1 (rather than just max_hash_value) for
           any associated value entries that don't correspond to
@@ -780,7 +792,7 @@ Tue Oct 17 14:19:48 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           occur for most input, but why take the risk?
 
         * Changed the behavior for the -a (ANSI) option so that the
-          generated prototypes use int rather than size_t for the LEN 
+          generated prototypes use int rather than size_t for the LEN
           parameter.  It was too ugly having to #include <stddef.h> all
           over the place...
 
@@ -794,19 +806,19 @@ Sat Oct 14 20:29:43 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
 
         * Added a majorly neat hack to Bool_Array, suggested by rfg.
           The basic idea was to throw away the Ullman array technique.
-          The Ullman array was used to remove the need to reinitialize all 
+          The Ullman array was used to remove the need to reinitialize all
           the Bool_Array elements to zero everytime we needed to determine
-          whether there were duplicate hash values in the keyword list.  
+          whether there were duplicate hash values in the keyword list.
           The current trick uses an `iteration number' scheme, which takes
-          about 1/3 the space and reduces the overall program running a 
-          time by about 20 percent for large input!  The hack works as 
+          about 1/3 the space and reduces the overall program running a
+          time by about 20 percent for large input!  The hack works as
           follows:
-          
+
           1. Dynamically allocation 1 boolean array of size k.
           2. Initialize the boolean array to zeros, and consider the first
              iteration to be iteration 1.
           2. Then on all subsequent iterations we `reset' the bool array by
-             kicking the iteration count by 1. 
+             kicking the iteration count by 1.
           3. When it comes time to check whether a hash value is currently
              in the boolean array we simply check its index location.  If
              the value stored there is *not* equal to the current iteration
@@ -815,7 +827,7 @@ Sat Oct 14 20:29:43 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
              location for future reference.  Otherwise, if the item at
              the index location *is* equal to the iteration number we've
              found a duplicate.  No muss, no fuss!
-             
+
 Mon Oct  2 12:30:54 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Changed some consts in options.h to enumerals, since g++
@@ -846,7 +858,7 @@ Sat Sep 30 12:55:24 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 Tue Sep 26 10:36:50 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Changed class Read_Line's definition so that it no longer
-          needs to know about the buffering scheme used to speed up 
+          needs to know about the buffering scheme used to speed up
           dynamic memory allocation of input keywords and their
           associated attributes.  This means that operator new is no longer
           a friend of Read_Line.
@@ -864,15 +876,15 @@ Sun Sep 24 13:11:24 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Changed classes Read_Line and List_Node to use Obstacks in order
           to cache memory allocation for keyword strings and List_Nodes.
-          
+
         * Continued to experiment with inheritance schemes.
-        
+
         * Added a new file `alpha.h', that declares static data shared
           (i.e., inherited) between classes List_Node and Key_List.
 
 Tue Sep 12 16:14:41 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
-        * Made numerous changes to incorporate multiple inheritance in 
+        * Made numerous changes to incorporate multiple inheritance in
           gperf.
 
 Wed Aug 16 23:04:08 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
@@ -907,7 +919,7 @@ Tue Jul 18 16:04:31 1989  Doug Schmidt  (schmidt at zola.ics.uci.edu)
 
 Sun Jul  9 17:53:28 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
-        * Changed the ./tests subdirectory Makefile so that it 
+        * Changed the ./tests subdirectory Makefile so that it
           uses $(CC) instead of gcc.
 
 Sun Jul  2 21:52:15 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
@@ -921,9 +933,9 @@ Sun Jul  2 21:52:15 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           access the contents in this table.
 
         * Added the "#" feature, that allows comments inside the keyword
-          list from the input file. Comment handling takes place in readline.c.  
+          list from the input file. Comment handling takes place in readline.c.
           This simplifies the code and reduces the number of malloc calls.
-          
+
         * Also added the -H option (user can give the name of the hash
           function) and the -T option (prevents the transfer of the type decl
           to the output file, which is useful if the type is already defined
@@ -970,10 +982,10 @@ Sun May 21 01:51:45 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 
         * Removed the operator new hack from Read_Line, since this seemed
           to create horrible bus error problems.
-                    
-        * Changed many class member functions and data members to be `static', 
+
+        * Changed many class member functions and data members to be `static',
           if they don't manipulate this!
-          
+
 Fri May 12 23:06:56 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Changed class Std_Err to use static member functions, a la
@@ -1015,12 +1027,12 @@ Tue May  2 16:23:29 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 
         * Added the GNU getopt program to the distribution.  This makes
           GPERF portable to systems that don't include getopt in libc.
-          
+
         * Added a strcspn member to class Key_List.  This also increases
           portability.
 
         * Added the get_include_src function from keylist.c as a member
-          function in class Key_List.  Hopefully every function is 
+          function in class Key_List.  Hopefully every function is
           now associated with a class.  This aids abstraction and
           modularity.
 
@@ -1039,13 +1051,13 @@ Sun Apr 30 12:15:25 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           not handled by the c++-mode formatter....
 
         * Modified the handling of links (i.e., keywords that have
-          identical hash values as other keywords).  This should 
+          identical hash values as other keywords).  This should
           speed up hash function generation for keyword sets with
           many duplicate entries.  The trick is to treat duplicate
           values as equivalence classes, so that each set of duplicate
           values is represented only once in the main list processing.
 
-        * Fixed some capitialization typos and indentations mistakes in 
+        * Fixed some capitialization typos and indentations mistakes in
           Key_List::print_hash_function.
 
 Sat Apr 29 12:04:03 1989  Doug Schmidt  (schmidt at zola.ics.uci.edu)
@@ -1064,7 +1076,7 @@ Fri Apr 28 12:38:35 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           Also changed the strexp class to iterator.  Continued to work
           on style...
 
-        * Updated the version number to 1.6.  This reflects all the 
+        * Updated the version number to 1.6.  This reflects all the
           recent changes.
 
 Thu Apr 27 00:14:51 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
@@ -1075,7 +1087,7 @@ Thu Apr 27 00:14:51 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
         * Continued the stylistic changes.  Added the #pragma once
           directive to all the *.h files.  Removed all #defines and
           replaced them with static consts.  Also moved the key_sort
-          routine from options.cc into the options class as a 
+          routine from options.cc into the options class as a
           member function.
 
 Mon Apr  3 13:26:55 1989  Doug Schmidt  (schmidt at zola.ics.uci.edu)
@@ -1091,7 +1103,7 @@ Thu Mar 30 23:28:45 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 Sat Mar 11 13:12:37 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Fixed Stderr constructors so that they wouldn't try to
-          use the base class initializer syntax for the static 
+          use the base class initializer syntax for the static
           class variable Program_Name.  G++ 1.34 is stricter in
           enforcing the rules!
 
@@ -1116,16 +1128,16 @@ Tue Feb 28 11:19:58 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Added the LEX and YACC-like ability to include arbitrary
           text at the beginning of the generated C source code output.
-          This required two new functions Get_Special_Input, 
+          This required two new functions Get_Special_Input,
           Key_List::Save_Include_Src;
 
         * Fixed memory allocation bug in Key_List::Set_Types.
           Variable Return_Type needs 1 additional location
           to store the "*" if the -p option is used.
-          
+
         * Added code to NULL terminate both Struct_Tag and Return_Type,
           *after* the strncpy (stupid mistake).
-          
+
 Mon Feb 27 14:39:51 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Added a new option -N.  This allows the user to specify the
@@ -1138,7 +1150,7 @@ Mon Feb 20 23:33:14 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Corrected the Hash_Table::operator () function so that
           *it* is responsible for deciding when a new key has the
-          same signature as a previously seen key.  The key length 
+          same signature as a previously seen key.  The key length
           information is now used internally to this function to
           decide whether to add to the hash table those keys with
           the same key sets, but different lengths.  Before, this
@@ -1154,8 +1166,8 @@ Sun Feb 19 16:02:51 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
 Sun Jan 15 15:12:09 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 
-        * Incremented the version number upto 1.4 to reflect the new 
-          options that affect the generated code.  Send the new 
+        * Incremented the version number upto 1.4 to reflect the new
+          options that affect the generated code.  Send the new
           distribution off to Michael for use with g++ 1.33.
 
         * Added a fix to Key_List::Read_Keys so that it checks for links
@@ -1163,9 +1175,9 @@ Sun Jan 15 15:12:09 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           catch obvious links, which caused it to spend large amount
           of time searching for a solution that could never occur!
 
-        * Modified the Key_List data structure to record *both* the 
+        * Modified the Key_List data structure to record *both* the
           minimum and the maximum key lengths.  This information
-          is now computed in Key_List::Read_Keys, and thus 
+          is now computed in Key_List::Read_Keys, and thus
           Key_List::Print_Min_Max doesn't need to bother.
 
         * Modifed the key position iterator scheme in options.cc to
@@ -1180,7 +1192,7 @@ Sun Jan 15 15:12:09 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
         * Added a new function, Key_List::Print_Keylength_Table,
           which creates a table of lengths for use in speeding
           up the keyword search.  This also meant that a new
-          option, -l (LENTABLE) is recognized.  It controls 
+          option, -l (LENTABLE) is recognized.  It controls
           whether the length table is printed and the comparison
           made in the generated function ``in_word_set.''
 
@@ -1204,11 +1216,11 @@ Fri Jan 13 21:25:27 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
 
 Thu Jan 12 20:09:21 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
-        * Added pascal, modula3, and modula2 tests inputs to the 
+        * Added pascal, modula3, and modula2 tests inputs to the
           Makefile
-        
+
         * Recognised that there is a bug with the -n option.  However
-          I'm too busy to fix it properly, right now.  The problem 
+          I'm too busy to fix it properly, right now.  The problem
           is that the generated #define end up being 0, since that's
           my hack to make -n work.  This needs complete rethinking!
 
@@ -1217,7 +1229,7 @@ Tue Jan 10 00:08:16 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
         * Added a new option, -n, that instructs gperf to not use the
           length of an identifier when computing the hash functions.
           I'm not sure how useful this is!
-          
+
         * Retransmitted the distribution to rocky.oswego.edu.  Hopefully,
           this will work!
 
@@ -1248,7 +1260,7 @@ Sun Jan  8 13:43:14 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           Made Set_Sort a member function of class List_Node.
 
         * Massively updated the documentation in the gperf.texinfo file.
-        
+
         * Polished off the major revision to the print functions,
           added a few new tests in the Makefile to check for the
           validity of the program and ftp'ed the entire distribution
@@ -1262,7 +1274,7 @@ Sun Jan  8 13:43:14 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           Also, removed the restriction in Option that the -p and
           -t options couldn't be used simultaneously.
 
-        * Modified List_Node::List_Node, to perform only 1 call to 
+        * Modified List_Node::List_Node, to perform only 1 call to
           ``new'' when dynamically allocating memory for the Key_Set
           and the Uniq_Set.
 
@@ -1285,8 +1297,8 @@ Sat Jan  7 14:10:51 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
           to a user defined struct location from the generated
           ``in_word_set'' function instead of the current 0 or 1
           return value.  Created function Key_List::Print_Type_Switch
-          and added option -p to class Option, allowing the user to 
-          request generation of the aforementioned pointers returned 
+          and added option -p to class Option, allowing the user to
+          request generation of the aforementioned pointers returned
           instead of booleans.
 
         * Put in checks in class Option to make sure that -S and -t
@@ -1296,12 +1308,12 @@ Sat Jan  7 14:10:51 1989  Doug Schmidt  (schmidt at glacier.ics.uci.edu)
 
         * Sent version 1.2 to Doug Lea for possible inclusion into
           the libg++ distribution.
-          
+
         * Moved the static word_list array inside the generated function
           in_word_set.  This supports better data hiding.
 
         * Added a texinfo file, gperf.texinfo
-          
+
         * Revised the Makefile to cleanup the droppings from texinfo
           and changed the name of gperf.cc and gperf.h to perfect.cc
           and perfect.h.
@@ -1317,14 +1329,14 @@ Fri Jan  6 13:04:45 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           Key_List::Print_Hash_Function, and
           Key_List::Print_Lookup_Function.  This simplifies the big mess
           in Key_List::Output considerably!
-          
-        * Added switch statement option to Options, which potentially 
+
+        * Added switch statement option to Options, which potentially
           trades time for space in the generated lookup code.
 
 Thu Jan  5 22:46:34 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
 
         * Released version 1.1
-        
+
         * Fixed a bug with Gperf::Merge_Set, it was skipping letters
           shared between the Set_1 and Set_2.
 
@@ -1333,7 +1345,7 @@ Thu Jan  5 22:46:34 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
 
         * Changed Gperf::Sort_Set to use insertion sort, rather than
           bubble sort.
-        
+
         * Added a check in Key_List::Output for the special case where
           the keys used are 1,$.  It is possible to generate more
           efficient C code in this case.
