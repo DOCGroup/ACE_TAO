@@ -49,7 +49,6 @@ LD      = $(CXX)
 LDFLAGS = --no_auto_instantiation -u __main -u __premain -u _abort -r \
           $(COOL_DIR)/lib/libOrb.a  \
           $(MVME_DIR)/lib/CC/libC.a \
-          $(GHS_DIR)/ch68040/libedgnoe.a \
           $(MVME_DIR)/lib/classix/libcx.s.a
 OCFLAGS += -OL -OM
 AR      = $(GHS_DIR)/gnuch68/ar
