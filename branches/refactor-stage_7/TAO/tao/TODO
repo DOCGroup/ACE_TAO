@@ -8,10 +8,6 @@
 . Test location forwards with collocated servants for remote servants
   AND collcoated servants for collcoated servants.
 
-. test user exceptions
-
-. Move TAO_Exception_Data elsewhere
-
 . Test case for forwarded objects in collocated mode being remote
 
 . Recursive location forwards is broken still.
