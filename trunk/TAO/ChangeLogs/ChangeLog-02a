@@ -1,3 +1,8 @@
+Tue Feb 13 10:17:35 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RT_ORB.cpp: 
+	  Fixed broken template instantiation.
+
 Tue Feb 13 01:14:26 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/RT_ORB.cpp (create_named_mutex):
