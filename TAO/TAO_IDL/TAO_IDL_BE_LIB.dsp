@@ -291,6 +291,10 @@ SOURCE=.\be\be_visitor_ami_pre_proc.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_arg_traits.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_argument.cpp
 # End Source File
 # Begin Source File
@@ -616,6 +620,10 @@ SOURCE=.\be_include\be_visitor.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_ami_pre_proc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_arg_traits.h
 # End Source File
 # Begin Source File
 
