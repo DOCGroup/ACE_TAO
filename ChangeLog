@@ -1,21 +1,71 @@
+Wed Nov 10 12:42:45 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_Errno.h:
+        * ace/OS_Errno.cpp:
+
+          Do not inline this code if building with debug enabled using gcc
+          on Solaris.  If it is inlined, it can cause deadlocks during
+          static initialization.
+
+        * bin/MakeProjectCreator/config/rtscheduling.mpb:
+
+          The TAO_RTScheduler library links in the TAO_PortableServer
+          library, so this base project needs the portableserver base
+          project.
+
+        * tests/Priority_Task_Test.cpp:
+
+          Print out an informational message if we are unable to change
+          priority due to user privileges instead of an error.
+
+
+        Applying the following changes from Trevor Fields
+        (fields_t@ociweb.com):
+
+        Mon Oct 25 12:12:14 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * ace/Service_Repository.h:
+        * ace/Service_Repository.i:
+        * ace/Service_Repository.cpp:
+
+          Changed the lock from an ACE_Thread_Mutex to an
+          ACE_Recursive_Thread_Mutex.  This was done to stop the
+          deadlock from occuring on Solaris with gcc (>3) non-optimized
+          builds.
+          The problem is that the dynamic library loading is being done
+          according to the link line, every time a variable is looked up.
+          This results in loading a new library while holding the Service
+          Repository lock resulting in a single threaded deadlock.
+          The problem manifests itself in executables that deadlock before
+          reaching main().  The ImR_Activator is one of the programs that 
+          currently is broken by this problem.
+
+        Wed Sep  1 13:23:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * ace/Service_Repository.cpp:
+          Changed the insert method to delete a replaced service
+          after releasing the lock.  This was done to prevent     
+          deadlocks that were occuring on solaris with gcc > 3.2.1
+          in the debug mode.
+
 Wed Nov 10 16:42:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* include/makeinclude/platform_vxworks5.5.x.GNU:
-	  New platform configuration for VxWorks >= 5.5.1.
-	  This new file (should) work(s) for both the GNU and DIAB toolchains on
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          New platform configuration for VxWorks >= 5.5.1.
+          This new file (should) work(s) for both the GNU and DIAB toolchains on
           any host for any target:-)
 
 Wed Nov 10 16:38:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* ace/config-vxworks5.x.h:
-	  Added template specialization macros for DIAB builds.
+        * ace/config-vxworks5.x.h:
+          Added template specialization macros for DIAB builds.
 
 Wed Nov 10 16:35:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
-	* include/makeinclude/rules.local.GNU:
-	* include/makeinclude/wrapper_macros.GNU:
-	  Introduced use of ACE_MKDIR and MKDIR variables to better support
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Introduced use of ACE_MKDIR and MKDIR variables to better support
           VxWorks 5.5.1 builds.
 
 Wed Nov 10 07:10:12 2004  Chad Elliott  <elliott_c@ociweb.com>
