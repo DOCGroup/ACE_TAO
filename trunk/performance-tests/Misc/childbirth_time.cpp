@@ -84,7 +84,7 @@ typedef double (*Profiler)(size_t);
 static int do_exec_after_fork = 0;
 
 /// do nothing thread function
-extern "C" void *empty (void*)
+extern "C" void *ace_empty (void*)
 {
   return 0;
 }
@@ -193,14 +193,14 @@ prof_native_thread (size_t iteration)
 #if defined (ACE_HAS_WTHREADS)
               if (::CreateThread (NULL,
                                   0,
-                                  LPTHREAD_START_ROUTINE (empty),
+                                  LPTHREAD_START_ROUTINE (ace_empty),
                                   0,
                                   CREATE_SUSPENDED,
                                   0) == NULL)
 #elif defined (ACE_HAS_STHREADS)
                 if (::thr_create (NULL,
                                   0,
-                                  empty,
+                                  &ace_empty,
                                   0,
                                   THR_SUSPENDED,
                                   NULL) != 0)
@@ -238,7 +238,7 @@ prof_ace_os_thread (size_t iteration)
           ptimer.start ();
 
           for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
-            if (ACE_OS::thr_create ((ACE_THR_FUNC) empty,
+            if (ACE_OS::thr_create ((ACE_THR_FUNC) ace_empty,
                                     0,
                                     THR_SUSPENDED,
                                     NULL) == -1)
@@ -275,7 +275,7 @@ prof_tm_thread (size_t iteration)
           ptimer.start ();
 
           if (ACE_Thread_Manager::instance ()->spawn_n (MULTIPLY_FACTOR,
-                                                        (ACE_THR_FUNC) empty,
+                                                        (ACE_THR_FUNC) ace_empty,
                                                         0,
                                                         THR_SUSPENDED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
