@@ -1,7 +1,14 @@
+Fri Jul 27 16:33:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Enabled GIOP lite
+	  flag to pass through to their transport object.
+
 Fri Jul 27 16:32:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp: Enabled GIOP lite flag to go
-	  through.
+	* tao/IIOP_Connection_Handler.cpp: Enabled GIOP lite flag to pass
+	  through to their transport object.
 
 	* tao/GIOP_Message_Lite.cpp: Transfered the reply that has been
 	  received to the another CDR which is used to dispatch the
