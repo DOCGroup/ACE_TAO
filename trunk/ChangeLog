@@ -1,146 +1,199 @@
+Thu Jan 15 08:14:08 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Added documentation for keyword mapping which will allow users to
+          map custom defined keywords into the project level scope.
+          Removed support for the idlpreprocessor keyword.
+
+        * bin/MakeProjectCreator/config/core.mpb:
+
+          Changed core = 1 into a verbatim clause that enbles the removal of
+          the core keyword.
+
+        * bin/MakeProjectCreator/config/vcpartialmacros.mpt:
+
+          Removed the ACE specific precompiled headers macro.
+
+        * bin/MakeProjectCreator/modules/AutomakeProjectCreator.pm:
+
+          Propagated change from GNUACEProjectCreator on Wed Jan  7 06:24:54
+          2004.
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+          Added support for keyword mapping which will allow users to map
+          custom defined keywords into the project level scope.
+
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+
+          Changed the workspace output to allow a user to make a specific
+          target within the workspace.  If the user specified target
+          requires other projects, then those projects are built also.
+
+        * bin/MakeProjectCreator/modules/Version.pm:
+
+          Updated the version number of MPC.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Warn about circular dependencies between projects.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          Added verbatim markers, removed the use of the core keyword in
+          favor of the verbatim used to get the same effect.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a bug in this template where TAO_ORBSVCS was not being
+          handled properly.
+          Removed the use of the idlpreprocessor keyword in favor of the
+          verbatim used to get the same effect.
+
 Wed Jan 14 18:45:46 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
         * ACE version 5.4 released.
 
 Wed Jan 14 17:17:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile:
+        * Makefile:
 
- 	  Fixed the path to some of autoconf files. Hopefully this should
-	  be the last bug.
+          Fixed the path to some of autoconf files. Hopefully this should
+          be the last bug.
 
 Wed Jan 14 16:28:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: 
+        * bin/make_release:
 
-	  Fixed a bug with the way we were collecting the list of files
-	  for making the ACE distribution.
+          Fixed a bug with the way we were collecting the list of files
+          for making the ACE distribution.
 
 Wed Jan 14 16:13:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile:
+        * Makefile:
 
-	  Added RELEASE_FILES to the AUTOCONF_RELEASE_FILES.
+          Added RELEASE_FILES to the AUTOCONF_RELEASE_FILES.
 
 Wed Jan 14 14:26:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: 
+        * bin/make_release:
 
-	  Made changes to the way beta kits are created. We added some
-	  solution files and WinCE files for ACE but not for TAO+CIAO
-	  (with a reason). But when the final kits were created, the
-	  ACE+TAO bundles and ACE+TAO+CIAO bundles had all the ACE
-	  specific stuff which confused the user. Moreover, the autoconf
-	  support was also bootstrapped which confused users to no end
-	  since autoconf works only with ACE. The bootstrapping should have
-	  been done to the ACE distribution and not to other
-	  distributions. 
+          Made changes to the way beta kits are created. We added some
+          solution files and WinCE files for ACE but not for TAO+CIAO
+          (with a reason). But when the final kits were created, the
+          ACE+TAO bundles and ACE+TAO+CIAO bundles had all the ACE
+          specific stuff which confused the user. Moreover, the autoconf
+          support was also bootstrapped which confused users to no end
+          since autoconf works only with ACE. The bootstrapping should have
+          been done to the ACE distribution and not to other
+          distributions.
 
-	* Makefile:
+        * Makefile:
 
-	  Added an extra target for AUTOCONF_RELEASE_FILES. This will have
-	  all the release files in ACE + the files that needs to go in
-	  with autoconf. 
+          Added an extra target for AUTOCONF_RELEASE_FILES. This will have
+          all the release files in ACE + the files that needs to go in
+          with autoconf.
 
-	  I have to test this stuff and will do so shortly.
+          I have to test this stuff and will do so shortly.
 
 Wed Jan 14 09:47:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*_Static.ds[p,w]:
+        * */*_Static.ds[p,w]:
 
-	  All the Win32 static projects and workspaces have been
-	  removed. Please use MPC to generate them. 
+          All the Win32 static projects and workspaces have been
+          removed. Please use MPC to generate them.
 
 Wed Jan 14 07:32:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Thanks to Johnny Willemsen for spotting a typo in the file.
+          Thanks to Johnny Willemsen for spotting a typo in the file.
 
 Tue Jan 13 22:42:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile (RELEASE_FILES):
+        * Makefile (RELEASE_FILES):
 
-	  Added `aclocal.m4' and `Makefile.in' to the list of files to be
-	  included in releases/kits.  This should be the last of them.
+          Added `aclocal.m4' and `Makefile.in' to the list of files to be
+          included in releases/kits.  This should be the last of them.
 
 Tue Jan 13 21:39:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile (CONTROLLED_FILES):
+        * Makefile (CONTROLLED_FILES):
 
-	  Removed aux and configure from the CONTROLLED_FILES section and
-	  moved it to the RELEASE_FILES section.
+          Removed aux and configure from the CONTROLLED_FILES section and
+          moved it to the RELEASE_FILES section.
 
 Tue Jan 13 16:33:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile (CONTROLLED_FILES):
+        * Makefile (CONTROLLED_FILES):
 
-	  Added `aux' directory to the list of controlled files.  It is a
-	  directory generated at autotool bootstrap-time via the
-	  bin/bootstrap script, and must be available in order for ACE's
-	  autoconf support to work.
+          Added `aux' directory to the list of controlled files.  It is a
+          directory generated at autotool bootstrap-time via the
+          bin/bootstrap script, and must be available in order for ACE's
+          autoconf support to work.
 
-	  Added `configure' to the list of controlled files.  Users can't
-	  run the `configure' script if it isn't shipped with the
-	  distribution.
+          Added `configure' to the list of controlled files.  Users can't
+          run the `configure' script if it isn't shipped with the
+          distribution.
 
-	* bin/bootstrap:
+        * bin/bootstrap:
 
-	  Invoke `autoreconf' without the "--symlink" option.  Auxiliary
-	  files should be copied into the distribution, not symbolic
-	  pointing to them.
+          Invoke `autoreconf' without the "--symlink" option.  Auxiliary
+          files should be copied into the distribution, not symbolic
+          pointing to them.
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Prepend "/usr/local/bin" to the GNU tool path.  That directory
-	  on our release host now contains some specific versions of GNU
-	  autotools.
+          Prepend "/usr/local/bin" to the GNU tool path.  That directory
+          on our release host now contains some specific versions of GNU
+          autotools.
 
 Tue Jan 13 16:42:37 2004  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Correct the autoconf section to direct the user
-	  to create a subdirectory under ACE_wrappers. Thanks to Ossama for
-	  pointing this out.
-	  Also changed the traditional make section to advise user to
-	  create config.h and platform_macros.GNU files and include the
-	  platform file rather than link or copy the platform file.
+        * ACE-INSTALL.html: Correct the autoconf section to direct the user
+          to create a subdirectory under ACE_wrappers. Thanks to Ossama for
+          pointing this out.
+          Also changed the traditional make section to advise user to
+          create config.h and platform_macros.GNU files and include the
+          platform file rather than link or copy the platform file.
 
 Tue Jan 13 16:19:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* netsvcs/clients/Naming/Client/Client.mpc:
+        * netsvcs/clients/Naming/Client/Client.mpc:
 
-	  Fixed a dependancy issue.
+          Fixed a dependancy issue.
 
 Tue Jan 13 11:28:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile (CONTROLLED_FILES):
+        * Makefile (CONTROLLED_FILES):
 
-	  Added `configure.ac' file to the list of controlled files.
+          Added `configure.ac' file to the list of controlled files.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Corrected problem where std::auto_ptr<>::reset() method was not
-	  detected properly in the !ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-	  case.
+          Corrected problem where std::auto_ptr<>::reset() method was not
+          detected properly in the !ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+          case.
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Bootstrap autotool support prior to creating the kits via the
-	  new bootstrap_autotools() subroutine described below.
+          Bootstrap autotool support prior to creating the kits via the
+          new bootstrap_autotools() subroutine described below.
 
-	  Appended Emacs "Local Variables" block containing Perl mode to
-	  end of this file to force Perl mode instead Fundamental mode to
-	  be used by default when editing with Emacs.
+          Appended Emacs "Local Variables" block containing Perl mode to
+          end of this file to force Perl mode instead Fundamental mode to
+          be used by default when editing with Emacs.
 
-	  (create_kit):
+          (create_kit):
 
-	  Moved autotool bootstrapping call to new bootstrap_autotools()
-	  subroutine.
+          Moved autotool bootstrapping call to new bootstrap_autotools()
+          subroutine.
 
-	  (bootstrap_autotools):
+          (bootstrap_autotools):
 
-	  New subroutine that bootstraps autotool support into the ACE
-	  distribution.
+          New subroutine that bootstraps autotool support into the ACE
+          distribution.
 
 Tue Jan 13 18:06:23 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -180,24 +233,24 @@ Mon Jan 12 23:26:28 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Mon Jan 12 17:52:17 2004  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Add a section for using GNU autoconf.
+        * ACE-INSTALL.html: Add a section for using GNU autoconf.
 
-	* examples/APG/ThreadPools/Futures.cpp: Don't delete all work
-	  requests; only the Exit requests - the others are allocated on
-	  the stack. Thanks to Andy Harvey <agh@cisco.com> for this fix.
+        * examples/APG/ThreadPools/Futures.cpp: Don't delete all work
+          requests; only the Exit requests - the others are allocated on
+          the stack. Thanks to Andy Harvey <agh@cisco.com> for this fix.
 
 Mon Jan 12 14:24:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Makefile.am: Remove $(libdir) from libTest_Output.la listed
-	  in dependencies - having it there caused it to not match the
-	  plain libTest_Output.la target in the Makefile, and thus not
-	  get built before many of the tests. Added libTest_Output.la to
-	  the DLL_Test and Service_Config_Test dependencies.
+        * tests/Makefile.am: Remove $(libdir) from libTest_Output.la listed
+          in dependencies - having it there caused it to not match the
+          plain libTest_Output.la target in the Makefile, and thus not
+          get built before many of the tests. Added libTest_Output.la to
+          the DLL_Test and Service_Config_Test dependencies.
 
 Mon Jan 12 15:54:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/JAWS/server/jaws.dsp:
-	  Fixed incorrect macro name.
+        * apps/JAWS/server/jaws.dsp:
+          Fixed incorrect macro name.
 
 Mon Jan 12 08:06:07 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -598,9 +651,9 @@ Wed Jan  7 15:55:41 2004  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_netdb.inl (getipnodebyaddr, getipnodebyname, ): Make
           ACE_WIN32 go through the IPv4-only case. Since Windows IPv6
-	  implementation (at this time) doesn't offer
-	  getipnodebyname() we make the code to pass through IPV4 portion
-	  even if ACE_HAS_IPV6 is enabled.
+          implementation (at this time) doesn't offer
+          getipnodebyname() we make the code to pass through IPV4 portion
+          even if ACE_HAS_IPV6 is enabled.
 
         * ace/OS_NS_arpa_inet.inl (inet_ntop, inet_pton): Make these run
           through the IPv4-only section on Win32 as well. These may be doable

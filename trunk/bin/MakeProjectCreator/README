@@ -112,7 +112,6 @@ idlgendir       Specifies the output directory for idl generated files.
                 If a listed idl file has a directory as part of the name,
                 the generated files will go in that directory unless
                 idlgendir specifies otherwise.
-idlpreprocessor	Simple assignment used in the gnu template only
 pch_header	Specifies the precompiled header file name
 pch_source	Specifies the precompiled source file name
 ssl             Specifies that the project will use ssl
@@ -217,6 +216,24 @@ command             The name of the command that should be used to process
 commandflags        Any options that should be passed to the command go here.
 inputext            This is a comma separated list of input file extensions
                     that belong to the command.
+keyword             This is a special assignment that takes the form of the
+                    following:
+
+                    keyword newname = existing_custom_name
+
+                    This has the effect of mapping newname to be the
+                    same as existing_custom_name.  existing_custom_name,
+                    which is optional, corresponds to one of the keywords
+                    available within a Define_Custom scope (except for
+                    keyword).  This function puts newname into the project
+                    level scope such that it can be used outside of the
+                    scope of the particular custom file type being defined.
+                    It should be noted that the mapped keywords can not be
+                    used within the scope of a 'specific' clause.  It does
+                    not cause an error, but it has absolutely no affect.
+                    If existing_custom_name is not supplied, then the only
+                    way to utilize the newname value is from within the
+                    template code. ex. <%newname%>
 libpath             If the command requires an additional library path, add
                     it here.
 output_option       If the command takes an option to specify a single file
@@ -281,6 +298,40 @@ example:
 
 In the above example, the generated file (QtReactor_moc.cpp) is placed in
 the moc_generated directory and the -nw option is added to commandflags.
+
+The following example illustrates the use of the keyword mapping capability
+of the Define_Custom:
+
+project {
+  Define_Custom(CIDL) {
+    automatic         = 0;
+    command           =  $(CIAO_ROOT)/bin/cidlc
+    commandflags      = -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs/orbsvcs --
+    inputext          = cidl
+    source_outputext  = _svnt.cpp
+    generic_outputext = E.idl
+
+    // Allow cidlflags to be used outside the scope of CIDL_Files
+    keyword cidlflags = commandflags
+  }
+
+  // This will get added to all commandflags for CIDL_Files
+  cidlflags += --some_option
+
+  CIDL_Files {
+    // This will have a combination of the original commandflags plus
+    // the value added to cidlflags above.
+    file.cidl
+  }
+
+  CIDL_Files {
+    // This will have a combination of the original commandflags plus
+    // the value added to cidlflags above plus the value added to
+    // cidlflags here.
+    cidlflags += --another_option
+    another_file.cidl
+  }
+}
 
 Special type of feature project
 -------------------------------

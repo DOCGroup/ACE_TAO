@@ -549,11 +549,10 @@ sub process_assignment_add {
   my($name)   = shift;
   my($value)  = shift;
   my($assign) = shift;
-  my($order)  = shift;
-  my($nval)   = $self->get_assignment($name, $assign);
+  my($nval)   = $self->get_assignment_for_modification($name, $assign);
 
   if (defined $nval) {
-    if ($order) {
+    if ($self->preserve_assignment_order($name)) {
       $nval .= " $value";
     }
     else {
@@ -573,7 +572,7 @@ sub process_assignment_sub {
   my($name)   = shift;
   my($value)  = shift;
   my($assign) = shift;
-  my($nval)   = $self->get_assignment($name, $assign);
+  my($nval)   = $self->get_assignment_for_modification($name, $assign);
 
   if (defined $nval) {
     ## Remove double quotes if there are any
@@ -760,6 +759,15 @@ sub get_assignment {
 }
 
 
+sub get_assignment_for_modification {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($assign) = shift;
+
+  return $self->get_assignment($name, $assign);
+}
+
+
 sub get_baseprojs {
   my($self) = shift;
   return $self->{'baseprojs'};
@@ -804,6 +812,13 @@ sub get_apply_project {
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub preserve_assignment_order {
+  #my($self) = shift;
+  #my($name) = shift;
+  return 1;
+}
+
 
 sub compare_output {
   #my($self) = shift;

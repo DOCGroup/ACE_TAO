@@ -2,5 +2,7 @@
 // $Id$
 
 project {
-  core = 1
+  verbatim(borland, macros) {
+    INSTALL_THIS_TARGET = 1
+  }
 }
