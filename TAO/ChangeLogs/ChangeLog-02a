@@ -1,3 +1,16 @@
+Thu Sep 14 12:15:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/tao_static.dsp:
+
+	  Removed some MS libraries from the link list in the project
+	  text file, even though they weren't showing up in the
+	  project dialog boxes.
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+
+	  Removed some unused variables.
+
 Thu Sep 14 01:43:35 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Portable_Interceptors/Benchmark/client.cpp:
