@@ -1,3 +1,10 @@
+Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * PACE/pace/posix/math.inl:
+        * PACE/pace/win32/math.inl:
+
+          Disabled fuzz math.h inclusion check.
+
 Wed Sep 13 13:52:00 2000  Luther J Baker  <luther@maxixe.doc.wustl.edu>
 
 	* pace/win32/types.h:
