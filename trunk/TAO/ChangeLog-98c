@@ -5,6 +5,9 @@ Tue Sep 08 07:30:33 1998  David L. Levine  <levine@cs.wustl.edu>
           It should be OK to delete it now, thanks to the recent
           fix provided by Ravi Nagabhyru <ravi@future-minds.com>.
 
+        * tao/POA.cpp: removed explicit ACE_Guard <ACE_Lock> instantiation
+          because it is now in ace/Message_Block.cpp.
+
 Mon Sep  7 21:10:06 1998  Balachandran Natarajan  <bala@cumbia.cs.wustl.edu>
 
         * tests/Simple/grid:  Made some changes to Constructors
