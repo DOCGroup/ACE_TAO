@@ -155,7 +155,7 @@ if [ -f ../netsvcs/servers/main ]; then
 fi
 
 # Testing for this flag always disables the test
-DISABLED=1
+DISABLED=
 
 echo "Starting ACE version $ace_version tests . . ."
 
