@@ -53,9 +53,10 @@ TAO_EC_Null_SupplierFiltering::push (const RtecEventComm::EventSet& event,
   TAO_EC_ConsumerAdmin* consumer_admin =
     this->event_channel_->consumer_admin ();
 
-  ACE_GUARD_THROW (TAO_EC_ConsumerAdmin::Busy_Lock,
+  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
       ace_mon, consumer_admin->busy_lock (),
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   TAO_EC_ConsumerAdmin::SupplierSetIterator end =
     consumer_admin->end ();

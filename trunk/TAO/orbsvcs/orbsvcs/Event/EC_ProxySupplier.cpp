@@ -102,9 +102,10 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
       CORBA::Environment &ACE_TRY_ENV)
 {
   {
-    ACE_GUARD_THROW (
+    ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
 
     if (this->is_connected_i ())
       ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
@@ -127,9 +128,10 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
       CORBA::Environment &ACE_TRY_ENV)
 {
   {
-    ACE_GUARD_THROW (
+    ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
 
     this->consumer_ =
       RtecEventComm::PushConsumer::_nil ();
@@ -149,18 +151,21 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
 void
 TAO_EC_ProxyPushSupplier::suspend_connection (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (
+  ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
   this->suspended_ = 1;
 }
 
 void
 TAO_EC_ProxyPushSupplier::resume_connection (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (
+  ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   this->suspended_ = 0;
 }
@@ -170,10 +175,10 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
                                   TAO_EC_QOS_Info& qos_info,
                                   CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_RETURN (
+  ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
-            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR (),
-            0);
+            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK_RETURN (0);
 
   return this->child_->filter (event, qos_info, ACE_TRY_ENV);
 }
@@ -183,10 +188,10 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
                                          TAO_EC_QOS_Info& qos_info,
                                          CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_RETURN (
+  ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
-            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR (),
-            0);
+            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK_RETURN (0);
 
   return this->child_->filter_nocopy (event, qos_info, ACE_TRY_ENV);
 }

@@ -88,9 +88,10 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
         ACE_const_cast(RtecEventComm::Event*, &e);
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
 
-      ACE_GUARD_THROW (TAO_EC_ProxyPushSupplier_Set::Busy_Lock,
+      ACE_GUARD_THROW_EX (TAO_EC_ProxyPushSupplier_Set::Busy_Lock,
           ace_mon, this->supplier_set_->busy_lock (),
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+      ACE_CHECK;
 
       TAO_EC_ProxyPushSupplier_Set::SupplierSetIterator end =
         this->supplier_set_->end ();
