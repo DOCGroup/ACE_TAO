@@ -269,10 +269,11 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
 
   if (p != 0)
     {
-      continue_encoding = stream->write_long (p->id.length);
+      continue_encoding = stream->write_long (p->id.length ());
 
       continue_encoding = continue_encoding &&
-	stream->write_octet_array (p->id.buffer, p->id.length);
+	stream->write_octet_array (p->id.get_buffer (),
+				   p->id.length ());
     }
   else
     continue_encoding = stream->write_long (0);

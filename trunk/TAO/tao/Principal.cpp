@@ -26,9 +26,6 @@ CORBA_Principal::CORBA_Principal (void)
 CORBA_Principal::~CORBA_Principal (void)
 {
   assert (refcount_ == 0);
-
-  if (id.buffer)
-    delete [] id.buffer;
 }
 
 CORBA::ULong

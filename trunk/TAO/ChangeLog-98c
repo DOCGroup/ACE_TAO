@@ -1,3 +1,31 @@
+Tue Apr 14 16:37:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/encode.cpp: 
+	* tao/deep_copy.cpp: 
+	* tao/decode.cpp: 
+	* tao/Principal.cpp: 
+	* tao/ORB.h: 
+	* tao/IIOP_Object.cpp: 
+	* tao/GIOP.cpp: 
+	* tao/Exception.cpp: 
+	  Removed the last traces of CORBA_SEQUENCE<T>, we use
+	  TAO_Unbounded_Sequence<CORBA::Octet> for CORBA::OctetSeq and
+	  TAO_Unbounded_Object_Sequence<T> for CORBA::ExceptionList.
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: 
+	  It is less surprizing to receive arguments as T_ptr than as
+	  T_var&.
+	  Also followed the usual memory managment conventions of CORBA,
+	  i.e. we don't own the parameters we receive, but we do own the
+	  return values or out parameters we obtain.
+
+	* orbsvcs/tests/Event_Latency/Event_Latency.h: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Pseudo-objects or objects passed as input parameters must be
+	  duplicated before storing them in a T_var variable.
+
 Tue Apr 14 13:49:51 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	The following changes are untested.

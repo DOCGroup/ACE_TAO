@@ -154,8 +154,6 @@ public:
   // sent.  If the timestamp flag is enabled, then events are
   // timestamped, e.g., for use in measuring jitter.
 
-  ~Latency_Supplier (void);
-  
   int open_supplier (RtecEventChannelAdmin::EventChannel_ptr event_channel,
 		     const char *name, int master);
   // Registers with the name server under the given <name>.  Also
@@ -223,8 +221,8 @@ private:
 
   ACE_CString entry_point_;
 
-  Supplier* supplier_;
-  Consumer* consumer_;
+  Supplier supplier_;
+  Consumer consumer_;
 };
 
 void Latency_Consumer::entry_point(const char* s)

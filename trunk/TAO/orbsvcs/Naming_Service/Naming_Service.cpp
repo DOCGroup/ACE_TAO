@@ -73,19 +73,18 @@ Naming_Service::init (int argc,
 		      char** argv)
 {
   int result;
-  CORBA::ORB_var orb;
-  PortableServer::POA_var child_poa;
 
   TAO_TRY
     {
       this->orb_manager_.init_child_poa (argc,
-                                     argv,
-                                     "child_poa",
-                                     TAO_TRY_ENV);
+					 argv,
+					 "child_poa",
+					 TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      orb = this->orb_manager_.orb ();
-      child_poa = this->orb_manager_.child_poa ();
+      CORBA::ORB_ptr orb = this->orb_manager_.orb ();
+      PortableServer::POA_ptr
+	child_poa = this->orb_manager_.child_poa ();
       
       result = this->my_naming_server_.init (orb,
                                              child_poa);
