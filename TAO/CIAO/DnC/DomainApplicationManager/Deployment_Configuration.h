@@ -38,8 +38,8 @@ namespace CIAO
    * @brief A class that provides strategies on deployment topology.
    *
    * This class provides strategies on how the DomainApplicationManager
-   * should deploy an deployment plan at domain-level.  This is achieved 
-   * by providing mappings from deployment destination names to actually 
+   * should deploy an deployment plan at domain-level.  This is achieved
+   * by providing mappings from deployment destination names to actually
    * NodeManager daemon IORs, and the strategy for which default NodeManager
    * daemons a deployment mechanism should use.
    *
