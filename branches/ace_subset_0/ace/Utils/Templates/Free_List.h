@@ -14,13 +14,13 @@
 #define ACE_FREE_LIST_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
+#include "ace/Threads/Synch_T.h"
 
 /**
  * @class ACE_Free_List
@@ -133,11 +133,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Free_List.i"
+#include "ace/Utils/Templates/Free_List.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Free_List.cpp"
+#include "ace/Utils/Templates/Free_List.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -353,11 +353,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Functor.i"
+#include "ace/Utils/Functor.i"
 #endif /* __ACE_INLINE__ */
 
 // Include the templates here.
-#include "ace/Functor_T.h"
+#include "ace/Utils/Functor_T.h"
 
 #include "ace/post.h"
 #endif /* ACE_FUNCTOR_H */

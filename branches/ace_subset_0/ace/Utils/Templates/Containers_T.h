@@ -21,19 +21,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Need by ACE_DLList_Node.
-#include "ace/Containers.h"
+#include "ace/Utils/Containers.h"
 
 // Shared with "ace/Unbounded_Set.h"
-#include "ace/Node.h"
+#include "ace/Utils/Templates/Node.h"
 
 // Backwards compatibility, please include "ace/Array_Base.h" directly.
-#include "ace/Array_Base.h"
+#include "ace/Utils/Templates/Array_Base.h"
 
 // Backwards compatibility, please include "ace/Unbounded_Set.h" directly.
-#include "ace/Unbounded_Set.h"
+#include "ace/Utils/Unbounded_Set.h"
 
 // Backwards compatibility, please include "ace/Unbounded_Queue.h" directly.
-#include "ace/Unbounded_Queue.h"
+#include "ace/Utils/Unbounded_Queue.h"
 
 class ACE_Allocator;
 
@@ -1480,11 +1480,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Containers_T.i"
+#include "ace/Utils/Templates/Containers_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Containers_T.cpp"
+#include "ace/Utils/Templates/Containers_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -19,14 +19,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
-#include "ace/Signal.h"
-#include "ace/Mem_Map.h"
+#include "ace/Demux/Event_Handler.h"
+#include "ace/IPC/Signal.h"
+#include "ace/Memory/Mem_Map.h"
 #if !defined (ACE_WIN32)
-#include "ace/SV_Semaphore_Complex.h"
+#include "ace/IPC/SV_Semaphore_Complex.h"
 #endif /* !ACE_WIN32 */
 
-#include "ace/Unbounded_Set.h"
+#include "ace/Utils/Unbounded_Set.h"
 
 #if !defined (ACE_LACKS_SBRK)
 /**
@@ -749,7 +749,7 @@ private:
 #endif /* ACE_WIN32 */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Memory_Pool.i"
+#include "ace/Memory/Memory_Pool.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

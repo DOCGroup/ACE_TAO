@@ -14,8 +14,8 @@
 #define ACE_CONTAINERS_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Malloc_Base.h"
+#include "ace/OS/OS.h"
+#include "ace/Memory/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -63,10 +63,10 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Containers.i"
+#include "ace/Utils/Containers.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Containers_T.h"
+#include "ace/Utils/Templates/Containers_T.h"
 
 #include "ace/post.h"
 #endif /* ACE_CONTAINERS_H */

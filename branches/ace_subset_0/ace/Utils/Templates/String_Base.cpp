@@ -1,15 +1,15 @@
 // $Id$
 
-#include "ace/Malloc.h"
-#include "ace/String_Base.h"
-#include "ace/Auto_Ptr.h"
+#include "ace/Memory/Malloc.h"
+#include "ace/Utils/Templates/String_Base.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-# include "ace/streams.h"
+# include "ace/Streams/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/String_Base.i"
+#include "ace/Utils/Templates/String_Base.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, String_Base, "String_Base.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")

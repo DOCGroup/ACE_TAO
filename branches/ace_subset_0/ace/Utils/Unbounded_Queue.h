@@ -15,14 +15,14 @@
 #define ACE_UNBOUNDED_QUEUE_H
 #include "ace/pre.h"
 
-#include "ace/Node.h"
+#include "ace/Utils/Templates/Node.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // For size_t under Chorus
-#include "ace/OS_Memory.h"
+#include "ace/OS/OS_Memory.h"
 
 class ACE_Allocator;
 
@@ -219,11 +219,11 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Unbounded_Queue.inl"
+#include "ace/Utils/Unbounded_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Unbounded_Queue.cpp"
+#include "ace/Utils/Unbounded_Queue.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

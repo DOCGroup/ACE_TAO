@@ -20,15 +20,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc_Base.h"
+#include "ace/Memory/Malloc_Base.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if defined (ACE_HAS_MALLOC_STATS)
-#include "ace/Synch_T.h"
+#include "ace/Threads/Synch_T.h"
 #if defined (ACE_HAS_THREADS)
 #define ACE_PROCESS_MUTEX ACE_Process_Mutex
 #else
-#include "ace/SV_Semaphore_Simple.h"
+#include "ace/IPC/SV_Semaphore_Simple.h"
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
 
@@ -154,7 +157,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Malloc_Allocator.i"
+#include "ace/Memory/Malloc_Allocator.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -15,11 +15,11 @@
 #define ACE_CAPABILITIES_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Containers.h"
-#include "ace/SString.h"
+#include "ace/OS/OS.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Utils/Hash_Map_Manager.h"
+#include "ace/Utils/Containers.h"
+#include "ace/Utils/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -192,7 +192,7 @@ is_line (const ACE_TCHAR *line)
 #endif /* ACE_IS_SPLITTING */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Capabilities.i"
+#include "ace/Utils/Capabilities.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -3,16 +3,19 @@
 #ifndef ACE_UNBOUNDED_QUEUE_C
 #define ACE_UNBOUNDED_QUEUE_C
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Malloc_Base.h"
+#include "ace/Utils/Unbounded_Queue.h"
+#include "ace/Memory/Malloc_Base.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Unbounded_Queue.inl"
+#include "ace/Utils/Unbounded_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Unbounded_Queue, "$Id$")
@@ -81,6 +84,7 @@ ACE_Unbounded_Queue<T>::end (void)
   return ACE_Unbounded_Queue_Iterator<T> (*this, 1);
 }
 
+#ifdef ACE_SUBSET_0
 template <class T> void
 ACE_Unbounded_Queue<T>::dump (void) const
 {
@@ -103,6 +107,7 @@ ACE_Unbounded_Queue<T>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 template <class T> void
 ACE_Unbounded_Queue<T>::copy_nodes (const ACE_Unbounded_Queue<T> &us)

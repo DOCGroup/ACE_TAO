@@ -1,11 +1,14 @@
 // $Id$
 
-#include "ace/Map_Manager.h"
-#include "ace/Capabilities.h"
+#include "ace/Utils/Templates/Map_Manager.h"
+#include "ace/Utils/Capabilities.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Capabilities.i"
+#include "ace/Utils/Capabilities.i"
 #endif /* !__ACE_INLINE__ */
 
 #define ACE_ESC ((ACE_TCHAR)0x1b)
@@ -214,8 +217,10 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
         line++;
       else
         {
+#ifdef ACE_SUBSET_0
           ACE_DEBUG ((LM_DEBUG,
                       ACE_LIB_TEXT ("Invalid entry\n")));
+#endif
           break;
         }
     }
@@ -304,11 +309,13 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 {
   FILE *fp = ACE_OS::fopen (fname, ACE_LIB_TEXT ("r"));
 
+#ifdef ACE_SUBSET_0
   if (fp == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Can't open %s file\n"),
                        fname),
                       -1);
+#endif
 
   int done;
   ACE_TString line;

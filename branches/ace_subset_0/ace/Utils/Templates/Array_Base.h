@@ -191,11 +191,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Array_Base.inl"
+#include "ace/Utils/Templates/Array_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Array_Base.cpp"
+#include "ace/Utils/Templates/Array_Base.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -14,7 +14,7 @@
 #define ACE_TEST_AND_SET_H
 
 #include "ace/pre.h"
-#include "ace/Event_Handler.h"
+#include "ace/Demux/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -61,11 +61,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Test_and_Set.i"
+#include "ace/Utils/Test_and_Set.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Test_and_Set.cpp"
+#include "ace/Utils/Test_and_Set.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

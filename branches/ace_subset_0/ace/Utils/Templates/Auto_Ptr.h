@@ -17,7 +17,7 @@
 #define ACE_AUTO_PTR_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -157,11 +157,11 @@ public:
 # endif /* ACE_AUTO_PTR_LACKS_RESET */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Auto_Ptr.i"
+#include "ace/Utils/Templates/Auto_Ptr.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Auto_Ptr.cpp"
+#include "ace/Utils/Templates/Auto_Ptr.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
