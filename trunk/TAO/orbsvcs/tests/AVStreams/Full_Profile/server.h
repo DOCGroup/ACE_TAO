@@ -12,10 +12,13 @@
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/Policy.h"
 
+class Server;
+
 class FTP_Server_Callback
   :public TAO_AV_Callback
 {
 public:
+  FTP_Server_Callback (void);
   virtual int handle_stop (void);
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *,
@@ -33,20 +36,6 @@ public:
 };
 
 typedef TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint> FTP_Server_FDev;
-// class FTP_Server_FDev
-//   :public TAO_FDev
-// {
-// public:
-//   FTP_Server_FDev (void);
-//   virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
-//                                                        AVStreams::QoS & the_qos,
-//                                                        CORBA::Boolean_out met_qos,
-//                                                        char *& named_fdev,
-//                                                        CORBA::Environment &env = CORBA::Environment::default_environment ());
-//   // bridge method for the application to override the consumer object
-//   // creation. Default implementation creates a TAO_FlowConsumer.
-
-// };
 
 class Server
 {
@@ -57,16 +46,21 @@ public:
   int run (void);
   FILE *file (void);
   AVStreams::protocolSpec protocols (void);
+  CORBA::ORB_ptr orb (void);
+  void orb (CORBA::ORB_ptr orb_in);
+  PortableServer::POA_ptr poa (void);
+  void poa (PortableServer::POA_ptr poa_in);
   const char *format (void);
 protected:
   int parse_args (int argc,char **argv);
-  TAO_ORB_Manager *orb_manager_;
   TAO_Naming_Client my_naming_client_;
   TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   TAO_MMDevice *mmdevice_;
   FTP_Server_FDev *fdev_;
   FILE *fp_;
   char *protocol_;
+  CORBA::ORB_var orb_;
+  PortableServer::POA_ptr poa_;
 };
 
 typedef ACE_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;

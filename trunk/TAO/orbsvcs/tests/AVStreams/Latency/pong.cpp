@@ -3,7 +3,7 @@
 #include "pong.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/corba.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
@@ -24,7 +24,6 @@ ACE_Throughput_Stats recv_latency;
 ACE_hrtime_t send_throughput_base = 0;
 ACE_Throughput_Stats send_latency;
 
-CORBA::ORB_ptr the_orb = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -107,40 +106,31 @@ int main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      TAO_AV_Core *av_core = TAO_AV_CORE::instance ();
-      av_core->init (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       parse_args (argc, argv);
 
-      TAO_ORB_Manager* orb_manager =
-        av_core->orb_manager ();
-
-      CORBA::ORB_var orb = orb_manager->orb ();
-      the_orb = orb.in ();
-      // No copying, because the global variable is not used after the
-      // event loop finishes...
-
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv);
+      
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA");
+      
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj);
+      
+      PortableServer::POAManager_var mgr
+        = poa->the_POAManager ();
+      
+      mgr->activate ();
+      
+      TAO_AV_CORE::instance ()->init (orb.in (),
+                                      poa.in (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Register the video mmdevice object with the ORB
-
+      
       Reactive_Strategy *reactive_strategy;
       ACE_NEW_RETURN (reactive_strategy,
-                      Reactive_Strategy (orb_manager),
+                      Reactive_Strategy (orb.in (), poa.in ()),
                       1);
       TAO_MMDevice *mmdevice_impl;
       ACE_NEW_RETURN (mmdevice_impl,
@@ -243,7 +233,7 @@ int
 Pong_Recv_Callback::handle_stop (void)
 {
   // ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::stop"));
-  the_orb->shutdown ();
+  TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 

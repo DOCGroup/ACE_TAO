@@ -3,27 +3,9 @@
 #include "ftp.h"
 
 FTP_Client_Callback::FTP_Client_Callback (void)
-  //  :handler_ (handler),
   :count_ (0)
 {
 }
-
-// FTP_Client_Callback::FTP_Client_Callback (FTP_Client_Flow_Handler *handler)
-//   :handler_ (handler)
-// {
-// }
-
-// int
-// FTP_Client_Callback::handle_start (void)
-// {
-//   return this->handler_->start ();
-// }
-
-// int
-// FTP_Client_Callback::handle_stop (void)
-// {
-//   return this->handler_->stop ();
-// }
 
 int
 FTP_Client_Callback::handle_end_stream (void)
@@ -32,8 +14,7 @@ FTP_Client_Callback::handle_end_stream (void)
   return 0;
 }
 
-FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manager)
-  :orb_manager_ (orb_manager)
+FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (void)
 {
 
 }
@@ -77,8 +58,7 @@ FTP_Client_Callback::handle_timeout (void *)
                   ACE_TRY_CHECK;
                   CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
                   ACE_TRY_CHECK;
-                  //TAO_AV_CORE::instance ()->stop_run ();
-                  TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
+                  TAO_AV_CORE::instance ()->orb ()->shutdown (0);
                   ACE_TRY_CHECK;
                   return 0;
                 }
@@ -108,13 +88,7 @@ int
 FTP_Client_StreamEndPoint::get_callback (const char *,
                                          TAO_AV_Callback *&callback)
 {
-//   ACE_Time_Value timeout (2);
-//   ACE_NEW_RETURN (this->handler_,
-//                   FTP_Client_Flow_Handler (this->orb_manager_,
-//                                            timeout),
-//                   -1);
   ACE_NEW_RETURN (this->callback_,
-                  //                  FTP_Client_Callback (this->handler_),
                   FTP_Client_Callback,
                   -1);
   callback = this->callback_;
@@ -125,100 +99,17 @@ int
 FTP_Client_StreamEndPoint::set_protocol_object (const char *flowname,
                                                 TAO_AV_Protocol_Object *object)
 {
-  //  int result = this->handler_->set_protocol_object (object);
   this->callback_->set_protocol_object (object);
   ACE_CString flow_string (flowname);
   return 0;
 }
 
-// FTP_Client_Flow_Handler::FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
-//                                                   ACE_Time_Value &timeout)
-//   :orb_manager_ (orb_manager),
-//    count_ (0),
-//    protocol_object_ (0),
-//    timeout_ (timeout)
-// {
-// }
 
-// int
-// FTP_Client_Flow_Handler::start (void)
-// {
-//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::start"));
-//   ACE_Time_Value delta = ACE_Time_Value::zero;
-//   this->timer_id_ =
-//     TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
-//                                                           0,
-//                                                           delta,
-//                                                           this->timeout_);
-//   return 0;
-// }
-
-// int
-// FTP_Client_Flow_Handler::stop (void)
-// {
-//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::stop"));
-//   int result = TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
-//   if (result < 0)
-//     ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::stop cancel timer failed\n"),-1);
-//   return 0;
-// }
-
-// int
-// FTP_Client_Flow_Handler::set_protocol_object (TAO_AV_Protocol_Object *object)
-// {
-//   this->protocol_object_ = object;
-//   return 0;
-// }
-// int
-// FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-//                                          const void *arg)
-// {
-//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::handle_timeout"));
-//   ACE_Message_Block mb (BUFSIZ);
-//   char *buf = mb.rd_ptr ();
-//   cerr << "message block size" << mb.size () << endl;
-//   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
-//   if (n < 0)
-//     {
-//       TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
-//       ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
-//     }
-//   if (n == 0)
-//     {
-//       if (::feof (CLIENT::instance ()->file ()))
-//         {
-//           // wait for sometime for the data to be flushed to the other side.
-//           this->count_++;
-//           if (this->count_ == 2)
-//             {
-//               ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
-//               AVStreams::flowSpec stop_spec (1);
-//               stop_spec.length (1);
-//               ACE_DECLARE_NEW_CORBA_ENV;
-//               stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
-//               CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
-//               ACE_CHECK_RETURN (-1);
-//             }
-//           else
-//             return 0;
-//         }
-//       else
-//         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
-//     }
-//   cerr << "read bytes = " << n << endl;
-//   mb.wr_ptr (n);
-//   int result = this->protocol_object_->send_frame (&mb);
-//   if (result < 0)
-//     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
-//   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
-// }
-
-
-Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager,
+Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb_,
+                                                        PortableServer::POA_ptr poa_,
                                                         Client *client)
-  :ENDPOINT_STRATEGY (orb_manager),
-   client_ (client),
-   orb_manager_ (orb_manager)
+  :ENDPOINT_STRATEGY (orb_, poa_),
+   client_ (client)
 {
 }
 
@@ -227,7 +118,7 @@ Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&en
 {
   ACE_DEBUG ((LM_DEBUG,"Endpoint_Reactive_Strategy::make_stream_endpoint"));
   ACE_NEW_RETURN (endpoint,
-                  FTP_Client_StreamEndPoint (this->orb_manager_),
+                  FTP_Client_StreamEndPoint,
                   -1);
   return 0;
 }
@@ -283,8 +174,7 @@ Client::streamctrl (void)
 }
 
 Client::Client (void)
-  :orb_manager_ (TAO_AV_CORE::instance ()->orb_manager ()),
-   endpoint_strategy_ (orb_manager_,this),
+  :endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa (),this),
    client_mmdevice_ (&endpoint_strategy_),
    address_ (ACE_OS::strdup ("224.9.9.2:10002")),
    fp_ (0),
@@ -321,7 +211,7 @@ Client::bind_to_server (const char *name)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Command_Handler::resolve_reference");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Clinet::bind_to_server\n");
       return -1;
     }
   ACE_ENDTRY;
@@ -332,39 +222,28 @@ Client::bind_to_server (const char *name)
 int
 Client::init (int argc,char **argv)
 {
+  
+  PortableServer::POAManager_var mgr
+    = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
+  
+  mgr->activate ();
+  
   this->argc_ = argc;
   this->argv_ = argv;
 
   // Increase the debug_level so that we can see the output
   //  TAO_debug_level++;
-  CORBA::String_var ior;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->init (argc,
-                                      argv,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      this->orb_manager_ = TAO_AV_CORE::instance ()->orb_manager ();
-      this->orb_manager_->init_child_poa (this->argc_,
-                                         this->argv_,
-                                         "child_poa",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       this->parse_args (this->argc_, this->argv_);
-      // activate the client video mmdevice under the child poa.
-      ior = this->orb_manager_->activate (&this->client_mmdevice_,
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Initialize the naming services
-      CORBA::ORB_var orb = orb_manager_->orb ();
-      if (this->my_naming_client_.init (orb.in ()) != 0)
+      
+      if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
                           -1);
-
+      
       this->fp_ = ACE_OS::fopen (this->filename_,"r");
       if (this->fp_ != 0)
         {
@@ -394,9 +273,7 @@ Client::run (void)
         ACE_OS::strcpy (flow_protocol_str,"");
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
-      // Bind the client and server mmdevices.
 
-      this->orb_manager_->activate_poa_manager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ACE_INET_Addr addr (this->address_);
       ACE_NEW_RETURN (this->flowname_,
@@ -451,7 +328,7 @@ Client::run (void)
       // Schedule a timer for the for the flow handler.
       //TAO_AV_CORE::instance ()->run ();
       ACE_Time_Value tv (10000,0);
-      if (TAO_AV_CORE::instance ()->orb_manager ()->run (tv) == -1)
+      if (TAO_AV_CORE::instance ()->orb ()->run (tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
       
@@ -471,14 +348,39 @@ int
 main (int argc,
       char **argv)
 {
-  int result = 0;
-  result = CLIENT::instance ()->init (argc,argv);
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
-  result = CLIENT::instance ()->run ();
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv);
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA");
+      
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj);
+      
+      TAO_AV_CORE::instance ()->init (orb.in (),
+                                      poa.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
+      int result = 0;
+      result = CLIENT::instance ()->init (argc,argv);
+      if (result < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
+      result = CLIENT::instance ()->run ();
+      if (result < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
+    }
+  ACE_CATCHANY
+    
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client Failed\n");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+  
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

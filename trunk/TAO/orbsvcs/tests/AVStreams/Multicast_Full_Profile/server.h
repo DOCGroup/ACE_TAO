@@ -2,7 +2,6 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -60,7 +59,6 @@ public:
   const char *format (void);
 protected:
   int parse_args (int argc,char **argv);
-  TAO_ORB_Manager *orb_manager_;
   TAO_Naming_Client my_naming_client_;
   TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   TAO_MMDevice *mmdevice_;

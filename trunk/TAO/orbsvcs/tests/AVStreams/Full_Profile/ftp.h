@@ -6,7 +6,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Flows_T.h"
@@ -15,7 +14,10 @@
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
 
+class Client;
+
 class FTP_Client_Callback;
+
 class FTP_Client_Producer
   :public virtual TAO_FlowProducer
 {
@@ -38,11 +40,9 @@ public:
   virtual int handle_end_stream (void);
   virtual void get_timeout (ACE_Time_Value *&tv,
                             void *&arg);
-  //  virtual int get_frame (ACE_Message_Block *&block,TAO_AV_frame_info *&frame_info);
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object) {this->protocol_object_ = protocol_object;}
 
 protected:
-  //  FTP_Client_Flow_Handler *handler_;
   int count_;
   TAO_AV_Protocol_Object *protocol_object_;
 };
@@ -65,7 +65,6 @@ public:
 private:
   int parse_args (int argc, char **argv);
   int bind_to_server (void);
-  TAO_ORB_Manager *orb_manager_;
   ENDPOINT_STRATEGY endpoint_strategy_;
   AVStreams::MMDevice_var server_mmdevice_;
   TAO_MMDevice client_mmdevice_;
@@ -83,6 +82,8 @@ private:
   char *protocol_;
   char *flowname_;
   int use_sfp_;
+  CORBA::ORB_var orb_;
+  PortableServer::POA_ptr poa_;
 };
 
 typedef ACE_Singleton<Client,ACE_Null_Mutex> CLIENT;

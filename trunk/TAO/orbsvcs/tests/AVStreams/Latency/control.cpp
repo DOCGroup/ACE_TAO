@@ -2,7 +2,7 @@
 
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
@@ -73,32 +73,27 @@ int main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      TAO_AV_Core *av_core = TAO_AV_CORE::instance ();
-      av_core->init (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       parse_args (argc, argv);
-
-      TAO_ORB_Manager* orb_manager =
-        av_core->orb_manager ();
-
-      CORBA::ORB_var orb = orb_manager->orb ();
-
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv);
+      
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA");
+      
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj);
+      
+      PortableServer::POAManager_var mgr
+        = poa->the_POAManager ();
+      
+      mgr->activate ();
+      
+      TAO_AV_CORE::instance ()->init (orb.in (),
+                                      poa.in (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      
       // Connect the two streams and run them...
       AVStreams::flowSpec flow_spec (2);
       flow_spec.length (2);
@@ -129,15 +124,13 @@ int main (int argc, char *argv[])
         stream_control_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var obj =
-        orb->string_to_object (ping_ior, ACE_TRY_ENV);
+      obj = orb->string_to_object (ping_ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       AVStreams::MMDevice_var ping_sender =
         AVStreams::MMDevice::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      obj =
-        orb->string_to_object (pong_ior, ACE_TRY_ENV);
+      obj = orb->string_to_object (pong_ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       AVStreams::MMDevice_var pong_sender =
         AVStreams::MMDevice::_narrow (obj.in (), ACE_TRY_ENV);
@@ -166,8 +159,6 @@ int main (int argc, char *argv[])
       stream_control->stop (flow_spec, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // root_poa->destroy (1, 1, ACE_TRY_ENV);
-      // ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
