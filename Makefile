@@ -67,6 +67,21 @@ clone:
                 (clone -s $(ACE_ROOT)/$$dir $$dir) \
         done
 
+CORE_DIRS= \
+	ace \
+	apps/gperf/src \
+	TAO/tao \
+	TAO/TAO_IDL \
+	TAO/orbsvcs/orbsvcs \
+	TAO/orbsvcs/Naming_Service
+
+.PHONY: Core
+Core:
+	@for dir in $(CORE_DIRS); \
+	do \
+		$(MAKE) -C $$dir; \
+	done
+
 #### NOTE:  The following comments describe how to create kits.
 ####        It's intended for use by ACE+TAO developers and
 ####        maintainers only.  ACE+TAO users need not be concerned
