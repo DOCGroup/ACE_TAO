@@ -4,6 +4,14 @@
 #	Top-level Makefile for the TAO
 #----------------------------------------------------------------------------
 
+#### The "release" targets can be used to create the ACE+TAO kit.  By
+#### default, it creates a new beta release.  To create a new minor or
+#### major release, add "REL=minor" or "REL=major", respectively, to
+#### the make invocation.
+####
+#### To see what make release would do without actually doing it, add
+#### "CHECK=-n" to the invocation.
+
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
@@ -92,15 +100,27 @@ INSTALL:	TAO-INSTALL.html
 
 FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' -print
 
-cleanrelease:	INSTALL
+cleanrelease-old:	INSTALL
 	@$(TIMESTAMP) (make realclean; cd ..; \
 	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
 	 chmod a+r TAO.tar.gz; )
 
-release:	INSTALL
+release-old:	INSTALL
 	@$(TIMESTAMP) (cd ..; \
 	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
 	 chmod a+r TAO.tar.gz; )
 
-releaseall: INSTALL
+releaseall-old: INSTALL
 	@$(TIMESTAMP) true
+
+REL = beta
+CHECK =
+
+#### The call to make_release below doesn't actually create the kit.
+#### If creating a release in /project/adaptive/ACE_wrappers/TAO, it
+#### just updates the VERSION and ChangeLog files, and tags the release.
+#### Then, make releasetao is invoked to actually create the kit.
+release: INSTALL
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -k tao -t $(REL) \
+	   -c "$(RELEASE_FILES)" -r "$(RELEASE_FILES)"  &&  \
+	 cd ..  &&  make releasetao
