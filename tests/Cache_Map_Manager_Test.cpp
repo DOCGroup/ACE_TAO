@@ -57,14 +57,20 @@ typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 
 typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
         HASH_MAP_MANAGER;
+typedef ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
+        HASH_MAP_ITERATOR;
 
 typedef ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>
         MAP_MANAGER;
+typedef ACE_Map_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
+        MAP_ITERATOR;
+typedef ACE_Map_Reverse_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
+        MAP_REV_ITERATOR;
 
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, ATTR>
+typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_ITERATOR, ATTR>
         HASH_MAP_CACHING_UTILITY;
 
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_MANAGER::iterator, ATTR>
+typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_ITERATOR, ATTR>
         MAP_CACHING_UTILITY;
 
 // = Hash_Map_Manager related
@@ -109,7 +115,7 @@ typedef ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CA
 
 typedef ACE_Hash_Cache_Map_Manager<KEY, VALUE, hash_key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>
         HASH_MAP_CACHE;
-typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER::iterator, MAP_MANAGER::reverse_iterator, MAP_CACHING_STRATEGY, ATTR>
+typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_ITERATOR, MAP_REV_ITERATOR, MAP_CACHING_STRATEGY, ATTR>
         MAP_CACHE;
 
 enum Caching_Strategy_Type
