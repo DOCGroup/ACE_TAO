@@ -14,7 +14,7 @@
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -466,10 +466,10 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
   static const long timeT_per_uSec = 10L;
   static const long uSec_per_sec = 1000000L;
 
-  ::TAO_PG::Properties_Decoder decoder(property_set);
+  ::TAO::PG_Property_Set decoder(property_set);
 
   TimeBase::TimeT value = 0;
-  if( TAO_PG::find (decoder, FT::FT_FAULT_MONITORING_INTERVAL, value) )
+  if( TAO::find (decoder, FT::FT_FAULT_MONITORING_INTERVAL, value) )
   {
     // note: these should be unsigned long, but
     // ACE_Time_Value wants longs.
@@ -524,14 +524,14 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   ACE_UNUSED_ARG (type_id); //@@ use it
   InternalGuard guard (this->internals_);
 
-  ::TAO_PG::Properties_Decoder decoder (the_criteria);
+  ::TAO::PG_Property_Set decoder (the_criteria);
 
   // boolean, becomes true if a required parameter is missing
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
   FT::FaultNotifier_ptr notifier;
-  if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
+  if (! ::TAO::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
     if (! CORBA::is_nil (this->notifier_.in ()))
     {
@@ -549,7 +549,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   }
 
   FT::PullMonitorable_ptr monitorable;
-  if (! ::TAO_PG::find (decoder, ::FT::FT_MONITORABLE, monitorable) )
+  if (! ::TAO::find (decoder, ::FT::FT_MONITORABLE, monitorable) )
   {
     ACE_ERROR ((LM_ERROR,
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
@@ -562,7 +562,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   FT::FTDomainId domain_id = 0;
   // note the cast in the next line makes ANY >>= work.
   const char * domain_id_string = 0;
-  if (::TAO_PG::find (decoder, ::FT::FT_DOMAIN_ID, domain_id_string) )
+  if (::TAO::find (decoder, ::FT::FT_DOMAIN_ID, domain_id_string) )
   {
     // NOTE the assumption that we can assign a char * to a domain id
     domain_id = ACE_const_cast (char *, domain_id_string);
@@ -580,7 +580,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   }
 
   PortableGroup::Location * object_location = 0;
-  if (! ::TAO_PG::find (decoder, ::FT::FT_LOCATION, object_location) )
+  if (! ::TAO::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
       object_location = & this->location_;
 
@@ -594,7 +594,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
   PortableGroup::TypeId object_type = 0;
   const char * object_type_string;
-  if (::TAO_PG::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
+  if (::TAO::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
   {
     object_type = ACE_const_cast (char *, object_type_string);
   }
@@ -606,7 +606,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   }
 
   FT::ObjectGroupId group_id = 0;
-  if (! ::TAO_PG::find (decoder, ::FT::FT_GROUP_ID, group_id) )
+  if (! ::TAO::find (decoder, ::FT::FT_GROUP_ID, group_id) )
   {
     // Not required: missingParameter = 1;
   }

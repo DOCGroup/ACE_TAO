@@ -204,7 +204,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_location (
 }
 
 // 
-//TODO: Use TAO_PG::Properties_Decoder to get property values from properties
+//TODO: Use TAO::PG_Property_Set to get property values from properties
 // instead of all these specific "get" functions.
 //
 

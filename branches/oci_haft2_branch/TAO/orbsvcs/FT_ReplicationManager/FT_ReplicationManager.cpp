@@ -20,7 +20,7 @@
 #include <tao/IORTable/IORTable.h>
 #include <tao/debug.h>
 #include <orbsvcs/PortableGroup/PG_Object_Group.h>
-#include <orbsvcs/PortableGroup/PG_Properties_Decoder.h>
+#include <orbsvcs/PortableGroup/PG_Property_Set.h>
 #include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
 #include <orbsvcs/PortableGroup/PG_Property_Utils.h>
 #include <orbsvcs/PortableGroup/PG_conf.h>
@@ -964,7 +964,7 @@ TAO::FT_ReplicationManager::create_object (
   ////////////////////////////////
   // find the properties for this
   // type of object group
-  TAO_PG::Properties_Decoder * typeid_properties
+  TAO::PG_Property_Set * typeid_properties
     = this->properties_support_.find_typeid_properties (
       type_id
       ACE_ENV_ARG_PARAMETER);

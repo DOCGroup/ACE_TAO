@@ -64,7 +64,7 @@ TAO::PG_Object_Group::PG_Object_Group (
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
-  TAO_PG::Properties_Decoder * type_properties)
+  TAO::PG_Property_Set * type_properties)
   : internals_()
   , orb_ (CORBA::ORB::_duplicate (orb))
   , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
@@ -519,7 +519,7 @@ CORBA::Object_ptr TAO::PG_Object_Group::get_member_reference (
 PortableGroup::MembershipStyleValue TAO::PG_Object_Group::get_membership_style () const
 {
   PortableGroup::MembershipStyleValue membership_style = 0;
-  if (! TAO_PG::find (properties_, PortableGroup::PG_MEMBERSHIP_STYLE, membership_style))
+  if (! TAO::find (properties_, PortableGroup::PG_MEMBERSHIP_STYLE, membership_style))
   {
     membership_style = TAO_PG_MEMBERSHIP_STYLE;
   }
@@ -530,7 +530,7 @@ PortableGroup::MembershipStyleValue TAO::PG_Object_Group::get_membership_style (
 PortableGroup::MinimumNumberMembersValue TAO::PG_Object_Group::get_minimum_number_members () const
 {
   PortableGroup::MinimumNumberMembersValue minimum_number_members = 0;
-  if (! TAO_PG::find (properties_, PortableGroup::PG_MINIMUM_NUMBER_MEMBERS, minimum_number_members))
+  if (! TAO::find (properties_, PortableGroup::PG_MINIMUM_NUMBER_MEMBERS, minimum_number_members))
   {
     minimum_number_members = TAO_PG_MINIMUM_NUMBER_MEMBERS;
   }
@@ -540,7 +540,7 @@ PortableGroup::MinimumNumberMembersValue TAO::PG_Object_Group::get_minimum_numbe
 PortableGroup::InitialNumberMembersValue TAO::PG_Object_Group::get_initial_number_members () const
 {
   PortableGroup::InitialNumberMembersValue initial_number_members = 0;
-  if (! TAO_PG::find (properties_, PortableGroup::PG_INITIAL_NUMBER_MEMBERS, initial_number_members))
+  if (! TAO::find (properties_, PortableGroup::PG_INITIAL_NUMBER_MEMBERS, initial_number_members))
   {
     initial_number_members = TAO_PG_INITIAL_NUMBER_MEMBERS;
   }

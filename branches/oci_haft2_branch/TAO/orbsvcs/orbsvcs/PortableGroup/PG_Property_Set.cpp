@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    PG_Properties_Decoder.cpp
+ *  @file    PG_Property_Set.cpp
  *
  *  $Id$
  *
@@ -16,18 +16,18 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "PG_Properties_Decoder.h"
+#include "PG_Property_Set.h"
 
 //////////////////////
-// Properties_Decoder
+// PG_Property_Set
 
-TAO_PG::Properties_Decoder::Properties_Decoder()
+TAO::PG_Property_Set::PG_Property_Set()
   : defaults_ (0)
 {
 }
 
 
-TAO_PG::Properties_Decoder::Properties_Decoder (
+TAO::PG_Property_Set::PG_Property_Set (
   const PortableGroup::Properties & property_set
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -36,9 +36,9 @@ TAO_PG::Properties_Decoder::Properties_Decoder (
   this->decode (property_set ACE_ENV_ARG_PARAMETER);
 }
 
-TAO_PG::Properties_Decoder::Properties_Decoder (
+TAO::PG_Property_Set::PG_Property_Set (
     const PortableGroup::Properties & property_set,
-    Properties_Decoder * defaults
+    PG_Property_Set * defaults
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (defaults)
@@ -47,18 +47,18 @@ TAO_PG::Properties_Decoder::Properties_Decoder (
 }
 
 
-TAO_PG::Properties_Decoder::Properties_Decoder (
-    Properties_Decoder * defaults)
+TAO::PG_Property_Set::PG_Property_Set (
+    PG_Property_Set * defaults)
   : defaults_ (defaults)
 {
 }
 
-TAO_PG::Properties_Decoder::~Properties_Decoder ()
+TAO::PG_Property_Set::~PG_Property_Set ()
 {
   this->clear ();
 }
 
-void TAO_PG::Properties_Decoder::decode (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
+void TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   InternalGuard guard(this->internals_);
@@ -97,7 +97,7 @@ void TAO_PG::Properties_Decoder::decode (const PortableGroup::Properties & prope
   }
 }
 
-void TAO_PG::Properties_Decoder::clear ()
+void TAO::PG_Property_Set::clear ()
 {
   InternalGuard guard(this->internals_);
   for (ValueMapIterator it = this->values_.begin ();
@@ -117,7 +117,7 @@ void TAO_PG::Properties_Decoder::clear ()
   this->values_.unbind_all ();
 }
 
-void TAO_PG::Properties_Decoder::remove (const PortableGroup::Properties & property_set)
+void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_set)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   InternalGuard guard(this->internals_);
@@ -145,7 +145,7 @@ void TAO_PG::Properties_Decoder::remove (const PortableGroup::Properties & prope
 
 
 
-void TAO_PG::Properties_Decoder::export_properties(PortableGroup::Properties & property_set) const
+void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & property_set) const
 {
   ValueMap merged_values;
   this->merge_properties (merged_values);
@@ -175,9 +175,9 @@ void TAO_PG::Properties_Decoder::export_properties(PortableGroup::Properties & p
   ACE_ASSERT (pos == property_set.length ());
 }
 
-void TAO_PG::Properties_Decoder::merge_properties (ValueMap & merged_values) const
+void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
 {
-  InternalGuard guard(ACE_const_cast (TAO_PG::Properties_Decoder *, this)->internals_);
+  InternalGuard guard(ACE_const_cast (TAO::PG_Property_Set *, this)->internals_);
   if (0 != this->defaults_)
   {
     this->defaults_->merge_properties (merged_values);
@@ -194,11 +194,11 @@ void TAO_PG::Properties_Decoder::merge_properties (ValueMap & merged_values) con
 
 
 
-int TAO_PG::Properties_Decoder::find (
+int TAO::PG_Property_Set::find (
   const ACE_CString & key,
   const PortableGroup::Value *& pValue) const
 {
-  InternalGuard guard(ACE_const_cast (TAO_PG::Properties_Decoder *, this)->internals_);
+  InternalGuard guard(ACE_const_cast (TAO::PG_Property_Set *, this)->internals_);
   int found = (0 == this->values_.find (key, pValue));
   if (! found)
   {
@@ -243,7 +243,7 @@ int TAO_PG::test_encode_decode ()
     encoder.encode (property_set);
   }
 
-  TAO_PG::Properties_Decoder decoder (property_set);
+  TAO::PG_Property_Set decoder (property_set);
 
   CORBA::Long longResult = 0;
   if (find (decoder, testLongKey, longResult) )

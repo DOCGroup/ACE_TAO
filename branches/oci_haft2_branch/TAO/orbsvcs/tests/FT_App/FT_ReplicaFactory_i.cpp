@@ -16,7 +16,7 @@
 #include <orbsvcs/CosNamingC.h>
 #include <orbsvcs/PortableGroupC.h>
 #include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/PortableGroup/PG_Properties_Decoder.h>
+#include <orbsvcs/PortableGroup/PG_Property_Set.h>
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -628,14 +628,14 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   ACE_UNUSED_ARG (type_id);
   InternalGuard guard (this->internals_);
 
-  ::TAO_PG::Properties_Decoder decoder (the_criteria);
+  ::TAO::PG_Property_Set decoder (the_criteria);
 
   // boolean, becomes true if a required parameter is missing
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
   CORBA::Long initialValue = 0;
-  if (! ::TAO_PG::find (decoder, criterion_initial_value, initialValue) )
+  if (! ::TAO::find (decoder, criterion_initial_value, initialValue) )
   {
     // not required.  Otherwise:
     // missingParameter = 1;
@@ -643,7 +643,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   }
 
   const char * role = "replica";
-  if (! ::TAO_PG::find (decoder, PortableGroup::role_criterion, role) )
+  if (! ::TAO::find (decoder, PortableGroup::role_criterion, role) )
   {
     ACE_ERROR((LM_INFO,
       "Property \"%s\" not found?\n", PortableGroup::role_criterion

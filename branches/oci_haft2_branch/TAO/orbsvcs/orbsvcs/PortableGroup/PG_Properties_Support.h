@@ -7,7 +7,7 @@
  *
  *  This file declares classes to help manage the PortableGroup::Properties
  *  It serves roughly the same purpose as PG_PropertiesManager, but takes a
- *  different approach that suits the needs of FT CORBA.  
+ *  different approach that suits the needs of FT CORBA.
  *  It would be possible to replace PG_PropertiesManager, or implement it in
  *  terms of PG_Properties_Support at some time in the future.
  *
@@ -17,21 +17,22 @@
 #ifndef TAO_PG_PROPERTIES_SUPPORT_H
 #define TAO_PG_PROPERTIES_SUPPORT_H
 
-#include "PG_Properties_Decoder.h"
+#include "PG_Property_Set.h"
 
 namespace TAO
 {
   /**
-   *  This Properties Support object manages Property Sets (that go by the name
-   *  of PG_Properties_Decoder for historical reasons.)  One set, default_properties_,
+   *  This Properties Support object manages Property Sets (TAO::PG_Property_Set).
+   *
+   *  One set, default_properties_,
    *  acts as a "global" default set of properties.
-   *  
-   *  The collection, properties_map_, contains a set of properties for each 
+   *
+   *  The collection, properties_map_, contains a set of properties for each
    *  PortableGroup::type_id.  The default set acts as a "parent" for each of
    *  these type_id sets.
    *
-   *  Expected use: When an object group is created that implements the interface 
-   *  identified by type_id, the corresponding typed_id propery set acts as a 
+   *  Expected use: When an object group is created that implements the interface
+   *  identified by type_id, the corresponding typed_id propery set acts as a
    *  parent to the Property set contained in the PG_Object_Group.
    *
    *  This heirarchy of property sets provides the correct property behavior.  A
@@ -49,11 +50,11 @@ namespace TAO
   {
     typedef ACE_Hash_Map_Manager<
       ACE_CString,
-      ::TAO_PG::Properties_Decoder *,
+      ::TAO::PG_Property_Set *,
       TAO_SYNCH_MUTEX> Properties_Map;
     typedef ACE_Hash_Map_Iterator<
       ACE_CString,
-      ::TAO_PG::Properties_Decoder *,
+      ::TAO::PG_Property_Set *,
       TAO_SYNCH_MUTEX> Properties_Map_Iterator;
 
   public:
@@ -63,7 +64,7 @@ namespace TAO
     /**
      * Update the default property set.
      *
-     * Properties that appear in props are replaced in or added to the default 
+     * Properties that appear in props are replaced in or added to the default
      * property set.  Properties that do not appear in props are unchanged.
      *
      * @param props the set of properties to update the defaults.
@@ -73,7 +74,7 @@ namespace TAO
     /**
      * Export the default properties in PortableGroup::Properties format.
      *
-     * This produces the properties in a format suitable for use across 
+     * This produces the properties in a format suitable for use across
      * a CORBA interface.
      * The caller owns the resulting Properties and must release it to avoid
      * resource leaks.
@@ -130,7 +131,7 @@ namespace TAO
      * resource leaks.
      *
      * Compare this method to find_typeid_properties which returns a pointer
-     * to the internal representation of the properties in TAO_PG::Properties_Decoder 
+     * to the internal representation of the properties in TAO::PG_Property_Set
      * format.  This is more efficient, but suitable only for internal use.
      *
      * @param type_id identifies the set of properties to be exported.
@@ -152,9 +153,9 @@ namespace TAO
      * should use the get_type_properties method.
      *
      * @param type_id identifies the set of properties to be found.
-     * @returns a pointer to a Properties_Decoder owned by this Properties_Support object.
+     * @returns a pointer to a Property_Set owned by this Properties_Support object.
      */
-    TAO_PG::Properties_Decoder *  TAO::PG_Properties_Support::find_typeid_properties (
+    TAO::PG_Property_Set *  TAO::PG_Properties_Support::find_typeid_properties (
         const char *type_id
         ACE_ENV_ARG_PARAMETER)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -184,7 +185,7 @@ namespace TAO
     typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
 
     /// The default property set.
-    TAO_PG::Properties_Decoder default_properties_;
+    TAO::PG_Property_Set default_properties_;
 
     /// A collection of property sets indexed by type_id.
     Properties_Map properties_map_;

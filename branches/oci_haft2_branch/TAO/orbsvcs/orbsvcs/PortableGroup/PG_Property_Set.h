@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    PG_Properties_Decoder.h
+ *  @file    PG_Property_Set.h
  *
  *  $Id$
  *
@@ -16,33 +16,33 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#ifndef TAO_PG_PROPERTIES_DECODER_H
-#define TAO_PG_PROPERTIES_DECODER_H
+#ifndef TAO_PG_PROPERTY_SET
+#define TAO_PG_PROPERTY_SET
 #include "portablegroup_export.h"
 #include <orbsvcs/PortableGroupS.h>
 #include <orbsvcs/CosNamingC.h>
 #include <ace/Hash_Map_Manager.h>
 #include <ace/SString.h>
 
-namespace TAO_PG
+namespace TAO
 {
 
   /**
-   * The Properties_Decoder captures the set of properties from a PortableGroup::Properties
+   * The PG_Property_Set captures the set of properties from a PortableGroup::Properties
    * structure in a more usable format (a hash map), and provides methods for
    * operating on these properties.
    *
    * It supports "chains" of property sets to implement default value semantics.
    * If a requested property is not found in this set, the default set(s) are searched.
    * Thus, any property found at this level overrides the defaults.
-   * 
+   *
    * See: PG_Properties_Support for more details on use of this object.
    *
-   * A Properties_Decoder may also be used for it's original purpose as a stand-alone
+   * A PG_Property_Set may also be used for it's original purpose as a stand-alone
    * helper class for extracting values from PortableGroup::Properties.
    */
 
-  class TAO_PortableGroup_Export Properties_Decoder
+  class TAO_PortableGroup_Export PG_Property_Set
   {
     typedef ACE_Hash_Map_Manager<
       ACE_CString,
@@ -58,13 +58,13 @@ namespace TAO_PG
     /**
      * constructor: empty set with no defaults.
      */
-    Properties_Decoder();
+    PG_Property_Set();
 
     /**
      * constructor
      * @param property_set the properties to be decoded
      */
-    Properties_Decoder (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
+    PG_Property_Set (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -72,7 +72,7 @@ namespace TAO_PG
      * @param property_set the properties to be decoded
      * @param defaults a propert set decoder that supplies default values.
      */
-    Properties_Decoder (const PortableGroup::Properties & property_set, Properties_Decoder * defaults ACE_ENV_ARG_DECL)
+    PG_Property_Set (const PortableGroup::Properties & property_set, PG_Property_Set * defaults ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -80,10 +80,10 @@ namespace TAO_PG
      * (note this is not a copy constructor)
      * @param defaults a propert set decoder that supplies default values.
      */
-    Properties_Decoder (Properties_Decoder * defaults);
+    PG_Property_Set (PG_Property_Set * defaults);
 
 
-    ~Properties_Decoder ();
+    ~PG_Property_Set ();
 
     /**
      * general purpose find. returns a pointer to an Any
@@ -137,8 +137,8 @@ namespace TAO_PG
     ////////////////////
     // Forbidden methods
   private:
-    Properties_Decoder(const Properties_Decoder & rhs);
-    Properties_Decoder & operator = (const Properties_Decoder & rhs);
+    PG_Property_Set(const PG_Property_Set & rhs);
+    PG_Property_Set & operator = (const PG_Property_Set & rhs);
 
     ///////////////
     // Data Members
@@ -155,7 +155,7 @@ namespace TAO_PG
      * these can be chained indefinitely.
      * @@ TODO: reference counted pointers would be a good idea here.
      */
-    Properties_Decoder * defaults_;
+    PG_Property_Set * defaults_;
   };
 
 #ifdef PG_PS_UNIT_TEST
@@ -168,10 +168,10 @@ namespace TAO_PG
    */
   int test_encode_decode();
 #endif // PG_PS_UNIT_TEST
-} //namespace TAO_PG
+} //namespace TAO
 
 ////////////////////////////////////
 // include templated helper function
-#include "PG_Properties_Decoder_Find.h"
+#include "PG_Property_Set_Find.h"
 
-#endif // TAO_PG_PROPERTIES_DECODER_H
+#endif // TAO_PG_PROPERTY_SET

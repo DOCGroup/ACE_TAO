@@ -17,10 +17,6 @@
 #include "PG_Object_Group.h"
 #include <orbsvcs/orbsvcs/PortableGroup/PG_Utils.h>
 
-//#include "PG_Properties_Encoder.h"
-//#include "PG_Properties_Decoder.h"
-
-
 ACE_RCSID (PortableGroup,
            PG_Group_Factory,
            "$Id$")
@@ -75,7 +71,7 @@ void TAO::PG_Group_Factory::init (
 TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    TAO_PG::Properties_Decoder * typeid_properties
+    TAO::PG_Property_Set * typeid_properties
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::NoFactory,
