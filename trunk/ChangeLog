@@ -1,3 +1,8 @@
+Tue May 11 14:21:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Streams/streams.mpc: Added 'threads' to the requires
+	  spec.
+
 Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-freebsd.h: If FreeBSD 5, change the Proactor default
