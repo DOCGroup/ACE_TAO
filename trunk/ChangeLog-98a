@@ -1,3 +1,10 @@
+Sun Dec 21 14:53:05 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Containers.h (class ACE_Double_Linked_List): Removed
+	  unused function declarations.
+
+	* ace/Containers.h (class ACE_DNode): Removed ACE_DNode class.
+
 Sun Dec 21 12:39:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Changed all ACE class documentation so that it puts the
@@ -26,7 +33,7 @@ Sat Dec 20 11:05:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  <arbuckle@uran.informatik.uni-bonn.de> for suggesting this.
 
 	* ace/Malloc*: Changed ACE_MALLOC_STATS to ACE_HAS_MALLOC_STATS
-	  since this is more consistent with ACE conventions.  Also, 
+	  since this is more consistent with ACE conventions.  Also,
 	  added ACE_HAS_MALLOC_STATS to the ace/README file.  Thanks
 	  to Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
 	  suggesting this.
