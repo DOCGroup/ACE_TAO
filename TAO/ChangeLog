@@ -1,18 +1,25 @@
+Wed Apr 28 08:25:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocalObject.cpp:
+          Use prefix increment and decrement for the refcount of
+          TAO_Local_RefCounted_Object because this is faster than
+          postfix.
+
 Tue Apr 27 17:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
 
-	  Fixed a ACE_NEW macros usage. 
+	  Fixed a ACE_NEW macros usage.
 
 Tue Apr 27 16:39:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableInterceptor.pidl:	
+	* tao/PortableInterceptor.pidl:
  	* tao/Bounds.pidl:
 	* tao/Policy.pidl:
 	* tao/IOP_Codec.pidl:
 
-	  Added documentation about the need to make this change. 
-	
+	  Added documentation about the need to make this change.
+
 	* tao/BoundsA.cpp:
 	* tao/BoundsC.cpp:
 	* tao/IOP_CodecA.cpp:
@@ -25,12 +32,12 @@ Tue Apr 27 16:39:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Moved typecodes for exceptions *C.cpp. This will ensure that
 	  *A.o are not linked in while making a binary. The *A.o can
 	  increase the footprint drastically. The last regeneration just
-	  increased simple client footprint by just 25K. 
-	
+	  increased simple client footprint by just 25K.
+
 	* tao/Valuetype/ValueFactory.h:
 
 	  Added additional includes to fix compile errors in builds where
-	  native exceptions are disabled. 
+	  native exceptions are disabled.
 
 Tue Apr 27 13:37:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
