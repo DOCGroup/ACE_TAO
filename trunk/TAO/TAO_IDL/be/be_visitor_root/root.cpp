@@ -684,6 +684,9 @@ be_visitor_root::visit_valuetype (be_valuetype *node)
       }
     }
 
+  // Change the state depending on the kind of node strategy
+  ctx.state (node->next_state (ctx.state ()));
+
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
@@ -704,6 +707,36 @@ be_visitor_root::visit_valuetype (be_valuetype *node)
                          ),  -1);
     }
   delete visitor;
+  visitor = 0;
+
+  // Do addtional "extra" code generation if necessary
+  if (node->has_extra_code_generation (ctx.state ()))
+    {   
+      // Change the state depending on the kind of node strategy
+      ctx.state (node->next_state (ctx.state (), 1));
+
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_valuetype - "
+                             "NUL visitor\n"
+                             ),  -1);
+        }
+
+      // let the node accept this visitor
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_valuetype - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
+      delete visitor;
+      visitor = 0;
+    } 
   return 0;
 }
 

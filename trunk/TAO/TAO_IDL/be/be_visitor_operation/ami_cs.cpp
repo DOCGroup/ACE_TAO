@@ -105,7 +105,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
   visitor = tao_cg->make_visitor (&ctx);
-  if ((!visitor) || (node->hidden_operation ()->accept (visitor) == -1))
+  if ((!visitor) || (node->arguments ()->accept (visitor) == -1))
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -121,7 +121,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // last argument - is always CORBA::Environment
   *os << "{" << be_idt_nl;
 
-  be_type *bt = be_type::narrow_from_decl (node->hidden_operation ()->return_type ());
+  be_type *bt = be_type::narrow_from_decl (node->arguments ()->return_type ());
 
   // generate any pre stub info if and only if none of our parameters is of the
   // native type
@@ -378,27 +378,12 @@ be_compiled_visitor_operation_ami_cs::~be_compiled_visitor_operation_ami_cs (voi
 
 int
 be_compiled_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
-                                                     be_type *)
+                                                         be_type *bt)
 {
-
-  // Check if this operation raises any exceptions. In that case, we must
-  // generate a list of exception typecodes. This is not valid for
-  // attributes
-  if (!this->ctx_->attribute ())
-    {
-      be_visitor_context ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) "
-                             "be_compiled_visitor_operation_ami_cs::"
-                             "gen_pre_stub_info - "
-                             "Exceptionlist generation error\n"),
-                            -1);
-        }
-    }
+  // Nothing to be done here, we do not through any exceptions,
+  // besides system exceptions, so we do not need an user exception table.
+  ACE_UNUSED_ARG (node);
+  ACE_UNUSED_ARG (bt);
 
   return 0;
 }
@@ -513,7 +498,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->hidden_operation ()->accept (visitor) == -1))
+      if (!visitor || (node->marshaling ()->accept (visitor) == -1))
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -539,18 +524,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
     }
 
   *os << be_nl
-      << "int _invoke_status =" << be_idt_nl;
-  if (node->exceptions ())
-    {
-      *os << "_tao_call.invoke (_tao_" << node->flat_name ()
-          << "_exceptiondata, "
-          << node->exceptions ()->length ()
-          << ", ACE_TRY_ENV);";
-    }
-  else
-    {
-      *os << "_tao_call.invoke (0, 0, ACE_TRY_ENV);";
-    }
+      << "int _invoke_status = _tao_call.invoke (ACE_TRY_ENV);";
 
   *os << be_uidt_nl;
 

@@ -92,7 +92,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           if (inherited->defined_in ()->scope_node_type () == AST_Decl::NT_module)
             {
               be_decl *scope = be_scope::narrow_from_scope (inherited->defined_in ())->decl ();
-              // be_decl *scope = be_scope::narrow_from_scope (inherited->defined_in ())->decl ();
               *os << "ACE_NESTED_CLASS ("
                   << scope->name() << ","
                   << inherited->local_name () << ")";

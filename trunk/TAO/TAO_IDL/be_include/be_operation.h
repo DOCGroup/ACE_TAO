@@ -78,10 +78,15 @@ public:
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
   // returns true if we have to genrate extra code.
 
-  be_operation *hidden_operation ();
-  // returns the operation node which contains extra data,
-  // e.g. special marshalling information, this was needed for the 
-  // AMI implementationb
+  be_operation *marshaling ();
+  // returns the operation containing special marshaling information,
+  // this makes sense if not all arguments get marshaled, e.g. AMI
+  // sendc_ operations
+
+  be_operation *arguments ();
+  // returns a customized arguments list, e.g. AMI sendc_ operations
+  // only use the in and inout arguments but not the out arguments,
+  // also the first argument is the reply handler.
 
   // Narrowing
   DEF_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl);

@@ -222,9 +222,22 @@ public:
   int gen_optable_entries (be_interface *);
   // generate the operation table entries.
 
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
+  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                    int is_extra_state = 0);
   // find the next state, used to hide differences between variants of 
   // interfaces.
+
+  int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+  // Returns 1 if additional code needs to be generated, the behavior
+  // is driven by the strategy connected with this interface
+
+  void original_interface (be_interface *original_interface);
+  // Sets the original interface from which this one was created,
+  // applies only to implied IDL 
+
+  be_interface *original_interface ();
+  // Returns the original interface from which this one was created,
+  // applies only to implied IDL 
 
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
@@ -270,6 +283,8 @@ private:
 
   be_interface_strategy *strategy_;
   // Member for holding the strategy for generating names
+
+  be_interface *original_interface_;
 };
 
 #endif  // if !defined

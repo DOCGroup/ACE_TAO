@@ -18,28 +18,29 @@
 //
 // ============================================================================
 
-#ifndef _BE_INTERFACE_INTERFACE_AMI_EXCEPTION_HOLDER_CS_H_
-#define _BE_INTERFACE_INTERFACE_AMI_EXCEPTION_HOLDER_CS_H_
+#ifndef _BE_VISITOR_VALUETYPE_AMI_EXCEPTION_HOLDER_CS_H_
+#define _BE_VISITOR_VALUETYPE_AMI_EXCEPTION_HOLDER_CS_H_
 
-class be_visitor_interface_ami_exception_holder_cs : public be_visitor_interface
+class be_visitor_valuetype_ami_exception_holder_cs : public be_visitor_valuetype
 {
   //
   // = TITLE
-  //   be_visitor_interface_cs
+  //   be_visitor_valuetype_ami_exception_holder_cs
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the client stubs for interface
   //
   //
 public:
-  be_visitor_interface_ami_exception_holder_cs (be_visitor_context *ctx);
+  be_visitor_valuetype_ami_exception_holder_cs (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_interface_ami_exception_holder_cs (void);
+  ~be_visitor_valuetype_ami_exception_holder_cs (void);
   // destructor
 
-  virtual int visit_interface (be_interface *node);
-  // set the right context and make a visitor
+  virtual int visit_valuetype (be_valuetype *node);
+
+  virtual int visit_operation (be_operation *node);
 };
 
-#endif /* _BE_INTERFACE_INTERFACE_AMI_EXCEPTION_HOLDER_CS_H_ */
+#endif /* _BE_VISITOR_VALUETYPE_AMI_EXCEPTION_HOLDER_CS_H_ */

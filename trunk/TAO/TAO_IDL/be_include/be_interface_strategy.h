@@ -94,8 +94,11 @@ public:
   int strategy_type ();
   // Return the type of the strategy.
 
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state) = 0;
+  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                            int is_extra_state = 0);
   // Change the sate if necessary
+
+  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 
 protected:
 
@@ -203,7 +206,6 @@ public:
   virtual const char *local_coll_name (int);
   // retrieve the fully qualified collocated class name.
 
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
   // end of overridden methods
 };
 
@@ -217,7 +219,8 @@ public:
   virtual ~be_interface_ami_handler_strategy ();
 
   // overridden methods.
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
+  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                            int is_extra_state = 0);
 };
 
 
@@ -230,7 +233,10 @@ public:
   virtual ~be_interface_ami_exception_holder_strategy ();
 
   // overridden methods.
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
+  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                            int is_extra_state = 0);
+
+  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 };
 
 #endif  // if !defined

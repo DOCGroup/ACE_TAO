@@ -49,7 +49,14 @@ be_operation_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE current_
 }
 
 be_operation *
-be_operation_strategy::hidden_operation ()
+be_operation_strategy::marshaling ()
+{
+  return 0;
+}
+
+
+be_operation *
+be_operation_strategy::arguments ()
 {
   return 0;
 }
@@ -82,10 +89,12 @@ be_operation_default_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
 // AMI sendc_ operation strategy
 
 be_operation_ami_sendc_strategy::be_operation_ami_sendc_strategy (be_operation *node,
-                                                                  be_operation *hidden_operation)
+                                                                  be_operation *marshaling,
+                                                                  be_operation *arguments)
   : be_operation_strategy (node, 
                            AMI_SENDC),
-    hidden_operation_ (hidden_operation)
+    marshaling_ (marshaling),
+    arguments_ (arguments)
 {
 }
 
@@ -128,9 +137,16 @@ be_operation_ami_sendc_strategy::has_extra_code_generation (TAO_CodeGen::CG_STAT
 
 
 be_operation*
-be_operation_ami_sendc_strategy::hidden_operation ()
+be_operation_ami_sendc_strategy::marshaling ()
 {
-  return hidden_operation_;
+  return marshaling_;
+}
+
+
+be_operation*
+be_operation_ami_sendc_strategy::arguments ()
+{
+  return arguments_;
 }
 
 // ****************************************************************
@@ -156,7 +172,7 @@ be_operation_ami_exception_holder_raise_strategy::next_state (TAO_CodeGen::CG_ST
       switch (current_state)
         {
       case TAO_CodeGen::TAO_OPERATION_CS:
-        return TAO_CodeGen::TAO_AMI_EXCEP_HOLDER_RAISE_OPERATION_CS;
+        return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS;
       default:
         return current_state;
         }

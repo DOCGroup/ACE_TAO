@@ -94,7 +94,7 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
                         -1);
     }
 
-  if (node->hidden_operation ()->accept (visitor) == -1)
+  if (node->arguments ()->accept (visitor) == -1)
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,

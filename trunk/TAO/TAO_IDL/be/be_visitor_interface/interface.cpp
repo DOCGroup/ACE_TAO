@@ -578,13 +578,16 @@ be_visitor_interface::visit_operation (be_operation *node)
   delete visitor;
   visitor = 0;
 
+  // Do additional code generation is necessary.
+  // Note, this call is delegated to the strategy connected to
+  // the node.
   if (node->has_extra_code_generation (ctx.state ()))
     {
       // Change the state depending on the kind of node strategy
       ctx.state (node->next_state (ctx.state (), 1));
 
       // grab the appropriate visitor
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

@@ -358,6 +358,8 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
     }
   delete visitor;
 
+  // @@ Michael: We need to put the exception throw spec here
+
   return 0;
 }
 
