@@ -1826,8 +1826,6 @@ balancing algorithms:
 <ul>
 <li>Factory must be implemented to allow applications to create load
 balancers at run-time, rather than at application start up time.</li>
-<li>Thread safety needs improvement.</li>
-<li>Exception safety needs improvement.</li>
 </ul>
 
 <h4>Recent Work:</h4>
@@ -1837,7 +1835,7 @@ balancers at run-time, rather than at application start up time.</li>
     robust way of forwarding requests.  The DSI implementation was a
     bit of a hack since ForwardRequest exceptions are only supposed to
     be thrown from ServantManagers, such as ServantLocators.</li>
-<li>All code is now thread-safe.</li>
+<li>All code is now thread-safe and exception-safe.</li>
 </ul>
 
 <h4>Future Work:</h4>
