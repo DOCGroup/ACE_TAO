@@ -186,7 +186,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         }
 
       *os << "// set the length of the sequence" << be_nl
-
+         	<< "_tao_sequence.length (_tao_seq_len);" << be_nl;
       // Now we do a check for the sequence length to be non zero.
 	    // If length is 0 we return true.
       *os << "// If length is 0 we return true." << be_nl;
