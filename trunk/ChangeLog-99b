@@ -1,3 +1,9 @@
+Sat May 01 12:06:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.cpp:
+	* ace/config-win32.h:  Reverted my previous change.  I didn't
+	  notice David had already fixed it.  Thanks David.
+
 Sat May 01 01:48:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ACE.cpp (DllMain): Only use DllMain to control
