@@ -138,9 +138,6 @@ private:
   TAO_UIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for UIOP.
 
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
-
   CORBA::Boolean lite_flag_;
   // Do we need to use a GIOP_Lite for sending messages?
 
