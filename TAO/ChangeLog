@@ -1,3 +1,8 @@
+Tue Nov 25 10:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+          Added #include of ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
+
 Tue Nov 25 08:00:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/Makefile.bor:
