@@ -524,8 +524,8 @@ public:
 
   TAO_AV_QoS &qos (void);
 
-  void TAO_Base_StreamEndPoint::protocol_object_set (void);
-  int TAO_Base_StreamEndPoint::is_protocol_object_set (void);
+  void protocol_object_set (void);
+  int is_protocol_object_set (void);
 
 protected:
 
