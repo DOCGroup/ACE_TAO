@@ -1,3 +1,8 @@
+Tue Aug 27 16:32:18 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Proactor_Impl.h: Fixed some u_long->size_t changes missed
+          on POSIX platforms.
+
 Tue Aug 27 14:44:00 2002  Justin Michel  <michel_j@ociweb.com>
 
         * ace/Timer_Wheel_T.cpp:
