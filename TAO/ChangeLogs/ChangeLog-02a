@@ -1,3 +1,15 @@
+Thu Nov  9 10:59:12 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* TAO/TAOACE.dsw
+	* TAO/TAOACE_Static.dsw
+  		
+	  Updated the workspaces to include the new TAO_Strategies project files.  
+	
+      * tao/Strategies/TAO_Strategies.dsp
+	* tao/Strategies/TAO_Strategies_Static.dsp
+	  
+	  Added project files for the TAO_Strategies library.
+
 Thu Nov  9 10:38:19 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Makefile: 
