@@ -320,7 +320,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::Short flag = 131;
+          CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
           call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                                ACE_TRY_ENV);
@@ -453,7 +453,7 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
       call.start (ACE_TRY_ENV);
       ACE_CHECK;
 
-      CORBA::Short flag = 131;
+      CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
       call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                            ACE_TRY_ENV);
