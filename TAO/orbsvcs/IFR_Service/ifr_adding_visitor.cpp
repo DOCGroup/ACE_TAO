@@ -1218,7 +1218,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
                                c->repoID (),
                                c->local_name ()->get_string (),
                                c->version (),
-                               base_component,
+                               base_component.in (),
                                supported_interfaces
                                ACE_ENV_ARG_PARAMETER
                              );
@@ -3522,7 +3522,8 @@ ifr_adding_visitor::get_referenced_type (AST_Type *node
 
 void 
 ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
-                                     AST_ValueType *node)
+                                     AST_ValueType *node
+                                     ACE_ENV_ARG_DECL)
 {
   result = CORBA::ValueDef::_nil ();
   AST_ValueType *base_value = node->inherits_concrete ();
@@ -3881,7 +3882,7 @@ ifr_adding_visitor::fill_get_exceptions (CORBA::ExceptionDefSeq &result,
 {
   this->fill_exceptions (result,
                          node->get_get_exceptions ()
-                         ACE_ENV_ARG_DECL);
+                         ACE_ENV_ARG_PARAMETER);
 }
 
 void 
@@ -3891,7 +3892,7 @@ ifr_adding_visitor::fill_set_exceptions (CORBA::ExceptionDefSeq &result,
 {
   this->fill_exceptions (result,
                          node->get_set_exceptions ()
-                         ACE_ENV_ARG_DECL);
+                         ACE_ENV_ARG_PARAMETER);
 }
 
 void 

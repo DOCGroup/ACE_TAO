@@ -1,4 +1,32 @@
-	
+Thu Jul  3 11:48:40 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/tests/Redundant_Naming/client.cpp: Initialized ns[12]ref
+	  variables to zero.  Although the code looked like the variables
+	  probably would be assigned prior to use, this de-warns on picky
+	  platforms/compilers like GCC 3.2.
+
+	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+
+	  Modified operator<< and operator>> to use
+	  ACE_SIZE_T_FORMAT_SPECIFIER macro rather than an explicit %d.
+	  This should rid us of warnings such as "warning: int format,
+	  different type arg (arg 3)"
+
+	* tao/Transport.cpp (dump_iov): Made same modification as above
+	  for the same reasons.
+
+Thu Jul  3 11:22:47 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+	  Used proper ACE_ENV_ARG_* macros in function declarations and
+	  function bodies.  This should get rid of compilation errors on
+	  no-exception builds that manifested themselves as
+	  "`_ACE_CORBA_Environment_variable' undeclared" errors.
+
+	  Also used .in() to explicitly select a conversion on a _var so
+	  get rid of warnings regarding which conversion the G++ compiler
+	  was going to choose.
 
 Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -41,7 +69,6 @@ Thu Jul 03 13:20:16 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	  Many thanks to Johnny Willemsen  <jwillemsen@remedy.nl> for all
 	  of the above.
-
 
 Thu Jul 03 17:03:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
