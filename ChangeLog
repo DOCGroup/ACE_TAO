@@ -1,3 +1,19 @@
+Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
+	  bugzilla database at
+
+  	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1268
+
+	  for more details on the source of the problem and the solution
+	  for the same. Thanks to Carlos O'Ryan for providing patches.
+
+	* tests/Reactor_Notification_Queue_Test.cpp:
+	* tests/Reactor_Notification_Queue_Test.dsp:
+	* tests/tests.dsw: New test that stresses the feature of sending
+	  notify messages to the reactor. Thanks to Carlos O'Ryan for
+	  providing the test.
+
 Sun Oct 12 14:08:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
