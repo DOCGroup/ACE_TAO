@@ -1,3 +1,11 @@
+Thu Sep 25 23:27:38 1997    <irfan@TWOSTEP>
+
+	* ace/config-win32.h: Error in directives: it should be "Define
+ 	  ACE_HAS_WINSOCK2 to 0 in your config.h file if you do *not* want
+ 	  to compile with WinSock 2.0.". The typo was a 1 instead of the
+ 	  0. Thanks to Gonzalo A. Diethelm <gonzo@ing.puc.cl> for pointing
+ 	  this out.
+
 Thu Sep 25 20:33:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Timer_List_T.cpp (ACE_Timer_List_Iterator_T): Changed

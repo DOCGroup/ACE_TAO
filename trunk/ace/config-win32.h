@@ -98,13 +98,11 @@
 	#define ACE_HAS_SVC_DLL 1
 #endif
 
-// Define ACE_HAS_WINSOCK2 to 1 in your config.h file if you do *not*
+// Define ACE_HAS_WINSOCK2 to 0 in your config.h file if you do *not*
 // want to compile with WinSock 2.0.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: winsock2 must be installed.
-#if !defined (ACE_HAS_WINSOCK2)
 //	#define ACE_HAS_WINSOCK2 0
-#endif
 
 // Define ACE_HAS_ORBIX to 1 in your config.h file if you want to integrate
 // ACE and Orbix in Win32.
