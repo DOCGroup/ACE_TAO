@@ -1,3 +1,11 @@
+Wed Aug 29 14:27:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Throughput/svc.conf: Used blocked flushing
+	  strategy. Using a RW connection handler with a LF flushing
+	  strategy can be really really tricky. It may not be that tricky,
+	  it wouldnt work :-). This should fix the failure problem
+	  observed in Solaris builds.
+
 Wed Aug 29 13:13:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
