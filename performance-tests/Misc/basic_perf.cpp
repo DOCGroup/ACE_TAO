@@ -494,9 +494,9 @@ Virtual_Member_Call_Test::run (void)
 ///////////////////////////////////////////////////////////////////////////////
 static
 unsigned int
-get_options (int argc, char *argv [])
+get_options (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:?");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:?"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -550,7 +550,7 @@ get_options (int argc, char *argv [])
 ///////////////////////////////////////////////////////////////////////////////
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   if (get_options (argc, argv))
     ACE_OS::exit (-1);

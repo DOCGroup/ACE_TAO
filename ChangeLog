@@ -1,3 +1,13 @@
+Wed Nov 21 12:49:08 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * performance-tests/Misc/basic_perf.cpp
+        * performance-tests/Misc/childbirth_time.cpp
+        * performance-tests/Misc/context_switch_time.cpp
+        * performance-tests/Misc/preempt.cpp
+        * performance-tests/Misc/test_mutex.cpp
+        * performance-tests/Misc/test_singleton.cpp
+          Made these tests compiling when ACE_USES_WCHAR is set
+
 Wed Nov 21 08:49:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/OS.h

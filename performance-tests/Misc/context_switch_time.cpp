@@ -116,7 +116,7 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                       1, 0, LOW_PRIORITY))
-    ACE_OS::perror ("activate");
+    ACE_OS::perror (ACE_TEXT("activate"));
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
@@ -201,7 +201,7 @@ Suspend_Resume_Test::Suspend_Resume_Test (const ACE_UINT32 iterations) :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
-    ACE_OS::perror ("activate");
+    ACE_OS::perror (ACE_TEXT("activate"));
 }
 
 Suspend_Resume_Test::~Suspend_Resume_Test()
@@ -311,7 +311,7 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
-    ACE_OS::perror ("activate");
+    ACE_OS::perror (ACE_TEXT("activate"));
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
@@ -416,7 +416,7 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
-    ACE_OS::perror ("activate");
+    ACE_OS::perror (ACE_TEXT("activate"));
 }
 
 Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test()
@@ -558,7 +558,7 @@ Yield_Test::Yield_Test (const ACE_UINT32 iterations) :
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   2, 0, LOW_PRIORITY))
-    ACE_OS::perror ("activate");
+    ACE_OS::perror (ACE_TEXT("activate"));
 
 #if !defined (VXWORKS)
   timer_barrier_.wait ();
@@ -798,7 +798,7 @@ High_Priority_Synchronized_Task::High_Priority_Synchronized_Task (
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
-    ACE_OS::perror ("activate");
+    ACE_OS::perror (ACE_TEXT("activate"));
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor, activated\n"));
@@ -961,7 +961,7 @@ Synchronized_Suspend_Resume_Test::Synchronized_Suspend_Resume_Test (
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
-    ACE_OS::perror ("activate");
+    ACE_OS::perror (ACE_TEXT("activate"));
 }
 
 Synchronized_Suspend_Resume_Test::~Synchronized_Suspend_Resume_Test()
@@ -1081,9 +1081,9 @@ Synchronized_Suspend_Resume_Test::average_context_switch_time ()
 
 static
 u_int
-get_options (int argc, char *argv[])
+get_options (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "c:n?");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("c:n?"));
   int opt;
   while ((opt = get_opt ()) != EOF) {
     switch (opt) {
@@ -1145,9 +1145,9 @@ get_options (int argc, char *argv[])
 ///////////////////////////////////////////////////////////////////////////////
 
 int
-main (int argc, char *argv [])
+main (int argc, ACE_TCHAR *argv [])
 {
-  ACE_LOG_MSG->open (argv[0] > 0  ?  argv[0]  :  "context_switch_time");
+  ACE_LOG_MSG->open (argv[0] > 0  ?  argv[0]  :  ACE_TEXT("context_switch_time"));
 
   if (get_options (argc, argv))
     ACE_OS::exit (-1);
@@ -1177,7 +1177,7 @@ main (int argc, char *argv [])
         }
       else
         {
-          ACE_OS::perror ("context_switch_time");
+          ACE_OS::perror (ACE_TEXT("context_switch_time"));
           ACE_OS::exit (-1);
         }
     }
