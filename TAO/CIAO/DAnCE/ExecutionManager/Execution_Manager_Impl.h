@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DAM_Map.h"
+#include "ace/SString.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
