@@ -1490,7 +1490,7 @@ ACE::send_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK)
+          if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1548,7 +1548,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK)
+              errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1610,7 +1610,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK)
+          if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1668,7 +1668,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK)
+              errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1728,7 +1728,7 @@ ACE::send_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK)
+          if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1784,7 +1784,7 @@ ACE::send_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK)
+              errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
@@ -1908,7 +1908,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       if (n == -1)
         {
           // Check for possible blocking.
-          if (errno == EWOULDBLOCK)
+          if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
               int result = ACE::handle_write_ready (handle,
@@ -1981,7 +1981,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
         {
           // Check for possible blocking.
           if (n == -1 &&
-              errno == EWOULDBLOCK)
+              errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait upto <timeout> for the blocking to subside.
               int rtn = ACE::handle_write_ready (handle,
