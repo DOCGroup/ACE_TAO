@@ -1,5 +1,10 @@
 Fri Jan 29 17:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* websvcs/lib/URL_Addr.h: 
+	* websvcs/lib/URL_Addr.cpp: 
+	  We were not checking against nil strings in several places, also
+	  fixed some uninitialized members in the HTTP_Addr constructors.
+
 	* bin/auto_compile: 
 	  Added protection against simultaneous executions of the script;
 	  it checks for .disable file on the $LOGDIR directory, if present

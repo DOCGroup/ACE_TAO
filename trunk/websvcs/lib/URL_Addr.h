@@ -82,7 +82,7 @@ private:
 class ACE_HTTP_Addr;
 class ACE_FTP_Addr;
 class ACE_Mailto_Addr;
-// @@ TODO add more URP schemes as needed.
+// @@ TODO add more URL schemes as needed.
 // class ACE_File_Addr;
 // class ACE_AFS_Addr;
 // class ACE_News_Addr;
