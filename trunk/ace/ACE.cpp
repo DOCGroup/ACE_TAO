@@ -18,8 +18,6 @@ int
 ACE::terminate_process (pid_t pid)
 {
 #if defined (ACE_WIN32)
-  ACE_UNUSED_ARG (signum);
-
   // Create a handle for the given process id.
   ACE_HANDLE process_handle = 
     ::OpenProcess (PROCESS_TERMINATE,
@@ -37,7 +35,6 @@ ACE::terminate_process (pid_t pid)
       return terminate_result;
     }
 #elif defined (CHORUS)
-  ACE_UNUSED_ARG (signum);
   KnCap cap_;
 
   // Use the pid to find out the actor's capability, then kill it.
