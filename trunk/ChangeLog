@@ -1,59 +1,65 @@
+Tue Mar 13 10:04:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/TCP/run_test.pl:
+          Fixed the path to the $ACE_ROOT/bin directory, now the script
+          runs again.
+
 Tue Mar 13 06:04:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Service_Manager.cpp (list_services): Add an indication of whether
-	  a service is active or paused.  Thanks to Mike Curtis for this
- 	  improvement.
+        * ace/Service_Manager.cpp (list_services): Add an indication of whether
+          a service is active or paused.  Thanks to Mike Curtis for this
+          improvement.
 
-	* ace/Reactor.h: Clarified that the remove_handler (handle, mask)
-	  method also removes the event handle.  Thanks to Pierre Fayolle
- 	  <fayolle@enseirb.fr> for reporting this.
+        * ace/Reactor.h: Clarified that the remove_handler (handle, mask)
+          method also removes the event handle.  Thanks to Pierre Fayolle
+          <fayolle@enseirb.fr> for reporting this.
 
-	* tests/Logging_Strategy_Test.cpp (get_statistic): Replace struct stat
-	  with ACE_stat.  Thanks to Johnny Willemsen for reporting this.
+        * tests/Logging_Strategy_Test.cpp (get_statistic): Replace struct stat
+          with ACE_stat.  Thanks to Johnny Willemsen for reporting this.
 
 Tue Mar 13 00:35:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Select_Reactor_T.i (deactivated): Reverted this change
-	  regarding Select_Reactor_T::deactivated():
+        * ace/Select_Reactor_T.i (deactivated): Reverted this change
+          regarding Select_Reactor_T::deactivated():
 
-	  Thu Feb 22 12:28:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+          Thu Feb 22 12:28:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	  Though my change improved correctness of access and change to
-	  the <deactivated_> variable, it had a negative consequence: the
-	  event loop calls Select_Reactor_T::deactivated() before calling
-	  Select_Reactor_T::handle_events() to make sure that the reactor
-	  is not closed yet.  Unfortunately, if
-	  Select_Reactor_T::deactivated() has a guard, it will send a null
-	  event waking up the current leader and thus lead to unnecessary
-	  thrashing.  For now, I have removed the guard from the
-	  Select_Reactor_T::deactivated() methods.  We should revisit this
-	  issue some time again.  This fixes bug 816.
+          Though my change improved correctness of access and change to
+          the <deactivated_> variable, it had a negative consequence: the
+          event loop calls Select_Reactor_T::deactivated() before calling
+          Select_Reactor_T::handle_events() to make sure that the reactor
+          is not closed yet.  Unfortunately, if
+          Select_Reactor_T::deactivated() has a guard, it will send a null
+          event waking up the current leader and thus lead to unnecessary
+          thrashing.  For now, I have removed the guard from the
+          Select_Reactor_T::deactivated() methods.  We should revisit this
+          issue some time again.  This fixes bug 816.
 
 Mon Mar 12 16:30:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp (main): Fixed the rest of the
-	  warnings in VxWorks builds.
+        * tests/Logging_Strategy_Test.cpp (main): Fixed the rest of the
+          warnings in VxWorks builds.
 
 Mon Mar 12 16:21:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp (main): Fixed a couple of
-	  warnings in VxWorks build. Couple of more warnings are left. 
+        * tests/Logging_Strategy_Test.cpp (main): Fixed a couple of
+          warnings in VxWorks build. Couple of more warnings are left. 
 
 Mon Mar 12 14:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Local_Name_Space_T.cpp (create_manager_i): Fixed a compile
-	  error on Win32 Unicode platforms.
+        * ace/Local_Name_Space_T.cpp (create_manager_i): Fixed a compile
+          error on Win32 Unicode platforms.
 
 Mon Mar 12 12:12:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Also mentioned Windows 2000 explicitly in the
-	  document.  Thanks to Rahul Shukla <rshukla@ggn.aithent.com> for
-	  raising the question.
+        * ACE-INSTALL.html: Also mentioned Windows 2000 explicitly in the
+          document.  Thanks to Rahul Shukla <rshukla@ggn.aithent.com> for
+          raising the question.
 
 Mon Mar 12 00:49:24 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/tests.dsw:
-	* tests/Logging_Strategy_Test.dsp: Added a new dsp file.
+        * tests/tests.dsw:
+        * tests/Logging_Strategy_Test.dsp: Added a new dsp file.
 
 Sun Mar 11 21:00:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
