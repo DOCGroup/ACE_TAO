@@ -685,16 +685,12 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
       ACE_CHECK_RETURN (reply_error);
     }
 
-  // If this is still an error that needs special handing, call the
-  // ORB Core which would check whether we need to really
-  // raise an exception or are we going to base our decision on the
-  // loaded services.
+  // If this is still an error that needs other handlers to be used ,
+  // call the ORB Core which can take care of the rest..
   if (reply_error == -1)
     {
-      // An error has occured while waiting for the reply. So reset the
-      // state of the dispatcher guard so that no unbind happens when
-      // the destructor is called.
-      (void) dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
+      // Just unbind the dispatcher before we take any action.
+      (void) dispatch_guard.unbind_dispatcher ();
       return this->orb_core_->service_raise_comm_failure (this,
                                                           this->profile_
                                                           ACE_ENV_ARG_PARAMETER);
