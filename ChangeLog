@@ -1,3 +1,8 @@
+Sun Aug 24 09:45:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* samewise: Removed contents of this directory since the new
+	  MakefileProjectCreator (MPC) supresedes this.
+
 Sun Aug 24 14:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
