@@ -23,10 +23,10 @@
 
 namespace Kokyu
 {
-  class DSRT_Scheduler_Impl
+  class DSRT_Scheduler_Impl : public ACE_Service_Object
   {
   public:
-    DSRT_Scheduler_Impl (ACE_Sched_Params::Policy sched_policy, int sched_scope);
+    DSRT_Scheduler_Impl ();
     int schedule (guid_t, const QoSDescriptor&);
 
   private:
@@ -37,17 +37,26 @@ namespace Kokyu
     int sched_scope_;
     Priority_t min_prio_;
     Priority_t max_prio_;
- };
+  };
 
   class MIF_Scheduler_Impl : public DSRT_Scheduler_Impl
   {
   public:
-    MIF_Scheduler_Impl (ACE_Sched_Params::Policy sched_policy, int sched_scope);
+    MIF_Scheduler_Impl ();
+    virtual int init (int argc, ACE_TCHAR* argv[]);
+    virtual int fini (void);
+    static void init_svcs (void);
 
   private:
     virtual Priority_t schedule_i (guid_t, const QoSDescriptor&);
   };
 }
+
+//could not use SVC declare macros here because of Kokyu namespace
+//need to revisit later
+extern ACE_Static_Svc_Descriptor ace_svc_desc_MIF_Scheduler_Impl;
+
+ACE_FACTORY_DECLARE (Kokyu, MIF_Scheduler_Impl)
 
 #if defined (__ACE_INLINE__)
 //#include "DSRT_Schedulers.i"

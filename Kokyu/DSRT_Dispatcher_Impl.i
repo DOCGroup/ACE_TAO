@@ -2,6 +2,7 @@
 
 namespace Kokyu
 {
+
 ACE_INLINE
 DSRT_Dispatcher_Impl::~DSRT_Dispatcher_Impl ()
 {
