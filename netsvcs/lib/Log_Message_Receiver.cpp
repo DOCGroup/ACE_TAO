@@ -19,7 +19,9 @@ Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (char const *hostname,
     ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, lock_);
 #endif /* ACE_HAS_THREADS */
 
-  record.print (hostname, 0, stderr);
+  record.print (hostname,
+                ACE_Log_Msg::instance ()->flags (),
+                stderr);
 }
 
 template<ACE_SYNCH_DECL> void
@@ -33,7 +35,9 @@ Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_output (char const *hostname,
       static ACE_SYNCH_MUTEX_T lock_;
       ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, lock_);
 #endif /* ACE_HAS_THREADS */
-      record.print (hostname, 0, *outputfile);
+      record.print (hostname,
+                    ACE_Log_Msg::instance ()->flags (),
+                    *outputfile);
     }
 }
 
@@ -98,7 +102,9 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (char const *hostname,
 						    ACE_Log_Record &record)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_));
-  record.print (hostname, 0, stderr);
+  record.print (hostname,
+                ACE_Log_Msg::instance ()->flags (),
+                stderr);
 }
 
 template<ACE_SYNCH_DECL> void
@@ -109,7 +115,9 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (char const *hostname,
   if (outputfile != 0)
     {
       ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_));
-      record.print (hostname, 0, *outputfile);
+      record.print (hostname,
+                    ACE_Log_Msg::instance ()->flags (),
+                    *outputfile);
     }
 }
 
