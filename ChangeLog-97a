@@ -1,3 +1,10 @@
+Wed Apr 23 22:56:57 1997  Sumedh Mungee <sumedh@cs.wustl.edu>
+
+        * Fixed apps/JAWS/client/* warnings due to size_t
+        * Fixed apps/JAWS/client/Blob_Handler error by passing
+          pointer to base class ACE_Blob_Handler instead
+          of pointing to ACE_Blob_Reader, in call to connect
+
 Wed Apr 23 20:57:35 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/OS.i and ace/OS.h: added methods for getpwnam and
