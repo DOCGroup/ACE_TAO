@@ -372,6 +372,113 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (const ACE_Map_Itera
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Const_Iterator_Base (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm)
+  : map_man_ (&mm),
+    next_ (this->map_man_->occupied_list_id ())
+{
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) const
+{
+  if (this->next_ != this->map_man_->occupied_list_id ())
+    {
+      mm = &this->map_man_->search_structure_[this->next_];
+      return 1;
+    }
+  else
+    return 0;
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
+{
+  return this->next_ == this->map_man_->occupied_list_id ();
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
+{
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+  while (1)
+    {
+      // Go to the next item in the list.
+      this->next_ = this->map_man_->search_structure_[this->next_].next ();
+
+      // Stop if we reach the end.
+      if (this->done ())
+        break;
+
+      // Break if we find a non-free slot.
+      if (!this->map_man_->search_structure_[this->next_].free_)
+        {
+          break;
+        }
+    }
+
+#else
+
+  this->next_ = this->map_man_->search_structure_[this->next_].next ();
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
+  return this->next_ != this->map_man_->occupied_list_id ();
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
+{
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+  while (1)
+    {
+      // Go to the prev item in the list.
+      this->next_ = this->map_man_->search_structure_[this->next_].prev ();
+
+      // Stop if we reach the end.
+      if (this->done ())
+        break;
+
+      // Break if we find a non-free slot.
+      if (!this->map_man_->search_structure_[this->next_].free_)
+        {
+          break;
+        }
+    }
+
+#else
+
+  this->next_ = this->map_man_->search_structure_[this->next_].prev ();
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
+  return this->next_ != this->map_man_->occupied_list_id ();
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
+const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void) const
+{
+  return *this->map_man_;
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
+{
+  return (this->map_man_ == rhs.map_man_ &&
+          this->next_ == rhs.next_);
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator!= (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
+{
+  return !this->operator== (rhs);
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                                               int pass_end)
   : ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm)
@@ -445,6 +552,84 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
+  this->reverse_i ();
+  return retv;
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Const_Iterator (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
+                                                                          int pass_end)
+  : ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm)
+{
+  if (!pass_end)
+    {
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+      // Start here.
+      this->next_ = this->map_man_->occupied_list_.next ();
+
+      while (1)
+        {
+          // Stop if we reach the end.
+          if (this->done ())
+            break;
+
+          // Break if we find a non-free slot.
+          if (!this->map_man_->search_structure_[this->next_].free_)
+            {
+              break;
+            }
+
+          // Go to the next item in the list.
+          this->next_ = this->map_man_->search_structure_[this->next_].next ();
+        }
+
+#else
+
+      this->next_ = this->map_man_->occupied_list_.next ();
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
+    }
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
+{
+  return this->forward_i ();
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
+{
+  this->forward_i ();
+  return *this;
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
+{
+  ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
+  this->forward_i ();
+  return retv;
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
+{
+  this->reverse_i ();
+  return *this;
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
+{
+  ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->reverse_i ();
   return retv;
 }
