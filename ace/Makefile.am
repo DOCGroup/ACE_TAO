@@ -10,7 +10,7 @@
 
 ## The number in AUTOMAKE_OPTIONS is the minimum required version automake
 ## needed to process this file.
-AUTOMAKE_OPTIONS = 1.5
+AUTOMAKE_OPTIONS = 1.4
 
 ## Disable building of CLASSIX library for now.
 ## SUBDIRS = CLASSIX

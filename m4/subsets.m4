@@ -385,6 +385,9 @@ AM_CONDITIONAL(BUILD_STREAMS_FILES,
 AM_CONDITIONAL(BUILD_MEMORY_FILES,
                test X$ace_user_enable_lib_memory = Xyes)
 
+AM_CONDITIONAL(BUILD_TIMER_FILES,
+		test X$ace_user_enable_lib_timer = Xyes)
+
 AM_CONDITIONAL(BUILD_TOKEN_FILES,
                test X$ace_user_enable_lib_token = Xyes)
 
