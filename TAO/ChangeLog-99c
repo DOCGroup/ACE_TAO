@@ -1,9 +1,15 @@
+Tue Jun 08 15:12:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Loader/Servant_Activator.cpp (ServantActivator_i):
+	  Fixed "ANSI C++ forbids casting between pointers to functions
+	  and objects" warning.  Thanks to David for pointing this out.
+
 Tue Jun  8 15:15:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/param_test_i.h:
         * TAO/tests/Param_Test/param_test_i.cpp:
 	* TAO/tests/NestedUpcall/MT_Client_Test/client.h:
-	  Moved class member ORB_var orb_ up the list so 
+	  Moved class member ORB_var orb_ up the list so
 	  it will get destroyed after other _vars.
 
 	* tao/DynArray_i.h:
@@ -24,19 +30,19 @@ Tue Jun  8 15:15:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Jun  8 15:09:35 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Callback_Quoter/Consumer_i.h (class Consumer): 
-	* examples/Callback_Quoter/Consumer_Handler.h (class Consumer_Handler): 
+	* examples/Callback_Quoter/Consumer_i.h (class Consumer):
+	* examples/Callback_Quoter/Consumer_Handler.h (class Consumer_Handler):
 	* examples/Callback_Quoter/Supplier_i.h (class Supplier):
-	  
+
 	  Moved the CORBA::ORB_var before the other vars in the member
 	  declaration so that it gets destructed last.
 
 Tue Jun  8 15:03:02 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/client.h:	
+	* orbsvcs/tests/Property/client.h:
 	* orbsvcs/tests/Property/client.cpp:
-	
-	 Fixed the SunCC5.0 warnings. 
+
+	 Fixed the SunCC5.0 warnings.
 
 Tue Jun 08 13:36:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
