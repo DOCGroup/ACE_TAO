@@ -99,12 +99,10 @@ public:
   unsigned long n_dims (void);
 
   AST_Expression **dims (void);
-
   void set_dims (AST_Expression **,
                  unsigned long);
 
   AST_Type *base_type (void);
-
   void set_base_type (AST_Type *nbt);
 
   // Narrowing.

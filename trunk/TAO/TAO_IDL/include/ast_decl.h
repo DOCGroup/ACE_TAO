@@ -166,25 +166,20 @@ public:
   // Data Accessors.
 
   idl_bool imported (void);
-
   void set_imported (idl_bool is_it);
 
   idl_bool in_main_file (void);
-
   void set_in_main_file (idl_bool is_it);
 
   UTL_Scope *defined_in (void);
-
   void set_defined_in (UTL_Scope *);
 
   NodeType node_type (void);
 
   long line (void);
-
   void set_line (long l);
 
   UTL_String *file_name (void);
-
   void set_file_name (UTL_String *s);
 
   UTL_ScopedName *name (void);
@@ -242,13 +237,9 @@ public:
   //
 
   Identifier *original_local_name (void);
-  // Get.
-
   void original_local_name (Identifier *);
-  // Set.
 
   idl_bool added (void);
-
   void set_added (idl_bool is_it);
 
   // Narrowing.
@@ -278,6 +269,10 @@ public:
   UTL_ScopedName *last_referenced_as (void) const;
   void last_referenced_as (UTL_ScopedName *n);
 
+  // Useful for GIOP to know if a wstring is being marshaled.
+  virtual int contains_wstring (void);
+  void contains_wstring (int val);
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor.
@@ -285,6 +280,10 @@ protected:
   char *repoID_;
   // Repository ID.
 
+  int contains_wstring_;
+  // If we are a scope, do we contain a wstring at some level?
+
+protected:
   void compute_repoID (void);
   // Computes the repoID.
 

@@ -157,6 +157,12 @@ AST_Field::visibility (void)
   return this->pd_visibility;
 }
 
+int
+AST_Field::contains_wstring (void)
+{
+  return this->pd_field_type->contains_wstring ();
+}
+
 // Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Field, AST_Decl)
 IMPL_NARROW_FROM_DECL(AST_Field)

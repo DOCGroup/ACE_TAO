@@ -80,6 +80,7 @@ AST_Enum::AST_Enum (void)
         : pd_enum_counter (0),
     member_count_ (-1)
 {
+  this->size_type (AST_Type::FIXED);
 }
 
 AST_Enum::AST_Enum (UTL_ScopedName *n,
@@ -93,6 +94,7 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
          pd_enum_counter (0),
    member_count_ (-1)
 {
+  this->size_type (AST_Type::FIXED);
 }
 
 AST_Enum::~AST_Enum (void)

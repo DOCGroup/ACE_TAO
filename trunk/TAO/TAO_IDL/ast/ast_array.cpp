@@ -219,8 +219,8 @@ void
 AST_Array::set_dims (AST_Expression **ds,
                      unsigned long nds)
 {
-    this->pd_dims = ds;
-    this->pd_n_dims = nds;
+  this->pd_dims = ds;
+  this->pd_n_dims = nds;
 }
 
 // Narrowing methods.

@@ -106,13 +106,13 @@ public:
   // Visit valuetype_fwd
 
   virtual int visit_component (AST_Component *node) = 0;
-  // Visit valuetype.
+  // Visit component.
 
   virtual int visit_home (AST_Home *node) = 0;
-  // Visit valuetype.
+  // Visit home.
 
   virtual int visit_component_fwd (AST_ComponentFwd *node) = 0;
-  // Visit valuetype_fwd
+  // Visit component_fwd
 
   virtual int visit_factory (AST_Factory *node) = 0;
   // Visit a OBV factory construct.

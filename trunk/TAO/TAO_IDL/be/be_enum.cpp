@@ -28,7 +28,6 @@ ACE_RCSID (be,
 
 be_enum::be_enum (void)
 {
-  this->size_type (AST_Type::FIXED);
 }
 
 be_enum::be_enum (UTL_ScopedName *n,
@@ -43,7 +42,6 @@ be_enum::be_enum (UTL_ScopedName *n,
     COMMON_Base (local,
                  abstract)
 {
-  this->size_type (AST_Type::FIXED);
 }
 
 void

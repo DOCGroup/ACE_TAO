@@ -75,6 +75,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 #include "ast_interface.h"
+#include "ast_array.h"
+#include "ast_field.h"
+#include "ast_structure.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_typedef.h"
 #include "ast_visitor.h"
 #include "global_extern.h"
 #include "nr_extern.h"
@@ -114,6 +120,7 @@ COMMON_Base::destroy (void)
 
 AST_Decl::AST_Decl (void)
   : repoID_ (0),
+    contains_wstring_ (-1),
     pd_imported (I_FALSE),
     pd_in_main_file (I_FALSE),
     pd_defined_in (0),
@@ -137,6 +144,7 @@ AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     idl_bool anonymous)
   : repoID_ (0),
+    contains_wstring_ (-1),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ().depth () > 0
@@ -1206,6 +1214,72 @@ void
 AST_Decl::last_referenced_as (UTL_ScopedName *n)
 {
   this->last_referenced_as_ = n;
+}
+
+// Container types will override this.
+int 
+AST_Decl::contains_wstring (void)
+{
+  if (this->contains_wstring_ == -1)
+    {
+      switch (this->node_type ())
+        {
+          case AST_Decl::NT_array:
+            {
+              AST_Array *a = AST_Array::narrow_from_decl (this);
+              this->contains_wstring_ = 
+                a->base_type ()->contains_wstring ();
+              break;
+            }
+          case AST_Decl::NT_except:
+          case AST_Decl::NT_struct:
+          case AST_Decl::NT_union:
+            {
+              AST_Structure *s = AST_Structure::narrow_from_decl (this);
+              this->contains_wstring_ = 
+                s->contains_wstring ();
+              break;
+            }
+          case AST_Decl::NT_sequence:
+            {
+              AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
+              this->contains_wstring_ = 
+                s->base_type ()->contains_wstring ();
+              break;
+            }
+          case AST_Decl::NT_attr:
+          case AST_Decl::NT_field:
+          case AST_Decl::NT_union_branch:
+            {
+              AST_Field *f = AST_Field::narrow_from_decl (this);
+              this->contains_wstring_ = 
+                f->field_type ()->contains_wstring ();
+              break;
+            }
+          case AST_Decl::NT_typedef:
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (this);
+              this->contains_wstring_ = 
+                td->primitive_base_type ()->contains_wstring ();
+              break;
+            }
+          case AST_Decl::NT_wstring:
+            this->contains_wstring_ = 1;
+            break;
+          default:
+            this->contains_wstring_ = 0;
+            break;
+        }
+    }
+
+  return this->contains_wstring_;
+}
+
+// Non-virtual - no need to override this one.
+void 
+AST_Decl::contains_wstring (int val)
+{
+  this->contains_wstring_ = val;
 }
 
 //Narrowing methods for AST_Decl.

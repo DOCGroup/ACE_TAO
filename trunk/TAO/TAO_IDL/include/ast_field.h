@@ -112,6 +112,9 @@ public:
 
   Visibility visibility (void);
 
+  // Are we or do we contain a wstring?
+  virtual int contains_wstring (void);
+
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Field, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Field);
