@@ -1,3 +1,9 @@
+Tue Dec  1 08:55:48 PST 1998  James Hu  <jxh@entera.com>
+
+        * ace/Memory_Pool.cpp:  Since type key_t might be something
+          other than int (e.g., a long), some additional code was needed
+          to support the sscanf.
+
 Tue Dec 01 10:49:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/Win32clerk.conf
