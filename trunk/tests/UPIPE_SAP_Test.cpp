@@ -151,31 +151,21 @@ main (int, char *[])
   ACE_UPIPE_Acceptor acc (addr);
 
   // Spawn a acceptor thread.
-  if (ACE_Thread::spawn (ACE_THR_FUNC (acceptor),
-                         (void *) &acc,
-                         THR_NEW_LWP,
-                         0,
-                         &thr_handle_acceptor) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (acceptor),
+                                              (void *) &acc,
+                                              THR_NEW_LWP,
+                                              0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   // Spawn a connector thread.
-  if (ACE_Thread::spawn (ACE_THR_FUNC (connector),
-                         (void *) 0,
-                         THR_NEW_LWP,
-                         0,
-                         &thr_handle_connector) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (connector),
+                                              (void *) 0,
+                                              THR_NEW_LWP,
+                                              0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
-
-  // Wait for both the acceptor and connector threads to exit.
-  if (ACE_Thread::join (thr_handle_connector) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
-  else
-    ACE_DEBUG ((LM_DEBUG, "(%t) joined with connector thread\n"));
-  if (ACE_Thread::join (thr_handle_acceptor) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
-  else
-    ACE_DEBUG ((LM_DEBUG, "(%t) joined with acceptor thread\n"));
+  ACE_Thread_Manager::instance ()->wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%t) joined with acceptor thread\n"));
 
   // Close the acceptor
   acc.close ();
