@@ -1,9 +1,17 @@
+Thu Jan 15 14:39:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Config.rules:
+
+	  Fixed incorrect initialization of UTILITY_BUILD_RULES when
+	  UTILITY_ROOT is set. Thanks to Gary Duzan <gduzan@bbn.com> 
+	  for reporting this.
+
 Thu Jan 15 14:30:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* README: 
-	  
+	* README:
+
 	  Updated the file with information about CIDLC. Thanks to Gary
-	  Duzan <gduzan@bbn.com> for motivating this. 
+	  Duzan <gduzan@bbn.com> for motivating this.
 
 Wed Jan 14 18:50:00 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
@@ -32,7 +40,7 @@ Wed Jan 14 10:59:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/releasenotes/index.html:
 
-	  The actual document is placed here to be consistent with TAO. 
+	  The actual document is placed here to be consistent with TAO.
 
 	* docs/releasenotes.html:
 
@@ -48,7 +56,7 @@ Tue Jan 13 11:24:55 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Config.rules:
 
-	  Added 'default-if-not-set' value for UTILITY_BUILD_RULES to 
+	  Added 'default-if-not-set' value for UTILITY_BUILD_RULES to
 	  look into well-known location where RedHat and Debian packages
 	  are installed.
 
@@ -1092,7 +1100,7 @@ Mon Dec 22 15:35:19 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 Thu Dec 18 09:57:50 2003  Balachandran  <bala@dre.vanderbilt.edu>
 
         * CIAO version 0.3.6 released.
-	
+
 2003-12-17  Tao Lu  <lu@tango.dre.vanderbilt.edu>
 
 	* examples/Hello/step-by-step.html:
@@ -1287,7 +1295,7 @@ Fri Nov 28 13:58:58 2003  Tao Lu  <lu@dre.vanderbilt.edu>
           handcrafted examples from which I learned to program do CIAO
           programming. This example is meant to be used a step-by-step
           tutorial for CIAO.
-	
+
 Wed Nov 26 22:16:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:

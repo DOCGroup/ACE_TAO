@@ -9,6 +9,7 @@
 # only BOOST_ROOT is set then BOOST_LIB=$(BOOST_ROOT)/lib and
 # BOOST_INCLUDE=$(BOOST_ROOT)
 #
+
 BOOST_ROOT    ?=
 BOOST_LIB     ?=
 BOOST_INCLUDE ?=
@@ -16,7 +17,7 @@ BOOST_INCLUDE ?=
 
 UTILITY_ROOT        ?=
 UTILITY_INCLUDE     ?=
-UTILITY_BUILD_RULES ?=/usr/share/libutility-dev/BuildRules
+UTILITY_BUILD_RULES ?=
 
 
 # You normally would not want to edit anything below.
@@ -27,11 +28,11 @@ UTILITY_BUILD_RULES ?=/usr/share/libutility-dev/BuildRules
 ifneq ($(strip $(BOOST_ROOT)),)
 
   ifeq ($(strip $(BOOST_LIB)),)
-    BOOST_LIB = $(BOOST_ROOT)/lib
+    BOOST_LIB := $(BOOST_ROOT)/lib
   endif
 
   ifeq ($(strip $(BOOST_INCLUDE)),)
-    BOOST_INCLUDE = $(BOOST_ROOT)
+    BOOST_INCLUDE := $(BOOST_ROOT)
   endif
 
 endif
@@ -54,17 +55,22 @@ ifneq ($(strip $(UTILITY_ROOT)),)
 
   ifeq ($(strip $(UTILITY_INCLUDE)),)
 
-    UTILITY_INCLUDE = $(UTILITY_ROOT)
+    UTILITY_INCLUDE := $(UTILITY_ROOT)
 
   endif
 
   ifeq ($(strip $(UTILITY_BUILD_RULES)),)
 
-    UTILITY_BUILD_RULES = $(UTILITY_ROOT)/BuildRules
+    UTILITY_BUILD_RULES := $(UTILITY_ROOT)/BuildRules
 
   endif
 
 endif
+
+ifeq ($(strip $(UTILITY_BUILD_RULES)),)
+  UTILITY_BUILD_RULES :=/usr/share/libutility-dev/BuildRules
+endif
+
 
 # $(warning "utility inc : $(UTILITY_INCLUDE)")
 # $(warning "utility bld : $(UTILITY_BUILD_RULES)")
