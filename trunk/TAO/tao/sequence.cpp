@@ -106,12 +106,20 @@ operator= (const TAO_Unbounded_String_Sequence &seq)
 	}
       if (this->maximum_ < seq.maximum_)
 	{
+          // free the older buffer
+          TAO_Unbounded_String_Sequence::freebuf (tmp);
+          // set new max, length
+          this->maximum_ = seq.maximum_;
+          this->length_ = seq.length_;
 	  this->buffer_ =
 	    TAO_Unbounded_String_Sequence::allocbuf (seq.maximum_);
 	}
     }
   else
     {
+      this->maximum_ = seq.maximum_;
+      this->length_ = seq.length_;
+      this->release_ = 1;
       this->buffer_ =
 	TAO_Unbounded_String_Sequence::allocbuf (this->maximum_);
     }
