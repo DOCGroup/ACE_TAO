@@ -2426,7 +2426,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
 
   if (is_rh_base)
     {
-      *os << "ACE_NESTED_CLASS (POA_Messsaging, ReplyHandler) (rhs)";
+      *os << "ACE_NESTED_CLASS (POA_Messaging, ReplyHandler) (rhs)";
     }
   else if (base->is_nested ())
     {
