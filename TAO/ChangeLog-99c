@@ -1,3 +1,11 @@
+Fri Aug 27 15:05:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	  Had to unconcatenate some code generating stream
+	  output statements to get the buffer to flush.
+	  Thanks to Michael Kircher and Darrell Brunsch for
+	  pointing out the problem.
+
 Fri Aug 27 09:04:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp (compute_scheduling):
