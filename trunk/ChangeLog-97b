@@ -1,3 +1,7 @@
+Sat Nov 15 17:31:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * Ran "make depend" on all of ACE.
+ 
 Sat Nov 15 15:55:52 1997  Steve Huston  <shuston@riverace.com>
 
 	* tests/Priority_Reactor_Test.cpp: Removed the writer->peer().close()
