@@ -1,3 +1,11 @@
+Fri Oct 13 18:43:24 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/MM_Shared_Memory_Test.cpp: Changed SYNCHRONIZER ctor for
+          ACE_SV_Semaphore_Simple case to specify
+          ACE_SV_Semaphore_Simple::ACE_CREATE, not ACE_SV_Semaphore_Complex::
+          ACE_CREATE. Else it got compile failures on Solaris, Sun CC,
+          in PACE build (why in just PACE build? Dunno...)
+
 Fri Oct 13 13:57:40 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Process_Manager.h :
