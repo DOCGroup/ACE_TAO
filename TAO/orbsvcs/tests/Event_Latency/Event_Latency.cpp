@@ -903,9 +903,11 @@ main (int argc, char *argv [])
                                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
 #else
-      TAO_EC_Basic_Factory ec_factory (root_poa.in ());
+      TAO_EC_Basic_Factory ec_factory;
 
-      TAO_EC_Event_Channel ec_impl  (&ec_factory);
+      TAO_EC_Event_Channel ec_impl  (root_poa.in (),
+                                     root_poa.in (),
+                                     &ec_factory);
       ec_impl.activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 

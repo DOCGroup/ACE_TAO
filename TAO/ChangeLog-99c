@@ -1,3 +1,30 @@
+Fri Apr 23 11:12:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	  Cleaned up EC_Event_Channel initialization: now it takes the POA 
+	  for the consumer and suppliers in the constructor instead of
+	  using the factory.  This is was required since not all factories 
+	  can be initialized with the right POAs.
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	* orbsvcs/tests/EC_Mcast/svc.conf:
+	  This test also uses the default factory now.
+
 Fri Apr 23 10:15:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Factory.h:

@@ -10,7 +10,6 @@
 #include "orbsvcs/Time_Utilities.h"
 
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Basic_Factory.h"
 
 #include "EC_Mcast.h"
 
@@ -118,9 +117,8 @@ ECM_Driver::run (int argc, char* argv[])
             }
         }
 
-      TAO_EC_Basic_Factory ec_factory (root_poa.in ());
-
-      TAO_EC_Event_Channel ec_impl (&ec_factory);
+      TAO_EC_Event_Channel ec_impl (root_poa.in (),
+                                    root_poa.in ());
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =

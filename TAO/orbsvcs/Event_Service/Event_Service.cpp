@@ -133,11 +133,10 @@ Event_Service::run (int argc, char* argv[])
           {
             TAO_EC_Event_Channel* ec;
             ACE_NEW_RETURN (ec,
-                            TAO_EC_Event_Channel (),
+                            TAO_EC_Event_Channel (root_poa.in (),
+                                                  root_poa.in ()),
                             1);
             this->ec_impl_ = ec;
-            ec->supplier_poa (root_poa.in ());
-            ec->consumer_poa (root_poa.in ());
             ec->activate (ACE_TRY_ENV);
             ACE_TRY_CHECK;
           }
