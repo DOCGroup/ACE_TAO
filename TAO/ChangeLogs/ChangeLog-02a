@@ -1,102 +1,107 @@
+Wed Jul 12 09:37:53 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
+
+        * tao/IORManipulation.cpp: added #include of tao/ORB_Core.h
+          to allow compilation on AIX 4.3 with new Visual Age C++ 5.0.
+
 Tue Jul 11 20:42:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
 
-	  Added cosmetic close paren in ACE_DEBUG statement.
+          Added cosmetic close paren in ACE_DEBUG statement.
 
 Tue Jul 11 19:39:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.h:
-	* tao/Typecode.cpp:
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
 
-	  The Typecode functions member_type, member_name, and
-	  member_label, when called on a union typecode, would
-	  try to acquire the private state's lock twice (the 
-	  second time when calling discriminator_type from within 
-	  a critical section), causing these functions to hang
-	  on all Unix platforms. The locking code was actually
-	  in the wrapped function private_discriminator_type, so
-	  a doubly wrapped function private_discriminator_type_i
-	  was added that can also be called internally. Also
-	  made many cosmetic changes.
+          The Typecode functions member_type, member_name, and
+          member_label, when called on a union typecode, would
+          try to acquire the private state's lock twice (the
+          second time when calling discriminator_type from within
+          a critical section), causing these functions to hang
+          on all Unix platforms. The locking code was actually
+          in the wrapped function private_discriminator_type, so
+          a doubly wrapped function private_discriminator_type_i
+          was added that can also be called internally. Also
+          made many cosmetic changes.
 
 Tue Jul 11 14:51:13 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
-	* orbsvcs/orbsvcs/*.bor:
-	* tao/Makefile.bor:
-	  Added support for 'make install'.
+        * orbsvcs/orbsvcs/*.bor:
+        * tao/Makefile.bor:
+          Added support for 'make install'.
 
-	* orbsvcs/IFR_Service/*.bor:
-	  Added makefiles for the interface repository service.
+        * orbsvcs/IFR_Service/*.bor:
+          Added makefiles for the interface repository service.
 
 Tue Jul 11 13:39:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union.cpp:
 
-	  Modified compute_default_index(). It was based on the
-	  label count, but TAO's class Typecode bases its index on
-	  a member count, not a label count, so unions with
-	  multiple case labels were getting typecodes generated
-	  with the default index set incorrectly.
+          Modified compute_default_index(). It was based on the
+          label count, but TAO's class Typecode bases its index on
+          a member count, not a label count, so unions with
+          multiple case labels were getting typecodes generated
+          with the default index set incorrectly.
 
 Tue Jul 11 13:18:42 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_T.h:
-	  Disabled "inheritence via dominance" warnings in Win NT builds.
+        * orbsvcs/orbsvcs/Trader/Trader_T.h:
+          Disabled "inheritence via dominance" warnings in Win NT builds.
 
 Tue Jul 11 13:08:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
 
-	  Added link inlcude path for the release version. Thanks
-	  to Angelo for pointing this out.
+          Added link inlcude path for the release version. Thanks
+          to Angelo for pointing this out.
 
 Tue Jul 11 11:51:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/include/ast_module.h:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/include/ast_module.h:
 
-	  Added new member to store all declarations from previous
-	  openings of the module, as well as searching and administrating
-	  functions.
+          Added new member to store all declarations from previous
+          openings of the module, as well as searching and administrating
+          functions.
 
-	* TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_generator.cpp:
 
-	  Calls the administrating function at create time, and adds the
-	  declarations from all previous openings.
+          Calls the administrating function at create time, and adds the
+          declarations from all previous openings.
 
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  If all else fails, the local scope lookup function now checks if
-	  the scope is a module. If so, it calls the module's searching
-	  function to see if the identifier can be found in a previous
- 	  opening's declaration.
+          If all else fails, the local scope lookup function now checks if
+          the scope is a module. If so, it calls the module's searching
+          function to see if the identifier can be found in a previous
+          opening's declaration.
 
-	  The above fix was prompted by an IDL example sent in by
-	  Richard Reitmeyer <richard@hades.verecomm.com> and my
-	  frustration with trying to handle all use cases of reopened
-	  modules by using existing IDL compiler data structures.
+          The above fix was prompted by an IDL example sent in by
+          Richard Reitmeyer <richard@hades.verecomm.com> and my
+          frustration with trying to handle all use cases of reopened
+          modules by using existing IDL compiler data structures.
 
-	* tests/IDL_Test/reopened_modules.idl:
+        * tests/IDL_Test/reopened_modules.idl:
 
-	  Added two new examples that now work with the above fix.
+          Added two new examples that now work with the above fix.
 
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
 
-	  Added #if defined (_FOO__CI_) guards to the object constructor
-	  from stub, since it is generated at the forward declaration and
-	  at the definition.
+          Added #if defined (_FOO__CI_) guards to the object constructor
+          from stub, since it is generated at the forward declaration and
+          at the definition.
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  In _unchecked_narrow(), when the proxy is created with
-	  ACE_NEW_RETURN, changed the proxy constructor to use the
-	  fully scoped class name. In certain cases of reopened modules,
-	  some compilers were having problems with the name that the
-	  nested_type_name() function decided to put there. Strangely,
-	  there was no problem with the similarly generated <foo>::_nil()
-	  return value immediately following, so it was left alone.
+          In _unchecked_narrow(), when the proxy is created with
+          ACE_NEW_RETURN, changed the proxy constructor to use the
+          fully scoped class name. In certain cases of reopened modules,
+          some compilers were having problems with the name that the
+          nested_type_name() function decided to put there. Strangely,
+          there was no problem with the similarly generated <foo>::_nil()
+          return value immediately following, so it was left alone.
 
 Mon Jul 10 21:11:19 2000  Marina Spivak <marina@cs.wustl.edu>
 
@@ -104,42 +109,42 @@ Mon Jul 10 21:11:19 2000  Marina Spivak <marina@cs.wustl.edu>
 
 Mon Jul 10 18:59:49 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security.idl (SecurityORBServiceReady):
+        * orbsvcs/orbsvcs/Security.idl (SecurityORBServiceReady):
 
-	  Corrected typo in "SecurityORBServiceRaady."
+          Corrected typo in "SecurityORBServiceRaady."
 
-	* orbsvcs/orbsvcs/SSLIOP.dsp:
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
 
-	  Added missing TAO_Security{d}.lib to list of libraries to link
-	  in SSLIOP{d}.lib against.  SSLIOP depends on it.
+          Added missing TAO_Security{d}.lib to list of libraries to link
+          in SSLIOP{d}.lib against.  SSLIOP depends on it.
 
 Mon Jul 10 17:28:55 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security.dsp:
-	* orbsvcs/orbsvcs/SSLIOP.dsp:
+        * orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
 
-	  Added MSVC++ project files for TAO's Security Service library
-	  and SSLIOP pluggable protocol.
+          Added MSVC++ project files for TAO's Security Service library
+          and SSLIOP pluggable protocol.
 
-	* examples/Content_Server/AMI_Iterator/client.dsp:
-	* examples/Content_Server/AMI_Iterator/server.dsp:
-	* examples/Content_Server/AMI_Observer/client.dsp:
-	* examples/Content_Server/AMI_Observer/server.dsp:
+        * examples/Content_Server/AMI_Iterator/client.dsp:
+        * examples/Content_Server/AMI_Iterator/server.dsp:
+        * examples/Content_Server/AMI_Observer/client.dsp:
+        * examples/Content_Server/AMI_Observer/server.dsp:
 
-	  Added missing "-GC" TAO IDL compiler flag option to the Release
-	  configuration.  This causes AMI stubs to be generated.
+          Added missing "-GC" TAO IDL compiler flag option to the Release
+          configuration.  This causes AMI stubs to be generated.
 
 Mon Jul 10 13:10:21 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input):
 
-	  Updated this method to match the corresponding one in TAO's
-	  other pluggable protocols.  This fixes a compile-time error.
+          Updated this method to match the corresponding one in TAO's
+          other pluggable protocols.  This fixes a compile-time error.
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/Makefile.Security:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Jul 10 12:01:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -147,23 +152,23 @@ Mon Jul 10 12:01:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sun Jul 09 21:41:01 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/SMI_Iterator/client.dsp:
-	* examples/Content_Server/SMI_Iterator/server.dsp:
-	* examples/Content_Server/AMI_Iterator/client.dsp:
-	* examples/Content_Server/AMI_Iterator/server.dsp:
-	* examples/Content_Server/AMI_Observer/client.dsp:
-	* examples/Content_Server/AMI_Observer/server.dsp:
+        * examples/Content_Server/SMI_Iterator/client.dsp:
+        * examples/Content_Server/SMI_Iterator/server.dsp:
+        * examples/Content_Server/AMI_Iterator/client.dsp:
+        * examples/Content_Server/AMI_Iterator/server.dsp:
+        * examples/Content_Server/AMI_Observer/client.dsp:
+        * examples/Content_Server/AMI_Observer/server.dsp:
 
-	  Fixed preprocessor include path and library path in the
-	  "Release" configuration.  Removed extraneous directories from
-	  both of these paths in all configurations.
+          Fixed preprocessor include path and library path in the
+          "Release" configuration.  Removed extraneous directories from
+          both of these paths in all configurations.
 
 Sun Jul 09 19:31:47 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * test/Exposed_Policies/Server.dsp:
         * test/Exposed_Policies/Client.dsp:
 
-	  Updated project setting to fix link time errors.
+          Updated project setting to fix link time errors.
 
 Sun Jul 09 15:51:46 2000  David L. Levine  <levine@cs.wustl.edu>
 
