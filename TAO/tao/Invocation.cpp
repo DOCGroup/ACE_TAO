@@ -443,8 +443,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
             );
         }
       this->transport_->close_connection ();
-      TAO_Transport::release (this->transport_);
-      this->transport_ = 0;
 
       this->endpoint_->reset_hint ();
 
@@ -474,8 +472,6 @@ TAO_GIOP_Invocation::close_connection (void)
 
   this->transport_->close_connection ();
   // this->transport_->idle ();
-  TAO_Transport::release (this->transport_);
-  this->transport_ = 0;
 
   this->endpoint_->reset_hint ();
   this->endpoint_ = 0;
