@@ -9,44 +9,40 @@
 
 int main (int argc, char* argv[])
 {
-  const char* key = 0;
+  const char* host = 0;
   int nsamples = 10000;
   int c;
-  
-  ACE_Get_Opt getopt (argc, argv, "k:n:");
+
+  ACE_Get_Opt getopt (argc, argv, "h:i:");
 
   while ((c = getopt ()) != -1)
     {
       switch ((char) c)
         {
-        case 'k':
-          key = getopt.optarg;
+        case 'h':
+          host = getopt.optarg;
           break;
 
-        case 'n':
+        case 'i':
           nsamples = ACE_OS::atoi (getopt.optarg);
           break;
         }
     }
 
-  if (key == 0)
+  if (host == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Usage: client <server key>\n"));
+      ACE_DEBUG ((LM_DEBUG, "Usage: client -h host -i iterations\n"));
       return 1;
     }
 
   CLIENT *cl =
-    clnt_create (key, PINGPROG, PINGVERS, "tcp");
+    clnt_create (host, PINGPROG, PINGVERS, "tcp");
 
   if (cl == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Cannot create client handle\n"));
       return 1;
     }
-
-  ACE_DEBUG ((LM_DEBUG, "Calibrating high resolution timer . . ."));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, " done\n"));
 
   ACE_Throughput_Stats throughput;
 
@@ -64,6 +60,10 @@ int main (int argc, char* argv[])
                          end - start);
 
     }
+
+  ACE_DEBUG ((LM_DEBUG, "Calibrating high resolution timer . . ."));
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_DEBUG ((LM_DEBUG, " done\n"));
 
   throughput.dump_results ("Client", gsf);
 
