@@ -1155,12 +1155,19 @@ sub check_for_non_bool_operators ()
                     next;
                   }
 
-                if ($found_bool == 0
-                    && /(?<![^\w]bool)(\s+|s+\w+::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
+		if ($found_return_type == 0 && /((^\w+)|(\s+\w+))\s*$/)
+		  {
+		    $found_return_type = 1;
+		    next;
+		  }
+
+                if ($found_return_type == 1 && $found_bool == 0
+                    && /(?<![^\w]bool)(\s+|\w+::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
                     && !/^\s*return\s+/) {
                     print_error ("non-bool return type for operator in $file on line $line");
                 }
 
+		$found_return_type = 0;
                 $found_bool = 0;
             }
             close (FILE);
