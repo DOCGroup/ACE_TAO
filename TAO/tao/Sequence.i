@@ -186,15 +186,6 @@ TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
 {
 }
 
-ACE_INLINE TAO_SeqElem_String_Manager
-TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  char **const tmp =
-    ACE_reinterpret_cast (char **ACE_CAST_CONST, this->buffer_);
-  return TAO_SeqElem_String_Manager (tmp + index, this->release_);
-}
-
 // ****************************************************************
 
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
