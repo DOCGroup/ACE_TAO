@@ -17,7 +17,6 @@ Implementation: A C++ Supplier pushes events containing a
             consumer extracts the data of the structs and dispatches
             it to various display components.
 
-
 Requirements: 
            C++ compiler, TAO environment, Visibroker 3.2 for JAVA
 
@@ -81,9 +80,6 @@ Compiling:
 
        make
 
-
-
-
     DOVE Browser: in directory $TAO/orbsvcs/tests/Simulator/Sim_Display/.)
        cp ../NavWeap.idl .
        cp $TAO_ROOT/orbsvcs/orbsvcs/CosNaming.idl .
@@ -100,7 +96,6 @@ Compiling:
 
        vbjc *.java
        
-
 Starting:
 
      Supplier:
