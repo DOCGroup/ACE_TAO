@@ -26,7 +26,9 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_ctype.h"
 #  include "ace/OS_NS_sys_time.h"
 
-#  include <limits>
+#  if !defined (ACE_HAS_WINCE)
+#    include /**/ <limits>
+#  endif
 #endif  /* ACE_LACKS_MKSTEMP */
 
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
@@ -621,8 +623,12 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // greatly slowing down this mkstemp() implementation.  It is more
   // practical to limit the search space to UTF-8 / ASCII characters
   // (i.e. 127 characters).
+#  if defined (ACE_HAS_WINCE)
+  static float const MAX_VAL = static_cast<float> (127);
+#else
   static float const MAX_VAL =
     static_cast<float> (std::numeric_limits<char>::max ());
+#endif /* ACE_HAS_WINCE */
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
   // MAX_VAL).  See Numerical Recipes in C: The Art of Scientific
