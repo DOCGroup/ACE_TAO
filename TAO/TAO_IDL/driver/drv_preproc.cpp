@@ -599,15 +599,13 @@ DRV_pre_proc (const char *myfile)
         }
 
       // ACE_DEBUG sends to stderr - we want stdout for this dump
-      // of the preprocessor output. This is basically the guts of
-      // the ACE_DEBUG macro with the ostream reset.
-      int ace_error = ACE_OS::last_error ();
+      // of the preprocessor output. So we modify the singleton that
+      // was created in this process. Since IDL_CF_ONLY_PREPROC causes
+      // an (almost) immediate exit below, we don't have to restore
+      // the singleton's default parameters.
       ACE_Log_Msg *out = ACE_Log_Msg::instance ();
-      out->conditional_set (__FILE__, 
-                            __LINE__, 
-                            0, 
-                            ace_error);
       out->msg_ostream (&cout);
+      out->clr_flags (ACE_Log_Msg::STDERR);
 
       while ((bytes = ACE_OS::fread (buffer, 
                                      sizeof (char), 
@@ -615,10 +613,10 @@ DRV_pre_proc (const char *myfile)
                                      preproc)) 
           != 0)
         {
-          buffer[bytes] = 0;  // Null char
+          buffer[bytes] = 0;
 
-          out->log (LM_DEBUG, 
-                    buffer);
+          ACE_DEBUG ((LM_DEBUG, 
+                      buffer));
         }
 
       ACE_OS::fclose (preproc);
