@@ -702,7 +702,7 @@ Task_Entry_Link::Task_Entry_Link (
   Task_Entry &caller,
   Task_Entry &called,
   CORBA::Long number_of_calls,
-  RtecScheduler::Dependency_Type dependency_type)
+  RtecScheduler::Dependency_Type_t dependency_type)
   : number_of_calls_ (number_of_calls)
   , caller_ (caller)
   , called_ (called)

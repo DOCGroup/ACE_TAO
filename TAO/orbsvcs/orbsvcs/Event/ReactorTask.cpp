@@ -51,7 +51,7 @@ ACE_ES_Reactor_Task::svc_hook(RtecScheduler::OS_Priority)
 }
 
 int
-ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
+ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period_t &period)
 {
   // Create a name for ourselves using the period.  The period is
   // in 100 ns units; first convert to usec by dividing by 10.

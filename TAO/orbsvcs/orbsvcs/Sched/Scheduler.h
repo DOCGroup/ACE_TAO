@@ -48,13 +48,13 @@ public:
 
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
-  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::Preemption_Priority_t Preemption_Priority;
   typedef RtecScheduler::OS_Priority OS_Thread_Priority;
-  typedef RtecScheduler::Preemption_Subpriority Sub_Priority;
+  typedef RtecScheduler::Preemption_Subpriority_t Sub_Priority;
   typedef RtecScheduler::RT_Info RT_Info;
   typedef RtecScheduler::Config_Info Config_Info;
   typedef RtecScheduler::Time Time;
-  typedef RtecScheduler::Dispatching_Type Dispatching_Type;
+  typedef RtecScheduler::Dispatching_Type_t Dispatching_Type;
   typedef RtecScheduler::Scheduling_Anomaly Scheduling_Anomaly;
 
   // Map some types to simplify re-use.
