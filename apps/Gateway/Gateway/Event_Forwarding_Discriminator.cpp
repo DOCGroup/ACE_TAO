@@ -30,7 +30,10 @@ Event_Forwarding_Discriminator::find (Event_Key event_addr,
 int
 Event_Forwarding_Discriminator::unbind (Event_Key event_addr)
 {
-  return this->map_.unbind (event_addr);
+  Consumer_Dispatch_Set *cds = 0;
+  int result = this->map_.unbind (event_addr, cds);
+  delete cds;
+  return result;
 }
 
 Event_Forwarding_Discriminator_Iterator::Event_Forwarding_Discriminator_Iterator 
