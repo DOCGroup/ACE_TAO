@@ -203,6 +203,17 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
+    bool
+    register_with_ns (const char * obj_name,
+                      CORBA::ORB_ptr orb,
+                      Components::CCMObject_ptr obj
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+    bool
+    unregister_with_ns (const char * obj_name,
+                        CORBA::ORB_ptr orb
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
     /*------- CIAO helper functions for building pub/sub service connection------/*
      *
      *---------------------------------------------------------------------------*/

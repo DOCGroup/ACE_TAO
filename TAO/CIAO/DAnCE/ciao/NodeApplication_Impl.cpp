@@ -4,6 +4,8 @@
 #include "ace/UUID.h"
 #include "string.h" // for debug
 
+#include "orbsvcs/CosNamingC.h"
+
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -283,7 +285,9 @@ CIAO::NodeApplication_Impl::install (
                                  "ComponentIOR") == 0)
                {
                  if (CIAO::debug_level () > 1)
-                   ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
+                  }
                  const char * path;
                  impl_infos[i].component_config[prop_len].value >>= path;
 
@@ -300,6 +304,16 @@ CIAO::NodeApplication_Impl::install (
                      ACE_TRY_THROW (CORBA::INTERNAL ());
                    }
 
+                 // Also register the component with the naming service
+                 ACE_DEBUG ((LM_DEBUG, "Register component with the naming service.\n"));
+                 if (! register_with_ns (impl_infos[i].component_instance_name.in (),
+                                         this->orb_.in (),
+                                         comp.in ()
+                                         ACE_ENV_ARG_PARAMETER))
+                   {
+                     ACE_DEBUG ((LM_DEBUG, "Failed to register with the naming service.\n"));
+                   }
+                 ACE_TRY_CHECK;
                }
            }
        }
@@ -489,6 +503,15 @@ CIAO::NodeApplication_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
     if (this->home_map_.find ( (*iter).ext_id_, home) != 0)
       ACE_THROW (CORBA::BAD_PARAM ());
 
+    // Unbind the component name from the name server.
+    if (! unregister_with_ns ((*iter).ext_id_.c_str (),
+                              this->orb_.in ()
+                              ACE_ENV_ARG_PARAMETER))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Failed to unregister with the naming service.\n"));
+      }
+    ACE_CHECK;
+
     // This will call ccm_passivate on the component executor.
     home->remove_component ((*iter).int_id_);
     ACE_CHECK;
@@ -508,6 +531,8 @@ CIAO::NodeApplication_Impl::remove_component (const char * comp_ins_name
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  ACE_DEBUG ((LM_DEBUG, "remove_component\n"));
+
   Components::CCMObject_ptr comp;
   Components::CCMHome_ptr home;
 
@@ -710,4 +735,90 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
     ACE_CHECK;
 
     ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection () completed!!!!\n"));
+}
+
+bool
+CIAO::NodeApplication_Impl::register_with_ns (const char * obj_name,
+                                              CORBA::ORB_ptr orb,
+                                              Components::CCMObject_ptr obj
+                                              ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+	  // Obtain the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          false);
+
+      CosNaming::NamingContextExt_var naming_context =
+        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+  
+      // Create a Naming Sequence
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (obj_name);
+      name[0].kind = CORBA::string_dup ("");
+
+      // Register with the Name Server
+      naming_context->bind (name, obj ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return true;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to register with naming service.");
+      return false;
+    }
+  ACE_ENDTRY;
+  return true;
+}
+
+bool
+CIAO::NodeApplication_Impl::unregister_with_ns (const char * obj_name,
+                                                CORBA::ORB_ptr orb
+                                                ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+	  // Obtain the naming service
+      CORBA::Object_var naming_obj =
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          false);
+
+      CosNaming::NamingContextExt_var naming_context =
+        CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+  
+      // Create a Naming Sequence
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup (obj_name);
+      name[0].kind = CORBA::string_dup ("");
+
+      // Register with the Name Server
+      ACE_DEBUG ((LM_DEBUG, "Unregister component with the name server : %s!\n", obj_name));
+      naming_context->unbind (name ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      return true;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NodeApplication: failed to unregister with naming service.");
+      return false;
+    }
+  ACE_ENDTRY;
+  return true;
 }
