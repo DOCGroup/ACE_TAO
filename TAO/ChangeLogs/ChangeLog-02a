@@ -1,3 +1,14 @@
+Mon May  7 11:37:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (fini): Deferred the deletion of the allocators
+	  till the  reactor registry is deleted. The RTCORBA has a
+	  configuration called Reactor-Per-Priority, which deletes the
+	  service handlers only when the registry is deleted. There seems
+	  to be a subtle problem in the way the handlers are de-registered
+	  from the reactor for this particular configuration. We will look
+	  at that problem next. This fix should get around that problem
+	  for the time being.
+
 Mon May  7 9:10:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
