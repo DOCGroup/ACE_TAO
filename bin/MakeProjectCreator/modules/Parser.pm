@@ -44,12 +44,25 @@ sub cd {
   my($self)   = shift;
   my($dir)    = shift;
   my($status) = chdir($dir);
+
   if ($status && $dir ne '.') {
-    if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
-      $cwd = $dir;
+    ## First strip out any /./ or ./ or /.
+    $dir =~ s/\/\.\//\//g;
+    $dir =~ s/^\.\///;
+    $dir =~ s/\/\.$//;
+
+    ## If the new directory contains a relative directory
+    ## then we just get the real working directory
+    if ($dir =~ /\.\./) {
+      $cwd = Cwd::getcwd();
     }
     else {
-      $cwd .= "/$dir";
+      if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
+        $cwd = $dir;
+      }
+      else {
+        $cwd .= "/$dir";
+      }
     }
   }
   return $status;
@@ -141,16 +154,16 @@ sub get_include_path {
 
 
 sub search_include_path {
-  my($self)  = shift; 
-  my($file)  = shift; 
-  my($found) = undef; 
+  my($self)  = shift;
+  my($file)  = shift;
+  my($found) = undef;
 
   foreach my $include (@{$self->{'include'}}, '.') {
     if (-r "$include/$file") {
       $found = "$include/$file";
       last;
     }
-  }  
+  }
   return $found;
 }
 
