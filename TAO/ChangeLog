@@ -1,3 +1,11 @@
+Thu Apr 22 12:53:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+
+          Made a change to include the right .cpp file.
+
+          This should fix some of the windows builds.
+
 Thu Apr 22 12:43:33 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         *
