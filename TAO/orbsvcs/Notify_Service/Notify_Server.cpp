@@ -12,41 +12,34 @@
 int
 main (int argc, char *argv[])
 {
-  // Init Factories
+  // Init factories.
   TAO_Notify_Default_CO_Factory::init_svc ();
   TAO_Notify_Default_POA_Factory::init_svc ();
   TAO_Notify_Default_Collection_Factory::init_svc ();
   TAO_Notify_Default_EMO_Factory::init_svc ();
 
-  TAO_Notify_Service service;
+  TAO_Notify_Service notify_service;
 
-  ACE_TRY_NEW_ENV
+  if (notify_service.init (argc, argv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Failed to start the Notification Service.\n"),
+                      1);
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      if (service.init (argc,
-                        argv,
-                        ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed to start the Notification Service.\n"),
-                          1);
-      ACE_TRY_CHECK;
-
-      if (service.run () == -1)
-        {
-          service.shutdown ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Failed to run the Notification Service.\n"),
-                            1);
-        }
+      notify_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      notify_service.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
     }
   ACE_CATCHANY
     {
+      notify_service.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Failed to start the Notification Service\n");
       return 1;
     }
   ACE_ENDTRY;
-
-  service.shutdown ();
+  ACE_CHECK_RETURN (1);
 
   return 0;
 }
