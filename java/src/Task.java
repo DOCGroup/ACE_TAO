@@ -102,13 +102,13 @@ public abstract class Task implements Runnable, EventHandler
    */
   public synchronized int activate (long flags, int nThreads, boolean forceActive)
     {
-       if (this.thrCount () > 0 && forceActive == false)
-	 return 1; // Already active.
-       this.flags_ = flags;
-
        // Create a Thread Manager if we do not already have one
        if (this.thrMgr_ == null)
 	 this.thrMgr_ = new ThreadManager ();
+
+       if (this.thrCount () > 0 && forceActive == false)
+	 return 1; // Already active.
+       this.flags_ = flags;
 
        if (ACE.BIT_ENABLED (flags, TaskFlags.THR_DAEMON))
 	 this.thrMgr_.spawnN (nThreads, this, true); // Spawn off all threads as daemon threads
