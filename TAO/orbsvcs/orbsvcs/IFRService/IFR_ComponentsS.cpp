@@ -1388,7 +1388,7 @@ void POA_CORBA::ComponentIR::EventDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1485,7 +1485,7 @@ void POA_CORBA::ComponentIR::EventDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -1629,7 +1629,7 @@ void POA_CORBA::ComponentIR::EventDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2156,7 +2156,7 @@ void POA_CORBA::ComponentIR::Container::create_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2313,7 +2313,7 @@ void POA_CORBA::ComponentIR::Container::create_home_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2495,7 +2495,7 @@ void POA_CORBA::ComponentIR::Container::create_event_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2620,7 +2620,7 @@ void POA_CORBA::ComponentIR::Container::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2717,7 +2717,7 @@ void POA_CORBA::ComponentIR::Container::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -2861,7 +2861,7 @@ void POA_CORBA::ComponentIR::Container::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3359,7 +3359,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3456,7 +3456,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -3600,7 +3600,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4108,7 +4108,7 @@ void POA_CORBA::ComponentIR::Repository::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4205,7 +4205,7 @@ void POA_CORBA::ComponentIR::Repository::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4349,7 +4349,7 @@ void POA_CORBA::ComponentIR::Repository::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4824,7 +4824,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_get_interface_type_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -4922,7 +4922,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_set_interface_type_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5029,7 +5029,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5126,7 +5126,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5270,7 +5270,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5739,7 +5739,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_interface_type_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5837,7 +5837,7 @@ void POA_CORBA::ComponentIR::UsesDef::_set_interface_type_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -5937,7 +5937,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_is_multiple_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6035,7 +6035,7 @@ void POA_CORBA::ComponentIR::UsesDef::_set_is_multiple_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6142,7 +6142,7 @@ void POA_CORBA::ComponentIR::UsesDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6239,7 +6239,7 @@ void POA_CORBA::ComponentIR::UsesDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6383,7 +6383,7 @@ void POA_CORBA::ComponentIR::UsesDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6851,7 +6851,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -6949,7 +6949,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7056,7 +7056,7 @@ void POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7163,7 +7163,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7260,7 +7260,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7404,7 +7404,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7880,7 +7880,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -7977,7 +7977,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -8121,7 +8121,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -8601,7 +8601,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -8698,7 +8698,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -8842,7 +8842,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -9322,7 +9322,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -9419,7 +9419,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -9563,7 +9563,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10077,7 +10077,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_base_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10175,7 +10175,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_base_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10275,7 +10275,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_supported_interfaces_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10373,7 +10373,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_supported_interfaces_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10501,7 +10501,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_provides_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10642,7 +10642,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_uses_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10778,7 +10778,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_emits_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -10912,7 +10912,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_publishes_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -11046,7 +11046,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_consumes_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -11159,7 +11159,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -11256,7 +11256,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -11400,7 +11400,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -11957,7 +11957,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -12054,7 +12054,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -12198,7 +12198,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -12739,7 +12739,7 @@ void POA_CORBA::ComponentIR::FinderDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -12836,7 +12836,7 @@ void POA_CORBA::ComponentIR::FinderDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -12980,7 +12980,7 @@ void POA_CORBA::ComponentIR::FinderDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -13496,7 +13496,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_base_home_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -13594,7 +13594,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_base_home_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -13694,7 +13694,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_supported_interfaces_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -13792,7 +13792,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_supported_interfaces_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -13892,7 +13892,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_managed_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -13990,7 +13990,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_managed_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -14090,7 +14090,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_primary_key_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -14188,7 +14188,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_primary_key_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -14323,7 +14323,7 @@ void POA_CORBA::ComponentIR::HomeDef::create_factory_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -14466,7 +14466,7 @@ void POA_CORBA::ComponentIR::HomeDef::create_finder_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -14581,7 +14581,7 @@ void POA_CORBA::ComponentIR::HomeDef::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -14678,7 +14678,7 @@ void POA_CORBA::ComponentIR::HomeDef::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -14822,7 +14822,7 @@ void POA_CORBA::ComponentIR::HomeDef::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
