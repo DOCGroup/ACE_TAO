@@ -56,7 +56,7 @@ Account_i::withdraw (CORBA::Float withdrawl,
   if (balance_ >= withdrawl)
     balance_ -= withdrawl;
   else
-    env.exception (new Bank::Account::Overdraft("Exception::Overdraft\n"));
+    env.exception (new Bank::Account::Overdraft ("Exception::Overdraft\n"));
 }
 
 char *
