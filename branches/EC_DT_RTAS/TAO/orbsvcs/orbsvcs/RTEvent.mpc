@@ -7,7 +7,10 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
   dynamicflags = TAO_RTEVENT_BUILD_DLL
   tagchecks   += RTEvent
   // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs $(DATASTREAM_ROOT)/include
+
+  libs += dsui
+  libpaths += $(DATASTREAM_ROOT)/lib
 
   IDL_Files {
     RtecDefaultEventData.idl
@@ -62,6 +65,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       Event/EC_Dispatching_Task.cpp
       Event/EC_Event_Channel.cpp
       Event/EC_Event_Channel_Base.cpp
+      Event/EC_Event_Limit.cpp
       Event/EC_Factory.cpp
       Event/EC_Filter.cpp
       Event/EC_Filter_Builder.cpp
