@@ -1,3 +1,13 @@
+Fri Dec 10 15:37:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Clarified how the clone procedure should
+	  work.  Thank to Jerry D. De Master <jdemaste@ipdinc.com>
+	  for suggesting this.
+
+	* ace/OS.h: Changed the value of O_NDELAY from 0 to 1 on
+	  Windows NT.  Thanks to Craig Perras <cperras@watchguard.com> for
+ 	  reporting this.
+
 Fri Dec 10 15:55:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Configuration.cpp:

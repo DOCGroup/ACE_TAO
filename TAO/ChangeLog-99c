@@ -1,3 +1,9 @@
+Fri Dec 10 15:33:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs: Added the new pluggable.html document that explains
+	  how to write pluggable protocols for TAO.  Thanks to Bruce Trask
+ 	  <btrask@contactsystems.com> for contributing this.
+
 Fri Dec 10 16:13:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
