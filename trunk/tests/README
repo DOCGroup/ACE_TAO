@@ -9,6 +9,19 @@ this by setting the ACE_TEST_DIR environment variable to another
 prefix.  On Win32 all the output is stored in separate files in
 C:\temp\log\.
 
+________________________________________
+
+Please follow these directions when adding a new test to
+$ACE_ROOT/tests:
+
+1.  Use appropriate ACE_START_TEST and ACE_END_TEST macros in main ()
+2.  Add test to Makefile
+3.  Add test to MS project files (tests.dsp and version_tests/version_tests.dsp)
+4.  Add test to all or most of these: 
+
+    run_tests.bat, run_tests.psosim, run_tests.sh, and run_tests.vxworks.
+________________________________________
+
 We had problems running the batch file on Windows 95 and Windows NT
 using the native DOS prompt. However we were able to get around this
 problem by using a program called "4DOS for Windows NT" which also

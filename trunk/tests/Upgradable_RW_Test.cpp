@@ -364,7 +364,7 @@ template class ACE_Double_Linked_List_Iterator<Element>;
 
 int main (int argc, ASYS_TCHAR *argv[])
 {
-  // ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
+  ACE_START_TEST (ASYS_TEXT ("Upgradable_RW_Test"));
 
 #if defined (ACE_HAS_THREADS)
 
@@ -476,7 +476,8 @@ int main (int argc, ASYS_TCHAR *argv[])
   ACE_ERROR ((LM_ERROR, 
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
-  // ACE_END_TEST;
+  
+  ACE_END_TEST;
   return 0;
 }
 
