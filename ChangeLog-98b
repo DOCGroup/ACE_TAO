@@ -1,3 +1,9 @@
+Tue Oct  6 15:06:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.cpp (ACE_Asynch_Accept_Handler): Removed the
+	  version of the ctor with no args - it's equivalent to the one
+	  with all defaulted args, and HP aCC complained.
+
 Tue Oct  6 12:49:37 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/006/client_handler.cpp
