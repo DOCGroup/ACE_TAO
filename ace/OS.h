@@ -4802,7 +4802,7 @@ public:
   static int fclose (FILE *fp);
   static int fcntl (ACE_HANDLE handle,
                     int cmd,
-                    int val = 0);
+                    long arg = 0);
   static int fdetach (const char *file);
 
   static int fsync(ACE_HANDLE handle);
