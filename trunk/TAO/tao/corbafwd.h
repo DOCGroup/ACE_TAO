@@ -29,6 +29,14 @@
 
 #include "ace/CDR_Base.h"
 
+#if defined (HPUX)
+#  if defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h 
+      and we don't want that definition, see IOPC.h */
+#  undef IOR
+#  endif /* IOR */
+#endif /* HPUX */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

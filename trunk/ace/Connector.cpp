@@ -365,6 +365,9 @@ ACE_Connector<SVH, PR_CO_2>::handle_exception (ACE_HANDLE h)
 {
   ACE_TRACE ("ACE_Connector<SVH, PR_CO_2>::handle_exception");
 
+  // On Win32, the except mask must also be set for asynchronous
+  // connects.
+
   return this->handle_output (h);
 }
 
