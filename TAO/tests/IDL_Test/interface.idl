@@ -74,11 +74,19 @@ interface child : mother, father
 // Definition below in file.
 interface later;
 
+typedef boolean Bool;
+
 interface later_user
 {
   later op (in later inarg, 
             inout later inoutarg,
             out later outarg);
+
+            
+  // Not a clash with the C++ keyword because they are case sensitive,
+  // but the Arg_Traits<> specialization parameter (ACE_InputCDR::to_boolean)
+  // needs the unaliased type name to work.
+  void op2 (in Bool inarg2);
 };
 
 struct later_holder
