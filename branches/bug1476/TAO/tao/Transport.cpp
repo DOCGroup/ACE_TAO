@@ -146,6 +146,9 @@ TAO_Transport::~TAO_Transport (void)
 
   delete this->handler_lock_;
 
+  // @@Johnny, could you please move this code in a seperate method
+  // and have the destructor and
+  // send_connection_closed_notifications_i () call that?
   if (!this->is_connected_)
     {
       // When we have a not connected transport we could have buffered

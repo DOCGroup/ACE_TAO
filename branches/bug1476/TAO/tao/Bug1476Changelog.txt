@@ -1,3 +1,9 @@
+Mon Jul 26 11:38:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport.cpp (TAO_Transport): 
+
+	  Left a comment for Johnny.
+
 Mon Jul 26 11:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Adapter.cpp:
