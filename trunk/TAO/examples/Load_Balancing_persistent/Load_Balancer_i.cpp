@@ -1010,7 +1010,7 @@ RR_Object_Group::unbind (const char *id,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >;
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex, ACE_Control_Block>;
+template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
 template class ACE_Hash_Map_With_Allocator<char *, char *>;
 template class ACE_Hash_Map_Iterator_Base_Ex<char *,  Load_Balancer::Object_Group_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>;
