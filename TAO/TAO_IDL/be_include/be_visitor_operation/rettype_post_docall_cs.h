@@ -51,4 +51,25 @@ public:
   // visit an interface node
 };
 
+// ****************************************************************
+
+class be_visitor_operation_compiled_rettype_post_docall : public be_visitor_decl
+{
+  //
+  // = TITLE
+  //   be_visitor_operation_rettype_post_docall
+  //
+  // = DESCRIPTION
+  //   This is a visitor for post processing after the invocation in
+  //   compiled marshaling
+  //
+  //
+public:
+  be_visitor_operation_compiled_rettype_post_docall (be_visitor_context *ctx);
+  // constructor
+
+  int visit_array (be_array *node);
+  int visit_typedef (be_typedef *node);
+};
+
 #endif /* _BE_VISITOR_OPERATION_RETTYPE_POST_DOCALL_CS_H_ */
