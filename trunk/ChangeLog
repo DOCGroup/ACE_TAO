@@ -1,3 +1,9 @@
+Wed May  7 17:02:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_component.mpb: Added the
+	  required libraries to build the server. This was necessitated by
+	  the recent subsetting in TAO.
+	
 Wed May  7 17:25:49 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Service_Config.h: Added description of the -s option to
