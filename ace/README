@@ -80,7 +80,7 @@ ACE_HAS_SOCKIO_H                	Compiler/platform provides the sockio.h file
 ACE_HAS_SPARCWORKS_401_SIGNALS 		Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...
 ACE_HAS_SSIZE_T				Compiler supports the ssize_t typedef
 ACE_HAS_STHREADS			Platform supports Solaris threads
-ACE_HAS_STL				Platform/compiler supports STL
+ACE_HAS_STANDARD_CPP_LIBRARY		Platform/compiler supports Standard C++ Library
 ACE_HAS_STRBUF_T			Compiler/platform supports struct strbuf
 ACE_HAS_STREAMS				Platform supports STREAMS
 ACE_HAS_STREAM_PIPES			Platform supports STREAM pipes

@@ -105,6 +105,54 @@ protected:
   ACE_File_Lock (const ACE_File_Lock &) {}
 };
 
+class ACE_Export ACE_Semaphore
+  // = TITLE
+  //     Wrapper for Dijkstra style general semaphores.
+{
+public:
+  // = Initialization and termination.
+  ACE_Semaphore (u_int count, 
+		 int type = USYNC_THREAD, 
+		 LPCTSTR name = 0, 
+		 void * = 0,
+		 int max = 0x7fffffff);
+  // Initialize the semaphore, with default value of "count".
+
+  ~ACE_Semaphore (void);       
+  // Implicitly destroy the semaphore.
+
+  int remove (void);
+  // Explicitly destroy the semaphore.
+
+  int acquire (void);
+  // Block the thread until the semaphore count becomes
+  // greater than 0, then decrement it.
+
+  int tryacquire (void);
+  // Conditionally decrement the semaphore if count is greater 
+  // than 0 (i.e., won't block).
+
+  int release (void);
+  // Increment the semaphore, potentially unblocking
+  // a waiting thread.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+  const ACE_sema_t &lock (void) const;
+  // Return the underlying lock.
+
+private:
+  ACE_sema_t semaphore_;
+
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Semaphore &) {}
+  ACE_Semaphore (const ACE_Semaphore &) {}
+};
+
 class ACE_Export ACE_Process_Semaphore
   // = TITLE
   //     Wrapper for Dijkstra style general semaphores that work
@@ -654,54 +702,6 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
-};
-
-class ACE_Export ACE_Semaphore
-  // = TITLE
-  //     Wrapper for Dijkstra style general semaphores.
-{
-public:
-  // = Initialization and termination.
-  ACE_Semaphore (u_int count, 
-		 int type = USYNC_THREAD, 
-		 LPCTSTR name = 0, 
-		 void * = 0,
-		 int max = 0x7fffffff);
-  // Initialize the semaphore, with default value of "count".
-
-  ~ACE_Semaphore (void);       
-  // Implicitly destroy the semaphore.
-
-  int remove (void);
-  // Explicitly destroy the semaphore.
-
-  int acquire (void);
-  // Block the thread until the semaphore count becomes
-  // greater than 0, then decrement it.
-
-  int tryacquire (void);
-  // Conditionally decrement the semaphore if count is greater 
-  // than 0 (i.e., won't block).
-
-  int release (void);
-  // Increment the semaphore, potentially unblocking
-  // a waiting thread.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-  const ACE_sema_t &lock (void) const;
-  // Return the underlying lock.
-
-private:
-  ACE_sema_t semaphore_;
-
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Semaphore &) {}
-  ACE_Semaphore (const ACE_Semaphore &) {}
 };
 
 class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore

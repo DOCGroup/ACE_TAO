@@ -1,3 +1,24 @@
+Sun Dec  1 00:15:45 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Synch.h: Repositioned ACE_Semaphore such that there are no
+	  problems in compiling ACE_Process_Semaphore under Win32. 
+
+	* ace/config-win32-msvc4.0.h: Changed ACE_HAS_STL to
+ 	  ACE_HAS_STANDARD_CPP_LIBRARY which is more descriptive (and what
+ 	  is expected by stdcpp.h).
+
+	* ace/Registry.h: Added the setting of NOMINMAX and
+ 	  VC_PLUS_PLUS_NESTED_CLASS_PROBLEM flags so that STL behaves
+ 	  properly.
+
+	* ace/Log_Msg.cpp (open): Fixed a small bug such that msg_ostream
+ 	  is only set this to cerr if it hasn't already been set.
+
+	* STL: Updated the STL directory will latest code from
+ 	  http://www.rahul.net/terris/ and also added the original
+ 	  readme2.stl file.  Created ACE_Changes which has the list of
+ 	  changes made to the STL distribution.
+
 Sat Nov 30 12:02:00 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
 	* ace/OS.h: Added a new pragma that disables warning #4097 in
