@@ -13,7 +13,7 @@ define(`built_in_type_impl', `
       //
       //
       //
-      class $1 : public virtual BuiltInTypeDef
+      class $1 : public virtual BuiltInTypeDecl
       {
       public:
         virtual
@@ -83,23 +83,22 @@ namespace CCF
       //
       //
       //
-      class BuiltInTypeDef : public virtual TypeDef
+      class BuiltInTypeDecl : public virtual TypeDecl
       {
       protected:
         virtual
-        ~BuiltInTypeDef () throw () {}
+        ~BuiltInTypeDecl () throw () {}
 
-        BuiltInTypeDef ()
+        BuiltInTypeDecl ()
         {
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
       public:
-        virtual std::string
-        declaration_class ()
+        virtual bool
+        complete () const
         {
-          return "built-in type";
+          return true;
         }
 
       public:
@@ -108,8 +107,8 @@ namespace CCF
       };
 
       typedef
-      StrictPtr<BuiltInTypeDef>
-      BuiltInTypeDefPtr;
+      StrictPtr<BuiltInTypeDecl>
+      BuiltInTypeDeclPtr;
 dnl
 built_in_type(`Object')
 built_in_type(`ValueBase')

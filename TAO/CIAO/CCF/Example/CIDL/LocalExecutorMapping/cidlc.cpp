@@ -174,25 +174,25 @@ int main (int argc, char* argv[])
 
       ScopePtr s = builtin->scope ();
 
-      s->insert (BuiltInTypeDefPtr (new Object           (s)));
-      s->insert (BuiltInTypeDefPtr (new ValueBase        (s)));
-      s->insert (BuiltInTypeDefPtr (new Any              (s)));
-      s->insert (BuiltInTypeDefPtr (new Boolean          (s)));
-      s->insert (BuiltInTypeDefPtr (new Char             (s)));
-      s->insert (BuiltInTypeDefPtr (new Double           (s)));
-      s->insert (BuiltInTypeDefPtr (new Float            (s)));
-      s->insert (BuiltInTypeDefPtr (new Long             (s)));
-      s->insert (BuiltInTypeDefPtr (new LongDouble       (s)));
-      s->insert (BuiltInTypeDefPtr (new LongLong         (s)));
-      s->insert (BuiltInTypeDefPtr (new Octet            (s)));
-      s->insert (BuiltInTypeDefPtr (new Short            (s)));
-      s->insert (BuiltInTypeDefPtr (new String           (s)));
-      s->insert (BuiltInTypeDefPtr (new UnsignedLong     (s)));
-      s->insert (BuiltInTypeDefPtr (new UnsignedLongLong (s)));
-      s->insert (BuiltInTypeDefPtr (new UnsignedShort    (s)));
-      s->insert (BuiltInTypeDefPtr (new Void             (s)));
-      s->insert (BuiltInTypeDefPtr (new Wchar            (s)));
-      s->insert (BuiltInTypeDefPtr (new Wstring          (s)));
+      s->insert (BuiltInTypeDeclPtr (new ObjectDecl           (s)));
+      s->insert (BuiltInTypeDeclPtr (new ValueBaseDecl        (s)));
+      s->insert (BuiltInTypeDeclPtr (new AnyDecl              (s)));
+      s->insert (BuiltInTypeDeclPtr (new BooleanDecl          (s)));
+      s->insert (BuiltInTypeDeclPtr (new CharDecl             (s)));
+      s->insert (BuiltInTypeDeclPtr (new DoubleDecl           (s)));
+      s->insert (BuiltInTypeDeclPtr (new FloatDecl            (s)));
+      s->insert (BuiltInTypeDeclPtr (new LongDecl             (s)));
+      s->insert (BuiltInTypeDeclPtr (new LongDoubleDecl       (s)));
+      s->insert (BuiltInTypeDeclPtr (new LongLongDecl         (s)));
+      s->insert (BuiltInTypeDeclPtr (new OctetDecl            (s)));
+      s->insert (BuiltInTypeDeclPtr (new ShortDecl            (s)));
+      s->insert (BuiltInTypeDeclPtr (new StringDecl           (s)));
+      s->insert (BuiltInTypeDeclPtr (new UnsignedLongDecl     (s)));
+      s->insert (BuiltInTypeDeclPtr (new UnsignedLongLongDecl (s)));
+      s->insert (BuiltInTypeDeclPtr (new UnsignedShortDecl    (s)));
+      s->insert (BuiltInTypeDeclPtr (new VoidDecl             (s)));
+      s->insert (BuiltInTypeDeclPtr (new WcharDecl            (s)));
+      s->insert (BuiltInTypeDeclPtr (new WstringDecl          (s)));
 
     }
 

@@ -15,24 +15,24 @@ using namespace SyntaxTree;
 // common to every other class in this file,
 // and collects the ancestors in one place.
 //
-class TypeNameEmitter : public Traversal::Void,
-                        public Traversal::Boolean,
-                        public Traversal::Octet,
-                        public Traversal::Char,
-                        public Traversal::Wchar,
-                        public Traversal::Short,
-                        public Traversal::UnsignedShort,
-                        public Traversal::Long,
-                        public Traversal::UnsignedLong,
-                        public Traversal::LongLong,
-                        public Traversal::UnsignedLongLong,
-                        public Traversal::Float,
-                        public Traversal::Double,
-                        public Traversal::String,
-                        public Traversal::Wstring,
-                        public Traversal::Object,
-                        public Traversal::ValueBase,
-                        public Traversal::Any,
+class TypeNameEmitter : public Traversal::VoidDecl,
+                        public Traversal::BooleanDecl,
+                        public Traversal::OctetDecl,
+                        public Traversal::CharDecl,
+                        public Traversal::WcharDecl,
+                        public Traversal::ShortDecl,
+                        public Traversal::UnsignedShortDecl,
+                        public Traversal::LongDecl,
+                        public Traversal::UnsignedLongDecl,
+                        public Traversal::LongLongDecl,
+                        public Traversal::UnsignedLongLongDecl,
+                        public Traversal::FloatDecl,
+                        public Traversal::DoubleDecl,
+                        public Traversal::StringDecl,
+                        public Traversal::WstringDecl,
+                        public Traversal::ObjectDecl,
+                        public Traversal::ValueBaseDecl,
+                        public Traversal::AnyDecl,
                         public Traversal::LocalInterfaceDecl
 {
 protected:
@@ -49,27 +49,27 @@ class ReturnTypeNameEmitter : public TypeNameEmitter
 public:
   ReturnTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (VoidPtr const&);
-  virtual void traverse (BooleanPtr const&);
-  virtual void traverse (OctetPtr const&);
-  virtual void traverse (CharPtr const&);
-  virtual void traverse (WcharPtr const&);
-  virtual void traverse (ShortPtr const&);
-  virtual void traverse (UnsignedShortPtr const&);
-  virtual void traverse (LongPtr const&);
-  virtual void traverse (UnsignedLongPtr const&);
-  virtual void traverse (LongLongPtr const&);
-  virtual void traverse (UnsignedLongLongPtr const&);
-  virtual void traverse (FloatPtr const&);
-  virtual void traverse (DoublePtr const&);
-  virtual void traverse (StringPtr const&);
-  virtual void traverse (WstringPtr const&);
-  virtual void traverse (ObjectPtr const&);
-  virtual void traverse (ValueBasePtr const&);
-  virtual void traverse (AnyPtr const&);
+  virtual void traverse (VoidDeclPtr const&);
+  virtual void traverse (BooleanDeclPtr const&);
+  virtual void traverse (OctetDeclPtr const&);
+  virtual void traverse (CharDeclPtr const&);
+  virtual void traverse (WcharDeclPtr const&);
+  virtual void traverse (ShortDeclPtr const&);
+  virtual void traverse (UnsignedShortDeclPtr const&);
+  virtual void traverse (LongDeclPtr const&);
+  virtual void traverse (UnsignedLongDeclPtr const&);
+  virtual void traverse (LongLongDeclPtr const&);
+  virtual void traverse (UnsignedLongLongDeclPtr const&);
+  virtual void traverse (FloatDeclPtr const&);
+  virtual void traverse (DoubleDeclPtr const&);
+  virtual void traverse (StringDeclPtr const&);
+  virtual void traverse (WstringDeclPtr const&);
+  virtual void traverse (ObjectDeclPtr const&);
+  virtual void traverse (ValueBaseDeclPtr const&);
+  virtual void traverse (AnyDeclPtr const&);
   virtual void traverse (LocalInterfaceDeclPtr const&);
 };
-  
+
 // Generates the typename of an IN argument.
 //
 //
@@ -78,25 +78,25 @@ class INArgTypeNameEmitter : public TypeNameEmitter
 public:
   INArgTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (BooleanPtr const&);
-  virtual void traverse (OctetPtr const&);
-  virtual void traverse (CharPtr const&);
-  virtual void traverse (WcharPtr const&);
-  virtual void traverse (ShortPtr const&);
-  virtual void traverse (UnsignedShortPtr const&);
-  virtual void traverse (LongPtr const&);
-  virtual void traverse (UnsignedLongPtr const&);
-  virtual void traverse (LongLongPtr const&);
-  virtual void traverse (UnsignedLongLongPtr const&);
-  virtual void traverse (FloatPtr const&);
-  virtual void traverse (DoublePtr const&);
-  virtual void traverse (StringPtr const&);
-  virtual void traverse (WstringPtr const&);
-  virtual void traverse (ObjectPtr const&);
-  virtual void traverse (ValueBasePtr const&);
-  virtual void traverse (AnyPtr const&);
+  virtual void traverse (BooleanDeclPtr const&);
+  virtual void traverse (OctetDeclPtr const&);
+  virtual void traverse (CharDeclPtr const&);
+  virtual void traverse (WcharDeclPtr const&);
+  virtual void traverse (ShortDeclPtr const&);
+  virtual void traverse (UnsignedShortDeclPtr const&);
+  virtual void traverse (LongDeclPtr const&);
+  virtual void traverse (UnsignedLongDeclPtr const&);
+  virtual void traverse (LongLongDeclPtr const&);
+  virtual void traverse (UnsignedLongLongDeclPtr const&);
+  virtual void traverse (FloatDeclPtr const&);
+  virtual void traverse (DoubleDeclPtr const&);
+  virtual void traverse (StringDeclPtr const&);
+  virtual void traverse (WstringDeclPtr const&);
+  virtual void traverse (ObjectDeclPtr const&);
+  virtual void traverse (ValueBaseDeclPtr const&);
+  virtual void traverse (AnyDeclPtr const&);
 };
-  
+
 // Generates the typename of an INOUT argument.
 //
 //
@@ -105,25 +105,25 @@ class INOUTArgTypeNameEmitter : public TypeNameEmitter
 public:
   INOUTArgTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (BooleanPtr const&);
-  virtual void traverse (OctetPtr const&);
-  virtual void traverse (CharPtr const&);
-  virtual void traverse (WcharPtr const&);
-  virtual void traverse (ShortPtr const&);
-  virtual void traverse (UnsignedShortPtr const&);
-  virtual void traverse (LongPtr const&);
-  virtual void traverse (UnsignedLongPtr const&);
-  virtual void traverse (LongLongPtr const&);
-  virtual void traverse (UnsignedLongLongPtr const&);
-  virtual void traverse (FloatPtr const&);
-  virtual void traverse (DoublePtr const&);
-  virtual void traverse (StringPtr const&);
-  virtual void traverse (WstringPtr const&);
-  virtual void traverse (ObjectPtr const&);
-  virtual void traverse (ValueBasePtr const&);
-  virtual void traverse (AnyPtr const&);
+  virtual void traverse (BooleanDeclPtr const&);
+  virtual void traverse (OctetDeclPtr const&);
+  virtual void traverse (CharDeclPtr const&);
+  virtual void traverse (WcharDeclPtr const&);
+  virtual void traverse (ShortDeclPtr const&);
+  virtual void traverse (UnsignedShortDeclPtr const&);
+  virtual void traverse (LongDeclPtr const&);
+  virtual void traverse (UnsignedLongDeclPtr const&);
+  virtual void traverse (LongLongDeclPtr const&);
+  virtual void traverse (UnsignedLongLongDeclPtr const&);
+  virtual void traverse (FloatDeclPtr const&);
+  virtual void traverse (DoubleDeclPtr const&);
+  virtual void traverse (StringDeclPtr const&);
+  virtual void traverse (WstringDeclPtr const&);
+  virtual void traverse (ObjectDeclPtr const&);
+  virtual void traverse (ValueBaseDeclPtr const&);
+  virtual void traverse (AnyDeclPtr const&);
 };
-  
+
 // Generates the typename of an OUT argument.
 //
 //
@@ -132,24 +132,23 @@ class OUTArgTypeNameEmitter : public TypeNameEmitter
 public:
   OUTArgTypeNameEmitter (std::ostream&);
 
-  virtual void traverse (BooleanPtr const&);
-  virtual void traverse (OctetPtr const&);
-  virtual void traverse (CharPtr const&);
-  virtual void traverse (WcharPtr const&);
-  virtual void traverse (ShortPtr const&);
-  virtual void traverse (UnsignedShortPtr const&);
-  virtual void traverse (LongPtr const&);
-  virtual void traverse (UnsignedLongPtr const&);
-  virtual void traverse (LongLongPtr const&);
-  virtual void traverse (UnsignedLongLongPtr const&);
-  virtual void traverse (FloatPtr const&);
-  virtual void traverse (DoublePtr const&);
-  virtual void traverse (StringPtr const&);
-  virtual void traverse (WstringPtr const&);
-  virtual void traverse (ObjectPtr const&);
-  virtual void traverse (ValueBasePtr const&);
-  virtual void traverse (AnyPtr const&);
+  virtual void traverse (BooleanDeclPtr const&);
+  virtual void traverse (OctetDeclPtr const&);
+  virtual void traverse (CharDeclPtr const&);
+  virtual void traverse (WcharDeclPtr const&);
+  virtual void traverse (ShortDeclPtr const&);
+  virtual void traverse (UnsignedShortDeclPtr const&);
+  virtual void traverse (LongDeclPtr const&);
+  virtual void traverse (UnsignedLongDeclPtr const&);
+  virtual void traverse (LongLongDeclPtr const&);
+  virtual void traverse (UnsignedLongLongDeclPtr const&);
+  virtual void traverse (FloatDeclPtr const&);
+  virtual void traverse (DoubleDeclPtr const&);
+  virtual void traverse (StringDeclPtr const&);
+  virtual void traverse (WstringDeclPtr const&);
+  virtual void traverse (ObjectDeclPtr const&);
+  virtual void traverse (ValueBaseDeclPtr const&);
+  virtual void traverse (AnyDeclPtr const&);
 };
-  
-#endif /* TYPENAME_EMITTER_HPP */
 
+#endif /* TYPENAME_EMITTER_HPP */

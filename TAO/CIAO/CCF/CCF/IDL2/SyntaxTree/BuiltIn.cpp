@@ -16,442 +16,442 @@ namespace CCF
     namespace SyntaxTree
     {
 
-      // BuiltInTypeDef
+      // BuiltInTypeDecl
       //
       //
       namespace
       {
         TypeInfo
-        built_in_type_def_init_ ()
+        built_in_type_decl_init_ ()
         {
-          TypeInfo ti (typeid (BuiltInTypeDef));
-          ti.add_base (Access::PUBLIC, true, TypeDef::static_type_info ());
+          TypeInfo ti (typeid (BuiltInTypeDecl));
+          ti.add_base (Access::PUBLIC, true, TypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo built_in_type_def_ (built_in_type_def_init_ ());
+        TypeInfo built_in_type_decl_ (built_in_type_decl_init_ ());
       }
 
-      TypeInfo const& BuiltInTypeDef::
-      static_type_info () { return built_in_type_def_; }
+      TypeInfo const& BuiltInTypeDecl::
+      static_type_info () { return built_in_type_decl_; }
 
 
-      // Object
+      // ObjectDecl
       //
       //
       namespace
       {
         TypeInfo
-        object_init_ ()
+        object_decl_init_ ()
         {
-          TypeInfo ti (typeid (Object));
+          TypeInfo ti (typeid (ObjectDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo object_ (object_init_ ());
+        TypeInfo object_decl_ (object_decl_init_ ());
       }
 
-      TypeInfo const& Object::
-      static_type_info () { return object_; }
+      TypeInfo const& ObjectDecl::
+      static_type_info () { return object_decl_; }
 
 
-      // ValueBase
+      // ValueBaseDecl
       //
       //
       namespace
       {
         TypeInfo
-        value_base_init_ ()
+        value_base_decl_init_ ()
         {
-          TypeInfo ti (typeid (ValueBase));
+          TypeInfo ti (typeid (ValueBaseDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo value_base_ (value_base_init_ ());
+        TypeInfo value_base_decl_ (value_base_decl_init_ ());
       }
 
-      TypeInfo const& ValueBase::
-      static_type_info () { return value_base_; }
+      TypeInfo const& ValueBaseDecl::
+      static_type_info () { return value_base_decl_; }
 
 
-      // Any
+      // AnyDecl
       //
       //
       namespace
       {
         TypeInfo
-        any_init_ ()
+        any_decl_init_ ()
         {
-          TypeInfo ti (typeid (Any));
+          TypeInfo ti (typeid (AnyDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo any_ (any_init_ ());
+        TypeInfo any_decl_ (any_decl_init_ ());
       }
 
-      TypeInfo const& Any::
-      static_type_info () { return any_; }
+      TypeInfo const& AnyDecl::
+      static_type_info () { return any_decl_; }
 
 
-      // Boolean
+      // BooleanDecl
       //
       //
       namespace
       {
         TypeInfo
-        boolean_init_ ()
+        boolean_decl_init_ ()
         {
-          TypeInfo ti (typeid (Boolean));
+          TypeInfo ti (typeid (BooleanDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo boolean_ (boolean_init_ ());
+        TypeInfo boolean_decl_ (boolean_decl_init_ ());
       }
 
-      TypeInfo const& Boolean::
-      static_type_info () { return boolean_; }
+      TypeInfo const& BooleanDecl::
+      static_type_info () { return boolean_decl_; }
 
 
-      // Char
+      // CharDecl
       //
       //
       namespace
       {
         TypeInfo
-        char_init_ ()
+        char_decl_init_ ()
         {
-          TypeInfo ti (typeid (Char));
+          TypeInfo ti (typeid (CharDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo char_ (char_init_ ());
+        TypeInfo char_decl_ (char_decl_init_ ());
       }
 
-      TypeInfo const& Char::
-      static_type_info () { return char_; }
+      TypeInfo const& CharDecl::
+      static_type_info () { return char_decl_; }
 
 
-      // Double
+      // DoubleDecl
       //
       //
       namespace
       {
         TypeInfo
-        double_init_ ()
+        double_decl_init_ ()
         {
-          TypeInfo ti (typeid (Double));
+          TypeInfo ti (typeid (DoubleDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo double_ (double_init_ ());
+        TypeInfo double_decl_ (double_decl_init_ ());
       }
 
-      TypeInfo const& Double::
-      static_type_info () { return double_; }
+      TypeInfo const& DoubleDecl::
+      static_type_info () { return double_decl_; }
 
 
-      // Float
+      // FloatDecl
       //
       //
       namespace
       {
         TypeInfo
-        float_init_ ()
+        float_decl_init_ ()
         {
-          TypeInfo ti (typeid (Float));
+          TypeInfo ti (typeid (FloatDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo float_ (float_init_ ());
+        TypeInfo float_decl_ (float_decl_init_ ());
       }
 
-      TypeInfo const& Float::
-      static_type_info () { return float_; }
+      TypeInfo const& FloatDecl::
+      static_type_info () { return float_decl_; }
 
 
-      // Long
+      // LongDecl
       //
       //
       namespace
       {
         TypeInfo
-        long_init_ ()
+        long_decl_init_ ()
         {
-          TypeInfo ti (typeid (Long));
+          TypeInfo ti (typeid (LongDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo long_ (long_init_ ());
+        TypeInfo long_decl_ (long_decl_init_ ());
       }
 
-      TypeInfo const& Long::
-      static_type_info () { return long_; }
+      TypeInfo const& LongDecl::
+      static_type_info () { return long_decl_; }
 
 
-      // LongDouble
+      // LongDoubleDecl
       //
       //
       namespace
       {
         TypeInfo
-        long_double_init_ ()
+        long_double_decl_init_ ()
         {
-          TypeInfo ti (typeid (LongDouble));
+          TypeInfo ti (typeid (LongDoubleDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo long_double_ (long_double_init_ ());
+        TypeInfo long_double_decl_ (long_double_decl_init_ ());
       }
 
-      TypeInfo const& LongDouble::
-      static_type_info () { return long_double_; }
+      TypeInfo const& LongDoubleDecl::
+      static_type_info () { return long_double_decl_; }
 
 
-      // LongLong
+      // LongLongDecl
       //
       //
       namespace
       {
         TypeInfo
-        long_long_init_ ()
+        long_long_decl_init_ ()
         {
-          TypeInfo ti (typeid (LongLong));
+          TypeInfo ti (typeid (LongLongDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo long_long_ (long_long_init_ ());
+        TypeInfo long_long_decl_ (long_long_decl_init_ ());
       }
 
-      TypeInfo const& LongLong::
-      static_type_info () { return long_long_; }
+      TypeInfo const& LongLongDecl::
+      static_type_info () { return long_long_decl_; }
 
 
-      // Octet
+      // OctetDecl
       //
       //
       namespace
       {
         TypeInfo
-        octet_init_ ()
+        octet_decl_init_ ()
         {
-          TypeInfo ti (typeid (Octet));
+          TypeInfo ti (typeid (OctetDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo octet_ (octet_init_ ());
+        TypeInfo octet_decl_ (octet_decl_init_ ());
       }
 
-      TypeInfo const& Octet::
-      static_type_info () { return octet_; }
+      TypeInfo const& OctetDecl::
+      static_type_info () { return octet_decl_; }
 
 
-      // Short
+      // ShortDecl
       //
       //
       namespace
       {
         TypeInfo
-        short_init_ ()
+        short_decl_init_ ()
         {
-          TypeInfo ti (typeid (Short));
+          TypeInfo ti (typeid (ShortDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo short_ (short_init_ ());
+        TypeInfo short_decl_ (short_decl_init_ ());
       }
 
-      TypeInfo const& Short::
-      static_type_info () { return short_; }
+      TypeInfo const& ShortDecl::
+      static_type_info () { return short_decl_; }
 
 
-      // String
+      // StringDecl
       //
       //
       namespace
       {
         TypeInfo
-        string_init_ ()
+        string_decl_init_ ()
         {
-          TypeInfo ti (typeid (String));
+          TypeInfo ti (typeid (StringDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo string_ (string_init_ ());
+        TypeInfo string_decl_ (string_decl_init_ ());
       }
 
-      TypeInfo const& String::
-      static_type_info () { return string_; }
+      TypeInfo const& StringDecl::
+      static_type_info () { return string_decl_; }
 
 
-      // UnsignedLong
+      // UnsignedLongDecl
       //
       //
       namespace
       {
         TypeInfo
-        unsigned_long_init_ ()
+        unsigned_long_decl_init_ ()
         {
-          TypeInfo ti (typeid (UnsignedLong));
+          TypeInfo ti (typeid (UnsignedLongDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo unsigned_long_ (unsigned_long_init_ ());
+        TypeInfo unsigned_long_decl_ (unsigned_long_decl_init_ ());
       }
 
-      TypeInfo const& UnsignedLong::
-      static_type_info () { return unsigned_long_; }
+      TypeInfo const& UnsignedLongDecl::
+      static_type_info () { return unsigned_long_decl_; }
 
 
-      // UnsignedLongLong
+      // UnsignedLongLongDecl
       //
       //
       namespace
       {
         TypeInfo
-        unsigned_long_long_init_ ()
+        unsigned_long_long_decl_init_ ()
         {
-          TypeInfo ti (typeid (UnsignedLongLong));
+          TypeInfo ti (typeid (UnsignedLongLongDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo unsigned_long_long_ (unsigned_long_long_init_ ());
+        TypeInfo unsigned_long_long_decl_ (unsigned_long_long_decl_init_ ());
       }
 
-      TypeInfo const& UnsignedLongLong::
-      static_type_info () { return unsigned_long_long_; }
+      TypeInfo const& UnsignedLongLongDecl::
+      static_type_info () { return unsigned_long_long_decl_; }
 
 
-      // UnsignedShort
+      // UnsignedShortDecl
       //
       //
       namespace
       {
         TypeInfo
-        unsigned_short_init_ ()
+        unsigned_short_decl_init_ ()
         {
-          TypeInfo ti (typeid (UnsignedShort));
+          TypeInfo ti (typeid (UnsignedShortDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo unsigned_short_ (unsigned_short_init_ ());
+        TypeInfo unsigned_short_decl_ (unsigned_short_decl_init_ ());
       }
 
-      TypeInfo const& UnsignedShort::
-      static_type_info () { return unsigned_short_; }
+      TypeInfo const& UnsignedShortDecl::
+      static_type_info () { return unsigned_short_decl_; }
 
 
-      // Void
+      // VoidDecl
       //
       //
       namespace
       {
         TypeInfo
-        void_init_ ()
+        void_decl_init_ ()
         {
-          TypeInfo ti (typeid (Void));
+          TypeInfo ti (typeid (VoidDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo void_ (void_init_ ());
+        TypeInfo void_decl_ (void_decl_init_ ());
       }
 
-      TypeInfo const& Void::
-      static_type_info () { return void_; }
+      TypeInfo const& VoidDecl::
+      static_type_info () { return void_decl_; }
 
 
-      // Wchar
+      // WcharDecl
       //
       //
       namespace
       {
         TypeInfo
-        wchar_init_ ()
+        wchar_decl_init_ ()
         {
-          TypeInfo ti (typeid (Wchar));
+          TypeInfo ti (typeid (WcharDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo wchar_ (wchar_init_ ());
+        TypeInfo wchar_decl_ (wchar_decl_init_ ());
       }
 
-      TypeInfo const& Wchar::
-      static_type_info () { return wchar_; }
+      TypeInfo const& WcharDecl::
+      static_type_info () { return wchar_decl_; }
 
 
-      // Wstring
+      // WstringDecl
       //
       //
       namespace
       {
         TypeInfo
-        wstring_init_ ()
+        wstring_decl_init_ ()
         {
-          TypeInfo ti (typeid (Wstring));
+          TypeInfo ti (typeid (WstringDecl));
           ti.add_base (Access::PUBLIC,
                        true,
-                       BuiltInTypeDef::static_type_info ());
+                       BuiltInTypeDecl::static_type_info ());
           return ti;
         }
 
-        TypeInfo wstring_ (wstring_init_ ());
+        TypeInfo wstring_decl_ (wstring_decl_init_ ());
       }
 
-      TypeInfo const& Wstring::
-      static_type_info () { return wstring_; }
+      TypeInfo const& WstringDecl::
+      static_type_info () { return wstring_decl_; }
     }
   }
 }

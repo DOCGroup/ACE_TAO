@@ -70,9 +70,9 @@ namespace CCF
                 if (!d->is_a<ComponentDecl> ())
                 {
                   throw IncompatibleType (d->declaration_class ());
-                }                
+                }
 
-                return d->dynamic_type<TypeDecl> ()->defined ();
+                return d->dynamic_type<ComponentDecl> ()->defined ();
               }
             } p;
 
@@ -138,13 +138,13 @@ namespace CCF
               {
                 // Spec doesn't say anything about which interfaces
                 // component can support.
-                
+
                 if (!d->is_a<UnconstrainedInterfaceDecl> ())
                 {
                   throw IncompatibleType (d->declaration_class ());
                 }
 
-                return d->dynamic_type<TypeDecl> ()->defined ();
+                return d->dynamic_type<InterfaceDecl> ()->defined ();
               }
             } p;
 

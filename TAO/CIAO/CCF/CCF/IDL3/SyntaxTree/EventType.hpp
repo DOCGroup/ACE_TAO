@@ -31,14 +31,6 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "event type";
-        }
-
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -64,14 +56,6 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "event type";
-        }
-
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -92,15 +76,7 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "event type";
-        }
-
+        
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -120,8 +96,7 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
-
-        // Runtime declaration type information
+        
       public:
         virtual std::string
         declaration_class ()
@@ -180,7 +155,7 @@ namespace CCF
             new ConcreteEventTypeDef (name, order, scope, inherits ()));
         }
 
-        // Runtime declaration type information
+
       public:
         virtual std::string
         declaration_class ()

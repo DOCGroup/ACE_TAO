@@ -330,6 +330,65 @@ namespace CCF
       //
       //
       //
+      struct ForwardDeclarableTypeDecl : Traverser
+      {
+        typedef
+        SyntaxTree::ForwardDeclarableTypeDeclPtr
+        NodePtr;
+
+        ForwardDeclarableTypeDecl ()
+        {
+          map (typeid (SyntaxTree::ForwardDeclarableTypeDecl), this);
+        }
+
+        virtual bool
+        traverse (SyntaxTree::NodePtr const& n)
+        {
+          traverse (
+            n->dynamic_type<SyntaxTree::ForwardDeclarableTypeDecl> ());
+          return true;
+        }
+
+        virtual void
+        traverse (NodePtr const& n)
+        {
+          delegate (n);
+        }
+      };
+
+
+      //
+      //
+      //
+      struct TypeForwardDecl : Traverser
+      {
+        typedef
+        SyntaxTree::TypeForwardDeclPtr
+        NodePtr;
+
+        TypeForwardDecl ()
+        {
+          map (typeid (SyntaxTree::TypeForwardDecl), this);
+        }
+
+        virtual bool
+        traverse (SyntaxTree::NodePtr const& n)
+        {
+          traverse (n->dynamic_type<SyntaxTree::TypeForwardDecl> ());
+          return true;
+        }
+
+        virtual void
+        traverse (NodePtr const& n)
+        {
+          delegate (n);
+        }
+      };
+
+
+      //
+      //
+      //
       struct TypeDef : Traverser
       {
         typedef

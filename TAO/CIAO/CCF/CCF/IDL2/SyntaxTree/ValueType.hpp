@@ -17,7 +17,7 @@ namespace CCF
       //
       //
       //
-      class ValueTypeDecl : public virtual TypeDecl
+      class ValueTypeDecl : public virtual ForwardDeclarableTypeDecl
       {
       protected:
         virtual
@@ -28,14 +28,15 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
       public:
-        virtual std::string
-        declaration_class ()
+        virtual bool
+        complete () const
         {
-          return "value";
+          // Valuetype is considered complete even if it's
+          // not defined.
+          //
+          return true;
         }
-
 
       public:
         static Utility::Introspection::TypeInfo const&
@@ -80,14 +81,6 @@ namespace CCF
         ValueTypeForwardDecl ()
         {
           type_info (static_type_info ());
-        }
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "value";
         }
 
       public:
@@ -169,15 +162,6 @@ namespace CCF
                ++i) s.insert (i->name ());
 
           return s;
-        }
-
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "value";
         }
 
       public:

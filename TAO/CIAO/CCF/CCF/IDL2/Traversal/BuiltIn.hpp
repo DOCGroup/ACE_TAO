@@ -18,24 +18,24 @@ namespace CCF
     namespace Traversal
     {
 
-      // BuiltInTypeDef
+      // BuiltInTypeDecl
       //
       //
-      struct BuiltInTypeDef : Traverser
+      struct BuiltInTypeDecl : Traverser
       {
         typedef
-        SyntaxTree::BuiltInTypeDefPtr
+        SyntaxTree::BuiltInTypeDeclPtr
         NodePtr;
 
-        BuiltInTypeDef ()
+        BuiltInTypeDecl ()
         {
-          map (typeid (SyntaxTree::BuiltInTypeDef), this);
+          map (typeid (SyntaxTree::BuiltInTypeDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::BuiltInTypeDef> ());
+          traverse (n->dynamic_type<SyntaxTree::BuiltInTypeDecl> ());
 	  return true;
         }
 
@@ -47,24 +47,24 @@ namespace CCF
       };
 
 
-      // Object
+      // ObjectDecl
       //
       //
-      struct Object : Traverser
+      struct ObjectDecl : Traverser
       {
         typedef
-        SyntaxTree::ObjectPtr
+        SyntaxTree::ObjectDeclPtr
         NodePtr;
 
-        Object ()
+        ObjectDecl ()
         {
-          map (typeid (SyntaxTree::Object), this);
+          map (typeid (SyntaxTree::ObjectDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Object> ());
+          traverse (n->dynamic_type<SyntaxTree::ObjectDecl> ());
 	  return true;
         }
 
@@ -76,24 +76,24 @@ namespace CCF
       };
 
 
-      // ValueBase
+      // ValueBaseDecl
       //
       //
-      struct ValueBase : Traverser
+      struct ValueBaseDecl : Traverser
       {
         typedef
-        SyntaxTree::ValueBasePtr
+        SyntaxTree::ValueBaseDeclPtr
         NodePtr;
 
-        ValueBase ()
+        ValueBaseDecl ()
         {
-          map (typeid (SyntaxTree::ValueBase), this);
+          map (typeid (SyntaxTree::ValueBaseDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::ValueBase> ());
+          traverse (n->dynamic_type<SyntaxTree::ValueBaseDecl> ());
 	  return true;
         }
 
@@ -105,24 +105,24 @@ namespace CCF
       };
 
 
-      // Any
+      // AnyDecl
       //
       //
-      struct Any : Traverser
+      struct AnyDecl : Traverser
       {
         typedef
-        SyntaxTree::AnyPtr
+        SyntaxTree::AnyDeclPtr
         NodePtr;
 
-        Any ()
+        AnyDecl ()
         {
-          map (typeid (SyntaxTree::Any), this);
+          map (typeid (SyntaxTree::AnyDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Any> ());
+          traverse (n->dynamic_type<SyntaxTree::AnyDecl> ());
 	  return true;
         }
 
@@ -134,24 +134,24 @@ namespace CCF
       };
 
 
-      // Boolean
+      // BooleanDecl
       //
       //
-      struct Boolean : Traverser
+      struct BooleanDecl : Traverser
       {
         typedef
-        SyntaxTree::BooleanPtr
+        SyntaxTree::BooleanDeclPtr
         NodePtr;
 
-        Boolean ()
+        BooleanDecl ()
         {
-          map (typeid (SyntaxTree::Boolean), this);
+          map (typeid (SyntaxTree::BooleanDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Boolean> ());
+          traverse (n->dynamic_type<SyntaxTree::BooleanDecl> ());
 	  return true;
         }
 
@@ -163,24 +163,24 @@ namespace CCF
       };
 
 
-      // Char
+      // CharDecl
       //
       //
-      struct Char : Traverser
+      struct CharDecl : Traverser
       {
         typedef
-        SyntaxTree::CharPtr
+        SyntaxTree::CharDeclPtr
         NodePtr;
 
-        Char ()
+        CharDecl ()
         {
-          map (typeid (SyntaxTree::Char), this);
+          map (typeid (SyntaxTree::CharDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Char> ());
+          traverse (n->dynamic_type<SyntaxTree::CharDecl> ());
 	  return true;
         }
 
@@ -192,24 +192,24 @@ namespace CCF
       };
 
 
-      // Double
+      // DoubleDecl
       //
       //
-      struct Double : Traverser
+      struct DoubleDecl : Traverser
       {
         typedef
-        SyntaxTree::DoublePtr
+        SyntaxTree::DoubleDeclPtr
         NodePtr;
 
-        Double ()
+        DoubleDecl ()
         {
-          map (typeid (SyntaxTree::Double), this);
+          map (typeid (SyntaxTree::DoubleDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Double> ());
+          traverse (n->dynamic_type<SyntaxTree::DoubleDecl> ());
 	  return true;
         }
 
@@ -221,24 +221,24 @@ namespace CCF
       };
 
 
-      // Float
+      // FloatDecl
       //
       //
-      struct Float : Traverser
+      struct FloatDecl : Traverser
       {
         typedef
-        SyntaxTree::FloatPtr
+        SyntaxTree::FloatDeclPtr
         NodePtr;
 
-        Float ()
+        FloatDecl ()
         {
-          map (typeid (SyntaxTree::Float), this);
+          map (typeid (SyntaxTree::FloatDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Float> ());
+          traverse (n->dynamic_type<SyntaxTree::FloatDecl> ());
 	  return true;
         }
 
@@ -250,24 +250,24 @@ namespace CCF
       };
 
 
-      // Long
+      // LongDecl
       //
       //
-      struct Long : Traverser
+      struct LongDecl : Traverser
       {
         typedef
-        SyntaxTree::LongPtr
+        SyntaxTree::LongDeclPtr
         NodePtr;
 
-        Long ()
+        LongDecl ()
         {
-          map (typeid (SyntaxTree::Long), this);
+          map (typeid (SyntaxTree::LongDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Long> ());
+          traverse (n->dynamic_type<SyntaxTree::LongDecl> ());
 	  return true;
         }
 
@@ -279,24 +279,24 @@ namespace CCF
       };
 
 
-      // LongDouble
+      // LongDoubleDecl
       //
       //
-      struct LongDouble : Traverser
+      struct LongDoubleDecl : Traverser
       {
         typedef
-        SyntaxTree::LongDoublePtr
+        SyntaxTree::LongDoubleDeclPtr
         NodePtr;
 
-        LongDouble ()
+        LongDoubleDecl ()
         {
-          map (typeid (SyntaxTree::LongDouble), this);
+          map (typeid (SyntaxTree::LongDoubleDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::LongDouble> ());
+          traverse (n->dynamic_type<SyntaxTree::LongDoubleDecl> ());
 	  return true;
         }
 
@@ -308,24 +308,24 @@ namespace CCF
       };
 
 
-      // LongLong
+      // LongLongDecl
       //
       //
-      struct LongLong : Traverser
+      struct LongLongDecl : Traverser
       {
         typedef
-        SyntaxTree::LongLongPtr
+        SyntaxTree::LongLongDeclPtr
         NodePtr;
 
-        LongLong ()
+        LongLongDecl ()
         {
-          map (typeid (SyntaxTree::LongLong), this);
+          map (typeid (SyntaxTree::LongLongDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::LongLong> ());
+          traverse (n->dynamic_type<SyntaxTree::LongLongDecl> ());
 	  return true;
         }
 
@@ -337,24 +337,24 @@ namespace CCF
       };
 
 
-      // Octet
+      // OctetDecl
       //
       //
-      struct Octet : Traverser
+      struct OctetDecl : Traverser
       {
         typedef
-        SyntaxTree::OctetPtr
+        SyntaxTree::OctetDeclPtr
         NodePtr;
 
-        Octet ()
+        OctetDecl ()
         {
-          map (typeid (SyntaxTree::Octet), this);
+          map (typeid (SyntaxTree::OctetDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Octet> ());
+          traverse (n->dynamic_type<SyntaxTree::OctetDecl> ());
 	  return true;
         }
 
@@ -366,24 +366,24 @@ namespace CCF
       };
 
 
-      // Short
+      // ShortDecl
       //
       //
-      struct Short : Traverser
+      struct ShortDecl : Traverser
       {
         typedef
-        SyntaxTree::ShortPtr
+        SyntaxTree::ShortDeclPtr
         NodePtr;
 
-        Short ()
+        ShortDecl ()
         {
-          map (typeid (SyntaxTree::Short), this);
+          map (typeid (SyntaxTree::ShortDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Short> ());
+          traverse (n->dynamic_type<SyntaxTree::ShortDecl> ());
 	  return true;
         }
 
@@ -395,24 +395,24 @@ namespace CCF
       };
 
 
-      // String
+      // StringDecl
       //
       //
-      struct String : Traverser
+      struct StringDecl : Traverser
       {
         typedef
-        SyntaxTree::StringPtr
+        SyntaxTree::StringDeclPtr
         NodePtr;
 
-        String ()
+        StringDecl ()
         {
-          map (typeid (SyntaxTree::String), this);
+          map (typeid (SyntaxTree::StringDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::String> ());
+          traverse (n->dynamic_type<SyntaxTree::StringDecl> ());
 	  return true;
         }
 
@@ -424,24 +424,24 @@ namespace CCF
       };
 
 
-      // UnsignedLong
+      // UnsignedLongDecl
       //
       //
-      struct UnsignedLong : Traverser
+      struct UnsignedLongDecl : Traverser
       {
         typedef
-        SyntaxTree::UnsignedLongPtr
+        SyntaxTree::UnsignedLongDeclPtr
         NodePtr;
 
-        UnsignedLong ()
+        UnsignedLongDecl ()
         {
-          map (typeid (SyntaxTree::UnsignedLong), this);
+          map (typeid (SyntaxTree::UnsignedLongDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::UnsignedLong> ());
+          traverse (n->dynamic_type<SyntaxTree::UnsignedLongDecl> ());
 	  return true;
         }
 
@@ -453,24 +453,24 @@ namespace CCF
       };
 
 
-      // UnsignedLongLong
+      // UnsignedLongLongDecl
       //
       //
-      struct UnsignedLongLong : Traverser
+      struct UnsignedLongLongDecl : Traverser
       {
         typedef
-        SyntaxTree::UnsignedLongLongPtr
+        SyntaxTree::UnsignedLongLongDeclPtr
         NodePtr;
 
-        UnsignedLongLong ()
+        UnsignedLongLongDecl ()
         {
-          map (typeid (SyntaxTree::UnsignedLongLong), this);
+          map (typeid (SyntaxTree::UnsignedLongLongDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::UnsignedLongLong> ());
+          traverse (n->dynamic_type<SyntaxTree::UnsignedLongLongDecl> ());
 	  return true;
         }
 
@@ -482,24 +482,24 @@ namespace CCF
       };
 
 
-      // UnsignedShort
+      // UnsignedShortDecl
       //
       //
-      struct UnsignedShort : Traverser
+      struct UnsignedShortDecl : Traverser
       {
         typedef
-        SyntaxTree::UnsignedShortPtr
+        SyntaxTree::UnsignedShortDeclPtr
         NodePtr;
 
-        UnsignedShort ()
+        UnsignedShortDecl ()
         {
-          map (typeid (SyntaxTree::UnsignedShort), this);
+          map (typeid (SyntaxTree::UnsignedShortDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::UnsignedShort> ());
+          traverse (n->dynamic_type<SyntaxTree::UnsignedShortDecl> ());
 	  return true;
         }
 
@@ -511,24 +511,24 @@ namespace CCF
       };
 
 
-      // Void
+      // VoidDecl
       //
       //
-      struct Void : Traverser
+      struct VoidDecl : Traverser
       {
         typedef
-        SyntaxTree::VoidPtr
+        SyntaxTree::VoidDeclPtr
         NodePtr;
 
-        Void ()
+        VoidDecl ()
         {
-          map (typeid (SyntaxTree::Void), this);
+          map (typeid (SyntaxTree::VoidDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Void> ());
+          traverse (n->dynamic_type<SyntaxTree::VoidDecl> ());
 	  return true;
         }
 
@@ -540,24 +540,24 @@ namespace CCF
       };
 
 
-      // Wchar
+      // WcharDecl
       //
       //
-      struct Wchar : Traverser
+      struct WcharDecl : Traverser
       {
         typedef
-        SyntaxTree::WcharPtr
+        SyntaxTree::WcharDeclPtr
         NodePtr;
 
-        Wchar ()
+        WcharDecl ()
         {
-          map (typeid (SyntaxTree::Wchar), this);
+          map (typeid (SyntaxTree::WcharDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Wchar> ());
+          traverse (n->dynamic_type<SyntaxTree::WcharDecl> ());
 	  return true;
         }
 
@@ -569,24 +569,24 @@ namespace CCF
       };
 
 
-      // Wstring
+      // WstringDecl
       //
       //
-      struct Wstring : Traverser
+      struct WstringDecl : Traverser
       {
         typedef
-        SyntaxTree::WstringPtr
+        SyntaxTree::WstringDeclPtr
         NodePtr;
 
-        Wstring ()
+        WstringDecl ()
         {
-          map (typeid (SyntaxTree::Wstring), this);
+          map (typeid (SyntaxTree::WstringDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::Wstring> ());
+          traverse (n->dynamic_type<SyntaxTree::WstringDecl> ());
 	  return true;
         }
 

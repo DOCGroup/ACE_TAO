@@ -700,10 +700,7 @@ namespace CCF
         // for diagnistic.
       public:
         virtual std::string
-        declaration_class ()
-        {
-          return "declaration";
-        }
+        declaration_class () = 0;
 
       public:
         static Introspection::TypeInfo const&
@@ -903,14 +900,6 @@ namespace CCF
         Order
         peek_order ();
 
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "scope";
-        }
-
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -956,22 +945,11 @@ namespace CCF
                                  Order const& order,
                                  ScopePtr const& scope) = 0;
 
-
         // Type completeness.
         //
       public:
         virtual bool
-        defined () const = 0;
-
-
-        // Runtime declaration type information.
-        //
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "type";
-        }
+        complete () const = 0;
 
       public:
         static Introspection::TypeInfo const&
@@ -983,10 +961,39 @@ namespace CCF
       TypeDeclRef;
 
 
+
       //
       //
       //
-      class TypeForwardDecl : public virtual TypeDecl
+      class ForwardDeclarableTypeDecl : public virtual TypeDecl
+      {
+      protected:
+        virtual
+        ~ForwardDeclarableTypeDecl () throw () {}
+
+        ForwardDeclarableTypeDecl ()
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual bool
+        defined () const = 0;
+
+      public:
+        static Introspection::TypeInfo const&
+        static_type_info ();
+      };
+
+      typedef
+      StrictPtr<ForwardDeclarableTypeDecl>
+      ForwardDeclarableTypeDeclPtr;
+
+
+      //
+      //
+      //
+      class TypeForwardDecl : public virtual ForwardDeclarableTypeDecl
       {
       protected:
         virtual
@@ -997,7 +1004,6 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Type completeness
       public:
         virtual bool
         defined () const
@@ -1005,24 +1011,20 @@ namespace CCF
           return false;
         }
 
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "type";
-        }
-
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
       };
 
+      typedef
+      StrictPtr<TypeForwardDecl>
+      TypeForwardDeclPtr;
+
 
       //
       //
       //
-      class TypeDef : public virtual TypeDecl
+      class TypeDef : public virtual ForwardDeclarableTypeDecl
       {
       protected:
         virtual
@@ -1033,20 +1035,11 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Type completeness
       public:
         virtual bool
         defined () const
         {
           return true;
-        }
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "type";
         }
 
       public:
