@@ -28,23 +28,43 @@ rw_wrlock            0.00        0.010      2    0.005    0.005    0.004   0.000
 Cubit results over Ethernet with 20,000 calls
 ---------------------------------------------
 
-                                Latency (ms)            Calls/Sec
+                               Clients  Latency (ms)            Calls/Sec
 
-MT-Orbix without filters        1.876                   533
-MT-Orbix Thread-Per-Request     2.173                   460
-MT-Orbix Thread-Pool (25)       1.903                   525
-MT-Orbix Thread-Per-Session     2.160                   462 
+MT-Orbix without filters       1        1.876                   533
+                               2        2.202                   454
+                               3        2.740                   364 
+
+MT-Orbix Thread-Per-Request    1        1.886                   530
+                               2        3.1                     322
+                               3        5.0                     200
+
+MT-Orbix Thread-Pool (25)      1        1.875                   533
+                               2        3.1                     322
+                               3        5.1                     196
+
+MT-Orbix Thread-Per-Session    1        2.002                   499
+                               2        3.306                   302
+                               3        5.15                    194
         
 
 Cubit results over ATM with 20,000 calls
 ----------------------------------------
 
-                                Latency (ms)            Calls/Sec
+                               Clients  Latency (ms)            Calls/Sec
 
-MT-Orbix without filters        1.818                   550
-MT-Orbix Thread-Per-Request     2.075                   481
-MT-Orbix Thread-Pool (25)       1.880                   531
-MT-Orbix Thread-Per-Session     2.014                   496
+MT-Orbix without filters       1        1.818                   550
+                               2        1.968                   508
+                               3        2.803                   356
 
 
-        
+MT-Orbix Thread-Per-Request    1        1.846                   541
+                               2        3.1                     322
+                               3        4.98                    200
+
+MT-Orbix Thread-Pool (25)      1        1.913                   522
+                               2        3.18                    314
+                               3        5.1                     196
+
+MT-Orbix Thread-Per-Session    1        1.959                   510
+                               2        3.29                    303
+                               3        5.15                    194
