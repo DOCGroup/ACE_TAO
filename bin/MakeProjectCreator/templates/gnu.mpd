@@ -116,7 +116,7 @@ $(OUTPUT_DIRECTORY):
 
 <%if(sharedname || staticname || exename)%>
 <%if(libs && libpaths)%>
-LIBCHECK = $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach $libpath,<%libpaths%>,$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
+LIBCHECK = $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%>,$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
 ifeq ($(LIBCHECK),)
   LIBCHECK = 1
 endif
