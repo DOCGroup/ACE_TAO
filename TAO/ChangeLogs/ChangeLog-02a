@@ -1,3 +1,10 @@
+Thu Dec 07 20:00:59 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.dsp:
+
+          Fixed include directory for Strategies library.	  
+
 Thu Dec  7 18:32:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Removed the
@@ -295,7 +302,6 @@ Thu Dec  7 13:45:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Regenerated the stub files updated the diff files.
 
->>>>>>> 1.2150
 Thu Dec  7 03:01:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/TAO_IDL_BE_LIB.dsp:
