@@ -156,10 +156,10 @@ ACE_Future_Rep<T>::set (const T &r,
                         -1);
 
       // Remove and notify all subscribed observers.
-      OBSERVER_COLLECTION::iterator iterator =
+      ACE_TYPENAME OBSERVER_COLLECTION::iterator iterator =
         this->observer_collection_.begin ();
 
-      OBSERVER_COLLECTION::iterator end =
+      ACE_TYPENAME OBSERVER_COLLECTION::iterator end =
         this->observer_collection_.end ();
 
       for (;
