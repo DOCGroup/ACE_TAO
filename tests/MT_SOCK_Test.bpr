@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = MT_SOCK_Test.exe
-OBJFILES = obj\MT_SOCK_Test.obj
+OBJFILES = objs\MT_SOCK_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

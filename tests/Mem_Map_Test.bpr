@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Mem_Map_Test.exe
-OBJFILES = obj\Mem_Map_Test.obj
+OBJFILES = objs\Mem_Map_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

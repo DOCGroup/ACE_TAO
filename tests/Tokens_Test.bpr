@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Tokens_Test.exe
-OBJFILES = obj\Tokens_Test.obj
+OBJFILES = objs\Tokens_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

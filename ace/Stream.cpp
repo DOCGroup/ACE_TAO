@@ -345,7 +345,7 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::control");
   ACE_IO_Cntl_Msg ioc (cmd);
 
-  ACE_Message_Block *db = 0;
+  ACE_Message_Block *db;
 
   // Try to create a data block that contains the user-supplied data.
   ACE_NEW_RETURN (db, ACE_Message_Block (sizeof (int), 
@@ -371,7 +371,7 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
       return -1;
     }
 
-  int result = 0;
+  int result;
 
   if (this->stream_head_->writer ()->put (cb) == -1)
     result = -1;
@@ -381,7 +381,7 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
     result = ((ACE_IO_Cntl_Msg *) cb->rd_ptr ())->rval ();
 
   // This will also release db if it's reference count == 0.
-  cb->release (); 
+  cb->release ();
 
   return result;
 }

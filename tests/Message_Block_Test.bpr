@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Message_Block_Test.exe
-OBJFILES = obj\Message_Block_Test.obj
+OBJFILES = objs\Message_Block_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

@@ -392,7 +392,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
    // First grow the heap itself.
 
-  ACE_Timer_Node_T<TYPE> **new_heap = 0;
+  ACE_Timer_Node_T<TYPE> **new_heap;
   ACE_NEW (new_heap, (ACE_Timer_Node_T<TYPE> *[new_size]));
   ACE_OS::memcpy (new_heap, this->heap_,
                   max_size_ * sizeof *new_heap);
@@ -401,7 +401,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   // Grow the array of timer ids.
 
-  long *new_timer_ids = 0;
+  long *new_timer_ids;
 
   ACE_NEW (new_timer_ids, long[new_size]);
 

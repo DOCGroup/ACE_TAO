@@ -14,7 +14,7 @@ BCB = $(MAKEDIR)\..
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
 PROJECT = Aio_Platform_Test.exe
-OBJFILES = obj\Aio_Platform_Test.obj
+OBJFILES = objs\Aio_Platform_Test.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

@@ -144,7 +144,7 @@ Thread_Pool::open (void *)
 
   for (size_t count = 0; count < n_iterations; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb;
 
       // Allocate a new message.
       ACE_NEW_RETURN (mb,
@@ -173,7 +173,7 @@ Thread_Pool::open (void *)
 	      this->thr_count ()));
   this->dump ();
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
 
   ACE_NEW_RETURN (mb,
 		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,

@@ -95,7 +95,7 @@ producer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
 
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     {
