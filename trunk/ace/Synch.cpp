@@ -700,12 +700,9 @@ ACE_Condition_Thread_Mutex::wait (ACE_Thread_Mutex &mutex,
 				  const ACE_Time_Value *abstime)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
-  if (abstime == 0)
-    return ACE_OS::cond_wait (&this->cond_, &mutex_.lock_);
-  else
-    return ACE_OS::cond_timedwait (&this->cond_,
-				   &mutex.lock_,
-				   (ACE_Time_Value *) abstime);
+  return ACE_OS::cond_timedwait (&this->cond_,
+				 &mutex.lock_,
+				 (ACE_Time_Value *) abstime);
 }
 
 int

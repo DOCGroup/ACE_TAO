@@ -746,13 +746,13 @@ public:
 #define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 #define ACE_SYNCH_MUTEX ACE_Thread_Mutex
-#define ACE_SYNCH_NULL_MUTEX  ACE_Null_Mutex;
-#define ACE_SYNCH_PROCESS_MUTEX  ACE_Process_Mutex;
+#define ACE_SYNCH_NULL_MUTEX  ACE_Null_Mutex
+#define ACE_SYNCH_PROCESS_MUTEX  ACE_Process_Mutex
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_Recursive_Thread_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_RW_Thread_Mutex
 #define ACE_SYNCH_CONDITION ACE_Thread_Condition
 #define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
-#define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Mutex;
+#define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Mutex
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 #define ACE_SYNCH ACE_MT_SYNCH
