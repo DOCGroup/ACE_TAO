@@ -1,16 +1,24 @@
+Tue May 25 15:19:06 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_ghs.GNU: added
+          -Xleaveg7 to CFLAGS with threads=1.  It's necessary
+          to avoid execution problems in multithreaded programs.
+          Thanks to Stefaan Kiebooms <stefaan@ghs.com> for providing
+          this fix.
+
 Tue May 25 13:40:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/LSOCK_Acceptor.cpp (get_local_addr): 
+        * ace/LSOCK_Acceptor.cpp (get_local_addr):
 
-	  Only the base class members of ACE_UNIX_Addr were being copied
-	  since the assignment lacked a dynamic cast.  Thanks to Carlos and
-	  Irfan for clarifying this.
+          Only the base class members of ACE_UNIX_Addr were being copied
+          since the assignment lacked a dynamic cast.  Thanks to Carlos and
+          Irfan for clarifying this.
 
 Tue May 25 11:41:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe_T.h (class ACE_Timeprobe): Moved the default size
-	  from Timeprobe_T.h to OS.h, where it can easily be redefined by
-	  the user.
+        * ace/Timeprobe_T.h (class ACE_Timeprobe): Moved the default size
+          from Timeprobe_T.h to OS.h, where it can easily be redefined by
+          the user.
 
 Tue May 25 07:37:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
