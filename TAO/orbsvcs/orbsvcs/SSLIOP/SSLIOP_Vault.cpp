@@ -10,6 +10,7 @@ ACE_RCSID (TAO_SSLIOP,
 
 #include "SSLIOP_Credentials.h"
 
+#include "tao/debug.h"
 
 extern "C"
 int

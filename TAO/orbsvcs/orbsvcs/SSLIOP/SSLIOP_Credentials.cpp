@@ -386,16 +386,17 @@ TAO_SSLIOP_Credentials::operator== (const TAO_SSLIOP_Credentials &rhs)
 {
   const X509 *xa = this->x509_.in ();
   const X509 *xb = rhs.x509_.in ();
-  const EVP_PKEY *ea = this->evp_.in ();
-  const EVP_PKEY *eb = rhs.evp_.in ();
+  //  const EVP_PKEY *ea = this->evp_.in ();
+  //const EVP_PKEY *eb = rhs.evp_.in ();
 
   return
     this->accepting_options_supported_ == rhs.accepting_options_supported_
     && this->accepting_options_required_ == rhs.accepting_options_required_
     && this->invocation_options_supported_ == invocation_options_supported_
     && this->invocation_options_required_ == this->invocation_options_required_
-    && (xa! == 0 && xb !== 0 && ::X509_cmp (xa, xb) == 0)
-    && (ea! == 0 && eb !== 0 && ::EVP_PKEY_cmp (ea, eb) == 0);
+    && (xa != 0 && xb != 0 && ::X509_cmp (xa, xb) == 0)
+    // && (ea != 0 && eb != 0 && ::EVP_PKEY_cmp (ea, eb) == 0)
+    ;
 }
 
 CORBA::ULong
@@ -413,7 +414,7 @@ TAO_SSLIOP_Credentials::_narrow (CORBA::Object_ptr obj
   return TAO_SSLIOP_Credentials::_unchecked_narrow (obj
                                                     TAO_ENV_ARG_PARAMETER);
 }
-  
+
 TAO_SSLIOP_Credentials_ptr
 TAO_SSLIOP_Credentials::_unchecked_narrow (CORBA::Object_ptr obj
                                            TAO_ENV_ARG_DECL_NOT_USED)
@@ -467,7 +468,7 @@ TAO_SSLIOP_Credentials::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -568,7 +569,7 @@ TAO_SSLIOP_Credentials_var::operator const ::TAO_SSLIOP_Credentials_ptr &() cons
   return this->ptr_;
 }
 
-TAO_SSLIOP_Credentials_var::operator ::TAO_SSLIOP_Credentials_ptr &() // cast 
+TAO_SSLIOP_Credentials_var::operator ::TAO_SSLIOP_Credentials_ptr &() // cast
 {
   return this->ptr_;
 }

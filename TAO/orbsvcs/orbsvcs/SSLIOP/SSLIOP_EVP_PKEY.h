@@ -90,7 +90,7 @@ public:
   EVP_PKEY *&out (void);
   EVP_PKEY *_retn (void);
   EVP_PKEY *ptr (void) const;
-  
+
 private:
 
   // Unimplemented - prevents widening assignment.
