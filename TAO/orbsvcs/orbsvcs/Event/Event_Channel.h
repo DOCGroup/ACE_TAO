@@ -175,13 +175,19 @@ public:
 
   ACE_EventChannel (CORBA::Boolean activate_threads = 1,
                     u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                    TAO_Module_Factory* factory = 0,
-                    RtecScheduler::Scheduler_ptr scheduler = 
-                      RtecScheduler::Scheduler::_nil ());
+                    TAO_Module_Factory* factory = 0);
+  ACE_EventChannel (RtecScheduler::Scheduler_ptr scheduler,
+                    CORBA::Boolean activate_threads = 1,
+                    u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                    TAO_Module_Factory* factory = 0);
   // Construction of the given <type>.  Check the **_CHANNEL
   // enumerations defined below.
   // By default we activate the threads on construction, but it is
   // possible to create the EC first and activate the threads later.
+  // A factory for the modules can be provided, by default it uses 
+  // TAO_EC_Default_Module_Factory
+  // If an scheduler is not provided it uses the singleton in
+  // ACE_Scheduler_Factory.
 
   virtual ~ACE_EventChannel (void);
   // Calls destroy.
@@ -274,6 +280,9 @@ public:
   // ownership of the reference returned.
 
 private:
+  void init (int activate_threads);
+  // Factor out commonality in the constructor.
+
   void cleanup_observers (void);
   // Remove all the observers, this simplifies the shutdown process.
 

@@ -101,8 +101,7 @@ class TAO_ORBSVCS_Export ACE_RT_Task : public ACE_ES_TASK
   //    one thread should be calling any management methods.
   friend class ACE_RT_Thread_Manager;
 public:
-  ACE_RT_Task (RtecScheduler::Scheduler_ptr scheduler = 
-                   RtecScheduler::Scheduler::_nil ());
+  ACE_RT_Task (RtecScheduler::Scheduler_ptr scheduler);
   // Default construction.
 
   ~ACE_RT_Task (void);

@@ -38,8 +38,7 @@ public:
   typedef ACE_Reactor Reactor;
 #endif /* ACE_OLD_STYLE_REACTOR */
 
-  ACE_ES_Reactor_Task (RtecScheduler::Scheduler_ptr scheduler = 
-                           RtecScheduler::Scheduler::_nil ());
+  ACE_ES_Reactor_Task (RtecScheduler::Scheduler_ptr scheduler);
   // Default construction.
 
   ~ACE_ES_Reactor_Task (void);
