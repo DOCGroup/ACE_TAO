@@ -12,7 +12,6 @@
   <li><a href="#current">Current Status</a>
   <li><a href="#issues">Known Issues</a>
   <li><a href="#ongoing">Ongoing work</a>
-  <li><a href="#rework">Rework Notes</a>
   <li><a href="#future">Future Work</a>
   <li><a href="#completed">Completed Work</a>
 </ul>
@@ -57,7 +56,7 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       request, the server will crash on NT.  This is because we are
       doing a blocking recv when a server connection handler acts as
       an active object, and the recv won't break out until the process
-      gets kill by the OS.  This is especially a problem on NT becuase
+      gets kill by the OS.  This is especially a problem on NT because
       on shutdown, NT close down the socket service, which cause the
       blocking recv to unblock at which point, these threads try to
       access the already destroyed ORB resources.  A temporary
@@ -93,27 +92,9 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
   <li><p>ORB Core overhaul.</p>
   </li>
 
-  <li><p>Identify/fix the problems in multithreaded client with TSS
-      resources. This could be done using the leader-follower model
-      (thread-pool.)</p>
-  </li>
-
   <li><p>Support new concurrency models, e.g., Thread-per-Request,
       thread pool, etc..</p>
   </li>
-</ul>
-<!-- --------------------- -->
-<a href="#toc">Back to TOC</a>
-<!-- --------------------- -->
-
-<!-- ============================================================ -->
-<a name="rework"><h3>Rework Notes:</h3></a>
-
-Here are some thoughts/points of concern that we have regarding the
-new ORB Core structure.
-
-<ul>
-  <li>
 </ul>
 <!-- --------------------- -->
 <a href="#toc">Back to TOC</a>
@@ -140,21 +121,10 @@ new ORB Core structure.
         <li><p>Improve connection cache so that it won't crash when
             there are no more slots or sockets.
         </li>
-
-        <li><p>Add an option to the ORB core, e.g.,
-            <b>-ORBnameservicetimeout</b>, to allow specification of
-            an upper bound on the itime-to-wait for a response from
-            the ORB's multicast "search" for a running name server.<p>
-        </li>
       </ol>
 
   <li>New features:</li>
       <ol>
-        <li><p>Implement <code>ORB::perform_work</code> and
-            <code>ORB::work_pending</code> so that <code>ORB::run</code>
-            <em>could</em> be implemented in terms of them.</p>
-        </li>
-
         <li><p>Implement <code>RT-CORBA</code> spec. once it passes
             OMG member vote.</p>
         </li>
@@ -209,6 +179,27 @@ new ORB Core structure.
 <!-- Please make sure you append new items at the end of the list -->
 <!-- ************************************************************ -->
 <ul>
+  <li><p><code>TAO_ORB_Core_instance()</code> returns the orb core
+      of the default orb (the first orb created by the user).  This
+      may not be the orb that the user is interested in.  The better
+      approach is <code>myorb->orb_core()</code>.</p>
+  </li>
+
+  <li><p>Added an optional argument to resolve_initial_references()
+      that allows the user to specify a timeout (an upper bound
+      on the time-to-wait for a response from the ORB's multicast
+      "search" for a running server). If no timeout value is
+      specified by the user,
+      <code>TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT</code> is
+      used.</p>
+  </li>
+
+  <li><p><code>ORB::perform_work</code> and
+      <code>ORB::work_pending</code> are now implemented.
+      <code>ORB::work_pending</code> may need some additional work
+      in the future (since it currently always returns true).</p>
+  </li>
+
   <li><p>Provides dynamically linked wholesale assignment of ORB
       strategies for communication, concurrency, demultiplexing,
       scheduling, and dispatching using the ACE Service Configurator
@@ -423,10 +414,10 @@ new ORB Core structure.
   </li>
 
   <li><p>Added CORBA compliant collocated stubs implementation.  The new
-      implementation now query POA for permission to proceed thus fixed 
-      many potentially subtle problems.  The original collocation implementation 
+      implementation now query POA for permission to proceed thus fixed
+      many potentially subtle problems.  The original collocation implementation
       is still supported using by specifying the -ORBCollocationStrategy direct
-      command option (because the original scheme has slightly less method 
+      command option (because the original scheme has slightly less method
       invocation overhead.)
   </li>
 
