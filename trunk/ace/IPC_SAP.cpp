@@ -123,9 +123,7 @@ ACE_IPC_SAP::disable (int value) const
       // blocking:            (0)
       {
         u_long nonblock = 0;
-#if defined (ACE_WIN32)
-        ::WSAEventSelect(this->handle_, 0, 0);
-#endif /* ACE_WIN32 */
+
         return ACE_OS::ioctl (this->handle_,
                               FIONBIO,
                               &nonblock);
