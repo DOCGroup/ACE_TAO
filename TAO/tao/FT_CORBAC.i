@@ -615,10 +615,16 @@ FT::FTRequestServiceContext_out::operator-> (void)
   return this->ptr_;
 }
 
+
+#if !defined (_FT_REQUESTDURATIONPOLICY___CI_)
+#define _FT_REQUESTDURATIONPOLICY___CI_
+
 ACE_INLINE
 FT::RequestDurationPolicy::RequestDurationPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_REQUESTDURATIONPOLICY___VAR_CI_)
@@ -631,11 +637,6 @@ FT::RequestDurationPolicy::RequestDurationPolicy (TAO_Stub *objref, TAO_ServantB
 ACE_INLINE
 FT::RequestDurationPolicy_var::RequestDurationPolicy_var (void) // default constructor
   : ptr_ (RequestDurationPolicy::_nil ())
-{}
-
-ACE_INLINE
-FT::RequestDurationPolicy_var::RequestDurationPolicy_var (RequestDurationPolicy_ptr p)
-  : ptr_ (p)
 {}
 
 ACE_INLINE ::FT::RequestDurationPolicy_ptr
@@ -1051,10 +1052,16 @@ FT::HeartbeatPolicyValue_var::ptr (void) const
   return this->ptr_;
 }
 
+
+#if !defined (_FT_HEARTBEATPOLICY___CI_)
+#define _FT_HEARTBEATPOLICY___CI_
+
 ACE_INLINE
 FT::HeartbeatPolicy::HeartbeatPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_HEARTBEATPOLICY___VAR_CI_)
@@ -1067,11 +1074,6 @@ FT::HeartbeatPolicy::HeartbeatPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_se
 ACE_INLINE
 FT::HeartbeatPolicy_var::HeartbeatPolicy_var (void) // default constructor
   : ptr_ (HeartbeatPolicy::_nil ())
-{}
-
-ACE_INLINE
-FT::HeartbeatPolicy_var::HeartbeatPolicy_var (HeartbeatPolicy_ptr p)
-  : ptr_ (p)
 {}
 
 ACE_INLINE ::FT::HeartbeatPolicy_ptr
@@ -1231,10 +1233,16 @@ FT::HeartbeatPolicy_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+
+#if !defined (_FT_HEARTBEATENABLEDPOLICY___CI_)
+#define _FT_HEARTBEATENABLEDPOLICY___CI_
+
 ACE_INLINE
 FT::HeartbeatEnabledPolicy::HeartbeatEnabledPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_HEARTBEATENABLEDPOLICY___VAR_CI_)
@@ -1247,11 +1255,6 @@ FT::HeartbeatEnabledPolicy::HeartbeatEnabledPolicy (TAO_Stub *objref, TAO_Servan
 ACE_INLINE
 FT::HeartbeatEnabledPolicy_var::HeartbeatEnabledPolicy_var (void) // default constructor
   : ptr_ (HeartbeatEnabledPolicy::_nil ())
-{}
-
-ACE_INLINE
-FT::HeartbeatEnabledPolicy_var::HeartbeatEnabledPolicy_var (HeartbeatEnabledPolicy_ptr p)
-  : ptr_ (p)
 {}
 
 ACE_INLINE ::FT::HeartbeatEnabledPolicy_ptr
@@ -1411,10 +1414,16 @@ FT::HeartbeatEnabledPolicy_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+
+#if !defined (_FT_GENERICFACTORY___CI_)
+#define _FT_GENERICFACTORY___CI_
+
 ACE_INLINE
 FT::GenericFactory::GenericFactory (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_GENERICFACTORY___VAR_CI_)
@@ -1427,11 +1436,6 @@ FT::GenericFactory::GenericFactory (TAO_Stub *objref, TAO_ServantBase *_tao_serv
 ACE_INLINE
 FT::GenericFactory_var::GenericFactory_var (void) // default constructor
   : ptr_ (FT::GenericFactory::_nil ())
-{}
-
-ACE_INLINE
-FT::GenericFactory_var::GenericFactory_var (FT::GenericFactory_ptr p)
-  : ptr_ (p)
 {}
 
 ACE_INLINE FT::GenericFactory_ptr 
@@ -1591,10 +1595,16 @@ FT::GenericFactory_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+
+#if !defined (_FT_FAULTNOTIFIER___CI_)
+#define _FT_FAULTNOTIFIER___CI_
+
 ACE_INLINE
 FT::FaultNotifier::FaultNotifier (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_FAULTNOTIFIER___VAR_CI_)
@@ -1607,11 +1617,6 @@ FT::FaultNotifier::FaultNotifier (TAO_Stub *objref, TAO_ServantBase *_tao_servan
 ACE_INLINE
 FT::FaultNotifier_var::FaultNotifier_var (void) // default constructor
   : ptr_ (FT::FaultNotifier::_nil ())
-{}
-
-ACE_INLINE
-FT::FaultNotifier_var::FaultNotifier_var (FT::FaultNotifier_ptr p)
-  : ptr_ (p)
 {}
 
 ACE_INLINE FT::FaultNotifier_ptr 
@@ -1772,6 +1777,1468 @@ FT::FaultNotifier_out::operator-> (void)
 #endif /* end #if !defined */
 
 // *************************************************************
+// Inline operations for class FT::Property_var
+// *************************************************************
+
+ACE_INLINE
+FT::Property_var::Property_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+FT::Property_var::Property_var (Property *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+FT::Property_var::Property_var (const ::FT::Property_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::FT::Property (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Property_var::~Property_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE FT::Property_var &
+FT::Property_var::operator= (Property *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::FT::Property_var &
+FT::Property_var::operator= (const ::FT::Property_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::FT::Property (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::FT::Property *
+FT::Property_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Property *
+FT::Property_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+FT::Property_var::operator const ::FT::Property &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+FT::Property_var::operator ::FT::Property &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+FT::Property_var::operator ::FT::Property &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+FT::Property_var::operator ::FT::Property *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::FT::Property &
+FT::Property_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::FT::Property &
+FT::Property_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::FT::Property *&
+FT::Property_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Property *
+FT::Property_var::_retn (void)
+{
+  ::FT::Property *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::FT::Property *
+FT::Property_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class FT::Property_out
+// *************************************************************
+
+ACE_INLINE
+FT::Property_out::Property_out (::FT::Property *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Property_out::Property_out (Property_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Property_out::Property_out (const ::FT::Property_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Property_out&, p).ptr_)
+{}
+
+ACE_INLINE FT::Property_out &
+FT::Property_out::operator= (const ::FT::Property_out &p)
+{
+  this->ptr_ = ACE_const_cast (Property_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE FT::Property_out &
+FT::Property_out::operator= (Property *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::Property_out::operator ::FT::Property *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Property *&
+FT::Property_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Property *
+FT::Property_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CI_
+
+  // = Static operations.
+  ACE_INLINE FT::Property *
+  FT::_TAO_Unbounded_Sequence_FT_Properties::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    FT::Property *retval = 0;
+    ACE_NEW_RETURN (retval, FT::Property[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void FT::_TAO_Unbounded_Sequence_FT_Properties::freebuf (FT::Property *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_FT_Properties::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (CORBA::ULong maximum,
+    CORBA::ULong length,
+    FT::Property *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (const _TAO_Unbounded_Sequence_FT_Properties &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      FT::Property *tmp1 = _TAO_Unbounded_Sequence_FT_Properties::allocbuf (this->maximum_);
+      FT::Property * const tmp2 = ACE_reinterpret_cast (FT::Property * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE FT::_TAO_Unbounded_Sequence_FT_Properties &
+  FT::_TAO_Unbounded_Sequence_FT_Properties::operator= (const _TAO_Unbounded_Sequence_FT_Properties &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        FT::Property *tmp = ACE_reinterpret_cast (FT::Property *, this->buffer_);
+        _TAO_Unbounded_Sequence_FT_Properties::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_FT_Properties::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_FT_Properties::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    FT::Property *tmp1 = ACE_reinterpret_cast (FT::Property *, this->buffer_);
+    FT::Property * const tmp2 = ACE_reinterpret_cast (FT::Property * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE FT::Property &
+  FT::_TAO_Unbounded_Sequence_FT_Properties::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    FT::Property* tmp = ACE_reinterpret_cast(FT::Property*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const FT::Property &
+  FT::_TAO_Unbounded_Sequence_FT_Properties::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    FT::Property * const tmp = ACE_reinterpret_cast (FT::Property* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE FT::Property *
+  FT::_TAO_Unbounded_Sequence_FT_Properties::get_buffer (CORBA::Boolean orphan)
+  {
+    FT::Property *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_FT_Properties::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (FT::Property*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(FT::Property*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const FT::Property *
+  FT::_TAO_Unbounded_Sequence_FT_Properties::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const FT::Property * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  FT::_TAO_Unbounded_Sequence_FT_Properties::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  FT::Property *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      FT::Property *tmp = ACE_reinterpret_cast(FT::Property*,this->buffer_);
+      _TAO_Unbounded_Sequence_FT_Properties::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_FT_PROPERTIES_CI_)
+#define _FT_PROPERTIES_CI_
+
+// *************************************************************
+// Inline operations for class FT::Properties_var
+// *************************************************************
+
+ACE_INLINE
+FT::Properties_var::Properties_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+FT::Properties_var::Properties_var (Properties *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+FT::Properties_var::Properties_var (const ::FT::Properties_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::FT::Properties (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Properties_var::~Properties_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE FT::Properties_var &
+FT::Properties_var::operator= (Properties *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE FT::Properties_var &
+FT::Properties_var::operator= (const ::FT::Properties_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::FT::Properties (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::FT::Properties *
+FT::Properties_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Properties *
+FT::Properties_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+FT::Properties_var::operator const ::FT::Properties &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+FT::Properties_var::operator ::FT::Properties &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+FT::Properties_var::operator ::FT::Properties &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+FT::Properties_var::operator ::FT::Properties *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE FT::Property &
+FT::Properties_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::FT::Properties &
+FT::Properties_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::FT::Properties &
+FT::Properties_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::FT::Properties *&
+FT::Properties_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Properties *
+FT::Properties_var::_retn (void)
+{
+  ::FT::Properties *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::FT::Properties *
+FT::Properties_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class FT::Properties_out
+// *************************************************************
+
+ACE_INLINE
+FT::Properties_out::Properties_out (Properties *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Properties_out::Properties_out (Properties_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Properties_out::Properties_out (const ::FT::Properties_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Properties_out&, p).ptr_)
+{}
+
+ACE_INLINE ::FT::Properties_out &
+FT::Properties_out::operator= (const ::FT::Properties_out &p)
+{
+  this->ptr_ = ACE_const_cast (Properties_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::FT::Properties_out &
+FT::Properties_out::operator= (Properties *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::Properties_out::operator ::FT::Properties *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Properties *&
+FT::Properties_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Properties *
+FT::Properties_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE FT::Property &
+FT::Properties_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CI_
+
+  // = Static operations.
+  ACE_INLINE FT::Location *
+  FT::_TAO_Unbounded_Sequence_FT_Locations::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    FT::Location *retval = 0;
+    ACE_NEW_RETURN (retval, FT::Location[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void FT::_TAO_Unbounded_Sequence_FT_Locations::freebuf (FT::Location *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_FT_Locations::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (CORBA::ULong maximum,
+    CORBA::ULong length,
+    FT::Location *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (const _TAO_Unbounded_Sequence_FT_Locations &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      FT::Location *tmp1 = _TAO_Unbounded_Sequence_FT_Locations::allocbuf (this->maximum_);
+      FT::Location * const tmp2 = ACE_reinterpret_cast (FT::Location * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE FT::_TAO_Unbounded_Sequence_FT_Locations &
+  FT::_TAO_Unbounded_Sequence_FT_Locations::operator= (const _TAO_Unbounded_Sequence_FT_Locations &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        FT::Location *tmp = ACE_reinterpret_cast (FT::Location *, this->buffer_);
+        _TAO_Unbounded_Sequence_FT_Locations::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_FT_Locations::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_FT_Locations::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    FT::Location *tmp1 = ACE_reinterpret_cast (FT::Location *, this->buffer_);
+    FT::Location * const tmp2 = ACE_reinterpret_cast (FT::Location * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE FT::Location &
+  FT::_TAO_Unbounded_Sequence_FT_Locations::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    FT::Location* tmp = ACE_reinterpret_cast(FT::Location*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const FT::Location &
+  FT::_TAO_Unbounded_Sequence_FT_Locations::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    FT::Location * const tmp = ACE_reinterpret_cast (FT::Location* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE FT::Location *
+  FT::_TAO_Unbounded_Sequence_FT_Locations::get_buffer (CORBA::Boolean orphan)
+  {
+    FT::Location *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_FT_Locations::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (FT::Location*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(FT::Location*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const FT::Location *
+  FT::_TAO_Unbounded_Sequence_FT_Locations::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const FT::Location * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  FT::_TAO_Unbounded_Sequence_FT_Locations::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  FT::Location *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      FT::Location *tmp = ACE_reinterpret_cast(FT::Location*,this->buffer_);
+      _TAO_Unbounded_Sequence_FT_Locations::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_FT_LOCATIONS_CI_)
+#define _FT_LOCATIONS_CI_
+
+// *************************************************************
+// Inline operations for class FT::Locations_var
+// *************************************************************
+
+ACE_INLINE
+FT::Locations_var::Locations_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+FT::Locations_var::Locations_var (Locations *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+FT::Locations_var::Locations_var (const ::FT::Locations_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::FT::Locations (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Locations_var::~Locations_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE FT::Locations_var &
+FT::Locations_var::operator= (Locations *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE FT::Locations_var &
+FT::Locations_var::operator= (const ::FT::Locations_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::FT::Locations (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::FT::Locations *
+FT::Locations_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Locations *
+FT::Locations_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+FT::Locations_var::operator const ::FT::Locations &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+FT::Locations_var::operator ::FT::Locations &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+FT::Locations_var::operator ::FT::Locations &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+FT::Locations_var::operator ::FT::Locations *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE FT::Location &
+FT::Locations_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::FT::Locations &
+FT::Locations_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::FT::Locations &
+FT::Locations_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::FT::Locations *&
+FT::Locations_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Locations *
+FT::Locations_var::_retn (void)
+{
+  ::FT::Locations *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::FT::Locations *
+FT::Locations_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class FT::Locations_out
+// *************************************************************
+
+ACE_INLINE
+FT::Locations_out::Locations_out (Locations *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Locations_out::Locations_out (Locations_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::Locations_out::Locations_out (const ::FT::Locations_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Locations_out&, p).ptr_)
+{}
+
+ACE_INLINE ::FT::Locations_out &
+FT::Locations_out::operator= (const ::FT::Locations_out &p)
+{
+  this->ptr_ = ACE_const_cast (Locations_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::FT::Locations_out &
+FT::Locations_out::operator= (Locations *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::Locations_out::operator ::FT::Locations *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Locations *&
+FT::Locations_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::Locations *
+FT::Locations_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE FT::Location &
+FT::Locations_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class FT::FactoryInfo_var
+// *************************************************************
+
+ACE_INLINE
+FT::FactoryInfo_var::FactoryInfo_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+FT::FactoryInfo_var::FactoryInfo_var (FactoryInfo *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+FT::FactoryInfo_var::FactoryInfo_var (const ::FT::FactoryInfo_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::FT::FactoryInfo (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::FactoryInfo_var::~FactoryInfo_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE FT::FactoryInfo_var &
+FT::FactoryInfo_var::operator= (FactoryInfo *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::FT::FactoryInfo_var &
+FT::FactoryInfo_var::operator= (const ::FT::FactoryInfo_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::FT::FactoryInfo (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::FT::FactoryInfo *
+FT::FactoryInfo_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfo *
+FT::FactoryInfo_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+FT::FactoryInfo_var::operator const ::FT::FactoryInfo &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+FT::FactoryInfo_var::operator ::FT::FactoryInfo &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+FT::FactoryInfo_var::operator ::FT::FactoryInfo &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+FT::FactoryInfo_var::operator ::FT::FactoryInfo *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::FT::FactoryInfo &
+FT::FactoryInfo_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfo &
+FT::FactoryInfo_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::FT::FactoryInfo *&
+FT::FactoryInfo_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfo *
+FT::FactoryInfo_var::_retn (void)
+{
+  ::FT::FactoryInfo *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::FT::FactoryInfo *
+FT::FactoryInfo_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class FT::FactoryInfo_out
+// *************************************************************
+
+ACE_INLINE
+FT::FactoryInfo_out::FactoryInfo_out (::FT::FactoryInfo *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::FactoryInfo_out::FactoryInfo_out (FactoryInfo_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::FactoryInfo_out::FactoryInfo_out (const ::FT::FactoryInfo_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (FactoryInfo_out&, p).ptr_)
+{}
+
+ACE_INLINE FT::FactoryInfo_out &
+FT::FactoryInfo_out::operator= (const ::FT::FactoryInfo_out &p)
+{
+  this->ptr_ = ACE_const_cast (FactoryInfo_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE FT::FactoryInfo_out &
+FT::FactoryInfo_out::operator= (FactoryInfo *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::FactoryInfo_out::operator ::FT::FactoryInfo *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfo *&
+FT::FactoryInfo_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfo *
+FT::FactoryInfo_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CI_
+
+  // = Static operations.
+  ACE_INLINE FT::FactoryInfo *
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    FT::FactoryInfo *retval = 0;
+    ACE_NEW_RETURN (retval, FT::FactoryInfo[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::freebuf (FT::FactoryInfo *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (CORBA::ULong maximum,
+    CORBA::ULong length,
+    FT::FactoryInfo *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (const _TAO_Unbounded_Sequence_FT_FactoryInfos &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      FT::FactoryInfo *tmp1 = _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (this->maximum_);
+      FT::FactoryInfo * const tmp2 = ACE_reinterpret_cast (FT::FactoryInfo * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE FT::_TAO_Unbounded_Sequence_FT_FactoryInfos &
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::operator= (const _TAO_Unbounded_Sequence_FT_FactoryInfos &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        FT::FactoryInfo *tmp = ACE_reinterpret_cast (FT::FactoryInfo *, this->buffer_);
+        _TAO_Unbounded_Sequence_FT_FactoryInfos::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    FT::FactoryInfo *tmp1 = ACE_reinterpret_cast (FT::FactoryInfo *, this->buffer_);
+    FT::FactoryInfo * const tmp2 = ACE_reinterpret_cast (FT::FactoryInfo * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE FT::FactoryInfo &
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    FT::FactoryInfo* tmp = ACE_reinterpret_cast(FT::FactoryInfo*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const FT::FactoryInfo &
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    FT::FactoryInfo * const tmp = ACE_reinterpret_cast (FT::FactoryInfo* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE FT::FactoryInfo *
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::get_buffer (CORBA::Boolean orphan)
+  {
+    FT::FactoryInfo *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (FT::FactoryInfo*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(FT::FactoryInfo*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const FT::FactoryInfo *
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const FT::FactoryInfo * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  FT::FactoryInfo *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      FT::FactoryInfo *tmp = ACE_reinterpret_cast(FT::FactoryInfo*,this->buffer_);
+      _TAO_Unbounded_Sequence_FT_FactoryInfos::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_FT_FACTORYINFOS_CI_)
+#define _FT_FACTORYINFOS_CI_
+
+// *************************************************************
+// Inline operations for class FT::FactoryInfos_var
+// *************************************************************
+
+ACE_INLINE
+FT::FactoryInfos_var::FactoryInfos_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+FT::FactoryInfos_var::FactoryInfos_var (FactoryInfos *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+FT::FactoryInfos_var::FactoryInfos_var (const ::FT::FactoryInfos_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::FT::FactoryInfos (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::FactoryInfos_var::~FactoryInfos_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE FT::FactoryInfos_var &
+FT::FactoryInfos_var::operator= (FactoryInfos *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE FT::FactoryInfos_var &
+FT::FactoryInfos_var::operator= (const ::FT::FactoryInfos_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::FT::FactoryInfos (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::FT::FactoryInfos *
+FT::FactoryInfos_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfos *
+FT::FactoryInfos_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+FT::FactoryInfos_var::operator const ::FT::FactoryInfos &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+FT::FactoryInfos_var::operator ::FT::FactoryInfos &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+FT::FactoryInfos_var::operator ::FT::FactoryInfos &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+FT::FactoryInfos_var::operator ::FT::FactoryInfos *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE FT::FactoryInfo &
+FT::FactoryInfos_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::FT::FactoryInfos &
+FT::FactoryInfos_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfos &
+FT::FactoryInfos_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::FT::FactoryInfos *&
+FT::FactoryInfos_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfos *
+FT::FactoryInfos_var::_retn (void)
+{
+  ::FT::FactoryInfos *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::FT::FactoryInfos *
+FT::FactoryInfos_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class FT::FactoryInfos_out
+// *************************************************************
+
+ACE_INLINE
+FT::FactoryInfos_out::FactoryInfos_out (FactoryInfos *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::FactoryInfos_out::FactoryInfos_out (FactoryInfos_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+FT::FactoryInfos_out::FactoryInfos_out (const ::FT::FactoryInfos_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (FactoryInfos_out&, p).ptr_)
+{}
+
+ACE_INLINE ::FT::FactoryInfos_out &
+FT::FactoryInfos_out::operator= (const ::FT::FactoryInfos_out &p)
+{
+  this->ptr_ = ACE_const_cast (FactoryInfos_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::FT::FactoryInfos_out &
+FT::FactoryInfos_out::operator= (FactoryInfos *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::FactoryInfos_out::operator ::FT::FactoryInfos *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfos *&
+FT::FactoryInfos_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::FactoryInfos *
+FT::FactoryInfos_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE FT::FactoryInfo &
+FT::FactoryInfos_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
 // Inline operations for class FT::FaultMonitoringIntervalAndTimeoutValue_var
 // *************************************************************
 
@@ -1898,6 +3365,786 @@ FT::FaultMonitoringIntervalAndTimeoutValue_var::ptr (void) const
 {
   return this->ptr_;
 }
+
+// *************************************************************
+// Inline operations for exception FT::InterfaceNotFound
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::ObjectGroupNotFound
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::MemberNotFound
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::ObjectNotFound
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::MemberAlreadyPresent
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::BadReplicationStyle
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::ObjectNotCreated
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::ObjectNotAdded
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::PrimaryNotSet
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::UnsupportedProperty
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::InvalidProperty
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::NoFactory
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::InvalidCriteria
+// *************************************************************
+
+// *************************************************************
+// Inline operations for exception FT::CannotMeetCriteria
+// *************************************************************
+
+
+#if !defined (_FT_PROPERTYMANAGER___CI_)
+#define _FT_PROPERTYMANAGER___CI_
+
+ACE_INLINE
+FT::PropertyManager::PropertyManager (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_PROPERTYMANAGER___VAR_CI_)
+#define _FT_PROPERTYMANAGER___VAR_CI_
+
+// *************************************************************
+// Inline operations for class FT::PropertyManager_var
+// *************************************************************
+
+ACE_INLINE
+FT::PropertyManager_var::PropertyManager_var (void) // default constructor
+  : ptr_ (PropertyManager::_nil ())
+{}
+
+ACE_INLINE ::FT::PropertyManager_ptr
+FT::PropertyManager_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+FT::PropertyManager_var::PropertyManager_var (const ::FT::PropertyManager_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (PropertyManager::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+FT::PropertyManager_var::~PropertyManager_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE FT::PropertyManager_var &
+FT::PropertyManager_var::operator= (PropertyManager_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE FT::PropertyManager_var &
+FT::PropertyManager_var::operator= (const ::FT::PropertyManager_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::FT::PropertyManager::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+FT::PropertyManager_var::operator const ::FT::PropertyManager_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+FT::PropertyManager_var::operator ::FT::PropertyManager_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PropertyManager_ptr
+FT::PropertyManager_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PropertyManager_ptr
+FT::PropertyManager_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PropertyManager_ptr &
+FT::PropertyManager_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PropertyManager_ptr &
+FT::PropertyManager_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::PropertyManager::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PropertyManager_ptr
+FT::PropertyManager_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::FT::PropertyManager_ptr val = this->ptr_;
+  this->ptr_ = ::FT::PropertyManager::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_PROPERTYMANAGER___OUT_CI_)
+#define _FT_PROPERTYMANAGER___OUT_CI_
+
+// *************************************************************
+// Inline operations for class FT::PropertyManager_out
+// *************************************************************
+
+ACE_INLINE
+FT::PropertyManager_out::PropertyManager_out (PropertyManager_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::FT::PropertyManager::_nil ();
+}
+
+ACE_INLINE
+FT::PropertyManager_out::PropertyManager_out (PropertyManager_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::PropertyManager::_nil ();
+}
+
+ACE_INLINE
+FT::PropertyManager_out::PropertyManager_out (const ::FT::PropertyManager_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (PropertyManager_out &, p).ptr_)
+{}
+
+ACE_INLINE ::FT::PropertyManager_out &
+FT::PropertyManager_out::operator= (const ::FT::PropertyManager_out &p)
+{
+  this->ptr_ = ACE_const_cast (PropertyManager_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE FT::PropertyManager_out &
+FT::PropertyManager_out::operator= (const ::FT::PropertyManager_var &p)
+{
+  this->ptr_ = ::FT::PropertyManager::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE FT::PropertyManager_out &
+FT::PropertyManager_out::operator= (PropertyManager_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::PropertyManager_out::operator ::FT::PropertyManager_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PropertyManager_ptr &
+FT::PropertyManager_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PropertyManager_ptr
+FT::PropertyManager_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_OBJECTGROUPMANAGER___CI_)
+#define _FT_OBJECTGROUPMANAGER___CI_
+
+ACE_INLINE
+FT::ObjectGroupManager::ObjectGroupManager (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_OBJECTGROUPMANAGER___VAR_CI_)
+#define _FT_OBJECTGROUPMANAGER___VAR_CI_
+
+// *************************************************************
+// Inline operations for class FT::ObjectGroupManager_var
+// *************************************************************
+
+ACE_INLINE
+FT::ObjectGroupManager_var::ObjectGroupManager_var (void) // default constructor
+  : ptr_ (ObjectGroupManager::_nil ())
+{}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr
+FT::ObjectGroupManager_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+FT::ObjectGroupManager_var::ObjectGroupManager_var (const ::FT::ObjectGroupManager_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (ObjectGroupManager::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+FT::ObjectGroupManager_var::~ObjectGroupManager_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE FT::ObjectGroupManager_var &
+FT::ObjectGroupManager_var::operator= (ObjectGroupManager_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE FT::ObjectGroupManager_var &
+FT::ObjectGroupManager_var::operator= (const ::FT::ObjectGroupManager_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::FT::ObjectGroupManager::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+FT::ObjectGroupManager_var::operator const ::FT::ObjectGroupManager_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+FT::ObjectGroupManager_var::operator ::FT::ObjectGroupManager_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr
+FT::ObjectGroupManager_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr
+FT::ObjectGroupManager_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr &
+FT::ObjectGroupManager_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr &
+FT::ObjectGroupManager_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::ObjectGroupManager::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr
+FT::ObjectGroupManager_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::FT::ObjectGroupManager_ptr val = this->ptr_;
+  this->ptr_ = ::FT::ObjectGroupManager::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_OBJECTGROUPMANAGER___OUT_CI_)
+#define _FT_OBJECTGROUPMANAGER___OUT_CI_
+
+// *************************************************************
+// Inline operations for class FT::ObjectGroupManager_out
+// *************************************************************
+
+ACE_INLINE
+FT::ObjectGroupManager_out::ObjectGroupManager_out (ObjectGroupManager_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::FT::ObjectGroupManager::_nil ();
+}
+
+ACE_INLINE
+FT::ObjectGroupManager_out::ObjectGroupManager_out (ObjectGroupManager_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::ObjectGroupManager::_nil ();
+}
+
+ACE_INLINE
+FT::ObjectGroupManager_out::ObjectGroupManager_out (const ::FT::ObjectGroupManager_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ObjectGroupManager_out &, p).ptr_)
+{}
+
+ACE_INLINE ::FT::ObjectGroupManager_out &
+FT::ObjectGroupManager_out::operator= (const ::FT::ObjectGroupManager_out &p)
+{
+  this->ptr_ = ACE_const_cast (ObjectGroupManager_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE FT::ObjectGroupManager_out &
+FT::ObjectGroupManager_out::operator= (const ::FT::ObjectGroupManager_var &p)
+{
+  this->ptr_ = ::FT::ObjectGroupManager::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE FT::ObjectGroupManager_out &
+FT::ObjectGroupManager_out::operator= (ObjectGroupManager_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::ObjectGroupManager_out::operator ::FT::ObjectGroupManager_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr &
+FT::ObjectGroupManager_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ObjectGroupManager_ptr
+FT::ObjectGroupManager_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_REPLICATIONMANAGER___CI_)
+#define _FT_REPLICATIONMANAGER___CI_
+
+ACE_INLINE
+FT::ReplicationManager::ReplicationManager (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_REPLICATIONMANAGER___VAR_CI_)
+#define _FT_REPLICATIONMANAGER___VAR_CI_
+
+// *************************************************************
+// Inline operations for class FT::ReplicationManager_var
+// *************************************************************
+
+ACE_INLINE
+FT::ReplicationManager_var::ReplicationManager_var (void) // default constructor
+  : ptr_ (ReplicationManager::_nil ())
+{}
+
+ACE_INLINE ::FT::ReplicationManager_ptr
+FT::ReplicationManager_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+FT::ReplicationManager_var::ReplicationManager_var (const ::FT::ReplicationManager_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (ReplicationManager::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+FT::ReplicationManager_var::~ReplicationManager_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE FT::ReplicationManager_var &
+FT::ReplicationManager_var::operator= (ReplicationManager_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE FT::ReplicationManager_var &
+FT::ReplicationManager_var::operator= (const ::FT::ReplicationManager_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::FT::ReplicationManager::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+FT::ReplicationManager_var::operator const ::FT::ReplicationManager_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+FT::ReplicationManager_var::operator ::FT::ReplicationManager_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ReplicationManager_ptr
+FT::ReplicationManager_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ReplicationManager_ptr
+FT::ReplicationManager_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ReplicationManager_ptr &
+FT::ReplicationManager_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ReplicationManager_ptr &
+FT::ReplicationManager_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::ReplicationManager::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ReplicationManager_ptr
+FT::ReplicationManager_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::FT::ReplicationManager_ptr val = this->ptr_;
+  this->ptr_ = ::FT::ReplicationManager::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_REPLICATIONMANAGER___OUT_CI_)
+#define _FT_REPLICATIONMANAGER___OUT_CI_
+
+// *************************************************************
+// Inline operations for class FT::ReplicationManager_out
+// *************************************************************
+
+ACE_INLINE
+FT::ReplicationManager_out::ReplicationManager_out (ReplicationManager_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::FT::ReplicationManager::_nil ();
+}
+
+ACE_INLINE
+FT::ReplicationManager_out::ReplicationManager_out (ReplicationManager_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::ReplicationManager::_nil ();
+}
+
+ACE_INLINE
+FT::ReplicationManager_out::ReplicationManager_out (const ::FT::ReplicationManager_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ReplicationManager_out &, p).ptr_)
+{}
+
+ACE_INLINE ::FT::ReplicationManager_out &
+FT::ReplicationManager_out::operator= (const ::FT::ReplicationManager_out &p)
+{
+  this->ptr_ = ACE_const_cast (ReplicationManager_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE FT::ReplicationManager_out &
+FT::ReplicationManager_out::operator= (const ::FT::ReplicationManager_var &p)
+{
+  this->ptr_ = ::FT::ReplicationManager::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE FT::ReplicationManager_out &
+FT::ReplicationManager_out::operator= (ReplicationManager_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::ReplicationManager_out::operator ::FT::ReplicationManager_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ReplicationManager_ptr &
+FT::ReplicationManager_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::ReplicationManager_ptr
+FT::ReplicationManager_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_PULLMONITORABLE___CI_)
+#define _FT_PULLMONITORABLE___CI_
+
+ACE_INLINE
+FT::PullMonitorable::PullMonitorable (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_PULLMONITORABLE___VAR_CI_)
+#define _FT_PULLMONITORABLE___VAR_CI_
+
+// *************************************************************
+// Inline operations for class FT::PullMonitorable_var
+// *************************************************************
+
+ACE_INLINE
+FT::PullMonitorable_var::PullMonitorable_var (void) // default constructor
+  : ptr_ (PullMonitorable::_nil ())
+{}
+
+ACE_INLINE ::FT::PullMonitorable_ptr
+FT::PullMonitorable_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+FT::PullMonitorable_var::PullMonitorable_var (const ::FT::PullMonitorable_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (PullMonitorable::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+FT::PullMonitorable_var::~PullMonitorable_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE FT::PullMonitorable_var &
+FT::PullMonitorable_var::operator= (PullMonitorable_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE FT::PullMonitorable_var &
+FT::PullMonitorable_var::operator= (const ::FT::PullMonitorable_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::FT::PullMonitorable::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+FT::PullMonitorable_var::operator const ::FT::PullMonitorable_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+FT::PullMonitorable_var::operator ::FT::PullMonitorable_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PullMonitorable_ptr
+FT::PullMonitorable_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PullMonitorable_ptr
+FT::PullMonitorable_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PullMonitorable_ptr &
+FT::PullMonitorable_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PullMonitorable_ptr &
+FT::PullMonitorable_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::PullMonitorable::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PullMonitorable_ptr
+FT::PullMonitorable_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::FT::PullMonitorable_ptr val = this->ptr_;
+  this->ptr_ = ::FT::PullMonitorable::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_FT_PULLMONITORABLE___OUT_CI_)
+#define _FT_PULLMONITORABLE___OUT_CI_
+
+// *************************************************************
+// Inline operations for class FT::PullMonitorable_out
+// *************************************************************
+
+ACE_INLINE
+FT::PullMonitorable_out::PullMonitorable_out (PullMonitorable_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::FT::PullMonitorable::_nil ();
+}
+
+ACE_INLINE
+FT::PullMonitorable_out::PullMonitorable_out (PullMonitorable_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::FT::PullMonitorable::_nil ();
+}
+
+ACE_INLINE
+FT::PullMonitorable_out::PullMonitorable_out (const ::FT::PullMonitorable_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (PullMonitorable_out &, p).ptr_)
+{}
+
+ACE_INLINE ::FT::PullMonitorable_out &
+FT::PullMonitorable_out::operator= (const ::FT::PullMonitorable_out &p)
+{
+  this->ptr_ = ACE_const_cast (PullMonitorable_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE FT::PullMonitorable_out &
+FT::PullMonitorable_out::operator= (const ::FT::PullMonitorable_var &p)
+{
+  this->ptr_ = ::FT::PullMonitorable::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE FT::PullMonitorable_out &
+FT::PullMonitorable_out::operator= (PullMonitorable_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+FT::PullMonitorable_out::operator ::FT::PullMonitorable_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PullMonitorable_ptr &
+FT::PullMonitorable_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::FT::PullMonitorable_ptr
+FT::PullMonitorable_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_STATE_CI_)
@@ -2122,10 +4369,16 @@ FT::State_out::operator[] (CORBA::ULong index)
 // Inline operations for exception FT::InvalidUpdate
 // *************************************************************
 
+
+#if !defined (_FT_CHECKPOINTABLE___CI_)
+#define _FT_CHECKPOINTABLE___CI_
+
 ACE_INLINE
 FT::Checkpointable::Checkpointable (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_CHECKPOINTABLE___VAR_CI_)
@@ -2138,11 +4391,6 @@ FT::Checkpointable::Checkpointable (TAO_Stub *objref, TAO_ServantBase *_tao_serv
 ACE_INLINE
 FT::Checkpointable_var::Checkpointable_var (void) // default constructor
   : ptr_ (Checkpointable::_nil ())
-{}
-
-ACE_INLINE
-FT::Checkpointable_var::Checkpointable_var (Checkpointable_ptr p)
-  : ptr_ (p)
 {}
 
 ACE_INLINE ::FT::Checkpointable_ptr
@@ -2302,10 +4550,16 @@ FT::Checkpointable_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+
+#if !defined (_FT_UPDATEABLE___CI_)
+#define _FT_UPDATEABLE___CI_
+
 ACE_INLINE
 FT::Updateable::Updateable (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
+
+#endif /* end #if !defined */
 
 
 #if !defined (_FT_UPDATEABLE___VAR_CI_)
@@ -2318,11 +4572,6 @@ FT::Updateable::Updateable (TAO_Stub *objref, TAO_ServantBase *_tao_servant, COR
 ACE_INLINE
 FT::Updateable_var::Updateable_var (void) // default constructor
   : ptr_ (Updateable::_nil ())
-{}
-
-ACE_INLINE
-FT::Updateable_var::Updateable_var (Updateable_ptr p)
-  : ptr_ (p)
 {}
 
 ACE_INLINE ::FT::Updateable_ptr
@@ -2795,6 +5044,101 @@ operator>> (
     TAO_InputCDR &,
     FT::FaultNotifier_ptr &
   );
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::Property &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.nam) &&
+    (strm << _tao_aggregate.val)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::Property &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.nam) &&
+    (strm >> _tao_aggregate.val)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+
+#if !defined _TAO_CDR_OP_FT_Properties_I_
+#define _TAO_CDR_OP_FT_Properties_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const FT::Properties &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    FT::Properties &
+  );
+
+#endif /* _TAO_CDR_OP_FT_Properties_I_ */
+
+
+#if !defined _TAO_CDR_OP_FT_Locations_I_
+#define _TAO_CDR_OP_FT_Locations_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const FT::Locations &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    FT::Locations &
+  );
+
+#endif /* _TAO_CDR_OP_FT_Locations_I_ */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FactoryInfo &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.factory.in ()) &&
+    (strm << _tao_aggregate.the_location) &&
+    (strm << _tao_aggregate.the_criteria)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FactoryInfo &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.factory.out ()) &&
+    (strm >> _tao_aggregate.the_location) &&
+    (strm >> _tao_aggregate.the_criteria)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+
+#if !defined _TAO_CDR_OP_FT_FactoryInfos_I_
+#define _TAO_CDR_OP_FT_FactoryInfos_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const FT::FactoryInfos &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    FT::FactoryInfos &
+  );
+
+#endif /* _TAO_CDR_OP_FT_FactoryInfos_I_ */
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FaultMonitoringIntervalAndTimeoutValue &_tao_aggregate)
 {
   if (
@@ -2817,6 +5161,852 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FaultMonitoringInt
   else
     return 0;
   
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::InterfaceNotFound &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::InterfaceNotFound&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::InterfaceNotFound &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::ObjectGroupNotFound &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::ObjectGroupNotFound&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::ObjectGroupNotFound &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::MemberNotFound &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::MemberNotFound&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::MemberNotFound &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::ObjectNotFound &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::ObjectNotFound&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::ObjectNotFound &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::MemberAlreadyPresent &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::MemberAlreadyPresent&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::MemberAlreadyPresent &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::BadReplicationStyle &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::BadReplicationStyle&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::BadReplicationStyle &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::ObjectNotCreated &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::ObjectNotCreated&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::ObjectNotCreated &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::ObjectNotAdded &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::ObjectNotAdded&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::ObjectNotAdded &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::PrimaryNotSet &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,FT::PrimaryNotSet&)
+{
+  return 1;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::PrimaryNotSet &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::UnsupportedProperty &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+  {
+    // now marshal the members (if any)
+    if (
+      (strm << _tao_aggregate.nam) &&
+      (strm << _tao_aggregate.val)
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,FT::UnsupportedProperty &_tao_aggregate)
+{
+  // now marshal the members
+  if (
+    (strm >> _tao_aggregate.nam) &&
+    (strm >> _tao_aggregate.val)
+  )
+    return 1;
+  else
+    return 0;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::UnsupportedProperty &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::InvalidProperty &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+  {
+    // now marshal the members (if any)
+    if (
+      (strm << _tao_aggregate.nam) &&
+      (strm << _tao_aggregate.val)
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,FT::InvalidProperty &_tao_aggregate)
+{
+  // now marshal the members
+  if (
+    (strm >> _tao_aggregate.nam) &&
+    (strm >> _tao_aggregate.val)
+  )
+    return 1;
+  else
+    return 0;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::InvalidProperty &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::NoFactory &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+  {
+    // now marshal the members (if any)
+    if (
+      (strm << _tao_aggregate.the_location) &&
+      (strm << _tao_aggregate.type_id.in ())
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,FT::NoFactory &_tao_aggregate)
+{
+  // now marshal the members
+  if (
+    (strm >> _tao_aggregate.the_location) &&
+    (strm >> _tao_aggregate.type_id.out ())
+  )
+    return 1;
+  else
+    return 0;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::NoFactory &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::InvalidCriteria &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+  {
+    // now marshal the members (if any)
+    if (
+      (strm << _tao_aggregate.invalid_criteria)
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,FT::InvalidCriteria &_tao_aggregate)
+{
+  // now marshal the members
+  if (
+    (strm >> _tao_aggregate.invalid_criteria)
+  )
+    return 1;
+  else
+    return 0;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::InvalidCriteria &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::CannotMeetCriteria &_tao_aggregate)
+{
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+  {
+    // now marshal the members (if any)
+    if (
+      (strm << _tao_aggregate.unmet_criteria)
+    )
+      return 1;
+    else
+      return 0;
+  }
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,FT::CannotMeetCriteria &_tao_aggregate)
+{
+  // now marshal the members
+  if (
+    (strm >> _tao_aggregate.unmet_criteria)
+  )
+    return 1;
+  else
+    return 0;
+}
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+ACE_INLINE
+ostream & operator<< (ostream &os, const FT::CannotMeetCriteria &_tao_aggregate)
+{
+  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
+  if (tc)
+    {
+      os << tc->name () << " (";
+    }
+  os << _tao_aggregate._id ();
+  if (tc)
+    {
+      os << ")";
+    }
+  return os;
+}
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::PropertyManager_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::PropertyManager_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::PropertyManager_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::PropertyManager_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::PropertyManager::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::ObjectGroupManager_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::ObjectGroupManager_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::ObjectGroupManager_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::ObjectGroupManager_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::ObjectGroupManager::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::GenericFactory_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::GenericFactory_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::GenericFactory_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::GenericFactory_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::GenericFactory::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::ReplicationManager_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::ReplicationManager_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::ReplicationManager_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::ReplicationManager_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::ReplicationManager::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::PullMonitorable_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::PullMonitorable_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::PullMonitorable_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::PullMonitorable_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::PullMonitorable::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const FT::FaultNotifier_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    FT::FaultNotifier_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const FT::FaultNotifier_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    FT::FaultNotifier_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      FT::FaultNotifier::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
 }
 
 
