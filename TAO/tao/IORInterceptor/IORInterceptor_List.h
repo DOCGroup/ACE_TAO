@@ -15,19 +15,20 @@
 
 #include "ace/pre.h"
 
-#include "tao/Interceptor_List.h"
+#include "iorinterceptor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Interceptor_List.h"
 
 /**
  * @class TAO_IORInterceptor_List
  *
  * @brief Encapsulation for a list of IOR interceptors.
  */
-class TAO_Export TAO_IORInterceptor_List
+class TAO_IORInterceptor_Export TAO_IORInterceptor_List
   : public TAO_Interceptor_List
 {
 public:
