@@ -1,3 +1,9 @@
+Mon Jan 31 11:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
+
 Mon Jan 31 07:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/NamingViewer/SelectNSDialog.cpp:
