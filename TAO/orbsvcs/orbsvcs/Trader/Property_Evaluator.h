@@ -19,7 +19,7 @@
 
 #include "Trader.h"
 
-class TAO_Property_Evaluator
+class TAO_ORBSVCS_Export TAO_Property_Evaluator
 //
 // = TITLE
 //   This class abstracts away the details of obtaining property

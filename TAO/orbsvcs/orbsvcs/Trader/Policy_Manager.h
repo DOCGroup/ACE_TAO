@@ -19,7 +19,7 @@
 
 #include "Policies.h"
 
-class TAO_Policy_Manager
+class TAO_ORBSVCS_Export TAO_Policy_Manager
 // = TITLE
 //
 // This class is a utility for clients using the CosTrading::Lookup
