@@ -160,6 +160,9 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound));
 
+  /// Set up multicast handler, if multicast is enabled
+  int setup_multicast (ACE_Reactor *reactor);
+
   /// The locator interface for the IORTable
   IORTable::Locator_var locator_;
 

@@ -1,3 +1,14 @@
+Tue Mar  6 17:29:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+
+          Hmmm, yuck.  I'm cleaning up my 10 or so workspaces and found 
+          that I still had this fix ready for checkin.  [Bug 723]
+          Originally submitted by RogerTragin@bigfoot.com (Roger Tragin).
+
 Tue Mar  6 15:40:42 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
