@@ -1,3 +1,10 @@
+Wed Apr 17 11:15:23 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Messaging/Messaging.h:
+
+	  Include "tao/TAOC.h" to pull in the TAO module that contains
+	  the oneway buffering related IDL.
+
 Wed Apr 17 12:25:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp (send_reply_exception):
