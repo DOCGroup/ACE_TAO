@@ -10,10 +10,10 @@ main (int argc, char *argv[])
   // Initialize WinSock DLL on Win32...
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
-  struct sockaddr_in saddr;
-  struct hostent *hp;
-  char *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
-  u_short port_num =
+  struct sockaddr_in saddr;                                          
+  struct hostent *hp;                                           
+  const char *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  u_short port_num = 
     htons (argc > 2 ? atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT);
   int sockbufsize = argc > 3 ? ACE_OS::atoi (argv[3]) : 0;
   char buf[BUFSIZ];

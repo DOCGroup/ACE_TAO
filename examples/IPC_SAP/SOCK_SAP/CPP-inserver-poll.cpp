@@ -8,7 +8,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/INET_Addr.h"                                       
 
-#if defined (ACE_HAS_SVR4_POLL)
+#if defined (ACE_HAS_POLL)
 
 // Maximum per-process open I/O descriptors.
 const int MAX_FDS = 200;
