@@ -1355,6 +1355,55 @@ ACE_OS::socket_fini (void)
 #if defined (VXWORKS)
 int sys_nerr = ERRMAX + 1;
 
+#include <usrLib.h>   // for ::sp()
+
+// This global function can be used from the VxWorks shell to
+// pass arguments to a C main () function.
+// usage: -> spa main, "arg1", "arg2"
+// All arguments must be quoted, even numbers.
+int
+spa (FUNCPTR entry, ...)
+{
+   static const unsigned int MAX_ARGS = 10;
+   static char *argv[MAX_ARGS];
+   va_list pvar;
+   int argc;
+
+   // Hardcode a program name because the real one isn't available
+   // through the VxWorks shell.
+   argv[0] = "spa ():t";
+
+   // Peel off arguments to spa () and put into argv.  va_arg ()
+   // isn't necessarily supposed to return 0 when done, though
+   // since the VxWorks shell uses a fixed number (10) of arguments,
+   // it might 0 the unused ones.
+   // This function could be used to increase that limit, but then
+   // it couldn't depend on the trailing 0.  So, the number of arguments
+   // would have to be passed.
+   va_start (pvar, entry);
+   for (argc = 1; argc <= MAX_ARGS; ++argc)
+     {
+       argv[argc] = va_arg (pvar, char *);
+       if (argv[argc] == 0)
+         break;
+     }
+
+   if (argc > MAX_ARGS  &&  argv[argc-1] != 0)
+     {
+       // try to read another arg, and warn user if the limit was exceeded
+       if (va_arg (pvar, char *) != 0)
+         fprintf (stderr, "spa(): number of arguments limited to %d\n",
+                  MAX_ARGS);
+     }
+
+   int ret = ::sp (entry, argc, (int) argv, 0, 0, 0, 0, 0, 0, 0);
+   va_end (pvar);
+
+   // ::sp () returns the taskID on success:  return 0 instead
+   // if successful
+   return ret > 0 ? 0 : ret;
+}
+
 #endif /* VXWORKS */
 
 #if !defined (ACE_HAS_SIGINFO_T)
