@@ -1,3 +1,9 @@
+Thu Nov 14 13:35:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Containers_T.cpp: Changed to deallocate internal nodes in
+	  ACE_Double_Linked_List with the allocator.  Thanks to Eugene
+	  Alterman <EugeneA@bremer-inc.com> for reporting the problem.
+
 Thu Nov 14 10:57:47 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* ace/OS.h (ace_timezone):
