@@ -22,12 +22,12 @@
 #define TAO_IFRFWD_H
 #include "ace/pre.h"
 
+#include "ifr_client_export.h"
+#include "tao/corbafwd.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ifr_client_export.h"
-#include "tao/corbafwd.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
