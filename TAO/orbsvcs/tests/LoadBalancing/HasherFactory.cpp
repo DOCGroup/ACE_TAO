@@ -107,6 +107,10 @@ HasherFactory::create_object (
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Hasher activated.\n"));
+
   HasherFactory::FactoryCreationId fcid =
     this->bind_fcid (oid.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -177,9 +181,13 @@ HasherFactory::init (CORBA::Environment &ACE_TRY_ENV)
         this->root_poa_->create_id_assignment_policy (
           PortableServer::SYSTEM_ID);
 
+      PortableServer::POAManager_var manager =
+        this->root_poa_->the_POAManager (ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->poa_ =
         this->root_poa_->create_POA ("Hasher_POA",
-                                     PortableServer::POAManager::_nil (),
+                                     manager.in (),
                                      policies,
                                      ACE_TRY_ENV);
       ACE_CHECK;

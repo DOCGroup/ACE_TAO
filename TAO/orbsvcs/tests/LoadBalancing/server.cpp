@@ -50,6 +50,9 @@ setup_lb (CORBA::Object_ptr lb,
           TAO_LB_RPMS_Monitor &rpms_monitor,
           HasherFactory &hasher_factory)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Setting up LB\n"));
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
