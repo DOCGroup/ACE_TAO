@@ -1,5 +1,7 @@
 // @(#) $Id$
 
+#define POA_NO_TIMESTAMP
+
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
@@ -2232,10 +2234,6 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Skip past the system id indicator
   starting_at += TAO_POA::system_id_key_type_length ();
 
-  // Assume persistent key when the POA_NO_TIMESTAMP is enabled.
-  is_persistent = 1;
-
-#if !defined (POA_NO_TIMESTAMP)
   // Check the persistence indicator
   char persistent_key_type = key_data[starting_at];
   if (persistent_key_type == TAO_POA::persistent_key_char ())
@@ -2255,6 +2253,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Skip past the persistent indicator
   starting_at += TAO_POA::persistent_key_type_length ();
 
+#if !defined (POA_NO_TIMESTAMP)
   // Grab the timestamp for transient POAs.
   if (!is_persistent)
     {
@@ -2348,16 +2347,14 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Calculate the space required for the timestamp and the persistent
   // byte.
-  CORBA::ULong creation_time = 0;
+  CORBA::ULong creation_time = this->persistent_key_type_length ();
 #if !defined (POA_NO_TIMESTAMP)
   // Calculate the space required for the timestamp.
   CORBA::ULong creation_time_length = TAO_Creation_Time::creation_time_length ();
   if (!this->persistent_)
     {
-      creation_time = creation_time_length;
+      creation_time += creation_time_length;
     }
-
-  creation_time += this->persistent_key_type_length ();
 #endif /* POA_NO_TIMESTAMP */
 
   // Calculate the space required for the key.
@@ -2392,11 +2389,11 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   buffer[starting_at] = (CORBA::Octet) this->system_id_key_type ();
   starting_at += this->system_id_key_type_length ();
 
-#if !defined (POA_NO_TIMESTAMP)
   // Copy the persistence byte.
   buffer[starting_at] = (CORBA::Octet) this->persistent_key_type ();
   starting_at += this->persistent_key_type_length ();
 
+#if !defined (POA_NO_TIMESTAMP)
   // Then copy the timestamp for transient POAs.
   if (!this->persistent ())
     {
