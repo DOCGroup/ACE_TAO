@@ -39,12 +39,14 @@ void reset_iov(iovec& iov)
 }
 
 wpdu::wpdu(const Pdu& pdu, const UdpTarget& target): 
-   valid_flag_(SNMP_CLASS_INVALID )
+   valid_flag_(SNMP_CLASS_INVALID ), comm_len(MAX_COMM_STR_LEN)
 {
    reset_iov(iovec_);
    version_ = target.get_version();
    int status;
    OctetStr comm_str;
+
+   community_name[0] = 0;
 
    snmp_pdu *raw_pdu;   // create a raw pdu
    raw_pdu = cmu_snmp::pdu_create( (int) pdu.get_type());
@@ -159,8 +161,9 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
   raw_pdu->time = ( unsigned long) timestamp;
 }
 
-wpdu::wpdu(const iovec& iov): valid_flag_(FALSE)
+wpdu::wpdu(const iovec& iov): valid_flag_(FALSE),comm_len(MAX_COMM_STR_LEN)
 {
+  community_name[0] = 0;
    reset_iov(iovec_);
    version_ = version1;		// TODO: figure where this should come from
    ACE_NEW(iovec_.iov_base, char[iov.iov_len]);
@@ -171,6 +174,13 @@ wpdu::wpdu(const iovec& iov): valid_flag_(FALSE)
 
    copy_iovec(iovec_, iov);     
    valid_flag_ = SNMP_CLASS_SUCCESS;
+}
+
+wpdu::wpdu(): valid_flag_(FALSE), comm_len(MAX_COMM_STR_LEN)
+{
+  community_name[0] = 0;
+   reset_iov(iovec_);
+   version_ = version1;		// TODO: figure where this should come from
 }
 
 int wpdu::valid() const
@@ -258,6 +268,21 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
       smival->value.hNumber.lopart = c64.low();
     }
     break;
+
+   // OID syntax
+  case sNMP_SYNTAX_OID:
+    {
+      Oid tmpoid;
+      tmpoid.oidval();
+      tempvb.get_value(tmpoid);
+      SmiLPOID smi = tmpoid.oidval();
+      smival->value.oid.len = tmpoid.length();
+      ACE_NEW_RETURN(smival->value.oid.ptr, 
+                SmiUINT32 [smival->value.oid.len], 1);
+      ACE_OS::memcpy(smival->value.oid.ptr, smi->ptr, 
+                     smival->value.oid.len *sizeof(SmiUINT32));
+    }
+    break;
     
   case sNMP_SYNTAX_BITS:
   case sNMP_SYNTAX_OCTETS:
@@ -280,6 +305,10 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
 	}
       }
     }
+
+    default:
+     ACE_DEBUG((LM_DEBUG, "wpdu::convert_vb_to_smival did not convert vb\n"));
+     // ACE_ASSERT(0);
   } // switch
 
   return 0;
@@ -315,7 +344,7 @@ const iovec& wpdu::get_buffer() const
 }
 
 // return a pdu from a buffer
-int wpdu::get_pdu(Pdu& pdu, snmp_version& version) const
+int wpdu::get_pdu(Pdu& pdu, snmp_version& version) 
 {
   if (iovec_.iov_len == 0)
     return -1; // NO DATA
@@ -328,15 +357,13 @@ int wpdu::get_pdu(Pdu& pdu, snmp_version& version) const
 
   // max value a client can send us - TODO: replace this with an
   // api to get actual string length 
-  unsigned char community_name[MAX_COMM_STR_LEN];
-  unsigned long comm_len = MAX_COMM_STR_LEN;
   int status = cmu_snmp::parse( raw_pdu, (unsigned char *)iovec_.iov_base,
                      community_name, comm_len,
                      version, iovec_.iov_len);
   if (status != 0)
     return SNMP_CLASS_INTERNAL_ERROR;
-  //  TODO: something with community - verify against params_?
 
+  community_name[comm_len] = 0; // set null based on returned length
   set_request_id( &pdu, raw_pdu->reqid);
   set_error_status( &pdu, (int) raw_pdu->errstat);
   set_error_index( &pdu, (int) raw_pdu->errindex);
@@ -458,5 +485,11 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
 
   return 0;
 }
+
+const unsigned char *wpdu::get_community() const
+{
+  return community_name;
+}
+
 
 
