@@ -11,6 +11,9 @@
 
 ACE_RCSID(ace, Service_Object, "$Id$")
 
+#undef ACE_TRACE
+#define ACE_TRACE(X) ACE_TRACE_IMPL(X)
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
@@ -22,7 +25,7 @@ ACE_Service_Type::dump (void) const
 
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
-                                    ACE_DLL *dll,
+                                    const ACE_DLL &dll,
                                     int active)
   : name_ (0),
     type_ (t),
@@ -39,8 +42,6 @@ ACE_Service_Type::~ACE_Service_Type (void)
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
 
   this->fini ();
-
-  delete dll_;
 
   delete [] (ACE_TCHAR *) this->name_;
 }

@@ -202,7 +202,7 @@ public:
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0) = 0;
   virtual void set_symbol (void *h);
   ACE_SHLIB_HANDLE handle (void);
-  ACE_DLL *dll (void);
+  const ACE_DLL &dll (void);
   const ACE_TCHAR *pathname (void) const;
   void pathname (const ACE_TCHAR *h);
   int dispose (void) const;
@@ -228,11 +228,8 @@ protected:
    */
   int must_delete_;
 
-  /// Flag to determine if we should delete the dll.
-  int delete_dll_;
-
   /// The open shared library.
-  ACE_DLL *dll_;
+  ACE_DLL dll_;
 
   /// Symbol that we've obtained from the shared library.
   void *symbol_;
