@@ -184,11 +184,12 @@ ACE_Process::wait (int *status)
   // keep the original error code intact.
   result = ::WaitForSingleObject (process_info_.hProcess,
                                 INFINITE);
-  if (result == WAIT_OBJECT_0 && status != 0)
+  if (result == WAIT_OBJECT_0)
     {
+      if (status != 0)
       // The error status of GetExitCodeProcess is nonetheless not
       // tested.  (Don't know how to return the value.)
-      ::GetExitCodeProcess (process_info_.hProcess, (LPDWORD) status);
+        ::GetExitCodeProcess (process_info_.hProcess, (LPDWORD) status);
 
       return this->getpid ();
     }
