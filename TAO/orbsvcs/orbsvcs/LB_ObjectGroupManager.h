@@ -41,7 +41,8 @@ class TAO_LB_ObjectGroupManager
 public:
 
   /// Constructor.
-  TAO_LB_ObjectGroupManager (TAO_LB_ObjectGroup_Map &map);
+  TAO_LB_ObjectGroupManager (TAO_LB_PropertyManager &property_manager,
+                             TAO_LB_ObjectGroup_Map &map);
 
   /**
    * @name TAO_LoadBalancer::ObjectGroupManager methods

@@ -6,9 +6,9 @@ ACE_RCSID (LoadBalancing,
            LB_PropertyManager,
            "$Id$")
 
-TAO_LB_PropertyManager::TAO_LB_PropertyManager (void)
-{
-}
+// TAO_LB_PropertyManager::TAO_LB_PropertyManager (void)
+// {
+// }
 
 void
 TAO_LB_PropertyManager::set_default_properties (
