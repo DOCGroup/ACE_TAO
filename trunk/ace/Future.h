@@ -102,7 +102,9 @@ private:
            ACE_Future<T> &caller);
   // Set the result value.  The specified <caller> represents the
   // future that invoked this <set> method, which is used to notify
-  // the list of future observers.
+  // the list of future observers. Returns 0 for success, -1 on error.
+  // This function only has an effect the first time it is called for
+  // the object. Subsequent calls return 0 (success) but have no effect.
 
   int get (T &value,
            ACE_Time_Value *tv);
@@ -248,7 +250,11 @@ public:
 
   int set (const T &r);
   // Make the result available. Is used by the server thread to give
-  // the result to all waiting clients.
+  // the result to all waiting clients. Returns 0 for success, -1 on failure.
+  // This function only has an effect the first time it is called for
+  // the object (actually, the first time the underlying ACE_Future_Rep has a
+  // value assigned to it). Subsequent calls return 0 (success) but have no
+  // effect.
 
   int get (T &value,
            ACE_Time_Value *tv = 0);
@@ -285,8 +291,8 @@ public:
   // 1 if the specified observer was actually attached to the subject
   // prior to this call and 0 if was not.
   //
-  // Returns 0 if the observer was successfully detached, and -1 if the observer was
-  // not attached in the first place.
+  // Returns 0 if the observer was successfully detached, and -1 if the
+  // observer was not attached in the first place.
 
   void dump (void) const;
   // Dump the state of an object.
