@@ -1,9 +1,0 @@
-//$Id$
-
-project(*CompilerElements) {
-  requires += cidl
-  sharedname =
-  staticname = CompilerElements
-  includes += ../..
-  libout = ..
-}

@@ -1,2 +1,0 @@
-project(Latency*): taoexe, portableserver, strategies {
-}

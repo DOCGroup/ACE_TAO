@@ -1,8 +1,0 @@
-#
-# $Id$
-#
-
-MAKEFILES = \
-        IBM1047_ISO8859.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

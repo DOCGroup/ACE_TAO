@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, notify, naming {
-  avoids += minimum_corba
-}
