@@ -1,3 +1,25 @@
+Wed Sep  5 17:26:12 2001  Anand Krishnan  <anandk@cs.wustl.edu>
+
+	* orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: 
+	* orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
+	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.cpp:
+	* orbsvcs/tests/Security/MT_SSLIOP/client.cpp:
+	* orbsvcs/tests/Security/MT_SSLIOP/Client_Worker.cpp:
+	* orbsvcs/tests/Security/MT_SSLIOP/Client_Worker.h:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/MT_SSLIOP/test_i.cpp:
+	* orbsvcs/tests/Security/MT_SSLIOP/test_i.h:
+	* orbsvcs/tests/Security/MT_SSLIOP/test_i.i:
+	* orbsvcs/tests/Security/MT_SSLIOP/client.conf:
+	* orbsvcs/tests/Security/MT_SSLIOP/server.conf:
+	* orbsvcs/tests/Security/MT_SSLIOP/selfsigncert.pem:
+	* orbsvcs/tests/Security/MT_SSLIOP/pvtkey.pem: 
+	* orbsvcs/tests/Security/MT_SSLIOP/test.idl: A test for a simple
+	  multi-threaded SSLIOP test. This test will not be included in
+	  the daily builds for the upcoming beta, but will be there for
+	  the next beta.
+	
 Wed Sep  5 12:10:40 2001  Priyanka Gontla  <gontla_p@ociweb.com>
 
 	This set of changes are for bug 977.
