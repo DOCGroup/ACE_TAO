@@ -139,9 +139,9 @@ RtecEventChannelAdmin::EventChannel_ptr
 FTEC_Gateway::activate(PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   // preallocation connections
-  CORBA::PolicyList_var pols;
-  impl_->ftec->_validate_connection (pols.out () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  //CORBA::PolicyList_var pols;
+  //impl_->ftec->_validate_connection (pols.out () ACE_ENV_ARG_PARAMETER);
+  //ACE_CHECK_RETURN(0);
 
   PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
     poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
