@@ -2,15 +2,22 @@
 #ifndef DT_CREATOR_H
 #define DT_CREATOR_H
 
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "tao/RTScheduling/RTScheduler.h"
-
+#include "ace/Arg_Shifter.h"
+#include "POA_Holder.h"
+#include "Job_i.h"
+#include "Synch_i.h"
 
 class Thread_Task;
 class Task;
 
+
 typedef Thread_Task **DT_LIST;
+typedef POA_Holder **POA_LIST;
+typedef Job_i **JOB_LIST;
 
 class DT_Creator : public ACE_Service_Object
 {
@@ -19,11 +26,17 @@ class DT_Creator : public ACE_Service_Object
   ~DT_Creator (void);
 
   int init (int argc, char *argv []);
-  
-  virtual void create_distributable_threads (CORBA::ORB_ptr orb,
-					     RTScheduling::Current_ptr  current
+
+  int dt_task_init (ACE_Arg_Shifter& arg_shifter
+		    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+  virtual void create_distributable_threads (RTScheduling::Current_ptr  current
 					     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  
+
+  void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void activate_job_list (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void activate_schedule (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
   virtual void yield (int suspend_time,
 		      Thread_Task* task) = 0;
 
@@ -31,32 +44,73 @@ class DT_Creator : public ACE_Service_Object
   
   virtual Thread_Task* create_thr_task (int importance,
 					int start_time,
-					int load) = 0;
+					int load,
+					int iter,
+					int dist,
+					char *job_name) = 0;
   //  virtual Task* task (void) = 0;
+  
+  /// Resolve the naming service.
+  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
 
   int dt_count (void);
 
   void dt_ended (void);
+  void job_ended (void);
 
   void check_ifexit (void);
 
   void log_msg (char* msg);
 
+  void orb (CORBA::ORB_ptr);
   CORBA::ORB_ptr orb (void);
 
+  ACE_Time_Value* base_time (void);  
+  void base_time (ACE_Time_Value*);  
+
+  ACE_hrtime_t base_hr_time (void);  
+
+  virtual int total_load (void) = 0;
+
+  RTScheduling::Current_ptr current (void); 
+
+  Synch_i* synch (void);
+
+  void register_synch_obj (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  int activate_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
+  
  protected:
+
+
   DT_LIST dt_list_;
+  POA_LIST poa_list_;
+  JOB_LIST job_list_;
   //Fixed_Priority_Scheduler* scheduler_;
   ACE_Barrier* barrier_;
   int dt_count_;
+  int poa_count_;
+  int job_count_;
   CORBA::ORB_var orb_;
   /// Mutex to serialize access to our internal state.
   ACE_Lock* state_lock_;
   ACE_Lock* shutdown_lock_;
   int active_dt_count_;
+  int active_job_count_;
   char** log;
   ACE_Time_Value* base_time_;
+  ACE_hrtime_t base_hr_time_;
   RTScheduling::Current_var current_; 
+  /// RT ORB
+  RTCORBA::RTORB_var rt_orb_;
+  /// Reference to the root poa.
+  PortableServer::POA_var root_poa_;
+  /// A naming context.
+  CosNaming::NamingContextExt_var naming_;
+  char* file_name_;
+  char* log_file_name_;
+  ACE_UINT32 gsf_;
+  Synch_i* synch_;
 };
 
 
