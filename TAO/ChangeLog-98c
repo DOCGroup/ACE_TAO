@@ -1,3 +1,15 @@
+Wed Nov  4 15:31:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/IIOP_Object.h: Added TAO_Export to Profile so I can use
+          it in the Implementation Repository.
+
+        * orbsvcs/ImplRepo_Service/*: The Implementation Repository 
+          (which now supports DSI and Ping Objects) has been moved here.
+
+        * orbsvcs/tests/ImplRepo/*: Updated the test to check DSI and
+          the Ping Object, and also added a test for just the Repository
+          class in ImplRepo_Service.
+
 Tue Nov  3 21:02:30 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Supplier_Timer_Handler.cpp
