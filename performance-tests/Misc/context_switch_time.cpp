@@ -862,7 +862,8 @@ High_Priority_Synchronized_Task::svc ()
         ACE_hrtime_t nsec;
         timer_.elapsed_time (nsec);
         const ACE_UINT32 context_switch_time =
-          ACE_U64_TO_U32 (nsec) - mutex_acquire_release_time;
+          ACE_U64_TO_U32 (nsec) >= mutex_acquire_release_time  ?
+            ACE_U64_TO_U32 (nsec) - mutex_acquire_release_time  :  0;
 
         total_time_ += context_switch_time;
 
