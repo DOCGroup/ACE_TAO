@@ -429,7 +429,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
                                                0 /* TAO_DIOP_Properties */),
                   -1);
 
-  this->connection_handler_->addr (addr);
+  this->connection_handler_->local_addr (addr);
   this->connection_handler_->open_server ();
 
   this->orb_core_->reactor ()->register_handler (this->connection_handler_,

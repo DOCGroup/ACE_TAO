@@ -153,6 +153,7 @@ TAO_DIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                                                    0 /* TAO_DIOP_Properties */),
                       -1);
 
+      svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
       svc_handler_i->addr (remote_address);
 
       svc_handler_i->open (0);
