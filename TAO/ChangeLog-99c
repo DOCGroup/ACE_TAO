@@ -1,3 +1,16 @@
+Tue Aug 10 19:59:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/Any.i:
+	* tao/Any.cpp:
+	* tao/CDR.h:
+	* tao/CDR.i:
+	  Added the wstring versions of the <<=, >>=, << and >>
+	  operators. Also moved the <<= operators in Any.i to
+	  Any.cpp (they are much too long to inline), and 
+	  added an ACE_DEBUG message to the previously empty
+	  ACE_CATCHANY block in the Any operators.
+
 Tue Aug 10 12:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/TAO_Test.dsw:
