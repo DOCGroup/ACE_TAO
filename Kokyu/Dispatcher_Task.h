@@ -16,6 +16,11 @@
 #include "ace/Task.h"
 #include "ace/Lock_Adapter_T.h"
 
+#ifdef KOKYU_HAS_RELEASE_GUARD
+#include "ace/Map.h"
+#include "Dispatch_Deferrer.h"
+#endif //KOKYU_HAS_RELEASE_GUARD
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -41,6 +46,9 @@ public:
         ACE_Allocator* mb_allocator =0);
 
   Dispatch_Command* command ();
+
+  //Any reason why this shouldn't be visible?
+  const QoSDescriptor& qos_info() const;
 
 private:
   void init_i(const QoSDescriptor&);
@@ -71,6 +79,8 @@ public:
   int enqueue (const Dispatch_Command* cmd,
            const QoSDescriptor& qos_info);
 
+  int enqueue (Dispatch_Queue_Item *qitem);
+
   /// Process the events in the queue.
   int svc (void);
 
@@ -94,6 +104,24 @@ private:
 
   ACE_Deadline_Message_Strategy deadline_msg_strategy_;
   ACE_Laxity_Message_Strategy laxity_msg_strategy_;
+
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  //TODO: What's the best way to identify periodic events?
+  //For now, use QoSDescriptor equivalence.
+  //Maps QoSDescriptors to last release time of events for that
+  //QoSDescriptor.  Seems kind of wasteful to store the whole
+  //QoSDescriptor as the key, but I don't see any other way since each
+  //Dispatch_Queue_Item has its own instance of the QoSDescriptor.
+  //The release time is stored as a long as if from
+  //ACE_Time_Value.msec().
+  typedef ACE_Map_Manager<QoSDescriptor,long,ACE_SYNCH_NULL_MUTEX> Release_Time_Map;
+
+  Release_Time_Map releases_;
+
+  //For delaying dispatch until required by RG:
+  Dispatch_Deferrer_Attributes deferrer_attr_;
+  Dispatch_Deferrer deferrer_;
+#endif //KOKYU_HAS_RELEASE_GUARD
 };
 
 } //end of namespace
