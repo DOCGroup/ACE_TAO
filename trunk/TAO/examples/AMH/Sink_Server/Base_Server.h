@@ -66,7 +66,7 @@ public:
   // @@ Mayur, please put inlined methods in a separate `.inl' file,
   //    as detailed in the ACE/TAO coding/style guidelines, and as per
   //    our conventions.
- //
+  //
   // @@ Mayur, empty parameter lists should be denoted with "(void)",
   //    not "()".  Again, this is detailed in the guidelines.
 
