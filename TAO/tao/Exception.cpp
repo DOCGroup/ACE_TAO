@@ -277,8 +277,21 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_EPERM_MINOR_CODE;
     case EAFNOSUPPORT:
       return TAO_EAFNOSUPPORT_MINOR_CODE;
+    case EAGAIN:
+      return TAO_EAGAIN_MINOR_CODE;
+    case ENOMEM:
+      return TAO_ENOMEM_MINOR_CODE;
+    case EACCES:
+      return TAO_EACCES_MINOR_CODE;
+    case EFAULT:
+      return TAO_EFAULT_MINOR_CODE;
+    case EBUSY:
+      return TAO_EBUSY_MINOR_CODE;
+    case EEXIST:
+      return TAO_EEXIST_MINOR_CODE;
     default:
-      return TAO_UNKNOWN_MINOR_CODE;
+      // Mask off bottom 7 bits and return them.
+      return errno_value & 0x7F;
     }
 }
 
@@ -319,7 +332,7 @@ CORBA_SystemException::_info (void) const
   if (VMCID == TAO_DEFAULT_MINOR_CODE)
     {
       const char *location;
-      switch (this->minor () & 0x00000FF0u)
+      switch (this->minor () & 0x00000F80u)
         {
         case TAO_INVOCATION_CONNECT_MINOR_CODE:
           location = "invocation connect failed";
@@ -365,7 +378,8 @@ CORBA_SystemException::_info (void) const
         }
 
       const char *errno_indication;
-      switch (this->minor () & 0x0000000Fu)
+      char unknown_errno [32];
+      switch (this->minor () & 0x7FU)
         {
         case TAO_UNSPECIFIED_MINOR_CODE:
           errno_indication = "unspecified errno";
@@ -400,8 +414,33 @@ CORBA_SystemException::_info (void) const
         case TAO_EAFNOSUPPORT_MINOR_CODE:
           errno_indication = "EAFNOSUPPORT";
           break;
+        case TAO_EAGAIN_MINOR_CODE:
+          errno_indication = "EAGAIN";
+          break;
+        case TAO_ENOMEM_MINOR_CODE:
+          errno_indication = "ENOMEM";
+          break;
+        case TAO_EACCES_MINOR_CODE:
+          errno_indication = "EACCES";
+          break;
+        case TAO_EFAULT_MINOR_CODE:
+          errno_indication = "EFAULT";
+          break;
+        case TAO_EBUSY_MINOR_CODE:
+          errno_indication = "EBUSY";
+          break;
+        case TAO_EEXIST_MINOR_CODE:
+          errno_indication = "EEXIST";
+          break;
         default:
-          errno_indication = "unknown errno";
+          {
+            // 7 bits of some other errno.
+            ACE_OS::sprintf (unknown_errno,
+                             "low 7 bits of errno: %3u",
+                             this->minor () & 0x7FU);
+
+            errno_indication = unknown_errno;
+          }
         }
 
       char buffer[BUFSIZ];
