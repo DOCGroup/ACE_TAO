@@ -1,3 +1,7 @@
+Tue Nov 10 21:53:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Process.cpp: added const to loop index, in CHORUS code.
+
 Tue Nov 10 19:27:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/OS.[i,cpp]:
@@ -8,11 +12,11 @@ Tue Nov 10 19:27:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 Tue Nov 10 14:56:38 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/index.html
-	  Including #17 now
+          Including #17 now
 
         * docs/tutorials/017/*.html
           docs/tutorials/017/combine.shar
-	  Completed!  Commented and converted into standared Tutorial format.
+          Completed!  Commented and converted into standared Tutorial format.
 
 Tue Nov 10 10:09:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -34,8 +38,9 @@ Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp (main): prepended "./" to name of
           file to spawn.  With the last round of changes to
-          ace/Process.cpp, that's necessary on g++/Solaris86
-          without ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+          ace/Process.cpp, that's necessary if "." isn't in the user's
+          PATH.  That's because we're now using only execvp, and no
+          longer using execve.
 
         * tests/Atomic_Op_Test.cpp,Barrier_Test.cpp,Buffer_Stream_Test.cpp,
           Future_Test.cpp,IOStream_Test.cpp,MT_Reactor_Timer_Test.cpp,
