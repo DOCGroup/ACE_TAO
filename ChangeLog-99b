@@ -1,3 +1,11 @@
+Mon Jun 21 13:24:41 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_freebsd.GNU,platform_linux.GNU,
+          platform_linux_lxpthread.GNU,platform_psosim_g++.GNU,
+          platform_qnx_neutrino.GNU,platform_sunos5_g++.GNU,
+          platform_vxworks5.x_g++.GNU: added -W to CFLAGS.  -Wall
+          doesn't include the -W checks, at least with egcs 1.1.2.
+
 Mon Jun 21 10:18:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: moved FlReactor, Msg_WFMO_Reactor, TkReactor,
