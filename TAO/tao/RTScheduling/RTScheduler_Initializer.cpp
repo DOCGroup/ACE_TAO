@@ -77,7 +77,7 @@ void
     info->register_initial_reference ("RTScheduler_Current",
 				      current_obj
 				      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK;
 
   Client_Interceptor *client_interceptor;
   ACE_NEW_THROW_EX (client_interceptor,
