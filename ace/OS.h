@@ -1100,10 +1100,10 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #    if !defined (ACE_HAS_POSIX_SEM)
 // This is used to implement semaphores for POSIX pthreads, but
 // without POSIX semaphores.  It is different than the POSIX sem_t.
-class ACE_sema_t
+class ACE_Export ACE_sema_t
 {
 friend class ACE_OS;
-private:
+protected:
   ACE_mutex_t lock_;
   // Serialize access to internal state.
 
@@ -1230,7 +1230,7 @@ typedef HANDLE ACE_sema_t;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 
 #if defined (ACE_LACKS_COND_T)
-class ACE_cond_t
+class ACE_Export ACE_cond_t
   // = TITLE
   //     This structure is used to implement condition variables on
   //     VxWorks and Win32.
@@ -1244,7 +1244,7 @@ public:
   long waiters (void) const;
   // Returns the number of waiters.
 
-private:
+protected:
   long waiters_;
   // Number of waiting threads.
 
@@ -1274,7 +1274,7 @@ private:
 #endif /* ACE_LACKS_COND_T */
 
 #if defined (ACE_LACKS_RWLOCK_T)
-struct ACE_rwlock_t
+struct ACE_Export ACE_rwlock_t
   // = TITLE
   //     This is used to implement readers/writer locks on NT,
   //     VxWorks, and POSIX pthreads.
@@ -1284,7 +1284,7 @@ struct ACE_rwlock_t
   //     within the same process.
 {
 friend class ACE_OS;
-private:
+protected:
   ACE_mutex_t lock_; 
   // Serialize access to internal state.
  
@@ -1524,7 +1524,7 @@ struct utsname
 #define ACE_DEFAULT_GLOBALNAME_W L"\\globalnames"
 
 // Need to work around odd glitches with NT.
-#define ACE_MAX_DEFAULT_PORT 65279
+#define ACE_MAX_DEFAULT_PORT 0
 
 // We're on WinNT or Win95
 #define ACE_PLATFORM_A "Win32"
@@ -1818,10 +1818,10 @@ typedef char TCHAR;
 #define ACE_DEV_NULL "/dev/null"
 
 // Wrapper for NT events on UNIX.
-class ACE_event_t
+class ACE_Export ACE_event_t
 {  
   friend class ACE_OS;
-private:
+protected:
   ACE_mutex_t lock_;
   // Protect critical section.
 
