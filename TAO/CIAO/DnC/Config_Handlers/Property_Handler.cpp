@@ -3,6 +3,7 @@
 #include "Property_Handler.h"
 #include "Any_Handler.h"
 #include "tao/Exception.h"
+#include "ace/Auto_Ptr.h"
 #include "Utils.h"
 
 using CIAO::Config_Handler::Utils;
@@ -36,8 +37,10 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
                     {
                       DOMNode * attr_node = named_node_map->item (j);
                       XStr attr_node_name = attr_node->getNodeName ();
-                      ACE_TString attr_node_value = 
+                      char*  attr_node_value_ch = 
                         XMLString::transcode (attr_node->getNodeValue ());
+                      ACE_TString attr_node_value = attr_node_value_ch;
+                      auto_ptr<char> cleanup_char (attr_node_value_ch);
                       if (attr_node_name = XStr (ACE_TEXT ("href")))
                         {
                           XMLURL url (attr_node_value.c_str ());
