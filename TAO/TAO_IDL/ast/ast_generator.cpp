@@ -175,35 +175,77 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
   return retval;
 }
 
-// Create a be_valuetype node.
+// Create an AST_Interface node which is a valuetype.
 AST_Interface *
-AST_Generator::create_valuetype (UTL_ScopedName *,
-                                 AST_Interface ** /* ih */,
-                                 long /* nih */,
-                                 UTL_StrList *)
+AST_Generator::create_valuetype (UTL_ScopedName *n,
+                                 AST_Interface **ih,
+                                 long nih,
+                                 UTL_StrList *p)
 {
+#ifdef IDL_HAS_VALUETYPE
+  AST_Interface *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Interface (n, 
+                                 ih, 
+                                 nih,
+                                 0,
+                                 0, 
+                                 p,
+                                 0,
+                                 0),
+                  0);
+
   // Valuetypes are represented as be_valuetype derived from be_interface,
   // which derives from AST_Interface. If you construct a backend which
   // utilizes only the AST_... classes, you must instantiate an object that
   // returns true from AST_Interface::is_valuetype().
-  // (currently not implemented)
-  // Also invoke
-  // (AST_Module::narrow_from_scope (this->defined_in ()))->set_has_nested_valuetype ();
+  // (@@@ (JP) implemented 2000/10/4)
+  retval->set_valuetype ();
 
-  ACE_ASSERT (0);
-  return 0;
+  // The following helps with OBV_ namespace generation.
+  AST_Module *m = AST_Module::narrow_from_scope (retval->defined_in ());
+
+  if (m != 0)
+    {
+      m->set_has_nested_valuetype ();
+    }
+
+  return retval;
+#else
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Valuetype support not enabled\n"),
+                    0);
+#endif /* IDL_HAS_VALUETYPE */
 }
 
-// Create a be_valuetype_fwd node.
+// Create an AST_InterfaceFwd node whose full_definition
+// member is a valuetype.
 AST_InterfaceFwd *
-AST_Generator::create_valuetype_fwd (UTL_ScopedName *,
-                                     UTL_StrList *)
+AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
+                                     UTL_StrList *p)
 {
-  // see note in create_valuetype()
-  // dummy placeholder must return true from is_valuetype().
+  // See note in create_valuetype().
+  // Dummy placeholder must return true from is_valuetype().
 
-  ACE_ASSERT (0);
-  return 0;
+#ifdef IDL_HAS_VALUETYPE
+  AST_Interface *dummy = this->create_valuetype (n,
+                                                 0,
+                                                 -1,
+                                                 p);
+
+  AST_InterfaceFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_InterfaceFwd (dummy,
+                                    n,
+                                    p),
+                  0);
+
+  return retval;
+#else
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Valuetype support not enabled\n"),
+                    0);
+#endif /* IDL_HAS_VALUETYPE */
 }
 
 

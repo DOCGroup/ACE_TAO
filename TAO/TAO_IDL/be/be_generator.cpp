@@ -64,12 +64,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// be_generator.cc
-//
-// Implementation of BE generator class
+// Implementation of BE generator class.
 //
 // This implements the same protocol as AST_Generator but creates instances
-// of the BE-subclassed classes instead of of AST classes
+// of the BE-subclassed classes instead of of AST classes.
 
 #include "idl.h"
 #include "idl_extern.h"

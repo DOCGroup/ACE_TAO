@@ -133,11 +133,13 @@ public:
     return (pd_n_inherits < 0) ? I_FALSE : I_TRUE;
   }
 
-  virtual idl_bool is_valuetype (void);
+  idl_bool is_valuetype (void);
 
-  virtual idl_bool is_abstract_valuetype (void);
+  void set_valuetype (void);
 
-  virtual void set_abstract_valuetype (void);
+  idl_bool is_abstract_valuetype (void);
+
+  void set_abstract_valuetype (void);
 
   // Check if any member's name clashes with a parent's
   // member's name, or if any parents' members' names
@@ -154,6 +156,11 @@ public:
 
   // AST Dumping.
   virtual void dump (ostream &o);
+
+protected:
+
+  idl_bool is_valuetype_;
+  // 
 
 private:
   // Helper function for fwd_redefinition_helper.

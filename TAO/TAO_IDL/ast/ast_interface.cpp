@@ -82,7 +82,8 @@ AST_Interface::AST_Interface (void)
   : pd_inherits (0),
     pd_n_inherits (0),
     pd_inherits_flat (0),
-    pd_n_inherits_flat (0)
+    pd_n_inherits_flat (0),
+    is_valuetype_ (0)
 {
 }
 
@@ -103,7 +104,8 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
     pd_inherits (ih),
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
-    pd_n_inherits_flat (nih_flat)
+    pd_n_inherits_flat (nih_flat),
+    is_valuetype_ (0)
 {
 }
 
@@ -111,27 +113,32 @@ AST_Interface::~AST_Interface (void)
 {
 }
 
-// Public operations
+// Public operations.
 
 idl_bool 
 AST_Interface::is_valuetype (void)
 {
-  return 0;
+  return this->is_valuetype_;
 }
 
+void
+AST_Interface::set_valuetype (void)
+{
+  this->is_valuetype_ = 1;
+}
 
 idl_bool 
 AST_Interface::is_abstract_valuetype (void)
 {
-  return 0;
+  return this->is_valuetype_ && this->is_abstract_;
 }
 
 void 
 AST_Interface::set_abstract_valuetype (void)
 {
-  ACE_ASSERT (0);
+  this->is_valuetype_ = 1;
+  this->is_abstract_ = 1;
 }
-
 
 void 
 AST_Interface::be_replace_operation (AST_Decl *old_op,                                                                                    
