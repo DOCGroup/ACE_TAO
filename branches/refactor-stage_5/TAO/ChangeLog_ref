@@ -1,3 +1,27 @@
+Mon Aug  4 10:08:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+          Replaced instantiation and invocation of visitor to generate
+          skeleton-side interceptor classes, which wa inadvertently
+          removed.
+
+        * tao/TAO.dsp:
+
+          Restored files to build which were excluded pending Bala's
+          update to bring them in synch with recent reactor and POA
+          changes.
+
+        * tao/Typecode.h:
+        * tao/PortableServer/Key_Adapters.cpp:
+
+          Added additional includes required by recent changes to ACE.
+
+        * tests/Bench/wire/test.idl:
+
+          Changed interface operation name and signature to match what
+          is in the implementation class.
+
 Sun Aug  3 16:37:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any_Basic_Impl_T.cpp:

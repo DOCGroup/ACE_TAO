@@ -3,6 +3,8 @@
 
 interface foo
 {
-  attribute long attr;
+  string all_str (in string inarg,
+                  inout string inoutarg,
+                  out string outarg);
 };
 
