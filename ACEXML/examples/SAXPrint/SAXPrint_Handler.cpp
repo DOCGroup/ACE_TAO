@@ -28,7 +28,9 @@ ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (end);
 
-  cout << cdata;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("%s"),
+              cdata));
 }
 
 void
@@ -37,7 +39,7 @@ ACEXML_SAXPrint_Handler::endDocument (ACEXML_Env &xmlenv)
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << endl;
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
 }
 
 void
@@ -51,7 +53,9 @@ ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
 
   this->dec_indent ();
   this->print_indent ();
-  cout << "</" << qName << ">";
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("</%s>"),
+              qName));
 }
 
 void
@@ -61,7 +65,9 @@ ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *prefix,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event endPrefixMapping (" << prefix << ") ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
+              prefix));
 }
 
 void
@@ -73,7 +79,8 @@ ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char *,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event ignorableWhitespace () ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
 void
@@ -85,8 +92,9 @@ ACEXML_SAXPrint_Handler::processingInstruction (const ACEXML_Char *target,
   ACE_UNUSED_ARG (xmlenv);
 
   this->print_indent ();
-  cout << "<?" << target << " "
-       << data << "?>" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("<?%s %s>\n"),
+              target, data));
 }
 
 void
@@ -95,7 +103,8 @@ ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator *,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event setDocumentLocator () ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
 
 void
@@ -105,7 +114,9 @@ ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event skippedEntity (" << name << ") ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event skippedEntity (%s) ***************\n"),
+              name));
 }
 
 void
@@ -114,7 +125,8 @@ ACEXML_SAXPrint_Handler::startDocument (ACEXML_Env &xmlenv)
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event startDocument () ***************" << endl;
+//    ACE_DEBUG ((LM_DEBUG,
+//                ACE_LIB_TEXT ("* Event startDocument () ***************\n")));
 }
 
 void
@@ -129,14 +141,16 @@ ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
 
   this->print_indent ();
 
-  cout << "<" << qName;
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("<%s"),
+              qName));
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
-        cout << " " << alist->getQName (i) << " = \""
-             << alist->getValue (i) << "\"";
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT (" %s = \"%s\""),
+                    alist->getQName (i), alist->getValue (i)));
       }
-  cout <<  ">";
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (">")));
   this->inc_indent ();
 }
 
@@ -216,7 +230,7 @@ ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException &,
 void
 ACEXML_SAXPrint_Handler::print_indent (void)
 {
-  cout << endl;
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   for (size_t i = 0; i < this->indent_; ++i)
-    cout << "  ";
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("  ")));
 }

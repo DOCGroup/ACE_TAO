@@ -38,7 +38,7 @@ ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input,
 {
   if (this->setupParser () < 0)
     {
-      xmlenv.exception (new ACEXML_SAXException ("No Parent available"));
+      xmlenv.exception (new ACEXML_SAXException (ACE_LIB_TEXT ("No Parent available")));
       return;
     }
   this->parent_->parse (input, xmlenv);
@@ -52,7 +52,7 @@ ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId,
 {
   if (this->setupParser () < 0)
     {
-      xmlenv.exception (new ACEXML_SAXException ("No Parent available"));
+      xmlenv.exception (new ACEXML_SAXException (ACE_LIB_TEXT ("No Parent available")));
       return;
     }
 

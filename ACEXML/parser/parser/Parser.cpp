@@ -501,14 +501,13 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
       if (xmlenv.exception () != 0)
         return -1;
       else if (this->dtd_public_ == 0)
-          cout << "ACEXML Parser got external DTD id: SYSTEM " << this->dtd_system_
-               << endl;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("ACEXML Parser got external DTD id: SYSTEM %s\n"),
+                      this->dtd_system_));
       else
-          cout << "==> ACEXML Parser got DTD external id: PUBLIC "
-               << this->dtd_public_
-               << " "
-               << this->dtd_system_
-               << endl;
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("==> ACEXML Parser got DTD external id: PUBLIC %s %s\n"),
+                    this->dtd_public_, this->dtd_system_));
     }
 
   nextch = this->skip_whitespace (0);
@@ -890,12 +889,12 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t len)
           if (more_digit == 0)  // no digit exist???
             return -1;
           int clen;
-#if 1                           // depending on what we default char we are using here
-                                // we assume UTF-8 here
-          if ((clen = ACEXML_Transcoder::ucs42utf8 (sum, buf, len)) < 0)
-            return -1;
-#elif 1                         // or UTF-16, currently disabled.
+#if defined (ACE_USES_WCHAR)    // UTF-16
           if ((clen = ACEXML_Transcoder::ucs42utf16 (sum, buf, len)) < 0)
+            return -1;
+
+#elif 1                         // or UTF-8
+          if ((clen = ACEXML_Transcoder::ucs42utf8 (sum, buf, len)) < 0)
             return -1;
 #elif 0                         // UCS 4, not likely
           buf [0] = sum;
@@ -1401,12 +1400,18 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
       else
         {
           // @@ Need to support external CharStream sources
-          cout << "ENTITY: (" << entity_name << ") ";
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("ENTITY: (%s) "),
+                      entity_name));
 
           if (publicid == 0)
-            cout << "SYSTEM " << systemid << endl;
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_LIB_TEXT ("SYSTEM %s\n"),
+                        systemid));
           else
-            cout << "PUBLIC " << publicid << " " << systemid << endl;
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_LIB_TEXT ("PUBLIC %s %s\n"),
+                        publicid, systemid));
         }
     }
 
