@@ -13,8 +13,7 @@ TAO_IDLFLAGS += -Ge 1
 
 DIRS  = Common \
 	Single_Endpoint \
-        Orb_Per_Priority \
-        Endpoint_Per_Priority
+        Orb_Per_Priority
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
