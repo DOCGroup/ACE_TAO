@@ -1,34 +1,44 @@
+Wed Mar 21 07:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Client_Leaks/client.dsp:
+        * tests/Client_Leaks/server.dsp:
+          Updated project files.
+
+        * tests/Client_Leaks/Process_Factory.cpp:
+          Fixed compilation problems on Win32, ACE_Process_Options lacks
+          an avoid_zombies in this case.
+
 Wed Mar 21 08:02:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/Explicit_Binding/client.cpp: Fixed a possible typo
-	  that was giving false alarms in the nightly builds. The message
-	  read "ERROR: <validate_connection> returned true". The message
-	  was not right, as this is not an error.
+        * tests/RTCORBA/Explicit_Binding/client.cpp: Fixed a possible typo
+          that was giving false alarms in the nightly builds. The message
+          read "ERROR: <validate_connection> returned true". The message
+          was not right, as this is not an error.
 
 Tue Mar 20 21:53:17 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
+        * orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
 
-	  Added user exception that is thrown when no security attributes
-	  are available for the current upcall.
+          Added user exception that is thrown when no security attributes
+          are available for the current upcall.
 
-	  The baz() test method raises this exception.
+          The baz() test method raises this exception.
 
-	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.h (baz):
+        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.h (baz):
 
-	  Updated exception specification to include the newly added user
-	  exception.
+          Updated exception specification to include the newly added user
+          exception.
 
-	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp (baz):
+        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp (baz):
 
-	  Throw an exception if no security attributes are available for
-	  the current upcall.  The exception indicates problem with the
-	  underlying security mechanism in use.
+          Throw an exception if no security attributes are available for
+          the current upcall.  The exception indicates problem with the
+          underlying security mechanism in use.
 
-	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+        * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
 
-	  Increased timeout for server IOR file.  It wasn't long enough
-	  for some slow machines.
+          Increased timeout for server IOR file.  It wasn't long enough
+          for some slow machines.
 
 Tue Mar 20 20:01:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 

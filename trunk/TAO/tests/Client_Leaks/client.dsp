@@ -93,12 +93,20 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Client_Task.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TestC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Client_Task.h
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 
