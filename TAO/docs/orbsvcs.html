@@ -73,7 +73,9 @@ bgcolor="#ffffff">
       <TR>
 	<TD>Concurrency Service</TD><TD><CODE>orbsvcs/Concurrency</CODE></TD></TR>
       <TR>
-	<TD>Event Service</TD><TD><CODE>orbsvcs/Event</CODE></TD></TR>
+	<TD>Event Service</TD><TD><CODE>orbsvcs/CosEvent</CODE></TD></TR>
+      <TR>
+	<TD>Real-time Event Service</TD><TD><CODE>orbsvcs/Event</CODE></TD></TR>
       <TR>
 	<TD>LifeCycle Service</TD><TD><CODE>orbsvcs/LifeCycle</CODE></TD></TR>
       <TR>
@@ -102,6 +104,7 @@ bgcolor="#ffffff">
       <LI>Concurrenty_Service</LI>
       <LI>Dump_Schedule</LI>
       <LI>LifeCycle_Service</LI>
+      <LI>CosEvent_Service</LI>
       <LI>Event_Service</LI>
       <LI>Naming_Service</LI>
       <LI>Scheduling_Service</LI>
@@ -131,15 +134,64 @@ bgcolor="#ffffff">
       <TR>
 	<TD><CODE>Concurrency</CODE></TD>
 	<TD>Test the Concurrency Service.</TD></TR>
+
       <TR>
-	<TD><CODE>Event_Latency</CODE></TD>
-	<TD>Test the Event Service and measure end-to-end latency,
-	it also uses the Scheduling and Naming services.</TD></TR>
+	<TD><CODE>CosEC_Basic</CODE></TD>
+          <TD>Test the basic functionality of the standard Event
+            Service.
+          </TD>
+        </TR>
+
+      <TR>
+	<TD><CODE>CosEC_Multiple</CODE></TD>
+          <TD>Simple example that connects multiple consumers and/or
+            suppliers to the standard event service. It can be used to
+            show how composing a standard event-service and the
+            real-time event service provides filtering capabilities.
+          </TD>
+        </TR>
+
+      <TR>
+	<TD><CODE>EC_Basic</CODE></TD>
+          <TD>Test the basic functionality of the real-time Event
+            Service.
+          </TD>
+        </TR>
+
+      <TR>
+	<TD><CODE>EC_Custom_Marshal</CODE></TD>
+          <TD>Show how the Real-time event service can send user
+            defined data using custom marshaling.
+          </TD>
+        </TR>
+
+      <TR>
+	<TD><CODE>EC_Mcast</CODE></TD>
+          <TD>Multiple real-time event channels can communicate using
+            multicast, this example shows how to do it.
+          </TD>
+        </TR>
+        
       <TR>
 	<TD><CODE>EC_Multiple</CODE></TD>
-	<TD>Connect two Event Channels using the
+	<TD>Connect two Real-time Event Channels using the
 	  <CODE>EC_Gateway</CODE>,
-	  measure latency, utilization and minimum spacing.</TD></TR>
+	  measure latency, utilization and minimum spacing.
+          </TD>
+        </TR>
+
+      <TR>
+	<TD><CODE>EC_Throughput</CODE></TD>
+	<TD>Measure throughput and latency for collocated and remote
+            real-time event services.
+          </TD>
+        </TR>
+
+      <TR>
+	<TD><CODE>Event_Latency</CODE></TD>
+	<TD>Test the Real-time Event Service and measure end-to-end latency,
+	it also uses the Scheduling and Naming services.</TD></TR>
+
       <TR>
 	<TD><CODE>Logger</CODE></TD>
 	<TD>An example logging service using the Naming Service to
