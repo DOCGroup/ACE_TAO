@@ -24,10 +24,16 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name CosNaming_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosProperty_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
     End Project Dependency
 }}}
 
@@ -42,10 +48,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name PortableServer_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
     End Project Dependency
 }}}
 
@@ -60,10 +69,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name CosNaming_Static
     End Project Dependency
 }}}
 
@@ -78,10 +87,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name CosNaming_Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
 }}}
 
@@ -96,10 +105,16 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name IORTable_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
     End Project Dependency
 }}}
 
@@ -114,9 +129,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name PortableServer_Static
     End Project Dependency
     Begin Project Dependency
@@ -124,6 +136,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
 }}}
 
@@ -138,10 +153,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name PortableServer_Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
 }}}
 
@@ -156,10 +171,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name CosNaming_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
     End Project Dependency
 }}}
 
@@ -174,10 +192,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name CosNaming_Static
     End Project Dependency
 }}}
 
@@ -191,6 +209,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -204,10 +225,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name CosTrading_Static
     End Project Dependency
 }}}
 
@@ -221,6 +242,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -245,6 +269,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -257,6 +284,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -269,6 +299,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -282,10 +315,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
+    Project_Dep_Name PortableServer_Static
     End Project Dependency
 }}}
 
@@ -335,6 +368,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -347,6 +383,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -362,6 +401,12 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -374,6 +419,18 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -386,6 +443,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -398,6 +461,24 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -410,6 +491,18 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler Static
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -423,10 +516,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO LIB
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
+    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
 }}}
 
@@ -440,6 +533,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACE LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -503,6 +599,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -515,6 +614,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client_Static
+    End Project Dependency
 }}}
 
 ###############################################################################
