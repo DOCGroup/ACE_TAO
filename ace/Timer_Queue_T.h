@@ -34,7 +34,7 @@ template <class TYPE>
 class ACE_Timer_Node_Dispatch_Info_T
 {
 public:
-  // The type of object held in the queue
+  /// The type of object held in the queue
   TYPE type_;
 
   /// Asynchronous completion token associated with the timer.
