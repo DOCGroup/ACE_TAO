@@ -2,6 +2,10 @@
 
 [Current difficulties]
 
+  [ACE_ASSERT]
+     This macro fails to print out the assertion error and causes
+     Access Violation itself.
+
   [Non-static object manager problem]
      CE uses non-static object manager.  However, there seems to be
      another global object manager hanging somewhere and it gets
@@ -17,7 +21,7 @@
         un-inline _all_ inline functions in ACE to get it to work.
         Not sure if inlining works for Release version or other CPUs
         (namely, MIPS series.)  It appears to work fine for x86
-        emulator.  
+        emulator builds.  
 
     [Lost string literals]
         The following format string in ACE_OS::ctime_r was
@@ -146,6 +150,7 @@
 
 
 [Status of one-button tests]
+
    [Convention of project files settings]
         
       Procedures:
@@ -184,24 +189,37 @@
 
       * You are all done.
         
-   [Legend:] X - test working properly
-             F - compile but doesn't work correctly.
-             C - compilation trouble
-             . - work pending (deferred)
-             N - Not supported by CE
+   [Legend:] 
+        X - test working properly
+        F - compile but doesn't work correctly.
+        C - compilation trouble
+        . - work pending (deferred)
+        N - Not supported by CE
+
+        For each test, Section [EM] describes the status of the test
+        on x86 emulator.  Section [SH] describes the status of the
+        test under SH series machines.  (I use an HP 360LX as my
+        testbed.  We don't have MIPS machine.)
 
     [N] Aio_Platform_Test
            Asynch I/O is not supported on CE.
     [X] Atomic_Op_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Barrier_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [X] Basic_Types_Test
+           [EM] Runs successfully
+           [SH] Runs successfully
     [F] Buffer_Stream_Test
     [F] Conn_Test
     [X] Enum_Interfaces_Test
           Sort of working right.  (Report get_ip_interface error ;-)
     [N] Env_Value_Test
     [X] Future_Test
-           This test seems to run to completion without error but the display hangs before printing out the ending message
+           This test seems to run to completion without error but the
+           display hangs before printing out the ending message.
     [X] Handle_Set_Test
     [X] Hash_Map_Manager_Test
     [N] IOStream_Test
@@ -236,22 +254,22 @@
     [N] Reactor_Exceptions_Test
            Exceptions are not support on CE.
     [F] Reactor_Notify_Test
-           Hang at limited notifications test.
+           Hang at "starting limited notifications test."
     [F] Reactor_Performance_Test
     [X] Reactor_Timer_Test
     [F] Reactors_Test
            Hang after done_count reaches 0.  Reactors were not shutting down.
-    [x] Reader_Writer_Test
+    [X] Reader_Writer_Test
            Seems working.  Need to redo the test
-    [F] Recursive_Mutex_Test
-           Looks fine but hang before run to completion
-    [F] SOCK_Connector_Test
-           Hang at program startup
-    [F] SOCK_Test
-           Hang at program startup
+    [X] Recursive_Mutex_Test
+           The test succeeded after reducing the iteration from 100 to
+           50.  It appears that windows' CEdit buffer overflowed from
+           the exccessive amount of output from this test.
+    [X] SOCK_Connector_Test
+    [X] SOCK_Test
     [N] SPIPE_Test
            SPIPE is not supported yet.
-    [F] SString_Test
+    [X] SString_Test
     [N] SV_Shared_Memory_Test
     [X] Semaphore_Test
            Test runs fine but gets Access Violation at program exit
@@ -259,17 +277,18 @@
            I don't have confidence on this test....
     [X] Sigset_Ops_Test
     [X] Simple_Message_Block_Test
-    [F] TSS_Test
-           Hang halfway.
+    [X] TSS_Test
+           TlsGetValue appearently acts differently from most Win32
+           platforms.  If we check the return value and the error
+           code, then, ACE_OS::key_getspecific will never succeed.
     [X] Task_Test
            Test runs successfully but hang after the ending messge.
-    [F] Thread_Manager_Test
-           Doesn't terminate (no ending string)
+    [X] Thread_Manager_Test
     [X] Thread_Mutex_Test
     [X] Thread_Pool_Test
     [.] Time_Service_Test
     [X] Time_Value_Test
-    [F] Timer_Queue_Test
+    [X] Timer_Queue_Test
            Hang midway.
     [.] Tokens_Test
     [N] UPIPE_SAP_Test
@@ -570,13 +589,13 @@
    (x)                    Mem_Map.i
                   [Shared_Malloc]
    (x)                    Malloc.cpp
-   (x)                    Malloc.h
+   (x_)                   Malloc.h
    (x)                    Malloc.i
    (T)                    Malloc_T.cpp
    (T)                    Malloc_T.h
    (T)                    Malloc_T.i
    (x)                    Memory_Pool.cpp
-   (x)                    Memory_Pool.h
+   (x_)                   Memory_Pool.h
    (x)                    Memory_Pool.i
                   [Shared_Memory]
    ( )                    Shared_Memory.h
@@ -673,7 +692,6 @@
    (x)            Service_Config.cpp
    (x)            Service_Config.h
    (x)            Service_Config.i
-   ( )            Service_Main.cpp
    (x)            Service_Manager.cpp
    (x)            Service_Manager.h
    (x)            Service_Manager.i
@@ -694,7 +712,7 @@
    (x)            Svc_Conf_y.cpp
           [Streams]
    (x)            IO_Cntl_Msg.cpp
-   (x)            IO_Cntl_Msg.h
+   (x_)           IO_Cntl_Msg.h
    (x)            IO_Cntl_Msg.i
    (x)            Message_Block.cpp
    (x)            Message_Block.h
