@@ -1,3 +1,9 @@
+Thu Jul 27 15:02:53 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h:
+
+	  Clean up comments.
+
 Thu Jul 27 14:04:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/defines.h:
