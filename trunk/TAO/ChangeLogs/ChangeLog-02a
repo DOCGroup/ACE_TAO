@@ -1,3 +1,12 @@
+Mon Jan 28 20:21:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CORBALOC_Parser.cpp
+	  (check_prefix, parse_string_count_helper):
+
+	  Only print debugging information if desired by the user.
+
+	  Improved efficiency of some code.
+
 Mon Jan 28 16:21:59 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/TAO.dsp:
