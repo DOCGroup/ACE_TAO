@@ -75,9 +75,6 @@ main (int argc, char **argv)
 
   ACE_TRY
     {
-
-      char* ior=0;
-
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -102,18 +99,20 @@ main (int argc, char **argv)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to read ior\n"),
                           -1);
-      ior = ACE_OS::strdup (data);
+
+      ACE_CString ior = data;
       ior_buffer.alloc ()-> free (data);
       ACE_OS::close (input_file);
 
-      CORBA::Object_var object = orb->string_to_object (ior, ACE_TRY_ENV);
+      CORBA::Object_var object = orb->string_to_object (ior.c_str (),
+                                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Narrow the object reference to a File::System
       File::System_var file_system = File::System::_narrow (object.in (),
                                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Creat the file filename i.e "test"
       File::Descriptor_var fd = file_system->open (filename,
                                                    O_CREAT | O_RDWR,
