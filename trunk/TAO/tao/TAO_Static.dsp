@@ -24,7 +24,8 @@ CFG=TAO Static - Win32 Debug
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_LocalPath "Desktop"
+# PROP WCE_FormatVersion ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -207,6 +208,10 @@ SOURCE=.\IIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Profile.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Server_Request.cpp
 # End Source File
 # Begin Source File
 
@@ -482,6 +487,10 @@ SOURCE=.\IIOP_Profile.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_Server_Request.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
@@ -707,6 +716,10 @@ SOURCE=.\giop.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Server_Request.i
 # End Source File
 # Begin Source File
 
