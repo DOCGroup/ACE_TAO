@@ -1,3 +1,16 @@
+Tue Nov 18 23:17:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Concurrency_Service/Makefile:
+	* orbsvcs/Time_Service/Makefile:
+	   
+	  Added messaging library. This is not sufficient. We need to make
+	  a check whether messaging is on or not. I just wanted to fix
+	  this before I went to bed. 
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+
+	  Fixed an unused variable warning.
+
 Tue Nov 18 22:49:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Naming_Service/Makefile:
