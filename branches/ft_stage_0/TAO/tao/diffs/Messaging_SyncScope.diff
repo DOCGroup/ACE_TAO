@@ -1,0 +1,38 @@
+--- orig/Messaging_SyncScopeC.h	Wed Apr 17 14:02:07 2002
++++ Messaging_SyncScopeC.h	Wed Apr 17 14:03:14 2002
+@@ -23,14 +23,13 @@
+ #define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++
++#include "corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "corbafwd.h"
+-
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+ #endif
+--- orig/Messaging_SyncScopeC.cpp	Wed Apr 17 14:02:07 2002
++++ Messaging_SyncScopeC.cpp	Wed Apr 17 14:05:32 2002
+@@ -21,15 +21,7 @@
+ 
+ #include "Messaging_SyncScopeC.h"
+ 
+-#include "tao/Stub.h"
+-#include "tao/Invocation.h"
+-#include "tao/PortableInterceptor.h"
+-
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#include "tao/ClientRequestInfo_i.h"
+-#include "tao/ClientInterceptorAdapter.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
++#include "tao/Typecode.h"
+ 
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

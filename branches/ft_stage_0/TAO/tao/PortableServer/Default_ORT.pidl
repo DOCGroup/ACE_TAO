@@ -1,0 +1,46 @@
+// -*- IDL -*-
+/**
+ * @file Default_ORT.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the TAO_Default_ORT module.
+ *
+ * This file is used to generate Default_ORTC.{h,i,cpp}, using the following
+ * command:
+ *
+ *   tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h"
+ *        Default_ORT.pidl
+ *
+ * and then:
+ *
+ * cp orig/Default_ORTC.{h,i,cpp} .
+ * patch < diffs/Default_ORT.diff
+ *
+ * The code left in Default_ORTC.{h,i,cpp} is
+ * ready for use.
+ *
+ *
+ * @note The diffs were generated using:
+ *
+ *   rm diffs/Default_ORT.diff
+ *   for i in Default_ORTC.{h,i,cpp}; do
+ *     diff -wub orig/$i $i >> diffs/Default_ORT.diff
+ *   done
+ */
+
+#ifndef TAO_DEFAULT_ORT_PIDL
+#define TAO_DEFAULT_ORT_PIDL
+
+#include <ObjectReferenceTemplate.pidl>
+
+module TAO_Default_ORT
+{
+  valuetype ObjectReferenceTemplate
+    : PortableInterceptor::ObjectReferenceTemplate {};
+};
+
+#endif /* TAO_DEFAULT_ORT_PIDL */
