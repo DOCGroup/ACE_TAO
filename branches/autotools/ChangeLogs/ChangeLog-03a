@@ -1,3 +1,15 @@
+Sat Feb  1 10:20:45 2003  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.am:
+
+	  Updated list of files and directories to be distributed.
+	  Removed files that no longer from the list.
+
+	* ace/Makefile.am:
+
+	  Updated header, inline, source and template file lists to
+	  include new files.
+
 Wed Jan 29 13:54:21 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:
