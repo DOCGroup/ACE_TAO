@@ -9,8 +9,9 @@ const CORBA::ULong reply_ctx_id = 0xbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Request_Interceptor reply message";
 
-Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (void)
-  : myname_ ("Echo_Client_Interceptor")
+Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (CORBA::ORB_ptr orb)
+  : myname_ ("Echo_Client_Interceptor"),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -23,17 +24,22 @@ Echo_Client_Request_Interceptor::name (CORBA::Environment &)
 void
 Echo_Client_Request_Interceptor::preinvoke (CORBA::ULong rid,
                                             CORBA::Boolean,
-                                            CORBA::Object_ptr,
+                                            CORBA::Object_ptr objref,
                                             const char *op,
                                             IOP::ServiceContextList &sc,
                                             CORBA::NVList_ptr &,
                                             PortableInterceptor::Cookies &,
-                                            CORBA::Environment &)
+                                            CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::String_var ior = this->orb_->object_to_string (objref,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::preinvoke from \"%s\" request_id: %d\n",
+              "Echo_Client_Request_Interceptor::preinvoke from \"%s\" request_id: %d on object: %s\n",
               op,
-              rid));
+              rid,
+              ior));
 
   CORBA::ULong length = sc.length ();
   sc.length (length + 1);
@@ -52,17 +58,22 @@ Echo_Client_Request_Interceptor::preinvoke (CORBA::ULong rid,
 void
 Echo_Client_Request_Interceptor::postinvoke (CORBA::ULong rid,
                                              CORBA::Boolean,
-                                             CORBA::Object_ptr,
+                                             CORBA::Object_ptr objref,
                                              const char * op,
                                              IOP::ServiceContextList &sc,
                                              CORBA::NVList_ptr &,
                                              PortableInterceptor::Cookies &,
-                                             CORBA::Environment &)
+                                             CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::String_var ior = this->orb_->object_to_string (objref,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::postinvoke from \"%s\" request_id: %d\n",
+              "Echo_Client_Request_Interceptor::postinvoke from \"%s\" request_id: %d on object: %s\n",
               op,
-              rid));
+              rid,
+              ior));
 
   for (CORBA::ULong size = 0; size < sc.length (); ++size)
     if (sc[size].context_id == reply_ctx_id)
@@ -77,19 +88,25 @@ Echo_Client_Request_Interceptor::postinvoke (CORBA::ULong rid,
 void
 Echo_Client_Request_Interceptor::exception_occurred (CORBA::ULong rid,
                                                      CORBA::Boolean,
-                                                     CORBA::Object_ptr,
+                                                     CORBA::Object_ptr objref,
                                                      const char * op,
                                                      PortableInterceptor::Cookies &,
-                                                     CORBA::Environment &)
+                                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::String_var ior = this->orb_->object_to_string (objref,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::exception_occurred from \"%s\" request_id: %d\n",
+              "Echo_Client_Request_Interceptor::exception_occurred from \"%s\" request_id: %d on object: %s\n",
               op,
-              rid));
+              rid,
+              ior));
 }
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
-  : myname_ ("Echo_Server_Interceptor")
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (CORBA::ORB_ptr orb)
+  : myname_ ("Echo_Server_Interceptor"),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -102,17 +119,22 @@ Echo_Server_Request_Interceptor::name (CORBA::Environment &)
 void
 Echo_Server_Request_Interceptor::preinvoke (CORBA::ULong rid,
                                             CORBA::Boolean,
-                                            CORBA::Object_ptr,
+                                            CORBA::Object_ptr objref,
                                             const char *op,
                                             IOP::ServiceContextList &sc,
                                             CORBA::NVList_ptr &,
                                             PortableInterceptor::Cookies &,
-                                            CORBA::Environment &)
+                                            CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::String_var ior = this->orb_->object_to_string (objref,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::preinvoke from \"%s\" request_id: %d\n",
+              "Echo_Server_Request_Interceptor::preinvoke from \"%s\" request_id: %d on object: %s\n",
               op,
-              rid));
+              rid,
+              ior));
 
   for (CORBA::ULong size = 0; size < sc.length (); ++size)
     if (sc[size].context_id == request_ctx_id)
@@ -127,17 +149,22 @@ Echo_Server_Request_Interceptor::preinvoke (CORBA::ULong rid,
 void
 Echo_Server_Request_Interceptor::postinvoke (CORBA::ULong rid,
                                              CORBA::Boolean,
-                                             CORBA::Object_ptr,
+                                             CORBA::Object_ptr objref,
                                              const char * op,
                                              IOP::ServiceContextList &sc,
                                              CORBA::NVList_ptr &,
                                              PortableInterceptor::Cookies &,
-                                             CORBA::Environment &)
+                                             CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::String_var ior = this->orb_->object_to_string (objref,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::postinvoke from \"%s\" request_id: %d\n",
+              "Echo_Server_Request_Interceptor::postinvoke from \"%s\" request_id: %d on object: %s\n",
               op,
-              rid));
+              rid,
+              ior));
 
   CORBA::ULong length = sc.length ();
   sc.length (length + 1);
@@ -156,13 +183,18 @@ Echo_Server_Request_Interceptor::postinvoke (CORBA::ULong rid,
 void
 Echo_Server_Request_Interceptor::exception_occurred (CORBA::ULong rid,
                                                      CORBA::Boolean,
-                                                     CORBA::Object_ptr,
+                                                     CORBA::Object_ptr objref,
                                                      const char * op,
                                                      PortableInterceptor::Cookies &,
-                                                     CORBA::Environment &)
+                                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::String_var ior = this->orb_->object_to_string (objref,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::exception_occurred from \"%s\" request_id: %d\n",
+              "Echo_Server_Request_Interceptor::exception_occurred from \"%s\" request_id: %d on object: %s\n",
               op,
-              rid));
+              rid,
+              ior));
 }

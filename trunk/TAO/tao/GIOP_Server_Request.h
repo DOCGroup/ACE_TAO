@@ -133,6 +133,10 @@ public:
 
   virtual const TAO_ObjectKey &object_key (void) const;
 
+  virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ());
+  // Return the object reference of the request.
+
   virtual IOP::ServiceContextList &service_info (void);
 
   // The pseudo object methods, not really needed because the class is

@@ -14,6 +14,12 @@ TAO_ClientRequestInterceptor_Adapter::~TAO_ClientRequestInterceptor_Adapter
 {
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ClientRequestInterceptor_Adapter::valid (void) const
+{
+  return (! CORBA::is_nil (this->interceptor_.in ()));
+}
+
 ACE_INLINE void
 TAO_ClientRequestInterceptor_Adapter::
 preinvoke (CORBA::ULong request_id,
@@ -25,7 +31,7 @@ preinvoke (CORBA::ULong request_id,
            PortableInterceptor::Cookies &cookies,
            CORBA::Environment &ACE_TRY_ENV)
 {
-  if (! CORBA::is_nil (this->interceptor_.in ()))
+  if (this->valid ())
     this->interceptor_->preinvoke (request_id,
                                    two_way,
                                    objref,
@@ -47,7 +53,7 @@ postinvoke (CORBA::ULong request_id,
             PortableInterceptor::Cookies &cookies,
             CORBA::Environment &ACE_TRY_ENV)
 {
-  if (! CORBA::is_nil (this->interceptor_.in ()))
+  if (this->valid ())
     this->interceptor_->postinvoke (request_id,
                                     two_way,
                                     objref,
@@ -69,7 +75,7 @@ exception_occurred (CORBA::ULong request_id,
                     PortableInterceptor::Cookies &cookies,
                     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (! CORBA::is_nil (this->interceptor_.in ()))
+  if (this->valid ())
     this->interceptor_->exception_occurred (request_id,
                                             two_way,
                                             objref,
@@ -91,6 +97,12 @@ TAO_ServerRequestInterceptor_Adapter::~TAO_ServerRequestInterceptor_Adapter
 {
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ServerRequestInterceptor_Adapter::valid (void) const
+{
+  return (! CORBA::is_nil (this->interceptor_.in ()));
+}
+
 ACE_INLINE void
 TAO_ServerRequestInterceptor_Adapter::
 preinvoke (CORBA::ULong request_id,
@@ -102,7 +114,7 @@ preinvoke (CORBA::ULong request_id,
            PortableInterceptor::Cookies &cookies,
            CORBA::Environment &ACE_TRY_ENV)
 {
-  if (! CORBA::is_nil (this->interceptor_.in ()))
+  if (this->valid ())
     this->interceptor_->preinvoke (request_id,
                                    two_way,
                                    objref,
@@ -124,7 +136,7 @@ postinvoke (CORBA::ULong request_id,
             PortableInterceptor::Cookies &cookies,
             CORBA::Environment &ACE_TRY_ENV)
 {
-  if (! CORBA::is_nil (this->interceptor_.in ()))
+  if (this->valid ())
     this->interceptor_->postinvoke (request_id,
                                     two_way,
                                     objref,
@@ -146,7 +158,7 @@ exception_occurred (CORBA::ULong request_id,
                     PortableInterceptor::Cookies &cookies,
                     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (! CORBA::is_nil (this->interceptor_.in ()))
+  if (this->valid ())
     this->interceptor_->exception_occurred (request_id,
                                             two_way,
                                             objref,

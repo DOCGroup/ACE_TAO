@@ -70,6 +70,9 @@ public:
 
   ~TAO_ClientRequestInterceptor_Adapter (void);
 
+  CORBA::Boolean valid (void) const;
+  // Check if we have a valid interceptor.
+
   void preinvoke (CORBA::ULong,
                   CORBA::Boolean,
                   CORBA::Object_ptr,
@@ -120,6 +123,9 @@ public:
     (PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
 
   ~TAO_ServerRequestInterceptor_Adapter (void);
+
+  CORBA::Boolean valid (void) const;
+  // Check if we have a valid interceptor.
 
   void preinvoke (CORBA::ULong,
                   CORBA::Boolean,
