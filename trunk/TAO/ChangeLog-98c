@@ -1,3 +1,8 @@
+Tue Nov 04 10:45:07 1997    <nw1@CHA-CHA>
+
+	* TAO_IDL/fe/y.tab.cpp: Enclosed a #pragma ident with #if !defined
+ 	  ACE_WIN32.  Compilers other than SunCC might also need this.
+
 Tue Nov  4 10:33:51 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL compiler: Fixed the following problems
