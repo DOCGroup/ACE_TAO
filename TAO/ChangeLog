@@ -1,3 +1,16 @@
+Wed Feb 26 10:28:28 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RTCORBA/RTCORBAC.cpp:
+
+          Wrapped remaining CORBA::UserException base class method calls
+	  with the ACE_NESTED_CLASS macro.  Addresses remaining problems
+	  in Borland C++ builds.
+
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+
+	  Removed extraneous "ace/pre.h" include.  Fixes some warnings in
+	  Borland C++ builds.
+
 Wed Feb 26 10:03:10 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.h (ORB):
