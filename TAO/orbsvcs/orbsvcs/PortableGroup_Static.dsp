@@ -7,19 +7,19 @@
 CFG=PortableGroup_Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "PortableGroup_Static.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "PortableGroup_Static.mak" CFG="PortableGroup_Static - Win32 Static Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "PortableGroup_Static - Win32 Static Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "PortableGroup_Static - Win32 Static Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -80,7 +80,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAO_PortableGroupsd.lib"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -168,7 +168,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -216,7 +216,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "PortableGroup_Static - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__PORTA="..\..\..\bin\tao_idl_static.exe"	
+USERDEP__PORTA="..\..\..\bin\tao_idl_static.exe"
 # Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\PortableGroup.idl
 InputName=PortableGroup
@@ -252,7 +252,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
@@ -421,6 +421,10 @@ SOURCE=.\PortableGroup\UIPMC_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup\UIPMC_Message_Block_Data_Iterator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\UIPMC_Profile.h
 # End Source File
 # Begin Source File
@@ -552,6 +556,10 @@ SOURCE=.\PortableGroup\UIPMC_Endpoint.cpp
 # Begin Source File
 
 SOURCE=.\PortableGroup\UIPMC_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\UIPMC_Message_Block_Data_Iterator.cpp
 # End Source File
 # Begin Source File
 

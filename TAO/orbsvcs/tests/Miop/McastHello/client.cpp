@@ -7,6 +7,8 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
+#define MAX_MIOP_OCTET_SEQUENCE  (ACE_MAX_DGRAM_SIZE - 272 /* MIOP_MAX_HEADER_SIZE */)
+
 const char *ior = "file://test.ior";
 
 int
@@ -70,6 +72,17 @@ main (int argc, char *argv[])
         }
 
       hello->send_forty_two (42 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      Test::Octets payload (MAX_MIOP_OCTET_SEQUENCE);
+      payload.length (MAX_MIOP_OCTET_SEQUENCE);
+
+      for (CORBA::ULong j = 0; j != MAX_MIOP_OCTET_SEQUENCE; ++j)
+        {
+          payload[j] = j % 256;
+        }
+
+      hello->send_large_octet_array (payload ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
