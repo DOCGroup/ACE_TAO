@@ -51,7 +51,8 @@ EXTERNAL_LIBS = \
         $(TAO_IORTABLE_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
         $(TAO_ETCL_LIB) \
-        $(TAO_NOTIFY_LIB)
+        $(TAO_NOTIFY_LIB) \
+	$(TAO_DYNAMICANY_LIB)
 
 LFLAGS = \
   -j$(CORE_BINDIR) \
@@ -82,6 +83,7 @@ CFLAGS = \
         $(TAO_NOTIFYTESTS_CFLAGS) \
         $(TAO_ETCL_CFLAGS) \
         $(TAO_NOTIFY_CFLAGS) \
+	$(TAO_DYNAMICANY_CFLAGS) \
         -DTAO_NOTIFY_TEST_BUILD_DLL
 
 CPPDIR = .
