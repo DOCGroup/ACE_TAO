@@ -1,3 +1,13 @@
+Mon Jan  4 13:00:07 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Mem_Map.cpp (map): where ace/Mem_Map.cpp mmap() will succeed
+ 	  if the length of the file mapping is 0, which will be the case
+ 	  if we've just created the file.  This was the wrong place to
+ 	  make this check.
+
+	* tests/MM_Shared_Memory_Test.cpp: Cleaned up a few things
+	  in this test so that it'll be easier to maintain.
+
 Mon Jan 04 08:45:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: changed symlink creation failure from

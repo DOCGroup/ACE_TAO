@@ -206,11 +206,6 @@ ACE_Mem_Map::map (LPCTSTR file_name,
                   mode,
                   sa) == -1)
     return -1;
-  else if (ACE_BIT_ENABLED (flags, O_CREAT)
-           && len <= 0)
-    // <mmap> will fail if the length of the file mapping is 0, which
-    // will be the case if we've just created the file.
-    return 0;
   else
     return this->map_it (this->handle (),
                          len,
