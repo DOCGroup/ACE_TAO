@@ -288,12 +288,10 @@ be_visitor_operation_ami_cs::gen_check_exception (be_type *bt)
   if (this->void_return_type (bt))
     {
       *os << "ACE_CHECK;\n";
-      //<< "_tao_environment);\n";
     }
   else
     {
       *os << "ACE_CHECK_RETURN (";
-      // << "_tao_environment, ";
 
       // return the appropriate return value
       ctx = *this->ctx_;

@@ -567,7 +567,6 @@ be_visitor_operation_ss::gen_check_exception (be_type *, const char * /* env */)
   os->indent ();
   // check if there is an exception
   *os << "ACE_CHECK;\n";
-  // << env << ");\n";
 
   return 0;
 }
@@ -580,7 +579,6 @@ be_visitor_operation_ss::gen_check_interceptor_exception (be_type *, const char 
   os->indent ();
   // check if there is an exception
   *os << "TAO_INTERCEPTOR_CHECK;\n";
-  // << env << ");\n";
 
   return 0;
 }

@@ -802,7 +802,6 @@ be_visitor_operation_cs::gen_check_exception (be_type *bt)
   if (this->void_return_type (bt))
     {
       *os << "ACE_CHECK;\n";
-      //<< "_tao_environment);\n";
     }
   else
     {
@@ -830,7 +829,6 @@ be_visitor_operation_cs::gen_check_interceptor_exception (be_type *bt)
   if (this->void_return_type (bt))
     {
       *os << "TAO_INTERCEPTOR_CHECK;\n";
-      //<< "_tao_environment);\n";
     }
   else
     {
