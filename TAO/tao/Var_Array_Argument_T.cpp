@@ -87,8 +87,12 @@ TAO::Inout_Var_Array_Argument_T<S,S_forany>::interceptor_replace (
 
 // ==============================================================
 
-template<typename S, typename S_var, typename S_out, typename S_forany>
-TAO::Out_Var_Array_Argument_T<S,S_var,S_out,S_forany>::
+template<typename S, 
+         typename S_slice, 
+         typename S_var, 
+         typename S_out, 
+         typename S_forany>
+TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany>::
 Out_Var_Array_Argument_T (S_out x)
 {
   typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
@@ -97,9 +101,13 @@ Out_Var_Array_Argument_T (S_out x)
   this->x_ = x.ptr ();
 }
 
-template<typename S, typename S_var, typename S_out, typename S_forany>
+template<typename S, 
+         typename S_slice, 
+         typename S_var, 
+         typename S_out, 
+         typename S_forany>
 CORBA::Boolean
-TAO::Out_Var_Array_Argument_T<S,S_var,S_out,S_forany>::demarshal (
+TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany>::demarshal (
     TAO_InputCDR & cdr
   )
 {
