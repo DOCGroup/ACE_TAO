@@ -13,19 +13,4 @@ The individual directories contain READMEs on how to run the tests.
         . Cubit
                 
                  Cubit example. The servant returns the cube of the number
-                 sent to it by the client. There are three versions of this
-                 example.
-
-                 -  IDL_Cubit
-
-                 Cubit example with tao_idl compiler generated stubs and
-                 skeletons
-
-	         - MT_Cubit 
-
-		 Multithreaded real-time Cubit example.
-
-                 - DII_Cubit
-                
-                 Cubit example with hand-generated stubs.
-
+                 sent to it by the client.
