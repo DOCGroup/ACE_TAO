@@ -1,3 +1,8 @@
+Sat Dec 20 15:39:00 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* tests/IOStream_Test.cpp (spawn): Changed ACE_LACKS_EXEC to
+	  ACE_LACKS_FORK.
+
 Sat Dec 20 11:05:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/test_config.h (ACE_INIT_LOG): Added (%P|%t) to an
