@@ -2359,24 +2359,6 @@ ACE_CACHE_CHECK(for C++ namespace support,
                   ])
   ], , AC_DEFINE(ACE_HAS_BROKEN_NAMESPACES))
 
-dnl Check for C++ "using" keyword support
-ACE_CACHE_CHECK(for C++ \"using\" keyword support,
-  ace_cv_feature_cxx_using_keyword,
-  [
-   AC_TRY_COMPILE([
-#include <iostream.h>
-                  ],
-                  [
-                   using namespace std;
-                  ],
-                  [
-                   ace_cv_feature_cxx_using_keyword=yes
-                  ],
-                  [
-                   ace_cv_feature_cxx_using_keyword=no
-                  ])
-  ], AC_DEFINE(ACE_HAS_USING_KEYWORD),)
-
 dnl Check for C++ standard namespace
 ACE_CACHE_CHECK(for C++ standard namespace,
   ace_cv_feature_posix_uses_std_namespace,[
@@ -2393,6 +2375,44 @@ ACE_CACHE_CHECK(for C++ standard namespace,
                     ace_cv_feature_posix_uses_std_namespace=no
                    ])
   ], AC_DEFINE(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB),)
+
+dnl Check for C++ "using" keyword support
+ACE_CACHE_CHECK(for C++ \"using\" keyword support,
+  ace_cv_feature_cxx_using_keyword,
+  [
+   AC_TRY_COMPILE([
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+# include <iostream.h>
+#elif !defined (ACE_HAS_BROKEN_NAMESPACES)
+  namespace ACE
+  {
+   int x;
+  }
+#endif
+                  ],
+                  [
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+  using namespace std;
+
+  cout << "FOO" << endl;
+#elif !defined (ACE_HAS_BROKEN_NAMESPACES)
+  using namespace ACE;
+
+  x++;
+#else
+# error Namespaces are not supported on this platform.
+Throw in some extraneous text since compilers are stupid enough
+to interpret "#error" as a warning.  Go figure. :(
+This extraneous text should force an error.
+#endif
+                  ],
+                  [
+                   ace_cv_feature_cxx_using_keyword=yes
+                  ],
+                  [
+                   ace_cv_feature_cxx_using_keyword=no
+                  ])
+  ], AC_DEFINE(ACE_HAS_USING_KEYWORD),)
 
 dnl Check for new style C++ include file support
 ACE_CACHE_CHECK(for new style C++ include file support,
@@ -2693,32 +2713,79 @@ EOF
 
 dnl Check if platform supports template specialization
 ACE_CACHE_CHECK(for template specialization,
-  ace_cv_feature_posix_template_specialization,[
+  ace_cv_feature_cxx_template_specialization,[
     AC_TRY_COMPILE([
-                    template <class T>
-                    class Foo
-                    {
-                    public:
-                      Foo(T bar) : bar_(bar) {};
-                    private:
-                      T bar_;
-                    };
-                    class Foo<int>
-                    {
-                    public:
-                      Foo(int bar) : bar_(bar + 1) {};
-                    private:
-                      int bar_;
-                    };
+
+dnl Some compilers have a hard time with this test since the syntax is
+dnl too "new" for them.
+
+// general vector type
+template<class T>
+class Vector
+{
+public:
+  Vector (void);
+  Vector (int);
+
+  T& elem (int i) { return v[i]; }
+  T& operator[] (int i);
+private:
+  T* v;
+  int sz;;
+};
+
+// void * specialization
+template<>
+class Vector<void *>
+{
+public:
+  Vector (void);
+  Vector (int);
+
+  void*& elem (int i) { return p[i]; }
+  void*& operator[] (int i);
+private:
+  void** p;
+  int sz;;
+};
                    ],
                    [
-                    Foo<int> foo(11);
+Vector<int> vi;
+Vector<void *> vpv;
                    ],
                    [
-                    ace_cv_feature_posix_template_specialization=yes
+                    ace_cv_feature_cxx_template_specialization=yes
                    ],
                    [
-                    ace_cv_feature_posix_template_specialization=no
+                    dnl Try the "old" test if the "proper" test failed
+                    AC_TRY_COMPILE(
+                      [
+                       template <class T>
+                       class Foo
+                       {
+                       public:
+                         Foo(T bar) : bar_(bar) {};
+                       private:
+                         T bar_;
+                       };
+
+                       class Foo<int>
+                       {
+                       public:
+                         Foo(int bar) : bar_(bar + 1) {};
+                       private:
+                         int bar_;
+                       };
+                      ],
+                      [
+                       Foo<int> foo(11);
+                      ],
+                      [
+                       ace_cv_feature_cxx_template_specialization=yes
+                      ],
+                      [
+                       ace_cv_feature_cxx_template_specialization=no
+                      ])
                    ])
   ], AC_DEFINE(ACE_HAS_TEMPLATE_SPECIALIZATION),)
 
@@ -3827,7 +3894,7 @@ ACE_CONVERT_WARNINGS_TO_ERRORS([
 #endif
      ],
      [
-      int n;
+      int n = 0;
       fd_set* readfds = 0;
       fd_set* writefds = 0;
       fd_set* exceptfds = 0;
@@ -3855,7 +3922,7 @@ dnl Now check if select will actually take int* arguments
 #endif
         ],
         [
-         int n;
+         int n = 0;
          int* readfds = 0;
          int* writefds = 0;
          int* exceptfds = 0;
@@ -3995,7 +4062,7 @@ ACE_CACHE_CHECK(if select takes a const fifth argument,
 #endif
       ],
       [
-       int  n;
+       int n = 0;
        fd_set *readfds;
        fd_set *writefds;
        fd_set *exceptfds;
@@ -5643,36 +5710,6 @@ dnl Now check to make sure that these defines actually fix getpgid
   ], AC_DEFINE(_GNU_SOURCE),)
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-dnl Check if platform only supports SCHED_OTHER scheduling policy
-ACE_CACHE_CHECK(if SCHED_OTHER is only scheduling policy,
-  ace_cv_feature_only_have_sched_other,[
-    AC_EGREP_CPP(WE_ONLY_HAVE_SCHED_OTHER,
-      [
-#ifdef ACE_HAS_PTHREADS
-# include <pthread.h>
-#elif defined (ACE_HAS_STHREADS)
-# include <thread.h>
-#endif
-
-#if defined (ACE_LACKS_SCHED_H)
-# include <sched.h>
-#endif
-
-       /* These are ORed so that ACE will not redefine
-          any of them if any of them exist. */
-#if !defined (SCHED_FIFO) && \
-           !defined (SCHED_RR)
-          WE_ONLY_HAVE_SCHED_OTHER
-#endif
-      ],
-      [
-       ace_cv_feature_only_have_sched_other=yes
-      ],
-      [
-       ace_cv_feature_only_have_sched_other=no
-      ])
-  ], AC_DEFINE(ACE_HAS_ONLY_SCHED_OTHER),)
-
 dnl
 dnl SECTION 14: checks for aggregated features
 dnl TODO: Little by little, get rid of these...
@@ -5876,6 +5913,108 @@ dnl        the UNIX International threads library was detected.
    AC_DEFINE(_POSIX_THREADS)
    AC_DEFINE(_POSIX_THREAD_SAFE_FUNCTIONS)
    AC_DEFINE(_POSIX_PTHREAD_SEMANTICS)
+  fi dnl test "$ace_has_pthreads" = yes
+
+  if test "$ace_has_pthreads" = yes; then
+    dnl Check if platform only supports SCHED_OTHER scheduling policy
+    dnl
+    dnl This test must be performed after the POSIX threads implementation
+    dnl that the platform supports has been determined.
+    ACE_CACHE_CHECK(if SCHED_OTHER is only scheduling policy,
+      ace_cv_feature_only_have_sched_other,[
+        AC_EGREP_CPP(WE_ONLY_HAVE_SCHED_OTHER,
+          [
+#ifdef ACE_HAS_PTHREADS
+# include <pthread.h>
+#endif
+
+#if defined (ACE_LACKS_SCHED_H)
+# include <sched.h>
+#endif
+
+       /* These are ORed so that ACE will not redefine
+          any of them if any of them exist. */
+#if !defined (SCHED_FIFO) && \
+    !defined (SCHED_RR) && \
+    defined (SCHED_OTHER)
+          WE_ONLY_HAVE_SCHED_OTHER
+#endif
+          ],
+          [
+           ace_cv_feature_only_have_sched_other=yes      
+          ],
+          [
+           AC_TRY_RUN(
+             [
+#ifndef _REENTRANT
+#define _REENTRANT
+#endif 
+
+#ifndef _THREAD_SAFE
+#define _THREAD_SAFE
+#endif           
+
+#include <pthread.h>
+#include <stdio.h>
+#include <errno.h>
+
+int main ()
+{
+  pthread_attr_t ace_attr;
+
+#if defined (ACE_HAS_PTHREADS_DRAFT4)
+  if (pthread_attr_create (&ace_attr) != 0)
+#else
+  if (pthread_attr_init (&ace_attr) != 0)
+#endif
+    {
+     perror ("pthread_attr_init");
+     return 0; /* Return "successfully" since only the policy call
+                  will return with an error for this test. */
+    }
+
+#if defined (ACE_HAS_PTHREADS_DRAFT4)
+  if (pthread_attr_setsched (&ace_attr, SCHED_FIFO) != 0)
+#else
+  if (pthread_attr_setschedpolicy (&ace_attr, SCHED_FIFO) != 0)
+#endif
+    {   
+     perror ("pthread_attr_setschedpolicy");
+     return -1;
+    }
+
+#if defined (ACE_HAS_PTHREADS_DRAFT4)
+  if (pthread_attr_delete (&ace_attr) != 0)
+#else
+  if (pthread_attr_destroy (&ace_attr) != 0)
+#endif
+    {                                   
+     perror ("pthread_attr_destroy");
+     return 0; /* Return "successfully" since only the policy call
+                  will return with an error for this test. */    
+    }
+
+  return 0;
+}
+             ],
+             [
+              ace_cv_feature_only_have_sched_other=no
+             ],
+             [
+              ace_cv_feature_only_have_sched_other=yes
+             ],
+             [
+              dnl We only get here if polices other than SCHED_OTHER
+              dnl were found in the headers and we are cross-compiling.
+              dnl
+              dnl If we are cross-compiling let's hope that the
+              dnl scheduling policies found in the headers
+              dnl besides SCHED_OTHER (e.g. SCHED_FIFO, SCHED_RR)
+              dnl are supported.
+              ace_cv_feature_only_have_sched_other=no
+             ])
+          ])
+      ], AC_DEFINE(ACE_HAS_ONLY_SCHED_OTHER),)
   fi dnl test "$ace_has_pthreads" = yes
 fi dnl test "$ace_user_enable_threads" = yes
 
