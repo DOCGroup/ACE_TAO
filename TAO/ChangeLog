@@ -1,5 +1,11 @@
 Fri Apr 04 10:43:55 2003  Pradeep Gore  <pradeep@oomworks.com>
 
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+	  Removed default from ENV parameter.
+
 	* orbsvcs/tests/Notify/lib/Makefile.bor:
 	* orbsvcs/tests/Notify/Test_Filter/Makefile.bor:
 	  Updated.
