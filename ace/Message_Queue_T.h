@@ -213,6 +213,9 @@ public:
   virtual ACE_Notification_Strategy *notification_strategy (void);
   virtual void notification_strategy (ACE_Notification_Strategy *s);
 
+  ACE_SYNCH_MUTEX_T &lock (void);
+  // Returns a reference to the lock used by the <ACE_Message_Queue>.
+
   virtual void dump (void) const;
   // Dump the state of an object.
 
@@ -221,6 +224,7 @@ public:
 
 protected:
   // = Routines that actually do the enqueueing and dequeueing.
+
   // These routines assume that locks are held by the corresponding
   // public methods.  Since they are virtual, you can change the
   // queueing mechanism by subclassing from <ACE_Message_Queue>.
@@ -239,18 +243,25 @@ protected:
   // queue.
 
   // = Check the boundary conditions (assumes locks are held).
+
   virtual int is_full_i (void);
   // True if queue is full, else false.
+
   virtual int is_empty_i (void);
   // True if queue is empty, else false.
 
-  // = Implementation of the public activate() and deactivate() methods above (assumes locks are held).
+  // = Implementation of the public <activate> and <deactivate> methods.
+
+  // These methods assume locks are held.
+
   virtual int deactivate_i (void);
   // Deactivate the queue.
+
   virtual int activate_i (void);
   // Activate the queue.
 
   // = Helper methods to factor out common #ifdef code.
+
   virtual int wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
                                   ACE_Time_Value *timeout);
   // Wait for the queue to become non-full.

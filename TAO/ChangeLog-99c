@@ -1,19 +1,18 @@
 Wed Jun 09 16:42:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp (compute_scheduling):
-          changed type of anomaly_severity_msg from char * to const char *,
-          to avoid warnings from Sun C++ 5.0 about string literal conversion.
-          Thanks to Doug for reporting this.  Also, removed and changed a few
-          casts to ANSI-style casts.
+ 	  changed type of anomaly_severity_msg from char * to const char
+ 	  *, to avoid warnings from Sun C++ 5.0 about string literal
+ 	  conversion.  Thanks to Doug for reporting this.  Also, removed
+ 	  and changed a few casts to ANSI-style casts.
 
 Wed Jun  9 16:26:55 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/Any.cpp:
-          Changed one branch of >>= (to_object) to reflect
-          the change in CORBA 2.3 - namely that the caller
-          is responsible for release of the result of this
-          call. The other branch already had this behavior.
-          Also added an ACE_NEW check in that other branch.
+        * tao/Any.cpp: Changed one branch of >>= (to_object) to reflect
+ 	  the change in CORBA 2.3 - namely that the caller is responsible
+ 	  for release of the result of this call. The other branch already
+ 	  had this behavior.  Also added an ACE_NEW check in that other
+ 	  branch.
 
 Wed Jun 09 16:03:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -21,34 +20,29 @@ Wed Jun 09 16:03:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
         * examples/POA/Forwarding/server.cpp
         * examples/POA/On_Demand_Activation/server.cpp
         * examples/POA/RootPOA/RootPOA.cpp
-        * examples/POA/TIE/server.cpp:
+        * examples/POA/TIE/server.cpp: Simple clean up.  Also fixed one
+ 	  memory leak.
 
-          Simple clean up.  Also fixed one memory leak.
+        * tao/default_resource.cpp (init): -ORBReactorType handling and
+ 	  selection of Reactor was incorrect.  Correct behavior is that
+ 	  "null" should select TAO_REACTOR_SELECT_ST and "token" should
+ 	  select TAO_REACTOR_SELECT_MT.  Thanks to Phil Mesnier
+ 	  <mesnier_p@ociweb.com> for reporting this bug.
 
 Wed Jun  9 13:43:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * TAO_IDL/fe: Regenerated the y.tab.cpp file with the new BYACC so
-          that we won't have any more annoying warnings about const
-          correctness.
+ 	  that we won't have any more annoying warnings about const
+ 	  correctness.
 
         * utils/nslist: Added a new utility program that prints out a
-          nicely organized list of Naming Contexts in a Naming Service.
-          Thanks to Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
-          contributing this.
-
-Wed Jun 09 11:02:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * tao/default_resource.cpp (init): -ORBReactorType handling and
-          selection of Reactor was incorrect.  Correct behavior is that
-          "null" should select TAO_REACTOR_SELECT_ST and "token" should
-          select TAO_REACTOR_SELECT_MT.  Thanks to Phil Mesnier
-          <mesnier_p@ociweb.com> for reporting this bug.
-
-Wed Jun  9 10:32:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+ 	  nicely organized list of Naming Contexts in a Naming Service.
+  	  Thanks to Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+ 	  contributing this.
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Fixed a bug that
-          was preventing the IDL compiler from putting files in the
-          current directory.  Thanks to Byron Harris for reporting this.
+ 	  was preventing the IDL compiler from putting files in the
+ 	  current directory.  Thanks to Byron Harris for reporting this.
 
 Tue Jun 08 21:13:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
