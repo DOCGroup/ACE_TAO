@@ -11674,14 +11674,14 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 }
 
 ACE_INLINE int
-ACE_OS::sigpause (int signum)
+ACE_OS::sigsuspend (const sigset_t *sigset)
 {
-#if defined (ACE_HAS_SIGPAUSE)
-  ACE_OSCALL_RETURN (::sigpause (signum), int, -1);
+#if defined (ACE_HAS_SIGSUSPEND)
+  ACE_OSCALL_RETURN (::sigpause (sigset), int, -1);
 #else
-  ACE_UNUSED_ARG (signum);
+  ACE_UNUSED_ARG (sigset);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_SIGPAUSE */
+#endif /* ACE_HAS_SIGSUSPEND */
 }
 
 ACE_INLINE int
