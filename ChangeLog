@@ -1,3 +1,11 @@
+Thu Apr 25 14:20:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/TP_Reactor_Logging_Server.{cpp mak}:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+          New source and makefiles for C++NPv2 chapter 4 examples.
+
+        * examples/C++NPv2/Makefile: Added TP_Reactor_Logging_Server.
+
 Thu Apr 25 15:46:39 2002  Steve Huston  <shuston@riverace.com>
 
         POSIX asynch I/O improvements/corrections submitted by Alex
