@@ -9,7 +9,8 @@ Tue Oct 21 07:14:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_{Heap,List,Wheel}_T.cpp: replaced NULL with 0 because
 	  some compilers, such as GHS, define NULL as (void *) 0.  So, it
-	  sometimes needs to be cast to be used.
+	  sometimes needs to be cast to be used.  Thanks to Brian Mendel
+	  for reporting this.
 
 Tue Oct 21 02:23:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
