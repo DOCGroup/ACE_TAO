@@ -1080,74 +1080,81 @@ be_visitor_valuetype::have_operation (be_valuetype* node)
         }
     }
 
-	have_operation = have_operation || be_visitor_valuetype::have_supported_op (node);
+  // Check for operations on supported interfaces
+  AST_Interface * supported = node->supports_concrete ();
+  if (supported != 0)
+    {
+      be_interface *intf = be_interface::narrow_from_decl (supported);
+      if (intf != 0)
+	      have_operation = have_operation || be_visitor_valuetype::have_supported_op (intf);
+    }
 
   return have_operation;
 }
 
 idl_bool
-be_visitor_valuetype::have_supported_op (be_valuetype * node)
+be_visitor_valuetype::have_supported_op (be_interface * node)
 {
-	// Check for operations on supported interfaces
-
-	if (node == 0)
-		return 0;
 
 	idl_bool have_supported_op = 0;
 
-	// Check each supported interface to see if it has operations defined
-	long i; // loop index
-	long n_supports = node->n_supports (); // get the number of supported interfaces
-	AST_Interface ** supports = node->supports ();
+  if (node->nmembers () > 0)
 
-	for (i = 0; i < n_supports; i++)
+	// Initialize an iterator for supported interface elements
+	for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls); !si.is_done (); si.next())
 		{
-			be_interface * vt = be_interface::narrow_from_decl (supports[i]);
+			AST_Decl *d = si.item ();
 
-			if (vt != 0)
+			if (!d)
 				{
+					ACE_ERROR_RETURN ((LM_ERROR,
+						                 "(%N:%l) be_visitor_valuetype_init::"
+							               "has_operation"
+								             "bad node in this scope\n"),
+										          0);
 
-					if (vt->nmembers () > 0)
+				}
 
-					// Initialize an iterator for supported interface elements
-					for (UTL_ScopeActiveIterator si (vt, UTL_Scope::IK_decls); !si.is_done (); si.next())
-						{
-							AST_Decl *d = si.item ();
+			AST_Decl::NodeType node_type = d->node_type();
 
-							if (!d)
-								{
-									ACE_ERROR_RETURN ((LM_ERROR,
-										                 "(%N:%l) be_visitor_valuetype_init::"
-											               "has_operation"
-												             "bad node in this scope\n"),
-													          0);
-
-								}
-
-							AST_Decl::NodeType node_type = d->node_type();
-
-							// Check the type of each element in the supported interface
-							if (node_type == AST_Decl::NT_op)
-								{
-									have_supported_op = 1;
-									continue;
-								}
-
-							if (node_type == AST_Decl::NT_attr)
-								{
-									have_supported_op = 1;
-									continue;
-								}
-						} // end for loop
-
-				  if (have_supported_op)
-					  {
-						  break;
-						}
-				} // end if
+      // Check the type of each element in the supported interface
+			if (node_type == AST_Decl::NT_op)
+				{
+					have_supported_op = 1;
+					continue;
+				}
+			if (node_type == AST_Decl::NT_attr)
+				{
+					have_supported_op = 1;
+					continue;
+				}
+      if (have_supported_op)
+        {
+		      break;
+		    }
 		} // end for loop
 
-	return have_supported_op;
+  // Now traverse inheritance tree.
+  long i;  // loop index
+  long n_inherits = node->n_inherits ();
+  AST_Interface **inherits = node->inherits ();
+  for (i = 0; i < n_inherits; ++i)
+    {
+      be_interface * intf = be_interface::narrow_from_decl (inherits[i]);
+
+      if (intf != 0)
+        {
+          have_supported_op = have_supported_op ||
+            be_visitor_valuetype::have_supported_op (intf);
+
+          if (have_supported_op)
+            {
+              break;
+            }
+        }
+    }
+
+  return have_supported_op;
 }
 
 idl_bool

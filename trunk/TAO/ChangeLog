@@ -1,3 +1,12 @@
+Wed Jun 18 12:50:15 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp
+          
+          Fixed bug in factory generation for valuetypes that
+          support interfaces
+
+
 Wed Jun 18 12:47:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
@@ -11,16 +20,17 @@ Wed Jun 18 12:47:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  and/or fixed the order of base class constructor calls in the
 	  copy constructor.
 
+
 Wed Jun 18 12:13:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_enum.cpp:
-	* TAO_IDL/be/be_eventtype.cpp:
-	* TAO_IDL/be/be_eventtype_fwd.cpp:
-	* TAO_IDL/be/be_union_fwd.cpp:
+        * TAO_IDL/be/be_eventtype.cpp:
+        * TAO_IDL/be/be_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_union_fwd.cpp:
 
-	  Fixed mistakes in constructor reordering from
+          Fixed mistakes in constructor reordering from
 
-	  Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+	        Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 18 13:53:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

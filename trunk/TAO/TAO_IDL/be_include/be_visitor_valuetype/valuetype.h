@@ -131,7 +131,7 @@ protected:
   // recurse down the inheritance tree to determine
   // if valuetype has at least one operation/attribute.
 
-	static idl_bool have_supported_op (be_valuetype* node);
+	static idl_bool have_supported_op (be_interface* node);
   // check if VT supports an interface with at least 1 operation
 
   static idl_bool obv_need_ref_counter(be_valuetype* node);
