@@ -1,3 +1,12 @@
+Wed Jan 23 10:47:30 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	  Add a new traverse_inheritance_graph() method that takes a class
+	  (with a virtual method) instead of a naked pointer to function.
+	  I will need the new version to pass state into one of the
+	  traversals.
+
 Wed Jan 23 09:55:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
@@ -7,6 +16,7 @@ Wed Jan 23 09:55:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  in be_visitor_operation/amh_rh_ss.cpp.
 
 Wed Jan 23 09:33:31 2002  Ossama Othman  <ossama@uci.edu>
+
 	* tests/ORT/ORT_test_IORInterceptor.cpp
 	  (establish_components, components_established):
 
