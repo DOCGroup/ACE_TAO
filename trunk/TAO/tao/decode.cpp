@@ -675,10 +675,11 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
     {
       // Create a new CORBA_Object and give it the IIOP_Object just
       // created.
-      CORBA_Object *corba_proxy;
+      TAO_ServantBase *servant = TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
+      CORBA_Object *corba_proxy = 0;
 
       ACE_NEW_RETURN (corba_proxy,
-                      CORBA_Object (objdata),
+                      CORBA_Object (objdata, servant, servant != 0),
                       CORBA::TypeCode::TRAVERSE_CONTINUE);
 
       if (corba_proxy)
