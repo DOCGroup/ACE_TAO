@@ -9,7 +9,8 @@ Mon Feb 23 22:40:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_decl.cpp (tc_name2long): changed type of "buf" array
           from char to long so that it gets properly aligned.  This solves
-          the core dump problem with tao_idl on egcs/Solaris.
+          the core dump problem with tao_idl on egcs/Solaris.  Thanks to
+          Håkan Källberg <hk@simulina.se> for reporting this.
 
 Mon Feb 23 22:13:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
