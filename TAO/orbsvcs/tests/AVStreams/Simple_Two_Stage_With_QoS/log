@@ -1,0 +1,186 @@
+TAO (1988|1024) Loaded default protocol <IIOP_Factory>
+TAO (1988|1024) created new ORB <>
+TAO_AV_Core::init (1988|1024) WARNING - No UDP Factory found in Service Repository.  Using default instance.
+(1988|1024) WARNING - No TCP Factory found in Service Repository.  Using default instance.
+(1988|1024) WARNING - No UDP QoS Factory found in Service Repository.  Using default instance.
+TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory
+Creating the QOS FACTORY
+Number of entries in the transport factory is 3
+(1988|1024) WARNING - No UDP Flow Factory found in Service Repository.  Using default instance.
+(1988|1024) WARNING - No UDP QoS Flow Factory found in Service Repository.  Using default instance.
+TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory
+(1988|1024) WARNING - No TCP Flow Factory found in Service Repository.  Using default instance.
+(1988|1024) WARNING - No RTP Flow Factory found in Service Repository.  Using default instance.
+(1988|1024) WARNING - No RTCP Flow Factory found in Service Repository.  Using default instance.
+(1988|1024) WARNING - No SFP Flow Factory found in Service Repository.  Using default instance.
+Number of entries in the transport factory is 6
+
+sent multicast request.
+ORB.cpp; Sent multicast.# of bytes sent is 16.
+ORB.cpp: service resolved to IOR <IOR:010000002b00000049444c3a6f6d672e6f72672f436f734e616d696e672f4e616d696e67436f6e746578744578743a312e3000000100000000000000a4000000010102000c0000006465657074686f7567687400010400003300000014010f004e5550000000150000000001000000004e616d65536572766963650000000000010000004e616d65536572766963650003000000000000000800000001000000004f41540100000014000000018c7c4001000100000000000901010000000000024f41541c000000018c7c40010000000c0000006465657074686f75676874000104ffff>
+(1988|1024) TAO_Transport_Cache_Manager::find_i unable to locate a free connection 
+(1988|1024) IIOP_Connector::connect - making a new connection
+TAO (1988|1024) IIOP connection from client<127.0.0.1:1025> on 7
+(1988|1024) IIOP_Connector::connect - new connection on HANDLE 7
+(1988|1024) TAO_Exclusive_TMS::request_id - <0>
+(1988 | 1024): send GIOP v1.2 msg, 128 data bytes, my endian, Request = 0
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <80ac7e0>
+TAO (1988|1024) Parsed header = <1,2,1,1,13>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 13 data bytes, my endian, Reply = 0
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <80ac7e0>
+File opened successfully
+(1988 |1024) index in find <0> 
+(1988|1024) IIOP_Connector::connect - got an existing transport with id 7
+(1988|1024) TAO_Exclusive_TMS::request_id - <1>
+(1988 | 1024): send GIOP v1.2 msg, 109 data bytes, my endian, Request = 1
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <80ac7e0>
+TAO (1988|1024) Parsed header = <1,2,1,1,204>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 204 data bytes, my endian, Reply = 1
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <80ac7e0>
+TAO_FlowSpec_Entry::set_protocol address is not 0
+TAO_FlowSpec_Entry::set_protocol:192.168.1.3:8000 c0a80103
+entry_to_string: entry = Data_Receiver\IN\USER_DEFINED\\QoS_UDP=192.168.1.3;8000
+TAO_StreamEndPoint::TAO_StreamEndPoint::mcast_addr = 224.9.9.2(1988|1024) TAO_StreamEndPoint_A::TAO_StreamEndPoint_A: created
+TAO_AV_Endpoint_Reactive_Strategy_A::activate_stream_endpoint,Stream Endpoint ior is : IOR:010000002b00000049444c3a6f6d672e6f72672f415653747265616d732f53747265616d456e64506f696e745f413a312e30000001000000000000008c000000010102000c0000006465657074686f75676874007d0500001b00000014010f0052535413ccdf3ada4502000200000001000000030000000003000000000000000800000001000000004f41540100000014000000014cc14001000100000000000901010000000000024f41541c000000014cc140010000000c0000006465657074686f75676874007d05ffff
+(1988|1024)TAO_AV_Endpoint_Reactive_Strategy::activated stream_endpoint
+(1988|1024) TAO_VDev::TAO_VDev: created
+(1988|1024)TAO_AV_Endpoint_Reactive_Strategy::activate_vdev, vdev ior is:IOR:010000001f00000049444c3a6f6d672e6f72672f415653747265616d732f564465763a312e30000001000000000000008c000000010102000c0000006465657074686f75676874007d0500001b00000014010f0052535413ccdf3ada4502000300000001000000040000000003000000000000000800000001000000004f41540100000014000000014ec14001000100000000000901010000000000024f41541c00000001000000010000000c0000006465657074686f75676874007d05ffff
+(1988|1024)TAO_AV_Endpoint_Reactive_Strategy::activated vdev
+(1988|1024)TAO_AV_Endpoint_Reactive_Strategy::activate_mediactrl , media_ctrl ior is :IOR:010000001700000049444c3a4e756c6c5f4d656469614374726c3a312e30000001000000000000008c000000010102000c0000006465657074686f75676874007d0500001b00000014010f0052535413ccdf3ada4502000400000001000000050000000003000000000000000800000001000000004f415401000000140000000100000001000100000000000901010000000000024f41541c000000014ec140010000000c0000006465657074686f75676874007d05ffff
+(1988|1024)TAO_AV_Endpoint_Reactive_Strategy::activated mediactrl
+(1988|1024) TAO_StreamCtrl::create_A: succeeded
+(1988|1024) TAO_Transport_Cache_Manager::find_i unable to locate a free connection 
+(1988|1024) IIOP_Connector::connect - making a new connection
+TAO (1988|1024) IIOP connection from client<127.0.0.1:1398> on 10
+(1988|1024) IIOP_Connector::connect - new connection on HANDLE 10
+(1988|1024) TAO_Exclusive_TMS::request_id - <0>
+(1988 | 1024): send GIOP v1.2 msg, 628 data bytes, my endian, Request = 0
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <8123f38>
+TAO (1988|1024) Parsed header = <1,2,1,1,701>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 701 data bytes, my endian, Reply = 0
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <8123f38>
+(1988|1024) TAO_StreamCtrl::create_B: succeeded
+
+(1988|1024)stream_endpoint_b_ = IOR:010000002b00000049444c3a6f6d672e6f72672f415653747265616d732f53747265616d456e64506f696e745f423a312e30000001000000000000008c000000010102650c0000006465657074686f756768740076055c511b00000014010f005253540fccdf3a95fc0d0001000000010000000200000000030000000000000008000000014cc140004f41540100000014000000014ec14001000100000000000901010000000000024f41541c000000014ec140010000000c0000006465657074686f75676874007605ffff(1988 |1024) index in find <0> 
+(1988|1024) IIOP_Connector::connect - got an existing transport with id 10
+(1988|1024) TAO_Exclusive_TMS::request_id - <1>
+(1988 | 1024): send GIOP v1.2 msg, 360 data bytes, my endian, Request = 1
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <8123f38>
+TAO (1988|1024) Parsed header = <1,2,1,1,12>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 12 data bytes, my endian, Reply = 1
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <8123f38>
+(1988 |1024) index in find <0> 
+(1988|1024) IIOP_Connector::connect - got an existing transport with id 10
+(1988|1024) TAO_Exclusive_TMS::request_id - <2>
+(1988 | 1024): send GIOP v1.2 msg, 384 data bytes, my endian, Request = 2
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <8123f38>
+TAO (1988|1024) Parsed header = <1,2,1,1,12>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 12 data bytes, my endian, Reply = 2
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <8123f38>
+(1988|1024) TAO_VDev::set_peer: called(1988|1024) TAO_VDev::set_peer: my peer is IOR:010000001f00000049444c3a6f6d672e6f72672f415653747265616d732f564465763a312e30000001000000000000008c000000010102650c0000006465657074686f756768740076055c511b00000014010f005253540fccdf3a95fc0d000200000001000000030000000003000000000000000800000001000000004f415401000000140000000100000001000100000000000901010000000000024f41541c00000001000000010000000c0000006465657074686f75676874007605ffff
+(1988 |1024) index in find <0> 
+(1988|1024) IIOP_Connector::connect - got an existing transport with id 10
+(1988|1024) TAO_Exclusive_TMS::request_id - <3>
+(1988 | 1024): send GIOP v1.2 msg, 98 data bytes, my endian, Request = 3
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <8123f38>
+TAO (1988|1024) Parsed header = <1,2,1,1,397>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 397 data bytes, my endian, Reply = 3
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <8123f38>
+(1988|1024)The Media Control IOR is IOR:010000001700000049444c3a4e756c6c5f4d656469614374726c3a312e30000001000000000000008c000000010102000c0000006465657074686f7567687400760500001b00000014010f005253540fccdf3a95fc0d0003000000010000000400000000030000000000000008000000014cc140004f41540100000014000000014ec14001000100000000000901010000000000024f41541c000000014ec140010000000c0000006465657074686f75676874007605ffff
+(1988 |1024) index in find <0> 
+(1988|1024) IIOP_Connector::connect - got an existing transport with id 10
+(1988|1024) TAO_Exclusive_TMS::request_id - <4>
+(1988 | 1024): send GIOP v1.2 msg, 808 data bytes, my endian, Request = 4
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <8123f38>
+TAO (1988|1024) IIOP connection from client<127.0.0.1:1407> on 11
+TAO (1988|1024) Parsed header = <1,2,1,0,98>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 98 data bytes, my endian, Request = 0
+(1988 | 1024): send GIOP v1.2 msg, 397 data bytes, my endian, Reply = 0
+TAO (1988|1024) Parsed header = <1,2,1,1,308>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 308 data bytes, my endian, Reply = 4
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <8123f38>
+TAO_StreamEndPoint::Connect ()
+QoS is Specified
+TAO_StreamEndPoint::connect: flow_spec_length = 1
+TAO_FlowSpec_Entry::parse_address QoS_UDP=192.168.1.3;8000 c0a80103
+entry_to_string: entry = Data_Receiver\IN\USER_DEFINED\\QoS_UDP=192.168.1.3;8000
+TAO_StreamEndPoint::Connect: Data_Receiver\IN\USER_DEFINED\\QoS_UDP=192.168.1.3;8000
+TAO_AV_Core::init_forward_flows
+address given for flow Data_ReceiverInit Forward Flows 0
+TAO_AV_Acceptor_Registry::open 
+TAO_AV_Acceptor_Registry::protocol for flow Data_Receiver is QoS_UDP
+Need to match QoS_UDP 1
+Need to match QoS_UDP 2
+Need to match QoS_UDP 3
+TAO_AV_UDP_QoS_Factory::match_protocol
+Found match QoS_UDP
+TAO_AV_UDP_QoS_Factory::make_acceptor TAO_AV_UDP_QoS_Acceptor::open TAO_AV_UDP_QoS_Acceptor::open: 192.168.1.3:8000IN GET FLOW QoS Data_Receiver
+Filled up the Sender QoS parameters
+rapi_session () call succeeds. Session ID = 1
+QoS session opened successfully
+Subscribe succeeded
+It is a Producer
+
+Sender TSpec :  [T [9.2K(9.2K) p=18.4K m=0 M=1.02K]]
+
+TSpec :
+	 Spec Type = 0
+	 Rate = 9200.000000
+	 Bucket = 9200.000000
+	 Peak = 18400.000000
+	 MPU = 0
+	 MDU = 1024
+	 TTL = 0
+Making the rapi_sender () call
+rapi_sender () call succeeds ! 
+Setting QOS succeeds.
+TAO_AV_UDP_QoS_ACCEPTOR::open:192.168.1.3:8000 
+Acceptor Svc Handler QOS ENABLED 
+TAO_AV_UDP_QoS_Flow_Handler::get_handle:13
+(1988 |1024) index in find <0> 
+(1988|1024) IIOP_Connector::connect - got an existing transport with id 10
+(1988|1024) TAO_Exclusive_TMS::request_id - <5>
+(1988 | 1024): send GIOP v1.2 msg, 636 data bytes, my endian, Request = 5
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <8123f38>
+TAO (1988|1024) Parsed header = <1,2,1,1,372>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 372 data bytes, my endian, Reply = 5
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <8123f38>
+TAO_FlowSpec_Entry::parse_address QoS_UDP=192.168.1.3;8000 c0a80103
+entry_to_string: entry = Data_Receiver\QoS_UDP=192.168.1.3;8000\\IN\USER_DEFINED
+TAO_StreamEndPoint::Connect: Reverse Flow Spec Data_Receiver\QoS_UDP=192.168.1.3;8000\\IN\USER_DEFINED
+(1988|1024)TAO_AV_Core::init_reverse_flows
+TAO_AV_UDP_QoS_Flow_Handler::set_remote_address
+This connector registry is called TWO
+Frame Rate = 1 / second
+Inter Frame Time = 1000 (msec)
+TAO_AV_UDP_Object::send_frame
+Using ACE_OS::sendto () : Bytes sent : 8192Sender::pace_data frame 1 was sent succesfully
+TAO_AV_UDP_Object::send_frame
+Using ACE_OS::sendto () : Bytes sent : 8192Sender::pace_data frame 2 was sent succesfully
+Elapsed Time = 4
+Wait Time = 995
+TAO (1988|1024) - start of run/perform_work
+TAO (1988|1024) - blocking on handle events
+TAO (1988|1024) - end of run/perform_work 0
+TAO_AV_UDP_Object::send_frame
+Using ACE_OS::sendto () : Bytes sent : 8192Sender::pace_data frame 3 was sent succesfully
+Elapsed Time = 4
+Wait Time = 995
+TAO (1988|1024) - start of run/perform_work
+TAO (1988|1024) - blocking on handle events
+TAO (1988|1024) - blocking on handle events
+TAO (1988|1024) - end of run/perform_work 0
+TAO_AV_UDP_Object::send_frame
+Using ACE_OS::sendto () : Bytes sent : 4196Sender::pace_data frame 4 was sent succesfully
+Handle_Start:End of file
+TAO_AV_Callback::handle_end_stream
+(1988 |1024) index in find <0> 
+(1988|1024) IIOP_Connector::connect - got an existing transport with id 10
+(1988|1024) TAO_Exclusive_TMS::request_id - <6>
+(1988 | 1024): send GIOP v1.2 msg, 64 data bytes, my endian, Request = 6
+TAO (1988|1024) - wait (leader):to enter reactor event loop on <8123f38>
+TAO (1988|1024) Parsed header = <1,2,1,1,12>
+(1988 | 1024): Recv msg GIOP v1.2 msg, 12 data bytes, my endian, Reply = 6
+TAO (1988|1024) - wait : (leader) : done with reactor event loop on <8123f38>
+TAO (1988|1024) - start of run/perform_work
+TAO (1988|1024) - blocking on handle events
