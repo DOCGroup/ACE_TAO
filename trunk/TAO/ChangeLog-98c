@@ -1,12 +1,12 @@
 Wed Aug 19 10:48:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl: 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
-	  Fixed syntax errors, wrong paths and increased sleep time, seems
-	  to work now.
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+          Fixed syntax errors, wrong paths and increased sleep time, seems
+          to work now.
 
-	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
-	  The script was giving the wrong options to the server.
+        * tests/Cubit/TAO/DII_Cubit/run_test.pl:
+          The script was giving the wrong options to the server.
 
 Wed Aug 19 09:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -17,6 +17,10 @@ Wed Aug 19 09:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (parse_args): check
           for success of ACE_OS::fopen () call on the IOR file.  Print
           an ACE_ERROR message and return -1 if it failed.
+
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp (main): replaced {0, 0}
+          initializers for Times with 0, now that CORBA::ULongLong is an
+          int type.
 
 Wed Aug 19 08:07:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
