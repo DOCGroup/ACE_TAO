@@ -41,6 +41,22 @@ if ($client == -1) {
   exit 1;
 }
 
+print STDERR "\n\n==== InvalidName test\n";
+
+$CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
+                       " not_a_service "
+                       ."-ORBInitRef random_service="
+                       ."iioploc://localhost:$port/object_name");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $SV->Kill (); $SV->TimedWait (1);
+  unlink $file;
+  exit 1;
+}
+
 print STDERR "\n\n==== DefaultInitRef test\n";
 
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
