@@ -172,6 +172,8 @@ ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard (void)
 
   (void) this->repository_.remove_ref (this->handle_);
 
-  // @todo Resume the handler so that other threads will be allowed to
-  //       dispatch the handler.
+  /**
+   * @todo Resume the handler so that other threads will be allowed to
+   *       dispatch the handler.
+   */
 }
