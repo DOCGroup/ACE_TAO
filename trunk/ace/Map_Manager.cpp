@@ -29,7 +29,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
 
-template <class EXT_ID, class INT_ID, class ACE_LOCK> int
+  template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
                                                  ACE_Allocator *alloc)
 {
@@ -343,8 +343,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
-                                                     size_t &index)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (const EXT_ID &ext_id,
+                                                                    size_t &index)
 {
   // Try to find the key.
   int result = this->find_and_return_index (ext_id, 
@@ -368,8 +368,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
 {
   // Unbind the entry.
   size_t index = 0;
-  int result = this->unbind_i (ext_id, 
-                               index);
+  int result = this->unbind_and_return_index (ext_id, 
+                                              index);
 
   if (result == 0)
     {

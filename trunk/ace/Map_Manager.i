@@ -129,8 +129,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id)
 {
   // Unbind the entry.
   size_t index = 0;
-  return this->unbind_i (ext_id, 
-                         index);
+  return this->unbind_and_return_index (ext_id, 
+                                        index);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int

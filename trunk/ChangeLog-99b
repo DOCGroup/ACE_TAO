@@ -18,6 +18,9 @@ Sun Jan 24 19:26:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* ace/SString.cpp (set): Fixed usage case of when the incoming
 	  string is not zero but the length specified is zero.
 
+	* tests/SString_Test.cpp (main): Added zero sized strings and
+	  single character strings to the test.
+
 Sun Jan 24 19:09:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-common.h
