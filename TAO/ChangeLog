@@ -1,3 +1,9 @@
+Wed Aug 20 15:52:03 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/*.*
+
+          Added new test for collocated portable interceptors.
+
 Tue Aug 19 20:52:57 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/tests/Event/Basic/rteventtestexe.mpb:
