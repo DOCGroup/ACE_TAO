@@ -1,3 +1,20 @@
+Sat May 17 12:25:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/{Acceptor,Connector,Strategies_T}: Make sure to either
+ 	  enable or disable ACE_NONBLOCK (depending on the flags).  This
+ 	  ensures that we always start with the I/O mode set to a
+ 	  deterministic state.  Thanks to Irfan for suggesting this.
+
+	* ace/Connector: Added a new "flags" parameter to the 
+	  ACE_Connector and ACE_Strategy_Connector which keeps track of
+	  flags that control how Svc_Handler are initialized prior to
+	  being activated.  
+
+	* ace/Strategies_T.cpp (activate_svc_handler): Make sure to set
+ 	  the peer's handle into non-blocking mode *before* calling the
+ 	  Svc_Handler's open() method.  This ensures that things are set
+ 	  up correctly when this hook is called.
+
 Sat May 17 02:19:27 1997  Nanbor Wang  <nw1@number.wustl.edu>
 
 	* ace/config-freebsd.h (ACE_HAS_BROKEN_TIMESPEC_MEMBERS): 

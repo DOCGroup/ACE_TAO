@@ -87,7 +87,7 @@ template <class TYPE, class FUNCTOR, class LOCK>
 ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_List_T (void)
 {
   ACE_TRACE ("ACE_Timer_List::~ACE_Timer_List");
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->lock_));
+  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
   
   ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *curr = this->head_;
   
@@ -154,7 +154,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::schedule (const TYPE &type,
 						 const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_List::schedule");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   // Increment the sequence number (it will wrap around).
   long timer_id = this->timer_id ();
@@ -224,7 +224,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::cancel (long timer_id,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_List::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *prev = 0;
   ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *curr = 0;
@@ -263,7 +263,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_List::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *prev = 0;
   ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *curr = this->head_;
