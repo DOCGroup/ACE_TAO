@@ -63,6 +63,12 @@
 # include "ace/config-ghs-common.h"
 
 # define ACE_LACKS_UNISTD_H
+# define ACE_LACKS_IOSTREAM_TOTALLY
+
+// Short-circuit the include of <arpa/inet.h>
+// Green Hills has a problem with multiply defined functions
+// with different parameters.
+# define __INCineth
 
 #elif defined (__DCPLUSPLUS__)
   // Diab 4.2a or later.

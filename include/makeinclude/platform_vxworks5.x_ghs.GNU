@@ -32,7 +32,7 @@
 #### endif # PATH
 ####
 #### CPU = 86
-#### GHS = /project/doc/pkg/wind/green/vx$(CPU)
+#### GHSROOT = /project/doc/pkg/wind/green
 #### include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_ghs.GNU
 
 VXWORKS = 1
@@ -53,8 +53,11 @@ endif # CPU
 ifeq ($(CPU),86)
   # With GHS' ax, ld386 complains that it can't read the
   # archive symbol table.
+  ifndef GHSROOT
+    GHSROOT = /project/doc/pkg/wind/green
+  endif
   ifndef GHS
-    GHS = /project/doc/pkg/wind/green/vx$(CPU)
+    GHS = $(GHSROOT)/vx$(CPU)
   endif # GHS
   AR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ar386
   ARFLAGS  = rsu
@@ -63,8 +66,11 @@ ifeq ($(CPU),86)
   #### LIBS += $(GHS)/libedgnoe.a
 else
 ifeq ($(CPU),ppc)
+  ifndef GHSROOT
+    GHSROOT = /appl/newgreen
+  endif
   ifndef GHS
-    GHS = /appl/newgreen/vx$(CPU)603
+    GHS = $(GHSROOT)/vx$(CPU)603
   endif # GHS
   AR = ax
   ARFLAGS  = cr
@@ -75,12 +81,13 @@ endif # ppc
 endif # CPU
 
 #### For GHS 1.8.9:
-LIBS += $(GHS)/libscnoe.a $(GHS)/libsedgnoe.a $(GHS)/liblockinit_sc.o
+LIBS += $(GHS)/libscnoe.a $(GHS)/libsedgnoe.a $(GHS)/liblockinit_sc.o $(GHSROOT)/$(CPU)/libarch.a
 
 CC       = cxvx$(CPU)
 CXX      = $(CC)
-CCFLAGS  += $(CFLAGS) --no_rtti -tnone
+CCFLAGS  += $(CFLAGS) --no_rtti -tnone -Dghs -I$(GHSROOT)/vxworks/include -I$(WIND_BASE)/target/h
 DCFLAGS  += -g
+SOFLAGS  += -shared
 DLD      = $(CXX)
 LD       = $(CXX)
 LDFLAGS  = --no_auto_instantiation
