@@ -2842,17 +2842,6 @@ struct ifafilt;
   #include /**/ <sys/socket.h>
 #endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 
-// Increase the range of "address families".  Please note that this
-// must appear _after_ the include of sys/socket.h, for the AF_FILE
-// definition on Linux/glibc2.
-#define AF_ANY (-1)
-#define AF_SPIPE (AF_MAX + 1)
-#if !defined (AF_FILE)
-# define AF_FILE (AF_MAX + 2)
-#endif /* ! AF_FILE */
-#define AF_DEV (AF_MAX + 3)
-#define AF_UPIPE (AF_SPIPE)
-
 extern "C"
 {
 #if defined (VXWORKS)
@@ -3175,6 +3164,17 @@ typedef short ACE_pri_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
 #endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+
+// Increase the range of "address families".  Please note that this
+// must appear _after_ the include of sys/socket.h, for the AF_FILE
+// definition on Linux/glibc2.
+#define AF_ANY (-1)
+#define AF_SPIPE (AF_MAX + 1)
+#if !defined (AF_FILE)
+# define AF_FILE (AF_MAX + 2)
+#endif /* ! AF_FILE */
+#define AF_DEV (AF_MAX + 3)
+#define AF_UPIPE (AF_SPIPE)
 
 #if defined (ACE_SELECT_USES_INT)
 typedef int ACE_FD_SET_TYPE;

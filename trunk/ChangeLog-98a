@@ -1,3 +1,10 @@
+Wed Jan 14 20:27:44 1998    <coryan@MILONGA>
+
+	* ace/OS.h: 
+	  The new location for AF_ANY and AF_FILE was in the middle of a
+	  big #if !ACE_WIN32, hence it was not working for NT, I moved it
+	  further down and now NT is happy.
+
 Wed Jan 14 19:01:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Message_Queue.cpp (open): In Message_Queue::open
