@@ -8,6 +8,8 @@
 #include "ace/FILE_IO.h"
 #include "ace/Mem_Map.h"
 
+#include "JAWS/Export.h"
+
 class JAWS_Export JAWS_FILE : public ACE_FILE_IO
 //
 // Like ACE_FILE_IO, but support for ACE_Mem_Map;
@@ -15,16 +17,23 @@ class JAWS_Export JAWS_FILE : public ACE_FILE_IO
 public:
 
   JAWS_FILE (void);
-  JAWS_FILE (ACE_HANDLE map_handle);
 
-  ACE_Mem_Map *mem_map (void);
-  ACE_Mem_Map *mem_map (void) const;
+  ACE_Mem_Map *mem_map (int length = -1,
+                        int prot = PROT_RDWR,
+                        int share = ACE_MAP_PRIVATE,
+                        void *addr = 0,
+                        off_t offset = 0,
+                        LPSECURITY_ATTRIBUTES sa = 0);
+  ACE_Mem_Map *mem_map (int length = -1,
+                        int prot = PROT_RDWR,
+                        int share = ACE_MAP_PRIVATE,
+                        void *addr = 0,
+                        off_t offset = 0,
+                        LPSECURITY_ATTRIBUTES sa = 0) const;
 
   ACE_Mem_Map *map (void) const;
 
 private:
-
-  ACE_HANDLE map_handle_;
 
   ACE_SYNCH_MUTEX lock_;
   ACE_Mem_Map *map_;
