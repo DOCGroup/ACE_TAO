@@ -60,7 +60,7 @@ sub process {
   my($replace) = $self->{'replace'};
   my(@repkeys) = keys %$replace;
   my($cwd)     = $self->{'cwd'};
-  my(@files)   = @{$self->{'pre'}->process($file)};
+  my(@files)   = @{$self->{'pre'}->process($file, $self->{'noinline'})};
 
   ## Go through each file
   foreach my $finc (@files) {
@@ -81,18 +81,7 @@ sub process {
   }
 
   ## Sort the dependencies to make them reproducible
-  if ($self->{'noinline'}) {
-    my(@copy) = sort @files;
-    @files = ();
-    for(my $i = 0; $i <= $#copy; ++$i) {
-      if ($copy[$i] !~ /\.i(nl)?$/) {
-        push(@files, $copy[$i]);
-      }
-    }
-  }
-  else {
-    @files = sort @files;
-  }
+  @files = sort @files;
 
   ## Generate the dependency string
   return $self->{'dwrite'}->process($objects, \@files);
