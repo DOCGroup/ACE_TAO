@@ -159,6 +159,7 @@ $(ACE_ROOT)/include/makeinclude/platform_linux.GNU         MODIFIED
 
 $(ACE_ROOT)/tests/Makefile                                 MODIFIED
 $(ACE_ROOT)/tests/Multihomed_INET_Addr_Test.cpp            ADDED
+$(ACE_ROOT)/tests/SOCK_SEQPACK_Association_Test.cpp        ADDED
 $(ACE_ROOT)/tests/run_test.lst                             MODIFIED
 
 $(ACE_ROOT)/performance-tests/SCTP/THANKS                  ADDED
