@@ -37,7 +37,7 @@ namespace TAO
     // of arg classes as interfaces.
     static void tao_release (T *);
   };
-};
+}
 
 /**
  * @class TAO_Value_Var_T
@@ -46,7 +46,7 @@ namespace TAO
  *
  */
 template <typename T>
-class TAO_Value_Var_T 
+class TAO_Value_Var_T
 {
 public:
   TAO_Value_Var_T (void);
@@ -57,16 +57,16 @@ public:
   TAO_Value_Var_T (const T *);
 
   ~TAO_Value_Var_T (void);
-  
+
   TAO_Value_Var_T &operator= (T *);
   TAO_Value_Var_T &operator= (const TAO_Value_Var_T<T> &);
 
   T * operator-> (void) const;
-  
+
   operator const T * () const;
   operator T *& ();
 
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   T * in (void) const;
   T *& inout (void);
   T *& out (void);
@@ -74,7 +74,7 @@ public:
 
   // (TAO extension)
   T * ptr (void) const;
-  
+
 private:
   T * ptr_;
 };
@@ -86,7 +86,7 @@ private:
  *
  */
 template <typename T>
-class TAO_Value_Out_T 
+class TAO_Value_Out_T
 {
 public:
   TAO_Value_Out_T (T *&);
@@ -101,7 +101,7 @@ public:
   T *& ptr (void);
 
   T * operator-> (void);
-  
+
 private:
   typedef TAO_Value_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
