@@ -1,9 +1,20 @@
+Mon Apr 14 18:28:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.lib.GNU:
+          Only pass LDFLAGS once to the linker
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Pass BORLDFLAGS to the SOFLAGS and removed setting of SOLINK.cc.
+          With -L the location of shared objects to link with can be set,
+          but this -L should be only specified once, and the paths should
+          then be divided by :.
+
 Mon Apr 14 12:56:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/DSRT_Dispatcher_Impl.h:
 	* Kokyu/DSRT_Dispatcher_Impl.cpp:
 	* Kokyu/DSRT_Dispatcher_Impl.i:
-	  
+
 	  Added new files for Dynamic scheduling support.
 
 Mon Apr 14 17:28:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
