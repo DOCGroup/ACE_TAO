@@ -119,6 +119,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Bind_Dispatcher_Guard.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
@@ -751,6 +755,10 @@ SOURCE=.\Asynch_Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Bind_Dispatcher_Guard.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.i
 # End Source File
 # Begin Source File
@@ -1200,6 +1208,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # Begin Source File
 
 SOURCE=.\Asynch_Reply_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Bind_Dispatcher_Guard.cpp
 # End Source File
 # Begin Source File
 
