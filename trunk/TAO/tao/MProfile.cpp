@@ -304,8 +304,8 @@ TAO_MProfile::is_equivalent (TAO_MProfile *first,
   // of the profiles from the second list!!
   TAO_Profile_ptr *pfiles1 = first->pfiles ();
   TAO_Profile_ptr *pfiles2 = second->pfiles ();
-  int first_cnt = first->profile_count ();
-  int second_cnt = second->profile_count ();
+  PHandle first_cnt = first->profile_count ();
+  PHandle second_cnt = second->profile_count ();
   
   for (PHandle h1 = 0; h1 < first_cnt;h1++)
     for (PHandle h2 = 0; h2 < second_cnt; h2++ )
