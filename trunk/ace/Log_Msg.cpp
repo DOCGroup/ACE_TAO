@@ -2073,12 +2073,16 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
                           text);
 
   sz += ACE_OS::sprintf (msg_buf + sz,
-                         ACE_LIB_TEXT ("HEXDUMP %lu bytes"),
+                         ACE_LIB_TEXT ("HEXDUMP ")
+                         ACE_SIZE_T_FORMAT_SPECIFIER
+                         ACE_LIB_TEXT (" bytes"),
                          size);
 
   if (len < size)
     ACE_OS::sprintf (msg_buf + sz,
-                     ACE_LIB_TEXT (" (showing first %lu bytes)"),
+                     ACE_LIB_TEXT (" (showing first ")
+                     ACE_SIZE_T_FORMAT_SPECIFIER
+                     ACE_LIB_TEXT (" bytes)"),
                      len);
 
   // Now print out the formatted buffer.
