@@ -12,7 +12,7 @@ Log_i::Log_i (DsLogAdmin::LogMgr_ptr factory,
               DsLogAdmin::LogFullAction log_full_action,
               CORBA::ULongLong max_size,
               ACE_Reactor *reactor)
-  : factory_ (factory),
+  : factory_ (DsLogAdmin::LogMgr::_duplicate (factory)),
     log_full_action_ (log_full_action),
     logid_ (id),
     admin_state_ (DsLogAdmin::locked),
