@@ -96,6 +96,11 @@ public:
   ~ACE_Object_Manager (void);
 private:
 
+#if defined (ACE_HAS_TSS_EMULATION)
+  // Main thread's thread-specific storage array.
+  void *ts_storage_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
+#endif /* ACE_HAS_TSS_EMULATION */
+
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   friend class ACE_Object_Manager_Destroyer;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
