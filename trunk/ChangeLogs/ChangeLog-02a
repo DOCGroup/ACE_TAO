@@ -1,3 +1,8 @@
+Mon Apr 15 10:22:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.h:
+          Doxygen-ized some of the comments
+
 Mon Apr 15 08:49:23 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Makefile.bor:
