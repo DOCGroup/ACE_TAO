@@ -41,25 +41,26 @@ namespace CCF
               : IDL2::SemanticAction::Impl::Factory (context, dout, r),
                 trace_ (context.get ("idl3::semantic-action::trace", false)),
 
-                include_ (trace_, context, dout, *this, r, scope_),
                 component_ (trace_, scope_),
-                provides_ (trace_, scope_),
-                uses_ (trace_, scope_),
-                publishes_ (trace_, scope_),
-                emits_ (trace_, scope_),
                 consumes_ (trace_, scope_),
+                emits_ (trace_, scope_),
                 event_type_ (trace_, scope_),
                 home_ (trace_, scope_),
-                home_factory_ (trace_, scope_)
+                home_factory_ (trace_, scope_),
+                include_ (trace_, context, dout, *this, r, scope_),
+                provides_ (trace_, scope_),
+                publishes_ (trace_, scope_),
+                system_include_ (trace_, context, dout, *this, r, scope_),
+                uses_ (trace_, scope_)
           {
           }
 
         public:
 
-          virtual IDL2::SemanticAction::Include&
-          include ()
+          virtual SemanticAction::Consumes&
+          consumes ()
           {
-            return include_;
+            return consumes_;
           }
 
           virtual SemanticAction::Component&
@@ -68,34 +69,10 @@ namespace CCF
             return component_;
           }
 
-          virtual SemanticAction::Provides&
-          provides ()
-          {
-            return provides_;
-          }
-
-          virtual SemanticAction::Uses&
-          uses ()
-          {
-            return uses_;
-          }
-
-          virtual SemanticAction::Publishes&
-          publishes ()
-          {
-            return publishes_;
-          }
-
           virtual SemanticAction::Emits&
           emits ()
           {
             return emits_;
-          }
-
-          virtual SemanticAction::Consumes&
-          consumes ()
-          {
-            return consumes_;
           }
 
 
@@ -118,21 +95,51 @@ namespace CCF
           }
 
 
+          virtual IDL2::SemanticAction::Include&
+          include ()
+          {
+            return include_;
+          }
+
+          virtual SemanticAction::Provides&
+          provides ()
+          {
+            return provides_;
+          }
+
+          virtual SemanticAction::Publishes&
+          publishes ()
+          {
+            return publishes_;
+          }
+
+          virtual IDL2::SemanticAction::SystemInclude&
+          system_include ()
+          {
+            return system_include_;
+          }
+
+          virtual SemanticAction::Uses&
+          uses ()
+          {
+            return uses_;
+          }
+
         private:
 
           bool trace_;
 
-          Include include_;
-
           Component component_;
-          Provides provides_;
-          Uses uses_;
-          Publishes publishes_;
-          Emits emits_;
           Consumes consumes_;
+          Emits emits_;
           EventType event_type_;
           Home home_;
           HomeFactory home_factory_;
+          Include include_;
+          Provides provides_;
+          Publishes publishes_;
+          SystemInclude system_include_;
+          Uses uses_;
         };
       }
     }

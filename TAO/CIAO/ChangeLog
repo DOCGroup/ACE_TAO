@@ -1,3 +1,32 @@
+Tue Nov 25 14:47:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CodeGenerationKit/CommandLine.hpp:
+
+	  Added capability to iterate over options.
+
+	* CCF/CCF/CompilerElements/FileSystem.hpp:
+
+	  Added normalize() function to normalize absolute paths.
+
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Include.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:	
+	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+	
+	  Added #include handling.
+	
+	* CCF/Test/IDL2/Parser/Include/root.idl:
+	* CCF/Test/IDL2/Parser/Include/bar/bar.idl:
+	* CCF/Test/IDL2/Parser/Include/bar/baz.idl:
+	* CCF/Test/IDL2/Parser/Include/foo/foo.idl:
+
+	  Simple test for #include.
+
 Tue Nov 25 09:34:10 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/RoundTrip/run_test.pl

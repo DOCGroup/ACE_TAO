@@ -426,6 +426,12 @@ namespace CCF
       NoArgAction<SemanticAction::Include>
       act_include_end;
 
+      OneArgAction<StringLiteralPtr, SemanticAction::SystemInclude>
+      act_system_include_begin;
+
+      NoArgAction<SemanticAction::SystemInclude>
+      act_system_include_end;
+
 
       // Interface
       //
