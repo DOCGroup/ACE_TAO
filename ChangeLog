@@ -1,3 +1,9 @@
+Wed May 21 14:32:13 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Test_Output.dsp:
+          Removed post build step that cleaned up old versions of
+          Test_Output*.dll. 
+
 Wed May 21 09:25:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Parser.pm:
