@@ -43,7 +43,7 @@ TAO_ECG_UDP_Request_Index::TAO_ECG_UDP_Request_Index (void)
 
 ACE_INLINE
 TAO_ECG_UDP_Request_Index::TAO_ECG_UDP_Request_Index (const ACE_INET_Addr& from_,
-                                                CORBA::ULong request_id_)
+                                                      CORBA::ULong request_id_)
   :  from (from_),
      request_id (request_id_)
 {
@@ -58,18 +58,16 @@ TAO_ECG_UDP_Request_Index::hash (void) const
 }
 
 ACE_INLINE int
-operator==(const TAO_ECG_UDP_Request_Index& lhs,
-           const TAO_ECG_UDP_Request_Index& rhs)
+TAO_ECG_UDP_Request_Index::operator== (const TAO_ECG_UDP_Request_Index& rhs) const
 {
-  return (lhs.from == rhs.from
-          && lhs.request_id == rhs.request_id);
+  return (this->from == rhs.from && 
+          this->request_id == rhs.request_id);
 }
 
 ACE_INLINE int
-operator!=(const TAO_ECG_UDP_Request_Index& lhs,
-           const TAO_ECG_UDP_Request_Index& rhs)
+TAO_ECG_UDP_Request_Index::operator!= (const TAO_ECG_UDP_Request_Index& rhs) const
 {
-  return !(lhs == rhs);
+  return !(*this == rhs);
 }
 
 // ****************************************************************

@@ -1,3 +1,9 @@
+Mon Dec 28 16:44:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP: Fixed "used before it was
+ 	  declared inline" problem.  Also, made opertor== and opertor!=
+ 	  class methods.
+
 Mon Dec 28 13:13:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Simple/time/Server_i.cpp (parse_args): Fixed an
