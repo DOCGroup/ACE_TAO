@@ -1,3 +1,14 @@
+Tue Jan  5 18:48:47  James CE Johnson  <jcej@lads.com>
+
+	* docs/tutorials/templates.html: 
+	Fixed a number of problems here.  Thanks to Amos Shapira
+	<Amos_Shapira@icomverse.com> for pointing them out.
+
+	* docs/tutorials/colorize:
+	I pulled out the colorization code from combine into this
+	standalone script.  One of these days I'll fix combine so that the 
+	code isn't duplicated...
+	
 Tue Jan  5 16:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-irix6.x-common.h: 

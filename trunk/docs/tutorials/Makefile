@@ -6,3 +6,4 @@ all clean realclean : #
 		[ -f $$i/Makefile ] || continue ; \
 		( cd $$i ; $(MAKE) $@ ) ; \
 	done
+include .depend
