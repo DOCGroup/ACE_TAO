@@ -1,3 +1,11 @@
+Sun Sep 23 10:02:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/High_Res_Timer.h: Removed a question mark "?",  in a line
+	  which read  "or sometimes 3.579 Mhz??". This seems to remove the
+	  warning in VXWORKS builds. I have no clue about the problem that
+	  VXWORKS compiler sees. It took only more than an hour to figure
+	  this out. :(.
+
 Sat Sep 22 08:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Service_Manager.cpp (handle_input): Added some logic to

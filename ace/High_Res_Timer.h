@@ -88,7 +88,7 @@
  * in sync.
  * A windows "timer chip" NOTE: (8254-compatible real-time clock)
  * When ::QueryPerformanceCounter() uses the 8254 it has a 
- * frequency off about 1.193 Mhz (or sometimes 3.579 Mhz??) and
+ * frequency off about 1.193 Mhz (or sometimes 3.579 Mhz?) and
  * reading it requires some time (several thousand cycles).
  */
 class ACE_Export ACE_High_Res_Timer
