@@ -5,7 +5,7 @@ Thu Apr 05 03:26:13 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
         * examples/Synch/README:
         * examples/Synch/Synch.dsw:
         * examples/Synch/proc_sema.cpp:
-        * examples/Synch/proc_sema.dsp: Added a new explame to play with
+        * examples/Synch/proc_sema.dsp: Added a new example to play with
 	  process semaphores.
 
 Thu Apr 05 02:48:51 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -21,8 +21,6 @@ Thu Apr 05 02:48:51 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tests/MEM_Stream_Test.cpp (handle_close): Handle_close should
 	  only inform it's peer to destroy the mmap file instead of
 	  removing the file itself.
-
-	*
 
 Wed Apr  4 16:21:13 2001  Darrell Brunsch <brunsch@uci.edu>
 
