@@ -9,7 +9,7 @@ dnl       general enough for general use.
 dnl 
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 1998, 1999, 2000  Ossama Othman
+dnl  Copyright (C) 1998, 1999, 2000, 2002  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
@@ -32,7 +32,7 @@ dnl a directory that doesn't contain any CVS controlled sources and files,
 dnl i.e. that doesn't contain a CVS directory.
 dnl
 dnl Usage: ACE_CHECK_FOR_CVS_DIR
-AC_DEFUN(ACE_CHECK_FOR_CVS_DIR,
+AC_DEFUN([ACE_CHECK_FOR_CVS_DIR],
 [
  if test -d CVS; then
    AC_MSG_ERROR(
@@ -64,9 +64,9 @@ dnl configuration is being performed in the top-level directory.  The
 dnl idea is to prevent files generated during configuration and build
 dnl from overwriting the stock files of the same name.
 dnl Usage: ACE_CHECK_TOP_SRCDIR
-AC_DEFUN(ACE_CHECK_TOP_SRCDIR,
+AC_DEFUN([ACE_CHECK_TOP_SRCDIR],
 [
- if test $srcdir = "." && test $USE_MAINTAINER_MODE != yes; then
+ if test "$srcdir" = "." && test "$USE_MAINTAINER_MODE" != "yes"; then
    AC_MSG_ERROR(
      [
       Please configure and build in a directory other than the
@@ -91,28 +91,23 @@ AC_DEFUN(ACE_CHECK_TOP_SRCDIR,
 ])
 
 dnl Add compiler flags to the CXXFLAGS and CFLAGS variables when doing an
-dnl AC_TRY_COMPILE (not ACE_TRY_COMPILE).
+dnl AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[],[]) (not ACE_TRY_COMPILE).
 dnl Use this macro when adding include directories to the compiler flags,
 dnl for example.
 dnl Usage: ACE_TRY_COMPILE(COMPILER-FLAGS, INCLUDES, FUNCTION-BODY,
 dnl                        [ACTION-IF-FOUND [,ACTION-IF-NOT-FOUND]])
-AC_DEFUN(ACE_TRY_COMPILE, dnl
+AC_DEFUN([ACE_TRY_COMPILE],
 [
- ifelse(AC_LANG, [CPLUSPLUS],
-   [
-    ace_pre_try_CXXFLAGS="$CXXFLAGS"
-    CXXFLAGS="$CXXFLAGS $1"
-   ],
-   [
-    ace_pre_try_CFLAGS="$CFLAGS"
-    CFLAGS="$CFLAGS $1"
-   ])
+ AC_LANG([C++])
+ AC_REQUIRE([AC_LANG])
 
- AC_TRY_COMPILE([$2],[$3],[$4],[$5])
+ ace_pre_try_CXXFLAGS="$CXXFLAGS"
+ CXXFLAGS="$CXXFLAGS $1"
 
- dnl Restore the C++ and C flags
- ifelse(AC_LANG, [CPLUSPLUS],
-   [CXXFLAGS="$ace_pre_try_CXXFLAGS"],[CFLAGS="$ace_pre_try_CFLAGS"])
+ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[$2]], [[$3]])],[$4],[$5])
+
+ dnl Restore the C++ flags
+ CXXFLAGS="$ace_pre_try_CXXFLAGS"
 
 ])
 
@@ -122,9 +117,9 @@ dnl exist.  Files will be created under the source directory, not the build
 dnl directory.
 dnl Use this macro when you need a particular file available but want it to be
 dnl empty.  This is useful to prevent conflicts with autoconf's confdefs.h
-dnl header when doing an AC_TRY_COMPILE.
+dnl header when doing an AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[],[]).
 dnl Usage: ACE_USE_TEMP_FILE(TEMP-FILE-TO-CREATE, COMMANDS-THAT-WILL-USE-IT)
-AC_DEFUN(ACE_USE_TEMP_FILE, dnl
+AC_DEFUN([ACE_USE_TEMP_FILE],
 [
  test -d ./$1 && AC_MSG_ERROR([cannot create file: $acetmp is a directory])
 
@@ -167,10 +162,10 @@ changequote([, ])dnl
 
 dnl Run given test(s) with warnings converted to errors
 dnl Usage: ACE_CONVERT_WARNINGS_TO_ERRORS(TEST-BLOCK)
-AC_DEFUN(ACE_CONVERT_WARNINGS_TO_ERRORS, dnl
+AC_DEFUN([ACE_CONVERT_WARNINGS_TO_ERRORS],
 [
 dnl $WERROR is set in the ACE_SET_COMPILER_FLAGS macro.
- AC_REQUIRE([ACE_SET_COMPILER_FLAGS])dnl
+ AC_REQUIRE([ACE_SET_COMPILER_FLAGS])
 
 dnl Some tests may pass because the compiler issues warnings
 dnl instead of errors when errors should occur.  This macro converts
@@ -195,11 +190,11 @@ dnl The COMMANDS-TO-SET-CACHE-VAL should set the CACHE-ID to yes or "no,"
 dnl otherwise the "ACTION-IF*" commands may not run.  The
 dnl COMMANDS-TO-SET-CACHE-VAL should only set the CACHE value.  For example,
 dnl no AC_DEFINES should be placed in the COMMANDS-TO-SET-CACHE-VAL.
-AC_DEFUN(ACE_CACHE_CHECK,
+AC_DEFUN([ACE_CACHE_CHECK],
 [
   AC_MSG_CHECKING([$1])
   AC_CACHE_VAL([$2], [$3])
-  AC_MSG_RESULT([$]$2)
+  AC_MSG_RESULT([[$]$2])
   if test "[$]$2" != no; then
     ace_just_a_place_holder=fixme
 ifelse([$4], , :, [$4])
@@ -222,25 +217,22 @@ dnl Check for specific typedef in given header file
 dnl Usage: ACE_CHECK_TYPE(TYPEDEF, INCLUDE,
 dnl                       [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
 dnl This macro can only check for one typedef in one header file at a time!!
-AC_DEFUN(ACE_CHECK_TYPE, dnl
+AC_DEFUN([ACE_CHECK_TYPE],
 [
 dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
-dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
+dnl  AC_LANG([C++])
+dnl  AC_REQUIRE([AC_LANG])
 
   ACE_CACHE_CHECK([for $1 in $2], [ace_cv_type_$1],
     [
-     AC_TRY_COMPILE(
-       [
+     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <$2>
-       ],
-       [
+       ]], [[
         $1 ace_$1;
-       ],
-       [
+       ]])],[
         ace_cv_type_$1=yes
-       ],
-       [
+       ],[
         ace_cv_type_$1=no
        ])
     ],[$3],[$4])
@@ -253,11 +245,12 @@ dnl Check for specific struct in given header file
 dnl Usage: ACE_CHECK_STRUCT(STRUCTURE, INCLUDE,
 dnl                        [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
 dnl This macro can only check for one struct in one header file at a time!!
-AC_DEFUN(ACE_CHECK_STRUCT, dnl
+AC_DEFUN([ACE_CHECK_STRUCT],
 [
 dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
-dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
+dnl  AC_LANG([C++])
+dnl  AC_REQUIRE([AC_LANG])
 
 dnl Do the transliteration at runtime so arg 1 can be a shell variable.
 dnl  ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
@@ -279,36 +272,33 @@ dnl program.  This macro is used by ACE_CHECK_STRUCT.
 dnl Usage: ACE_TRY_COMPILE_STRUCT(STRUCTURE, INCLUDE,
 dnl                         [ACTION-IF-SUCCESSFUL[, ACTION-IF-NOT-SUCCESSFUL]])
 dnl This macro can only check for one struct in one header file at a time!!
-AC_DEFUN(ACE_TRY_COMPILE_STRUCT, dnl
+AC_DEFUN([ACE_TRY_COMPILE_STRUCT],
 [
 dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
-dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
+dnl  AC_LANG([C++])
+dnl  AC_REQUIRE([AC_LANG])
 
-     AC_TRY_COMPILE(
-       [
+     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <$2>
-       ],
-       [
+       ]], [[
         struct $1 ace_$1;
-       ],
-       [
+       ]])],[
         $3
-       ],
-       [
+       ],[
 dnl Some compilers don't like the "struct" but we need the struct for
 dnl some platforms to resolve ambiguities between functions and
 dnl structures with with the same name.  So, we try the same test but
 dnl without "struct" if the above test with "struct" fails.  If both
 dnl tests fail, then we can be reasonably sure that we don't have the
 dnl structure we are testing for.
-        AC_TRY_COMPILE(
-          [
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+          [[
 #include <$2>
-          ],
-          [
+          ]],
+          [[
            $1 ace_$1;
-          ],
+          ]])],
           [
            $3
           ],
@@ -332,19 +322,17 @@ dnl things "transparent."  If the given header does not exist then this
 dnl macro acts just like the standard AC_CHECK_FUNC macro.
 dnl Usage: ACE_CHECK_FUNC(FUNCTION, HEADER,
 dnl                        [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
-AC_DEFUN(ACE_CHECK_FUNC, dnl
+AC_DEFUN([ACE_CHECK_FUNC],
 [
 dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
-dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
+dnl  AC_LANG([C++])
+dnl  AC_REQUIRE([AC_LANG])
   AC_REQUIRE([AC_PROG_AWK])
 
-  AC_TRY_CPP(
-     [
+  AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 #include <$2>
-     ],
-     [ace_header_exists=yes],
-     [ace_header_exists=no])
+     ]])],[ace_header_exists=yes],[ace_header_exists=no])
 
   cat > conftest.$ac_ext <<EOF
 
@@ -385,17 +373,17 @@ dnl things "transparent."  If the given header does not exist then this
 dnl macro acts just like the standard AC_CHECK_LIB macro.
 dnl Usage: ACE_CHECK_LIB(LIBRARY, FUNCTION, HEADER,
 dnl                        [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
-AC_DEFUN(ACE_CHECK_LIB, dnl
+AC_DEFUN([ACE_CHECK_LIB],
 [
 dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
-dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
+dnl  AC_LANG([C++])
+dnl  AC_REQUIRE([AC_LANG])
   AC_REQUIRE([AC_PROG_AWK])
 
-  AC_TRY_CPP(
-    [
+  AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 #include <$3>
-    ], ace_header_exists=yes, ace_header_exists=no)
+    ]])],[ace_header_exists=yes],[ace_header_exists=no])
 
   cat > conftest.$ac_ext <<EOF
 
@@ -406,7 +394,7 @@ EOF
 
   if test "$ace_header_exists" = yes; then
     if test -z "$AWK"; then
-      AC_MSG_WARN(No awk program found.  "Real" function in library may not be found.)
+      AC_MSG_WARN([No awk program found.  "Real" function in library may not be found.])
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
@@ -418,20 +406,20 @@ EOF
     fi
 
     if test $2 != "$ace_real_function"; then
-      AC_MSG_CHECKING(for real $2 from $3)
-      AC_MSG_RESULT($ace_real_function)
+      AC_MSG_CHECKING([for real $2 from $3])
+      AC_MSG_RESULT([$ace_real_function])
     fi
   else
     ace_real_function=$2
   fi dnl test "$ace_header_not_exist" != yes
 
-  AC_CHECK_LIB($1, $ace_real_function, $4, $5)
+  AC_CHECK_LIB([$1], [$ace_real_function], [$4], [$5])
 ])
 
 
 dnl Check if getrlimit() takes an enum as 1st argument
 dnl Usage: ACE_CHECK_SETRLIMIT_ENUM
-AC_DEFUN(ACE_CHECK_SETRLIMIT_ENUM, dnl
+AC_DEFUN([ACE_CHECK_SETRLIMIT_ENUM],
 [
 if test "$ac_cv_func_setrlimit" = yes; then
   AC_MSG_CHECKING([if setrlimit() takes an enum as 1st argument])
@@ -474,11 +462,11 @@ fi  dnl test "$ac_cv_func_setrlimit" = yes
 
 dnl Check if getrusage() takes an enum as 1st argument
 dnl Usage: ACE_CHECK_GETRUSAGE_ENUM
-AC_DEFUN(ACE_CHECK_GETRUSAGE_ENUM, dnl
+AC_DEFUN([ACE_CHECK_GETRUSAGE_ENUM],
 [
 if test "$ac_cv_func_getrusage" = yes; then
   AC_MSG_CHECKING([if getrusage() takes an enum as 1st argument])
-  AC_EGREP_HEADER([getrusage.*\(.*[^,]*enum], sys/resource.h,
+  AC_EGREP_HEADER([getrusage.*\(.*[^,]*enum], [sys/resource.h],
     [
      cat > conftest.$ac_ext <<EOF
 #include "confdefs.h"
@@ -536,7 +524,7 @@ AC_DEFUN([ACE_CHECK_LSEEK64],
        ace_save_CPPFLAGS="$CPPFLAGS"
        ace_no_largefile64="-U_LARGEFILE64_SOURCE"
        CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
-       AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
+       AC_EGREP_HEADER([[^_]+lseek64], [unistd.h],
          [
           ace_cv_lib_has_lseek64_prototype=yes
          ],
@@ -545,7 +533,7 @@ AC_DEFUN([ACE_CHECK_LSEEK64],
          ])
        dnl Reset the compiler flags
        CPPFLAGS="$ace_save_CPPFLAGS"
-      ],, AC_DEFINE(ACE_LACKS_LSEEK64_PROTOTYPE))
+      ],[],[AC_DEFINE([ACE_LACKS_LSEEK64_PROTOTYPE])])
    ],
    [
     AC_CHECK_FUNC([llseek],
@@ -565,7 +553,7 @@ AC_DEFUN([ACE_CHECK_LSEEK64],
           ace_save_CPPFLAGS="$CPPFLAGS"
           ace_no_largefile64="-U_LARGEFILE64_SOURCE"
           CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
-          AC_EGREP_HEADER([[^_]+llseek], unistd.h,
+          AC_EGREP_HEADER([[^_]+llseek],[unistd.h],
             [
              ace_cv_lib_has_llseek_prototype=no
             ],
@@ -574,7 +562,7 @@ AC_DEFUN([ACE_CHECK_LSEEK64],
             ],)
           dnl Reset the compiler flags
           CPPFLAGS="$ace_save_CPPFLAGS"
-         ],, AC_DEFINE(ACE_LACKS_LLSEEK_PROTOTYPE))
+         ],[],[AC_DEFINE([ACE_LACKS_LLSEEK_PROTOTYPE])])
 
 
       ],)
@@ -587,7 +575,7 @@ dnl Usage: ACE_CHECK_LOFF_64(LSEEK64-FUNC)
 AC_DEFUN([ACE_CHECK_OFF64_T],
 [
   AC_MSG_CHECKING([for 64 bit offset type])
-  AC_EGREP_HEADER([[ ]+$1.*\(.*], unistd.h,
+  AC_EGREP_HEADER([[ ]+$1.*\(.*],[unistd.h],
     [
      cat > conftest.$ac_ext <<EOF
 #include "confdefs.h"
@@ -638,166 +626,164 @@ dnl This section contains my own *re*implementation of the functionality
 dnl provided by some tests/macros found in GNU Autoconf since the ones found
 dnl in Autoconf don't appear to work as expected.
 dnl
-dnl                -Ossama Othman <ossama@debian.org>
-dnl
-dnl The copyright for the following macros is listed below.
-dnl Note that all macros listed prior to this section are copyrighted
-dnl by Ossama Othman, not the Free Software Foundation.  Nevertheless,
-dnl all software found in this file is free software.  Please read the
-dnl distribution terms found at the top of this file and the ones below.
+dnl dnl                -Ossama Othman <ossama@debian.org>
+dnl dnl
+dnl dnl The copyright for the following macros is listed below.
+dnl dnl Note that all macros listed prior to this section are copyrighted
+dnl dnl by Ossama Othman, not the Free Software Foundation.  Nevertheless,
+dnl dnl all software found in this file is free software.  Please read the
+dnl dnl distribution terms found at the top of this file and the ones below.
 
-dnl Parameterized macros.
-dnl Requires GNU m4.
-dnl This file is part of Autoconf.
-dnl Copyright (C) 1992, 93, 94, 95, 96, 1998 Free Software Foundation, Inc.
-dnl
-dnl This program is free software; you can redistribute it and/or modify
-dnl it under the terms of the GNU General Public License as published by
-dnl the Free Software Foundation; either version 2, or (at your option)
-dnl any later version.
-dnl
-dnl This program is distributed in the hope that it will be useful,
-dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
-dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-dnl GNU General Public License for more details.
-dnl
-dnl You should have received a copy of the GNU General Public License
-dnl along with this program; if not, write to the Free Software
-dnl Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-dnl 02111-1307, USA.
-dnl
-dnl As a special exception, the Free Software Foundation gives unlimited
-dnl permission to copy, distribute and modify the configure scripts that
-dnl are the output of Autoconf.  You need not follow the terms of the GNU
-dnl General Public License when using or distributing such scripts, even
-dnl though portions of the text of Autoconf appear in them.  The GNU
-dnl General Public License (GPL) does govern all other use of the material
-dnl that constitutes the Autoconf program.
-dnl
-dnl Certain portions of the Autoconf source text are designed to be copied
-dnl (in certain cases, depending on the input) into the output of
-dnl Autoconf.  We call these the "data" portions.  The rest of the Autoconf
-dnl source text consists of comments plus executable code that decides which
-dnl of the data portions to output in any given case.  We call these
-dnl comments and executable code the "non-data" portions.  Autoconf never
-dnl copies any of the non-data portions into its output.
-dnl
-dnl This special exception to the GPL applies to versions of Autoconf
-dnl released by the Free Software Foundation.  When you make and
-dnl distribute a modified version of Autoconf, you may extend this special
-dnl exception to the GPL to apply to your modified version as well, *unless*
-dnl your modified version has the potential to copy into its output some
-dnl of the text that was the non-data portion of the version that you started
-dnl with.  (In other words, unless your change moves or copies text from
-dnl the non-data portions to the data portions.)  If your modification has
-dnl such potential, you must delete any notice of this special exception
-dnl to the GPL from your modified version.
-dnl
-dnl Written by David MacKenzie, with help from
-dnl Franc,ois Pinard, Karl Berry, Richard Pixley, Ian Lance Taylor,
-dnl Roland McGrath, Noah Friedman, david d zuhn, and many others.
+dnl dnl Parameterized macros.
+dnl dnl Requires GNU m4.
+dnl dnl This file is part of Autoconf.
+dnl dnl Copyright (C) 1992, 93, 94, 95, 96, 1998 Free Software Foundation, Inc.
+dnl dnl
+dnl dnl This program is free software; you can redistribute it and/or modify
+dnl dnl it under the terms of the GNU General Public License as published by
+dnl dnl the Free Software Foundation; either version 2, or (at your option)
+dnl dnl any later version.
+dnl dnl
+dnl dnl This program is distributed in the hope that it will be useful,
+dnl dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl dnl GNU General Public License for more details.
+dnl dnl
+dnl dnl You should have received a copy of the GNU General Public License
+dnl dnl along with this program; if not, write to the Free Software
+dnl dnl Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+dnl dnl 02111-1307, USA.
+dnl dnl
+dnl dnl As a special exception, the Free Software Foundation gives unlimited
+dnl dnl permission to copy, distribute and modify the configure scripts that
+dnl dnl are the output of Autoconf.  You need not follow the terms of the GNU
+dnl dnl General Public License when using or distributing such scripts, even
+dnl dnl though portions of the text of Autoconf appear in them.  The GNU
+dnl dnl General Public License (GPL) does govern all other use of the material
+dnl dnl that constitutes the Autoconf program.
+dnl dnl
+dnl dnl Certain portions of the Autoconf source text are designed to be copied
+dnl dnl (in certain cases, depending on the input) into the output of
+dnl dnl Autoconf.  We call these the "data" portions.  The rest of the Autoconf
+dnl dnl source text consists of comments plus executable code that decides which
+dnl dnl of the data portions to output in any given case.  We call these
+dnl dnl comments and executable code the "non-data" portions.  Autoconf never
+dnl dnl copies any of the non-data portions into its output.
+dnl dnl
+dnl dnl This special exception to the GPL applies to versions of Autoconf
+dnl dnl released by the Free Software Foundation.  When you make and
+dnl dnl distribute a modified version of Autoconf, you may extend this special
+dnl dnl exception to the GPL to apply to your modified version as well, *unless*
+dnl dnl your modified version has the potential to copy into its output some
+dnl dnl of the text that was the non-data portion of the version that you started
+dnl dnl with.  (In other words, unless your change moves or copies text from
+dnl dnl the non-data portions to the data portions.)  If your modification has
+dnl dnl such potential, you must delete any notice of this special exception
+dnl dnl to the GPL from your modified version.
+dnl dnl
+dnl dnl Written by David MacKenzie, with help from
+dnl dnl Franc,ois Pinard, Karl Berry, Richard Pixley, Ian Lance Taylor,
+dnl dnl Roland McGrath, Noah Friedman, david d zuhn, and many others.
 
 
-dnl Usage: ACE_SEARCH_LIBS(FUNCTION, SEARCH-LIBS [, ACTION-IF-FOUND
-dnl                        [, ACTION-IF-NOT-FOUND [, OTHER-LIBRARIES]]])
-dnl Search for a library defining FUNCTION, if it's not already available.
-AC_DEFUN(ACE_SEARCH_LIBS, dnl
-[
- AC_CACHE_CHECK([for library containing $1], [ac_cv_search_$1],
-   [
-    ac_func_search_save_LIBS="$LIBS"
+dnl dnl Usage: ACE_SEARCH_LIBS(FUNCTION, SEARCH-LIBS [, ACTION-IF-FOUND
+dnl dnl                        [, ACTION-IF-NOT-FOUND [, OTHER-LIBRARIES]]])
+dnl dnl Search for a library defining FUNCTION, if it's not already available.
+dnl AC_DEFUN([ACE_SEARCH_LIBS],
+dnl [
+dnl  AC_CACHE_CHECK([for library containing $1], [ac_cv_search_$1],
+dnl    [
+dnl     ac_func_search_save_LIBS="$LIBS"
 
-    ac_cv_search_$1="no"
+dnl     ac_cv_search_$1="no"
 
-    ACE_TRY_LINK_FUNC([$1], [ac_cv_search_$1="none required"])
+dnl     ACE_TRY_LINK_FUNC([$1], [ac_cv_search_$1="none required"])
 
-    test "$ac_cv_search_$1" = "no" && for i in $2; do
-      LIBS="-l$i $5 $ac_func_search_save_LIBS"
-      ACE_TRY_LINK_FUNC([$1],
-        [
-         ac_cv_search_$1="-l$i"
-         break
-        ])
-    done
+dnl     test "$ac_cv_search_$1" = "no" && for i in $2; do
+dnl       LIBS="-l$i $5 $ac_func_search_save_LIBS"
+dnl       ACE_TRY_LINK_FUNC([$1],
+dnl         [
+dnl          ac_cv_search_$1="-l$i"
+dnl          break
+dnl         ])
+dnl     done
 
-    LIBS="$ac_func_search_save_LIBS"
-   ])
+dnl     LIBS="$ac_func_search_save_LIBS"
+dnl    ])
 
-  if test "$ac_cv_search_$1" != "no"; then
-    test "$ac_cv_search_$1" = "none required" || LIBS="$ac_cv_search_$1 $LIBS"
-    $3
-  else :
-    $4
-  fi
-])
+dnl   if test "$ac_cv_search_$1" != "no"; then
+dnl     test "$ac_cv_search_$1" = "none required" || LIBS="$ac_cv_search_$1 $LIBS"
+dnl     $3
+dnl   else :
+dnl     $4
+dnl   fi
+dnl ])
 
-dnl Usage: ACE_TRY_LINK_FUNC(FUNCTION,[, ACTION-IF-FOUND
-dnl                          [, ACTION-IF-NOT-FOUND])
-dnl Search for a library defining FUNCTION, if it's not already available.
-AC_DEFUN(ACE_TRY_LINK_FUNC, dnl
-[
-AC_TRY_LINK(
-dnl Don't include <ctype.h> because on OSF/1 3.0 it includes <sys/types.h>
-dnl which includes <sys/select.h> which contains a prototype for
-dnl select.  Similarly for bzero.
-[/* System header to define __stub macros and hopefully few prototypes,
-    which can conflict with char $1(); below.  */
-#include <assert.h>
-/* Override any gcc2 internal prototype to avoid an error.  */
-]ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
-extern "C"
-#endif
-])dnl
-[/* We use char because int might match the return type of a gcc2
-    builtin and then its argument prototype would still apply.  */
-char $1();
-], [
-/* The GNU C library defines this for functions which it implements
-    to always fail with ENOSYS.  Some functions are actually named
-    something starting with __ and the normal name is an alias.  */
-#if defined (__stub_$1) || defined (__stub___$1)
-choke me
-#else
-$1();
-#endif
-],[$2],[$3])
-])
+dnl dnl Usage: ACE_TRY_LINK_FUNC(FUNCTION,[, ACTION-IF-FOUND
+dnl dnl                          [, ACTION-IF-NOT-FOUND])
+dnl dnl Search for a library defining FUNCTION, if it's not already available.
+dnl AC_DEFUN([ACE_TRY_LINK_FUNC],
+dnl [
+dnl AC_LINK_IFELSE([AC_LANG_PROGRAM([[dnl Don't include <ctype.h> because on OSF/1 3.0 it includes <sys/types.h>
+dnl dnl which includes <sys/select.h> which contains a prototype for
+dnl dnl select.  Similarly for bzero.
+dnl /* System header to define __stub macros and hopefully few prototypes,
+dnl     which can conflict with char $1(); below.  */
+dnl #include <assert.h>
+dnl /* Override any gcc2 internal prototype to avoid an error.  */
+dnl ifelse(AC_LANG, C++, #ifdef __cplusplus
+dnl extern "C"
+dnl #endif
+dnl )dnl
+dnl /* We use char because int might match the return type of a gcc2
+dnl     builtin and then its argument prototype would still apply.  */
+dnl char $1();
+dnl ]], [[
+dnl /* The GNU C library defines this for functions which it implements
+dnl     to always fail with ENOSYS.  Some functions are actually named
+dnl     something starting with __ and the normal name is an alias.  */
+dnl #if defined (__stub_$1) || defined (__stub___$1)
+dnl choke me
+dnl #else
+dnl $1();
+dnl #endif
+dnl ]])],[$2],[$3])
+dnl ])
 
-AC_DEFUN(ACE_SYS_RESTARTABLE_SYSCALLS,
-[AC_REQUIRE([AC_HEADER_SYS_WAIT])
-AC_CHECK_HEADERS(unistd.h)
-AC_CACHE_CHECK(for restartable system calls, ac_cv_sys_restartable_syscalls,
-[AC_TRY_RUN(
-[/* Exit 0 (true) if wait returns something other than -1,
-   i.e. the pid of the child, which means that wait was restarted
-   after getting the signal.  */
-#include <sys/types.h>
-#include <signal.h>
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
-#if HAVE_SYS_WAIT_H
-# include <sys/wait.h>
-#endif
+dnl AC_DEFUN([ACE_SYS_RESTARTABLE_SYSCALLS],
+dnl [AC_REQUIRE([AC_HEADER_SYS_WAIT])
+dnl AC_CHECK_HEADERS([unistd.h])
+dnl AC_CACHE_CHECK([for restartable system calls, ac_cv_sys_restartable_syscalls],
+dnl [AC_RUN_IFELSE([AC_LANG_SOURCE([[/* Exit 0 (true) if wait returns something other than -1,
+dnl    i.e. the pid of the child, which means that wait was restarted
+dnl    after getting the signal.  */
+dnl #include <sys/types.h>
+dnl #include <signal.h>
+dnl #if HAVE_UNISTD_H
+dnl # include <unistd.h>
+dnl #endif
+dnl #if HAVE_SYS_WAIT_H
+dnl # include <sys/wait.h>
+dnl #endif
 
-/* Some platforms explicitly require an extern "C" signal handler
-   when using C++. */
-#ifdef __cplusplus
-extern "C"
-#endif
-void ucatch (int) { }
+dnl /* Some platforms explicitly require an extern "C" signal handler
+dnl    when using C++. */
+dnl #ifdef __cplusplus
+dnl extern "C"
+dnl #endif
+dnl void ucatch (int) { }
 
-main () {
-  int i = fork (), status;
-  if (i == 0) { sleep (3); kill (getppid (), SIGINT); sleep (3); exit (0); }
-  signal (SIGINT, ucatch);
-  status = wait(&i);
-  if (status == -1) wait(&i);
-  exit (status == -1);
-}
-], ac_cv_sys_restartable_syscalls=yes, ac_cv_sys_restartable_syscalls=no)])
-if test $ac_cv_sys_restartable_syscalls = yes; then
-  AC_DEFINE(HAVE_RESTARTABLE_SYSCALLS)
-fi
-])
+dnl main () {
+dnl   int i = fork (), status;
+dnl   if (i == 0) { sleep (3); kill (getppid (), SIGINT); sleep (3); exit (0); }
+dnl   signal (SIGINT, ucatch);
+dnl   status = wait(&i);
+dnl   if (status == -1) wait(&i);
+dnl   exit (status == -1);
+dnl }
+dnl ]])],[ac_cv_sys_restartable_syscalls=yes],[ac_cv_sys_restartable_syscalls=no],[])])
+dnl if test $ac_cv_sys_restartable_syscalls = yes; then
+dnl   AC_DEFINE([HAVE_RESTARTABLE_SYSCALLS])
+dnl fi
+dnl ])
 
