@@ -4704,11 +4704,11 @@ ACE_OS::filesize (ACE_HANDLE handle)
 
 ACE_INLINE int 
 ACE_OS::writev (ACE_HANDLE handle, 
-		ACE_WRITEV_TYPE *iov,
+		const struct iovec *iov,
 		int iovcnt)
 {
   // ACE_TRACE ("ACE_OS::writev");
-  ACE_OSCALL_RETURN (::writev (handle, iov, iovcnt), int, -1);
+  ACE_OSCALL_RETURN (::writev (handle, (ACE_WRITEV_TYPE *) iov, iovcnt), int, -1);
 }
 
 ACE_INLINE ssize_t
