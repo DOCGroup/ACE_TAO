@@ -131,5 +131,13 @@ TAO_PG_Default_Property_Validator::validate_criteria (
     }
 
   if (p > 0)
-    ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
+    {
+      // Reduce the length of the invalid criteria sequence in an
+      // effort to optimize the copying that will occur when the below
+      // exception is thrown.  Reducing the length is fast since no
+      // deallocations should occur.
+      invalid_criteria.length (p);
+
+      ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
+    }
 }

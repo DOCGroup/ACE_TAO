@@ -121,7 +121,8 @@ private:
          PortableGroup::ObjectGroup_ptr object_group,
          const PortableServer::ObjectId & oid,
          const char * type_id,
-         const PortableGroup::FactoryInfos &factory_infos
+         const PortableGroup::FactoryInfos &factory_infos,
+         const PortableGroup::InitialNumberMembersValue initial_number_members
          ACE_ENV_ARG_DECL);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.
