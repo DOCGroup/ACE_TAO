@@ -74,12 +74,13 @@ orbsvcs/README: docs/orbsvcs.html
 
 REL = beta
 CHECK =
+APPLY_NEW_TAG = tag
 
 #### The call to make_release below doesn't actually create the kit.
 #### If creating a release in /project/adaptive/ACE_wrappers/TAO, it
 #### just updates the VERSION and ChangeLog files, and tags the release.
 #### Then, make releasetao is invoked to actually create the kit.
-release: tag
+release: $(APPLY_NEW_TAG)
 	@cd ..  &&  $(MAKE) -s releasetao
 
 tag:

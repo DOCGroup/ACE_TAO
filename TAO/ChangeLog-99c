@@ -1,33 +1,38 @@
+Fri Aug 13 12:44:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: added support for creating kits with or without a new
+          tag.
+
 Fri Aug 13 12:13:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/run_test.pl:
-	  Reduce the number of threads, it was starting 25 threads and
-	  that creates problems with the backlog queue in the
-	  acceptors. We know we could do better things about that (like
-	  using asynchronous connections), track [BUGID:132] and
-	  [BUGID:189] for more details.
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+          Reduce the number of threads, it was starting 25 threads and
+          that creates problems with the backlog queue in the
+          acceptors. We know we could do better things about that (like
+          using asynchronous connections), track [BUGID:132] and
+          [BUGID:189] for more details.
 
 Fri Aug 13 12:09:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_expression.h:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/be/be_expression.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	  Had to put back the removed function and contructor
-	  below (with the correct from_wchar signature). A good
-	  lesson that all overloaded virtual functions must
-	  be overridden, else they are hidden and the compiler
-	  warns.
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+          Had to put back the removed function and contructor
+          below (with the correct from_wchar signature). A good
+          lesson that all overloaded virtual functions must
+          be overridden, else they are hidden and the compiler
+          warns.
 
 Thu Aug 12 22:07:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_expression.h:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/be/be_expression.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	  Removed create_expression() and be_expression constructor for wchars.
-	  Not needed. Thanks to a SunCC warning reported by David for
-	  making me take a second look at the code.
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+          Removed create_expression() and be_expression constructor for wchars.
+          Not needed. Thanks to a SunCC warning reported by David for
+          making me take a second look at the code.
 
 Thu Aug 12 20:55:44 1999  David L. Levine  <levine@cs.wustl.edu>
 

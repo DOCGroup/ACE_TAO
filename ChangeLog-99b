@@ -1,3 +1,10 @@
+Fri Aug 13 12:44:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile,bin/make_release: added support (and documentation)
+          for creating kits with or without new tags, or using an old
+          tag; generated man pages; installation to the public ftp/http
+          site on ace; and zip files.
+
 Fri Aug 13 07:58:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,i},README,config-osf1-4.0.h (llseek): added
