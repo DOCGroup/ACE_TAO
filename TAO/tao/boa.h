@@ -9,12 +9,12 @@
 //    boa.h
 //
 // = DESCRIPTION
-//     (Early) BOA
+//     (Early) POA
 //
-//     BOA is a stripped down, lean, mean, portable OA.  The work
+//     POA is a stripped down, lean, mean, portable OA.  The work
 //     involved in managing objects is all handled by "higher level"
 //     code, including skeletons, generated either by an IDL compiler
-//     by hand.  BOA itself maintains no object-level state.
+//     by hand.  POA itself maintains no object-level state.
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
@@ -38,16 +38,16 @@
 class TAO_GIOP_RequestHeader;
 
 // @@ Why does this inherit from IUnknown?
-class CORBA_BOA : public IUnknown
+class CORBA_POA : public IUnknown
 {
   // = TITLE
   //    The <{TAO}> Basic Object Adapter.
 public:
-  CORBA_BOA (CORBA::ORB_ptr orb_arg,
+  CORBA_POA (CORBA::ORB_ptr orb_arg,
              CORBA::Environment &env);
-  virtual ~CORBA_BOA (void);
+  virtual ~CORBA_POA (void);
 
-  static CORBA::BOA_ptr init (CORBA::ORB_ptr which_orb, 
+  static CORBA::POA_ptr init (CORBA::ORB_ptr which_orb, 
                               ACE_INET_Addr &addr,
                               CORBA::Environment &env);
   // NON-STANDARD CALL.  According to CORBA V2.0, this functionality
@@ -56,7 +56,7 @@ public:
   // The current signature is residue from when this code was part of
   // the SunSoft IIOP reference implementation.
   //
-  // @@ Hum, does this still make sense now that it's in BOA?
+  // @@ Hum, does this still make sense now that it's in POA?
 
   /* virtual */
   CORBA::Object_ptr create (CORBA::OctetSeq& obj_id,
@@ -75,15 +75,15 @@ public:
   //
   // Clients which invoke operations using one of these references
   // when the server is not active (or after the last reference to the
-  // BOA is released) will normally see an OBJECT_NOT_EXIST exception
-  // reported by the ORB.  If the BOA is a "Named BOA" the client's
-  // ORB will not normally return OBJECT_NOT_EXIST unless the BOA
+  // POA is released) will normally see an OBJECT_NOT_EXIST exception
+  // reported by the ORB.  If the POA is a "Named POA" the client's
+  // ORB will not normally return OBJECT_NOT_EXIST unless the POA
   // reports that fault.
   //
-  // NOTE: Since any given BOA may have been used in the past, servers
+  // NOTE: Since any given POA may have been used in the past, servers
   // may need to place some data (such as a timestamp) into the object
-  // ID to help distinguish different incarnations of the BOA.  "Named
-  // BOA" objects won't want those semantics as much as "Anonymous"
+  // ID to help distinguish different incarnations of the POA.  "Named
+  // POA" objects won't want those semantics as much as "Anonymous"
   // ones.
 
   virtual void handle_request (TAO_GIOP_RequestHeader hdr,
@@ -95,7 +95,7 @@ public:
   // and eventual dispatch.  Derived classes can override this to
   // perform their own processing.
   
-  typedef void (CORBA_BOA::*dsi_handler) (CORBA::OctetSeq &obj_id,
+  typedef void (CORBA_POA::*dsi_handler) (CORBA::OctetSeq &obj_id,
 					  CORBA::ServerRequest &request,
 					  void *context,
 					  CORBA::Environment &env);
@@ -119,7 +119,7 @@ public:
   //
   // Note that in addition to the operations defined by an object's
   // IDL interface specification, four operations must be supported by
-  // code layered above the BOA.  There are many ways in which these
+  // code layered above the POA.  There are many ways in which these
   // operations can be hidden from "application" programs, and some
   // solutions are noted below.
   //
@@ -144,7 +144,7 @@ public:
   // allow all currently active calls (e.g. "this one") to complete.
   // This ensures that OS resources associated with this OA can be
   // reclaimed even if some buggy applications code mismanages
-  // refcounting on this BOA.
+  // refcounting on this POA.
 
   void run (struct timeval *tvp,
 	    CORBA::Environment &env);
@@ -156,22 +156,22 @@ public:
   // defined here purely for convenience, to help some applications
   // avoid writing that loop.
 
-  static CORBA::BOA_ptr get_boa (CORBA::ORB_ptr orb,
+  static CORBA::POA_ptr get_boa (CORBA::ORB_ptr orb,
 				CORBA::Environment &env);
-  // Get an "anonymous" BOA pseudo-objref ... this is the API that
-  // most applications will use.  It returns a BOA which is not
+  // Get an "anonymous" POA pseudo-objref ... this is the API that
+  // most applications will use.  It returns a POA which is not
   // otherwise in use (though it may have been used in the past).
   // 
-  // Any given BOA (named or otherwise) will create equivalent object
-  // references when BOA::create () is called with the same object and
+  // Any given POA (named or otherwise) will create equivalent object
+  // references when POA::create () is called with the same object and
   // type IDs.  This is not true for two different BOAs.
 
-  static CORBA::BOA_ptr get_named_boa (CORBA::ORB_ptr orb,
+  static CORBA::POA_ptr get_named_boa (CORBA::ORB_ptr orb,
 				      CORBA::String name,
 				      CORBA::Environment &env);
-  // Get a "named" BOA ... most applications don't use/need this API.
+  // Get a "named" POA ... most applications don't use/need this API.
   // 
-  // BOA names are for ORB/system bootstrapping purposes, and need not
+  // POA names are for ORB/system bootstrapping purposes, and need not
   // be shared between different systems.  The scope of the name isn't
   // guaranteed to include more than one system.  The names themselves
   // are administered using system-specific mechanisms and policies.
@@ -240,7 +240,7 @@ private:
   u_int refcount_;		
   // Used by COM stuff
 
-  CORBA::BOA::dsi_handler skeleton_;	
+  CORBA::POA::dsi_handler skeleton_;	
   // Skeleton function
 
   void *context_;		
@@ -254,8 +254,8 @@ private:
   // Locks critical sections in COM-related code (was tcpoa_lock).
 
   // = Copy and assignment: just say no
-  CORBA_BOA (const CORBA_BOA &src);
-  CORBA_BOA &operator= (const CORBA_BOA &src);
+  CORBA_POA (const CORBA_POA &src);
+  CORBA_POA &operator= (const CORBA_POA &src);
 };
 
 struct TAO_Dispatch_Context
@@ -268,7 +268,7 @@ struct TAO_Dispatch_Context
   // calls back one of the two helper routines as part of handling any
   // particular incoming request.
 
-  CORBA::BOA::dsi_handler skeleton_;
+  CORBA::POA::dsi_handler skeleton_;
   // Function pointer to skeleton glue function.
 
   void (*check_forward_) (CORBA::OctetSeq& key,
@@ -282,8 +282,8 @@ struct TAO_Dispatch_Context
   // Who knows...another overloading of the word "context".
   // @@ Can we please try to remove this?
 
-  CORBA::BOA_ptr oa_;
-  // This should really be a BOA_ptr, but currently it doesn't support
+  CORBA::POA_ptr oa_;
+  // This should really be a POA_ptr, but currently it doesn't support
   // the one call we need to make through here: <handle_message ()>.
 
   ACE_SOCK_Stream endpoint_;
