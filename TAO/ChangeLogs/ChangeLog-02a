@@ -1,3 +1,49 @@
+Mon Jan 21 02:12:34 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h
+	  (retrieved_credentials):
+
+	  Changed the return type to be a Credentials object, thus making
+	  the method act as advertised.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	  (ssliop_connect):
+
+	  Once a connection has been made and before it is cached, set the
+	  quality-of-protection, establishment-of-trust and credentials
+	  specific to the connection in the TAO_SSLIOP_Endpoint.  They
+	  must be taken into account when searching the transport cache
+	  for suitable SSLIOP connections.
+	
+	  (retrieve_credentials):
+
+	  Returned the retrieved credentials to the caller instead of
+	  attempting to do too much in this method.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp
+	  (operator==, hash):
+
+	  Added these comparison methods for use with TAO's transport
+	  caching mechanism.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+
+	  Added a SSLIOP_Credentials attribute, and accompanying
+	  accessors.
+
+	  Removed unnecessary `tao/ORB.h' include.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (credentials):
+
+	  New "credentials_" member set/get accessor methods.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
+	  (is_equivalent, hash):
+
+	  Use the corresponding methods in the SSLIOP_Credentials class
+	  when comparing/hashing two SSLIOP_Credentials objects.
+
 Mon Jan 21 01:05:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp

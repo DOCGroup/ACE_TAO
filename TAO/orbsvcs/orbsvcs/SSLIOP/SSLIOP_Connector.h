@@ -33,6 +33,7 @@
 /// Forward declarations.
 class TAO_Base_Transport_Property;
 class TAO_SSLIOP_Endpoint;
+class TAO_SSLIOP_Credentials;
 
 /**
  * @class TAO_SSLIOP_Connector
@@ -91,9 +92,9 @@ protected:
   /// Retrieve SSLIOP credentials from the policy overrides list and
   /// set up the underlying SSL connection to use the X.509
   /// certificates stored within them.
-  int retrieve_credentials (TAO_Stub *stub,
-                            SSL *ssl
-                            TAO_ENV_ARG_DECL);
+  TAO_SSLIOP_Credentials * retrieve_credentials (TAO_Stub *stub,
+                                                 SSL *ssl
+                                                 TAO_ENV_ARG_DECL);
 
 public:
 
