@@ -6,13 +6,10 @@
  *
  *  $Id$
  *
- *   A wrapper for mutexes that can be used across processes on
- *   the same host machine, as well as within a process, of
- *   course.
+ *   A wrapper for mutexes that can be used across processes on the
+ *   same host machine, as well as within a process, of course.
  *
- *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
+ * @author Douglas C. Schmidt <schmidt@cs.wustl.edu> */
 //=============================================================================
 
 #ifndef ACE_PROCESS_MUTEX_H
@@ -67,7 +64,7 @@ public:
    *
    * @param name optional, null-terminated string containing the name of
    * the object. Multiple users of the same @c ACE_Process_Mutex must use
-   * the same name to access the same object. If not specified, a name
+   * the same name to access the same object.  If not specified, a name
    * is generated.
    * @param arg optional, attributes to be used to initialize the mutex.
    * If using @c ACE_SV_Semaphore_Complex as the underlying mechanism,
