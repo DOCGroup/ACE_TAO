@@ -1549,6 +1549,8 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::Obje
 template class TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint>;
 template class TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_A>;
 template class TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_B>;
+template class TAO_PropertySet<POA_AVStreams::StreamEndPoint_A>;
+template class TAO_PropertySet<POA_AVStreams::StreamEndPoint_B>;
 template class TAO_PropertySet<POA_AVStreams::Basic_StreamCtrl>;
 template class TAO_PropertySet<POA_AVStreams::VDev>;
 template class TAO_PropertySet<POA_AVStreams::MMDevice>;
@@ -1564,6 +1566,11 @@ template class TAO_PropertySet<POA_AVStreams::FDev>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint>;
+#pragma instantiate TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_A>;
+#pragma instantiate TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_B>;
+#pragma instantiate TAO_PropertySet<POA_AVStreams::StreamEndPoint_A>;
+#pragma instantiate TAO_PropertySet<POA_AVStreams::StreamEndPoint_B>;
 #pragma instantiate TAO_PropertySet<POA_AVStreams::Basic_StreamCtrl>
 #pragma instantiate TAO_PropertySet<POA_AVStreams::VDev>
 #pragma instantiate TAO_PropertySet<POA_AVStreams::MMDevice>
