@@ -171,6 +171,7 @@ main (int argc, char *argv[])
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Token, int>;
+template class ACE_TSS<TSS_Data>;
 template class ACE_TSS<TSS_Obj>;
 template class ACE_TSS_Singleton<TSS_Data>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
