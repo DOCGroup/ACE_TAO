@@ -139,6 +139,18 @@ TAO_ORB_Parameters::implrepo_service_port (void) const
   return this->implrepo_service_port_;
 }
 
+ACE_INLINE void
+TAO_ORB_Parameters::mcast_discovery_endpoint (const ACE_CString &mde)
+{
+  this->mcast_discovery_endpoint_ = mde;
+}
+
+ACE_INLINE const char *
+TAO_ORB_Parameters::mcast_discovery_endpoint (void) const
+{
+  return this->mcast_discovery_endpoint_.c_str ();
+}
+
 ACE_INLINE TAO_IOR_LookupTable *
 TAO_ORB_Parameters::ior_lookup_table (void)
 {
