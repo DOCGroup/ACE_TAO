@@ -20,7 +20,7 @@
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBAC.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 
 
 ACE_RCSID(IORManipluation, IORTest, "$Id$")

@@ -1,3 +1,13 @@
+Sat Sep 23 11:30:07 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+	  Made changes to the tests to make things simpler.
+
 Sat Sep 23 11:18:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:

@@ -1,18 +1,45 @@
 //$Id$
-#ifndef _MANAGER_H_
-#define _MANAGER_H_
+// -*- C++ -*-
+// $Id$
 
-#include "tao/corbafwd.h"
+// ============================================================================
+//
+// = LIBRARY
+//   test
+//
+// = FILENAME
+//    Manager.h
+//
+// = DESCRIPTION
+//    A manager class that merger IORS and designates primary
+//
+// = AUTHOR
+//     Bala Natarajan <bala@cs.wustl.edu>
+//
+// ============================================================================
+#ifndef TEST_FT_IOGR_MANAGER_H
+#define TEST_FT_IOGR_MANAGER_H
+
 #include "tao/ORB.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Object.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 class Manager
 {
 public:
 
   Manager (void);
-
   // Ctor
 
   int init (int argc,
@@ -32,6 +59,9 @@ public:
 
   int write_to_file (void);
   // Write the merged IOR to a file
+
+  CORBA::ORB_ptr orb (void);
+  // Return the pointer to the copy of our ORB
 private:
   CORBA::ORB_var orb_;
   // Our ORB
@@ -39,4 +69,4 @@ private:
   CORBA::Object_var merged_set_;
   // The merged IOR set
 };
-#endif /*_MANAGER_H_ */
+#endif /*TEST_FT_IOGR_MANAGER_H */
