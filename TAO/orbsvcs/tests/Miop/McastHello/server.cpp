@@ -2,7 +2,6 @@
 
 #include "McastHello.h"
 #include "ace/Get_Opt.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"  // Include to pull in PortableGroup library.
 
 ACE_RCSID (McastHello,
            server,
