@@ -1,3 +1,12 @@
+Sun Nov 23 08:20:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/OctetSeq.pidl:
+	* tao/OctetSeqC.h:
+	* tao/OctetSeqC.i:
+
+	  Thanks to Johnny for reporting a small problem with generated
+	  code that caused the Borland builds to freak out. 
+
 Sat Nov 22 20:44:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Simple/grid/Makefile:
