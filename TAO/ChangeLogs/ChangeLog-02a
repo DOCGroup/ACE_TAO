@@ -1,3 +1,8 @@
+Mon Apr  2 15:24:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Add missing ACE_TRY_CHECKs
+
 Mon Apr  2 16:45:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/IFR_ExtendedC.h:
@@ -16,25 +21,25 @@ Mon Apr  2 16:22:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Apr  2 16:17:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Fixed an error that showed up on static
-	  builds.  
+        * tao/ORB_Core.cpp: Fixed an error that showed up on static
+          builds.
 
 2001-04-02  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 
-	  
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+
           Fixed Fuzz errors.
 
 Mon Apr  2 13:48:52 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/InterOp-Naming/Server_i.cpp : 
-	* tests/InterOp-Naming/INS_test_client.cpp : 
-	  Added the ACE_TRY_CHECK macro.	
+        * tests/InterOp-Naming/Server_i.cpp :
+        * tests/InterOp-Naming/INS_test_client.cpp :
+          Added the ACE_TRY_CHECK macro.
 
 Mon Apr  2 15:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp: 
-        * examples/PluggableUDP/DIOP/DIOP_Transport.h: 
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
           Removed the use of the local buffer as TAO now
           supports the single read mechanism, which will
           read in all of the UDP datagram.
@@ -56,30 +61,30 @@ Mon Apr  2 15:09:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Apr  2 14:39:03 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* Logging_Service/Logging_Service.cpp:
-	* Notify_Service/Notify_Service.cpp:
-	* examples/Log/Client/TLS_Client.cpp:
-	* examples/Log/test/BasicLog_Test.cpp:
-	* orbsvcs/Concurrency/CC_Lock.cpp:
-	* orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
-	* orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-	* orbsvcs/Notify/Notify_EventChannel_i.cpp:
-	* orbsvcs/Notify/Notify_Event_Map.cpp:
-	* orbsvcs/Notify/Notify_Filter_i.cpp:
-	* orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
-	* orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp:
-	* orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	* orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
-	* orbsvcs/Notify/Notify_Worker_Task.cpp:
-	* tests/Notify/Basic/Events_Test.cpp:
-	* tests/Notify/Basic/LifeCycleTest.cpp:
-	* tests/Notify/Basic/Simple.cpp:
-	* tests/Notify/Basic/Updates.cpp:
-	* tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
-	* tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * Logging_Service/Logging_Service.cpp:
+        * Notify_Service/Notify_Service.cpp:
+        * examples/Log/Client/TLS_Client.cpp:
+        * examples/Log/test/BasicLog_Test.cpp:
+        * orbsvcs/Concurrency/CC_Lock.cpp:
+        * orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/Notify/Notify_Event_Map.cpp:
+        * orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp:
+        * orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+        * orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
+        * orbsvcs/Notify/Notify_Worker_Task.cpp:
+        * tests/Notify/Basic/Events_Test.cpp:
+        * tests/Notify/Basic/LifeCycleTest.cpp:
+        * tests/Notify/Basic/Simple.cpp:
+        * tests/Notify/Basic/Updates.cpp:
+        * tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * tests/Notify/performance-tests/Throughput/Throughput.cpp:
 
-	  Fixed Fuzz errors.
+          Fixed Fuzz errors.
 
 Mon Apr  2 13:33:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -93,29 +98,29 @@ Mon Apr  2 13:33:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Apr  2 13:25:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/MT_Timeout/MT_Timeout.dsw:
-	* tests/MT_Timeout/MT_Timeout_Client.dsp:
-	* tests/MT_Timeout/MT_Timeout_Client.dsp:
-	  Added MS VC++ workspace and project files.
+        * tests/MT_Timeout/MT_Timeout.dsw:
+        * tests/MT_Timeout/MT_Timeout_Client.dsp:
+        * tests/MT_Timeout/MT_Timeout_Client.dsp:
+          Added MS VC++ workspace and project files.
 
 Mon Apr  2 13:12:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/RTCORBA:
-	  Added target directory for RTCORBA subsetting.
+        * tao/RTCORBA:
+          Added target directory for RTCORBA subsetting.
 
-	* tao/RTCORBA/README:
-	  Status and plan for subsetting RTCORBA.  This file will be
-	  removed once the subsetting is completed.
+        * tao/RTCORBA/README:
+          Status and plan for subsetting RTCORBA.  This file will be
+          removed once the subsetting is completed.
 
 Mon Apr  2 13:07:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* examples/Logging/Logging_Service_i.cpp:
-	* examples/Logging/Logging_Test_i.cpp:
-	* examples/Simple/grid/Grid_i.cpp:
-	* orbsvcs/tests/Property/client.cpp:
-	* orbsvcs/tests/Property/main.cpp:
+        * examples/Logging/Logging_Service_i.cpp:
+        * examples/Logging/Logging_Test_i.cpp:
+        * examples/Simple/grid/Grid_i.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/main.cpp:
 
-	  Fuzz..Fuzz...Fuzzzz
+          Fuzz..Fuzz...Fuzzzz
 
 Mon Apr  2 10:46:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
