@@ -682,14 +682,19 @@ compute_scheduling (CORBA::Long minimum_priority,
   //          storing the maximum severity level recorded so far.
   if (anomalies.ptr () == 0)
     {
-      anomalies =
-        new RtecScheduler::Scheduling_Anomaly_Set (0);
+      ACE_NEW_THROW_EX (anomalies,
+                        RtecScheduler::Scheduling_Anomaly_Set (0),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
 
   // return the set of scheduled RT_Infos
   if (infos.ptr () == 0)
     {
-      infos = new RtecScheduler::RT_Info_Set (this->rt_info_count_);
+      ACE_NEW_THROW_EX (infos,
+                        RtecScheduler::RT_Info_Set (this->rt_info_count_),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
   infos->length (this->rt_info_count_);
   RtecScheduler::RT_Info* rt_info = 0;
@@ -704,8 +709,11 @@ compute_scheduling (CORBA::Long minimum_priority,
   // return the set of scheduled Config_Infos
   if (configs.ptr () == 0)
     {
-      configs =
-        new RtecScheduler::Config_Info_Set(this->config_info_count_);
+      ACE_NEW_THROW_EX (configs,
+                        RtecScheduler::Config_Info_Set(this->
+                                                         config_info_count_),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
   configs->length (this->config_info_count_);
   RtecScheduler::Config_Info* config_info = 0;
