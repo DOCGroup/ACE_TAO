@@ -1,3 +1,4 @@
+// $Id$
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/Get_Opt.h"
@@ -97,7 +98,7 @@ Options::enabled (int option) const
 void
 Options::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "a:c:h:m:t:v", 0);
+  ACE_Get_Opt get_opt (argc, argv, "a:c:C:h:m:t:v", 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
