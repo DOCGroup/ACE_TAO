@@ -4,7 +4,26 @@
 
 #include "JAWS/JAWS.h"
 
-// ------------- Helper functions ---------------
+JAWS_HTTP_10_Headers::JAWS_HTTP_10_Headers (void)
+  : iter_ (*this)
+{
+}
+
+JAWS_HTTP_10_Headers::~JAWS_HTTP_10_Headers (void)
+{
+}
+
+int
+JAWS_HTTP_10_Headers::lessthan (const char *const &k1, const char *const &k2)
+{
+  return ACE_OS::strcmp (k1, k2) < 0;
+}
+
+Symbol_Table_Iterator &
+JAWS_HTTP_10_Headers::iter (void)
+{
+  return this->iter_;
+}
 
 char *
 JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)
@@ -30,3 +49,13 @@ JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)
 
   return path;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class RB_Tree_Node<const char *, const char *>;
+template class RB_Tree<const char *, const char *>;
+template class RB_Tree_Iterator<const char *, const char *>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate RB_Tree_Node<const char *, const char *>
+#pragma instantiate RB_Tree<const char *, const char *>
+#pragma instantiate RB_Tree_Iterator<const char *, const char *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -4,6 +4,8 @@
 #if !defined (JAWS_HTTP_10_H)
 #define JAWS_HTTP_10_H
 
+#include "ace/RB_Tree.h"
+
 #include "JAWS/Pipeline_Tasks.h"
 
 // Forward declaration
@@ -52,6 +54,25 @@ public:
 private:
 };
 
+typedef RB_Tree<const char *, const char *> Symbol_Table;
+typedef RB_Tree_Iterator<const char *, const char *> Symbol_Table_Iterator;
+
+class JAWS_HTTP_10_Headers : public Symbol_Table
+{
+public:
+  JAWS_HTTP_10_Headers (void);
+  virtual ~JAWS_HTTP_10_Headers (void);
+
+  virtual int lessthan (const char *const &k1, const char *const &k2);
+  // virtual comparison hook in RB_Tree
+
+  Symbol_Table_Iterator &iter (void);
+  // returns an iterator to the headers container
+
+private:
+  Symbol_Table_Iterator iter_;
+};
+
 class JAWS_HTTP_10_Request
 {
 public:
@@ -79,10 +100,13 @@ public:
   void end_of_headers (int flag);
   void status (int s);
 
+  JAWS_HTTP_10_Headers *table (void);
+
   const char *method (const char *s);
   const char *uri (const char *s);
   const char *version (const char *s);
   const char *path (const char *s);
+
 
   int type (void);
 
@@ -128,11 +152,14 @@ private:
   int type_;
   int content_length_;
   int datalen_;
+
   char *data_;
   char *method_;
   char *uri_;
   char *version_;
   char *path_;
+
+  JAWS_HTTP_10_Headers table_;
 };
 
 class JAWS_HTTP_10_Helper
