@@ -191,6 +191,7 @@ ACE_SVC_FACTORY_DEFINE (Baseline_Token_Test)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class Baseline_Lock_Test<ACE_Thread_Mutex>;
+template class Baseline_Lock_Test<ACE_Process_Mutex>;
 template class Baseline_Lock_Test<ACE_RW_Mutex>;
 template class Baseline_Lock_Test<ACE_RW_Thread_Mutex>;
 template class Baseline_Lock_Test<ACE_Null_Mutex>;
@@ -209,6 +210,7 @@ template class Baseline_Lock_Test<ACE_Null_Semaphore>;
 template class Baseline_Lock_Test<ACE_Token>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Baseline_Lock_Test<ACE_Thread_Mutex>
+#pragma instantiate Baseline_Lock_Test<ACE_Process_Mutex>
 #pragma instantiate Baseline_Lock_Test<ACE_RW_Mutex>
 #pragma instantiate Baseline_Lock_Test<ACE_RW_Thread_Mutex>
 #pragma instantiate Baseline_Lock_Test<ACE_Null_Mutex>
