@@ -63,8 +63,6 @@ module dot
 
 module dot 
 { 
-  interface Person;  
-   
   interface Party 
     {
       attribute Person somePerson;
