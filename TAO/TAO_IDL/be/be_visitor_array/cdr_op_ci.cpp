@@ -33,8 +33,9 @@ ACE_RCSID(be_visitor_array, cdr_op_ci, "$Id$")
 // stubs file
 // ***************************************************************************
 
-be_visitor_array_cdr_op_ci::be_visitor_array_cdr_op_ci
-(be_visitor_context *ctx)
+be_visitor_array_cdr_op_ci::be_visitor_array_cdr_op_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -46,25 +47,28 @@ be_visitor_array_cdr_op_ci::~be_visitor_array_cdr_op_ci (void)
 int
 be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 {
+  if (node->is_local ())
+    {
+      return 0;
+    }
+
   if (this->ctx_->alias ())
     {
-      // We are here because the base type of the array node is itself an array
-      // i.e., this is a case of array of array.
+      // We are here because the base type of the array node is itself an
+      // array, i.e., this is a case of array of array.
       return this->visit_node (node);
     }
   else
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      be_type *bt; // base type of the array
-
       if (node->cli_inline_cdr_op_gen () || node->imported ())
         {
           return 0;
         }
 
-      // Retrieve the type.
-      bt = be_type::narrow_from_decl (node->base_type ());
+      // Retrieve the base type.
+      be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
       if (!bt)
         {
@@ -102,7 +106,10 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
       // Save the node's local name and full name in a buffer for quick use later
       // on.
-      ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+      ACE_OS::memset (fname, 
+                      '\0', 
+                      NAMEBUFSIZE);
+
       if (this->ctx_->tdef ())
         {
           ACE_OS::sprintf (fname, "%s", node->full_name ());
@@ -132,6 +139,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
       //  Set the sub state as generating code for the output operator.
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+
       *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
           << "const " << fname << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
@@ -149,7 +157,9 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
       //  Set the sub state as generating code for the input operator.
       os->indent ();
+
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+
       *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
           << fname << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
@@ -167,6 +177,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
       node->cli_inline_cdr_op_gen (1);
     }
+
   return 0;
 }
 
@@ -390,7 +401,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
 
   // Generate a product of all the dimensions. This will be the total length of
   // the "unfolded" single dimensional array.
-  for (i = 0; i < array->n_dims (); i++)
+  for (i = 0; i < array->n_dims (); ++i)
     {
       // Retrieve the ith dimension value.
       AST_Expression *expr = array->dims ()[i];
@@ -405,8 +416,11 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
         }
 
       if (i != 0)
-        // Do not generate the multiplication operator the first time in.
-        *os << "*";
+        {
+          // Do not generate the multiplication operator the first time in.
+          *os << "*";
+        }
+
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
@@ -421,6 +435,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                             -1);
         }
     }
+
   *os << ");" << be_uidt_nl;
 
   return 0;
@@ -495,13 +510,13 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
   // primitive type. In this case, we are left with no other alternative but to
   // encode/decode element by element.
 
-  // generate nested loops for as many dimensions as there are
+  // Generate nested loops for as many dimensions as there are.
   for (i = 0; i < node->n_dims (); i++)
     {
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_ci::"
@@ -513,7 +528,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << be_nl << "for (CORBA::ULong i" << i << " = 0; i" << i << " < "
+          *os << be_nl << "for (CORBA::ULong i" << i << " = 0; i" 
+              << i << " < "
               << expr->ev ()->u.ulval << " && _tao_marshal_flag; i" << i
               << "++)" << be_idt_nl;
         }
@@ -679,7 +695,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                         -1);
     }
 
-  for (i = 0; i < node->n_dims (); i++)
+  for (i = 0; i < node->n_dims (); ++i)
     {
       // Decrement indentation as many times as the number of dimensions.
       *os << be_uidt;

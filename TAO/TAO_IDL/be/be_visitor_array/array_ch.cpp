@@ -48,7 +48,9 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   // Nothing to do if we are imported or code is already generated.
   if (node->imported () || (node->cli_hdr_gen ()))
-    return 0;
+    {
+      return 0;
+    }
 
   this->ctx_->node (node);
 
@@ -163,7 +165,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
                             -1);
         }
 
-      // An out defn is generated only for a variable length struct
+      // An out defn is generated only for a variable size array.
       if (node->size_type () == be_decl::VARIABLE)
         {
           if (this->gen_out_defn (node) == -1)
@@ -469,15 +471,10 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
   return 0;
 }
 
-// generate the _forany definition for ourself.
+// Generate the _forany definition for ourself.
 int
 be_visitor_array_ch::gen_forany_defn (be_array *node)
 {
-  if (node->is_local ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
   char namebuf [NAMEBUFSIZE];
   char foranyname [NAMEBUFSIZE];
