@@ -167,13 +167,13 @@ TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
                                        env);
   TAO_CHECK_ENV_RETURN (env, 0);
 
-  CORBA::String_var str =
+  CORBA::String str =
     this->orb_->object_to_string (obj.in (),
                                   env);
 
   TAO_CHECK_ENV_RETURN (env, 0);
 
-  return str._retn ();
+  return str;
 }
   
 // Enter the ORB event loop.
