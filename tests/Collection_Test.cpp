@@ -40,9 +40,9 @@ void iterate_const(const UNBOUNDED_SET& set)
       iterator.next (data);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                   (*data)));
-      DATA *data_second = *iterator;
+      DATA data_second = *iterator;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
-                  (*data_second)));
+                  (data_second)));
       iterator.advance ();
     }
   }

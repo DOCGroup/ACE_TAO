@@ -1,3 +1,9 @@
+Tue Aug  7 17:27:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Collection_test.cpp: Fixed a compile error with g++. This
+	  is a patch that Johnny Willemsen sent as a part of his last
+	  checkin. 
+
 Tue Aug 07 11:25:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Made the following definition
