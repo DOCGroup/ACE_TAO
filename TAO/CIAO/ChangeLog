@@ -29,7 +29,7 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.hpp:
 
 	  Extended support for IDL2 valuetype feature.
-	
+
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
 	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
@@ -74,7 +74,12 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	  Added support for IDL3 eventtype feature.
 
+	* CCF/CCF/IDL3/SemanticAction/HomeFinder.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp:
 
+	  Added support for IDL3 home finder feature.
+	
 	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
 	* CCF/CCF/IDL3/LexicalAnalyzer.hpp:
 	* CCF/CCF/IDL3/Parser.cpp:
