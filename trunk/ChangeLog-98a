@@ -1,3 +1,8 @@
+Sat Jan 10 22:37:37 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/SStirng.i (find): changed type of local i to size_t to
+          avoid signed/unsigned comparison.
+
 Sat Jan 10 14:57:01 1998    <coryan@MILONGA>
 
 	* ace/Env_Value_T.h: 
