@@ -64,6 +64,9 @@ Updates: $(addprefix $(VDIR),Updates.o)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 endif # Notify
 
+realclean: clean
+	-$(RM) Updates
+
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------

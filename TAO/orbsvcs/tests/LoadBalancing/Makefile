@@ -58,6 +58,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
+	-$(RM) $(BIN_UNCHECKED)
 	-$(RM) $(foreach ext, $(IDL_EXT), Hash_Replica$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
