@@ -1,6 +1,7 @@
 // $Id$
 
 #include "server_i.h"
+#include "tao/Timeprobe.h"
 
 int
 main (int argc, char *argv[])
