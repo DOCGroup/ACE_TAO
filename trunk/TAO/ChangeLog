@@ -1,3 +1,10 @@
+Wed May 12 09:09:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset_Manager.cpp:
+          Updated formatting of the debug lines so that the formatting is
+          similar to the rest of the debug lines in TAO. This makes the logging
+          easier to read.
+
 Wed May 12 08:48:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Base.pidl:
