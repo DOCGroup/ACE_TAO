@@ -191,12 +191,11 @@ writer (void *)
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_OS::sleep(pause);
-      {
-        // Add an additional scope here to bound the duration that the
-        // write lock is held.
-        ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 
-        current_writers++;
+      ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+
+      current_writers++;
+
       if (current_writers > 1)
         ACE_DEBUG ((LM_DEBUG, 
                     ASYS_TEXT (" (%t) other writers found!!!\n")));
@@ -204,11 +203,12 @@ writer (void *)
       if (current_readers > 0)
         ACE_DEBUG ((LM_DEBUG, 
                     ASYS_TEXT (" (%t) readers found!!!\n")));
-        ACE_thread_t self = ACE_Thread::self ();
 
-        shared_data = self;
+      ACE_thread_t self = ACE_Thread::self ();
 
-	for (size_t loop = 1; loop <= n_loops; loop++)
+      shared_data = self;
+
+      for (size_t loop = 1; loop <= n_loops; loop++)
         {
           ACE_Thread::yield ();
 
@@ -217,11 +217,10 @@ writer (void *)
                         ASYS_TEXT (" (%t) somebody wrote on my data %d\n"),
                         shared_data));
         }
-        current_writers--;
-      }
 
+      current_writers--;
+       
       ACE_DEBUG((LM_DEBUG, ASYS_TEXT (" (%t) write %d done at %T\n"), iterations));
-      // ACE_Thread::yield ();
     }
   return 0;
 }
