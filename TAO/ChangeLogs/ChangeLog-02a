@@ -1,3 +1,34 @@
+Fri May  4 12:08:55 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/NVList.cpp:
+
+          Fixed typo in comment.
+
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+
+          Fixed typos in ACE_ERROR messages.
+
+        * tao/Any.cpp:
+
+          Fixed <<= operator for bounded (w)string. It was leaking
+          memory.
+
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_wstr_seq.cpp:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/multdim_array.cpp:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref_struct.cpp:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstring.cpp:
+        * tests/Param_Test/var_struct.cpp:
+
+          Fixed memory leaks and/or uninitialized memory read messages
+          (from Purify) in these param test files.
+
 Thu May  3 14:56:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply): 
