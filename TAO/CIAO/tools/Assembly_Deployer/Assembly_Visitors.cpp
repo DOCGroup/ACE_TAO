@@ -42,8 +42,6 @@ CIAO::Assembly_Builder_Visitor::visit_hostcollocation
 {
   ACE_DEBUG ((LM_DEBUG, "hostcollocation %s\n", hc->id ()));
 
-
-
   CIAO::Assembly_Placement::Container::ITERATOR iter (*hc);
   CIAO::Assembly_Placement::Node *node = 0;
 
@@ -66,52 +64,74 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
  ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "processcollocation %s\n", pc->id ()));
+  Components::ConfigValues server_config;
+
+  // Destination logical host id.
+  ACE_CString destination_host;
 
   if (pc->destination () != 0)
     {
       ACE_CString desti_string (pc->destination ());
       ssize_t endpos = desti_string.find ('|');
 
-      ACE_CString destination_host =
+      destination_host =
         desti_string.substring (0, endpos);
-
-      Components::Deployment::ServerActivator_var activator =
-        this->deployment_config_.get_activator (destination_host.c_str ());
-
-      if (CORBA::is_nil (activator.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Fail to acquire ServerActivator (%s)\n",
-                           pc->destination ()),
-                          -1);
-
-      Components::ConfigValues server_config;
-      // @@ Nothing to config yet.
 
       if (endpos != ACE_CString::npos)
         {
           ACE_CString svcconf = desti_string.substring (endpos + 1);
           server_config.length (1);
 
-          Components::ConfigValue *item = new OBV_Components::ConfigValue ();
-          item->name (CORBA::string_dup ("CIAO-svcconf-id"));
-          item->value () <<= CORBA::string_dup (svcconf.c_str ());
-          server_config[0] = item;
+          Components::ConfigValue *newconfig =
+            new OBV_Components::ConfigValue;
+          newconfig->name ((const char *) "CIAO-svcconf-id");
+          newconfig->value () <<= svcconf.c_str ();
+          server_config[0] = newconfig;
         }
-
-      this->compserv_ =
-        activator->create_component_server (server_config
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-
-      this->context_.component_servers_.enqueue_tail (this->compserv_);
-
-      Components::ConfigValues container_config;
-      // @@ Should we get the config value from Softpkg_Info?
-      this->container_ =
-        this->compserv_->create_container (container_config
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
     }
 
+  // @@ check for RTCAD file, parse the file, and insert the thing in server_config.
+
+  const char *rtcad = pc->rtcad_filename ();
+
+  if (rtcad != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Using RTCAD file: %s\n",
+                  rtcad));
+      CORBA::ULong len = server_config.length ();
+      server_config.length (len+1);
+
+      Components::ConfigValue *newconfig =
+        new OBV_Components::ConfigValue;
+      newconfig->name ((const char *) "CIAO-rtcad-filename");
+      newconfig->value () <<= rtcad;
+      server_config[len] = newconfig;
+    }
+
+  Components::Deployment::ServerActivator_var activator =
+    this->deployment_config_.get_activator
+    (destination_host.length () == 0 ? 0 : destination_host.c_str ());
+
+  if (CORBA::is_nil (activator.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR, "Fail to acquire ServerActivator (%s)\n",
+                       pc->destination ()),
+                      -1);
+
+  this->compserv_ =
+    activator->create_component_server (server_config
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  ACE_DEBUG ((LM_DEBUG, "Done creating component server\n"));
+
+  this->context_.component_servers_.enqueue_tail (this->compserv_);
+
+  // @@ Do not create a default container here.  We should wait until
+  // the children ask for a specific containers
+  this->container_ = Components::Deployment::Container::_nil ();
+  this->rtpolicy_name_.clear ();
+
+  // Now deal with the children nodes.
   CIAO::Assembly_Placement::Container::ITERATOR iter (*pc);
   CIAO::Assembly_Placement::Node *node = 0;
 
@@ -158,17 +178,28 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
       home_config.length (2);
 
       Components::ConfigValue *item = new OBV_Components::ConfigValue ();
-      item->name (CORBA::string_dup ("CIAO-servant-UUID"));
-      item->value () <<= CORBA::string_dup (info.servant_UUID_.c_str ());
+      item->name ((const char *) "CIAO-servant-UUID");
+      item->value () <<= info.servant_UUID_.c_str ();
       home_config[0] = item;
 
       item = new OBV_Components::ConfigValue ();
-      item->name (CORBA::string_dup ("CIAO-servant-entrypt"));
-      item->value () <<= CORBA::string_dup (info.servant_entrypt_.c_str ());
+      item->name ((const char *) "CIAO-servant-entrypt");
+      item->value () <<= info.servant_entrypt_.c_str ();
       home_config[1] = item;
 
+      // @@ How do I get a customized container here, if we named a
+      // RTpolicy_Set for this home placement?
+
+      // @@ We actually have to take care of both home_config and
+      // container_config here.  Should we use a Container Manager
+      // here to make sure that we always use the same container for
+      // different homes with similar policies?  Naw, we'll just
+      // require putting similar policied home together for now.  They
+      // have abandoned this implementation already anyway.
+
       Components::Deployment::Container_var container
-        = this->get_current_container (ACE_ENV_SINGLE_ARG_PARAMETER);
+        = this->get_container (hp->rtpolicyset_ref ()
+                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (CORBA::is_nil (container.in ()))
@@ -256,11 +287,13 @@ CIAO::Assembly_Builder_Visitor::visit_componentinstantiation
   return 0;
 }
 
-Components::Deployment::Container_ptr
-CIAO::Assembly_Builder_Visitor::get_current_container (ACE_ENV_SINGLE_ARG_DECL)
+Components::Deployment::ComponentServer_ptr
+CIAO::Assembly_Builder_Visitor::get_current_componentserver (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->compserv_.in ()))
     {
+      ACE_DEBUG ((LM_DEBUG, "Creating new ComponenetServer\n"));
+
       Components::Deployment::ServerActivator_var activator =
         this->deployment_config_.get_default_activator ();
 
@@ -277,13 +310,54 @@ CIAO::Assembly_Builder_Visitor::get_current_container (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (0);
 
       this->context_.component_servers_.enqueue_tail (this->compserv_);
+      this->container_ = Components::Deployment::Container::_nil ();
+      this->rtpolicy_name_.clear ();
+    }
+  return Components::Deployment::ComponentServer::_duplicate
+    (this->compserv_.in ());
+}
+
+Components::Deployment::Container_ptr
+CIAO::Assembly_Builder_Visitor::get_container (const char *rtpolicy
+                                               ACE_ENV_ARG_DECL)
+{
+  // If we are not using the same rtpolicy set, or the there's no
+  // cached container, then create a new one.
+  if (this->rtpolicy_name_ != ACE_CString (rtpolicy) ||
+      CORBA::is_nil (this->container_.in ()))
+    {
+      Components::Deployment::ComponentServer_var server
+        = this->get_current_componentserver ();
 
       Components::ConfigValues container_config;
       // @@ Should we get the config value from Softpkg_Info?
+      if (rtpolicy != 0)
+        {
+          CORBA::ULong len = container_config.length ();
+          container_config.length (len + 1);
+
+          Components::ConfigValue *newconfig
+            = new OBV_Components::ConfigValue;
+
+          newconfig->name ((const char *) "CIAO-RTPolicySet");
+          newconfig->value () <<= rtpolicy;
+          container_config[len] = newconfig;
+        }
+
       this->container_ =
-        this->compserv_->create_container (container_config
-                                           ACE_ENV_ARG_PARAMETER);
+        server->create_container (container_config
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+
+      this->rtpolicy_name_ = rtpolicy;
+
+      if (rtpolicy != 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Creating container with RTPolicySet %s\n",
+                    rtpolicy));
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "Creating container with empty policy set\n"));
     }
 
   return Components::Deployment::Container::_duplicate

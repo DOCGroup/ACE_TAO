@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Server_Activator.cpp
+ * @file ServerActivator.cpp
  *
  * @brief CIAO's server activator implementation
  *
