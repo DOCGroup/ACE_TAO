@@ -1,3 +1,10 @@
+Mon Sep  6 21:19:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Signal_Test.cpp (run_test): Added an ACE_UNUSED_ARG
+	  for the synchronous_signal_handler pointer-to-function for the
+ 	  case where ACE_HAS_THREADS is disabled.  Otherwise, we get a
+ 	  warning.
+
 Mon Sep  6 18:47:18 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Process_Manager.h: Moved handle_signal outside of a !defined
