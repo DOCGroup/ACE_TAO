@@ -1,3 +1,9 @@
+Thu Mar 13 18:21:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/ReactorEx.h: Change protection of methods/variables of
+	  ReactorEx from private to protected. Thanks to Matthias Kerkhoff
+	  <make@cs.tu-berlin.de> for suggesting this.
+
 Thu Mar 13 16:31:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (thr_getprio): Added missing ACE_NOTSUP_RETURN
