@@ -139,8 +139,8 @@ run (char* buf, size_t bufsize,
       rusecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
       rusecs += rtv.usec ();
 
-      double write_average = ACE_reinterpret_cast(ACE_INT32,wusecs) / m;
-      double read_average = ACE_reinterpret_cast(ACE_INT32,rusecs) / m;
+      double write_average = ACE_static_cast(ACE_INT32,wusecs) / m;
+      double read_average = ACE_static_cast(ACE_INT32,rusecs) / m;
       ACE_DEBUG ((LM_DEBUG,
 		  "%s: %d %.3f %.3f\n",
 		  name, x, write_average, read_average));
@@ -212,7 +212,7 @@ main (int argc, char *argv[])
       // Create a "big" buffer and fill it up.
       char* buf = new char[hi];
       CORBA::Long l = 0xdeadbeef;
-      for (size_t i = 0; i < hi / sizeof (l); ++i)
+      for (int i = 0; i < hi / sizeof (l); ++i)
 	{
 	  ACE_OS::memcpy (buf + sizeof (l) * i, &l, sizeof (l));
 	}
