@@ -26,6 +26,7 @@ Single_Query_Stock_Handler_i::get_price_and_names (CORBA::Double ami_return_val,
 void
 Single_Query_Stock_Handler_i::
     get_price_and_names_excep (Quoter::AMI_Single_Query_StockExceptionHolder_ptr )
+  throw (CORBA::SystemException)
 {
   // We ignore the exception, but this counts as a reponse, otherwise
   // the application would not finish.
