@@ -91,18 +91,18 @@ main (int argc, char** argv)
 
       offer_exporter.describe_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      
+      offer_exporter.modify_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      //      offer_exporter.modify_offers (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      //offer_exporter.describe_offers (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;
+      offer_exporter.withdraw_offers_using_constraints (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      //offer_exporter.withdraw_offers_using_constraints (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;
-
-      //offer_exporter.describe_offers (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;      
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;      
 
       offer_exporter.withdraw_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;      
