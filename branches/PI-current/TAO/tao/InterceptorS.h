@@ -222,8 +222,6 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Boolean response_expected,
         CORBA::Object_ptr objref,
         const char * operation_name,
-        IOP::ServiceContextList & sc,
-        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -282,8 +280,6 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Boolean response_expected,
         CORBA::Object_ptr objref,
         const char * operation_name,
-        IOP::ServiceContextList & sc,
-        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -353,8 +349,6 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Boolean response_expected,
         CORBA::Object_ptr objref,
         const char * operation_name,
-        IOP::ServiceContextList & sc,
-        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -413,8 +407,6 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Boolean response_expected,
         CORBA::Object_ptr objref,
         const char * operation_name,
-        IOP::ServiceContextList & sc,
-        CORBA::Exception_ptr & exc,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()

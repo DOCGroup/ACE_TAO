@@ -17,6 +17,12 @@ TAO_GIOP_Invocation::request_service_info (void)
   return this->request_service_info_;
 }
 
+ACE_INLINE CORBA::ULong
+TAO_GIOP_Invocation::request_id (void)
+{
+  return this->request_id_;
+}
+
 ACE_INLINE TAO_OutputCDR &
 TAO_GIOP_Invocation::out_stream (void)
 {
