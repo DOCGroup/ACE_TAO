@@ -20,6 +20,7 @@ ACE_RCSID(ace, Proactor, "$Id$")
 
 #if defined (ACE_HAS_AIO_CALLS)
 #   include "ace/POSIX_Proactor.h"
+#   include "ace/POSIX_CB_Proactor.h"
 #else /* !ACE_HAS_AIO_CALLS */
 #   include "ace/WIN32_Proactor.h"
 #endif /* ACE_HAS_AIO_CALLS */
@@ -298,12 +299,16 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
 #  elif defined (ACE_POSIX_SIG_PROACTOR)
       ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
-#  else /* Default is to use the SIG one */
-#    if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
-      ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
+#  else /* Default order: CB (but not Lynx), SIG, AIOCB */
+#    if !defined (__Lynx)
+      ACE_NEW (implementation, ACE_POSIX_CB_Proactor);
 #    else
+#      if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
+      ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
+#      else
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
-#    endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+#      endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+#    endif /* !__Lynx */
 #  endif /* ACE_POSIX_AIOCB_PROACTOR */
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       // WIN_Proactor.

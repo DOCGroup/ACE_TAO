@@ -3,7 +3,7 @@
 
 #include "ace/POSIX_CB_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__sun) && !defined(__Lynx__)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__)
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task_T.h"
@@ -31,7 +31,7 @@ ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor (void)
   this->close ();
 }
 
-void ACE_POSIX_CB_Proactor::aio_completion_func ( sigval_t cb_data )
+void ACE_POSIX_CB_Proactor::aio_completion_func (sigval_t cb_data)
 {
 #if defined (__FreeBSD__)
   ACE_POSIX_CB_Proactor * impl = ACE_static_cast (ACE_POSIX_CB_Proactor *, cb_data.sigval_ptr);
@@ -42,6 +42,14 @@ void ACE_POSIX_CB_Proactor::aio_completion_func ( sigval_t cb_data )
   if ( impl != 0 )
     impl->notify_completion (0);
 }
+
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_POSIX_CB_Proactor_aio_completion (sigval_t cb_data)
+{
+  ACE_POSIX_CB_Proactor::aio_completion_func (cb_data);
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
 
 int
 ACE_POSIX_CB_Proactor::handle_events (ACE_Time_Value &wait_time)
@@ -74,14 +82,20 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
     return -1;
 
   // setup OS notification methods for this aio
-  // store index!!, not pointer in signal info
-  // need to figure out correct thing to do here when we are not on SGI
+  // @@ TODO: This gets the completion method back to this proactor to
+  // find the completed aiocb. It would be so much better to not only get
+  // the proactor, but the aiocb as well.
 #if defined(__sgi)
   result->aio_sigevent.sigev_notify = SIGEV_CALLBACK;
   result->aio_sigevent.sigev_func   = aio_completion_func ;
 #else
   result->aio_sigevent.sigev_notify = SIGEV_THREAD;
+#  if defined (ACE_HAS_SIG_C_FUNC)
+  result->aio_sigevent.sigev_notify_function =
+    ACE_POSIX_CB_Proactor_aio_completion;
+#  else
   result->aio_sigevent.sigev_notify_function = aio_completion_func;
+#  endif /* ACE_HAS_SIG_C_FUNC */
   result->aio_sigevent.sigev_notify_attributes = 0;
 #endif /* __sgi */
 
@@ -167,4 +181,4 @@ ACE_POSIX_CB_Proactor::handle_events_i (unsigned long milli_seconds)
   return ret_aio + ret_que > 0 ? 1 : 0;
 }
 
-#endif /* ACE_HAS_AIO_CALLS && !__sun && !__Lynx__ */
+#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ */
