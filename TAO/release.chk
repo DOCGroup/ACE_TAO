@@ -43,18 +43,18 @@ Legend:
 [xxxxx ] 	POA/Default_Servant runs
 
 [1111x ] Param_Test compiles
-[101xx ] 	SII short
-[101xx ] 	SII ubstring
-[101xx ] 	SII fixed_struct
+[111xx ] 	SII short
+[111xx ] 	SII ubstring
+[111xx ] 	SII fixed_struct
 [x0xxx ] 	SII strseq
 [x00xx ] 	SII var_struct
 [x00xx ] 	SII nested_struct
 [x00xx ] 	SII struct_seq
 [x00xx ] 	SII objref
 
-[x0xxx ] 	DII short
-[x0xxx ] 	DII ubstring
-[x0xxx ] 	DII fixed_struct
+[x1xxx ] 	DII short
+[x1xxx ] 	DII ubstring
+[x1xxx ] 	DII fixed_struct
 [x0xxx ] 	DII strseq
 [x0xxx ] 	DII var_struct
 [x0xxx ] 	DII nested_struct
@@ -65,8 +65,8 @@ Legend:
 
 [1111x ] liborbsvcs compiles
 [1111x ] Naming_Service compiles
-[1x11x ] Simple_Naming compiles
-[xxx0x ] 	Simple_Naming runs
+[1111x ] Simple_Naming compiles
+[x0x0x ] 	Simple_Naming runs
 [1xx1x ] Logger compiles
 [xxx0x ] 	Logger runs
 [11x11 ] Scheduling_Service compiles
