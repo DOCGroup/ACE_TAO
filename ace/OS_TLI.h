@@ -119,71 +119,71 @@ extern "C" int _xti_error(char *);
 # endif /* ACE_REDEFINES_XTI_FUNCTIONS */
 
 /**
- * @class ACE_OS_TLI
+ * @namespace ACE_OS_TLI
  *
  * @brief This class is a wrapper for the TLI operations
  *
  */
-class ACE_OS_Export ACE_OS_TLI
+#define ACE_OS_TLI ACE_OS
+namespace ACE_OS
 {
-public:
   // = A set of wrappers for TLI.
-  static int t_accept (ACE_HANDLE fildes,
+  int t_accept (ACE_HANDLE fildes,
                        ACE_HANDLE resfd,
                        struct t_call
                        *call);
-  static char *t_alloc (ACE_HANDLE fildes,
+  char *t_alloc (ACE_HANDLE fildes,
                         int struct_type,
                         int
                         fields);
-  static int t_bind (ACE_HANDLE fildes,
+  int t_bind (ACE_HANDLE fildes,
                      struct t_bind *req,
                      struct
                      t_bind *ret);
-  static int t_close (ACE_HANDLE fildes);
-  static int t_connect (ACE_HANDLE fildes,
+  int t_close (ACE_HANDLE fildes);
+  int t_connect (ACE_HANDLE fildes,
                         struct t_call *sndcall,
                         struct t_call *rcvcall);
-  static void t_error (const char *errmsg);
-  static int t_free (char *ptr,
+  void t_error (const char *errmsg);
+  int t_free (char *ptr,
                      int struct_type);
-  static int t_getinfo (ACE_HANDLE fildes,
+  int t_getinfo (ACE_HANDLE fildes,
                         struct t_info *info);
-  static int t_getname (ACE_HANDLE fildes,
+  int t_getname (ACE_HANDLE fildes,
                         struct netbuf *namep,
                         int type);
-  static int t_getstate (ACE_HANDLE fildes);
-  static int t_listen (ACE_HANDLE fildes,
-                       struct t_call *call);
-  static int t_look (ACE_HANDLE fildes);
-  static ACE_HANDLE t_open (char *path,
+  int t_getstate (ACE_HANDLE fildes);
+  int t_listen (ACE_HANDLE fildes,
+                        struct t_call *call);
+  int t_look (ACE_HANDLE fildes);
+  ACE_HANDLE t_open (char *path,
                             int oflag,
                             struct t_info *info);
-  static int t_optmgmt (ACE_HANDLE fildes,
+  int t_optmgmt (ACE_HANDLE fildes,
                         struct t_optmgmt *req,
                         struct t_optmgmt *ret);
-  static int t_rcv (ACE_HANDLE fildes,
+  int t_rcv (ACE_HANDLE fildes,
                     char *buf,
                     unsigned int nbytes,
                     int *flags);
-  static int t_rcvdis (ACE_HANDLE fildes,
+  int t_rcvdis (ACE_HANDLE fildes,
                        struct t_discon *discon);
-  static int t_rcvrel (ACE_HANDLE fildes);
-  static int t_rcvudata (ACE_HANDLE fildes,
+  int t_rcvrel (ACE_HANDLE fildes);
+  int t_rcvudata (ACE_HANDLE fildes,
                          struct t_unitdata *unitdata,
                          int *flags);
-  static int t_rcvuderr (ACE_HANDLE fildes,
+  int t_rcvuderr (ACE_HANDLE fildes,
                          struct t_uderr *uderr);
-  static int t_snd (ACE_HANDLE fildes,
+  int t_snd (ACE_HANDLE fildes,
                     const char *buf,
                     unsigned int nbytes,
                     int flags);
-  static int t_snddis (ACE_HANDLE fildes,
+  int t_snddis (ACE_HANDLE fildes,
                        struct t_call *call);
-  static int t_sndrel (ACE_HANDLE fildes);
-  static int t_sync (ACE_HANDLE fildes);
-  static int t_unbind (ACE_HANDLE fildes);
-};
+  int t_sndrel (ACE_HANDLE fildes);
+  int t_sync (ACE_HANDLE fildes);
+  int t_unbind (ACE_HANDLE fildes);
+}; /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -19,6 +19,7 @@
 
 #include "server.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(MT_Client_Test, server, "$Id$")
 

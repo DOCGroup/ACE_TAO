@@ -7,9 +7,8 @@
 #ifndef ACE_SSL_CLIENT_SIMPLE_H
 #define ACE_SSL_CLIENT_SIMPLE_H
 
-#include "ace/OS.h"
-
 #include "ace/SSL/SSL_SOCK_Stream.h"
+#include "ace/Time_Value.h"
 
 class Options
   // = TITLE

@@ -16,6 +16,7 @@
 #include "LifeCycle_Service.h"
 
 #include "ace/Argv_Type_Converter.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID (LifeCycle_Service, 
            LifeCycle_Service, 

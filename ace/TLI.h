@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Addr.h"
+#include "ace/OS_TLI.h"
 
 #if defined (ACE_HAS_TLI)
 

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/Thread_Adapter.h"
-#include "ace/OS.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Thread_Exit.h"
 #include "ace/Thread_Hook.h"

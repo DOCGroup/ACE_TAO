@@ -1,4 +1,4 @@
-#include "ace/OS.h"
+#include "ace/Basic_Types.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Basic_Types.i"

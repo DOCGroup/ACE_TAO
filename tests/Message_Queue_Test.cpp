@@ -25,8 +25,11 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Message_Queue.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
+#include "ace/Null_Condition.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, Message_Queue_Test, "$Id$")
 

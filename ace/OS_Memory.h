@@ -232,22 +232,18 @@ typedef void *ACE_MALLOC_T;
         ((char *) ACE_align_binary (((ptrdiff_t) (ptr)), (alignment)))
 //@}
 
+#include "ace/OS_NS_stdlib.h"
+
 /**
- * @class ACE_OS_Memory
+ * @namespace ACE_OS_Memory
  *
  * @brief This class is a wrapper for dynamic memory operations.
  *
  */
-class ACE_OS_Export ACE_OS_Memory
+#define ACE_OS_Memory ACE_OS
+namespace ACE_OS
 {
-public:
-  // = A set of wrappers for memory managment.
-  static void *sbrk (int brk);
-  static void *calloc (size_t elements, size_t sizeof_elements);
-  static void *malloc (size_t);
-  static void *realloc (void *, size_t);
-  static void free (void *);
-};
+} /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

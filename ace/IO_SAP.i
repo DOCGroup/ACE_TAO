@@ -3,6 +3,8 @@
 
 // IO_SAP.i
 
+#include "ace/OS_NS_stropts.h"
+
 ASYS_INLINE
 ACE_IO_SAP::~ACE_IO_SAP (void)
 {

@@ -1,8 +1,9 @@
+// -*- C++ -*-
 // $Id$
 
 // ****************************************************************
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 ACE_INLINE
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)

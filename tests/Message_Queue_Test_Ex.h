@@ -18,7 +18,7 @@
 #ifndef ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H
 #define ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 // User-defined class used for queue data.
 class User_Class

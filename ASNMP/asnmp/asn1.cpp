@@ -52,6 +52,7 @@
 
 #include "asnmp/asn1.h"
 #include "asnmp/snmp.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(asnmp, asn1, "$Id$")
 

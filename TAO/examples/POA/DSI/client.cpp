@@ -18,6 +18,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "DatabaseC.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID(DSI, client, "$Id$")
 

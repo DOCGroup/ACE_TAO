@@ -7,6 +7,7 @@
 #include "Server_Request_Interceptor.h"
 
 #include "tao/ORBInitializer_Registry.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ForwardRequest,
            server,

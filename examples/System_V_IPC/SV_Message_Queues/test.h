@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,17 +20,17 @@ public:
                 const char user[] = "",
                 const char text[] = ""): pid_ (p)
   {
-    ::strncpy (this->username_, user, 9);
-    ::strncpy (this->mtext_, text, MSGSZ);
+    ACE_OS::strncpy (this->username_, user, 9);
+    ACE_OS::strncpy (this->mtext_, text, MSGSZ);
   }
 
   long pid (void) { return this->pid_; }
   void pid (long p) { this->pid_ = p; }
   char *user (void) { return this->username_; }
-  void user (char user[]) { ::strncpy (this->username_, user, 9); }
+  void user (char user[]) { ACE_OS::strncpy (this->username_, user, 9); }
   char *text (void) { return this->mtext_; }
-  void text (char text[]) { ::strncpy (this->mtext_, text, MSGSZ); }
-  int length (void) { return sizeof *this - sizeof this->mtext_ + ::strlen (this->mtext_) + 1; }
+  void text (char text[]) { ACE_OS::strncpy (this->mtext_, text, MSGSZ); }
+  int length (void) { return sizeof *this - sizeof this->mtext_ + ACE_OS::strlen (this->mtext_) + 1; }
 
 protected:
   long  pid_;

@@ -4,6 +4,7 @@
 #define SIMPLE_UTIL_C
 # include "Simple_util.h"
 # include "tao/debug.h"
+# include "ace/OS_NS_fcntl.h"
 
 // Constructor.
 

@@ -25,6 +25,8 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(Proactor, test_timeout, "$Id$")
 

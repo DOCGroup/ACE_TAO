@@ -8,6 +8,8 @@
 #include "ace/Barrier.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
+
 ACE_RCSID(ace, Barrier, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sub_Barrier)

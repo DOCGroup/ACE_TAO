@@ -6,7 +6,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Pipe.h"

@@ -4,6 +4,7 @@
 
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/OS_NS_stdio.h"
 
 
 const char*

@@ -7,6 +7,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_netdb.h"
 
 // How many servers should we get at once?
 const size_t IR_LIST_CHUNK = 10;

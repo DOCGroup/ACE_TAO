@@ -32,7 +32,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                                    MAXPATHLEN))
     return -1;
   DWORD msg_file_length = ACE_static_cast (DWORD,
-                                           ACE_OS_String::strlen (msg_file));
+                                           ACE_OS::strlen (msg_file));
 
   // If a logger_key has been supplied then we use that as the event
   // source name, otherwise we default to the program name.

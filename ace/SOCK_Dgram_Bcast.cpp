@@ -1,12 +1,16 @@
 // $Id$
 
 #include "ace/SOCK_Dgram_Bcast.h"
-#include "ace/Log_Msg.h"
-#include "ace/ACE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram_Bcast.i"
 #endif
+
+#include "ace/Log_Msg.h"
+#include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
+#include "ace/os_include/net/os_if.h"
+#include "ace/OS_NS_netdb.h"
 
 ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
 

@@ -1,6 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_mman.h"
+
 ACE_INLINE ACE_HANDLE
 ACE_Mem_Map::handle (void) const
 {

@@ -2,7 +2,7 @@
 
 // HTTP_Config.cpp
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdlib.h"
 #include "HTTP_Config.h"
 
 ACE_RCSID(server, HTTP_Config, "$Id$")

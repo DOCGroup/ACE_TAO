@@ -20,6 +20,8 @@
 
 #include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Concurrency_Service, Concurrency_Service, "$Id$")
 

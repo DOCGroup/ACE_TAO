@@ -17,6 +17,8 @@
 #include "ace/Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID(ace, Thread_Mutex, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex_Guard)

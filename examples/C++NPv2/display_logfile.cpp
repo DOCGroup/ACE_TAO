@@ -4,7 +4,6 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/OS.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
@@ -13,9 +12,10 @@
 #include "ace/Module.h"
 #include "ace/SString.h"
 #include "ace/Stream.h"
-#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/OS_NS_time.h"
 
 template <class TASK>
 class Logrec_Module : public ACE_Module<ACE_SYNCH>
@@ -79,7 +79,7 @@ public:
       // extract what's needed, crunch the block to move all remaining
       // data to the beginning and read more from the file.
       for (;;) {
-        size_t name_len = ACE_OS_String::strnlen
+        size_t name_len = ACE_OS::strnlen
                              (mblk.rd_ptr (), mblk.length ());
         if (name_len == mblk.length ()) break;
 

@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Global_Macros.h"
+
 // Be very carefull before changing the calculations inside
 // ACE_High_Res_Timer.  The precision matters and we are using integer
 // calculations not floating point.  Also look good at the emulated 64

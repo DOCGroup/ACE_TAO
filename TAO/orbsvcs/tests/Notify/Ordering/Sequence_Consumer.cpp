@@ -12,6 +12,7 @@
 #include "goC.h"
 
 #include "Notify_Test_Client.h"
+#include "ace/OS_NS_sys_stat.h"
 
 #if !defined (PATH_MAX)
 #define PATH_MAX 1024

@@ -9,7 +9,6 @@
 #include "URL_Properties.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS.h"
 #include "ace/Auto_Ptr.h"
 #include "URL_Array_Helper.h"
 

@@ -36,6 +36,26 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+# if !defined (GETVAL)
+#   define GETVAL 0
+# endif /* GETVAL */
+
+# if !defined (SETVAL)
+#   define SETVAL 0
+# endif /* SETVAL */
+
+# if !defined (GETALL)
+#   define GETALL 0
+# endif /* GETALL */
+
+# if !defined (SETALL)
+#   define SETALL 0
+# endif /* SETALL */
+
+# if !defined (SEM_UNDO)
+#   define SEM_UNDO 0
+# endif /* SEM_UNDO */
+
 #if defined (ACE_LACKS_SEMBUF_T)
    struct sembuf
    {

@@ -2,7 +2,9 @@
 
 #if !defined(_WIN32) 
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"

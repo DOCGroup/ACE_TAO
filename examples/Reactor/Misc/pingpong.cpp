@@ -35,12 +35,12 @@
    stop it earlier, just hit the control-C sequence
    and you'll see the same messages. */
 
-#include "ace/Synch.h"
 #include "ace/Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/Test_and_Set.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;

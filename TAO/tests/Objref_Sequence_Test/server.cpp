@@ -1,6 +1,7 @@
 //$Id$
 #include "TestS.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 /// Implement the Server Interface
 class ServerServant :

@@ -19,7 +19,7 @@ ACE_Blob::~ACE_Blob (void)
 int
 ACE_Blob::open (ACE_TCHAR *filename, const ACE_TCHAR *hostname , u_short port)
 {
-  filename_ = ACE_OS_String::strdup (filename);
+  filename_ = ACE_OS::strdup (filename);
   inet_addr_.set (port, hostname);
   return 0;
 }

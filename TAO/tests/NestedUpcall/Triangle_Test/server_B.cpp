@@ -19,6 +19,7 @@
 
 #include "server_B.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Triangle_Test, server_B, "$Id$")
 

@@ -62,7 +62,7 @@
 
 // Process Creation profiling
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
 #include "ace/Process.h"
 #include "ace/Profile_Timer.h"

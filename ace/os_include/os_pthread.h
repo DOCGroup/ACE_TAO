@@ -24,6 +24,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_PRIOCNTL)
+   // Need to #include thread.h before #defining THR_BOUND, etc.,
+   // when building without threads on SunOS 5.x.
+#  if defined (sun)
+#    include /**/ <thread.h>
+#  endif /* sun */
+
+   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
+#  include /**/ <sys/rtpriocntl.h>
+#  include /**/ <sys/tspriocntl.h>
+#endif /* ACE_HAS_PRIOCNTL */
+
 #include "ace/os_include/sys/os_types.h"
 
 // This needs to go here *first* to avoid problems with AIX.
@@ -362,8 +374,7 @@ extern "C" pthread_t pthread_self (void);
  */
 class ACE_OS_Export ACE_sema_t
 {
-friend class ACE_OS;
-protected:
+public:
   /// Serialize access to internal state.
   ACE_mutex_t lock_;
 

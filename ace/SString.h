@@ -21,8 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/String_Base.h"
-#include "ace/OS.h"
-
 
 #if !defined (ACE_DEFAULT_GROWSIZE)
 #define ACE_DEFAULT_GROWSIZE 32

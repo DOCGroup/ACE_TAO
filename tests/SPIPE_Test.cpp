@@ -22,7 +22,6 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SPIPE_Addr.h"

@@ -15,6 +15,7 @@
 
 #include "demux_test_server.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(CodeGen, demux_test_server, "$Id$")
 
