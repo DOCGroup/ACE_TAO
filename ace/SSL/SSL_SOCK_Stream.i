@@ -18,21 +18,6 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
     }
 }
 
-ASYS_INLINE int
-ACE_SSL_SOCK_Stream::notify (ACE_Reactor_Mask mask) const
-{
-  if (this->reactor_ != 0
-      && this->handler_ != 0
-      && ::SSL_pending (this->ssl_))
-    {
-      return this->reactor_->notify (this->handler_,
-                                     mask);
-    }
-
-  // No need for notification.
-  return 0;
-}
-
 ASYS_INLINE ssize_t
 ACE_SSL_SOCK_Stream::send_i (const void *buf,
                              size_t n,
@@ -49,9 +34,6 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
   int bytes_sent = ::SSL_write (this->ssl_,
                                 ACE_static_cast (const char *, buf),
                                 n);
-
-  if (this->notify (ACE_Event_Handler::WRITE_MASK) != 0)
-    return -1;
 
   switch (::SSL_get_error (this->ssl_, bytes_sent))
     {
@@ -154,9 +136,6 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
                                ACE_static_cast (char *, buf),
                                n);
     }
-
-  if (this->notify (ACE_Event_Handler::READ_MASK) != 0)
-    return -1;
 
   int status = ::SSL_get_error (this->ssl_, bytes_read);
   switch (status)

@@ -23,7 +23,9 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
   : ssl_ (0),
     stream_ (),
     reactor_ (0),
-    handler_ (0)
+    handler_ (0),
+    read_notification_pending_ (0),
+    write_notification_pending_ (0)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 
@@ -61,7 +63,9 @@ ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
 }
 
 ssize_t
-ACE_SSL_SOCK_Stream::sendv (const iovec iov[], size_t n) const
+ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
+                            size_t n,
+                            const ACE_Time_Value *max_wait_time) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::sendv");
 
@@ -72,14 +76,48 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[], size_t n) const
 
   ssize_t bytes_sent = 0;
 
+  ACE_HANDLE handle = this->get_handle ();
+
+  int val = 0;
+
+  ACE_Time_Value t;
+  ACE_Time_Value *timeout =
+    ACE_const_cast (ACE_Time_Value *, max_wait_time);
+
+  if (max_wait_time != 0)
+    {
+      // Make a copy since ACE_Countdown_Time modifies the
+      // ACE_Time_Value.
+      t = *max_wait_time;
+      timeout = &t;
+    }
+
+  // Take into account the time between each send.
+  ACE_Countdown_Time countdown (timeout);
+
   for (size_t i = 0; i < n; ++i)
     {
-      int result = this->send (iov[i].iov_base,
-                               iov[i].iov_len);
+      ssize_t result = this->send (iov[i].iov_base,
+                                   iov[i].iov_len,
+                                   timeout);
+
       if (result == -1)
-        return -1;
+        {
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was sent.  If no data was sent,
+          // then always return -1.  Otherwise only return bytes_sent
+          // if errno == EWOULDBLOCK or the send timed out.  This
+          // gives the caller an opportunity to keep track of which
+          // data was actually sent.
+          if (bytes_sent > 0 && (errno == EWOULDBLOCK || errno == ETIME))
+            break;
+          else
+            return -1;
+        }
       else
         bytes_sent += result;
+
+      (void) countdown.update ();
     }
 
   return bytes_sent;
@@ -430,8 +468,8 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
 
   for (size_t i = 0; i < iovcnt; ++i)
     {
-      int result = this->send_n (iov[i].iov_base,
-                                 iov[i].iov_len);
+      ssize_t result = this->send_n (iov[i].iov_base,
+                                     iov[i].iov_len);
 
       if (result == -1)
         return -1;
@@ -451,8 +489,8 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
 
   for (size_t i = 0; i < iovcnt; ++i)
     {
-      int result = this->recv_n (iov[i].iov_base,
-                                 iov[i].iov_len);
+      ssize_t result = this->recv_n (iov[i].iov_base,
+                                     iov[i].iov_len);
 
       if (result == -1)
         return -1;
@@ -461,17 +499,4 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
     }
 
   return bytes_read;
-}
-
-void
-ACE_SSL_SOCK_Stream::reactor (ACE_Reactor *reactor)
-
-{
-  this->reactor_ = reactor;
-}
-
-void
-ACE_SSL_SOCK_Stream::handler (ACE_Event_Handler *handler)
-{
-  this->handler_ = handler;
 }

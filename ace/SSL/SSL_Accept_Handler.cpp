@@ -69,6 +69,15 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
 
     case SSL_ERROR_WANT_WRITE:
     case SSL_ERROR_WANT_READ:
+      // If data is still buffered within OpenSSL's internal buffer,
+      // then force the Reactor to invoke the SSL accept event handler
+      // (with the appropriate mask) before waiting for more events
+      // (e.g. blocking on select()).  All pending data must be
+      // processed before waiting for more events to come in on the
+      // SSL handle.
+      if (::SSL_pending (ssl))
+        return 1;
+
       break;
 
     case SSL_ERROR_ZERO_RETURN:

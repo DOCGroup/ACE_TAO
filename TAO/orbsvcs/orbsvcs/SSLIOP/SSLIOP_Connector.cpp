@@ -133,7 +133,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   TAO_Endpoint *endpoint = desc->endpoint ();
 
-  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
+  if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
     return -1;
 
   TAO_SSLIOP_Endpoint *ssl_endpoint =

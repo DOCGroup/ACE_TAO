@@ -100,8 +100,14 @@ public:
                 size_t n) const;
 
   /// Send an iovec of size n to the ssl socket.
+  /**
+   * Note that it is not possible to perform a "scattered" write with
+   * the underlying OpenSSL implementation.  As such, the expected
+   * semantics are not fully reproduced with this implementation.
+   */
   ssize_t sendv (const iovec iov[],
-                 size_t n) const;
+                 size_t n,
+                 const ACE_Time_Value *timeout = 0) const;
 
   /**
    * Allows a client to read from a socket without having to provide a
@@ -254,31 +260,9 @@ public:
   /// Return a pointer to the underlying SSL structure.
   SSL *ssl (void) const;
 
-  /**
-   * @name Muxing/Demuxing Related Methods
-   *
-   * Since SSL is a record-oriented protocol, the ACE_SSL_SOCK_Stream
-   * must notify the Reactor that it should invoke the given event
-   * handler before waiting in the Reactor's event loop.  This is
-   * necessary to prevent the Reactor from waiting for data that has
-   * already arrived.
-   */
-  //@{
-
-  /// Set the Reactor being used to dispatch events coming in on this
-  /// stream's handle.
-  void reactor (ACE_Reactor *r);
-
-  /// Set the Event Handler to which events will be dispatched.
-  void handler (ACE_Event_Handler *handler);
-
   //@}
 
 protected:
-
-  /// Notify the event handler of the given mask in the Reactor if
-  /// data is still pending in the SSL buffer.
-  int notify (ACE_Reactor_Mask mask) const;
 
   /// Return the underlying ACE_SOCK_Stream which ACE_SSL runs atop of.
   ACE_SOCK_Stream & peer (void);
@@ -316,6 +300,12 @@ protected:
   /// Event handler that handles events coming in this
   /// ACE_SSL_SOCK_Stream's handle.
   ACE_Event_Handler *handler_;
+
+  /// If true, a read notification is pending in the Reactor.
+  int read_notification_pending_;
+
+  /// If true, a read notification is pending in the Reactor.
+  int write_notification_pending_;
 
 };
 
