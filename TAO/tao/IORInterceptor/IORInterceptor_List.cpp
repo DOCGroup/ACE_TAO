@@ -70,7 +70,12 @@ TAO_IORInterceptor_List::adapter_state_changed (
 
   for (size_t counter = 0; counter < array_obj_ref_template.size(); ++counter)
     {
-      seq_obj_ref_template[counter] = array_obj_ref_template[counter];
+      PortableInterceptor::ObjectReferenceTemplate *member =
+        array_obj_ref_template[counter];
+
+      CORBA::add_ref (member);
+
+      seq_obj_ref_template[counter] = member;
     }
 
   for (size_t i = 0; i < interceptor_count; ++i)
