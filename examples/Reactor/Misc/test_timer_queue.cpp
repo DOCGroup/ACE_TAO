@@ -52,6 +52,15 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (tq->expire () == 0);
 }
 
+struct Timer_Queues
+{
+  ACE_Timer_Queue *queue_;
+  // Pointer to the subclass of <ACE_Timer_Queue> that we're testing.
+  
+  const char *name_;
+  // Name of the Queue that we're testing.
+};
+
 static Timer_Queues timer_queues[] =
 {
   { new ACE_Timer_List, "ACE_Timer_List" },

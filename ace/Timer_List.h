@@ -109,7 +109,16 @@ public:
   // Returns 1 if cancellation succeeded and 0 if the <timer_id>
   // wasn't found.
 
+  virtual void dump (void) const;
+  // Dump the state of an object.
+
 private:
+  int timer_id (void);
+  // Returns a timer id that uniquely identifies this timer.  This id
+  // can be used to cancel a timer via the <cancel (int)> method.  The
+  // timer id returned from this method will never == -1 to avoid
+  // conflicts with other failure return values.
+
   virtual void reschedule (ACE_Timer_Node *);
   // Reschedule an "interval" <ACE_Timer_Node>.
 
@@ -121,6 +130,11 @@ private:
 
   ACE_Timer_List_Iterator iterator_;
   // Iterator used to expire timers.
+
+  int timer_id_;
+  // Keeps track of the timer id that uniquely identifies each timer.
+  // This id can be used to cancel a timer via the <cancel (int)>
+  // method.
 };
 
 #endif /* ACE_TIMER_LIST_H */

@@ -26,10 +26,10 @@
 #include "test_config.h"
 
 // Number of iterations for the performance tests.
-static const int MAX_ITERATIONS = ACE_DEFAULT_MAX_TIMERS;
+static int max_iterations = ACE_DEFAULT_MAX_TIMERS;
 
 // Keep track of the timer ids that were assigned to us.
-static int timer_ids[MAX_ITERATIONS];
+static int *timer_ids;
 
 class Example_Handler : public ACE_Event_Handler
 {
@@ -59,7 +59,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
 			   ACE_OS::gettimeofday ()) != -1);
   ACE_ASSERT (tq->cancel (timer_id) == 1);
-  ACE_ASSERT (!tq->is_empty ());
+  ACE_ASSERT (tq->is_empty () == 0);
 
   ACE_ASSERT (tq->expire () == 2);
 
@@ -87,13 +87,13 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = 0; i < MAX_ITERATIONS; i++)
+  for (i = 0; i < max_iterations; i++)
     {
       timer_ids[i] = tq->schedule (&eh, (const void *) 42, ACE_OS::gettimeofday ());
       ACE_ASSERT (timer_ids[i] != -1);
     }
 
-  ACE_ASSERT (!tq->is_empty ());
+  ACE_ASSERT (tq->is_empty () == 0);
 
   timer.stop ();
 
@@ -102,11 +102,11 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, "time to schedule %d timers for %s\n", 
-	      MAX_ITERATIONS, test_name));
+	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
-	      (et.real_time / double (MAX_ITERATIONS)) * 1000000));
+	      (et.real_time / double (max_iterations)) * 1000000));
 
   // Test the amount of time required to cancel all the timers.  We
   // start from the "back" in order to measure the worst case
@@ -114,7 +114,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = MAX_ITERATIONS - 1; i >= 0; i--)
+  for (i = max_iterations - 1; i >= 0; i--)
     tq->cancel (timer_ids[i]);
 
   ACE_ASSERT (tq->is_empty ());
@@ -124,21 +124,21 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, "time to cancel %d timers for %s\n",
-	      MAX_ITERATIONS, test_name));
+	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
-	      (et.real_time / double (MAX_ITERATIONS)) * 1000000));
+	      (et.real_time / double (max_iterations)) * 1000000));
 
   // Test the amount of time required to schedule and expire all the
   // timers.
 
   timer.start ();
 
-  for (i = 0; i < MAX_ITERATIONS; i++)
+  for (i = 0; i < max_iterations; i++)
     ACE_ASSERT (tq->schedule (&eh, (const void *) 42, ACE_OS::gettimeofday ()) != -1);
 
-  ACE_ASSERT (!tq->is_empty ());
+  ACE_ASSERT (tq->is_empty () == 0);
 
   // Expire all the timers.
   tq->expire ();
@@ -148,11 +148,11 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, "time to schedule and expire %d timers for %s\n", 
-	      MAX_ITERATIONS, test_name));
+	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
-	      (et.real_time / double (MAX_ITERATIONS)) * 1000000));
+	      (et.real_time / double (max_iterations)) * 1000000));
 }
 
 struct Timer_Queues
@@ -172,12 +172,21 @@ static Timer_Queues timer_queues[] =
 };
 
 int
-main (int, char *[])
+main (int argc, char *argv[])
 {
   ACE_START_TEST ("Timer_Queue_Test");
 
+  if (argc > 1)
+    max_iterations = ACE_OS::atoi (argv[1]);
+
+  ACE_NEW_RETURN (timer_ids,
+		  int[max_iterations],
+		  -1);
+
   for (int i = 0; timer_queues[i].name_ != 0; i++)
     {
+      ACE_DEBUG ((LM_DEBUG, "**** starting test of %s\n", 
+		  timer_queues[i].name_));
       test_performance (timer_queues[i].queue_, timer_queues[i].name_);
       test_functionality (timer_queues[i].queue_);
       delete timer_queues[i].queue_;

@@ -14,6 +14,14 @@ void
 ACE_Timer_Node::dump (void) const
 {
   ACE_TRACE ("ACE_Timer_Node::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\nhandler_ = %x", this->handler_));
+  ACE_DEBUG ((LM_DEBUG, "\narg_ = %x", this->arg_));
+  this->timer_value_.dump ();
+  this->interval_.dump ();
+  ACE_DEBUG ((LM_DEBUG, "\nnext_ = %x", this->next_));
+  ACE_DEBUG ((LM_DEBUG, "\ntimer_id_ = %d", this->timer_id_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Timer_Node::ACE_Timer_Node (ACE_Event_Handler *h, 
@@ -82,13 +90,13 @@ ACE_Timer_Queue::dump (void) const
 {
   ACE_TRACE ("ACE_Timer_Queue::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  this->timeout_.dump ();
   this->timer_skew_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
 
 ACE_Timer_Queue::ACE_Timer_Queue (void)
-  : timer_id_ (0),
-    timer_skew_ (0, ACE_TIMER_SKEW)
+  : timer_skew_ (0, ACE_TIMER_SKEW)
 
 {
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");

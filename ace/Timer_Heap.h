@@ -114,7 +114,7 @@ protected:
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
 private:
-  ACE_Timer_Node *remove (int index);
+  ACE_Timer_Node *remove (size_t index);
   // Remove and return the <index>th <ACE_Timer_Node> and restore the
   // heap property.
 
@@ -124,8 +124,20 @@ private:
   void reheap_up (ACE_Timer_Node *new_node);
   // Restore the heap property.
 
-  void reheap_down (ACE_Timer_Node *moved_node, int child_index);
+  void reheap_down (ACE_Timer_Node *moved_node, size_t child_index);
   // Restore the heap property, starting at <child_index>.
+
+  int timer_id (void);
+  // Returns a timer id that uniquely identifies this timer.  This id
+  // can be used to cancel a timer via the <cancel (int)> method.  The
+  // timer id returned from this method will never == -1 to avoid
+  // conflicts with other failure return values.
+
+  int pop_freelist (void);
+  // Pops and returns a new timer id from the freelist.
+
+  void push_freelist (int old_id);
+  // Pushes <old_id> onto the freelist.
 
   size_t max_size_;
   // Maximum size of the heap.
@@ -141,6 +153,20 @@ private:
   // <ACE_Timer_Node> *'s.  In this context, a heap is a "partially
   // ordered, almost complete" binary tree, which is stored in an
   // array.
+
+  int *timer_ids_;
+  // An array of "pointers" that allows each <ACE_Timer_Node> in the
+  // <heap_> to be located in O(1) time.  Basically, <timer_id_[i]>
+  // contains the index in the <heap_> array where an <ACE_Timer_Node>
+  // * with timer id <i> resides.  Thus, the timer id passed back from
+  // <schedule> is really an index into the <timer_ids> array.  The
+  // <timer_ids_> array serves two purposes: negative values are
+  // treated as "pointers" for the <freelist_>, whereas positive
+  // values are treated as "pointers" into the <heap_> array.
+
+  int freelist_;
+  // "Pointer" to the first element in the freelist contained within
+  // the <timer_ids_> array.
 };
 
 #endif /* ACE_TIMER_HEAP_H */

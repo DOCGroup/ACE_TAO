@@ -72,6 +72,16 @@ ACE_Timer_List::~ACE_Timer_List (void)
     }
 }
 
+void 
+ACE_Timer_List::dump (void) const
+{
+  ACE_TRACE ("ACE_Timer_List::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\nhead_ = %d", this->head_));
+  ACE_DEBUG ((LM_DEBUG, "\ntimer_id_ = %d", this->timer_id_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+}
+
 // Reschedule a periodic timer.  This function must be called with the
 // mutex lock held.
 
@@ -156,6 +166,18 @@ ACE_Timer_List::schedule (ACE_Event_Handler *handler,
 		      -1);
       return timer_id;
     }
+}
+
+int
+ACE_Timer_List::timer_id (void)
+{
+  this->timer_id_++;
+
+  // Make sure this never == -1
+  if (this->timer_id_ == -1)
+    this->timer_id_ = 0;
+
+  return this->timer_id_;
 }
 
 // Locate and remove the single <ACE_Event_Handler> with a value of
