@@ -26,7 +26,7 @@ typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
 class Quit_Handler : public ACE_Event_Handler {
   friend class ace_dewarn_gplusplus;
 public:
-  Quit_Handler (ACE_Reactor *r) { reactor (r); }
+  Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
 
   virtual int handle_exception (ACE_HANDLE) {
     reactor ()->end_reactor_event_loop ();
