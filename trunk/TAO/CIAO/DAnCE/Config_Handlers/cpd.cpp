@@ -9,10 +9,11 @@ namespace CIAO
     // 
 
     PackagedComponentImplementation::
-    PackagedComponentImplementation ()
-    :
-    name_ (new ::XMLSchema::string< char > ()),
-    referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription ()),
+    PackagedComponentImplementation (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__)
+    : 
+    name_ (new ::XMLSchema::string< char > (name__)),
+    referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription (referencedImplementation__)),
     regulator__ ()
     {
       name_->container (this);
@@ -22,6 +23,7 @@ namespace CIAO
     PackagedComponentImplementation::
     PackagedComponentImplementation (::CIAO::Config_Handlers::PackagedComponentImplementation const& s)
     :
+    XSCRT::Type (), 
     name_ (new ::XMLSchema::string< char > (*s.name_)),
     referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription (*s.referencedImplementation_)),
     regulator__ ()
@@ -87,7 +89,7 @@ namespace CIAO
 
     ComponentPackageDescription::
     ComponentPackageDescription ()
-    :
+    : 
     regulator__ ()
     {
     }
@@ -95,6 +97,7 @@ namespace CIAO
     ComponentPackageDescription::
     ComponentPackageDescription (::CIAO::Config_Handlers::ComponentPackageDescription const& s)
     :
+    XSCRT::Type (), 
     label_ (s.label_.get () ? new ::XMLSchema::string< char > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< char > (*s.UUID_) : 0),
     realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
@@ -397,14 +400,8 @@ namespace CIAO
 
     PackagedComponentImplementation::
     PackagedComponentImplementation (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      referencedImplementation_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -415,14 +412,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "referencedImplementation")
         {
-          ::CIAO::Config_Handlers::ComponentImplementationDescription t (e);
-          referencedImplementation (t);
+          referencedImplementation_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentImplementationDescription > (new ::CIAO::Config_Handlers::ComponentImplementationDescription (e));
+          referencedImplementation_->container (this);
         }
 
         else 
@@ -436,9 +433,7 @@ namespace CIAO
 
     ComponentPackageDescription::
     ComponentPackageDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);

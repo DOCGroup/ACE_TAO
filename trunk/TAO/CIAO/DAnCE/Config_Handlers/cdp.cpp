@@ -9,29 +9,33 @@ namespace CIAO
     // 
 
     DeploymentPlan::
-    DeploymentPlan ()
-    :
-    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription ()),
-    implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription ()),
+    DeploymentPlan (::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__)
+    : 
+    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (realizes__)),
     regulator__ ()
     {
       realizes_->container (this);
-      implementation_->container (this);
     }
 
     DeploymentPlan::
     DeploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const& s)
     :
+    XSCRT::Type (), 
     label_ (s.label_.get () ? new ::XMLSchema::string< char > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< char > (*s.UUID_) : 0),
     realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_)),
-    implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (*s.implementation_)),
     regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       realizes_->container (this);
-      implementation_->container (this);
+      implementation_.reserve (s.implementation_.size ());
+      {
+        for (implementation_const_iterator i (s.implementation_.begin ());
+        i != s.implementation_.end ();
+        ++i) add_implementation (*i);
+      }
+
       instance_.reserve (s.instance_.size ());
       {
         for (instance_const_iterator i (s.instance_.begin ());
@@ -79,7 +83,13 @@ namespace CIAO
 
       realizes (s.realizes ());
 
-      implementation (s.implementation ());
+      implementation_.clear ();
+      implementation_.reserve (s.implementation_.size ());
+      {
+        for (implementation_const_iterator i (s.implementation_.begin ());
+        i != s.implementation_.end ();
+        ++i) add_implementation (*i);
+      }
 
       instance_.clear ();
       instance_.reserve (s.instance_.size ());
@@ -217,22 +227,53 @@ namespace CIAO
 
     // DeploymentPlan
     // 
-    ::CIAO::Config_Handlers::MonolithicDeploymentDescription const& DeploymentPlan::
-    implementation () const
+    DeploymentPlan::implementation_iterator DeploymentPlan::
+    begin_implementation ()
     {
-      return *implementation_;
+      return implementation_.begin ();
     }
 
-    ::CIAO::Config_Handlers::MonolithicDeploymentDescription& DeploymentPlan::
-    implementation ()
+    DeploymentPlan::implementation_iterator DeploymentPlan::
+    end_implementation ()
     {
-      return *implementation_;
+      return implementation_.end ();
+    }
+
+    DeploymentPlan::implementation_const_iterator DeploymentPlan::
+    begin_implementation () const
+    {
+      return implementation_.begin ();
+    }
+
+    DeploymentPlan::implementation_const_iterator DeploymentPlan::
+    end_implementation () const
+    {
+      return implementation_.end ();
     }
 
     void DeploymentPlan::
-    implementation (::CIAO::Config_Handlers::MonolithicDeploymentDescription const& e)
+    add_implementation (::CIAO::Config_Handlers::MonolithicDeploymentDescription const& e)
     {
-      *implementation_ = e;
+      if (implementation_.capacity () < implementation_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > v;
+        v.reserve (implementation_.size () + 1);
+
+        while (implementation_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::MonolithicDeploymentDescription& t = implementation_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          implementation_.pop_back ();
+        }
+
+        implementation_.swap (v);
+      }
+
+      implementation_.push_back (e);
+      implementation_.back ().container (this);
     }
 
     // DeploymentPlan
@@ -501,14 +542,8 @@ namespace CIAO
 
     DeploymentPlan::
     DeploymentPlan (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription ()),
-    implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      realizes_->container (this);
-      implementation_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -531,14 +566,14 @@ namespace CIAO
 
         else if (n == "realizes")
         {
-          ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
-          realizes (t);
+          realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
+          realizes_->container (this);
         }
 
         else if (n == "implementation")
         {
           ::CIAO::Config_Handlers::MonolithicDeploymentDescription t (e);
-          implementation (t);
+          add_implementation (t);
         }
 
         else if (n == "instance")

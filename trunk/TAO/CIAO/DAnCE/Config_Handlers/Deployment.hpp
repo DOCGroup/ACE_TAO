@@ -13,8 +13,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XSCRT/XMLSchema.hpp"
-#include "XSCRT/Parser.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "Basic_Deployment_Data.hpp"
 

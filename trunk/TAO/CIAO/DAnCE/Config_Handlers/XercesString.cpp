@@ -1,11 +1,11 @@
 // $Id$
 
-#include <ostream>
+#include <iostream>
 
 #include "XercesString.h"
 using xercesc::XMLString;
 
-namespace Config_Handler
+namespace DRM
 {
 
   XStr::XStr (const char* str)
@@ -115,9 +115,14 @@ namespace Config_Handler
     return _wstr[i];
   }
 
+  bool XStr::operator== (const XMLCh* wstr) const
+  {
+    return XMLString::compareIString (wstr, this->_wstr) == 0;
+  }
+
   bool operator== (const XStr& lhs, const XStr& rhs)
   {
-    return XMLString::compareIString (lhs,rhs) == 0;
+    return XMLString::equals (lhs,rhs);
   }
 
   bool operator!= (const XStr& lhs, const XStr& rhs)
@@ -129,12 +134,12 @@ namespace Config_Handler
   std::ostream&
   operator<< (std::ostream& o, XStr const& str)
   {
-    char* s = XMLString::transcode (str);
-
+    char* s (XMLString::transcode (str));
+    
     o << s;
-
+    
     XMLString::release (&s); // idiots?
     return o;
   }
-
+  
 }
