@@ -5,66 +5,22 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../../bin';
-require ACEutils;
+use lib "../../../../../bin";
+use PerlACE::Run_Test;
 
-$iorfile = "test.ior";
 $iterations = 4000;
 $bufsize = 4000;
 $work = 10;
-$transport = "";
 $type = "";
 $level = "object";
 $shutdown = "";
 $all = 1;
 $other = "";
 
+$status = 0;
+
+$iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
-
-sub run_test
-{
-  my $type = shift(@_);
-
-  if ($type == "none" || $type == "transport") {
-    $transport = "-ORBNodelay 0";
-  }
-  else {
-    $transport = "";
-  }
-
-  if ($all == 0) {
-    $shutdown = "-x";
-  }
-
-  print STDERR "\n***************** STARTING TEST ******************\n";
-
-  $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                         " $transport -t $type -i $iterations -l $level"
-			 . " -m $bufsize -w $work $shutdown ");
-
-  $client = $CL->TimedWait (60);
-  if ($client == -1) {
-    print STDERR "ERROR: client timedout\n";
-    $CL->Kill (); $CL->TimedWait (1);
-  }
-}
-
-sub run_buffered
-{
-  my $bufsize = shift (@_);
-
-  print STDERR "\n***************** STARTING TEST ******************\n";
-
-  $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                         " -ORBNodelay 0 -l $level "
-			 . " -t none -i $iterations -m $bufsize");
-
-  $client = $CL->TimedWait (60);
-  if ($client == -1) {
-    print STDERR "ERROR: client timedout\n";
-    $CL->Kill (); $CL->TimedWait (1);
-  }
-}
 
 # Parse the arguments
 
@@ -72,91 +28,111 @@ sub run_buffered
 
 @bufsizes = (10, 40, 100, 400, 1000, 2000);
 
-for ($i = 0; $i <= $#ARGV; $i++)
-{
-  SWITCH:
-  {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") 
-    {
-      print "Run_Test Perl script for TAO Reliable Oneways Test\n\n";
-      print "run_test [-t test type] [-i iterations] [-m buffer size]\n";
-      print "\n";
-      print "-t test type        -- runs only one type of oneway test\n";
-      print "-i iterations       -- number of calls in each test\n";
-      print "-l level		 -- level at which policy is set\n";
-      print "-m buffer size      -- queue size for buffered oneways\n";
-      print "-w servant work	 -- number of loops of 1000 by servant\n";
-      exit 0;
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
+        print "Run_Test Perl script for TAO Reliable Oneways Test\n\n";
+        print "run_test [-t test type] [-i iterations] [-m buffer size]\n";
+        print "\n";
+        print "-t test type        -- runs only one type of oneway test\n";
+        print "-i iterations       -- number of calls in each test\n";
+        print "-l level      -- level at which policy is set\n";
+        print "-m buffer size      -- queue size for buffered oneways\n";
+        print "-w servant work   -- number of loops of 1000 by servant\n";
+        exit 0;
     }
-    if ($ARGV[$i] eq "-i")
-    {
-      $iterations = $ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-i") {
+        $iterations = $ARGV[$i + 1];
+        $i++;
     }
-    if ($ARGV[$i] eq "-m")
-    {
-      $bufsize = $ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-m") {
+        $bufsize = $ARGV[$i + 1];
+        $i++;
+        last SWITCH;
     }
-    if ($ARGV[$i] eq "-w")
-    {
-      $work = $ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-w") {
+        $work = $ARGV[$i + 1];
+        $i++;
+        last SWITCH;
     }
-    if ($ARGV[$i] eq "-t")
-    {
-      @types = split (',', $ARGV[$i + 1]);
-      $all = 0;
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-t") {
+        @types = split (',', $ARGV[$i + 1]);
+        $all = 0;
+        $i++;
     }
-    if ($ARGV[$i] eq "-l")
-    {
-      $level = $ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-l") {
+        $level = $ARGV[$i + 1];
+        $i++;
     }
-    $other .= $ARGV[$i];
-  }
+    else {
+        $other .= $ARGV[$i];
+    }
 }
+
+###############################################################################
 
 unlink $iorfile;
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT");
+$SV = new PerlACE::Process ("server");
+$CL = new PerlACE::Process ("client");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); 
+    exit 1;
 }
+
+###############################################################################
 
 if ($all == 1) {
-  foreach $bufsize (@bufsizes) {
-    run_buffered ($bufsize);
-  }
+    foreach $bufsize (@bufsizes) {
+        print STDERR "\n***************** STARTING TEST ******************\n";
+        
+        $CL->Arguments ("-ORBNodelay 0 -l $level -t none -i $iterations -m $bufsize");
+
+        my $client = $CL->SpawnWaitKill (60);
+        if ($client != 0) {
+            print STDERR "ERROR: client returned $client\n";
+            $status = 1;
+        }
+    }
 }
 
-print STDERR "\nSyncScope policy set at the ";
-print STDERR $level;
-print STDERR " level\n";
+###############################################################################
+
+print STDERR "\nSyncScope policy set at the $level level\n";
 
 foreach $type (@types) {
-  run_test ($type);
+    print STDERR "\n***************** STARTING TEST ******************\n";
+
+    my $transport = "";
+    
+    if ($type == "none" || $type == "transport") {
+        $transport = "-ORBNodelay 0";
+    }
+
+    if ($all == 0) {
+        $shutdown = "-x";
+    }
+
+    $CL->Arguments (" $transport -t $type -i $iterations -l $level -m $bufsize -w $work $shutdown ");
+
+    my $client = $CL->SpawnWaitKill (60);
+    if ($client != 0) {
+        print STDERR "ERROR: client returned $client\n";
+        $status = 1;
+    }
 }
 
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+###############################################################################
+
+$server = $SV->WaitKill (5);
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
 unlink $iorfile;
 
-if ($server != 0 || $client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status;
