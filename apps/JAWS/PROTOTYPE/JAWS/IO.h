@@ -52,7 +52,9 @@ public:
 
   // James, please add documentation here.
 
-  virtual void accept (JAWS_IO_Handler *ioh) = 0;
+  virtual void accept (JAWS_IO_Handler *ioh,
+                       ACE_Message_Block *mb = 0,
+                       unsigned int size = 0) = 0;
   // accept a passive connection
 
   virtual void read (JAWS_IO_Handler *ioh,
@@ -102,32 +104,36 @@ class JAWS_Export JAWS_Synch_IO : public JAWS_IO
 public:
   JAWS_Synch_IO (void);
 
-  ~JAWS_Synch_IO (void);
+  virtual ~JAWS_Synch_IO (void);
 
-  virtual void accept (JAWS_IO_Handler *ioh);
+  virtual void accept (JAWS_IO_Handler *ioh,
+                       ACE_Message_Block *mb = 0,
+                       unsigned int size = 0);
 
-  void read (JAWS_IO_Handler *ioh, ACE_Message_Block *mb, unsigned int size);
+  virtual void read (JAWS_IO_Handler *ioh,
+                     ACE_Message_Block *mb,
+                     unsigned int size);
 
-  void transmit_file (JAWS_IO_Handler *ioh,
-                      const char *filename,
-                      const char *header,
-                      unsigned int header_size,
-                      const char *trailer,
-                      unsigned int trailer_size);
+  virtual void transmit_file (JAWS_IO_Handler *ioh,
+                              const char *filename,
+                              const char *header,
+                              unsigned int header_size,
+                              const char *trailer,
+                              unsigned int trailer_size);
 
-  void receive_file (JAWS_IO_Handler *ioh,
-                     const char *filename,
-                     void *initial_data,
-                     unsigned int initial_data_length,
-                     unsigned int entire_length);
+  virtual void receive_file (JAWS_IO_Handler *ioh,
+                             const char *filename,
+                             void *initial_data,
+                             unsigned int initial_data_length,
+                             unsigned int entire_length);
 
-  void send_confirmation_message (JAWS_IO_Handler *ioh,
-                                  const char *buffer,
-                                  unsigned int length);
+  virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
+                                          const char *buffer,
+                                          unsigned int length);
 
-  void send_error_message (JAWS_IO_Handler *ioh,
-                           const char *buffer,
-                           unsigned int length);
+  virtual void send_error_message (JAWS_IO_Handler *ioh,
+                                   const char *buffer,
+                                   unsigned int length);
 
 protected:
   virtual void send_message (JAWS_IO_Handler *ioh,
@@ -151,32 +157,36 @@ class JAWS_Export JAWS_Asynch_IO : public JAWS_IO
 public:
   JAWS_Asynch_IO (void);
 
-  ~JAWS_Asynch_IO (void);
+  virtual ~JAWS_Asynch_IO (void);
 
-  virtual void accept (JAWS_IO_Handler *ioh);
+  virtual void accept (JAWS_IO_Handler *ioh,
+                       ACE_Message_Block *mb,
+                       unsigned int size);
 
-  void read (JAWS_IO_Handler *ioh, ACE_Message_Block *mb, unsigned int size);
+  virtual void read (JAWS_IO_Handler *ioh,
+                     ACE_Message_Block *mb,
+                     unsigned int size);
 
-  void transmit_file (JAWS_IO_Handler *ioh,
-                      const char *filename,
-                      const char *header,
-                      unsigned int header_size,
-                      const char *trailer,
-                      unsigned int trailer_size);
+  virtual void transmit_file (JAWS_IO_Handler *ioh,
+                              const char *filename,
+                              const char *header,
+                              unsigned int header_size,
+                              const char *trailer,
+                              unsigned int trailer_size);
 
-  void receive_file (JAWS_IO_Handler *ioh,
-                     const char *filename,
-                     void *initial_data,
-                     unsigned int initial_data_length,
-                     unsigned int entire_length);
+  virtual void receive_file (JAWS_IO_Handler *ioh,
+                             const char *filename,
+                             void *initial_data,
+                             unsigned int initial_data_length,
+                             unsigned int entire_length);
 
-  void send_confirmation_message (JAWS_IO_Handler *ioh,
-                                  const char *buffer,
-                                  unsigned int length);
+  virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
+                                          const char *buffer,
+                                          unsigned int length);
 
-  void send_error_message (JAWS_IO_Handler *ioh,
-                           const char *buffer,
-                           unsigned int length);
+  virtual void send_error_message (JAWS_IO_Handler *ioh,
+                                   const char *buffer,
+                                   unsigned int length);
 
   enum Message_Types
   {

@@ -327,18 +327,26 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
   this->dispatch_handler ();
 
-  // Get the data from the message block of the acceptor, copy it
-  // into our Data Block and then return.
+  if (result.success ())
+    {
+      // Get the data from the message block of the acceptor, copy it
+      // into our Data Block and then return.
 
-  JAWS_Data_Block *db = this->handler ()->message_block ();
-  ACE_Message_Block &mb = result.message_block ();
+      JAWS_Data_Block *db = this->handler ()->message_block ();
+      ACE_Message_Block &mb = result.message_block ();
 
-  ACE_OS::memcpy(db->base (), mb.base (), mb.size ());
+      ACE_OS::memcpy(db->base (), mb.base (), mb.size ());
 
-  db->rd_ptr (mb.rd_ptr () - mb.base ());
-  db->wr_ptr (mb.wr_ptr () - mb.base ());
+      db->rd_ptr (mb.rd_ptr () - mb.base ());
+      db->wr_ptr (mb.wr_ptr () - mb.base ());
 
-  mb.release ();
+      mb.release ();
+
+      this->handler ()->accept_complete ();
+    }
+  else
+    this->handler ()->accept_error (-1);
+
 }
 
 void
