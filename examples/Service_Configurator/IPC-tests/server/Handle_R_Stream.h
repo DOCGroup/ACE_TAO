@@ -27,9 +27,9 @@ public:
 
 private:
   int open (const ACE_INET_Addr &sia, int async = 0);
-  virtual int get_handle (void) const;
-  virtual int handle_input (int fd);
-  virtual int handle_close (int fd, ACE_Reactor_Mask);
+  virtual ACE_HANDLE get_handle (void) const;
+  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 
   ACE_SOCK_Stream    new_remote_stream;
   static u_short DEFAULT_PORT;
