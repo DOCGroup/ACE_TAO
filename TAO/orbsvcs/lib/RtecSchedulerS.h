@@ -21,10 +21,10 @@ public:
     Scheduler (const char *obj_name = 0);
     virtual ~Scheduler (void);
   public:
-    virtual RtecScheduler::handle_t create (const char *entry_point,  CORBA::Environment &env) = 0; // pure virtual
+    virtual RtecScheduler::handle_t create (const char * entry_point,  CORBA::Environment &env) = 0; // pure virtual
     static void create_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual RtecScheduler::handle_t lookup (const char *entry_point,  CORBA::Environment &env) = 0; // pure virtual
+    virtual RtecScheduler::handle_t lookup (const char * entry_point,  CORBA::Environment &env) = 0; // pure virtual
     static void lookup_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     virtual RtecScheduler::RT_Info * get (RtecScheduler::handle_t handle,  CORBA::Environment &env) = 0; // pure virtual
@@ -39,7 +39,7 @@ public:
     virtual void priority (RtecScheduler::handle_t handle, RtecScheduler::OS_Priority_out priority, RtecScheduler::Sub_Priority_out subpriority, RtecScheduler::Preemption_Priority_out p_priority,  CORBA::Environment &env) = 0; // pure virtual
     static void priority_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual void entry_point_priority (const char *entry_point, RtecScheduler::OS_Priority_out priority, RtecScheduler::Sub_Priority_out subpriority, RtecScheduler::Preemption_Priority_out p_priority,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void entry_point_priority (const char * entry_point, RtecScheduler::OS_Priority_out priority, RtecScheduler::Sub_Priority_out subpriority, RtecScheduler::Preemption_Priority_out p_priority,  CORBA::Environment &env) = 0; // pure virtual
     static void entry_point_priority_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     virtual void compute_scheduling (CORBA::Long minimum_priority, CORBA::Long maximum_priority, RtecScheduler::RT_Info_Set_out infos,  CORBA::Environment &env) = 0; // pure virtual

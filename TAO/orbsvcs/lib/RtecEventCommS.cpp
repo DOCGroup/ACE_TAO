@@ -11,13 +11,13 @@
 #include "RtecEventCommS.i"
 #endif // !defined INLINE
 
-static const TAO_operation_db_entry PushConsumer_operations [] = {
+static const TAO_operation_db_entry RtecEventComm_PushConsumer_operations [] = {
   {"push", &POA_RtecEventComm::PushConsumer::push_skel},
   {"disconnect_push_consumer", &POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel},
   {"_is_a", &POA_RtecEventComm::PushConsumer::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_PushConsumer_optable (PushConsumer_operations, 3, 6);
+TAO_Dynamic_Hash_OpTable tao_RtecEventComm_PushConsumer_optable (RtecEventComm_PushConsumer_operations, 3, 6);
 // skeleton constructor
 POA_RtecEventComm::PushConsumer::PushConsumer (const char *obj_name)
 {
@@ -26,7 +26,7 @@ POA_RtecEventComm::PushConsumer::PushConsumer (const char *obj_name)
   TAO_ORB_Core *ocp = TAO_ORB_Core_instance (); // underlying ORB core instance
   CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); // underlying OA
   const ACE_INET_Addr &addr = ocp->orb_params ()->addr ();
-  this->optable_ = &tao_PushConsumer_optable;
+  this->optable_ = &tao_RtecEventComm_PushConsumer_optable;
   
   // set up an IIOP object
   data = new IIOP_Object (CORBA::string_dup (repoID), addr, obj_name);
@@ -50,11 +50,9 @@ void POA_RtecEventComm::PushConsumer::push_skel (CORBA::ServerRequest &_tao_serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  
-impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
+  impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
   impl->push(data, _tao_environment);
   
-
 }
 
 void POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -68,11 +66,9 @@ void POA_RtecEventComm::PushConsumer::disconnect_push_consumer_skel (CORBA::Serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  
-impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
+  impl = (POA_RtecEventComm::PushConsumer_ptr) _tao_object_reference->get_subclass ();
   impl->disconnect_push_consumer(_tao_environment);
   
-
 }
 
 void POA_RtecEventComm::PushConsumer::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
@@ -100,12 +96,12 @@ void POA_RtecEventComm::PushConsumer::_is_a_skel (CORBA::ServerRequest &req, COR
   req.result (any, env);
 }
 
-static const TAO_operation_db_entry PushSupplier_operations [] = {
+static const TAO_operation_db_entry RtecEventComm_PushSupplier_operations [] = {
   {"disconnect_push_supplier", &POA_RtecEventComm::PushSupplier::disconnect_push_supplier_skel},
   {"_is_a", &POA_RtecEventComm::PushSupplier::_is_a_skel}
 };
 
-TAO_Dynamic_Hash_OpTable tao_PushSupplier_optable (PushSupplier_operations, 2, 4);
+TAO_Dynamic_Hash_OpTable tao_RtecEventComm_PushSupplier_optable (RtecEventComm_PushSupplier_operations, 2, 4);
 // skeleton constructor
 POA_RtecEventComm::PushSupplier::PushSupplier (const char *obj_name)
 {
@@ -114,7 +110,7 @@ POA_RtecEventComm::PushSupplier::PushSupplier (const char *obj_name)
   TAO_ORB_Core *ocp = TAO_ORB_Core_instance (); // underlying ORB core instance
   CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); // underlying OA
   const ACE_INET_Addr &addr = ocp->orb_params ()->addr ();
-  this->optable_ = &tao_PushSupplier_optable;
+  this->optable_ = &tao_RtecEventComm_PushSupplier_optable;
   
   // set up an IIOP object
   data = new IIOP_Object (CORBA::string_dup (repoID), addr, obj_name);
@@ -134,11 +130,9 @@ void POA_RtecEventComm::PushSupplier::disconnect_push_supplier_skel (CORBA::Serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  
-impl = (POA_RtecEventComm::PushSupplier_ptr) _tao_object_reference->get_subclass ();
+  impl = (POA_RtecEventComm::PushSupplier_ptr) _tao_object_reference->get_subclass ();
   impl->disconnect_push_supplier(_tao_environment);
   
-
 }
 
 void POA_RtecEventComm::PushSupplier::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
