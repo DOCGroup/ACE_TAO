@@ -1,3 +1,23 @@
+Mon May  3 16:09:24 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Server_Reqeust.*:
+	* tao/GIOP_Server_Request.*:
+ 	
+	  Changed all references to IIOP_ServerRequest to GIOP_ServerRequest
+	  since the implementation is GIOP-specific, not IIOP-specific.
+
+	* tao/UIOP_Server_Request.*:
+
+	  A UIOP-specific ServerRequest class is no longer needed since
+	  the UIOP case falls under the GIOP case.  Removed these files.
+
+	* tao/Connect.cpp:
+	* tao/UIOP_Connect.cpp:
+
+	  Changed references to IIOP_ServerRequest and UIOP_ServerRequest
+	  to GIOP_ServerRequest since both transport protocols fall under
+	  GIOP.
+	
 Mon May  3 15:53:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/AST_Expression.h:
