@@ -1,7 +1,8 @@
 Mon Jun 16 10:59:55 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.cpp: Changed expire () so it doesn't access past
-	  the end of an array when it finds nothing to expire.
+	  the end of an array when it finds nothing to expire.  Thanks to
+	  Norbert Rapp <norbert.rapp@nexus-informatics.de> for catching this.
 
 Sun Jun 15 03:44:21 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
