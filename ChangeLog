@@ -1,3 +1,12 @@
+Wed Apr 17 10:39:24 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (open):
+
+	  Corrected a potential resource (file descriptor) leak for the
+	  "ACE_HAS_DEV_POLL" case.
+
+	  Fixed a warning.  Use "ACE_NEW_RETURN" instead of "ACE_NEW."
+
 Wed Apr 17 10:29:14 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Dev_Poll_Reactor.cpp (ACE_HAS_DEV_POLL):
