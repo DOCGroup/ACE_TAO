@@ -9,7 +9,6 @@ MAKEFILE = Makefile.dirs
 
 DIRS = \
   PortableServer \
-  Messaging \
   DynamicAny \
   DynamicInterface \
   BiDir_GIOP \
@@ -29,6 +28,7 @@ ifeq ($(corba_messaging),1)
 
 DIRS += \
   RTCORBA \
+  Messaging \
   RTPortableServer
 
 endif # corba_messaging

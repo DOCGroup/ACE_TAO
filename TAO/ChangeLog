@@ -1,3 +1,11 @@
+Sat Aug 31 16:06:42 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+	* tao/Messaging/Makefile: Reverted the change "Sat Aug 31 14:54:01
+	  2002  Balachandran Natarajan " since there is better way to do
+	  this.
+
+	* tao/Makefile.dirs: Make the Messaging directory to be
+	  conditionally compiled. 
+	
 Sat Aug 31 14:54:01 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Adapter.cpp: #included debug.h
