@@ -114,7 +114,12 @@ public:
 
 private:
   int set (const ACE_INET_Addr& addr);
+  // helper method to set the INET_Addr.
 
+  void create_body (void);
+  // does the work for add_profile.
+
+private:
   CORBA::ULong tag_;
   // The tag, 
 
@@ -123,9 +128,6 @@ private:
 
   Version version_;
   // IIOP version number.
-
-  void create_body (void);
-  // does the work for add_profile.
 
   TAO_ObjectKey object_key_;
   // object_key associated with this profile.
