@@ -205,6 +205,18 @@ namespace CIAO
       void parse_satisfier_property_href_doc (DOMDocument* doc, unsigned long filter,
                                               Deployment::SatisfierProperty& satisfier_property);
 
+      /// update node refs
+      void update_node_refs (Deployment::Domain& domain);
+
+      /// update ic refs
+      void update_ic_refs (Deployment::Domain& domain);
+
+      /// update bridge refs
+      void update_bridge_refs (Deployment::Domain& domain);
+
+      /// update sr refs
+      void update_sr_refs (Deployment::Domain& domain);
+
     private:
 
       DOMDocumentTraversal* traverse_;
