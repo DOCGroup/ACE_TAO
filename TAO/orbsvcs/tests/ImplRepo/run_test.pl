@@ -326,4 +326,4 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-both_ir ();
+both_ir_test ();

@@ -79,7 +79,7 @@ run_service (void)
 int
 main (int argc, char *argv[])
 {
-  int result = OPTIONS::instance ()->parse_args (argc, argv);
+  int result = OPTIONS::instance ()->init (argc, argv);
   
   if (result < 0)
     return 1;  // Error parsing args
