@@ -23740,6 +23740,66 @@ NODEP_CPP_OFFER=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Persistent_Bindings_Map.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Entries.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Naming_Context.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\PingC.cpp
 
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
@@ -40050,6 +40110,26 @@ SOURCE=.\Trader\Offer_Iterators_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Persistent_Bindings_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Entries.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Naming_Context.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PingC.h
 # End Source File
 # Begin Source File
@@ -40131,6 +40211,10 @@ SOURCE=.\sfpC.h
 # Begin Source File
 
 SOURCE=.\sfpS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Shared_Hash_Map_T.h
 # End Source File
 # Begin Source File
 
@@ -43412,6 +43496,36 @@ SOURCE=.\Trader\Offer_Iterators_T.cpp
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index_T.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Shared_Hash_Map_T.cpp
+
+!IF  "$(CFG)" == "orbsvcs - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
 
 !ENDIF 
 
