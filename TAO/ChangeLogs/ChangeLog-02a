@@ -1,3 +1,10 @@
+Tue Jan  2 18:28:15 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+          Make sure the POA is activated before anything else happens,
+          this should eliminate some phantom TRANSIENT exceptions in this
+          test.  BTW, MT_Cubit is completely unreadable.
+
 Tue Jan  2 18:35:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/be_produce.cpp:
@@ -10,7 +17,7 @@ Tue Jan  2 18:35:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/IFR_Service/ifr_visitor.h:
         * orbsvcs/IFR_Service/ifr_visitor_macro.h:
 
-          Substituted new macros TAO_IFR_CHECK and 
+          Substituted new macros TAO_IFR_CHECK and
           TAO_IFR_CHECK_RETURN for ACE_CHECK and
           ACE_CHECK_RETURN. The new macros use the member
           environment varible of the ifr_visitor class
@@ -21,7 +28,7 @@ Tue Jan  2 16:25:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/IFR_Service/IFR.dsw:
         * orbsvcs/IFR_Service/Makefile:
 
-          Modifications corresponding to the addition of the new files 
+          Modifications corresponding to the addition of the new files
           and projects added below.
 
         * orbsvcs/IFR_Service/Makefile.BE:
@@ -62,7 +69,7 @@ Tue Jan  2 16:25:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
           New files comprising the backend library and executable for
           'tao_ifr', which processes IDL files and administers the IfR.
           For the frontend library, the existing TAO_IDL_FE_DLL is
-          used. The class IFR_Visitor overrides all the pure virtual 
+          used. The class IFR_Visitor overrides all the pure virtual
           functions of its base class AST_Visitor with no-ops, so that
           further subclasses can override only the functions they need.
 
@@ -93,7 +100,7 @@ Tue Jan  2 16:25:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.h:
 
           New files for IfR test which is intended to simulate an application,
-          using tao_ifr in both its adding and removing capacity, and 
+          using tao_ifr in both its adding and removing capacity, and
           constructing a DII request based on information obtained by
           querying the IfR.
 
