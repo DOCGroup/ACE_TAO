@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "tao/IOPC.h"
+#include "tao/Service_Context.h"
 #include "tao/target_specification.h"
 
 
@@ -62,6 +62,11 @@ public:
   IOP::ServiceContextList &service_info	(void);
   const	IOP::ServiceContextList	&service_info (void) const;
   // Get the service context list
+  // @@ The above methods should go......
+
+  TAO_Service_Context &service_context (void);
+  const TAO_Service_Context &service_context (void) const;
+  // Access the TAO_Service_Context
 
   void request_id (CORBA::ULong	id);
 
@@ -96,7 +101,7 @@ private:
   CORBA::Octet response_flags_;
   // Response flags
 
-  IOP::ServiceContextList service_info_;
+  TAO_Service_Context service_info_;
   // The ServiceContextList sent to the	server side.  Only valid
   // when sending a request.
 

@@ -192,6 +192,13 @@ TAO_Transport::messaging_init (CORBA::Octet /*major*/,
   ACE_NOTSUP_RETURN (-1);
 }
 
+void
+TAO_Transport::bidirectional_flag (int )
+{
+  return;
+}
+
+
 // Read the message on the connection. Returns 0 when there is Short
 // Read on the connection. Returns 1 when the full reply is read and
 // handled. Returns -1 on errors. If <block> is 1, then reply is

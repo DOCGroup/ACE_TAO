@@ -30,10 +30,9 @@
 
 #include "ace/SString.h"
 #include "tao/ORB.h"
-//#include "tao/Principal.h"
-//#include "tao/GIOP_Message_Base.h"
 #include "tao/Tagged_Profile.h"
 #include "tao/OctetSeqC.h"
+
 
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
@@ -125,6 +124,7 @@ public:
 
   IOP::ServiceContextList &service_info (void);
   void service_info (IOP::ServiceContextList &service_info);
+  // @@ The above two should go away...
 
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
