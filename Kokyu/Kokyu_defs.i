@@ -65,6 +65,18 @@ void Dispatch_Command::destroy (void)
 }
 
 ACE_INLINE
+void Dispatch_Command::setID (Object_Counter::object_id input_oid)
+{
+  oid_ = input_oid;
+}
+
+ACE_INLINE
+const Object_Counter::object_id Dispatch_Command::getID (void)
+{
+  return oid_;
+}
+
+ACE_INLINE
 ConfigInfo::ConfigInfo ()
   :preemption_priority_ (0),
    thread_priority_ (0),

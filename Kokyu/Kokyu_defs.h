@@ -17,6 +17,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Sched_Params.h"
 #include "ace/Malloc_Allocator.h"
+#include "Counter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -144,6 +145,11 @@ namespace Kokyu
       int can_be_deleted () const;
 
       void destroy (void);
+
+      const Object_Counter::object_id getID (void);
+
+      void setID (Object_Counter::object_id);
+
     protected:
       /// Destructor
       // only inheritance is possible and object should be on heap,
@@ -155,6 +161,7 @@ namespace Kokyu
       ACE_Allocator *allocator_;
       //if this object has to be deleted, then delete it using the allocator
       //if one is present.
+      Object_Counter::object_id oid_;
     };
 
   enum DSRT_Sched_Type_t

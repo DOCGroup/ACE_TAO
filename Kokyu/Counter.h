@@ -8,7 +8,7 @@
 #include "ace/SString.h"
 #include <sstream>
 
-namespace kokyu {
+namespace Kokyu {
 
   class Object_Counter
     {
