@@ -8,6 +8,7 @@ DIRS = \
         Identity \
         Non_Servant_Upcalls \
         Single_Threaded_POA \
-        wait_for_completion
+        wait_for_completion \
+	Multiple_Deactivations
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
