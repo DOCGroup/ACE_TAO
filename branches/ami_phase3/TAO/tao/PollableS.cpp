@@ -271,7 +271,7 @@ POA_CORBA::_tao_collocated_Pollable::_tao_collocated_Pollable (
     POA_CORBA::Pollable_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,Pollable) (),
+  : ACE_CORBA_1 (Pollable) (),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
@@ -516,7 +516,7 @@ POA_CORBA::_tao_collocated_DIIPollable::_tao_collocated_DIIPollable (
     POA_CORBA::DIIPollable_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,DIIPollable) (),
+  : ACE_CORBA_1 (DIIPollable) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Pollable) (servant, stub),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
@@ -863,7 +863,7 @@ POA_CORBA::_tao_collocated_PollableSet::_tao_collocated_PollableSet (
     POA_CORBA::PollableSet_ptr  servant,
     TAO_Stub *stub
   )
-  : ACE_NESTED_CLASS (CORBA,PollableSet) (),
+  : ACE_CORBA_1 (PollableSet) (),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {

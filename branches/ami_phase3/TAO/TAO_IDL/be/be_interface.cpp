@@ -33,9 +33,13 @@ ACE_RCSID(be, be_interface, "$Id$")
 // default constructor
 be_interface::be_interface (void)
   : full_skel_name_ (0),
+    ami_handler_full_skel_name_ (0),
     skel_count_ (0),
     full_coll_name_ (0),
+    ami_handler_full_coll_name_ (0),
     local_coll_name_ (0),
+    ami_handler_local_coll_name_ (0),
+    ami_handler_local_name_ (0),
     in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
@@ -48,9 +52,13 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
     AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
     full_skel_name_ (0),
+    ami_handler_full_skel_name_ (0),
     skel_count_ (0),
     full_coll_name_ (0),
+    ami_handler_full_coll_name_ (0),
     local_coll_name_ (0),
+    ami_handler_local_coll_name_ (0),
+    ami_handler_local_name_ (0),
     in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
@@ -63,15 +71,35 @@ be_interface::~be_interface (void)
       delete[] this->full_skel_name_;
       this->full_skel_name_ = 0;
     }
+  if (this->ami_handler_full_skel_name_ != 0)
+    {
+      delete[] this->ami_handler_full_skel_name_;
+      this->ami_handler_full_skel_name_ = 0;
+    }
   if (this->full_coll_name_ != 0)
     {
       delete[] this->full_coll_name_;
       this->full_coll_name_ = 0;
     }
+  if (this->ami_handler_full_coll_name_ != 0)
+    {
+      delete[] this->ami_handler_full_coll_name_;
+      this->ami_handler_full_coll_name_ = 0;
+    }
   if (this->local_coll_name_ != 0)
     {
       delete[] this->local_coll_name_;
       this->local_coll_name_ = 0;
+    }
+  if (this->ami_handler_local_coll_name_ != 0)
+    {
+      delete[] this->ami_handler_local_coll_name_;
+      this->ami_handler_local_coll_name_ = 0;
+    }
+  if (this->ami_handler_local_name_ != 0)
+    {
+      delete[] this->ami_handler_local_name_;
+      this->ami_handler_local_name_ = 0;
     }
 }
 
@@ -167,6 +195,37 @@ be_interface::local_coll_name (void) const
     ACE_const_cast (be_interface*, this)->compute_coll_name ();
 
   return this->local_coll_name_;
+}
+
+
+const char*
+be_interface::ami_handler_full_coll_name (void)
+{
+  if (this->ami_handler_full_coll_name_ == 0)
+    compute_ami_handler_name (this->full_coll_name(),
+                               this->ami_handler_full_coll_name_);
+
+  return this->ami_handler_full_coll_name_;
+}
+
+const char*
+be_interface::ami_handler_local_coll_name (void)
+{
+  if (this->ami_handler_local_coll_name_ == 0)
+    compute_ami_handler_name (this->local_coll_name(),
+                              this->ami_handler_local_coll_name_);
+
+  return this->ami_handler_local_coll_name_;
+}
+
+const char*
+be_interface::ami_handler_local_name (void)
+{
+  if (this->ami_handler_local_name_ == 0)
+    compute_ami_handler_name (this->local_name()->get_string (),
+                              this->ami_handler_local_name_);
+
+  return this->ami_handler_local_name_;
 }
 
 // Generate collocated local and full names for the arbitrary local
@@ -331,6 +390,17 @@ be_interface::full_skel_name (void)
 
   return this->full_skel_name_;
 }
+
+const char*
+be_interface::ami_handler_full_skel_name (void)
+{
+  if (this->ami_handler_full_skel_name_ == 0)
+    compute_ami_handler_name (this->full_skel_name(),
+                              this->ami_handler_full_skel_name_);
+
+  return this->ami_handler_full_skel_name_;
+}
+
 
 // Am I in some kind of a multiple inheritance
 int be_interface::in_mult_inheritance (void)
@@ -2159,6 +2229,8 @@ be_interface::accept (be_visitor *visitor)
 {
   return visitor->visit_interface (this);
 }
+
+
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)

@@ -41,8 +41,11 @@ be_decl::be_decl (void)
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
     fullname_ (0),
+    ami_handler_fullname_ (0),
     flatname_ (0),
+    ami_handler_flatname_ (0),
     repoID_ (0),
+    ami_handler_repoID_ (0),
     prefix_ (0),
     size_type_ (be_decl::SIZE_UNKNOWN)
 {
@@ -66,8 +69,11 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
     fullname_ (0),
+    ami_handler_fullname_ (0),
     flatname_ (0),
+    ami_handler_flatname_ (0),
     repoID_ (0),
+    ami_handler_repoID_ (0),
     prefix_ (0),
     size_type_ (be_decl::SIZE_UNKNOWN)
 {
@@ -76,6 +82,41 @@ be_decl::be_decl (AST_Decl::NodeType type,
 //destructor
 be_decl::~be_decl (void)
 {
+  if (this->fullname_ != 0)
+    {
+      delete[] this->fullname_;
+      this->fullname_ = 0;
+    }
+  if (this->ami_handler_fullname_ != 0)
+    {
+      delete[] this->ami_handler_fullname_;
+      this->ami_handler_fullname_ = 0;
+    }
+  if (this->flatname_ != 0)
+    {
+      delete[] this->flatname_;
+      this->flatname_ = 0;
+    }
+  if (this->ami_handler_flatname_ != 0)
+    {
+      delete[] this->ami_handler_flatname_;
+      this->ami_handler_flatname_ = 0;
+    }
+  if (this->repoID_ != 0)
+    {
+      delete[] this->repoID_;
+      this->repoID_ = 0;
+    }
+  if (this->ami_handler_repoID_ != 0)
+    {
+      delete[] this->ami_handler_repoID_;
+      this->ami_handler_repoID_ = 0;
+    }
+  if (this->prefix_ != 0)
+    {
+      delete[] this->prefix_;
+      this->prefix_ = 0;
+    }
 }
 
 // return our size type
@@ -104,6 +145,26 @@ be_decl::size_type (be_decl::SIZE_TYPE st)
     // when setting the sizes of structures and unions
     this->size_type_ = st;
 }
+
+const char*
+be_decl::fullname (void)
+{
+  if (!this->fullname_)
+    compute_fullname ();
+
+  return this->fullname_;
+}
+
+const char*
+be_decl::ami_handler_fullname (void)
+{
+  if (!this->ami_handler_fullname_)
+    compute_ami_handler_name (this->fullname (),
+                              this->ami_handler_fullname_);
+
+  return this->ami_handler_fullname_;
+}
+
 
 // compute stringified fully scoped name
 void
@@ -170,13 +231,23 @@ be_decl::compute_fullname (void)
 }
 
 const char*
-be_decl::fullname (void)
+be_decl::flatname (void)
 {
-  if (!this->fullname_)
-    compute_fullname ();
+  if (!this->flatname_)
+    this->compute_flatname ();
 
-  return this->fullname_;
+  return this->flatname_;
 }
+
+const char*
+be_decl::ami_handler_flatname (void)
+{
+  if (!this->ami_handler_flatname_)
+    this->compute_flatname ("AMI_","_Handler");
+
+  return this->ami_handler_flatname_;
+}
+
 
 // compute stringified flattened fully scoped name
 void
@@ -245,16 +316,6 @@ be_decl::compute_flatname (void)
 
 
 
-
-const char*
-be_decl::flatname (void)
-{
-  if (!this->flatname_)
-    compute_flatname ();
-
-  return this->flatname_;
-}
-
 char *
 be_decl::compute_flatname  (const char *prefix, const char *suffix)
 {
@@ -310,12 +371,27 @@ be_decl::compute_flatname  (const char *prefix, const char *suffix)
       result_str += suffix_str;
     }
 
-  // Allocate memory. Release 0.
-  ACE_CString return_str (result_str.rep (),
-                          0,
-                          0);
+  this->ami_handler_flatname_ = result_str.rep ();
+  return this->ami_handler_flatname_;
+}
 
-  return return_str.rep ();
+const char *
+be_decl::repoID (void)
+{
+  if (!this->repoID_)
+    this->compute_repoID ();
+
+  return this->repoID_;
+}
+
+
+const char *
+be_decl::ami_handler_repoID (void)
+{
+  if (!this->ami_handler_repoID_)
+    this->compute_repoID ("AMI_","_Handler");
+
+  return this->ami_handler_repoID_;
 }
 
 
@@ -529,20 +605,59 @@ be_decl::compute_repoID (const char *prefix, const char *suffix)
   delete result;
   result = 0;
   
-  return repoID.rep ();
+  this->ami_handler_repoID_ = repoID.rep ();
+
+  return this->ami_handler_repoID_;
 }  
-  
 
 
-
-const char *
-be_decl::repoID (void)
+int
+be_decl::compute_ami_handler_name (const char *name,
+                                        char *&ami_handler_name)
 {
-  if (!this->repoID_)
-    compute_repoID ();
+  int name_length = ACE_OS::strlen (name);
+  int ami_handler_length = ACE_OS::strlen ("AMI__HANDLER");
 
-  return this->repoID_;
+  ACE_NEW_RETURN (ami_handler_name, 
+                  char[name_length + ami_handler_length+1],
+                  -1);
+
+  // copy it in
+  ACE_OS::strcpy (ami_handler_name, name);
+
+  const char *interface_name = 0;
+  int i = ACE_OS::strlen (name);
+  for (;i >= 1; i--)
+    {
+      if (name[i-1] == ':' && name[i] == ':')
+        {
+          interface_name = &name[i+1];
+          break;
+        }
+      else if (i >= 3)
+        if (name[i-3] == 'P' && 
+            name[i-2] == 'O' &&
+            name[i-1] == 'A' &&
+            name[i] == '_')
+          {
+            interface_name = &name[i+1];
+            break;
+          }
+  }
+
+  if (interface_name == 0)
+    interface_name = name;
+  
+  ACE_OS::strcpy(&ami_handler_name[name_length-ACE_OS::strlen(interface_name)],"AMI_");
+  ACE_OS::strcpy(&ami_handler_name[name_length-ACE_OS::strlen(interface_name)+4],
+                 interface_name);
+  ACE_OS::strcpy(&ami_handler_name[name_length+4],
+                 "_Handler");
+
+  return 0;
 }
+
+  
 
 void
 be_decl::compute_prefix ()

@@ -224,7 +224,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       delete visitor;
           
       // = Generate the Servant Skeleton code.
-#if 0      
       // Set the context.
       ctx = *this->ctx_;
           
@@ -253,7 +252,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                             -1);
         }
       delete visitor;
-#endif
     }
   
   return 0;

@@ -383,12 +383,6 @@ int be_visitor_args_upcall_ss::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {

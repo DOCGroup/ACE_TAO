@@ -304,7 +304,7 @@ public:
 
     TAO_COLLOCATED_AMI_HANDLER_CH,           // Collocated AMI_*_Handler class.
 
-    TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH, // Operation insidee collocated handler.
+    TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH, // Operation inside the collocated AMI handler.
 
 // @@ Michael    TAO_AMI_HANDLER_ARGUMENT_INVOKE_CS,
 
