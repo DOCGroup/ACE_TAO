@@ -252,7 +252,7 @@ ACE_Object_Manager::init (void)
       return 0;
     } else {
       // Had already initialized.
-      return -1;
+      return 1;
     }
 }
 
@@ -423,7 +423,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
                                     *ACE_Object_Manager::instance ()->
                                     internal_lock_,
                                     -1));
-          
+
           if (lock == 0)
             {
               ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter;
@@ -431,7 +431,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
                               ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
                               -1);
               lock = &lock_adapter->object ();
-              
+
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the
               // ACE_Object_Manager::instance ()->internal_lock_
@@ -457,7 +457,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
           // instance has been destroyed, so the internal lock is not
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
-          
+
           ACE_NEW_RETURN (lock,
                           ACE_Mutex,
                           -1);
@@ -541,7 +541,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
           // instance has been destroyed, so the internal lock is not
           // available.  Either way, we can not use double-checked
           // locking.  So, we'll leak the lock.
-          
+
           ACE_NEW_RETURN (lock,
                           ACE_RW_Thread_Mutex,
                           -1);
@@ -593,7 +593,7 @@ ACE_Object_Manager::fini (void)
   if (shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
-    return -1;
+    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_Object_Manager instance.
