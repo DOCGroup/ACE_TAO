@@ -1,3 +1,9 @@
+Mon Dec 16 18:11:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/CDR_Stream.h: Moved the destructor of
+	  ACE_Char_Codeset_Translator to be public. Not sure why this was
+	  protected in the first place.
+
 Mon Dec 16 13:14:34 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ace/CDR_Stream.cpp:
