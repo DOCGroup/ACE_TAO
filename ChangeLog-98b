@@ -1,3 +1,7 @@
+Sat Nov 14 14:21:49 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.4 released.
+
 Fri Nov 13 12:03:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-irix6.x-sgic++.h: 
