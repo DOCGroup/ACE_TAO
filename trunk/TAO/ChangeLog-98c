@@ -1,3 +1,11 @@
+Mon Nov  3 13:45:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* {tao,TAO_IDL/util,TAO_IDL/narrow,TAO_IDL/fe,TAO_IDL/driver,
+ 	TAO_IDL/be,TAO_IDL/ast,Benchmark/benchmark}/Makefile (SHLIB):
+ 	Fixed definition so that the extension was $(SOEXT) rather than
+ 	hard-coded to "so".  This makes things compile on VxWorks better.
+  	Thanks to David Levine for pointing this out.
+
 Mon Nov  3 10:52:32 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (svc): Removed
@@ -24,7 +32,7 @@ Sun Nov  2 19:20:57 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	latter will be problematic with multiple threads. Thanks to
 	Arturo Montes <mitosys@colomsat.net.co> for pointing that out.
 
-	*TAO/test/Cubit/TAO/IDL_Cubit : Improved the code so that it uses
+	* TAO/test/Cubit/TAO/IDL_Cubit : Improved the code so that it uses
 	the "print_exception" which is now defined on class
 	CORBA::Environment. The clnt still needs improvement in terms of
 	handling invalid parameters and gracefully exiting.

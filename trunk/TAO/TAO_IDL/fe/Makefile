@@ -7,7 +7,7 @@
 MAKEFILE = Makefile
 LIBNAME  = libfe
 LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).so
+SHLIB    = $(LIBNAME).$(SOEXT)
 IDL_CFE_VERSION	= \"1.3.0\"
 
 # These are components that are sources of
