@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file PeriodicSupplier_Command.h
+ *  @file Periodic_Supplier_Command.h
  *
  *  $Id$
  *
