@@ -1,3 +1,7 @@
+Fri May 07 11:00:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: OK on RedHat 6.0 Linux.
+
 Fri May 07 08:58:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,i}: added some QNX support.  In OS.i, this
