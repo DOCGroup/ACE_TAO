@@ -25,7 +25,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
@@ -37,18 +39,18 @@ static const CORBA::Long _oc_PortableServer_POAList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f414c69), 
-  ACE_NTOHL (0x73743a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f414c69),
+  ACE_NTOHL (0x73743a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/POAList:1.0
     8,
-  ACE_NTOHL (0x504f414c), 
+  ACE_NTOHL (0x504f414c),
   ACE_NTOHL (0x69737400),  // name = POAList
     CORBA::tk_sequence, // typecode kind
   8, // encapsulation length
@@ -80,26 +82,26 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterAlreadyExists[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   56,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f41), 
-  ACE_NTOHL (0x64617074), 
-  ACE_NTOHL (0x6572416c), 
-  ACE_NTOHL (0x72656164), 
-  ACE_NTOHL (0x79457869), 
-  ACE_NTOHL (0x7374733a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f41),
+  ACE_NTOHL (0x64617074),
+  ACE_NTOHL (0x6572416c),
+  ACE_NTOHL (0x72656164),
+  ACE_NTOHL (0x79457869),
+  ACE_NTOHL (0x7374733a),
   ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POA/AdapterAlreadyExists:2.3
     21,
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x74657241), 
-  ACE_NTOHL (0x6c726561), 
-  ACE_NTOHL (0x64794578), 
-  ACE_NTOHL (0x69737473), 
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x74657241),
+  ACE_NTOHL (0x6c726561),
+  ACE_NTOHL (0x64794578),
+  ACE_NTOHL (0x69737473),
   ACE_NTOHL (0x0),  // name = AdapterAlreadyExists
   0, // member count
   };
@@ -124,25 +126,25 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterNonExistent[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   54,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f41), 
-  ACE_NTOHL (0x64617074), 
-  ACE_NTOHL (0x65724e6f), 
-  ACE_NTOHL (0x6e457869), 
-  ACE_NTOHL (0x7374656e), 
-  ACE_NTOHL (0x743a322e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f41),
+  ACE_NTOHL (0x64617074),
+  ACE_NTOHL (0x65724e6f),
+  ACE_NTOHL (0x6e457869),
+  ACE_NTOHL (0x7374656e),
+  ACE_NTOHL (0x743a322e),
   ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/POA/AdapterNonExistent:2.3
     19,
-  ACE_NTOHL (0x41646170), 
-  ACE_NTOHL (0x7465724e), 
-  ACE_NTOHL (0x6f6e4578), 
-  ACE_NTOHL (0x69737465), 
+  ACE_NTOHL (0x41646170),
+  ACE_NTOHL (0x7465724e),
+  ACE_NTOHL (0x6f6e4578),
+  ACE_NTOHL (0x69737465),
   ACE_NTOHL (0x6e740000),  // name = AdapterNonExistent
   0, // member count
   };
@@ -165,27 +167,27 @@ static const CORBA::Long _oc_PortableServer_POA_InvalidPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f412f49), 
-  ACE_NTOHL (0x6e76616c), 
-  ACE_NTOHL (0x6964506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a322e33), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f50),
+  ACE_NTOHL (0x4f412f49),
+  ACE_NTOHL (0x6e76616c),
+  ACE_NTOHL (0x6964506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a322e33),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/POA/InvalidPolicy:2.3
     14,
-  ACE_NTOHL (0x496e7661), 
-  ACE_NTOHL (0x6c696450), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c696450),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = InvalidPolicy
   1, // member count
     6,
-  ACE_NTOHL (0x696e6465), 
+  ACE_NTOHL (0x696e6465),
   ACE_NTOHL (0x78000000),  // name = index
     CORBA::tk_ushort,
 

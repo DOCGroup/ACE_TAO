@@ -47,7 +47,7 @@
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 #if defined (TAO_EXPORT_MACRO)

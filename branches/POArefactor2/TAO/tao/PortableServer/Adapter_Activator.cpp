@@ -3,7 +3,10 @@
 #include "Adapter_Activator.h"
 #include "AdapterActivatorC.h"
 #include "POAManagerC.h"
+
+#define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 ACE_RCSID (PortableServer,
            Adapter_Activator,

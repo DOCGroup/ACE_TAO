@@ -50,6 +50,8 @@ module PortableServer
       raises(AdapterInactive);
 
     State get_state ();
+
+    string get_id();
   };
 };
 

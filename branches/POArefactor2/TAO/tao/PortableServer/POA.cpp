@@ -601,7 +601,7 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
               // Check the state of the POA Manager.
               this->poa_manager_.check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
-
+// @todo, when this call gives a ssytem exception, then obj_adapter should be thrown with minor code 1 (see 11.3.9.2)
               CORBA::Boolean success =
                 this->adapter_activator_->unknown_adapter (this,
                                                            child_name.c_str ()
@@ -1590,8 +1590,7 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
   // Get the object key octets.
   const CORBA::Octet *key_data = key.get_buffer ();
 
-  // Skip the object key prefix since we have already checked for
-  // this.
+  // Skip the object key prefix since we have already checked for this.
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 
   // Check the root indicator.
@@ -2429,7 +2428,7 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                            ACE_ENV_ARG_DECL)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
-    locate_servant (system_id, servant ACE_ENV_ARG_PARAMETER);
+          locate_servant (system_id, servant ACE_ENV_ARG_PARAMETER);
 }
 
 TAO::ORT_Adapter_Factory *
@@ -2582,9 +2581,9 @@ TAO_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
       return servant;
     }
   else
-    // If no servant has been associated with the POA, the NoServant
-    // exception is raised.
     {
+      // If no servant has been associated with the POA, the NoServant
+      // exception is raised.
       ACE_THROW_RETURN (PortableServer::POA::NoServant (),
                         0);
     }
@@ -2647,7 +2646,8 @@ TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
 CORBA::ULong
 TAO_POA::waiting_servant_deactivation (void) const
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->waiting_servant_deactivation ();
+  return this->active_policy_strategies_.servant_retention_strategy()->
+          waiting_servant_deactivation ();
 }
 
 void

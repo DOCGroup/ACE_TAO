@@ -357,10 +357,10 @@ namespace TAO
                                     servant);
 
       if (servant == 0)
-      {
-        servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
-      }
+        {
+          servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
 
       if (servant != 0)
         {
@@ -389,18 +389,9 @@ namespace TAO
         }
       else
         {
-          if (result == -1)
-          {
-            // Otherwise the ObjectNotActive exception is raised.
-            ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                              0);
-          }
-          else
-          {
-              // Otherwise the ObjectNotActive exception is raised.
-              ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                                0);
-          }
+          // Otherwise the ObjectNotActive exception is raised.
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                            0);
         }
     }
 

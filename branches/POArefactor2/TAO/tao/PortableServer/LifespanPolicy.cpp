@@ -1,7 +1,10 @@
 #include "LifespanPolicy.h"
-#include "PortableServerC.h"
 #include "LifespanPolicyValue.h"
 #include "ace/Dynamic_Service.h"
+
+#define TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 ACE_RCSID (PortableServer,
            POA_LifespanPolicy,

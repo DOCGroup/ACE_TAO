@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/StrategyFactory.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:301
 
 
-#include "PortableServerC.h"
+#include "PortableServer.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/Typecode.h"
@@ -54,7 +54,7 @@ namespace TAO
 {
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<PortableServer::AdapterActivator>
     : public
@@ -96,7 +96,7 @@ PortableServer::wstring_to_ObjectId (const CORBA::WChar *id)
   return TAO_POA::wstring_to_ObjectId (id);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_PORTABLESERVER_POALIST_CS_)
@@ -193,7 +193,7 @@ TAO::Objref_Traits<PortableServer::POA>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*PortableServer__TAO_POA_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;

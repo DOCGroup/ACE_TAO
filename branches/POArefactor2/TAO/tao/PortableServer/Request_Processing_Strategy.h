@@ -17,11 +17,14 @@
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
 #include "Active_Object_Map.h"
-#include "PortableServerC.h"
 #include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
 
 #include "Object_Adapter.h" // for TAO_SERVANT_LOCATION, move this enum to another file
+
+#define TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,6 +49,11 @@ namespace PortableServer
 
   typedef ServantLocator *ServantLocator_ptr;
   typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
+
+  class ServantManager;
+
+  typedef ServantManager *ServantManager_ptr;
+  typedef TAO_Objref_Var_T<ServantManager> ServantManager_var;
 }
 
 namespace TAO

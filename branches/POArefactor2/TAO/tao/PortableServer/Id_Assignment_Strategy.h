@@ -15,7 +15,6 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "PortableServerC.h"
 #include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
 

@@ -16,7 +16,9 @@
 #define TAO_POA_CACHED_POLICIES_H
 #include /**/ "ace/pre.h"
 
+#define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,5 +1,4 @@
 #include "RequestProcessingPolicyValue.h"
-#include "PortableServerC.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,

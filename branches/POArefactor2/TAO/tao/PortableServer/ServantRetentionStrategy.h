@@ -15,12 +15,14 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "PortableServerC.h"
 #include "Policy_Strategy.h"
 #include "Active_Object_Map.h"
 #include "ace/Service_Config.h"
 #include "Object_Adapter.h" // for TAO_SERVANT_LOCATION, move this enum to another file
 
+#define TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

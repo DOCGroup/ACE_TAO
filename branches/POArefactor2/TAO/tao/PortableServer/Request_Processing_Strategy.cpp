@@ -225,6 +225,12 @@ namespace TAO
                         int &wait_occurred_restart_call
                         ACE_ENV_ARG_DECL)
     {
+      ACE_UNUSED_ARG (operation);
+      ACE_UNUSED_ARG (system_id);
+      ACE_UNUSED_ARG (servant_upcall);
+      ACE_UNUSED_ARG (poa_current_impl);
+      ACE_UNUSED_ARG (wait_occurred_restart_call);
+
       // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
       // has been associated with the POA so the POA will invoke the
       // appropriate method on that servant. If no servant has been
@@ -564,24 +570,24 @@ namespace TAO
                         ACE_ENV_ARG_DECL)
     {
       ACE_UNUSED_ARG (wait_occurred_restart_call);
-  // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
-  // has been associated with the POA so the POA will invoke incarnate
-  // or preinvoke on it to find a servant that may handle the
-  // request. (The choice of method depends on the NON_RETAIN or
-  // RETAIN policy of the POA.) If no servant manager has been
-  // associated with the POA, the POA raises the OBJ_ADAPTER system
-  // exception.
-  //
-  // If a servant manager is located and invoked, but the servant
-  // manager is not directly capable of incarnating the object, it
-  // (the servant manager) may deal with the circumstance in a variety
-  // of ways, all of which are the application's responsibility.  Any
-  // system exception raised by the servant manager will be returned
-  // to the client in the reply. In addition to standard CORBA
-  // exceptions, a servant manager is capable of raising a
-  // ForwardRequest exception. This exception includes an object
-  // reference.
-  //
+      // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
+      // has been associated with the POA so the POA will invoke incarnate
+      // or preinvoke on it to find a servant that may handle the
+      // request. (The choice of method depends on the NON_RETAIN or
+      // RETAIN policy of the POA.) If no servant manager has been
+      // associated with the POA, the POA raises the OBJ_ADAPTER system
+      // exception.
+      //
+      // If a servant manager is located and invoked, but the servant
+      // manager is not directly capable of incarnating the object, it
+      // (the servant manager) may deal with the circumstance in a variety
+      // of ways, all of which are the application's responsibility.  Any
+      // system exception raised by the servant manager will be returned
+      // to the client in the reply. In addition to standard CORBA
+      // exceptions, a servant manager is capable of raising a
+      // ForwardRequest exception. This exception includes an object
+      // reference.
+      //
 
       if (CORBA::is_nil (this->servant_locator_.in ()))
         {
@@ -605,7 +611,7 @@ namespace TAO
       // Release the object adapter lock.
       this->poa_->object_adapter().lock ().release ();
 
-      // We have release the object adapter lock.  Record this
+      // We have released the object adapter lock.  Record this
       // for later use.
       servant_upcall.state (TAO::Portable_Server::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
 
@@ -620,8 +626,8 @@ namespace TAO
 
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7,
+                                         CORBA::COMPLETED_NO));
         }
 
       // Remember to invoke <postinvoke> on the given locator

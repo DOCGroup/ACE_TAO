@@ -1,3 +1,9 @@
+Tue Nov  2 13:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*:
+          Guard inclusion of PortableServerC.h, PortableServer.h must be
+          included by the users, not the C.h
+
 Tue Nov  2 12:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PS_ForwardC.h:
