@@ -39,11 +39,11 @@ ACE::terminate_process (pid_t pid)
 
   // Use the pid to find out the actor's capability, then kill it.
   if (::acap (AM_MYSITE, pid, &cap_) == 0)
-    ACE_OSCALL_RETURN (::akill (&cap_), int, -1);
+    return ::akill (&cap_);
   else
     return -1;
 #else
-  ACE_OSCALL_RETURN (::kill (pid, 9), int, -1);
+  return ACE_OS::kill (pid, 9);
 #endif /* ACE_WIN32 */
 }
 
