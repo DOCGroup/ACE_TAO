@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
-Project: "ACE"=.\ace\ace.dsp - Package Owner=<4>
+Project: "Atomic_Op_Test"=.\tests\Atomic_Op_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -123,6 +123,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Exceptions"=.\examples\Reactor\ReactorEx\Exceptions.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Future_Test"=.\tests\Future_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -136,6 +148,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Handle_Set_Test"=.\tests\Handle_Set_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Hash_Map_Manager_Test"=.\tests\Hash_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -243,6 +267,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Multithreading"=.\examples\Reactor\ReactorEx\Multithreading.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Mutex_Test"=.\tests\Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -256,6 +292,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Naming_Test"=.\tests\Naming_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Network_Events"=.\examples\Reactor\ReactorEx\Network_Events.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -411,6 +459,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Registration"=.\examples\Reactor\ReactorEx\Registration.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Removals"=.\examples\Reactor\ReactorEx\Removals.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "SOCK_Test"=.\tests\SOCK_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -459,6 +531,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Semaphore_Test"=.\tests\Semaphore_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Service_Config_Test"=.\tests\Service_Config_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -496,6 +580,18 @@ Package=<4>
 ###############################################################################
 
 Project: "TSS_Test"=.\tests\TSS_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Talker"=.\examples\Reactor\ReactorEx\Talker.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -556,6 +652,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Time_Value_Test"=.\tests\Time_Value_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Timeouts"=.\examples\Reactor\ReactorEx\Timeouts.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -807,18 +915,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ntalk"=.\examples\Reactor\ReactorEx\reactorex.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "ntalker"=.\examples\Reactor\Ntalker\ntalker.dsp - Package Owner=<4>
 
 Package=<5>
@@ -963,30 +1059,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "test_MT"=.\examples\Reactor\ReactorEx\test_MT.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "test_exception"=.\examples\Reactor\ReactorEx\test_exception.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "test_multiple_loops"=.\examples\Reactor\Proactor\test_multiple_loops.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1000,18 +1072,6 @@ Package=<4>
 ###############################################################################
 
 Project: "test_proactor"=.\examples\Reactor\Proactor\test_proactor.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "test_remove_handler"=.\examples\Reactor\ReactorEx\test_remove_handler.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
