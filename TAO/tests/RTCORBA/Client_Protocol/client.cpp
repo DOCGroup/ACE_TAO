@@ -200,12 +200,13 @@ main (int argc, char *argv[])
 
       // Test 4: Override ClientProtocolPolicy on the Current level.
       // For the override value, use the sequence of protocols, none
-      // of which are available in the ORB.  Attempt an invocation on
-      // the second object.  Should get CORBA::INV_POLICY exception
-      // since none of the protocols specified in the policy are
-      // available.
+      // of which are available in the server ORB.  Attempt an
+      // invocation on the second object.  Should get
+      // CORBA::INV_POLICY exception since none of the protocols
+      // specified in the policy are available.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 4\n"));
+      // Hardcode a sequence of nonexistent protocols.
       protocols.length (3);
       protocols[0].protocol_type = 3;
       protocols[1].protocol_type = 4;
