@@ -1,6 +1,7 @@
 // -*- C++ -*-
 //$Id$
 
+ACE_INLINE
 TAO_Resume_Handle::TAO_Resume_Handle (TAO_ORB_Core *orb_core,
                                       ACE_HANDLE h)
   : orb_core_ (orb_core),
@@ -9,6 +10,7 @@ TAO_Resume_Handle::TAO_Resume_Handle (TAO_ORB_Core *orb_core,
 {
 }
 
+ACE_INLINE
 TAO_Resume_Handle::~TAO_Resume_Handle (void)
 {
   if (this->flag_ == 0)
