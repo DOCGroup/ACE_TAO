@@ -727,10 +727,8 @@ namespace ACE_OS {}
 #endif /* ACE_OS_TLI */
 
 // These includes are here to avoid circular dependencies.
-#ifndef ACE_OS_MAIN_H
 // Keep this at the bottom of the file.  It contains the main macros.
-#  include "ace/OS_main.h"
-#endif /* ACE_OS_MAIN_h */
+#include "ace/OS_main.h"
 
 #include /**/ "ace/post.h"
 
