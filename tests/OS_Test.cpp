@@ -231,6 +231,24 @@ string_emulation_test (void)
 
     ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (42, itoa1, 16),
                                        "2a") == 0);
+
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (8, itoa1, 10),
+                                       "8") == 0);
+
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (-8, itoa1, 10),
+                                       "-8") == 0);
+
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (20345, itoa1, 10),
+                                       "20345") == 0);
+
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (-20345, itoa1, 10),
+                                       "-20345") == 0);
+
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (4566733, itoa1, 10),
+                                       "4566733") == 0);
+
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (-4566733, itoa1, 10),
+                                       "-4566733") == 0);
   }
 
 #if defined (ACE_HAS_WCHAR)

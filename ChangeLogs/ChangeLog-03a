@@ -1,3 +1,8 @@
+Fri Nov 15 07:48:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OS_Test.cpp: Added the test cases for itoa from
+	  Joseph Sarbak <joseph.sarbak@csfb.com>. 
+
 Fri Nov 15 07:08:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Fixed a few minor problems that showed
