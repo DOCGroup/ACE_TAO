@@ -24,6 +24,10 @@ tests:
 
         . OctetSeq
 
+	  Measures the cost of marshaling and demarshaling of
+          sequences of octets of different sizes. NOTE: TAO optimizes
+	  this so the cost should be constant!
+
         . Param_Test
  
           Tests all the features of TAO's protocol engine.
@@ -47,5 +51,4 @@ tests:
         . Thruput
 
           Throughput tests for TAO, based on TTCP.
-
 
