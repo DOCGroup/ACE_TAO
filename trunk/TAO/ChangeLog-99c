@@ -1,3 +1,25 @@
+Mon Apr 19 16:26:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/deep_free.cpp:
+	  Updated TAO_Marshal_Union::deep_free to use the
+	  Union class virtual functions. The old code was
+	  bumpint the void *data pointer along to point to
+	  the discriminator value, then to the member value.
+	  This wasn't working on NT where the first thing
+	  in the union class memory layout is the vptr. Also
+	  changed the use of value() to _tao_get_cdr() on
+	  the elements of the member label list. That 
+	  wouldn't work on any platform because those Anys
+	  are all created with void *value = 0;
+	* tao/decode.cpp:
+	* tao/encode.cpp:
+	* tao/skip.cpp:
+	  Changed the tk_enum case for the discriminator inside
+	  the TAO_Marshal_Union versions to use CORBA::ULong as
+	  was determined to be the correct mapping earlier today.
+	  Also finished implementing the tk_wchar cases, which
+	  Andy had marked TODO.
+
 Mon Apr 19 14:35:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/colocated_test.cpp (main):
