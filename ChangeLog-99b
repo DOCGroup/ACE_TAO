@@ -1,3 +1,10 @@
+Sun Aug 29 22:57:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Signal_Test.cpp (worker_parent): Revised the test
+	  so that we transmit the parent process ID in argv so that the
+ 	  child doesn't have to "guess."  This should solve the annoying
+ 	  problems with Linux threads...
+
 Sun Aug 29 21:35:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-g++-common.h:
@@ -28,53 +35,53 @@ Sun Aug 29 21:35:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * tests/Signal_Test.cpp: Linux threads are evil because getppid()
-          isn't the process id of your parent PROCESS, it's the process id
-          of your parent THREAD.  Yikes!  Therefore, I had to rearrange
-          this test so that it'll work on Linux.
+	* tests/Signal_Test.cpp: Linux threads are problematic because
+	  getppid() isn't the process id of your parent PROCESS, it's the
+ 	  "process" id of your parent THREAD.  Yikes!  Therefore, I had to
+ 	  rearrange this test so that it'll work on Linux.
 
-        * ace/config-qnx-neutrino.h,
-        * ace/config-vxworks5.x.h,
-        * ace/config-osf1-4.0.h,
-        * ace/config-sunos5.5.h,
-        * ace/config-linux-common.h: Added support for
-          the ACE_HAS_SIGTIMEDWAIT and ACE_HAS_SIGSUSPEND macros.
+	* ace/config-qnx-neutrino.h,
+	* ace/config-vxworks5.x.h,
+	* ace/config-osf1-4.0.h,
+	* ace/config-sunos5.5.h,
+	* ace/config-linux-common.h: Added support for
+	  the ACE_HAS_SIGTIMEDWAIT and ACE_HAS_SIGSUSPEND macros.
 
-        * ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.  This
-          implementation is "smarter" than the default behavior of
-          sigsuspend(2) because it'll handle NULL sigset_t *'s gracefully.
+	* ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.  This
+	  implementation is "smarter" than the default behavior of
+ 	  sigsuspend(2) because it'll handle NULL sigset_t *'s gracefully.
 
-        * ace/Signal: Make the use of ACE_Sig_Set & parameters
-          const-correct.
+	* ace/Signal: Make the use of ACE_Sig_Set & parameters
+ 	  const-correct.
 
-        * ace/Signal: Added a new method for ACE_Sig_Action that'll register
-          an ACE_Sig_Set's worth of signals simultaneously.
+	* ace/Signal: Added a new method for ACE_Sig_Action that'll register 
+	  an ACE_Sig_Set's worth of signals simultaneously.
 
-        * ace/Signal: Updated the documentation to explain what the various
-          constructors do.
+	* ace/Signal: Updated the documentation to explain what the various
+	  constructors do.
 
-        * ace/Process.h: Updated the documentation for ACE_Process::spawn()
-          to explain what the return values are.
+	* ace/Process.h: Updated the documentation for ACE_Process::spawn()
+	  to explain what the return values are.
 
-        * tests/Makefile: Added Signal_Test to the list of tests that are
-          built automatically.
+	* tests/Makefile: Added Signal_Test to the list of tests that are
+ 	  built automatically.
 
-        * tests: Added a new test, Signal_Test.cpp, that exercises the
-          various signal handling capabilities supported by ACE on various
-          OS platforms.
+	* tests: Added a new test, Signal_Test.cpp, that exercises the
+	  various signal handling capabilities supported by ACE on various
+ 	  OS platforms.
 
-        * ace/OS.h,
-        * ace/README,
-        * ace/config-vxworks5.x.h:
-          Removed all mention of the ACE_LACKS_ATEXIT feature.  This is
-          now the default behavior because we ACE_OS_Object_Manager::at_exit()
-          to get consistent semantics, as described below.  Thanks to David
-          for pointing this out.
+	* ace/OS.h,
+	* ace/README,
+	* ace/config-vxworks5.x.h:
+	  Removed all mention of the ACE_LACKS_ATEXIT feature.  This is
+ 	  now the default behavior because we ACE_OS_Object_Manager::at_exit()
+	  to get consistent semantics, as described below.  Thanks to David
+	  for pointing this out.
 
-        * ace/OS.i: Changed the implementation of ACE_OS::atexit() to always
-          use the ACE_OS_Object_Manager::instance ()->at_exit() method so
-          that we get consistent semantics across platforms.
-
+	* ace/OS.i: Changed the implementation of ACE_OS::atexit() to always
+	  use the ACE_OS_Object_Manager::instance ()->at_exit() method so
+ 	  that we get consistent semantics across platforms.
+  
 Sun Aug 29 18:27:38 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * ACE.ifnames:

@@ -207,6 +207,8 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_THREAD_STACK_ADDR
 #define ACE_PAGE_SIZE 8192
+#define ACE_HAS_SIGTIMEDWAIT
+#define ACE_HAS_SIGSUSPEND
 
 // DJT 6/10/96 All these broken macro's can now be removed with the
 // approporiate ordering of the include files. The Platinum release
