@@ -90,6 +90,8 @@ goto done
 :justrun
 
 echo Running %arg%
+if not exist %arg%.exe goto nofile
+
 %arg%.exe
 if errorlevel 0 goto fine
 echo.
@@ -105,6 +107,11 @@ type %temp%\log\%arg%.log | find /I "Win32 structured exception"
 echo.
 
 goto done
+
+:nofile
+echo %arg%.exe not found
+goto done
+
 :fine
 
 rem We should check the log files here to make sure the test ended correctly
