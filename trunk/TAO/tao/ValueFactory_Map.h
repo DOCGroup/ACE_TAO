@@ -74,6 +74,9 @@ private:
 typedef TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
         TAO_VALUEFACTORY_MAP;
 
+TAO_SINGLETON_DECLARE (TAO_Singleton,
+                       TAO_ValueFactory_Map,
+                       TAO_SYNCH_MUTEX);
 
 
 #if defined (__ACE_INLINE__)

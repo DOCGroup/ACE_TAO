@@ -1421,6 +1421,10 @@ public:
 typedef TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
         TAO_TSS_RESOURCES;
 
+TAO_SINGLETON_DECLARE (TAO_TSS_Singleton,
+                       TAO_TSS_Resources,
+                       TAO_SYNCH_MUTEX);
+
 // ****************************************************************
 
 /// Obtain an instance of the first ORB core registered in the ORB

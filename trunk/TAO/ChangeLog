@@ -1,3 +1,12 @@
+Wed Jul 31 16:40:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ValueFactory_Map.h: Applied TAO_SINGLETON_DECLARE to
+	  TAO_TSS_RESOURCES, and TAO_VALUEFACTORY_MAP to avoid MSVC from
+	  instantiating multiple instantances of singleton in different
+	  DLLs.  Thanks to Dimitrije Jankovic <djankov@syncad.com> for
+	  reporting ths problem.
+
 Wed Jul 31 16:22:59 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTCORBA\Profile_And_Endpoint_Selection\run_test.pl: Made
@@ -11,7 +20,6 @@ Wed Jul 31 13:27:10 2002  Ossama Othman  <ossama@uci.edu>
 
 	  New public method that sets the unexpected exception handler to
 	  the supplied value.
-
 	  (init):
 
 	  Do not set the unexpected exception handler.
@@ -22,7 +30,7 @@ Wed Jul 31 13:27:10 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Set the unexpected exception handler by invoking the
 	  TAO_Singleton_Manger::_set_unexpected() method.
-	
+
 Wed Jul 31 11:28:16 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.h (init_orb_globals):
@@ -62,12 +70,12 @@ Wed Jul 31 11:28:16 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Jul 31 09:45:01 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/PSS/PSDL_String.h: 
-	* orbsvcs/PSS/PSDL_String.cpp: 
-	  Added an operator equality and inequality comparison operator 
+	* orbsvcs/PSS/PSDL_String.h:
+	* orbsvcs/PSS/PSDL_String.cpp:
+	  Added an operator equality and inequality comparison operator
 	  methods. Fixes the Lynx_PPC build with explicit template
 	  instantiations
-	
+
 Wed Jul 31 11:34:02 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Added a place holder for CIAO,
