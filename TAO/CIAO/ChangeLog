@@ -1,3 +1,9 @@
+Thu Sep 30 09:16:52 2004  Nanbor Wang  <nanbor@txcorp.com>
+
+	* CCF/Config.rules: Added new definitions to actually add the
+	  boost and utility related directives into compiler/linker
+	  flags.  
+
 Thu Sep 30 09:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/DnC_Dump_T.h:
