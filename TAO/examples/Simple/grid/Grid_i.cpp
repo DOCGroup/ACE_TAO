@@ -52,7 +52,7 @@ Grid_i::set (CORBA::Short x,
 	     CORBA::Short y,
 	     CORBA::Long value,
 	     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (x < 0
       || y < 0
@@ -69,7 +69,7 @@ CORBA::Long
 Grid_i::get (CORBA::Short x,
              CORBA::Short y,
              CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (x < 0
       || y < 0
@@ -84,14 +84,14 @@ Grid_i::get (CORBA::Short x,
 
 CORBA::Short
 Grid_i::width (CORBA::Environment &A)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->width_;
 }
 
 CORBA::Short
 Grid_i::height (CORBA::Environment &)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->height_;
 }
@@ -99,7 +99,7 @@ Grid_i::height (CORBA::Environment &)
 void
 Grid_i::width (CORBA::Short x,
 	       CORBA::Environment &)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->width_ = x;
 }
@@ -107,7 +107,7 @@ Grid_i::width (CORBA::Short x,
 void
 Grid_i::height (CORBA::Short y,
 		CORBA::Environment &)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->height_ = y;
 }
@@ -116,7 +116,7 @@ Grid_i::height (CORBA::Short y,
 
 void
 Grid_i::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Delete the array.
 
@@ -142,7 +142,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 
 void
 Grid_Factory_i::shutdown (CORBA::Environment &)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) %s\n",
@@ -179,7 +179,7 @@ Grid_ptr
 Grid_Factory_i::make_grid (CORBA::Short width,
                            CORBA::Short height,
                            CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Grid_i *grid_ptr = 0;
 
