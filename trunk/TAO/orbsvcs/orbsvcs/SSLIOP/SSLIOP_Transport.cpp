@@ -5,7 +5,9 @@
 #include "SSLIOP_Transport.h"
 #include "tao/debug.h"
 
-ACE_RCSID (TAO_SSLIOP, SSLIOP_Transport, "$Id$")
+ACE_RCSID (SSLIOP,
+           SSLIOP_Transport,
+           "$Id$")
 
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Profile.h"
@@ -69,12 +71,18 @@ TAO_SSLIOP_Transport::messaging_object (void)
 
 
 ssize_t
-TAO_SSLIOP_Transport::send_i (iovec *iov, int iovcnt,
+TAO_SSLIOP_Transport::send_i (iovec *iov,
+                              int iovcnt,
                               size_t &bytes_transferred,
-                              const ACE_Time_Value *max_wait_time)
+                              const ACE_Time_Value * /* max_wait_time */)
 {
-  ssize_t retval = this->connection_handler_->peer ().send (iov, iovcnt,
-                                                            max_wait_time);
+  // @@ We should not be attempting to send an iovec with an iovcnt
+  //    greater than 1!  Proper iovec non-blocking send semantics
+  //    cannot be maintained with SSL.  Either send an iovec with an
+  //    iovcnt of one or just send a single buffer.
+  //        -Ossama
+  ssize_t retval =
+    this->connection_handler_->peer ().sendv (iov, iovcnt /*, max_wait_time*/);
   if (retval > 0)
     bytes_transferred = retval;
 
