@@ -17,17 +17,26 @@
 CC		= cc
 CXX		= CC
 CFLAGS		+= $(DCFLAGS) -mt
-#### Exception handling breaks on MP machines prior to Sun C++ 4.2
-#### with jumbo patch 104631-02, see ace/config-sunos5.5-sunc++-4.x.h.
-#### If you are using a version of Sun C++ prior to 4,2, or haven't
-#### applied that jumbo patch to your 4.2, then add "-noex" to
-#### CCFLAGS below.
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
-CCFLAGS		+= $(CFLAGS) -pta
+CCFLAGS		+= $(CFLAGS) $(EXFLAGS) -pta
 DCFLAGS		+= -g
 DLD		= $(CXX) 
+
+#### Exception handling breaks on MP machines prior to Sun C++ 4.2
+#### with jumbo patch 104631-02, see ace/config-sunos5.5-sunc++-4.x.h.
+#### If you are using a version of Sun C++ prior to 4,2, or haven't
+#### applied that jumbo patch to your 4.2, or don't want to pay the
+#### performance penalty of exception handling, then use the default
+#### of no exceptions.  If you want to enable exception handling,
+#### add "exceptions=1" to your "make" invocation.
+ifdef exceptions
+EXFLAGS += -DACE_HAS_EXCEPTIONS
+else
+EXFLAGS += -noex
+endif # exceptions
+
 LD		= $(CXX)
 
 ifdef orbix
