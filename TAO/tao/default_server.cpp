@@ -414,13 +414,11 @@ template class ACE_Thread_Strategy<TAO_Server_Connection_Handler>;
 #pragma instantiate ACE_Thread_Strategy<TAO_Server_Connection_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#if defined (TAO_USES_STATIC_SERVICE) || defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
 		       ASYS_TEXT ("Server_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-#endif /* TAO_USES_STATIC_SERVICE || TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
-
+ACE_STATIC_SVC_REQUIRE (TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)
