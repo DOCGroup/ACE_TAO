@@ -1,0 +1,202 @@
+# Microsoft Developer Studio Generated NMAKE File
+!IF "$(CFG)" == ""
+CFG=<%default_platform("Win32")%> <%default_configuration("Debug")%>
+!MESSAGE No configuration specified. Defaulting to <%platform("Win32")%> <%default_configuration%>.
+!ENDIF 
+
+!IF <%foreach(configurations)%>"$(CFG)" != "<%platform%> <%configuration%>"<%fornotlast(" && ")%><%endfor%>
+!MESSAGE Invalid configuration "$(CFG)" specified.
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE 
+!MESSAGE NMAKE /f "<%project_file%>" CFG="<%platform%> <%default_configuration%>"
+!MESSAGE 
+!MESSAGE Possible choices for configuration are:
+!MESSAGE 
+<%foreach(configurations)%>
+!MESSAGE "<%platform%> <%configuration%>" (based on "<%platform_long("Win32 (x86)")%> <%type_description("Dynamic-Lynk Library")%>")
+<%endfor%>
+!MESSAGE 
+!ERROR An invalid configuration is specified.
+!ENDIF 
+
+!IF "$(OS)" == "Windows_NT"
+NULL=
+!ELSE 
+NULL=nul
+!ENDIF 
+
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
+
+<%if(exename)%>
+OUTDIR=<%output_dir(".")%>
+<%if(install)%>
+INSTALLDIR=<%install%>
+<%else%>
+INSTALLDIR=$(OUTDIR)
+<%endif%>
+<%endif%>
+<%if(type_is_static)%>
+OUTDIR=<%output_dir(".")%>
+<%endif%>
+<%if(type_is_dynamic)%>
+OUTDIR=<%libout%>
+<%endif%>
+INTDIR=<%intermediate_dir(".")%>
+
+ALL : "<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
+
+
+CLEAN :
+	-@erase "$(INTDIR)\*.obj"
+	-@erase "$(INTDIR)\*.res"
+	-@erase "$(INTDIR)\*.pch"
+	-@erase "$(INTDIR)\*.idb"
+	-@erase "$(OUTDIR)\*.exp"
+	-@erase "$(OUTDIR)\*.lib"
+	-@erase "$(OUTDIR)\*.ilk"
+<%if(pdb)%>
+<%if(exename)%>
+	-@erase "$(INSTALLDIR)\<%exename%>.pdb"
+<%endif%>
+<%if(type_is_dynamic)%>
+	-@erase "$(OUTDIR)\<%sharedname%><%lib_modifier%>.pdb"
+<%endif%>
+<%if(type_is_static)%>
+	-@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.pdb"
+<%endif%>
+<%endif%>
+	-@erase "<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
+
+<%if(type_is_dynamic)%>
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+<%endif%>
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+CPP=cl.exe
+CPP_PROJ=/nologo <%compile_flags("/MD /W3 /GX /O2 /Ob2")%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+RSC=rc.exe
+<%foreach(resource_files)%>
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\<%basenoextension(resource_file)%>.res"<%foreach(defines)%> /d <%define%>=1<%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%>
+<%endfor%>
+BSC32=bscmake.exe
+<%if(sharedname)%>
+BSC32_FLAGS=/nologo <%if(type_is_dynamic)%>/o"$(OUTDIR)\<%sharedname%>.bsc"<%endif%>
+<%endif%>
+BSC32_SBRS= \
+	
+<%if(type_is_binary)%>
+LINK32=link.exe
+LINK32_FLAGS=<%systemlibs("advapi32.lib user32.lib")%> /INCREMENTAL:<%incremental("NO")%> <%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> <%if(pdb)%>/pdb:"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.pdb<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.pdb<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.pdb<%endif%>" <%endif%>/machine:<%machine("I386")%> /out:"<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%if(sharedname)%> /implib:"$(OUTDIR)\<%sharedname%><%lib_modifier%>.lib"<%endif%>
+<%endif%>
+<%if(type_is_static)%>
+LINK32=link.exe -lib
+LINK32_FLAGS=/nologo /machine:<%machine("I386")%> /out:"<%libout%>\<%staticname%><%lib_modifier%>.lib"
+<%endif%>
+LINK32_OBJS= \
+<%foreach(resource_files)%>
+	"$(INTDIR)\<%basenoextension(resource_file)%>.res" \
+<%endfor%>
+<%if(pch_source)%>
+	"$(INTDIR)\<%basenoextension(pch_source)%>.obj" \
+<%endif%>
+<%foreach(source_files)%>
+	"$(INTDIR)\<%basenoextension(source_file)%>.obj"<%fornotlast(" \\")%>
+<%endfor%>
+
+"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+<%endfor%>
+!ENDIF
+
+
+!IF "$(NO_EXTERNAL_DEPS)" != "1"
+!IF EXISTS("<%dependency_file("project.dep")%>")
+!INCLUDE "<%dependency_file%>"
+!ELSE 
+!MESSAGE Warning: cannot find "<%dependency_file%>"
+!ENDIF 
+!ENDIF 
+
+
+!IF <%foreach(configurations)%>"$(CFG)" == "<%platform%> <%configuration%>" <%fornotlast("|| ")%><%endfor%>
+<%if(pch_source)%>
+<%if(pch_header)%>
+SOURCE=.\<%pch_source%>
+
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
+
+CPP_SWITCHES=/nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c 
+
+"$(INTDIR)\<%basenoextension(pch_source)%>.obj"	"$(INTDIR)\<%noextension(pch_header)%>.pch" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+<%endfor%>
+!ENDIF
+
+<%endif%>
+<%endif%>
+<%foreach(source_files)%>
+SOURCE=.\<%source_file%>
+
+"$(INTDIR)\<%basenoextension(source_file)%>.obj" : $(SOURCE) "$(INTDIR)"<%if(pch_header)%> "$(INTDIR)\<%noextension(pch_header)%>.pch"<%endif%>
+<%if(basename_found)%>
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+<%endif%>
+
+<%endfor%>
+<%foreach(template_files)%>
+SOURCE=.\<%template_file%>
+<%endfor%>
+<%foreach(resource_files)%>
+SOURCE=.\<%resource_file%>
+
+"$(INTDIR)\<%basenoextension(resource_file)%>.res" : $(SOURCE) "$(INTDIR)"
+	$(RSC) $(RSC_PROJ) $(SOURCE)
+
+
+<%endfor%>
+
+!ENDIF 
+

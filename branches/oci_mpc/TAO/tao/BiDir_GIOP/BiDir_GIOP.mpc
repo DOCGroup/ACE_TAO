@@ -1,0 +1,6 @@
+project : taolib {
+  sharedname = TAO_BiDirGIOP
+  libs       = TAO
+  dllflags   = TAO_BIDIRGIOP_BUILD_DLL
+  libout     = ..
+}

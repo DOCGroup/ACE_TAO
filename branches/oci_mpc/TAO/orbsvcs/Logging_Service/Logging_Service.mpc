@@ -1,0 +1,5 @@
+project : orbsvcsexe {
+  depends += DsLogAdmin CosTrading CosNaming Svc_Utils IORTable DynamicAny PortableServer
+  exename  = Logging_Service
+  libs     = TAO_DsLogAdmin TAO_CosTrading TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_DynamicAny TAO_PortableServer TAO
+}

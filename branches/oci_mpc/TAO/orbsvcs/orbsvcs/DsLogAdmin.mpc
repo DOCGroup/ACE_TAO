@@ -1,0 +1,17 @@
+project(DsLogAdmin) : orbsvcslib {
+  depends   += CosTrading Svc_Utils PortableServer
+  sharedname = TAO_DsLogAdmin
+  libs       = TAO_CosTrading TAO_Svc_Utils TAO_PortableServer TAO
+  idlflags  += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h
+  dllflags   = TAO_LOG_BUILD_DLL
+
+  IDL_Files {
+    DsLogAdmin.idl
+  }
+
+  Source_Files {
+    DsLogAdminC.cpp
+    DsLogAdminS.cpp
+    Log
+  }
+}

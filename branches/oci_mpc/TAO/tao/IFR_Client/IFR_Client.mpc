@@ -1,0 +1,6 @@
+project : taolib {
+  sharedname = TAO_IFR_Client
+  libs       = TAO
+  dllflags   = TAO_IFR_CLIENT_BUILD_DLL
+  libout     = ..
+}
