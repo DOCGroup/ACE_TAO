@@ -38,3 +38,10 @@ PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.3
  . Static Configuration for DAnCE (??) 
 
  . Target Manager (Jai and Kitty)
+
+ . Support for server-side RT policies, including extension for schema, container,
+   and NodeApplication.  Configuring client-side (receptacle) policies
+   to honor these server policies.  (Gan, Nanbor)
+
+ . Tools and utilities for developing and debugging components and
+   applications. (low prio.)
