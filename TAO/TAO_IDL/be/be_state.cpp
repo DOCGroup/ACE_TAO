@@ -35,7 +35,7 @@ be_state_attribute::be_state_attribute (void)
 {
 }
 
-int 
+int
 be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
   // Macro to avoid "warning: unused parameter" type warning.
@@ -843,13 +843,15 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
     case TAO_CodeGen::TAO_OPERATION_CH:
       os = cg->client_header ();
       break;
-    case TAO_CodeGen::TAO_OPERATION_CS:
+    case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+    case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+    case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+    case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
       os = cg->client_stubs ();
       break;
     case TAO_CodeGen::TAO_OPERATION_SH:
       os = cg->server_header ();
       break;
-    case TAO_CodeGen::TAO_OPERATION_SS:
     case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
     case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
     case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
@@ -874,6 +876,26 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       {
         switch (cg->state ())
           {
+          case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+            {
+              *os << bt->name () << "_ptr ";
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+            {
+              *os << "CORBA::Object_ptr retval = CORBA::Object::_nil ();" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+            {
+              *os << "return " << bt->name () << "::_nil ();" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
+            {
+              *os << "return " << bt->name () << "::_narrow (retval);" << nl;
+            }
+          break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
               *os << bt->name () << "_ptr retval;"; // callee allocates
@@ -897,6 +919,87 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
 
         switch (cg->state ())
           {
+          case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+            {
+              // check if the type is an any
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << bt->name () << " *";
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << bt->name () << "_ptr ";
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_void)
+                {
+                  *os << "void ";
+                }
+              else
+                {
+                  *os << bt->name () << " ";
+                }
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+            {
+              // check if the type is an any
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << bt->name () << " *retval;" << nl;
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << bt->name () << "_ptr retval;" << nl;
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_void)
+                {
+                  // no return variable
+                }
+              else
+                {
+                  *os << bt->name () << " retval;" << nl;
+                }
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+            {
+              // check if the type is an any
+              if (bpd->pt () == AST_PredefinedType::PT_any)
+                {
+                  // if it is an any, return a pointer to it
+                  *os << "return 0;" << nl;
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+                {
+                  // pseudo object, return a pointer
+                  *os << "return 0;" << nl;
+                }
+              else if (bpd->pt () == AST_PredefinedType::PT_void)
+                {
+                  *os << "return;" << nl;
+                }
+              else
+                {
+                  *os << "return retval;" << nl;
+                }
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
+            {
+              if (bpd->pt () == AST_PredefinedType::PT_void)
+                {
+                  *os << "return; // no value" << nl;
+                }
+              else
+                {
+                  *os << "return retval;" << nl;
+                }
+            }
+          break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
               // check if the type is an any
@@ -958,6 +1061,26 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       {
         switch (cg->state ())
           {
+          case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+            {
+              *os << "char *";
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+            {
+              *os << "char *retval = 0;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+            {
+              *os << "return 0;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
+            {
+              *os << "return retval;" << nl;
+            }
+          break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
               *os << "char *retval;" << nl;
@@ -980,6 +1103,26 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       {
         switch (cg->state ())
           {
+          case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+            {
+              *os << bt->name () << "_slice *";
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+            {
+              *os << bt->name () << "_slice *retval;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+            {
+              *os << "return 0;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
+            {
+              *os << "return retval;" << nl;
+            }
+          break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
               *os << bt->name () << "_slice *retval;" << nl;
@@ -1003,6 +1146,26 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       {
         switch (cg->state ())
           {
+          case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+            {
+              *os << bt->name () << " *";
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+            {
+              *os << bt->name () << " *retval = 0;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+            {
+              *os << "return 0;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
+            {
+              *os << "return retval;" << nl;
+            }
+          break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
               *os << bt->name () << " *retval;" << nl;
@@ -1024,6 +1187,26 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       {
         switch (cg->state ())
           {
+          case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+            {
+              *os << bt->name () << " ";
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+            {
+              *os << bt->name () << " retval;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+            {
+              *os << "return retval;" << nl;
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
+            {
+              *os << "return retval;" << nl;
+            }
+          break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
               *os << bt->name () << " *retval = new " << bt->name () << ";" <<
@@ -1047,6 +1230,44 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       {
         switch (cg->state ())
           {
+          case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
+            {
+              *os << bt->name () << " ";
+              if (bt->size_type () == be_decl::VARIABLE)
+                {
+                  *os << "*";
+                }
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
+            {
+              if (bt->size_type () == be_decl::VARIABLE)
+                {
+                  *os << bt->name () << " *retval;" << nl;
+                }
+              else
+                {
+                  *os << bt->name () << " retval;" << nl;
+                }
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+            {
+              if (bt->size_type () == be_decl::VARIABLE)
+                {
+                  *os << "return 0;" << nl;
+                }
+              else
+                {
+                  *os << "return retval;" << nl;
+                }
+            }
+          break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
+            {
+              *os << "return retval;" << nl;
+            }
+          break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
               if (type->size_type () == be_decl::VARIABLE)
@@ -1424,7 +1645,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
+                  bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1443,7 +1664,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
+                  bt->tc_name () << ", &" << arg->local_name () <<
                   "); // ORB does not own" << nl;
               }
             else
@@ -1462,7 +1683,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   ";" << nl;
                     // declare an Any
                 *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
+                  bt->tc_name () << ", &" << arg->local_name () <<
                   ", 1); // ORB owns" << nl;
               }
             else

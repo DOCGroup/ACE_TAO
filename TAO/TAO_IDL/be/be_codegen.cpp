@@ -21,6 +21,8 @@
 
 static const int CHUNK = 100;
 
+TAO_CodeGen::MAXNAMELEN = 100;
+
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
@@ -70,9 +72,11 @@ TAO_CodeGen::make_state (void)
     case TAO_UNION_PRIVATE_CH:
       return TAO_BE_STATE_UNION_PRIVATE_CH::instance ();
     case TAO_OPERATION_CH:
-    case TAO_OPERATION_CS:
+    case TAO_OPERATION_RETURN_TYPE_CS:
+    case TAO_OPERATION_RETVAL_DECL_CS:
+    case TAO_OPERATION_RETVAL_EXCEPTION_CS:
+    case TAO_OPERATION_RETVAL_RETURN_CS:
     case TAO_OPERATION_SH:
-    case TAO_OPERATION_SS:
     case TAO_OPERATION_RETVAL_DECL_SS:
     case TAO_OPERATION_RETVAL_ASSIGN_SS:
     case TAO_OPERATION_RESULT_SS:
@@ -95,16 +99,17 @@ TAO_CodeGen::make_state (void)
     case TAO_SEQUENCE_BODY_CH:
     case TAO_SEQUENCE_BODY_CI:
       return TAO_BE_STATE_SEQUENCE::instance ();
+    default:
+      return 0;
     }
-  return 0;
 }
 
 const char *
 TAO_CodeGen::upcase (const char *str)
 {
-  static char upcase_str [MAXNAMELEN];
+  static char upcase_str [TAO_CodeGen::MAXNAMELEN];
 
-  ACE_OS::memset (upcase_str, '\0', MAXNAMELEN);
+  ACE_OS::memset (upcase_str, '\0', TAO_CodeGen::MAXNAMELEN);
   // convert letters in str to upcase
   for (unsigned int i=0; i < ACE_OS::strlen (str); i++)
     {
@@ -140,10 +145,10 @@ TAO_CodeGen::client_header (const char *fname)
   else
     {
       // now generate the #if !defined clause
-      static char macro_name [MAXNAMELEN];
+      static char macro_name [TAO_CodeGen::MAXNAMELEN];
       char *suffix;
 
-      ACE_OS::memset (macro_name, '\0', MAXNAMELEN);
+      ACE_OS::memset (macro_name, '\0', TAO_CodeGen::MAXNAMELEN);
       suffix = ACE_OS::strstr (fname, ".h");
       if (suffix == 0)
 	return -1; // bad file name
@@ -256,10 +261,10 @@ TAO_CodeGen::server_header (const char *fname)
   else
     {
       // now generate the #if !defined clause
-      static char macro_name [MAXNAMELEN];
+      static char macro_name [TAO_CodeGen::MAXNAMELEN];
       char *suffix;
 
-      ACE_OS::memset (macro_name, '\0', MAXNAMELEN);
+      ACE_OS::memset (macro_name, '\0', TAO_CodeGen::MAXNAMELEN);
       suffix = ACE_OS::strstr (fname, ".h");
       if (suffix == 0)
 	return -1; // bad file name
