@@ -1,3 +1,46 @@
+Thu Jul 24 17:38:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        Various scoreboard items ----
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/include/ast_interface.h:
+
+	  Changed the inheritance graph traversal mechanism
+	  to be depth-first instead of breadth-first. It
+	  seems that gcc 3.3 wants base class constructors
+	  to be called in left-to-right depth-first order,
+	  as required by ANSI C++.
+
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+
+	  Added missing header files to project.
+
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+
+	  Modified an included template source file to be
+	  excluded from the build.
+
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+
+	  Removed a check for an unsigned char argument
+	  value greater than 255, which gcc 3.3 correctly
+	  warns is impossible.
+
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+
+	  Removed some legacy no-op copy constructors that
+	  were originally added only to please some version
+	  of gcc. The new 3.3 version of gcc now complains
+	  about their existence.
+
+        * tao/Messaging/MessagingS.cpp:
+        * TAO_IDL/fe/fe_lookup.cpp:
+
+	  Modified char type array subscripts to be cast 
+	  to int, reflecting recent changes to gperf.
+
 Thu Jul 24 17:30:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/Peer_T.ccp (status):
