@@ -203,6 +203,13 @@ protected:
 
   /// If 1, we use the TTL flags, if 0, we just ignore TTL
   int use_ttl_;
+
+  /// The flag for using the consumer proxy map. With 1 the consumer proxy map
+  /// is used, meaning that for each unique source id we use a different
+  /// proxy push consumer, if 0, we only use one proxy push consumer (the
+  /// default) for all source ids.
+  int use_consumer_proxy_map_;
+
 };
 
 #include /**/ "ace/post.h"
