@@ -1,3 +1,16 @@
+Wed Jul  7 15:04:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/OEP/BasicSP/descriptors/test.rtd: 
+	* examples/OEP/BasicSP/descriptors/svcmap.dat: 
+	* examples/OEP/BasicSP/descriptors/RTsvc.conf: 
+	* examples/OEP/BasicSP/descriptors/BasicSP-rt.cad: 
+
+	  Added these files to be used in RT version of BasicSP.
+	
+	* examples/OEP/BasicSP/NOTE.txt: 
+	
+	  Updated notes on how to run with RTComponentServer.
+	
 Wed Jul  7 14:35:33 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* docs/static_ciao_contents.html: 
