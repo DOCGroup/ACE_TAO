@@ -35,7 +35,7 @@ Sat Dec 07 14:29:47 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ACE.cpp (format_hexdump): This change fixed the problem that
 	  a character is missing when the last line has less than 16 bytes
-	  or less to display.  Thanks to Terry <terry@ec-tone.com> for
+	  or less to display.  Thanks to Terry Lao <terry@ec-tone.com> for
 	  submitting the patch, and Johnny Willemsen
 	  <jwillemsen@remedy.nl> for reviewing the change.
 
