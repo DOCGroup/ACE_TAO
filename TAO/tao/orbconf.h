@@ -682,8 +682,9 @@ enum MCAST_SERVICEID
              TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_BUFFERING_CONSTRAINT_POLICY */
 
-// AMI support is disabled by default.  If enabled, it requires
-// CORBA_MESSAGING support.
+// AMI support is enabled by default, unless TAO is compiled with
+// Minimum CORBA.  In that case AMI is disabled by default.
+// If disabled you can also disable the CORBA MESSAGING support.
 // To explicitly enable AMI support uncomment the following
 // #define TAO_HAS_AMI 1
 // To explicitly disable AMI support uncomment the following
@@ -691,7 +692,11 @@ enum MCAST_SERVICEID
 
 // Default AMI settings
 #if !defined (TAO_HAS_AMI)
-#  define TAO_HAS_AMI 0
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
+#    define TAO_HAS_AMI 0
+#  else
+#    define TAO_HAS_AMI 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
 #else
 #  if (TAO_HAS_AMI == 1) && \
       (TAO_HAS_CORBA_MESSAGING == 0)
