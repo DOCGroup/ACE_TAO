@@ -57,7 +57,7 @@ public:
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
                     TAO_Acceptor **acceptors_end,
-                    CORBA::Short priority);
+                    CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS
   /// tag component of profiles.

@@ -241,7 +241,18 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - (destroy_threadpool_i): We now shutdown the reactors in
             the thread pool, wait for the threads in the pool to exit,
             finalize the resources in the pool, and only then delete
-            the thread pool.          
+            the thread pool.         
+
+          - (TAO_RT_New_Leader_Generator::no_leaders_available): This
+            method is called by the leader followers class when it is
+            out of threads to run the event loop.
+            
+            If this lane has support for dynamic threads, we grab the
+            Thread Pool Manager lock, check if the current number of
+            threads in this lane does not exceed the <static> +
+            <dynamic> number of threads specified by the user.  If it
+            does not exceed <static> + <dynamic>, one dynamic thread
+            is created.
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	  (set_default_server_protocol_policy): Don't include all the
@@ -329,6 +340,14 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - (TAO_RTCORBA_Initializer): Removed the registration of
 	    TAO_RT_Protocols_Hooks into the service configurator - it
 	    is already done in TAO_RT_ORBInitializer::pre_init.
+
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.i
+
+          RT manager which manages multiple set of resources
+          associated with each thread lane and has a default set of
+          lane resources.
 
         * tao/RTCORBA/RT_Current.h:
         * tao/RTCORBA/RT_Mutex.h:
@@ -531,14 +550,6 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           resources and approximates these resources being in the ORB
           Core.
 
-	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp
-	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h
-	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.i
-
-          RT manager which manages multiple set of resources
-          associated with each thread lane and has a default set of
-          lane resources.
-
 	* tao/Endpoint.h (TAO_Endpoint): Changed default <priority> value
 	  in constructor to <TAO_INVALID_PRIORITY> instead of -1.
 
@@ -603,6 +614,7 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/CORBALOC_Parser.cpp (make_stub_from_mprofile): 
 	* tao/Stub.cpp (set_policy_overrides): 
 	* tao/Object.cpp (operator>>): 
+        * tao/IORManipulation/IORManipulation.cpp:
 
 	  No need to pass ORB_Core::create_stub() a pointer to the
 	  ORB_Core.
@@ -618,6 +630,11 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           with the servant.  The default resolver simply does what was
           done before which is to check the <is_collocated_> flag on
           the object.  The RT resolver is more interesting.
+          
+        * tao/Leader_Follower.cpp (elect_new_leader): When we are out
+          of leader threads and there are no event loop threads
+          waiting and there are no followers available, we call on the
+          new leader generator class to create us a new leader thread.  
 
 	* tao/Makefile: 
 	* tao/Makefile.bor: 
@@ -748,9 +765,24 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tao/PortableServer/MessagingS.cpp:
         * tao/PortableServer/PolicyS.cpp:
         * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+        * tao/Domain/DomainS.cpp:
 
           Passed environment variable to
           TAO_ORB_Core::collocation_strategy().
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+
+          - make_mprofile() was replaced by endpoint_count() and
+            fill_profile().
+            
+          - Access the acceptor registry through the lane resources
+            rather than through the ORB Core.
+
+          - Include "tao/Thread_Lane_Resources.h".
 
 	* tests/RTCORBA/Policy_Combinations: New test added that
           combines and tests several RT policies in different ways.
@@ -1091,12 +1123,48 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           Removed PortableServer and RTPortableServer libraries since
           they are not needed.
 
+        * tests/TAO_Tests.dsw:
+        * tests/Collocation/Coll_Test_Stubs.bor:
+        * tests/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Collocation/Coll_Tester.cpp:
+        * tests/Collocation/Coll_Tester.h:
+        * tests/Collocation/Collocation.bor:
+        * tests/Collocation/Collocation.cpp:
+        * tests/Collocation/Collocation.dsp:
+        * tests/Collocation/Collocation.dsw:
+        * tests/Collocation/Collocation_Test_Stubs.bor:
+        * tests/Collocation/Collocation_Test_Stubs.dsp:
+        * tests/Collocation/Collocation_Tester.cpp:
+        * tests/Collocation/Collocation_Tester.h:
+        * tests/Collocation/Diamond.bor:
+        * tests/Collocation/Diamond.dsp:
+        * tests/Collocation/Makefile.bor:
+        * tests/Collocation/Makefile.test:
+        * tests/Collocation/README:
+        * tests/Connection_Purging/client.bor:
+        * tests/Connection_Purging/client.cpp:
+        * tests/Connection_Purging/client.dsp:
+        * tests/Connection_Purging/server.bor:
+        * tests/Connection_Purging/server.cpp:
+        * tests/Connection_Purging/server.dsp:
+        * tests/DLL_ORB/Test_Client_Module.dsp:
+        * tests/DLL_ORB/Test_Server_Module.dsp:
+        * tests/DLL_ORB/client.dsp:
+        * tests/DLL_ORB/server.dsp:
+        * tests/Faults/middle.dsp:
+        * tests/Multiple/Client.dsp:
+        * tests/Multiple/Server.dsp:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.dsw:
+
+          Made a bunch of small changes to make code and makefiles
+          consistent.
+
 	* docs/rtcorba/features.html:
 	* docs/rtcorba/status.html:
 	* docs/rtcorba/issues.html:
 
           Updated RTCORBA documentation to reflect new thread-pool
-          support.
+          support.  Also added new issues that need to be addressed.
 
         * docs/Options.html: Added documentation for new
           -ORBScopePolicy option.

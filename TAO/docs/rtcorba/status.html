@@ -107,18 +107,42 @@ for their implementation:
 <h3><a name="future">Future Work</a></h3>
 
 <ol>
-  <li>Improve current RT CORBA implementation through benchmarking and optimizations,
-    resolving known bugs and issues, adding examples, and other enhancements.</li>
-  <li>Implement an alternative real-time orb architecture using a <em>queue-per-lane</em>
-    approach, as described in the <a href="architecture.html">TAO Real-Time Architecture</a>
-    section. In this approach, each threadpool lane owns a queue, while I/O resources
-    are being shared among all the threadpool lanes of the same priority within a server.
-    Strategize TAO to use either <em>queue-per-lane</em> or <em>reactor-per-lane</em>
+
+  <li>Currently, persistent objects are not supported for RT POAs.  We
+    need to add this feature.</li>
+
+  <li>Currently, purging of connection only happens for the lane of
+    the thread that runs out of connection.  We need to change this
+    such that we allow system wide purging.</li>
+
+  <li>Currently, all user-created threads are part of the default
+    thread pool.  There is nothing done to separate out these threads
+    into different (implicit) lanes based on their priorities.  We may
+    need to add this separation to get better/predictable behavior
+    with respect to sharing of resources across threads of different
+    priorities.</li>
+
+  <li>Currently, some CDR memory pools are global.  We should
+    reevaluate them to see which of them can be made a per-lane
+    resource.</li>
+
+  <li>Improve current RT CORBA implementation through benchmarking and
+    optimizations, resolving known bugs and issues, adding examples,
+    and other enhancements.</li>
+
+  <li>Implement an alternative real-time orb architecture using a
+    <em>queue-per-lane</em> approach, as described in the <a
+    href="architecture.html">TAO Real-Time Architecture</a>
+    section. In this approach, each threadpool lane owns a queue,
+    while I/O resources are being shared among all the threadpool
+    lanes of the same priority within a server.  Strategize TAO to use
+    either <em>queue-per-lane</em> or <em>reactor-per-lane</em>
     implementation, and compare the two.</li>
-  <li>As both real-time and fault tolerance implementations mature separately, explore issues
-    in combining them, and, ultimately, enable TAO to provide applications with both real-time
-    and fault tolerance support at the same time. </li>
-</ol>
+
+  <li>As both real-time and fault tolerance implementations mature
+    separately, explore issues in combining them, and, ultimately,
+    enable TAO to provide applications with both real-time and fault
+    tolerance support at the same time. </li> </ol>
 
 <hr>
 <i>
