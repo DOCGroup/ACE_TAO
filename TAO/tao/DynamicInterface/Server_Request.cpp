@@ -227,7 +227,7 @@ CORBA_ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   // of bytes. The outgoing stream's byte order has already been matched
   // to the original source of the reply.
   this->orb_server_request_.outgoing ().write_octet_array (
-      ACE_static_cast (CORBA::Octet *, raw_exception.fast_rep ()),
+      ACE_static_cast (const CORBA::Octet *, raw_exception.fast_rep ()),
       raw_exception.length () + ACE_CDR::MAX_ALIGNMENT
     );
 
