@@ -62,6 +62,8 @@ private:
         ACE_Reactor::instance ()->schedule_timer (this, 0, this->tv_);
   }
 
+public: // needed for destructor due to "aCC: HP ANSI C++ B3910B A.03.39" compiler bug
+
   ~JAWS_IO_Reactive_Handler (void)
   {
     if (this->timer_id_ != -1)
