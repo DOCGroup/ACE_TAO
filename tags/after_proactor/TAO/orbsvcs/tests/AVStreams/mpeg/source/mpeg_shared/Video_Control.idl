@@ -1,0 +1,112 @@
+// -*- C++ -*- 
+
+// $Id$
+
+interface Video_Control
+{
+
+  typedef sequence <char> my_seq_char;
+  const long VIDEO_PATTERN_SIZE = 100;
+  struct INITvideoPara
+  {
+    long sn;
+    long version;
+    my_seq_char videofile;
+  };
+
+  struct INITvideoReply
+  {
+    long live;
+    long format;
+  
+    long totalHeaders;
+    long totalFrames;
+    long totalGroups;
+    long horizontalSize;
+    long verticalSize;
+    long pelAspectRatio;
+    long pictureRate1000;
+    long vbvBufferSize;
+    long sizeIFrame;
+    long sizePFrame;
+    long sizeBFrame;
+    long sizeSystemHeader;
+    long sizeGop;
+    long averageFrameSize;
+    long firstGopFrames;
+    my_seq_char pattern;
+  };
+
+  /* CmdPOSITION, CmdPOSITIONrelease: followed by following parameter */
+  struct POSITIONpara
+  {
+    long sn;
+    long nextGroup;
+  };
+
+  /* CmdSTEP: followed by following parameter */
+  struct STEPpara
+  {
+    long sn;
+    long nextFrame;
+  };
+
+  /* CmdFF, CmdFB: followed by following parameter */
+  struct FFpara
+  {
+    long sn;
+    long nextGroup;
+    long usecPerFrame;
+    long framesPerSecond;
+    long VStimeAdvance;
+  };
+  
+  typedef FFpara FBpara;
+
+  /*CmdPLAY: followed by following parameter */
+  struct PLAYpara
+  {
+    long sn;
+    long collectStat;
+    long nextFrame;
+    long usecPerFrame;
+    long framesPerSecond;
+    long frameRateLimit1000;
+    long VStimeAdvance;
+    long sendPatternGops;
+    my_seq_char sendPattern;
+  };
+
+  /* CmdSPEED: parameter */
+  struct SPEEDpara
+  {
+    long sn;
+    long usecPerFrame;
+    long framesPerSecond;
+    long frameRateLimit1000;
+    long sendPatternGops;
+    my_seq_char sendPattern;
+  };
+
+
+  boolean init_video (in INITvideoPara para,
+                      out INITvideoReply reply_para);
+  boolean stat_stream (out char ch, out long size);
+  oneway void close ();
+  boolean stat_sent ();
+  boolean fast_forward (in FFpara para);
+  boolean fast_backward (in FFpara para);
+  boolean step (in STEPpara para);
+  boolean play (in PLAYpara para, out long vts);
+  boolean position (in POSITIONpara para);
+  boolean speed (in SPEEDpara para);
+  boolean stop (in long cmdsn);
+
+  boolean set_peer (inout string peer);
+  // Initializes the server to communicate to the <peer>, which can be
+  // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
+  // "128.252.166.57:1234").  If there is no ':' in the <address> it
+  // is assumed to be a port number, with the IP address being
+  // INADDR_ANY.
+  // Server returns it's UDP data port number.
+};
