@@ -831,6 +831,57 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             }
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBLogFile")))
+        {
+
+          // USAGE: -ORBLogFile <filename> <a|w>
+          // I actually accept anything that starts with
+          // an 'a' ie: append
+
+          ASYS_TCHAR* file_name = current_arg;
+          arg_shifter.consume_arg ();
+
+          ACE_OSTREAM_TYPE* output_stream;
+
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
+          output_stream = ACE_OS::fopen (file_name, "a");
+
+          ACE_LOG_MSG->msg_ostream (output_stream);
+
+#else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+          //
+          // won't compile on linux ???
+          //
+          // output_stream->open (file_name, flags, 0660);
+          //
+          // forced to use constructor with file name
+          //
+
+          ACE_NEW_RETURN
+            (output_stream,
+             ofstream(file_name, ios::out | ios::app, 0660),
+             1);
+
+          //
+          // note: we are allocating dynamic memory here....
+          // but I assume it will stay persistent for the life
+          // of the program.
+          //
+
+          if (!output_stream->bad ())
+            {
+              ACE_LOG_MSG->msg_ostream (output_stream);
+            }
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+          ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
+          ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
+
+        }
 
       ////////////////////////////////////////////////////////////////
       // catch all the remaining -ORB args                          //
