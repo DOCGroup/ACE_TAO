@@ -47,6 +47,9 @@ Wed Apr 16 00:18:08 2003  Ossama Othman  <ossama@uci.edu>
 	  Forward declare "ACE_Allocator" class.  Necessitated by above
 	  change.
 
+	  Uninlined another CORBA::SystemException constructor.  This
+	  should help reduce TAO's footprint.
+
 	* tao/GIOP_Message_Generator_Parser.h:
 	* tao/Utils/Auto_Functor.h:
 
