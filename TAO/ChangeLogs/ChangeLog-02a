@@ -1,3 +1,10 @@
+Mon May 13 08:01:18 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+
+          Fixed exception macro related warnings.
+
 Mon May 13 07:40:34 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/RTCORBA/Linear_Priority/client.cpp:
