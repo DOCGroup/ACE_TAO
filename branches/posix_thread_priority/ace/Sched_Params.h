@@ -82,12 +82,14 @@ public:
   static int next_priority (const Policy, const int priority);
   // The next higher priority.  "Higher" refers to scheduling priority,
   // not to the priority value itself.  (On some platforms, higher scheduling
-  // priority is indicated by a lower priority value.)
+  // priority is indicated by a lower priority value.)  If "priority" is
+  // the highest priority (for the specified policy), then it is returned.
 
   static int previous_priority (const Policy, const int priority);
   // The previous, lower priority.  "Lower" refers to scheduling priority,
   // not to the priority value itself.  (On some platforms, lower scheduling
-  // priority is indicated by a higher priority value.)
+  // priority is indicated by a higher priority value.)  If "priority" is
+  // the lowest priority (for the specified policy), then it is returned.
 
 private:
   Policy policy_;
