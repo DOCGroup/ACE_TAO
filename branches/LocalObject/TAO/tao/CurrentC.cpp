@@ -84,7 +84,7 @@ CORBA::Boolean CORBA_Current::_is_a (const CORBA::Char *value, CORBA::Environmen
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* CORBA_Current::_remote_interface_repository_id (void) const
+const char* CORBA_Current::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Current:1.0";
 }

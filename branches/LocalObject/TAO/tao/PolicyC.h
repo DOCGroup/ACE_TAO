@@ -196,7 +196,7 @@ public:
       CORBA_Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_Policy (void); // default constructor
   CORBA_Policy (TAO_Stub *objref,
@@ -434,7 +434,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_PolicyManager (void); // default constructor
   CORBA_PolicyManager (TAO_Stub *objref,
@@ -514,7 +514,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-  virtual const char* _remote_interface_repository_id (void) const;
+  virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_PolicyCurrent (void); // default constructor
   CORBA_PolicyCurrent (TAO_Stub *objref,

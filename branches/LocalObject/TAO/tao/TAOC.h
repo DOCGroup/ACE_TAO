@@ -206,7 +206,7 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     ClientPriorityPolicy (void);
@@ -389,7 +389,7 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     BufferingConstraintPolicy (void);

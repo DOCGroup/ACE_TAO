@@ -1,14 +1,68 @@
-
 	TO-DO
 
-	* Modify code generation for local interface.  Abstract
-	  interface will come later.
+	* Supress AMI code generation for local interfaces.
 
 	* Need to add syntax/semantic check for local/abstract interfaces
-	  as defined in CCM.  (E.g., a local object can not be the
-	  argument of a remote operation.)
+	  as defined in CCM.  (E.g., a local interface can not be an
+	  argument in an operation of a remote interface.)
 
 	* Remove gen_locality_constraint stuff.
+
+	* Rename TAO/TAO_IDL/util/utl_error.cpp to utl_err.cpp.
+
+	* Need to figure out how to do _narrow if a local interface
+	  inherits from a remote interface.
+
+Wed Apr 19 04:05:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/LocalObject.h:
+	* tao/LocalObject.i:
+	* tao/LocalObject.cpp:
+	* tao/Object.h:
+	* tao/Object.h: Reverted my previous changes about differentiating
+	  local and remote _interface_repository_id methods.  It didn't
+	  solve any problem.  Instead, the LocalObject class should not
+	  implement the _interface_repository_id method to avoid
+	  inheritance ambiguity.  Removed _interface_repository_id method
+	  from LocalObject class.
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp: Added a new queryinterface_helper
+	  method to help traverse the inheritance tree and generate the
+	  proper _tao_QueryInterface implementation.
+
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp: Implemented
+	  local interface code generation and remove the old hack for
+	  generating locality constraint interfaces.
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Removed code
+	  for generating locality constraint interfaces.  They are
+	  superceded by local interfaces.
+
+	* docs/compiler.html:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/driver/drv_args.cpp: Removed support for -Gl flag which
+	  directed idl compiler to generate locality constraint
+	  interfaces.  This is now depreciated.
 
 Tue Apr 18 16:06:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -34,41 +88,6 @@ Tue Apr 18 16:06:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/LocalObject.h:
 	* tao/LocalObject.cpp: Rename <_interface_repository_id> to
 	  <_local_interface_repository_id>.
-
-	* tao/POA_CORBA.h: Oops, revert my previous change on
-	  <_interface_repository_id>.  This file declares skeletons, which
-	  still use <_interface_repository_id>.
-
-Tue Apr 18 14:32:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DynAnyC.cpp:
-	* tao/DynAnyC.h:
-	* tao/IORC.cpp:
-	* tao/IORC.h:
-	* tao/ImplRepoC.cpp:
-	* tao/ImplRepoC.h:
-	* tao/InterceptorC.cpp:
-	* tao/InterceptorC.h:
-	* tao/InterfaceC.cpp:
-	* tao/InterfaceC.h:
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.h:
-	* tao/POAC.cpp:
-	* tao/POAC.h:
-	* tao/POA_CORBA.h:
-	* tao/PolicyC.h:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp:
-	* tao/PollableC.h:
-	* tao/RT_Current.cpp:
-	* tao/RT_Current.h:
-	* tao/TAOC.cpp:
-	* tao/TAOC.h: Renamed method <_interface_repository_id> to
-	  <_remote_interface_repository_id>.
 
 Tue Apr 18 03:17:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -56,10 +56,6 @@ be_visitor_operation_cs::post_process (be_decl *bd)
 int
 be_visitor_operation_cs::visit_operation (be_operation *node)
 {
-  // For locality constraint interface, all operations are pure virtual.
-  if (idl_global->gen_locality_constraint ())
-    return 0;
-
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node
   be_visitor_context ctx;  // visitor context
@@ -354,7 +350,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   // fish out the interceptor from the ORB
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
       << "TAO_ClientRequestInterceptor_Adapter" << be_idt_nl
-      << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));\n" 
+      << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));\n"
       << be_uidt;
   if (this->gen_check_exception (bt) == -1)
     {
@@ -880,4 +876,3 @@ be_visitor_operation_cs::compute_operation_name (be_operation *node)
     }
   return this->operation_name_;
 }
-

@@ -54,12 +54,6 @@ CORBA::LocalObject::_is_a (const CORBA::Char *type_id,
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-const char*
-CORBA::LocalObject::_local_interface_repository_id (void) const
-{
-  return "IDL:omg.org/CORBA/LocalObject:1.0";
-}
-
 // Quickly hash an object reference's representation data.  Used to
 // create hash tables.
 

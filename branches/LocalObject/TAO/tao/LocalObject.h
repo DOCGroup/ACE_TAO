@@ -180,10 +180,6 @@ public:
 
   // = TAO extensions
 
-  virtual const char* _local_interface_repository_id (void) const;
-  // The repository ID for the most derived class, this is an
-  // implementation method and does no remote invocations!
-
   virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV =
                                  TAO_default_environment ());
   // throws NO_IMPLEMENT.

@@ -47,13 +47,12 @@ int
 be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
 {
   if (node->cli_inline_cdr_op_gen () ||
-      node->imported () ||
-      idl_global->gen_locality_constraint ())
+      node->imported ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // If we contain an anonymous sequence, 
+  // If we contain an anonymous sequence,
   // generate code for the sequence here.
 
   // retrieve the base type
@@ -71,8 +70,8 @@ be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
     {
       // CDR operators for sequences are now declared in the .i file,
       // so we pass this state to the function.
-      if (this->gen_anonymous_base_type (base, 
-                                         TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI) 
+      if (this->gen_anonymous_base_type (base,
+                                         TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI)
           == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -80,7 +79,7 @@ be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
                              "visit_sequence - "
                              "gen_anonymous_base_type failed\n"),
                             -1);
-        }              
+        }
     }
 
   // Sequences are *always* generated in the .cpp file, it doesn't

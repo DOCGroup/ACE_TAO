@@ -149,7 +149,6 @@ IDL_GlobalData::IDL_GlobalData (void)
 #else
       exception_support_ (I_FALSE),
 #endif
-      gen_locality_constraint_ (I_FALSE),
       opt_tc_ (I_FALSE),
       case_diff_error_ (I_TRUE),
       ami_call_back_ (I_FALSE),
@@ -1450,18 +1449,6 @@ idl_bool
 IDL_GlobalData::exception_support (void)
 {
   return this->exception_support_;
-}
-
-void
-IDL_GlobalData::gen_locality_constraint (idl_bool val)
-{
-  this->gen_locality_constraint_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_locality_constraint (void)
-{
-  return this->gen_locality_constraint_;
 }
 
 void

@@ -145,7 +145,7 @@ class TAO_Export CORBA_IRObject : public virtual ACE_CORBA_1 (Object)
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_IRObject (void);
@@ -568,7 +568,7 @@ class TAO_Export CORBA_Contained: public virtual CORBA_IRObject
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_Contained (void);
@@ -2800,7 +2800,7 @@ class TAO_Export CORBA_Container: public virtual CORBA_IRObject
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_Container (void);
@@ -2916,7 +2916,7 @@ class TAO_Export CORBA_IDLType: public virtual CORBA_IRObject
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_IDLType (void);
@@ -3420,7 +3420,7 @@ class TAO_Export CORBA_Repository: public virtual CORBA_Container
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_Repository (void);
@@ -3527,7 +3527,7 @@ class TAO_Export CORBA_ModuleDef: public virtual CORBA_Container, public virtual
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_ModuleDef (void);
@@ -3733,7 +3733,7 @@ class TAO_Export CORBA_ConstantDef: public virtual CORBA_Contained
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_ConstantDef (void);
@@ -3897,7 +3897,7 @@ class TAO_Export CORBA_TypedefDef: public virtual CORBA_Contained, public virtua
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_TypedefDef (void);
@@ -4077,7 +4077,7 @@ class TAO_Export CORBA_StructDef: public virtual CORBA_TypedefDef, public virtua
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_StructDef (void);
@@ -4227,7 +4227,7 @@ class TAO_Export CORBA_UnionDef: public virtual CORBA_TypedefDef, public virtual
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_UnionDef (void);
@@ -4351,7 +4351,7 @@ class TAO_Export CORBA_EnumDef: public virtual CORBA_TypedefDef
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_EnumDef (void);
@@ -4475,7 +4475,7 @@ class TAO_Export CORBA_AliasDef: public virtual CORBA_TypedefDef
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_AliasDef (void);
@@ -4590,7 +4590,7 @@ class TAO_Export CORBA_PrimitiveDef: public virtual CORBA_IDLType
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_PrimitiveDef (void);
@@ -4715,7 +4715,7 @@ class TAO_Export CORBA_StringDef: public virtual CORBA_IDLType
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_StringDef (void);
@@ -4839,7 +4839,7 @@ class TAO_Export CORBA_WstringDef: public virtual CORBA_IDLType
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_WstringDef (void);
@@ -4981,7 +4981,7 @@ class TAO_Export CORBA_FixedDef: public virtual CORBA_IDLType
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_FixedDef (void);
@@ -5130,7 +5130,7 @@ class TAO_Export CORBA_SequenceDef: public virtual CORBA_IDLType
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_SequenceDef (void);
@@ -5280,7 +5280,7 @@ class TAO_Export CORBA_ArrayDef: public virtual CORBA_IDLType
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_ArrayDef (void);
@@ -5412,7 +5412,7 @@ class TAO_Export CORBA_ExceptionDef: public virtual CORBA_Contained, public virt
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_ExceptionDef (void);
@@ -5618,7 +5618,7 @@ class TAO_Export CORBA_AttributeDef: public virtual CORBA_Contained
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_AttributeDef (void);
@@ -6444,7 +6444,7 @@ class TAO_Export CORBA_OperationDef: public virtual CORBA_Contained
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_OperationDef (void);
@@ -7112,7 +7112,7 @@ class TAO_Export CORBA_InterfaceDef: public virtual CORBA_Container, public virt
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_InterfaceDef (void);
@@ -7516,7 +7516,7 @@ class TAO_Export CORBA_ValueMemberDef: public virtual CORBA_Contained
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_ValueMemberDef (void);
@@ -7870,7 +7870,7 @@ class TAO_Export CORBA_ValueDef: public virtual CORBA_Container, public virtual 
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_ValueDef (void);
@@ -8056,7 +8056,7 @@ class TAO_Export CORBA_ValueBoxDef: public virtual CORBA_IDLType
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_ValueBoxDef (void);

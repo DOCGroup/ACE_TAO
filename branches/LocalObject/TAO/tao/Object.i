@@ -51,21 +51,17 @@ CORBA_Object::_nil (void)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&ACE_TRY_ENV)
 {
-  if (obj->is_local_)
-    return
-      ACE_reinterpret_cast (CORBA::Object_ptr,
-                            obj->_tao_QueryInterface
-                            (ACE_reinterpret_cast (ptr_arith_t,
-                                                   &CORBA::Object::_narrow)));
-  else
-    return CORBA_Object::_duplicate (obj);
+  return CORBA::Object::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
 {
+  if (CORBA::is_nil (obj))
+    return CORBA::Object::_nil ();
+
   if (obj->is_local_)
     return
       ACE_reinterpret_cast (CORBA::Object_ptr,
@@ -80,14 +76,6 @@ ACE_INLINE TAO_Stub *
 CORBA_Object::_stubobj (void) const
 {
   return this->protocol_proxy_;
-}
-
-ACE_INLINE const char*
-CORBA_Object::_interface_repository_id (void) const
-{
-  return (this->is_local_ ?
-          this->_local_interface_repository_id () :
-          this->_remote_interface_repository_id ());
 }
 
 

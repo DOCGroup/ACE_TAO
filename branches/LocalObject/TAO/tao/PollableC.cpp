@@ -239,7 +239,7 @@ CORBA::Boolean CORBA_Pollable::_is_a (const CORBA::Char *value, CORBA::Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* CORBA_Pollable::_remote_interface_repository_id (void) const
+const char* CORBA_Pollable::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Pollable:1.0";
 }
@@ -335,7 +335,7 @@ CORBA::Boolean CORBA::DIIPollable::_is_a (const CORBA::Char *value, CORBA::Envir
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* CORBA::DIIPollable::_remote_interface_repository_id (void) const
+const char* CORBA::DIIPollable::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/DIIPollable:1.0";
 }
@@ -884,7 +884,7 @@ CORBA::Boolean CORBA_PollableSet::_is_a (const CORBA::Char *value, CORBA::Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
-const char* CORBA_PollableSet::_remote_interface_repository_id (void) const
+const char* CORBA_PollableSet::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/PollableSet:1.0";
 }

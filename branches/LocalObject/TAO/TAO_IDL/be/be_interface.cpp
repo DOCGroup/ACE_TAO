@@ -1789,6 +1789,34 @@ be_interface::is_a_helper (be_interface * /*derived*/,
   return 0;
 }
 
+int
+be_interface::queryinterface_helper (be_interface *derived,
+                                     be_interface *ancestor,
+                                     TAO_OutStream *os)
+{
+  // emit the comparison code
+  *os << "(type == ACE_reinterpret_cast" << be_idt_nl
+      << "(ptr_arith_t," << be_idt_nl
+      << "&" << ancestor->full_name () << "::_narrow" << be_uidt
+      << "))" << be_nl;
+  if (derived == ancestor)
+    *os << "retv = ACE_reinterpret_cast (void*, this);" << be_uidt_nl;
+  else
+    *os << "retv = ACE_reinterpret_cast" << be_idt_nl
+        << "(" << be_idt_nl
+        << "void *," << be_nl
+        << "ACE_static_cast" << be_idt_nl
+        << "(" << be_idt_nl
+        << ancestor->full_name () << "_ptr," << be_nl
+        << "this" << be_uidt_nl
+        << ")" << be_uidt << be_uidt_nl
+        << ")" << be_uidt << be_uidt_nl;
+
+  *os << "else if ";
+
+  return 0;
+}
+
 
 
 int

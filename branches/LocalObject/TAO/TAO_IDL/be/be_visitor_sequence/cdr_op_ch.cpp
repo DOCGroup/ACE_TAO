@@ -45,8 +45,7 @@ int
 be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 {
   if (node->cli_hdr_cdr_op_gen () ||
-      node->imported () ||
-      idl_global->gen_locality_constraint ())
+      node->imported ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();

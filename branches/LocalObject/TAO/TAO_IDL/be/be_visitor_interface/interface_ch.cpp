@@ -174,14 +174,19 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << ");" << be_uidt_nl;
 
       // This method is defined in the header file to workaround old
-      // g++ problems
+      // g++ problems.
       *os << "static " << node->local_name () << "_ptr _nil (void)"
           << be_idt_nl << "{" << be_idt_nl
           << "return (" << node->local_name ()
           << "_ptr)0;" << be_uidt_nl
-          << "}" << be_uidt << "\n" << be_nl;
+          << "}" << be_uidt << "\n\n";
 
-      *os << "static void _tao_any_destructor (void*);\n\n";
+      // No Any operator for local interfaces.
+      if (! node->is_local_interface ())
+        {
+          os->indent ();
+          *os << "static void _tao_any_destructor (void*);\n\n";
+        }
 
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
@@ -196,25 +201,38 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
       // the _is_a method
       os->indent ();
-      *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
-          << "const CORBA::Char *type_id, " << be_nl
-          << "CORBA::Environment &env = " << be_idt_nl
-          << "TAO_default_environment ()"
-          << be_uidt << be_uidt_nl
-          << ");" << be_uidt_nl
-          << "virtual const char* "
-          << "_remote_interface_repository_id (void) const;\n" << be_uidt_nl;
+
+      if (! node->is_local_interface ())
+        *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+            << "const CORBA::Char *type_id, " << be_nl
+            << "CORBA::Environment &env = " << be_idt_nl
+            << "TAO_default_environment ()"
+            << be_uidt << be_uidt_nl
+            << ");" << be_uidt << be_nl;
+
+      // the _tao_QueryInterface method
+      *os << "virtual void *_tao_QueryInterface (ptr_arith_t type);"
+          << be_nl << be_nl;
+
+      // the _interface_repository_id method
+      *os << "virtual const char* _interface_repository_id (void) const;\n"
+          << be_uidt_nl;
 
       // generate the "protected" constructor so that users cannot instantiate
       // us
       *os << "protected:" << be_idt_nl
-          << node->local_name () << " (void);" << be_nl
-          << node->local_name ()
-                << " (TAO_Stub *objref, " << be_idt << be_idt_nl
-          << "TAO_ServantBase *_tao_servant = 0, " << be_nl
-          << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
-                << ");" << be_uidt_nl
-          << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
+          << node->local_name () << " (void);" << be_nl;
+
+      // Local interfaces don't support stub objects.
+      if (! node->is_local_interface ())
+        *os << node->local_name ()
+            << " (TAO_Stub *objref, " << be_idt << be_idt_nl
+            << "TAO_ServantBase *_tao_servant = 0, " << be_nl
+            << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
+            << ");" << be_uidt_nl;
+
+      // Protected destructor.
+      *os << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
@@ -225,23 +243,27 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << be_uidt <<be_uidt_nl;
       *os << "};\n\n";
 
-      // Smart Proxy related classes.
-       be_visitor_context ctx (*this->ctx_);
-       be_visitor *visitor = 0;
-
-       ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
-       visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      be_visitor_context ctx (*this->ctx_);
+      be_visitor *visitor = 0;
+      // Don't support smart proxies for local interfaces.
+      if (! node->is_local_interface ())
         {
+          // Smart Proxy related classes.
+
+          ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "codegen for smart proxy classes failed\n"),
+                                -1);
+            }
           delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for smart proxy classes failed\n"),
-                            -1);
+          visitor = 0;
         }
-      delete visitor;
-      visitor = 0;
 
       os->gen_endif ();
 

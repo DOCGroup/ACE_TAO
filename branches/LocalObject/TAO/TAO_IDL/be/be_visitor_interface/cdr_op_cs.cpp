@@ -39,12 +39,11 @@ be_visitor_interface_cdr_op_cs::~be_visitor_interface_cdr_op_cs (void)
 int
 be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 {
-  // No CDR operations for locality constraint interfaces.
-  if (idl_global->gen_locality_constraint ())
-    return 0;
-
+  // No CDR operations for local interfaces.
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_stub_cdr_op_gen () || node->imported ())
+  if (node->cli_stub_cdr_op_gen () ||
+      node->imported () ||
+      node->is_local_interface ())
     return 0;
 
   // set the substate as generating code for the types defined in our scope

@@ -54,92 +54,87 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   os->indent (); // start with whatever indentation level we are at
 
-  // Skip the generation of collocation factory function pointer
-  // initializer if the interface is locality constraint.
-  if (!idl_global->gen_locality_constraint ())
+  if (node->gen_operation_table () == -1)
     {
-      if (node->gen_operation_table () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ss::"
-                             "visit_interface - "
-                             "codegen for operation table failed\n"),
-                            -1);
-        }
-
-      // Collocation factory function pointer initializer.
-      *os << node->full_name () << "_ptr _TAO_collocation_POA_"
-          << node->flat_name () << "_Stub_Factory (" << be_idt << be_idt_nl
-          << "CORBA::Object_ptr obj" << be_uidt_nl
-          << ")" << be_uidt_nl;
-
-      *os << "{" << be_idt_nl
-          << "TAO_Stub *stub = obj->_stubobj ();" << be_nl << be_nl
-          << "switch (stub->servant_orb_var ()->orb_core"
-          << " ()->get_collocation_strategy ())" << be_idt_nl
-          << "{" << be_nl << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
-
-      if (idl_global->gen_thru_poa_collocation ())
-        *os << "{" << be_nl
-            << node->full_name () << "_ptr retval = 0;" << be_nl
-            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-            << "retval," << be_nl
-            << node->full_coll_name (be_interface::THRU_POA)
-            << " (stub)," << be_nl
-            << "0" << be_uidt_nl
-            << ");" << be_uidt_nl
-            << "return retval;" << be_nl
-            << "}" << be_uidt_nl;
-      else
-        *os << "break;" << be_uidt_nl;
-
-      *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
-
-      if (idl_global->gen_direct_collocation ())
-        *os << "if (obj->_servant () != 0)" << be_idt_nl
-            << "{" << be_idt_nl
-            << node->full_skel_name () << " *servant = ACE_reinterpret_cast ("
-            << node->full_skel_name () << "*, obj->_servant ()->_downcast (\""
-            << node->repoID () << "\"));" << be_nl
-            << "if (servant != 0)" << be_idt_nl
-            << "{" << be_idt_nl
-            << node->full_name () << " *retval = 0;" << be_nl
-            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-            << "retval," << be_nl
-            << node->full_coll_name (be_interface::DIRECT)
-            << " (servant, stub)," << be_nl
-            << "0" << be_uidt_nl
-            << ");" << be_uidt_nl
-            << "return retval;" << be_uidt_nl
-            << "}" << be_uidt << be_uidt_nl
-            << "}" << be_uidt_nl;
-
-      *os << "break;" << be_uidt_nl
-          << "default:" << be_idt_nl
-          << "break;" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "return 0;" << be_uidt_nl
-          << "}\n\n";
-
-      *os << "int _TAO_collocation_POA_" << node->flat_name ()
-          << "_Stub_Factory_Initializer"
-          << " (long dummy)" << be_nl
-          << "{" << be_idt_nl
-          << "ACE_UNUSED_ARG (dummy);" << be_nl << be_nl
-          << "_TAO_collocation_" << node->flat_name ()
-          << "_Stub_Factory_function_pointer = " << be_idt_nl
-          << "_TAO_collocation_POA_" << node->flat_name ()
-          << "_Stub_Factory;" << be_uidt_nl << be_nl
-          << "return 0;" << be_uidt_nl << "}" << be_nl << be_nl;
-
-      *os << "static int _TAO_collocation_POA_" << node->flat_name ()
-          << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
-          << "_TAO_collocation_POA_" << node->flat_name ()
-          << "_Stub_Factory_Initializer ("
-          << "ACE_reinterpret_cast (long, _TAO_collocation_POA_"
-          << node->flat_name () << "_Stub_Factory_Initializer));"
-          << be_uidt_nl << be_nl;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_ss::"
+                         "visit_interface - "
+                         "codegen for operation table failed\n"),
+                        -1);
     }
+
+  // Collocation factory function pointer initializer.
+  *os << node->full_name () << "_ptr _TAO_collocation_POA_"
+      << node->flat_name () << "_Stub_Factory (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_uidt_nl
+      << ")" << be_uidt_nl;
+
+  *os << "{" << be_idt_nl
+      << "TAO_Stub *stub = obj->_stubobj ();" << be_nl << be_nl
+      << "switch (stub->servant_orb_var ()->orb_core"
+      << " ()->get_collocation_strategy ())" << be_idt_nl
+      << "{" << be_nl << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
+
+  if (idl_global->gen_thru_poa_collocation ())
+    *os << "{" << be_nl
+        << node->full_name () << "_ptr retval = 0;" << be_nl
+        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "retval," << be_nl
+        << node->full_coll_name (be_interface::THRU_POA)
+        << " (stub)," << be_nl
+        << "0" << be_uidt_nl
+        << ");" << be_uidt_nl
+        << "return retval;" << be_nl
+        << "}" << be_uidt_nl;
+  else
+    *os << "break;" << be_uidt_nl;
+
+  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
+
+  if (idl_global->gen_direct_collocation ())
+    *os << "if (obj->_servant () != 0)" << be_idt_nl
+        << "{" << be_idt_nl
+        << node->full_skel_name () << " *servant = ACE_reinterpret_cast ("
+        << node->full_skel_name () << "*, obj->_servant ()->_downcast (\""
+        << node->repoID () << "\"));" << be_nl
+        << "if (servant != 0)" << be_idt_nl
+        << "{" << be_idt_nl
+        << node->full_name () << " *retval = 0;" << be_nl
+        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "retval," << be_nl
+        << node->full_coll_name (be_interface::DIRECT)
+        << " (servant, stub)," << be_nl
+        << "0" << be_uidt_nl
+        << ");" << be_uidt_nl
+        << "return retval;" << be_uidt_nl
+        << "}" << be_uidt << be_uidt_nl
+        << "}" << be_uidt_nl;
+
+  *os << "break;" << be_uidt_nl
+      << "default:" << be_idt_nl
+      << "break;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "return 0;" << be_uidt_nl
+      << "}\n\n";
+
+  *os << "int _TAO_collocation_POA_" << node->flat_name ()
+      << "_Stub_Factory_Initializer"
+      << " (long dummy)" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_UNUSED_ARG (dummy);" << be_nl << be_nl
+      << "_TAO_collocation_" << node->flat_name ()
+      << "_Stub_Factory_function_pointer = " << be_idt_nl
+      << "_TAO_collocation_POA_" << node->flat_name ()
+      << "_Stub_Factory;" << be_uidt_nl << be_nl
+      << "return 0;" << be_uidt_nl << "}" << be_nl << be_nl;
+
+  *os << "static int _TAO_collocation_POA_" << node->flat_name ()
+      << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
+      << "_TAO_collocation_POA_" << node->flat_name ()
+      << "_Stub_Factory_Initializer ("
+      << "ACE_reinterpret_cast (long, _TAO_collocation_POA_"
+      << node->flat_name () << "_Stub_Factory_Initializer));"
+      << be_uidt_nl << be_nl;
 
   // constructor
   *os << "// skeleton constructor" << be_nl;
@@ -157,44 +152,37 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         " (void)" << be_nl;
     }
 
-  *os << "{" << be_idt_nl;
-  // No need to initialize optable for locality constraint interface.
-  if (!idl_global->gen_locality_constraint ())
-    *os << "this->optable_ = &tao_" << node->flat_name ()
-        << "_optable;" << be_uidt_nl;
-  else
-    *os << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  // Generate optable
+  *os << "{" << be_idt_nl
+      << "this->optable_ = &tao_" << node->flat_name ()
+      << "_optable;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
-  // Skip copy constructor if interface is locality constraint.
-  if (!idl_global->gen_locality_constraint ())
+  *os << "// copy ctor" << be_nl;
+  // find if we are at the top scope or inside some module
+  if (!node->is_nested ())
     {
-      *os << "// copy ctor" << be_nl;
-      // find if we are at the top scope or inside some module
-      if (!node->is_nested ())
-        {
-          // we are outermost. So the POA_ prefix is prepended to our name
-          *os << node->full_skel_name () << "::POA_"
-              << node->local_name () << " ("
-              << "const POA_" << node->local_name () << "& rhs)";
-        }
-      else
-        {
-          // the POA_ prefix is prepended to our outermost module name
-          *os << node->full_skel_name () << "::"
-              << node->local_name () << " (const "
-              << node->local_name () << "& rhs)";
-        }
-      *os << be_idt_nl
-          << ": ";
-      if (node->traverse_inheritance_graph
-          (be_interface::copy_ctor_helper, os) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "be_visitor_interface_ss::visit_interface - "
-                           " copy ctor generation failed\n"), -1);
-      *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
-          << "{}" << be_nl << be_nl;
+      // we are outermost. So the POA_ prefix is prepended to our name
+      *os << node->full_skel_name () << "::POA_"
+          << node->local_name () << " ("
+          << "const POA_" << node->local_name () << "& rhs)";
     }
+  else
+    {
+      // the POA_ prefix is prepended to our outermost module name
+      *os << node->full_skel_name () << "::"
+          << node->local_name () << " (const "
+          << node->local_name () << "& rhs)";
+    }
+  *os << be_idt_nl
+      << ": ";
+  if (node->traverse_inheritance_graph
+      (be_interface::copy_ctor_helper, os) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "be_visitor_interface_ss::visit_interface - "
+                       " copy ctor generation failed\n"), -1);
+  *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
+      << "{}" << be_nl << be_nl;
 
   *os << "// skeleton destructor" << be_nl;
 
@@ -224,57 +212,52 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  // Skip the generation of default static skeletons if the interface
-  // is locality constraint.
-  if (!idl_global->gen_locality_constraint ())
-    {
-      // generate code for the _is_a skeleton
-      os->indent ();
-      *os << "void " << node->full_skel_name ()
-          << "::_is_a_skel (" << be_idt << be_idt_nl
-          << "CORBA::ServerRequest &_tao_server_request, " << be_nl
-          << "void * _tao_object_reference," << be_nl
-          << "void * /* context */," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
-          << ")" << be_uidt_nl;
-      *os << "{" << be_idt_nl;
-      *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
-      *os << node->full_skel_name () << " *_tao_impl = ("
-          << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
-      *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
-      *os << "CORBA::String_var value;" << be_nl;
-      *os << "if (!((_tao_in >> value.out ())))" << be_idt_nl;
-      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
-      *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
-      *os << "ACE_CHECK;" << be_nl << be_nl;
-      *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
-      *os << "ACE_CHECK;" << be_nl;
-      *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-      *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
-      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
+  // generate code for the _is_a skeleton
+  os->indent ();
+  *os << "void " << node->full_skel_name ()
+      << "::_is_a_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
+      << "void * _tao_object_reference," << be_nl
+      << "void * /* context */," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl;
+  *os << "{" << be_idt_nl;
+  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
+  *os << node->full_skel_name () << " *_tao_impl = ("
+      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
+  *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
+  *os << "CORBA::String_var value;" << be_nl;
+  *os << "if (!((_tao_in >> value.out ())))" << be_idt_nl;
+  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+  *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
+  *os << "ACE_CHECK;" << be_nl << be_nl;
+  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
+  *os << "ACE_CHECK;" << be_nl;
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
+  *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
+  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
 
       // generate code for the _non_existent skeleton
-      *os << "void " << node->full_skel_name ()
-          << "::_non_existent_skel (" << be_idt << be_idt_nl
-          << "CORBA::ServerRequest &_tao_server_request, " << be_nl
-          << "void * _tao_object_reference," << be_nl
-          << "void * /* context */," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
-          << ")" << be_uidt_nl;
-      *os << "{" << be_idt_nl;
-      *os << node->full_skel_name () << " *_tao_impl = ("
-          << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
-      *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);" << be_nl;
-      *os << "ACE_CHECK;" << be_nl << be_nl;
-      *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
-      *os << "ACE_CHECK;" << be_nl;
-      *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-      *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
-      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
-      *os << "}\n\n";
-    }
+  *os << "void " << node->full_skel_name ()
+      << "::_non_existent_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
+      << "void * _tao_object_reference," << be_nl
+      << "void * /* context */," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << ")" << be_uidt_nl;
+  *os << "{" << be_idt_nl;
+  *os << node->full_skel_name () << " *_tao_impl = ("
+      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
+  *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);" << be_nl;
+  *os << "ACE_CHECK;" << be_nl << be_nl;
+  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
+  *os << "ACE_CHECK;" << be_nl;
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
+  *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
+  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  *os << "}\n\n";
 
   os->indent ();
   *os << "CORBA::Boolean " << node->full_skel_name ()
@@ -326,29 +309,24 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "return 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // Also skip the generation of the _dispatch method for locality
-  // constraint interface.
-  if (!idl_global->gen_locality_constraint ())
-    {
-      // now the dispatch method
-      *os << "void " << node->full_skel_name () <<
-        "::_dispatch (CORBA::ServerRequest &req, " <<
-        "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
-      *os << "const char *opname = req.operation (); // retrieve operation name"
-          << be_nl;
-      *os << "// find the skeleton corresponding to this opname" << be_nl;
-      *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
-      *os << "ACE_THROW (CORBA_BAD_OPERATION ());"
-          << be_uidt_nl;
-      *os << "}" << be_nl;
-      *os << "else" << be_idt_nl;
-      *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
-    }
+  // now the dispatch method
+  *os << "void " << node->full_skel_name () <<
+    "::_dispatch (CORBA::ServerRequest &req, " <<
+    "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
+  *os << "const char *opname = req.operation (); // retrieve operation name"
+      << be_nl;
+  *os << "// find the skeleton corresponding to this opname" << be_nl;
+  *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
+  *os << "ACE_THROW (CORBA_BAD_OPERATION ());"
+      << be_uidt_nl;
+  *os << "}" << be_nl;
+  *os << "else" << be_idt_nl;
+  *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   *os << "const char* " << node->full_skel_name ()
       << "::_interface_repository_id (void) const"
@@ -365,68 +343,53 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl;
 
-  // The _this operation is much more simpler for locality constraint
-  // interface.
-  if (idl_global->gen_locality_constraint ())
-    *os << "::" << node->full_name () << " *retval = 0;" << be_nl
+  *os << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())" << be_idt_nl
+      << "switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())" << be_idt_nl
+      << "{" << be_nl
+      << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
+
+      // Thru POA stub
+  if (idl_global->gen_thru_poa_collocation ())
+    *os << "{" << be_idt_nl
+        << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
         << "retval," << be_nl
-        << node->full_coll_name (be_interface::DIRECT)
-        << " (this, stub)," << be_nl
+        << node->full_coll_name (be_interface::THRU_POA) << " (stub)," << be_nl
         << "0" << be_uidt_nl
         << ");" << be_uidt_nl
         << "return retval;" << be_uidt_nl
-        << "}\n\n";
+        << "}" << be_uidt_nl;
   else
-    {
-      *os << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())" << be_idt_nl
-          << "switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())" << be_idt_nl
-          << "{" << be_nl
-          << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
-
-      // Thru POA stub
-      if (idl_global->gen_thru_poa_collocation ())
-        *os << "{" << be_idt_nl
-            << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
-            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-            << "retval," << be_nl
-            << node->full_coll_name (be_interface::THRU_POA) << " (stub)," << be_nl
-            << "0" << be_uidt_nl
-            << ");" << be_uidt_nl
-            << "return retval;" << be_uidt_nl
-            << "}" << be_uidt_nl;
-      else
-        *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
+    *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
 
       // Direct stub
-      *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
-      if (idl_global->gen_direct_collocation ())
-        *os << "{" << be_idt_nl
-            << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
-            << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-            << "retval," << be_nl
-            << node->full_coll_name (be_interface::DIRECT) << " (this, stub)," << be_nl
-            << "0" << be_uidt_nl
-            << ");" << be_uidt_nl
-            << "return retval;" << be_uidt_nl
-            << "}" << be_uidt_nl;
-      else
-        *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
+  *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
+  if (idl_global->gen_direct_collocation ())
+    *os << "{" << be_idt_nl
+        << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
+        << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+        << "retval," << be_nl
+        << node->full_coll_name (be_interface::DIRECT) << " (this, stub)," << be_nl
+        << "0" << be_uidt_nl
+        << ");" << be_uidt_nl
+        << "return retval;" << be_uidt_nl
+        << "}" << be_uidt_nl;
+  else
+    *os << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl;
 
-      *os << "default:" << be_idt_nl
-          << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
-          << "else" << be_idt_nl
-          << "{" << be_idt_nl
-          << "// stub->_incr_refcnt ();" << be_nl
-          << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
-          << "ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);" << be_nl
-          << "CORBA::Object_var obj = tmp;" << be_nl
-          << "return " << "::" << node->full_name ()
-          << "::_unchecked_narrow (obj.in ());" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
-          << "}\n\n";
-    }
+  *os << "default:" << be_idt_nl
+      << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl
+      << "// stub->_incr_refcnt ();" << be_nl
+      << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
+      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub), 0);" << be_nl
+      << "CORBA::Object_var obj = tmp;" << be_nl
+      << "return " << "::" << node->full_name ()
+      << "::_unchecked_narrow (obj.in ());" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}\n\n";
 
   // the _create_collocated_objref method.  If the idl compiler does
   // not generate the type of collocated stub but the orb is asking
