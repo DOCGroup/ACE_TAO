@@ -41,7 +41,7 @@ Results::print_stats (void)
 
   CORBA::ULong i;
 
-  if (this->error_count_ == 0)
+  if (TAO_debug_level > 0 && this->error_count_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Iteration\tReal time (msec)\tUser time (msec)"
@@ -84,19 +84,20 @@ Results::print_stats (void)
                   (avg_system_time < 0.0? 0.0:avg_system_time),
                   (cps < 0.0? 0.0 : cps)));
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "\t%d calls, %d errors\n"
+                  "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=\n",
+                  this->call_count_,
+                  this->error_count_));
     }
-  else
+  else if (this->error_count_ != 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "\tNo time stats printed.  Call count zero or error ocurred.\n"));
-
+      ACE_DEBUG ((LM_DEBUG,
+                  "\tERROR %d faults in %d calls\n"
+                  "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=\n",
+                  this->error_count_,
+                  this->call_count_));
     }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "\t%d calls, %d errors\n"
-              "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=\n",
-              this->call_count_,
-              this->error_count_));
 }
 
 void

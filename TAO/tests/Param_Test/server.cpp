@@ -136,7 +136,8 @@ main (int argc, char *argv[])
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) The IOR is <%s>\n", str.in ()));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) The IOR is <%s>\n", str.in ()));
       if (ior_output_file)
         {
           ACE_OS::fprintf (ior_output_file, "%s", str.in());

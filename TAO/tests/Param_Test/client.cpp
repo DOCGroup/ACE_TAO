@@ -52,9 +52,10 @@ Param_Test_Client<T>::run_sii_test (void)
   Options *opt = OPTIONS::instance (); // get the options
   const char *opname = this->test_object_->opname (); // operation
 
-  ACE_DEBUG ((LM_DEBUG,
-              "********** %s SII *********\n",
-              opname));
+  if (opt->debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                "********** %s SII *********\n",
+                opname));
 
   // Initialize call count and error count.
   this->results_.call_count (0);
@@ -145,7 +146,7 @@ Param_Test_Client<T>::run_sii_test (void)
                   "********** Error running %s SII *********\n",
                   opname));
     }
-  else
+  else if (opt->debug ())
     {
       ACE_DEBUG ((LM_DEBUG,
                   "********** Finished running %s SII *********\n",
@@ -160,9 +161,11 @@ Param_Test_Client<T>::run_dii_test (void)
 {
   const char *opname = this->test_object_->opname ();
   Options *opt = OPTIONS::instance ();
-  ACE_DEBUG ((LM_DEBUG,
-              "********** %s DII *********\n",
-              opname));
+
+  if (opt->debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                "********** %s DII *********\n",
+                opname));
 
   // initialize call count and error count
   this->results_.call_count (0);
@@ -255,7 +258,7 @@ Param_Test_Client<T>::run_dii_test (void)
                   "********** Error running %s DII *********\n",
                   opname));
     }
-  else
+  else if (opt->debug ())
     {
       ACE_DEBUG ((LM_DEBUG,
                   "********** Finished running %s DII *********\n",
