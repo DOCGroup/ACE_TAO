@@ -207,9 +207,6 @@ ACE_OS::mkdir (const char *path, mode_t mode)
   ACE_OS::free(phile_path);
   return result;
 
-#elif defined (VXWORKS)
-  ACE_UNUSED_ARG (mode);
-  ACE_OSCALL_RETURN (::mkdir ((char *) path), int, -1);
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
@@ -218,7 +215,7 @@ ACE_OS::mkdir (const char *path, mode_t mode)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_CHAR_TO_TCHAR (path), 0),
                                           ace_result_),
                         int, -1);
-#elif defined (ACE_WIN32)
+#elif defined (ACE_MKDIR_LACKS_MODE)
   ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::mkdir (path), int, -1);
 #else
@@ -263,14 +260,14 @@ ACE_INLINE int
 ACE_OS::stat (const char *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::stat");
-#if defined (VXWORKS)
-  ACE_OSCALL_RETURN (::stat ((char *) file, stp), int, -1);
+#if defined (ACE_HAS_NONCONST_STAT)
+  ACE_OSCALL_RETURN (::stat (const_cast <char *> (file), stp), int, -1);
 #elif defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (file);
   ACE_UNUSED_ARG (stp);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::stat_f ((char *) file, stp), int, -1);
+  ACE_OSCALL_RETURN (::stat_f (const_cast <char *> (file), stp), int, -1);
 #elif defined (ACE_HAS_WINCE)
   ACE_TEXT_WIN32_FIND_DATA fdata;
 
@@ -305,7 +302,7 @@ ACE_OS::stat (const char *file, ACE_stat *stp)
 #else
   ACE_OSCALL_RETURN (::_stat (file, (struct _stat *) stp), int, -1);
 #endif /* __IBMCPP__ */
-#else /* VXWORKS */
+#else /* ACE_HAS_NONCONST_STAT */
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #endif /* VXWORKS */
 }
@@ -350,31 +347,17 @@ ACE_OS::stat (const wchar_t *file, ACE_stat *stp)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if !defined (ACE_WIN32)
-
 ACE_INLINE mode_t
 ACE_OS::umask (mode_t cmask)
 {
   ACE_OS_TRACE ("ACE_OS::umask");
-# if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+# if defined (ACE_LACKS_UMASK)
   ACE_UNUSED_ARG (cmask);
   ACE_NOTSUP_RETURN ((mode_t)-1);
-# else
-  return ::umask (cmask); // This call shouldn't fail...
-# endif /* VXWORKS || ACE_PSOS */
-}
-
-#else /* ACE_WIN32 */
-
-ACE_INLINE mode_t
-ACE_OS::umask (mode_t cmask)
-{
-#if !defined (ACE_HAS_WINCE)
-  ACE_OS_TRACE ("ACE_OS::umask");
+# elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_umask (cmask), mode_t, -1);
 # else
-  ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_WINCE */
+  return ::umask (cmask); // This call shouldn't fail...
+# endif /* ACE_LACKS_UMASK */
 }
 
-#endif /* WIN32 */

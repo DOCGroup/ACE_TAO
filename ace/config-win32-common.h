@@ -230,6 +230,8 @@
 #define ACE_HAS_VFWPRINTF
 #define ACE_HAS_VSWPRINTF
 
+#define ACE_MKDIR_LACKS_MODE
+
 #define ACE_SIZEOF_LONG_LONG 8
 // Green Hills Native x86 does not support __int64 keyword
 // Neither does mingw32.
