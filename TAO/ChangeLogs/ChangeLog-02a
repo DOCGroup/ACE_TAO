@@ -1,3 +1,13 @@
+Sat May 19 17:17:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html,
+	* docs/pluggable_protocols/index.html (TAO_IIOP_Profile),
+	* orbsvcs/Notify_Service/README,
+	* tests/Param_Test/anyop.cpp (main),
+  	* tests/Param_Test/manipulation.cpp: Fixed all uses of
+	  "iioploc://" with "corbaloc:iiop:".  Thanks to Craig Rodrigues
+ 	  for suggesting this.
+
 Sat May 19 11:02:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed a problem
