@@ -1,3 +1,10 @@
+Mon Mar  4 19:43:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Framework_Component_Test.h (new file):
+        * tests/Framework_Component_Test.cpp: Moved declaration of
+          My_Singleton to .h file so Visual Age C++ can find it when
+          instantiating templates.
+
 Mon Mar 04 11:20:45 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Copy_Disabled.h:

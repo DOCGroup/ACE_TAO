@@ -18,31 +18,13 @@
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "ace/Object_Manager.h"
 #include "ace/SString.h"
 #include "tests/test_config.h"
+#include "tests/Framework_Component_Test.h"
 
 ACE_RCSID(tests, Framework_Component_Test, "$Id$")
 
-/// This is a singleton we will use to test the ACE_Framework_Repository
-class My_Singleton
-{
-public:
-  My_Singleton (void)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("My_Singleton::ctor\n")));
-    }
-  virtual ~My_Singleton (void)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("My_Singleton::dtor\n")));
-    }
-
-  static My_Singleton * instance (void);
-
-  static void close_singleton (void);
-
-private:
-  static My_Singleton *instance_;
-};
 
 My_Singleton *My_Singleton::instance_ = 0;
 
