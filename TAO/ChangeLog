@@ -1,3 +1,9 @@
+Thu Feb 24 09:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/IFRService/*S_T.{h,cpp,inl}:
+          Regenerated
+
 Wed Feb 23 15:47:31 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_sh.cpp:
