@@ -1,3 +1,17 @@
+Fri Sep 10 11:20:47 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SOCK_Acceptor.h,
+	  ace/SOCK_Connector.h: Updated the documentation to clarify what
+ 	  happens wrt blocking vs. non-blocking connects and accepts.
+  	  Thanks to Jose Rubio <jrubio@tr.comm.mot.com> for motivating
+ 	  this change.
+
+Thu Sep  9 16:27:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager,
+	  ace/Process: Added some new patches from Dave Madden to obtain
+ 	  greater control over the spawn() behavior.
+
 Fri Sep 10 14:30:17 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
     	
 	* ace/SOCK_Dgram_Mcast.i: 
