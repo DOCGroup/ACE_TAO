@@ -278,7 +278,10 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/CosNotification.bor:
 	  Removed old Notify files, added Method_Request_Updates file and
 	  updated dependencies.
-
+	
+	* orbsvcs/Notify_Service/Makefile:
+	  Updated dependencies.
+	
 Mon Nov 11 14:28:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/GIOP_Message_Base.cpp (consolidate_fragments): When growing
