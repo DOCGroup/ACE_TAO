@@ -16,6 +16,7 @@ project : acelib, taoversion {
       Transport_Connector.cpp
       Transport.cpp
       Incoming_Message_Queue.cpp
+      Notify_Handler.cpp
       Resume_Handle.cpp
       Profile.cpp
       Endpoint.cpp
@@ -96,6 +97,7 @@ project : acelib, taoversion {
       MProfile.cpp
       Stub.cpp
       Typecode.cpp
+      AbstractBase.cpp
       ValueBase.cpp
       ValueFactory.cpp
       ValueFactory_Map.cpp
@@ -153,6 +155,7 @@ project : acelib, taoversion {
       Muxed_TMS.cpp
       Reply_Dispatcher.cpp
       Synch_Reply_Dispatcher.cpp
+      Synch_Refcountable.cpp
       Asynch_Reply_Dispatcher_Base.cpp
       IOPC.cpp
       PollableC.cpp

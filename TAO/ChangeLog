@@ -1,3 +1,9 @@
+Tue Jul  9 14:05:25 2002  Chad Elliott  <elliott_c@ociweb.com>
+        * orbsvcs/orbsvcs/Loadbalancing.mpc:
+        * tao/tao.mpc:
+
+          Update these mpc files to reflect the current source.
+
 Tue Jul  9 11:28:31 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/PluggableUDP/tests/Performance/server.cpp: Changed
