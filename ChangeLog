@@ -1,3 +1,9 @@
+Tue Oct 15 16:19:33 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	[Bug 1090]
+	* ace/config-freebsd-pthread.h: Add ACE_HAS_GETIFADDRS.  This fixes
+	Bugzilla bug 1090.
+
 Tue Oct 15 10:47:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/SPIPE_Connector.cpp: Fixed a unused variable warning. 
