@@ -141,7 +141,7 @@ namespace TAO
     const S * arg (void) const;
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
