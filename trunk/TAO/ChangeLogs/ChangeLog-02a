@@ -1,3 +1,52 @@
+Wed May  2 16:52:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Added new methods that could dish out memory
+	  always from the global pool. The motivation for a new methods
+	  are:
+	  (1) In olden days out CDR's were created only in the invocation
+	      path and destroyed during the invocation path. If the ORB is
+	      configured with TSS, it made sense to get the allocators
+	      from the TSS. That doesn't hold true anymore as illustrated
+	      by point (2).
+
+	  (2) We now cache CDR streams, message blocks in classes within
+	      the connection handlers. These objects are on a
+	      per-connection basis as opposed to per-thread basis (though
+	      the thread may very well create the connections). We want
+	      the connections to be reused by other threads and so we
+	      cannot destroy the connections when the threads go
+	      away. 
+
+	  The above two reasons motivated adding new methods that dish out
+	  memory from the global pool alone,  even if the ORB has been 
+	  configured to use TSS. 
+
+	* tao/GIOP_Message_Base.cpp: Changes for bug id 871. We were
+	  trying to use a constructor for an InputCDR stream that made a
+	  copy from a message block. The process happened in two steps. It
+	  first allocated memory and then copied the contents. Both of
+	  them are bad. To make things efficient we use only the data
+	  block in which the incoming stream has been read to create a CDR
+	  stream. The same stream is passed onto the higher layers of the
+	  ORB. The stream *never* gets copied. The stream that is handled
+	  by the Reply_Dispatcher only uses this very same  data block to
+	  pass it onto the stubs. So this should give us a neat path with
+	  no-copies to the stubs. But there is one release that can be
+	  removed which will be done in the next cycle. 
+	  
+	* tao/GIOP_Message_Handler.cpp:
+	* tao/GIOP_Message_Handler.h:
+	* tao/GIOP_Message_Handler.inl: Added a new method
+	  steal_data_block (). This gives ownership away of the existing
+	  data_block and creates a new data_block for itself. Further the
+	  message_blocks use the memory from the global memory pool so
+	  that we dont have problems when the message blocks loose
+	  ownership to other threads.
+
+	  We have one more release in the critical path that can be
+	  removed. Once that is removed we can close #871.
+
 Wed May  2 15:14:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/CDR.h (TAO_InputCDR):
