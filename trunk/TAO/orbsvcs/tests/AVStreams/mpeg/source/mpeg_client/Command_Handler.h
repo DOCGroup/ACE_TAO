@@ -217,16 +217,16 @@ class Video_Client_StreamEndPoint
   :public virtual TAO_Client_StreamEndPoint
 {
 public:
-  virtual int handle_preconnect (void);
+  virtual CORBA::Boolean handle_preconnect (void);
   // called before connecting
 
-  virtual int handle_postconnect (void);
+  virtual CORBA::Boolean handle_postconnect (void);
   // called after connecting
 
-  CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder, 
-                          AVStreams::streamQoS &qos_spec, 
-                          const AVStreams::flowSpec &the_spec,  
-                          CORBA::Environment &env);
+//   CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder, 
+//                           AVStreams::streamQoS &qos_spec, 
+//                           const AVStreams::flowSpec &the_spec,  
+//                           CORBA::Environment &env);
 private:
   ACE_SOCK_Dgram dgram_;
 };
