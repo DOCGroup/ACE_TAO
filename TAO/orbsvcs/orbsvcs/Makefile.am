@@ -148,6 +148,11 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosProperty.rc
 
+pkgconfigdata_DATA += TAO_CosProperty.pc
+
+TAO_CosProperty.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty.pc.in
+
 ## Makefile.AV.am
 
 BUILT_SOURCES += \
@@ -437,6 +442,11 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   CosConcurrency.rc
+
+pkgconfigdata_DATA += TAO_CosConcurrency.pc
+
+TAO_CosConcurrency.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency.pc.in
 
 ## Makefile.CosEvent.am
 
@@ -981,6 +991,11 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   CosLifeCycle.rc
 
+pkgconfigdata_DATA += TAO_CosLifeCycle.pc
+
+TAO_CosLifeCycle.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosLifeCycle.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosLifeCycle.pc.in
+
 ## Makefile.FTORB_Utils.am
 
 if !BUILD_MINIMUM_CORBA
@@ -1462,6 +1477,11 @@ nobase_include_HEADERS += \
   CosLoadBalancingS_T.cpp \
   CosLoadBalancing.idl \
   LB_ORT.idl
+
+pkgconfigdata_DATA += TAO_CosLoadBalancing.pc
+
+TAO_CosLoadBalancing.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosLoadBalancing.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosLoadBalancing.pc.in
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_AMI
@@ -2260,6 +2280,11 @@ nobase_include_HEADERS += \
 
 EXTRA_DIST += \
   CosTime.rc
+
+pkgconfigdata_DATA += TAO_CosTime.pc
+
+TAO_CosTime.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTime.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTime.pc.in
 
 ## Makefile.CosTrading.am
 
