@@ -548,13 +548,6 @@ endif
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/objectid.h \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
@@ -569,6 +562,13 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -588,8 +588,9 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -813,8 +814,9 @@ endif
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -1079,13 +1081,6 @@ endif
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/objectid.h \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
@@ -1100,6 +1095,13 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -1119,8 +1121,9 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1383,8 +1386,9 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1535,8 +1539,9 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1749,8 +1754,9 @@ endif
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -1935,8 +1941,9 @@ endif
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2094,8 +2101,9 @@ endif
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2261,8 +2269,9 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2464,8 +2473,9 @@ endif
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -2821,8 +2831,9 @@ endif
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -3184,8 +3195,9 @@ endif
   $(ACE_ROOT)/ace/Map_Manager.cpp \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
@@ -3556,8 +3568,9 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor_String.h \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
