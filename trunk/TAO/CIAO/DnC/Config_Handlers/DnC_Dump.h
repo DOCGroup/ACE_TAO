@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "../Core/DeploymentC.h"
+#include "Config_Handler_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -27,7 +28,7 @@ namespace Deployment
    * @brief This class defines a set of overloaded "dump" methods to print
    * the contents of various IDL data types, which passed as input.
    */
-  class DnC_Dump
+  class Config_Handler_Export DnC_Dump
     {
     public:
       /// Dump functions for CORBA sequences

@@ -47,7 +47,7 @@ using xercesc::DOMNodeFilter;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
-class IR_Handler: public Basic_Handler
+class Config_Handler_Export IR_Handler: public Basic_Handler
 {
 public:
 

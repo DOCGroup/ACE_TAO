@@ -16,6 +16,7 @@
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager.h"
+#include "Config_Handler_export.h"
 
 #include <xercesc/dom/DOM.hpp>
 
@@ -26,7 +27,7 @@ using xercesc::DOMNode;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
-class Basic_Handler {
+class Config_Handler_Export Basic_Handler {
 public:
   typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
   typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;

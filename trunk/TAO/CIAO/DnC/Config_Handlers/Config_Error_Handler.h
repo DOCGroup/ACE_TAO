@@ -10,6 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <xercesc/dom/DOMErrorHandler.hpp>
+#include "Config_Handler_export.h"
 
 using xercesc::DOMErrorHandler;
 using xercesc::DOMError;
@@ -18,7 +19,7 @@ namespace CIAO
 {
   namespace Config_Handler
   {
-    class Config_Error_Handler : public DOMErrorHandler
+    class Config_Handler_Export Config_Error_Handler : public DOMErrorHandler
     {
     public:
 

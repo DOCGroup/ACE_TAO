@@ -51,7 +51,7 @@ using xercesc::DOMNamedNodeMap;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
-class MID_Handler: public Basic_Handler
+class Config_Handler_Export MID_Handler: public Basic_Handler
 {
 public:
 
