@@ -1249,7 +1249,7 @@ ace_thread_adapter (void *args)
   delete thread_args;
 
 #if defined (ACE_WIN32)
-  void *status;
+  void *status = 0;
 
   ACE_SEH_TRY {
     status = (*func) (arg);  // Call thread entry point.

@@ -588,6 +588,8 @@ ACE_ReactorEx::ACE_ReactorEx (size_t size,
     change_state_thread_ (0),
     open_for_business_ (0)
 {
+  ACE_UNUSED_ARG (unused);
+
   if (this->open (size, 0, sh, tq) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ReactorEx"));
 }
@@ -704,6 +706,9 @@ ACE_ReactorEx::open (size_t size,
 		     ACE_Sig_Handler *sh,
 		     ACE_Timer_Queue *tq)
 {
+  ACE_UNUSED_ARG (unused);
+  ACE_UNUSED_ARG (sh);
+
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 

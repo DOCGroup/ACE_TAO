@@ -3358,8 +3358,8 @@ public:
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
   static wchar_t *strcat (wchar_t *s, const wchar_t *t);
-  static wchar_t *strchr (const wchar_t *s, int c);
-  static wchar_t *strrchr (const wchar_t *s, int c);
+  static wchar_t *strchr (const wchar_t *s, wint_t c);
+  static wchar_t *strrchr (const wchar_t *s, wint_t c);
   static int strcmp (const wchar_t *s, const wchar_t *t);
   static wchar_t *strcpy (wchar_t *s, const wchar_t *t);
   static size_t strlen (const wchar_t *s);

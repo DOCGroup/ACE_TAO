@@ -482,6 +482,9 @@ int
 ACE_Proactor::handle_close (ACE_HANDLE handle,
 			    ACE_Reactor_Mask close_mask)
 {
+  ACE_UNUSED_ARG (close_mask);
+  ACE_UNUSED_ARG (handle);
+
   return this->close ();
 }
 
@@ -565,7 +568,7 @@ ACE_Proactor::application_specific_code (ACE_Asynch_Result *asynch_result,
       asynch_result->complete (bytes_transferred,
 			       success,
 			       (void *) completion_key,
-			       errno);
+			       error);
     }
   ACE_SEH_FINALLY
     {
@@ -645,6 +648,11 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 				      const void *completion_key,
 				      u_long error)
 {
+  ACE_UNUSED_ARG (error);
+  ACE_UNUSED_ARG (completion_key);
+  ACE_UNUSED_ARG (success);
+  ACE_UNUSED_ARG (bytes_transferred);
+
   this->handler_.handle_time_out (this->time_, this->act ());
 }
 
