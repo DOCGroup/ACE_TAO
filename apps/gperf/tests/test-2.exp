@@ -1,12 +1,14 @@
-/* C code produced by gperf version 2.5 (GNU C++ version) */
+/* C code produced by gperf version 2.6 (GNU C++ version) */
 /* Command-line: ../src/gperf -n -k1-8 -l  */
+#include <string.h>
 
 #define TOTAL_KEYWORDS 40
 #define MIN_WORD_LENGTH 2
 #define MAX_WORD_LENGTH 14
 #define MIN_HASH_VALUE 1
 #define MAX_HASH_VALUE 256
-/* maximum key range = 256, duplicates = 0 */
+#define HASH_VALUE_RANGE 256
+#define DUPLICATES 0
 
 static unsigned int
 hash (str, len)
@@ -50,7 +52,6 @@ hash (str, len)
         hval += asso_values[str[1]];
       case 1:
         hval += asso_values[str[0]];
-        break;
     }
   return hval;
 }
@@ -170,7 +171,7 @@ in_word_set (str, len)
     {
       int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE && key >= 0)
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
           char *s = wordlist[key];
 

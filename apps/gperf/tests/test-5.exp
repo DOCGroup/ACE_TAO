@@ -1,5 +1,5 @@
-/* C code produced by gperf version 2.5 (GNU C++ version) */
-/* Command-line: ../src/gperf -g -o -j1 -t -p -N is_reserved_word  */
+/* C code produced by gperf version 2.6 (GNU C++ version) */
+/* Command-line: ../src/gperf -a -g -o -j1 -t -p -N is_reserved_word  */
 /* ISO Pascal 7185 reserved words.
  *
  * For GNU Pascal compiler (GPC) by jtv@hut.fi
@@ -9,6 +9,7 @@
  * gperf  -g -o -j1 -t -p -N is_reserved_word
  *
  */
+#include <string.h>
 struct resword { char *name; short token; short iclass;};
 
 #define TOTAL_KEYWORDS 35
@@ -16,13 +17,14 @@ struct resword { char *name; short token; short iclass;};
 #define MAX_WORD_LENGTH 9
 #define MIN_HASH_VALUE 2
 #define MAX_HASH_VALUE 43
-/* maximum key range = 42, duplicates = 0 */
+#define HASH_VALUE_RANGE 42
+#define DUPLICATES 0
 
 inline
 static unsigned int
 hash (str, len)
      char *str;
-     int unsigned len;
+     unsigned int len;
 {
   static unsigned char asso_values[] =
     {
@@ -95,7 +97,7 @@ is_reserved_word (str, len)
     {
       int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE && key >= 0)
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
           char *s = wordlist[key].name;
 

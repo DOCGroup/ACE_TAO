@@ -18,10 +18,13 @@ main (int argc, char *argv[])
   char buf[MAX_LEN];
 
   while (fgets (buf, sizeof buf, stdin) != 0) 
-    if (in_word_set (buf, strlen (buf)) && verbose) 
-      printf ("in word set %s\n", buf);
-    else if (verbose) 
-      printf ("NOT in word set %s\n", buf);
-
+    {
+      int len = strlen (buf) - 1;
+      buf[len] = '\0';
+      if (in_word_set (buf, len) && verbose)
+        printf ("in word set %s\n", buf);
+      else if (verbose) 
+        printf ("NOT in word set %s\n", buf);
+    }
   return 0;
 }
