@@ -1,38 +1,46 @@
+Fri Mar 21 09:48:33 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Added the -static_only option back in to allow generation of
+          static projects only.
+
 Thu Mar 20 19:50:36 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i (ACE_OS::recursive_mutex_cond_unlock): If on WinCE, don't
-	  do the check for RecursionCount; WinCE's structure doesn't have that
-	  member. Also see:
-	  Sat Mar 15 10:55:01 2003  Douglas C. Schmidt
+        * ace/OS.i (ACE_OS::recursive_mutex_cond_unlock): If on WinCE, don't
+          do the check for RecursionCount; WinCE's structure doesn't have that
+          member. Also see:
+          Sat Mar 15 10:55:01 2003  Douglas C. Schmidt
 
 Thu Mar 20 17:51:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* bin/MakeProjectCreator/templates/em3vcp.mpd: Only output a linker
-	  /entry option if building a DLL. Let binary programs pick up the
-	  correct entrypoint from the subsystem type. It defaults to windowsce,
-	  requiring WinMainCRTStartup.
+        * bin/MakeProjectCreator/templates/em3vcp.mpd: Only output a linker
+          /entry option if building a DLL. Let binary programs pick up the
+          correct entrypoint from the subsystem type. It defaults to windowsce,
+          requiring WinMainCRTStartup.
 
 Thu Mar 20 14:11:01 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Codecs.cpp (encode, decode):
+        * ace/Codecs.cpp (encode, decode):
 
-	  Fixed "comparison is always false due to limited range of data
-	  type" warning by removing those comparisons and accompanying
-	  code.
+          Fixed "comparison is always false due to limited range of data
+          type" warning by removing those comparisons and accompanying
+          code.
 
 Thu Mar 20 14:00:53 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Memory_Pool.cpp (find_seg):
+        * ace/Memory_Pool.cpp (find_seg):
 
-	  Fixed overflow in pointer arithmetic on platforms where
-	  sizeof(void*) is greater than sizeof(off_t).  This also fixes a
-	  "cast from pointer to integer of different size" warning.
+          Fixed overflow in pointer arithmetic on platforms where
+          sizeof(void*) is greater than sizeof(off_t).  This also fixes a
+          "cast from pointer to integer of different size" warning.
 
 Thu Mar 20 12:56:26 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Recursive_Condition_Bug_Test.cpp:
+        * tests/Recursive_Condition_Bug_Test.cpp:
 
-	  Fixed unused variable warning in single-threaded builds.
+          Fixed unused variable warning in single-threaded builds.
 
 Thu Mar 20 12:35:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -61,7 +61,7 @@ sub usageAndExit {
                "Usage: $base [-global <file>] [-include <directory>] [-recurse]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR]\n" .
-               $spaces . "[-noreldefs] [-notoplevel] [-static]\n" .
+               $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-type <";
@@ -92,6 +92,7 @@ sub usageAndExit {
 "       -template       Specifies the template name (with no extension).\n" .
 "       -static         Specifies that static projects will be generated in\n" .
 "                       addition to dynamic projects.\n" .
+"       -static_only    Specifies that only static projects will be generated.\n" .
 "       -recurse        Recurse from the current directory and generate from\n" .
 "                       all found input files.\n" .
 "       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
@@ -333,6 +334,10 @@ sub run {
     }
     elsif ($arg eq '-static') {
       $static  = 1;
+    }
+    elsif ($arg eq '-static_only') {
+      $static  = 1;
+      $dynamic = 0;
     }
     elsif ($arg =~ /^-/) {
       $self->usageAndExit();
