@@ -2655,6 +2655,16 @@ TAO_POA::allow_multiple_activations (void) const
     allow_multiple_activations ();
 }
 
+int
+TAO_POA::is_servant_active (
+  PortableServer::Servant servant,
+  int &wait_occurred_restart_call)
+{
+  return this->active_policy_strategies_.servant_retention_strategy ()->
+    is_servant_in_map (servant, wait_occurred_restart_call);
+}
+
+
 void
 TAO_POA::set_servant (PortableServer::Servant servant
                       ACE_ENV_ARG_DECL)

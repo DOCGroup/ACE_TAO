@@ -481,6 +481,10 @@ public:
 
   bool allow_multiple_activations (void) const;
 
+  int is_servant_active (
+    PortableServer::Servant servant,
+    int &wait_occurred_restart_call);
+
 protected:
 
   /// Template method for creating new POA's of this type.

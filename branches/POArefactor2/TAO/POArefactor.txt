@@ -1,3 +1,14 @@
+Mon Nov 15 18:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/IdUniquenessStrategy*.{h,cpp}
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Added is_servant_active to the POA which calls the
+          is_servant_in_map on the servant retention strategy. The id
+          uniqueness strategy now calls the POA instead of the servant
+          retention strategy directly, changed the strategy_init argument to
+          a POA pointer.
+
 Mon Nov 15 18:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Policy_Strategies.cpp:

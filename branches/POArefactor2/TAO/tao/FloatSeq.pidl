@@ -18,9 +18,9 @@
  *
  * and then:
  *
- * cp orig/FloatSeqC.{h,i,cpp} .
+ * cp orig/FloatSeqC.{h,inl,cpp} .
  *
- * The code left in FloatSeqC.{h,i,cpp} is ready for use.
+ * The code left in FloatSeqC.{h,inl,cpp} is ready for use.
  */
 // ================================================================
 

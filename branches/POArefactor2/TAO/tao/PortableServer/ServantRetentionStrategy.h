@@ -47,78 +47,69 @@ namespace TAO
 
       virtual CORBA::ULong waiting_servant_deactivation (void) const = 0;
 
-      virtual
-      void strategy_init (
+      virtual void strategy_init (
         TAO_POA *poa,
         RequestProcessingStrategy* request_processing_strategy
         ACE_ENV_ARG_DECL) = 0;
 
-      virtual
-      int is_servant_in_map (PortableServer::Servant servant,
-                             int &wait_occurred_restart_call) = 0;
+      virtual int is_servant_in_map (PortableServer::Servant servant,
+                                     int &wait_occurred_restart_call) = 0;
 
-      virtual
-      TAO_SERVANT_LOCATION
-      locate_servant (const PortableServer::ObjectId &system_id,
-                      PortableServer::Servant &servant
+      virtual TAO_SERVANT_LOCATION locate_servant (
+        const PortableServer::ObjectId &system_id,
+        PortableServer::Servant &servant
+        ACE_ENV_ARG_DECL) = 0;
+
+      virtual PortableServer::Servant locate_servant (
+        const char *operation,
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall,
+        TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+        int &wait_occurred_restart_call
                       ACE_ENV_ARG_DECL) = 0;
 
-      virtual
-      PortableServer::Servant
-      locate_servant (const char *operation,
-                      const PortableServer::ObjectId &system_id,
-                      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                      int &wait_occurred_restart_call
-                      ACE_ENV_ARG_DECL) = 0;
+      virtual PortableServer::ObjectId *activate_object (
+        PortableServer::Servant servant,
+        CORBA::Short priority,
+        int &wait_occurred_restart_call
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ServantAlreadyActive,
+                           PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual
-      PortableServer::ObjectId *
-      activate_object (PortableServer::Servant servant,
-                       CORBA::Short priority,
-                       int &wait_occurred_restart_call
-                            ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantAlreadyActive,
-                         PortableServer::POA::WrongPolicy)) = 0;
-
-      virtual
-      void
-      activate_object_with_id (const PortableServer::ObjectId &id,
-                               PortableServer::Servant servant,
-                               CORBA::Short priority,
-                               int &wait_occurred_restart_call
-                               ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::ObjectAlreadyActive,
-                   PortableServer::POA::WrongPolicy)) = 0;
+      virtual void activate_object_with_id (
+        const PortableServer::ObjectId &id,
+        PortableServer::Servant servant,
+        CORBA::Short priority,
+        int &wait_occurred_restart_call
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ServantAlreadyActive,
+                           PortableServer::POA::ObjectAlreadyActive,
+                           PortableServer::POA::WrongPolicy)) = 0;
 
       virtual void deactivate_object (const PortableServer::ObjectId &id
                                       ACE_ENV_ARG_DECL) = 0;
 
-      virtual
-      PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference,
-                            PortableServer::ObjectId system_id
-                            ACE_ENV_ARG_DECL) = 0;
+      virtual PortableServer::Servant reference_to_servant (
+        CORBA::Object_ptr reference,
+        PortableServer::ObjectId system_id
+        ACE_ENV_ARG_DECL) = 0;
 
-      virtual
-      PortableServer::ObjectId *
-      reference_to_id (CORBA::Object_ptr reference,
-                       PortableServer::ObjectId system_id
-                       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongAdapter,
-                         PortableServer::POA::WrongPolicy)) = 0;
+      virtual PortableServer::ObjectId *reference_to_id (
+        CORBA::Object_ptr reference,
+        PortableServer::ObjectId system_id
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongAdapter,
+                           PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual
-      PortableServer::Servant
-      id_to_servant (const PortableServer::ObjectId &id
-                     ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ObjectNotActive,
-                         PortableServer::POA::WrongPolicy)) = 0;
+      virtual PortableServer::Servant id_to_servant (
+        const PortableServer::ObjectId &id
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ObjectNotActive,
+                           PortableServer::POA::WrongPolicy)) = 0;
 
       virtual
       CORBA::Object_ptr

@@ -34,7 +34,7 @@ namespace TAO
 
       virtual ~Unique_Id_Uniqueness_Strategy (void);
 
-      void strategy_init (ServantRetentionStrategy *srs);
+      void strategy_init (TAO_POA *poa);
 
       virtual bool is_servant_activation_allowed (
         PortableServer::Servant servant,
@@ -43,7 +43,7 @@ namespace TAO
       virtual bool allow_multiple_activations (void) const;
 
     private:
-      ServantRetentionStrategy* servant_retention_strategy_;
+      TAO_POA* poa_;
     };
   }
 }
