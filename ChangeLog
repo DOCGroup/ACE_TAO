@@ -1,3 +1,9 @@
+Sat Jan 31 08:52:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/smart_proxies.mpb:
+	  Removed requires smart_proxies, there is no need for this and
+	  only prevents the smart_proxies tests from compiling
+
 Fri Jan 30 19:33:49 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/platform_linux.GNU: Allow user to override
