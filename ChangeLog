@@ -1,9 +1,15 @@
+Thu Oct 21 08:43:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Corrected the mismatched ACE_TRACE macros.
+
 Wed Oct 20 14:53:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_main.h: For WinCE, don't intersperse a call to an ace_os_...
-	  function. Just set up a ACE_Main object and call its run() method.
-	  Fixed the run() method on WinCE to take the command line args
-	  that WinMain gets on CE.
+        * ace/OS_main.h: For WinCE, don't intersperse a call to an ace_os_...
+          function. Just set up a ACE_Main object and call its run() method.
+          Fixed the run() method on WinCE to take the command line args
+          that WinMain gets on CE.
 
 Wed Oct 20 10:42:22 2004  Chad Elliott  <elliott_c@ociweb.com>
 
