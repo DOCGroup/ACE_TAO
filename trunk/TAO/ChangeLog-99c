@@ -6,20 +6,20 @@ Tue Jun 15 14:50:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Jun 15 13:24:30 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp:
-	Added ACE_THROW_SPEC macros.
+	* orbsvcs/tests/Simple_Naming/client.cpp: Added ACE_THROW_SPEC
+ 	  macros.
 
 	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
-	Added missing template instantiations, workarounds for g++
-	template problems.
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp: Added
+ 	  missing template instantiations, workarounds for g++ template
+ 	  problems.
 
 Tue Jun 15 12:23:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.h (CORBA_ORB): Removed old comments about perform_work()
-	  and work_pending().  Thanks to Pradeep Gore for pointing this
-	  out.
+ 	  and work_pending() not being supported -- they are actually
+ 	  supported now.  Thanks to Pradeep Gore for pointing this out.
 
 Tue Jun 15 10:57:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
