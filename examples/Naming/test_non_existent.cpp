@@ -5,7 +5,7 @@
 
 ACE_RCSID(Naming, test_non_existent, "$Id$")
 
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   int i;
 
@@ -18,29 +18,28 @@ int main (int, char *[])
 
   ACE_Name_Options *name_options = ns_ptr->name_options ();
 
-  const char *m_argv[] = 
+  const ACE_TCHAR *m_argv[] =
   {
-    "MyName",
-    "-cNODE_LOCAL" ,
+    ACE_TEXT("MyName"),
+    ACE_TEXT("-cNODE_LOCAL") ,
 #if defined (ACE_WIN32)
-    "-lC:\\temp\\non_existent",
+    ACE_TEXT("-lC:\\temp\\non_existent"),
 #else
-    "-l/tmp/foobar.mine",
+    ACE_TEXT("-l/tmp/foobar.mine"),
 #endif /* ACE_WIN32 */
-    NULL
+    0
   };
 
   int m_argc =
-    sizeof (m_argv) / sizeof (char *) -1;
+    sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;
 
-  name_options->parse_args (m_argc,
-                            (char **) m_argv);
+  name_options->parse_args (m_argc, (ACE_TCHAR**)m_argv);
 
   i = ns_ptr->open (ACE_Naming_Context::NODE_LOCAL);
   ACE_DEBUG ((LM_DEBUG,
               "(%P) opened with %d\n",
               i));
-  if (i != 0) 
+  if (i != 0)
     return -1;
 
   i = ns_ptr->bind ("Key_Value",

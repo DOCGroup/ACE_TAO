@@ -6,29 +6,29 @@
 ACE_RCSID(Naming, test_open, "$Id$")
 
 int
-main (int argc, char **argv)
+main (int argc, ACE_TCHAR **argv)
 {
-  const char *host = argc > 1 ? argv[1] : "-hlocalhost";
-  const char *port = argc > 2 ? argv[2] : "-p20012";
+  const ACE_TCHAR *host = argc > 1 ? argv[1] : ACE_TEXT("-hlocalhost");
+  const ACE_TCHAR *port = argc > 2 ? argv[2] : ACE_TEXT("-p20012");
 
   ACE_STATIC_SVC_REGISTER(ACE_Naming_Context);
 
   ACE_Naming_Context ns;
   ACE_Name_Options *name_options = ns.name_options ();
 
-  const char *m_argv[] =
+  const ACE_TCHAR *m_argv[] =
   {
-    "MyName",
-    "-cNET_LOCAL",
+    ACE_TEXT("MyName"),
+    ACE_TEXT("-cNET_LOCAL"),
     host,
     port,
-    NULL
+    0
   };
   int m_argc =
-    sizeof (m_argv) / sizeof (char *) -1;
+    sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;
 
   name_options->parse_args (m_argc,
-                            (char **) m_argv);
+                            (ACE_TCHAR **) m_argv);
 
   int result = ns.open (ACE_Naming_Context::NET_LOCAL);
   ACE_DEBUG ((LM_DEBUG,

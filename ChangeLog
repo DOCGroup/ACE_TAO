@@ -1,7 +1,10 @@
 Tue Dec  4 10:00:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/Reactor/Multicast/client.cpp:
-          Made this file compiling when ACE_USES_WCHAR is set
+        * examples/Naming/test_non_existent.cpp:
+        * examples/Naming/test_open.cpp:
+        * examples/Naming/test_writers.cpp:
+          Made these files compiling when ACE_USES_WCHAR is set
 
 Mon Dec  3 18:19:11 2001  Ossama Othman  <ossama@uci.edu>
 
