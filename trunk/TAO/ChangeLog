@@ -1,3 +1,15 @@
+Thu Apr 24 13:52:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+
+          Reinstated code generation of CDR operators for structs that
+          contain a local interface. The operators are needed by the
+          Any operator template instantiation. The marshaling error
+          required for local interfaces is still output.
+
 Thu Apr 24 13:01:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_type.cpp (gen_common_tmplinst):

@@ -42,8 +42,7 @@ int
 be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
 {
   if (node->cli_hdr_cdr_op_gen ()
-      || node->imported ()
-      || node->is_local ())
+      || node->imported ())
     {
       return 0;
     }
