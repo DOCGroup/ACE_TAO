@@ -10,6 +10,10 @@ Tue Jan 27 06:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_SOCK_IOSTREAM instead of its expansion in the ACE_Svc_Handler
           template instantiation.
 
+        * ace/Event_Handler_T.h,examples/Reactor/Misc/test_event_handler_t.cpp:
+          removed special-case support for ACE_HAS_SIGNFO_T, because ace/OS.h
+          declares a siginfo_t without it.
+
 Tue Jan 27 02:38:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{i,cpp}:
