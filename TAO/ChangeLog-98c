@@ -1,3 +1,15 @@
+Tue Jul 14 13:30:01 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp
+          orbsvcs/orbsvcs/Event/RT_Task.h:
+
+	Added conditional compilation logic to cause EC to use dynamic queues 
+	with appropriate dispatching strategies when the MUF, EDF, or MLF
+	strategies are defined.  This is a temporary measure to allow
+	testing of the EC performance with the dynamic queues, and will
+	be relaced with a better configuration mechanism, based on the results
+	of the off-line scheduling run, in the very near future.
+
 Tue Jul 14 12:00:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
