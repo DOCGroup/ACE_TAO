@@ -333,6 +333,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
+          << "ACE_THROW_SPEC ((CORBA::SystemException," << be_nl
+          << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl
           << "void" << be_nl
@@ -340,6 +342,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
+          << "ACE_THROW_SPEC ((CORBA::SystemException," << be_nl
+          << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl;
     }
