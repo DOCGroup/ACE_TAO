@@ -1,3 +1,16 @@
+Tue Jan 11 23:39:37 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* tao/Strategies/advanced_resource.h (Module):
+	* tao/Strategies/advanced_resource.cpp (Module):
+	Created a simple chain of resource_factories to allow creation of GUIReactors
+	and using Advanced_Resource_Factory the same time.
+
+	* tao/qt_resource_loader.cpp (Module):
+	* tao/qt_resource.h (Module):
+	* tao/qt_resource.cpp (Module):
+	Corrected loading of TAO_QtResource_Factory. Protected against multiple calls
+	of create_reactor_impl.
+
 Sun Jan  9 22:58:24 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/QtTests/svc.conf.xml (Module):

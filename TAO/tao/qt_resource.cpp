@@ -6,19 +6,21 @@
 #endif /* ! __ACE_INLINE__ */
 
 QApplication *TAO_QtResource_Factory::qapp_ = 0 ;
+ACE_QtReactor *TAO_QtResource_Factory::reactor_impl_ = 0;
 
 ACE_Reactor_Impl *
 TAO_QtResource_Factory::allocate_reactor_impl (void) const
 {
   if (this->qapp_ == 0)
     return 0;
-
-  ACE_Reactor_Impl *impl = 0;
-
-  ACE_NEW_RETURN(impl,
-                 ACE_QtReactor (qapp_),
-                 0);
-  return impl;
+  if ( !reactor_impl_ )
+  {
+      ACE_NEW_RETURN(reactor_impl_,
+                     ACE_QtReactor (qapp_),
+                     0);
+      ACE_DEBUG ( ( LM_DEBUG, "ACE_QtReactor created.\n" ) );
+  }
+  return reactor_impl_;
 }
 
 void
@@ -35,4 +37,5 @@ ACE_STATIC_SVC_DEFINE (TAO_QtResource_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_QtReactor, TAO_QtResource_Factory)
+
 

@@ -38,17 +38,18 @@ class TAO_QtReactor_Export TAO_QtResource_Factory : public TAO_Default_Resource_
 {
 
 public:
-  TAO_QtResource_Factory (void);
+    TAO_QtResource_Factory (void);
 
-  /// Set the context used to create the QtReactor
-  static void set_context (QApplication *qapp) ;
+    /// Set the context used to create the QtReactor
+    static void set_context (QApplication *qapp) ;
 
 protected:
-  /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+    /// Obtain the reactor implementation
+    virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
 
 private:
-  static QApplication *qapp_ ;
+    static QApplication *qapp_ ;
+    static ACE_QtReactor *reactor_impl_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -56,7 +57,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_QtReactor, TAO_QtResource_Factory)
-ACE_FACTORY_DECLARE (TAO_QtReactor, TAO_QtResource_Factory)
+    ACE_FACTORY_DECLARE (TAO_QtReactor, TAO_QtResource_Factory)
 
 #include /**/ "ace/post.h"
 #endif /* QTRESOURCE_H */
