@@ -19,34 +19,28 @@ TAO_Server_Strategy_Factory::open (TAO_ORB_Core*)
   return 0;
 }
 
-TAO_Server_Strategy_Factory::CREATION_STRATEGY *
-TAO_Server_Strategy_Factory::creation_strategy (void)
+int
+TAO_Server_Strategy_Factory::enable_poa_locking (void)
 {
-  return 0;
+  return -1;
 }
 
-TAO_Server_Strategy_Factory::ACCEPT_STRATEGY *
-TAO_Server_Strategy_Factory::accept_strategy (void)
-{
-  return 0;
-}
-
-TAO_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
-TAO_Server_Strategy_Factory::concurrency_strategy (void)
-{
-  return 0;
-}
-
-TAO_Server_Strategy_Factory::SCHEDULING_STRATEGY *
-TAO_Server_Strategy_Factory::scheduling_strategy (void)
+int
+TAO_Server_Strategy_Factory::activate_server_connections (void)
 {
   return 0;
 }
 
 int
-TAO_Server_Strategy_Factory::enable_poa_locking (void)
+TAO_Server_Strategy_Factory::server_connection_thread_flags (void)
 {
-  return -1;
+  return 0;
+}
+
+int
+TAO_Server_Strategy_Factory::server_connection_thread_count (void)
+{
+  return 0;
 }
 
 ACE_Lock *
@@ -87,16 +81,3 @@ TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters::Active_Objec
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Creation_Strategy<TAO_Server_Connection_Handler>;
-template class ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<TAO_Server_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_Server_Connection_Handler>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Creation_Strategy<TAO_Server_Connection_Handler>
-#pragma instantiate ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_Server_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_Server_Connection_Handler>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

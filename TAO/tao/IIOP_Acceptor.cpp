@@ -20,6 +20,10 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
 
+ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
+
+// ****************************************************************
+
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),
     base_acceptor_ ()
@@ -97,20 +101,10 @@ int
 TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_CString &address)
 {
-  // address is in the for host:port
   ACE_INET_Addr addr (address.c_str ());
 
-  // open endpoint.  If port ==0 then
-  // calling the open method will cause the system to assign
-  // an ephemeral port number number.
-  if (this->base_acceptor_.open (
-       addr,
-       orb_core->reactor(),
-       orb_core->server_factory ()->creation_strategy (),
-       orb_core->server_factory ()->accept_strategy (),
-       orb_core->server_factory ()->concurrency_strategy (),
-       orb_core->server_factory ()->scheduling_strategy ()) == -1)
-    return -1; // Failure
+  if (this->base_acceptor_.open (orb_core, addr) == -1)
+    return -1;
 
   char tmp_host[MAXHOSTNAMELEN+1];
   this->port_ = addr.get_port_number ();
@@ -128,11 +122,11 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
        this->host_ = tmp_host;
     }
 
-  return 0;  // Success
+  return 0;
 }
 
 
-CORBA::ULong 
+CORBA::ULong
 TAO_IIOP_Acceptor::endpoint_count (void)
 {
   // @@ for now just assume one!
@@ -140,3 +134,16 @@ TAO_IIOP_Acceptor::endpoint_count (void)
   // get the list of available IP interfaces and return this number.
   return 1;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+template class TAO_Acceptor_Impl<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+#pragma instantiate TAO_Acceptor_Impl<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

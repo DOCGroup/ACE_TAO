@@ -10,38 +10,18 @@
 ACE_RCSID(tao, default_server, "$Id$")
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
-  : thread_flags_ (THR_BOUND),
+  : activate_server_connections_ (0),
+    thread_flags_ (THR_BOUND),
     poa_lock_type_ (TAO_THREAD_LOCK),
     poa_mgr_lock_type_ (TAO_THREAD_LOCK),
     event_loop_lock_type_ (TAO_NULL_LOCK),
-    cached_connector_lock_type_ (TAO_THREAD_LOCK),
-    creation_strategy_ (0),
-    concurrency_strategy_ (0)
+    cached_connector_lock_type_ (TAO_THREAD_LOCK)
 {
 }
 
 TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
 {
   // Perform appropriate cleanup.
-}
-
-TAO_Default_Server_Strategy_Factory::CREATION_STRATEGY *
-TAO_Default_Server_Strategy_Factory::creation_strategy (void)
-{
-  if (this->creation_strategy_ == 0)
-    return &this->default_creation_strategy_;
-  else
-    return this->creation_strategy_;
-}
-
-TAO_Default_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
-TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
-{
-  if (this->concurrency_strategy_ == 0)
-    // If no strategy is specified, use the reactive one.
-    return &this->reactive_strategy_;
-  else
-    return this->concurrency_strategy_;
 }
 
 int
@@ -57,14 +37,31 @@ TAO_Default_Server_Strategy_Factory::enable_poa_locking (void)
     }
 }
 
+int
+TAO_Default_Server_Strategy_Factory::activate_server_connections (void)
+{
+  return this->activate_server_connections_;
+}
+
+int
+TAO_Default_Server_Strategy_Factory::server_connection_thread_flags (void)
+{
+  return this->thread_flags_;
+}
+
+int
+TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
+{
+  return 1;
+}
+
 ACE_Lock *
 TAO_Default_Server_Strategy_Factory::create_servant_lock (void)
 {
   ACE_Lock *the_lock = 0;
 
 #if defined (ACE_HAS_THREADS)
-  if (this->concurrency_strategy_ != &this->reactive_strategy_ &&
-      this->concurrency_strategy_ != 0)
+  if (this->activate_server_connections ())
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
                       0);
@@ -146,12 +143,7 @@ TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 int
 TAO_Default_Server_Strategy_Factory::open (TAO_ORB_Core* orb_core)
 {
-  if (reactive_strategy_.open (orb_core->reactor ()) == 0
-      && threaded_strategy_.open (orb_core->thr_mgr (),
-                                  this->thread_flags_) == 0)
-    return 0;
-  else
-    return -1;
+  return 0;
 }
 
 int
@@ -170,9 +162,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "reactive") == 0)
-              this->concurrency_strategy_ = &reactive_strategy_;
+              this->activate_server_connections_ = 0;
             else if (ACE_OS::strcasecmp (name, "thread-per-connection") == 0)
-              this->concurrency_strategy_ = &threaded_strategy_;
+              this->activate_server_connections_ = 1;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0 ||
@@ -346,36 +338,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
   return 0;
 }
 
-TAO_Default_Server_Creation_Strategy::TAO_Default_Server_Creation_Strategy (ACE_Thread_Manager *t)
-  :  ACE_Creation_Strategy<TAO_Server_Connection_Handler> (t)
-{
-}
-
-int
-TAO_Default_Server_Creation_Strategy::make_svc_handler (TAO_Server_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    {
-      // Maybe this show be cached in the constructor, but it is
-      // possible that this method is invoked in several threads
-      // during the lifetime of this object, and the ORB_Core is a
-      // TSS singleton.
-      TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-      ACE_NEW_RETURN (sh,
-                      TAO_Server_Connection_Handler (orb_core),
-                      -1);
-    }
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Reactive_Strategy<TAO_Server_Connection_Handler>;
-template class ACE_Reactive_Strategy<TAO_Server_Connection_Handler>;
-template class ACE_Thread_Strategy<TAO_Server_Connection_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Reactive_Strategy<TAO_Server_Connection_Handler>
-#pragma instantiate ACE_Reactive_Strategy<TAO_Server_Connection_Handler>
-#pragma instantiate ACE_Thread_Strategy<TAO_Server_Connection_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,

@@ -19,7 +19,6 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Strategies_T.h"
-#include "tao/Connect.h"
 #include "tao/params.h"
 
 class TAO_Active_Object_Map_Impl;
@@ -86,38 +85,21 @@ public:
   // "settle" in their initialization since the streategies herein
   // might need some of that information.
 
-  // = Server-side factory types.
-  typedef ACE_Creation_Strategy<TAO_Server_Connection_Handler>
-          CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
-          ACCEPT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<TAO_Server_Connection_Handler>
-          CONCURRENCY_STRATEGY;
-  typedef ACE_Scheduling_Strategy<TAO_Server_Connection_Handler>
-          SCHEDULING_STRATEGY;
-
-  // = Factory methods for the server-side strategies.
-
-  virtual CREATION_STRATEGY *creation_strategy (void);
-  // Return concrete creation strategy.
-
-  virtual ACCEPT_STRATEGY *accept_strategy (void);
-  // Return concrete acceptor strategy.
-
-  virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
-  // Return the concurrency strategy used.
-
-  virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
-  // Return the scheduling strategy used.
-
   virtual int enable_poa_locking (void);
   // Enable POA locking?
 
+  virtual int activate_server_connections (void);
+  // Are server connections active (i.e. run in their own thread)
+
+  virtual int server_connection_thread_flags (void);
+  virtual int server_connection_thread_count (void);
+  // The thread activation parameters
+
   virtual ACE_Lock *create_servant_lock (void);
-  // Return a new lock for use in locking the servant.
+  // Creates and returns a lock for servants.
 
   virtual ACE_Lock *create_event_loop_lock (void);
-  // Return a new lock for use in the ORB event loop.
+  // Creates and returns a lock for the event loop.
 
   virtual ACE_Lock *create_cached_connector_lock (void);
   // Create the lock to be used by the cached connector.

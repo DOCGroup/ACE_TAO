@@ -53,8 +53,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
       if (connector)
         {
           connectors_.insert (connector);
-          connector->open (orb_core->resource_factory (),
-                           orb_core->reactor ());
+          connector->open (orb_core);
         }
       else
         return -1;

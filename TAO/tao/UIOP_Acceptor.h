@@ -27,22 +27,7 @@
 #include "ace/LSOCK_Acceptor.h"
 #include "tao/Pluggable.h"
 #include "tao/UIOP_Connect.h"
-
-// *******************************************************************
-//
-// @@ More hacks until we get things better strategized.
-//                                    -Ossama
-// = Server-side factory types.
-typedef ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_CREATION_STRATEGY;
-typedef ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> UIOP_ACCEPT_STRATEGY;
-typedef ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_CONCURRENCY_STRATEGY;
-typedef ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_SCHEDULING_STRATEGY;
-// *******************************************************************
-
-typedef ACE_Acceptor<TAO_UIOP_Server_Connection_Handler,
-              ACE_LSOCK_ACCEPTOR>
-        TAO_UIOP_BASE_ACCEPTOR;
-// was defined in UIOP_Connect.h
+#include "tao/Acceptor_Impl.h"
 
 // TAO UIOP_Acceptor concrete call defination
 
@@ -76,15 +61,12 @@ public:
 
   CORBA::ULong endpoint_count (void);
   // return the number of profiles this will generate
+
+  typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler,ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
+
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
-
-  // = Server-side factory types.
-  static UIOP_CREATION_STRATEGY UIOP_Creation_Strategy_;
-  static UIOP_ACCEPT_STRATEGY UIOP_Accept_Strategy_;
-  static UIOP_CONCURRENCY_STRATEGY UIOP_Concurrency_Strategy_;
-  static UIOP_SCHEDULING_STRATEGY UIOP_Scheduling_Strategy_;
 };
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

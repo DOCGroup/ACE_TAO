@@ -24,6 +24,7 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
+#include "ace/Map_Manager.h"
 
 // Forward declarations
 class TAO_Client_Connection_Handler;

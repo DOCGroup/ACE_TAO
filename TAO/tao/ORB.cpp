@@ -1,16 +1,12 @@
 // $Id$
 
-// @@ as with TAO, this has a strong coupling to the Internet ORB
-// (IIOP) code.  We should make it know less about that protocol
-// component and have a loose table-driven coupling to ORB/protocol
-// library components.
-
 #include "tao/ORB.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/SOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Auto_Ptr.h"
@@ -20,7 +16,6 @@
 #include "tao/Typecode.h"
 #include "tao/NVList.h"
 #include "tao/Stub.h"
-#include "tao/IIOP_Profile.h"
 #include "tao/DynAny_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -31,7 +26,6 @@
 #include "tao/Marshal.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/GIOP.h"
-#include "tao/IIOP_Acceptor.h"
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/Request.h"
@@ -1411,7 +1405,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // @@ Need to fix!!
 
       if (obj->_stubobj () == 0)
-        return CORBA::string_copy ((CORBA::String) TAO_IIOP_Profile::prefix ());
+        return CORBA::string_copy ("iiop:");
         // @@ This should be some sort of default prefix, not
         // hardcoded to IIOP!! FRED
 
@@ -1690,70 +1684,6 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
           ACE_ENDTRY;
         }
     }
-
-#if 0
-      // Check if the object requested is a collocated object.
-      // @@ FRED - can we make this more generic!!
-      // @@ Fred: this is a question that the Acceptor registry must
-      //    answer, in other words: we should go to the connector
-      //    registry with the Stub object and ask if that object is
-      //    collocated or not.  Then we simply lookup in the POA to
-      //    find the servant.
-      //    How does the Acceptor Registry answer the question:
-      //    - For each profile in the Stub it iterates over the
-      //      acceptors, if the profile and the acceptor have the same
-      //      protocol then we pass the profile to the acceptor.
-      //    - The acceptor downcast the profile, the derived class
-      //      contains a method that returns the address in the
-      //      favourite format for that protocol (i.e. this is not a
-      //      method of the base class); it uses that address to match
-      //      with the addresses it is accepting on.
-      //    - A policy question: do we return when the first acceptor
-      //      matches or if they all match?
-      //      Before answering: "only when they all match" think about
-      //      a server that is restarted with more endpoints (or
-      //      less), shouldn't old, persistent IORs, still be treated
-      //      as collocated?
-      TAO_Object_Adapter *object_adapter = 0;
-      if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
-        {
-          const ACE_INET_Addr &addr =
-            ACE_dynamic_cast (TAO_IIOP_Profile *, pfile)->object_addr ();
-
-          object_adapter = this->orb_core_->get_collocated_object_adapter (addr);
-        }
-      else
-        ACE_ERROR ((LM_ERROR,
-                    "get_collocated_poa NOT Supported for NON-IIOP profile!\n"));
-
-      if (object_adapter != 0)
-        {
-          PortableServer::Servant servant =
-            object_adapter->find_servant (objkey.in (), env);
-          if (env.exception ())
-            {
-#if 0
-              ACE_DEBUG ((LM_DEBUG,
-                          "CORBA_ORB: cannot find servant for <%s>\n",
-                          pfile->addr_to_string ()));
-#endif
-              return 0;
-            }
-
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
-                      "CORBA_ORB: object at <%s> is collocated\n",
-                      pfile->addr_to_string ()));
-#endif
-          return servant;
-        }
-    }
-
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "CORBA_ORB: collocation failed for \n"));
-#endif
-#endif
 
   return 0;
 }

@@ -43,11 +43,17 @@ public:
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h
-  int open (TAO_Resource_Factory *trf, ACE_Reactor *reactor);
+  int open (TAO_ORB_Core *orb_core);
   int close (void);
   int connect (TAO_Profile *profile, TAO_Transport *&transport);
   int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
+
+  typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
+        TAO_NULL_ACTIVATION_STRATEGY;
+
+  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
+        TAO_NULL_CREATION_STRATEGY;
 
 protected:
   // = More TAO_Connector methods, please check the documentation on
@@ -58,6 +64,9 @@ protected:
   virtual int check_prefix (const char *endpoint);
 
 private:
+  TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
+  TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
+
   TAO_IIOP_BASE_CONNECTOR  base_connector_;
   // The connector initiating connection requests for IIOP.
 };

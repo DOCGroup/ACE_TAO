@@ -27,14 +27,12 @@
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Pluggable.h"
 #include "tao/Protocol_Factory.h"
-#include "tao/IIOP_Connector.h"
 #include "tao/corbafwd.h"
 #include "tao/orbconf.h"
 #include "ace/Containers_T.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 
-class TAO_Client_Connection_Handler;
 class TAO_POA;
 class TAO_Object_Adapter;
 
@@ -50,20 +48,8 @@ public:
   ~TAO_Cached_Connector_Lock (void);
 };
 
-typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
-                                    TAO_SOCK_CONNECTOR,
-                                    TAO_Cached_Connector_Lock>
-        TAO_CACHED_CONNECT_STRATEGY;
-
 // ****************************************************************
 
-typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_CREATION_STRATEGY;
-
-typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
-        TAO_NULL_ACTIVATION_STRATEGY;
-
-// ****************************************************************
 class TAO_Export TAO_Protocol_Item
 {
 public:
@@ -126,17 +112,6 @@ public:
 
   virtual TAO_Connector_Registry *get_connector_registry (void);
   // Return an Connector to be utilized.
-
-  virtual TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
-  // Return an Cached Connect Strategy to be utilized.
-
-  virtual TAO_NULL_CREATION_STRATEGY *get_null_creation_strategy (void);
-  // This no-op creation strategy is necessary for using the
-  // <Strategy_Connector> with the <Cached_Connect_Strategy>.
-
-  virtual TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
-  // This no-op activation strategy prevents the cached connector from
-  // calling the service handler's <open> method multiple times.
 
   virtual TAO_POA *get_root_poa (void);
   // Return a root poa to be utilized.
