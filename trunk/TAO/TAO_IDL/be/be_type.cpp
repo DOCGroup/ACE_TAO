@@ -298,7 +298,7 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
       << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T<"
                                 : "TAO_Var_Var_T<")
       << be_idt << be_idt_nl
-      << this->local_name () << be_uidt_nl
+      << this->name () << be_uidt_nl
       << ">;" << be_uidt << be_uidt;
 
   if (st == AST_Type::VARIABLE)
@@ -306,8 +306,8 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
       *os << be_nl<< be_nl
           << "template class" << be_idt_nl
           << "TAO_Out_T<" << be_idt << be_idt_nl
-          << this->local_name () << "," << be_nl
-          << this->local_name () << "_var" << be_uidt_nl
+          << this->name () << "," << be_nl
+          << this->name () << "_var" << be_uidt_nl
           << ">;" << be_uidt << be_uidt;
     }
 
@@ -318,7 +318,7 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
       << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T< \\"
                                 : "TAO_Var_Var_T< \\")
       << be_idt << be_idt_nl
-      << this->local_name () << " \\" << be_uidt_nl
+      << this->name () << " \\" << be_uidt_nl
       << ">" << be_uidt << be_uidt;
 
   if (st == AST_Type::VARIABLE)
@@ -326,8 +326,8 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
       *os << be_nl << be_nl
           << "# pragma instantiate \\" << be_idt_nl
           << "TAO_Out_T< \\" << be_idt << be_idt_nl
-          << this->local_name () << ", \\" << be_nl
-          << this->local_name () << "_var \\" << be_uidt_nl
+          << this->name () << ", \\" << be_nl
+          << this->name () << "_var \\" << be_uidt_nl
           << ">" << be_uidt << be_uidt;
     }
 
