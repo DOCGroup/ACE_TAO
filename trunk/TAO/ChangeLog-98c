@@ -1,3 +1,7 @@
+Mon Jan 05 23:54:13 1998    <coryan@MILONGA>
+
+	* Added project files for a static orbsvcs library.
+
 Mon Jan  5 16:37:14 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* Makefile: Merged client and server rules
