@@ -11,6 +11,10 @@ Wed May 12 08:56:40 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  inside class CORBA_ORB. We needed some forward declarations in
 	  corbafwd.h. 
 
+	  Removed some possibly unnecessary explicit template
+	  instantiation from ObjectIDList.cpp. We were trying to
+	  instantiate a TAO_Object_Field_T<CORBA::ORB>.
+
 Wed May 12 02:38:52 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	  Code review changes and additions for the CosEC Factory.
