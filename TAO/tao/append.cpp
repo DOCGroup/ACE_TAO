@@ -447,10 +447,12 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
     tc->member_count (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-  CORBA::ULong current_member = ~0UL;
-  CORBA::ULong default_member = ~0UL;
+  const CORBA::ULong null_member = ~ACE_static_cast (CORBA::ULong, 0U);
+
+  CORBA::ULong current_member = null_member;
+  CORBA::ULong default_member = null_member;
   for (CORBA::ULong i = 0;
-       i != member_count && current_member == ~0UL;
+       i != member_count && current_member == null_member;
        ++i)
     {
       CORBA::Any *any =
@@ -545,11 +547,11 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
         }
     }
 
-  if (current_member == ~0UL)
+  if (current_member == null_member)
     {
       // Cannot find the current member, check if there is a
       // default...
-      if (default_member != ~0UL)
+      if (default_member != null_member)
         {
           // Good, use the default to append...
           CORBA::TypeCode_ptr member_tc =

@@ -1,28 +1,37 @@
+Thu Mar 23 20:49:43 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/append.cpp (append), skip.cpp (skip): replaced
+          assignment of ~0UL to a CORBA::ULong, because cxx
+          complained about the 64-to-32 bit truncation.  Instead,
+          created a local const null_member that should be platform
+          independent (at the expense of a static_cast, to be really
+          sure that no compiler complains).
+
 Thu Mar 23 15:26:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* PROBLEM-REPORT-FORM:
-	  Modified the text to encourage users to report real bugs to
-	  Bugzilla, that way we don't have to enter them ourselves.  Only
-	  dubious stuff should be reported to the mailing list.
+        * PROBLEM-REPORT-FORM:
+          Modified the text to encourage users to report real bugs to
+          Bugzilla, that way we don't have to enter them ourselves.  Only
+          dubious stuff should be reported to the mailing list.
 
 Thu Mar 23 17:02:46 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/AMI/Makefile:
-	* examples/Buffered_AMI/Makefile: Updated dependencies. Thanks to
-	  Jeff for reporting this.
+        * tests/AMI/Makefile:
+        * examples/Buffered_AMI/Makefile: Updated dependencies. Thanks to
+          Jeff for reporting this.
 
 Thu Mar 23 15:38:23 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp: Fixed a typo.
+        * tao/GIOP_Message_Accept_State.cpp: Fixed a typo.
 
 Thu Mar 23 14:48:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * tao/*.h:
         * orbsvcs/orbsvcs/*.h: Moved the inclusion of <pre.h> down after
-	  the definition of header guard macro.  The original order
-	  violated the ACE programming guideline.  Thanks to Carlos for
-	  catching this.
+          the definition of header guard macro.  The original order
+          violated the ACE programming guideline.  Thanks to Carlos for
+          catching this.
 
 Thu Mar 23 11:06:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
