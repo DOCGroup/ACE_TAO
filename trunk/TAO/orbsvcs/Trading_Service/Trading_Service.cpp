@@ -236,7 +236,7 @@ Trading_Service::bootstrap_to_federation (void)
                 orb->string_to_object (link_info->target, TAO_TRY_ENV);
               TAO_CHECK_ENV;
               remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
-              TAO_TRY_ENV;
+              TAO_CHECK_ENV;
 #else
               remote_lookup = link_info->target.in ();
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
@@ -309,7 +309,7 @@ Trading_Service::shutdown (void)
                 orb->string_to_object (link_info->target, TAO_TRY_ENV);
               TAO_CHECK_ENV;
               remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
-              TAO_TRY_ENV;
+              TAO_CHECK_ENV;
 #else 
               remote_lookup = link_info->target.in ();
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
