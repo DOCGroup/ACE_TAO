@@ -700,9 +700,13 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   retval = this->transport_->bind_reply_dispatcher (this->request_id_,
                                                     &this->rd_);
   if (retval == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                       CORBA::COMPLETED_MAYBE),
-                      -1);
+    {
+      // @@ What is the right way to handle this error?
+      this->close_connection ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
+    }
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
@@ -763,8 +767,17 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // Wait for the reply. We should wait till we receive the reply
   // fully.
   // @@ Check for return value -1 here !!! (Alex).
-  while (!this->transport_->message_received ())
-    this->transport_->wait_for_reply ();
+  int reply_error = 0;
+  while (!this->transport_->message_received () && reply_error == 0)
+    reply_error = this->transport_->wait_for_reply ();
+
+  if (reply_error == -1)
+    {
+      this->close_connection ();
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
+                                             CORBA::COMPLETED_MAYBE),
+                        TAO_INVOKE_EXCEPTION);
+    }
 
   // @@ Alex: the old version of this had some error handling code,
   //    like:  this->profile_->reset_hint ()
@@ -791,7 +804,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-	// Demarshal the system exception and raise it!
+        // Demarshal the system exception and raise it!
         return TAO_INVOKE_EXCEPTION;
       }
       // NOTREACHED.

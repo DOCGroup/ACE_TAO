@@ -70,8 +70,8 @@ TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table
   int index = 0;
   if ((index = init_ref.find ("=")) == ACE_CString::npos)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to parse -ORBInitRef parameter\n"),
-		      -1);
+                       "Unable to parse -ORBInitRef parameter\n"),
+                      -1);
 
   ACE_CString object_id = init_ref.substr (0,index);
   ACE_CString ior = init_ref.substr (index+1);
@@ -137,8 +137,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   TAO_IOR_LookupTable *ior_lookup_table;
 
   ACE_NEW_RETURN (ior_lookup_table,
-		  TAO_IOR_LookupTable,
-		  -1);
+                  TAO_IOR_LookupTable,
+                  -1);
 
   // List of comma separated prefixes from ORBDefaultInitRef.
   ACE_CString default_init_ref;
@@ -428,21 +428,21 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             {
               init_ref = arg_shifter.get_current ();
               if (this->add_to_ior_table (init_ref,*ior_lookup_table) != 0)
-		ACE_ERROR_RETURN ((LM_ERROR,
-				   "Unable to add IOR to the Table\n"),
-				  -1);
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Unable to add IOR to the Table\n"),
+                                  -1);
               arg_shifter.consume_arg ();
             }
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBDefaultInitRef") == 0)
-	{
-	  arg_shifter.consume_arg ();
+        {
+          arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
               default_init_ref = arg_shifter.get_current ();
               arg_shifter.consume_arg ();
             }
-	}
+        }
       else
         arg_shifter.ignore_arg ();
     }
@@ -999,7 +999,8 @@ int
 TAO_ORB_Core::unset_leader_wake_up_follower (void)
   // sets the leader_available flag to false and tries to wake up a follower
 {
-  ACE_Guard <ACE_SYNCH_MUTEX> g (this->leader_follower_lock ());
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                    this->leader_follower_lock (), -1);
 
   this->unset_leader_thread ();
 

@@ -233,11 +233,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
       // Now somebody woke us up to become a leader or to handle
       // our input. We are already removed from the follower queue.
-      if (this->reply_received_)
+      if (this->reply_received_ == 1)
         {
-          // We have received our reply, it is time to return control
-          // to the application....
-
           // But first reset our state in case we are invoked again...
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
@@ -245,6 +242,21 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
           return 0;
         }
+      else if (this->reply_received_ == -1)
+        {
+          // But first reset our state in case we are invoked again...
+          this->reply_received_ = 0;
+          this->expecting_response_ = 0;
+          this->calling_thread_ = ACE_OS::NULL_thread;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - L-F reply error\n"));
+
+          return -1;
+        }
+      // FALLTHROUGH
+      // We only get here if we woke up but the reply is not complete
+      // yet, time to assume the leader role....
     }
 
   // = Leader Code.
@@ -295,7 +307,11 @@ TAO_Wait_On_Leader_Follower::wait (void)
   // Return an error if there was a problem receiving the reply...
   result = 0;
   if (this->reply_received_ == -1)
-    result = -1;
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - L-F reply error\n"));
+      result = -1;
+    }
 
   // Make us reusable
   this->reply_received_ = 0;
@@ -326,25 +342,30 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);
 
-  // Severe error, abort....
-  if (result == -1)
-    {
-      this->reply_received_ = -1;
-      return -1;
-    }
-     
-
   // Data was read, but there the reply has not been completely
   // received...
   if (result == 0)
     return 0;
 
-  // All the data is here!
-  this->reply_received_ = 1;
+  // Severe error, abort....
+  if (result == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - L-F error while waiting on %d\n",
+                  this->transport_->handle ()));
+
+      this->reply_received_ = -1;
+    }
+  else
+    {
+      // All the data is here!
+      this->reply_received_ = 1;
+      result = 0;
+    }
 
   if (ACE_OS::thr_equal (this->calling_thread_, ACE_Thread::self ()))
     {
-      // We are the leader thread, simply return 1 to terminate the
+      // We are the leader thread, simply return 0 to terminate the
       // event loop....
       return 0;
     }
@@ -365,10 +386,10 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
   if (cond == 0 || cond->signal () == -1)
     {
       // Yikes, what do we do here????
-      return 0;
+      return result;
     }
 
-  return 0;
+  return result;
 }
 
 // Register the handler.
