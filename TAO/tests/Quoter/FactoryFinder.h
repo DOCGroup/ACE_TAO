@@ -15,7 +15,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/tao.h"
-#include "FactoryFinderImpl.h"
+#include "FactoryFinder_Impl.h"
 
 #if !defined (QUOTER_FACTORY_FINDER_H)
 #define QUOTER_FACTORY_FINDER_H
