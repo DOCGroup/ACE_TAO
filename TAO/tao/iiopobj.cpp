@@ -16,13 +16,13 @@
 #include "tao/orb.h"
 #include "tao/stub.h"
 #include "tao/iiopobj.h"
+#endif /* 0 */
+
+#include "tao/corba.h"
 
 #if !defined (__ACE_INLINE__)
 #  include "iiopobj.i"
 #endif /* __ACE_INLINE__ */
-#endif /* 0 */
-
-#include "tao/corba.h"
 
 IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
   : iiop_version (src.iiop_version),
