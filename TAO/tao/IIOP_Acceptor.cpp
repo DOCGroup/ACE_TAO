@@ -8,7 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
-#include "tao/RT_Policy_i.h"
+#include "tao/Protocols_Hooks.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -760,60 +760,42 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
 
   // ServerProtocolProperties policy controls protocols configuration.
   // Look for protocol properties in the effective ServerProtocolPolicy.
-  TAO_ServerProtocolPolicy *server_protocols =
-    this->orb_core_->server_protocol ();
-  // Automatically release the policy.
-  CORBA::Object_var auto_release = server_protocols;
-  RTCORBA::TCPProtocolProperties_var tcp_properties =
-    RTCORBA::TCPProtocolProperties::_nil ();
-  RTCORBA::ProtocolList & protocols = server_protocols->protocols_rep ();
 
-  // Find protocol properties for TCP.
   ACE_DECLARE_NEW_CORBA_ENV;
-  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-      if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
-        {
-          tcp_properties =
-            RTCORBA::TCPProtocolProperties::_narrow
-            (protocols[j].transport_protocol_properties.in (),
-             ACE_TRY_ENV);
-          ACE_CHECK_RETURN (-1);
-          break;
-        }
 
-  if (CORBA::is_nil (tcp_properties.in ()))
+  RTCORBA::ProtocolProperties_var properties =
+    RTCORBA::ProtocolProperties::_nil ();
+
+  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
+  
+  if (tph != 0)
     {
-      // TCP Properties were not specified in the effective policy.
-      // We must use orb defaults.
+      const char protocol [] = "iiop";
+      const char *protocol_type = protocol;
 
-      server_protocols = this->orb_core_->default_server_protocol ();
-      // Automatically release the policy.
-      auto_release = server_protocols;
-      // Find protocol properties for IIOP.
-      RTCORBA::ProtocolList & protocols = server_protocols->protocols_rep ();
-      for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-        if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
-          {
-            tcp_properties =
-              RTCORBA::TCPProtocolProperties::_narrow
-              (protocols[j].transport_protocol_properties.in (),
-               ACE_TRY_ENV);
-            ACE_CHECK_RETURN (-1);
-            break;
-          }
+      int hook_return = 
+        tph->call_server_protocols_hook (this->orb_core_,
+                                         properties,
+                                         protocol_type);
 
-      // Orb defaults should never be null, since the ORB initializes
-      // them in ORB_init ...
+      if (hook_return == -1)
+        return -1;
     }
 
-  // Extract and locally store properties of interest.
-  this->tcp_properties_.send_buffer_size =
-    tcp_properties->send_buffer_size ();
-  this->tcp_properties_.recv_buffer_size =
-    tcp_properties->recv_buffer_size ();
-  this->tcp_properties_.no_delay =
-    tcp_properties->no_delay ();
+  RTCORBA::TCPProtocolProperties_var tcp_properties =
+    RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
+                                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
+  if (!CORBA::is_nil (tcp_properties.in ()))
+    {  // Extract and locally store properties of interest.
+      this->tcp_properties_.send_buffer_size =
+        tcp_properties->send_buffer_size ();
+      this->tcp_properties_.recv_buffer_size =
+        tcp_properties->recv_buffer_size ();
+      this->tcp_properties_.no_delay =
+        tcp_properties->no_delay ();
+    }
   // @@ NOTE.  RTCORBA treats a combination of transport+messaging
   // as a single protocol.  Keep this in mind for when we adopt
   // RTCORBA approach to protocols configuration for nonRT use.  In

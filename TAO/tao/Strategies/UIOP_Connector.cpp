@@ -11,11 +11,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
-#include "tao/RT_Policy_i.h"
+#include "tao/Protocols_Hooks.h"
 #include "tao/Base_Connection_Property.h"
 
 ACE_RCSID(Strategies, UIOP_Connector, "$Id$")
-
 
 TAO_UIOP_Connector::TAO_UIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
@@ -421,54 +420,37 @@ TAO_UIOP_Connector::init_uiop_properties (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  // Check ORB-level override for tcp properties.
-  TAO_ClientProtocolPolicy *client_protocols =
-    this->orb_core ()->policy_manager ()->client_protocol ();
-  CORBA::Object_var auto_release = client_protocols;
+  RTCORBA::ProtocolProperties_var properties =
+    RTCORBA::ProtocolProperties::_nil ();
+
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
+
+  if (tph != 0)
+    {
+      const char protocol [] = "uiop";
+      const char *protocol_type = protocol;
+      int hook_result =
+        tph->call_client_protocols_hook (this->orb_core (),
+                                         properties,
+                                         protocol_type);
+
+      if(hook_result == -1)
+        return -1;
+    }
+
   RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
-    RTCORBA::UnixDomainProtocolProperties::_nil ();
+    RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
+                                                    ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  if (client_protocols != 0)
-    {
-      RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
-
-      for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-        if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
-          {
-            uiop_properties =
-              RTCORBA::UnixDomainProtocolProperties::_narrow
-            (protocols[j].transport_protocol_properties.in (),
-             ACE_TRY_ENV);
-            ACE_CHECK_RETURN (-1);
-            break;
-          }
-    }
-
-  if (CORBA::is_nil (uiop_properties.in ()))
-    {
-      // No tcp properties in ORB-level override.  Use ORB defaults.
-      // Orb defaults should never be null - they were initialized by
-      // the ORB_Core.
-      client_protocols = this->orb_core ()->default_client_protocol ();
-      auto_release = client_protocols;
-      RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
-      for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-        if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
-          {
-            uiop_properties =
-              RTCORBA::UnixDomainProtocolProperties::_narrow
-              (protocols[j].transport_protocol_properties.in (),
-               ACE_TRY_ENV);
-            ACE_CHECK_RETURN (-1);
-            break;
-          }
-    }
-
-  // Extract and locally store properties of interest.
-  this->uiop_properties_.send_buffer_size =
-    uiop_properties->send_buffer_size ();
-  this->uiop_properties_.recv_buffer_size =
-    uiop_properties->recv_buffer_size ();
+  if (!CORBA::is_nil (uiop_properties.in ()))
+  {
+    // Extract and locally store properties of interest.
+    this->uiop_properties_.send_buffer_size =
+      uiop_properties->send_buffer_size ();
+    this->uiop_properties_.recv_buffer_size =
+      uiop_properties->recv_buffer_size ();
+  }
 
 #else /* TAO_HAS_RT_CORBA == 1 */
 

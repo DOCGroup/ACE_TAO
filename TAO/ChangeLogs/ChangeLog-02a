@@ -1,3 +1,234 @@
+Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Makefile :
+	  Added the new files.
+
+	* tao/*/Makefile :
+	  Updated dependencies.
+
+	* tao/RT_Protocols_Hooks.h :
+	* tao/RT_Protocols_Hooks.i :
+	* tao/RT_Protocols_Hooks.cpp :
+
+	* tao/Default_Protocols_Hooks.h :
+	* tao/Default_Protocols_Hooks.i :
+	* tao/Default_Protocols_Hooks.cpp :
+
+	* tao/Protocols_Hooks.h:
+	* tao/Protocols_Hooks.i:
+	* tao/Protocols_Hooks.cpp:
+
+	  This change is aimed at removing the dependencies between
+	  RTCORBA and the rest of the TAO library. For the same
+	  purpose, I added hooks for almost all the methods which use
+	  RTCORBA related stuff.
+	  TAO_Protocools_Hooks is the base class from which
+	  TAO_Default_Protocols_Hooks and TAO_RT_Protocols_Hooks derive.
+
+	  If TAO_HAS_RT_CORBA==1, TAO_RT_ORBInitializer::pre_init method
+	  invokes the static method 'TAO_ORB_Core::set_protocols_hooks'
+	  which sets the static variable
+	  'TAO_ORB_Core::protocols_hooks_name' to 'RT_Protocols_Hooks'
+	  thereby causing the control to go to TAO_RT_Protocols_Hooks
+	  methods in case any of the hooks are invoked. Else, the control
+	  goes to the TAO_Default_Protocols_Hooks which does nothing.
+
+	* tao/RT_ORBInitializer.cpp :
+
+	  Invoke the static methods in TAO_ORB_Core and
+	  TAO_RT_Protocols_Hooks to set the new values.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+
+	  Added a new method
+	  TAO_ORB_Core::set_protocols_hooks (const char *)
+	  to set the static variable protocols_hooks_name_. The default
+	  value is "Protocols_Hooks". It can be set to
+	  "RT_Protocols_Hooks".
+
+	  Added another method
+	  TAO_ORB_Core::get_protocols_hooks (void)
+	  to get the desired Protocols_Hooks (TAO_Default_Protocols_Hooks
+	  or TAO_RT_Protocols_Hooks) class depending on the value of
+	  protocols_hooks_name_. The handle to this factory is
+	  TAO_ORB_Core::protocols_hooks_
+
+	  Changed the return values of the following functions to return a
+	  CORBA::Policy * instead of the policies that they are returning
+	  previously.
+
+	  /// Methods for obtaining ORB implementation default values for RT
+	  /// policies.
+	  //@{
+ 	  TAO_PrivateConnectionPolicy *default_private_connection (void) const;
+	  TAO_PriorityBandedConnectionPolicy *
+	  default_priority_banded_connection (void) const;
+          TAO_ClientProtocolPolicy *default_client_protocol (void) const;
+          TAO_ServerProtocolPolicy *default_server_protocol (void) const;
+ 	  TAO_ThreadpoolPolicy *default_threadpool (void) const;
+	  TAO_PriorityModelPolicy *default_priority_model (void) const;
+  	  //@}
+
+	  and
+	  {
+	  TAO_ThreadpoolPolicy *threadpool (void);
+	  TAO_PriorityModelPolicy *priority_model (void);
+          TAO_ServerProtocolPolicy *server_protocol (void);
+	  }
+
+	* tao/Policy_Manager.h :
+	* tao/Policy_Manager.i :
+	* tao/Policy_Manager.cpp :
+
+	  Changed the return values of the following functions to return
+	  CORBA::Policy * in all the classes.
+
+	  {
+	  TAO_PriorityModelPolicy *priority_model (void) const;
+	  TAO_ThreadpoolPolicy *threadpool (void) const;
+	  TAO_PrivateConnectionPolicy *private_connection (void) const;
+	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+	  (void) const;
+	  TAO_ServerProtocolPolicy *server_protocol (void) const;
+          TAO_ClientProtocolPolicy *client_protocol (void) const;
+	  }
+
+	  and
+	  {
+	  TAO_PrivateConnectionPolicy *private_connection (void) const;
+	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+	  (void) const;
+	  TAO_ClientProtocolPolicy *client_protocol (void) const;
+	  }
+
+	  And all these variables are now CORBA::Policy *
+	  {
+	  TAO_PriorityModelPolicy *priority_model_;
+	  TAO_ThreadpoolPolicy *threadpool_;
+	  TAO_PrivateConnectionPolicy *private_connection_;
+	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
+	  TAO_ServerProtocolPolicy *server_protocol_;
+	  TAO_ClientProtocolPolicy *client_protocol_;
+	  }
+
+	  In TAO_Policy_Manager_Impl::copy_from implementation, instead of
+	  calling ACE_NEW_THROW_EX for a new instance of all
+	  classes related to RTCORBA (which are in the #if guard of
+	  TAO_HAS_RT_CORBA==1), invoked the copy function of the
+	  respective classes.
+
+	  In TAO_Policy_Manager_Impl::set_policy_overrides, for the
+	  sections related to RTCORBA, removed unneeded narrows and casts
+	  now that the variables are CORBA::Policy *.
+
+	* tao/Invocation.h:
+	* tao/Invocation.i :
+	* tao/Invocation.cpp :
+
+          Moved part of add_rt_service_context to
+	  TAO_RT_Protocols_Hooks::add_rt_service_context_hook and invoked
+	  the hook instead in
+	  TAO_Invocation::add_rt_service_context method implementation.
+
+	  Added the following two methods to get access to the protected
+	  variables for the add_rt_service_context_hook method in
+	  RT_Protocols_Hooks.cpp
+
+	  {
+	  /// Get the protected variable <endpoint_selection_state_>
+	  TAO_Endpoint_Selection_State get_endpoint_selection_state (void);
+
+	  /// Get the pointer to stub.
+	  TAO_Stub *get_stub (void);
+	  }
+
+	* tao/Stub.h :
+	* tao/Stub.cpp :
+
+	  Call TAO_RT_Protocols_Hooks::call_policy_type_hook in
+	  TAO_Stub::parse_policies to get the policy_type as a (in a
+	  hard-coded way)
+	  CORBA::Ulong value. The policy_type is checked in the hook
+	  method and a CORBA::ULong value is set accordingly. Depending on
+	  this value, the corresponding steps are executed.
+
+	  Changed the return value to CORBA::Policy * for the functions
+	  returning different RTCORBA Policy pointers. The same for all
+	  the RTCORBA Policy_ptr variables.
+
+	  Owing to this change, modified the
+	  TAO_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
+	  TAO_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
+	  TAO_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
+	  methods to remove unnecessary narrows and casts.
+
+	  In TAO_Stub::get_policy,
+	     TAO_Stub::get_client_policy and
+	     TAO_Stub::set_policy_overrides, invoked the
+	  TAO_Protocols_Hooks::validate_policy_type to check the
+	  CORBA::PolicyType. The same strategy used for
+	  call_policy_type method as above.
+
+	  In TAO_Stub::effective_priority_banded_connection,
+	  TAO_Stub::effective_client_protocol, call
+	  effective_priority_banded_connection_hook and
+	  effective_client_protocol_hook respectively to check if override
+	  or exposed policy is to be returned.
+
+	* tao/RT_Invocation_Endpoint_Selectors.h :
+	* tao/RT_Invocation_Endpoint_Selectors.i :
+	* tao/RT_Invocation_Endpoint_Selectors.cpp :
+
+	* tao/Invocation_Endpoint_Selectors.h :
+	* tao/Invocation_Endpoint_Selectors.i :
+	* tao/Invocation_Endpoint_Selectors.cpp :
+
+	  Moved the classes in Invocation_Endpoint_Selectors
+	  which are used only if TAO_HAS_RT_CORBA==1 to these new RT_ files.
+	  This helps helps to simply move the file to the new library when
+	  we are actually creating a new library for RTCORBA.
+
+	  The classes that are moved are:
+	  TAO_Priority_Endpoint_Selector
+	  TAO_Bands_Endpoint_Selector
+	  TAO_Protocol_Endpoint_Selector
+	  TAO_Client_Priority_Policy_Selector
+	  TAO_Priority_Protocol_Selector
+	  TAO_Bands_Protocol_Selector.
+
+	  The other classes are in Invocation_Endpoint_Selectors itself.
+
+	  Also, called the get_selector_hook and
+	  get_selector_bands_policy_hook in
+ 	  TAO_Endpoint_Selector_Factory::get_selector and
+	  get_selector_bands_policy_hook.
+
+	* tao/RT_Policy_i.h:
+	* tao/RT_Policy_i.cpp:
+
+	  Added hooks
+	  TAO_ClientProtocolPolicy::hook and
+	  TAO_ServerProtocolPolicy::hook which are called from
+	  TAO_IIOP(/UIOP)_Connector(/Acceptor)::init_tcp(/uiop)_properties.
+
+	  These hook methods set the RTCORBA::ProtocolProperties_var
+	  &properties depending on the protocol_type. The method
+	  implementation is a little bit hardcoded .. should change in
+	  future.
+
+	* tao/IIOP_Connector.cpp :
+	* tao/IIOP_Acceptor.cpp :
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Acceptor.cpp:
+
+	  Corresponding change as listed above for RT_Policy_i.cpp.
+
+	* tao/PortableServer/POA.cpp :
+	  In TAO_POA_Policies constructor, narrowed down the pointers
+	  returned to the correct policy_vars.
+
 Mon Dec 18 19:48:52 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * TAO_IDL/fe/idl.yy:
@@ -303,7 +534,7 @@ Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
         * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
         * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
 
-          Had to move the implementation of 
+          Had to move the implementation of
           TAO_Exceptions::make_unknown_user_typecode() back into
           TAO. Since it is called before the service repository
           is initialized, it can't be implemented by a dynamic
@@ -311,34 +542,34 @@ Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
 Mon Dec 18 10:45:33 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
 
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
-	* orbsvcs/tests/AVStreams/Latency/control.cpp: 
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/control.cpp:
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp:
 
 	  Fixed compile warnings.
-	
+
 Mon Dec 18 08:03:13 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * tao/Exception.cpp:
         * tao/Exception.h:
 
-          Moved class UnknownUserException and body of method 
+          Moved class UnknownUserException and body of method
           TAO_Exceptions::make_unknown_user_typecode() to the
           DynamicInterface library.
 
@@ -349,7 +580,7 @@ Mon Dec 18 08:03:13 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
         * tao/DynamicInterface/Dynamic_Adapter_Impl.h:
-        
+
           Added virtual method create_unknown_user_typecode().
 
         * tao/DynamicInterface/Unknown_User_Exception.h:

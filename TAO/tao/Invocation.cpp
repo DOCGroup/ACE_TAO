@@ -31,7 +31,6 @@
 
 ACE_RCSID(tao, Invocation, "$Id$")
 
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Invocation_Timeprobe_Description[] =
@@ -200,6 +199,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       this->orb_core_->endpoint_selector_factory ()->get_selector (this,
                                                                    ACE_TRY_ENV);
       ACE_CHECK;
+
       this->is_selector_initialized_ = 1;
     }
 
@@ -555,6 +555,7 @@ TAO_GIOP_Invocation::create_ior_info (void)
   // work if there was forwarding ...  But it seems the problem isn't
   // just here, but the whole addressing mode thing won't work if
   // there was forwarding.
+
   const TAO_MProfile &mprofile = this->stub_->base_profiles ();
 
   for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
@@ -586,48 +587,13 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
 
   if (this->endpoint_selection_state_.priority_model_policy_)
     {
-      if (this->endpoint_selection_state_.priority_model_policy_->
-          get_priority_model () == RTCORBA::CLIENT_PROPAGATED)
-        {
-          // Encapsulate the priority of the current thread into
-          // a service context.
-          TAO_OutputCDR cdr;
-          if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-               == 0)
-              || (cdr << this->endpoint_selection_state_.client_priority_)
-              == 0)
-            ACE_THROW (CORBA::MARSHAL ());
-
-          // @@ The piece of code that comes here should go. It should
-          // be something like this.
-          // IOP::ServiceContext context;
-          // context.context_id = IOP::RTCorbaPriority;
-          // this->op_details_.service_context ().set_context
-          // (context, cdr);
-          // RT Folks can you please do these changes consistently
-          // wherever you guys are adding service context information
-          // - Bala
-          IOP::ServiceContextList &context_list = this->service_info ();
-
-          CORBA::ULong l = context_list.length ();
-          context_list.length (l + 1);
-          context_list[l].context_id = IOP::RTCorbaPriority;
-
-          // Make a *copy* of the CDR stream...
-          CORBA::ULong length = cdr.total_length ();
-          context_list[l].context_data.length (length);
-          CORBA::Octet *buf = context_list[l].context_data.get_buffer ();
-
-          for (const ACE_Message_Block *i = cdr.begin ();
-               i != 0;
-               i = i->cont ())
-            {
-              ACE_OS::memcpy (buf,
-                              i->rd_ptr (),
-                              i->length ());
-              buf += i->length ();
-            }
-        }
+      this->orb_core_->get_protocols_hooks
+        ()->add_rt_service_context_hook (
+                this,
+                this->endpoint_selection_state_.priority_model_policy_,
+                this->endpoint_selection_state_.client_priority_,
+                ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {

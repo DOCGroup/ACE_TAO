@@ -96,7 +96,7 @@ TAO_Policy_Manager::client_priority (void)
     {
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
       return this->impl_.client_priority ();
-    }
+   }
   return 0;
 }
 
@@ -132,7 +132,7 @@ TAO_Policy_Manager::buffering_constraint (void)
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-ACE_INLINE TAO_PriorityModelPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::priority_model (void)
 {
   // Double-checked locking.
@@ -144,7 +144,7 @@ TAO_Policy_Manager::priority_model (void)
   return 0;
 }
 
-ACE_INLINE TAO_ThreadpoolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::threadpool (void)
 {
   // Double-checked locking.
@@ -156,7 +156,7 @@ TAO_Policy_Manager::threadpool (void)
   return 0;
 }
 
-ACE_INLINE TAO_PrivateConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::private_connection (void)
 {
   // Double-checked locking.
@@ -168,7 +168,7 @@ TAO_Policy_Manager::private_connection (void)
   return 0;
 }
 
-ACE_INLINE TAO_PriorityBandedConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::priority_banded_connection (void)
 {
   // Double-checked locking.
@@ -180,7 +180,7 @@ TAO_Policy_Manager::priority_banded_connection (void)
   return 0;
 }
 
-ACE_INLINE TAO_ServerProtocolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::server_protocol (void)
 {
   // Double-checked locking.
@@ -192,7 +192,7 @@ TAO_Policy_Manager::server_protocol (void)
   return 0;
 }
 
-ACE_INLINE TAO_ClientProtocolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::client_protocol (void)
 {
   // Double-checked locking.
@@ -255,20 +255,20 @@ TAO_Policy_Current_Impl::buffering_constraint (void) const
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-ACE_INLINE TAO_PrivateConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current_Impl::private_connection (void) const
 {
   return this->manager_impl_.private_connection ();
 }
 
-ACE_INLINE TAO_PriorityBandedConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current_Impl::priority_banded_connection (void) const
 {
   return this->manager_impl_.priority_banded_connection ();
 }
 
 
-ACE_INLINE TAO_ClientProtocolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current_Impl::client_protocol (void) const
 {
   return this->manager_impl_.client_protocol ();
@@ -354,7 +354,7 @@ TAO_Policy_Current::buffering_constraint (void) const
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-ACE_INLINE TAO_PrivateConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current::private_connection (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
@@ -362,7 +362,7 @@ TAO_Policy_Current::private_connection (void) const
   return impl.private_connection ();
 }
 
-ACE_INLINE TAO_PriorityBandedConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current::priority_banded_connection (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
@@ -370,7 +370,7 @@ TAO_Policy_Current::priority_banded_connection (void) const
   return impl.priority_banded_connection ();
 }
 
-ACE_INLINE TAO_ClientProtocolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_Policy_Current::client_protocol (void) const
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
