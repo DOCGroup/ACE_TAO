@@ -224,6 +224,9 @@ my $ace_root = $ENV{'ACE_ROOT'};
 &ex ("$rm -r $export_dir/DON $export_dir/*.gz $export_dir/*.zip $export_dir/*.bz2")  &&
  die "$0: failed to remove files in $export_dir\n";
 
+&ex ("$rm -r $old_versions_dir/DON")  &&
+ die "$0: failed to remove file in $old_versions_dir\n";
+
 ########
 ######## Setup signal handlers.
 ########
