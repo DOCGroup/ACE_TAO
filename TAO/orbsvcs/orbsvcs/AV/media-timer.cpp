@@ -31,8 +31,11 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
+
+/*
 static const char rcsid[] =
     "@(#) $Header$";
+*/
 
 #include "media-timer.h"
 #include <math.h>
