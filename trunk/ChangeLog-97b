@@ -1,7 +1,8 @@
 Thu Nov 13 05:47:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Thread_Manager.cpp: added ACE_TSS_Singleton<ACE_Dynamic,
-          ACE_Null_Mutex> instantiation.
+          ACE_Null_Mutex> instantiation, for the recent Svc_Handler
+          change.
 
 Thu Nov 13 02:06:58 1997  Chris Cleeland  <cleeland@macarena.cs.wustl.edu>
 
