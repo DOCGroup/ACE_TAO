@@ -5,6 +5,7 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
+#include "ace/OS_NS_arpa_inet.h"
 
 // Default dtor.
 ACE_INLINE
