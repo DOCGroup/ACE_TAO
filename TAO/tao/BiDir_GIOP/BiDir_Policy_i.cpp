@@ -16,8 +16,8 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
     const BiDirPolicy::BidirectionalPolicyValue  val)
   : ACE_NESTED_CLASS (CORBA, Object) ()
   , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
   , ACE_NESTED_CLASS (BiDirPolicy, BidirectionalPolicy) ()
+  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
   , TAO_Local_RefCounted_Object ()
   , value_ (val)
 {
