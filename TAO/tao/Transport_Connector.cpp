@@ -464,7 +464,7 @@ TAO_Connector::check_connection_closure (
   int result = -1;
 
   // Check if the handler has been closed.
-  int closed =
+  bool closed =
     connection_handler->is_closed ();
 
   // In case of failures and close() has not be called.
@@ -488,7 +488,7 @@ TAO_Connector::check_connection_closure (
       if (!closed)
         {
           // Check if the handler has been opened.
-          const int open = connection_handler->is_open ();
+          const bool open = connection_handler->is_open ();
 
           // Some other thread was able to open the handler even
           // though wait failed for this thread.
