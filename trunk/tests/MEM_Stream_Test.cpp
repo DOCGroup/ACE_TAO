@@ -407,7 +407,7 @@ test_concurrent (const ACE_TCHAR *prog,
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   u_short port = 0;
 
@@ -529,7 +529,7 @@ template ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>,
 
 #else
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
 

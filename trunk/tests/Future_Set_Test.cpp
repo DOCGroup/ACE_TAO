@@ -440,7 +440,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<char_star_key, char_star_value, 
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Future_Set_Test"));
 

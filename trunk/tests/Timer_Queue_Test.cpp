@@ -55,7 +55,7 @@ static int max_iterations = 2000;
 static int max_iterations = ACE_DEFAULT_TIMERS * 100;
 #endif
 
-// Amount of time between each timer. 
+// Amount of time between each timer.
 // (0 schedules all the timers to expire at exactly the same time.)
 // in milliseconds
 static int TIMER_DISTANCE = 50;
@@ -75,7 +75,7 @@ public:
     return 0;
   }
 
-  virtual int handle_timeout (const ACE_Time_Value &, 
+  virtual int handle_timeout (const ACE_Time_Value &,
                               const void *arg)
   {
     int *act = (int *) arg;
@@ -501,7 +501,7 @@ public:
 };
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Timer_Queue_Test"));
 

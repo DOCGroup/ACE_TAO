@@ -669,14 +669,14 @@ build_config_object (ACE_Configuration& cfg)
                             data,
                             80))
     return -15;
-  
+
   ACE_TString string((ACE_TCHAR*) 0);// = '0';
   // Try to set the unnamed, default value.
   if (cfg.set_string_value (LoggerSection,
                             0,//string.c_str (),//0, //ACE_TEXT ("x"),
                             ACE_TString (ACE_TEXT ("some string"))))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("could not set value with null name\n")), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("could not set value with null name\n")),
                       -16);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("here\n")));
@@ -686,12 +686,12 @@ build_config_object (ACE_Configuration& cfg)
   if (cfg.get_string_value (LoggerSection,
                             name.c_str (), //0, //ACE_TEXT ("x"),
                             string))
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("error using ACE_TString::c_str() == %d, len == %d\n"),
-                       name.c_str(), name.length ()), 
+                       name.c_str(), name.length ()),
                       -17);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("the value for the unnamed var=(%s)\n"),
               string.c_str ()));
 
@@ -722,10 +722,10 @@ Config_Test::testEquality ()
     }
 
   // populate them equally
-  if (build_config_object (heap1) != 0 || 
+  if (build_config_object (heap1) != 0 ||
       build_config_object (heap2) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("could not build config object\n")), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("could not build config object\n")),
                       -1);
 
   // test equality
@@ -1440,7 +1440,7 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Config_Test"));
   int errors = 0;

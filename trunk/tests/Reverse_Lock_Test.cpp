@@ -19,13 +19,14 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Synch.h"
 
 ACE_RCSID(tests, Reverse_Lock_Test, "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reverse_Lock_Test"));
 

@@ -71,7 +71,7 @@ ACE_SYNCH_RECURSIVE_CONDITION condition_(mutex_);
 // Test driver sets this to non-zero before spawning and to zero for waiter.
 int protected_int = 0;
 
-static ACE_THR_FUNC_RETURN 
+static ACE_THR_FUNC_RETURN
 waiter (void *)
 {
   if (mutex_.acquire () != 0)
@@ -238,7 +238,7 @@ test_4 (void)
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Recursive_Condition_Test"));
 

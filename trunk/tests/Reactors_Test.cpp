@@ -211,7 +211,7 @@ template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactors_Test"));
 

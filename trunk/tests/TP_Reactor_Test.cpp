@@ -1164,7 +1164,7 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>;
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("TP_Reactor_Test"));
 

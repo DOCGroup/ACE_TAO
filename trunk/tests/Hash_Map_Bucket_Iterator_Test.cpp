@@ -70,7 +70,7 @@ typedef ACE_Hash_Map_Bucket_Iterator<ACE_UINT32,
                                      ACE_SYNCH_NULL_MUTEX> HASH_MAP_BUCKET_ITERATOR;
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
   int result = parse_args (argc, argv);

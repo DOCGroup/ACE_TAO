@@ -275,7 +275,7 @@ test_fifo_msg (void)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("FIFO_Test"));
 
@@ -288,7 +288,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
 #else
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("FIFO_Test"));
 

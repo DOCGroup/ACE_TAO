@@ -33,18 +33,20 @@ do { \
 } while (0)
 
 int
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) || defined (ACE_LACKS_FORK)
+// This has been unconditionally turned on for the time being since I can't
+// figure out an easy way to enable it and still keep ACE_TMAIN in a seperate
+// cpp.
+#if 1 || defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) || defined (ACE_LACKS_FORK)
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
 // arguments.  And on platforms that lack fork (), we can't use spawn.
-
-ACE_TMAIN (int argc, ACE_TCHAR* [])
+run_main (int argc, ACE_TCHAR* [])
 {
   ACE_UNUSED_ARG (argc);
 
   ACE_OS::putenv (ACE_TEXT ("TEST_VALUE_POSITIVE=10.2"));
   ACE_OS::putenv (ACE_TEXT ("TEST_VALUE_NEGATIVE=-10.2"));
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
-ACE_TMAIN (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
+run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
 {
   if (argc == 1)
     {

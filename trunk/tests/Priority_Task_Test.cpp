@@ -137,7 +137,7 @@ Priority_Task::svc (void)
   {
     if (errno == ENOTSUP)
     {
-      ACE_DEBUG((LM_DEBUG, 
+      ACE_DEBUG((LM_DEBUG,
                  ACE_TEXT ("getprior not supported on this platform\n")
                ));
       return 0;
@@ -167,7 +167,7 @@ Priority_Task::svc (void)
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Priority_Task_Test"));
 

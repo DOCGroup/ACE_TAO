@@ -19,7 +19,6 @@
 // =====================================================================
 
 #include "test_config.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID(tests, Aio_Platform_Test, "$Id$")
 
@@ -28,7 +27,7 @@ static int do_sysconf (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Doing <sysconf> calls to know the run-time values of POSIX feature limits\n"));
-  
+
   // Call sysconf to find out runtime values.
   errno = 0;
 #if defined (_SC_LISTIO_AIO_MAX)
@@ -79,7 +78,7 @@ static int do_sysconf (void)
   ACE_ERROR ((LM_ERROR,
               "_SC_REALTIME_SIGNALS does not exist on this platform\n"));
 #endif /* _SC_REALTIME_SIGNALS */
-  
+
 
 #if defined (_SC_RTSIG_MAX)
   errno = 0;
@@ -146,14 +145,14 @@ have_asynchio (void)
   ACE_DEBUG ((LM_DEBUG,
               "Before do_sysconf : Errno %d\n",
               errno));
-  
+
   // Check and print the run time values.
   do_sysconf ();
 
   // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG,
               "After do_sysconf: Errno : %d\n", errno));
-  
+
   return 0;
 
 #else /* Not _POSIX_ASYNCHRONOUS_IO */
@@ -164,10 +163,10 @@ have_asynchio (void)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Aio_Platform_Test"));
-  
+
   // Test the #defined and constants and runtime values.
   errno = 0;
   if (have_asynchio () == 0)
@@ -180,7 +179,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "AIO not found.Test failed\n"),
                       -1);
-  
+
   ACE_END_TEST;
 
   return 0;

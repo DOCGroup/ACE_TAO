@@ -223,8 +223,8 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Got %d tasks - correct\n"), num_tasks));
-      if (((task_list[0] == &t1 && task_list[1] == &t2) 
-           || (task_list[1] == &t1 && task_list[0] == &t2)) 
+      if (((task_list[0] == &t1 && task_list[1] == &t2)
+           || (task_list[1] == &t1 && task_list[0] == &t2))
           && task_list[0] != task_list[1])
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
       else
@@ -249,7 +249,7 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Manager_Test"));
   int status = 0;
