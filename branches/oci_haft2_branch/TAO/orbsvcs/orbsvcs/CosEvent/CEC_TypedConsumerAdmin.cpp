@@ -142,9 +142,11 @@ TAO_CEC_Propagate_Typed_Event::work (TAO_CEC_ProxyPushSupplier *supplier
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier>;
+template class TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier>
+#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

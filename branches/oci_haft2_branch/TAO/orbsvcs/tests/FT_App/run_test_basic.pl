@@ -24,8 +24,8 @@ unlink $replica2_ior;
 unlink $data_file;
 my($status) = 0;
 
-my($SV1) = new PerlACE::Process ("release/ft_replica", "-o $factory1_ior -t $replica1_ior -q -ORBInitRef ReplicationManager=NULL");
-my($SV2) = new PerlACE::Process ("release/ft_replica", "-o $factory2_ior -t $replica2_ior -q -ORBInitRef ReplicationManager=NULL");
+my($SV1) = new PerlACE::Process ("release/ft_replica", "-o $factory1_ior -t $replica1_ior -q -f none");
+my($SV2) = new PerlACE::Process ("release/ft_replica", "-o $factory2_ior -t $replica2_ior -q -f none");
 my($CL) = new PerlACE::Process ("release/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 #my($CL) = new PerlACE::Process ("release/ft_client", "-f file://$replica1_iogr -c testscript");
 
