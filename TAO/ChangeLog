@@ -1,3 +1,33 @@
+Thu Jan  6 09:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Checkin of separate footprint issue. This has no influence at the
+          other code, so committed this. When the POA refactoring is merged
+          the ImplRepo code will move to another new library
+
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ServerObject.pidl:
+        * tao/PortableServer/ImplRepoA.cpp:
+        * tao/PortableServer/ImplRepoC.{h,cpp,i,inl}:
+        * tao/PortableServer/ImplRepoS.{h,cpp,i,inl}:
+          Moved the ServerObject interface to its own idl file so
+          that when someone just uses the ServerObject stub and
+          the ImplRepo proxy, he doesn't link in the ImplRepo stub
+          which is big.
+
+        * tao/PortableServer/ServerObjectA.cpp:
+        * tao/PortableServer/ServerObjectC.{h,cpp,inl}:
+        * tao/PortableServer/ServerObjectS.{h,cpp,inl}:
+          New generated files
+
+        * tao/PortableSever/ImplRepo_i.h:
+          Replaced include of ImplRepoS.h with ServerObjectS.h
+
+        * tao/PortableServer/POA.cpp:
+          Added include of ImplRepoC.h
+
+        * tao/Makefile.am:
+          Added new files above
+
 Thu Jan  6 09:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer_include.pidl:
