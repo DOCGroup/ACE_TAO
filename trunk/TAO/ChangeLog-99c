@@ -9,93 +9,74 @@ Mon May 31 18:09:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon May 31 18:19:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/encode.cpp:
-	  Removed a superfluous cast to ACE_Message_Block* in
-	  TAO_Marshal_Union::encode().
+	* tao/encode.cpp: Removed a superfluous cast to ACE_Message_Block*
+ 	  in TAO_Marshal_Union::encode().
 
 Mon May 31 17:45:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Stub.cpp:
-	  Made a change in do_dynamic_call() in the case where the
-	  'return' Any contains only a message block. This was one
-	  of those 'how did this code ever work?' situations, but
-	  it's possible that this branch had never been tested.
-	  After making this small mod, I saw a way to eliminate
-	  two CDR stream constructions (I think). I left the
-	  original code (with the small fix) commented out, so it
-	  can be quickly restored if anyone sees something I 
-	  missed or if there are resulting problems. This fixes a
-	  problem reported by Dale/Christine Wood <dale_wood@Mitel.COM>.
+	* tao/Stub.cpp: Made a change in do_dynamic_call() in the case
+ 	  where the 'return' Any contains only a message block. This was
+ 	  one of those 'how did this code ever work?' situations, but it's
+ 	  possible that this branch had never been tested.  After making
+ 	  this small mod, I saw a way to eliminate two CDR stream
+ 	  constructions (I think). I left the original code (with the
+ 	  small fix) commented out, so it can be quickly restored if
+ 	  anyone sees something I missed or if there are resulting
+ 	  problems. This fixes a problem reported by Dale/Christine Wood
+ 	  <dale_wood@Mitel.COM>.
 
 Mon May 31 17:35:51 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/Options.html:
-
-	  Updated -ORBendpoint documentation with new "default endpoint"
-	  description.
+	* docs/Options.html: Updated -ORBendpoint documentation with new
+ 	  "default endpoint" description.
 
 Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp,
+	  orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp,
+	  orbsvcs/orbsvcs/Time/Timer_Helper.cpp: Fixed a warning on
+	  VxWorks. Replaces long int * ACE_UINT64 with ACE_UINT64 *
+	  ACE_UINT64.
 
 	* Removed tests/InterOp-Naming/InterOp_test.cpp as it was 
 	  obsolete.
 
 Mon May 31 16:44:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.{h,cpp} (close_all):
+	* tao/Acceptor_Registry.{h,cpp} (close_all): Added an
+ 	  Acceptor_Registry::close_all() method that closes all registered
+ 	  open acceptors.
 
-	  Added an Acceptor_Registry::close_all() method that closes all
-	  registered open acceptors.
-
-	* tao/Acceptor_Registry.{h,cpp} (open, open_default):
-
-	  Updated to accept "empty string" endpoints. If an endpoint is
-	  specified with only the protocol, e.g. `uiop://', then open an
-	  Acceptor with a default endpoint. This conforms to the "iioploc"
-	  syntax.  All TAO pluggable protocols will be expected to have
-	  the ability to create a default endpoint.
+	* tao/Acceptor_Registry.{h,cpp} (open, open_default): Updated to
+ 	  accept "empty string" endpoints. If an endpoint is specified
+ 	  with only the protocol, e.g. `uiop://', then open an Acceptor
+ 	  with a default endpoint. This conforms to the "iioploc" syntax.
+  	  All TAO pluggable protocols will be expected to have the ability
+ 	  to create a default endpoint.
 
 	  Minor cosmetic changes.
 
-	* tao/Connector_Registry.cpp (close_all):
+	* tao/Connector_Registry.cpp (close_all): Minor cosmetic changes.
 
-	  Minor cosmetic changes.
-
-	* tao/ORB_Core.cpp (fini): 
-
-	  Added calls to Connector_Registry::close_all() and
-	  Acceptor_Registry::close_all() to make sure all connectors and
-	  acceptors are shutdown properly.
+	* tao/ORB_Core.cpp (fini): Added calls to
+ 	  Connector_Registry::close_all() and
+ 	  Acceptor_Registry::close_all() to make sure all connectors and
+ 	  acceptors are shutdown properly.
 	
-	* tao/IIOP_Profile.cpp (set):
-
-	  Added a comment about passing in TAO_ORB_Core as a parameter,
-	  instead of using the TAO_ORB_Core singleton.
+	* tao/IIOP_Profile.cpp (set): Added a comment about passing in
+ 	  TAO_ORB_Core as a parameter, instead of using the TAO_ORB_Core
+ 	  singleton.
 	
-	* tao/UIOP_Connector.cpp: 
+	* tao/UIOP_Connector.cpp: Fixed pragma template instantiation that
+ 	  was split between two lines without a backslash.
 
-	  Fixed pragma template instantiation that was split between two
-	  lines without a backslash.
+	* tao/UIOP_Profile.cpp (parse_string): Corrected memory
+ 	  allocation/deallocation mismatch.  Memory was being allocated
+ 	  using CORBA::string_alloc() but deallocated by delete [].
 
-	* tao/UIOP_Profile.cpp (parse_string):
-
-	  Corrected memory allocation/deallocation mismatch.  Memory was
-	  being allocated using CORBA::string_alloc() but deallocated by
-	  delete [].
-
-	* tao/params.cpp:
-
-	  ACE_Unbounded_Set_Iterator<ACE_CString> template was being
-	  incorrectly instantiated with a second template argument.  In
-	  addition, ACE_CString was mispelled "ACE_Cstring."  
-
-Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
-
-	Fixed a warning on VxWorks. Replaces long int * ACE_UINT64
-	with ACE_UINT64 * ACE_UINT64. Changed the following files :
-
-	*orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
-	*orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
-	*orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+	* tao/params.cpp: ACE_Unbounded_Set_Iterator<ACE_CString> template
+ 	  was being incorrectly instantiated with a second template
+ 	  argument.  In addition, ACE_CString was mispelled "ACE_Cstring."
 
 Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
