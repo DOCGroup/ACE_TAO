@@ -1,3 +1,11 @@
+Fri Sep  7 17:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Thread_Pool_Reactor_Resume_Test.cpp: Initialised the lock
+	  to null  in the constrcutor before allocating memory for
+	  it. This was done to remove the ABW errors in
+	  purify. This should remove the problem that we see with this
+	  test in our daily builds with SunCC 4.2.
+
 Fri Sep  7 15:51:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Logging_Strategy_Test.cpp: Included Auto_Ptr.h.
