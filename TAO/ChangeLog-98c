@@ -1,3 +1,11 @@
+Fri Nov 14 17:08:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/iiopobj.cpp: Make sure that host is set to 0 in all the
+ 	  constructors.
+
+	* tao/iiopobj.cpp (Profile): Modified the code to consistently
+	  store a NUL at the end of each object key string.
+
 Fri Nov 14 17:10:20 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* cubit_i.cpp: Chaged &d to %d in ACE_ERROR
@@ -118,11 +126,6 @@ Fri Nov 14 13:02:52 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	method. All we do is pass a 0 (NUL) argument. This suffices
 	because we have already decoded the host and port number. So all
 	information is with us to set the server address.
-
-Fri Nov 14 00:03:20 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* tao/iiopobj.cpp (Profile): Modified the code to consistently
-	  store a NUL at the end of each object key string.
 
 Fri Nov 14 00:29:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
