@@ -266,10 +266,12 @@ ACE_SSL_SOCK_Stream::close (void)
   // connection, not 0.
   int status = ::SSL_shutdown (this->ssl_);
 
+
   if (status <= 0)
     {
       switch (::SSL_get_error (this->ssl_, status))
       {
+#if 0
       case SSL_ERROR_WANT_WRITE:
         ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_WANT_WRITE\n"));
         break;
@@ -282,15 +284,29 @@ ACE_SSL_SOCK_Stream::close (void)
       case SSL_ERROR_NONE:
         ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_NONE\n"));
         break;
+#endif  /* 0 */
       case SSL_ERROR_SYSCALL:
-        ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_SYSCALL\n"));
-        break;
+        // ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_SYSCALL\n"));
+
+        // Ignore this error condition.
+
+        // Don't set the handle in OpenSSL; only in the
+        // SSL_SOCK_Stream.  We do this to avoid any potential side
+        // effects.  Invoking ACE_SSL_SOCK::set_handle() bypasses the
+        // OpenSSL SSL_set_fd() call ACE_SSL_SOCK_Stream::set_handle()
+        // does.
+        this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
+
+        return this->stream_.close ();
+        // break;
+#if 0
       case SSL_ERROR_ZERO_RETURN:
         ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_ZERO_RETURN\n"));
         break;
+#endif /* 0 */
       default:
 #ifndef ACE_NDEBUG
-        ACE_DEBUG ((LM_DEBUG, "STATUS = %d\n", status));
+        // ACE_DEBUG ((LM_DEBUG, "STATUS = %d\n", status));
 #endif  /* ACE_NDEBUG */
         break;
       }
@@ -298,12 +314,16 @@ ACE_SSL_SOCK_Stream::close (void)
       // Save/restore errno
       ACE_Errno_Guard error (errno);
       (void) this->stream_.close ();
-      this->set_handle (ACE_INVALID_HANDLE);
 
       return -1;
     }
 
-  this->set_handle (ACE_INVALID_HANDLE);
+  // Don't set the handle in OpenSSL; only in the SSL_SOCK_Stream.  We
+  // do this to avoid any potential side effects.
+  // Invoking ACE_SSL_SOCK::set_handle() bypasses the OpenSSL
+  // SSL_set_fd() call ACE_SSL_SOCK_Stream::set_handle() does.
+  this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
+
   return this->stream_.close ();
 }
 
