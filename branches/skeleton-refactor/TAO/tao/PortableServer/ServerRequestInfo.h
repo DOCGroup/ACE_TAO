@@ -43,12 +43,6 @@
 #endif /* _MSC_VER */
 
 class TAO_Service_Context;
-class TAO_ServantBase;
-
-namespace PortableServer
-{
-  typedef ::TAO_ServantBase ServantBase;
-}
 
 namespace TAO
 {
@@ -76,7 +70,6 @@ namespace TAO
                        TAO::Argument * const * args,
                        size_t nargs,
                        void * servant_upcall,
-                       PortableServer::ServantBase * servant,
                        CORBA::TypeCode_ptr const exceptions[],
                        size_t nexceptions);
 
@@ -295,10 +288,6 @@ namespace TAO
     /// Pointer to the @c Servant_Upcall object that contains the
     /// object ID, among other things.
     TAO_Object_Adapter::Servant_Upcall * const servant_upcall_;
-
-    /// Pointer to the actual servant to which the operation is
-    /// dispatched.
-    PortableServer::ServantBase * const servant_;
 
     /// Array of @c TypeCodes for user exceptions the operation is
     /// capable of raising.

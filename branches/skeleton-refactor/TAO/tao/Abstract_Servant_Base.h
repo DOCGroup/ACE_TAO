@@ -56,7 +56,6 @@ namespace TAO
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
-    void *,
     void *
 #if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
     , CORBA::Environment &

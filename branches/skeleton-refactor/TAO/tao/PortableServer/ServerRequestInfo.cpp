@@ -466,14 +466,19 @@ TAO::ServerRequestInfo::target_most_derived_interface (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->servant_ == 0)
+  PortableServer::Servant const servant =
+    (this->servant_upcall_ == 0
+     ? 0
+     : this->servant_upcall_->servant ());
+
+  if (servant == 0)
     {
       ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
                                              CORBA::COMPLETED_NO),
                         0);
     }
 
-  return CORBA::string_dup (this->servant_->_interface_repository_id ());
+  return CORBA::string_dup (servant->_interface_repository_id ());
 }
 
 CORBA::Policy_ptr
@@ -553,14 +558,21 @@ TAO::ServerRequestInfo::target_is_a (const char * id
 {
   // Implemented in the generated skeleton.
 
-  if (this->servant_ == 0)
+  PortableServer::Servant const servant =
+    (this->servant_upcall_ == 0
+     ? 0
+     : this->servant_upcall_->servant ());
+
+
+  if (servant == 0)
     {
       ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
-                                             CORBA::COMPLETED_NO), 0);
+                                             CORBA::COMPLETED_NO),
+                        0);
     }
 
-  return this->servant_->_is_a (id
-                                ACE_ENV_ARG_PARAMETER);
+  return servant->_is_a (id
+                         ACE_ENV_ARG_PARAMETER);
 }
 
 void
