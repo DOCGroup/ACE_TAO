@@ -1,3 +1,10 @@
+Sat Jan 30 16:28:57 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.{h,cpp}:
+ 	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+	renamed variables named "ppc" to "proxypushconsumer" to fix the
+	compile errors on Green Hills cross-compiler 1.8.8 for PowerPC.
+
 Sat Jan 30 14:26:41 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Added a new option -ORBInitRef to the ORB. The syntax is
