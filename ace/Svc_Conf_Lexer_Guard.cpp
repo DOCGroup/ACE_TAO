@@ -1,5 +1,6 @@
 // -*- C++ -*-
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
 #include "ace/Svc_Conf.h"
 
 #include "ace/Svc_Conf_Lexer_Guard.h"
@@ -34,3 +35,4 @@ ACE_Svc_Conf_Lexer_Guard::~ACE_Svc_Conf_Lexer_Guard (void)
 
   ::ace_yy_pop_buffer (this->buffer_);
 }
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */

@@ -244,6 +244,9 @@ svc_location
                                        sym,
                                        flags,
                                        gobbler);
+          if (stp == 0)
+            ace_yyerrno++;
+
           $$ = new ACE_Service_Type ($1,
                                      stp,
                                      $3->handle (),
@@ -435,7 +438,6 @@ ace_create_service_type (const ACE_TCHAR *name,
     default:
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("unknown case\n")));
-      yyerrno++;
       break;
     }
   return stp;

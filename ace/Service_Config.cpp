@@ -298,6 +298,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
     }
 }
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
 int
 ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 {
@@ -322,6 +323,7 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
   else
     return 0;
 }
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
 
 int
 ACE_Service_Config::process_file (const ACE_TCHAR file[])
@@ -330,6 +332,7 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
 
   int result = 0;
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
   FILE *fp = ACE_OS::fopen (file,
                             ACE_LIB_TEXT ("r"));
 
@@ -354,6 +357,7 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
 
       (void) ACE_OS::fclose (fp);
     }
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
 
   return result;
 }
@@ -368,6 +372,7 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
                 ACE_LIB_TEXT ("Service_Config::process_directive - %s\n"),
                 directive));
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
   ACE_UNUSED_ARG (directive);
 
   ACE_Svc_Conf_Param d (directive);
@@ -375,6 +380,9 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
   int result = ACE_Service_Config::process_directives_i (&d);
 
   return result;
+#else
+  return -1;
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
 }
 
 // Process service configuration requests as indicated in the queue of

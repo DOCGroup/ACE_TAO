@@ -2,6 +2,7 @@
 /*  A Bison parser, made from Svc_Conf.y
     by GNU Bison version 1.28  */
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
 #define ACE_YYBISON 1  /* Identify Bison output.  */
 
 #define	ACE_DYNAMIC	257
@@ -18,6 +19,7 @@
 #define	ACE_PATHNAME	268
 #define	ACE_IDENT	269
 #define	ACE_STRING	270
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
 
 
 // $Id$
@@ -31,6 +33,7 @@ ACE_RCSID (ace,
            Svc_Conf_y,
            "$Id$")
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
                                         ACE_Static_Node *svc_type);
@@ -973,6 +976,9 @@ case 30:
                                        sym,
                                        flags,
                                        gobbler);
+          if (stp == 0)
+            ace_yyerrno++;
+
           ace_yyval.svc_record_ = new ACE_Service_Type (ace_yyvsp[-3].ident_,
                                      stp,
                                      ace_yyvsp[-1].location_node_->handle (),
@@ -1342,6 +1348,29 @@ ace_get_module (ACE_Static_Node *str_rec,
   return mt;
 }
 
+#if defined (DEBUGGING)
+// Current line number.
+int ace_yylineno = 1;
+
+// Name given on the command-line to envoke the program.
+ACE_TCHAR *program_name;
+
+// Main driver program.
+
+int
+main (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Svc_Conf_Param param (stdin);
+
+  // Try to reopen any filename argument to use ACE_YYIN.
+  if (argc > 1 && (ace_yyin = freopen (argv[1], ACE_LIB_TEXT("r"), stdin)) == 0)
+    ACE_OS::fprintf (stderr, ACE_LIB_TEXT("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
+
+  return ace_yyparse (&param);
+}
+#endif /* DEBUGGING */
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
+
 ACE_Service_Type_Impl *
 ace_create_service_type (const ACE_TCHAR *name,
                          int type,
@@ -1377,30 +1406,7 @@ ace_create_service_type (const ACE_TCHAR *name,
     default:
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("unknown case\n")));
-      ace_yyerrno++;
       break;
     }
   return stp;
 }
-
-#if defined (DEBUGGING)
-// Current line number.
-int ace_yylineno = 1;
-
-// Name given on the command-line to envoke the program.
-ACE_TCHAR *program_name;
-
-// Main driver program.
-
-int
-main (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Svc_Conf_Param param (stdin);
-
-  // Try to reopen any filename argument to use ACE_YYIN.
-  if (argc > 1 && (ace_yyin = freopen (argv[1], ACE_LIB_TEXT("r"), stdin)) == 0)
-    ACE_OS::fprintf (stderr, ACE_LIB_TEXT("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
-
-  return ace_yyparse (&param);
-}
-#endif /* DEBUGGING */

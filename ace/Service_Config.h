@@ -31,7 +31,9 @@ class ACE_Service_Type;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
 class ACE_Svc_Conf_Param;
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
 
 extern "C"
 {
@@ -355,10 +357,12 @@ protected:
   /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
   /// This is the implementation function that process_directives()
   /// and process_directive() both call.  Returns the number of errors
   /// that occurred.
   static int process_directives_i (ACE_Svc_Conf_Param *param);
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
 
   /// Become a daemon.
   static int start_daemon (void);
