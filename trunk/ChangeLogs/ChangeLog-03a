@@ -1,16 +1,23 @@
+Mon Nov 27 11:58:43 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/run_test.pl: on platforms other than Win32, simply
+          exec run_tests.sh.  run_tests.sh properly handles all of
+          the current ACE tests.  [Bug 729]
+
 Sun Nov 26 19:07:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* examples/Map_Manager/test_hash_map_manager.cpp:
-	* examples/Shared_Malloc/Malloc.cpp:
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
-	
-	  Removed extraneous explicit template instantiation declarations causing
-	  "multiply defined" errors on VxWorks and LynxOS.
-	
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+        * examples/Shared_Malloc/Malloc.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+
+          Removed extraneous explicit template instantiation declarations
+          causing "multiply defined" errors on VxWorks and LynxOS.
+
 Sat Nov 25 22:08:46 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* apps/drwho/Makefile:
-	  Disabled drwho compilation on Vxworks - its missing protocols/rwhod.h.
+        * apps/drwho/Makefile:
+          Disabled drwho compilation on Vxworks - it doesn't have
+          protocols/rwhod.h.
 
 Fri Nov 24 16:58:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -21,10 +28,10 @@ Fri Nov 24 16:58:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Nov 24 15:43:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* docs/ACE-categories.html:
-	  Fixed URLs to Doxygen documents, I used the absolute URL to our
-	  Doxygen site, but in the future we may want to do that
-	  configurable.
+        * docs/ACE-categories.html:
+          Fixed URLs to Doxygen documents, I used the absolute URL to our
+          Doxygen site, but in the future we may want to do that
+          configurable.
 
         * bin/auto_run_tests.lst:
           Disable the Connection_Purging test in TAO, it never worked and
@@ -42,13 +49,13 @@ Fri Nov 24 11:42:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Nov 24 05:48:26 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Signal.h: Enhanced the documentation to clarify the role of sigkey.
-	  Thanks to Oscar Rodriquez <Oscar.Rodriquez@eln.ericsson.se> for
- 	  motivating this.
+        * ace/Signal.h: Enhanced the documentation to clarify the role of
+          sigkey.  Thanks to Oscar Rodriquez <Oscar.Rodriquez@eln.ericsson.se>
+          for motivating this.
 
-	* ace/SOCK_Connector.h: Updated the documentation to clarify the parameters to 
-	  the constructors and the connect() method.  Thanks to Pierre
- 	  Oberson <oberson@nagra-kudelski.ch> for suggesting this.
+        * ace/SOCK_Connector.h: Updated the documentation to clarify the
+          parameters to the constructors and the connect() method.  Thanks
+          to Pierre Oberson <oberson@nagra-kudelski.ch> for suggesting this.
 
 Thu Nov 23 21:17:16 2000  David L. Levine <levine@cs.wustl.edu>
 
@@ -76,9 +83,9 @@ Thu Nov 23 18:27:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Nov 23 17:46:56 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Method_Request: Made the priority() method const.  Thanks
-	  to Johnny Willemsen <jwillemsen@remedy.nl>
-  
+        * ace/Method_Request: Made the priority() method const.  Thanks
+          to Johnny Willemsen <jwillemsen@remedy.nl>
+
 Thu Nov 23 14:43:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile:
@@ -263,9 +270,9 @@ Sun Nov 19 08:05:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 Sat Nov 18 15:39:49 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp: 
-	  Fixed a mistake in the "usage" string.  Thanks to Mike Curtis
- 	  <mccurry@my-deja.com> for pointing this out.
+        * examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+          Fixed a mistake in the "usage" string.  Thanks to Mike Curtis
+          <mccurry@my-deja.com> for pointing this out.
 
 Sat Nov 18 11:35:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
