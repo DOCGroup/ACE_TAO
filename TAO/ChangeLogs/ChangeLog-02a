@@ -1,3 +1,12 @@
+Thu Apr 26 20:18:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	* tao/GIOP_Message_Generator_Parser_10.cpp: Used the new method
+	  ACE_InputCDR::steal_data () to extract data from the
+	  stream. This should help a bit with the performance and would
+	  also address part of bug # 875 in bugzilla. More changes for bug
+	  875 and 871 would be following this one.
+
 Thu Apr 26 15:01:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Single_Read/Makefile: Fixed a typo. Thanks to Chad for

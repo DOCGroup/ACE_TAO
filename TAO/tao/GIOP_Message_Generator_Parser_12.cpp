@@ -446,8 +446,11 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
     }
 
+
+
+
   // Steal the contents in to the reply CDR
-  params.input_cdr_.steal_from (cdr);
+  params.input_cdr_.steal_data (cdr);
 
   return 0;
 }
@@ -470,7 +473,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
     }
 
   // Steal the contents in to the reply CDR
-  params.input_cdr_.steal_from (cdr);
+  params.input_cdr_.steal_data (cdr);
 
   return 0;
 }
