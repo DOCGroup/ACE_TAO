@@ -15,6 +15,11 @@ public class OilPaintFilter extends SpatialFilter
       degree_ = degree;
     }
 
+  public String info ()
+  {
+    return "Converts an image into an oil painting.";
+  }
+
   public void imageComplete(int status)
   {
     if (status == IMAGEERROR || status == IMAGEABORTED)
