@@ -143,8 +143,14 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DE
 TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation (void)
 {
-  return ACE_static_cast (TAO_RTScheduler_Current_i *,
-                          TAO_TSS_RESOURCES::instance ()->rtscheduler_current_impl_);
+  TAO_RTScheduler_Current_i* impl = ACE_static_cast (TAO_RTScheduler_Current_i *,
+						     TAO_TSS_RESOURCES::instance ()->rtscheduler_current_impl_);
+  if (impl == 0)
+    ACE_NEW_RETURN (impl,
+		    TAO_RTScheduler_Current_i,
+		    0);
+  
+  return impl;
 }
 
 
@@ -159,6 +165,12 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
                      tss->rtscheduler_current_impl_);
   tss->rtscheduler_current_impl_ = new_current;
   return old;
+}
+
+void
+TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (void)
+{
+  ACE_DEBUG (("TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
 }
 
 void
