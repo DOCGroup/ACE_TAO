@@ -5,7 +5,6 @@
 #----------------------------------------------------------------------------
 
 BIN     = gperf
-INSBIN  = $(ACE_ROOT)/bin/gperf
 
 FILES   = Options \
           Iterator \

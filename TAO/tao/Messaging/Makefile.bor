@@ -10,7 +10,7 @@ OBJFILES = \
         $(OBJDIR)\MessagingS.obj \
         $(OBJDIR)\MessagingS_T.obj \
         $(OBJDIR)\Asynch_Reply_Dispatcher.obj \
-        $(OBJDIR)\Asynch_Reply_Dispatcher.obj \
+        $(OBJDIR)\Asynch_Timeout_Handler.obj \
         $(OBJDIR)\Connection_Timeout_Policy_i.obj \
         $(OBJDIR)\Messaging_ORBInitializer.obj \
         $(OBJDIR)\Messaging_PolicyFactory.obj \
