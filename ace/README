@@ -165,8 +165,8 @@ ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
                                         u_long fdmask (e.g., Linux and
                                         SCO).
 ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-                                        Compiler handle explicit calling of  template destructor correctly.
-                                        explicitly using "normal" syntax, see
+                                        Compiler handles explicit calling of
+                                        template destructor correctly. See
                                         "ace/OS.h" for details.
 ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
                                         support namespaces (or the
