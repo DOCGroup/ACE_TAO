@@ -1,3 +1,8 @@
+Thu Aug 27 17:20:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/POA/Makefile (DIRS): Added TIE and Forwarding to the list
+ 	  of directories that are built and tested.
+
 Thu Aug 27 15:41:44 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
