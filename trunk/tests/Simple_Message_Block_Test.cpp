@@ -20,9 +20,9 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
-#include "test_config.h"
 
 int
 main (int, char *[])

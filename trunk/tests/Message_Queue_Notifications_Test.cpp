@@ -28,10 +28,10 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Strategies.h"
 #include "ace/Task.h"
-#include "test_config.h"
 
 static int iterations = 10;
 

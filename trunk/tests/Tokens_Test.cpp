@@ -25,9 +25,8 @@
 // 
 // ============================================================================
 
-#include "ace/OS.h"
+#include "test_config.h"
 #include "ace/Process.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Collection.h"
@@ -35,7 +34,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 #include "ace/Token_Invariants.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 

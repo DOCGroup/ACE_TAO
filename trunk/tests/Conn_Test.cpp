@@ -21,13 +21,13 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
 #include "ace/Strategies.h"
-#include "test_config.h"
 #include "Conn_Test.h"
 
 // ****************************************

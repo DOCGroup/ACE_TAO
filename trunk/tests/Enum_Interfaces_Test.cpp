@@ -27,9 +27,9 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/OS.h"
 #include "ace/INET_Addr.h"
-#include "test_config.h"
 
 int
 main (int, char *[])

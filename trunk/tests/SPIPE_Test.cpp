@@ -21,13 +21,13 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/OS.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/SPIPE_Acceptor.h"
-#include "test_config.h"
 
 // pipe name to use
 static const char *PIPE_NAME = "ace_pipe_name";

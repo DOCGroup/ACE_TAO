@@ -19,9 +19,8 @@
 // 
 // ============================================================================
 
-
-#include "ace/Mem_Map.h"
 #include "test_config.h"
+#include "ace/Mem_Map.h"
 
 static const int FILE_SIZE = 10;
 static const int NUM_LINES = 15;

@@ -18,10 +18,10 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
-#include "test_config.h"
 
 static void
 test_duplicates (size_t count)

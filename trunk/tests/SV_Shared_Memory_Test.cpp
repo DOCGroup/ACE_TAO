@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-#include "ace/Malloc.h"
 #include "test_config.h"
+#include "ace/Malloc.h"
 
 #if defined (ACE_HAS_SYSV_IPC)
 

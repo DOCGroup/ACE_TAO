@@ -18,10 +18,10 @@
 // 
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
-#include "test_config.h"
 
 static char name[BUFSIZ];
 static char value[BUFSIZ];

@@ -18,8 +18,8 @@
 // 
 // ============================================================================
 
-#include "ace/SString.h"
 #include "test_config.h"
+#include "ace/SString.h"
 
 int 
 main (int, char *[])
