@@ -10,13 +10,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Cubit \
-        POA \
-        Pluggable \
-        RTCorba \
-	Latency \
-	Memory \
-	Throughput
+DIRS  = Single_Threaded 
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -28,15 +22,6 @@ endif
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(corba_messaging),1)
-
-DIRS += \
-	Callback
-
-endif # corba_messaging
-
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
