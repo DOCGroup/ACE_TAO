@@ -1,5 +1,13 @@
 Wed Jun 23 12:33:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp : 
+	* orbsvcs/orbsvcs/AV/sfp.cpp: 
+	  Fixed a few warnings for unused args. Thanks to Carlos for
+	  reporting these. 
+	
 	* orbsvcs/tests/AVStreams/sfp/run_test.pl: 
 	  Added a new run_test.pl for the sfp tests.
 	* orbsvcs/tests/AVStreams/sfp/client.cpp:
