@@ -270,13 +270,40 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
       <code>connect()</code> fails with <code>EWOULDBLOCK</code>,
       morph the error to -1 and clean up the request.</li>
 
-      <li><em>Help, Irfan?</em> Service handlers obtained from the
-      caching connector are now cleaned up.  The application needs to
-      be able to signal that it's not using it any longer, and, when
-      the application encounters an error, needs to effectively close
-      down that connection for good so that a new connection can be
-      initiated.  We're still working through the details on how to
-      accomplish this.</li>
+      <li> Service handlers obtained from the caching connector are
+      now cleaned up.  The application needs to be able to signal that
+      it's not using it any longer, and, when the application encounters 
+      an error, needs to effectively close down that connection for good 
+      so that a new connection can be initiated. <br>
+
+      Added the ability for a Svc_Handler to
+      recycle itself.  idle() can be called when the Svc_Handler is
+      done serving a particular connection and can how be recycled.
+      The Svc_Handler now also has a pointer to a recycler that is
+      responsible for managing the connections.  The recycler is
+      usually a Cached_Connector. <br>
+
+      Added new class ACE_Recycling_Strategy.
+      It defines the interface (and default implementation) for
+      specifying a recycling strategy for a Svc_Handler.  This
+      strategy acts as a consular to the Svc_Handler, preparing it for
+      the tough times ahead when the Svc_Handler will be recycled. <br>
+
+      Added new class ACE_NOOP_Concurrency_Strategy.  It implements 
+      a no-op activation strategy in order to avoid calling open on 
+      a recycled svc_handler multiple times. <br>
+
+      ACE_Cached_Connect_Strategy now
+      implements the ACE_Connection_Recycling_Strategy interface.
+      This allows Svc_Handlers to cache themselves with
+      ACE_Cached_Connect_Strategy when they become idle.  It also
+      allows them to purge themselves from the connection cache when
+      the Svc_Handlers close down. <br>
+
+      Also added ~ACE_Cached_Connect_Strategy that will cleanup up the
+      connection cache.  </li>
+
+
     </UL>
 
     <P>Future work:
