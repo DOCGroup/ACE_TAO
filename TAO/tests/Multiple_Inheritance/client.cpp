@@ -28,7 +28,7 @@ static char *ior_input_file = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:i:");
+  ACE_Get_Opt get_opts (argc, argv, "k:f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,14 +37,13 @@ parse_args (int argc, char **argv)
       case 'k':
         ior = get_opts.optarg;
         break;
-      case 'i':
+      case 'f':
 	ior_input_file = get_opts.optarg;
 	break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\nusage:  %s "
-			   "-d "
 			   "-i <ior_input_file> "
                            "-k IOR "
                            "\n",

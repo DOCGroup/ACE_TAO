@@ -8,11 +8,11 @@ unshift @INC, '../../../bin';
 require ACEutils;
 
 $iorfile = "server.ior";
-$SV = Process::Create ("server$Process::EXE_EXT", " -o $iorfile");
+$SV = Process::Create ("server$Process::EXE_EXT", " -f $iorfile");
 
 ACE::waitforfile ($iorfile);
 
-$status  = system ("client$Process::EXE_EXT -i $iorfile");
+$status  = system ("client$Process::EXE_EXT -f $iorfile");
 
 $SV->Kill (); $SV->Wait ();
 

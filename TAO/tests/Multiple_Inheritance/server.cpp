@@ -10,24 +10,20 @@ static char *ior_output_file = 0;
 int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:");
+  ACE_Get_Opt get_opts (argc, argv, "f:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'd':
-	TAO_debug_level++;
-        break;
-      case 'o':
+      case 'f':
 	ior_output_file = ACE_OS::strdup (get_opts.optarg);
 	break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-d "
-			   "-o <iorfile>"
+			   "-f <iorfile>"
                            "\n",
                            argv [0]),
                           -1);
@@ -61,10 +57,9 @@ main (int argc, char **argv)
 					      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG, "%s\n",
-		    ior.in ()));
-
+      ACE_DEBUG ((LM_DEBUG, "%s\n",
+                  ior.in ()));
+      
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
 	{
