@@ -1415,16 +1415,6 @@ Wed Nov 18 20:56:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * ace/DLL.{cpp,h} (ACE_DLL): Added the close-on-destruction
           feature in the constructor of the ACE_DLL class.
 
-Wed Nov 18 15:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Basic_Types.h (ACE_UINT64_DBLCAST_ADAPTER): on other
-          than Win32 and without ACE_LACKS_LONGLONG_T, wrapped the
-          "n" macro definition with parenthesis, to avoid insidious
-          errors in equations due to removing the grouping.  g++ 2.7.2.3
-          noticed this on the latest context_switch_time.cpp.
-
-        * ace/Svc_Handler.cpp (cleanup_hint): fixed ACE_TRACE string.
-
 Thu Nov 19 00:18:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/OS.i (strnstr): Added a check to see if the substring is
@@ -1446,6 +1436,14 @@ Thu Nov 19 00:18:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
           according to their liking.
 
 Wed Nov 18 15:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h (ACE_UINT64_DBLCAST_ADAPTER): on other
+          than Win32 and without ACE_LACKS_LONGLONG_T, wrapped the
+          "n" macro definition with parenthesis, to avoid insidious
+          errors in equations due to removing the grouping.  g++ 2.7.2.3
+          noticed this on the latest context_switch_time.cpp.
+
+        * ace/Svc_Handler.cpp (cleanup_hint): fixed ACE_TRACE string.
 
         * *.cpp: changed include protection from #if !defined to ifndef.
           Added #pragma once, if possible, i.e., after #include of
