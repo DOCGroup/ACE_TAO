@@ -11,7 +11,7 @@
 #  static_cast<foo> (bar)).
 #
 #  Use this script at your own risk.  It appears to work correctly for
-#  all cases, but verify the results "just in case".
+#  most cases, but verify the results "just in case".
 #
 #  @note Wildcards may be supplied as the "FILE" arguments to this
 #        script since the shell should expand the wildcards before
@@ -37,8 +37,8 @@ do
   shift
 
   if grep "ACE_\(static\|dynamic\|const\|reinterpret\)_cast" $arg > /dev/null 2>&1; then
-    echo $arg
-   sed -e :a -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*\([^ \t].*\)/\1_cast<\2> (\3/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*(/ba' $arg > ${arg}.new
+    echo "  $arg"
+   sed -e :a -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*\([^ \t].*\)/\1_cast<\2> (\3/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*(/ba' $arg > ${arg}.new
     mv ${arg}.new $arg
   fi
 done
