@@ -34,6 +34,7 @@
 #include "be_helper.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
+#include "nr_extern.h"
 
 #include "be_visitor_interface.h"
 #include "be_visitor_attribute.h"

@@ -291,8 +291,18 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "tao_" << node->flat_name () << "_marshal ("
-              << "_tao_aggregate." << f->local_name () << ".in (), strm)";
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao_marshal ("
+              << be_idt << be_idt_nl
+              << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
+              << "strm" << be_uidt_nl
+              << ")" << be_uidt;
         }
 
       break;
@@ -346,8 +356,18 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
         }
       else
         {
-          *os << "tao_" << node->flat_name () << "_marshal ("
-              << "_tao_aggregate." << f->local_name () << ".in (), strm)";
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao_marshal ("
+              << be_idt << be_idt_nl
+              << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
+              << "strm" << be_uidt_nl
+              << ")" << be_uidt;
         }
 
       break;

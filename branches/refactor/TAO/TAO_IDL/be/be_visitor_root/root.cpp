@@ -129,52 +129,6 @@ int be_visitor_root::visit_root (be_root *node)
                   << ifwd->full_name () << " *" << be_uidt_nl
                   << ");" << be_uidt;
             }
-          else
-            {
-              *os << "// External declarations for undefined interface" 
-                  << be_nl << be_nl
-                  << "// " << ifwd->full_name () << be_nl;
-
-              *os << be_global->stub_export_macro () << be_nl
-                  << ifwd->full_name () << "_ptr" << be_nl
-                  << "tao_" << ifwd->flat_name ()
-                  << "_duplicate ("
-                  << be_idt << be_idt_nl
-                  << ifwd->full_name  () << "_ptr" << be_uidt_nl
-                  << ");" << be_uidt_nl << be_nl
-                  << be_global->stub_export_macro () << be_nl
-                  << "void" << be_nl
-                  << "tao_" << ifwd->flat_name ()
-                  << "_release (" << be_idt << be_idt_nl
-                  << ifwd->full_name () << "_ptr" << be_uidt_nl
-                  << ");" << be_uidt_nl << be_nl
-                  << be_global->stub_export_macro () << be_nl
-                  << ifwd->full_name () << "_ptr" << be_nl
-                  << "tao_" << ifwd->flat_name ()
-                  << "_nil (" << be_idt << be_idt_nl
-                  << "void" << be_uidt_nl
-                  << ");" << be_uidt_nl << be_nl
-                  << be_global->stub_export_macro () << be_nl
-                  << ifwd->full_name () << "_ptr" << be_nl
-                  << "tao_" << ifwd->flat_name ()
-                  << "_narrow (" << be_idt << be_idt_nl
-                  << "CORBA::Object *" << be_nl
-                  << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
-                  << ");" << be_uidt_nl << be_nl
-                  << be_global->stub_export_macro () << be_nl
-                  << "CORBA::Object *" << be_nl
-                  << "tao_" << ifwd->flat_name ()
-                  << "_upcast (" << be_idt << be_idt_nl
-                  << "void *" << be_uidt_nl
-                  << ");" << be_uidt_nl << be_nl
-                  << be_global->stub_export_macro () << be_nl
-                  << "CORBA::Boolean" << be_nl
-                  << "tao_" << ifwd->flat_name () << "_marshal ("
-                  << be_idt << be_idt_nl
-                  << ifwd->full_name () << "_ptr," << be_nl
-                  << "TAO_OutputCDR &" << be_uidt_nl
-                  << ");" << be_uidt;
-            }
         }
 
       size = be_global->mixed_parentage_interfaces.size ();

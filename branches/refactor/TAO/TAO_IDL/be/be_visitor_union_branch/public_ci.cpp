@@ -362,14 +362,24 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 
       if (bt_is_defined)
         {
-          *os << "OBJECT_FIELD (" << bt->name () << "::";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << bt->name () << "::";
         }
       else
         {
-          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
-  *os << "_duplicate (val))" << be_uidt_nl
+  *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -457,14 +467,24 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
 
       if (bt_is_defined)
         {
-          *os << "OBJECT_FIELD (" << bt->name () << "::";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << bt->name () << "::";
         }
       else
         {
-          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
-  *os << "_duplicate (val))" << be_uidt_nl
+  *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -625,25 +645,14 @@ be_visitor_union_branch_public_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
       ub->gen_default_label_value (os, bu);
     }
 
-  idl_bool bt_is_defined = node->full_definition ()->is_defined ();
-
   *os << ";" << be_nl
+      << "CORBA::add_ref (val);" << be_nl
       << "typedef "
       << bt->nested_type_name (bu, "_var")
       << " OBJECT_FIELD;" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->u_." << ub->local_name () << "_," << be_nl;
-
-      if (bt_is_defined)
-        {
-          *os << "OBJECT_FIELD (" << bt->name () << "::";
-        }
-      else
-        {
-          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
-        }
-
-  *os << "_duplicate (val))" << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_," << be_nl
+      << "OBJECT_FIELD (val)" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 

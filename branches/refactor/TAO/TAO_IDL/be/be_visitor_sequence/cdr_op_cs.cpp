@@ -795,7 +795,14 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
           else
             {
-              *os << "tao_" << bt->flat_name () << "_marshal ("
+              AST_Decl *parent = ScopeAsDecl (bt->defined_in ());
+
+              if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+                {
+                  *os << parent->name () << "::";
+                }
+
+              *os << "tao_" << bt->local_name () << "_life::tao_marshal ("
                   << "_tao_sequence[i].in (), strm);" << be_uidt;
             }
           
