@@ -400,7 +400,6 @@ DRV_check_for_include (const char* buf)
 {
   const char* r = buf;
   const char* h;
-  UTL_String* nm;
 
   // Skip initial '#'.
   if (*r != '#')
@@ -476,16 +475,3 @@ DRV_check_for_include (const char* buf)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate  ACE_Env_Value<char*>
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
