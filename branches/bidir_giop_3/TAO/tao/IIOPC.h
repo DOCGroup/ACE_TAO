@@ -23,18 +23,23 @@
 #define TAO_IDL_IIOPC_H
 
 #include "ace/pre.h"
+#include "tao/TAO_Export.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/corbafwd.h"
+#include "tao/Managed_Types.h"
+#include "tao/Sequence_T.h"
+#include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
+
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
