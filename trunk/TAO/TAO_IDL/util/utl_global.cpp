@@ -138,7 +138,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       gen_assign_op_ (I_FALSE),
       exception_support_ (I_FALSE),
       opt_tc_ (I_FALSE),
-      case_diff_error_ (I_FALSE)
+      case_diff_error_ (I_TRUE)
 {
 
   // Path for the perfect hash generator(gperf) program.
