@@ -1,3 +1,5 @@
+// $Id$
+
 The following TAO applications explain the various POA interfaces and
 their usage scenarios.
 	Individual README files in the respective directories explain
