@@ -1,3 +1,9 @@
+Wed Aug 23 13:16:27 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/Naming/Naming_Loader.cpp:
+
+	  Added missing ace/Dynamic_Service.h include.
+
 Wed Aug 23 12:19:04 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Propagated/Client_Propagated.dsw

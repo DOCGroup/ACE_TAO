@@ -14,6 +14,7 @@
 //==============================================================================================
 
 #include "Naming_Loader.h"
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (Naming, Naming_Loader, "$Id$");
 
