@@ -41,7 +41,7 @@ typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> HTTP_SOCK_Acceptor;
 
 typedef HTTP_SOCK_Acceptor HTTP_Acceptor;
 
-class HTTP_Server : public ACE_Service_Object
+class ACE_Svc_Export HTTP_Server : public ACE_Service_Object
   // = TITLE
   //     This server is used to create HTTP Handlers for the Web
   //     server
@@ -134,8 +134,8 @@ private:
 };
 #endif /* ACE_WIN32 */
 
+ACE_SVC_FACTORY_DECLARE (HTTP_Server)
+
 ACE_STATIC_SVC_DECLARE (HTTP_Server)
 
 #endif /* HTTP_SERVER_H */
-
-

@@ -1,5 +1,7 @@
 // $Id$
 
+#define ACE_BUILD_SVC_DLL
+
 #include "ace/Get_Opt.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
@@ -342,7 +344,7 @@ HTTP_Server::asynch_thread_pool (void)
   // Create the thread pool.
   // Register threads with the proactor and thread manager.
   Asynch_Thread_Pool_Task t (*ACE_Proactor::instance (),
-                             this->tm_); 
+                             this->tm_);
 
   // The proactor threads are waiting on the I/O Completion Port.
 
@@ -391,4 +393,3 @@ template class ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
