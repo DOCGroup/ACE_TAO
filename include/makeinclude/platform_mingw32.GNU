@@ -25,11 +25,13 @@
 #    ... %{!shared:%{!mdll:c:/mingw32/lib/gcc-lib/mingw32/2.95.2/crt2%O%s}} ...
 #    or something similar depending on the location of your instalation).
 
-# Chose your target CPU (uncomment ONE of these).
-TCPU = pentiumpro
-#TCPU = pentium
-#TCPU = i486
-#TCPU = i386
+#
+# Chose your target CPU (by default we set it to pentiumpro. In your
+# platform_macros.GNU file you can override this to pentium, i486 or i386
+#
+ifndef TCPU
+  TCPU = pentiumpro
+endif
 
 mingw32 = 1
 
