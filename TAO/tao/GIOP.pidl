@@ -22,7 +22,7 @@
 //          GIOP.pidl
 //
 // ================================================================
-#pragma prefix "omg.org"
+// #pragma prefix "omg.org"
 
 #include "IOP.pidl"
 #include "OctetSeq.pidl"
