@@ -47,7 +47,7 @@ CORBA::Boolean CORBA::B_TRUE = 1;
 // COM's IUnknown support
 
 // {A201E4C7-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_STUB_Object,
+TAO_DEFINE_GUID (IID_STUB_Object,
              0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 CORBA::String_var::String_var (char *p)
