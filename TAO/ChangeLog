@@ -1,3 +1,17 @@
+Fri Mar 14 21:50:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed improper clearing of a #pragma prefix directive,
+          thanks to Gary Duzan <gduzan@bbn.com> and Craig Rodrigues
+          <crodrigu@bbn.com> for sending in the example of included
+          IDL files that uncovered the bug.
+
+        * TAO_IDL/driver/drv_init.cpp:
+
+          Removed an unused file that was overlooked in a previous
+          checkin.
+
 Fri Mar 14 16:55:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/PortableServerC.h:

@@ -473,11 +473,15 @@ IDL_GlobalData::seen_include_file_before (char *n)
   char *incl = 0;
   char *tmp = n;
 
+  // @@@ (JP) This may have been here for the SunCC preprocessor. If
+  // that turns out to be the case, I can easily re-add this code
+  // conditionally.
+/*
   if (n[0] == '.')
     {
       tmp = n + 2;
     }
-
+*/
   for (i = 0; i < this->pd_n_include_file_names; ++i)
     {
       incl = this->pd_include_file_names[i]->get_string ();
@@ -1032,12 +1036,14 @@ IDL_GlobalData::update_prefix (char *filename)
     }
 
   char *fstring = this->pd_filename->get_string ();
+  char *tail = fstring + ACE_OS::strlen (fstring) - 3;
 
   // We have to do this check because some preprocessors (gcc 3.2
   // on RedHat Linux 7.1, for one) output the same filename
   // multiple times for no apparent reason, and we don't want it
   // to clear the prefix.
-  if (ACE_OS::strcmp (fstring, filename) == 0)
+  if (ACE_OS::strcmp (fstring, filename) == 0
+      || ACE_OS::strcmp (tail, ".cc") == 0)
     {
       return;
     }
@@ -1055,10 +1061,8 @@ IDL_GlobalData::update_prefix (char *filename)
   // main filename. Otherwise we know we are beginning an included
   // file, so we push a blank prefix on the stack, which may
   // possibly be changed later.
-  if (ACE_OS::strcmp (fstring, main_filename) != 0
-      && this->pragma_prefixes_.size () > 1
-      && (this->seen_include_file_before (filename) == 1
-          || ACE_OS::strcmp (filename, main_filename) == 0))
+  if (this->seen_include_file_before (filename) != 0
+      || ACE_OS::strcmp (filename, main_filename) == 0)
     {
       char *trash = 0;
       this->pragma_prefixes_.pop (trash);
