@@ -23,6 +23,15 @@ interface PostScript_Printer : Remote_Output
 {
 };
 
+typedef sequence<short> ShortSeq;
+typedef sequence<unsigned short> UShortSeq;
+typedef sequence<long> LongSeq;
+typedef sequence<unsigned long> ULongSeq;
+typedef sequence<boolean> BooleanSeq;
+typedef sequence<float> FloatSeq;
+typedef sequence<double> DoubleSeq;
+typedef sequence<string> StringSeq;
+
 };
 
 
