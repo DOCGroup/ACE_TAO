@@ -1,162 +1,167 @@
+Wed Jan 06 13:29:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/DynStruct_i.cpp: removed ACE_Array_Base<CORBA_DynAny_var>
+          instantiation because it's in DynArray_i.cpp.
+
 Wed Jan  6 14:05:21 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
 
-	  g++ was issuing warnings for the helper methods defined for
-	  arrays (e.g., _alloc, _dup, _copy, _free). These warnings
-	  appeared only when the helper methods were in the outermost
-	  global scope because they were defined static and the compiler
-	  could not find their implementation. Thus, we now do not
-	  generate the "static" keyword for these helpers if they are in
-	  the outermost scope. However, this change made Sun C++ compiler
-	  unhappy since it did not like the _free and _alloc in the inline
-	  file (*.i) and their forward declarations did not have the
-	  inline word. So now also generate the ACE_INLINE macro for the
-	  _free and _alloc methods if they are in the outermost scope. Now
-	  both compilers are happy. Hopefully others are too.
+          g++ was issuing warnings for the helper methods defined for
+          arrays (e.g., _alloc, _dup, _copy, _free). These warnings
+          appeared only when the helper methods were in the outermost
+          global scope because they were defined static and the compiler
+          could not find their implementation. Thus, we now do not
+          generate the "static" keyword for these helpers if they are in
+          the outermost scope. However, this change made Sun C++ compiler
+          unhappy since it did not like the _free and _alloc in the inline
+          file (*.i) and their forward declarations did not have the
+          inline word. So now also generate the ACE_INLINE macro for the
+          _free and _alloc methods if they are in the outermost scope. Now
+          both compilers are happy. Hopefully others are too.
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
-	  TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
 
-	  The var and out implementation was not guarded by the #if
-	  !defined conditionla. As a result, there were instances when we
-	  could get multiple definitions. Thanks to Virginie Amar
-	  <vamar@amadeus.net> for submitting the bugreport. 
+          The var and out implementation was not guarded by the #if
+          !defined conditionla. As a result, there were instances when we
+          could get multiple definitions. Thanks to Virginie Amar
+          <vamar@amadeus.net> for submitting the bugreport.
 
-	  We had also forgotten to set the "is_generated" flag to true
-	  once we had generated code for the sequence node.
+          We had also forgotten to set the "is_generated" flag to true
+          once we had generated code for the sequence node.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
 
-	  Since we now use the TAO_Object_Field_T<T> for object reference
-	  members of union, we couldn't call CORBA::release in the "reset"
-	  method. We now simply call "delete".
-	
+          Since we now use the TAO_Object_Field_T<T> for object reference
+          members of union, we couldn't call CORBA::release in the "reset"
+          method. We now simply call "delete".
+
 Wed Jan 06 11:55:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Simple/echo/Client_i.cpp (echo_list): Changed <l> to of
-	  type Echo::List_var to free up the return value.  The returned
-	  string from object_to_string must be freed properly.
+        * examples/Simple/echo/Client_i.cpp (echo_list): Changed <l> to of
+          type Echo::List_var to free up the return value.  The returned
+          string from object_to_string must be freed properly.
 
 Wed Jan  6 09:31:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
           The UDP_Receiver::init() method should only create the RT_Info
-	  if it is not there already. Thanks to Dave Meyer
+          if it is not there already. Thanks to Dave Meyer
           <dmeyer@std.saic.com> and J. Russell Noseworthy
           <rnosewor@objectsciences.com> for providing this fix.
 
 Wed Jan 06 09:04:46 1999  Carlos O'Ryan  <coryan@JIG>
 
-	* docs/releasenotes/TODO.html:
-	  Updated the information about EC related tasks.
+        * docs/releasenotes/TODO.html:
+          Updated the information about EC related tasks.
 
-	* docs/releasenotes/ec.html:
-	  Added the new features in the EC; removed the entries about a
-	  missing CosEventChannel, because we have one now!
+        * docs/releasenotes/ec.html:
+          Added the new features in the EC; removed the entries about a
+          missing CosEventChannel, because we have one now!
 
-	* docs/releasenotes/index.html:
-	  Added some comments for Pradeep.
+        * docs/releasenotes/index.html:
+          Added some comments for Pradeep.
 
 Wed Jan  6 07:44:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/DynStruct_i.cpp:
-	  Removed the last use (hopefully) of ACE_Array<>
+        * tao/DynStruct_i.cpp:
+          Removed the last use (hopefully) of ACE_Array<>
 
 Wed Jan 06 02:58:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * TAO_Examples.dsw
-	* POA/Explicit_Activation/Makefile
-	* POA/Generic_Servant/Makefile
-	* POA/Generic_Servant/server.dsp
+        * POA/Explicit_Activation/Makefile
+        * POA/Generic_Servant/Makefile
+        * POA/Generic_Servant/server.dsp
         * POA/Loader/Loader.dsw
         * POA/Loader/Makefile
         * POA/Loader/server.dsp
         * POA/On_Demand_Activation/On_Demand_Activation.dsw
         * POA/On_Demand_Activation/server.dsp
-	* POA/On_Demand_Activation/Makefile
+        * POA/On_Demand_Activation/Makefile
         * POA/On_Demand_Loading/Makefile
         * POA/On_Demand_Loading/On_Demand_Loading.dsw
         * POA/On_Demand_Loading/server.dsp
 
-	  - Changed the name of the Generic Servant dynamic library from
- 	    MyFoo back to Generic_Servant.  This was causing too many
- 	    things to break on NT since the original settings were based
- 	    on the Generic_Servant name.
+          - Changed the name of the Generic Servant dynamic library from
+            MyFoo back to Generic_Servant.  This was causing too many
+            things to break on NT since the original settings were based
+            on the Generic_Servant name.
 
-	  - Removed excess include directories in the make setting.
+          - Removed excess include directories in the make setting.
 
-	  - Fixed NT make files (including release settings) and made them
- 	    conform with the existing makefiles.
+          - Fixed NT make files (including release settings) and made them
+            conform with the existing makefiles.
 
         * POA/On_Demand_Loading/Servant_Activator.cpp
         * POA/On_Demand_Loading/Servant_Locator.cpp
         * POA/Loader/Servant_Activator.cpp
         * POA/Loader/Servant_Locator.cpp
-	* POA/Loader/Server_Manager.cpp
+        * POA/Loader/Server_Manager.cpp
 
-	  - Removed access includes files.
+          - Removed access includes files.
 
         * POA/On_Demand_Loading/Servant_Manager.cpp: Fixed use of ACE_CString.
 
 Tue Jan  5 22:36:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/default_server.{h,cpp}:
-	* tao/default_client.{h,cpp}:
-	* tao/ORB_Core.{h,cpp}: We also need to define/declare static
-	  services for platform without svc.conf support.
+        * tao/default_server.{h,cpp}:
+        * tao/default_client.{h,cpp}:
+        * tao/ORB_Core.{h,cpp}: We also need to define/declare static
+          services for platform without svc.conf support.
 
 Tue Jan  5 18:27:26 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Server_i.cpp (init): Added the IR related
-	code.
+        * orbsvcs/Time_Service/Server_i.cpp (init): Added the IR related
+        code.
 
 Tue Jan  5 17:44:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/DynAnyC.h
-	* tao/DynAnyC.i
-	* tao/DynSequence_i.h:
-	* tao/DynStruct_i.h:
-	  Removed some other uses of ACE_Array in favor of ACE_Array_Base,
-	  in these cases there was no need for the operator== and/or
-	  operator!=
+        * tao/DynAnyC.h
+        * tao/DynAnyC.i
+        * tao/DynSequence_i.h:
+        * tao/DynStruct_i.h:
+          Removed some other uses of ACE_Array in favor of ACE_Array_Base,
+          in these cases there was no need for the operator== and/or
+          operator!=
 
 Tue Jan 05 15:40:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):
-	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (initialize_orb):
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (init):
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init):
-	  Removed explicit call to <TAO_Internal::open_services> when
-	  building static lib version on Win32 since we can now use them
-	  as static service (and configure them thru svc.conf.static
-	  file.)
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (initialize_orb):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (init):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init):
+          Removed explicit call to <TAO_Internal::open_services> when
+          building static lib version on Win32 since we can now use them
+          as static service (and configure them thru svc.conf.static
+          file.)
 
-	* performance_tests/Cubit/TAO/IDL_Cubit/svc.conf.static:
-	* performance_tests/Cubit/TAO/MT_Cubit/svc.conf.static: Added two
-	  example svc.conf files to show how to use static services.
+        * performance_tests/Cubit/TAO/IDL_Cubit/svc.conf.static:
+        * performance_tests/Cubit/TAO/MT_Cubit/svc.conf.static: Added two
+          example svc.conf files to show how to use static services.
 
-	* tao/orbconf.h: Changed the format of XXX_FACTORY_ARGS strings for
-	  platforms without svc.conf support to a single char string.
-	  These entries should look like this now:
+        * tao/orbconf.h: Changed the format of XXX_FACTORY_ARGS strings for
+          platforms without svc.conf support to a single char string.
+          These entries should look like this now:
 
-	   "static TAO_Foobar_Factory \"-ORBsettings a -ORBset b\""
+           "static TAO_Foobar_Factory \"-ORBsettings a -ORBset b\""
 
-	* tao/TAO_Internal.{h,cpp}: Removed method open_services which
-	  takes separate argument lists for each of the TAO default
-	  service.  Service initialization is now done in a more general
-	  way.
+        * tao/TAO_Internal.{h,cpp}: Removed method open_services which
+          takes separate argument lists for each of the TAO default
+          service.  Service initialization is now done in a more general
+          way.
 
 Tue Jan 05 14:32:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object.i (_narrow): _narrow must increase the reference
- 	  count on the object.  Thanks to Ron Barack <rab@terminal.cz> for
- 	  reporting this bug.
+        * tao/Object.i (_narrow): _narrow must increase the reference
+          count on the object.  Thanks to Ron Barack <rab@terminal.cz> for
+          reporting this bug.
 
 Tue Jan 05 14:21:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp (open_services): Added insertion of
-	  default static service objects of TAO.  I forgot to do that.
+        * tao/TAO_Internal.cpp (open_services): Added insertion of
+          default static service objects of TAO.  I forgot to do that.
 
 Tue Jan  5 13:06:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
