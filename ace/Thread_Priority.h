@@ -94,14 +94,26 @@ public:
   ~ACE_Thread_Priority (void);
 
   // = Set/Get accessors for priority class.
-  long priority_class (const Priority_Class);
+  int priority_class (const Priority_Class);
   // Return 0 on success and -1 on failure (and sets errno).
   Priority_Class priority_class (void) const;
 
   // = Set/Get accessors for default thread priority.
-  long default_thread_priority (const Thread_Priority);
+  int default_thread_priority (const Thread_Priority);
   // Return 0 on success and -1 on failure (and sets errno).
   Thread_Priority default_thread_priority (void) const;
+
+  // = Increment/decrement operations.  These increment/decrement
+  //   the default thread priority, adjusting the priority class if
+  //   necessary.  Return 0 on success if the priority class did not
+  //   have to be adjusted; 1 on success if the priority class did have
+  //   to be adjusted; or -1 if the the priority class/default priority
+  //   were already at their upper/lower limit (and in which case they
+  //   would not have been changed).
+  //   These functions currently don't take into account the priority
+  //   overlap described above on Windows NT.
+  int increment (void);
+  int decrement (void);
 
   ACE_id_t os_priority_class (void) const;
   // Get accessor for the OS-specific priority class.
@@ -123,7 +135,7 @@ private:
   ACE_pri_t os_default_thread_priority_;
   // OS-specific value of default_thread_priority_.
 
-  long convert_to_os_priority (void);
+  int convert_to_os_priority (void);
   // Convert OS-independent priorities into OS-specific priorities.
 };
 
