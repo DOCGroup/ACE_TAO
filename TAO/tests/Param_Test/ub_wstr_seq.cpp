@@ -30,10 +30,10 @@ ACE_RCSID (Param_Test,
 
 Test_WString_Sequence::Test_WString_Sequence (void)
   : opname_ (CORBA::string_dup ("test_wstrseq")),
-    in_ (new Param_Test::WStrSeq),
-    inout_ (new Param_Test::WStrSeq),
-    out_ (new Param_Test::WStrSeq),
-    ret_ (new Param_Test::WStrSeq)
+    in_ (new CORBA::WStringSeq),
+    inout_ (new CORBA::WStringSeq),
+    out_ (new CORBA::WStringSeq),
+    ret_ (new CORBA::WStringSeq)
 {
 }
 
@@ -57,26 +57,26 @@ Test_WString_Sequence::dii_req_invoke (CORBA::Request *req
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
 
-  req->set_return_type (Param_Test::_tc_WStrSeq);
+  req->set_return_type (CORBA::_tc_WStringSeq);
 
   req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  Param_Test::WStrSeq *tmp;
+  CORBA::WStringSeq *tmp;
   req->return_value () >>= tmp;
-  this->ret_ = new Param_Test::WStrSeq (*tmp);
+  this->ret_ = new CORBA::WStringSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
-  this->inout_ = new Param_Test::WStrSeq (*tmp);
+  this->inout_ = new CORBA::WStringSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
-  this->out_ = new Param_Test::WStrSeq (*tmp);
+  this->out_ = new CORBA::WStringSeq (*tmp);
 }
 
 int
@@ -104,9 +104,9 @@ Test_WString_Sequence::init_parameters (Param_Test_ptr
 int
 Test_WString_Sequence::reset_parameters (void)
 {
-  this->inout_ = new Param_Test::WStrSeq; // delete the previous ones
-  this->out_ = new Param_Test::WStrSeq;
-  this->ret_ = new Param_Test::WStrSeq;
+  this->inout_ = new CORBA::WStringSeq; // delete the previous ones
+  this->out_ = new CORBA::WStringSeq;
+  this->ret_ = new CORBA::WStringSeq;
   return 0;
 }
 
@@ -116,7 +116,7 @@ Test_WString_Sequence::run_sii_test (Param_Test_ptr objref
 {
   ACE_TRY
     {
-      Param_Test::WStrSeq_out out (this->out_.out ());
+      CORBA::WStringSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_wstrseq (this->in_.in (),
                                          this->inout_.inout (),

@@ -29,10 +29,10 @@ ACE_RCSID (Param_Test,
 
 Test_Long_Sequence::Test_Long_Sequence (void)
   : opname_ (CORBA::string_dup ("test_long_sequence")),
-    in_ (new Param_Test::Long_Seq),
-    inout_ (new Param_Test::Long_Seq),
-    out_ (new Param_Test::Long_Seq),
-    ret_ (new Param_Test::Long_Seq)
+    in_ (new CORBA::LongSeq),
+    inout_ (new CORBA::LongSeq),
+    out_ (new CORBA::LongSeq),
+    ret_ (new CORBA::LongSeq)
 {
 }
 
@@ -56,26 +56,26 @@ Test_Long_Sequence::dii_req_invoke (CORBA::Request *req
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
 
-  req->set_return_type (Param_Test::_tc_Long_Seq);
+  req->set_return_type (CORBA::_tc_LongSeq);
 
   req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  Param_Test::Long_Seq *tmp;
+  CORBA::LongSeq *tmp;
   req->return_value () >>= tmp;
-  this->ret_ = Param_Test::Long_Seq (*tmp);
+  this->ret_ = CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
-  this->inout_ = Param_Test::Long_Seq (*tmp);
+  this->inout_ = CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
-  this->out_ = Param_Test::Long_Seq (*tmp);
+  this->out_ = CORBA::LongSeq (*tmp);
 }
 
 int
@@ -102,9 +102,9 @@ Test_Long_Sequence::init_parameters (Param_Test_ptr
 int
 Test_Long_Sequence::reset_parameters (void)
 {
-  this->inout_ = new Param_Test::Long_Seq; // delete the previous ones
-  this->out_ = new Param_Test::Long_Seq;
-  this->ret_ = new Param_Test::Long_Seq;
+  this->inout_ = new CORBA::LongSeq; // delete the previous ones
+  this->out_ = new CORBA::LongSeq;
+  this->ret_ = new CORBA::LongSeq;
   return 0;
 }
 
@@ -114,7 +114,7 @@ Test_Long_Sequence::run_sii_test (Param_Test_ptr objref
 {
   ACE_TRY
     {
-      Param_Test::Long_Seq_out out (this->out_.out ());
+      CORBA::LongSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_long_sequence (this->in_.in (),
                                                this->inout_.inout (),

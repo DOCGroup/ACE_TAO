@@ -27,7 +27,6 @@
 module CORBA
 {
   typedef sequence<string> StringSeq;
-  typedef sequence<wstring> WStringSeq;
 };
 
 #endif  /* TAO_CORBA_STRING_SEQ_IDL */

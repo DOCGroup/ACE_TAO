@@ -206,16 +206,16 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
 
 // = Sequences
 
-Param_Test::Long_Seq *
-Param_Test_i::test_long_sequence (const Param_Test::Long_Seq & s1,
-                                  Param_Test::Long_Seq & s2,
-                                  Param_Test::Long_Seq_out s3
+CORBA::LongSeq *
+Param_Test_i::test_long_sequence (const CORBA::LongSeq & s1,
+                                  CORBA::LongSeq & s2,
+                                  CORBA::LongSeq_out s3
                                   ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Param_Test::Long_Seq
-    *ret = new Param_Test::Long_Seq,
-    *out = new Param_Test::Long_Seq;
+  CORBA::LongSeq
+    *ret = new CORBA::LongSeq,
+    *out = new CORBA::LongSeq;
 
   s2 = s1;
   *out = s1;
@@ -224,16 +224,16 @@ Param_Test_i::test_long_sequence (const Param_Test::Long_Seq & s1,
   return ret;
 }
 
-Param_Test::Short_Seq *
-Param_Test_i::test_short_sequence (const Param_Test::Short_Seq & s1,
-                                   Param_Test::Short_Seq & s2,
-                                   Param_Test::Short_Seq_out s3
+CORBA::ShortSeq *
+Param_Test_i::test_short_sequence (const CORBA::ShortSeq & s1,
+                                   CORBA::ShortSeq & s2,
+                                   CORBA::ShortSeq_out s3
                                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Param_Test::Short_Seq
-    *ret = new Param_Test::Short_Seq,
-    *out = new Param_Test::Short_Seq;
+  CORBA::ShortSeq
+    *ret = new CORBA::ShortSeq,
+    *out = new CORBA::ShortSeq;
 
   s2 = s1;
   *out = s1;
@@ -278,18 +278,18 @@ Param_Test_i::test_bounded_long_sequence (const Param_Test::Bounded_Long_Seq & s
   return ret;
 }
 
-Param_Test::StrSeq *
-Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
-                           Param_Test::StrSeq &s2,
-                           Param_Test::StrSeq_out s3
+CORBA::StringSeq *
+Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
+                           CORBA::StringSeq &s2,
+                           CORBA::StringSeq_out s3
                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
-  Param_Test::StrSeq
-    *ret = new Param_Test::StrSeq,
-    *out = new Param_Test::StrSeq;
+  CORBA::StringSeq
+    *ret = new CORBA::StringSeq,
+    *out = new CORBA::StringSeq;
 
   if (TAO_debug_level > 0)
     {
@@ -335,18 +335,18 @@ Param_Test_i::test_bounded_strseq (const Param_Test::Bounded_StrSeq & s1,
   return ret;
 }
 
-Param_Test::WStrSeq *
-Param_Test_i::test_wstrseq (const Param_Test::WStrSeq &ws1,
-                            Param_Test::WStrSeq &ws2,
-                            Param_Test::WStrSeq_out ws3
+CORBA::WStringSeq *
+Param_Test_i::test_wstrseq (const CORBA::WStringSeq &ws1,
+                            CORBA::WStringSeq &ws2,
+                            CORBA::WStringSeq_out ws3
                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
-  Param_Test::WStrSeq
-    *ret = new Param_Test::WStrSeq,
-    *out = new Param_Test::WStrSeq;
+  CORBA::WStringSeq
+    *ret = new CORBA::WStringSeq,
+    *out = new CORBA::WStringSeq;
 
   // now copy all elements of s1 into the others using the assignment operator
   ws2 = ws1;
@@ -580,18 +580,18 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
   return ret;
 }
 
-Param_Test::AnySeq *
-Param_Test_i::test_anyseq (const Param_Test::AnySeq &s1,
-                           Param_Test::AnySeq &s2,
-                           Param_Test::AnySeq_out s3
+CORBA::AnySeq *
+Param_Test_i::test_anyseq (const CORBA::AnySeq &s1,
+                           CORBA::AnySeq &s2,
+                           CORBA::AnySeq_out s3
                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
-  Param_Test::AnySeq
-    *ret = new Param_Test::AnySeq,
-    *out = new Param_Test::AnySeq;
+  CORBA::AnySeq
+    *ret = new CORBA::AnySeq,
+    *out = new CORBA::AnySeq;
 
   // now copy all elements of s1 into the others using the assignment operator
   s2 = s1;
@@ -775,7 +775,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   const char *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
-  Param_Test::Short_Seq *ub_short_sequence;
+  CORBA::ShortSeq *ub_short_sequence;
   Param_Test::Bounded_Short_Seq *bd_short_sequence;
   Param_Test::Fixed_Struct *fixed_structure;
   Param_Test::Big_Union *big_union;

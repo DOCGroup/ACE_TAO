@@ -33,10 +33,10 @@ const CORBA::ULong NUM_TEST_TYPES = 4;
 
 Test_AnySeq::Test_AnySeq (void)
   : opname_ (CORBA::string_dup ("test_anyseq")),
-    in_ (new Param_Test::AnySeq (TEST_SEQ_LENGTH)),
-    inout_ (new Param_Test::AnySeq (TEST_SEQ_LENGTH)),
-    out_ (new Param_Test::AnySeq),
-    ret_ (new Param_Test::AnySeq)
+    in_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
+    inout_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
+    out_ (new CORBA::AnySeq),
+    ret_ (new CORBA::AnySeq)
 {
 }
 
@@ -60,26 +60,26 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
 
-  req->set_return_type (Param_Test::_tc_AnySeq);
+  req->set_return_type (CORBA::_tc_AnySeq);
 
   req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  Param_Test::AnySeq* tmp;
+  CORBA::AnySeq* tmp;
   req->return_value () >>= tmp;
-  this->ret_ = new Param_Test::AnySeq (*tmp);
+  this->ret_ = new CORBA::AnySeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
-  this->inout_ = new Param_Test::AnySeq (*tmp);
+  this->inout_ = new CORBA::AnySeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
-  this->out_ = new Param_Test::AnySeq (*tmp);
+  this->out_ = new CORBA::AnySeq (*tmp);
 }
 
 int
@@ -204,7 +204,7 @@ Test_AnySeq::run_sii_test (Param_Test_ptr objref
 {
   ACE_TRY
     {
-      Param_Test::AnySeq_out out (this->out_.out ());
+      CORBA::AnySeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_anyseq (this->in_.in (),
                                         this->inout_.inout (),
@@ -329,7 +329,7 @@ Test_AnySeq::print_values (void)
 }
 
 void
-Test_AnySeq::print_sequence (const Param_Test::AnySeq &s)
+Test_AnySeq::print_sequence (const CORBA::AnySeq &s)
 {
   ACE_DEBUG ((LM_DEBUG,
               "maximum = %d\n"

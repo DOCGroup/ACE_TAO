@@ -186,7 +186,7 @@ Test_Any::reset_parameters (void)
         if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_DEBUG,
                       "Param_Test: ANY_SHORT_SEQ subtest\n"));
-        Param_Test::Short_Seq seq;
+        CORBA::ShortSeq seq;
         seq.length (gen->gen_short () % 16);
         for (size_t i = 0; i < seq.length (); i++)
           seq[i] = gen->gen_short ();
@@ -301,7 +301,7 @@ Test_Any::check_validity (void)
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
   Param_Test::Fixed_Array_forany array_in, array_inout, array_out, array_ret;
   Param_Test::Bounded_Short_Seq *bdss_in, *bdss_inout, *bdss_out, *bdss_ret;
-  Param_Test::Short_Seq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
+  CORBA::ShortSeq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
   Param_Test::Fixed_Struct *fs_in, *fs_inout, *fs_out, *fs_ret;
   Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
   Param_Test::Small_Union *su_in, *su_inout, *su_out, *su_ret;

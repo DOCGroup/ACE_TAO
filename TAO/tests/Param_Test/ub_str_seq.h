@@ -64,16 +64,16 @@ private:
   char *opname_;
   // operation name
 
-  Param_Test::StrSeq_var in_;
+  CORBA::StringSeq_var in_;
   // in parameter
 
-  Param_Test::StrSeq_var inout_;
+  CORBA::StringSeq_var inout_;
   // inout parameter
 
-  Param_Test::StrSeq_var out_;
+  CORBA::StringSeq_var out_;
   // out parameter
 
-  Param_Test::StrSeq_var ret_;
+  CORBA::StringSeq_var ret_;
   // return value
 };
 
