@@ -6,6 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib '../../../bin';
+use ACEutils;
 use PerlACE::Run_Test;
 
 $file = PerlACE::LocalFile ("test.ior");
