@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/ObjectReferenceTemplate_Adapter_Factory.h"
+#include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,

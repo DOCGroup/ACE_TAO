@@ -1,3 +1,41 @@
+
+        * tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.cpp:
+          Fixed incorrect include
+
+        * tao/PortableServer/ObjectReferenceTemplate_Adapter.h:
+          - Added adapter_name as constructor argument
+          - Added destroy() method, called by POA when this adapter is not
+          needed anymore, adapter must do its own cleanup
+          - Added activate() method with just a ORT* to activate the adapter
+          with an existing factory.
+          - Added get_adapter_template and get_obj_ref_factory to get the real
+          servant, this is needed for the IORInterceptors
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+          - Added invoke_key_to_object_helper() which will check for the ORT and
+          if available will call that or will call invoke_key_to_object
+          instead.
+          - Added object_reference_template_adapter() which will check
+          ir an ORT Adapter is already available, if not, tries to get an
+          ORT Adapater Factory, if that is available, create a new ORT
+          Adapter.
+          - Added some doxygen grouping to group methods belonging to each other
+          in one doxygen group.
+          - Added ort_adapter_ member to store the ORT Adapter when we have
+          retrieved one.
+          - Removed set_adapter_template() from the header file, there is no
+          implementation of this method and it is not needed
+          - Added TAO_POA_Static_Resources to store the name of the ORT factory,
+          used the TAO_ORB_Core_Static_Resources but I didn't it put it there
+          because the ORB_Core doesn't need to know anything or ORT.
+          - Removed old ort_template, def_ort_template and obj_ref_factory and
+          its usage.
+
+        * tao/PortableServer/Default_ORT*.*:
+        * tao/PortableServer/ObjectReferenceTemplate.{h,cpp,i}:
+          Removed these files, default ORT implementation is now in the ORT
+          library
+
 Fri Aug 13 18:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ObjectReferenceTemplate_Adapter.{h,cpp}
