@@ -34,7 +34,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   rounded_bytes = this->round_up (nbytes);
 
   ACE_Auto_Basic_Array_Ptr<char> cp = new char[rounded_bytes];
-  
+
   if (cp.get () == 0)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) new failed \n")), 0);
   else
@@ -788,12 +788,11 @@ ACE_Shared_Memory_Pool::release (void)
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<char *>;
+template class ACE_Auto_Basic_Array_Ptr<char>;
 template class ACE_Unbounded_Set<char *>;
 template class ACE_Unbounded_Set_Iterator<char *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<char *>
-#pragma instantiate ACE_Unbounded_Set<char *> 
-#pragma instantiate ACE_Unbounded_Set_Iterator<char *> 
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<char>
+#pragma instantiate ACE_Unbounded_Set<char *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<char *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
