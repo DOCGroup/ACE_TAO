@@ -240,11 +240,30 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << node->local_name () << " (const " << node->local_name () << " &);"
           << be_nl
           << "void operator= (const " << node->local_name () << " &);";
-      *os << be_uidt_nl;
-      *os << "};\n\n";
 
+      // Generate the embedded RequestInfo classes per operation.
+      // This is to be used by interceptors.
       be_visitor_context ctx (*this->ctx_);
       be_visitor *visitor = 0;
+      // Interceptor related classes.
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "codegen for interceptor classes failed\n"),
+                                -1);
+        }
+      delete visitor;
+      visitor = 0;
+
+      ctx = *this->ctx_;
+
+      *os << be_uidt_nl;
+      *os << "};\n\n";
 
       // Don't support smart proxies for local interfaces.
       if (! node->is_local ())
@@ -286,6 +305,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
             }
 
         }
+
       node->cli_hdr_gen (I_TRUE);
     } // if !cli_hdr_gen
 

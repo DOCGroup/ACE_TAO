@@ -32,8 +32,13 @@
 #include "be_visitor_argument/pre_invoke_cs.cpp"
 #include "be_visitor_argument/invoke_cs.cpp"
 #include "be_visitor_argument/post_invoke_cs.cpp"
-
-
+#include "be_visitor_argument/request_info_ch.cpp"
+#include "be_visitor_argument/request_info_cs.cpp"
+#include "be_visitor_argument/paramlist.cpp"
+#include "be_visitor_argument/request_info_sh.cpp"
+#include "be_visitor_argument/request_info_ss.cpp"
+#include "be_visitor_argument/request_info_result.cpp"
+#include "be_visitor_argument/request_info_arglist.cpp"
 
 ACE_RCSID(be, be_visitor_argument, "$Id$")
 
