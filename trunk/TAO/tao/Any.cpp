@@ -1033,12 +1033,14 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 
 // Specializations for CORBA::Any
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Any>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Any>::demarshal_value (TAO_InputCDR &)
 {
@@ -1049,6 +1051,7 @@ TAO::Any_Impl_T<CORBA::Any>::demarshal_value (TAO_InputCDR &)
 
 // Specializations of the create_empty method for long long and long double.
 
+template<>
 TAO::Any_Basic_Impl_T<CORBA::LongLong> *
 TAO::Any_Basic_Impl_T<CORBA::LongLong>::create_empty (
     CORBA::TypeCode_ptr tc
@@ -1063,6 +1066,7 @@ TAO::Any_Basic_Impl_T<CORBA::LongLong>::create_empty (
   return retval;
 }
 
+template<>
 TAO::Any_Basic_Impl_T<CORBA::LongDouble> *
 TAO::Any_Basic_Impl_T<CORBA::LongDouble>::create_empty (
     CORBA::TypeCode_ptr tc
@@ -1081,6 +1085,7 @@ TAO::Any_Basic_Impl_T<CORBA::LongDouble>::create_empty (
 
 // Specializations for CORBA::Exception
 
+template<>
 TAO::Any_Dual_Impl_T<CORBA::Exception>::Any_Dual_Impl_T (
     _tao_destructor destructor,
     CORBA::TypeCode_ptr tc,
@@ -1092,6 +1097,7 @@ TAO::Any_Dual_Impl_T<CORBA::Exception>::Any_Dual_Impl_T (
   this->value_ = val._tao_duplicate ();
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
 {
@@ -1111,6 +1117,7 @@ TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
 {
