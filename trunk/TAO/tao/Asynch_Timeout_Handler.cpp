@@ -16,11 +16,11 @@ ACE_RCSID(tao, Asynch_Timeout_Handler, "$Id$")
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
   TAO_Asynch_Reply_Dispatcher_Base *rd,
-  TAO_Transport_Mux_Strategy *tms,
-  CORBA::ULong request_id)
+  ACE_Reactor *reactor)
   : rd_ (rd),
-    tms_ (tms),
-    request_id_ (request_id)
+    tms_ (0),
+    request_id_ (0),
+    reactor_ (reactor)
 {
 
 }
@@ -30,44 +30,44 @@ TAO_Asynch_Timeout_Handler::~TAO_Asynch_Timeout_Handler ()
 
 }
 
+
+long
+TAO_Asynch_Timeout_Handler::schedule_timer (TAO_Transport_Mux_Strategy *tms,
+                                            CORBA::ULong request_id,
+                                            const ACE_Time_Value &max_wait_time)
+{
+  // Remember them for later.
+  this->tms_ = tms;
+  this->request_id_ = request_id;
+
+  return this->reactor_->schedule_timer (this,          // handler
+                                         0,             // arg
+                                         max_wait_time);
+}
+
 int 
 TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                             const void *)
 {
-  tms_->unbind_dispatcher (request_id_);
+  this->tms_->unbind_dispatcher (request_id_);
 
-  rd_->reply_timed_out ();
+  this->rd_->reply_timed_out ();
 
+  // reset any possible timeout errno
   errno = 0;
 
-  // let the reactor unregister us.
-  return -1;
-}
-
-int
-TAO_Asynch_Timeout_Handler::handle_close (ACE_HANDLE,
-                                          ACE_Reactor_Mask)
-{
-  // commit suicide, we are a per invocation object.
-  delete this;
-
-  // @@ Michael: We should avoid dynamic creation of the timeout
-  //             handler, so that it is statically allocated 
-  //             in the asynch reply dispatcher. Thanks to Carlos
-  //             for this hint.
-
+  // we are unregistered anyway
   return 0;
 }
-
-
 
 void
 TAO_Asynch_Timeout_Handler::cancel ()
 {
-  this->reactor ()->cancel_timer (this);
-
-  // The reply handler, which invokes this operation is going
-  // to delete this object.
+  // The tms_ is only set if we got scheduled.
+  if (this->tms_)
+    {
+      this->reactor_->cancel_timer (this);
+    }
 }
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */

@@ -1,3 +1,21 @@
+Thu Mar  8 15:32:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Timeout_Handler.cpp:
+        * tao/Asynch_Timeout_Handler.h:
+    
+          Moved the alloaction of the timeout handler from the asynch invocation,
+          where it was done dynamically, to the constructur of the asynch reply
+          dispatcher constructor, where it is allocated together with the 
+          reply dispatcher. The reply dispatcher itself is allocated on the
+          heap as the invocation object will go away before the reply arrives.
+
+          This change also involved some restructuring of the timeout mechanism,
+          though nothing major.
+    
+
 Thu Mar  8 14:20:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/InterfaceC.cpp:
