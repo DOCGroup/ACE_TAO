@@ -37,7 +37,7 @@ ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
 ACE_DLL::~ACE_DLL (void)
 {
   // CLose the library only if it hasn't been already.
-  if (this->close_on_destruction_ == 0 
+  if (this->close_on_destruction_ == 1 
       && this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     this->close ();
 }
@@ -120,7 +120,7 @@ ACE_DLL::get_handle (int become_owner)
   // rights to close it on destruction.  The new controller has to do
   // it explicitly.
   if (become_owner == 0)
-    this->close_on_destruction_ = 1;
+    this->close_on_destruction_ = 0;
 
   // Return the handle requested by the user.
   return this->handle_;
