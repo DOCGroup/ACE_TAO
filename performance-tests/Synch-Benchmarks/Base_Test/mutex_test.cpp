@@ -2,6 +2,10 @@
 
 #define ACE_BUILD_SVC_DLL
 
+#include "Baseline_Test.h"
+
+# if defined (ACE_HAS_THREADS)
+
 #include "ace/Log_Msg.h"
 #include "ace/Token.h"
 #include "ace/Process_Mutex.h"
@@ -13,7 +17,7 @@
 #include "ace/Semaphore.h"
 #include "ace/Null_Semaphore.h"
 #include "ace/Process_Semaphore.h"
-#include "Baseline_Test.h"
+
 
 template<class LOCK>
 class ACE_Svc_Export Baseline_Lock_Test : public Baseline_Test_Base
@@ -239,3 +243,5 @@ template class Baseline_Lock_Test<ACE_Token>;
 #pragma instantiate Baseline_Lock_Test<ACE_Null_Semaphore>
 #pragma instantiate Baseline_Lock_Test<ACE_Token>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif  /* ACE_HAS_THREADS */

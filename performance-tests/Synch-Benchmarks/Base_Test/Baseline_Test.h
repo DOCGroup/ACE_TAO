@@ -4,11 +4,13 @@
 #ifndef ACE_BASELINE_TEST_H
 #define ACE_BASELINE_TEST_H
 
+#include "Synch_Lib/Benchmark_Base.h"
+
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/Profile_Timer.h"
 #include "ace/svc_export.h"
 #include "ace/Barrier.h"
-
-#include "Synch_Lib/Benchmark_Base.h"
 
 const unsigned long DEFAULT_ITERATIONS = 1000000;
 
@@ -145,5 +147,7 @@ ACE_SVC_FACTORY_DECLARE (Baseline_Test)
 #if defined (__ACE_INLINE__)
 #include "Baseline_Test.i"
 #endif /* __ACE_INLINE__ */
+
+#endif  /* ACE_HAS_THREADS */
 
 #endif /* ACE_BASELINE_TEST_H */

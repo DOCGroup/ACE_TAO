@@ -31,7 +31,7 @@ enum DEBUGGING_RANGE
 
 static DEBUGGING_RANGE debug = DEBUG_NONE;
 
-typedef ACE_Task<ACE_MT_SYNCH> TASK;
+typedef ACE_Task<ACE_SYNCH> TASK;
 
 class Leader_Follower_Task : public TASK
 {
