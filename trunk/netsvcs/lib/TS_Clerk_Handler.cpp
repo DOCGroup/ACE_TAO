@@ -801,4 +801,6 @@ ACE_SVC_FACTORY_DEFINE (ACE_TS_Clerk_Processor)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<ACE_TS_Clerk_Handler>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_RW_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -322,4 +322,5 @@ ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
+template class ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

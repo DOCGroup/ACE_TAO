@@ -436,10 +436,15 @@ ACE_Thr_Server_Logging_Handler::svc (void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Strategy_Acceptor<ACE_Thr_Server_Logging_Handler, LOGGING_PEER_ACCEPTOR>;
-template class ACE_Schedule_All_Threaded_Strategy<ACE_Thr_Server_Logging_Handler>;
-template class ACE_Strategy_Acceptor<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH>, LOGGING_PEER_ACCEPTOR>;
+template class ACE_Acceptor<ACE_Server_Logging_Handler<ACE_TLI_Stream, ACE_INET_Addr, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex>, ACE_TLI_Acceptor, ACE_INET_Addr>;
+template class ACE_Acceptor<ACE_Thr_Server_Logging_Handler, ACE_TLI_Acceptor, ACE_INET_Addr>;
+template class ACE_Creation_Strategy<ACE_Server_Logging_Handler<ACE_TLI_Stream, ACE_INET_Addr, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex> >;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH> >;
+template class ACE_Schedule_All_Threaded_Strategy<ACE_Thr_Server_Logging_Handler>;
+template class ACE_Scheduling_Strategy<ACE_Thr_Server_Logging_Handler>;
+template class ACE_Server_Logging_Handler<ACE_TLI_Stream, ACE_INET_Addr, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
+template class ACE_Strategy_Acceptor<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH>, LOGGING_PEER_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<ACE_Thr_Server_Logging_Handler, LOGGING_PEER_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_TLI_Stream, ACE_INET_Addr, ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
+template class ACE_Svc_Handler<ACE_TLI_Stream, ACE_INET_Addr, ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
-
