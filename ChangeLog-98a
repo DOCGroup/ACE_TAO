@@ -28,9 +28,9 @@ Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Richard Keizer <RICHARD.L.KEIZER@cdev.com> for
           diagnosing the problem and providing the fix.
 
-        * tests/run_tests.vxworks: enabled Thread_Manager_Test now
-          that it succeeds.  Thanks to Richard Keizer
-          <RICHARD.L.KEIZER@cdev.com> for the above fix.
+        * tests/run_tests.vxworks: enabled Thread_Manager_Test and
+          Message_Block_Test now that they succeed.  Thanks to Richard Keizer
+          <RICHARD.L.KEIZER@cdev.com> for the ACE_OS::thr_kill fix.
 
         * ace/OS.cpp (thr_create), ace/Thread_Manager.cpp (kill_thr):
           on VxWorks, use strncmp instead of strcmp to check for allocated
