@@ -1,3 +1,11 @@
+Mon May  3 23:46:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+	  Added a line to suppress inclusion of "fooC,h" and
+	  "fooS.h" if foo.idl is "orb.idl". We're not
+	  fully functional with '#include <orb.idl>' yet -
+	  more changes to come.
+
 Mon May 03 22:02:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/include/ast_expression.h: reverted replacement of
