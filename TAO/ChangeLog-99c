@@ -1,3 +1,15 @@
+Fri Aug 13 12:09:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_expression.h:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	  Had to put back the removed function and contructor
+	  below (with the correct from_wchar signature). A good
+	  lesson that all overloaded virtual functions must
+	  be overridden, else they are hidden and the compiler
+	  warns.
+
 Thu Aug 12 22:07:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_expression.h:
