@@ -14,7 +14,9 @@
 #ifndef CONFIGFACTORY_H
 #define CONFIGFACTORY_H
 
+#include "test_driver_export.h"
 #include "TestConfig.h"
+#include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,7 +36,7 @@ namespace ConfigFactory {
  * The objects it creates are owned by this class, the client must
  * invoke the corresponding destroy() method to release them.
  */
-class Config_Factory : ACE_Service_Object
+class Test_Driver_Export Config_Factory : public ACE_Service_Object
 {
 public:
   ///Constructor
@@ -71,7 +73,7 @@ enum Sched_Type {
  * Since the class can be dynamically loaded the strategies can be
  * set in the service configurator file.
  */
-class Default_Config_Factory : public Config_Factory
+class Test_Driver_Export Default_Config_Factory : public Config_Factory
 {
 public:
   /// Constructor
@@ -96,9 +98,13 @@ protected:
   Sched_Type sched_type_;
 };
 
+ACE_STATIC_SVC_DECLARE (Default_Config_Factory)
+ACE_FACTORY_DECLARE (Test_Driver, Default_Config_Factory)
+
 } /* namespace ConfigFactory */
 
-//ACE_STATIC_SVC_DECLARE (Default_Config_Factory)
-//ACE_FACTORY_DECLARE (TestConfig, Default_Config_Factory)
+#if defined (__ACE_INLINE__)
+#include "Config_Factory.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* CONFIGFACTORY_H */
