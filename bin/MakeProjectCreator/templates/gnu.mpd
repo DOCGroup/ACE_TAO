@@ -100,7 +100,14 @@ LIB   = $(LIB_UNCHECKED)
 <%if(sharedname)%>
 SHLIB = $(SHLIB_UNCHECKED)
 <%endif%>
-<%foreach(avoids requires)%>
+<%foreach(avoids)%>
+else
+  all: avoid_warning
+endif
+<%endfor%>
+<%foreach(requires)%>
+else
+  all: require_warning
 endif
 <%endfor%>
 <%if(tagname)%>
@@ -119,7 +126,14 @@ ifneq ($(<%avoid%>),1)
 <%foreach(tagchecks)%>
   endif
 <%endfor%>
-<%foreach(avoids requires)%>
+<%foreach(avoids)%>
+else
+  all: avoid_warning
+endif
+<%endfor%>
+<%foreach(requires)%>
+else
+  all: require_warning
 endif
 <%endfor%>
 endif
@@ -295,9 +309,6 @@ TAO_IDLFLAGS += <%idlflags%>
 <%if(lit_libs)%>
 <%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%endif%>
-<%if(ssl)%>
-<%if(exename)%>LDLIBS<%endif%><%if(sharedname)%>ACE_SHLIBS<%endif%> +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
-<%endif%>
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
@@ -306,16 +317,19 @@ TAO_IDLFLAGS += <%idlflags%>
 comp_warning:
 	@echo This project will not be built due to one of the following missing components:
 	@echo<%foreach(comps)%> <%comp%><%endfor%>
+
 <%endif%>
 <%if(requires)%>
 require_warning:
 	@echo This project will not be built due to one of the following missing features:
 	@echo<%foreach(requires)%> <%require%><%endfor%>
+
 <%endif%>
 <%if(avoids)%>
 avoid_warning:
 	@echo This project will not be built due to one of the following enabled features:
 	@echo<%foreach(avoids)%> <%avoid%><%endfor%>
+
 <%endif%>
 <%if(custom_types)%>
 <%foreach(custom_types)%>

@@ -2,7 +2,6 @@ conditional_include "idl_compiler_win32"
 
 configurations     = Release Debug "Static Release" "Static Debug"
 common_defines     = WIN32 _WINDOWS
-ssl_libs           = libeay32 ssleay32
 
 Release {
   type_is_dynamic  = 1

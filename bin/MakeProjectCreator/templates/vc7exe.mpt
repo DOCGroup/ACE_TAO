@@ -5,7 +5,6 @@ type_is_binary     = 1
 common_defines     = WIN32 _CONSOLE
 configuration_type = 1
 subsystem          = 1
-ssl_libs           = libeay32 ssleay32
 pdb                = 1
 
 Release {
