@@ -13,6 +13,10 @@
 
 ACE_RCSID(ETCL, ETCL_Constraint, "$Id$")
 
+TAO_ETCL_Constraint::TAO_ETCL_Constraint (void)
+{
+}
+
 TAO_ETCL_Constraint::~TAO_ETCL_Constraint (void)
 {
 }
@@ -22,6 +26,7 @@ TAO_ETCL_Constraint::~TAO_ETCL_Constraint (void)
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
     const TAO_ETCL_Literal_Constraint & lit
   )
+  : TAO_ETCL_Constraint ()
 {
   this->copy (lit);
 }

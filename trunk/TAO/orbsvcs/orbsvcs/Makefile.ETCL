@@ -12,7 +12,7 @@ LIBNAME  = libTAO_ETCL
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-VPATH=.
+VPATH=.:ETCL
 
 ACE_SHLIBS = -lTAO -lACE
 
