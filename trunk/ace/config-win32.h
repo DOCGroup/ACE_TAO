@@ -3,7 +3,7 @@
 
 // The following configuration file is designed to work for Windows 95,
 // Windows NT 3.51 and Windows NT 4.0 platforms using the Microsoft Visual C++
-// compilers 2.0, 4.0, 4.1, 4.2 and 5.0
+// compilers 2.0, 4.0, 4.1, 4.2, 5.0 and 6.0
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -166,6 +166,9 @@
 #elif (ACE_HAS_NONSTATIC_OBJECT_MANAGER == 0)
 # undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+// MSVC already defined __TEXT
+#define ACE_HAS_TEXT_MACRO_CONFLICT
 
 #define ACE_HAS_GPERF
 
