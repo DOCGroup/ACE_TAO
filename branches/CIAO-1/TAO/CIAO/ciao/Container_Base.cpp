@@ -87,12 +87,43 @@ CIAO::Session_Container::install_servant (PortableServer::Servant p
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  PortableServer::ObjectId_var oid
+    = this->poa_->activate_object (p
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::Object_var objref
+    = this->poa_->id_to_reference (oid
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return objref._retn ();
 }
 
 void
-CIAO::Session_Container::uninstall_reference (CORBA::Object_ptr objref
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+CIAO::Session_Container::uninstall (CORBA::Object_ptr objref
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  PortableServer::ObjectId_var oid
+    = this->poa_->reference_to_id (objref
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->poa_->deactivate_object (oid
+                                 ACE_ENV_ARG_PARAMETER);
+}
+
+void
+CIAO::Session_Container::uninstall (PortableServer::Servant svt
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var oid
+    = this->poa_->servant_to_id (svt
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->poa_->deactivate_object (oid
+                                 ACE_ENV_ARG_PARAMETER);
 }
