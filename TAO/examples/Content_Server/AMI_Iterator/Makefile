@@ -59,7 +59,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-TAO_IDLFLAGS += -GC   # For AMI support
+TAO_IDLFLAGS += -GC -Ge 1  # -GC for AMI support
+
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
