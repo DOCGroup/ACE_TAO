@@ -12,11 +12,11 @@
 #define TAO_LRU_PURGING_STRATEGY_H
 #include "ace/pre.h"
 
+#include "tao/Connection_Purging_Strategy.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Connection_Purging_Strategy.h"
 
 // ****************************************************************
 
