@@ -1,5 +1,7 @@
 Thu Jul  9 15:12:35 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
+	* tao/deep_free.cpp: wasn't freeing string fields of structs.
+
 	* tests/Quoter/Makefile: removed STL vestige.
 
 Wed Jul  8 21:08:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
