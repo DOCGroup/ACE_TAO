@@ -1,3 +1,9 @@
+Thu Apr  1 22:54:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release: 
+
+	  Fixes from testing.
+
 Thu Apr  1 18:03:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release: 
