@@ -6,6 +6,7 @@
 #include "ace/Unbounded_Set_Ex.h"
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_errno.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
