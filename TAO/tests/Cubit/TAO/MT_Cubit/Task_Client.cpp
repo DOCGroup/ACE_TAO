@@ -17,8 +17,7 @@ Task_State::Task_State (int argc, char **argv)
     oneway_ (0),
     use_name_service_ (1),
     ior_file_ (0),
-    grain_ (1),
-    context_switch_ (0)
+    grain_ (1)
 {
   ACE_Get_Opt opts (argc, argv, "sn:t:d:rk:xof:g:");
   int c;
@@ -115,10 +114,12 @@ Task_State::Task_State (int argc, char **argv)
       ACE_OS::fclose (ior_file);
     }
 
-  // thread_count_ + 1 because there is one utilization thread also
-  // wanting to begin at the same time the clients begin..
+  // thread_count_ + 2 because there is one utilization thread also
+  // wanting to begin at the same time the clients begin && the main
+  // thread wants to know when clients will start running to get
+  // accurate context switch numbers.
   ACE_NEW (barrier_,
-           ACE_Barrier (thread_count_ + 1));
+           ACE_Barrier (thread_count_ + 2));
   ACE_NEW (latency_,
            double [thread_count_]);
   ACE_NEW (global_jitter_array_,
@@ -134,14 +135,12 @@ Client::Client (Task_State *ts)
 void
 Client::put_latency (double *jitter,
                      double latency,
-                     u_int thread_id,
-		     u_int context_switch)
+                     u_int thread_id)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
 
   ts_->latency_[thread_id] = latency;
   ts_->global_jitter_array_[thread_id] = jitter;
-  ts_->context_switch_ += context_switch;
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
@@ -570,7 +569,6 @@ Client::run_tests (Cubit_ptr cb,
 
   for (i = 0; i < loop_count; i++)
     {
-      ACE_Profile_Timer timer_for_context_switch;
       ACE_High_Res_Timer timer_;
       ACE_Time_Value tv (0, (long int) (sleep_time - delta));
       ACE_OS::sleep (tv);
@@ -578,12 +576,6 @@ Client::run_tests (Cubit_ptr cb,
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
       
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
-      ACE_Profile_Timer timer_for_context_switch;
-      ACE_Profile_Timer::Rusage usage;
-      timer_for_context_switch.start ();
-#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
-
 #if defined (CHORUS)       
       pstartTime = pccTime1Get();
 #else /* CHORUS */
@@ -788,13 +780,6 @@ Client::run_tests (Cubit_ptr cb,
       timer_.elapsed_time (delta_t);
 #endif /* !CHORUS */
 
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
-      timer_for_context_switch.stop ();
-      timer_for_context_switch.elapsed_rusage (usage);
-      // Add up the voluntary context switches & involuntary context switches
-      context_switch += usage.pr_vctx + usage.pr_ictx;
-#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
-
       // Calculate time elapsed
 #if defined (ACE_LACKS_FLOATING_POINT)
 #   if defined (CHORUS)      
@@ -810,6 +795,8 @@ Client::run_tests (Cubit_ptr cb,
       delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += real_time;
 #else /* ACE_LACKS_FLOATING_POINT */
+      // Store the time in secs.
+      real_time = delta_t.sec () + (double)delta_t.usec () / ACE_ONE_SECOND_IN_USECS;
       delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
       latency += real_time;
       my_jitter_array [i] = real_time * 1000;
@@ -837,8 +824,7 @@ Client::run_tests (Cubit_ptr cb,
 
               this->put_latency (my_jitter_array, 
 				 latency, 
-				 thread_id, 
-				 context_switch);
+				 thread_id);
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
@@ -847,8 +833,7 @@ Client::run_tests (Cubit_ptr cb,
                           1 / latency));
               this->put_latency (my_jitter_array,
                                  latency * 1000,
-                                 thread_id, 
-				 context_switch);
+                                 thread_id);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
             }
           else
@@ -856,8 +841,7 @@ Client::run_tests (Cubit_ptr cb,
               // still we have to call this function to store a valid array pointer.
               this->put_latency (my_jitter_array,
                                  0,
-                                 thread_id, 
-				 context_switch);
+                                 thread_id);
               ACE_DEBUG ((LM_DEBUG,
                           "*** Warning: Latency is less than or equal to zero."
                           "  Precision may have been lost.\n"));
@@ -977,15 +961,15 @@ context_switch_time (void)
           ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
-        {
-          ACE_DEBUG ((LM_MAX, "context_switch_time: user is not superuser, "
-                              "so remain in time-sharing class\n"));
-        }
+	{
+	  ACE_DEBUG ((LM_MAX, "context_switch_time: user is not superuser, "
+		      "so remain in time-sharing class\n"));
+	}
       else
-        {
-          ACE_OS::perror ("context_switch_time");
-          ACE_OS::exit (-1);
-        }
+	{
+	  ACE_OS::perror ("context_switch_time");
+	  ACE_OS::exit (-1);
+	}
     }
 
   for (u_int i=0; i<100; i++)
@@ -1001,5 +985,9 @@ context_switch_time (void)
       
       tmp += (double) (yield_test.elapsed_time ()/ (ACE_UINT32) 1u) /iterations /2;
     }
+
+  // Disable LM_DEBUG
+  ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
+                                           LM_DEBUG);
   return tmp/retries;
 }

@@ -15,6 +15,8 @@
 
 #include "client.h"
 
+double csw = 0.0;
+
 int
 initialize (void)
 {
@@ -40,6 +42,10 @@ int
 do_priority_inversion_test (Task_State &ts)
 {
   u_int i;
+
+  // stores the total number of context switches incurred by the
+  // program while making CORBA requests
+  u_int context_switch = 0;
 
   // Create the clients.
   Client high_priority_client (&ts);
@@ -110,14 +116,37 @@ do_priority_inversion_test (Task_State &ts)
                                                   ACE_SCOPE_THREAD);
     }
 
+  // Wait for all the client threads to be initialized before going
+  // any further.
+  ts.barrier_->wait ();
+
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+  ACE_Profile_Timer timer_for_context_switch;
+  ACE_Profile_Timer::Rusage usage;
+  timer_for_context_switch.start ();
+  timer_for_context_switch.get_rusage (usage);
+  context_switch = usage.pr_vctx + usage.pr_ictx;
+#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
+
   // Wait for all the threads to exit (except the utilization thread).
   ACE_Thread_Manager::instance ()->wait ();
+
+  ACE_OS::printf("-------------------------- Stats -------------------------------\n");
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+  timer_for_context_switch.stop ();
+  timer_for_context_switch.get_rusage (usage);
+  // Add up the voluntary context switches & involuntary context switches
+  context_switch = usage.pr_vctx + usage.pr_ictx - context_switch;
+  ACE_OS::printf("Voluntary context switches=%d, Involuntary context switches=%d\n",usage.pr_vctx , usage.pr_ictx);
+#endif /* ACE_HAS_PRUSAGE_T || ACE_HAS_GETRUSAGE */
+
+  csw = context_switch_time ();
+
 #if defined (VXWORKS)
   ACE_OS::printf ("Test done.\n"
                   "High priority client latency : %d usec\n"
-                  "Low priority client latency : %d usec\n",
-
-                 high_priority_client.get_high_priority_latency (),
+                  "Low priority client latency : %d usec\n",		  
+		  high_priority_client.get_high_priority_latency (),
                   low_priority_client.get_low_priority_latency ());
 #elif defined (CHORUS)
   ACE_OS::printf ("Test done.\n"
@@ -166,14 +195,15 @@ do_priority_inversion_test (Task_State &ts)
   ACE_DEBUG ((LM_DEBUG, "Test done.\n"
               "High priority client latency : %f msec, jitter: %f msec\n"
               "Low priority client latency : %f msec, jitter: %f msec\n"
-	      "# of context switches: %d\n"
-	      "total context switch time: %f\n",
+	      "# of context switches: %d, context_switch_time: %f msec\n"
+	      "total context switch time: %f msec\n",
               high_priority_client.get_high_priority_latency (),
               high_priority_client.get_high_priority_jitter (),
               low_priority_client.get_low_priority_latency (),
               low_priority_client.get_low_priority_jitter (),
-	      ts.context_switch_,
-	      context_switch_time () * ts.context_switch_ ));
+	      context_switch,
+	      csw,
+	      csw * context_switch ));
 #endif /* !VXWORKS && !CHORUS */
 
   // signal the utilization thread to finish with its work..
