@@ -1,8 +1,20 @@
+Wed Mar 12 09:54:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing Paul Calabrese's <calabrese_p@ociweb.com> MPC related
+        changes.
+
+        * ACEXML/common/ACEXML_Export.h:
+        * ACEXML/common/common.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * bin/MakeProjectCreator/config/acexml.mpb:
+
+          Fix problems with ACEXML mpc files on windows.
+
 Wed Mar 12 08:36:12 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/FILE.cpp: Make the ACE_FILE::close() method check for a 
-	  valid handle.  Thanks to Paul Marquis <pmarquis@pobox.com> for
- 	  reporting this.
+        * ace/FILE.cpp: Make the ACE_FILE::close() method check for a
+          valid handle.  Thanks to Paul Marquis <pmarquis@pobox.com> for
+          reporting this.
 
 Wed Mar 12 08:25:17 2003  Chad Elliott  <elliott_c@ociweb.com>
 
