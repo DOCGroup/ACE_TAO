@@ -193,7 +193,7 @@ release-old: ACE-INSTALL
          chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
          mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
 
-releaseall-old: release
+releaseall-old: release-old
 	@cd TAO; make releaseall
 	@(cd ..; \
          find $(ALL_RELEASE_FILES) $(FILTER) | \
