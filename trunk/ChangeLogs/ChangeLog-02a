@@ -1,3 +1,7 @@
+Thu Feb 14 16:15:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* COPYING: Updated copyright years.
+
 Thu Feb 14 11:25:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/docs/bugs.txt:
@@ -106,9 +110,10 @@ Thu Feb 14 00:20:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  Thanks to Johnny Tucker <jtucker@magisnetworks.com> for the
 	  suggestion.
 
+>>>>>>> 4.3173
 Wed Feb 13 17:42:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Configuration.cpp (operator=): Fixed a warning in g+
+	* ace/Configuration.cpp (operator=): Fixed a warning in g++
 	  builds. Stupid mistake on my part :(.
 
 Wed Feb 13 12:45:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
