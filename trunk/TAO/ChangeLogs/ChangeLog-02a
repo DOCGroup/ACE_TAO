@@ -1,3 +1,14 @@
+Mon Oct 30 12:29:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+
+	  Made the signatures of wstring members and wstring
+	  parameters in constructor signature agree for the
+	  generated TAO_ServerRequest_Info subclasses. Thanks to
+	  Johnny Willemsen <johnny.willemsen@meco.nl> for reporting
+	  this bug.
+
 Sat Oct 28 17:55:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORBInitializer_Registry.cpp:
