@@ -2043,8 +2043,13 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // Note that the mutex should not be a recursive one, i.e., it
   // should only be a standard mutex or an error checking mutex.
 
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts),
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts),
                                        result), int, -1);
+
+  // We need to adjust this to make the errno values consistent.
+  if (result == -1 && errno == ETIMEDOUT)
+    errno = ETIME;
+  return result;
 #  elif defined (ACE_HAS_WTHREADS)
   // Note that we must convert between absolute time (which is passed
   // as a parameter) and relative time (which is what the system call
@@ -2063,7 +2068,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
           // Note that we still hold the lock
           return 0;
         case WAIT_TIMEOUT:
-          errno = EBUSY;
+          errno = ETIME;
           return -1;
         default:
           // This is a hack, we need to find an appropriate mapping...
@@ -2088,8 +2093,8 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   u_long ticks = relative_time.sec() * KC_TICKS2SEC +
                  relative_time.usec () * KC_TICKS2SEC /
                    ACE_ONE_SECOND_IN_USECS;
-  if(ticks == 0)
-    ACE_OSCALL_RETURN (::sm_p (*m, SM_NOWAIT, 0), int, -1); //no timeout
+  if (ticks == 0)
+    ACE_OSCALL_RETURN (::sm_p (*m, SM_NOWAIT, 0), int, -1); // no timeout
   else
     ACE_OSCALL_RETURN (::sm_p (*m, SM_WAIT, ticks), int, -1);
 
@@ -2123,6 +2128,13 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS && ACE_HAS_MUTEX_TIMEOUTS */
+}
+
+ACE_INLINE int
+ACE_OS::mutex_lock (ACE_mutex_t *m,
+                    const ACE_Time_Value *timeout)
+{
+  return timeout == 0 ? ACE_OS::mutex_lock (m) : ACE_OS::mutex_lock (m, *timeout);
 }
 
 ACE_INLINE int
@@ -2315,6 +2327,15 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
+                           const ACE_Time_Value *timeout)
+{
+  return timeout == 0 
+    ? ACE_OS::thread_mutex_lock (m) 
+    : ACE_OS::thread_mutex_lock (m, *timeout);
 }
 
 ACE_INLINE int
@@ -4256,6 +4277,12 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_POSIX_SEM */
+}
+
+ACE_INLINE int
+ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value *tv)
+{
+  return tv == 0 ? ACE_OS::sema_wait (s) : ACE_OS::sema_wait (s, *tv);
 }
 
 ACE_INLINE int

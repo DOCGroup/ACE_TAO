@@ -1,3 +1,10 @@
+Sun Jul 29 19:31:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tao/RTCORBA/RT_Mutex.cpp (try_lock): Since we fixed the timed
+	  ACE_OS::mutex_lock() to set errno to ETIME we can cleanup the
+ 	  code here to remove the checks for errno == EBUSY and errno ==
+ 	  ETIMEDOUT.
+
 Sun Jul 29 20:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tao/PortableServer/ORB_Manager.h:
