@@ -50,23 +50,23 @@ public:
   /**
    * Initializes a new activation queue.
    *
-   * @arg new_queue  The activation queue uses an ACE_Message_Queue to
-   *                 queue and order the method requests. If this argument
-   *                 is 0, a new ACE_Message_Queue is created for this
-   *                 object's use and will be deleted when this object is
-   *                 destroyed. If a non-zero pointer is supplied, the
-   *                 passed object will be used and will not be deleted when
-   *                 this object is destroyed. If an ACE_Task is being created
-   *                 to act as the scheduler, for instance, its
-   *                 ACE_Message_Queue pointer can be passed to this object.
-   * @arg alloc      Optional, the allocator to use when allocating
-   *                 ACE_Message_Block instances that wrap the method requests
-   *                 queued to this activation queue. Defaults to
-   *                 ACE_Allocator::instance().
-   * @arg db_alloc   Optional, the allocator to use when allocating
-   *                 data blocks for the ACE_Message_Block instances that
-   *                 wrap the method requests queued to this activation queue.
-   *                 Defaults to ACE_Allocator::instance().
+   * @param new_queue The activation queue uses an ACE_Message_Queue to
+   *                  queue and order the method requests. If this argument
+   *                  is 0, a new ACE_Message_Queue is created for this
+   *                  object's use and will be deleted when this object is
+   *                  destroyed. If a non-zero pointer is supplied, the
+   *                  passed object will be used and will not be deleted when
+   *                  this object is destroyed. If an ACE_Task is being created
+   *                  to act as the scheduler, for instance, its
+   *                  ACE_Message_Queue pointer can be passed to this object.
+   * @param alloc     Optional, the allocator to use when allocating
+   *                  ACE_Message_Block instances that wrap the method requests
+   *                  queued to this activation queue. Defaults to
+   *                  ACE_Allocator::instance().
+   * @param db_alloc  Optional, the allocator to use when allocating
+   *                  data blocks for the ACE_Message_Block instances that
+   *                  wrap the method requests queued to this activation queue.
+   *                  Defaults to ACE_Allocator::instance().
    */
   ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0,
                         ACE_Allocator *alloc = 0,
@@ -79,7 +79,7 @@ public:
 
   /// Dequeue the next available ACE_Method_Request.
   /**
-   * @arg tv    If 0, the method will block until a method request is
+   * @param tv  If 0, the method will block until a method request is
    *            available, else will wait until the absolute time specified
    *            in the referenced ACE_Time_Value.  This method will return,
    *            earlier, however, if queue is closed, deactivated, or when
@@ -97,10 +97,10 @@ public:
    * method of the queued method request. Priority ordering is determined
    * by the ACE_Message_Queue class; 0 is the lowest priority.
    *
-   * @arg new_method_request  Pointer to the ACE_Method_Request object to
+   * @param new_method_request  Pointer to the ACE_Method_Request object to
    *            queue. This object's @c priority() method is called to obtain
    *            the priority.
-   * @arg tv    If 0, the method will block until the method request can
+   * @param tv  If 0, the method will block until the method request can
    *            be queued, else will wait until the absolute time specified
    *            in the referenced ACE_Time_Value.  This method will return,
    *            earlier, however, if queue is closed, deactivated, or when

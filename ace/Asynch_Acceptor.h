@@ -152,9 +152,9 @@ public:
    * from this method determines whether or not ACE will continue
    * opening the service or abort the connection.
    *
-   * @arg result    Result of the connection acceptance.
-   * @arg remote    Peer's address.
-   * @arg local     Local address connection was accepted at.
+   * @param result    Result of the connection acceptance.
+   * @param remote    Peer's address.
+   * @param local     Local address connection was accepted at.
    *
    * @retval  -1  ACE_Asynch_Acceptor will close the connection, and
    *              the service will not be opened.

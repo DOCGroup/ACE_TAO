@@ -818,7 +818,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::recover_key (const KEY 
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
-                                                               ACE_Pair<KEY, VALUE> *&internal_value)
+                                                               expanded_value *&internal_value)
 {
   // Ask the <key_adapter_> to recover the active key.
   ACE_Active_Map_Manager_Key active_key;
@@ -929,7 +929,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::trybind (const KEY &,
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE int
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
-                                                                 ACE_Pair<KEY, VALUE> *&internal_value)
+                                                                 expanded_value *&internal_value)
 {
   // Ask the <key_adapter_> to recover the active key.
   ACE_Active_Map_Manager_Key active_key;
@@ -1002,7 +1002,7 @@ template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE ACE_Iterator_Imp
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::end_impl (void)
 {
   ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp = 0;
-  ACE_NEW_RETURN (temp, 
+  ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.end ()),
                   0);
   return temp;

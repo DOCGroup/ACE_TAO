@@ -288,8 +288,8 @@ public:
   /**
    * Wait to get the object's value.
    *
-   * @arg value   Receives the value of this ACE_Future when it is set.
-   * @arg tv      Pointer to an ACE_Time_Value containing the absolute
+   * @param value Receives the value of this ACE_Future when it is set.
+   * @param tv    Pointer to an ACE_Time_Value containing the absolute
    *              time to wait until for the value to be set. If @a tv
    *              is 0, the call waits indefinitely for the value to be
    *              set, unless an error occurs.
@@ -322,6 +322,8 @@ public:
    * result is already set when this method gets invoked, then the update
    * method of the specified subject will be invoked immediately.
    *
+   * @param observer The observer to attach to the subject.
+   *
    * @retval  0   Success.
    * @retval  1   The observer was already attached.
    * @retval -1   Error; check ACE_OS::last_error() for an error code.
@@ -332,6 +334,8 @@ public:
    * Detaches the specified observer from a subject (this ACE_Future).
    * The update method of the specified subject will not be invoked when the
    * ACE_Future_Rep result gets set.
+   *
+   * @param observer The observer to attach to the subject.
    *
    * @retval  0   The observer was successfully detached.
    * @retval -1   Error, including the observer not attached prior

@@ -61,11 +61,11 @@ public:
    * method to order the method requests in the queue by priority.
    * 0 is the lowest priority.
    *
-   * @arg prio   unsigned long, the new priority value for this object.
+   * @param prio   unsigned long, the new priority value for this object.
    *
    * @sa ACE_Activation_Queue::enqueue
    */
-  void priority (unsigned long);
+  void priority (unsigned long prio);
 
   // = Invocation method (must be overridden by subclasses).
   /// Invoked by the scheduler to execute the request.

@@ -190,8 +190,8 @@ public:
    * Accepts a variable, caller-specified, number of pointer/length
    * pairs. Arguments following @a n are char *, size_t pairs.
    *
-   * @arg handle  The I/O handle to receive on
-   * @arg n       The total number of char *, size_t pairs following @a n.
+   * @param handle The I/O handle to receive on
+   * @param n      The total number of char *, size_t pairs following @a n.
    *
    * @return -1 on error, else total number of bytes received.
    */
@@ -429,7 +429,7 @@ public:
    * Returns the current timestamp in the form
    * "hour:minute:second:microsecond."  The month, day, and year are
    * also stored in the beginning of the <date_and_time> array, which
-   * is a user-supplied array of size <time_len> <ACE_TCHAR>s.  Returns  
+   * is a user-supplied array of size <time_len> <ACE_TCHAR>s.  Returns
    * 0 if unsuccessful, else returns pointer to beginning of the
    * "time" portion of <date_and_time>.  If
    * <return_pointer_to_first_digit> is 0 then return a pointer to the
