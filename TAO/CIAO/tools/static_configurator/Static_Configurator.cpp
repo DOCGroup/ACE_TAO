@@ -2,7 +2,9 @@
 
 #include "Static_Configurator.h"
 #include "ace/OS_NS_stdio.h"
-//#include "Segment_Timer.h"
+#include "../Segment_Timer/Segment_Timer.h"
+
+extern Segment_Timer segment_timers[MAX_TIMERS];
 
 int CIAO::Static_Configurator::configure(
                    CORBA::ORB_ptr orb,
@@ -43,9 +45,10 @@ int CIAO::Static_Configurator::configure(
 
 int CIAO::Static_Configurator::create_homes (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "Creating Homes...\n"));
+  //ACE_DEBUG ((LM_DEBUG, "Creating Homes...\n"));
   for (int i=0; i<homes_count_; ++i)
     {
+      segment_timers[CREATE_HOME_TIMER].start_timer ();
       // install home
       Components::ConfigValues home_config;
       // Setting home config value here:
@@ -98,17 +101,20 @@ int CIAO::Static_Configurator::create_homes (ACE_ENV_SINGLE_ARG_DECL)
 
       this->installed_homes_.bind (homes_[i].id_,
                                                      home);
+      segment_timers[CREATE_HOME_TIMER].stop_timer ();
       homes_[i].home_ = klhome;
     }
-  ACE_DEBUG ((LM_DEBUG, "Homes installed...\n"));
+  //ACE_DEBUG ((LM_DEBUG, "Homes installed...\n"));
   return 0;
 }
 
 int CIAO::Static_Configurator::create_connections (ACE_ENV_SINGLE_ARG_DECL)
 {
-  for (int i=0; i<connections_count_; ++i)
+    for (int i=0; i<connections_count_; ++i)
     {
+      segment_timers[CREATE_CONNECTION_TIMER].start_timer ();
       make_connection (i ACE_ENV_ARG_PARAMETER);
+      segment_timers[CREATE_CONNECTION_TIMER].stop_timer ();
     }
   return 0;
 }
@@ -362,6 +368,7 @@ Components::Deployment::Container_ptr
 CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
                                           ACE_ENV_ARG_DECL)
 {
+  segment_timers[CREATE_CONTAINER_TIMER].start_timer ();
 
   // If we are not using the same rtpolicy set, or the there's no
   // cached container, then create a new one.
@@ -373,6 +380,7 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
         {
           if (!CORBA::is_nil (containers_[i].container_.in ()))
             {
+              segment_timers[CREATE_CONTAINER_TIMER].stop_timer ();
               return Components::Deployment::Container::_duplicate
                 (containers_[i].container_.in ());
             }
@@ -404,13 +412,15 @@ CIAO::Static_Configurator::get_container (const ACE_CString& rtpolicy
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (rtpolicy.length () > 0)
+  /*if (rtpolicy.length () > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Creating container with RTPolicySet %s\n",
                 rtpolicy.c_str ()));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Creating container with empty policy set\n"));
+  */
+  segment_timers[CREATE_CONTAINER_TIMER].stop_timer ();
 
   return Components::Deployment::Container::_duplicate
     (this->containers_[container_index].container_.in ());
@@ -421,8 +431,10 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
   for (int i=0; i<components_count_; ++i)
     {
       // @@ instantiation and register component.
-      ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n",
+      /*ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n",
                   components_[i].id_.c_str ()));
+      */
+      segment_timers[CREATE_COMPONENT_TIMER].start_timer ();
 
       Components::CCMObject_var comp
         = homes_[components_[i].homes_table_index_].home_->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -430,6 +442,7 @@ int CIAO::Static_Configurator::create_components (ACE_ENV_SINGLE_ARG_DECL)
 
       this->instantiated_components_.bind (components_[i].id_,
                                                              comp);
+      segment_timers[CREATE_COMPONENT_TIMER].stop_timer ();
 
       int begin_index = components_[i].component_registration_begin_index_;
       int end_index = components_[i].component_registration_end_index_;
@@ -456,6 +469,7 @@ CIAO::Static_Configurator::register_component (
                  CIAO::Assembly_Placement::componentinstantiation::Register_Info& i,
                  Components::CCMObject_ptr c ACE_ENV_ARG_DECL)
 {
+  segment_timers[REGISTER_COMPONENT_TIMER].start_timer ();
   CORBA::Object_ptr reg_obj;
 
   // Extract the right interface to register:
@@ -515,22 +529,20 @@ CIAO::Static_Configurator::register_component (
     default:
       ACE_THROW (CORBA::INTERNAL ());
     }
+   segment_timers[REGISTER_COMPONENT_TIMER].stop_timer ();
 }
 
 void CIAO::Static_Configurator::
        config_rt_info(Components::ConfigValues &configs, 
 		      CIAO::Static_Config::ThreadPoolAttributes *thread_pool_table,
 		      int thread_pool_table_size,
-		      CIAO::Static_Config::LaneAttributes *lane_table,
-		      int lane_table_size,
+		      CIAO::Static_Config::LaneAttributes *lane_table,		
 		      CIAO::Static_Config::ThreadPoolLanesAttributes *thread_pool_lanes_table,
 		      int thread_pool_lanes_table_size,
 		      CIAO::Static_Config::BandAttributes *band_table,
-		      int band_table_size,
 		      CIAO::Static_Config::PriorityBandsAttributes *priority_band_table,
 		      int priority_band_table_size,
 		      CIAO::Static_Config::PolicyConfigAttributes *policy_config_table,
-		      int policy_config_table_size,
 		      CIAO::Static_Config::PolicySetAttributes    *policy_set_table,
 		      int policy_set_table_size)
 {
