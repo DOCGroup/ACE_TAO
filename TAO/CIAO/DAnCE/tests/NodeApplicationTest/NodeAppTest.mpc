@@ -17,7 +17,7 @@ project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
 
 project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
   after += NodeAppTest_RoundTrip_stub
-  requires += cidlc
+  requires += cidl
   sharedname  = NodeAppTest_RoundTrip_svnt
 
   libs    += NodeAppTest_RoundTrip_stub
