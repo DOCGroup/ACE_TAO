@@ -6637,14 +6637,9 @@ public:
 
 private:
   static ACE_EXIT_HOOK exit_hook_;
-  // Function that is called by ACE_OS::exit (), if non-null.
+  // Function that is called by <ACE_OS::exit>, if non-null.
 
-  static ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK exit_hook) 
-  {
-    ACE_EXIT_HOOK old_hook = exit_hook_;
-    exit_hook_ = exit_hook;
-    return old_hook;
-  }
+  static ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK hook);
   // For use by ACE_Object_Manager only, to register its exit hook..
 
   friend class ACE_OS_Object_Manager;
@@ -6751,7 +6746,7 @@ private:
 
 extern "C"
 void
-ACE_OS_Object_Manager_Internal_Exit_Hook ();
+ACE_OS_Object_Manager_Internal_Exit_Hook (void);
 
 
 class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base

@@ -1,5 +1,12 @@
 Sat Aug 21 12:36:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.h: Moved the ACE_OS::set_exit_hook() static method
+	  into the OS.i file so be more consistent with the other ACE_OS
+ 	  methods.  Also, changed the signature of extern "C" void
+ 	  ACE_OS_Object_Manager_Internal_Exit_Hook () to void
+ 	  ACE_OS_Object_Manager_Internal_Exit_Hook (void) so that this
+ 	  will match the type declaration for ACE_EXIT_HOOK.
+
 	* ace/Process_Manager.cpp: Use the new ACE_OS::wait() method, 
 	  which is portable to Win32, rather than ACE_OS::waitpid().
 
@@ -83,11 +90,15 @@ Fri Aug 20 15:40:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  just syntactic sugar for ACE_Process_Manager::reap().  Thanks to
  	  Dave Madden <dhm@mersenne.com> for suggesting this.
 
-	* ace/OS: Added support for ACE_OS::atexit().  At the moment,
-	  this just calls ::atexit() (unless a platform's config.h file
- 	  #defines ACE_LACKS_ATEXIT).  Ultimately, we might want to have
- 	  this hook into the ACE_Object_Manager's at_exit() support, which
- 	  may be more portable and reliable.
+	* ace/OS: Added support for ACE_OS::atexit(), which necessitated
+	  changing the extern "C" signature for ACE_EXIT_HOOK to typedef
+ 	  void (*ACE_EXIT_HOOK) (void) so that this will be consistent
+ 	  with the signature expected by the ISO/ANSI C atexit() call.  At
+ 	  the moment, ACE_OS::atexit just calls ::atexit() (unless a
+ 	  platform's config.h file #defines ACE_LACKS_ATEXIT).
+  	  Ultimately, we might want to have this hook into the
+ 	  ACE_OS_Object_Manager's at_exit() support, which may be more
+ 	  portable and reliable.
 
         * ace/ACE_Process_Manager.h: Made the destructor virtual so it's
 	  possible to subclass from this class.

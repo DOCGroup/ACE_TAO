@@ -12046,6 +12046,14 @@ ACE_OS::getuid (void)
 # endif /* VXWORKS */
 }
 
+ACE_INLINE ACE_EXIT_HOOK 
+ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)
+{
+  ACE_EXIT_HOOK old_hook = exit_hook_;
+  exit_hook_ = exit_hook;
+  return old_hook;
+}
+
 ACE_INLINE int
 ACE_OS::isatty (ACE_HANDLE handle)
 {
@@ -12212,5 +12220,6 @@ ACE_Countdown_Time::stop (void)
 ACE_INLINE int
 ACE_Countdown_Time::update (void)
 {
-  return (this->stop () == 0) && this->start ();
+  return this->stop () == 0 && this->start ();
 }
+
