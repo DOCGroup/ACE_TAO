@@ -367,7 +367,9 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<IIOP_ORB, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Unbounded_Set<ACE_INET_Addr>;
+template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<IIOP_ORB, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>;
+#pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_INET_Addr>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
