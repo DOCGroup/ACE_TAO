@@ -1,3 +1,9 @@
+Tue Dec 28 15:50:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/test_config.h (set_output): removed the flags
+          local variable, with its conditionally compiled type
+          determination.  The absorbed code is much cleaner.
+
 Tue Dec 28 15:37:11 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Log_Msg.cpp
