@@ -1,3 +1,15 @@
+Mon Sep  6 01:03:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Threads/Makefile (BIN): Added process_manager.cpp
+	  back into the list of programs that get built automagically.
+
+        * ace/Process_Manager: Added some new patches from Dave Madden
+	  <dhm@mersenne.com> that continue to improve the
+ 	  ACE_Process_Manager and make it portable between NT and UNIX.	
+  
+	* examples/Threads: Readded process_manager.cpp now that
+	  Dave Madden <dhm@mersenne.com> has updated it.
+
 Sun Sep 05 23:52:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (WIFEXITED,WEXITSTATUS): On platforms that do not
