@@ -171,17 +171,24 @@ public:
 #if defined (ACE_MALLOC_STATS)
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
+#define ACE_CONTROL_BLOCK_SIZE (sizeof (ACE_Name_Node *) \
+				+ sizeof (ACE_Malloc_Header *) \
+				+ MAXNAMELEN  \
+				+ sizeof (ACE_Malloc_Stats))
+#else
+#define ACE_CONTROL_BLOCK_SIZE (sizeof(ACE_Name_Node *) \
+				+ sizeof (ACE_Malloc_Header *) \
+				+ MAXNAMELEN)
 #endif /* ACE_MALLOC_STATS */
+ 	
+#define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
+					? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN) \
+					: ACE_MALLOC_ALIGN) / sizeof(long))
+
+  long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
 
   ACE_Malloc_Header base_;
   // Dummy node used to anchor the freelist. 
-
-#if 0
-  long align_ [(ACE_MALLOC_ALIGN/sizeof (long)) -
-	      1 - ((sizeof (ACE_Name_Node *) + sizeof (ACE_Malloc_Header *) + MAXNAMELEN) / sizeof (long))];
-#else
-  long align_[ACE_MALLOC_ALIGN/sizeof (long)];
-#endif /* 0 */
 
   void dump (void) const;
   // Dump the state of the object.

@@ -18,6 +18,10 @@
 #if !defined (ACE_OS_H)
 #define ACE_OS_H
 
+// This file should be a link to the platform/compiler-specific
+// configuration file (e.g., config-sunos5-sunc++-4.x.h).  
+#include "ace/config.h"
+
 // Define the default constants for ACE.  Many of these are used for
 // the ACE tests and applications.  You may want to change some of
 // these to correspond to your environment.
@@ -180,10 +184,6 @@
 #define ACE_ALLOC_HOOK_DECLARE struct __Ace {} /* Just need a dummy... */
 #define ACE_ALLOC_HOOK_DEFINE(CLASS) 
 #endif /* ACE_HAS_ALLOC_HOOKS */
-
-// This file should be a link to the platform/compiler-specific
-// configuration file (e.g., config-sunos5-sunc++-4.x.h).  
-#include "ace/config.h"
 
 #if defined (ACE_LACKS_KEY_T)
 #if defined (ACE_WIN32)
@@ -1346,6 +1346,20 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_STREAMBUF_SIZE 1024
 #endif /* BUFSIZ */
 
+#if defined (ACE_LACKS_UTSNAME_T)
+#define _SYS_NMLN 257
+struct utsname 
+{
+  char sysname[_SYS_NMLN];
+  char nodename[_SYS_NMLN];
+  char release[_SYS_NMLN];
+  char version[_SYS_NMLN];
+  char machine[_SYS_NMLN];
+};
+#else
+#include /**/ <sys/utsname.h>
+#endif /* ACE_LACKS_UTSNAME_T */
+
 #if defined (ACE_WIN32)
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)
@@ -1784,20 +1798,6 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #include /**/ <dirent.h>
 #include /**/ <sys/stat.h>
 #include /**/ <unistd.h>
-
-#if defined (ACE_LACKS_UTSNAME_T)
-#define _SYS_NMLN 257
-struct utsname 
-{
-  char sysname[_SYS_NMLN];
-  char nodename[_SYS_NMLN];
-  char release[_SYS_NMLN];
-  char version[_SYS_NMLN];
-  char machine[_SYS_NMLN];
-};
-#else
-#include /**/ <sys/utsname.h>
-#endif /* ACE_LACKS_UTSNAME_T */
 
 #if !defined (ACE_LACKS_PARAM_H)
 #include /**/ <sys/param.h>
