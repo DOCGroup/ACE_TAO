@@ -327,6 +327,9 @@ ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
 void
 ACE_SSL_Context::report_error (unsigned long error_code)
 {
+  if (error_code == 0)
+    return;
+
   ACE_TCHAR error_string[256];
 
   (void) ::ERR_error_string (error_code, error_string);
