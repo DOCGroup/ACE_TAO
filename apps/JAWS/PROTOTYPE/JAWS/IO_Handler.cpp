@@ -235,7 +235,7 @@ JAWS_IO_Handler::release (void)
 JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory (void)
 {
 }
- 
+
 JAWS_IO_Handler *
 JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
 {
@@ -246,7 +246,7 @@ JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
 
   return handler;
 }
- 
+
 void
 JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
