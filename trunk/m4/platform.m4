@@ -104,8 +104,6 @@ dnl  */
     AC_DEFINE([IP_DROP_MEMBERSHIP], [0x14])
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX4A_DRAFT10_SOURCE -D_POSIX4_DRAFT_SOURCE"
     ;;
-  *freebsd*)
-    ;;
   *fsu*)
 dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([PTHREAD_STACK_MIN], [(1024*10)])
@@ -188,9 +186,6 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     ;;
   *mvs*)
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_ALL_SOURCE"
-    ;;
-  *netbsd*)
-    AC_DEFINE([ACE_NETBSD])
     ;;
   *osf3.2*)
     AC_EGREP_CPP([ACE_DEC_CXX],
