@@ -1,18 +1,20 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/EventLog_i.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/LogNotification.h"
 
+
+ACE_RCSID (Log,
+           EventLog_i,
+           "$Id$")
+
+
 LogConsumer::LogConsumer (EventLog_i *log)
-: log_ (log)
+  : log_ (log)
 {
-  // No-Op.
 }
 
 LogConsumer::~LogConsumer (void)
 {
-  // No-Op.
 }
 
 void
@@ -156,6 +158,10 @@ EventLog_i::activate (void)
       CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
         this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Create the PushConsumer that will log the events.
+      this->my_log_consumer_ = new LogConsumer (this);
+      this->my_log_consumer_->connect (consumer_admin.in ());
     }
   ACE_CATCHANY
     {
@@ -163,10 +169,6 @@ EventLog_i::activate (void)
                            "Exception in EventLog_i::activate()");
     }
   ACE_ENDTRY;
-
-  // Create the PushConsumer that will log the events.
-  this->my_log_consumer_ = new LogConsumer (this);
-  this->my_log_consumer_->connect (consumer_admin.in ());
 }
 
 
