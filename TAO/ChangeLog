@@ -46,7 +46,6 @@ Fri Aug  9 11:57:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  This should fix somerandom core dumps with MT_Timeout test which
 	  uses this feature heavily.
 
->>>>>>> 1.243
 Thu Aug  8 23:12:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Reverted this change "Thu Aug  8
@@ -180,10 +179,9 @@ Wed Aug  7 13:06:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	  Fixed compile errors.
 
-Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+Wed Aug  7 00:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
         * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
-
 	* tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
 	* tao/RTCORBA/Network_Priority_Mapping_Manager.i:
 	* tao/RTCORBA/Network_Priority_Mapping.h:
@@ -193,19 +191,24 @@ Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/RTCORBA/Linear_Network_Priority_Mapping.cpp:
 	* tao/RTCORBA/Linear_Network_Priority_Mapping.i:
 
-	  Added a Network Priority Mapping framework and a default
-	  implmentation of the Linear mapping.
+	  Added a Network Priority Mapping framework similar to the native
+	  thread priority mapping framework. This will enable the mapping
+	  from RTCORBA priority to Network Priority and vice versa. A
+	  default implementation of the Linear Network Priority Mapping is
+	  provided in TAO.
 
 	* tao/RTPortableServer/RT_POA.h:
 	* tao/RTPortableServer/RT_POA.cpp:
 
-	  Added the server_protocol method to get the current protocol policy.
+	  Added the server_protocol method to get the current server
+	  protocol policy set either at the ORB, thread or POA level..
 
 	* tao/RTPortableServer/RT_Servant_Dispatcher.h:
 	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
 
 	  Modified the pre_invoke_remote_request to iniate the updation of
-	  the tcp protocol properties and set the dscp in the replies sent.
+	  the tcp protocol properties and set the dscp in the replies
+	  sent.
 
 	* tao/RTCORBA/Makefile:
 	* tao/RTCORBA/RTCORBA.pidl:
@@ -245,15 +248,22 @@ Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/Connection_Handler.h:
 	* tao/Connection_Handler.cpp:
 
-	  Added:
-	  update_protocol_properties - to update the tcp protocol properties.
+	  Added: 
+	  update_protocol_properties - to update the tcp protocol
+	  properties by getting the current tcp protocol properties from
+	  the protocol policies set at the ORB,thread, object or POA
+	  level.
 
 	* tao/IIOP_Connection_Handler.h:
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/IIOP_Connection_Handler.i:
 
-	  Added:
-	  set_dscp_codepoint - to set the dscp codepoint.
+	  Added: 
+	  set_dscp_codepoint - to set the dscp codepoint on the tcp
+	  connection used by the connection handler that sends GIOP
+	  request and response messages. When the connection is diffserv
+	  enabled all the GIOP message (requests and responses) packets
+	  sent will have the Diffserv Codepoint set.
 
 	* tao/Protocols_Hooks.h:
 	* tao/Protocols_Hooks.cpp:
@@ -263,11 +273,18 @@ Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/Default_Protocols_Hooks.h:
 	* tao/Default_Protocols_Hooks.cpp:
 
-          update_client_protocol_properties - to update the client tcp
-	  protocol properties  update_server_protocol_properties - to
-	  update the server tcp protocol properties get_dscp_codepoint -
-	  to calculate and return the dscp corresponding corresponding to
-	  the mapping used. 
+	  Added:
+	  update_client_protocol_properties - to update the client tcp
+	  protocol properties on the connection handler based on the
+	  client protocol properties set at ORB, thread or object level.
+
+	  update_server_protocol_properties - to update the server tcp
+	  protocol properties on the cinnection handler based on the
+	  server protocol property set at the ORB, thread or POA level.
+
+	  get_dscp_codepoint - to calculate and return the dscp
+	  corresponding corresponding to the CORBA to network mapping
+	  used.
 
 	* tao/IIOP_Acceptor.cpp:
 	* tao/IIOP_Connector.cpp:
@@ -277,8 +294,7 @@ Wed Aug  7 24:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/IIOP_Transport.h:
 	* tao/IIOP_Transport.cpp:
 
-	  Added:
-	  connection_handler - accessor method for the underlying
+	  Made the connection_handler_i accessor method public.
 	  connection handler. 
 
 Tue Aug  6 22:42:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
