@@ -434,8 +434,6 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
                        this->orb_core_->to_iso8859 (),
                        this->orb_core_->to_unicode ());
 
-  encap.write_octet (TAO_ENCAP_BYTE_ORDER);
-
   // CHAR describing byte order, starting the encapsulation
   encap.write_octet (TAO_ENCAP_BYTE_ORDER);
 
