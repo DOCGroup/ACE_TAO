@@ -1,3 +1,9 @@
+Mon Apr 19 22:17:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): Removed access to input CDR since it is not
+	  used in this function.  Thanks to David for pointing this out.
+
 Mon Apr 19 20:17:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.{h,i}:

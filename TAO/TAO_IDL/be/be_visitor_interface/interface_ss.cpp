@@ -175,11 +175,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
   *os << node->full_skel_name () << " *_tao_impl = ("
       << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
-  *os << "CORBA::Boolean _tao_retval = 0;" << be_nl << be_nl;
-  *os << "_tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);" << be_nl;
+  *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);" << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
   *os << "ACE_CHECK;" << be_nl;
