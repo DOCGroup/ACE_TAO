@@ -5,25 +5,28 @@
    <META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html
 .dot">
    <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
-   <TITLE>Porting ACE to a New OS Platform</TITLE>
+   <TITLE>Porting ACE and TAO to a New OS Platform</TITLE>
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#FF0000">
 
 <HR><P>
-<H3>Porting ACE to a New OS Platform</H3><P>
+<H3>Porting ACE and TAO to a New OS Platform</H3><P>
 
 The <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
-framework has been ported to <A
+framework and the <A
+HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> ORB have been
+ported to <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE-versions-i.html">many OS
-platforms</A>.  Porting ACE to new platforms is fairly
-straightforward.  The following document describes the step-by-step
-process to use when porting the various <A
+platforms</A>.  Porting ACE and TAO to new platforms is fairly easy.
+The following document describes the step-by-step process to use when
+porting the various <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">components
-and layers</A> in ACE to a new OS platform. <P>
+and layers</A> in ACE to a new OS platform.  Once ACE is ported, it is
+straightforward to port TAO, as well.<P>
 
-<H4>Make a config header file for the target platform</H4>
+<H4>Create a <CODE>config.h</CODE> Header File for the Target OS Platform</H4>
 
-There exists a different <CODE>config-*.h</CODE> header file in <A
+A <CODE>config-*.h</CODE> header file exists in <A
 HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/">$ACE_ROOT/ace</A>
 for each platform to which ACE has been ported.  This file contains
 the portability macros for each particular configuration of ACE.  A
@@ -32,12 +35,12 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/README">$ACE_ROOT/ace/RE
 file. <P>
 
 Currently, you must edit this file by hand to port it to new OS
-platforms.  It's a good idea to use the config-files for platforms
-with similar characteristics as examples.  Ultimately, we plan to <A
-HREF="http://squall.tn.cornell.edu/aceconf">auto configure</A> these
-files. <P>
+platforms.  It's a good idea to use the <CODE>config-*.h</CODE> files
+for platforms with similar characteristics as examples.  Ultimately,
+we plan to <A HREF="http://squall.tn.cornell.edu/aceconf">auto
+configure</A> these files. <P>
 
-<H4>Porting the ACE_OS Class</H4>
+<H4>Port the <CODE>ACE_OS</CODE> Class</H4>
 
 The <CODE>ACE_OS</CODE> class encapsulates most of variation between
 the different OS implementations, e.g., UNIX, Win32, and various
@@ -48,7 +51,7 @@ how ACE has been ported to other operating systems in the
 <CODE>ACE_OS</CODE> class in the
 <CODE>$ACE_ROOT/ace/OS.{h,i,cpp}</CODE> files. <P>
 
-<H4>Porting the C++ Wrapper Components</H4>
+<H4>Port the C++ Wrapper Components</H4>
 
 After porting the <CODE>ACE_OS</CODE> class, the next step is to port
 all of the ACE C++ wrapper components, such as sockets, threads,
@@ -63,7 +66,7 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/">$ACE_ROOT/tests/</A>
 directory.  These tests can be used to validate the correctness of the
 various ACE C++ wrappers as they are ported. <P>
 
-<H4>Porting the higher level components of ACE</H4>
+<H4>Port the Higher-level Framework Components of ACE</H4>
 
 Having ported (and tested) all the components of the ACE OS
 adapptation layer and C++ wrappers, you can proceed to port the higher
@@ -72,5 +75,62 @@ Connector, Acceptor, and Streams frameworks.  At this point, it should
 be relatively easy to port the rest of ACE because most of the
 platform-dependent code is localized in the lower layers of ACE. <P>
 
+<H4>Port TAO</H4>
+
+After porting and successfully testing all the ACE framework
+components, it also should be relatively easy to port and <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/TAO-INSTALL.html">install</A>
+TAO because all of its platform-dependent code is localized in ACE.
+Typically, the only problems that arise when porting TAO is bugs with
+C++ compilers. <P>
+
+<HR><P>
+<H3>C++ Features Required to Port ACE and TAO</H3>
+
+ACE and TAO have been ported to most C++ compilers.  The following is
+a list of which C++ features a compiler must support in order to
+compile ACE and TAO:
+
+<UL>
+<LI> <B>Templates</B> -- The C++ compiler must support templates.
+    However, it need not support template member functions nor must it
+    support template traits. <P>
+
+<LI> <B>Multiple inheritance and dynamic binding</B> -- The C++
+    compiler must support multiple inheritance and dynamic
+    binding. <P> 
+</UL>
+
+The following is a list of which C++ features that ACE and TAO can
+take advantage of if a compiler supports them:
+
+<UL>
+<LI> <B>Exceptions</B> -- The ACE library itself does not catch or
+    throw C++ exceptions.  However, you can use exceptions in code
+    that uses ACE including throwing exceptions inside call back
+    methods, as long as you provide the code to handle it.
+    TAO can be configured to use C++ exceptions if ACE supports them,
+    <EM>i.e.</EM>, if <CODE>ACE_HAS_EXCEPTIONS</CODE> is defined. <P>
+
+<LI> <B>RTTI and ANSI casts</B> -- If the OS platform supports RTTI
+    and the new ANSI
+    C++ casts, <EM>i.e.</EM>, <CODE>ACE_HAS_ANSI_CASTS</CODE> is
+    enabled, then the various <CODE>ACE_*_cast</CODE> macros will
+    utilize these casts.  Otherwise, the macros will default to
+    "C-style" casts. <P>
+
+<LI> <B>Namespaces</B> -- ACE does not utilize namespaces.  However,
+    TAO will automatically take advantage of namespaces if the C++
+    compiler supports them, <EM>i.e.</EM>, if
+    <CODE>ACE_HAS_BROKEN_NAMESPACES</CODE> is <EM>not</EM> enabled. <P>
+</UL>
+
+<P><HR><P>
+
+Back to the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
+installation</A> page.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
 </HTML>
