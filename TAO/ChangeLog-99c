@@ -1,3 +1,7 @@
+Mon Sep 20 14:35:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/Makefile: Updated the dependencies.
+
 Mon Sep 20 12:53:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
