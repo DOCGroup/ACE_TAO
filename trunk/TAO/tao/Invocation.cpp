@@ -444,14 +444,13 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // This object pointer will be now extracted.
 
   CORBA::Object_ptr object_ptr = 0;
-  int status = 0;
 
   TAO_TRY_SYS
     {
-      status = inp_stream.decode (CORBA::_tc_Object,
-                             &(object_ptr),
-                             0,
-                             env);
+      inp_stream.decode (CORBA::_tc_Object,
+                         &(object_ptr),
+                         0,
+                         env);
     }
   TAO_CATCH_SYS (CORBA_SystemException, ex)
     {
@@ -685,7 +684,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
 	if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
 	  {
-	    CORBA_Exception *exception =  
+	    CORBA_Exception *exception =
 	      TAO_Exceptions::create_system_exception (buf, env);
 	    if (env.exception () != 0)
 	      return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -745,10 +744,10 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 if (loop_continue)
                   continue;
 
-		const ACE_Message_Block* cdr = 
+		const ACE_Message_Block* cdr =
 		  this->inp_stream_.start ();
 		CORBA_Any any (tcp, cdr);
-		CORBA_Exception *exception = 
+		CORBA_Exception *exception =
 		  new CORBA_UnknownUserException (any);
 		env.exception (exception);
 		return TAO_GIOP_USER_EXCEPTION;
@@ -762,7 +761,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	return TAO_GIOP_SYSTEM_EXCEPTION;
       }
     // NOTREACHED
-	
+
     case TAO_GIOP_LOCATION_FORWARD:
       return (this->location_forward (this->inp_stream_, env));
     }
@@ -973,7 +972,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
         if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
           {
-	    exception = 
+	    exception =
 	      TAO_Exceptions::create_system_exception (buf, env);
 	    if (env.exception () != 0)
 	      return TAO_GIOP_SYSTEM_EXCEPTION;
