@@ -1,3 +1,17 @@
+Wed Jul 07 09:47:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
+	  (~Cubit_Factory_i): Removed the deactivation of the servant in
+	  ~Cubit_Factory_i. The deactivation was actually already
+	  performed when ORB::shutdown was called. When the deactivation
+	  was happening again in ~Cubit_Factory_i, implicit activation was
+	  actually reregistering the servant, just to be immediately
+	  deactivate it.  I would not have noticed this if it weren't for
+	  the fact that on some platforms, the second deactivation occurs
+	  before the shutdown() upcall completes, causing the second
+	  deactivation to fail since the servant is still in the active
+	  object map.
+
 Wed Jul  7 03:17:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/Options.html: Removed the -ORBReactorLock entry into the
@@ -13,14 +27,14 @@ Wed Jul  7 03:17:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Tue Jul  6 22:23:01 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/run_test.pl: 
-	* orbsvcs/tests/CosEC_Multiple/run_test2.pl: 
-	* orbsvcs/tests/EC_Multiple/run_test.pl: 
-	* orbsvcs/tests/Event_Latency/run_test.pl: 
-	* orbsvcs/tests/Simple_Naming/run_test.pl: 
+	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+	* orbsvcs/tests/CosEC_Multiple/run_test2.pl:
+	* orbsvcs/tests/EC_Multiple/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	* orbsvcs/tests/Simple_Naming/run_test.pl:
 	* orbsvcs/tests/Property/run_test.pl,
 	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl,
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
 	  Updated these scripts to use Naming_Server rather than Naming_Service
 	  to match the change described in the next bullet.
 
@@ -104,6 +118,9 @@ Tue Jul 06 13:00:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
           In addition, _add_ref() was not being invoked on a servant
           returned from a servant activator.  This is fixed now.
+
+	* tao/ORB.cpp (_get_collocated_servant): Factored out some common
+	  code into <_find_collocated_servant>.
 
 Tue Jul  6 12:05:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
