@@ -314,7 +314,7 @@ typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
 template class ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>
-#elif defined (__GNUC__) && defined (_AIX)
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
 template ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> *
   ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
