@@ -1,3 +1,9 @@
+Wed Oct 16 11:02:41 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/High_Res_Timer.cpp (get_cpuinfo): Removed the recalibration of
+	  the scale factor every time the application is launched.  Thanks
+ 	  to Bo Balder <bba@post.utfors.se> for reporting this.
+
 Wed Oct 16 10:55:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/config-linux-common.h: Added support for ACE_CC_NAME,
