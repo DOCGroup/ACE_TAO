@@ -1,3 +1,20 @@
+Wed Sep 22 13:13:46 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/DynAnyC.h:
+
+	  Removed inclusion of ORB.h.  It wasn't needed.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+
+	  Moved inclusion of ORB.h to ORB_Core.h to fix "incomplete type"
+	  errors when building with Minimum CORBA support.  Thanks to
+	  David for reporting this.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Wed Sep 22 13:09:06 1999  Jim Rogers <jrogers@viasoft.com>
 
         * tao/orbconf.h: don't #define TAO_USES_ROBUST_CONNECTION_MGMT
@@ -5,10 +22,10 @@ Wed Sep 22 13:09:06 1999  Jim Rogers <jrogers@viasoft.com>
 
 Wed Sep 22 10:30:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/ORB.cpp:
-          Replaced CORBA::TypeCode_ptr::_nil() with COORBA::TypeCode::_nil()
-          in several places. Amazingly, gcc 2.95 compiled this, but
-          MSVC output an internal compiler error.
+	* tao/ORB.cpp:
+	  Replaced CORBA::TypeCode_ptr::_nil() with CORBA::TypeCode::_nil()
+	  in several places. Amazingly, gcc 2.95 compiled this, but
+	  MSVC output an internal compiler error.
 
 Mon Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -24,11 +41,21 @@ Mon Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           Added the ACE_RCSID.
 
 Tue Sep 21 23:29:30 1999  Mike Moran  <mm4@cs.wustl.edu>
+<<<<<<< ChangeLog
+
+	* tests/Explicit_Event_Loop:
+=======
 
         * tests/Explicit_Event_Loop/:
+>>>>>>> 1.2870
 
+<<<<<<< ChangeLog
+	  Added ACE_TRY macros so the test will run without exceptions=1,
+	  and enhanced the documentation and ACE-style compliance.
+=======
           Added ACE_TRY macros so the test will run without exceptions=1,
           and enhanced the documentation and ACE-style compliance.
+>>>>>>> 1.2870
 
 Tue Sep 21 22:06:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -888,7 +915,24 @@ Tue Sep 14 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           don't handle casts very well.
 
 Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
+<<<<<<< ChangeLog
 
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i:
+
+	  CORBA 2.3 Updates:
+=======
+>>>>>>> 1.2870
+
+<<<<<<< ChangeLog
+	  No longer destroy the ORB_Core in the ORB's destructor.  Let the
+	  ORB_Table handle ORB_Core deallocation.  CORBA::ORB::destroy()
+	  will also destroy the ORB's underlying ORB_Core.  It is the
+	  user's responsibility to release an ORB.
+=======
         * tao/ORB.h:
         * tao/ORB.cpp:
         * tao/ORB_Core.h:
@@ -909,12 +953,33 @@ Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
           Moved exception and type code destruction to the ORB_Table since
           exceptions must be kept around during the lifetime of the
           application.
+>>>>>>> 1.2870
 
+<<<<<<< ChangeLog
+	  All ORB methods that access the ORB_Core in some way now check
+	  that the ORB_Core hasn't been shutdown or destroyed before
+	  continuing.
+=======
           Summary of Changes:
+>>>>>>> 1.2870
 
+<<<<<<< ChangeLog
+	  Moved exception and type code destruction to the ORB_Table since
+	  exceptions must be kept around during the lifetime of the
+	  application.
+=======
           These changes allow code such as the following:
+>>>>>>> 1.2870
 
+<<<<<<< ChangeLog
+	  Summary of Changes:
+
+	  These changes allow code such as the following:
+
+	    {
+=======
             {
+>>>>>>> 1.2870
              ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
             }
             {
