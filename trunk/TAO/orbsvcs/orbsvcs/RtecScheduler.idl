@@ -367,6 +367,13 @@ module RtecScheduler
     //
     // If the schedule has not been computed:
     //    raises (NOT_SCHEDULED);
+
+    void get_config_infos(out Config_Info_Set configs)
+      raises (SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
+    // Provides the set of Config_Infos associated with the current schedule.
+    //
+    // If the schedule has not been computed:
+    //    raises (NOT_SCHEDULED);
   };
 };
 
