@@ -1,3 +1,31 @@
+Sat Jun  5 03:54:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object_Adapter.{h,i,cpp}: Extracted the steps needed to
+	  making an upcall from dispatch_servant and dispatch_servant_i
+	  into a new class Servant_Upcall.  For collocated operation
+	  invocation to be "safe," we need to query the POA for every
+	  invocation, locate the servant, create and setup the POA_Current
+	  object, bump up the servant reference count, and make sure the
+	  upcall conform with POA's threading policy.  The Servant_Upcall
+	  class gathers the information needed to make an upcall and makes
+	  sure all the locks are held/release at appropriate time.  With
+	  this class, we can change how an upcall is actually made without
+	  repeatedly puting these logic everywhere.
+
+	  The new dispatch_servant now uses the class.  dispatch_servant_i
+	  is no longer needed.  Also gone are Single_Threaded_POA_Lock and
+	  Outstanding_Request because they are only used in the original
+	  dispatch_servant_i.  
+
+	  The Servant_Upcall class'es implementation is exception safe
+	  regardless a platform supports native C++ exception or not.
+	  With this class, we can fix the collocated object's behave so
+	  that they obey the POA's state and policies without bloating the
+	  generated code.
+	
+	* tao/POA.{h,i,cpp}:  Moved TAO_POA_Current_Impl to
+	  Object_Adapter.* to avoid circular dependency.
+
 Fri Jun  4 23:48:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
