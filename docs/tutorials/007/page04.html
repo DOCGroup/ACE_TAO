@@ -60,7 +60,7 @@ int
                        int pool_size)
 {
   if (this->concurrency() == thread_pool_ && thread_pool_is_private ())
-    thread_pool ()->open (pool_size);
+    thread_pool ()->start (pool_size);
 
   return <font color=#008888>inherited::open</font> (addr, reactor);
 }
@@ -71,7 +71,7 @@ int
 <font color=#008888>Client_Acceptor::close</font> (void)
 {
   if (this->concurrency() == thread_pool_ && thread_pool_is_private ())
-    thread_pool ()->close ();
+    thread_pool ()->stop ();
 
   return <font color=#008888>inherited::close</font> ();
 }

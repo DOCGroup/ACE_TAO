@@ -61,24 +61,14 @@ public:
   <font color=red>// Basic constructor</font>
   Thread_Pool (void);
 
-  <font color=red>/* Opening the thread pool causes one or more threads to be
+  <font color=red>/* Starting the thread pool causes one or more threads to be
     activated.  When activated, they all execute the svc() method
     declared below.  */</font>
-  int open (int pool_size = default_pool_size_);
-
-  <font color=red>/* Some compilers will complain that our open() above attempts to
-    override a virtual function in the baseclass.  We have no
-    intention of overriding that method but in order to keep the
-    compiler quiet we have to add this method as a pass-thru to the
-    baseclass method.  */</font>
-  virtual int open (void *void_data)
-  {
-    return <font color=#008888>inherited::open</font> (void_data);
-  }
+  int start (int pool_size = default_pool_size_);
 
   <font color=red>/*
    */</font>
-  virtual int close (u_long flags = 0);
+  virtual int stop (void);
 
   <font color=red>/* To use the thread pool, you have to put some unit of work into
     it.  Since we're dealing with event handlers (or at least their
