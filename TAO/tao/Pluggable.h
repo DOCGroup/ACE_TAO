@@ -146,13 +146,13 @@ public:
   // Using this method, instead of send(), allows the transport (and
   // wait strategy) to take appropiate action.
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &op_details,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg) = 0;
   // This is a request for the transport object to write a request
   // header before it sends out a request
-                                
+
   TAO_ORB_Core *orb_core (void) const;
   // Access the ORB that owns this connection.
 

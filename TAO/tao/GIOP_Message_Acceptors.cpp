@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Server_Request.h"
+#include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Acceptors.i"
@@ -20,6 +21,8 @@ TAO_GIOP_Message_Acceptors::
                           TAO_InputCDR &input,
                           CORBA::Octet message_type)
 {
+  orb_core->leader_follower ().set_upcall_thread ();
+
   this->output_->reset ();
   switch (message_type)
     {

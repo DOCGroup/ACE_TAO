@@ -333,7 +333,7 @@ Client::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Latency: exception raised");
+                           "Exception raised:");
     }
   ACE_ENDTRY;
   return 0;

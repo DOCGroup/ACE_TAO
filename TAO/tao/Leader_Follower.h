@@ -42,6 +42,10 @@ public:
   // The current thread is not a server thread anymore, reset any
   // flags and counters.
 
+  void set_upcall_thread (void);
+  // This thread is going to perform an upcall, it will no longer be
+  // an event loop thread.
+
   int leader_available (void) const;
   // Is there any thread running as a leader?
 
@@ -105,6 +109,11 @@ private:
 
   int wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time);
   // Wait for the client leader to complete.
+
+  void reset_event_loop_thread_i (TAO_ORB_Core_TSS_Resources *tss);
+  // Implement the reset_event_loop_thread() method, once the TSS
+  // resources have been acquired.
+  // Also used in the set_upcall_thread.
 
 private:
   TAO_ORB_Core *orb_core_;

@@ -115,6 +115,7 @@ ORB_CORE_FILES = \
   Interceptor.cpp \
   InterceptorC.cpp \
   Asynch_Invocation.cpp \
+  DII_Invocation.cpp \
   ORB_Core.cpp \
   Leader_Follower.cpp \
   Reactor_Registry.cpp \
@@ -129,8 +130,16 @@ ORB_CORE_FILES = \
   IOR_LookupTable.cpp \
   TAO.cpp \
   Wait_Strategy.cpp \
+  Wait_On_Read.cpp \
+  Wait_On_Reactor.cpp \
+  Wait_On_Leader_Follower.cpp \
   Transport_Mux_Strategy.cpp \
+  Muxed_TMS.cpp \
+  Exclusive_TMS.cpp \
   Reply_Dispatcher.cpp \
+  Synch_Reply_Dispatcher.cpp \
+  Asynch_Reply_Dispatcher.cpp \
+  DII_Reply_Dispatcher.cpp \
   IOPC.cpp \
   IOPS.cpp \
   PollableC.cpp \
@@ -247,6 +256,7 @@ HEADER_FILES = \
   Active_Object_Map.h \
   Any.h \
   Asynch_Invocation.h \
+  DII_Invocation.h \
   BoundsC.h \
   Buffering_Constraint_Policy.h \
   CDR.h \
@@ -332,7 +342,6 @@ HEADER_FILES = \
   RT_Current.h \
   Reactor_Per_Priority.h \
   Reactor_Registry.h \
-  Reply_Dispatcher.h \
   Request.h \
   Resource_Factory.h \
   Sequence.h \
@@ -354,7 +363,6 @@ HEADER_FILES = \
   TimeBaseS.h \
   TimeBaseS_T.h \
   Timeprobe.h \
-  Transport_Mux_Strategy.h \
   Typecode.h \
   UIOP_Acceptor.h \
   UIOP_Connect.h \
@@ -367,6 +375,16 @@ HEADER_FILES = \
   ValueFactory_Map.h \
   Version.h \
   Wait_Strategy.h \
+  Wait_On_Read.h \
+  Wait_On_Reactor.h \
+  Wait_On_Leader_Follower.h \
+  Transport_Mux_Strategy.h \
+  Muxed_TMS.h \
+  Exclusive_TMS.h \
+  Reply_Dispatcher.h \
+  Synch_Reply_Dispatcher.h \
+  Asynch_Reply_Dispatcher.h \
+  DII_Reply_Dispatcher.h \
   WrongTransactionC.h \
   corba.h \
   corbafwd.h \
@@ -388,6 +406,7 @@ INLINE_FILES = \
   Active_Object_Map.i \
   Any.i \
   Asynch_Invocation.i \
+  DII_Invocation.i \
   BoundsC.i \
   Buffering_Constraint_Policy.i \
   CDR.i \
@@ -455,6 +474,9 @@ INLINE_FILES = \
   Reactor_Per_Priority.i \
   Reactor_Registry.i \
   Reply_Dispatcher.i \
+  Synch_Reply_Dispatcher.i \
+  Asynch_Reply_Dispatcher.i \
+  DII_Reply_Dispatcher.i \
   Request.i \
   Sequence.i \
   Sequence_T.i \

@@ -63,6 +63,15 @@ main (int argc, char *argv[])
                       "test runs in time-shared class\n"));
           policy = ACE_SCHED_OTHER;
           flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_DEFAULT;
+
+          if (ACE_Sched_Params::priority_min (policy)
+              == ACE_Sched_Params::priority_max (policy))
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%s: not enough priority levels, "
+                          "aborting\n", argv[0]));
+              return 0;
+            }
         }
       else
         ACE_ERROR ((LM_ERROR,
@@ -133,7 +142,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;
