@@ -1,3 +1,8 @@
+Fri Jan 11 12:28:48 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/Security/Makefile (DIRS): 
+	  Added MT_SSLIOP to DIRS section.  
+
 Fri Jan 11 07:50:41 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.h:
