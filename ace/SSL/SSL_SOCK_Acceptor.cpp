@@ -60,6 +60,9 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
             return -1;
     }
 
+  // Take into account the time between each select() call below.
+  ACE_Countdown_Time countdown (timeout);
+
   int status;
   do
     {
@@ -107,13 +110,13 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
               // Use that to decide what to do.
               if (SSL_want_write (ssl))
                 {
-                  ACE_DEBUG ((LM_DEBUG, "accept wants write\n"));
-                wr_handle.set_bit (handle);
+                  // ACE_DEBUG ((LM_DEBUG, "accept wants write\n"));
+                  wr_handle.set_bit (handle);
                 }
               else
                 {
-                  ACE_DEBUG ((LM_DEBUG, "accept wants read\n"));
-                rd_handle.set_bit (handle);
+                  // ACE_DEBUG ((LM_DEBUG, "accept wants read\n"));
+                  rd_handle.set_bit (handle);
                 }
 #else
               // Since we don't know whether this should have been
@@ -138,7 +141,8 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
 
       if (status == 1)
         {
-          ACE_DEBUG ((LM_DEBUG, "selecting...\n"));
+          // ACE_DEBUG ((LM_DEBUG, "selecting...\n"));
+
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set() == 1 || wr_handle.num_set () == 1);
           status = ACE::select (int (handle) + 1,
@@ -146,9 +150,13 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                                 &wr_handle,
                                 0,
                                 timeout);
+
+          (void) countdown.update ();
+
           // 0 is timeout, so we're done.
           // -1 is error, so we're done.
-          // Could be both handles set (same handle in both masks) so set to 1.
+          // Could be both handles set (same handle in both masks) so
+          // set to 1.
           if (status >= 1)
             status = 1;
           else                   // Timeout or failure
@@ -180,6 +188,10 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::accept");
 
+  // Take into account the time to complete the basic TCP handshake
+  // and the SSL handshake.
+  ACE_Countdown_Time countdown (timeout);
+
   ACE_SOCK_Stream temp_stream;
   if (-1 == this->acceptor_.accept (temp_stream,
                                     remote_addr,
@@ -187,6 +199,8 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                     restart,
                                     reset_new_handle))
     return -1;
+
+  (void) countdown.update ();
 
   new_stream.set_handle (temp_stream.get_handle ());
   temp_stream.set_handle (ACE_INVALID_HANDLE);
@@ -212,6 +226,10 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::accept");
 
+  // Take into account the time to complete the basic TCP handshake
+  // and the SSL handshake.
+  ACE_Countdown_Time countdown (timeout);
+
   ACE_SOCK_Stream temp_stream;
   if (-1 == this->acceptor_.accept (temp_stream,
                                     qos_params,
@@ -220,6 +238,8 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                     restart,
                                     reset_new_handle))
     return -1;
+
+  (void) countdown.update ();
 
   new_stream.set_handle (temp_stream.get_handle ());
   temp_stream.set_handle (ACE_INVALID_HANDLE);
