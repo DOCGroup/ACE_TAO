@@ -760,7 +760,7 @@ ACE_Service_Config::end_reactor_event_loop (void)
   // Send a notification, but don't block if there's no one to receive
   // it.
   return ACE_Service_Config::reactor ()->notify 
-    (0, ACE_Event_Handler::NULL_MASK, &ACE_Time_Value::zero);
+    (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
 /* static */

@@ -1,4 +1,13 @@
+Wed Jan  8 01:00:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Message_Block_Test.cpp: Enhanced the torture test of the
+ 	  ACE_Message_Block so that it stresses the reference counting
+ 	  implementation in a multi-threaded environment.
+
 Tue Jan  7 13:03:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block: Continued to improve the
+	  ACE_Message_Block/ACE_Data_Block implementation.
 
 	* ace/Message_Block: Added a new constructor to ACE_Message_Block
  	  that takes an ACE_Data_Block * and "owns" it.  Thanks to Tim for

@@ -216,15 +216,12 @@ using the -b flag.
 Here is what a config file would look like for starting up a server at
 port 20202:
 
-dynamic Time_Service Service_Object * ../lib/libnet_svcs.so:_make_ACE_TS_Server_Acceptor() "-p 20202"
+dynamic Time_Service Service_Object * ../lib/netsvcs:_make_ACE_TS_Server_Acceptor() "-p 20202"
 
 Here is what a config file would look like for starting up a clerk
 that needs to connect to two servers, one at tango and one at lambada:
 
-dynamic Time_Server_test Service_Object *../lib/libnet_svcs.so:_make_ACE_TS_Clerk_Connector () "-h tango:20202 -h lambada:20202 -t 4"
-
-[Note: these files would vary if the services are run on NT]
-
+dynamic Time_Server_test Service_Object *../lib/netsvcs:_make_ACE_TS_Clerk_Connector () "-h tango:20202 -h lambada:20202 -t 4"
 
 2. Class TS_Server_Handler
    -----------------------
