@@ -282,16 +282,20 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Based_Pointer_Repository.cpp
       Malloc.cpp
       PI_Malloc.cpp
+      Local_Memory_Pool.cpp
+      MMAP_Memory_Pool.cpp
       Malloc_Allocator.cpp
       Malloc_Instantiations.cpp
       Mem_Map.cpp
-      Memory_Pool.cpp
       Obchunk.cpp
       Obstack.cpp
+      Pagefile_Memory_Pool.cpp
       Read_Buffer.cpp
+      Sbrk_Memory_Pool.cpp
       Shared_Memory.cpp
       Shared_Memory_MM.cpp
       Shared_Memory_SV.cpp
+      Shared_Memory_Pool.cpp
     }
 
     Timer {
