@@ -104,6 +104,7 @@
 #define ACE_LACKS_WRITEV
 
 #define ACE_LACKS_READV
+#define ACE_LACKS_UMASK
 
 // rename the main entry point
 #define ACE_MAIN extern "C" void root

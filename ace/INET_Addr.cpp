@@ -958,7 +958,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
   //
   // So, we use the way that vxworks suggests.
   ACE_INET_Addr *ncthis = const_cast<ACE_INET_Addr *> (this);
-  inet_ntoa_b (this->inet_addr_.in4_.sin_addr, ncthis->buf_);
+  inet_ntoa_b(this->inet_addr_.in4_.sin_addr, ncthis->buf_);
   ACE_OS::strsncpy (dst, &buf_[0], size);
   return &buf_[0];
 #else /* VXWORKS */
@@ -993,7 +993,6 @@ ACE_INET_Addr::get_host_addr (void) const
 }
 
 // Return the 4-byte IP address, converting it into host byte order.
-
 ACE_UINT32
 ACE_INET_Addr::get_ip_address (void) const
 {

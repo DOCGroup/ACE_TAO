@@ -16,6 +16,7 @@
 #endif /* __ACE_INLINE__ */
 
 #define ACE_LACKS_ISATTY
+#define ACE_LACKS_UMASK
 
 #define ACE_LACKS_DIFFTIME
 

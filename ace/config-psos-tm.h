@@ -39,6 +39,7 @@
 #define TCP_NODELAY  1       // this will be defined later by pSOS/TM
 
 #define ACE_LACKS_HRTIME_T
+#define ACE_LACKS_UMASK
 
 // #define ACE_LACKS_EVENT_T
 

@@ -58,6 +58,8 @@ ACE_MAIN                                Renames "main (int, char *[])",
                                         that don't allow "main".  Requires
                                         the use of
                                         ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+ACE_MKDIR_LACKS_MODE                    This platform has a mkdir function with
+                                        a mode argument
 ACE_MT_SAFE                             Compile using multi-thread libraries
 ACE_NDEBUG                              Turns off debugging features
 ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
@@ -418,6 +420,8 @@ ACE_HAS_NONCONST_SENDMSG		Platform omits const qualifier
 ACE_HAS_NONCONST_SETRLIMIT              Platform omits const qualifier
 					from rlimit parameter in setrlimit()
 					prototype.
+ACE_HAS_NONCONST_STAT                   Platform's stat function has non const
+                                        name argument
 ACE_HAS_NONCONST_SWAB                   Platform's swab function has non
                                         const src argument
 ACE_HAS_NONCONST_WRITEV                 Platform omits const qualifier from
@@ -719,8 +723,8 @@ ACE_HAS_XTI                             Platform has XTI
 ACE_INITIALIZE_MEMORY_BEFORE_USE        Memory is explicitly initialized before
                                         use. Useful when using a profiler like
                                         purify or valgrind
-ACE_HRTIME_T_IS_BASIC_TYPE              ACE_hrtime_t is a basic type that 
-                                        doesn't require ACE_U64_TO_U32 
+ACE_HRTIME_T_IS_BASIC_TYPE              ACE_hrtime_t is a basic type that
+                                        doesn't require ACE_U64_TO_U32
                                         conversion
 ACE_LACKS_ACCESS                        Platform lacks access() (e.g.,
                                         VxWorks and Chorus)
@@ -1004,6 +1008,7 @@ ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS        Compiler does not have
                                         operator>> (istream &, signed char *)
 ACE_LACKS_UCONTEXT_H                    Platform lacks the ucontext.h
                                         file
+ACE_LACKS_UMASK                         Platform lacks umask function
 ACE_LACKS_UNBUFFERED_STREAMBUF          Platform lacks streambuf
                                         "unbuffered ()".
 ACE_LACKS_UNISTD_H                      Platform lacks the unistd.h
@@ -1105,7 +1110,7 @@ ACE_USES_CLASSIC_SVC_CONF               This macro should be defined
                                         svc.conf file format.
                                         Defining it to 1 will force
                                         ACE to use the classic
-                                        svc.conf format.  
+                                        svc.conf format.
                                         ** This macro takes precedence
                                         ** over previous two macros.
 

@@ -1,3 +1,31 @@
+Mon Dec 20 11:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-integritySCA.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psos-psosim-g++.h:
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_UMASK
+
+        * ace/config-vxworks5.x.h:
+          Adde ACE_LACKS_UMASK, ACE_HAS_NONCONST_STAT and ACE_MKDIR_LACKS_MODE
+
+        * ace/config-win32-common.h:
+          Added ACE_MKDIR_LACKS_MODE
+
+        * ace/OS_NS_sys_stat.inl:
+          Merged all umask implementation to one version and introduced
+          an ACE_LACKS_UMASK to check if umask is supported or not.
+          Use the new ACE_HAS_NONCONST_STAT instead of checking for VxWorks
+          explicitly
+          Use ACE_MKDIR_LACKS_MODE to determine whether a mode must be passed
+          with the mkdir invocation or not.
+
+        * ace/README:
+          Documented new defines
+
 Mon Dec 20 10:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.h:
