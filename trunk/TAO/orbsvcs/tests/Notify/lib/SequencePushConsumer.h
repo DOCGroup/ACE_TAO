@@ -24,7 +24,7 @@
 
 #include "Consumer_T.h"
 
-class TAO_NS_SequenceProxyPushSupplier_Traits
+class TAO_NOTIFY_TEST_Export TAO_NS_SequenceProxyPushSupplier_Traits
 {
 public:
   typedef CosNotifyChannelAdmin::SequenceProxyPushSupplier INTERFACE;
@@ -33,7 +33,7 @@ public:
   typedef CosNotifyChannelAdmin::ProxyID ID;
 };
 
-class TAO_NS_SequencePushConsumer_Traits
+class TAO_NOTIFY_TEST_Export TAO_NS_SequencePushConsumer_Traits
 {
 public:
   TAO_NS_SequencePushConsumer_Traits (void);

@@ -24,7 +24,7 @@
 
 #include "Supplier_T.h"
 
-class TAO_NS_StructuredProxyPushConsumer_Traits
+class TAO_NOTIFY_TEST_Export TAO_NS_StructuredProxyPushConsumer_Traits
 {
 public:
   typedef CosNotifyChannelAdmin::StructuredProxyPushConsumer INTERFACE;
@@ -33,7 +33,7 @@ public:
   typedef CosNotifyChannelAdmin::ProxyID ID;
 };
 
-class TAO_NS_StructuredPushSupplier_Traits
+class TAO_NOTIFY_TEST_Export TAO_NS_StructuredPushSupplier_Traits
 {
 public:
   TAO_NS_StructuredPushSupplier_Traits (void);

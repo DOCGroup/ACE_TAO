@@ -509,7 +509,7 @@ Notify_Throughput::run_test (ACE_ENV_SINGLE_ARG_DECL)
                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (suppliers_[i]->activate (THR_NEW_LWP | THR_JOINABLE) != 0)
+      if (suppliers_[i]->ACE_Task_Base::activate (THR_NEW_LWP | THR_JOINABLE) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "Cannot activate client threads\n"));
