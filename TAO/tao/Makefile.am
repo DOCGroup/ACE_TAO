@@ -403,10 +403,7 @@ nobase_include_HEADERS = \
   CONV_FRAMEC.h \
   CONV_FRAMEC.inl \
   CONV_FRAMES.h \
-  CONV_FRAMES.inl \
-  CONV_FRAMES_T.cpp \
   CONV_FRAMES_T.h \
-  CONV_FRAMES_T.inl \
   CORBALOC_Parser.h \
   CORBALOC_Parser.i \
   CORBANAME_Parser.h \
@@ -510,10 +507,7 @@ nobase_include_HEADERS = \
   GIOPC.h \
   GIOPC.inl \
   GIOPS.h \
-  GIOPS.inl \
-  GIOPS_T.cpp \
   GIOPS_T.h \
-  GIOPS_T.inl \
   GIOP_Message_Base.h \
   GIOP_Message_Generator_Parser.h \
   GIOP_Message_Generator_Parser_10.h \
@@ -551,10 +545,7 @@ nobase_include_HEADERS = \
   IOPC.h \
   IOPC.i \
   IOPS.h \
-  IOPS.i \
-  IOPS_T.cpp \
   IOPS_T.h \
-  IOPS_T.i \
   IOP_Codec.pidl \
   IOP_CodecC.h \
   IOP_CodecC.i \
@@ -705,10 +696,7 @@ nobase_include_HEADERS = \
   PollableC.h \
   PollableC.inl \
   PollableS.h \
-  PollableS.inl \
-  PollableS_T.cpp \
   PollableS_T.h \
-  PollableS_T.inl \
   PortableInterceptor.h \
   PortableInterceptor.pidl \
   PortableInterceptorC.h \
@@ -759,10 +747,7 @@ nobase_include_HEADERS = \
   ServicesC.h \
   ServicesC.inl \
   ServicesS.h \
-  ServicesS.inl \
-  ServicesS_T.cpp \
   ServicesS_T.h \
-  ServicesS_T.inl \
   Services_Activate.h \
   ShortSeq.pidl \
   ShortSeqC.h \
@@ -796,10 +781,7 @@ nobase_include_HEADERS = \
   TAOC.h \
   TAOC.inl \
   TAOS.h \
-  TAOS.inl \
-  TAOS_T.cpp \
   TAOS_T.h \
-  TAOS_T.inl \
   TAO_Export.h \
   TAO_Internal.h \
   TAO_Server_Request.h \
@@ -822,10 +804,7 @@ nobase_include_HEADERS = \
   TimeBaseC.h \
   TimeBaseC.inl \
   TimeBaseS.h \
-  TimeBaseS.inl \
-  TimeBaseS_T.cpp \
   TimeBaseS_T.h \
-  TimeBaseS_T.inl \
   Timeprobe.h \
   Transport.h \
   Transport.inl \

@@ -1,3 +1,11 @@
+Tue Jan 25 14:15:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Update for this change:
+
+	  Tue Jan 26 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Tue Jan 25 12:57:05 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset_Manager.cpp:
