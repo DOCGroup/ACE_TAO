@@ -263,3 +263,44 @@ be_visitor_operation_rettype_vardecl_ss::visit_union (be_union *node)
     *os << bt->name () << " _tao_retval;\n";
   return 0;
 }
+
+
+// ********************************************************************************
+//    be_visitor_operation_rettype_vardecl_ss
+//    This visitor generates code for variable declaration and initialization
+//    of the return type.
+// ********************************************************************************
+
+be_compiled_visitor_operation_rettype_vardecl_ss
+::be_compiled_visitor_operation_rettype_vardecl_ss
+(be_visitor_context *ctx)
+  : be_visitor_operation_rettype_vardecl_ss (ctx)
+{
+}
+
+be_compiled_visitor_operation_rettype_vardecl_ss::
+~be_compiled_visitor_operation_rettype_vardecl_ss (void)
+{
+}
+
+int
+be_compiled_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  os->indent ();
+  *os << node->name () << "_var _tao_retval;\n";
+  return 0;
+}
+
+int
+be_compiled_visitor_operation_rettype_vardecl_ss::
+visit_interface_fwd (be_interface_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+
+  os->indent ();
+  *os << node->name () << "_var _tao_retval;\n";
+  return 0;
+}
+
