@@ -23,6 +23,9 @@
 
 namespace CORBA
 {
+  class TypeCode;
+  typedef TypeCode * TypeCode_ptr;
+
   /**
    * @name TypeCode Constants
    *

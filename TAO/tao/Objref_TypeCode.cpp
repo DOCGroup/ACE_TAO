@@ -3,10 +3,10 @@
 #ifndef TAO_OBJREF_TYPECODE_CPP
 #define TAO_OBJREF_TYPECODE_CPP
 
-#include "tao/TypeCode/Objref_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/TypeCode/Objref_TypeCode.inl"
+# include "tao/Objref_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/ORB_Core.h"

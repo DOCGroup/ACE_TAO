@@ -74,9 +74,9 @@ namespace TAO
     char const tc_value_base_id[]   = "IDL:omg.org/CORBA/ValueBase:1.0";
     char const tc_value_base_name[] = "ValueBase";
     Value<char const *,
-          Field<char const *> *,
+          Value_Field<char const *> const *,
           CORBA::tk_value,
-          TAO::Null_RefCount_policy> tc_ValueBase (tc_value_base_id,
+          TAO::Null_RefCount_Policy> tc_ValueBase (tc_value_base_id,
                                                    tc_value_base_name,
                                                    CORBA::VM_NONE,
                                                    0,  // Nil TypeCode
@@ -86,9 +86,9 @@ namespace TAO
     char const tc_event_base_id[]   = "IDL:omg.org/CORBA/EventBase:1.0";
     char const tc_event_base_name[] = "EventBase";
     Value<char const *,
-          Field<char const *> *,
+          Value_Field<char const *> const *,
           CORBA::tk_event,
-          TAO::Null_RefCount_policy> tc_EventBase (tc_event_base_id,
+          TAO::Null_RefCount_Policy> tc_EventBase (tc_event_base_id,
                                                    tc_event_base_name,
                                                    CORBA::VM_NONE,
                                                    0,  // Nil TypeCode

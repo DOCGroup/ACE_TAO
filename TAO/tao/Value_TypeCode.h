@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TypeCode_Base_Attributes.h"
+#include "tao/OBV_Constants.h"
 
 
 namespace TAO
@@ -55,7 +56,7 @@ namespace TAO
       /// Constructor.
       Value (char const * id,
              char const * name,
-             CORBA::ValueModifer modifier,
+             CORBA::ValueModifier modifier,
              CORBA::TypeCode_ptr * concrete_base,
              Value_Field<StringType> const * fields,
              CORBA::ULong nfields);
@@ -99,7 +100,7 @@ namespace TAO
                                           ACE_ENV_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index
                                                  ACE_ENV_ARG_DECL) const;
-      virtual CORBA::Visibility member_visibility_i (ULong index
+      virtual CORBA::Visibility member_visibility_i (CORBA::ULong index
                                                      ACE_ENV_ARG_DECL) const;
       virtual CORBA::ValueModifier type_modifier (
         ACE_ENV_SINGLE_ARG_DECL) const;
@@ -132,7 +133,7 @@ namespace TAO
 
       /// The @c ValueModifier of the @c valuetype of @c eventtype
       /// represented by this @c TypeCode.
-      CORBA::ValueModifer const type_modifier_;
+      CORBA::ValueModifier const type_modifier_;
 
       /// The @c TypeCode corresponding to the concrete base
       /// @c valuetype or @c eventtype.
