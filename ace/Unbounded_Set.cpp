@@ -88,10 +88,7 @@ ACE_Unbounded_Set<T>::copy_nodes (const ACE_Unbounded_Set<T> &us)
   for (ACE_Node<T> *curr = us.head_->next_;
        curr != us.head_;
        curr = curr->next_)
-    {
-      if (!curr->deleted_)
-        this->insert_tail (curr->item_);
-    }
+    this->insert_tail (curr->item_);
 }
 
 template <class T> void
@@ -99,61 +96,21 @@ ACE_Unbounded_Set<T>::delete_nodes (void)
 {
   ACE_Node<T> *curr = this->head_->next_;
 
-  /* The following line is *temporarily* commented out because it
-     crashes TAO (cvs of 2003/03/25)  FIXME: Repair the problem in TAO.
-
-  ACE_ASSERT (number_of_iterators_ == 0);
-   */
-
   // Keep looking until we've hit the dummy node.
 
   while (curr != this->head_)
     {
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
-
-      if (! temp->deleted_)
-        this->cur_size_--;
-
-      if (number_of_iterators_ == 0)
-        {
-          ACE_DES_FREE_TEMPLATE (temp,
-                                 this->allocator_->free,
-                                 ACE_Node,
-                                 <T>);
-        }
-      else
-        temp->deleted_ = true;
+      ACE_DES_FREE_TEMPLATE (temp,
+                             this->allocator_->free,
+                             ACE_Node,
+                             <T>);
+      this->cur_size_--;
     }
 
   // Reset the list to be a circular list with just a dummy node.
   this->head_->next_ = this->head_;
-}
-
-template <class T> void
-ACE_Unbounded_Set<T>::cleanup ()
-{
-  /// curr is the address of the chaining
-  ACE_Node<T> **curr = &(this->head_->next_);
-  ACE_ASSERT (number_of_iterators_ == 0);
-
-  // Keep looking until we've hit the dummy node.
-  while (*curr != this->head_)
-    {
-      if ((*curr)->deleted_)
-        {
-          ACE_Node<T> *temp = *curr;
-          *curr = (*curr)->next_; // skip the deleted, curr is still the same
-          ACE_DES_FREE_TEMPLATE (temp,
-                                 this->allocator_->free,
-                                 ACE_Node,
-                                 <T>);
-        }
-      else
-        {
-          curr = &((*curr)->next_);
-        }
-    }
 }
 
 template <class T>
@@ -175,8 +132,7 @@ template <class T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
   : head_ (0),
     cur_size_ (0),
-    allocator_ (alloc),
-    number_of_iterators_ (0)
+    allocator_ (alloc)
 {
   // ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
@@ -194,8 +150,7 @@ template <class T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
   : head_ (0),
     cur_size_ (0),
-    allocator_ (us.allocator_),
-    number_of_iterators_ (0)
+    allocator_ (us.allocator_)
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
@@ -231,7 +186,7 @@ ACE_Unbounded_Set<T>::find (const T &item) const
   ACE_Node<T> *temp = this->head_->next_;
 
   // Keep looping until we find the item.
-  while (!(temp->item_ == item && !temp->deleted_))
+  while (!(temp->item_ == item))
     temp = temp->next_;
 
   // If we found the dummy node then it's not really there, otherwise,
@@ -256,33 +211,24 @@ ACE_Unbounded_Set<T>::remove (const T &item)
 
   // Insert the item to be founded into the dummy node.
   this->head_->item_ = item;
-  this->head_->deleted_ = false;
 
   ACE_Node<T> *curr = this->head_;
 
-  while (!(curr->next_->item_ == item) || curr->next_->deleted_)
+  while (!(curr->next_->item_ == item))
     curr = curr->next_;
 
   if (curr->next_ == this->head_)
     return -1; // Item was not found.
   else
     {
-      this->cur_size_--;
       ACE_Node<T> *temp = curr->next_;
-      if(number_of_iterators_>0)
-        {
-          temp->deleted_ = true;
-        }
-      else
-        {
-          // Skip over the node that we're deleting.
-          curr->next_ = temp->next_;
-
-          ACE_DES_FREE_TEMPLATE (temp,
-                                 this->allocator_->free,
-                                 ACE_Node,
-                                 <T>);
-        }
+      // Skip over the node that we're deleting.
+      curr->next_ = temp->next_;
+      this->cur_size_--;
+      ACE_DES_FREE_TEMPLATE (temp,
+                             this->allocator_->free,
+                             ACE_Node,
+                             <T>);
       return 0;
     }
 }
@@ -301,27 +247,6 @@ ACE_Unbounded_Set<T>::end (void)
   return ACE_Unbounded_Set_Iterator<T> (*this, 1);
 }
 
-template <class T> void
-ACE_Unbounded_Set<T>::iterator_add (void) const
-{
-  number_of_iterators_++;
-}
-
-template <class T> void
-ACE_Unbounded_Set<T>::iterator_leave (void)
-{
-  ACE_ASSERT (number_of_iterators_ > 0);
-  number_of_iterators_--;
-  if (number_of_iterators_ == 0)
-    cleanup ();
-}
-
-template <class T> void
-ACE_Unbounded_Set<T>::const_iterator_leave (void) const
-{
-  ACE_ASSERT (number_of_iterators_ > 0);
-  number_of_iterators_--;
-}
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Iterator)
 
@@ -333,39 +258,10 @@ ACE_Unbounded_Set_Iterator<T>::dump (void) const
 
 template <class T>
 ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, int end)
-  : current_ (end == 0 ? s.head_->next_ : s.head_),
+  : current_ (end == 0 ? s.head_->next_ : s.head_ ),
     set_ (&s)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator");
-  set_->iterator_add ();
-  // the first one may be deleted
-  while (this->current_->deleted_ && this->current_ != this->set_->head_)
-    this->current_ = this->current_->next_;
-}
-
-template <class T>
-ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (const ACE_Unbounded_Set_Iterator<T> &o)
-  : current_ (o.current_), set_ (o.set_)
-{
-  set_->iterator_add ();
-}
-
-template <class T> void
-ACE_Unbounded_Set_Iterator<T>::operator= (const ACE_Unbounded_Set_Iterator &o)
-{
-  if (this == &o)
-    return;
-  set_->iterator_leave ();
-  this->set_ = o.set_;
-  this->current_ = o.current_;
-  set_->iterator_add ();
-}
-
-
-template <class T>
-ACE_Unbounded_Set_Iterator<T>::~ACE_Unbounded_Set_Iterator ()
-{
-  set_->iterator_leave ();
 }
 
 template <class T> int
@@ -373,8 +269,6 @@ ACE_Unbounded_Set_Iterator<T>::advance (void)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::advance");
   this->current_ = this->current_->next_;
-  while(this->current_->deleted_ && this->current_ != this->set_->head_)
-    this->current_ = this->current_->next_;
   return this->current_ != this->set_->head_;
 }
 
@@ -383,8 +277,6 @@ ACE_Unbounded_Set_Iterator<T>::first (void)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::first");
   this->current_ = this->set_->head_->next_;
-  while(this->current_->deleted_ && this->current_ != this->set_->head_)
-    this->current_ = this->current_->next_;
   return this->current_ != this->set_->head_;
 }
 
@@ -469,37 +361,10 @@ ACE_Unbounded_Set_Const_Iterator<T>::dump (void) const
 
 template <class T>
 ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s, int end)
-  : current_ (end == 0 ? s.head_->next_ : s.head_),
+  : current_ (end == 0 ? s.head_->next_ : s.head_ ),
     set_ (&s)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator");
-  set_->iterator_add ();
-  // the first one may be deleted
-  while (this->current_->deleted_ && this->current_ != this->set_->head_)
-    this->current_ = this->current_->next_;
-}
-
-template <class T>
-ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator(const ACE_Unbounded_Set_Const_Iterator<T> &o):current_(o.current_),set_(o.set_)
-{
-  set_->iterator_add ();
-}
-
-template <class T>
-void ACE_Unbounded_Set_Const_Iterator<T>::operator=(const ACE_Unbounded_Set_Const_Iterator& o)
-{
-  if (this == &o)
-    return;
-  set_->iterator_leave ();
-  this->set_ = o.set_;
-  this->current_ = o.current_;
-  set_->iterator_add ();
-}
-
-template <class T>
-ACE_Unbounded_Set_Const_Iterator<T>::~ACE_Unbounded_Set_Const_Iterator()
-{
-  set_->const_iterator_leave ();
 }
 
 template <class T> int
@@ -507,8 +372,6 @@ ACE_Unbounded_Set_Const_Iterator<T>::advance (void)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::advance");
   this->current_ = this->current_->next_;
-  while (this->current_->deleted_ && this->current_ != this->set_->head_)
-    this->current_ = this->current_->next_;
   return this->current_ != this->set_->head_;
 }
 
@@ -517,8 +380,6 @@ ACE_Unbounded_Set_Const_Iterator<T>::first (void)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::first");
   this->current_ = this->set_->head_->next_;
-  while (this->current_->deleted_ && this->current_ != this->set_->head_)
-    this->current_ = this->current_->next_;
   return this->current_ != this->set_->head_;
 }
 
