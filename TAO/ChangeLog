@@ -1,3 +1,12 @@
+Sun Jan  9 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Servant_Location:
+          Moved the enum TAO_SERVANT_LOCATION to its own file.
+
+        * tao/Makefile.am:
+          Updated for change above
+
 Sun Jan  9 11:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.{h,cpp}:
