@@ -37,7 +37,7 @@ FtRtEvent_Test_Base::~FtRtEvent_Test_Base()
 int 
 FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:e:f:hi:k:np:?"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:e:f:hi:k:np:r?"));
     int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -71,6 +71,9 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       break;
     case 'p':
       options_.proxy_consumer_file = get_opt.opt_arg ();
+      break;
+    case 'r':
+        RT_Task::enable();
       break;
     case 'h':
     case '?':
@@ -134,8 +137,6 @@ FtRtEvent_Test_Base::get_event_channel(ACE_ENV_SINGLE_ARG_DECL)
 int 
 FtRtEvent_Test_Base::run(int argc, ACE_TCHAR** argv)
 {
-  RT_Task::set_current();
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
     orb_ = CORBA::ORB_init(argc, argv, ""

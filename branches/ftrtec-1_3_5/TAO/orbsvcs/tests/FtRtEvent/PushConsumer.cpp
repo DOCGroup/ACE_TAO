@@ -26,7 +26,7 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb,
   num_iterations_ = options.num_iterations ? options.num_iterations : INT_MAX;
   num_events_to_end_ = options.num_events;
 
-  run_times_.assign(options.num_iterations+1, -1);   
+  run_times_.assign(options.num_iterations, -1);   
 
   RtecEventChannelAdmin::ConsumerQOS qos;
   qos.is_gateway = 1;
@@ -79,11 +79,12 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
 
     num_events_recevied_ ++;
 
-     if ( num_iterations_ > static_cast<int>(x) &&
-         num_events_recevied_ < num_events_to_end_ ) {
-      run_times_[x] = static_cast<int>(elaps/10);
-      TAO_FTRTEC::Log(3, "received event %d\n", x);
-    }
+    if ( num_iterations_ > static_cast<int>(x) &&
+      num_events_recevied_ < num_events_to_end_ ) {
+        if (x < run_times_.size())
+          run_times_[x] = static_cast<int>(elaps/10);
+        TAO_FTRTEC::Log(3, "received event %d\n", x);
+      }
     else {
       ACE_TRY {
         supplier_->disconnect_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -124,10 +125,14 @@ void
 PushConsumer_impl::output_result()
 {
   size_t lost = 0;
+  size_t first_event = UINT_MAX;
   for (size_t i =0; i < run_times_.size(); ++i)
     if (run_times_[i] == -1) lost++;
-    else
+    else {
+      if (first_event > i) first_event = i;
       ACE_DEBUG((LM_DEBUG, "%5d received, elapsed time = %d\n",i, run_times_[i]));
-  ACE_DEBUG((LM_DEBUG, "%d events lost out of %d events\n", lost, num_iterations_));;
+    }
+
+  ACE_DEBUG((LM_DEBUG, "%d events lost out of %d events, %d events lost in the middle\n", lost, num_iterations_, lost-first_event));;
 }
 
