@@ -28,7 +28,7 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  // The first step : Initialize the ORB
+  // The first step Initialize the ORB
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
     {
