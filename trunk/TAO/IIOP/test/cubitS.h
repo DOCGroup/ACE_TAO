@@ -13,7 +13,7 @@ implementation
 #ifndef	_SKEL_CUBIT_HH
 #define	_SKEL_CUBIT_HH
 
-#include "CubitC.h"
+#include "cubitC.h"
 
 class _skel_Cubit;
 typedef _skel_Cubit *_skel_Cubit_ptr;

@@ -8,7 +8,7 @@
 // Modified by: Brian Mendel
 
 #include <ace/Get_Opt.h>
-#include <crtdbg.h>
+//#include <crtdbg.h>
 
 #if	unix
 #	include	<unistd.h>
@@ -24,7 +24,7 @@
 
 #include	"cubitC.h"
 
-#include	<corba/debug.hh>
+#include	<corba/debug.h>
 
 
 #if !defined (_WIN32)
@@ -67,7 +67,7 @@ int parse_args(int argc, char *argv[])
       switch (c) {
  
       case 'd':  // debug flag
-         debug_level++;
+         TAO_debug_level++;
          continue;
    
       case 'n':			// loop count

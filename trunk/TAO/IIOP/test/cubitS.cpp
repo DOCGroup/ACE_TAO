@@ -8,13 +8,13 @@
 #include	"cubitS.h"
 #include	"cubitC.cpp"
 
-#include <connect.hh>
-#include <params.hh>
+#include <connect.h>
+#include <params.h>
 
-#include	<corba/debug.hh>  // ... and debugging
+#include	<corba/debug.h>  // ... and debugging
 #include "tao_dyn_op_table.h"  // TAO Dynamic Operation Table
 #include "method_db.i"
-#include "iiopobj.hh"
+#include "iiopobj.h"
 
 TAO_Dynamic_Operation_Table tao_cubit_optable(7);  // Dynamic Operation Table
 

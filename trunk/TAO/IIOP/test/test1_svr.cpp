@@ -19,11 +19,11 @@
 
 #endif
 
-#include	"test1.hh"
-#include	<corba/boa.hh>
-#include <roa.hh>
+#include	"test1.h"
+#include	<corba/boa.h>
+#include <roa.h>
 
-#include	<corba/debug.hh>
+#include	<corba/debug.h>
 
 
 
@@ -56,6 +56,7 @@ extern char 	*optarg;	// missing on some platforms
     static void \
     _test1_test_ ## name ( \
 	CORBA_ServerRequest	&req, \
+        CORBA_Object_ptr        obj, \
 	CORBA_Environment	&env \
     ) \
     { \
@@ -107,24 +108,23 @@ extern char 	*optarg;	// missing on some platforms
 	    return; \
 	} \
     } \
-    extern calldata test1_ ## name ## _calldata;
+    extern TAO_Call_Data test1_ ## name ## _calldata;
 
 
-extern const calldata test1_void_calldata;
+extern const TAO_Call_Data test1_void_calldata;
 
 static void
-_test1_test_void (
-    CORBA_ServerRequest		&req,
-    CORBA_Environment		&env
-)
+_test1_test_void (CORBA_ServerRequest &req,
+		  CORBA_Object_ptr obj,
+		  CORBA_Environment &env)
 {
-    CORBA_NVList_ptr		nvlist;
+  CORBA_NVList_ptr nvlist;
 
-    req.orb ()->create_list (0, nvlist);
-    req.params (nvlist, env);
+  req.orb ()->create_list (0, nvlist);
+  req.params (nvlist, env);
 
-    if (env.exception () != 0)
-	dexc (env, "test_throw, get params");
+  if (env.exception () != 0)
+    dexc (env, "test_throw, get params");
 }
 
 
@@ -228,66 +228,72 @@ DEFINE_SKEL3 (wstring, WString, WString)
 // void test_throw (in long case_num) raises (x1, x2);
 //
 
-extern const calldata test1_test_throw_calldata;
+extern const TAO_Call_Data test1_test_throw_calldata;
 
 static void
-_test1_test_throw (
-    CORBA_ServerRequest		&req,
-    CORBA_Environment		&env
-)
+_test1_test_throw (CORBA_ServerRequest &req,
+		   CORBA_Object_ptr obj,
+		   CORBA_Environment &env)
 {
-    CORBA_NVList_ptr		nvlist;
-    CORBA_NamedValue_ptr	nv;
-    CORBA_Any			temp_value (_tc_CORBA_Long);
-    CORBA_Long			value;
+  CORBA_NVList_ptr nvlist;
+  CORBA_NamedValue_ptr nv;
+  CORBA_Any temp_value (_tc_CORBA_Long);
+  CORBA_Long value;
 
-    req.orb ()->create_list (0, nvlist);
-    nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  req.orb ()->create_list (0, nvlist);
+  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
 
-    req.params (nvlist, env);
-    if (env.exception () != 0) {
-	dexc (env, "test_throw, get params");
-	return;
+  req.params (nvlist, env);
+  if (env.exception () != 0)
+    {
+      dexc (env, "test_throw, get params");
+      return;
     }
 
-    value = *(CORBA_Long *)nv->value ()->value ();
-    if (env.exception () != 0) {
-	dexc (env, "test_throw, param value");
-	return;
+  value = *(CORBA_Long *)nv->value ()->value ();
+  if (env.exception () != 0)
+    {
+      dexc (env, "test_throw, param value");
+      return;
     }
 
-    CORBA_Any_ptr		any;
+  CORBA_Any_ptr any;
 
-    if (value <= 0) {
-	test1_x1		*x;
+  if (value <= 0) 
+    {
+      test1_x1		*x;
 
-	x = new test1_x1 (value);
-	any = new CORBA_Any (_tc_test1_x1, x, CORBA_B_TRUE);
+      x = new test1_x1 (value);
+      any = new CORBA_Any (_tc_test1_x1, x, CORBA_B_TRUE);
 
-    } else if (value & 0x01) {
-	test1_x2		*x;
+    }
+  else if (value & 0x01)
+    {
+      test1_x2		*x;
 
-	x = new test1_x2 (CORBA_Object::_nil (), value);
-	any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
+      x = new test1_x2 (CORBA_Object::_nil (), value);
+      any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
 
-    } else {
+    } 
+  else
+    {
 #if	0
-	test1_x2		*x;
+      test1_x2		*x;
 
-	x = new test1_x2 (req.oa()->target (), value);
-	any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
+      x = new test1_x2 (req.oa()->target (), value);
+      any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
 #else
-	//
-	// XXX right now, we don't have a target() operation on the
-	// BOA ... needs to be added.  Verify the client side memory
-	// leak of pointers embedded in user exceptions is fixed, too.
-	//
-	env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
-	return;
+      //
+      // XXX right now, we don't have a target() operation on the
+      // BOA ... needs to be added.  Verify the client side memory
+      // leak of pointers embedded in user exceptions is fixed, too.
+      //
+      env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
+      return;
 #endif
     }
 
-    req.exception (USER_EXCEPTION, any, env);
+  req.exception (USER_EXCEPTION, any, env);
 }
 
 
@@ -298,7 +304,7 @@ _test1_test_throw (
 #define	DECL_SKEL(name) \
 	{ & test1_ ## name ## _calldata, _test1_test_ ## name }
 
-static const skel_entry test1_operations [] = {
+static const TAO_Skel_Entry test1_operations [] = {
     DECL_SKEL (void),
 
     DECL_SKEL (octet),
@@ -362,83 +368,91 @@ level1_skeleton (
     CORBA_Environment		&env
 )
 {
-    //
-    // Verify that the target object and "this" object have the
-    // same key.  Normally, this would be used to figure out
-    // which object was the target, and hence which operations
-    // vector to dispatch the request.
-    //
-    CORBA_OctetSeq		*obj_key;
+  //
+  // Verify that the target object and "this" object have the
+  // same key.  Normally, this would be used to figure out
+  // which object was the target, and hence which operations
+  // vector to dispatch the request.
+  //
+  CORBA_OctetSeq		*obj_key;
 
-    obj_key = (CORBA_OctetSeq *) context;
-    if (obj_key->length != key.length
-	    || ACE_OS::memcmp (obj_key->buffer, key.buffer,
-		    obj_key->length) != 0) {
-	env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
+  obj_key = (CORBA_OctetSeq *) context;
+  if (obj_key->length != key.length
+      || ACE_OS::memcmp (obj_key->buffer, key.buffer,
+			 obj_key->length) != 0)
+    {
+    env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
 #ifdef	DEBUG
-	if (debug_level)
-	    dmsg_opaque ("request to nonexistent object, key = ",
-		    key.buffer, key.length);
+    if (debug_level)
+      dmsg_opaque ("request to nonexistent object, key = ",
+		   key.buffer, key.length);
 #endif
-	return;
+    return;
+  }
+
+  //
+  // Find a "level 2 skeleton" for this operation, then
+  // call it with the right per-object state.
+  //
+  const TAO_Skel_Entry	*entry;
+  CORBA_String		opname;
+
+  opname = req.op_name ();
+  for (entry = &test1_operations [0]; entry->op_descriptor; entry++)
+    {
+    if (strcmp ((char *)opname, entry->op_descriptor->opname) == 0)
+      {
+      // We pass a bogus object because this version of the cubit example is
+      // so tightly coupled that it doesn't use it.  Future modifications will,
+      // hopefully!
+      CORBA_Object_ptr bogus_object = 0;
+      entry->impl_skeleton (req, bogus_object, env);
+      return;
     }
+  }
 
-    //
-    // Find a "level 2 skeleton" for this operation, then
-    // call it with the right per-object state.
-    //
-    const skel_entry		*entry;
-    CORBA_String		opname;
+  //
+  // XXX True top-level skeleton code would also have to understand
+  // the built-in operations:
+  //
+  // * _is_a (for narrowing tests) ... can be derived by searching an
+  //	 appropriately structured graph of level2 skeletons.
+  //
+  // * _non_existent ... if the level1 skeleton consults a module
+  //	 which understands object lifespans, this should be simple.
+  // 
+  // * _get_interface ... could either (a) fail; (b) return the ref
+  //   from some IFR; or most interestingly (c) return a ref to some
+  //	 code in this process that can answer all IFR queries from the
+  //	 skeleton data structures.
+  //
+  // * _get_implementation  ... return some administrative hook to
+  //   the object implementation:
+  //
+  // No other legal operations start with a character that's not an
+  // ASCII alphanumeric, for what it's worth.
+  //
+  // The skeleton might want to use data in the object key to find
+  // the objref's type; if it's integrated with object creation, and
+  // an per-process implementation repository, this should be easy.
+  //
 
-    opname = req.op_name ();
-    for (entry = &test1_operations [0]; entry->op_descriptor; entry++) {
-	if (strcmp ((char *)opname, entry->op_descriptor->opname) == 0) {
-	    entry->impl_skeleton (req, env);
-	    return;
-	}
-    }
+  //
+  // bypass level 2 skeletons for this one ...
+  //
+  if (strcmp ((char *) opname, "please_exit") == 0)
+    {
+    dmsg ("I've been asked to shut down...");
+    req.oa ()->please_shutdown (env);
+    dexc (env, "please_exit, please_shutdown");
+    return;
+  }
 
-    //
-    // XXX True top-level skeleton code would also have to understand
-    // the built-in operations:
-    //
-    // * _is_a (for narrowing tests) ... can be derived by searching an
-    //	 appropriately structured graph of level2 skeletons.
-    //
-    // * _non_existent ... if the level1 skeleton consults a module
-    //	 which understands object lifespans, this should be simple.
-    // 
-    // * _get_interface ... could either (a) fail; (b) return the ref
-    //   from some IFR; or most interestingly (c) return a ref to some
-    //	 code in this process that can answer all IFR queries from the
-    //	 skeleton data structures.
-    //
-    // * _get_implementation  ... return some administrative hook to
-    //   the object implementation:
-    //
-    // No other legal operations start with a character that's not an
-    // ASCII alphanumeric, for what it's worth.
-    //
-    // The skeleton might want to use data in the object key to find
-    // the objref's type; if it's integrated with object creation, and
-    // an per-process implementation repository, this should be easy.
-    //
-
-    //
-    // bypass level 2 skeletons for this one ...
-    //
-    if (strcmp ((char *) opname, "please_exit") == 0) {
-	dmsg ("I've been asked to shut down...");
-	req.oa ()->please_shutdown (env);
-	dexc (env, "please_exit, please_shutdown");
-	return;
-    }
-
-    //
-    // No match.  Operation not implemented; say so.
-    //
-    dmsg1 ("unknown operation, %s", opname);
-    env.exception (new CORBA_BAD_OPERATION (COMPLETED_NO));
+  //
+  // No match.  Operation not implemented; say so.
+  //
+  dmsg1 ("unknown operation, %s", opname);
+  env.exception (new CORBA_BAD_OPERATION (COMPLETED_NO));
 }
 
 
@@ -449,114 +463,124 @@ extern void
 print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
 
 int
-OA_listen (
-    CORBA_ORB_ptr	orb_ptr,
-    ROA_ptr		oa_ptr,
-    CORBA_String	key,
-    int			idle
-)
+OA_listen (CORBA_ORB_ptr orb_ptr,
+	   CORBA_BOA_ptr oa_ptr,
+	   CORBA_String key,
+	   int idle)
 {
-    //
-    // Create the object we'll be implementing.
-    //
-    CORBA_OctetSeq	obj_key;
-    CORBA_Object_ptr	obj;
-    CORBA_Environment	env;
+  //
+  // Create the object we'll be implementing.
+  //
+  CORBA_OctetSeq	obj_key;
+  CORBA_Object_ptr	obj;
+  CORBA_Environment	env;
 
-    obj_key.buffer = (CORBA_Octet *) key;
-    obj_key.length = obj_key.maximum = ACE_OS::strlen (key);
+  obj_key.buffer = (CORBA_Octet *) key;
+  obj_key.length = obj_key.maximum = ACE_OS::strlen (key);
 
-    obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "BOA::create");
-	return 1;
+  obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
+  if (env.exception () != 0)
+    {
+      print_exception (env.exception (), "BOA::create");
+      return 1;
     }
 
-    //
-    // Stringify the objref we'll be implementing, and
-    // print it to stdout.  Someone will take that string
-    // and give it to some client.
-    //
-    CORBA_String	str;
+  //
+  // Stringify the objref we'll be implementing, and
+  // print it to stdout.  Someone will take that string
+  // and give it to some client.
+  //
+  CORBA_String	str;
 
-    str = orb_ptr->object_to_string (obj, env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "object2string");
-	return 1;
+  str = orb_ptr->object_to_string (obj, env);
+  if (env.exception () != 0)
+    {
+      print_exception (env.exception (), "object2string");
+      return 1;
     }
-    ACE_OS::puts ((char *)str);
-    ACE_OS::fflush (stdout);
-    dmsg1 ("listening as object '%s'", str);
+  ACE_OS::puts ((char *)str);
+  ACE_OS::fflush (stdout);
+  dmsg1 ("listening as object '%s'", str);
 
-    //
-    // Clean up -- "key" is sufficient to dispatch all requests.
-    //
-    CORBA_release (obj);
-    CORBA_string_free (str);
-    env.clear ();
+  //
+  // Clean up -- "key" is sufficient to dispatch all requests.
+  //
+  CORBA_release (obj);
+  CORBA_string_free (str);
+  env.clear ();
 
-    //
-    // Handle requests for this object until we're killed, or one of
-    // the methods makes us exit.
-    //
-    // NOTE:  apart from registering the top level skeleton, the rest
-    // of this loop is exactly what BOA::run() does.  It's here to
-    // show there's no magic.
-    //
-    oa_ptr->register_dir (level1_skeleton, &obj_key, env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "register_dir");
-	return 1;
+  //
+  // Handle requests for this object until we're killed, or one of
+  // the methods makes us exit.
+  //
+  // NOTE:  apart from registering the top level skeleton, the rest
+  // of this loop is exactly what BOA::run() does.  It's here to
+  // show there's no magic.
+  //
+#if 0
+  oa_ptr->register_dir (level1_skeleton, &obj_key, env);
+#else
+  oa_ptr->register_dir (oa_ptr->dispatch, &obj_key, env);
+#endif
+  if (env.exception () != 0)
+    {
+      print_exception (env.exception (), "register_dir");
+      return 1;
     }
 
-    for (;;) {
-	if (idle == -1)
-	    oa_ptr->get_request (CORBA_B_FALSE, 0, env);
-	else {
-	    timeval		tv;
+  for (;;) {
+    if (idle == -1)
+      oa_ptr->get_request (CORBA_B_FALSE, 0, env);
+    else
+      {
+	timeval		tv;
 
-	    tv.tv_sec = idle;
-	    tv.tv_usec = 0;
-	    oa_ptr->get_request (CORBA_B_FALSE, &tv, env);
-	}
+	tv.tv_sec = idle;
+	tv.tv_usec = 0;
+	oa_ptr->get_request (CORBA_B_FALSE, &tv, env);
+      }
 
-	CORBA_Exception_ptr	xp;
+    CORBA_Exception_ptr	xp;
 
-	if ((xp = env.exception ()) != 0) {
-	    CORBA_Environment	env2;	// XXX
-	    char		*id;
+    if ((xp = env.exception ()) != 0)
+      {
+	CORBA_Environment env2;	// XXX
+	char *id;
 
-	    id = env.exception ()->id ();
+	id = env.exception ()->id ();
 
-	    //
-	    // We get BAD_INV_ORDER if we call get_request() after
-	    // shutdown was initiated.  Simpler to rely on that
-	    // than to arrange any handshaking in this simple app.
-	    //
-	    if (strcmp (id, _tc_CORBA_BAD_INV_ORDER->id (env2)) == 0) {
-		break;
+	//
+	// We get BAD_INV_ORDER if we call get_request() after
+	// shutdown was initiated.  Simpler to rely on that
+	// than to arrange any handshaking in this simple app.
+	//
+	if (strcmp (id, _tc_CORBA_BAD_INV_ORDER->id (env2)) == 0)
+	  {
+	    break;
 
 	    //
 	    // Other exceptions are errors.
 	    //
-	    } else {
-		print_exception (env.exception (), "BOA::get_request");
-		return 1;
-	    }
-	}
-	env.clear ();
-    }
+	  }
+	else
+	  {
+	    print_exception (env.exception (), "BOA::get_request");
+	    return 1;
+	  }
+      }
+    env.clear ();
+  }
 
-    //
-    // Shut down the OA -- recycles all underlying resources (e.g. file
-    // descriptors, etc).
-    //
-    // XXX shutdown is not quite the same as release, unless we want mem
-    // leaks to cause some rude failure modes.  BOA just hasn't been
-    // updated yet to have any handshake about this though.
-    //
-    oa_ptr->Release ();
-    return 0;
+  //
+  // Shut down the OA -- recycles all underlying resources (e.g. file
+  // descriptors, etc).
+  //
+  // XXX shutdown is not quite the same as release, unless we want mem
+  // leaks to cause some rude failure modes.  BOA just hasn't been
+  // updated yet to have any handshake about this though.
+  //
+  oa_ptr->Release ();
+  return 0;
 }
 
 
@@ -566,81 +590,81 @@ OA_listen (
 int
 main (int    argc, char   *argv[])
 {
-    CORBA_Environment	env;
-    CORBA_ORB_ptr	orb_ptr;
-    BOA_ptr		oa_ptr;
-    CORBA_String	key = (CORBA_String) "elvis";
-    char		*oa_name = 0;
-    char		*orb_name = "internet";
-    int			idle = -1;
+  CORBA_Environment	env;
+  CORBA_ORB_ptr	orb_ptr;
+  CORBA_BOA_ptr		oa_ptr;
+  CORBA_String	key = (CORBA_String) "elvis";
+  char		*oa_name = 0;
+  char		*orb_name = "internet";
+  int			idle = -1;
 
-    //
-    // Parse the command line, get options
-    //
-    ACE_Get_Opt get_opt (argc, argv, "dln:O:x");
-    int			c;
+  //
+  // Parse the command line, get options
+  //
+  ACE_Get_Opt get_opt (argc, argv, "dln:O:x");
+  int			c;
 
-    while ((c = get_opt ()) != -1)
-      switch (c)
-	{
-	case 'd':			// more debug noise
-	  debug_level++;
-	  continue;
+  while ((c = get_opt ()) != -1)
+    switch (c)
+      {
+      case 'd':			// more debug noise
+	TAO_debug_level++;
+	continue;
 
-	case 'i':			// idle seconds b4 exit
-	  idle = ACE_OS::atoi (get_opt.optarg);
-	  continue;
+      case 'i':			// idle seconds b4 exit
+	idle = ACE_OS::atoi (get_opt.optarg);
+	continue;
 
-	case 'k':			// key (str)
-	  key = (CORBA_String) get_opt.optarg;
-	  continue;
+      case 'k':			// key (str)
+	key = (CORBA_String) get_opt.optarg;
+	continue;
 
-	case 'o':			// orb name
-	  orb_name = get_opt.optarg;
-	  continue;
+      case 'o':			// orb name
+	orb_name = get_opt.optarg;
+	continue;
 
-	case 'p':			// portnum
-	  oa_name = get_opt.optarg;
-	  continue;
+      case 'p':			// portnum
+	oa_name = get_opt.optarg;
+	continue;
 
-	  // XXX set debug filters ...
+	// XXX set debug filters ...
 
-	  //
-	  // XXX ignore OMG-specified options ... hope nobody ever tries
-	  // to use that "-ORB* param" and "-OA* param" syntax, it flies
-	  // in the face of standard command parsing algorithms which
-	  // require single-character option specifiers.
-	  //
+	//
+	// XXX ignore OMG-specified options ... hope nobody ever tries
+	// to use that "-ORB* param" and "-OA* param" syntax, it flies
+	// in the face of standard command parsing algorithms which
+	// require single-character option specifiers.
+	//
 
 
-	case '?':
-	default:
-	  ACE_OS::fprintf (stderr, "usage:  %s"
-			   " [-d]"
-			   " [-i idle_seconds]"
-			   " [-k object_key=elvis]"
-			   " [-o orbname=internet]"
-			   " [-p oa_name]"
-			   "\n", argv [0]
-			   );
-	  return 1;
-	}
-
-    orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "ORB init");
+      case '?':
+      default:
+	ACE_OS::fprintf (stderr, "usage:  %s"
+			 " [-d]"
+			 " [-i idle_seconds]"
+			 " [-k object_key=elvis]"
+			 " [-o orbname=internet]"
+			 " [-p oa_name]"
+			 "\n", argv [0]
+			 );
 	return 1;
-    }
+      }
 
-    //
-    // The BOA may or may not actually be named ...
-    //
-    oa_ptr = BOA::get_named_boa (orb_ptr, oa_name, env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "OA init");
-	return 1;
-    }
+  orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "ORB init");
+    return 1;
+  }
 
-    return OA_listen (orb_ptr, oa_ptr, key, idle);
+  //
+  // The BOA may or may not actually be named ...
+  //
+  oa_ptr = CORBA_BOA::get_named_boa (orb_ptr, oa_name, env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "OA init");
+    return 1;
+  }
+
+  return OA_listen (orb_ptr, oa_ptr, key, idle);
 }
 
