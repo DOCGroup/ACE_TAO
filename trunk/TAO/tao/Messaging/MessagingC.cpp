@@ -929,7 +929,7 @@ Messaging::ReplyHandler::_is_a (
     }
   else
     {
-      return this->Object::_is_a (
+      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );

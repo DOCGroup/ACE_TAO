@@ -44,7 +44,7 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
 {
   // If the object is collocated then try locally....
   if (!this->_is_collocated ())
-    return this->Object::_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
+    return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
 
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (logical_type_id,

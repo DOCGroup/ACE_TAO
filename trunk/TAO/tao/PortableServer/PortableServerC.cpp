@@ -323,7 +323,7 @@ PortableServer::ForwardRequest::ForwardRequest (const ::PortableServer::ForwardR
 PortableServer::ForwardRequest&
 PortableServer::ForwardRequest::operator= (const ::PortableServer::ForwardRequest &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
   return *this;
 }
@@ -505,7 +505,7 @@ PortableServer::NotAGroupObject::NotAGroupObject (const ::PortableServer::NotAGr
 PortableServer::NotAGroupObject&
 PortableServer::NotAGroupObject::operator= (const ::PortableServer::NotAGroupObject &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -3703,7 +3703,7 @@ PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableSe
 PortableServer::POAManager::AdapterInactive&
 PortableServer::POAManager::AdapterInactive::operator= (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -5319,7 +5319,7 @@ PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (const ::Portabl
 PortableServer::POA::AdapterAlreadyExists&
 PortableServer::POA::AdapterAlreadyExists::operator= (const ::PortableServer::POA::AdapterAlreadyExists &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -5403,7 +5403,7 @@ PortableServer::POA::AdapterNonExistent::AdapterNonExistent (const ::PortableSer
 PortableServer::POA::AdapterNonExistent&
 PortableServer::POA::AdapterNonExistent::operator= (const ::PortableServer::POA::AdapterNonExistent &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -5488,7 +5488,7 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy (const ::PortableServer::POA::
 PortableServer::POA::InvalidPolicy&
 PortableServer::POA::InvalidPolicy::operator= (const ::PortableServer::POA::InvalidPolicy &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   this->index = _tao_excp.index;
   return *this;
 }
@@ -5586,7 +5586,7 @@ PortableServer::POA::NoServant::NoServant (const ::PortableServer::POA::NoServan
 PortableServer::POA::NoServant&
 PortableServer::POA::NoServant::operator= (const ::PortableServer::POA::NoServant &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -5672,7 +5672,7 @@ PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (const ::PortableS
 PortableServer::POA::ObjectAlreadyActive&
 PortableServer::POA::ObjectAlreadyActive::operator= (const ::PortableServer::POA::ObjectAlreadyActive &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -5756,7 +5756,7 @@ PortableServer::POA::ObjectNotActive::ObjectNotActive (const ::PortableServer::P
 PortableServer::POA::ObjectNotActive&
 PortableServer::POA::ObjectNotActive::operator= (const ::PortableServer::POA::ObjectNotActive &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -5840,7 +5840,7 @@ PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (const ::Portabl
 PortableServer::POA::ServantAlreadyActive&
 PortableServer::POA::ServantAlreadyActive::operator= (const ::PortableServer::POA::ServantAlreadyActive &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -5924,7 +5924,7 @@ PortableServer::POA::ServantNotActive::ServantNotActive (const ::PortableServer:
 PortableServer::POA::ServantNotActive&
 PortableServer::POA::ServantNotActive::operator= (const ::PortableServer::POA::ServantNotActive &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -6008,7 +6008,7 @@ PortableServer::POA::WrongAdapter::WrongAdapter (const ::PortableServer::POA::Wr
 PortableServer::POA::WrongAdapter&
 PortableServer::POA::WrongAdapter::operator= (const ::PortableServer::POA::WrongAdapter &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -6092,7 +6092,7 @@ PortableServer::POA::WrongPolicy::WrongPolicy (const ::PortableServer::POA::Wron
 PortableServer::POA::WrongPolicy&
 PortableServer::POA::WrongPolicy::operator= (const ::PortableServer::POA::WrongPolicy &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -6489,7 +6489,7 @@ PortableServer::Current::NoContext::NoContext (const ::PortableServer::Current::
 PortableServer::Current::NoContext&
 PortableServer::Current::NoContext::operator= (const ::PortableServer::Current::NoContext &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 

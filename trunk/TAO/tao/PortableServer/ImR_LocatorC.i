@@ -31,7 +31,7 @@ ImplementationRepository::Locator::Locator (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : Object (objref, _tao_collocated, servant)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_Locator_setup_collocation (_tao_collocated);
 }
@@ -51,4 +51,3 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     ImplementationRepository::Locator_ptr &
   );
-

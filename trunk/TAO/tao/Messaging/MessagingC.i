@@ -19,7 +19,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_valuetype/valuetype_ci.cpp:58
 
 ACE_INLINE
@@ -30,7 +30,7 @@ ACE_INLINE
 Messaging::ExceptionHolder::~ExceptionHolder (void)
 {}
 
-ACE_INLINE const char* 
+ACE_INLINE const char*
 Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Messaging/ExceptionHolder:1.0";
@@ -48,7 +48,7 @@ Messaging::ReplyHandler::ReplyHandler (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : Object (objref, _tao_collocated, servant)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
 {
   this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
 }
@@ -86,4 +86,3 @@ TAO_Messaging_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr &
   );
-
