@@ -1,43 +1,45 @@
 #----------------------------------------------------------------------------
-#	$Id: Makefile	1.1	10/18/96
+#       $Id$
 #
-#	Makefile for tests of the Shared_Malloc wrappers
+#       Makefile for Naming examples.
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-BIN     = test_non_existent \
-	  test_writers \
-	  test_multiple_contexts
-
-LSRC	= $(addsuffix .cpp,$(FILES))
-LOBJ	= $(addsuffix .o,$(FILES))
-SHOBJ	= $(addsuffix .so,$(FILES))
+BIN = test_non_existent \
+      test_writers \
+      test_multiple_contexts
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD   = $(VBIN)
-
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If ACE_COMPONENTS is set and doesn't contain Other, don't
+#### try to build any of the clients.
+ifdef ACE_COMPONENTS
+  ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
+    BIN =
+  endif # ! Other
+endif # ACE_COMPONENTS
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
