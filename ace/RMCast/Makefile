@@ -84,6 +84,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -116,7 +117,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i
 
@@ -143,6 +144,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -175,7 +177,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i
 
@@ -203,6 +205,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -235,7 +238,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i
 
@@ -263,6 +266,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -295,7 +299,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -388,6 +392,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -420,7 +425,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -603,6 +608,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -633,7 +639,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
@@ -758,6 +764,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -790,7 +797,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Proxy.i
 
@@ -818,6 +825,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -850,7 +858,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Containers.h \
@@ -927,6 +935,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -959,7 +968,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h \
   RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
@@ -1072,6 +1081,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1104,7 +1114,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Copy_On_Write.h RMCast_Worker.h \
   RMCast_Worker.i RMCast_Worker.cpp \
@@ -1165,6 +1175,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1197,7 +1208,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h \
   RMCast_Worker.h RMCast_Worker.i RMCast_Worker.cpp \
@@ -1309,6 +1320,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1341,7 +1353,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/RB_Tree.h \
@@ -1452,6 +1464,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1484,7 +1497,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Reliable_Factory.i RMCast_Receiver_Module.h RMCast_Module.h \
@@ -1619,6 +1632,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1651,7 +1665,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Singleton_Factory.i
@@ -1685,6 +1699,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1716,7 +1731,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast.i RMCast_Module.i RMCast_Copy_On_Write.h RMCast_Worker.h \
   RMCast_Worker.i RMCast_Worker.cpp \
@@ -1822,6 +1837,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1854,7 +1870,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Receiver_Module.i \
   RMCast_Proxy.h RMCast_Proxy.i \
@@ -1889,6 +1905,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -1921,7 +1938,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/Synch.h \
@@ -1980,6 +1997,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -2012,7 +2030,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Fork.i
 
@@ -2040,6 +2058,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -2072,7 +2091,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
@@ -2223,6 +2242,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -2254,7 +2274,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast.i RMCast_Module.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
@@ -2393,6 +2413,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -2425,7 +2446,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module.i RMCast_Proxy.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
@@ -2572,6 +2593,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -2604,7 +2626,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Singleton_Factory.i RMCast_Reliable_Factory.h \
@@ -2750,6 +2772,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_sem.h \
   $(ACE_ROOT)/ace/ace_sys_socket.h \
   $(ACE_ROOT)/ace/ace_sys_stat.h \
+  $(ACE_ROOT)/ace/ace_sys_uio.h \
   $(ACE_ROOT)/ace/ace_sys_utsname.h \
   $(ACE_ROOT)/ace/ace_sys_wait.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
@@ -2782,7 +2805,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/ace_sys_mman.h \
   $(ACE_ROOT)/ace/ace_sys_msg.h \
   $(ACE_ROOT)/ace/ace_sys_shm.h \
-  $(ACE_ROOT)/ace/ace_sys_uio.h \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Main_Macros.h \
   RMCast_Export.h RMCast.i RMCast_Module_Factory.i \
   RMCast_Singleton_Factory.i RMCast_IO_UDP.h RMCast_Module.h \

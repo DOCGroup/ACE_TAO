@@ -25,9 +25,9 @@
 #   include /**/ <limits.h>
 # endif /* ACE_LACKS_LIMITS_H */
 
-# if !defined (L_cuserid)
+#if !defined (L_cuserid)
 #   if !defined (ACE_L_CUSERID)
-#     define ACE_L_CUSERID  9  
+#     define ACE_L_CUSERID  9
       // 8 character user ID + NULL
 #   endif /* !ACE_L_CUSERID */
 #   define L_cuserid ACE_L_CUSERID
@@ -37,6 +37,9 @@
 # if !defined ACE_MAX_USERID
 #   define ACE_MAX_USERID L_cuserid
 # endif /* !ACE_MAX_USERID */
+
+// Need this before MAXNAMELEN--does it belong here?
+#include "ace/ace_sys_param.h"
 
 # if !defined (MAXNAMELEN)
 #   if !defined (ACE_MAXNAMELEN)

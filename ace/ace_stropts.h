@@ -30,9 +30,10 @@
 #       include /**/ <stropts.h>
 #       undef _XOPEN_EXTENDED_SOURCE
 #     endif /* AIX */
-#   else 
-#     include /**/ <stropts.h>
+//#   else
+//#     include /**/ <stropts.h>
 #   endif /* ACE_HAS_STREAMS */
+#   include /**/ <stropts.h>
 # endif /* ACE_LACKS_STROPTS_H */
 
 # if defined (ACE_LACKS_STRRECVFD)
