@@ -33,9 +33,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
+#include "EC_Timeout_Filter.h"
 
 class TAO_EC_QOS_Info;
-class TAO_EC_Timeout_Filter;
 
 class TAO_ORBSVCS_Export TAO_EC_Timeout_Generator
 {
