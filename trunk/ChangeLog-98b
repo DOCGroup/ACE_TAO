@@ -1,12 +1,20 @@
+Wed Jan 06 15:15:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (process_directive,close): Moved the
+	  deletion of <svc_conf_file_queue_> into close method.
+	  Otherwise, there's no way to reconfigure the service
+	  configuration once it get started.  Thanks to Mike Goldman
+	  <whig@by.net> for reporting the problem.
+
 Wed Jan  6 14:27:24 EST 1999  James CE Johnson  <jcej@lads.com
 
         * docs/tutorials/021/*:
         Completed the ACE_Malloc<> tutorial.  It could be a lot better
         than it is but I'm still new to ACE_Malloc...
-      
+
         * docs/tutorials/021/online-tutorials.html:
         Added the link for #21
-      
+
 Tue Jan 05 22:55:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (cleanup_hint_i and check_hint_i): Since we
@@ -22,21 +30,21 @@ Tue Jan 05 22:55:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Jan  5 18:48:47  James CE Johnson  <jcej@lads.com>
 
-	* docs/tutorials/templates.html: 
+	* docs/tutorials/templates.html:
 	Fixed a number of problems here.  Thanks to Amos Shapira
 	<Amos_Shapira@icomverse.com> for pointing them out.
 
 	* docs/tutorials/colorize:
 	I pulled out the colorization code from combine into this
-	standalone script.  One of these days I'll fix combine so that the 
+	standalone script.  One of these days I'll fix combine so that the
 	code isn't duplicated...
-	
+
 Tue Jan  5 16:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-common.h: 
+	* ace/config-irix6.x-common.h:
 	  Added ACE_TIMER_SKEW definition.
 
-	* ace/FILE.cpp: 
+	* ace/FILE.cpp:
 	  Fixed the seek() prototype, is was declared as taking a "off_t"
 	  argument, but is was defined with a "long" argument,
 	  unfortunately in most platforms this was not a problem.
