@@ -259,4 +259,8 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Special_Basic_Arguments.cpp
     }
   }
+  
+  Header_Files {
+    Arg_Traits_T.h
+  }
 }
