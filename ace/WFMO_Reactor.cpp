@@ -85,10 +85,8 @@ ACE_WFMO_Reactor_Handler_Repository::bit_ops (long &existing_masks,
 
   if (ACE_BIT_ENABLED (existing_masks, FD_READ) ||
       ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
-    {
-      ACE_SET_BITS (old_masks, ACE_Event_Handler::READ_MASK);
-    }
-
+    ACE_SET_BITS (old_masks, ACE_Event_Handler::READ_MASK);
+    
   if (ACE_BIT_ENABLED (existing_masks, FD_WRITE))
     ACE_SET_BITS (old_masks, ACE_Event_Handler::WRITE_MASK);
 
@@ -110,10 +108,7 @@ ACE_WFMO_Reactor_Handler_Repository::bit_ops (long &existing_masks,
   switch (operation)
     {
     case ACE_Reactor::CLR_MASK:
-
-      //
       // For the CLR_MASK operation, clear only the specific masks.
-      //
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::READ_MASK))
         {
@@ -982,6 +977,12 @@ ACE_WFMO_Reactor_Handler_Repository::dump (void) const
 }
 
 /************************************************************/
+
+int
+ACE_WFMO_Reactor::work_pending (const ACE_Time_Value &)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
 
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
 				    ACE_Timer_Queue *tq)
