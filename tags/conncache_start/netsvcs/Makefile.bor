@@ -1,0 +1,14 @@
+#
+# Makefile for building the netsvcs
+#
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+	cd $(ACE_ROOT)\netsvcs\lib
+	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+	cd $(ACE_ROOT)\netsvcs\clients
+	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+	cd $(ACE_ROOT)\netsvcs\servers
+	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+

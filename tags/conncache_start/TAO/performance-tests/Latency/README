@@ -1,0 +1,23 @@
+# $Id$
+
+Description:
+
+	This is a simple latency test, a server runs using a thread
+pool reactor, the client creates several threads that send requests to 
+the server and record latency and throughput statistics.
+
+	Command line options on the client and server can be used to
+control the number of threads in the server and the client, the amount
+work performed on each request, the number of requests per thread,
+etc.
+
+Expected output:
+	The server prints out the IOR of the object it serves. The
+client prints the results on a per-thread basis as well as the
+aggregated numbers.
+
+How to run:
+	You can use the run_test.pl script to run it or:
+
+$ server -ORBSvcConf server.conf -n 2
+$ client -ORBSvcConf client.conf -n 4 -i 1000
