@@ -61,7 +61,7 @@ static u_int timeout_interval = 250; // msec
 static int short_circuit_EC = 0;
 static int shutting_down = 0;
 
-// This is global to allow the Supplier to short ciruit the EC
+// This is global to allow the Supplier to short circuit the EC
 // and talk directly to consumers.  For testing only :-)
 static Latency_Consumer **consumer;
 
@@ -218,19 +218,25 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                                     (ACE_CU64_TO_CU32 (to_ec_nsecs) %
                                        ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
-              ACE_Time_Value in_ec (ACE_static_cast (long,
-                in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
+              ACE_Time_Value in_ec, from_ec;
+              if (! short_circuit_EC)
+                {
+                  const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
+                  in_ec =
+                    ACE_Time_Value (ACE_static_cast (long,
+                      in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
                                     ACE_static_cast (long,
-                ACE_CU64_TO_CU32 (in_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS /
-                  1000));
+                      ACE_CU64_TO_CU32 (in_ec_nsecs) %
+                        ACE_ONE_SECOND_IN_NSECS / 1000));
 
-              const ACE_hrtime_t from_ec_nsecs = now - ec_send;
-              ACE_Time_Value from_ec (ACE_static_cast (long,
-                from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
-                                      ACE_static_cast (long,
-                ACE_CU64_TO_CU32 (from_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS /
-                  1000));
+                  const ACE_hrtime_t from_ec_nsecs = now - ec_send;
+                  from_ec =
+                    ACE_Time_Value (ACE_static_cast (long,
+                      from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
+                                    ACE_static_cast (long,
+                      ACE_CU64_TO_CU32 (from_ec_nsecs) %
+                        ACE_ONE_SECOND_IN_NSECS / 1000));
+                }
 
               if (! shutting_down)
                 {
@@ -240,13 +246,16 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                   total_latency_ += latency;
                   if (min_to_ec_ > to_ec) min_to_ec_ = to_ec;
                   if (max_to_ec_ < to_ec) max_to_ec_ = to_ec;
-                  sum_to_ec_ += to_ec;
-                  if (min_in_ec_ > in_ec) min_in_ec_ = in_ec;
-                  if (max_in_ec_ < in_ec) max_in_ec_ = in_ec;
-                  sum_in_ec_ += in_ec;
-                  if (min_from_ec_ > from_ec) min_from_ec_ = from_ec;
-                  if (max_from_ec_ < from_ec) max_from_ec_ = from_ec;
-                  sum_from_ec_ += from_ec;
+                  if (! short_circuit_EC)
+                    {
+                      sum_to_ec_ += to_ec;
+                      if (min_in_ec_ > in_ec) min_in_ec_ = in_ec;
+                      if (max_in_ec_ < in_ec) max_in_ec_ = in_ec;
+                      sum_in_ec_ += in_ec;
+                      if (min_from_ec_ > from_ec) min_from_ec_ = from_ec;
+                      if (max_from_ec_ < from_ec) max_from_ec_ = from_ec;
+                      sum_from_ec_ += from_ec;
+                    }
                 }
             }
         }
@@ -285,45 +294,51 @@ Latency_Consumer::print_stats () /* const */
       double lat_max =
         (max_latency_.sec () * 1000000.0 + max_latency_.usec ()) / 1000.0;
       double lat_avg =
-        (total_latency_.sec () * 1000000.0 +total_latency_.usec ()) / total_pushes_ / 1000.0;
+        (total_latency_.sec () * 1000000.0 +total_latency_.usec ()) /
+        total_pushes_ / 1000.0;
       ACE_DEBUG ((LM_TRACE,
                   "%s: Latency in msec (min/max/avg): "
                     "%5.3f/%5.3f/%5.3f\n",
                   entry_point (), lat_min, lat_max, lat_avg));
 
-      double to_ec_min =
-        (min_to_ec_.sec () * 1000000.0 + min_to_ec_.usec ()) / 1000.0;
-      double to_ec_max =
-        (max_to_ec_.sec () * 1000000.0 + max_to_ec_.usec ()) / 1000.0;
-      double to_ec_avg =
-        (sum_to_ec_.sec () * 1000000.0 + sum_to_ec_.usec ()) / total_pushes_ / 1000.0;
-      ACE_DEBUG ((LM_TRACE,
-                  "%s: From test to EC (min/max/avg): "
-                  "%5.3f/%5.3f/%5.3f\n",
-                  entry_point (), to_ec_min, to_ec_max, to_ec_avg));
+      if (! short_circuit_EC)
+        {
+          double to_ec_min =
+            (min_to_ec_.sec () * 1000000.0 + min_to_ec_.usec ()) / 1000.0;
+          double to_ec_max =
+            (max_to_ec_.sec () * 1000000.0 + max_to_ec_.usec ()) / 1000.0;
+          double to_ec_avg =
+            (sum_to_ec_.sec () * 1000000.0 + sum_to_ec_.usec ()) /
+            total_pushes_ / 1000.0;
+          ACE_DEBUG ((LM_TRACE,
+                      "%s: From test to EC (min/max/avg): "
+                      "%5.3f/%5.3f/%5.3f\n",
+                      entry_point (), to_ec_min, to_ec_max, to_ec_avg));
 
-      double in_ec_min =
-        (min_in_ec_.sec () * 1000000.0 + min_in_ec_.usec ()) / 1000.0;
-      double in_ec_max =
-        (max_in_ec_.sec () * 1000000.0 + max_in_ec_.usec ()) / 1000.0;
-      double in_ec_avg =
-        (sum_in_ec_.sec () * 1000000.0 + sum_in_ec_.usec ()) / total_pushes_ / 1000.0;
-      ACE_DEBUG ((LM_TRACE,
-                  "%s: In the EC (min/max/avg): "
-                  "%5.3f/%5.3f/%5.3f\n",
-                  entry_point (), in_ec_min, in_ec_max, in_ec_avg));
+          double in_ec_min =
+            (min_in_ec_.sec () * 1000000.0 + min_in_ec_.usec ()) / 1000.0;
+          double in_ec_max =
+            (max_in_ec_.sec () * 1000000.0 + max_in_ec_.usec ()) / 1000.0;
+          double in_ec_avg =
+            (sum_in_ec_.sec () * 1000000.0 + sum_in_ec_.usec ()) /
+            total_pushes_ / 1000.0;
+          ACE_DEBUG ((LM_TRACE,
+                      "%s: In the EC (min/max/avg): "
+                      "%5.3f/%5.3f/%5.3f\n",
+                      entry_point (), in_ec_min, in_ec_max, in_ec_avg));
 
-      double from_ec_min =
-        (min_from_ec_.sec () * 1000000.0 + min_from_ec_.usec ()) / 1000.0;
-      double from_ec_max =
-        (max_from_ec_.sec () * 1000000.0 + max_from_ec_.usec ()) / 1000.0;
-      double from_ec_avg =
-        (sum_from_ec_.sec () * 1000000.0 + sum_from_ec_.usec ()) / total_pushes_ / 1000.0;
-      ACE_DEBUG ((LM_TRACE,
-                  "%s: From EC to test (min/max/avg): "
-                  "%5.3f/%5.3f/%5.3f\n",
-                  entry_point (), from_ec_min, from_ec_max, from_ec_avg));
-
+          double from_ec_min =
+            (min_from_ec_.sec () * 1000000.0 + min_from_ec_.usec ()) / 1000.0;
+          double from_ec_max =
+            (max_from_ec_.sec () * 1000000.0 + max_from_ec_.usec ()) / 1000.0;
+          double from_ec_avg =
+            (sum_from_ec_.sec () * 1000000.0 + sum_from_ec_.usec ()) /
+            total_pushes_ / 1000.0;
+          ACE_DEBUG ((LM_TRACE,
+                      "%s: From EC to test (min/max/avg): "
+                      "%5.3f/%5.3f/%5.3f\n",
+                      entry_point (), from_ec_min, from_ec_max, from_ec_avg));
+        }
     }
 }
 
@@ -703,6 +718,7 @@ Latency_Supplier::print_stats () /* const */
 // function get_options
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+
 static
 unsigned int
 get_options (int argc, char *argv [])
@@ -794,9 +810,13 @@ get_options (int argc, char *argv [])
   return 0;
 }
 
-//
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // function main
-//
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
 int
 main (int argc, char *argv [])
 {
