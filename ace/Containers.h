@@ -601,12 +601,12 @@ public:
   // = Classic queue operations.
 
   T *insert_tail (T *new_item);
-  // Adds <new_item> to the tail of the list.  Returns 0 on success,
-  // -1 on failure.
+  // Adds <new_item> to the tail of the list. Returns the new item
+  // that was inserted. 
 
   T *insert_head (T *new_item);
-  // Adds <new_item> to the head of the list.  Returns 0 on success,
-  // -1 on failure.
+  // Adds <new_item> to the head of the list.Returns the new item that
+  // was inserted.
 
   T* delete_head (void);
   // Removes and returns the first <item> in the list.  Returns
