@@ -2,7 +2,6 @@ Tue Jan  4 12:58:54 2000  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile (CONTROLLED_FILES):
 
-	  Added `man' directory to list of controlled files.
 	  man/man3/Makefile.am and man/html/Makefile.am previously weren't
 	  being labelled.  Thanks to David for pointing this out.
 
