@@ -1,9 +1,7 @@
-Thu Jul 30 02:22:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/Synch_T.cpp (ts_init): Casted away constness of key_.
-	  Changed to cast away constness of the pointer to once_.
-
 Thu Jul 30 01:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/TP_Reactor.i (notify_handle): Added an ASYS_TEXT where it
+ 	  was missing.  Thanks to Dieter Quehl for reporting this.
 
 	* ace/Synch_T.cpp: It wasn't possible to call ts_object() to set
  	  an initial zero pointer value.  The solution is to give
@@ -11,6 +9,11 @@ Thu Jul 30 01:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
   	  I also factored out some common code into a new method called
  	  ts_init().  Thanks to Bob McWhirter <bob@netwrench.com> for
  	  reporting this.
+
+Thu Jul 30 02:22:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch_T.cpp (ts_init): Casted away constness of key_.
+	  Changed to cast away constness of the pointer to once_.
 
 Wed Jul 29 23:58:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
