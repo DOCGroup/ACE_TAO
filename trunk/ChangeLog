@@ -1,3 +1,8 @@
+Mon Jan 19 17:27:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/make_release:
+	  dfm files shouldn't get LF->CRLF conversions.
+
 Mon Jan 19 10:46:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GUID.pm:
