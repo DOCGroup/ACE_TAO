@@ -2007,7 +2007,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
   char *buf;
 
 #if defined (ACE_HAS_ALLOCA)
-  buf = (iovec *) alloca (length);
+  buf = alloca (length);
 #else 
   ACE_NEW_RETURN (buf, length, -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -2046,8 +2046,9 @@ readv (ACE_HANDLE handle, struct iovec *vp, int vpcount)
     else
       length += iov[i].iov_len;
 
+  char *buf;
 #if defined (ACE_HAS_ALLOCA)
-  buf = (iovec *) alloca (length);
+  buf = alloca (length);
 #else 
   ACE_NEW_RETURN (buf, length, -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
