@@ -915,16 +915,9 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   return;
 }
 
-#if defined (__Lynx__)
-
-// LynxOS uses macro THREAD_CANCELLED internally, so it must
-// be undefined to avoid compilation errors
-#if defined (THREAD_CANCELLED)
+#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
-
-#endif /*__Lynx__ */
-
+#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
 
 // List of standard/system exceptions ... used to create static
 // storage for their typecodes, then later to initialize that storage
