@@ -1,3 +1,30 @@
+Thu Oct 28 16:32:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.h:
+	* tao/Typecode.i:
+	* tao/Typecode.cpp:
+	  Changes to equal() and equivalent() and the functions underneath
+	  them to conform to CORBA 2.3.1 (99-10-07). The old version 
+	  of equivalent() just unaliased both typcodes and then called
+	  equal(). This behavior will not satisfy 2.3 rules, so now the two
+	  functions call a new one call equ_common() with an extra arg,
+	  a flag called equiv_only, set in equivalent()'s call but not in
+	  equal()'s. This new function unaliases the typecodes if the flag
+	  is set, then calls private_equal(), which passes the call on to
+	  the appropriate private_equal_* function, all of which now 
+	  have the extra arg. Equ_common() is also now the recursion
+	  entry point for complex typecode checking.
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	   Changed code generation to use equivalent() instead
+	   of equal() in the Any extraction operator.
+
 Thu Oct 28 14:24:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.TAO.GNU: don't use the IDL_EXT and IDL_EXT2 macros
