@@ -15,6 +15,8 @@ channel, yet it will be properly strategized so it can be adapted and
 extended to other domains (such as distributed interactive
 simulation).
 
+= Thanks to Irfan for providing feedback on this document.
+
 = The module architecture
 
         The current event channel is based on a series of modules
@@ -69,6 +71,18 @@ components:
       Possible implementations: Reactive Dispatching, a single queue
   served by multiple threads, multiple queues serviced by threads at
   different priorities.
+      An interesting challenge to solve in this module is to minimize
+  the amount of copying of events, for instance:
+    + Reactive dipatching does not require any copies for an event,
+      the event is simply pushed from the supplier to the consumer.
+    + If the dispatching module has any form of queueing then at least 
+      one copy must be made. Ideally we want to avoid making multiple
+      copies for each consumer interested in the event; a potential
+      solution is to let the dispatching module create up front a
+      "reference counted" version of the event; this reference counted 
+      version is used by the SupplierFiltering strategy to push to
+      each consumer. 
+      @@ TODO: how do we match this with the filtering interfaces?
 
 - The ConsumerAdmin module: this object acts as a factory for the
   ProxyPushSupplier objects (i.e. the interface between the event
@@ -135,7 +149,17 @@ components:
 	  supplier (can be a global set), holding a lock as we go.
 	  This is potentially the most efficient version, but it can
 	  suffer from priority inversion because the lock is held for
-	  a long time.
+	  a long time. 
+	  It can also produce dead-locks if there is no queueing in
+	  the dispatching module. 
+	+ Mark the list as "busy" so no changes will be made to it
+	  while we iterate over it.  Instead, any changes to the list
+	  are "posted" in a list of Command objects.
+	  After finishing the iteration the lock is acquired again,
+	  the is is marked as "idle" and any posted operations are
+	  executed.
+	  "busy" and "idle" could be implemented using a reference
+	  count.
 	+ Make a copy of the current set of consumers, unfortunately
 	  this could requires a memory allocation, and potentially
 	  increasing the reference count on the consumers.
@@ -179,7 +203,7 @@ components:
   the new design do not neglect this issues, for instance:
 
   - The EC_Factory creates strategized locks, so the single threaded
-    implementations can perform correctly.
+    implementations can perform optimally.
 
   - Each consumer has its own filters, so no locking is required at
     each filter (just one for the consumer).
@@ -218,13 +242,13 @@ components:
     events with no data copying (with Reactive dispatching) and with 
     only one data copy (if Prioritized dispatching is used).
     We believe that even this extra data copy could be minimized in
-    the multi-threaded case (or at least avoided for that event
-    payload).
+    the multi-threaded case (or at least limited to the event header
+    and avoided for the event payload).
 
 	In general we expect that the performance of the new real-time 
 Event Service will be equal or better than the previous
-implementation. Initial experiments suggest that this is going to be
-the case.
+implementation. As we mention above initial experiments suggest that
+this is going to be the case.
 
 = Locking revisited
 
