@@ -21,11 +21,13 @@ LIBS    += $(ACELIB)
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.
 ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
+ifneq ($(static_libs_only),1)
 ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
   BIN = main
   SHLIB = libClient_Test.$(SOEXT)
   BUILD = $(VSHLIB) $(VBIN)
 endif # Other
+endif # static_libs_only
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

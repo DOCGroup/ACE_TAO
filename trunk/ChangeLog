@@ -1,3 +1,8 @@
+Thu Dec  5 14:35:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* netsvcs/clients/Naming/Client/Makefile: Do not build in static
+	  builds. 
+
 Thu Dec  5 07:39:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Removed Bug_1020_Regression from the
