@@ -1,3 +1,9 @@
+Thu Apr 12 06:50:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+	* examples/PluggableUDP/tests/SimplePerformance/test_i.cpp: Fixed
+	  warnings with g++ builds.
+
 Wed Apr 11 19:33:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/SimplePerformance/server.cpp:

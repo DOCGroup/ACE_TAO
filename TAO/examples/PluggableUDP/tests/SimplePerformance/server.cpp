@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
       CORBA::Object_var objOne = root_poa->id_to_reference (oidServer.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Simple_Server_var server = Simple_Server::_narrow (objOne, ACE_TRY_ENV);
+      Simple_Server_var server = Simple_Server::_narrow (objOne.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
       CORBA::String_var ior =
