@@ -1,3 +1,16 @@
+Fri Jul 14 17:46:56 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/dirent.h:
+
+	  Removed 'const' member of dirent struct.
+	  Added dir_init to guarantee that 'started_reading_' is
+	  initialized correctly!
+
+	* pace/win32/types.h:
+
+	  Added support for win32
+	  PACE_WIN32_INVALID_HANDLE = (void*)0
+
 Fri Jul 14 15:55:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/sys/mman.h:

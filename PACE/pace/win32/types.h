@@ -140,6 +140,10 @@ extern "C" {
   typedef uid_t pace_uid_t;
 #endif /* PACE_UID_T */
 
+#ifndef PACE_WIN32_INVALID_HANDLE
+#define PACE_WIN32_INVALID_HANDLE (void*)0
+#endif
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
