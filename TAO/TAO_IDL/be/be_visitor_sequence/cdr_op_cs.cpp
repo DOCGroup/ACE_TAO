@@ -285,6 +285,24 @@ be_visitor_sequence_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_sequence_cdr_op_cs::visit_component (be_component *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_component_fwd (be_component_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_home (be_home *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_cdr_op_cs::visit_valuetype (be_valuetype *node)
 {
   return this->visit_node (node);
@@ -292,6 +310,18 @@ be_visitor_sequence_cdr_op_cs::visit_valuetype (be_valuetype *node)
 
 int
 be_visitor_sequence_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   return this->visit_node (node);
 }

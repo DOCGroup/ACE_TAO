@@ -61,11 +61,26 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit an interface forward node
 
+  virtual int visit_component (be_component *node);
+  // visit a component
+
+  virtual int visit_home (be_home *node);
+  // visit a home
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit a component forward node
+
   virtual int visit_valuetype (be_valuetype *node);
-  // visit an interface
+  // visit a valuetype
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-  // visit an interface forward node
+  // visit a valuetype forward node
+
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit an eventtype
+
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit an eventtype forward node
 
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit a predefined type node
