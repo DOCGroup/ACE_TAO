@@ -17,7 +17,6 @@
 // 
 // ============================================================================
 
-#include "ace/Reactor.h"
 #include "ace/Synch.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
@@ -25,7 +24,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-static const int NUM_INVOCATIONS = 10;
 static const int MAX_TASKS = 20;
 
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -100,7 +98,7 @@ Test_Task::svc (void)
 {
   ACE_NEW_THREAD;
 
-  for (int i = 0; i < NUM_INVOCATIONS; i++)
+  for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_OS::thr_yield ();
 
@@ -130,7 +128,7 @@ Test_Task::handle_input (ACE_HANDLE)
 {
   this->handled_++;
 
-  if (this->handled_ == NUM_INVOCATIONS)
+  if (this->handled_ == ACE_MAX_ITERATIONS)
     {
       done_count--;
       ACE_DEBUG ((LM_DEBUG, 
@@ -158,6 +156,7 @@ worker (void *args)
 
   for (;;)
     {
+      // Use a timeout to inform the Reactor when to shutdown.
       switch (reactor->handle_events (timeout))
 	{
 	case -1:
@@ -171,10 +170,6 @@ worker (void *args)
 
   return 0;
 }
-
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_HAS_THREADS */
 

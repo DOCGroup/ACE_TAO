@@ -66,8 +66,8 @@ parse_args (int argc, char **argv)
 class Task_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  Task_Handler (int number_of_handles,
-		int concurrent_threads);
+  Task_Handler (size_t number_of_handles,
+		size_t concurrent_threads);
   // Constructor.
 
   ~Task_Handler (void);
@@ -79,7 +79,7 @@ public:
   int svc (void);
   // Task event loop.
 
-  int signal (int index);
+  int signal (size_t index);
   // Signal an event.
 
 private:
@@ -96,11 +96,12 @@ Task_Handler::svc (void)
       ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "handle_events"), 0);	
 }
 
-Task_Handler::Task_Handler (int number_of_handles,
-			    int concurrent_threads)
+Task_Handler::Task_Handler (size_t number_of_handles,
+			    size_t int concurrent_threads)
 {
   ACE_NEW (this->events_, ACE_Auto_Event [number_of_handles]);
-  for (int i = 0; i < number_of_handles; i++)
+
+  for (size_t i = 0; i < number_of_handles; i++)
     {
       if (ACE_Service_Config::reactorEx ()->register_handler (this,
 							      this->events_[i].handle ()) == -1)
@@ -144,7 +145,7 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 }
 
 int 
-Task_Handler::signal (int index)
+Task_Handler::signal (size_T index)
 {
   return this->events_[index].signal ();
 }

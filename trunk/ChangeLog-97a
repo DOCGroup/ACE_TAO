@@ -1,3 +1,77 @@
+Sun Feb 16 12:23:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor.cpp: Totally rewrote the ACE_Reactor's dispatching
+ 	  mechanism so that it now keeps track of whether the state of the
+ 	  wait_set_ has changed during a dispatch (i.e., whenever
+ 	  register_handler_i() or remove_handler_i() is called).  If the
+ 	  wait_set_ state *has* changed, then we bail out and rerun
+ 	  select() in order to get the latest changes.
+
+	* ace/Reactor.cpp: Changed the implementation of the
+ 	  ACE_Reactor_Notify class so that (1) it short-circuits a trip
+ 	  through the ACE_Reactor::notify_handle() method (after all, it's
+ 	  just going to call its own handle_input() method back) and (2)
+ 	  the ACE_Reactor_Notify::handle_input() method now returns a
+ 	  count of the number of handlers that it dispatched.
+
+	* ace/Log_Msg.h: Added a (%P|%t) so that we now print out the
+ 	  process id and thread number for failed ACE_ASSERT() calls.
+
+	* tests: Removed the unnecessary template specializations of
+ 	  ACE_Atomic_Op<ACE_Thread_Mutex, int> since this is already done
+ 	  in libACE.
+
+	* ace/Reactor.cpp: Removed the #ifdef preventing the enabling of
+ 	  non-blocking mode for the recv() side of the Reactor's
+ 	  notification pipe (socket) for Win32.  I believe that with the
+ 	  new max_notify_iterations scheme we should be all set.
+
+	* ace/ReactorEx.cpp: Added an identical API for bounding the
+ 	  max_notify_iterations() for ReactorEx.
+
+	* ace/Reactor.cpp: Enhanced the Reactor's notify() mechanism so
+ 	  that it is now possible to set the max_notify_iterations(),
+ 	  which limits the number of times that the
+ 	  ACE_Reactor_Notify::handle_input() method will iterate and
+ 	  dispatch the ACE_Event_Handlers that are passed in via the
+ 	  notify pipe before breaking out of its recv() loop.  This is
+ 	  necessary to keep from starving out other Event_Handlers.
+  	  Thanks to Rod Skinner <rods@in.ot.com.au> for pointing out the
+ 	  need for this.
+
+	* ace/Reactor.cpp: Fixed a bug in the WIN32
+ 	  ACE_Reactor_Notify::handle_input() logic.  We were calling
+ 	  requeue_position(0) when we should have been calling renew().
+
+Sat Feb 15 11:46:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp: It appears that VxWorks doesn't support fcntl().
+  	  However, it does seem to support ioctl().  Therefore, that's how
+ 	  we'll set the descriptors into non-blocking mode.  Thanks to
+ 	  Dave Mayerhoefer <m210229@svappl36.mdc.com> for reporting this.
+
+	* ace/SOCK_Stream.h: Corrected the documentation for
+ 	  ACE_SOCK_Stream::recv_n (void *buf, size_t len, int flags, const
+ 	  ACE_Time_Value *timeout).  Thanks to Paul Roman
+ 	  <proman@npac.syr.edu> for reporting this.
+
+	* ace/SOCK_Stream.i (recv_n): Fixed a minor bug in the
+	  SOCK_Stream.i line 38: 
+
+	  ACE_TRACE ("ACE_SOCK_Stream::send_n");
+
+	  should be
+
+	  ACE_TRACE ("ACE_SOCK_Stream::recv_n");
+
+	  Thanks to Paul Roman <proman@npac.syr.edu> for reporting this.
+
+Fri Feb 14 00:40:14 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/TTY_IO.cpp (control): Moved the drop out timer value from
+ 	  the ACE struct to the WinNT struct.  Thanks to Brad Flood
+ 	  <BFLOOD@tcs.lmco.com> for this fix.
+
 Thu Feb 13 21:24:17 1997    <irfan@cha-cha.cs.wustl.edu>
 
 	* ace/OS.i (event_wait): Fixed the missing check for success.

@@ -193,7 +193,13 @@ ACE_TTY_IO::control (Control_Mode cmd,
 	  dcb.fRtsControl = RTS_CONTROL_DISABLE ;
 	}
       dcb.fBinary = TRUE ;          
-      return ::SetCommState (this->get_handle (), &dcb);
+    ::SetCommState (this->get_handle (), &dcb);
+
+    // 2/13/97 BWF added drop out timer
+    COMMTIMEOUTS timeouts;
+    ::GetCommTimeouts (this->get_handle(), &timeouts) ;
+    timeouts.ReadIntervalTimeout = arg->readtimeoutmsec ;
+    return ::SetCommTimeouts (this->get_handle (), &timeouts) ;
 
     case GETPARAMS:
       ACE_NOTSUP_RETURN (-1); // Not yet implemented.

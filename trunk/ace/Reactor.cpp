@@ -249,6 +249,11 @@ ACE_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 			  this->reactor_.wait_set_,
 			  ACE_Reactor::ADD_MASK);
 
+  // Note the fact that we've changed the state of the <wait_set_>,
+  // which is used by the dispatching loop to determine whether it can
+  // keep going or if it needs to reconsult select().
+  this->reactor_.state_changed_ = 1;
+
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (&this->reactor_);
   return 0;
@@ -273,6 +278,11 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 			  mask, 
 			  this->reactor_.wait_set_,
 			  ACE_Reactor::CLR_MASK);
+
+  // Note the fact that we've changed the state of the <wait_set_>,
+  // which is used by the dispatching loop to determine whether it can
+  // keep going or if it needs to reconsult select().
+  this->reactor_.state_changed_ = 1;
 
   // Close down the <Event_Handler> unless we've been instructed not
   // to.
@@ -483,7 +493,12 @@ ACE_Reactor::requeue_position (int rp)
 {
   ACE_TRACE ("ACE_Reactor::requeue_position");
   ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
+#if defined (ACE_WIN32)
+  // Must always requeue ourselves "next" on Win32.
+  this->requeue_position_ = 0;
+#else
   this->requeue_position_ = rp;
+#endif /* ACE_WIN32 */
 }
 
 int 
@@ -492,6 +507,33 @@ ACE_Reactor::requeue_position (void)
   ACE_TRACE ("ACE_Reactor::requeue_position");
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
   return this->requeue_position_;
+}
+
+void 
+ACE_Reactor::max_notify_iterations (int iterations)
+{
+  ACE_TRACE ("ACE_Reactor::max_notify_iterations");
+  ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
+
+#if defined (ACE_WIN32)
+  // There seems to be a Win32 bug with non-blocking mode, so we'll
+  // always just read one notification at a time.
+  iterations = 1;
+#else
+  // Must always be > 0 or < 0 to optimize the loop exit condition.
+  if (iterations == 0)
+    iterations = 1;
+#endif /* ACE_WIN32 */
+
+  this->max_notify_iterations_ = iterations;
+}
+
+int 
+ACE_Reactor::max_notify_iterations (void)
+{
+  ACE_TRACE ("ACE_Reactor::max_notify_iterations");
+  ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
+  return this->max_notify_iterations_;
 }
 
 #if defined (ACE_MT_SAFE)
@@ -553,13 +595,12 @@ ACE_Reactor_Notify::open (ACE_Reactor *r)
   if (this->notification_pipe_.open () == -1)
     return -1;
 
-#if !defined (ACE_WIN32) // There seems to be a Win32 bug with this...
-  // Set this into non-blocking mode.
+  // There seems to be a Win32 bug with this...  Set this into
+  // non-blocking mode.
   if (ACE::set_flags (this->notification_pipe_.read_handle (), 
 		      ACE_NONBLOCK) == -1)
     return -1;
   else 
-#endif /* !ACE_WIN32 */
     return this->reactor_->register_handler 
       (this->notification_pipe_.read_handle (),
        this,
@@ -593,7 +634,8 @@ ACE_Reactor_Notify::notify (ACE_Event_Handler *eh,
 // Reactor.
 
 int
-ACE_Reactor_Notify::handle_notifications (const ACE_Handle_Set &rd_mask)
+ACE_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
+					    const ACE_Handle_Set &rd_mask)
 {
   ACE_TRACE ("ACE_Reactor_Notify::handle_notification");
 
@@ -602,13 +644,8 @@ ACE_Reactor_Notify::handle_notifications (const ACE_Handle_Set &rd_mask)
 
   if (rd_mask.is_set (read_handle))
     {
-      this->reactor_->notify_handle 
-	(read_handle, 
-	 ACE_Event_Handler::READ_MASK,
-	 this->reactor_->ready_set_.rd_mask_, 
-	 this->reactor_->handler_rep_.find (read_handle),
-	 &ACE_Event_Handler::handle_input); 
-      return 1;
+      number_of_active_handles--;
+      return this->handle_input (read_handle);
     }
   else
     return 0;
@@ -628,18 +665,9 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
 
   ACE_Notification_Buffer buffer;
   ssize_t n;
+  int number_dispatched = 0;
 
-#if defined (ACE_WIN32)
-  n = ACE::recv (handle, (char *) &buffer, sizeof buffer);
-
-  if (n == -1)
-    return -1;
-
-  // Put ourselves at the head of the queue.
-  this->reactor_->requeue_position (0);
-#else
   while ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) != -1)
-#endif /* ACE_WIN32 */
     {
       // If eh == 0 then another thread is unblocking the ACE_Reactor
       // to update the ACE_Reactor's internal structures.  Otherwise,
@@ -669,16 +697,38 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
             buffer.eh_->handle_close (ACE_INVALID_HANDLE, 
 				      ACE_Event_Handler::EXCEPT_MASK);
         }
+
+      number_dispatched++;
+
+      // Bail out if we've reached the <notify_threshold_>.  Note that
+      // by default <notify_threshold_> is -1, so we'll loop until all
+      // the notifications in the pipe have been dispatched.
+      if (number_dispatched == this->reactor_->max_notify_iterations_)
+	break;
     }
 
   // Enqueue ourselves into the list of waiting threads.  When we
   // reacquire the token we'll be off and running again with ownership
-  // of the token.
+  // of the token.  The postcondition of this call is that
+  // this->reactor_.token_.current_owner () == ACE_Thread::self ();
   this->reactor_->renew ();
 
-  // Postcondition: this->reactor_.token_.current_owner () ==
-  // ACE_Thread::self ();
-  return n == -1 && errno != EWOULDBLOCK ? -1 : 0;
+  if (n == -1)
+    {
+      if (errno != EWOULDBLOCK)
+	{
+	  // If we're returning -1 here something is seriously wrong!
+	  ACE_ASSERT (!"something's totally wrong!\n");
+	  return -1;
+	}
+      else
+	{
+	  ACE_DEBUG ((LM_DEBUG, "(%t) ++++ WOULD BLOCK +++++\n"));
+	  return number_dispatched;
+	}
+    }
+  else
+    return number_dispatched;
 }
 #endif /* ACE_MT_SAFE */
 
@@ -899,8 +949,15 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
     timer_queue_ (0),
     delete_timer_queue_ (0),
     delete_signal_handler_ (0),
+#if defined (ACE_WIN32)
+    requeue_position_ (0), // Must always requeue ourselves "next" on Win32.
+    max_notify_iterations_ (1),
+#else
     requeue_position_ (-1), // Requeue at end of waiters by default.
-    initialized_ (0)
+    max_notify_iterations_ (-1),
+#endif /* ACE_WIN32 */
+    initialized_ (0),
+    state_changed_ (0)
 #if defined (ACE_MT_SAFE)
     , token_ (*this)
 #endif /* ACE_MT_SAFE */
@@ -921,8 +978,15 @@ ACE_Reactor::ACE_Reactor (size_t size,
     timer_queue_ (0),
     delete_timer_queue_ (0),
     delete_signal_handler_ (0),
+#if defined (ACE_WIN32)
+    requeue_position_ (0), // Must always requeue ourselves "next" on Win32.
+    max_notify_iterations_ (1),
+#else
     requeue_position_ (-1), // Requeue at end of waiters by default.
-    initialized_ (0)
+    max_notify_iterations_ (-1),
+#endif /* ACE_WIN32 */
+    initialized_ (0),
+    state_changed_ (0)
 #if defined (ACE_MT_SAFE)
     , token_ (*this)
 #endif /* ACE_MT_SAFE */
@@ -1328,6 +1392,121 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
 }
 
 int
+ACE_Reactor::dispatch_timer_handlers (void)
+{
+  int number_dispatched = this->timer_queue_->expire ();
+  return this->state_changed_ ? -1 : number_dispatched;
+}
+
+int
+ACE_Reactor::dispatch_notification_handlers (int &number_of_active_handles,
+					     ACE_Reactor_Handle_Set &dispatch_set)
+{
+#if defined (ACE_MT_SAFE)
+      // Check to see if the ACE_HANDLE associated with the Reactor's
+      // notify hook is enabled.  If so, it means that one or more
+      // other threads are trying to update the ACE_Reactor's internal
+      // tables.  We'll handle all these threads and then break out to
+      // continue the event loop.
+  
+  int number_dispatched = 
+    this->notify_handler_.dispatch_notifications (number_of_active_handles, 
+						  dispatch_set.rd_mask_);
+  return this->state_changed_ ? -1 : number_dispatched;
+#else
+  return 0;
+#endif /* ACE_MT_SAFE */
+}
+
+int
+ACE_Reactor::dispatch_output_handlers (int &number_of_active_handles,
+				       ACE_Reactor_Handle_Set &dispatch_set)
+{
+  ACE_HANDLE handle;
+
+  int number_dispatched = 0;
+
+  if (number_of_active_handles > 0)
+    {
+      // Handle output events (this code needs to come first
+      // to handle the obscure case of piggy-backed data
+      // coming along with the final handshake message of a
+      // nonblocking connection).
+
+      for (ACE_Handle_Set_Iterator handle_iter_wr (dispatch_set.wr_mask_);
+	   (handle = handle_iter_wr ()) != ACE_INVALID_HANDLE 
+	     && number_dispatched < number_of_active_handles;
+	   ++handle_iter_wr)
+	{
+	  number_dispatched++;
+	  this->notify_handle (handle,
+			       ACE_Event_Handler::WRITE_MASK,
+			       this->ready_set_.wr_mask_, 
+			       this->handler_rep_.find (handle),
+			       &ACE_Event_Handler::handle_output); 
+	}
+    }
+
+  number_of_active_handles -= number_dispatched;
+  return this->state_changed_ ? -1 : number_dispatched;
+}
+
+int
+ACE_Reactor::dispatch_exception_handlers (int &number_of_active_handles,
+					  ACE_Reactor_Handle_Set &dispatch_set)
+{
+  ACE_HANDLE handle;
+
+  int number_dispatched = 0;
+
+  if (number_of_active_handles > 0)
+    {
+      // Handle "exceptional" events.
+      for (ACE_Handle_Set_Iterator handle_iter_ex (dispatch_set.ex_mask_);
+	   (handle = handle_iter_ex ()) != ACE_INVALID_HANDLE 
+	     && number_dispatched < number_of_active_handles;
+	   ++handle_iter_ex)
+	{
+	  this->notify_handle (handle,
+			       ACE_Event_Handler::EXCEPT_MASK,
+			       this->ready_set_.ex_mask_, 
+			       this->handler_rep_.find (handle),
+			       &ACE_Event_Handler::handle_exception); 
+	  number_dispatched++;
+	}
+    }
+
+  number_of_active_handles -= number_dispatched;
+  return this->state_changed_ ? -1 : number_dispatched;
+}
+
+int
+ACE_Reactor::dispatch_input_handlers (int &number_of_active_handles,
+				      ACE_Reactor_Handle_Set &dispatch_set)
+{
+  ACE_HANDLE handle;
+
+  int number_dispatched = 0;
+
+  if (number_of_active_handles > 0)
+    {
+      // Handle input, passive connection, and shutdown events.
+      for (ACE_Handle_Set_Iterator handle_iter_rd (dispatch_set.rd_mask_);
+	   (handle = handle_iter_rd ()) != ACE_INVALID_HANDLE 
+	     && number_dispatched < number_of_active_handles;
+	   ++handle_iter_rd)
+	this->notify_handle (handle,
+			     ACE_Event_Handler::READ_MASK,
+			     this->ready_set_.rd_mask_, 
+			     this->handler_rep_.find (handle),
+			     &ACE_Event_Handler::handle_input); 
+    }
+
+  number_of_active_handles -= number_dispatched;
+  return this->state_changed_ ? -1 : number_dispatched;
+}
+
+int
 ACE_Reactor::dispatch (int number_of_active_handles, 
                        ACE_Reactor_Handle_Set &dispatch_set)
 {
@@ -1335,90 +1514,94 @@ ACE_Reactor::dispatch (int number_of_active_handles,
 
   int number_of_handlers_dispatched = 0;
 
-  for (;;)
+  // Keep dispatching while there are still active handles left.  Note
+  // that the only way we should ever iterate more than once through
+  // this loop is if signals occur while we're dispatching other
+  // handlers.  
+  // 
+  // Note that we keep track of changes to our state.  If any of the
+  // dispatch_*() methods below return -1 it means that the
+  // <wait_set_> state has changed as the result of an
+  // <ACE_Event_Handler> being dispatched.  This means that we need to
+  // bail out and rerun the select() loop since our existing notion of
+  // handles in <dispatch_set> may no longer be correct.
+  //
+  // In the beginning, our state starts out unchanged.  After every
+  // iteration (i.e., due to signals), our state again starts out
+  // unchanged.
+
+  for (this->state_changed_ = 0; 
+       number_of_active_handles > 0;
+       this->state_changed_ = 0) 
     {
-      number_of_handlers_dispatched += number_of_active_handles;
+      // Perform the Template Method for dispatching all the handlers.
+      // We use a loop here just to simplify the "breaking out" if we
+      // need to stop early.
 
-      // Handle timers first since they may have higher latency
-      // constraints...
-
-      number_of_handlers_dispatched += this->timer_queue_->expire ();
-
-#if defined (ACE_MT_SAFE)
-      // Check to see if the notify ACE_HANDLE is enabled.  If so, it
-      // means that one or more other threads are trying to update the
-      // ACE_Reactor's internal tables.  We'll handle all these
-      // threads and then break out to continue the event loop.
-  
-      if (this->notify_handler_.handle_notifications (dispatch_set.rd_mask_) == 0)
-#endif /* ACE_MT_SAFE */
+      do
 	{
-	  ACE_HANDLE handle;
+	  int result;
 
-	  if (number_of_active_handles > 0)
-	    {
-	      // Handle output events (this code needs to come first
-	      // to handle the obscure case of piggy-backed data
-	      // coming along with the final handshake message of a
-	      // nonblocking connection).
+	  // Handle timers first since they may have higher latency
+	  // constraints.
 
-	      for (ACE_Handle_Set_Iterator handle_iter_wr (dispatch_set.wr_mask_);
-		   (handle = handle_iter_wr ()) != ACE_INVALID_HANDLE 
-		     && --number_of_active_handles >= 0; 
-		   ++handle_iter_wr)
-		this->notify_handle (handle,
-				     ACE_Event_Handler::WRITE_MASK,
-				     this->ready_set_.wr_mask_, 
-				     this->handler_rep_.find (handle),
-				     &ACE_Event_Handler::handle_output); 
-	    }
+	  result = this->dispatch_timer_handlers ();
+	  if (result == -1)
+	    break; // State has changed, exit inner loop.
+	  else
+	    number_of_handlers_dispatched += result;
 
-	  if (number_of_active_handles > 0)
-	    {
-	      // Handle "exceptional" events.
-	      for (ACE_Handle_Set_Iterator handle_iter_ex (dispatch_set.ex_mask_);
-		   (handle = handle_iter_ex ()) != ACE_INVALID_HANDLE 
-		     && --number_of_active_handles >= 0; 
-		   ++handle_iter_ex)
-		this->notify_handle (handle,
-				     ACE_Event_Handler::EXCEPT_MASK,
-				     this->ready_set_.ex_mask_, 
-				     this->handler_rep_.find (handle),
-				     &ACE_Event_Handler::handle_exception); 
-	    }
+	  result = this->dispatch_notification_handlers (number_of_active_handles,
+							 dispatch_set);
+	  if (result == -1)
+	    break; // State has changed, exit inner loop.
+	  else
+	    number_of_handlers_dispatched += result;
 
-	  if (number_of_active_handles > 0)
-	    {
-	      // Handle input, passive connection, and shutdown events.
-	      for (ACE_Handle_Set_Iterator handle_iter_rd (dispatch_set.rd_mask_);
-		   (handle = handle_iter_rd ()) != ACE_INVALID_HANDLE 
-		     && --number_of_active_handles >= 0; 
-		   ++handle_iter_rd)
-		this->notify_handle (handle,
-				     ACE_Event_Handler::READ_MASK,
-				     this->ready_set_.rd_mask_, 
-				     this->handler_rep_.find (handle),
-				     &ACE_Event_Handler::handle_input); 
-	    }
+	  result = this->dispatch_output_handlers (number_of_active_handles,
+						   dispatch_set);
+
+	  if (result <= 0)
+	    // State has changed or there are no more handles to
+	    // dispatch, exit inner loop.
+	    break; 
+	  else
+	    number_of_handlers_dispatched += result;
+
+	  result = this->dispatch_input_handlers (number_of_active_handles,
+						  dispatch_set);
+
+	  if (result <= 0)
+	    // State has changed or there are no more handles to
+	    // dispatch, exit inner loop.
+	    break; 
+	  else
+	    number_of_handlers_dispatched += result;
+
+	  result = this->dispatch_exception_handlers (number_of_active_handles,
+						      dispatch_set);
+
+	  if (result <= 0)
+	    // State has changed or there are no more handles to
+	    // dispatch, exit inner loop.
+	    break;
+	  else
+	    number_of_handlers_dispatched += result;
 	}
+      while (0);
 
       // If any HANDLES are activated as a result of signals they
       // should be dispatched since they may be time critical...
 
       if (ACE_Sig_Handler::sig_pending () != 0)
-        {
-          ACE_Sig_Handler::sig_pending (0);
+	{
+	  ACE_Sig_Handler::sig_pending (0);
           
 	  number_of_active_handles = this->any_ready (dispatch_set);
-
-	  if (number_of_active_handles > 0)
-	    // Loop back around again and redispatch activated
-	    // handlers.
-	    continue;
-        }
-
-      return number_of_handlers_dispatched;
+	}
     }
+
+  return number_of_handlers_dispatched;
 }
 
 int

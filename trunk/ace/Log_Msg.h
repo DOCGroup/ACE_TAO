@@ -28,7 +28,7 @@
 #define	ACE_ASSERT(X) \
   do { if(!(X)) { int __ace_error = errno; ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
   ace___->set (__FILE__, __LINE__, -1, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
-  ace___->log (LM_ERROR, "ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n", #X, -1); \
+  ace___->log (LM_ERROR, "(%P|%t) ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n", #X, -1); \
   } } while (0)
 #endif	/* ACE_NDEBUG */
 

@@ -73,7 +73,8 @@ public:
   int open (ACE_Reactor *);
   int close (void);
 
-  int handle_notifications (const ACE_Handle_Set &rd_mask);
+  int dispatch_notifications (int &number_of_active_handles,
+			      const ACE_Handle_Set &rd_mask);
   // Handles pending threads (if any) that are waiting to unblock the
   // Reactor.
 
@@ -515,6 +516,22 @@ public:
   // Get position that the main ACE_Reactor thread is requeued in the
   // list of waiters during a notify() callback.
 
+  void max_notify_iterations (int);
+  // Set the maximum number of times that the
+  // <ACE_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.  By default,
+  // this is set to -1, which means "iterate until the pipe is empty."
+  // Setting this to a value like "1 or 2" will increase "fairness"
+  // (and thus prevent starvation) at the expense of slightly higher
+  // dispatching overhead.
+
+  int max_notify_iterations (void);
+  // Get the maximum number of times that the
+  // <ACE_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.
+
   // = Low-level wait_set mask manipulation methods.
   virtual int mask_ops (ACE_Event_Handler *eh,
 			ACE_Reactor_Mask mask, 
@@ -630,12 +647,43 @@ protected:
 					ACE_Time_Value *); 
   // Wait for events to occur.
 
+  // = Dispatching methods.
+
   virtual int dispatch (int nfound,
 			ACE_Reactor_Handle_Set &);
   // Template Method that dispatches <ACE_Event_Handler>s for time
   // events, I/O events, and signal events.  Returns the total number
   // of <ACE_Event_Handler>s that were dispatched or -1 if something
   // goes wrong.
+
+  virtual int dispatch_timer_handlers (void);
+  // Dispatch any expired timer handlers.  Returns -1 if the state of
+  // the <wait_set_> has changed, else returns number of timer
+  // handlers dispatched.
+
+  virtual int dispatch_notification_handlers (int &number_of_active_handles,
+					      ACE_Reactor_Handle_Set &dispatch_set);
+  // Dispatch any notification handlers.  Returns -1 if the state of
+  // the <wait_set_> has changed, else returns number of handlers
+  // notified.
+
+  virtual int dispatch_output_handlers (int &number_of_active_handles,
+					ACE_Reactor_Handle_Set &dispatch_set);
+  // Dispatch any output handlers.  Returns -1 if the state of the
+  // <wait_set_> has changed, else returns number of handlers
+  // dispatched.
+
+  virtual int dispatch_exception_handlers (int &number_of_active_handles,
+					   ACE_Reactor_Handle_Set &dispatch_set);
+  // Dispatch any exception handlers.  Returns -1 if the state of the
+  // <wait_set_> has changed, else returns number of handlers
+  // dispatched.
+
+  virtual int dispatch_input_handlers (int &number_of_active_handles,
+				       ACE_Reactor_Handle_Set &dispatch_set);
+  // Dispatch any input handlers.  Returns -1 if the state of the
+  // <wait_set_> has changed, else returns number of handlers
+  // dispatched.
 
   virtual void notify_handle (ACE_HANDLE handle,
 			      ACE_Reactor_Mask mask, 
@@ -666,8 +714,8 @@ protected:
   // Tracks handles that are waited for by select().
 
   ACE_Reactor_Handle_Set ready_set_;
-  // Track handles we are interested for various events that must be
-  // dispatched *without* requiring select().
+  // Track HANDLES we are interested in for various events that must
+  // be dispatched *without* going through select().
 
   int restart_; 
   // Restart automatically when interrupted 
@@ -679,11 +727,24 @@ protected:
   // requeued at the front of the list.  Else if it's > 1 then that
   // indicates the number of waiters to skip over.
 
+  int max_notify_iterations_;
+  // Keeps track of the maximum number of times that the
+  // <ACE_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.  By default,
+  // this is set to -1, which means "iterate until the pipe is empty."
+
   int initialized_;
   // True if we've been initialized yet...
 
   ACE_thread_t owner_;
   // The original thread that created this Reactor.
+
+  int state_changed_;
+  // True if state has changed during dispatching of
+  // <ACE_Event_Handlers>, else false.  This is used to determine
+  // whether we need to make another trip through the <Reactor>'s
+  // <wait_for_multiple_events> loop.
 
 #if defined (ACE_MT_SAFE)
   ACE_Reactor_Notify notify_handler_;
