@@ -1,3 +1,16 @@
+Tue Oct 15 17:34:07 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+	  Made a change in the delete_object () function.
+	  There is a check to see if the factory set is bound
+	  to the factory map or not. If we do not find an entry
+	  in the map, a exception was thrown.
+	  In the case of application-controlled membership, we do
+	  not have a factory set bound to the factory map at all.
+	  So the else case can be removed.
+	  Thanks to Ossama Othman <ossama@uci.edu> for helping
+	  me track down this problem.
+
 Tue Oct 15 17:25:04 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/Makefile: Updated dependencies.
