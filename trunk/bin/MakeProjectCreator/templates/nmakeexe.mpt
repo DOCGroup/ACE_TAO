@@ -30,7 +30,6 @@ Release {
   output_dir            = Release
   intermediate_dir      = Release
   debug_switch          =
-  ssl_libs              = libeay32 ssleay32
 }
 
 Debug {
@@ -41,7 +40,6 @@ Debug {
   output_dir            = .
   intermediate_dir      = Debug
   lib_modifier          = d
-  ssl_libs              = libeay32 ssleay32
 }
 
 Static Release {
@@ -77,7 +75,6 @@ MFC Release {
   intermediate_dir      = MFC_Release
   lib_modifier          = mfc
   debug_switch          =
-  ssl_libs              = libeay32 ssleay32
 }
 
 MFC Debug {
@@ -89,7 +86,6 @@ MFC Debug {
   output_dir            = MFC_Debug
   intermediate_dir      = MFC_Debug
   lib_modifier          = mfcd
-  ssl_libs              = libeay32 ssleay32
 }
 
 Static MFC Release {

@@ -4,7 +4,6 @@ configurations  = Release Debug
 type_is_binary  = 1
 type_is_dynamic = 1
 common_defines  = WIN32 _WINDOWS
-ssl_libs        = libeay32 ssleay32
 pdb             = 1
 
 Release {
