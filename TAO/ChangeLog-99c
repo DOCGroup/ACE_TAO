@@ -1,5 +1,11 @@
 Fri Apr 30 21:43:29 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* orbsvcs/tests/Property/server.cpp
+	* orbsvcs/tests/Property/README
+	* orbsvcs/tests/Property/client.cpp
+	* orbsvcs/tests/Property/client.h
+	* orbsvcs/tests/Property/main.cpp
+	* orbsvcs/tests/Property/server.cpp
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h: 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
