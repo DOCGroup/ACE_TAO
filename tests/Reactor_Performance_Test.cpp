@@ -12,7 +12,7 @@
 //
 //    This test is used to time the dispatching mechanisms of the
 //    ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
-//    tested. 
+//    tested.
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -31,9 +31,9 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
-#if defined (ACE_HAS_THREADS) 
+#if defined (ACE_HAS_THREADS)
 
-// Number of client (user) threads 
+// Number of client (user) threads
 static int opt_nconnections = 20;
 
 // Number of data exchanges
@@ -54,7 +54,7 @@ public:
   virtual int open (void *);
   virtual int handle_input (ACE_HANDLE h);
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
   // The Svc_Handler callbacks.
 
 private:
@@ -64,72 +64,72 @@ private:
 
 int Read_Handler::waiting_ = 0;
 
-void 
+void
 Read_Handler::set_countdown (int nconnections)
 {
   Read_Handler::waiting_ = nconnections;
 }
 
 // Initialize the Svc_Handler
-int 
+int
 Read_Handler::open (void *)
 {
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) Read_Handler::open, cannot set non blocking mode\n"), -1);
-  
+
   if (reactor ()->register_handler (this, READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) Read_Handler::open, cannot register handler\n"), -1);
-  
+
   ACE_DEBUG ((LM_DEBUG, "(%t) created svc_handler for handle %d\n", get_handle ()));
   return 0;
 }
 
 // Handle incoming data
-int 
+int
 Read_Handler::handle_input (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);
 
   char buf[BUFSIZ];
-  
+
   ssize_t result = this->peer ().recv (buf, sizeof (buf));
   if (result <= 0)
     {
       if (result < 0 && errno == EWOULDBLOCK)
-	return 0;
-      
+        return 0;
+
       if (result != 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", "Read_Handler::handle_input"));
-      
+
       // This will cause handle_close to get called
       return -1;
     }
-  
+
   return 0;
 }
 
 // Handle connection shutdown
-int 
+int
 Read_Handler::handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask)
+                            ACE_Reactor_Mask close_mask)
 {
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (close_mask);
-  
+
   // Reduce count
   waiting_--;
-  
+
   // If no connections are open
   if (waiting_ == 0)
     {
       ACE_Reactor::instance ()->end_event_loop ();
     }
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) Read_Handler::handle_close closing down\n"));
-  
+
   // Shutdown
   this->destroy ();
   return 0;
@@ -144,13 +144,13 @@ public:
   virtual int send_data (void);
 };
 
-int 
+int
 Write_Handler::open (void *)
 {
   return 0;
 }
 
-int 
+int
 Write_Handler::send_data (void)
 {
   int send_size = sizeof (ACE_ALPHABET) - 1;
@@ -166,7 +166,7 @@ typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 // Execute the client tests.
-void * 
+void *
 client (void *arg)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) running client\n"));
@@ -175,7 +175,7 @@ client (void *arg)
   CONNECTOR connector;
 
   int i;
-  
+
   // Automagic memory cleanup
   ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers;
   Write_Handler **temp_writers;
@@ -201,14 +201,14 @@ client (void *arg)
     }
 
   // Connection all <opt_nconnections> svc_handlers
-  int result = connector.connect_n (opt_nconnections, 
-                                    writers.get (), 
+  int result = connector.connect_n (opt_nconnections,
+                                    writers.get (),
                                     addresses.get (),
                                     failed_svc_handlers.get ());
   if (result == -1)
     {
       // Print out the connections that failed...
-      for (size_t i = 0; i < opt_nconnections; i++)
+      for (i = 0; i < opt_nconnections; i++)
         if (failed_svc_handlers.get ()[i])
           {
             ACE_INET_Addr failed_addr;
@@ -219,16 +219,16 @@ client (void *arg)
           }
       return 0;
     }
-  
+
   // Iterate to send data
   for (int j = 0; j < opt_nloops; j++)
     for (i = 0; i < opt_nconnections; i++)
       if (writers[i]->send_data () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "writer::send_data"), 0);
-  
+
   // Cleanup
   for (i = 0; i < opt_nconnections; i++)
-    writers[i]->destroy ();  
+    writers[i]->destroy ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) finishing client\n"));
   return 0;
@@ -239,7 +239,7 @@ void
 create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
-  
+
   if (opt_wfmo_reactor)
     {
 #if defined (ACE_WIN32)
@@ -274,13 +274,13 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 
   ACE_DEBUG ((LM_DEBUG, "\n\tTiming results:\n"));
   ACE_DEBUG ((LM_DEBUG,
-	      "\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n",
-	      et.real_time,
-	      et.user_time,
-	      et.system_time));  
+              "\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n",
+              et.real_time,
+              et.user_time,
+              et.system_time));
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Reactor_Performance_Test");
@@ -290,17 +290,17 @@ main (int argc, char *argv[])
     switch (c)
       {
       case 's':
-	opt_select_reactor = 1;
-	break;
+        opt_select_reactor = 1;
+        break;
       case 'w':
-	opt_wfmo_reactor = 1;
-	break;
+        opt_wfmo_reactor = 1;
+        break;
       case 'c':
-	opt_nconnections = atoi (getopt.optarg);
-	break;
+        opt_nconnections = atoi (getopt.optarg);
+        break;
       case 'l':
-	opt_nloops = atoi (getopt.optarg);
-	break;
+        opt_nloops = atoi (getopt.optarg);
+        break;
       }
 
   // Sets up the correct reactor (based on platform and options)
@@ -308,12 +308,12 @@ main (int argc, char *argv[])
 
   // Manage memory automagically.
   auto_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  auto_ptr<ACE_Reactor_Impl> impl; 
+  auto_ptr<ACE_Reactor_Impl> impl;
 
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
-    impl = ACE_Reactor::instance ()->implementation ();  
+    impl = ACE_Reactor::instance ()->implementation ();
 
   Read_Handler::set_countdown (opt_nconnections);
 
@@ -327,10 +327,10 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "open"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) starting server at port %d\n",
-	      server_addr.get_port_number ()));
+              server_addr.get_port_number ()));
 
   ACE_INET_Addr connection_addr (server_addr.get_port_number (), "localhost");
-      
+
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (client),
        (void *) &connection_addr,
@@ -402,5 +402,3 @@ main (int, char *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
-
