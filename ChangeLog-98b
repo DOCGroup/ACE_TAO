@@ -4,6 +4,12 @@ Sun May 17 21:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
           MULTIPLY_FACTOR from int to size_t to avoid signed/unsigned
           comparison.
 
+        * tests/Tokens_Test.cpp: synchronize start of thread svc ()
+          routines.  Occasionally, the first thread would finish before
+          any others had started.  The TSS objects would get cleaned
+          up.  Then, the remaining threads would start up and make a big
+          mess.
+
 Sat May 16 15:10:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace/Service_Config.h (ACE_Service_Config): Moved the
