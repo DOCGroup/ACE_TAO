@@ -10270,7 +10270,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   asm volatile ("rpcc %0" : "=r" (now) : : "memory");
 
   return now;
-#elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM)
+#elif defined (ACE_WIN32)
   LARGE_INTEGER freq;
 
   ::QueryPerformanceCounter (&freq);
