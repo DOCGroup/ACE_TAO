@@ -90,8 +90,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // use the parser to parse the deployment plan URL and create
       // a DOM document.
-      DOMDocument* ano_doc = plan_parser->getDocument ();
-      if (ano_doc == NULL)
+      DOMDocument* plan_doc = plan_parser->getDocument ();
+      if (plan_doc == NULL)
         {
           ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
                       May be the URL is wrong!!\n"));
@@ -102,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //auto_ptr<DOMBuilder> cleanup_parser (parser);
 
       // call the Deployment Plan handler to parse the XML descriptor.
-      CIAO::Config_Handler::Plan_Handler plan_handler (ano_doc,
+      CIAO::Config_Handler::Plan_Handler plan_handler (plan_doc,
                                                   DOMNodeFilter::SHOW_ELEMENT |
                                                   DOMNodeFilter::SHOW_TEXT);
       Deployment::DeploymentPlan plan;
