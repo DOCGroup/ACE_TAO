@@ -17,8 +17,10 @@ OBJFILES = \
 	$(OBJDIR)\FT_CORBAS.obj	\
 	$(OBJDIR)\FT_IOGR_Property.obj \
 	$(OBJDIR)\FT_Policy_i.obj \
+        $(OBJDIR)\FT_PolicyFactory.obj \
 	$(OBJDIR)\FT_Service_Activate.obj \
-	$(OBJDIR)\FT_Service_Callbacks.obj
+        $(OBJDIR)\FT_Service_Callbacks.obj \
+        $(OBJDIR)\FT_ORBInitializer.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
