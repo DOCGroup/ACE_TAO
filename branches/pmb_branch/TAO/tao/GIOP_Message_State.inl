@@ -33,6 +33,24 @@ TAO_GIOP_Message_State::reset (void)
   this->missing_data_ = 0;
 }
 
+ACE_INLINE const TAO_GIOP_Message_Version &
+TAO_GIOP_Message_State::giop_version () const
+{
+  return this->giop_version_;
+}
+
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_State::more_fragments () const
+{
+  return this->more_fragments_;
+}
+
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_State::message_type () const
+{
+  return this->message_type_;
+}
+
 #if 0
 ACE_INLINE int
 TAO_GIOP_Message_State::message_fragmented (void)

@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $client_conf = PerlACE::LocalFile ("muxed$PerlACE::svcconf_ext");
 
 $debug_level = '0';
-$iterations = '1';
+$iterations = '10000';
 
 foreach $i (@ARGV) {
     if ($i eq '-mux') {

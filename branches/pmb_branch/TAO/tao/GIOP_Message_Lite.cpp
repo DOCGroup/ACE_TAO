@@ -237,6 +237,7 @@ TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
 }
 
 
+#if 0
 int
 TAO_GIOP_Message_Lite::parse_incoming_messages (ACE_Message_Block &block)
 {
@@ -485,6 +486,7 @@ TAO_GIOP_Message_Lite::consolidate_fragments (TAO_Queued_Data * /*dqd*/,
   // We dont know what fragments are???
   return -1;
 }
+#endif
 
 int
 TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
@@ -1596,6 +1598,7 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
     }
 }
 
+#if 0
 TAO_Queued_Data *
 TAO_GIOP_Message_Lite::make_queued_data (size_t sz)
 {
@@ -1627,6 +1630,7 @@ TAO_GIOP_Message_Lite::make_queued_data (size_t sz)
 
   return qd;
 }
+#endif
 
 int
 TAO_GIOP_Message_Lite::generate_locate_reply_header (
@@ -1648,4 +1652,23 @@ size_t
 TAO_GIOP_Message_Lite::header_length (void) const
 {
   return TAO_GIOP_LITE_HEADER_LEN;
+}
+
+void
+TAO_GIOP_Message_Lite::set_queued_data_from_message_header (
+  TAO_Queued_Data *qd,
+  const ACE_Message_Block &mb
+  ) const
+{
+  ACE_UNUSED_ARG (qd);
+  ACE_UNUSED_ARG (mb);
+}
+
+int
+TAO_GIOP_Message_Lite::check_for_valid_header (
+  const ACE_Message_Block &mb
+  ) const
+{
+  ACE_UNUSED_ARG (mb);
+  return 0;
 }

@@ -23,6 +23,7 @@
 #include "Notify_Handler.h"
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
+#include "ace/Min_Max.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
@@ -105,6 +106,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , head_ (0)
   , tail_ (0)
   , incoming_message_queue_ (orb_core)
+  , uncompleted_message_ (0)
   , current_deadline_ (ACE_Time_Value::zero)
   , flush_timer_id_ (-1)
   , transport_timer_ (this)
@@ -1290,7 +1292,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
                   this->id ()));
     }
 
-  // First try to process messages of the head of the incoming queue.
+  // First try to process messages off the head of the incoming queue.
   int retval = this->process_queue_head (rh);
 
   if (retval <= 0)
@@ -1335,25 +1337,27 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
+  // We'll loop trying to complete the message this number of times,
+  // and that's it.
+  unsigned int number_of_read_attempts = 2;
 
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
+read_from_the_connection:
   size_t recv_size = 0;
   if (this->orb_core_->orb_params ()->single_read_optimization ())
     {
-      recv_size =
-        message_block.space ();
+      recv_size = message_block.space ();
     }
   else
     {
-      recv_size =
-        this->messaging_object ()->header_length ();
+      recv_size = this->messaging_object ()->header_length ();
     }
 
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.rd_ptr (),
+  ssize_t n = this->recv (message_block.wr_ptr (),
                           recv_size,
                           max_wait_time);
 
@@ -1371,7 +1375,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::handle_input_i, "
+                  "TAO (%P|%t) - Transport[%d]::handle_input_i: "
                   "read %d bytes\n",
                   this->id (), n));
     }
@@ -1379,47 +1383,381 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  // Parse the message and try consolidating the message if
-  // needed.
-  retval = this->parse_consolidate_messages (message_block,
-                                             rh,
-                                             max_wait_time);
+  if (TAO_debug_level >= 10)
+    ACE_HEX_DUMP ((LM_DEBUG,
+                   (const char *) message_block.rd_ptr (),
+                   message_block.length (),
+                   ACE_TEXT ("TAO (%P|%t) Transport::handle_input_i(): bytes read from socket")));
 
-  if (retval <= 0)
+  // **** BEGIN CJC PMB CHANGES ****
+  //
+  // - Does this properly handle GIOP FRAGMENT messages??
+  // @@ BALA: I doubt it.. You could get an incomplete message
+  // fragment or a complete message fragment but the message could
+  // incomplete.
+
+  // @@ BALA: How do you handle messages that didnt fit the message
+  // block here?
+  //
+  // @@ CJC: I'm not sure what you mean...If we need more space, then
+  // we allocate more.
+
+  // Check to see if we're still working to complete a message
+  if (this->uncompleted_message_)
     {
-      if (retval == -1 && TAO_debug_level > 0)
+      // try to complete it
+
+      // on exit from this frame we have one of the following states:
+      //
+      // (a) an uncompleted message still in uncompleted_message_
+      //     AND message_block is empty
+      //
+      // (b) uncompleted_message_ zero, the completed message at the
+      //     tail of the incoming queue; message_block could be empty
+      //     or still contain bytes
+
+      // ==> repeat
+      do
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::handle_input_i, "
-                      "error while parsing and consolidating\n",
-                      this->id ()));
+          /*
+           * Append the "right number of bytes" to uncompleted_message_
+           */
+          // ==> right_number_of_bytes = MIN(bytes missing from
+          //          uncompleted_message_, length of message_block);
+          size_t right_number_of_bytes =
+            ACE_MIN (this->uncompleted_message_->missing_data_bytes_,
+                     message_block.length () );
+
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Transport[%d]::handle_input_i: "
+                          "trying to use %u (of %u) "
+                          "bytes to complete message missing %u bytes\n",
+                          this->id (),
+                          right_number_of_bytes,
+                          message_block.length (),
+                          this->uncompleted_message_->missing_data_bytes_));
+            }
+
+          // ==> append right_number_of_bytes from message_block
+          //     to uncomplete_message_ & update read pointer of
+          //     message_block;
+
+          // 1. we assume that uncompleted_message_.msg_block_'s
+          //    wr_ptr is properly maintained
+          // 2. we presume that uncompleted_message_.msg_block was
+          //    allocated with enough space to contain the *entire*
+          //    expected GIOP message, so this copy shouldn't involve an
+          //    additional allocation
+          this->uncompleted_message_->msg_block_->copy (message_block.rd_ptr (),
+                                                        right_number_of_bytes);
+          this->uncompleted_message_->missing_data_bytes_ -= right_number_of_bytes;
+          message_block.rd_ptr (right_number_of_bytes);
+
+          switch (this->uncompleted_message_->current_state_)
+            {
+            case TAO_Queued_Data::WAITING_TO_COMPLETE_HEADER:
+              if (this->messaging_object()->check_for_valid_header (
+                    *this->uncompleted_message_->msg_block_))
+                {
+                  // ==> update bytes missing from uncompleted_message_
+                  //     with size of message from valid header;
+                  this->messaging_object()->set_queued_data_from_message_header (
+                    this->uncompleted_message_,
+                    *this->uncompleted_message_->msg_block_);
+                  // ==> change state of uncompleted_event_ to
+                  // WAITING_TO_COMPLETE_PAYLOAD;
+                  this->uncompleted_message_->current_state_ =
+                    TAO_Queued_Data::WAITING_TO_COMPLETE_PAYLOAD;
+
+                  // ==> Resize the message block to have capacity for
+                  // the rest of the incoming message
+                  ACE_Message_Block & mb = *this->uncompleted_message_->msg_block_;
+                  mb.size (mb.size ()
+                           + this->uncompleted_message_->missing_data_bytes_);
+
+                  if (TAO_debug_level > 2)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "(%P|%t) Transport[%d]::handle_input_i: "
+                                  "found a valid header in the message; "
+                                  "waiting for %u bytes to complete payload\n",
+                                  this->id (),
+                                  this->uncompleted_message_->missing_data_bytes_));
+                    }
+
+                  // Continue the loop...(?to where?)
+                  continue;
+                }
+              else
+                {
+                  // What the heck will we do with a bad header?  Just
+                  // better to close the connection and let things
+                  // re-train from there.
+                  return -1;
+#if 0 // I don't think I need this clause, but I'm leaving it just in case.
+                  // ==> bytes missing from uncompleted_message_ -= right_number_of_bytes;
+                  this->uncompleted_message_->missing_data_bytes_ -= right_number_of_bytes;
+                  ACE_ASSERT (this->uncompleted_message->missing_data_bytes_ > 0);
+#endif
+                }
+              break;
+
+            case TAO_Queued_Data::WAITING_TO_COMPLETE_PAYLOAD:
+              // ==> if (bytes missing from uncompleted_message_ == 0)
+              if (this->uncompleted_message_->missing_data_bytes_ == 0)
+                {
+                  /*
+                   * We completed the message!  Hooray!
+                   */
+                  // ==> place uncompleted_message_ (which is now
+                  // complete!) at the tail of the incoming message
+                  // queue;
+
+                  // ---> NOTE: whoever pulls this off the queue must delete it!
+                  this->uncompleted_message_->current_state_
+                    = TAO_Queued_Data::COMPLETED;
+                  // @@CJC NEED TO CHECK RETURN VALUE HERE!
+                  this->enqueue_incoming_message (this->uncompleted_message_);
+                  // zero out uncompleted_message_;
+                  this->uncompleted_message_ = 0;
+
+                  if (TAO_debug_level > 2)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "(%P|%t) Transport[%d]::handle_input_i: "
+                                  "completed and queued message for processing!\n",
+                                  this->id ()));
+                    }
+                  
+                }
+              else
+                {
+                  if (TAO_debug_level > 2)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "(%P|%t) Transport[%d]::handle_input_i: "
+                                  "still need %u bytes to complete uncompleted message.\n",
+                                  this->id (),
+                                  this->uncompleted_message_->missing_data_bytes_));
+                    }
+                }
+              break;
+
+            default:
+              // @@CJC What do we do here?!
+              ACE_ASSERT (! "Transport::handle_input_i: unexpected state"
+                          "in uncompleted_message_");
+            }
         }
-      return retval;
+      // Does the order of the checks matter?  In both (a) and (b),
+      // message_block is empty, but only in (b) is there no
+      // uncompleted_message_.
+      // ==> until (message_block is empty || there is no uncompleted_message_);
+      //    or, rewritten in C++ looping constructs
+      // ==> while ( ! message_block is empty && there is an uncompleted_message_ );
+      while (message_block.length() != 0 && this->uncompleted_message_);
     }
 
-  // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block,
-                      this->orb_core_->transport_message_buffer_allocator ());
-
-  // Extract the data for the node..
-  this->messaging_object ()->get_message_data (&qd);
-
-  // Check whether the message was fragmented..
-  if (qd.more_fragments_ ||
-      (qd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+  // If, at the end, we're still waiting to complete the message,
+  // we should effectively return.
+  //
+  // @@BALA: Returning here will reduce the throughput. We shold try
+  // reading again to see if we could get more data..
+  //
+  // @@CJC: Good point; maybe we can go to the top again, but only try
+  // to read at most 2-3 times before we just go on.  Obviously, if we
+  // complete the message (i.e., there's no uncompleted message), then
+  // we go on to the next step.
+  if (this->uncompleted_message_)
     {
-      // Duplicate the node that we have as the node is on stack..
-      TAO_Queued_Data *nqd =
-        TAO_Queued_Data::duplicate (qd);
+      if (number_of_read_attempts--)
+        {
+          // We try to read again just in case more data arrived while
+          // we were doing the stuff above.  This way, we can increase
+          // throughput without much of a penalty.
 
-      return this->consolidate_fragments (nqd, rh);
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Transport[%d]::handle_input_i: "
+                          "still have an uncompleted message; "
+                          "will try %d more times before letting "
+                          "somebody else have a chance.\n",
+                          this->id (),
+                          number_of_read_attempts));
+            }
+
+          // Yes, this uses the much-maligned "goto"; get over it.  TCP
+          // implementations use them, too, for just the same sort of
+          // situation.
+          goto read_from_the_connection;
+        }
+      else
+        {
+          // The queue should be empty because it should have been processed
+          // above.  But I wonder if I should put a check in here anyway.
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Transport[%d]::handle_input_i: "
+                          "giving up reading for now and returning "
+                          "with incoming queue length = %d\n",
+                          this->id (),
+                          this->incoming_message_queue_.queue_length ()));
+              if (this->uncompleted_message_)
+                ACE_DEBUG ((LM_DEBUG,
+                            "(%P|%t) Transport[%d]::handle_input_i: "
+                            "missing bytes from uncompleted message = %u\n",
+                            this->uncompleted_message_->missing_data_bytes_));
+            }
+          return 1;
+        }
     }
+
+  // At this point, there should be nothing in uncompleted_message_.
+  // We now need to chop up the bytes in message_block and store any
+  // complete messages in the incoming message queue.
+  //
+  // ==> if (message_block still has data)
+  if (message_block.length () != 0)
+    {
+      TAO_Queued_Data *complete_message = 0;
+      do
+        {
+          if (TAO_debug_level >= 10)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT("TAO (%P|%t) Transport::handle_input_i: ")
+                          ACE_TEXT("extracting complete messages\n")));
+              ACE_HEX_DUMP ((LM_DEBUG,
+                             message_block.rd_ptr (),
+                             message_block.length (),
+                             ACE_TEXT ("           from this message buffer")));
+            }
+          complete_message =
+            TAO_Queued_Data::make_completed_message (
+              message_block, *this->messaging_object ());
+          if (complete_message)
+            this->enqueue_incoming_message (complete_message);
+        }
+      while (complete_message != 0);
+      // On exit from this frame we have one of the following states:
+      // (a) message_block is empty
+      // (b) message_block contains bytes from a partial message
+    }
+
+  // If, at this point, there's still data in message_block, it's
+  // an incomplete message.  Therefore, we stuff it into the
+  // uncompleted_message_ and clear out message_block.
+  // ==> if (message_block still has data)
+  if (message_block.length () != 0)
+    {
+      // duplicate message_block remainder into this->uncompleted_message_
+      ACE_ASSERT (this->uncompleted_message_ == 0);
+      ACE_Message_Block *queueable_mb = message_block.clone ();
+      ACE_ASSERT (queueable_mb != 0);
+      message_block.rd_ptr (message_block.length ());
+      this->uncompleted_message_ =
+        TAO_Queued_Data::make_uncompleted_message (queueable_mb,
+                                                   *this->messaging_object ());
+    }
+
+  // We should have consumed ALL the bytes by now.
+  ACE_ASSERT (message_block.length () == 0);
+
+  // **** END   CJC PMG CHANGES ****
 
   // Process the message
-  return this->process_parsed_messages (&qd,
-                                        rh);
+  return this->process_queue_head (rh);
 }
 
+int
+TAO_Transport::enqueue_incoming_message (TAO_Queued_Data *queueable_message)
+{
+  // some notes...
+  //
+  // will probably need to modify process_queue_head to iterate to
+  // find the first unfragmented message in the queue
+
+  return this->incoming_message_queue_.enqueue_tail (queueable_message);
+
+#if 0
+  //
+  // This is the code that will deal with fragments
+  //
+
+  // If the message doesn't indicate that more fragments are on
+  // the way, then we just queue it up at the tail and go on.
+  if (! queueable_message->more_fragments_)
+    // NOTE: we might have to capture the return value from enqueue_tail()
+    // and convert it to an appropriate return value for this method.
+    return this->incoming_message_queue_.enqueue_tail (queueable_message);
+
+  // At this point we know that queueable_message is a fragment.  What
+  // we don't know is what kind of fragment it is, or how to deal with
+  // it.
+  //
+  // Let's just explore the mechanics of how things would be done for
+  // the case of GIOP.  When we really do this, we'll have to go a bit
+  // more abstract.
+  switch (queueable_message->giop_version)
+    {
+    case 1.0:
+      // Fragments aren't supported in 1.0.  This is an error and
+      // we should reject it somehow.  What do we do here?  Do we throw
+      // an exception to the receiving side?  Do we throw an exception
+      // to the sending side?
+      //
+      // At the very least, we need to log the fact that we received
+      // nonsense.
+      LOG_AND_RETURN_AN_ERROR;
+      break;
+
+    case 1.1:
+      // In 1.1, fragments kinda suck because they don't have they're
+      // own message-specific header.  Therefore, we have to do the
+      // following:
+      fragment_message = search the incoming queue for a GIOP 1.1 message that has the more_fragments_ bit set;
+      add this queueable_message->msg_block_ as a continuation block to the last block in fragment_message continuation chain;
+
+      // One note is that TAO_Queued_Data contains version numbers,
+      // but doesn't indicate the actual protocol to which those
+      // version numbers refer.  That's not a problem, though, because
+      // instances of TAO_Queued_Data live in a queue, and that queue
+      // lives in a particular instance of a Transport, and the
+      // transport instance has an association with a particular
+      // messaging_object.  The concrete messaging object embodies a
+      // messaging protocol, and must cover all versions of that
+      // protocol.  Therefore, we just need to cover the bases of all
+      // versions of that one protocol.
+      break;
+
+    case 1.2:
+      // In GIOP 1.2, we get a little more context.  There's a
+      // FRAGMENT message-specific header, and inside that is the
+      // request id with which the fragment is associated.
+      //
+      // What this means is that we'll have to add request_id_ as one
+      // of the TOA_Queued_Data public data members.
+      fragment_id = extract id from fragment header;
+      fragment_message = search incoming_queue for a GIOP message with request_id==fragment_id;
+      // Check for bizarre error conditions first
+      if (! fragment_message->more_fragments_)
+        LOG_AND_RETURN_AN_ERROR;
+      if (fragment_message->GIOP_version != 1.2)
+        LOG_AND_RETURN_AN_ERROR;
+      
+      add this queueable_message->msg_block_ as a continuation block to the last block in fragment_message continuation chain;
+      break;
+    }
+
+  return 0;
+#endif  
+}
+
+#if 0
 int
 TAO_Transport::parse_consolidate_messages (ACE_Message_Block &block,
                                            TAO_Resume_Handle &rh,
@@ -1902,6 +2240,7 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
 
   return this->process_queue_head (rh);
 }
+#endif
 
 int
 TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
@@ -2013,6 +2352,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   return 0;
 }
 
+#if 0
 TAO_Queued_Data *
 TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
 {
@@ -2063,6 +2403,7 @@ TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
 
   return qd;
 }
+#endif
 
 int
 TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
