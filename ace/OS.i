@@ -2385,14 +2385,26 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
 #     endif
 
-    return (::mu_create (ACE_reinterpret_cast (char *, name),
-                         flags, ceiling, m) == 0) ? 0 : -1;
+    // Fake a pSOS name - it can be any 4-byte value, not necessarily needing
+    // to be ASCII. So use the mutex pointer passed in. That should identify
+    // each one uniquely.
+    union { ACE_mutex_t *p; char n[4]; } m_name;
+    m_name.p = m;
+
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_create (m_name.n,
+                                                      flags,
+                                                      ceiling,
+                                                      m),
+                                         ace_result_),
+                       int, -1);
 
 #   else /* ! ACE_PSOS_HAS_MUTEX */
-  return ::sm_create ((char *) name,
-                      1,
-                      SM_LOCAL | SM_PRIOR,
-                      m) == 0 ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_create ((char *) name,
+                                                    1,
+                                                    SM_LOCAL | SM_PRIOR,
+                                                    m),
+                                       ace_result_),
+                     int, -1);
 #   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   ACE_UNUSED_ARG (name);
@@ -2441,9 +2453,11 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
 #   if defined (ACE_PSOS_HAS_MUTEX)
-  return (::mu_delete (*m) == 0) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_delete (*m), ace_result_),
+                     int, -1);
 #   else /* ! ACE_PSOS_HAS_MUTEX */
-  return (::sm_delete (*m) == 0) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_delete (*m), ace_result_),
+                     int, -1);
 #   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   return ::semDelete (*m) == OK ? 0 : -1;
@@ -2496,9 +2510,13 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
 #   if defined (ACE_PSOS_HAS_MUTEX)
-  return (::mu_lock (*m, MU_WAIT, 0) == 0) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_lock (*m, MU_WAIT, 0),
+                                       ace_result_),
+                     int, -1);
 #   else /* ACE_PSOS_HAS_MUTEX */
-  return (::sm_p (*m, SM_WAIT, 0) == 0) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_p (*m, SM_WAIT, 0),
+                                       ace_result_),
+                     int, -1);
 #   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
@@ -2600,7 +2618,9 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
 #   if defined (ACE_PSOS_HAS_MUTEX)
-   return (::mu_lock (*m, MU_NOWAIT, 0) == 0) ? 0 : -1;
+   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_lock (*m, MU_NOWAIT, 0),
+                                        ace_result_),
+                      int, -1);
 #   else /* ! ACE_PSOS_HAS_MUTEX */
    switch (::sm_p (*m, SM_NOWAIT, 0))
    {
@@ -2705,9 +2725,11 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
 #   if defined (ACE_PSOS_HAS_MUTEX)
-  return (::mu_unlock (*m) == 0) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_unlock (*m), ace_result_),
+                     int, -1);
 #   else /* ! ACE_PSOS_HAS_MUTEX */
-  return (::sm_v (*m) == 0) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_v (*m), ace_result_),
+                     int, -1);
 #   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   return ::semGive (*m) == OK ? 0 : -1;
@@ -2856,7 +2878,8 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), ace_result_), int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-  return (::cv_delete (*cv)) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cv_delete (*cv), ace_result_),
+                     int, -1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -2901,7 +2924,21 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
   attributes.type = type;
 
   return 0;
-#   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
+
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
+  attributes = CV_LOCAL | CV_PRIOR;
+#     else /* ACE_PSOS_HAS_PRIO_MUTEX */
+  attributes = CV_LOCAL | CV_FIFO;
+#     endif /* ACE_PSOS_HAS_PRIO_MUTEX */
+  return 0;
+
+#   else
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (type);
+  ACE_NOTSUP_RETURN (-1);
+
+#   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS vs. pSOS */
 
 # else
   ACE_UNUSED_ARG (attributes);
@@ -2924,7 +2961,11 @@ ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 
 #   elif defined (ACE_HAS_STHREADS)
   attributes.type = 0;
-#   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
+
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+  attributes = 0;
+
+#   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS vs. ACE_PSOS */
   return 0;
 # else
   ACE_UNUSED_ARG (attributes);
@@ -2966,13 +3007,12 @@ ACE_OS::cond_init (ACE_cond_t *cv,
                                        ace_result_),
                      int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
-  u_long flags = CV_LOCAL | CV_PRIOR;
-#     else /* ACE_PSOS_HAS_PRIO_MUTEX */
-  u_long flags = CV_LOCAL | CV_FIFO;
-#     endif /* ACE_PSOS_HAS_PRIO_MUTEX */
-  return (::cv_create ((char *) name, flags, cv)) ? 0 : -1;
-#   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cv_create (ACE_const_cast (char *, name),
+                                                    attributes,
+                                                    cv),
+                                       ace_result_),
+                     int, -1);
+#   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS vs. ACE_PSOS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (attributes);
@@ -3010,7 +3050,8 @@ ACE_TRACE ("ACE_OS::cond_signal");
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_signal (cv), ace_result_), int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-  return (::cv_signal (*cv)) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cv_signal (*cv), ace_result_),
+                     int, -1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -3036,7 +3077,8 @@ ACE_TRACE ("ACE_OS::cond_broadcast");
                                        ace_result_),
                      int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-  return (::cv_broadcast (*cv)) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cv_broadcast (*cv), ace_result_),
+                     int, -1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -3061,7 +3103,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), ace_result_),
                      int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-  return (::cv_wait (*cv, *external_mutex, 0)) ? 0 : -1;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cv_wait (*cv, *external_mutex, 0),
+                                       ace_result_),
+                     int, -1);
 #   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -3134,10 +3178,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                 result),
               int, -1, result);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-  if (timeout == 0)
-    return (::cv_wait (*cv, *external_mutex, 0)) ? 0 : -1;
-  else
-    return (::cv_wait (*cv, *external_mutex, *timeout)) ? 0 : -1;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
+                                ? ::cv_wait (*cv, *external_mutex, 0)
+                                : ::cv_wait (*cv,
+                                             *external_mutex,
+                                             timeout->msec ()),
+                                result),
+              int, -1, result);
 #   endif /* ACE_HAS_STHREADS */
   if (timeout != 0)
     timeout->set (ts); // Update the time value before returning.
@@ -4798,7 +4845,7 @@ ACE_OS::event_init (ACE_event_t *event,
   event->waiting_threads_ = 0;
 
   int result = ACE_OS::cond_init (&event->condition_,
-                                  type,
+                                  ACE_static_cast (short, type),
                                   name,
                                   arg);
   if (result == 0)
@@ -7706,6 +7753,12 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   else
 #   endif /* ACE_HAS_WINCE */
     return 0;
+# elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+  ACE_hthread_t tid;
+  ACE_OS::thr_self (tid);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::tsd_getval (key, tid, data),
+                                       ace_result_),
+                     int, -1);
 # else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
