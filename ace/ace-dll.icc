@@ -76,6 +76,7 @@ option
                                               'Cache_Map_Manager_T.h',
                                               'Caching_Strategies_T.h',
                                               'Caching_Utility_T.h',
+                                              'Capabilities.h',
                                               'CDR_Stream.h',
                                               'Cleanup_Strategies_T.h',
                                               'Codeset_IBM1047.h',
@@ -294,6 +295,7 @@ option
                  source type(cpp) "Asynch_IO_Impl.cpp"
                  source type(cpp) "Based_Pointer_Repository.cpp"
                  source type(cpp) "Basic_Types.cpp"
+                 source type(cpp) "Capabilities.cpp"
                  source type(cpp) "CDR_Stream.cpp"
                  source type(cpp) "Containers.cpp"
                  source type(cpp) "CORBA_Handler.cpp"
