@@ -14,7 +14,6 @@
 
 ACE_RCSID(ace, Timer_Wheel_T, "$Id$")
 
-
 /**
  * Just initializes the iterator with a ACE_Timer_Wheel_T and then calls
  * first() to initialize the rest of itself.
@@ -676,7 +675,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::iter (void)
   return *this->iterator_;
 }
 
-
 /**
  * Dummy version of expire to get rid of warnings in Sun CC 4.2
  * Just call the expire of the base class.
@@ -686,7 +684,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire ()
 {
   return ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::expire ();
 }
-
 
 /**
  * This is a specialized version of expire that is more suited for the
@@ -795,6 +792,27 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (
       earliest_pos = next_earliest_pos;
     } 
   while (earliest_pos != this->wheel_size_);
+
+  //  Look for a new earliest time
+
+  earliest_time = ACE_Time_Value::zero; 
+
+  // Check every entry in the table
+  for (i = 0; i < this->wheel_size_; i++)
+    {
+      // Skip empty entries
+      if (this->wheel_[i]->get_next () != this->wheel_[i])
+        {
+          // if initialization or if the time is earlier
+          if (earliest_time == ACE_Time_Value::zero
+              || this->wheel_[i]->get_timer_value () < earliest_time)
+            {
+              earliest_time =
+                this->wheel_[i]->get_next ()->get_timer_value ();
+              this->earliest_pos_ = i;
+            }
+        }
+    }
 
   return number_of_timers_expired;
 }

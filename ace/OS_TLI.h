@@ -7,8 +7,6 @@
  *  $Id$
  *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
- *  @author Jesper S. M|ller<stophph@diku.dk>
- *  @author and a cast of thousands...
  */
 //=============================================================================
 
@@ -24,9 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if defined (ACE_WIN32)
-// Win32 dummies to help compilation.
-struct rlimit { };
+# if !defined (ACE_HAS_TLI)
+// Dummies to help compilation.
 struct t_call { };
 struct t_bind { };
 struct t_info { };
@@ -130,7 +127,7 @@ class ACE_OS_Export ACE_OS_TLI
 public:
   // = A set of wrappers for TLI.
   static int t_accept (ACE_HANDLE fildes,
-                       int resfd,
+                       ACE_HANDLE resfd,
                        struct t_call
                        *call);
   static char *t_alloc (ACE_HANDLE fildes,
@@ -142,7 +139,7 @@ public:
                      struct
                      t_bind *ret);
   static int t_close (ACE_HANDLE fildes);
-  static int t_connect(int fildes,
+  static int t_connect(ACE_HANDLE fildes,
                        struct t_call *sndcall,
                        struct t_call *rcvcall);
   static void t_error (const char *errmsg);
@@ -157,9 +154,9 @@ public:
   static int t_listen (ACE_HANDLE fildes,
                        struct t_call *call);
   static int t_look (ACE_HANDLE fildes);
-  static int t_open (char *path,
-                     int oflag,
-                     struct t_info *info);
+  static ACE_HANDLE t_open (char *path,
+                            int oflag,
+                            struct t_info *info);
   static int t_optmgmt (ACE_HANDLE fildes,
                         struct t_optmgmt *req,
                         struct t_optmgmt *ret);

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SV_SEMAPHORE_SIMPLE_H
 #define ACE_SV_SEMAPHORE_SIMPLE_H
 #include "ace/pre.h"

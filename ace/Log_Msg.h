@@ -136,7 +136,7 @@ class ACE_Thread_Descriptor;
  * The ACE_Log_Msg class uses two priority masks to control its
  * logging behavior.  The <priority_mask_> object attribute is thread
  * specific and specifies the priority levels logged by the thread.
- * The <process_priority_mask_> class attribute is not thread specific
+ * The <process_priority_mask_> class attribute is not thread-specific
  * and specifies the priority levels that will be logged by all
  * threads in the process.  By default, all levels are enabled for
  * <priority_mask_> and all levels are disabled for

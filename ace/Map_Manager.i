@@ -9,26 +9,26 @@ ACE_Map_Entry<EXT_ID, INT_ID>::~ACE_Map_Entry (void)
 }
 #endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
-template <class EXT_ID, class INT_ID> ACE_INLINE size_t
+template <class EXT_ID, class INT_ID> ACE_INLINE ACE_UINT32
 ACE_Map_Entry<EXT_ID, INT_ID>::next (void) const
 {
   return this->next_;
 }
 
 template <class EXT_ID, class INT_ID> ACE_INLINE void
-ACE_Map_Entry<EXT_ID, INT_ID>::next (size_t n)
+ACE_Map_Entry<EXT_ID, INT_ID>::next (ACE_UINT32 n)
 {
   this->next_ = n;
 }
 
-template <class EXT_ID, class INT_ID> ACE_INLINE size_t
+template <class EXT_ID, class INT_ID> ACE_INLINE ACE_UINT32
 ACE_Map_Entry<EXT_ID, INT_ID>::prev (void) const
 {
   return this->prev_;
 }
 
 template <class EXT_ID, class INT_ID> ACE_INLINE void
-ACE_Map_Entry<EXT_ID, INT_ID>::prev (size_t p)
+ACE_Map_Entry<EXT_ID, INT_ID>::prev (ACE_UINT32 p)
 {
   this->prev_ = p;
 }
@@ -133,7 +133,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id) const
     (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *) this;
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, nc_this->lock_, -1);
 
-  size_t slot = 0;
+  ACE_UINT32 slot = 0;
   return nc_this->find_and_return_index (ext_id, slot);
 }
 
@@ -152,7 +152,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id)
 {
   // Unbind the entry.
-  size_t slot = 0;
+  ACE_UINT32 slot = 0;
   return this->unbind_and_return_index (ext_id,
                                         slot);
 }
@@ -195,7 +195,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::mutex (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE void
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_from_free_list_to_occupied_list (size_t slot)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_from_free_list_to_occupied_list (ACE_UINT32 slot)
 {
   this->shared_move (slot,
                      this->free_list_,
@@ -205,7 +205,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_from_free_list_to_occupied_list 
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE void
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_from_occupied_list_to_free_list (size_t slot)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_from_occupied_list_to_free_list (ACE_UINT32 slot)
 {
   this->shared_move (slot,
                      this->occupied_list_,
@@ -221,19 +221,19 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::equal (const EXT_ID &id1,
   return id1 == id2;
 }
 
-template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE size_t
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE ACE_UINT32
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_list_id (void) const
 {
   // If you change ~0, please change
   // ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key()
   // accordingly.
-  return (size_t) ~0;
+  return (ACE_UINT32) ~0;
 }
 
-template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE size_t
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE ACE_UINT32
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::occupied_list_id (void) const
 {
-  return (size_t) ~1;
+  return (ACE_UINT32) ~1;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE

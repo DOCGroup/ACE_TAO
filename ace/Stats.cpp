@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Stats.h"
+#include "ace/High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Stats.i"
@@ -590,7 +591,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
     ACE_static_cast (double,
                      ACE_UINT64_DBLCAST_ADAPTER(elapsed_time / sf));
 #endif /* ! ACE_LACKS_LONGLONG_T */
-  seconds /= 1000000.0;
+  seconds /= ACE_HR_SCALE_CONVERSION; 
   double t_avg = samples_count / seconds;
 
   ACE_DEBUG ((LM_DEBUG,

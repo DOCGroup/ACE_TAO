@@ -13,10 +13,13 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
 #if defined (ACE_HAS_STREAM_PIPES)
   int i = 0;
-  return ACE_OS::getmsg (this->get_handle (),
-			 (strbuf *) 0,
-			 (strbuf *) &recv_msg,
-			 &i);
+  if (ACE_OS::getmsg (this->get_handle (),
+                      (strbuf *) 0,
+                      (strbuf *) &recv_msg,
+                      &i) == -1)
+    return -1;
+  else 
+    return recv_msg.len;
 #else /* Do the ol' 2-read trick... */
   if (ACE_OS::read (this->get_handle (), 
 		    (char *) &recv_msg.len, 
@@ -45,10 +48,13 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
 			 int *flags)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
-  return ACE_OS::getmsg (this->get_handle (), 
-			 (strbuf *) cntl,
-			 (strbuf *) data,
-			 flags);
+  if (ACE_OS::getmsg (this->get_handle (), 
+                      (strbuf *) cntl,
+                      (strbuf *) data,
+                      flags) == -1)
+    return -1;
+  else
+    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
 }
 
 ASYS_INLINE ssize_t
@@ -58,10 +64,13 @@ ACE_FIFO_Recv_Msg::recv (int *band,
 			 int *flags)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
-  return ACE_OS::getpmsg (this->get_handle (), 
-			  (strbuf *) cntl,
-			  (strbuf *) data,
-			  band,
-			  flags);
+  if (ACE_OS::getpmsg (this->get_handle (), 
+                       (strbuf *) cntl,
+                       (strbuf *) data,
+                       band,
+                       flags) == -1)
+    return -1;
+  else
+    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
 }
 #endif /* ACE_HAS_STREAM_PIPES */

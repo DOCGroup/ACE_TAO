@@ -58,18 +58,18 @@ public:
   // are not portable.
 
   /// Get/Set next entry.
-  size_t next (void) const;
-  void next (size_t n);
+  ACE_UINT32 next (void) const;
+  void next (ACE_UINT32 n);
 
   /// Get/Set prev entry.
-  size_t prev (void) const;
-  void prev (size_t p);
+  ACE_UINT32 prev (void) const;
+  void prev (ACE_UINT32 p);
 
   /// Keeps track of the next entry.
-  size_t next_;
+  ACE_UINT32 next_;
 
   /// Keeps track of the previous entry.
-  size_t prev_;
+  ACE_UINT32 prev_;
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
@@ -307,7 +307,7 @@ protected:
   /// Performs a find using <ext_id> as the key.  Must be called with
   /// locks held.
   int find_and_return_index (const EXT_ID &ext_id,
-                             size_t &slot);
+                             ACE_UINT32 &slot);
 
   /// Performs an unbind of <int_id> using <ext_id> as the key.  Must
   /// be called with locks held.
@@ -321,13 +321,13 @@ protected:
   /// Performs an unbind using <ext_id> as the key.  Must be called
   /// with locks held.
   int unbind_and_return_index (const EXT_ID &ext_id,
-                               size_t &slot);
+                               ACE_UINT32 &slot);
 
   /// Unbind <slot>.
-  void unbind_slot (size_t slot);
+  void unbind_slot (ACE_UINT32 slot);
 
   /// Resize the map.  Must be called with locks held.
-  int resize_i (size_t size);
+  int resize_i (ACE_UINT32 size);
 
   /// Close down a <Map_Manager>.  Must be called with locks held.
   int close_i (void);
@@ -338,26 +338,26 @@ protected:
 
   /// This function returns the new size of the Map Manager.  This
   /// function is called when we run out of room and need to resize.
-  size_t new_size (void);
+  ACE_UINT32 new_size (void);
 
   /// Explicitly call the destructors and free up the
   /// <search_structure_>.
   void free_search_structure (void);
 
   /// Id of the free list sentinel.
-  size_t free_list_id (void) const;
+  ACE_UINT32 free_list_id (void) const;
 
   /// Id of the occupied list sentinel.
-  size_t occupied_list_id (void) const;
+  ACE_UINT32 occupied_list_id (void) const;
 
   /// Finds the next free slot.
-  int next_free (size_t &slot);
+  int next_free (ACE_UINT32 &slot);
 
   /// Move from free list to occupied list.
-  void move_from_free_list_to_occupied_list (size_t slot);
+  void move_from_free_list_to_occupied_list (ACE_UINT32 slot);
 
   /// Move from occupied list to free list.
-  void move_from_occupied_list_to_free_list (size_t slot);
+  void move_from_occupied_list_to_free_list (ACE_UINT32 slot);
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
@@ -372,11 +372,11 @@ protected:
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
   /// Move helper.
-  void shared_move (size_t slot,
+  void shared_move (ACE_UINT32 slot,
                     ACE_Map_Entry<EXT_ID, INT_ID> &current_list,
-                    size_t current_list_id,
+                    ACE_UINT32 current_list_id,
                     ACE_Map_Entry<EXT_ID, INT_ID> &new_list,
-                    size_t new_list_id);
+                    ACE_UINT32 new_list_id);
 
   /// Pointer to a memory allocator.
   ACE_Allocator *allocator_;
@@ -388,10 +388,10 @@ protected:
   ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
 
   /// Total number of elements in this->search_structure_.
-  size_t total_size_;
+  ACE_UINT32 total_size_;
 
   /// Current size of the map.
-  size_t cur_size_;
+  ACE_UINT32 cur_size_;
 
   /// Free list.
   ACE_Map_Entry<EXT_ID, INT_ID> free_list_;
@@ -471,7 +471,7 @@ protected:
   ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
 
   /// Keeps track of how far we've advanced...
-  size_t next_;
+  ACE_UINT32 next_;
 };
 
 /**

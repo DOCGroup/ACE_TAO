@@ -103,6 +103,10 @@ public:
    */
   static const ACE_TCHAR *priority_name (ACE_Log_Priority p);
 
+  // IMPORTANT: <name> must be a statically allocated const ACE_TCHAR*
+  static void priority_name (ACE_Log_Priority p,
+                             const ACE_TCHAR *name);
+
   // = Marshall/demarshall
   /// Encode the <Log_Record> for transmission on the network.
   void encode (void);

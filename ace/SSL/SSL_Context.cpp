@@ -12,12 +12,15 @@
 
 #include "ace/Synch.h"
 #include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
 #include <openssl/rand.h>
 
-ACE_RCSID (ACE_SSL, SSL_Context, "$Id$")
+ACE_RCSID (ACE_SSL,
+           SSL_Context,
+           "$Id$")
 
 #ifdef ACE_HAS_THREADS
 ACE_mutex_t * ACE_SSL_Context::lock_ = 0;

@@ -480,6 +480,9 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
   mb->rd_ptr (tmp.rd_ptr ());
   mb->wr_ptr (tmp.wr_ptr ());
 
+  // Remove the DONT_DELETE flags from mb
+  mb->clr_self_flags (ACE_Message_Block::DONT_DELETE);
+
   return 0;
 }
 
@@ -527,6 +530,20 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
       dst->copy (i->rd_ptr (), i->length ());
     }
 }
+
+#if defined (NONNATIVE_LONGLONG)
+int
+ACE_CDR::LongLong::operator== (const ACE_CDR::LongLong &rhs) const
+{
+  return this->h == rhs.h && this->l == rhs.l;
+}
+
+int
+ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
+{
+  return this->l != rhs.l || this->h != rhs.h;
+}
+#endif /* NONNATIVE_LONGLONG */
 
 #if defined (NONNATIVE_LONGDOUBLE)
 int

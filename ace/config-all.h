@@ -319,7 +319,7 @@
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  NOTE: that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
-# define ACE_UNUSED_ARG(a) {if (&a) /* null */ ;}
+# define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
 #else /* ghs || __GNUC__ || ..... */
 # define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs || __GNUC__ || ..... */
