@@ -1,8 +1,9 @@
 Mon Aug 30 07:38:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tests/Message_Block_Test.cpp: use the explicit template
-          instantiations even with ACE_HAS_GNU_REPO.  g++ 2.91.66
-          misses some of them with -frepo.
+        * tests/Message_Block_Test.cpp,
+          examples/Reactor/Misc/test_event_handler_t.cpp:
+          use the explicit template instantiations even with
+          ACE_HAS_GNU_REPO.  g++ 2.91.66 misses some of them with -frepo.
 
 Sun Aug 29 22:57:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
