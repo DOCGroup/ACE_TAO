@@ -24,7 +24,7 @@ ACE_RCSID(MT_Cubit, server, "$Id$")
 
 Globals::Globals (void)
   :ior_file (0),
-   base_port (ACE_DEFAULT_SERVER_PORT),
+   base_port (0),
    num_of_objs (2),
    use_name_service (1),
    thread_per_rate (0),
@@ -34,6 +34,8 @@ Globals::Globals (void)
    ready_cnd_ (ready_mtx_),
    barrier_ (0)
 {
+  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
+      perror ("gethostname");
 }
 
 int
@@ -42,12 +44,8 @@ Globals::parse_args (int argc,char **argv)
   ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rmU");
   int c;
 
-  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
-    {
-      perror ("gethostname");
-      return -1;
-    }
 
+  ACE_DEBUG ((LM_DEBUG,"%s",hostname));
   while ((c = opts ()) != -1)
     {
       //      ACE_DEBUG ((LM_DEBUG,"parse_args:%c ,",c));
@@ -78,7 +76,7 @@ Globals::parse_args (int argc,char **argv)
         break;
       case 'p':
         base_port = ACE_OS::atoi (opts.optarg);
-        //        ACE_DEBUG ((LM_DEBUG, "p\n"));
+        ACE_DEBUG ((LM_DEBUG, "base_port:%d\n",base_port));
         break;
       case 't':
         num_of_objs = ACE_OS::atoi (opts.optarg);
@@ -512,7 +510,10 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
   for (i = 0; i < this->argc_ ; i++)
     {
       if ((ACE_OS::strcmp (this->argv_[i],"-p") == 0) && (i-1 < this->argc_))
-        GLOBALS::instance ()->base_port = ACE_OS::atoi (this->argv_[i+1]);
+        {
+          GLOBALS::instance ()->base_port = ACE_OS::atoi (this->argv_[i+1]);
+          ACE_DEBUG ((LM_DEBUG,"base_port:%d",GLOBALS::instance()->base_port));
+        }
       else if ((ACE_OS::strcmp (this->argv_[i],"-h") == 0) && (i-1 < this->argc_))
         ACE_OS::strcpy (GLOBALS::instance ()->hostname,this->argv_[i+1]);
       else if ((ACE_OS::strcmp (this->argv_[i],"-t") == 0) && (i-1 < this->argc_))
@@ -526,10 +527,12 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                   -1);
 
   ACE_OS::sprintf (args1,
+                   "-ORBport %d "
                    "-ORBhost %s "
                    "-ORBobjrefstyle URL "
                    "-ORBsndsock 32768 "
                    "-ORBrcvsock 32768 ",
+                   GLOBALS::instance ()->base_port,
                    GLOBALS::instance ()->hostname);
 
   ACE_OS::strcat (high_thread_args,args1);
@@ -664,10 +667,12 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,Task_State *ts)
                       -1);
       ACE_OS::strcpy (new_args,low_thread_args);
       ACE_OS::sprintf (args,
+                       "-ORBport %d "
                        "-ORBhost %s "
                        "-ORBobjrefstyle URL "
                        "-ORBsndsock 32768 "
                        "-ORBrcvsock 32768 ",
+                       (GLOBALS::instance ()->base_port == 0) ? (int) 0 :GLOBALS::instance ()->base_port+i,
                        GLOBALS::instance ()->hostname);
 
       ACE_OS::strcat (new_args,args);

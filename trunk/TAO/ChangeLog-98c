@@ -1,3 +1,9 @@
+Tue Aug  4 15:56:34 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp : Changed BUFSIZ to
+	 3*BUFSIZ to fit the arguments. Made the default base orb port
+	as 0.
+
 Tue Aug 4 14:52:12 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
       * TAO/tests/Param_Test/bd_struct_seq.{h,cpp}:
