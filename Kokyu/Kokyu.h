@@ -83,6 +83,7 @@ namespace Kokyu
     Priority_t preemption_priority_;
     Deadline_t deadline_;
     Execution_Time_t execution_time_;
+    Importance_t importance_;
   };
 
   class Kokyu_Export Dispatch_Command
@@ -107,6 +108,27 @@ namespace Kokyu
     };
 
   class Dispatcher_Impl;
+  class DSRT_Dispatcher_Impl;
+
+  enum DSRT_Sched_t {SCHED_MIF};
+
+  struct DSRT_ConfigInfo
+  {
+    DSRT_Sched_t scheduler_type_;
+  };
+
+  typedef int guid_t;
+  class Kokyu_Export DSRT_Dispatcher
+  {
+  public:
+    int schedule (guid_t guid, const QoSDescriptor&);
+    int update_schedule (guid_t guid, const QoSDescriptor&);
+    int cancel_schedule (guid_t guid, const QoSDescriptor&);
+    void implementation (DSRT_Dispatcher_Impl*);
+
+  private:
+    DSRT_Dispatcher_Impl* dispatcher_impl_;
+  };
 
   class Kokyu_Export Dispatcher
   {
@@ -123,6 +145,7 @@ namespace Kokyu
     public:
       //@@ Should we return auto_ptr<Dispatcher> instead?
       static Dispatcher* create_dispatcher (const ConfigInfoSet&);
+      static DSRT_Dispatcher* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
     };
 } //end of namespace
 
@@ -131,6 +154,7 @@ namespace Kokyu
 #endif /* __ACE_INLINE__ */
 
 #include "Dispatcher_Impl.h"
+#include "DSRT_Dispatcher_Impl.h"
 
 #include "ace/post.h"
 #endif /* KOKYU_H */
