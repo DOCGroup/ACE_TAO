@@ -4,6 +4,10 @@ Fri Mar 21 11:41:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	  Added another missing explicit template instantiation.
 
+	* tests/AMH_Exceptions/client.dsp:
+
+	  Added generated file to the project.
+
 Thu Mar 20 18:29:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/ImplRepoC.cpp:
