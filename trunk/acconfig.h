@@ -15,11 +15,6 @@
 */
 
 
-/* Define _REENTRANT if reentrant functions should be used. */
-#ifndef _REENTRANT
-# undef _REENTRANT
-#endif
-
 #ifndef _POSIX_THREADS
 # undef _POSIX_THREADS
 #endif
@@ -32,25 +27,6 @@
 #ifndef _POSIX_PTHREAD_SEMANTICS
 # undef _POSIX_PTHREAD_SEMANTICS
 #endif
-
-/* Some platforms require "feature test" macros to be defined to make
-   some function prototypes "visible." */
-#ifndef _GNU_SOURCE
-#  undef _GNU_SOURCE
-#else
-#  ifndef _XOPEN_SOURCE
-#    undef _XOPEN_SOURCE
-#  endif  /*_XOPEN_SOURCE  */
-#  ifndef _XOPEN_EXTENDED_SOURCE
-#    undef _XOPEN_EXTENDED_SOURCE
-#  endif  /* _XOPEN_EXTENDED_SOURCE */
-#  ifndef _LARGEFILE64_SOURCE
-#    undef _LARGEFILE64_SOURCE
-#  endif  /* _LARGEFILE64_SOURCE */
-#  ifndef _FILE_OFFSET_BITS
-#    undef _FILE_OFFSET_BITS
-#  endif  /* _FILE_OFFSET_BITS */
-#endif /* _GNU_SOURCE */
 
 /* ACE currently doesn't use these; however the configure script does */
 #undef ACE_LACKS_SYSTIMES_H
@@ -228,6 +204,7 @@
 #undef IP_ADD_MEMBERSHIP
 #undef IP_DROP_MEMBERSHIP
 
+
 /* Specify sizes of given built-in types.  If a size isn't defined here,
    then ace/Basic_Types.h will attempt to deduce the size. */
 /* #undef ACE_SIZEOF_CHAR */
@@ -239,6 +216,12 @@
 #undef ACE_SIZEOF_FLOAT
 #undef ACE_SIZEOF_DOUBLE
 #undef ACE_SIZEOF_LONG_DOUBLE
+
+
+/* Missing prototypes:  These prototypes should only be enabled if the
+   function actually exists on the platform. */
+
+
 
 /* typedef for ACE_UINT64 */
 /*
@@ -1292,6 +1275,21 @@
 
 /* Platform doesn't have truncate() (e.g., vxworks) */
 #undef ACE_LACKS_TRUNCATE
+
+/* Platform/compiler lacks the getpgid() prototype */
+#undef ACE_LACKS_GETPGID_PROTOTYPE
+
+/* Platform/compiler lacks the strptime() prototype */
+#undef ACE_LACKS_STRPTIME_PROTOTYPE
+
+/* Platform/compiler lacks the strtok_r() prototype */
+#undef ACE_LACKS_STRTOK_R_PROTOTYPE
+
+/* Platform/compiler lacks the lseek64() prototype */
+#undef ACE_LACKS_LSEEK64_PROTOTYPE
+
+/* Platform/compiler lacks the pread() and pwrite() prototypes */
+#undef ACE_LACKS_PREAD_PROTOTYPE
 
 /* Platform/compiler lacks the ualarm() prototype (e.g., Solaris) */
 #undef ACE_LACKS_UALARM_PROTOTYPE

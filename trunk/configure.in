@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.65 $)dnl
+AC_REVISION($Revision 0.66 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -184,7 +184,7 @@ dnl
 dnl SECTION 2: Configure script command line options
 dnl
 
-dnl Added maintainer mode option to the option list
+dnl Add maintainer mode option to the option list.
 AM_MAINTAINER_MODE
 
 dnl Determine which subsets to build
@@ -914,7 +914,7 @@ ACE_SEARCH_LIBS(dlopen, dl svld, ace_has_svr4_dynamic_linking=yes, dnl
   ])
 
 dnl Check if the socket library is available
-ACE_SEARCH_LIBS(socket, socket,,)dnl
+ACE_SEARCH_LIBS(socket, socket,,,-lnsl)dnl
 
 dnl Check for gethostbyname in -lnsl since some platforms (e.g. Solaris)
 dnl put it there.
@@ -922,7 +922,7 @@ ACE_SEARCH_LIBS(gethostbyname, nsl, , )dnl
 
 dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
 dnl may put it there.
-ACE_SEARCH_LIBS(getservbyname, xnet, , AC_DEFINE(ACE_LACKS_GETSERVBYNAME))dnl
+ACE_SEARCH_LIBS(getservbyname, socket xnet, , AC_DEFINE(ACE_LACKS_GETSERVBYNAME), -lnsl)dnl
 
 
 dnl Check for compile() regex function in -lgen.  Solaris, for example,
@@ -952,14 +952,14 @@ dnl Some platforms, such as Solaris, may define sched_yield() there.
 dnl Later we run AC_CHECK_FUNC(sched_yield), which is redundant in this case
 dnl but is needed if sched_yield() is defined in one of the other libraries
 dnl we check for.
-ACE_SEARCH_LIBS(sched_yield, posix4, ace_has_sched_yield=yes,)dnl
+ACE_SEARCH_LIBS(sched_yield, rt posix4, ace_has_sched_yield=yes,)dnl
 
 dnl Check for asynchronous IO calls
 ACE_CHECK_ASYNCH_IO
 
 dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
-ACE_SEARCH_LIBS(clock_gettime, posix4, AC_DEFINE(ACE_HAS_CLOCK_GETTIME),)dnl
+ACE_SEARCH_LIBS(clock_gettime, rt posix4, AC_DEFINE(ACE_HAS_CLOCK_GETTIME),)dnl
 
 dnl Setup Libtool
 dnl
@@ -1670,16 +1670,158 @@ ACE_CACHE_CHECK(if dlfcn.h is protected by extern \"C\",
         ])
 ], , AC_DEFINE(ACE_HAS_DLFCN_H_BROKEN_EXTERN_C))
 
+dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+dnl needed to make the getpgid() prototype visible.
+ACE_CACHE_CHECK(if XOPEN defines are needed for getpgid prototype,
+  ace_cv_lib_getpgid_needs_xopen,
+  [
+   save_CPPFLAGS="$CPPFLAGS"
+   ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+   CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+   AC_EGREP_HEADER([[^_]+getpgid], unistd.h,
+     [
+      ace_cv_lib_getpgid_needs_xopen=no
+     ],
+     [
+      ace_xopen="-D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED"
+      CPPFLAGS="$save_CPPFLAGS $ace_xopen"
+      AC_EGREP_HEADER([[^_]+getpgid], unistd.h,
+        [
+         ace_cv_lib_getpgid_needs_xopen=yes
+        ],
+        [
+         # We're hosed if we get here!
+         ace_cv_lib_getpgid_needs_xopen=no
+        ])
+     ])
+   dnl Reset the compiler flags
+   CPPFLAGS="$save_CPPFLAGS"
+  ], AC_DEFINE(ACE_LACKS_GETPGID_PROTOTYPE),)
+
+dnl Check if _POSIX_SOURCE macro is needed to make the strtok_r()
+dnl prototype visible.
+ACE_CACHE_CHECK(if POSIX define is needed for strtok_r prototype,
+  ace_cv_lib_strtok_r_needs_posix,
+  [
+   save_CPPFLAGS="$CPPFLAGS"
+   ace_no_posix="-U_POSIX_SOURCE"
+   CPPFLAGS="$CPPFLAGS $ace_no_posix"
+   AC_EGREP_HEADER([[^_]+strtok_r], string.h,
+     [
+      ace_cv_lib_strtok_r_needs_posix=no
+     ],
+     [
+      ace_posix="-D_POSIX_SOURCE"
+      CPPFLAGS="$save_CPPFLAGS $ace_posix"
+      AC_EGREP_HEADER([[^_]+strtok_r], string.h,
+        [
+         ace_cv_lib_strtok_r_needs_posix=yes
+        ],
+        [
+         # We're hosed if we get here!
+         ace_cv_lib_strtok_r_needs_posix=no
+        ])
+     ])
+   dnl Reset the compiler flags
+   CPPFLAGS="$save_CPPFLAGS"
+  ], AC_DEFINE(ACE_LACKS_STRTOK_R_PROTOTYPE),)
+
+dnl Check if _XOPEN_SOURCE macro is needed to make the strptime()
+dnl prototype visible.
+ACE_CACHE_CHECK(if XOPEN define is needed for strptime prototype,
+  ace_cv_lib_strptime_needs_xopen,
+  [
+   save_CPPFLAGS="$CPPFLAGS"
+   ace_no_xopen="-U_XOPEN_SOURCE"
+   CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+   AC_EGREP_HEADER([[^_]+strptime], time.h,
+     [
+      ace_cv_lib_strptime_needs_xopen=no
+     ],
+     [
+      ace_xopen="-D_XOPEN_SOURCE"
+      CPPFLAGS="$save_CPPFLAGS $ace_xopen"
+      AC_EGREP_HEADER([[^_]+strptime], time.h,
+        [
+         ace_cv_lib_strptime_needs_xopen=yes
+        ],
+        [
+         # We're hosed if we get here!
+         ace_cv_lib_strptime_needs_xopen=no
+        ])
+     ])
+   dnl Reset the compiler flags
+   CPPFLAGS="$save_CPPFLAGS"
+  ], AC_DEFINE(ACE_LACKS_STRPTIME_PROTOTYPE),)
+
+dnl Check if _LARGEFILE64_SOURCE macro is needed to make the lseek64()
+dnl prototype visible.
+ACE_CACHE_CHECK(if LARGEFILE64 define is needed for lseek64 prototype,
+  ace_cv_lib_lseek64_needs_largefile64,
+  [
+   save_CPPFLAGS="$CPPFLAGS"
+   ace_no_largefile64="-U_LARGEFILE64_SOURCE"
+   CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
+   AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
+     [
+      ace_cv_lib_lseek64_needs_largefile64=no
+     ],
+     [
+      ace_largefile64="-D_LARGEFILE64_SOURCE"
+      CPPFLAGS="$save_CPPFLAGS $ace_largefile64"
+      AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
+        [
+         ace_cv_lib_lseek64_needs_largefile64=yes
+        ],
+        [
+         # We're hosed if we get here!
+         ace_cv_lib_lseek64_needs_largefile64=no
+        ])
+     ])
+   dnl Reset the compiler flags
+   CPPFLAGS="$save_CPPFLAGS"
+  ], AC_DEFINE(ACE_LACKS_LSEEK64_PROTOTYPE),)
+
+dnl Check if _XOPEN_SOURCE=500 macro is needed to make the pread() and
+dnl pwrite() prototypes visible.
+ACE_CACHE_CHECK(if XOPEN define is needed for pread prototype,
+  ace_cv_lib_pread_needs_xopen,
+  [
+   save_CPPFLAGS="$CPPFLAGS"
+   ace_no_xopen="-U_XOPEN_SOURCE"
+   CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+   AC_EGREP_HEADER([[^_]+pread], unistd.h,
+     [
+      ace_cv_lib_pread_needs_xopen=no
+     ],
+     [
+      ace_xopen="-D_XOPEN_SOURCE=500"
+      CPPFLAGS="$save_CPPFLAGS $ace_xopen"
+      AC_EGREP_HEADER([[^_]+pread], unistd.h,
+        [
+         ace_cv_lib_pread_needs_xopen=yes
+        ],
+        [
+         # We're hosed if we get here!
+         ace_cv_lib_pread_needs_xopen=no
+        ])
+     ])
+   dnl Reset the compiler flags
+   CPPFLAGS="$save_CPPFLAGS"
+  ], AC_DEFINE(ACE_LACKS_PREAD_PROTOTYPE),)
+
 dnl
 dnl SECTION 6: Checks for typedefs
 dnl
 
-dnl Standard typedef checks (All of them may not be needed
+dnl Standard typedef checks (All of them may not be needed)
 AC_TYPE_UID_T
 AC_TYPE_MODE_T
 AC_TYPE_OFF_T
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
+
+dnl AC_CHECK_TYPE (off64_t, long long)
 
 dnl Specific typedef checks
 dnl TODO: Check whether these typedefs can be defined somewhere else.
@@ -2477,8 +2619,8 @@ ACE_CACHE_CHECK(for C++ \"using\" keyword support,
   x++;
 #else
 # error Namespaces are not supported on this platform.
-Throw in some extraneous text since compilers are stupid enough
-to interpret "#error" as a warning.  Go figure. :(
+Throw in some extraneous text since some compilers are stupid
+enough to interpret "#error" as a warning.  Go figure. :(
 This extraneous text should force an error.
 #endif
                   ],
@@ -3916,8 +4058,8 @@ dnl Check if platform has thread_self() rather than pthread_self()
                  ])
 
 dnl Check if pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
-dnl PTHREAD_PROCESS_SHARED values
-  ACE_CACHE_CHECK(for PTHREAD_PROCESS_* values in pthread.h,
+dnl PTHREAD_PROCESS_SHARED valuesACE_CACHE_CHECK(for ctime() macro,
+  ACE_CACHE_CHECK(for PTHREAD_PROCESS_* enumeration in pthread.h,
                   ace_cv_lib_pthread_process_enum,
                   [
                    AC_TRY_COMPILE(
@@ -3925,6 +4067,8 @@ dnl PTHREAD_PROCESS_SHARED values
 #include <pthread.h>
                      ],
                      [
+/* Undefine PTHREAD_PROCESS_SHARED in case some platforms #define it */
+#undef PTHREAD_PROCESS_SHARED
 int foo = PTHREAD_PROCESS_SHARED;
                      ],
                      [
@@ -4139,7 +4283,7 @@ if test "$ace_user_enable_exceptions" = yes; then
 # include <exception.h>
 #endif
 
-        int main() {
+        int main(int, char *[]) {
           while (1) {
             try {
               char *a = new char[1024*1024];
@@ -4186,7 +4330,7 @@ if test "$ace_user_enable_exceptions" = yes; then
 # include <exception.h>
 #endif
 
-        int main() {
+        int main(int, char *[]) {
           while (1) {
             try {
               char *a = new char[1024*1024];
@@ -6042,48 +6186,6 @@ dnl gethrtime.cpp to the source list
   ],)
 AM_CONDITIONAL(ACE_ON_PENTIUM, test X$ace_cv_feature_pentium = Xyes)
 
-dnl We need to convert warnings to errors here since GNU C++ just gives
-dnl a warning about an implicit declaration of getpgid.
-ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
-[
-dnl getpgid() requires _GNU_SOURCE to be defined in some platforms.
-dnl First check to see if getgpid calls fail without _GNU_SOURCE defines
-ACE_CACHE_CHECK(if _GNU_SOURCE is needed,
-  ace_cv_feature_gnu_source,[
-    AC_TRY_COMPILE(
-       [
-#ifndef ACE_LACKS_UNISTD_H
-# include <unistd.h>
-#endif
-       ],
-       [
-        int id = getpgid(0);
-       ],
-       [
-        ace_cv_feature_gnu_source=no
-       ],
-       [
-dnl Now check to make sure that these defines actually fix getpgid
-        AC_TRY_COMPILE(
-          [
-#define _GNU_SOURCE
-/* #define _GNU_SOURCE_EXTENDED */
-#ifndef ACE_LACKS_UNISTD_H
-# include <unistd.h>
-#endif
-          ],
-          [
-           int id = getpgid(0);
-          ],
-          [
-           ace_cv_feature_gnu_source=yes
-          ],
-          [
-           ace_cv_feature_gnu_source=no
-          ])
-       ])
-  ], AC_DEFINE(_GNU_SOURCE),)
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 dnl
 dnl SECTION 14: checks for aggregated features
@@ -6282,7 +6384,7 @@ dnl        reentrant functions!  However, we don't want to define them if
 dnl        the UNIX International threads library was detected.
   AC_DEFINE(ACE_HAS_THREADS)
   AC_DEFINE(ACE_MT_SAFE)
-  AC_DEFINE(_REENTRANT)
+  ACE_CXXFLAGS="$ACE_CXXFLAGS -D_REENTRANT"
   if test "$ace_has_pthreads" = yes &&
      test "$ace_has_sthreads" != yes; then
    AC_DEFINE(_POSIX_THREADS)
@@ -6342,7 +6444,7 @@ main (int argc, char *argv[])
      fail then we've got other problems! */
   if (pthread_attr_create (&attr) != 0) return 0 /*1*/;
 
-  if (pthread_create (&id, attr, &nothing, 0) != 0) return 0 /*2*/;
+  if (pthread_create (&id, attr, nothing, 0) != 0) return 0 /*2*/;
 
   if (pthread_attr_delete (&attr) != 0) return /*3*/;
   /* ----- */
@@ -6811,6 +6913,7 @@ AC_OUTPUT([
   apps/gperf/Makefile
   apps/gperf/src/Makefile
   man/Makefile
+  man/html/Makefile
   man/man3/Makefile
   netsvcs/Makefile
   netsvcs/clients/Makefile
@@ -6842,7 +6945,6 @@ dnl  TAO/tao/Makefile
 dnl  TAO/tao-config
  ],
  [
-  chmod 755 ace-config #TAO/tao-config
   echo ""
   echo "Configuration of ACE is now complete."
   echo ""
