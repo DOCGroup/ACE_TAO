@@ -355,37 +355,27 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
 
       {
         // initialize an iterator to iterate thru our scope
-        UTL_ScopeActiveIterator *si;
-        ACE_NEW_RETURN (si,
-                        UTL_ScopeActiveIterator (node,
-                                                 UTL_Scope::IK_decls),
-                        -1);
-
-        while (!si->is_done ())
+        for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+             !si.is_done ();
+             si.next ())
           {
             number_of_elements++;
-            si->next ();
           }
-        delete si;
       }
 
-      AST_Decl **elements = new AST_Decl *[number_of_elements];
+      AST_Decl **elements;
+      ACE_NEW_RETURN (elements, AST_Decl *[number_of_elements], -1);
 
       {
         int position = 0;
         // initialize an iterator to iterate thru our scope
-        UTL_ScopeActiveIterator *si;
-        ACE_NEW_RETURN (si,
-                        UTL_ScopeActiveIterator (node,
-                                                 UTL_Scope::IK_decls),
-                        -1);
-
-        while (!si->is_done ())
+        for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+             !si.is_done ();
+             si.next ())
           {
-            elements[position++] = si->item ();
-            si->next ();
+            elements[position++] = si.item ();
+            si.next ();
           }
-        delete si;
       }
 
 
@@ -492,19 +482,14 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   if (node->nmembers () > 0)
     {
       // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
-      // continue until each element is visited
-      while (!si->is_done ())
+      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
         {
-          AST_Decl *d = si->item ();
+          AST_Decl *d = si.item ();
 
-          if (!d)
+          if (d == 0)
             {
-              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_amh_pre_proc::"
                                  "visit_interface - "
@@ -540,9 +525,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                             excep_holder,
                                             NORMAL);
             }
-          si->next ();
         } // end of while loop
-      delete si;
     } // end of if
 
   return excep_holder;

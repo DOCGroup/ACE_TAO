@@ -1,3 +1,11 @@
+Mon Jan 28 11:17:40 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Removed last instances of head-allocated
+	  UTL_ScopeActiveIterator, hopefully this will stop the madness
+	  and people will cut&paste the "Right Thing"[tm] from now on.
+
 Mon Jan 28 10:50:40 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
@@ -9,7 +17,7 @@ Mon Jan 28 10:39:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/tests/Application_Test/ifr_dii_client.cpp:
 
           Changed the name of a local variable to avoid a warning,
-          on SunOS Forte, of a possible hiding of a class member 
+          on SunOS Forte, of a possible hiding of a class member
           variable.
 
 Mon Jan 28 08:39:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
