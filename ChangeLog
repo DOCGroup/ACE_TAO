@@ -1,3 +1,7 @@
+Tue Apr 22 12:47:48 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Get_Opt.cpp (ctor): Add ACE_LIB_TEXT to naked string literal.
+
 Tue Apr 22 09:16:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:

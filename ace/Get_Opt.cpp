@@ -109,7 +109,7 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
 
   ACE_NEW (this->optstring_, ACE_TString (optstring));
-  ACE_NEW (this->last_option_, ACE_TString (""));
+  ACE_NEW (this->last_option_, ACE_TString (ACE_LIB_TEXT ("")));
 
   // First check to see if POSIXLY_CORRECT was set.
   if (ACE_OS::getenv (ACE_LIB_TEXT ("POSIXLY_CORRECT")) != 0)
