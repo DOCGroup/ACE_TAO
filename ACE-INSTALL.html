@@ -90,7 +90,7 @@ For information on TAO's platform coverage and support, please also see
 <tbody>
   <tr>
     <th>DOC Group</th>
-    <td><A HREF="http://www.dre.vanderbilt.edu/scoreboard/">Tested</A> 
+    <td><A HREF="http://www.dre.vanderbilt.edu/scoreboard/">Tested</A>
         and used daily by the DOC group:
         Solaris 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)
         Windows NT 4.0, 2000, XP (MSVC++ 6.x, and 7.x, and
@@ -118,7 +118,7 @@ For information on TAO's platform coverage and support, please also see
   </tr>
   <tr>
     <th>Remedy IT</th>
-    <td>Maintains ACE on certain platforms required for their ACE and 
+    <td>Maintains ACE on certain platforms required for their ACE and
         TAO service offerings.
     </td>
     <td>Remedy IT <A HREF="http://www.theaceorb.nl">web site</A></td>
@@ -179,9 +179,9 @@ supported by the DOC group, Riverace, or OCI. <P>
       ACE_Object_Manager</A> discussion below.<p>
 
       We've also added some support for
-      <A HREF="#mingw">GNU g++ with MinGW</A>, 
+      <A HREF="#mingw">GNU g++ with MinGW</A>,
       <A HREF="#cygwin">GNU g++ with Cygwin</A>
-      <A HREF="#borland">Borland C++ 5.5, Borland C++ Builder 4.0/5.0/6.0 
+      <A HREF="#borland">Borland C++ 5.5, Borland C++ Builder 4.0/5.0/6.0
       and Borland C++ BuilderX</A>, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
@@ -617,7 +617,7 @@ supported by the DOC group, Riverace, or OCI. <P>
       VxWorks/Tornado.  An anonymous contributor has also
       provided <a href="os-patches/vxworks-5.1.txt">notes for using
       ACE with VxWorks 5.1.</a>. It is not possible to use VxWorks 5.4
-      and earlier with ACE anymore because the compilers delivered with 
+      and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.<P>
 
       Tornado 2.2/VxWorks 5.5 support IP multicast.  That is not enabled
@@ -765,7 +765,7 @@ supported by the DOC group, Riverace, or OCI. <P>
         <p>1. The latest version of the Apple Developer Tools
         (December 2002)</p> 
         <p>2. The dlcompat library (obtained either through Fink or
-        SourceForge)</p> 
+        SourceForge)</p>
 
         <p>When creating $ACE_ROOT/ace/config.h for Mac OS X, you need
         to add the following if you obtained dlcompat via Fink:</p>
@@ -784,7 +784,7 @@ supported by the DOC group, Riverace, or OCI. <P>
         <p>The work to port ACE to Mac OS X was done by several people,
         John Zorko
         &lt;<Ahref="mailto:j.zorko@att.net">j.zorko@att.net</A>&gt; is
-        only one of  them.</p>
+        only one of them.</p>
 
 </UL>
 
@@ -1109,9 +1109,19 @@ testing and developing this process further. To simply configure and build
 ACE, do:
 <OL>
   <LI><CODE>cd</CODE> to the top-level <CODE>ACE_wrappers</CODE> directory.</LI>
+  <LI>Create a subdirectory to hold your build's configuration and built
+      ACE version, and then change to the new directory:
+       <pre>
+       mkdir build
+       cd build
+       </pre>
+      Note that you do not run the <code>create_ace_build</code> utility
+      mentioned in the <A HREF="#cloning">Cloning the Source Tree</A>
+      section. The configure script takes care of creating all files
+      and links that are needed.</LI>
   <LI>Configure ACE for your platform by issuing the following command:
        <pre>
-       ./configure [options]
+       ../configure [options]
        </pre>
       <code>options</code> can be a variable setting (such as setting
       <code>CXX</code> to your C++ compiler command) any standard GNU
@@ -1221,19 +1231,18 @@ per-platform configuration method:</P>
       however that you can normally skip this step because the
       defaults are typically fine for most systems. <P>
 
-  <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
-      <code>$ACE_ROOT/ace/config.h</code>
-      file that contains the appropriate platform/compiler-specific
-      header configurations, e.g.,
+  <LI>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
+      that includes the appropriate platform/compiler-specific
+      header configurations from the ACE source directory. For example:
 <PRE><CODE>
-% ln -s config-sunos5-sunc++-4.x.h config.h
+#include "ace/config-sunos5-sunc++-4.x.h"
 </CODE></PRE>
-      This file
+      The platform/compiler-specific configuration file
       contains the #defines that are used throughout ACE to indicate
-      which features your system supports (see the
-      <code>$ACE_ROOT/ace/OS.h</code> file for many examples of how
-      the ACE build configuration is affected by these macro
-      settings).  Make sure you settings are placed
+      which features your system supports. See the
+      <code>$ACE_ROOT/ace/README</code> file for a description of these
+      macro settings. If you desire to add some site-specific or build-specific
+      changes, you can add them to your config.h file; place them
       <strong>before</strong> the inclusion of the platform-specific
       header file.<P>
 
@@ -1243,16 +1252,16 @@ per-platform configuration method:</P>
       email if you get it working so I can add it to the master ACE
       release.<P>
 
-  <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
-      $ACE_ROOT/include/makeinclude/platform_macros.GNU file
+  <LI>Create a build configuration file,
+      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>,
       that contains the appropriate platform/compiler-specific
       Makefile configurations, e.g.,
 <PRE><CODE>
-% ln -s platform_sunos5_sunc++.GNU platform_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
 </CODE></PRE>
- This file
-      contains the compiler and Makefile directives that are
-      platform/compiler-specific<P>
+      This file contains the compiler and Makefile directives that are
+      platform/compiler-specific. If you'd like to add make options, you
+      can add them before including the paltform-specific configuration.<P>
 
   <LI>Note that because ACE builds shared libraries, you'll need to set
       LD_LIBRARY_PATH to whereever you put the binary version of the
@@ -1377,9 +1386,9 @@ variables
       Set the environment variable below to build a version of ACE that is build against the VCL-compatible run-time library. This can only be used with BCB version 4<BR>
       <CODE>set PASCAL=1</CODE><BR>
       <BR>
-      Set the environment variable below to build a version of ACE using the 
+      Set the environment variable below to build a version of ACE using the
       C++BuilderX preview compiler. This compiler isn't supported at this moment
-      but by setting this environment variable the new compiler is used and 
+      but by setting this environment variable the new compiler is used and
       you can expirement with this compiler.<BR>
       <CODE>set CBX=1</CODE><BR>
       <BR>
@@ -1804,7 +1813,7 @@ The steps we followed in the build are:
        # export PATH=//c/work/mingw/ACE_wrappers/ace:$PATH
        </pre></code></blockquote>
 
-       If you are using MPC generated Makefiles, then the DLLs have beein
+       If you are using MPC generated Makefiles, then the DLLs have been
        placed in the lib directory instead of ace and thus your PATH
        addition would need to look like this:
 
@@ -1831,7 +1840,7 @@ Once you build all the tests, you can run
 <code>tests</code> directory to try all the tests:
 
        <blockquote><code><pre>
-       % perl run_tests.pl
+       % perl run_test.pl
        </pre></code></blockquote>
 
 <p>
@@ -1954,7 +1963,7 @@ setup selects by default:
        # export PATH=//c/work/cygwin/ACE_wrappers/ace:$PATH
        </pre></code></blockquote>
 
-       If you are using MPC generated Makefiles, then the DLLs have beein
+       If you are using MPC generated Makefiles, then the DLLs have been
        placed in the lib directory instead of ace and thus your PATH
        addition would need to look like this:
 
@@ -1982,7 +1991,7 @@ Once you build all the tests, you can run
 <code>tests</code> directory to try all the tests:
 
        <blockquote><code><pre>
-       % perl run_tests.pl
+       % perl run_test.pl
        </pre></code></blockquote>
 
 <p>
@@ -2376,36 +2385,35 @@ on Windows NT hosts:
 <H4><A NAME="vxworks">&nbsp;</a>
 <a href="mailto:Jaffar_Shaikh@Mitel.COM">Jaffar Shaikh's</a>
 Notes for Building ACE and TAO for VxWorks on NT host</H4>
-<B><P>Scenario:</B>  I was building the ACE and TAO for VxWorks =
-on NT. The target system was a PPC860 based chassis and another a NT =
+<B><P>Scenario:</B>  I was building the ACE and TAO for VxWorks
+on NT. The target system was a PPC860 based chassis and another a NT
 host based card.</P>
 <B><P>Host System:</P>
 </B><P>NT 4.0 workstation with 128 M RAM, 266MHz Pentium.</P>
 
 <B><P>Software Needed For Building TAO</P>
-</B><P>1) PERL: Active State's ActivePerl 5.6.0.618 for NT available as =
-freeware from =
-http://www.ActiveState.com/download/contrib/Microsoft/NT/InstMsi.exe =
+</B><P>1) PERL: Active State's ActivePerl 5.6.0.618 for NT available as
+freeware from
+http://www.ActiveState.com/download/contrib/Microsoft/NT/InstMsi.exe
 </P>
 
 <P>2) Tornado II .Release V 9904 from Windriver.</P>
 
-<P>3) Cygwin GNU to build TAO. It is available for NT as a freeware =
+<P>3) Cygwin GNU to build TAO. It is available for NT as a freeware
 from </P>
 <P>http://www.cygwin.com/</P>
-<P>The Cygwin Make (version 3.75) can only build the TAO not the =
+<P>The Cygwin Make (version 3.75) can only build the TAO not the
 Tornado II make (version 3.74)</P>
 
 <B><P>Environment Variables:</P>
-</B><P>On NT the environment Variables are set as follows, (from =
+</B><P>On NT the environment Variables are set as follows, (from
 Control Panel-&gt; System -&gt; Environment)</P>
 <P>I added following Environment variable entries to PATH </P>
 
 <P>C:\Perl\bin\;</P>
 <P>C:\tornado\host\x86-win32\bin;</P>
 <P>C:\tornado\host\x86-win32\powerpc-wrs-vxworks\bin;</P>
-<P>C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.=
-2-960126;</P>
+<P>C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.2-960126;</P>
 <P>C:\Corba\Ace_wrappers\bin;</P>
 <P>C:\Cygwin\bin;</P>
 <P>C:\Cygwin\usr\bin;</P>
@@ -2421,8 +2429,7 @@ Control Panel-&gt; System -&gt; Environment)</P>
 <P>SHELL=/bin/sh.exe</P>
 <P>TERM=pcbios</P>
 <P>TAO_ROOT=/Corba/ACE_wrapper/Tao</P>
-<P>CPP_LOCATION=/Program Files/Microsoft Visual =
-Studio/VC98/Bin/CL.exe</P>
+<P>CPP_LOCATION=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe</P>
 <P>GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/</P>
 <P>WIND_HOST_TYPE=x86-win32</P>
 <P>PERL_PATH=/perl/bin/perl.exe</P>
@@ -2454,20 +2461,20 @@ Studio/VC98/Bin/CL.exe</P>
 <P>2) C:\Corba\ACE_wrappers\include\makeinclude\platform_macros.GNU</P>
 <P>WIND_BASE = /tornado</P>
 <P>WIND_HOST_TYPE = x86-win32</P>
-<P>include =
+<P>include
 $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU</P>
-<P>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE =
+<P>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE
 library that supports TAO)</P>
 
 <P>&nbsp;</P>
 <B><P>Steps to Build</P>
 </B><P>1) Build Ace.dll under NT</P>
-<P>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.dsw And build Ace =
+<P>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.dsw And build Ace
 DLL</P>
 <P>Copy Ace.dll in C:\bin</P>
 
 <P>2) Build gperf utility under NT</P>
-<P>In MS Visual C++ open =
+<P>In MS Visual C++ open
 C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</P>
 <P>Copy gperf.exe to C:\bin</P>
 
@@ -2476,7 +2483,7 @@ C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</P>
 <P>Mount following directories by using mount command.</P>
 <P>create respective directories first then use mount command </P>
 
-<P>e.g. Create /Corba directory then use $mount -s "C:\Corba" =
+<P>e.g. Create /Corba directory then use $mount -s "C:\Corba"
 /Corba</P>
 
 <P>C:\Corba  mount to /Corba</P>
@@ -2489,13 +2496,13 @@ C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</P>
 <P>4) Build ACE in Cygwin</P>
 <P>$cd /Corba/ACE_wrappers/ace </P>
 <P>$make static_libs=1</P>
-<P>This will build your ace library libACE.a for VxWorks. If you use =
-option shared_libs=1 then the build will be libACE.so. The other =
+<P>This will build your ace library libACE.a for VxWorks. If you use
+option shared_libs=1 then the build will be libACE.so. The other
 options are same as follows.</P>
 
 <P>5) Build TAO in Cygwin</P>
 <P>$cd $TAO_ROOT/tao</P>
-<P>$make debug=0 optimize=1 static_libs_only=1 minimum_orb=1 =
+<P>$make debug=0 optimize=1 static_libs_only=1 minimum_orb=1
 </P>
 <P>for shared libs use shared_libs=1</P>
 
@@ -2508,9 +2515,9 @@ options are same as follows.</P>
 <P>Advanced POA features</P>
 <P>CORBA/COM interworking</P>
 
-<P>You may play around with above options to find suitable build for =
-your needs. For example when you give option debug=1 all the debug =
-symbols will be created and the build will huge in size. The debug =
+<P>You may play around with above options to find suitable build for
+your needs. For example when you give option debug=1 all the debug
+symbols will be created and the build will huge in size. The debug
 symbols are necessary when you want to debug your code.</P>
 
 
@@ -2691,7 +2698,7 @@ below.</p>
    HREF="http://www.tenermerx.com/tao_bcb/index.html">
    http://www.tenermerx.com/tao_bcb/index.html</A>. Then build the OpenSSL
    library. When you use the DLL version of ACE+TAO you have to build a DLL
-   version of OpenSSL. Then you must set the environment variable SSL_ROOT 
+   version of OpenSSL. Then you must set the environment variable SSL_ROOT
    to the location of your OpenSSL and then build ACE and TAO as normally.
 </p>
 

@@ -1,3 +1,12 @@
+Tue Jan 13 16:42:37 2004  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Correct the autoconf section to direct the user
+	  to create a subdirectory under ACE_wrappers. Thanks to Ossama for
+	  pointing this out.
+	  Also changed the traditional make section to advise user to
+	  create config.h and platform_macros.GNU files and include the
+	  platform file rather than link or copy the platform file.
+
 Tue Jan 13 16:19:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* netsvcs/clients/Naming/Client/Client.mpc:
