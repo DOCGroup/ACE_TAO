@@ -170,11 +170,13 @@ public:
                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-                     RtecScheduler::TASK_COUNT_MISMATCH));
+                     RtecScheduler::TASK_COUNT_MISMATCH,
+                     RtecScheduler::INTERNAL,
+                     RtecScheduler::DUPLICATE_NAME));
   // If information has been added or changed since the last stable
   // schedule was computed, this method causes scheduling information
   // to be computed for all registered RT_Infos.  If the schedule is
-  // already stable, this is a no-op
+  // already stable, this is a no-op.
 
   virtual void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& o_priority,
@@ -197,8 +199,8 @@ public:
 
 protected:
 
-  // @@ TBD - use a memento to save and restore scheduler state without
-  //          breaking encapsulation, particularly of these flags.
+  // @@ TO DO: use a memento to save and restore scheduler state without
+  //           breaking encapsulation, particularly of these flags.
 
   enum Stability_Flags
   {
@@ -214,18 +216,14 @@ protected:
     // Priorities may need to be recomputed.
     SCHED_PRIORITY_NOT_STABLE = 0x02UL,
 
-    // Dispatching configuration may need to be recomputed.
-    SCHED_CONFIG_NOT_STABLE = 0x04UL,
-
     // Characteristics may need to be repropagated.
-    SCHED_PROPAGATION_NOT_STABLE = 0x08UL,
+    SCHED_PROPAGATION_NOT_STABLE = 0x04UL,
 
     // This should be the disjunction of
     // all the individual stability flags.
     SCHED_NONE_STABLE =
       SCHED_UTILIZATION_NOT_STABLE |
       SCHED_PRIORITY_NOT_STABLE |
-      SCHED_CONFIG_NOT_STABLE |
       SCHED_PROPAGATION_NOT_STABLE
   };
   // Flags indicating stability conditions of schedule.
@@ -353,11 +351,6 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Compute utilization, set last feasible priority.
-
-  virtual void compute_dispatch_config_i (CORBA::Environment &_env)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::INTERNAL));
-  // Compute dispatching configuration information.
 
   static void init_rt_info (RtecScheduler::RT_Info &rt_info)
     ACE_THROW_SPEC (());

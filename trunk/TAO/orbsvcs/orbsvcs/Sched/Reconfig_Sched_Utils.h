@@ -44,8 +44,6 @@ class TAO_ORBSVCS_Export TAO_Reconfig_Scheduler_Entry
 {
 public:
 
-  // @@ TO DO - add support for conjunctions and disjunctions.
-
   // Info for DFS traversal, topological sort of call graph.
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
 
@@ -265,8 +263,10 @@ public:
   // Determines whether or not an entry is critical, based on operation characteristics.
   // returns 1 if critical, 0 if not
 
-  // @@ TBD - a method to fill in a static dispatch configuration from an RT_Info,
-  //          based on its characteristics.
+  static int assign_config (RtecScheduler::Config_Info &,
+                            TAO_Reconfig_Scheduler_Entry &);
+  // Fills in a static dispatch configuration for a priority level, based
+  // on the operation characteristics of a representative scheduling entry.
 };
 
 

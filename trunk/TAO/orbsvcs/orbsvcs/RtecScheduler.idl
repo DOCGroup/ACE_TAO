@@ -327,7 +327,9 @@ module RtecScheduler
       raises (UTILIZATION_BOUND_EXCEEDED,
               SYNCHRONIZATION_FAILURE,
               INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-              TASK_COUNT_MISMATCH);
+              TASK_COUNT_MISMATCH,
+              INTERNAL,
+              DUPLICATE_NAME);
     // Computes the scheduling priorities, returns the RT_Info's with
     // their priorities properly filled.
     // This info can be cached by a Run_Time_Scheduler service or

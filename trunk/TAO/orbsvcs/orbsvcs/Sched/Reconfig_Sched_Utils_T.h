@@ -317,7 +317,8 @@ public:
   // assigns a priority and subpriority value to each
   // entry.  Priorities are assigned in increasing value
   // order, with lower numbers corresponding to higher
-  // priorities.
+  // priorities.  Returns -1 on error, 1 if a new priority
+  // was assigned, or 0 otherwise. 
 
 private:
 
