@@ -1,16 +1,15 @@
 Fri Jul 16 19:41:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (out_of_file_descriptors): Added a function to check
-	  if a process is out of file descriptors.  This is required to
-	  avoid repeating this code in many places.  Also, note that all
-	  platform specific quirks can be captured in this function.
+	* ace/ACE.cpp (out_of_handles): Added a function to check if a
+	  process is out of handles (file descriptors).  This is required
+	  to avoid repeating this code in many places.  Also, note that
+	  all platform specific quirks can be captured in this function.
 
 	* ace/Cached_Connect_Strategy_T.cpp (cached_connect):
 	* tests/Cached_Conn_Test.cpp (out_of_sockets_handler):
 	* tests/Cached_Accept_Conn_Test.cpp (out_of_sockets_handler):
 
-	  Changed the above to use the new ACE::out_of_file_descriptors()
-	  function.
+	  Changed the above to use the new ACE::out_of_handles() function.
 
 	* ace/OS.h (ENFILE): Added ENFILE if missing on platform.  In that
 	  case, ENFILE will equal to EMFILE.
