@@ -1,3 +1,8 @@
+Fri May  9 01:20:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_SYS_SEM_H macro.
+
 Fri May  9 00:20:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-win32-msvc.h:
