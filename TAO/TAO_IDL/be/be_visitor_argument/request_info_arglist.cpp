@@ -376,7 +376,7 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
               }
             else
               {
-                *os << this->type_name (node) << " &";
+                *os << "const " << this->type_name (node) << " &";
               }
 
             break;
