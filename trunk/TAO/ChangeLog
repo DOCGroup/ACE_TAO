@@ -15,11 +15,12 @@ Wed Sep  8 21:36:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	    clients should not be using this directly. 
 
 	  - The _duplicate () will check for stack based typecodes,
-            allocate a typecode off the heap. If the typecode is heap
-	    allocated we just increment the refcount. 
+            allocate a typecode off the heap if the incoming tyoecodes are
+	    stack based. If the typecode is heap allocated we just increment 
+	    the refcount. 
 
 	  - The _release () decrements the ref count if it is off the heap
-            and is no-op otherwise. 
+            and is a no-op otherwise. 
 
 	  The Typecode had a boolean flag orb_owns_ which was supposed to
 	  be used for the above, but we never used it for some reason. 
