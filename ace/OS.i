@@ -241,7 +241,7 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 # else
 #   if defined (ACE_LACKS_MEMORY_H)
 #     if !defined (ACE_PSOS_DIAB_MIPS)
-#       include /**/ <string.h>
+#       include "ace/os_include/string.h"
 #     endif /* ACE_PSOS_DIAB_MIPS */
 #   else
 #     include /**/ <memory.h>
@@ -284,7 +284,7 @@ extern "C" char *mktemp (char *);
 # endif /* ACE_HAS_SYSCALL_H */
 
 # if defined (UNIXWARE)  /* See strcasecmp, below */
-#   include /**/ <ctype.h>
+#   include "ace/os_include/ctype.h"
 # endif /* UNIXWARE */
 
 # if defined (ACE_HAS_GETIFADDRS)
@@ -851,7 +851,7 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
 }
 
 #if defined (ACE_HAS_SHM_OPEN) && defined(INTEGRITY)
-#include /**/ <sys/mman.h>
+#include "ace/os_include/sys/mman.h"
 #endif
 
 ACE_INLINE ACE_HANDLE

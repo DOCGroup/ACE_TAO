@@ -26,6 +26,10 @@
 
 #include "ace/os_include/unistd.h"
 
+#if !defined (ACE_LACKS_SYS_IOCTL_H)
+# include /**/ <sys/ioctl.h>
+#endif /* !ACE_LACKS_IOCTL_H */
+
 #if !defined (ACE_LACKS_STROPTS_H)
 # include /**/ <stropts.h>
 #endif /* !ACE_LACKS_STROPTS_H */

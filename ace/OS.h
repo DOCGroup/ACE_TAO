@@ -20,7 +20,7 @@
 #include "ace/config-all.h"
 
 #if defined (ACE_HAS_VIRTUAL_TIME)
-#include /**/ <sys/times.h>
+#include "ace/os_include/sys/times.h"
 #endif /*ACE_HAS_VIRTUAL_TIME*/
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -131,9 +131,9 @@ typedef int key_t;
 
 #   if defined (ACE_PSOSIM)
 
-#     include /**/ "ace/sys_conf.h" /* system configuration file */
-#     include /**/ <psos.h>         /* pSOS+ system calls                */
-#     include /**/ <pna.h>          /* pNA+ TCP/IP Network Manager calls */
+#     include /**/x "ace/sys_conf.h" /* system configuration file */
+#     include /**/x <psos.h>         /* pSOS+ system calls                */
+#     include /**/x <pna.h>          /* pNA+ TCP/IP Network Manager calls */
 
     /* In the *simulator* environment, use unsigned int for size_t */
 #     define size_t  unsigned int
@@ -150,10 +150,10 @@ typedef int key_t;
     /*                         use the wrappers under pSOSim               */
 
     /* put includes for necessary UNIX file system calls here */
-#     include /**/ <sys/stat.h>
-#     include /**/ <sys/ioctl.h>
-#     include /**/ <sys/sockio.h>
-#     include /**/ <netinet/tcp.h>
+#     include "ace/os_include/sys/stat.h"
+#     include "ace/os_include/stropts.h" // instead of <sys/ioctl.h>
+//#     include /**/x <sys/sockio.h> // again, for ioctl
+#     include "ace/os_include/netinet/tcp.h"
 
 #     define TCP_
 #     if ! defined (BUFSIZ)
@@ -198,23 +198,23 @@ typedef int key_t;
 //      typedef unsigned char wchar_t;
 #     endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
 
-#     include /**/ "ace/sys_conf.h" /* system configuration file */
-#     include /**/ <configs.h>   /* includes all pSOS headers */
-//    #include /**/ <psos.h>    /* pSOS system calls */
-#     include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
-#     include /**/ <phile.h>     /* pHILE+ file system calls */
-//    #include /**/ <prepccfg.h>     /* pREPC+ file system calls */
+#     include /**/x "ace/sys_conf.h" /* system configuration file */
+#     include /**/x <configs.h>   /* includes all pSOS headers */
+//    #include /**/x <psos.h>    /* pSOS system calls */
+#     include /**/x <pna.h>      /* pNA+ TCP/IP Network Manager calls */
+#     include /**/x <phile.h>     /* pHILE+ file system calls */
+//    #include /**/x <prepccfg.h>     /* pREPC+ file system calls */
 #     if defined (ACE_PSOS_DIAB_MIPS)
 #       if defined (ACE_PSOS_USES_DIAB_SYS_CALLS)
-#         include /**/ <unistd.h>    /* Diab Data supplied file system calls */
+#         include "ace/os_include/unistd.h"    /* Diab Data supplied file system calls */
 #       else
-#         include /**/ <prepc.h>
+#         include /**/x <prepc.h>
 #       endif /* ACE_PSOS_USES_DIAB_SYS_CALLS */
-#       include /**/ <sys/wait.h>    /* Diab Data supplied header file */
+#       include "ace/os_include/sys/wait.h"    /* Diab Data supplied header file */
 #     endif /* ACE_PSOS_DIAB_MIPS */
 
 // This collides with phile.h
-//    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
+//    #include /**/x <sys/stat.h>    /* Diab Data supplied header file */
 
 // Some versions have missing preprocessor definitions
 #     if !defined (AF_UNIX)
@@ -252,7 +252,7 @@ typedef int key_t;
 // Some versions of pSOS do not define error numbers, but newer
 // versions do. So, include errno.h and then see which ones are not
 // yet defined.
-#   include /**/ <errno.h>
+#   include "ace/os_include/errno.h"
 
 #   if !defined (EPERM)
 #     define EPERM        1        /* Not super-user                        */
@@ -585,9 +585,9 @@ private:
 # if defined (ACE_HAS_PTHREADS)
 extern "C" {
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include /**/ <signal.h>
+#     include "ace/os_include/signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#   include /**/ <pthread.h>
+#   include "ace/os_include/pthread.h"
 #   if defined (DIGITAL_UNIX)
 #     define pthread_self __pthread_self
 extern "C" pthread_t pthread_self (void);
@@ -596,7 +596,7 @@ extern "C" pthread_t pthread_self (void);
 #   if defined (HPUX_10)
 //    HP-UX 10 needs to see cma_sigwait, and since _CMA_NOWRAPPERS_ is defined,
 //    this header does not get included from pthreads.h.
-#     include /**/ <dce/cma_sigwait.h>
+#     include /**/x <dce/cma_sigwait.h>
 #   endif /* HPUX_10 */
 # endif /* ACE_HAS_PTHREADS */
 
@@ -1190,7 +1190,7 @@ struct strrecvfd {};
 # endif /* ACE_LACKS_STRRECVFD */
 
 # if defined (ACE_HAS_PROC_FS)
-#   include /**/ <sys/procfs.h>
+#   include /**/x <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
 
 # if defined(__rtems__)
@@ -1234,7 +1234,7 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 # endif /* ACE_DEFAULT_THREAD_PRIORITY */
 
 # if defined (ACE_HAS_POSIX_SEM)
-#   include /**/ <semaphore.h>
+#   include "ace/os_include/semaphore.h"
 #   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
 #     define SEM_FAILED ((sem_t *) -1)
 #   endif  /* !SEM_FAILED */
@@ -1270,12 +1270,12 @@ struct cancel_state
 };
 
 # if defined (ACE_HAS_WINCE)
-#   include /**/ <types.h>
+#   include "ace/os_include/sys/types.h" // /**/ <types.h>
 
 #   if (_WIN32_WCE < 400)
 typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
 #   else
-#     include /**/ <stddef.h>        // WinCE .NET puts it in stddef.h
+#     include "ace/os_include/stddef.h"        // WinCE .NET puts it in stddef.h
 #   endif
 
 //typedef DWORD  nlink_t;
@@ -1340,35 +1340,35 @@ struct stat
   typedef unsigned long ulong_t;
 #     endif /* ! defined (ACE_PSOS) */
 #   else
-#     include /**/ <sys/types.h>
+#     include "ace/os_include/sys/types.h"
 #   endif  /* ACE_LACKS_SYS_TYPES_H */
 
 #   if ! defined (ACE_PSOS)
-#     include /**/ <sys/stat.h>
+#     include "ace/os_include/sys/stat.h"
 #   endif
 # endif /* ACE_HAS_WINCE */
 
 #if !defined (ACE_LACKS_UNISTD_H)
-#  include /**/ <unistd.h>
+#  include "ace/os_include/unistd.h"
 #endif /* ACE_LACKS_UNISTD_H */
 
 #if defined (ACE_HAS_PRIOCNTL)
   // Need to #include thread.h before #defining THR_BOUND, etc.,
   // when building without threads on SunOS 5.x.
 #  if defined (sun)
-#    include /**/ <thread.h>
+#    include /**/x <thread.h>
 #  endif /* sun */
 
   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
-# include /**/ <sys/rtpriocntl.h>
-# include /**/ <sys/tspriocntl.h>
+# include /**/x <sys/rtpriocntl.h>
+# include /**/x <sys/tspriocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
 
 # if defined (ACE_HAS_THREADS)
 
 #   if defined (ACE_HAS_STHREADS)
-#     include /**/ <synch.h>
-#     include /**/ <thread.h>
+#     include /**/x <synch.h>
+#     include /**/x <thread.h>
 #     define ACE_SCOPE_PROCESS P_PID
 #     define ACE_SCOPE_LWP P_LWPID
 #     define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
@@ -1709,10 +1709,10 @@ protected:
         // If we are on Solaris we can just reuse the existing
         // implementations of these synchronization types.
 #         if !defined (ACE_LACKS_RWLOCK_T)
-#           include /**/ <synch.h>
+#           include /**/x <synch.h>
 typedef rwlock_t ACE_rwlock_t;
 #         endif /* !ACE_LACKS_RWLOCK_T */
-#         include /**/ <thread.h>
+#         include /**/x <thread.h>
 #       endif /* (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
 
 #     else
@@ -1828,19 +1828,19 @@ typedef u_int ACE_thread_key_t;
 #   elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
-#     include /**/ <semLib.h>
+#     include /**/x <semLib.h>
 
-#     include /**/ <envLib.h>
-#     include /**/ <hostLib.h>
-#     include /**/ <ioLib.h>
-#     include /**/ <remLib.h>
-#     include /**/ <selectLib.h>
-#     include /**/ <sigLib.h>
-#     include /**/ <sockLib.h>
-#     include /**/ <sysLib.h>
-#     include /**/ <taskLib.h>
-#     include /**/ <taskHookLib.h>
-#     include /**/ <inetLib.h>
+#     include /**/x <envLib.h>
+#     include /**/x <hostLib.h>
+#     include /**/x <ioLib.h>
+#     include /**/x <remLib.h>
+#     include /**/x <selectLib.h>
+#     include /**/x <sigLib.h>
+#     include /**/x <sockLib.h>
+#     include /**/x <sysLib.h>
+#     include /**/x <taskLib.h>
+#     include /**/x <taskHookLib.h>
+#     include /**/x <inetLib.h>
 extern "C"
 struct sockaddr_un {
   short sun_family;    // AF_UNIX.
@@ -2090,7 +2090,7 @@ protected:
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 typedef pthread_rwlock_t ACE_rwlock_t;
 #   elif defined (ACE_HAS_STHREADS)
-#     include /**/ <synch.h>
+#     include /**/x <synch.h>
 typedef rwlock_t ACE_rwlock_t;
 #   endif /* ACE_LACKS_RWLOCK_T */
 
@@ -2319,10 +2319,10 @@ protected:
 
 // Standard C Library includes
 // NOTE: stdarg.h must be #included before stdio.h on LynxOS.
-# include /**/ <stdarg.h>
+# include "ace/os_include/stdarg.h"
 # if !defined (ACE_HAS_WINCE)
-#   include /**/ <assert.h>
-#   include /**/ <stdio.h>
+#   include "ace/os_include/assert.h"
+#   include "ace/os_include/stdio.h"
 // this is a nasty hack to get around problems with the
 // pSOS definition of BUFSIZ as the config table entry
 // (which is valued using the LC_BUFSIZ value anyway)
@@ -2348,22 +2348,22 @@ typedef unsigned int size_t;
 
 #   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include /**/ <signal.h>
+#     include "ace/os_include/signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   endif /* ! ACE_PSOS_DIAB_MIPS && ! VXWORKS */
 
 #   if ! defined (ACE_PSOS_DIAB_MIPS)
-#   include /**/ <fcntl.h>
+#   include "ace/os_include/fcntl.h"
 #   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
-# include /**/ <limits.h>
-# include /**/ <ctype.h>
+# include "ace/os_include/limits.h"
+# include "ace/os_include/ctype.h"
 # if ! defined (ACE_PSOS_DIAB_MIPS)
-# include /**/ <string.h>
-# include /**/ <stdlib.h>
+# include "ace/os_include/string.h"
+# include "ace/os_include/stdlib.h"
 # endif /* ! ACE_PSOS_DIAB_MIPS */
-# include /**/ <float.h>
+# include "ace/os_include/float.h"
 
 // This is defined by XOPEN to be a minimum of 16.  POSIX.1g
 // also defines this value.  platform-specific config.h can
@@ -2404,7 +2404,7 @@ typedef unsigned int size_t;
 # endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
 # if defined (ACE_NEEDS_SCHED_H)
-#   include /**/ <sched.h>
+#   include "ace/os_include/sched.h"
 # endif /* ACE_NEEDS_SCHED_H */
 
 #if !defined (ACE_OSTREAM_TYPE)
@@ -2435,18 +2435,19 @@ typedef unsigned int size_t;
 
 # if !defined (ACE_HAS_WINCE)
 #   if ! defined (ACE_PSOS_DIAB_MIPS)
-#   include /**/ <fcntl.h>
+#   include "ace/os_include/fcntl.h"
 #   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
 // This must come after signal.h is #included.
 # if defined (SCO)
 #   define SIGIO SIGPOLL
-#   include /**/ <sys/regset.h>
+#   include /**/x <sys/regset.h>  // Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>  todo: move to signal.h???
+
 # endif /* SCO */
 
 # if defined ACE_HAS_BYTESEX_H
-#   include /**/ <bytesex.h>
+#   include /**/x <bytesex.h>
 # endif /* ACE_HAS_BYTESEX_H */
 # include "ace/Basic_Types.h"
 
@@ -2555,7 +2556,7 @@ typedef u_int ACE_RANDR_TYPE;
 # endif /* ACE_HAS_BROKEN_RANDR */
 
 # if defined (ACE_HAS_UTIME)
-#   include /**/ <utime.h>
+#   include "ace/os_include/utime.h"
 # endif /* ACE_HAS_UTIME */
 
 # if !defined (ACE_HAS_MSG) && !defined (SCO)
@@ -2673,7 +2674,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   endif /* ACE_HAS_STRICT */
 
 #   if !defined (ACE_HAS_WINCE)
-#     include /**/ <sys/timeb.h>
+#     include "ace/os_include/sys/timeb.h"
 #   endif /* ACE_HAS_WINCE */
 
 // Need to work around odd glitches with NT.
@@ -2787,7 +2788,7 @@ PAGE_NOACCESS
 PAGE_NOCACHE  */
 
 #   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#     include /**/ <ws2tcpip.h>
+#     include /**/x <ws2tcpip.h>
 #   endif /* ACE_HAS_WINSOCK2 */
 
 // error code mapping
@@ -2837,14 +2838,14 @@ PAGE_NOCACHE  */
 
 
 #   if !defined (ACE_HAS_WINCE)
-#     include /**/ <time.h>
-#     include /**/ <direct.h>
-#     include /**/ <process.h>
-#     include /**/ <io.h>
+#     include "ace/os_include/time.h"
+#     include /**/x <direct.h>
+#     include /**/x <process.h>
+#     include /**/x <io.h>
 #   endif /* ACE_HAS_WINCE */
 
 #   if defined (__BORLANDC__)
-#     include /**/ <fcntl.h>
+#     include "ace/os_include/fcntl.h"
 #     define _chdir chdir
 #     define _ftime ftime
 #     undef _access
@@ -3153,10 +3154,10 @@ struct ifafilt;
 
 #   if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
 #     undef __cplusplus
-#     include /**/ <sys/socket.h>
+#     include "ace/os_include/sys/socket.h"
 #     define __cplusplus
 #   else
-#     include /**/ <sys/socket.h>
+#     include "ace/os_include/sys/socket.h"
 #   endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 
 extern "C"
@@ -3171,12 +3172,12 @@ extern "C"
 #     define h_addr h_addr_list[0]   /* the first address */
   };
 #   elif defined (ACE_HAS_CYGWIN32_SOCKET_H)
-#     include /**/ <cygwin32/socket.h>
+#     include /**/x <cygwin32/socket.h>
 #   else
 #     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #       define queue _Queue_
 #     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#     include /**/ <netdb.h>
+#     include "ace/os_include/netdb.h"
 #     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #       undef queue
 #     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
@@ -3188,7 +3189,7 @@ extern "C"
 #   if defined (ACE_HAS_STL_MAP_CONFLICT)
 #     define map _Resource_Allocation_Map_
 #   endif /* ACE_HAS_STL_MAP_CONFLICT */
-#   include /**/ <net/if.h>
+#   include "ace/os_include/net/if.h"
 #   if defined (ACE_HAS_STL_MAP_CONFLICT)
 #     undef map
 #   endif /* ACE_HAS_STL_MAP_CONFLICT */
@@ -3196,7 +3197,7 @@ extern "C"
 #   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #     define queue _Queue_
 #   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   include /**/ <netinet/in.h>
+#   include "ace/os_include/netinet/in.h"
 #   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #     undef queue
 #   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
@@ -3208,7 +3209,7 @@ extern "C"
       struct in_addr inet_makeaddr (const int, const int);
       unsigned long  inet_network (const char *);
 #   else  /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
-#     include /**/ <arpa/inet.h>
+#     include "ace/os_include/arpa/inet.h"
 #   endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
 }
 #   if !defined (ACE_LACKS_TCP_H)
@@ -3220,31 +3221,31 @@ extern "C"
 #         undef TCP_MAXSEG
 #       endif
 #     endif
-#     include /**/ <netinet/tcp.h>
+#     include "ace/os_include/netinet/tcp.h"
 #   endif /* ACE_LACKS_TCP_H */
 
 #   if defined (__Lynx__) || defined (UNIXWARE_7_1)
 #     ifndef howmany
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
 #     endif /* howmany */
-#   endif /* __Lynx__ || UNIXWARE_7_1 */
+#   endif /* __Lynx__ || UNIXWARE_7_1 **/
 
 #   if defined (CHORUS)
-#     include /**/ <chorus.h>
+#     include /**/x <chorus.h>
 #     if !defined(CHORUS_4)
-#       include /**/ <cx/select.h>
+#       include /**/x <cx/select.h>
 #     else
-#       include /**/ <stdio.h>
+#       include "ace/os_include/stdio.h"
 #     endif
-#     include /**/ <sys/uio.h>
-#     include /**/ <time.h>
-#     include /**/ <stdfileio.h>
-#     include /**/ <am/afexec.h>
-#     include /**/ <sys/types.h>
-#     include /**/ <sys/signal.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
-#     include /**/ <timer/chBench.h>
+#     include "ace/os_include/sys/uio.h"
+#     include "ace/os_include/time.h"
+#     include /**/x <stdfileio.h>
+#     include /**/x <am/afexec.h>
+#     include "ace/os_include/sys/types.h"
+#     include "ace/os_include/signal.h"  // <sys/signal.h>
+#     include "ace/os_include/sys/wait.h"
+#     include "ace/os_include/pwd.h"
+#     include /**/x <timer/chBench.h>
 extern_C int      getgid          __((void));
 extern_C int      getuid          __((void));
 extern_C char*    getcwd          __((char* buf, size_t size));
@@ -3262,23 +3263,23 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
 #     endif /* howmany */
 #   elif defined (CYGWIN32)
-#     include /**/ <sys/uio.h>
-#     include /**/ <sys/file.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/sys/uio.h"
+#     include "ace/os_include/fcntl.h"  // <sys/file.h>
+#     include "ace/os_include/sys/time.h"
+#     include "ace/os_include/sys/resource.h"
+#     include "ace/os_include/sys/wait.h"
+#     include "ace/os_include/pwd.h"
 #   elif defined (__QNX__)
-#     include /**/ <sys/uio.h>
-#     include /**/ <sys/ipc.h>
-#     include /**/ <sys/sem.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/sys/uio.h"
+#     include "ace/os_include/sys/ipc.h"
+#     include "ace/os_include/sys/sem.h"
+#     include "ace/os_include:sys/time.h"
+#     include "ace/os_include/sys/wait.h"
+#     include "ace/os_include/sys/resource.h"
+#     include "ace/os_include/pwd.h"
       // sets O_NDELAY
-#     include /**/ <unix.h>
-#     include /**/ <sys/param.h> /* for NBBY */
+#     include /**/x <unix.h>
+#     include "ace/os_include/limits.h"  // <sys/param.h> /* for NBBY */
       typedef long fd_mask;
 #     if !defined (NFDBITS)
 #       define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
@@ -3287,13 +3288,13 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #       define howmany(x, y)   (((x)+((y)-1))/(y))
 #     endif /* ! howmany */
 #   elif defined(__rtems__)
-#     include /**/ <sys/file.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <sys/fcntl.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/utsname.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/fcntl.h"  // <sys/file.h>
+#     include "ace/os_include/sys/resource.h"
+#     include "ace/os_include/sys/fcntl.h"
+#     include "ace/os_include/sys/time.h"
+#     include "ace/os_include/sys/utsname.h"
+#     include "ace/os_include/sys/wait.h"
+#     include "ace/os_include/pwd.h"
 
 extern "C"
 {
@@ -3301,39 +3302,39 @@ extern "C"
               fd_set *exceptfds, const struct timeval *timeout);
 };
 #   elif ! defined (VXWORKS) && ! defined (INTEGRITY)
-#     include /**/ <sys/uio.h>
-#     include /**/ <sys/ipc.h>
+#     include "ace/os_include/sys/uio.h"
+#     include "ace/os_include/sys/ipc.h"
 #     if !defined(ACE_LACKS_SYSV_SHMEM)
 // No reason to #include this if the platform lacks support for SHMEM
-#       include /**/ <sys/shm.h>
+#       include "ace/os_include/sys/shm.h"
 #     endif /* ACE_LACKS_SYSV_SHMEM */
-#     include /**/ <sys/sem.h>
-#     include /**/ <sys/file.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/sys/sem.h"
+#     include "ace/os_include/fcntl.h"  // <sys/file.h>
+#     include "ace/os_include/sys/time.h"
+#     include "ace/os_include/sys/resource.h"
+#     include "ace/os_include/sys/wait.h"
+#     include "ace/os_include/pwd.h"
 #   endif /* ! VXWORKS */
-#   include /**/ <sys/ioctl.h>
+#   include "ace/os_include/stropts.h" // <sys/ioctl.h>
 
 // IRIX5 defines bzero() in this odd file...
 #   if defined (ACE_HAS_BSTRING)
-#     include /**/ <bstring.h>
+#     include /**/x <bstring.h>
 #   endif /* ACE_HAS_BSTRING */
 
 // AIX defines bzero() in this odd file...
 #   if defined (ACE_HAS_STRINGS)
-#     include /**/ <strings.h>
+#     include "ace/os_include/strings.h"
 #   endif /* ACE_HAS_STRINGS */
 
 #   if defined (ACE_HAS_TERM_IOCTLS)
 #     if defined (__QNX__)
-#       include /**/ <termios.h>
+#       include "ace/os_include/termios.h"
 #     else  /* ! __QNX__ */
-#       include /**/ <sys/termios.h>
+#       include "ace/os_include/termios.h"  // <sys/termios.h>
 #     endif /* ! __QNX__ */
 #     if defined (HPUX)
-#       include /**/ <sys/modem.h>
+#       include /**/x <sys/modem.h>
 #     endif /* HPUX */
 #   endif /* ACE_HAS_TERM_IOCTLS */
 
@@ -3350,42 +3351,42 @@ extern "C"
 #endif /* VTIME */
 
 #   if defined (ACE_HAS_AIO_CALLS)
-#     include /**/ <aio.h>
+#     include "ace/os_include/aio.h"
 #   endif /* ACE_HAS_AIO_CALLS */
 
-#   if !defined (ACE_LACKS_PARAM_H)
-#     include /**/ <sys/param.h>
-#   endif /* ACE_LACKS_PARAM_H */
+//#   if !defined (ACE_LACKS_PARAM_H) Programs that are intended to comply with the POSIX standard should include the /usr/include/sys/limits.h file rather than the param.h file.
+#     include "ace/os_include/limits.h"  // <sys/param.h>
+//#   endif /* ACE_LACKS_PARAM_H */
 
 // This is here for ACE_OS::num_processors_online(). On HP-UX, it
 // needs sys/param.h (above) and sys/pstat.h. The implementation of the
 // num_processors_online() method also uses 'defined (__hpux)' to decide
 // whether or not to try the syscall.
 #   if defined (__hpux)
-#     include /**/ <sys/pstat.h>
+#     include /**/x <sys/pstat.h>
 #   endif /* __hpux **/
 
 #   if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && !defined (VXWORKS)
-#     include /**/ <sys/un.h>
+#     include "ace/os_include/sys/un.h"
 #   endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#   if defined (ACE_HAS_SIGINFO_T)
-#     if !defined (ACE_LACKS_SIGINFO_H)
-#       if defined (__QNX__) || defined (__OpenBSD__)
-#         include /**/ <sys/siginfo.h>
-#       elif defined(__rtems__)
-#         include /**/ <signal.h>
-#       else  /* __QNX__ || __OpenBSD__ */
-#         include /**/ <siginfo.h>
-#       endif /* __QNX__ || __OpenBSD__ */
-#     endif /* ACE_LACKS_SIGINFO_H */
-#     if !defined (ACE_LACKS_UCONTEXT_H)
-#       include /**/ <ucontext.h>
-#     endif /* ACE_LACKS_UCONTEXT_H */
-#   endif /* ACE_HAS_SIGINFO_T */
+//#   if defined (ACE_HAS_SIGINFO_T)
+//#     if !defined (ACE_LACKS_SIGINFO_H)
+//#       if defined (__QNX__) || defined (__OpenBSD__)
+//#         include "ace/os_include/signal.h"  // <sys/siginfo.h>
+//#       elif defined(__rtems__)
+//#         include "ace/os_include/signal.h"
+//#       else  /* __QNX__ || __OpenBSD__ */
+//#         include "ace/os_include/signal.h"  // <siginfo.h>
+//#       endif /* __QNX__ || __OpenBSD__ */
+//#     endif /* ACE_LACKS_SIGINFO_H */
+//#     if !defined (ACE_LACKS_UCONTEXT_H)
+//#       include "ace/os_include/ucontext.h"
+//#     endif /* ACE_LACKS_UCONTEXT_H */
+//#   endif /* ACE_HAS_SIGINFO_T */
 
 #   if defined (ACE_HAS_POLL)
-#     include /**/ <poll.h>
+#     include "ace/os_include/poll.h"
 #   endif /* ACE_HAS_POLL */
 
 #   if defined (ACE_HAS_STREAMS)
@@ -3393,10 +3394,10 @@ extern "C"
 #       if !defined (_XOPEN_EXTENDED_SOURCE)
 #         define _XOPEN_EXTENDED_SOURCE
 #       endif /* !_XOPEN_EXTENDED_SOURCE */
-#       include /**/ <stropts.h>
+#       include "ace/os_include/stropts.h"
 #       undef _XOPEN_EXTENDED_SOURCE
 #     else
-#       include /**/ <stropts.h>
+#       include "ace/os_include/stropts.h"
 #     endif /* AIX */
 #   endif /* ACE_HAS_STREAMS */
 
@@ -3425,11 +3426,11 @@ extern "C"
 #   endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
 #   if defined (ACE_HAS_SELECT_H)
-#     include /**/ <sys/select.h>
+#     include "ace/os_include/sys/select.h"
 #   endif /* ACE_HAS_SELECT_H */
 
 #   if defined (ACE_HAS_ALLOCA_H)
-#     include /**/ <alloca.h>
+//#     include /**/ <alloca.h>
 #   endif /* ACE_HAS_ALLOCA_H */
 
 /* Set the proper handle type for dynamically-loaded libraries. */
@@ -3440,7 +3441,7 @@ extern "C"
 #    if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
 extern "C" {
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
-#     include /**/ <dlfcn.h>
+#     include "ace/os_include/dlfcn.h"
 #     if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
 }
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
@@ -3453,9 +3454,9 @@ extern "C" {
 #   endif /* KCC */
 #   elif defined (__hpux)
 #     if defined(__GNUC__) || __cplusplus >= 199707L
-#       include /**/ <dl.h>
+#       include /**/x <dl.h>
 #     else
-#       include /**/ <cxxdl.h>
+#       include /**/x <cxxdl.h>
 #     endif /* (g++ || HP aC++) vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
 #   define ACE_SHLIB_INVALID_HANDLE 0
@@ -3480,7 +3481,7 @@ extern "C" {
 #endif /* !RTLD_GLOBAL */
 
 #   if defined (ACE_HAS_SOCKIO_H)
-#     include /**/ <sys/sockio.h>
+#     include /**/x <sys/sockio.h>
 #   endif /* ACE_HAS_SOCKIO_ */
 
 // There must be a better way to do this...
@@ -3509,10 +3510,10 @@ extern "C" {
 #   if defined (ACE_HAS_BROKEN_MMAP_H)
 extern "C"
 {
-#     include /**/ <sys/mman.h>
+#     include "ace/os_include/sys/mman.h"
 }
 #   elif !defined (ACE_LACKS_MMAP)
-#     include /**/ <sys/mman.h>
+#     include "ace/os_include/sys/mman.h"
 #   endif /* ACE_HAS_BROKEN_MMAP_H */
 
 // OSF1 has problems with sys/msg.h and C++...
@@ -3520,7 +3521,7 @@ extern "C"
 #     define _KERNEL
 #   endif /* ACE_HAS_BROKEN_MSG_H */
 #   if !defined (ACE_LACKS_SYSV_MSG_H)
-#     include /**/ <sys/msg.h>
+#     include "ace/os_include/sys/msg.h"
 #   endif /* ACE_LACKS_SYSV_MSG_H */
 #   if defined (ACE_HAS_BROKEN_MSG_H)
 #     undef _KERNEL
@@ -3537,7 +3538,7 @@ extern "C"
 #   endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
 
 #   if defined (ACE_HAS_PRIOCNTL)
-#     include /**/ <sys/priocntl.h>
+#     include /**/x <sys/priocntl.h>
 #   endif /* ACE_HAS_PRIOCNTL */
 
 #   if defined (ACE_HAS_IDTYPE_T)
@@ -3664,7 +3665,7 @@ struct ACE_utsname
   ACE_TCHAR machine[_SYS_NMLN];
 };
 # else
-#   include /**/ <sys/utsname.h>
+#   include "ace/os_include/sys/utsname.h"
 typedef struct utsname ACE_utsname;
 # endif /* ACE_LACKS_UTSNAME_T */
 
@@ -4116,12 +4117,12 @@ typedef int ucontext_t;
 #   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #     define queue _Queue_
 #   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   include /**/ <sys/timod.h>
+#   include /**/x <sys/timod.h>
 #   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #     undef queue
 #   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 # elif defined (ACE_HAS_OSF_TIMOD_H)
-#   include /**/ <tli/timod.h>
+#   include /**/x <tli/timod.h>
 # endif /* ACE_HAS_TIMOD_H */
 
 /**
@@ -4368,11 +4369,11 @@ typedef double ACE_timer_t;
 # endif /* ACE_HAS_PRUSAGE_T */
 
 # if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
-# include /**/ <syslog.h>
+# include "ace/os_include/syslog.h"
 # endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
 
 # if defined (ACE_HAS_SYS_FILIO_H)
-# include /**/ <sys/filio.h>
+# include /**/x <sys/filio.h>
 # endif /* ACE_HAS_SYS_FILIO_H */
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)

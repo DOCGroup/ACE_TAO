@@ -1,3 +1,16 @@
+Wed May  7 00:02:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.{i,h}:
+        * ace/os_include/signal.h:
+        * ace/os_include/stropts.h:
+          Modified most of the #includes of systems headers to use the 
+          ace/os_include/*.h headers, and started moving some of the
+          #ifdef'd code to the new headers.
+
+        * ace/config-linux-common.h:
+          Removed #define ACE_LACKS_STRRECVFD and added #define 
+          ACE_HAS_STRBUF_T.  
+
 Mon May  5 19:06:49 2003  Steve Huston  <shuston@riverace.com>
 
 	* bin/MakeProjectCreator/templates/nmake.mpd: When generating the

@@ -25,6 +25,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/types.h"
+
+#if defined (ACE_HAS_SIGINFO_T)
+#  if !defined (ACE_LACKS_SIGINFO_H)
+#    if defined (__QNX__) || defined (__OpenBSD__)
+#      include /**/ <sys/siginfo.h>
+#    elif defined(__rtems__)
+//#      include "ace/os_include/signal.h"
+#    else  /* __QNX__ || __OpenBSD__ */
+#      include /**/ <siginfo.h>
+#    endif /* __QNX__ || __OpenBSD__ */
+#  endif /* ACE_LACKS_SIGINFO_H */
+#endif /* ACE_HAS_SIGINFO_T */
+
 #include "ace/os_include/ucontext.h"
 #include "ace/os_include/time.h"
 
