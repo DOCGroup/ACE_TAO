@@ -13,6 +13,13 @@ Thu Sep 24 12:48:58 1998  David L. Levine  <levine@cs.wustl.edu>
           reporting a compilation failure on Sun C++ 4.2/Solaris 2.6
           without it.
 
+        * ace/ High_Res_Timer.cpp (global_scale_factor): on Linux,
+          only use BogoMips if the CPU is an alpha.  It would also
+          work directly on Pentium Pro, but not other Pentiums.  With
+          a little effort, it could be made to work there, see the
+          BogoMips mini-HOWTO.  Thanks to Ossama for enlightening me
+          on this corner of Linux.
+
 Thu Sep 24 09:17:32 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/Containers_T.h: Added #include "ace/Containers.h" - AIX xlC
