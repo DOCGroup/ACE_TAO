@@ -1,4 +1,7 @@
+//
 // $Id$
+//
+
 #include "orbsvcs/CosNamingC.h"
 #include "tao/corba.h"
 
@@ -6,7 +9,7 @@ int main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV); 
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::Object_var ns_obj =
@@ -14,17 +17,18 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ns_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, 
-                           "Could not resolve Naming Service"), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Could not resolve Naming Service"),
                           1);
 
-      CosNaming::NamingContext_var inc = 
-        CosNaming::NamingContext::_narrow (ns_obj, ACE_TRY_ENV);
+      CosNaming::NamingContext_var inc =
+        CosNaming::NamingContext::_narrow (ns_obj.in (),
+                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (inc.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, 
-                           "Could not resolve Naming Service"), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Could not resolve Naming Service"),
                           1);
 
       CosNaming::Name name;
