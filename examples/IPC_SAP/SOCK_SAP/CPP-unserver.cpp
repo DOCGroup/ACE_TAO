@@ -4,7 +4,7 @@
 // ACE_LSOCK_Stream classes.  If the platform supports threads it uses
 // a thread-per-request concurrency model.
 
-#include "ace/LSOCK_Acceptor.h"                             
+#include "ace/LSOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
 ACE_RCSID(SOCK_SAP, CPP_unserver, "$Id$")
@@ -31,14 +31,14 @@ server (void *arg)
                        "%p\n",
                        "disable"),
                        0);
-                       
+
   if (new_stream.get_remote_addr (cli_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "get_remote_addr"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client connected from %s\n", 
+              "(%P|%t) client connected from %s\n",
               cli_addr.get_path_name ()));
 
   // Read data from client (terminate on error).
@@ -106,12 +106,12 @@ run_event_loop (const char rendezvous[])
                        -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "starting server %s\n", 
+              "starting server %s\n",
               server_addr.get_path_name ()));
 
   // Keep these guys out here to prevent excessive constructor
   // calls...
-  ACE_LSOCK_Stream new_stream;                                   
+  ACE_LSOCK_Stream new_stream;
 
   // Performs the iterative server activities.
 
@@ -120,12 +120,12 @@ run_event_loop (const char rendezvous[])
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
       if (peer_acceptor.accept (new_stream, 0, &timeout) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
+        {
+          ACE_ERROR ((LM_ERROR,
                       "%p\n",
                       "accept"));
-	  continue;
-	}          
+          continue;
+        }
 
 #if defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) server,
@@ -138,21 +138,20 @@ run_event_loop (const char rendezvous[])
 #else
       server ((void *) new_stream.get_handle ());
 #endif /* ACE_HAS_THREADS */
-    }  
+    }
 
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
-int 
+int
 main (int argc, char *argv[])
-{                                                                
+{
   return run_event_loop (argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS);
 }
 #else
 int main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
-		     "this platform does not support UNIX-domain sockets\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "this platform does not support UNIX-domain sockets\n"), -1);
 }
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
