@@ -60,11 +60,6 @@ public:
   // @@ The user must currently ensure that assignment or copy
   //    operations are atomic!
 
-  void operator= (const ACE_SSL_SOCK_Stream &);
-  // Assignment operator
-
-  ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &);
-  // Copy constructor
 
   ~ACE_SSL_SOCK_Stream (void);
   // Destructor
@@ -224,13 +219,18 @@ public:
   // access this method since some state in the underlying <ssl_> data
   // structure is set during SSL connection establishment.
 
-protected:
-
   SSL *ssl (void) const;
   // Return a pointer to the underlying SSL structure.
 
+protected:
+
   ACE_SOCK_Stream & peer (void);
   // Return the underlying <ACE_SOCK_Stream> which SSL runs atop of.
+
+private:
+
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_SOCK_Stream &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &))
 
 protected:
 
