@@ -108,7 +108,7 @@ ACE_Registry_Name_Space::resolve (const ACE_WString &name,
   ACE_Registry::Object object;
   int result = this->context_.resolve (name.fast_rep (), object);
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Context::resolve"), result);
+    return result;
 
   ACE_WString string ((ACE_USHORT16 *) object.data (),
 		      object.size () / sizeof (ACE_USHORT16));
@@ -125,7 +125,7 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
   int result = this->list_name_entries (binding_set,
 					pattern);
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Context::list"), result);    
+    return result;
   
   ACE_BINDING_ITERATOR iterator (binding_set);
 
@@ -147,7 +147,7 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
   int result = this->list_name_entries (binding_set,
 					pattern);
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Context::list"), result);    
+    return result;
   
   ACE_BINDING_ITERATOR iterator (binding_set);
 
@@ -176,7 +176,7 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
   ACE_Registry::Binding_List list;
   int result = this->context_.list (list);
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Context::list"), result);
+    return result;
 
   // Iterator through all entries
   for (ACE_Registry::Binding_List::iterator i = list.begin ();
