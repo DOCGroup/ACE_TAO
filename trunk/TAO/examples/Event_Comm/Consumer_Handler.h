@@ -59,10 +59,6 @@ public:
 
   ACE_Reactor *reactor (void);
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  // Close down the handler.
-
 private:
   int get_notifier (void);
   // gets the notifier reference from the naming service.

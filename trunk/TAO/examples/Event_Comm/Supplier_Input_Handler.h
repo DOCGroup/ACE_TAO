@@ -30,7 +30,7 @@
 // Forward declaration.
 class Notifier_Handler;
 
-class Supplier_Input_Handler : public ACE_Service_Object
+class Supplier_Input_Handler : public ACE_Event_Handler 
 {
   // = TITLE
   //   Handles input events generated from a keyboard.
@@ -47,29 +47,19 @@ public:
   ~Supplier_Input_Handler (void);
   // Destructor.
 
-  int initialize (Notifier_Handler *, ACE_HANDLE = ACE_STDIN);
-  // Initialization, uses stdin by default.
+  int initialize (Notifier_Handler *); 
+  // Initialization. 
 
   virtual int handle_input (ACE_HANDLE);
   // Frame input events and notify <Consumers>.
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  virtual int handle_close (void); 
   // Close down the handler.
 
 protected:
-  virtual ACE_HANDLE get_handle (void) const;
-  // Return the input handle.
-
-  ACE_HANDLE handle_;
-  // ACE_HANDLE where the input comes from.
-
-  Notifier_Handler *notifier_;
+    Notifier_Handler *notifier_;
   // Pointer to a <Notifier_Handler> that's used to inform Consumers
   // that events of interest have occurred.
-
-  FILE *fp_;
-  // Pointer to an input FILE.
 };
 
 #endif /* SUPPLIER_INPUT_HANDLER_H */

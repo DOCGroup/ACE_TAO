@@ -11,27 +11,9 @@ Consumer_Handler::Consumer_Handler (void)
   // No-Op.
 }
 
-// Destroy a Receiver target object.
-
 Consumer_Handler::~Consumer_Handler (void)
 {
   // No-Op.
-}
-
-int
-Consumer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
-{
-  if (this->receiver_ != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "closing down Consumer_Handler\n"));
-
-      CORBA::release (this->receiver_.in ());
-      this->receiver_ = 0;
-      CORBA::release (this->notifier_.in ());
-      this->notifier_ = 0;
-    }
-  return 0;
 }
 
 int
@@ -122,7 +104,7 @@ Consumer_Handler::get_notifier (void)
 }
 
 void
-Consumer_Handler:: close (void)
+Consumer_Handler::close (void)
 {
   this->orb_->shutdown ();
 }

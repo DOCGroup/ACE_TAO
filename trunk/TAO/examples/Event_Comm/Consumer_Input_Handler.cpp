@@ -6,7 +6,7 @@
 ACE_RCSID(Consumer, Consumer_Input_Handler, "$Id$")
 
 Consumer_Input_Handler::Consumer_Input_Handler (void)
-  : handle_ (0),
+  : //handle_ (0),
     receiver_handler_ (0),
     consumer_initiated_shutdown_ (0)
 {
@@ -30,14 +30,8 @@ Consumer_Input_Handler::consumer_initiated_shutdown (int c)
   this->consumer_initiated_shutdown_ = c;
 }
 
-ACE_HANDLE
-Consumer_Input_Handler::get_handle (void) const
-{
-  return this->handle_;
-}
-
 int
-Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Consumer_Input_Handler::handle_close (void) 
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "closing down Consumer::Input_Handler\n"));
@@ -69,28 +63,28 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       TAO_ENDTRY;
     }
 
-  if (this->receiver_handler_->reactor ()->remove_handler
-      (this,
-       // Don't execute a callback here otherwise we'll recurse
-       // indefinitely!
-       ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "remove_handler"));
+	// Make sure to cleanup the STDIN handler.
+	if (ACE_Event_Handler::remove_stdin_handler
+		  (TAO_ORB_Core_instance ()->reactor (),
+		   TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+		ACE_ERROR ((LM_ERROR,
+				   "%p\n",
+				   "remove_stdin_handler"));
+
   return 0;
 }
 
-int Consumer_Input_Handler::initialize (Consumer_Handler *ch,
-			      ACE_HANDLE handle)
+int Consumer_Input_Handler::initialize (Consumer_Handler *ch)
 {
   receiver_handler_ = ch;
-  handle_ = handle;
 
-  if (this->receiver_handler_->reactor()->register_handler
+  if (ACE_Event_Handler::register_stdin_handler
       (this,
-       ACE_Event_Handler::READ_MASK) == -1)
+       TAO_ORB_Core_instance ()->reactor (),
+       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Consumer_Input_Handler::Input_Handler\n"),
+		       "%p\n",
+		       "register_stdin_handler"),
 		      -1);
   return 0;
 }

@@ -7,7 +7,7 @@
 ACE_RCSID(Supplier, Supplier_Input_Handler, "$Id$")
 
 Supplier_Input_Handler::Supplier_Input_Handler ()
-  : handle_ (0),
+  : //handle_ (0),
     notifier_ (0)
 {
   // No-Op.
@@ -20,59 +20,40 @@ Supplier_Input_Handler::~Supplier_Input_Handler (void)
 }
 
 int
-Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Supplier_Input_Handler::handle_close (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier::Supplier_Input_Handler\n"));
 
-  Event_Comm::Notifier *notifier = this->notifier_->notifier ();
-  ACE_ASSERT (notifier != 0);
-
-  ACE_OS::fclose (this->fp_);
-
-  if (ACE_Reactor::instance ()->remove_handler
-      (this,
-       // Don't execute a callback here otherwise we'll recurse
-       // indefinitely!
-       ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
+  // Make sure to cleanup the STDIN handler.
+   if (ACE_Event_Handler::remove_stdin_handler
+      (TAO_ORB_Core_instance ()->reactor (),
+       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "remove_handler"));
-  return 0;
+		       "%p\n",
+		       "remove_stdin_handler"));
+
+   return 0;
 }
 
 int
-Supplier_Input_Handler::initialize (Notifier_Handler *notifier,
-				    ACE_HANDLE handle) // Use stdin by default.
+Supplier_Input_Handler::initialize (Notifier_Handler *notifier)			  
 {
   notifier_ = notifier;
-  handle_ = handle;
+  // Register our <Input_Handler> to handle STDIN events, which will
+  // trigger the <handle_input> method to process these events.
 
-  // Register ourselves with the ACE_Reactor so that input events
-  // cause our handle_input() method to be dispatched automatically.
-
-  if (ACE_Reactor::instance ()->register_handler
+  if (ACE_Event_Handler::register_stdin_handler
       (this,
-       ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                "%p\n",
-                "register_handler"),
-                      -1);
-
-  this->fp_ = ACE_OS::fdopen (handle, "r");
-
-  if (this->fp_ == 0)
+       TAO_ORB_Core_instance ()->reactor (),
+       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
-		       "fdopen"),
-                      -1);
-  return 0;
-}
+		       "register_stdin_handler"),
+		      -1);
 
-ACE_HANDLE
-Supplier_Input_Handler::get_handle (void) const
-{
-  return this->handle_;
+  
+  return 0;
 }
 
 // Frame input events and notify <Consumers>.
@@ -86,7 +67,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 
   if (ACE_OS::fgets (buf,
 		     sizeof buf - 1,
-		     this->fp_) == 0)
+			 stdin) == 0)
     {
       ACE_OS::strcpy (buf,
 		      "quit");

@@ -26,7 +26,7 @@
 // Forward declaration.
 class Consumer_Handler;
 
-class Consumer_Input_Handler : public ACE_Service_Object
+class Consumer_Input_Handler : public ACE_Event_Handler 
 {
   // = TITLE
   //   Handles input events generated from a keyboard.
@@ -43,16 +43,14 @@ public:
   ~Consumer_Input_Handler (void);
   // Destructor.
 
-  int initialize (Consumer_Handler *,
-		  ACE_HANDLE h = 0);
+  int initialize (Consumer_Handler *);	  
   // registers the input event handler.
   // returns 0 on success, -1 on error.
 
   virtual int handle_input (ACE_HANDLE);
   // Dispatch the callback when events occur.
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  virtual int handle_close (void); 
   // Close down the handler.
 
   int consumer_initiated_shutdown (void);
@@ -62,13 +60,7 @@ public:
   // Indicate that the Consumer initiated the shutdown.
 
 private:
-  virtual ACE_HANDLE get_handle (void) const;
-  // Obtain the input HANDLE.
-
-  ACE_HANDLE handle_;
-  // ACE_HANDLE where the input comes from.
-
-  Consumer_Handler *receiver_handler_;
+    Consumer_Handler *receiver_handler_;
   // Pointer to the <Consumer_Handler> that receives notifications
   // from the <Event_Comm::Notifier>.
 
