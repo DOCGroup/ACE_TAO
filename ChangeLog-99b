@@ -1,3 +1,8 @@
+Tue Sep 28 15:02:33 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.i (ioctl): Added the #if def ACE_HAS_WINSOCK2_GQOS for 
+	  the extra fields in struct _flowspec.
+
 Mon Sep 27 19:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (timezone): SunOS 4 needs to use gettimeofday() to find
