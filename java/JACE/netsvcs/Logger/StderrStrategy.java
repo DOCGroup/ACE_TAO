@@ -22,6 +22,12 @@ import java.io.*;
  */
 public class StderrStrategy implements LoggingStrategy
 {
+  /**
+   * Process the given LogRecord by printing it on the System.err stream.
+   *
+   *@param hostname host from which this LogRecord originated
+   *@param record LogRecord instance to process
+   */
   public void logRecord (String hostname,
 			 LogRecord record)
   {
