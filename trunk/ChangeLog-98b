@@ -22,6 +22,9 @@ Sat Aug 22 00:27:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  service instances maybe accessing these singletons in the fini()
  	  and destructor methods.
 
+	* ace/Service_Config.cpp (fini_svcs): Disable log messages when
+ 	  appropriate.
+
 Fri Aug 21 22:26:54 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.i (ACE_OS::gettimeofday): On Win32, instead of _ftime,

@@ -125,7 +125,7 @@ Cubit_Client::read_ior (char *filename)
                       -1);
 
   this->cubit_factory_key_ = ACE_OS::strdup (data);
-  ACE_Allocator::instance ()->free (data);
+  ior_buffer.alloc ()->free (data);
 
   return 0;
 }

@@ -654,7 +654,17 @@ int
 ACE_Service_Config::fini_svcs (void)
 {
   ACE_TRACE ("ACE_Service_Config::fini_svcs");
-  return ACE_Service_Repository::instance ()->fini ();
+
+  // Clear the LM_DEBUG bit from log messages if appropriate
+  if (!ACE_Service_Config::debug_)
+    ACE_Log_Msg::disable_debug_messages ();
+
+  int result = ACE_Service_Repository::instance ()->fini ();
+
+  if (!ACE_Service_Config::debug_)
+    ACE_Log_Msg::enable_debug_messages ();
+  
+  return result;
 }
 
 int

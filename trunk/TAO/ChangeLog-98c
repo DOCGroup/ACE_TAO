@@ -1,3 +1,11 @@
+Sat Aug 22 02:30:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp (read_ior): Use the
+ 	  buffer's allocator to free the memory.
+
+	* tests/Simple/time/: Made a big pass through the example to clean
+ 	  things up, remove extra code, and rename things. 
+
 Sat Aug 22 01:41:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/TAO.dsp:
