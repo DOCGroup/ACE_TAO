@@ -2,10 +2,10 @@
 
 #include "Progress_i.h"
 
+#if defined(ACE_HAS_FL)
+
 #include <FL/Fl_Slider.h>
 #include <FL/Fl_Button.h>
-
-#if defined(ACE_HAS_FL)
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
