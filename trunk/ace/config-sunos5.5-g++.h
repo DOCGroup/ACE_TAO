@@ -14,7 +14,10 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-#define ACE_HAS_STRING_CLASS
+#if __GNUG__ == 2 && __GNUC_MINOR__ < 8
+  // String.h isn't installed with out g++ 2.8.0.
+# define ACE_HAS_STRING_CLASS
+#endif /* __GNUG__ == 2 && __GNUC_MINOR__ < 8 */
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_UALARM
 #define ACE_LACKS_UALARM_PROTOTYPE
