@@ -42,6 +42,7 @@
 #  xt_reactor       Build the XtReactor.
 #  fl_reactor       Build the FlReactor.
 #  tk_reactor       Build the TkReactor.
+#  qt_reactor       Build the QtReactor.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -285,6 +286,17 @@ ifneq ($(tk_reactor),)
   LIBS += $(PLATFORM_TK_LIBS)
   LDFLAGS += $(PLATFORM_TK_LDFLAGS)
 endif # tk_reactor
+
+ifeq ($(qt_reactor),0)
+  override qt_reactor =
+endif # qt_reactor
+
+ifneq ($(qt_reactor),)
+  override ace_with_qt=1
+  CPPFLAGS += -DACE_HAS_QT $(PLATFORM_QT_CPPFLAGS)
+  LIBS += $(PLATFORM_QT_LIBS)
+  LDFLAGS += $(PLATFORM_QT_LDFLAGS)
+endif # qt_reactor
 
 ifeq ($(ace_with_gl),0)
   override ace_with_gl =
