@@ -692,7 +692,9 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
                             void *context,
                             CORBA::Environment &env)
 {
+#if 0
   CORBA::Boolean continue_encoding = CORBA::B_TRUE;
+#endif /* 0 */
   CDR *stream = (CDR *) context;  // context is the CDR stream
   CORBA::String str = *(CORBA::String *) data;
 
