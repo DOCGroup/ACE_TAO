@@ -1,3 +1,11 @@
+Thu Jul  3 22:38:04 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* HTTP_Response.cpp (build_headers): Added explicit cast for
+ 	  EMPTY_HEADER from (const char *) to (char *) in order to make
+ 	  MSVC happy.  This is probably very badly styled.  But
+ 	  HTTP_HEADER is only used in places that require (const char *),
+ 	  so I think it's safe to do so.
+
 Thu Jul  3 15:34:30 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* HTTP_Response.cpp (HTTP_Response): Moved a call to delete out of
