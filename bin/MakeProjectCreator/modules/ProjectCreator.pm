@@ -767,6 +767,14 @@ sub generate_default_target_names {
           last;
         }
       }
+
+      ## If we still don't have a project type, then we will
+      ## default to a library
+      if (!$self->exe_target()) {
+        my($base) = $self->base_directory();
+        $self->process_assignment('sharedname', $base);
+        $self->process_assignment('staticname', $base);
+      }
     }
   }
 }

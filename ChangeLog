@@ -1,3 +1,10 @@
+Tue Apr 29 08:47:16 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          If a project is not specified to be either a library or exe and it
+          can't be determined that the type is exe, we default to a library.
+
 Tue Apr 29 06:25:37 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
