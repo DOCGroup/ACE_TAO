@@ -1,4 +1,4 @@
-// $Id Handle_Set_Test.cpp,v 4.34 1999/09/19 15:53:54 schmidt Exp $
+// $Id$
 
 // ============================================================================
 //
@@ -23,7 +23,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
 
-ACE_RCSID(tests, Handle_Set_Test, "Handle_Set_Test.cpp,v 4.34 1999/09/19 15:53:54 schmidt Exp")
+ACE_RCSID(tests, Handle_Set_Test, "$Id$")
 
 static void
 test_duplicates (size_t count)
