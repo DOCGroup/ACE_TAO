@@ -1,3 +1,8 @@
+Fri Aug 27 07:17:58 1999  Toshio HORI  <toshi@etl.go.jp>
+
+        * ACE-INSTALL.html: fixed a typo, missing ; after
+          &lt and &gt.
+
 Thu Aug 26 21:01:02 1999  Jim Rucker  <James.D.Rucker@jpl.nasa.gov>
 
         * ace/Thread_Manager.cpp (spawn_i): on VxWorks, if t_handle
