@@ -176,11 +176,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << node->name () << "::" << node->local_name ()
-          << " (int collocated)" << be_nl
+          << " (void)" << be_nl
           << " : the" << node->base_proxy_broker_name () << "_ (0)" << be_nl
           << "{" << be_idt_nl
           << "this->" << node->flat_name ()
-          << "_setup_collocation (collocated);" << be_uidt_nl
+          << "_setup_collocation ();" << be_uidt_nl
           << be_uidt << "}";
     }
 
@@ -189,9 +189,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "void" << be_nl
           << node->name () << "::" << node->flat_name ()
-          << "_setup_collocation (int collocated)" << be_nl
+          << "_setup_collocation ()" << be_nl
           << "{" << be_idt_nl
-          << "if (collocated";
+          << "if (" << "::"
+          << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer";
 
        // Right now (29-01-04) we don't support collocation for
        // abstract interfaces, and the 'collocated' arg will always
@@ -200,12 +203,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
        // (which at present is also 0 for abstract interfaces),
        // in case the logic is changed in the future.
        if (node->is_abstract ())
-        {   
-          *os << " && " << node->flat_client_enclosing_scope () 
-              << node->base_proxy_broker_name () 
+        {
+          *os << " && " << node->flat_client_enclosing_scope ()
+              << node->base_proxy_broker_name ()
               << "_Factory_function_pointer";
         }
-          
+
       *os << ")" << be_idt_nl
           << "{" << be_idt_nl
           << "this->the" << node->base_proxy_broker_name ()
@@ -248,7 +251,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
               *os << be_nl
                   << "this->" << inherited->flat_name ()
-                  << "_setup_collocation" << " (collocated);";
+                  << "_setup_collocation" << " ();";
             }
         }
 

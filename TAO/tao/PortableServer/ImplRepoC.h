@@ -180,11 +180,11 @@ namespace ImplementationRepository
   
   protected:
     // Concrete interface only.
-    ServerObject (int collocated = 0);
+    ServerObject (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void ImplementationRepository_ServerObject_setup_collocation (int collocated);
+    virtual void ImplementationRepository_ServerObject_setup_collocation (void);
     
     // Concrete non-local interface only.
     ServerObject (
@@ -852,11 +852,11 @@ namespace ImplementationRepository
   
   protected:
     // Concrete interface only.
-    Administration (int collocated = 0);
+    Administration (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void ImplementationRepository_Administration_setup_collocation (int collocated);
+    virtual void ImplementationRepository_Administration_setup_collocation (void);
     
     // Concrete non-local interface only.
     Administration (
@@ -959,11 +959,11 @@ namespace ImplementationRepository
   
   protected:
     // Concrete interface only.
-    ServerInformationIterator (int collocated = 0);
+    ServerInformationIterator (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void ImplementationRepository_ServerInformationIterator_setup_collocation (int collocated);
+    virtual void ImplementationRepository_ServerInformationIterator_setup_collocation (void);
     
     // Concrete non-local interface only.
     ServerInformationIterator (

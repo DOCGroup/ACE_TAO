@@ -41,31 +41,16 @@ namespace TAO
                                       ex_data,
                                       ex_count);
 
-    // If we have a collocation proxy broker in our process space for
-    // <this->target_>, just take a guess and invoke the collocated
-    // path.
-    if (this->cpb_)
-      {
-        this->invoke_collocated (stub,
-                                 op_details
-                                 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-    else
-      {
-        this->invoke_remote (stub,
-                             op_details
-                             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-    return;
+    this->invoke_i (stub,
+                    op_details
+                    ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void
-  Invocation_Adapter::invoke_collocated (TAO_Stub *stub,
-                                         TAO_Operation_Details &details
-                                         ACE_ENV_ARG_DECL)
+  Invocation_Adapter::invoke_i (TAO_Stub *stub,
+                                TAO_Operation_Details &details
+                                ACE_ENV_ARG_DECL)
   {
     // Cache the target to a local variable.
     // @@ NOTE: Leak if forwarded
@@ -79,12 +64,18 @@ namespace TAO
     while (status == TAO_INVOKE_START ||
            status == TAO_INVOKE_RESTART)
       {
-        // This is a second test of the target to determine whether it
-        // is really collocated or not.
-        const Collocation_Strategy strat =
-          this->cpb_->get_strategy (effective_target
-                                    ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        // Default we go to remote
+        Collocation_Strategy strat = TAO_CS_REMOTE_STRATEGY;
+
+        // If we have a collocated proxy broker we look if we maybe
+        // can use a collocated invocation.
+        if (cpb_ != 0)
+          {
+            strat =
+              TAO_ORB_Core::collocation_strategy (effective_target
+                                                  ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+          }
 
         if (strat == TAO_CS_REMOTE_STRATEGY ||
             strat == TAO_CS_LAST)
@@ -99,28 +90,13 @@ namespace TAO
           }
         else
           {
-            Collocated_Invocation coll_inv (effective_target,
-                                            this->target_,
-                                            stub,
-                                            details,
-                                            this->type_ == TAO_TWOWAY_INVOCATION);
-
-            status = coll_inv.invoke (this->cpb_,
-                                      strat
-                                      ACE_ENV_ARG_PARAMETER);
+            status =
+              this->invoke_collocated_i (stub,
+                                         details,
+                                         effective_target,
+                                         strat
+                                         ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
-
-            if (status == TAO_INVOKE_RESTART &&
-                coll_inv.is_forwarded ())
-              {
-                effective_target =
-                  coll_inv.steal_forwarded_reference ();
-
-                (void) this->object_forwarded (effective_target,
-                                               stub
-                                               ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
-              }
           }
 
         if (status == TAO_INVOKE_RESTART)
@@ -132,48 +108,9 @@ namespace TAO
 
             {
               ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Invocation_Adapter::invoke_collocated, "
+                "TAO (%P|%t) - Invocation_Adapter::invoke_i, "
                 "handling forwarded locations \n"));
             }
-
-          }
-      }
-  }
-
-  void
-  Invocation_Adapter::invoke_remote (TAO_Stub *stub,
-                                     TAO_Operation_Details &op
-                                     ACE_ENV_ARG_DECL)
-  {
-    // @@NOTE: Leak if forwarding does happen
-    CORBA::Object *effective_target = this->target_;
-
-    ACE_Time_Value *max_wait_time = 0;
-
-    // Initial state
-    TAO::Invocation_Status status = TAO_INVOKE_START;
-
-    while (status == TAO_INVOKE_START ||
-           status == TAO_INVOKE_RESTART)
-      {
-        status = this->invoke_remote_i (stub,
-                                        op,
-                                        effective_target,
-                                        max_wait_time
-                                        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-
-        if (status == TAO_INVOKE_RESTART)
-          {
-            op.reset_request_service_info ();
-            op.reset_reply_service_info ();
-
-            if (TAO_debug_level > 2)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote, ")
-                  ACE_TEXT ("handling forwarded locations \n")));
-              }
           }
       }
   }
@@ -207,10 +144,50 @@ namespace TAO
     return stub;
   }
 
+  Invocation_Status
+  Invocation_Adapter::invoke_collocated_i (TAO_Stub *stub,
+                                           TAO_Operation_Details &details,
+                                           CORBA::Object *&effective_target,
+                                           Collocation_Strategy strat
+                                           ACE_ENV_ARG_DECL)
+  {
+    // To make a collocated call we must have a collocated proxy broker, the
+    // invoke_i() will make sure that we only come here when we have one
+    ACE_ASSERT (cpb_ != 0);
+
+    // Initial state
+    TAO::Invocation_Status status = TAO_INVOKE_START;
+
+    Collocated_Invocation coll_inv (this->target_,
+                                    effective_target,
+                                    stub,
+                                    details,
+                                    this->type_ == TAO_TWOWAY_INVOCATION);
+
+    status = coll_inv.invoke (this->cpb_,
+                              strat
+                              ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (status == TAO_INVOKE_RESTART &&
+        coll_inv.is_forwarded ())
+      {
+        effective_target =
+            coll_inv.steal_forwarded_reference ();
+
+        (void) this->object_forwarded (effective_target,
+                                       stub
+                                       ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      }
+
+    return status;
+  }
+
 
   Invocation_Status
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
-                                       TAO_Operation_Details &op,
+                                       TAO_Operation_Details &details,
                                        CORBA::Object *&effective_target,
                                        ACE_Time_Value *&max_wait_time
                                        ACE_ENV_ARG_DECL)
@@ -233,13 +210,13 @@ namespace TAO
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     // Update the request id now that we have a transport
-    op.request_id (resolver.transport ()->tms ()->request_id ());
+    details.request_id (resolver.transport ()->tms ()->request_id ());
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
     if (this->type_ == TAO_ONEWAY_INVOCATION)
       {
-        return this->invoke_oneway (op,
+        return this->invoke_oneway (details,
                                     effective_target,
                                     resolver,
                                     max_wait_time
@@ -249,8 +226,8 @@ namespace TAO
       {
         // @@ NOTE:Need to change this to something better. Too many
         // hash defines meaning the same  thing..
-        op.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
-        return this->invoke_twoway (op,
+        details.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
+        return this->invoke_twoway (details,
                                     effective_target,
                                     resolver,
                                     max_wait_time

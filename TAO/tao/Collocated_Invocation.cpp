@@ -8,13 +8,13 @@ ACE_RCSID (tao,
 
 namespace TAO
 {
-  Collocated_Invocation::Collocated_Invocation (CORBA::Object_ptr et,
-                                                CORBA::Object_ptr t,
+  Collocated_Invocation::Collocated_Invocation (CORBA::Object_ptr t,
+                                                CORBA::Object_ptr et,
                                                 TAO_Stub *stub,
                                                 TAO_Operation_Details &detail,
                                                 bool response_expected)
-    : Invocation_Base (et,
-                       t,
+    : Invocation_Base (t,
+                       et,
                        stub,
                        detail,
                        response_expected)

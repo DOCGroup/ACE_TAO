@@ -167,7 +167,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -194,9 +194,7 @@ TAO::Collocation_Proxy_Broker *
   
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
-      CORBA_DomainManager_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_DomainManager_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::Policy>::ret_val _tao_retval;
@@ -223,16 +221,16 @@ TAO::Collocation_Proxy_Broker *
   return _tao_retval.retn ();
 }
 
-CORBA::DomainManager::DomainManager (int collocated)
+CORBA::DomainManager::DomainManager (void)
  : the_TAO_DomainManager_Proxy_Broker_ (0)
 {
-  this->CORBA_DomainManager_setup_collocation (collocated);
+  this->CORBA_DomainManager_setup_collocation ();
 }
 
 void
-CORBA::DomainManager::CORBA_DomainManager_setup_collocation (int collocated)
+CORBA::DomainManager::CORBA_DomainManager_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_DomainManager_Proxy_Broker_ =
         ::CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer (this);
@@ -367,7 +365,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -395,9 +393,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
   
   if (this->the_TAO_ConstructionPolicy_Proxy_Broker_ == 0)
     {
-      CORBA_ConstructionPolicy_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      CORBA_ConstructionPolicy_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -424,22 +420,22 @@ void CORBA::ConstructionPolicy::make_domain_manager (
   ACE_CHECK;
 }
 
-CORBA::ConstructionPolicy::ConstructionPolicy (int collocated)
+CORBA::ConstructionPolicy::ConstructionPolicy (void)
  : the_TAO_ConstructionPolicy_Proxy_Broker_ (0)
 {
-  this->CORBA_ConstructionPolicy_setup_collocation (collocated);
+  this->CORBA_ConstructionPolicy_setup_collocation ();
 }
 
 void
-CORBA::ConstructionPolicy::CORBA_ConstructionPolicy_setup_collocation (int collocated)
+CORBA::ConstructionPolicy::CORBA_ConstructionPolicy_setup_collocation ()
 {
-  if (collocated)
+  if (::CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_ConstructionPolicy_Proxy_Broker_ =
         ::CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer (this);
     }
   
-  this->CORBA_Policy_setup_collocation (collocated);
+  this->CORBA_Policy_setup_collocation ();
 }
 
 CORBA::ConstructionPolicy::~ConstructionPolicy (void)

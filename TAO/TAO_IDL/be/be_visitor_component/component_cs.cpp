@@ -128,18 +128,20 @@ be_visitor_component_cs::visit_component (be_component *node)
   *os << "{}" << be_nl << be_nl;
 
   *os << node->name () << "::" << node->local_name ()
-      << " (int collocated)" << be_nl
+      << " (void)" << be_nl
       << "{" << be_idt_nl
       << "this->" << node->flat_name ()
-      << "_setup_collocation (collocated);" << be_uidt_nl
+      << "_setup_collocation ();" << be_uidt_nl
       << be_uidt << "}" << be_nl << be_nl;
 
   // Collocation setup method.
   *os << "void" << be_nl
       << node->name () << "::" << node->flat_name ()
-      << "_setup_collocation (int collocated)" << be_nl
+      << "_setup_collocation (void)" << be_nl
       << "{" << be_idt_nl
-      << "if (collocated)" << be_idt_nl
+      << "if ("<< "::" << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name ()
+      << "_Factory_function_pointer)" << be_idt_nl
       << "this->the" << node->base_proxy_broker_name ()
       << "_ =" << be_idt_nl
       << "::" << node->flat_client_enclosing_scope ()
@@ -153,7 +155,7 @@ be_visitor_component_cs::visit_component (be_component *node)
     {
       *os << be_nl
           << "this->" << base->flat_name ()
-          << "_setup_collocation" << " (collocated);";
+          << "_setup_collocation" << " ();";
     }
 
   *os << be_uidt_nl << "}" << be_nl << be_nl;

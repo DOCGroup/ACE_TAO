@@ -172,11 +172,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    DomainManager (int collocated = 0);
+    DomainManager (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_DomainManager_setup_collocation (int collocated);
+    virtual void CORBA_DomainManager_setup_collocation (void);
     
     // Concrete non-local interface only.
     DomainManager (
@@ -297,11 +297,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    ConstructionPolicy (int collocated = 0);
+    ConstructionPolicy (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_ConstructionPolicy_setup_collocation (int collocated);
+    virtual void CORBA_ConstructionPolicy_setup_collocation (void);
     
     // Concrete non-local interface only.
     ConstructionPolicy (

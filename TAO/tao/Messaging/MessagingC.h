@@ -293,11 +293,11 @@ namespace Messaging
   
   protected:
     // Concrete interface only.
-    ReplyHandler (int collocated = 0);
+    ReplyHandler (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
+    virtual void Messaging_ReplyHandler_setup_collocation (void);
     
     // Concrete non-local interface only.
     ReplyHandler (

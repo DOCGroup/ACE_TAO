@@ -216,9 +216,7 @@ void ImplementationRepository::ServerObject::ping (
   
   if (this->the_TAO_ServerObject_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_ServerObject_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_ServerObject_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -258,9 +256,7 @@ void ImplementationRepository::ServerObject::shutdown (
   
   if (this->the_TAO_ServerObject_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_ServerObject_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_ServerObject_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -283,16 +279,16 @@ void ImplementationRepository::ServerObject::shutdown (
   ACE_CHECK;
 }
 
-ImplementationRepository::ServerObject::ServerObject (int collocated)
+ImplementationRepository::ServerObject::ServerObject (void)
  : the_TAO_ServerObject_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_ServerObject_setup_collocation (collocated);
+  this->ImplementationRepository_ServerObject_setup_collocation ();
 }
 
 void
-ImplementationRepository::ServerObject::ImplementationRepository_ServerObject_setup_collocation (int collocated)
+ImplementationRepository::ServerObject::ImplementationRepository_ServerObject_setup_collocation ()
 {
-  if (collocated)
+  if (::ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_ServerObject_Proxy_Broker_ =
         ::ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer (this);
@@ -2024,9 +2020,7 @@ void ImplementationRepository::Administration::activate_server (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2092,9 +2086,7 @@ char * ImplementationRepository::Administration::activate_server_with_startup (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::Char *>::ret_val _tao_retval;
@@ -2164,9 +2156,7 @@ void ImplementationRepository::Administration::register_server (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2234,9 +2224,7 @@ void ImplementationRepository::Administration::reregister_server (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2302,9 +2290,7 @@ void ImplementationRepository::Administration::remove_server (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2362,9 +2348,7 @@ void ImplementationRepository::Administration::shutdown_server (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2424,9 +2408,7 @@ void ImplementationRepository::Administration::server_is_running (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2488,9 +2470,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2549,9 +2529,7 @@ void ImplementationRepository::Administration::find (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2612,9 +2590,7 @@ void ImplementationRepository::Administration::list (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2662,9 +2638,7 @@ char * ImplementationRepository::Administration::find_ior (
   
   if (this->the_TAO_Administration_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_Administration_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_Administration_setup_collocation ();
     }
   
   TAO::Arg_Traits<CORBA::Char *>::ret_val _tao_retval;
@@ -2705,16 +2679,16 @@ char * ImplementationRepository::Administration::find_ior (
   return _tao_retval.retn ();
 }
 
-ImplementationRepository::Administration::Administration (int collocated)
+ImplementationRepository::Administration::Administration (void)
  : the_TAO_Administration_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_Administration_setup_collocation (collocated);
+  this->ImplementationRepository_Administration_setup_collocation ();
 }
 
 void
-ImplementationRepository::Administration::ImplementationRepository_Administration_setup_collocation (int collocated)
+ImplementationRepository::Administration::ImplementationRepository_Administration_setup_collocation ()
 {
-  if (collocated)
+  if (::ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_Administration_Proxy_Broker_ =
         ::ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function_pointer (this);
@@ -2917,9 +2891,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
   
   if (this->the_TAO_ServerInformationIterator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_ServerInformationIterator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_ServerInformationIterator_setup_collocation ();
     }
   
   TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
@@ -2965,9 +2937,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
   
   if (this->the_TAO_ServerInformationIterator_Proxy_Broker_ == 0)
     {
-      ImplementationRepository_ServerInformationIterator_setup_collocation (
-          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
-        );
+      ImplementationRepository_ServerInformationIterator_setup_collocation ();
     }
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
@@ -2990,16 +2960,16 @@ void ImplementationRepository::ServerInformationIterator::destroy (
   ACE_CHECK;
 }
 
-ImplementationRepository::ServerInformationIterator::ServerInformationIterator (int collocated)
+ImplementationRepository::ServerInformationIterator::ServerInformationIterator (void)
  : the_TAO_ServerInformationIterator_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_ServerInformationIterator_setup_collocation (collocated);
+  this->ImplementationRepository_ServerInformationIterator_setup_collocation ();
 }
 
 void
-ImplementationRepository::ServerInformationIterator::ImplementationRepository_ServerInformationIterator_setup_collocation (int collocated)
+ImplementationRepository::ServerInformationIterator::ImplementationRepository_ServerInformationIterator_setup_collocation ()
 {
-  if (collocated)
+  if (::ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function_pointer)
     {
       this->the_TAO_ServerInformationIterator_Proxy_Broker_ =
         ::ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function_pointer (this);

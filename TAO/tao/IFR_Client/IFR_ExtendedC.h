@@ -205,11 +205,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    FixedDef (int collocated = 0);
+    FixedDef (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_FixedDef_setup_collocation (int collocated);
+    virtual void CORBA_FixedDef_setup_collocation (void);
     
     // Concrete non-local interface only.
     FixedDef (
@@ -458,11 +458,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    ValueMemberDef (int collocated = 0);
+    ValueMemberDef (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_ValueMemberDef_setup_collocation (int collocated);
+    virtual void CORBA_ValueMemberDef_setup_collocation (void);
     
     // Concrete non-local interface only.
     ValueMemberDef (
@@ -832,11 +832,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    ValueDef (int collocated = 0);
+    ValueDef (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_ValueDef_setup_collocation (int collocated);
+    virtual void CORBA_ValueDef_setup_collocation (void);
     
     // Concrete non-local interface only.
     ValueDef (
@@ -1079,11 +1079,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    ExtValueDef (int collocated = 0);
+    ExtValueDef (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_ExtValueDef_setup_collocation (int collocated);
+    virtual void CORBA_ExtValueDef_setup_collocation (void);
     
     // Concrete non-local interface only.
     ExtValueDef (
@@ -1208,11 +1208,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    ValueBoxDef (int collocated = 0);
+    ValueBoxDef (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_ValueBoxDef_setup_collocation (int collocated);
+    virtual void CORBA_ValueBoxDef_setup_collocation (void);
     
     // Concrete non-local interface only.
     ValueBoxDef (

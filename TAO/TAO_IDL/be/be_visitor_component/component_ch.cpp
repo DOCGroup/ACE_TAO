@@ -180,7 +180,7 @@ be_visitor_component_ch::visit_component (be_component *node)
   // instantiate us.
 
   *os << be_nl
-      << node->local_name () << " (int collocated = 0);";
+      << node->local_name () << " (void);";
 
   *os << be_nl << be_nl
       << "// These methods travese the inheritance tree and set the"
@@ -188,7 +188,7 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "// parents piece of the given class in the right mode."
       << be_nl
       << "virtual void " << node->flat_name ()
-      << "_setup_collocation (int collocated);";
+      << "_setup_collocation (void);";
 
   *os << be_nl << be_nl
       << node->local_name () << " (" << be_idt << be_idt_nl
