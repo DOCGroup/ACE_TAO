@@ -13,6 +13,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
+#include "Select_Reactor_Notify.h"
 
 // @@ The latest version of SunCC can't grok the code if we put inline
 // function here.  Therefore, we temporarily disable the code here.
@@ -996,7 +997,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   (const ACE_Time_Value &max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::work_pending");
