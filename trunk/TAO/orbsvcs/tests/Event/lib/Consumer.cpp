@@ -138,6 +138,8 @@ void
 EC_Consumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 {
   this->driver_->consumer_disconnect (this->cookie_, ACE_TRY_ENV);
+  this->supplier_proxy_ =
+    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 // ****************************************************************

@@ -31,34 +31,6 @@ TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
   this->event_channel_->destroy_supplier_lock (this->lock_);
 }
 
-CORBA::ULong
-TAO_EC_ProxyPushSupplier::_incr_refcnt (void)
-{
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-  return this->refcount_++;
-}
-
-CORBA::ULong
-TAO_EC_ProxyPushSupplier::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  // Notify the event channel
-  this->event_channel_->destroy_proxy_push_supplier (this);
-  return 0;
-}
-
-PortableServer::POA_ptr
-TAO_EC_ProxyPushSupplier::_default_POA (CORBA::Environment&)
-{
-  return PortableServer::POA::_duplicate (this->default_POA_.in ());
-}
-
 void
 TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer*,
                                      CORBA::Environment &)
@@ -84,6 +56,78 @@ TAO_EC_ProxyPushSupplier::disconnected (TAO_EC_ProxyPushSupplier*,
 }
 
 void
+TAO_EC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  RtecEventComm::PushConsumer_var consumer;
+
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    if (this->is_connected_i () == 0)
+      return;
+
+    consumer = this->consumer_._retn ();
+    
+    this->cleanup_i ();
+  }
+
+  this->deactivate (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  consumer->disconnect_push_consumer (ACE_TRY_ENV);
+}
+
+void
+TAO_EC_ProxyPushSupplier::cleanup_i (void)
+{
+  this->consumer_ =
+    RtecEventComm::PushConsumer::_nil ();
+
+  // @@ Why don't we have a destroy() method in the
+  // filter_builder?
+  delete this->child_;
+  this->child_ = 0;
+}
+
+void
+TAO_EC_ProxyPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
+{
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA::ULong
+TAO_EC_ProxyPushSupplier::_incr_refcnt (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+  return this->refcount_++;
+}
+
+CORBA::ULong
+TAO_EC_ProxyPushSupplier::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
+
+  // Notify the event channel
+  this->event_channel_->destroy_proxy_push_supplier (this);
+  return 0;
+}
+
+void
 TAO_EC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
@@ -102,13 +146,7 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
 
         // Re-connections are allowed, go ahead and disconnect the
         // consumer...
-        this->consumer_ =
-          RtecEventComm::PushConsumer::_nil ();
-
-        // @@ Why don't we have a destroy() method in the
-        // filter_builder?
-        delete this->child_;
-        this->child_ = 0;
+        this->cleanup_i ();
 
         // @@ Are there any race conditions here:
         //   + The lock is released, but the object is marked as
@@ -168,21 +206,10 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
     if (this->is_connected_i () == 0)
       ACE_THROW (CORBA::BAD_INV_ORDER ());
 
-    this->consumer_ =
-      RtecEventComm::PushConsumer::_nil ();
-
-    // @@ Why don't we have a destroy() method in the filter_builder?
-    delete this->child_;
-    this->child_ = 0;
+    this->cleanup_i ();
   }
 
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
-  PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Notify the event channel...
@@ -402,6 +429,12 @@ TAO_EC_ProxyPushSupplier::can_match (
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
   return this->child_->can_match (header);
+}
+
+PortableServer::POA_ptr
+TAO_EC_ProxyPushSupplier::_default_POA (CORBA::Environment&)
+{
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void

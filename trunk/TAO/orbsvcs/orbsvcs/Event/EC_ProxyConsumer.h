@@ -90,8 +90,8 @@ public:
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
-  // Override the ServantBase method.
+  virtual void shutdown (CORBA::Environment&);
+  // The event channel is shutting down
 
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -106,7 +106,8 @@ public:
                      CORBA::Environment &);
   virtual void disconnect_push_consumer (CORBA::Environment &);
 
-  // = Servant reference counting methods.
+  // = The Servant methods
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
                              CORBA::default_environment ());
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
@@ -115,6 +116,12 @@ public:
 private:
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
+
+  void cleanup_i (void);
+  // Release the filter and the supplier
+
+  void deactivate (CORBA::Environment &ACE_TRY_ENV);
+  // Deactivate from the POA
 
 private:
   TAO_EC_Event_Channel* event_channel_;

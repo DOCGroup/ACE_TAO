@@ -31,12 +31,6 @@ TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
   this->event_channel_->destroy_consumer_lock (this->lock_);
 }
 
-PortableServer::POA_ptr
-TAO_EC_ProxyPushConsumer::_default_POA (CORBA::Environment&)
-{
-  return PortableServer::POA::_duplicate (this->default_POA_.in ());
-}
-
 void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
                                      CORBA::Environment &ACE_TRY_ENV)
@@ -63,6 +57,55 @@ void
 TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushConsumer*,
                                         CORBA::Environment &)
 {
+}
+
+void
+TAO_EC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  RtecEventComm::PushSupplier_var supplier;
+
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    if (this->is_connected_i () == 0)
+      return;
+
+    supplier = this->supplier_._retn ();
+    
+    this->cleanup_i ();
+  }
+
+  this->deactivate (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  supplier->disconnect_push_supplier (ACE_TRY_ENV);
+}
+
+void
+TAO_EC_ProxyPushConsumer::cleanup_i (void)
+{
+  this->supplier_ =
+    RtecEventComm::PushSupplier::_nil ();
+
+  this->filter_->unbind (this);
+  this->event_channel_->supplier_filter_builder ()->destroy (this->filter_);
+  this->filter_ = 0;
+}
+
+void
+TAO_EC_ProxyPushConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
+{
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 CORBA::ULong
@@ -106,12 +149,7 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
 
         // Re-connections are allowed, go ahead and disconnect the
         // consumer...
-        this->supplier_ =
-          RtecEventComm::PushSupplier::_nil ();
-
-        this->filter_->unbind (this);
-        this->event_channel_->supplier_filter_builder ()->destroy (this->filter_);
-        this->filter_ = 0;
+        this->cleanup_i ();
 
         // @@ Please read the comments in EC_ProxySuppliers about
         //     possible race conditions in this area...
@@ -167,29 +205,24 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
     ACE_CHECK;
 
     if (this->is_connected_i () == 0)
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      ACE_THROW (CORBA::BAD_INV_ORDER ()); // @@ add user exception?
 
-    this->supplier_ =
-      RtecEventComm::PushSupplier::_nil ();
-
-    this->filter_->unbind (this);
-    this->event_channel_->supplier_filter_builder ()->destroy (this->filter_);
-    this->filter_ = 0;
+    this->cleanup_i ();
   }
 
-  PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
-  PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, ACE_TRY_ENV);
-  ACE_CHECK;
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Notify the event channel...
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
 
   this->_decr_refcnt ();
+}
+
+PortableServer::POA_ptr
+TAO_EC_ProxyPushConsumer::_default_POA (CORBA::Environment&)
+{
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
