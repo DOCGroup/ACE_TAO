@@ -117,6 +117,29 @@ class ACE_Export ACE_Object_Manager
   //     building the ACE library and your applications.  This #define
   //     is enabled in the VxWorks config files that are supplied with
   //     ACE.
+  //
+  //     By default (except on VxWorks), the ACE library creates a
+  //     static, singleton <ACE_Object_Manager> instance.  The
+  //     instance is placed in global program data, and constructed
+  //     via a static object constructor.  Optionally, the
+  //     <ACE_Object_Manager> instance can be created on the stack of
+  //     the main program thread.  This option is enabled by added
+  //     "#define ACE_HAS_NONSTATIC_OBJECT_MANAGER" to ace/config.h
+  //     before building libACE.  This option is enabled by default on
+  //     VxWorks.
+  //
+  //     With ACE_HAS_NONSTATIC_OBJECT_MANAGER enabled, the ACE
+  //     library has no static objects that require destruction.
+  //     However, there are two drawbacks to using it:
+  //
+  //     1) main (int, char *[]) must be declared with arguments, even
+  //        if they're not used.  All of ACE is converted to this, so
+  //        just applications have to be concerned with it.
+  //
+  //     2) If there any static objects that depend on those that are
+  //        cleaned up by the Object_Manager, they'll get cleaned up too
+  //        late.  The ACE tests do not violate this requirement.
+  //        However, applications may have trouble with it.
 {
 public:
   static int at_exit (ACE_Cleanup *object, void *param = 0);
