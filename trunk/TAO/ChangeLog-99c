@@ -1,3 +1,10 @@
+Thu May  6 18:09:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	  Fixed return type for the accesor of array fields of a
+	  valuetype.
+
 Thu May  6 17:52:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/README (client): 

@@ -151,7 +151,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
           << " (void) const" << post_op() << "     // get (read only) method\n\n";
  */
       // the get (read/write) method
-      *os << pre_op()
+      *os << pre_op() << "const "
           << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
           << " (void) const" << post_op() << "     // get method\n\n";
     }

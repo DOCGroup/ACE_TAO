@@ -178,7 +178,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
 
   // get method
   *os << "// retrieve the member" << be_nl
-      << this->pre_op() << fname << "_slice *" << be_nl;
+      << this->pre_op() << "const " << fname << "_slice *" << be_nl;
       this->op_name(bu,os);
       *os << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl;
