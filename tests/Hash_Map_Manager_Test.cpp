@@ -21,6 +21,7 @@
 #include <iostream.h>
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Synch.h"
 #include "test_config.h"
 
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<char *, char *>
