@@ -38,6 +38,7 @@
 #include "Protocols_Hooks.h"
 #include "IORInterceptor_Adapter.h"
 #include "IORInterceptor_Adapter_Factory.h"
+#include "Valuetype_Adapter.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
@@ -191,6 +192,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     server_request_interceptors_ (),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptor_adapter_ (0),
+    valuetype_adapter_ (0),
     parser_registry_ (),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
@@ -2975,7 +2977,12 @@ TAO_ORB_Core::init_ref_map ()
   return &this->init_ref_map_;
 }
 
-
+/// Return the valuetype adapter
+TAO_Valuetype_Adapter *&
+TAO_ORB_Core::valuetype_adapter (void)
+{
+  return this->valuetype_adapter_;
+}
 
 // ****************************************************************
 
