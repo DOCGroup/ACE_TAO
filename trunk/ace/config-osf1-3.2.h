@@ -10,8 +10,23 @@
 #define ACE_LACKS_SETSCHED 
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_GETPGID
-#define ACE_HAS_PTHREAD_MUTEXATTR_CREATE	
-#define ACE_HAS_PTHREAD_MUTEXATTR_DELETE	
+// DF: this platform uses Digital's CXX compiler
+#define DEC_CXX
+
+// DF: DEC's CXX supports explicit template specialization.
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
+// DF: 3.2 has getpgid but no prototype defined anywhere so we do not
+// use it. I suppose we could add a prototype somewhere but that would
+// be cheating.
+
+// DF: ACE_HAS_STRING_CLASS seems the right thing to do...
+#define ACE_HAS_STRING_CLASS
+
+// DF: Seems apropriate since this is a new compiler...
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
 
 #define ACE_HAS_BROKEN_MSG_H
 #define ACE_LACKS_SYSV_MSQ_PROTOS
@@ -40,6 +55,12 @@
 #define ACE_HAS_SETKIND_NP
 #define ACE_HAS_PTHREAD_T
 
+// Platform supports POSIX 1.b clock_gettime ()
+#define ACE_HAS_CLOCK_GETTIME
+
+// Compiler/platform supports the "long long" datatype.
+#define ACE_HAS_LONGLONG_T
+
 // Platform defines MAP_FAILED as a long constant.
 #define ACE_HAS_LONG_MAP_FAILED
  
@@ -52,9 +73,6 @@
 // Platform's implementation of setlrmit() has a non-const rlimit parameter.
 #define ACE_HAS_BROKEN_SETRLIMIT
  
-// Compiler has integer overflow problem with bit-shift operations.
-#define ACE_HAS_BROKEN_BITSHIFT
-
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
 
@@ -69,9 +87,6 @@
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-
-// ACE has no mktemp().
-#define ACE_LACKS_MKTEMP
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -105,6 +120,11 @@
 #define ACE_HAS_POSIX_NONBLOCK
 
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+
+// DF: So why were these two defined rather then the third?
+#define ACE_HAS_PTHREAD_EQUAL
+#define ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
+
 // ACE supports POSIX Pthreads.
 #define ACE_HAS_DCETHREADS
 #define ACE_HAS_THREAD_SELF
@@ -171,6 +191,10 @@
 #endif /* ACE_NTRACE */
 
 // Defines the page size of the system.
-#define ACE_PAGE_SIZE 4096
+#define ACE_PAGE_SIZE 8192
+#define ACE_HAS_GETPAGESIZE
+
+// DF: That the way it is
+#define ACE_HAS_ONEARG_SIGWAIT
 
 #endif /* ACE_CONFIG_H */
