@@ -41,6 +41,40 @@ be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist (void)
 {
 }
 
+int 
+be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
+{
+  UTL_Scope *scope = node->defined_in ();
+  be_interface *iface = be_interface::narrow_from_scope (scope);
+  
+  int is_an_amh_exception_holder = 0;
+
+  if (iface != 0)
+    {
+      const char *amh_underbar = "AMH_";
+      const char *node_name = iface->local_name ();
+      
+      if( amh_underbar[0] == node_name[0] &&
+          amh_underbar[1] == node_name[1] &&
+          amh_underbar[2] == node_name[2] &&
+          amh_underbar[3] == node_name[3]
+          ) // node name starts with "AMH_"
+        {
+          //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder \n"));
+          const char *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
+
+          if (last_E != 0
+              && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+            {
+              //ACE_DEBUG ((LM_DEBUG, "obv_operation: Passed second test of amh_excepholder \n"));
+              is_an_amh_exception_holder = 1;
+            }
+        }
+    }
+
+  return is_an_amh_exception_holder;
+}
+
 int
 be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 {
@@ -102,8 +136,21 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+      /***********************************************************/
+      // 2.1
       // Each method is pure virtual in the Valuetype class.
-      *os << " = 0;" << be_nl;
+      // BUT, not if it is an AMH ExceptionHolder!
+      /***********************************************************/
+      if (is_amh_exception_holder (node))
+        {
+          *os << "{ this->exception->_raise (); }" 
+              << be_uidt_nl;
+        }
+      /***********************************************************/
+      else
+        {
+          *os << " = 0;" << be_uidt_nl;
+        }
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
       break;
