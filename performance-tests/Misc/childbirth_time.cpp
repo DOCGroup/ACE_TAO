@@ -191,19 +191,19 @@ prof_native_thread (size_t iteration)
           for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
             {
 #if defined (ACE_HAS_WTHREADS)
-              if (::CreateThread (NULL,
+              if (::CreateThread (0,
                                   0,
                                   LPTHREAD_START_ROUTINE (ace_empty),
                                   0,
                                   CREATE_SUSPENDED,
-                                  0) == NULL)
+                                  0) == 0)
 #elif defined (ACE_HAS_STHREADS)
-                if (::thr_create (NULL,
+                if (::thr_create (0,
                                   0,
                                   &ace_empty,
                                   0,
                                   THR_SUSPENDED,
-                                  NULL) != 0)
+                                  0) != 0)
 #endif
                   ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
             }
@@ -241,7 +241,7 @@ prof_ace_os_thread (size_t iteration)
             if (ACE_OS::thr_create ((ACE_THR_FUNC) ace_empty,
                                     0,
                                     THR_SUSPENDED,
-                                    NULL) == -1)
+                                    0) == -1)
               ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
 
           ptimer.stop ();

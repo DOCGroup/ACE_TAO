@@ -19,10 +19,10 @@ TAO_Adapter::~TAO_Adapter (void)
 // ****************************************************************
 
 TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)
-  : orb_core_ (oc)
-  , adapters_capacity_ (16) // @@ Make it configurable
-  , adapters_count_ (0)
-  , adapters_ (0)
+  : orb_core_ (oc),
+    adapters_capacity_ (16), // @@ Make it configurable
+    adapters_count_ (0),
+    adapters_ (0)
 {
   ACE_NEW (this->adapters_,
            TAO_Adapter*[this->adapters_capacity_]);
@@ -31,9 +31,7 @@ TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)
 TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
-    {
-      delete this->adapters_[i];
-    }
+    delete this->adapters_[i];
 
   delete[] this->adapters_;
 }
@@ -190,10 +188,9 @@ TAO_Adapter_Registry::find_adapter (const char *name) const
   for (TAO_Adapter **i = this->adapters_;
        i != this->adapters_ + this->adapters_count_;
        ++i)
-    {
-      if (ACE_OS::strcmp ((*i)->name (), name) == 0)
-        return *i;
-    }
+    if (ACE_OS::strcmp ((*i)->name (), name) == 0)
+      return *i;
+
   return 0;
 
 }

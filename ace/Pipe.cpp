@@ -85,7 +85,7 @@ ACE_Pipe::open (int buffer_size)
     ACE_UNUSED_ARG (buffer_size);
 # else  /* ! ACE_LACKS_SOCKET_BUFSIZ */
   if (reader.set_option (SOL_SOCKET,
-                         SO_SNDBUF,
+                         SO_RCVBUF,
                          ACE_reinterpret_cast (void *, &buffer_size),
                          sizeof (buffer_size)) == -1
       && errno != ENOTSUP)
@@ -94,7 +94,7 @@ ACE_Pipe::open (int buffer_size)
       return -1;
     }
   else if (writer.set_option (SOL_SOCKET,
-                              SO_RCVBUF,
+                              SO_SNDBUF,
                               ACE_reinterpret_cast (void *, &buffer_size),
                               sizeof (buffer_size)) == -1
            && errno != ENOTSUP)

@@ -651,6 +651,11 @@ Tue Sep  9 14:30:13 MST 2003 Trevor Fields <fields_t@ociweb.com>
           instead of the direct funtion call.  gcc 2.95 on Solaris
           cant handle function call as length in initialization.
 
+Mon Sep  8 16:01:08 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tao/Adapter.cpp (find_adapter): Fixed some mistakes in coding
+	  style.  Thanks to Gan Deng for reporting this.
+
 Mon Sep  8 23:29:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/IOP_IORC.h:
