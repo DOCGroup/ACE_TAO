@@ -30,16 +30,32 @@ ACE_RCSID (be,
            "$Id$")
 
 be_predefined_type::be_predefined_type (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    AST_PredefinedType (),
+    be_decl (),
+    be_type ()
 {
 }
 
 be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
                                         UTL_ScopedName *n)
-  : AST_PredefinedType (t,
-                        n),
+  : COMMON_Base (),
     AST_Decl (AST_Decl::NT_pre_defined,
               n,
-              I_TRUE)
+              I_TRUE),
+    AST_Type (AST_Decl::NT_pre_defined,
+              n),
+    AST_ConcreteType (AST_Decl::NT_pre_defined,
+                      n),
+    AST_PredefinedType (t,
+                        n),
+    be_decl (AST_Decl::NT_pre_defined,
+             n),
+    be_type (AST_Decl::NT_pre_defined,
+             n)
 {
   // Computes the repoID.
   this->compute_repoID ();

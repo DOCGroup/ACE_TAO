@@ -79,7 +79,9 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Type::AST_Type (void)
-  : ifr_added_ (0),
+  : COMMON_Base (),
+    AST_Decl (),
+    ifr_added_ (0),
     ifr_fwd_added_ (0),
     size_type_ (AST_Type::SIZE_UNKNOWN),
     has_constructor_ (0),
@@ -89,7 +91,8 @@ AST_Type::AST_Type (void)
 
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
-  : AST_Decl (nt,
+  : COMMON_Base (),
+    AST_Decl (nt,
               n),
     ifr_added_ (0),
     ifr_fwd_added_ (0),

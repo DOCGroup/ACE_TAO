@@ -15,15 +15,22 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_UnionFwd::AST_UnionFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_StructureFwd ()
 {
 }
 
 AST_UnionFwd::AST_UnionFwd (AST_Union *dummy,
                             UTL_ScopedName *n)
-  : AST_StructureFwd (dummy,
-                      n),
+  : COMMON_Base (),
     AST_Decl (AST_Decl::NT_union_fwd,
-              n)
+              n),
+    AST_Type (AST_Decl::NT_union_fwd,
+              n),
+    AST_StructureFwd (dummy,
+                      n)
 {
 }
 

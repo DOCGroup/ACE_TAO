@@ -77,7 +77,12 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Enum::AST_Enum (void)
-        : pd_enum_counter (0),
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+	  pd_enum_counter (0),
     member_count_ (-1)
 {
   this->size_type (AST_Type::FIXED);
@@ -86,13 +91,17 @@ AST_Enum::AST_Enum (void)
 AST_Enum::AST_Enum (UTL_ScopedName *n,
                     idl_bool local,
                     idl_bool abstract)
- : AST_Decl (AST_Decl::NT_enum,
-             n),
-	 UTL_Scope (AST_Decl::NT_enum),
-   COMMON_Base (local,
-                abstract),
-         pd_enum_counter (0),
-   member_count_ (-1)
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_enum,
+              n),
+	  AST_Type (AST_Decl::NT_enum,
+              n),
+	  AST_ConcreteType (AST_Decl::NT_enum,
+                      n),
+	  UTL_Scope (AST_Decl::NT_enum),
+    pd_enum_counter (0),
+    member_count_ (-1)
 {
   this->size_type (AST_Type::FIXED);
 }

@@ -27,14 +27,23 @@ ACE_RCSID (be,
            "$Id$")
 
 be_module::be_module (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    UTL_Scope (),
+    be_scope (),
+    be_decl ()
 {
 }
 
 be_module::be_module (UTL_ScopedName *n)
-  : AST_Module (n),
+  : COMMON_Base (),
     AST_Decl (AST_Decl::NT_module,
               n),
-    UTL_Scope (AST_Decl::NT_module)
+    UTL_Scope (AST_Decl::NT_module),
+    AST_Module (n),
+    be_scope (AST_Decl::NT_module),
+    be_decl (AST_Decl::NT_module,
+             n)
 {
 }
 

@@ -12,6 +12,12 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_EventType::AST_EventType (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    AST_ValueType ()
 {
 }
 
@@ -25,8 +31,23 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
                               long n_supports,
                               AST_Interface *supports_concrete,
                               idl_bool abstract,
-                              idl_bool truncatable)
-  : AST_ValueType (n,
+                              idl_bool truncatable,
+                              idl_bool custom)
+  : COMMON_Base (I_FALSE,
+                 abstract),
+    AST_Decl (AST_Decl::NT_eventtype,
+              n),
+    AST_Type (AST_Decl::NT_eventtype,
+              n),
+    UTL_Scope (AST_Decl::NT_eventtype),
+    AST_Interface (n,
+                   inherits,
+                   n_inherits,
+                   inherits_flat,
+                   n_inherits_flat,
+                   I_FALSE,
+                   abstract),
+    AST_ValueType (n,
                    inherits,
                    n_inherits,
                    inherits_concrete,
@@ -36,21 +57,8 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
                    n_supports,
                    supports_concrete,
                    abstract,
-                   truncatable),
-    AST_Interface (n,
-                   inherits,
-                   n_inherits,
-                   inherits_flat,
-                   n_inherits_flat,
-                   I_FALSE,
-                   abstract),
-    AST_Type (AST_Decl::NT_eventtype,
-              n),
-    AST_Decl (AST_Decl::NT_eventtype,
-              n),
-    UTL_Scope (AST_Decl::NT_eventtype),
-    COMMON_Base (I_FALSE,
-                 abstract)
+                   truncatable,
+                   custom)
 {
 }
 

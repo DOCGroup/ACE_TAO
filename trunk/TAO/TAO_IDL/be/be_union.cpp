@@ -34,6 +34,16 @@ ACE_RCSID (be,
 
 
 be_union::be_union (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    AST_Union (),
+    be_scope (),
+    be_decl (),
+    be_type ()
 {
   // Always the case.
   this->has_constructor (I_TRUE);
@@ -43,19 +53,28 @@ be_union::be_union (AST_ConcreteType *dt,
                     UTL_ScopedName *n,
                     idl_bool local,
                     idl_bool abstract)
-  : AST_Union (dt,
-               n,
-               local,
-               abstract),
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_union,
+              n),
+    AST_Type (AST_Decl::NT_union,
+              n),
+    AST_ConcreteType (AST_Decl::NT_union,
+                      n),
+    UTL_Scope (AST_Decl::NT_union),
     AST_Structure (AST_Decl::NT_union,
                    n,
                    local,
                    abstract),
-    AST_Decl (AST_Decl::NT_union,
-              n),
-    UTL_Scope (AST_Decl::NT_union),
-    COMMON_Base (local,
-                 abstract)
+    AST_Union (dt,
+               n,
+               local,
+               abstract),
+    be_scope (AST_Decl::NT_union),
+    be_decl (AST_Decl::NT_union,
+             n),
+    be_type (AST_Decl::NT_union,
+             n)
 {
   // Always the case.
   this->has_constructor (I_TRUE);

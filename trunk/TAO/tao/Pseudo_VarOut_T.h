@@ -44,7 +44,7 @@ public:
 
   T * operator-> (void) const;
 
-  operator const T *& () const;
+  operator T const *& () const;
   operator T *& ();
 
   T * in (void) const;

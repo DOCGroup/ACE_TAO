@@ -14,7 +14,8 @@ ACE_RCSID (IFRService,
 const char *TAO_ComponentContainer_i::tmp_name_holder_ = 0;
 
 TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
-  : TAO_IRObject_i (repo)
+  : TAO_IRObject_i (repo),
+    TAO_Container_i (repo)
 {
 }
 

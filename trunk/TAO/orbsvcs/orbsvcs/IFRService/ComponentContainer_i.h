@@ -20,7 +20,7 @@
 #ifndef TAO_COMPONENTCONTAINER_I_H
 #define TAO_COMPONENTCONTAINER_I_H
 
-#include "IRObject_i.h"
+#include "Container_i.h"
 #include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,7 +37,7 @@
 #endif /* _MSC_VER */
 
 class TAO_IFRService_Export TAO_ComponentContainer_i 
-  : public virtual TAO_IRObject_i
+  : public virtual TAO_Container_i
 {
   // = TITLE
   //    TAO_ComponentContainer_i
@@ -49,10 +49,8 @@ class TAO_IFRService_Export TAO_ComponentContainer_i
   //
 public:
   TAO_ComponentContainer_i (TAO_Repository_i *repo);
-  // Constructor.
 
   virtual ~TAO_ComponentContainer_i (void);
-  // Destructor.
 
   virtual CORBA::ComponentIR::ComponentDef_ptr create_component (
       const char *id,

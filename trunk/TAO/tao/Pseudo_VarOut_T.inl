@@ -37,23 +37,9 @@ TAO_Pseudo_Var_T<T>::operator= (T * p)
 
 template <typename T>
 ACE_INLINE
-TAO_Pseudo_Var_T<T> &
-TAO_Pseudo_Var_T<T>::operator= (const TAO_Pseudo_Var_T<T> & p)
+TAO_Pseudo_Var_T<T>::operator T const *& () const
 {
-  if (this != &p)
-    {
-      CORBA::release (this->ptr_);
-      this->ptr_ = T::_duplicate (p.ptr ());
-    }
-
-  return *this;
-}
-
-template <typename T>
-ACE_INLINE
-TAO_Pseudo_Var_T<T>::operator const T *& () const
-{
-  return ACE_const_cast (const T*, this->ptr_);
+  return this->ptr_;
 }
 
 template <typename T>

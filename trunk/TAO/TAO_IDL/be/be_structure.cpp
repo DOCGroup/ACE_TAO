@@ -33,17 +33,38 @@ ACE_RCSID (be,
            "$Id$")
 
 be_structure::be_structure (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    be_scope (),
+    be_decl (),
+    be_type ()
 {
 }
 
 be_structure::be_structure (UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_struct,
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_struct,
               n),
+    AST_Type (AST_Decl::NT_struct,
+              n),
+    AST_ConcreteType (AST_Decl::NT_struct,
+                      n),
     UTL_Scope (AST_Decl::NT_struct),
-    COMMON_Base (local,
-                 abstract)
+    AST_Structure (n,
+                   local,
+                   abstract),
+    be_scope (AST_Decl::NT_struct),
+    be_decl (AST_Decl::NT_struct,
+             n),
+    be_type (AST_Decl::NT_struct,
+             n)
 {
 }
 

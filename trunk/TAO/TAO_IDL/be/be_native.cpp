@@ -25,13 +25,26 @@ ACE_RCSID (be,
 
 
 be_native::be_native (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_Native (),
+    be_decl (),
+    be_type ()
 {
 }
 
 be_native::be_native (UTL_ScopedName *n)
-  : AST_Native (n),
+  : COMMON_Base (),
     AST_Decl (AST_Decl::NT_native,
-              n)
+              n),
+    AST_Type (AST_Decl::NT_native,
+              n),
+    AST_Native (n),
+    be_decl (AST_Decl::NT_native,
+             n),
+    be_type (AST_Decl::NT_native,
+             n)
 {
 }
 

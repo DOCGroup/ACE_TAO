@@ -70,27 +70,37 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_factory.h"
 #include "ast_argument.h"
+#include "ast_exception.h"
 #include "ast_visitor.h"
 #include "global_extern.h"
 #include "utl_err.h"
 #include "utl_identifier.h"
+#include "utl_exceptlist.h"
+#include "utl_namelist.h"
 
 ACE_RCSID (ast,
            ast_factory,
            "$Id$")
 
 AST_Factory::AST_Factory (void)
-  : argument_count_ (-1),
+  : COMMON_Base (), 
+    AST_Decl (),
+    UTL_Scope (),
+    pd_exceptions (0),
+    pd_n_exceptions (0),
+    argument_count_ (-1),
     has_native_ (0)
 {
 }
 
 AST_Factory::AST_Factory (UTL_ScopedName *n)
-  : AST_Decl (AST_Decl::NT_factory,
+  : COMMON_Base (1,
+                 0), //@@ Always local, never abstract
+    AST_Decl (AST_Decl::NT_factory,
               n),
     UTL_Scope (AST_Decl::NT_factory),
-    COMMON_Base (1,
-                 0), //@@ Always local, never abstract
+    pd_exceptions (0),
+    pd_n_exceptions (0),
     argument_count_ (-1),
     has_native_ (0)
 {
@@ -101,6 +111,18 @@ AST_Factory::~AST_Factory (void)
 }
 
 // Public operations.
+
+UTL_ExceptList *
+AST_Factory::exceptions (void)
+{
+  return this->pd_exceptions;
+}
+
+int
+AST_Factory::n_exceptions (void)
+{
+  return this->pd_n_exceptions;
+}
 
 // Return the member count.
 int
@@ -145,7 +167,9 @@ AST_Factory::compute_argument_attr (void)
   // If there are elements in this scope.
   if (this->nmembers () > 0)
     {
-      for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
+      for (UTL_ScopeActiveIterator i (this, IK_decls);
+           !i.is_done ();
+           i.next ())
         {
           // Get the next AST decl node.
           d = i.item ();
@@ -212,6 +236,61 @@ AST_Factory::fe_add_argument (AST_Argument *t)
   this->add_to_referenced (t,
                            I_FALSE,
                            t->local_name ());
+
+  return t;
+}
+
+UTL_NameList *
+AST_Factory::fe_add_exceptions (UTL_NameList *t)
+{
+  UTL_ScopedName *nl_n = 0;
+  AST_Exception *fe = 0;
+  AST_Decl *d = 0;
+
+  this->pd_exceptions = 0;
+
+  for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
+    {
+      nl_n = nl_i.item ();
+
+      d = this->lookup_by_name (nl_n,
+                                I_TRUE);
+
+      if (d == 0 || d->node_type() != AST_Decl::NT_except)
+        {
+          idl_global->err ()->lookup_error (nl_n);
+          return 0;
+        }
+
+      fe = AST_Exception::narrow_from_decl (d);
+
+      if (fe == 0)
+        {
+          idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
+                                      this);
+          return 0;
+        }
+
+      if (this->pd_exceptions == 0)
+        {
+          ACE_NEW_RETURN (this->pd_exceptions,
+                          UTL_ExceptList (fe,
+                                          0),
+                          0);
+        }
+      else
+        {
+          UTL_ExceptList *el = 0;
+          ACE_NEW_RETURN (el,
+                          UTL_ExceptList (fe,
+                                          0),
+                          0);
+
+          this->pd_exceptions->nconc (el);
+        }
+
+      this->pd_n_exceptions++;
+    }
 
   return t;
 }

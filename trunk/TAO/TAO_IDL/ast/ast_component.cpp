@@ -13,7 +13,12 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Component::AST_Component (void)
-  : pd_base_component (0)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    pd_base_component (0)
 {
 }
 
@@ -23,20 +28,20 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                               long n_supports,
                               AST_Interface **supports_flat,
                               long n_supports_flat)
-  : AST_Interface (n,
+  : COMMON_Base (I_FALSE,
+                 I_FALSE),
+    AST_Decl (AST_Decl::NT_component,
+              n),
+    AST_Type (AST_Decl::NT_component,
+              n),
+    UTL_Scope (AST_Decl::NT_component),
+    AST_Interface (n,
                    supports,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
                    I_FALSE,
                    I_FALSE),
-    AST_Type (AST_Decl::NT_component,
-              n),
-    AST_Decl (AST_Decl::NT_component,
-              n),
-    UTL_Scope (AST_Decl::NT_component),
-    COMMON_Base (I_FALSE,
-                 I_FALSE),
     pd_base_component (base_component)
 {
 }

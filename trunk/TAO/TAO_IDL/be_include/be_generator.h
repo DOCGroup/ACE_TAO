@@ -112,7 +112,8 @@ public:
                                            long n_supports,
                                            AST_Interface *supports_concrete,
                                            idl_bool abstract,
-                                           idl_bool truncatable);
+                                           idl_bool truncatable,
+                                           idl_bool custom);
 
   virtual AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
                                                   idl_bool abstract);
@@ -127,7 +128,8 @@ public:
                                            long n_supports,
                                            AST_Interface *supports_concrete,
                                            idl_bool abstract,
-                                           idl_bool truncatable);
+                                           idl_bool truncatable,
+                                           idl_bool custom);
 
   virtual AST_EventTypeFwd *create_eventtype_fwd (UTL_ScopedName *n,
                                                   idl_bool abstract);

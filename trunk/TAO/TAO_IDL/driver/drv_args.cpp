@@ -290,11 +290,6 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gm \t\tEnable support for CORBA components\n")
-      ACE_TEXT (" (default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
       ACE_TEXT (" -Gp \t\tGenerate the code for thru-POA collocation")
       ACE_TEXT (" (default)\n")
     ));
@@ -306,6 +301,10 @@ DRV_usage (void)
       LM_DEBUG,
       ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
       ACE_TEXT (" (unopt by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -448,10 +447,6 @@ DRV_usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
     ));
 }
 

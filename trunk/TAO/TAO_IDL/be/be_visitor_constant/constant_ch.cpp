@@ -55,11 +55,14 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // to us here itself, else it will be in the *.cpp file.
 
   AST_Decl::NodeType nt = AST_Decl::NT_pre_defined;
-  AST_Decl *td = node->constant_value ()->get_tdef ();
+  AST_Decl *tdef = node->constant_value ()->get_tdef ();
+  AST_Decl::NodeType bnt = AST_Decl::NT_pre_defined;
 
-  if (td != 0)
+  if (tdef != 0)
     {
-      nt = td->node_type ();
+      nt = tdef->node_type ();
+      be_typedef *td = be_typedef:: narrow_from_decl (tdef);
+      bnt = td->base_node_type ();
     }
 
   *os << be_nl << be_nl;
@@ -75,7 +78,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else if (nt == AST_Decl::NT_typedef)
         {
-          *os << td->name ();
+          *os << tdef->name ();
         }
       else
         {
@@ -96,7 +99,14 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else if (nt == AST_Decl::NT_typedef)
         {
-          *os << td->name ();
+          if (bnt == AST_Decl::NT_string || bnt == AST_Decl::NT_wstring)
+            {
+              *os << node->exprtype_to_string ();
+            }
+          else
+            {
+              *os << tdef->name ();
+            }
         }
       else
         {

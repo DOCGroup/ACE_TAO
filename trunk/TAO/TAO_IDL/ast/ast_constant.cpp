@@ -130,7 +130,9 @@ AST_Constant::exprtype_to_string (AST_Expression::ExprType et)
 
 // Default constructor.
 AST_Constant::AST_Constant (void)
-  : pd_constant_value (0),
+  : COMMON_Base (),
+    AST_Decl (),
+    pd_constant_value (0),
     pd_et (AST_Expression::EV_none),
     ifr_added_ (0)
 {
@@ -141,7 +143,8 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
 			                      AST_Decl::NodeType nt,
 			                      AST_Expression *v,
 			                      UTL_ScopedName *n)
-  : AST_Decl (nt,
+  : COMMON_Base (),
+    AST_Decl (nt,
               n),
 	  pd_constant_value (v),
 	  pd_et (t),
@@ -153,7 +156,8 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
 			                      AST_Expression *v,
 			                      UTL_ScopedName *n)
-  : AST_Decl (AST_Decl::NT_const,
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_const,
               n),
 	  pd_constant_value (v),
 	  pd_et (t),

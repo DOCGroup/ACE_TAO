@@ -42,12 +42,19 @@ ACE_RCSID (be,
 
 // Default constructor.
 be_interface::be_interface (void)
-  : var_out_seq_decls_gen_ (0)
-    , skel_count_ (0)
-    , in_mult_inheritance_ (-1)
-    , strategy_ (0)
-    , original_interface_ (0)
-    , has_mixed_parentage_ (-1)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    be_scope (),
+    be_type (),
+    var_out_seq_decls_gen_ (0),
+    skel_count_ (0),
+    in_mult_inheritance_ (-1),
+    strategy_ (0),
+    original_interface_ (0),
+    has_mixed_parentage_ (-1)
 
 {
   ACE_NEW (this->strategy_,
@@ -62,9 +69,13 @@ be_interface::be_interface (UTL_ScopedName *n,
                             long nih_flat,
                             idl_bool local,
                             idl_bool abstract)
-  : be_scope (AST_Decl::NT_interface),
-    be_type (AST_Decl::NT_interface,
-             n),
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_interface,
+              n),
+    AST_Type (AST_Decl::NT_interface,
+              n),
+    UTL_Scope (AST_Decl::NT_interface),
     AST_Interface (n,
                    ih,
                    nih,
@@ -72,13 +83,9 @@ be_interface::be_interface (UTL_ScopedName *n,
                    nih_flat,
                    local,
                    abstract),
-    AST_Type (AST_Decl::NT_interface,
-              n),
-    AST_Decl (AST_Decl::NT_interface,
-              n),
-    UTL_Scope (AST_Decl::NT_interface),
-    COMMON_Base (local,
-                 abstract),
+    be_scope (AST_Decl::NT_interface),
+    be_type (AST_Decl::NT_interface,
+             n),
     var_out_seq_decls_gen_ (0),
     skel_count_ (0),
     in_mult_inheritance_ (-1),

@@ -25,19 +25,28 @@ ACE_RCSID (be,
            "$Id$")
 
 be_structure_fwd::be_structure_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_StructureFwd (),
+    be_decl (),
+    be_type ()
 {
 }
 
 be_structure_fwd::be_structure_fwd (AST_Structure *dummy,
                                     UTL_ScopedName *n)
-  : be_type (AST_Decl::NT_struct_fwd,
-             n),
-    AST_StructureFwd (dummy,
-                      n),
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_struct_fwd,
+              n),
     AST_Type (AST_Decl::NT_struct_fwd,
               n),
-    AST_Decl (AST_Decl::NT_struct_fwd,
-              n)
+    AST_StructureFwd (dummy,
+                      n),
+    be_decl (AST_Decl::NT_struct_fwd,
+             n),
+    be_type (AST_Decl::NT_struct_fwd,
+             n)
 {
 }
 

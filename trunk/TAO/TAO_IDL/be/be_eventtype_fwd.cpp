@@ -27,25 +27,35 @@ ACE_RCSID (be,
            "$Id$")
 
 be_eventtype_fwd::be_eventtype_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd (),
+    AST_ValueTypeFwd (),
+    be_interface_fwd (),
+    be_valuetype_fwd (),
+    AST_EventTypeFwd ()
 {
 }
 
 be_eventtype_fwd::be_eventtype_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : be_valuetype_fwd (dummy,
-                      n),
-    be_interface_fwd (dummy,
-                      n),
-    AST_EventTypeFwd (dummy,
+  : COMMON_Base (dummy->is_local (),
+                 dummy->is_abstract ()),
+    AST_Decl (AST_Decl::NT_valuetype_fwd,
+              n),
+    AST_Type (AST_Decl::NT_valuetype_fwd,
+              n),
+    AST_InterfaceFwd (dummy,
                       n),
     AST_ValueTypeFwd (dummy,
                       n),
-    AST_InterfaceFwd (dummy,
+    be_interface_fwd (dummy,
                       n),
-    AST_Decl (AST_Decl::NT_valuetype_fwd,
-              n),
-    COMMON_Base (dummy->is_local (),
-                 dummy->is_abstract ())
+    be_valuetype_fwd (dummy,
+                      n),
+    AST_EventTypeFwd (dummy,
+                      n)
 {
 }
 

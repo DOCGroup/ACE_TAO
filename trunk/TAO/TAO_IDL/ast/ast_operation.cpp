@@ -92,10 +92,13 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Operation::AST_Operation (void)
-  : pd_return_type (0),
+  : COMMON_Base (),
+    AST_Decl(),
+    UTL_Scope(),
+    pd_return_type (0),
     pd_flags (OP_noflags),
     pd_context (0),
-    pd_exceptions( 0),
+    pd_exceptions (0),
     argument_count_ (-1),
     has_native_ (0)
 {
@@ -106,11 +109,11 @@ AST_Operation::AST_Operation (AST_Type *rt,
                               UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Decl(AST_Decl::NT_op,
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl(AST_Decl::NT_op,
              n),
     UTL_Scope(AST_Decl::NT_op),
-    COMMON_Base (local,
-                 abstract),
     pd_return_type (rt),
     pd_flags (fl),
     pd_context (0),
@@ -350,7 +353,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       if (fe == 0)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                       this);
+                                      this);
           return 0;
         }
 

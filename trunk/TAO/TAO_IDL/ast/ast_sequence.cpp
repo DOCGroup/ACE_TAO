@@ -81,8 +81,12 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Sequence::AST_Sequence (void)
- : pd_max_size (0),
-   pd_base_type (0)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    pd_max_size (0),
+    pd_base_type (0)
 {
   // A sequence data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
@@ -93,13 +97,17 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
                             UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
- : AST_Decl (AST_Decl::NT_sequence,
-             n,
-             I_TRUE),
-   COMMON_Base (bt->is_local () || local,
-                abstract),
-   pd_max_size (ms),
-   pd_base_type (bt)
+  : COMMON_Base (bt->is_local () || local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_sequence,
+              n,
+              I_TRUE),
+    AST_Type (AST_Decl::NT_sequence,
+              n),
+    AST_ConcreteType (AST_Decl::NT_sequence,
+                      n),
+    pd_max_size (ms),
+    pd_base_type (bt)
 {
   // Check if we are bounded or unbounded. An expression value of 0 means
   // unbounded.

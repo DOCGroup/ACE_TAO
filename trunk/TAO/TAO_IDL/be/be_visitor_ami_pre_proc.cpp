@@ -348,6 +348,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                 0,
                                 0,
                                 0,
+                                0,
                                 0),
                   0);
 
@@ -397,6 +398,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                 p_intf,
                                 1,
                                 inherit_vt,
+                                0,
                                 0,
                                 0,
                                 0,

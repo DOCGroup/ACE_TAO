@@ -10,19 +10,23 @@ ACE_RCSID( ast,
            "$Id$")
 
 AST_ValueTypeFwd::AST_ValueTypeFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd ()
 {
 }
 
 AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : AST_InterfaceFwd (dummy,
-                      n),
-    AST_Type (AST_Decl::NT_valuetype_fwd,
-              n),
+  : COMMON_Base (I_FALSE,
+                 dummy->is_abstract ()),
     AST_Decl (AST_Decl::NT_valuetype_fwd,
               n),
-    COMMON_Base (I_FALSE,
-                 dummy->is_abstract ())
+    AST_Type (AST_Decl::NT_valuetype_fwd,
+              n),
+    AST_InterfaceFwd (dummy,
+                      n)
 {
 }
 

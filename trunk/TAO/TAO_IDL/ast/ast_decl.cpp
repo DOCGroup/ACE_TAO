@@ -120,7 +120,8 @@ COMMON_Base::destroy (void)
 // Constructor(s) and destructor.
 
 AST_Decl::AST_Decl (void)
-  : repoID_ (0),
+  : COMMON_Base (),
+    repoID_ (0),
     contains_wstring_ (-1),
     pd_imported (I_FALSE),
     pd_in_main_file (I_FALSE),
@@ -145,7 +146,8 @@ AST_Decl::AST_Decl (void)
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     idl_bool anonymous)
-  : repoID_ (0),
+  : COMMON_Base (),
+    repoID_ (0),
     contains_wstring_ (-1),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -830,6 +832,11 @@ AST_Decl::full_name (void)
 const char *
 AST_Decl::repoID (void)
 {
+  if (this->pd_node_type == NT_root)
+    {
+      this->repoID_ = ACE::strnew ("");
+    }
+
   if (this->repoID_ == 0)
     {
       this->compute_repoID ();
