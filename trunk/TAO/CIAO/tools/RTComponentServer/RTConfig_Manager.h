@@ -16,7 +16,7 @@
 
 #ifndef CIAO_RTCONFIG_MANAGER_H
 #define CIAO_RTCONFIG_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -157,5 +157,5 @@ namespace CIAO
 # include "RTConfig_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_RTCONFIG_MANAGER_H */
