@@ -97,7 +97,7 @@ public:
   // Tannenbaums UP operation.
 
   // = Semaphore operation methods.
-  int op (int val, u_short semnum = 0, int flags = 0) const;
+  int op (int val, u_short semnum = 0, int flags = SEM_UNDO) const;
   // General ACE_SV_Semaphore operation. Increment or decrement by a
   // specific amount (positive or negative; amount can`t be zero). 
 

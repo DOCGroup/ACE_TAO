@@ -465,7 +465,7 @@ ACE_Log_Msg::open (const char *prog_name,
             ACE_Log_Msg_message_queue->close ();
           ACE_SOCK_Connector con;
           status = con.connect (*ACE_Log_Msg_message_queue,
-                                ACE_INET_Addr (logger_key));
+                                ACE_INET_Addr (ACE_MULTIBYTE_STRING (logger_key)));
         }
 #else
         if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
