@@ -13,7 +13,7 @@ Fri Dec  8 13:06:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Replicated changes
-	  from IIOP.  
+	  that have been made to IIOP.
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
@@ -22,6 +22,9 @@ Fri Dec  8 13:06:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i: New files
 	  for the connection handler.
 
+	* orbsvcs/orbsvcs/Makefile.SSLIOP: Added new files and updated
+	  dependencies. 
+	
 	* tao/IIOP_Connector.cpp: Fixed some typos in #pragma
 	  instantiation. 
 

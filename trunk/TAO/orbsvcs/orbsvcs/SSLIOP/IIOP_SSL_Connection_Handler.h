@@ -23,11 +23,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/SSLIOPC.h"
-#include "tao/IIOP_Connect.h"
+#include "tao/IIOP_Connection_Handler.h"
 
 
 /**
- * @class TAO_IIOP_SSL_Server_Connection_Handler
+ * @class TAO_IIOP_SSL_Connection_Handler
  *
  * @brief
  * IIOP connection handler designed to be "SSL aware," i.e. it is
@@ -48,20 +48,20 @@
  * associate the TSS SSL state from the secure upcall with the
  * insecure upcall.  This implementation closes that security hole.
  */
-class TAO_SSLIOP_Export TAO_IIOP_SSL_Server_Connection_Handler
-  : public TAO_IIOP_Server_Connection_Handler
+class TAO_SSLIOP_Export TAO_IIOP_SSL_Connection_Handler
+  : public TAO_IIOP_Connection_Handler
 {
 public:
 
   /// Constructor. <arg> parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
-  TAO_IIOP_SSL_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_IIOP_SSL_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                          CORBA::Boolean flag,
-                                          void *arg);
+  TAO_IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
+                                   CORBA::Boolean flag,
+                                   void *arg);
 
   /// Destructor.
-  ~TAO_IIOP_SSL_Server_Connection_Handler (void);
+  ~TAO_IIOP_SSL_Connection_Handler (void);
 
 protected:
 
@@ -71,68 +71,6 @@ protected:
   virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
                               ACE_Time_Value *max_wait_time = 0);
 
-};
-
-/*************************************************************************/
-
-/**
- * @class TAO_IIOP_SSL_Client_Connection_Handler
- *
- * @brief
- * IIOP connection handler designed to be "SSL aware," i.e. it is
- * aware of the existence of the SSLIOP connection handler.   It makes
- * sure that SSL session state from a previous connection is not
- * associated with the non-SSL connection handled by this handler.
- *
- * This connection handler is essentially the same as the
- * standard IIOP client connection handler it is derived from.
- * However, this class overrides the handle_input() method to
- * invalidate the current TSS SSL state during a standard IIOP
- * (insecure) upcall.  This prevents SSL session state from a previous
- * SSL connection from being associated with non-SSL connections
- * processed by this connection handler.
- */
-class TAO_SSLIOP_Export TAO_IIOP_SSL_Client_Connection_Handler
-  : public TAO_IIOP_Client_Connection_Handler
-{
-  // = TITLE
-  //      <Svc_Handler> used on the client side and returned by the
-  //      <TAO_CONNECTOR>.
-public:
-
-  /**
-   * This constructor should *never* get called, it is just here to
-   * make the compiler happy: the default implementation of the
-   * Creation_Strategy requires a constructor with that signature, we
-   * don't use that implementation, but some (most?) compilers
-   * instantiate it anyway.
-   */
-  TAO_IIOP_SSL_Client_Connection_Handler (ACE_Thread_Manager* t = 0);
-
-  /// Constructor. <arg> parameter is used by the Connector to pass
-  /// the protocol configuration properties for this connection.
-  TAO_IIOP_SSL_Client_Connection_Handler (ACE_Thread_Manager *t,
-                                          TAO_ORB_Core* orb_core,
-                                          CORBA::Boolean flag,
-                                          void *arg);
-
-  /// Destructor
-  virtual ~TAO_IIOP_SSL_Client_Connection_Handler (void);
-
-  /// Overridden method that invalidates the TSS SSL state for the
-  /// current request, and restores the previous state once the
-  /// request is completed.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-
-private:
-
-  /**
-   * Will not be called at all. As a matter of fact should not be
-   * called.  This is just to override the pure virtual function in
-   * the TAO_Connection_Handler class.
-   */
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0);
 };
 
 // ****************************************************************
