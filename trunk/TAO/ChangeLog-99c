@@ -1,3 +1,8 @@
+Mon May 03 10:04:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/POA/Demux/Makefile: only build if the
+          orbsvcs library was built with the Naming component.
+
 Mon May 03 09:46:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/DII_Cubit/Makefile: removed
