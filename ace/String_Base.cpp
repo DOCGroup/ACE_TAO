@@ -73,7 +73,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
         {
           this->buf_len_ = len;
           this->len_ = len;
-          this->rep_ = (CHAR *) s;
+          this->rep_ = const_cast <CHAR *> (s);
         }
       else
         {

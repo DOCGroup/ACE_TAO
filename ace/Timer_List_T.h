@@ -27,7 +27,7 @@ class ACE_Timer_List_T;
 /**
  * @class ACE_Timer_List_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_List>.
+ * @brief Iterates over an ACE_Timer_List.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.
@@ -57,10 +57,10 @@ public:
   virtual ACE_Timer_Node_T<TYPE> *item (void);
 
 protected:
-  /// Pointer to the <ACE_Timer_List> that we are iterating over.
+  /// Pointer to the ACE_Timer_List that we are iterating over.
   List& list_;
 
-  /// Current position in the <ACE_Timer_List>
+  /// Current position in the ACE_Timer_List
   ACE_Timer_Node_T<TYPE>* current_node_;
 };
 
@@ -98,9 +98,9 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * Default constructor. <upcall_functor> is the instance of the
-   * FUNCTOR to be used by the list. If <upcall_functor> is 0, a
-   * default FUNCTOR will be created.  <freelist> the freelist of
+   * Default constructor. @a upcall_functor is the instance of the
+   * FUNCTOR to be used by the list. If @a upcall_functor is 0, a
+   * default FUNCTOR will be created.  @a freelist is the freelist of
    * timer nodes.  If 0, then a default freelist will be created.
    */
   ACE_Timer_List_T (FUNCTOR* upcall_functor = 0, FreeList* freelist = 0);
@@ -111,30 +111,30 @@ public:
   /// True if queue is empty, else false.
   virtual int is_empty (void) const;
 
-  /// Returns the time of the earlier node in the <ACE_Timer_List>.
+  /// Returns the time of the earlier node in the ACE_Timer_List.
   /// Must be called on a non-empty queue.
   virtual const ACE_Time_Value& earliest_time (void) const;
 
   /**
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
-   * <gettimeofday>.  If <interval> is equal to
-   * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
+   * <gettimeofday>.  If @a interval is equal to
+   * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value& interval);
 
   /**
-   * Cancel all timers associated with <type>.  If <dont_call> is 0
-   * then the <functor> will be invoked.  Returns number of timers
+   * Cancel all timers associated with @a type.  If dont_call_handle_close is 0
+   * then the @a functor will be invoked.  Returns the number of timers
    * cancelled.
    */
   virtual int cancel (const TYPE& type,
                       int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single timer that matches the <timer_id> value (which
+   * Cancel the single timer that matches the @a timer_id value (which
    * was returned from the <schedule> method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
@@ -146,7 +146,7 @@ public:
                       const void** act = 0,
                       int dont_call_handle_close = 1);
 
-  /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+  /// Returns a pointer to this ACE_Timer_Queue's iterator.
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>& iter (void);
 
   /// Removes the earliest node from the queue and returns it
@@ -155,7 +155,7 @@ public:
   /// Dump the state of an object.
   virtual void dump (void) const;
 
-  /// Reschedule an "interval" <ACE_Timer_Node>.  This should be private
+  /// Reschedule an "interval" ACE_Timer_Node_T.  This should be private
   /// but for now it needs to be public for <ACE_Timer_Hash_T>
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 

@@ -132,7 +132,7 @@ namespace ACE_Utils
           {
             ACE_DEBUG ((LM_DEBUG,
                         "UUID::UUID - "
-                        "IllegalArgument(invalid string representation)"));
+                        "IllegalArgument(invalid string representation)\n"));
             return;
           }
       }
@@ -159,7 +159,7 @@ namespace ACE_Utils
           {
             ACE_DEBUG ((LM_DEBUG,
                         "ACE_UUID::ACE_UUID - "
-                        "IllegalArgument(invalid string representation)"));
+                        "IllegalArgument(invalid string representation)\n"));
             return;
           }
       }
@@ -181,7 +181,7 @@ namespace ACE_Utils
       {
         ACE_DEBUG ((LM_DEBUG,
                     "ACE_UUID_Impl::ACE_UUID_Impl - "
-                    "IllegalArgument(unsupported variant)"));
+                    "IllegalArgument(unsupported variant)\n"));
         return;
       }
 
@@ -194,7 +194,7 @@ namespace ACE_Utils
       {
         ACE_DEBUG ((LM_DEBUG,
                     "ACE_UUID::ACE_UUID - "
-                    "IllegalArgument(unsupported version)"));
+                    "IllegalArgument(unsupported version)\n"));
         return;
       }
     if ((this->clockSeqHiAndReserved_ & 0xc0) == 0xc0)
@@ -203,7 +203,7 @@ namespace ACE_Utils
           {
             ACE_DEBUG ((LM_DEBUG,
                       "ACE_UUID::ACE_UUID - "
-                        "IllegalArgument (Missing Thread and Process Id)"));
+                        "IllegalArgument (Missing Thread and Process Id)\n"));
             return;
           }
         ACE_CString thr_pid_str (thr_pid_buf);
@@ -211,7 +211,7 @@ namespace ACE_Utils
         if (pos == -1)
           ACE_DEBUG ((LM_DEBUG,
                       "ACE_UUID::ACE_UUID - "
-                      "IllegalArgument (Thread and Process Id format incorrect)"));
+                      "IllegalArgument (Thread and Process Id format incorrect)\n"));
 
         this->thr_id_ = thr_pid_str.substr (0, pos);
       this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);

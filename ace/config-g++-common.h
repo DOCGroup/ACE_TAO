@@ -10,71 +10,40 @@
 #define ACE_GNUG_COMMON_H
 #include /**/ "ace/pre.h"
 
-#if __GNUC__ > 2  ||  ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
-  // egcs or g++ >= 2.8.0
+#define ACE_HAS_CPLUSPLUS_HEADERS
+#define ACE_HAS_STDCPP_STL_INCLUDES
+#define ACE_HAS_TEMPLATE_TYPEDEFS
+#define ACE_HAS_TYPENAME_KEYWORD
+#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+#define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+#define ACE_HAS_USING_KEYWORD
+#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#define ACE_TEMPLATES_REQUIRE_SOURCE
 
-# define ACE_HAS_CPLUSPLUS_HEADERS
-# define ACE_HAS_STDCPP_STL_INCLUDES
-# define ACE_HAS_TEMPLATE_TYPEDEFS
-# define ACE_HAS_TYPENAME_KEYWORD
-# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-
-#if __GNUC__ > 2  ||  ( __GNUC__ == 2 && __GNUC_MINOR__ >= 95)
-# define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-#endif
-
-# define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#if ( __GNUC__ == 2 && __GNUC_MINOR__ < 97 )
+  // gcc 2.97 and lower use old iostreams
 # define ACE_USES_OLD_IOSTREAMS
-
-#if (__GNUC__ == 2 && __GNUC_MINOR__ <= 91)
-// EGCS (gcc 2.91) doesn't define this in its C++ standard library.
-# define ACE_LACKS_AUTO_PTR
-# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-#endif
-
-# if __GNUC__ == 2  &&  __GNUC_MINOR__ != 9  &&  __GNUC_MINOR__ != 91
-#   // g++ 2.9 and egcs 2.91 apparently have a bug with this . . .
-#   define ACE_HAS_TEMPLATE_SPECIALIZATION
-# endif /* __GNUC__ != 2.9  &&  __GNUC__ != 2.91*/
-
-# if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 91 )
-#   define ACE_HAS_USING_KEYWORD
-    // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
-    // used with older versions.
-#   define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-#   if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
-#     define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
-#   endif /* __GNUC__ >= 3.4 */
-# endif /* __GNUC__ >= 2.91 */
-
-#if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 97 )
-        // gcc 2.97 and higher use libstdc++-v3 and require
-        // the use of the std namespace for using iostreams
-# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# undef  ACE_USES_OLD_IOSTREAMS
 #endif /* __GNUC__ >= 2.97 */
 
-  // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
-  // is not defined with -fno-exceptions, the ACE default for g++.
-  // ACE_HAS_EXCEPTIONS is defined in
-  // include/makeinclude/wrapper_macros.GNU, so this really isn't
-  // necessary.  Just in case . . .
-# if defined (__EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
-#   define ACE_HAS_EXCEPTIONS
-# endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
+#if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
+# define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
+#endif /* __GNUC__ >= 3.4 */
 
-# if defined (ACE_HAS_EXCEPTIONS)
-#   define ACE_NEW_THROWS_EXCEPTIONS
-# endif /* ACE_HAS_EXCEPTIONS */
+// __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
+// is not defined with -fno-exceptions, the ACE default for g++.
+// ACE_HAS_EXCEPTIONS is defined in
+// include/makeinclude/wrapper_macros.GNU, so this really isn't
+// necessary.  Just in case . . .
+#if defined (__EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
+#  define ACE_HAS_EXCEPTIONS
+#endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
 
-#else  /* ! egcs */
-  // Plain old g++.
-# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-# define ACE_HAS_GNUG_PRE_2_8
-# define ACE_HAS_TEMPLATE_SPECIALIZATION
-# define ACE_LACKS_MIN_MAX_TEMPLATES
-#endif /* ! egcs */
+#if defined (ACE_HAS_EXCEPTIONS)
+#  define ACE_NEW_THROWS_EXCEPTIONS
+#endif /* ACE_HAS_EXCEPTIONS */
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12
@@ -106,8 +75,6 @@
 #   undef ACE_HAS_STRING_CLASS
 # endif /* ACE_HAS_STRING_CLASS */
 #endif /* ! ACE_HAS_GNU_REPO */
-
-#define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #include /**/ "ace/post.h"
 #endif /* ACE_GNUG_COMMON_H */

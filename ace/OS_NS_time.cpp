@@ -72,8 +72,8 @@ ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
 
   // Encode date values from tm struct into pSOS date bit array.
   date_ = (ACE_PSOS_Time_t::year_mask &
-           ACE_static_cast (u_long,
-                            tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
+           static_cast <u_long>
+                            (tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
     ACE_PSOS_Time_t::year_shift;
   date_ |= (ACE_PSOS_Time_t::month_mask &
             ACE_static_cast (u_long,

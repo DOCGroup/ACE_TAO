@@ -269,15 +269,14 @@ ACE_INLINE int
 ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 {
   ACE_OS_TRACE ("ACE_OS::dup2");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (ACE_LACKS_DUP2)
   // msvcrt has _dup2 ?!
   ACE_UNUSED_ARG (oldhandle);
   ACE_UNUSED_ARG (newhandle);
-
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::dup2 (oldhandle, newhandle), int, -1);
-#endif /* ACE_WIN32 || VXWORKS || ACE_PSOS */
+#endif /* ACE_LACKS_DUP2 */
 }
 
 ACE_INLINE int

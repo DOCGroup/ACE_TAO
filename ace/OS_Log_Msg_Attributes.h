@@ -64,6 +64,11 @@ protected:
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
 #   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+
+private:
+  // Prevent copying
+  ACE_OS_Log_Msg_Attributes (const ACE_OS_Log_Msg_Attributes &);
+  ACE_OS_Log_Msg_Attributes &operator= (const ACE_OS_Log_Msg_Attributes &);
 };
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

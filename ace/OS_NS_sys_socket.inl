@@ -642,7 +642,8 @@ ACE_OS::sendto (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
 #if defined (VXWORKS)
-  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf,
+  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
+                                 const_cast <char *> (buf),
                                  len,
                                  flags,
                                  const_cast<struct sockaddr *> (addr),
@@ -914,7 +915,7 @@ ACE_OS::socketpair (int domain, int type,
                     int protocol, ACE_HANDLE sv[2])
 {
   ACE_OS_TRACE ("ACE_OS::socketpair");
-#if defined (ACE_WIN32) || defined (ACE_LACKS_SOCKETPAIR)
+#if defined (ACE_LACKS_SOCKETPAIR)
   ACE_UNUSED_ARG (domain);
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (protocol);
@@ -924,7 +925,7 @@ ACE_OS::socketpair (int domain, int type,
 #else
   ACE_OSCALL_RETURN (::socketpair (domain, type, protocol, sv),
                      int, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_SOCKETPAIR */
 }
 
 #if defined (__linux__) && defined (ACE_HAS_IPV6)

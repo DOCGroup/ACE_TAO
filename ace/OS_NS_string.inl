@@ -93,11 +93,7 @@ ACE_OS::strchr (const wchar_t *s, wint_t c)
 ACE_INLINE char *
 ACE_OS::strchr (char *s, int c)
 {
-#if defined (ACE_LACKS_STRCHR)
-  return ACE_OS::strchr_emulation (s, c);
-#else  /* ! ACE_LACKS_STRCHR */
   return ::strchr (s, c);
-#endif /* ACE_LACKS_STRCHR */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -147,11 +143,7 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 ACE_INLINE size_t
 ACE_OS::strcspn (const char *s, const char *reject)
 {
-#if defined (ACE_LACKS_STRCSPN)
-  return ACE_OS::strcspn_emulation (s, reject);
-#else  /* ACE_LACKS_STRCSPN */
   return ::strcspn (s, reject);
-#endif /* ACE_LACKS_STRCSPN */
 }
 
 #if defined (ACE_HAS_WCHAR)

@@ -1105,7 +1105,7 @@ AC_CHECK_TYPE([idtype_t],
 
 AC_CHECK_TYPE([key_t],
 	      [],
-	      [AC_DEFINE([ACE_LACKS_KEY_T], 1, 
+	      [AC_DEFINE([ACE_LACKS_KEY_T], 1,
 			 [Define to 1 if the system lacks the type `key_t'.])],
 	      [#include <sys/types.h>])
 
@@ -3222,10 +3222,6 @@ ACE_CHECK_HAS_FUNCS(itoa)
 ACE_CHECK_LACKS_FUNCS(qsort)
 
 ACE_CHECK_HAS_FUNCS(strnlen)
-
-ACE_CHECK_LACKS_FUNCS(strchr)
-
-ACE_CHECK_LACKS_FUNCS(strcspn)
 
 ACE_CHECK_LACKS_FUNCS(strerror)
 

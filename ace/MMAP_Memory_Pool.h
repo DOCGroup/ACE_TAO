@@ -108,6 +108,11 @@ public:
 
   /// File mode for mmaped file, if it is created.
   mode_t file_mode_;
+
+private:
+  // Prevent copying
+  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &);
+  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &);
 };
 
 /**
