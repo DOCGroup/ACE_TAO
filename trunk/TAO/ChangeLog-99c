@@ -1,3 +1,8 @@
+Tue Jul 13 17:38:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: replaced new
+          operators with ACE_NEW_THROW_EX macros.
+
 Tue Jul 13 16:05:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp:
