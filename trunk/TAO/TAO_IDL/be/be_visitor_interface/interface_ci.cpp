@@ -65,12 +65,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   os->indent (); // start from the current indentation level
 
-  // generate the constructors and destructor
-  *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::" << node->local_name () <<
-    " (void) // default constructor" << be_nl;
-  *os << "{}" << be_nl << be_nl;
-
+  // Generate the constructor from stub and servant.
   if (! node->is_local ())
     {
       *os << "ACE_INLINE" << be_nl;
@@ -81,11 +76,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << be_nl;
       *os << "{}" << be_nl << be_nl;
     }
-
-  *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::~" << node->local_name () <<
-    " (void) // destructor" << be_nl;
-  *os << "{}\n\n";
 
   // generate the ifdefined macro for  the _var type
   os->gen_ifdef_macro (node->flat_name (), "_var");
