@@ -1,3 +1,12 @@
+Mon Mar 29 12:24:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* examples/Threads/manual_event.cpp (worker): 
+	* tests/Upgradable_RW_Test.cpp (run_main): 
+	* tests/Conn_Test.cpp (client): Changed the name "barrier"
+	  to "thread_barrier" to fix a problem with macro conflicts on
+ 	  certain OS platforms.  Thanks to Levente Torok <tealev@yahoo.com>
+	  for reporting this.
+
 Mon Mar 29 17:02:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h:

@@ -382,7 +382,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   Time_Calculation time_Calculation;
   // for the time calculation
 
-  ACE_Barrier barrier (n_readers + n_writers);
+  ACE_Barrier thread_barrier (n_readers + n_writers);
   // for a nice start of all threads (for much contention)
 
   // Initialize the readers.
@@ -399,7 +399,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_NEW_RETURN (reader_tasks[i],
                       Reader_Task (time_Calculation,
-                                  barrier),
+                                  thread_barrier),
                       -1);
 
       reader_tasks[i]->activate (thr_flags,
@@ -421,7 +421,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_NEW_RETURN (writer_tasks[i],
                       Writer_Task (time_Calculation,
-                                  barrier),
+                                  thread_barrier),
                       -1);
 
       writer_tasks[i]->activate (thr_flags,
