@@ -51,6 +51,7 @@ CC_LockSet::~CC_LockSet(void)
 void CC_LockSet::lock(CosConcurrencyControl::lock_mode mode,
 		      CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_LockSet::lock\n"));
   if(lock_==0) {
     ACE_NEW(lock_, CC_Lock(mode));
     if(errno==ENOMEM) {
@@ -73,6 +74,7 @@ void CC_LockSet::lock(CosConcurrencyControl::lock_mode mode,
 CORBA::Boolean CC_LockSet::try_lock(CosConcurrencyControl::lock_mode mode,
 				    CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_LockSet::try_lock\n"));
   TAO_TRY {
     return lock_->try_lock(_env);
   }
@@ -87,6 +89,7 @@ CORBA::Boolean CC_LockSet::try_lock(CosConcurrencyControl::lock_mode mode,
 void CC_LockSet::unlock(CosConcurrencyControl::lock_mode mode,
 			CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_LockSet::unlock\n"));
   TAO_TRY {
     lock_->unlock(_env);
   }
@@ -102,6 +105,7 @@ void CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
 			      CosConcurrencyControl::lock_mode new_mode,
 			      CORBA::Environment &_env)
 {
+  ACE_DEBUG((LM_DEBUG, "CC_LockSet::change_mode\n"));
   TAO_TRY
     {
       lock_->change_mode(new_mode, _env);
