@@ -273,6 +273,12 @@ sub get_ti_override {
   return $self->{'ti'};
 }
 
+
+sub crlf {
+  my($self) = shift;
+  return "\n";
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************

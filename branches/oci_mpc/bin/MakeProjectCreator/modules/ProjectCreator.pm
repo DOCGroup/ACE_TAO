@@ -1138,7 +1138,7 @@ sub get_template_input {
       return $self->{'dll_template_input'};
     }
   }
-  
+
   if ($self->{'writing_type'} == 1) {
     return $self->{'lexe_template_input'};
   }
@@ -1226,12 +1226,6 @@ sub translate_value {
 sub convert_slashes {
   my($self) = shift;
   return 1;
-}
-
-
-sub crlf {
-  my($self) = shift;
-  return "\n";
 }
 
 
