@@ -1,77 +1,86 @@
+Tue Mar 20 20:01:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp (make_idle):
+          The function was not checking if cache_map_entry_ was null
+          before using it.  This field is set to 0 once the underlying
+          connection is closed, this can be done by another thread, while
+          the Transport has not been idled by the thread making a
+          request.
+
 Tue Mar 20 16:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Client_Leaks/Makefile:
-	* tests/Client_Leaks/Test.idl:
-	* tests/Client_Leaks/Client_Task.h:
-	* tests/Client_Leaks/Client_Task.cpp:
-	* tests/Client_Leaks/Process_Factory.h:
-	* tests/Client_Leaks/Process_Factory.cpp:
-	* tests/Client_Leaks/Server_Task.h:
-	* tests/Client_Leaks/Server_Task.cpp:
-	* tests/Client_Leaks/Startup_Callback.h:
-	* tests/Client_Leaks/Startup_Callback.cpp:
-	* tests/Client_Leaks/child.cpp:
-	* tests/Client_Leaks/client.cpp:
-	* tests/Client_Leaks/server.cpp:
-	  Several improvements to the test to make it more reliable and
-	  faster.
-	  The process factory uses callback interfaces to receive the new
-	  child IOR.
-	  Both the client and the process factory are multithreaded, to
-	  speed up the test by increasing concurrency during process
-	  creation.
-	  The child processes are detached to avoid zombies and to
-	  minimize the need of using the ACE_Process_Manager.
+        * tests/Client_Leaks/Makefile:
+        * tests/Client_Leaks/Test.idl:
+        * tests/Client_Leaks/Client_Task.h:
+        * tests/Client_Leaks/Client_Task.cpp:
+        * tests/Client_Leaks/Process_Factory.h:
+        * tests/Client_Leaks/Process_Factory.cpp:
+        * tests/Client_Leaks/Server_Task.h:
+        * tests/Client_Leaks/Server_Task.cpp:
+        * tests/Client_Leaks/Startup_Callback.h:
+        * tests/Client_Leaks/Startup_Callback.cpp:
+        * tests/Client_Leaks/child.cpp:
+        * tests/Client_Leaks/client.cpp:
+        * tests/Client_Leaks/server.cpp:
+          Several improvements to the test to make it more reliable and
+          faster.
+          The process factory uses callback interfaces to receive the new
+          child IOR.
+          Both the client and the process factory are multithreaded, to
+          speed up the test by increasing concurrency during process
+          creation.
+          The child processes are detached to avoid zombies and to
+          minimize the need of using the ACE_Process_Manager.
 
 Tue Mar 20 18.54:01  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (key_to_stub_i): 
-	  
-	  This was source of most of the the RTCORBA test failure.
-	  The problem was that the wrong Acceptor Filter were being used,
-	  this had as a conseguence the fact that some useful endpoint 
-	  associated to the erroneously filtered acceptor were filtered
-	  as well. 
+        * tao/PortableServer/POA.cpp (key_to_stub_i):
 
-	* tao/RT_Invocation_Endpoint_Selectors.cpp:
+          This was source of most of the the RTCORBA test failure.
+          The problem was that the wrong Acceptor Filter were being used,
+          this had as a conseguence the fact that some useful endpoint
+          associated to the erroneously filtered acceptor were filtered
+          as well.
 
-	  Reverted the change made in the in the 
-	  Priority_Endpoint_Selector. A description of the 
-	  change that were done is in:
-	  Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+        * tao/RT_Invocation_Endpoint_Selectors.cpp:
 
-	* tests/RTCORBA/Banded_Connections/run_test.pl:
-	  
-	  The perl script was passing a priority that did not match one
-	  of the endpoints exported in the server ORB, this was causing the
-	  request to a CORBA object with CLIENT_PROPAGATED policy and no
-	  priority bands to fail.
-	  
+          Reverted the change made in the in the
+          Priority_Endpoint_Selector. A description of the
+          change that were done is in:
+          Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+
+          The perl script was passing a priority that did not match one
+          of the endpoints exported in the server ORB, this was causing the
+          request to a CORBA object with CLIENT_PROPAGATED policy and no
+          priority bands to fail.
+
 Tue Mar 20 18:19:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h: 
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h:
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/distribuer.h:
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/distribuer.cpp:
-        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:	
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/README:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/README:
 
-	  Fixed bugs and cleaned up the test. This should get it working
-	  on windows.
+          Fixed bugs and cleaned up the test. This should get it working
+          on windows.
 
 Tue Mar 20 08:30:10 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.cpp (_tao_get_omg_exception_description):
+        * tao/Exception.cpp (_tao_get_omg_exception_description):
 
-	  Forgot to add the "const" qualifier to the description table
-	  declarations.  This fixes a "string literal loses const
-	  qualifier" warning.
+          Forgot to add the "const" qualifier to the description table
+          declarations.  This fixes a "string literal loses const
+          qualifier" warning.
 
 Tue Mar 20 06:17:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Schedule:/Service.cpp: Fixed a nagging
-	  warning in many platforms.  
+        * orbsvcs/examples/RtEC/Schedule:/Service.cpp: Fixed a nagging
+          warning in many platforms.
 
 Mon Mar 19 19:49:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -95,96 +104,96 @@ Mon Mar 19 19:49:04 2001  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/tests/Event/Performance/Throughput.bor:
         * orbsvcs/tests/Event/Performance/Latency.bor:
         * orbsvcs/tests/Event/Performance/Latency_Server.bor:
-	  Use the new directory for the ECTest library.
+          Use the new directory for the ECTest library.
 
 Mon Mar 19 16:37:21 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/Transport.cpp:
-	* tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
 
-	  Added new thread-safe TAO_Synch_Refcountable class (which uses
- 	  TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
- 	  changed the private base of TAO_Transport to use it rather than
- 	  ACE_Refcountable.  Now refcounting of Transport objects should
- 	  be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
- 	  814]
+          Added new thread-safe TAO_Synch_Refcountable class (which uses
+          TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
+          changed the private base of TAO_Transport to use it rather than
+          ACE_Refcountable.  Now refcounting of Transport objects should
+          be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
+          814]
 
 Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_activator): 
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_locator): 
-	* examples/POA/Loader/Server_Manager.cpp (create_activator): 
-	* examples/POA/Loader/Server_Manager.cpp (create_locator): 
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp (create_activator):
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp (create_locator):
+        * examples/POA/Loader/Server_Manager.cpp (create_activator):
+        * examples/POA/Loader/Server_Manager.cpp (create_locator):
 
-	  Fixed Servant Managers and Servant Activators leaks.  
-	
-	* tao/ORB_Core.cpp (collocation_strategy): When looking for a
-	  valid servant ORB, the following code was used:
+          Fixed Servant Managers and Servant Activators leaks.
 
-	  stub->servant_orb_ptr () != 0
+        * tao/ORB_Core.cpp (collocation_strategy): When looking for a
+          valid servant ORB, the following code was used:
 
-	  Unfortunately, servant_orb_ptr() duplicated the ORB.  Correct
-	  solution is to use:
+          stub->servant_orb_ptr () != 0
 
-	  stub->servant_orb_var ().in () != CORBA::ORB::_nil ()
+          Unfortunately, servant_orb_ptr() duplicated the ORB.  Correct
+          solution is to use:
 
-	* tests/POA/wait_for_completion/wait_for_completion.cpp (main):
-	  The servant was not removed from the POA at the end of the
-	  program.  When the POA died in the static destructors, it tried
-	  to reach for the dead servant causing a seg fault.  This was
-	  fixed by destroying the POA before the servant died.
+          stub->servant_orb_var ().in () != CORBA::ORB::_nil ()
+
+        * tests/POA/wait_for_completion/wait_for_completion.cpp (main):
+          The servant was not removed from the POA at the end of the
+          program.  When the POA died in the static destructors, it tried
+          to reach for the dead servant causing a seg fault.  This was
+          fixed by destroying the POA before the servant died.
 
 Mon Mar 19 14:20:38 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Makefile (DIRS):
+        * orbsvcs/tests/Makefile (DIRS):
 
-	  Added the `Security' directory to the list of directories to
-	  recurse into.
+          Added the `Security' directory to the list of directories to
+          recurse into.
 
 Mon Mar 19 14:03:35 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Makefile:
+        * orbsvcs/tests/Security/Makefile:
 
-	  New top-level Security Service test suite Makefile.
+          New top-level Security Service test suite Makefile.
 
 Mon Mar 19 13:58:44 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
 
-	  Added a new Makefile.
+          Added a new Makefile.
 
 Mon Mar 19 15:28:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput: Added a space between the svc conf
-	  file and the option "-m". This could be the problem that has
-	  been dodging the builds for quite sometime.
+        * orbsvcs/tests/EC_Throughput: Added a space between the svc conf
+          file and the option "-m". This could be the problem that has
+          been dodging the builds for quite sometime.
 
 Mon Mar 19 11:37:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main): 
-	* examples/POA/FindPOA/FindPOA.cpp (find_non_existant_POA): 
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main):
+        * examples/POA/FindPOA/FindPOA.cpp (find_non_existant_POA):
 
-	  In non-debug compiles, asserts disappear.  Thus it was necessary
-	  to add ACE_UNUSED_ARG to variables that are just being asserted
-	  on.
+          In non-debug compiles, asserts disappear.  Thus it was necessary
+          to add ACE_UNUSED_ARG to variables that are just being asserted
+          on.
 
-	* TAOACE.dsw: Added ACE DLL to gpref dependencies.
-	
+        * TAOACE.dsw: Added ACE DLL to gpref dependencies.
+
 Mon Mar 19 12:59:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Faults/run_test.pl: Fixed a problem that was signaling a
-	  flase alarm on many platforms in the nightly builds. 
+        * tests/Faults/run_test.pl: Fixed a problem that was signaling a
+          flase alarm on many platforms in the nightly builds.
 
 Mon Mar 19 11:28:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i: Moved the method service_context_list () from
-	  the .i file to .cpp file. This was causing SunCC 4.2 to choke
-	  when the debugging symbols were off and caused the clients
-	  linked with TAO to dump a core. Thanks to Carlos for suggesting
-	  that some methods in .i file could be the source of the
-	  problem. 
-	
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i: Moved the method service_context_list () from
+          the .i file to .cpp file. This was causing SunCC 4.2 to choke
+          when the debugging symbols were off and caused the clients
+          linked with TAO to dump a core. Thanks to Carlos for suggesting
+          that some methods in .i file could be the source of the
+          problem.
+
 Mon Mar 19 09:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Typecode.cpp:
