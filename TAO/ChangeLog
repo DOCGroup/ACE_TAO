@@ -1,3 +1,28 @@
+Wed Apr  9 15:28:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Stub.h (object_key):
+	* tao/Stub.cpp: Added a new method object_key (). The methodology
+	  adopted by the skeletons in the collocated cases could lead to
+	  crashes if TAO_Stub::profile_in_use_ wasnt set. The method that
+	  has been added should get around that problem, by always
+	  returning a usable object key.
+
+	* tao/Domain/DomainS.cpp:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp: 
+	* orbsvcs/orbsvcs//IFRService/IFR_BaseS.cpp:
+	* orbsvcs/orbsvcs//IFRService/IFR_BasicS.cpp:
+	* orbsvcs/orbsvcs//IFRService/IFR_ComponentsS.cpp:
+	* orbsvcs/orbsvcs//IFRService/IFR_ExtendedS.cpp:
+	* orbsvcs/orbsvcs//IFRService/IFR_Service_Utils.cpp: Edited the
+	  collocated portion of the generated code to use the above method.
+
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	  Use the above method in TAO_Stub to access the object_key.
+
 Wed Apr 09 14:54:03 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Destroy/main.cpp:

@@ -1368,7 +1368,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_ser
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "activate_server_in_location",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -1413,7 +1413,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_serve
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "remove_server_in_location",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -1458,7 +1458,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_ser
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "shutdown_server_in_location",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -1503,7 +1503,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_sh
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "server_is_shutting_down_in_location",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -1549,7 +1549,7 @@ CORBA::ULong POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::regi
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "register_activator",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -1595,7 +1595,7 @@ CORBA::ULong POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::unre
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
+      _collocated_tao_target_->_stubobj ()->object_key (),
       "unregister_activator",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
