@@ -126,7 +126,9 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
 	               "// This is an automatically generated file.\n\n" . \
                        "\#define ACE_MAJOR_VERSION ($${major}u)\n" . \
                        "\#define ACE_MINOR_VERSION ($${minor}u)\n" . \
-                       "\#define ACE_BETA_VERSION ($${beta}u)\n";' > \
+                       "\#define ACE_BETA_VERSION ($${beta}u)\n" . \
+                       "\#define ACE_VERSION " . \
+                         "\"$${major}.$${minor}.$${beta}\\0\"\n";' > \
                 ace/Version.h; \
               chmod 644 VERSION $$CHANGELOG ace/Version.h; \
               echo cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h) &&
