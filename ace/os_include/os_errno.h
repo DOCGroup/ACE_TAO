@@ -199,9 +199,6 @@ extern int t_errno;
 #   define ENXIO  6
 #endif /* ENXIO */
 
-#define LOCALNAME 0
-#define REMOTENAME 1
-
 #if !defined (ETIMEDOUT) && defined (ETIME)
 #  define ETIMEDOUT ETIME
 #endif /* ETIMEDOUT */
