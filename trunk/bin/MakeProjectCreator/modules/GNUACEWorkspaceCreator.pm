@@ -92,6 +92,25 @@ sub write_comps {
               "  KEEP_GOING = 0$crlf" .
               "endif$crlf";
 
+    $count = $#list + 1;
+
+    ## Print the targets for each of the above projects
+    foreach my $target (@targets) {
+      my($tlen) = length($target);
+      my($cutoff) = int((80 - ($tlen + 1)) / ($tlen + 8));
+      my($splitter) = 0;
+      print $fh "$crlf$crlf$target:";
+      for(my $i = 0; $i < $count; ++$i) {
+        print $fh " $target." . $$pjs{$list[$i]}->[0];
+        ++$splitter;
+        if ($i != $count - 1 && $splitter == $cutoff) {
+          print $fh " \\$crlf " . (' ' x $tlen);
+          $splitter = 0;
+        }
+      }
+    }
+    print $fh $crlf;
+
     ## Print out each of the individual targets
     foreach my $project (@list) {
       my($pjname) = $$pjs{$project}->[0];
@@ -110,23 +129,6 @@ sub write_comps {
                 "else$crlf" .
                 "\t$cmd" .
                 "endif$crlf";
-      ++$count;
-    }
-
-    ## Print the targets for each of the above projects
-    foreach my $target (@targets) {
-      my($tlen) = length($target);
-      my($cutoff) = int((80 - ($tlen + 1)) / ($tlen + 8));
-      my($splitter) = 0;
-      print $fh "$crlf$crlf$target:";
-      for(my $i = 0; $i < $count; ++$i) {
-        print $fh " $target." . $$pjs{$list[$i]}->[0];
-        ++$splitter;
-        if ($i != $count - 1 && $splitter == $cutoff) {
-          print $fh " \\$crlf " . (' ' x $tlen);
-          $splitter = 0;
-        }
-      }
     }
 
     ## Print out the reverseclean target
