@@ -290,8 +290,7 @@ public:
 protected:
   static int process_directives (void);
   // Process service configuration requests that are provided in the
-  // <service_config_file>.  Returns the number of errors that
-  // occurred.
+  // svc.config file(s).  Returns the number of errors that occurred.
 
   static int process_commandline_directives (void);
   // Process service configuration requests that were provided on the
@@ -315,9 +314,6 @@ protected:
   // <ACE_Service_Repository>.
 
 private:
-  static const ASYS_TCHAR *service_config_file_;
-  // Name of service configuration file.
-
   static LPCTSTR logger_key_;
   // Where to write the logging output.
 
@@ -325,7 +321,11 @@ private:
   // Singleton repository of statically linked services.
 
   static ACE_SVC_QUEUE *svc_queue_;
-  // Queue of services requested on the command-line.
+  // Queue of services specified on the command-line.
+
+  static ACE_SVC_QUEUE *svc_conf_file_queue_;
+  // Queue of svc.conf files specified on the command-line.
+  // @@ This should probably be made to handle unicode filenames...
 
   static sig_atomic_t reconfig_occurred_;
   // True if reconfiguration occurred.
