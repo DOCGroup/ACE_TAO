@@ -70,7 +70,7 @@ TAO_Notify_EventChannel_i::default_consumer_admin (CORBA::Environment & /*ACE_TR
   return 0;
 }
 
-CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_EventChannel_i::default_supplier_admin (CORBA::Environment &ACE_TRY_ENV)
+CosNotifyChannelAdmin::SupplierAdmin_ptr TAO_Notify_EventChannel_i::default_supplier_admin (CORBA::Environment & /*ACE_TRY_ENV*/ )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -263,7 +263,7 @@ CosEventChannelAdmin::ConsumerAdmin_ptr TAO_Notify_EventChannel_i::for_consumers
   }
 
   CosEventChannelAdmin::SupplierAdmin_ptr TAO_Notify_EventChannel_i::for_suppliers (
-  CORBA::Environment &ACE_TRY_ENV
+                                                                                    CORBA::Environment & //ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -275,7 +275,7 @@ CosEventChannelAdmin::ConsumerAdmin_ptr TAO_Notify_EventChannel_i::for_consumers
   }
 
   void TAO_Notify_EventChannel_i::destroy (
-  CORBA::Environment &ACE_TRY_ENV
+                                           CORBA::Environment & //ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
