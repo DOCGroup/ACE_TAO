@@ -1,3 +1,22 @@
+Mon Oct 09 15:56:58 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/IORManipulation/TAO_IORManip.dsp:
+	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+	* orbsvcs/tests/Property/client.dsp:
+	* orbsvcs/tests/Property/server.dsp:
+	* orbsvcs/tests/Simple_Naming/client.dsp:
+	* tao/IORManipulation/TAO_IORManip.dsp:
+	* tests/IORManipulation/IORTest.dsp:
+	* tests/MProfile/client.dsp:
+	* tests/MProfile/server.dsp:
+	* tests/Object_Loader/Test_DLL.dsp:
+	* tests/Object_Loader/driver.dsp:
+
+	  Udated the Release configuration to fix compilation and or
+	  link errors caused by erroneous or missing configuration
+	  info.
+
 Mon Oct 09 10:39:59 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/Makefile.bor:
