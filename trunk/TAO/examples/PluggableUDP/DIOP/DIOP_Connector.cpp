@@ -1,17 +1,16 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "ace/Connector.h"
 
-
-#include "DIOP_Connector.h"
-#include "DIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 
-#include "ace/Connector.h"
+#include "DIOP_Connector.h"
+#include "DIOP_Profile.h"
 
 
 ACE_RCSID (DIOP,

@@ -1,3 +1,11 @@
+Sat Apr 22 14:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.h:
+	
+	  Fixed a compiler warning about pragma once by reordering
+	  includes.
+	
 Sat Apr 21 19:33:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Environment.h:
