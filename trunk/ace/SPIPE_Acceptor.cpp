@@ -72,7 +72,9 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
 
   this->set_handle (spipe[1]);
   return 0;
-#elif defined (ACE_WIN32)
+
+#elif (defined (ACE_WIN32) && defined(ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+
   // Create a new instance of the Named Pipe (WIN32).  A new instance
   // of the named pipe must be created for every client process.  If
   // an instance of the named pipe that is already connected to a
@@ -81,22 +83,43 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
 
   ACE_UNUSED_ARG(perms);
   ACE_TRACE ("ACE_SPIPE_Acceptor::create_new_instance");
+  int status;
 
   // Create a new instance of the named pipe
   ACE_HANDLE handle = ::CreateNamedPipe (this->local_addr_.get_path_name (),
 					 PIPE_ACCESS_DUPLEX |
 					 FILE_FLAG_OVERLAPPED,
 					 PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE,
-					 MAX_PIPE_INSTANCES,
+					 PIPE_UNLIMITED_INSTANCES,
 					 1024 * 10,
 					 1024 * 10,
 					 ACE_DEFAULT_TIMEOUT,
 					 NULL);
   if (handle == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
   else
-    this->set_handle (handle);
-  return 0;
+    {
+      // Start the Connect (analogous to listen() for a socket).  Completion
+      // is noted by the event being signalled.  If a client connects
+      // before this call, the error status will be ERROR_PIPE_CONNECTED, in
+      // which case that fact is remembered via already_connected_ and noted
+      // when the user calls accept().
+      // Else the error status should be ERROR_IO_PENDING and the OS will
+      // signal the event when it's done.
+      this->already_connected_ = FALSE;
+      this->set_handle (handle);
+      this->overlapped_.hEvent = this->event_.handle();
+      this->event_.reset();
+      ACE_ASSERT(::ConnectNamedPipe (handle, &this->overlapped_) == FALSE);
+      status = ::GetLastError();
+      if (status == ERROR_PIPE_CONNECTED)
+	this->already_connected_ = TRUE;
+      else if (status != ERROR_IO_PENDING)
+	this->close();        // Sets handle to ACE_INVALID_HANDLE
+    }
+  return (this->get_handle() == ACE_INVALID_HANDLE ? -1 : 0);
 #else
   ACE_UNUSED_ARG (perms);
   ACE_NOTSUP_RETURN (-1);
@@ -165,58 +188,48 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
     *remote_addr = new_io.remote_addr_;
 
   return 0;
-#elif defined (ACE_WIN32)
+#elif (defined (ACE_WIN32) && defined(ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   ACE_UNUSED_ARG (restart);
-  ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (remote_addr);
 
   // Check to see if we have a valid pipe
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  // Accept connection on the current instance of the named pipe Note
-  // that the connection is done synchronously, by specifying a NULL
-  // OVERLAPPED structure pointer.
-
-  int attempts = 0;
-
-  for (;;)
+  // open() started the Connect in asynchronous mode.  Wait for the event
+  // in the OVERLAPPED structure to be signalled, then grab the status.
+  if (this->already_connected_ == FALSE)
     {
-      attempts++;
-
-      if (::ConnectNamedPipe (this->get_handle (), NULL) != 0)
-	break;
-
-      DWORD error = ::GetLastError ();
-
-      if (error == ERROR_NO_DATA)
+      if (timeout != 0)
 	{
-	  // A client connected and disconnected in the interval
-	  // between the creation of the named pipe instance and the
-	  // call to ::ConnectNamedPipe ().  The named pipe handle
-	  // must be disconnected from this fleeting client before it
-	  // can be reconnected to new client.
-
-	  if (attempts > MAX_ACCEPT_ATTEMPTS)
+	  ACE_Time_Value abstime (ACE_OS::gettimeofday() + *timeout);
+	  if (this->event_.wait (&abstime) == -1)
 	    return -1;
-	  else if (::DisconnectNamedPipe (this->get_handle ()) != 0)
-	    return -1;
-	  // Loop and make another connection attempt.
 	}
-      else if (error == ERROR_PIPE_CONNECTED)
-	// A client connected in the interval between the creation of
-	// the named pipe instance and the call to ::ConnectNamedPipe
-	// ().  However, the connection is alright.
-	break;
-      else // Unrecoverable connection failure, so let's bail out...
-	return -1;
+      else
+	if (this->event_.wait() == -1)
+	  return -1;
+
+      // Should be here with the ConnectNamedPipe operation complete.
+      // Steal the already_connected_ flag to record the results.
+      DWORD unused;
+      this->already_connected_ = ::GetOverlappedResult(this->get_handle(),
+						       &this->overlapped_,
+						       &unused,
+						       FALSE);
     }
 
-  new_io.set_handle (this->get_handle ());
-  new_io.local_addr_ = this->local_addr_;
+  if (this->already_connected_)
+    {
+      new_io.set_handle (this->get_handle ());
+      this->set_handle(ACE_INVALID_HANDLE);
+      new_io.local_addr_ = this->local_addr_;
 
-  // Create a new instance of the pipe for the next connection.
-  return this->create_new_instance ();
+      // Create a new instance of the pipe for the next connection.
+      this->create_new_instance ();
+      return 0;
+    }
+  return -1;
 #else
   ACE_UNUSED_ARG (restart);
   ACE_UNUSED_ARG (timeout);
