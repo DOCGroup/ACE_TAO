@@ -23,6 +23,8 @@
 
 ACE_RCSID(tao, Object, "$Id$")
 
+int CORBA_Object::_tao_class_id = 0;
+
 CORBA_Object::~CORBA_Object (void)
 {
   if (this->protocol_proxy_)
@@ -211,7 +213,7 @@ CORBA::Object::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (ptr_arith_t,
-                                    &CORBA::Object::_narrow))
+                                    &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *, this);
 
   if (retv)

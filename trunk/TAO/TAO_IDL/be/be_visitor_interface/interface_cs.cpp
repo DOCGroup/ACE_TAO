@@ -62,6 +62,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  // Initialize the static narrrowing helper variable.
+  *os << "int " << node->full_name () << "::_tao_class_id = 0;" 
+      << be_nl << be_nl;
+
   // Global functions to allow non-defined forward declared interfaces
   // access to some methods in the full definition.
   *os << node->full_name () << "_ptr" << be_nl
@@ -412,7 +416,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "(" << be_idt_nl
       << "ptr_arith_t," << be_nl
       << "&" << node->local_name () 
-      << "::_narrow" << be_uidt_nl
+      << "::_tao_class_id" << be_uidt_nl
       << ")" << be_uidt << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl
       << ");\n" << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt;
@@ -481,7 +485,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                          "_tao_QueryInterface method codegen failed\n"), -1);
     }
 
-  *os << "(type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))"
+  *os << "(type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))"
       << be_idt_nl << "retv = ACE_reinterpret_cast (void *," << be_idt_nl
       << "ACE_static_cast (CORBA::Object_ptr, this));" << be_uidt_nl << be_uidt_nl
       << "if (retv)" << be_idt_nl
