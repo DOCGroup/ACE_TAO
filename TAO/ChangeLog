@@ -1,3 +1,11 @@
+Thu Sep  9 05:02:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/PortableGroup.mpc:
+	* orbsvcs/orbsvcs/RTSched.mpc:
+
+	  Updated.  Missing some dependencies now that naming.mpb is just
+	  client stub library.
+
 Wed Sep  8 22:08:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
