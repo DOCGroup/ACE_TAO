@@ -16,17 +16,17 @@ LDLIBS = -lTAO_PortableServer -lTAO
 
 IDL_FILES = callback
 IDL_SRC = callbackC.cpp callbackS.cpp
-BIN = client server
+BIN_UNCHECKED = client server
 
 SRC = client.cpp \
 	server.cpp \
 	Server_i.cpp \
-	Callback_i.cpp
+	Callback_i.cpp \
+	$(IDL_SRC)
 
 CLIENT_OBJS = client.o Callback_i.o $(IDL_SRC:.cpp=.o)
 SERVER_OBJS = server.o Server_i.o   $(IDL_SRC:.cpp=.o)
 
-BUILD = $(BIN)
 TAO_IDLFLAGS += -Ge 1
 
 #----------------------------------------------------------------------------
@@ -36,6 +36,11 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+BIN=$(BIN_UNCHECKED)
+endif # corba_messaging
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
