@@ -14,17 +14,11 @@ FILES  	= \
 	util \
 	connection \
 	stats \
-	cp \
-
-TEMPLATE_FILES = \
+	cp
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
-
-#CPPFLAGS += -gstabs++
-#CPPFLAGS += -DACE_HAS_STL
-#CPPFLAGS += -DACE_INLINE
 
 INCLDIRS += -I../..
 
