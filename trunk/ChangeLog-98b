@@ -1,3 +1,8 @@
+Thu Sep 03 19:15:52 1998 Fred Kuhns <fredk@arl.wustl.edu>
+
+	* docs/tutorial/006/client_acceptor.cpp: added 
+	  typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH > inherited;
+
 Thu Sep 03 17:03:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Dynamic.cpp (instance): Removed the typedef in the header
