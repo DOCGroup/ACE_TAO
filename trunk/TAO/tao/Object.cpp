@@ -33,20 +33,31 @@ CORBA_Object::~CORBA_Object (void)
 {
   if (this->protocol_proxy_)
     (void) this->protocol_proxy_->_decr_refcnt ();
+
+  delete this->refcount_lock_;
 }
 
-CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
+CORBA_Object::CORBA_Object (TAO_Stub * protocol_proxy,
                             CORBA::Boolean collocated,
-                            TAO_Abstract_ServantBase *servant)
+                            TAO_Abstract_ServantBase * servant)
   : is_collocated_ (collocated),
     servant_ (servant),
     is_local_ (protocol_proxy == 0 ? 1 : 0),
     proxy_broker_ (0),
-    protocol_proxy_ (protocol_proxy)
+    protocol_proxy_ (protocol_proxy),
+    refcount_ (1),
+    refcount_lock_ (0)
 {
-
   if (protocol_proxy != 0)
     {
+      // Only instantiate a lock if the object is unconstrained.
+      // Locality-constrained objects have no-op reference counting by
+      // default.  Furthermore locality-constrained objects may be
+      // instantiated in the critical path.  Instantiating a lock for
+      // unconstrained objects alone optimizes instantiation of such
+      // locality-constrained objects.
+      ACE_NEW (this->refcount_lock_, TAO_SYNCH_MUTEX);
+
       // If the object is collocated then set the broker using the
       // factory otherwise use the remote proxy broker.
       if (this->is_collocated_ &&
@@ -54,49 +65,35 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
         this->proxy_broker_ = _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
       else
         this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
-
-      // Make sure the underlying TAO_Stub object is not yanked out
-      // from under us.  This will bring the TAO_Stub reference count
-      // up to at least 2.
-      (void) protocol_proxy->_incr_refcnt ();
     }
 }
 
 void
 CORBA_Object::_add_ref (void)
 {
-  if (this->protocol_proxy_ != 0)
-    (void) this->protocol_proxy_->_incr_refcnt ();
+  if (this->refcount_lock_ != 0)
+    {
+      ACE_GUARD (TAO_SYNCH_MUTEX, mon, *this->refcount_lock_);
+
+      this->refcount_++;
+    }
 }
 
 void
 CORBA_Object::_remove_ref (void)
 {
-  // Hijack the lock and reference count of the underlying TAO_Stub
-  // object.
-  // @@ There may be a race condition here.  We may have to put the
-  //    lock back into this class.
-  if (this->protocol_proxy_ != 0)
+  if (this->refcount_lock_ != 0)
     {
-      TAO_Stub * stub;
+      {   
+        ACE_GUARD (TAO_SYNCH_MUTEX, mon, *this->refcount_lock_);
 
-      {
-        ACE_GUARD (TAO_SYNCH_MUTEX,
-                   mon,
-                   this->protocol_proxy_->refcount_lock ());
+        this->refcount_--;
 
-        CORBA::ULong & refcnt = this->protocol_proxy_->refcount ();
-
-        refcnt--;
-        if (refcnt != 0)
+        if (this->refcount_ != 0)
           return;
-
-        stub = this->protocol_proxy_;
-        this->protocol_proxy_ = 0;
       }
-
-      stub->destroy ();
-      delete this;
+    
+      delete this; 
     }
 }
 
