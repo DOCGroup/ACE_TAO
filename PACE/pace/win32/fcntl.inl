@@ -20,7 +20,7 @@ pace_creat (const char * path, pace_mode_t mode)
 {
   /* Emulation is still buggy! creat (path, mode); */
   PACE_UNUSED_ARG (path);
-  PACE_UNUSED_ARG (mode)
+  PACE_UNUSED_ARG (mode);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
