@@ -204,6 +204,8 @@ STREAMS_FILES = \
   CDR_Base \
   CDR_Stream \
   Codeset_IBM1047 \
+  Codeset_Registry \
+  Codeset_Registry_db \
   Message_Queue \
   Reactor_Notification_Strategy \
   Task
