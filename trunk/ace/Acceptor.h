@@ -160,6 +160,7 @@ protected:
   virtual int info (ACE_TCHAR **buf, size_t) const;
   // Default version returns address info in <buf>.
 
+public:
   // = Service management hooks.
   virtual int suspend (void);
   // This method calls <Reactor::suspend>.
