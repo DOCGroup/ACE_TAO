@@ -187,10 +187,19 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
                     TAO_Wait_On_Reactor (transport),
                     0);
   else
-    ACE_NEW_RETURN (ws,
-                    TAO_Wait_On_Leader_Follower (transport),
-                    0);
-
+    {
+      // = Leader follower model.
+      
+      if (this->transport_mux_strategy_ == TAO_EXCLUSIVE_TMS)
+        ACE_NEW_RETURN (ws,
+                        TAO_Exclusive_Wait_On_Leader_Follower (transport),
+                        0);
+      else
+        ACE_NEW_RETURN (ws,
+                        TAO_Muxed_Wait_On_Leader_Follower (transport),
+                        0);
+    }
+      
   return ws;
 }
 
