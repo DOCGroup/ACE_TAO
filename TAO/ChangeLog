@@ -1,3 +1,26 @@
+Thu Feb 12 15:41:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        
+          Added BE node file includes for component, component_fwd,
+          eventtype, and eventtype_fwd.
+          
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be_include/be_visitor_sequence/buffer_type.h:
+        
+          To class be_visitor_sequence_buffer_type, added the following
+          missing method overrides:
+          
+          visit_component()
+          visit_component_fwd()
+          visit_eventtype()
+          visit_eventtype_fwd()
+          
+          which enables generation of the sequence buffer type name for
+          sequences of components and eventtypes. Thanks to Patrick
+          Lardieri <plardier@atl.lmco.com> for pointing out the missing
+          code generation.
+
 Thu Feb 12 14:28:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
