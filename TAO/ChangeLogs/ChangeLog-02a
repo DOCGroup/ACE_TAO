@@ -1,3 +1,8 @@
+Thu Apr 18 12:20:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Acceptor.cpp: Added a missing template instantiation to
+	  keep Sun CC compiulers happy.
+
 Thu Apr 18 09:00:31 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAOC.cpp:
