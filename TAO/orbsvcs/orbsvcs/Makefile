@@ -38,8 +38,11 @@ ifndef TAO_ORBSVCS
                 Property \
                 Sched \
                 Event \
-                CosEvent \
-                Event2
+                CosEvent
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  TAO_ORBSVCS += Event2
+endif # ACE_HAS_GNUG_PRE_2_8
 
 ### The following service(s) are not compiled by default because:
 ### (1) They are not used all the time,
