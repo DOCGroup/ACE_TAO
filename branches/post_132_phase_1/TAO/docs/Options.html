@@ -866,7 +866,19 @@ would load all the options listed within "".
 
     </TD>
   </TR>
+  <TR>
+    <TD><CODE>-ORBReplyDispatcherTableSize</CODE> <EM>integer</EM></TD>
 
+    <TD><A name="-ORBReplyDispatcherTableSize"></a>
+    
+        This options sets the size of the table that maps the reply
+        dispatcher to the request id's. Every entry in the table
+        consumes 16 bytes. The table is on a per transport
+        basis. Keeping the table size lower is recommended for
+        applications that need lower run-time memory consumption. The
+        default value is 16.
+    </TD>
+  </TR>
   <TR>
     <TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE / MUXED</EM></TD>
 
