@@ -1137,6 +1137,8 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 
 #if defined (AIX)
   int cmd = CSIOCGIFCONF;
+#elif defined (__MACOSX__)
+  int cmd = OSIOCGIFCONF;
 #else
   int cmd = SIOCGIFCONF;
 #endif /* AIX */
