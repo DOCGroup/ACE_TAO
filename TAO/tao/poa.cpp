@@ -12,13 +12,15 @@
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
-template <class STUB, class COLLOCATED_SKELETON, class IMPLEMENTATION>
+template <class STUB, class IMPLEMENTATION>
 IMPLEMENTATION *
 stub_to_impl (STUB stub)
 {
-  COLLOCATED_SKELETON *collocated = ACE_dynamic_cast (COLLOCATED_SKELETON *, stub);
+  PortableServer::Servant servant = stub->_servant ();
+  if (servant == 0)
+    return 0;
 
-  return ACE_dynamic_cast (IMPLEMENTATION *, collocated->_get_servant ());
+  return ACE_dynamic_cast (IMPLEMENTATION *, servant);
 }
 
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value)
@@ -626,7 +628,6 @@ TAO_POA::create_POA (const char *adapter_name,
   else
     {
       poa_manager_impl = stub_to_impl<PortableServer::POAManager_ptr, 
-                                      POA_PortableServer::_tao_collocated_POAManager, 
                                       TAO_POA_Manager> (poa_manager);
     }
 
@@ -2231,7 +2232,6 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         CORBA::Environment &env)
 {  
   TAO_POA *parent_impl = stub_to_impl<PortableServer::POA_ptr, 
-                                      POA_PortableServer::_tao_collocated_POA, 
                                       TAO_POA> (parent);
 
   return this->unknown_adapter_i (parent_impl,
