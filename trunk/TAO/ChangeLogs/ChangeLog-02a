@@ -1,3 +1,16 @@
+Tue Mar 20 18:19:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h: 
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distribuer.h:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distribuer.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h:	
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/README:
+
+	  Fixed bugs and cleaned up the test. This should get it working
+	  on windows.
+
 Tue Mar 20 08:30:10 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.cpp (_tao_get_omg_exception_description):
