@@ -131,21 +131,22 @@ class ACE_Log_Record;
  * messages to be printed in a thread-safe manner to various
  * locations, such as stdout, stderr, cerr, a distributed logger, etc.
  * The current message is also kept in a thread-specific storage
- * location (i.e., there is one ACE_Log_Msg object per-thread), which
+ * location (threads spawned using ACE_Thread_Manager automatically get
+ * an ACE_Log_Msg object that inherits the spawning thread's settings), which
  * can be used to communicate errors between framework methods and
  * callers.  A message is logged by the log() method, only if the
  * message priority is currently enabled.  Moreover, only the current
  * log message is stored here -- it will be overwritten by the
- * subsequent call to <log>.
+ * subsequent call to log().
  *
  * The ACE_Log_Msg class uses two priority masks to control its
- * logging behavior.  The <priority_mask_> object attribute is thread
+ * logging behavior.  The @c priority_mask_ object attribute is thread-
  * specific and specifies the priority levels logged by the thread.
- * The <process_priority_mask_> class attribute is not thread-specific
+ * The @c process_priority_mask_ class attribute is not thread-specific
  * and specifies the priority levels that will be logged by all
  * threads in the process.  By default, all levels are disabled for
- * <priority_mask_> and all levels are enabled for
- * <process_priority_mask_> (i.e. the process-wide mask controls
+ * @c priority_mask_ and all levels are enabled for
+ * @c process_priority_mask_ (i.e. the process-wide mask controls
  * the settings, and each instance can expand on it if desired).
  * Both priority masks can be modified using the priority_mask()
  * method of this class.
@@ -220,7 +221,7 @@ public:
    * @param logger_key     The name of ACE_FIFO rendezvous point where the
    *                       local client logger daemon is listening for logging
    *                       messages. Only meaningful if the LOGGER bit is
-   *                       set in the <flags> argument.
+   *                       set in the @a flags argument.
    */
   int open (const ACE_TCHAR *prog_name,
             u_long options_flags = ACE_Log_Msg::STDERR,
@@ -246,9 +247,9 @@ public:
   /** @name Allow apps to acquire and release internal synchronization
    *        lock
    *
-   * This lock is used internally by the <ACE_Log_Msg>
+   * This lock is used internally by the ACE_Log_Msg
    * implementation. By exporting the lock, applications can hold the
-   * lock atomically over a number of calls to <ACE_Log_Msg>.
+   * lock atomically over a number of calls to ACE_Log_Msg.
    */
   //@{
 
@@ -259,8 +260,8 @@ public:
   int release (void);
   //@}
 
-  /// Call after doing a <fork> to resynchronize the process id and
-  /// <program_name> variables.
+  /// Call after doing a @c fork() to resynchronize the process id and
+  /// @c program_name_ variables.
   void sync (const ACE_TCHAR *program_name);
 
   // = Set/get methods.  Note that these are non-static and thus will
@@ -327,7 +328,7 @@ public:
 
   /**
    * Set a new callback object and return the existing callback to
-   * allow "chaining".  Note that <ACE_Log_Msg_Callback>s are not
+   * allow "chaining".  Note that ACE_Log_Msg_Callback objects are not
    * inherited when spawning a new thread, so you'll need to reset
    * them in each thread.
    */
@@ -336,8 +337,8 @@ public:
 
   /**
    * Set a new backend object and return the existing backend to
-   * allow "chaining". Note that as opposit to <ACE_Log_Msg_Callback>
-   * <ACE_Log_Msg_Backend> is a per-process entity.
+   * allow "chaining". Note that as opposed to ACE_Log_Msg_Callback,
+   * ACE_Log_Msg_Backend is a per-process entity.
    *
    * Note: Be aware that because of the current architecture there is
    * no guarantee that open (), reset () and close () will be called
@@ -412,10 +413,10 @@ public:
   } MASK_TYPE;
 
   // = Get/set the priority mask.
-  /// Get the current <ACE_Log_Priority> mask.
+  /// Get the current ACE_Log_Priority mask.
   u_long priority_mask (MASK_TYPE = THREAD);
 
-  /// Set the <ACE_Log_Priority> mask, returns original mask.
+  /// Set the ACE_Log_Priority mask, returns original mask.
   u_long priority_mask (u_long, MASK_TYPE = THREAD);
 
   /// Return true if the requested priority is enabled.
@@ -470,43 +471,43 @@ public:
   /**
    * Format a message to the thread-safe ACE logging mechanism.  Valid
    * options (prefixed by '%', as in printf format strings) include:
-   *  + 'A': print an ACE_timer_t value (which could be either double
+   *  - 'A': print an ACE_timer_t value (which could be either double
    *         or ACE_UINT32.)
-   *  + 'a': abort the program at this point abruptly.
-   *  + 'c': print a character
-   *  + 'C': print a character string
-   *  + 'i', 'd': print a decimal number
-   *  + 'I': indent according to nesting depth (obtained from
-   *         <ACE_Trace::get_nesting_indent>).
-   *  + 'e', 'E', 'f', 'F', 'g', 'G': print a double
-   *  + 'l': print line number where an error occurred.
-   *  + 'M': print the name of the priority of the message.
-   *  + 'm': return the message corresponding to errno value, e.g., as
+   *  - 'a': abort the program at this point abruptly.
+   *  - 'c': print a character
+   *  - 'C': print a character string
+   *  - 'i', 'd': print a decimal number
+   *  - 'I': indent according to nesting depth (obtained from
+   *         ACE_Trace::get_nesting_indent()).
+   *  - 'e', 'E', 'f', 'F', 'g', 'G': print a double
+   *  - 'l': print line number where an error occurred.
+   *  - 'M': print the name of the priority of the message.
+   *  - 'm': return the message corresponding to errno value, e.g., as
    *         done by strerror()
-   *  + 'N': print file name where the error occurred.
-   *  + 'n': print the name of the program (or "<unknown>" if not set)
-   *  + 'o': print as an octal number
-   *  + 'P': print out the current process id
-   *  + 'p': print out the appropriate errno message from sys_errlist,
+   *  - 'N': print file name where the error occurred.
+   *  - 'n': print the name of the program (or "<unknown>" if not set)
+   *  - 'o': print as an octal number
+   *  - 'P': print out the current process id
+   *  - 'p': print out the appropriate errno message from sys_errlist,
    *         e.g., as done by perror()
-   *  + 'Q': print out the uint64 number
-   *  + '@': print a void* pointer (in hexadecimal)
-   *  + 'r': call the function pointed to by the corresponding argument
-   *  + 'R': print return status
-   *  + 'S': print out the appropriate _sys_siglist entry corresponding
+   *  - 'Q': print out the uint64 number
+   *  - '@': print a void* pointer (in hexadecimal)
+   *  - 'r': call the function pointed to by the corresponding argument
+   *  - 'R': print return status
+   *  - 'S': print out the appropriate _sys_siglist entry corresponding
    *         to var-argument.
-   *  + 's': print out a character string
-   *  + 'T': print timestamp in hour:minute:sec:usec format.
-   *  + 'D': print timestamp in month/day/year hour:minute:sec:usec format.
-   *  + 't': print thread id (1 if single-threaded)
-   *  + 'u': print as unsigned int
-   *  + 'w': prints a wide character
-   *  + 'W': print a wide character string
-   *  + 'x': print as a hex number
-   *  + 'X': print as a hex number
-   *  + 'z': print an ACE_OS::WChar character
-   *  + 'Z': print an ACE_OS::WChar character string
-   *  + '%': print out a single percent sign, '%'
+   *  - 's': print out a character string
+   *  - 'T': print timestamp in hour:minute:sec:usec format.
+   *  - 'D': print timestamp in month/day/year hour:minute:sec:usec format.
+   *  - 't': print thread id (1 if single-threaded)
+   *  - 'u': print as unsigned int
+   *  - 'w': prints a wide character
+   *  - 'W': print a wide character string
+   *  - 'x': print as a hex number
+   *  - 'X': print as a hex number
+   *  - 'z': print an ACE_OS::WChar character
+   *  - 'Z': print an ACE_OS::WChar character string
+   *  - '%': print out a single percent sign, '%'
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
 
@@ -530,7 +531,7 @@ public:
 
   /**
    * Method to log hex dump.  This is useful for debugging.  Calls
-   * <log> to do the actual print, but formats first to make the chars
+   * log() to do the actual print, but formats first to make the chars
    * printable.
    */
   int log_hexdump (ACE_Log_Priority log_priority,
@@ -546,14 +547,14 @@ public:
   /**
    * Init hook, create a Log_Msg_Attribute object, initialize its
    * attributes from the TSS Log_Msg and save the object in the
-   * <attributes> argument
+   * @a attributes argument
    */
                          );
 
   /**
-   * Inherit hook, the <attributes> field is a Log_Msg_Attribute
-   * object, invoke the <inherit_log_msg> method on it, then destroy
-   * it and set the <attribute> argument to 0
+   * Inherit hook, the @a attributes field is a ACE_OS_Log_Msg_Attributes
+   * object, invoke the inherit_log_msg() method on it, then destroy
+   * it and set the @a attribute argument to 0.
    */
   static void inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
                             ACE_OS_Log_Msg_Attributes &attributes);
@@ -579,7 +580,7 @@ private:
 
   /// The log message, which resides in thread-specific storage.  Note
   /// that only the current log message is stored here -- it will be
-  /// overwritten by the subsequent call to <log>.
+  /// overwritten by the subsequent call to log().
   ACE_TCHAR msg_[ACE_MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
 
   /// Indicates whether we should restart system calls that are
@@ -605,17 +606,17 @@ private:
   int delete_ostream_;
 
   /**
-   * If we're running in the context of an <ACE_Thread_Manager> this
+   * If we're running in the context of an ACE_Thread_Manager this
    * will point to the thread descriptor adapter which holds the
    * thread descriptor of the thread.  This can be used to repidly
-   * access all thread data kept in <ACE_Thread_Descriptor>.
+   * access all thread data kept in ACE_Thread_Descriptor.
    */
   ACE_Thread_Descriptor *thr_desc_;
 
   /**
-   * Keeps track of all the per-thread <ACE_Log_Priority> values that
+   * Keeps track of all the per-thread ACE_Log_Priority values that
    * are currently enabled.  Default is for all logging priorities to
-   * be _disabled_.
+   * be disabled.
    */
   u_long priority_mask_;
 
@@ -624,7 +625,7 @@ private:
   // We only want one instance for the entire process!
 
   /**
-   * Keeps track of all the per-process <ACE_Log_Priority> values that
+   * Keeps track of all the per-process ACE_Log_Priority values that
    * are currently enabled.  Default is for all logging priorities to
    * be enabled.
    */
@@ -646,7 +647,7 @@ private:
   static int msg_off_;
 
   /**
-   * Number of existing Log_Msg instances; when 0, delete program/host
+   * Number of existing ACE_Log_Msg instances; when 0, delete program/host
    * names
    */
   static int instance_count_;
@@ -679,7 +680,7 @@ private:
   /// For cleanup, at program termination.
   static void close (void);
 
-  /// Decouple the OS layer from the Log_Msg layer.
+  /// Decouple the OS layer from the ACE_Log_Msg layer.
   static void sync_hook (const ACE_TCHAR *prg_name);
 
   /// Return the TSS singleton thread descriptor
