@@ -341,6 +341,15 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
+# @@ Can we generalize this to something like this:
+# $(MANAGED_PIDL).target:
+# 	......
+interceptor.target:
+	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl; \
+	$(RM) -f InterceptorS.* InterceptorS_T.*; \
+	patch < diffs/InterceptorC.h.diff
+.PHONY interceptor.target:
+
 ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 endif # fakesvcconf

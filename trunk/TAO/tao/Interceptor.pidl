@@ -23,7 +23,7 @@
 // Author (currently): Nanbor Wang <nanbor@cs.wustl.edu>
 // @@ I will no longer be the author of this IDL file. ;-)
 
-#include <corba.pidl>
+#include <CORBA.pidl>
 #include <IOP.pidl>
 
 #pragma prefix "TAO"
