@@ -7,7 +7,7 @@ Sun Oct 01 15:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Sep 29 16:32:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin\msvc_auto_compile.pl: 
+        * bin/msvc_auto_compile.pl: 
 
           Added the BE and FE projects for TAO_IDL so the static version
           gets built correctly in auto_compiles.
