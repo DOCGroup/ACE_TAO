@@ -66,4 +66,3 @@ public:
 
 #include "ace/post.h"
 #endif /* TAO_EC_SCHEDULING_STRATEGY_H */
-\
