@@ -58,11 +58,6 @@
 #WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
 #STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
 
-[Debian_Core]
-LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/
-WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Core
-STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/status.txt
-
 [RedHat_Static]
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?maglor_Static
