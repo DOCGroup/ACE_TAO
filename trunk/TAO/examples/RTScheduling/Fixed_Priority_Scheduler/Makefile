@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LIBS = -lTAO_RTScheduler -lTAO_RTCORBA -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_ObjRefTemplate -lTAO_Valuetype -lTAO_IORInterceptor
+TEST_LIBS = -lTAO_RTScheduler -lTAO_RTCORBA -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable
 BIN_UNCHECKED = test Starter
 
 IDL_FILES = ../Synch \
@@ -57,10 +57,10 @@ override TAO_IDLFLAGS += -o ../ \
 .PRECIOUS: $(foreach ext, $(IDL_EXT), ../Job$(ext) ../Synch$(ext))
 
 test: $(addprefix $(VDIR),$(FP_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TEST_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 Starter: $(addprefix $(VDIR),$(STARTER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TEST_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), Job$(ext))
