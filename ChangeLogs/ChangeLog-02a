@@ -1,3 +1,9 @@
+Thu Aug  9 11:51:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/platform_hpux_aCC.GNU: On popular mandate we
+	  have the -w flag removed from CCFLAGS in the above file. Looks
+	  like the -w disables lots of warnings that may be useful.
+
 Thu Aug  9 11:41:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.h (ACE_OutputCDR): Fixed the ambigous constructor
