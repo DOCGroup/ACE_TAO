@@ -1,3 +1,7 @@
+Fri Jun 27 11:55:13 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp: added a check for an empty queue in expire
+
 Fri Jun 27 07:53:58 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Message_Queue_Notifications_Test.cpp (handle_output,
