@@ -109,7 +109,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   *os << "ACE_INLINE char **" << be_nl
       << full_class_name << "::allocbuf (CORBA::ULong /* length */)" << be_nl
       << "{" << be_idt_nl
-      << "char **buf;" << be_nl
+      << "char **buf = 0;" << be_nl
       << "ACE_NEW_RETURN (buf, char *[" << node->max_size () << "], 0);" << be_nl
       << "for (CORBA::ULong i = 0; i < " << node->max_size () << "; i++)" << be_idt_nl
       << "buf[i] = 0;" << be_uidt_nl
