@@ -5,24 +5,20 @@
 debug = 1
 optimize = 1
 threads = 1
+exceptions =
 
 ifeq ($(threads),0)
   CFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
-#### CPU type
-ifndef CPU
-  CPU = spc
-endif # CPU
-
-CC       = cc$(CPU)
+CC       = gcx
 CXX      = $(CC)
 CCFLAGS  += $(CFLAGS) --no_rtti -tnone
 DCFLAGS  += -g
 DLD      = $(CXX)
 LD       = $(CXX)
 LDFLAGS  = --no_auto_instantiation
-LIBS     += -lsocket -ldl -lgen -lnsl -lposix4 -lthread -lw
+LIBS     += -lsocket -ldl -lgen -lnsl -lposix4 -lthread -lw -lcx
 OCFLAGS  += -OL -OM
 PIC      = -PIC
 RANLIB   = @true
@@ -30,3 +26,11 @@ AR       = ax
 ARFLAGS  = ruv
 RANLIB   = @true
 SOFLAGS  = -shared
+
+ifdef exceptions
+  CCFLAGS += --exceptions
+  LIBS += -ledge
+else  # ! exceptions
+  CCFLAGS += --no_exceptions
+  LIBS += -ledgnoe
+endif # ! exceptions
