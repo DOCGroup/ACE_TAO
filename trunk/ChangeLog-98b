@@ -1,3 +1,8 @@
+Tue Dec 08 10:45:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/System_Time.h: Removed redundant ACE_Time_Date definition.
+	  Thanks to Martin Krumpolec <krumpo@pobox.sk> for reporting this.
+
 Mon Dec 07 22:58:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/Misc/test_early_timeouts.cpp: On some
