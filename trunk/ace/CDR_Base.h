@@ -43,7 +43,7 @@
   // MSVC++ 6 can't handle partial template specializations so fall
   // back on an unsigned char typedef.
 # include "ace/If_Then_Else.h"
-#endif  /* _MSC_VER < 1310 */
+#endif  /* !_MSC_VER || _MSC_VER >= 1310 */
 
 
 class ACE_Message_Block;

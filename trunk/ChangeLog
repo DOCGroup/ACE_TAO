@@ -1,3 +1,15 @@
+Wed Apr  6 13:41:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h:
+
+	  Corrected comment.
+
+	* ace/Value_Ptr.h:
+
+	  Value_Ptr implementation based on code in Herb Sutter's book
+	  "More Exceptional C++".  It is a smart pointer implementation
+	  designed for use as a class member.
+
 Wed Apr  6 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
