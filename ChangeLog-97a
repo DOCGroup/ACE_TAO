@@ -1,30 +1,56 @@
-Tue Apr 15 23:16:43 1997    <harrison@samba.cs.wustl.edu>
+Wed Apr 16 04:07:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Map_Manager.cpp: The Map_Manager now explicitly calls the
- 	  destructors of Map_Entry objects before freeing up the space.
-  	  Not sure why we were not doing this before.
+	* ace/Strategies_T: Widened the constructor interface for
+	  ACE_Process_Strategy based on the feedback I got from
+	  implementing the Process_Strategy_Test.cpp program.
 
-Tue Apr 15 17:09:33 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+	* tests/Process_Strategy_Test.cpp: Added an interesting new test
+ 	  that illustrates the use of the ACE_Process_Strategy and the
+ 	  ACE_File_Lock.  To exercise this program, you can telnet to it
+ 	  and type "read" and "inc" to query and change the count of
+	  the numbers in the file, respectively.
 
-	* examples/Logger: Added MSVC++ makefile to Acceptor-server
-	  and client.
+	* ace/Connector.cpp (create_AST):  I fixed a couple of things
+	  in Connector.cpp: 
 
-Tue Apr 15 21:51:45 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+	  - In create_AST, it needs to save and restore errno, else it
+	    gets wiped on Win32 and other platforms.
 
-        * apps/JAWS/server/IO.cpp: Added a template instance for
-          ACE_Singleton so it would link using GCC.  Removed GCC
-          warnings.
-
-        * apps/JAWS/server/HTTP_Server.cpp: Added template instances for
-          LOCK_SOCK_Acceptor, ACE_Task, ACE_Thru_Task, ACE_Message_Queue,
-          ACE_Module so it would link using GCC.  Removed GCC warnings.
-
-        * apps/JAWS/server/HTTP_Server_T.cpp: Removed template instance of
-          LOCK_SOCK_Acceptor, since it was not really being compiled.
-
-        * apps/JAWS/server/HTTP_Handler.cpp: Removed GCC warnings.
+	  - On Win32 when a non-blocking connect completes and handle_output is
+	    called, it tries to get the peer address.  If done too quickly, it
+	    fails.  I put in a Sleep(0) call.  I think this is not a great
+	    solution, but I don't have a better one yet.
+	    
+	  Thanks to Steve Huston <shuston@riverace.com> for fixing
+	  these bugs. 
 
 Tue Apr 15 17:09:33 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/SOCK_Stream.cpp (close): Removed the call to close_writer()
+	  on UNIX since that doesn't do the correct thing in many
+	  cases since it causes a protocol transmission which isn't
+	  what we want if we're using fork().
+
+	* ace/Strategies_T.cpp (activate_svc_handler): Added a call to
+ 	  svc_handler->destroy() in the parent since we don't need it and
+ 	  we're leaking descriptors and memory otherwise...  Thanks to
+ 	  Kevin Boyle <kboyle@sanwafp.com> for reporting this.
+
+	* ace/OS.i (thr_sigsetmask): Replaced the use of
+ 	  PTHREADS_1003_DOT_1C with ACE_HAS_PTHREAD_SIGMASK.  Thanks to
+ 	  Arturo Montes <mitosys@colomsat.net.co> for suggesting this.
+
+	* ace: Changed all uses of ACE_HAS_PTHREADS_XAVIER to
+ 	  ACE_HAS_PTHREAD_SIGMASK, which is more descriptive.  Thanks to
+ 	  Arturo Montes <mitosys@colomsat.net.co> for suggesting this.
+
+	* ace/config-aix-4.2.x.h: Added #define ACE_LACKS_RWLOCK_T to make
+ 	  things compile with AIX 4.2.  Thanks to Jeremy Buch
+ 	  <davinci@nortel.ca> for reporting this.
+
+	* ace/XtReactor.cpp (register_handler_i): Added "[]" to delete
+ 	  this->ids_ since it is an array.  Thanks to Jean-Marc Strauss
+ 	  <strauss@club-internet.fr> for reporting this.
 
 	* netsvcs/lib: Moved all the class definitions into the *.h files
  	  to avoid complaints from the IBM C++ compiler.
@@ -103,6 +129,48 @@ Tue Apr 15 17:09:33 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  typedef for ACE_RW_Mutex so that the code compiles on non-MT
  	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
  	  reporting this.
+
+Tue Apr 15 23:16:43 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/[Hash_]Map_Manager.cpp: The [Hash_]Map_Manager now
+ 	  explicitly calls the destructors of Map_Entry objects before
+ 	  freeing up the space.  Not sure why we were not doing this
+ 	  before...
+
+Tue Apr 15 17:09:33 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* examples/Logger: Added MSVC++ makefile to Acceptor-server
+	  and client.
+
+Tue Apr 15 21:51:45 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+        * apps/JAWS/server/IO.cpp: Added a template instance for
+          ACE_Singleton so it would link using GCC.  Removed GCC
+          warnings.
+
+        * apps/JAWS/server/HTTP_Server.cpp: Added template instances for
+          LOCK_SOCK_Acceptor, ACE_Task, ACE_Thru_Task, ACE_Message_Queue,
+          ACE_Module so it would link using GCC.  Removed GCC warnings.
+
+        * apps/JAWS/server/HTTP_Server_T.cpp: Removed template instance of
+          LOCK_SOCK_Acceptor, since it was not really being compiled.
+
+Tue Apr 15 21:51:45 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+        * apps/JAWS/server/IO.cpp: Added a template instance for
+          ACE_Singleton so it would link using GCC.  Removed GCC
+          warnings.
+
+        * apps/JAWS/server/HTTP_Server.cpp: Added template instances for
+          LOCK_SOCK_Acceptor, ACE_Task, ACE_Thru_Task,
+	  ACE_Message_Queue, ACE_Module so it would link using GCC.
+	  Removed GCC warnings.  
+
+        * apps/JAWS/server/HTTP_Server_T.cpp: Removed template
+	  instance of LOCK_SOCK_Acceptor, since it was not really
+	  being compiled. 
+
+        * apps/JAWS/server/HTTP_Handler.cpp: Removed GCC warnings.
 
 Tue Apr 15 13:01:13 1997  David L. Levine  <levine@cs.wustl.edu>
 

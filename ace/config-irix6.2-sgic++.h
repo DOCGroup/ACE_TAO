@@ -14,6 +14,7 @@
 #define ACE_CONFIG_H
 
 #define ACE_HAS_IRIX62_THREADS
+#define ACE_HAS_PTHREAD_SIGMASK
 
 // Needed for the threading stuff?
 #include /**/ <sched.h>

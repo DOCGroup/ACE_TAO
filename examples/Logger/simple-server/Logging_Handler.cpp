@@ -54,7 +54,8 @@ Logging_Handler::handle_input (ACE_HANDLE)
 			"client logger", this->host_name_), -1);      
       /* NOTREACHED */
     case 0:
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) closing log daemon at host %s (fd = %d)\n",
+      ACE_ERROR_RETURN ((LM_ERROR, 
+			 "(%P|%t) closing log daemon at host %s (fd = %d)\n",
 			this->host_name_, this->get_handle ()), -1);
       /* NOTREACHED */
     case sizeof (size_t):
