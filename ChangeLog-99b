@@ -3,7 +3,11 @@ Mon Jun 07 10:55:12 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-osf1-4.0.h: added #define ACE_HAS_BROKEN_T_ERROR
           to permit building again.  Thanks to Doug for this fix.
 
-Mon Jun  7 00:11:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Mon Jun  7 12:35:17 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+        * examples/Service_Configurator/IPC-tests/client: Fixed some more
+ 	  warnings related to const-correctness.  I believe that ACE is
+ 	  now just about completely const-correct.
 
         * examples/Service_Configurator/Misc/main.cpp (main): Cast to
           (ASYS_TCHAR **) rather than (ASYS_THCAR *[]).  Thanks to David
