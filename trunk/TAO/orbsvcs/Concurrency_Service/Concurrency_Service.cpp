@@ -34,11 +34,11 @@ Concurrency_Service::Concurrency_Service (void)
 
 Concurrency_Service::Concurrency_Service (int argc,
                                           char** argv,
-                                          CORBA::Environment& TAO_IN_ENV)
+                                          CORBA::Environment& ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Concurrency_Service::Concurrency_Service (...)\n"));
-  this->init (argc, argv, TAO_IN_ENV);
+  this->init (argc, argv, ACE_TRY_ENV);
 }
 
 int
@@ -84,19 +84,19 @@ Concurrency_Service::parse_args (void)
 int
 Concurrency_Service::init (int argc,
                            char **argv,
-                           CORBA::Environment &TAO_IN_ENV)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Concurrency_Service::init\n"));
   if (this->orb_manager_.init_child_poa (argc,
                                         argv,
                                         "child_poa",
-                                        TAO_IN_ENV) == -1)
+                                        ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "init_child_poa"),
-		      -1);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,-1);
+                       "%p\n",
+                       "init_child_poa"),
+                      -1);
+  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -107,7 +107,7 @@ Concurrency_Service::init (int argc,
                      -1);
   CORBA::String_var str =
     this->orb_manager_.activate (this->my_concurrency_server_.GetLockSetFactory (),
-                                TAO_IN_ENV);
+                                ACE_TRY_ENV);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
@@ -119,28 +119,28 @@ Concurrency_Service::init (int argc,
     }
 
   if (this->use_naming_service_)
-    return this->init_naming_service (TAO_IN_ENV);
+    return this->init_naming_service (ACE_TRY_ENV);
 
   return 0;
 }
 
 int
-Concurrency_Service::init_naming_service (CORBA::Environment &TAO_IN_ENV)
+Concurrency_Service::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "Concurrency_Service::init_naming_service (...)\n"));
   CORBA::ORB_var orb;
   PortableServer::POA_var child_poa;
-  
+
   orb = this->orb_manager_.orb ();
   child_poa = this->orb_manager_.child_poa ();
-  
+
   int result = this->my_name_server_.init (orb.in (),
                                            child_poa.in ());
   if (result == -1)
     return result;
   lockset_factory_ =
-    this->my_concurrency_server_.GetLockSetFactory ()->_this (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+    this->my_concurrency_server_.GetLockSetFactory ()->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   CosNaming::Name concurrency_context_name (1);
   concurrency_context_name.length (1);
@@ -148,28 +148,28 @@ Concurrency_Service::init_naming_service (CORBA::Environment &TAO_IN_ENV)
 
   this->concurrency_context_ =
     this->my_name_server_->bind_new_context (concurrency_context_name,
-                                             TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
-  
+                                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   CosNaming::Name lockset_name (1);
   lockset_name.length (1);
   lockset_name[0].id = CORBA::string_dup ("LockSetFactory");
   this->concurrency_context_->bind (lockset_name,
                                    lockset_factory_.in (),
-                                   TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 // Run the ORB event loop.
 
 int
-Concurrency_Service::run (CORBA_Environment& TAO_IN_ENV)
+Concurrency_Service::run (CORBA_Environment& ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Concurrency_Service::run (...)\n"));
 
-  if (this->orb_manager_.run (TAO_IN_ENV) == -1)
+  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                       "Concurrency_Service::run"),
                      -1);
@@ -192,31 +192,30 @@ main (int argc, char ** argv)
   ACE_DEBUG ((LM_DEBUG,
               "\n \t Concurrency Service:SERVER \n \n"));
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      if (concurrency_service.init (argc, argv, TAO_TRY_ENV) == -1)
+      int r = concurrency_service.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (r == -1)
         return 1;
-      else
-        {
-          concurrency_service.run (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
+
+      concurrency_service.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  
-  TAO_CATCH (CORBA::SystemException, sysex)
+
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_PRINT_EXCEPTION (sysex, "System Exception");
       return -1;
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_PRINT_EXCEPTION (userex, "User Exception");
       return -1;
     }
-  
-  TAO_ENDTRY;
+
+  ACE_ENDTRY;
   return 0;
 }
-
