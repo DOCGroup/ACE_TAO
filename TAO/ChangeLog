@@ -1,3 +1,13 @@
+Wed Jun 11 12:07:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
+
+          Added code to strip a trailing '/' if it appears in a fetched
+          environment string. Appends to these strings always include
+          a leading '/', and some compilers choke on the resulting "//"
+          separator. Thanks to D.J. Dwyer <dj_dwyer@yahoo.com> for
+          tracking down the source of the problem.
+
 Wed Jun 11 11:44:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Buffering_Constraint_Policy.cpp:
