@@ -1363,6 +1363,9 @@ we used for VxWorks 5.3.1/g++ 2.7.2:
 #define INCLUDE_WINDVIEW        /* WindView command server */
 </pre>
 
+Also, automatic construction/destruction of static objects
+should be enabled.<p>
+
 If you use TAO, it's also a good idea to increase the
 <code>NUM_FILES</code> parameter from its default of 50 to,
 say, 1000.<p>
@@ -1622,7 +1625,7 @@ on Windows NT hosts:
 
  <LI>When using cygnus windows GNUTools on WinNT you have to start
  make with "--unix" option, otherwise WinNT shell cmd.exe is responded and
- not sh.exe, i.e., 
+ not sh.exe, i.e.,
  <PRE>
  make --unix static_libs=1
  </PRE>
