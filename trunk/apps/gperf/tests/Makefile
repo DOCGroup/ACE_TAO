@@ -175,59 +175,59 @@ tout:$(addprefix $(VDIR),$(TOUT_OBJS))
 taoout:$(addprefix $(VDIR),$(TAOOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-runtests: cout aout c++out preout m3out pout iout iout2 tout
-	@echo "performing some tests of the perfect hash generator"
-	# test cout
-	./cout -v < $(srcdir)/c.gperf > c.out
-	-diff -b $(srcdir)/c.exp c.out
-	# test aout
-	./aout -v < $(srcdir)/ada.gperf > ada-res.out
-	-diff -b $(srcdir)/ada-res.exp ada-res.out
-	# test c++out
-	./c++out -v < $(srcdir)/c++.gperf > c++-res.out
-	-diff -b $(srcdir)/c++-res.exp c++-res.out
-	# test preout
-	./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
-	-diff -b $(srcdir)/ada-pred.exp ada-pred.out
-	# test m3out
-	./m3out -v < $(srcdir)/modula3.gperf > modula.out
-	-diff -b $(srcdir)/modula.exp modula.out
-	# test pout
-	./pout -v < $(srcdir)/pascal.gperf > pascal.out
-	-diff -b $(srcdir)/pascal.exp pascal.out
-	# test iout
-	./iout -v < $(srcdir)/idl.gperf > idl.out
-	-diff -b $(srcdir)/idl.exp idl.out
-	# test iout2
-	./iout2 -v < $(srcdir)/idl.gperf > idl.out
-	-diff -b $(srcdir)/idl.exp idl.out
-	#test tout
-	./tout -v < $(srcdir)/corba.gperf > corba.out
-	-diff -b $(srcdir)/corba.exp corba.out
-	#test taoout
-	./taoout -v < $(srcdir)/tao.gperf > tao.out
-	-diff -b $(srcdir)/tao.exp tao.out
-# these next 5 are demos that show off the generated code
-	$(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-1.out
-	-diff -b $(srcdir)/test-1.exp test-1.out
-	$(GPERF) -n -k1-8 -l <$(srcdir)/modula2.gperf | egrep -v 'ing time is ' > test-2.out
-	-diff -b $(srcdir)/test-2.exp test-2.out
-	$(GPERF) -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf | egrep -v 'ing time is ' > test-3.out
-	-diff -b $(srcdir)/test-3.exp test-3.out
-	$(GPERF) -D -p -t < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-4.out
-	-diff -b $(srcdir)/test-4.exp test-4.out
-	$(GPERF) -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf | egrep -v 'ing time is ' > test-5.out
-	-diff -b $(srcdir)/test-5.exp test-5.out
-# prints out the help message
-	-$(GPERF) -a -h > test-6.out 2>&1 || [ a = a ]
-	-diff -b $(srcdir)/test-6.exp test-6.out
-	./aout -v < $(srcdir)/c.gperf > test-7.out
-	-diff -b $(srcdir)/test-7.exp test-7.out
+runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
+	 @echo "performing some tests of the perfect hash generator"
+	 # test cout
+	 ./cout -v < $(srcdir)/c.gperf > c.out
+	 -diff -b $(srcdir)/c.exp c.out
+	 # test aout
+	 ./aout -v < $(srcdir)/ada.gperf > ada-res.out
+	 -diff -b $(srcdir)/ada-res.exp ada-res.out
+	 # test c++out
+	 ./c++out -v < $(srcdir)/c++.gperf > c++-res.out
+	 -diff -b $(srcdir)/c++-res.exp c++-res.out
+	 # test preout
+	 ./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
+	 -diff -b $(srcdir)/ada-pred.exp ada-pred.out
+	 # test m3out
+	 ./m3out -v < $(srcdir)/modula3.gperf > modula.out
+	 -diff -b $(srcdir)/modula.exp modula.out
+	 # test pout
+	 ./pout -v < $(srcdir)/pascal.gperf > pascal.out
+	 -diff -b $(srcdir)/pascal.exp pascal.out
+	 # test iout
+	 ./iout -v < $(srcdir)/idl.gperf > idl.out
+	 -diff -b $(srcdir)/idl.exp idl.out
+	 # test iout2
+	 ./iout2 -v < $(srcdir)/idl.gperf > idl.out
+	 -diff -b $(srcdir)/idl.exp idl.out
+	 #test tout
+	 ./tout -v < $(srcdir)/corba.gperf > corba.out
+	 -diff -b $(srcdir)/corba.exp corba.out
+	 #test taoout
+	 ./taoout -v < $(srcdir)/tao.gperf > tao.out
+	 -diff -b $(srcdir)/tao.exp tao.out
+	 # these next 5 are demos that show off the generated code
+	 $(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-1.out
+	 -diff -b $(srcdir)/test-1.exp test-1.out
+	 $(GPERF) -n -k1-8 -l <$(srcdir)/modula2.gperf | egrep -v 'ing time is ' > test-2.out
+	 -diff -b $(srcdir)/test-2.exp test-2.out
+	 $(GPERF) -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf | egrep -v 'ing time is ' > test-3.out
+	 -diff -b $(srcdir)/test-3.exp test-3.out
+	 $(GPERF) -D -p -t < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-4.out
+	 -diff -b $(srcdir)/test-4.exp test-4.out
+	 $(GPERF) -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf | egrep -v 'ing time is ' > test-5.out
+	 -diff -b $(srcdir)/test-5.exp test-5.out
+	 # prints out the help message
+	 -$(GPERF) -a -h > test-6.out 2>&1 || [ a = a ]
+	 -diff -b $(srcdir)/test-6.exp test-6.out
+	 ./aout -v < $(srcdir)/c.gperf > test-7.out
+	 -diff -b $(srcdir)/test-7.exp test-7.out
 
 realclean:
 	$(RM) -rf *.out cinset.cpp c++inset.cpp iinset.cpp iinset2.cpp \
 	tinset.cpp taoinset.cpp pinset.cpp m3inset.cpp adainset.cpp preinset.cpp
-	$(RM) -rf c.out aout preout m3out pout cout c++out iout iout2 tout toaout
+	$(RM) -rf c.out aout preout m3out pout cout c++out iout iout2 tout taoout
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

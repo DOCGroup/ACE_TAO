@@ -1,3 +1,10 @@
+Wed Sep 12 16:06:46 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * tests/Makefile:
+
+          Added missing dependency in runtests and entry in realclean for
+          taoout. This fixes a long standing nagging problem.
+
 Sat Sep  8 22:40:21 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * src/Key_List.cpp (output_lookup_array):
