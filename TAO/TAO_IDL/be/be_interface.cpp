@@ -198,7 +198,7 @@ int be_interface::gen_client_header (void)
       *ch << "static " << local_name () << "_ptr " << "_duplicate (" <<
         local_name () << "_ptr obj);" << nl;
       *ch << "static " << local_name () << "_ptr " << "_narrow (" <<
-        "CORBA::Object_ptr obj);" << nl;
+        "CORBA::Object_ptr obj, CORBA::Environment &env);" << nl;
       *ch << "static " << local_name () << "_ptr " << "_nil (" <<
         "void);" << nl;
 
@@ -324,10 +324,9 @@ int be_interface::gen_client_stubs (void)
 
   // The _narrow method
   *cs << name () << "_ptr " << name () <<
-    "::_narrow (CORBA::Object_ptr obj)" << nl;
+    "::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
-  *cs << "CORBA::Environment env;" << nl;
   *cs << "if (CORBA::is_nil (obj)) return " << this->name () << "::_nil ();" <<
     nl;
   *cs << "if (obj->_is_a (\"" << this->repoID () << "\", env))" << nl;
@@ -372,20 +371,45 @@ int be_interface::gen_client_stubs (void)
     "CORBA::Environment &env)" << nl;
   *cs << "{\n";
   cs->incr_indent ();
+#if 0
   *cs << "CORBA::ORB_ptr orb = 0;" << nl;
-  *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl << nl;
-  *cs << "char IOR [256];" << nl;
+  *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl;
+  *cs << "char IOR [TAO_MAXBUFSIZE];" << nl;
+  *cs << "size_t iorsize; // size of the actual IOR string" << nl;
+  *cs << "char *buffer; // holds the IOR\n";
+  *cs << "#if defined (ACE_HAS_ALLOCA)" << nl;
+  *cs << "buffer = (char *) alloca (iorsize);\n";
+  *cs << "#else" << nl;
+  *cs << "if (iorsize < TAO_MAXBUFSIZE)" << nl;
+  *cs << "\tbuffer = IOR; // use stack allocated storage" << nl;
+  *cs << "else" << nl;
+  *cs << "\tACE_NEW (buffer, char[size]);\n";
   *cs << "orb =  TAO_ORB_Core_instance ()->orb (); // access the ORB" << nl;
   *cs << "if (!orb) return " << this->name () <<
     "::_nil (); // return null obj" << nl << nl;
   *cs << "ACE_OS::memset (IOR, '\\0', 256);" << nl;
+  // @@ XXXASG - What if we start supporting IIOP:1.1
   *cs << "ACE_OS::sprintf (IOR, \"iiop:1.0//%s:%d/%s\", host, port, key);" <<
     nl;
   *cs << "objref = orb->string_to_object (IOR, env);" << nl;
+#endif
+  *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl;
+  *cs << "IIOP_Object *data = new IIOP_Object (host, port, key);" << nl;
+  *cs << "if (!data) return " << this->name () << "::_nil ();" << nl;
+  *cs << "// get the object_ptr using Query Interface" << nl;
+  *cs <<
+    "if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != NOERROR)"
+      << nl;
+  *cs << "{" << nl;
+  *cs << "\tenv.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));"
+      << nl;
+  *cs << "\treturn " << this->name () << "::_nil ();" << nl;
+  *cs << "}" << nl;
+  *cs << "data->Release (); // QueryInterface had bumped up our count" << nl;
   *cs << "if (CORBA::is_nil (objref))" << nl;
   *cs << "\treturn " << this->name () << "::_nil ();" << nl;
   *cs << "else // narrow it" << nl;
-  *cs << "\treturn " << this->name () << "::_narrow (objref);" << nl;
+  *cs << "\treturn " << this->name () << "::_narrow (objref, env);" << nl;
   cs->decr_indent (0);
   *cs << "}\n\n";
 
@@ -565,9 +589,11 @@ int be_interface::gen_server_skeletons (void)
     "// underlying ORB core instance" << nl;
   *ss << "CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
     "// underlying OA" << nl;
+  *ss << "const ACE_INET_Addr &addr = ocp->orb_params ()->addr ();" << nl;
   *ss << "this->optable_ = &tao_" << local_name () << "_optable;" << nl <<
     nl;
   *ss << "// set up an IIOP object" << nl;
+#if 0
   *ss << "data = new IIOP_Object (CORBA::string_dup (repoID));" << nl;
   *ss << "data->profile.iiop_version.major = IIOP::MY_MAJOR;" << nl;
   *ss << "data->profile.iiop_version.minor = IIOP::MY_MINOR;" << nl;
@@ -583,6 +609,9 @@ int be_interface::gen_server_skeletons (void)
     "new CORBA::Octet [(size_t)data->profile.object_key.length+1];" << nl;
   *ss << "ACE_OS::strcpy ((char *)data->profile.object_key.buffer, obj_name);"
       << " // set the object key" << nl;
+#endif
+  *ss << "data = new IIOP_Object (CORBA::string_dup (repoID), addr, obj_name);"
+      << nl;
   *ss << "this->set_parent (data); // store the IIOP obj ref with us" <<
     nl;
   *ss << "this->sub_ = this; // set the most derived type to be us" << nl;
@@ -1293,7 +1322,7 @@ be_interface::gen_encapsulation (void)
 
   // XXXASG - byte order must be based on what m/c we are generating code -
   // TODO
-  *cs << "MY_BYTE_SEX, // byte order" << nl;
+  *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);

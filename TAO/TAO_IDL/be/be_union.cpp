@@ -973,7 +973,7 @@ be_union::gen_encapsulation (void)
 
   // XXXASG - byte order must be based on what m/c we are generating code -
   // TODO
-  *cs << "MY_BYTE_SEX, // byte order" << nl;
+  *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
