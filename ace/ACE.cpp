@@ -2094,7 +2094,7 @@ ACE::recv_n (ACE_HANDLE handle,
       i = ACE::recv (handle, (char *) buf + bytes_received,
                      n - bytes_received, flags, timeout);
 
-      if (i == -1 || i == 0)
+      if (i == -1 || i == 0  || ACE_BIT_ENABLED (flags, MSG_PEEK))
         break;
     }
 
