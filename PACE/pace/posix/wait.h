@@ -22,14 +22,23 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-  /** 
+#define PACE_WEXITSTATUS WEXITSTATUS
+#define PACE_WIFEXITED WIFEXITED
+#define PACE_WIFSIGNALED WISIGNALED
+#define PACE_WIFSTOPPED WIFSTOPPED
+#define PACE_WNOHANG WNOHANG
+#define PACE_WSTOPSIG WSTOPSIG
+#define PACE_WTERMSIG WTERMSIG
+#define PACE_WUNTRACED WUNTRACED
+
+  /**
      PACE's implementation of the POSIX function wait.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 3.2.1.
    */
   PACE_INLINE pid_t pace_wait (int * statloc);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function waitpid.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 3.2.1.

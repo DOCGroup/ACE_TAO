@@ -17,6 +17,7 @@
 #define PACE_TIME_H
 
 #include <time.h>
+#include "pace/signal.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -202,7 +203,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 14.2.2.
    */
   PACE_INLINE int pace_timer_create (pace_clockid_t clock_id,
-                                     pace_sigevent * evp,
+                                     struct sigevent * evp,
                                      pace_timer_t * timerid);
 
   /**

@@ -361,7 +361,7 @@ PACE_INLINE
 pid_t
 pace_tcgetpgrp (int fildes)
 {
-  return tcgetpgrp (fldes);
+  return tcgetpgrp (fildes);
 }
 
 PACE_INLINE

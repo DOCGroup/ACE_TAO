@@ -49,7 +49,7 @@ PACE_FILES = \
   stdio \
   stdlib \
   string \
-  termios.h \
+  termios \
   time \
   unistd \
   utime \
