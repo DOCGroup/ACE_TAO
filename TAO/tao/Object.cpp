@@ -483,6 +483,8 @@ CORBA_Object::_set_policy_overrides (
                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   ACE_NEW_THROW_EX (obj,
@@ -494,6 +496,8 @@ CORBA_Object::_set_policy_overrides (
                         ENOMEM),
                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  (void) safe_stub.release ();
 
   return obj;
 }
