@@ -1,18 +1,17 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Log_Record.i
 #include "ace/Global_Macros.h"
 #include "ace/os_include/arpa/os_inet.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_string.h"
 
-ASYS_INLINE
+ACE_INLINE
 ACE_Log_Record::~ACE_Log_Record (void)
 {
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Log_Record::encode (void)
 {
   ACE_TRACE ("ACE_Log_Record::encode");
@@ -25,7 +24,7 @@ ACE_Log_Record::encode (void)
   this->pid_ = htonl (this->pid_);
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Log_Record::decode (void)
 {
   ACE_TRACE ("ACE_Log_Record::decode");
@@ -39,42 +38,42 @@ ACE_Log_Record::decode (void)
   this->length_ = ntohl (this->length_);
 }
 
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Log_Record::type (void) const
 {
   ACE_TRACE ("ACE_Log_Record::type");
   return (long) this->type_;
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Log_Record::type (long t)
 {
   ACE_TRACE ("ACE_Log_Record::type");
   this->type_ = (ACE_UINT32) t;
 }
 
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Log_Record::length (void) const
 {
   ACE_TRACE ("ACE_Log_Record::length");
   return (long) this->length_;
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Log_Record::length (long l)
 {
   ACE_TRACE ("ACE_Log_Record::length");
   this->length_ = static_cast<ACE_UINT32> (l);
 }
 
-ASYS_INLINE ACE_Time_Value
+ACE_INLINE ACE_Time_Value
 ACE_Log_Record::time_stamp (void) const
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
   return ACE_Time_Value ((long) this->secs_, (long) this->usecs_);
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
@@ -82,28 +81,28 @@ ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
   this->usecs_ = (ACE_UINT32) ts.usec ();
 }
 
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Log_Record::pid (void) const
 {
   ACE_TRACE ("ACE_Log_Record::pid");
   return (long) this->pid_;
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Log_Record::pid (long p)
 {
   ACE_TRACE ("ACE_Log_Record::pid");
   this->pid_ = (ACE_UINT32) p;
 }
 
-ASYS_INLINE const ACE_TCHAR *
+ACE_INLINE const ACE_TCHAR *
 ACE_Log_Record::msg_data (void) const
 {
   ACE_TRACE ("ACE_Log_Record::msg_data");
   return this->msg_data_;
 }
 
-ASYS_INLINE size_t
+ACE_INLINE size_t
 ACE_Log_Record::msg_data_len (void) const
 {
   ACE_TRACE ("ACE_Log_Record::msg_data_len");

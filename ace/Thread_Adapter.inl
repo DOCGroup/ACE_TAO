@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 ACE_INLINE ACE_Thread_Manager *

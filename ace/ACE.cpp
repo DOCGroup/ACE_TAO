@@ -2,10 +2,6 @@
 
 #include "ace/ACE.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include "ace/Basic_Types.h"
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
@@ -26,6 +22,10 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_TLI.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/ACE.i"
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
 #  include "ace/OS_NS_poll.h"

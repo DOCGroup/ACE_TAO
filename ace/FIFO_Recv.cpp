@@ -3,10 +3,11 @@
 
 #include "ace/FIFO_Recv.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_fcntl.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/FIFO_Recv.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FIFO_Recv, "$Id$")
 
@@ -24,7 +25,7 @@ ACE_FIFO_Recv::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-int 
+int
 ACE_FIFO_Recv::close (void)
 {
   ACE_TRACE ("ACE_FIFO_Recv::close");
@@ -53,7 +54,7 @@ ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
     return -1;
   else if (this->disable (ACE_NONBLOCK) == -1)
     return -1;
-  else if (persistent 
+  else if (persistent
 	   && (this->aux_handle_ = ACE_OS::open (fifo_name, O_WRONLY, 0, sa)) == ACE_INVALID_HANDLE)
     return -1;
   else

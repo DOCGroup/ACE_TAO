@@ -84,9 +84,9 @@ private:
   ACE_Message_Block mb_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/UPIPE_Acceptor.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */
 #include /**/ "ace/post.h"

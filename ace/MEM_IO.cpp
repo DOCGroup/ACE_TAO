@@ -6,9 +6,9 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/MEM_IO.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, MEM_IO, "$Id$")
 

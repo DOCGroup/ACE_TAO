@@ -23,11 +23,11 @@
 
 #include "ace/IO_Cntl_Msg.h"
 #include "ace/Message_Block.h"
-#include "ace/Time_Value.h"
 #include "ace/Module.h"
 
 // Forward decls.
 template<ACE_SYNCH_DECL> class ACE_Stream_Iterator;
+class ACE_Time_Value;
 
 /**
  * @class ACE_Stream

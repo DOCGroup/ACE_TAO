@@ -783,9 +783,9 @@ private:
   static char debug_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/ACE.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #if defined (acelog2)
 # define log2 acelog2

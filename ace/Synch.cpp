@@ -17,11 +17,6 @@ ACE_RCSID (ace,
            Synch,
            "$Id$")
 
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Synch.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/TSS_Adapter.cpp"
 #include "ace/Auto_Event.cpp"
 #include "ace/Manual_Event.cpp"

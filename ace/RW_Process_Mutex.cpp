@@ -12,6 +12,10 @@ ACE_RCSID(ace, RW_Process_Mutex, "$Id$")
 
 #include "ace/Malloc_T.h"
 
+#if defined (ACE_WIN32)
+#include "ace/OS_NS_fcntl.h"
+#endif /* ACE_WIN32 */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 
 const ACE_TCHAR *

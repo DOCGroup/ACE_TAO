@@ -9,6 +9,7 @@ ACE_RCSID (ace,
 #if defined (ACE_WIN32)
 
 #  include "ace/os_include/os_netdb.h"
+#  include "ace/OS_NS_unistd.h"
 
 // Funky macro to deal with strange error passing semantics
 // of Win32 Reg*() functions

@@ -3,8 +3,8 @@
 
 #include "ace/Date_Time.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/Date_Time.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Date_Time, "$Id$")

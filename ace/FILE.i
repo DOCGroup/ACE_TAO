@@ -1,9 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// FILE.i
-
-ASYS_INLINE int
+ACE_INLINE int
 ACE_FILE::disable (int signum) const
 {
 #if defined (ACE_WIN32)

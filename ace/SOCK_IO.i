@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// SOCK_IO.i
+#include "ace/OS_NS_unistd.h"
 
 // Send an n byte message to the connected socket.
 

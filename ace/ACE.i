@@ -8,7 +8,7 @@
 
 // Wrappers for methods that have been moved to ACE_OS.
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::read_n (ACE_HANDLE handle,
              void *buf,
              size_t len,
@@ -20,7 +20,7 @@ ACE::read_n (ACE_HANDLE handle,
                          bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::write_n (ACE_HANDLE handle,
               const void *buf,
               size_t len,
@@ -32,7 +32,7 @@ ACE::write_n (ACE_HANDLE handle,
                           bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::recv_n (ACE_HANDLE handle,
              void *buf,
              size_t len,
@@ -57,7 +57,7 @@ ACE::recv_n (ACE_HANDLE handle,
 
 #if defined (ACE_HAS_TLI)
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::t_rcv_n (ACE_HANDLE handle,
               void *buf,
               size_t len,
@@ -82,7 +82,7 @@ ACE::t_rcv_n (ACE_HANDLE handle,
 
 #endif /* ACE_HAS_TLI */
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::recv_n (ACE_HANDLE handle,
              void *buf,
              size_t len,
@@ -102,7 +102,7 @@ ACE::recv_n (ACE_HANDLE handle,
                           bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::recvv_n (ACE_HANDLE handle,
               iovec *iov,
               int iovcnt,
@@ -122,7 +122,7 @@ ACE::recvv_n (ACE_HANDLE handle,
                            bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const void *buf,
              size_t len,
@@ -147,7 +147,7 @@ ACE::send_n (ACE_HANDLE handle,
 
 #if defined (ACE_HAS_TLI)
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::t_snd_n (ACE_HANDLE handle,
               const void *buf,
               size_t len,
@@ -172,7 +172,7 @@ ACE::t_snd_n (ACE_HANDLE handle,
 
 #endif /* ACE_HAS_TLI */
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const void *buf,
              size_t len,
@@ -192,7 +192,7 @@ ACE::send_n (ACE_HANDLE handle,
                           bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::sendv_n (ACE_HANDLE handle,
               const iovec *iov,
               int iovcnt,
@@ -212,7 +212,7 @@ ACE::sendv_n (ACE_HANDLE handle,
                            bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 {
 #if defined (ACE_WIN32) || defined (ACE_PSOS) || defined (HPUX)
@@ -222,7 +222,7 @@ ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 #endif /* ACE_WIN32 */
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 {
 #if defined (ACE_WIN32) || defined (ACE_PSOS) || defined (ACE_OPENVMS)
@@ -232,7 +232,7 @@ ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 #endif /* ACE_WIN32 */
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE::handle_read_ready (ACE_HANDLE handle,
                         const ACE_Time_Value *timeout)
 {
@@ -243,7 +243,7 @@ ACE::handle_read_ready (ACE_HANDLE handle,
                             0);
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE::handle_write_ready (ACE_HANDLE handle,
                          const ACE_Time_Value *timeout)
 {
@@ -254,7 +254,7 @@ ACE::handle_write_ready (ACE_HANDLE handle,
                             0);
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE::handle_exception_ready (ACE_HANDLE handle,
                              const ACE_Time_Value *timeout)
 {
@@ -265,7 +265,7 @@ ACE::handle_exception_ready (ACE_HANDLE handle,
                             1);
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE::unique_name (const void *object,
                   ACE_TCHAR *name,
                   size_t length)
@@ -273,7 +273,7 @@ ACE::unique_name (const void *object,
   ACE_OS::unique_name (object, name, length);
 }
 
-ASYS_INLINE u_long
+ACE_INLINE u_long
 ACE::log2 (u_long num)
 {
   u_long log = 0;
@@ -286,14 +286,14 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ASYS_INLINE ACE_TCHAR
+ACE_INLINE ACE_TCHAR
 ACE::nibble2hex (u_int n)
 {
   // @@ UNICODE does this work?
   return ACE::hex_chars_[n & 0x0f];
 }
 
-ASYS_INLINE u_char
+ACE_INLINE u_char
 ACE::hex2byte (ACE_TCHAR c)
 {
   if (isdigit (c))
@@ -304,13 +304,13 @@ ACE::hex2byte (ACE_TCHAR c)
     return (u_char) (10 + c - ACE_LIB_TEXT ('A'));
 }
 
-ASYS_INLINE char
+ACE_INLINE char
 ACE::debug (void)
 {
   return ACE::debug_;
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE::debug (char c)
 {
   ACE::debug_ = c;

@@ -1126,9 +1126,6 @@ ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
                                         /*Platform lacks POSIX-style fcntl ().*/
 //#define ACE_LACKS_FSYNC
                                         /*Platform lacks fsync().*/
-//#define ACE_LACKS_INLINE_FUNCTIONS
-                                        /*Platform can't handle "inline"
-                                        keyword correctly.*/
 //#define ACE_LACKS_EXEC
                                         /*Platform lacks the exec()
                                         family of system calls (e.g.,

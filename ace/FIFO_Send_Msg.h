@@ -75,9 +75,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/FIFO_Send_Msg.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FIFO_SEND_MSG_H */

@@ -22,7 +22,7 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/ACE.h"
-#include "ace/os_include/os_stropts.h"
+#include "ace/OS_NS_stropts.h"
 
 /**
  * @class ACE_SPIPE_Stream
@@ -44,9 +44,9 @@
  *
  * Methods with <iovec> parameter are I/O vector variants of the I/O
  * operations.
- * 
+ *
  * The <send> and <revc> operations use "message" semantics rather
- * than "bytestream" semantics.  
+ * than "bytestream" semantics.
  */
 class ACE_Export ACE_SPIPE_Stream : public ACE_SPIPE
 {
@@ -159,9 +159,9 @@ private:
   ACE_SPIPE_Addr remote_addr_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/SPIPE_Stream.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SPIPE_STREAM_H */

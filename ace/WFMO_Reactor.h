@@ -696,11 +696,6 @@ public:
   /// Use a user specified signal handler instead.
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
 
-  /// @deprecated The following method is deprecated.
-  /// Instead, either specify a timer queue when creating/opening the
-  /// object or use the timer_queue() method.
-  virtual int set_timer_queue (ACE_Timer_Queue *tq);
-
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq);
 

@@ -26,8 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
-
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 // Specifies the size of the fixed length portion of

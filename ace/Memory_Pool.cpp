@@ -14,6 +14,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_sys_shm.h"
+#include "ace/OS_NS_unistd.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"

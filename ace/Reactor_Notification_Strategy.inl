@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 ACE_INLINE ACE_Reactor *
 ACE_Reactor_Notification_Strategy::reactor (void)
 {

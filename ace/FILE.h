@@ -135,9 +135,9 @@ protected:
   ACE_FILE_Addr addr_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/FILE.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FILE_H */

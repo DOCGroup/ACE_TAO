@@ -92,9 +92,9 @@ protected:
   int internal_id_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/SV_Message_Queue.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

@@ -1,9 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// MEM_Acceptor.i
-
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MEM_Acceptor::open (const ACE_Addr &local_sap,
                         ACE_Protocol_Info *protocolinfo,
                         ACE_SOCK_GROUP g,
@@ -18,7 +16,7 @@ ACE_MEM_Acceptor::open (const ACE_Addr &local_sap,
      backlog, protocol);
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MEM_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                           ACE_Addr *remote_addr,
                           ACE_Time_Value *timeout,
@@ -30,7 +28,7 @@ ACE_MEM_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 }
 
 #if !defined (ACE_HAS_WINCE)
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MEM_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                           ACE_Accept_QoS_Params qos_params,
                           ACE_Addr *remote_addr,
@@ -43,7 +41,7 @@ ACE_MEM_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 }
 #endif  // ACE_HAS_WINCE
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MEM_Acceptor::get_local_addr (ACE_MEM_Addr &sap) const
 {
   ACE_INET_Addr temp;
@@ -53,13 +51,13 @@ ACE_MEM_Acceptor::get_local_addr (ACE_MEM_Addr &sap) const
   return 0;
 }
 
-ASYS_INLINE const ACE_TCHAR *
+ACE_INLINE const ACE_TCHAR *
 ACE_MEM_Acceptor::mmap_prefix (void) const
 {
   return this->mmap_prefix_;
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_MEM_Acceptor::mmap_prefix (const ACE_TCHAR *prefix)
 {
   if (prefix == 0)
@@ -72,25 +70,25 @@ ACE_MEM_Acceptor::mmap_prefix (const ACE_TCHAR *prefix)
     }
 }
 
-ASYS_INLINE ACE_MEM_IO::Signal_Strategy
+ACE_INLINE ACE_MEM_IO::Signal_Strategy
 ACE_MEM_Acceptor::preferred_strategy (void) const
 {
   return this->preferred_strategy_;
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_MEM_Acceptor::preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy)
 {
   this->preferred_strategy_ = strategy;
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_MEM_Acceptor::init_buffer_size (off_t bytes)
 {
   this->malloc_options_.minimum_bytes_ = bytes;
 }
 
-ASYS_INLINE ACE_MEM_SAP::MALLOC_OPTIONS &
+ACE_INLINE ACE_MEM_SAP::MALLOC_OPTIONS &
 ACE_MEM_Acceptor::malloc_options (void)
 {
   // @@ This function has been deprecated and will be removed in the

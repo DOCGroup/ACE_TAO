@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Multihomed_INET_Addr.i
-
 // Accessor implementations
 ACE_INLINE
 size_t

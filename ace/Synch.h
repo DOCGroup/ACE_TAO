@@ -47,10 +47,6 @@
 #include "ace/Thread_Semaphore.h"
 #include "ace/TSS_Adapter.h"
 
-#if defined (__ACE_INLINE__)
-#include "ace/Synch.i"
-#endif /* __ACE_INLINE__ */
-
 // Include the templates here.
 // FUZZ: disable check_for_synch_include
 #include "ace/Synch_T.h"

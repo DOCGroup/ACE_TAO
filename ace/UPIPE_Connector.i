@@ -1,11 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// UPIPE_Connector.i
-
 // Creates a Local ACE_UPIPE.
-
-ASYS_INLINE
+ACE_INLINE
 ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
                                           const ACE_UPIPE_Addr &addr,
                                           ACE_Time_Value *timeout,
@@ -24,7 +21,7 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
                 ACE_LIB_TEXT ("ACE_UPIPE_Connector")));
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_UPIPE_Connector::reset_new_handle (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);

@@ -8,6 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_UNIX_Syslog.h"
 #include "ace/Log_Record.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_syslog.h"
 
 // NOTE:

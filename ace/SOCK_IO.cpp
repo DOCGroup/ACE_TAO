@@ -5,6 +5,8 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/OS_NS_sys_select.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_IO.i"

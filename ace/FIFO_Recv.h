@@ -72,9 +72,9 @@ private:
   ACE_HANDLE aux_handle_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/FIFO_Recv.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

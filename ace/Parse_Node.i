@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Parse_Node.i
-
 ACE_INLINE
 ACE_Suspend_Node::~ACE_Suspend_Node (void)
 {

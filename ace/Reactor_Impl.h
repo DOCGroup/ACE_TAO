@@ -145,10 +145,6 @@ public:
   /// Use a user specified signal handler instead.
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler) = 0;
 
-  /// @deprecated The following method is deprecated.  Use <timer_queue> instead.
-  /// Set a user specified timer queue.
-  virtual int set_timer_queue (ACE_Timer_Queue *tq) = 0;
-
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq) = 0;
 

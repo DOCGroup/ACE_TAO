@@ -1,29 +1,29 @@
 /* -*- C++ -*- */
-// SOCK_SEQPACK_Association.i
 // $Id$
 
 #include "ace/SOCK_SEQPACK_Association.h"
+#include "ace/OS_NS_sys_socket.h"
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association (void)
 {
   // ACE_TRACE ("ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association");
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association (ACE_HANDLE h)
 {
   // ACE_TRACE ("ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association");
   this->set_handle (h);
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_SEQPACK_Association::~ACE_SOCK_SEQPACK_Association (void)
 {
   // ACE_TRACE ("ACE_SOCK_SEQPACK_Association::~ACE_SOCK_SEQPACK_Association");
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SOCK_SEQPACK_Association::close_reader (void)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::close_reader");
@@ -35,7 +35,7 @@ ACE_SOCK_SEQPACK_Association::close_reader (void)
 
 // Shut down just the writing end of a ACE_SOCK.
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SOCK_SEQPACK_Association::close_writer (void)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::close_writer");
@@ -45,7 +45,7 @@ ACE_SOCK_SEQPACK_Association::close_writer (void)
     return 0;
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::recv_n (void *buf,
                          size_t len,
                          int flags,
@@ -61,7 +61,7 @@ ACE_SOCK_SEQPACK_Association::recv_n (void *buf,
                       bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::recv_n (void *buf,
                          size_t len,
                          const ACE_Time_Value *timeout,
@@ -75,7 +75,7 @@ ACE_SOCK_SEQPACK_Association::recv_n (void *buf,
                       bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::recvv_n (iovec iov[],
                                        int n,
                                        const ACE_Time_Value *timeout,
@@ -89,7 +89,7 @@ ACE_SOCK_SEQPACK_Association::recvv_n (iovec iov[],
                        bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::send_n (const void *buf,
                          size_t len,
                          int flags,
@@ -105,7 +105,7 @@ ACE_SOCK_SEQPACK_Association::send_n (const void *buf,
                       bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::send_n (const void *buf,
                          size_t len,
                          const ACE_Time_Value *timeout,
@@ -119,7 +119,7 @@ ACE_SOCK_SEQPACK_Association::send_n (const void *buf,
                       bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::sendv_n (const iovec iov[],
                                        int n,
                                        const ACE_Time_Value *timeout,
@@ -133,7 +133,7 @@ ACE_SOCK_SEQPACK_Association::sendv_n (const iovec iov[],
                        bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::send_n (const ACE_Message_Block *message_block,
                          const ACE_Time_Value *timeout,
                          size_t *bytes_transferred) const
@@ -145,7 +145,7 @@ ACE_SOCK_SEQPACK_Association::send_n (const ACE_Message_Block *message_block,
                       bytes_transferred);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::send_urg (const void *ptr,
                            size_t len,
                            const ACE_Time_Value *timeout) const
@@ -158,7 +158,7 @@ ACE_SOCK_SEQPACK_Association::send_urg (const void *ptr,
                     timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_SEQPACK_Association::recv_urg (void *ptr,
                            size_t len,
                            const ACE_Time_Value *timeout) const

@@ -4,10 +4,6 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#if !defined (__ACE_INLINE__)
-#include "ace/POSIX_Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/ACE.h"
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"

@@ -16,9 +16,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Errno.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/Strategies_T.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 
 ACE_RCSID (ace,

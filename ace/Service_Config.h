@@ -26,7 +26,7 @@
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 #include "ace/XML_Svc_Conf.h"
-
+#include "ace/OS_NS_signal.h"
 
 // Forward decl.
 class ACE_Service_Object;

@@ -15,10 +15,6 @@
 
 ACE_RCSID(ace, Synch_T, "$Id$")
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Synch_T.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Lock_Adapter_T.cpp"
 #include "ace/Reverse_Lock_T.cpp"
 #include "ace/Guard_T.cpp"

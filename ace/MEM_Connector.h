@@ -139,7 +139,7 @@ public:
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
   /// Accessor to underlying malloc options.
-  /// This method has been deprecated.
+  /// @deprecated This method has been deprecated.
   ACE_MEM_SAP::MALLOC_OPTIONS &malloc_options (void);
 
   // = Meta-type info
@@ -164,9 +164,9 @@ private:
   ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/MEM_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 

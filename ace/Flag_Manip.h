@@ -40,13 +40,11 @@ class ACE_Export ACE_Flag_Manip
 
   /// Return the current setting of flags associated with <handle>.
   static int get_flags (ACE_HANDLE handle);
-
-
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/Flag_Manip.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif  /* ACE_FLAG_MANIP_H */

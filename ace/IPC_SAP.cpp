@@ -2,14 +2,15 @@
 
 #include "ace/IPC_SAP.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/IPC_SAP.i"
-#endif
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_signal.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_fcntl.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/IPC_SAP.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, IPC_SAP, "$Id$")
 

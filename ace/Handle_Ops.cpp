@@ -2,10 +2,6 @@
 
 #include "ace/Handle_Ops.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Handle_Ops.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Time_Value.h"
