@@ -1,3 +1,10 @@
+Wed Aug 21 17:02:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS_String.cpp: Changed to enabled wchar version of
+	  strtok_r_emulation when both ACE_HAS_WCHAR and ACE_LACKS_WCSTOK
+	  are both defined (instead of ACE_HAS_REENTRANT_FUNCTIONS.)
+	  Thanks to Brian Appel <bappel@integ.com> for reporting this.
+
 Wed Aug 21 12:41:51 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.h:
