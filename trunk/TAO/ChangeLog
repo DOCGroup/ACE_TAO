@@ -1,3 +1,12 @@
+Sun Feb 29 16:46:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Makefile*:
+	* examples/Makefile*:
+	* utils/Makefile*:
+	* docs/tutorials/Makefile*: 
+
+          Regenerated dependencies.
+
 Sun Feb 29 14:58:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/Event_Service/Makefile:
