@@ -1,3 +1,11 @@
+Fri Mar 12 12:12:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Framework_Component_Test.cpp:
+        * Max_Default_Port_Test.cpp:
+        * Reactor_Exceptions_Test.cpp:
+          The test_config.h file must be included as first file else we don't
+          get log files in our SuSE 9 ACE build which has set ACE_NLOGGING.
+
 Fri Mar 12 11:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Auto_IncDec_Test.cpp:
