@@ -22,7 +22,7 @@
 //  import ::CosNotification
 //  import ::CosNotifyChannelAdmin
 
-#inclide <orb.idl>
+#include <orb.idl>
 #include <SecurityLevel2.idl>
 #include <CosPersistentState.idl>
 // #include <CosNotification.idl>

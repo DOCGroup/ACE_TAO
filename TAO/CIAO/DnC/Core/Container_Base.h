@@ -21,7 +21,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "CCM_ContainerC.h"
-#include "CCM_DeploymentC.h"
+#include "Deployment_CoreC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -65,9 +65,9 @@ namespace CIAO
        const char *sv_entrypt
        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::Deployment::UnknownImplId,
-                       Components::Deployment::ImplEntryPointNotFound,
-                       Components::Deployment::InstallationFailure)) = 0;
+                       Deployment::UnknownImplId,
+                       Deployment::ImplEntryPointNotFound,
+                       Deployment::InstallationFailure)) = 0;
 
     // Uninstall a servant for component or home.
     virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref
@@ -143,9 +143,9 @@ namespace CIAO
        const char *sv_entrypt
        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::Deployment::UnknownImplId,
-                       Components::Deployment::ImplEntryPointNotFound,
-                       Components::Deployment::InstallationFailure));
+                       Deployment::UnknownImplId,
+                       Deployment::ImplEntryPointNotFound,
+                       Deployment::InstallationFailure));
 
     // Uninstall a servant for component or home.
     virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref

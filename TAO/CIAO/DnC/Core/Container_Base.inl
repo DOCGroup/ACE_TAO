@@ -6,5 +6,5 @@ CIAO::Session_Container::get_objref (PortableServer::Servant p
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->_ciao_the_POA ()->servant_to_reference (p
-                                                 ACE_ENV_ARG_PARAMETER);
+						       ACE_ENV_ARG_PARAMETER);
 }
