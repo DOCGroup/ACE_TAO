@@ -1,3 +1,23 @@
+Mon Aug 23 21:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Elements.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Elements.tpp:
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.tpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.tpp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.hpp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.ipp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.tpp:
+
+	  Added XSCRT 0.0.4 into the repository to compile the handlers. 
+
+
 Mon Aug 23 21:32:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/TypeNameEmitter.cpp:
