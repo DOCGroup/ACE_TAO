@@ -34,14 +34,20 @@ USELIB("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
-#if defined (ACE_HAS_WINCE)
-static size_t n_iterations = 50;
+#if defined (VXWORKS)
+  // So the test doesn't run for too long . . .
+  static size_t n_iterations = 25;
 #else
-static size_t n_iterations = 50;
+  static size_t n_iterations = 50;
 #endif /* ACE_HAS_WINCE */
 
 // Default number of loops.
-static size_t n_loops = 100;
+#if defined (VXWORKS)
+  // thr_yield () and/or thr_equal () are expensive on VxWorks, apparently.
+  static size_t n_loops = 10;
+#else
+  static size_t n_loops = 100;
+#endif /* ACE_HAS_WINCE */
 
 // Default number of readers.
 static size_t n_readers = 6;
@@ -107,7 +113,7 @@ reader (void *)
 
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
-      ACE_OS::sleep(pause);
+      ACE_OS::sleep (pause);
       ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
       // int n = ++current_readers;
       // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) I'm reader number %d\n"), n));
@@ -192,7 +198,7 @@ writer (void *)
 
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
-      ACE_OS::sleep(pause);
+      ACE_OS::sleep (pause);
 
       ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 
