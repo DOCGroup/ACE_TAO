@@ -1,3 +1,12 @@
+Thu Apr 15 23:28:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU (CCFLAGS):
+	  (CPPFLAGS):
+
+	  Moved preprocessor flags in compiler flags variable $(CCFLAGS)
+	  to preprocessor flags variable $(CPPFLAGS).  Addresses potential
+	  dependency generation problems.
+
 Thu Apr 15 17:56:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/os_include/os_time.h: Include ace/os_include/sys/os_time.h
