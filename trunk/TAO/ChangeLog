@@ -1,3 +1,9 @@
+Sun Nov 30 10:44:41 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * tao/Fault_Tolerance_Service.cpp
+          Fixed the problem for the seperation of FTORB libraries.
+          FT_Service_Activate is changed to FT_ClientService_Activate.
+
 Sat Nov 29 20:27:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:
