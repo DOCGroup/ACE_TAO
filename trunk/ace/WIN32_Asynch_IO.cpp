@@ -422,7 +422,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
     iov[iovcnt].iov_base  = msg->wr_ptr ();
     iov[iovcnt].iov_len   = msg->space ();
     ++iovcnt;
-    if (iovcnt >= ACE_IOV_MAX)
+    if (iovcnt > ACE_IOV_MAX)
     {
       delete result;
       return -1;
@@ -770,7 +770,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
     iov[iovcnt].iov_base  = msg->rd_ptr ();
     iov[iovcnt].iov_len   = msg->length ();
     ++iovcnt;
-    if (iovcnt >= ACE_IOV_MAX)
+    if (iovcnt > ACE_IOV_MAX)
     {
       delete result;
       return -1;
@@ -1129,19 +1129,19 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
   int buffer_pointers_count = 0;
 
-  // Each buffer must be at least the size of a system memory page 
+  // Each buffer must be at least the size of a system memory page
   // and must be aligned on a system memory page size boundary
 
   for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
   {
-    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
       = ACE_reinterpret_cast (size_t, msg->wr_ptr ());
-    *ACE_reinterpret_cast (size_t *, 
-                           ACE_reinterpret_cast (char *, 
+    *ACE_reinterpret_cast (size_t *,
+                           ACE_reinterpret_cast (char *,
                                                  &buffer_pointers[buffer_pointers_count]) + 4)
       = 0;
     ++buffer_pointers_count;
-    if (buffer_pointers_count >= ACE_IOV_MAX)
+    if (buffer_pointers_count > ACE_IOV_MAX)
     {
       delete result;
       return -1;
@@ -1149,10 +1149,10 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   }
 
   // last one should be completely 0
-  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
     = 0;
-  *ACE_reinterpret_cast (size_t *, 
-                         ACE_reinterpret_cast (char *, 
+  *ACE_reinterpret_cast (size_t *,
+                         ACE_reinterpret_cast (char *,
                                                &buffer_pointers[buffer_pointers_count]) + 4)
     = 0;
 
@@ -1490,19 +1490,19 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
   int buffer_pointers_count = 0;
 
-  // Each buffer must be at least the size of a system memory page 
+  // Each buffer must be at least the size of a system memory page
   // and must be aligned on a system memory page size boundary
 
   for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
   {
-    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
       = ACE_reinterpret_cast (size_t, msg->rd_ptr ());
-    *ACE_reinterpret_cast (size_t *, 
-                           ACE_reinterpret_cast (char *, 
+    *ACE_reinterpret_cast (size_t *,
+                           ACE_reinterpret_cast (char *,
                                                  &buffer_pointers[buffer_pointers_count]) + 4)
       = 0;
     ++buffer_pointers_count;
-    if (buffer_pointers_count >= ACE_IOV_MAX)
+    if (buffer_pointers_count > ACE_IOV_MAX)
     {
       delete result;
       return -1;
@@ -1510,10 +1510,10 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   }
 
   // last one should be completely 0
-  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count]) 
+  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
     = 0;
-  *ACE_reinterpret_cast (size_t *, 
-                         ACE_reinterpret_cast (char *, 
+  *ACE_reinterpret_cast (size_t *,
+                         ACE_reinterpret_cast (char *,
                                                &buffer_pointers[buffer_pointers_count]) + 4)
     = 0;
 
@@ -2038,7 +2038,7 @@ ACE_WIN32_Asynch_Connect::ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_p
 
 ACE_WIN32_Asynch_Connect::~ACE_WIN32_Asynch_Connect (void)
 {
-  this->close ();  
+  this->close ();
   this->reactor (0); // to avoid purge_pending_notifications
 }
 
@@ -2086,7 +2086,7 @@ ACE_WIN32_Asynch_Connect::open (ACE_Handler &handler,
                                     completion_key,
                                     proactor);
 
-  // Ignore result as we pass ACE_INVALID_HANDLE 
+  // Ignore result as we pass ACE_INVALID_HANDLE
   //if (result == -1)
   //  return result;
 
@@ -2127,7 +2127,7 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                                      signal_number),
                     -1);
 
-    int rc = connect_i (result, 
+    int rc = connect_i (result,
                         remote_sap,
                         local_sap,
                         reuse_addr);
@@ -2233,10 +2233,10 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
 
   if (handle == ACE_INVALID_HANDLE)
     {
-      int protocol_family = remote_sap.get_type (); 
+      int protocol_family = remote_sap.get_type ();
 
       handle = ACE_OS::socket (protocol_family,
-                               SOCK_STREAM, 
+                               SOCK_STREAM,
                                0);
 
       // save it
@@ -2307,7 +2307,7 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
                                                       remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
-      if (rc < 0)  // failure 
+      if (rc < 0)  // failure
         {
           if (errno == EWOULDBLOCK || errno == EINPROGRESS)
             return 0; // connect started
@@ -2327,7 +2327,7 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
 //@@ New method cancel_uncompleted
 // It performs cancellation of all pending requests
 //
-// Parameter flg_notify can be 
+// Parameter flg_notify can be
 //     0  - don't send notifications about canceled accepts
 //    !0  - notify user about canceled accepts
 //          according WIN32 standards we should receive notifications
@@ -2373,7 +2373,7 @@ ACE_WIN32_Asynch_Connect::cancel (void)
 
   //We are not really ACE_WIN32_Asynch_Operation
   //so we could not call ::aiocancel ()
-  // or just write   
+  // or just write
   //return ACE_WIN32_Asynch_Operation::cancel ();
   //We delegate real cancelation to cancel_uncompleted (1)
 
@@ -3064,7 +3064,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
     iov[iovcnt].iov_base  = msg->wr_ptr ();
     iov[iovcnt].iov_len   = msg->size ();
     ++iovcnt;
-    if (iovcnt >= ACE_IOV_MAX)
+    if (iovcnt > ACE_IOV_MAX)
     {
       delete result;
       return -1;
@@ -3344,7 +3344,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
     iov[iovcnt].iov_base  = msg->rd_ptr ();
     iov[iovcnt].iov_len   = msg->length ();
     ++iovcnt;
-    if (iovcnt >= ACE_IOV_MAX)
+    if (iovcnt > ACE_IOV_MAX)
     {
       delete result;
       return -1;
