@@ -18,7 +18,7 @@ parse_args (int argc, char *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'f:':
+      case 'f':
         ior_output_file = get_opts.optarg;
         break;
 
