@@ -282,10 +282,15 @@ ACE_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
 			     const ACE_Time_Value &delta,
 			     const ACE_Time_Value &interval)
 {
-  return this->implementation ()->schedule_timer (event_handler,
-                                                  arg,
-                                                  delta,
-                                                  interval);
+  int result = this->implementation ()->schedule_timer (event_handler,
+                                                        arg,
+                                                        delta,
+                                                        interval);
+  if (result != -1)
+    // Assign *this* <Reactor> to the <Event_Handler>.
+    event_handler->reactor (this);
+
+  return result;
 }
 
 ACE_INLINE int 
@@ -311,16 +316,26 @@ ACE_INLINE int
 ACE_Reactor::schedule_wakeup (ACE_Event_Handler *event_handler,
 			      ACE_Reactor_Mask masks_to_be_added)
 {
-  return this->implementation ()->schedule_wakeup (event_handler,
-                                                   masks_to_be_added);
+  int result = this->implementation ()->schedule_wakeup (event_handler,
+                                                         masks_to_be_added);
+  if (result != -1)
+    // Assign *this* <Reactor> to the <Event_Handler>.
+    event_handler->reactor (this);
+
+  return result;
 }
   
 ACE_INLINE int 
 ACE_Reactor::schedule_wakeup (ACE_HANDLE handle,
 			      ACE_Reactor_Mask masks_to_be_added)
 {
-  return this->implementation ()->schedule_wakeup (handle,
-                                                   masks_to_be_added);
+  int result = this->implementation ()->schedule_wakeup (handle,
+                                                         masks_to_be_added);
+  if (result != -1)
+    // Assign *this* <Reactor> to the <Event_Handler>.
+    event_handler->reactor (this);
+
+  return result;
 }
 
 ACE_INLINE int 

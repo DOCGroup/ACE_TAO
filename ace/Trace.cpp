@@ -38,7 +38,7 @@ ACE_Trace::dump (void) const
 // Determine whether or not tracing is enabled
 
 int
-ACE_Trace::is_tracing(void)
+ACE_Trace::is_tracing (void)
 {
   return ACE_Trace::enable_tracing_;
 }
@@ -88,9 +88,13 @@ ACE_Trace::ACE_Trace (const ASYS_TCHAR *n,
           && lm->trace_active () == 0)
         {
           lm->trace_active (1);
-          ACE_DEBUG ((LM_TRACE, ASYS_TEXT ("%*s(%t) calling %s in file `%s' on line %d\n"),
+          ACE_DEBUG ((LM_TRACE,
+                      ASYS_TEXT ("%*s(%t) calling %s in file `%s' on line %d\n"),
                       ACE_Trace::nesting_indent_ * lm->inc (),
-                      ASYS_TEXT (""), this->name_, file, line));
+                      ASYS_TEXT (""),
+                      this->name_,
+                      file,
+                      line));
           lm->trace_active (0);
         }
     }
@@ -108,9 +112,11 @@ ACE_Trace::~ACE_Trace (void)
           && lm->trace_active () == 0)
         {
           lm->trace_active (1);
-          ACE_DEBUG ((LM_TRACE, ASYS_TEXT ("%*s(%t) leaving %s\n"),
+          ACE_DEBUG ((LM_TRACE,
+                      ASYS_TEXT ("%*s(%t) leaving %s\n"),
                       ACE_Trace::nesting_indent_ * lm->dec (),
-                      ASYS_TEXT (""), this->name_));
+                      ASYS_TEXT (""),
+                      this->name_));
           lm->trace_active (0);
         }
     }
