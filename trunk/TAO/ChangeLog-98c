@@ -1,3 +1,8 @@
+Fri Sep 04 14:10:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run): Re-enable
+	  cube_rti_data test.  
+
 Fri Sep  4 14:35:58 1998  Aniruddha Gokhale  <gokhale@cs.wustl.edu>
 
 	* tao/IIOP_Interpreter.{h, cpp}:
