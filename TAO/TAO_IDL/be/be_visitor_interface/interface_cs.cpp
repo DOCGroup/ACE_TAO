@@ -84,11 +84,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  // This may be necessary to work around a GCC compiler bug!
-  //  const char *skel_name = node->full_skel_name (); // unused at this time
-  //    const char *coll_name = node->full_coll_name ();
-  //    assert (coll_name != 0);
-
   // The _unchecked_narrow method
   if (!idl_global->gen_locality_constraint ())
     {
@@ -96,20 +91,29 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
 
       *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
-          << "stub->_incr_refcnt ();" << be_nl;
+          << "stub->_incr_refcnt ();" << be_nl
+        // Declare the default proxy.
+          <<node->full_name () << "_ptr default_proxy = " 
+          << node->full_name () <<"::_nil ();" << be_nl;
+
+      // If the policy didtates that the proxy be collocated, use the
+      // function to create one.
 
       *os << "if (obj->_is_collocated () && _TAO_collocation_"
           << node->flat_name () << "_Stub_Factory_function_pointer != 0)"
-          << be_idt_nl << "{" << be_idt_nl << node->local_name ()
-          << "_ptr retv = _TAO_collocation_"
-          << node->flat_name () << "_Stub_Factory_function_pointer (obj);"
-          << be_nl << "if (retv != 0)" << be_idt_nl << "return retv;"
-          << be_uidt << be_uidt_nl << "}" << be_uidt_nl;
+          << be_idt_nl << "{"<<be_idt_nl
+          << "default_proxy = _TAO_collocation_"<< node->flat_name ()
+          << "_Stub_Factory_function_pointer (obj);"
+          << be_uidt_nl<<"}"<<be_uidt_nl;
 
-      *os << node->full_name () << "_ptr retval = 0;" << be_nl
-          << "ACE_NEW_RETURN (retval, " << node->full_name ()
-          << " (stub), 0);" << be_nl
-          << "return retval;" <<  be_uidt_nl;
+      // The default proxy will either be returned else be transformed to 
+      // a smart one!
+      *os << "if (CORBA::is_nil (default_proxy))" << be_idt_nl
+          << "ACE_NEW_RETURN (default_proxy, "<< node->full_name () 
+          << " (stub), " << node->full_name () << "::_nil ());"<< be_uidt_nl
+          << "return TAO_" << node->flat_name () 
+          << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
+          << be_uidt_nl;
     }
   else
     {
@@ -189,11 +193,27 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
 
+  // Smart Proxy classes
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor *visitor = 0;
+  
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for smart proxy classes failed\n"),
+                            -1);
+    }
+  delete visitor;
+  visitor = 0;
+  
   // by using a visitor to declare and define the TypeCode, we have the
   // added advantage to conditionally not generate any code. This will be
   // based on the command line options. This is still TO-DO
-  be_visitor *visitor;
-  be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
   ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
   visitor = tao_cg->make_visitor (&ctx);
@@ -206,5 +226,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
+ 
   return 0;
 }

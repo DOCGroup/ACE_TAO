@@ -80,7 +80,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Get the strategy from the attribute and hand it over
   // to the operation
   delete op->set_strategy (node->get_get_strategy ());
-
   
   be_visitor_context ctx (*this->ctx_);
 
@@ -118,6 +117,12 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
       break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
+      break;    
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
       break;
@@ -245,7 +250,12 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
-
+    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
+      break;
+    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
+      break;
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,

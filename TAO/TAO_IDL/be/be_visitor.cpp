@@ -27,7 +27,6 @@
 
 ACE_RCSID(be, be_visitor, "$Id$")
 
-
 be_visitor::be_visitor (void)
 {
 }
