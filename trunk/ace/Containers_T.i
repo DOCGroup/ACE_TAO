@@ -500,8 +500,9 @@ ACE_DLList_Iterator<T>::next (T *&ptr)
 {
   ACE_DLList_Node *temp = 
     ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
-  ptr = (T *) temp->item_;
-  return ptr ? 1 : 0;
+  if (temp)
+    ptr = (T *) temp->item_;
+  return temp ? 1 : 0;
 }
 
 template <class T> ACE_INLINE T *
