@@ -39,8 +39,8 @@
 
 /// Policy factory for all Messaging related policies.
 class TAO_Export TAO_Messaging_PolicyFactory
-  : public PortableInterceptor::PolicyFactory,
-    public CORBA::LocalObject
+  : public virtual PortableInterceptor::PolicyFactory,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
 
