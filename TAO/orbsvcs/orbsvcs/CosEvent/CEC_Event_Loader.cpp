@@ -85,7 +85,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       // Parse the options, check if we should bind with the naming
       // service and under what name...
-      ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("o:n:xr"));
+      ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("o:n:xr:"));
       int opt;
       const ACE_TCHAR *service_name = ACE_LIB_TEXT("CosEventService");
       const ACE_TCHAR *ior_file = 0;
