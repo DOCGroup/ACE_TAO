@@ -588,8 +588,7 @@ can be used to verify performance using the new framework.</li>
             its list of arguments.  These protocol names are used to
             load an abstract factory via the service configurator.
             This factory can create acceptors or connectors on demand.
-            By default only IIOP, UIOP (if supported by the platform)
-	    and SHMIOP are loaded.
+            By default only IIOP is loaded.
 </li>
 
 <P><li>
@@ -618,25 +617,33 @@ The service configurator is now used to load protocol factories.
 
 <P><li>
             The URL style object reference format has been updated to
-            conform with the format that <code>iioploc</code>
-            uses. The BNF specification for <code>iioploc</code> is:
+            conform with the format that <code>corbaloc</code>
+            uses. The BNF specification for <code>corbaloc</code> is:
 
 <blockquote><code>
-&lt;iioploc&gt; = "iioploc://"[&lt;addr_list&gt;]["/"&lt;key_string&gt;]<br>
-&lt;addr_list&gt;= [&lt;address&gt; ","]* &lt;address&gt;<br>
-&lt;address&gt; = [&lt;version&gt; &lt;host&gt; [":" &lt;port&gt;]]<br>
+
+&lt;corbaloc&gt; = "corbaloc:/"[&lt;obj_addr_list&gt;]["/"&lt;key_string&gt;]<br>
+&lt;obj_addr_list&gt;= [&lt;obj_addr&gt; ","]* &lt;obj_addr&gt;<br>
+&lt;obj_addr&gt;= &lt;prot_addr&gt; | &lt;future_prot_addr&gt;<br>
+&lt;prot_addr&gt;= &lt;rir_prot_addr&gt; | &lt;iiop_prot_addr&gt;<br>
+&lt;rir_prot_addr&gt;= &lt;rir_prot_token&gt;":"<br>
+&lt;iiop_prot_addr&gt;= &lt;iiop_id&gt;&lt;iiop_addr&gt;<br>
+&lt;iiop_id&gt;= ":" | &lt;iiop_prot_token&gt;":"<br>
+&lt;iiop_prot_token&gt; = "iiop"<br>
+&lt;iiop_add&gt; = [&lt;version&gt; &lt;host&gt; [":" &lt;port&gt;]]<br>
 &lt;host&gt; = DNS-style Host Name | ip_address<br>
 &lt;version&gt; = &lt;major&gt; "." &lt;minor&gt; "@" | empty_string<br>
 &lt;port&gt; = number<br>
 &lt;major&gt; = number<br>
 &lt;minor&gt; = number<br>
+&lt;future_prot_addr&gt;    = &lt;future_prot_id>&lt;future_prot_addr&gt;
+&lt;future_prot_id&gt;    = &lt;future_prot_token&gt;":"
+&lt;future_prot_token&gt; = possible examples: "atm" | "dce"
+&lt;future_prot_addr&gt;    = protocol specific address 
 &lt;key_string&gt; = &lt;string&gt; | empty_string<br>
 </code></blockquote>
 
-            In TAO, <code>iiop</code> URL style object references are
-            equivalent to <code>iioploc</code> URL style object
-            references.  <code>uiop</code> URL style object references
-            have a similar syntax:
+            <code>uiop</code> URL style object references syntax is as:
 
 <blockquote><code>
 &lt;uioploc&gt; = "uioploc://"[&lt;addr_list&gt;]["|"&lt;key_string&gt;]<br>
@@ -1077,14 +1084,6 @@ how they are implemented in TAO.  <P>
 <li>
 Implementation of the CORBA Naming Service spec is completed.  TAO's
 Naming Service provides an optional persistence capability.</li>
-<li>
-Implementation of the CORBA INS spec is partially completed.  The
-following features are not yet supported:
-  <ul>
-  <li> iiopname format </li>
-  <li> NamingServiceExt interface</li>
-  </ul>
-</li>
 </ul>
 Recently completed work:
 <ul>
@@ -1097,7 +1096,7 @@ Updated the implementation of the Naming Service to use new ACE
 exception macros.</li>
 <li>
 Added support for the InterOperable Naming Service, which enables the
-ORB to support IORs in user-friendly <CODE>iioploc</CODE> format.
+ORB to support IORs in user-friendly <CODE>corbaloc</CODE> format.
 These features allow the ORB to be configured to return arbitrary object
 references from <CODE>CORBA::ORB::resolve_initial_references</CODE>
 for non-locality-constrained objects. Two options -ORBInitRef and
@@ -1115,10 +1114,17 @@ resolves a service in the following order :
 <br>2. -ORBDefaultInitRef
 <br>3. Multicast to service.
 </li>
-
 <li>
 Added a test for the InterOperable Naming Service that works in
 conjunction with the current TAO examples.
+</li>
+<li>
+Implementation of the CORBA INS spec is completed.  The
+following features are now supported:
+  <ul>
+  <li> corbaname format </li>
+  <li> NamingServiceExt interface</li>
+  </ul>
 </li>
 
 </ul>
@@ -1133,9 +1139,6 @@ It will be possible to bind a group of objects under a single name, and when a c
 Support for the Naming Service to handle the IIOP
 LocateRequest messages and respond with LocateReply messages with a
 LOCATION_FORWARD/OBJECT_NOT_EXIST status.
-</li>
-<li>
-Support for iiopname and NamingServiceExt interface.
 </li>
 </ul>
 

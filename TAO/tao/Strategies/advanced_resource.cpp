@@ -9,17 +9,16 @@
 #include "UIOP_Factory.h"
 #include "SHMIOP_Factory.h"
 
-#include "ace/Auto_Ptr.h"
-#include "tao/debug.h"
-
 #include "Reactor_Per_Priority.h"
 #include "Direct_Priority_Mapping.h"
 #include "Linear_Priority_Mapping.h"
 
+#include "tao/debug.h"
 #include "tao/Single_Reactor.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
-
+#include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
 #include "ace/FlReactor.h"
 #include "ace/TkReactor.h"
@@ -28,6 +27,21 @@
 #include "ace/TP_Reactor.h"
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
+
+TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
+{
+#if TAO_HAS_UIOP == 1
+  ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
+#endif /* TAO_HAS_UIOP == 1 */
+
+#if TAO_HAS_SHMIOP == 1
+  ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
+#endif /* TAO_HAS_UIOP == 1 */
+
+  TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
+}
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
   :sched_policy_ (ACE_SCHED_OTHER),
@@ -228,8 +242,8 @@ int
 TAO_Advanced_Resource_Factory::load_default_protocols (void)
 {
   int r = this->TAO_Default_Resource_Factory::load_default_protocols ();
-  
-  this->protocol_factories_ = 
+
+  this->protocol_factories_ =
     this->TAO_Default_Resource_Factory::protocol_factories_;
 
   if (r == -1)
@@ -395,7 +409,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
   for (; factory != end; factory++)
     {
       const ACE_CString &name = (*factory)->protocol_name ();
-     
+
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
@@ -496,7 +510,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
       break;
-      
+
     default:
     case TAO_REACTOR_TP:
       ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,

@@ -21,8 +21,6 @@
 
 ACE_RCSID(tao, Acceptor_Registry, "$Id$")
 
-
-
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
   : acceptors_ (0),
     size_ (0)
@@ -88,7 +86,7 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 
           // @@ We need to invoke a nonconst <endpoint> method on
           // <profile>.  The content of profile/endpoint
-          // will not be modified. 
+          // will not be modified.
           TAO_Profile *pf =
             ACE_const_cast (TAO_Profile *,
                             profile);
@@ -209,7 +207,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       int found = 0;
       // If usable protocol (factory) is found then this will be
       // set equal to 1.
- 
+
       for (TAO_ProtocolFactorySetItor factory =
              orb_core->protocol_factories ()->begin ();
            factory != end;
@@ -250,7 +248,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             -1);
         }
     }
- 
+
   // No longer need the endpoint set since all associated acceptors
   // have been opened by now.  Reclaim the memory used by the endpoint
   // set.

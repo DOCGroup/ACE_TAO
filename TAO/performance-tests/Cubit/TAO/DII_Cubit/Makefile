@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 DIRS    = ../IDL_Cubit
 
 LDLIBS = ../IDL_Cubit/.obj/cubitC.o \
-         -lTAO
+         -lTAO_Strategies -lTAO 
 
 PROG_SRCS = client.cpp
 
@@ -85,8 +85,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
- $(TAO_ROOT)/tao/corba.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

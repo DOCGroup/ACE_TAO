@@ -5,6 +5,8 @@
 #include "tao/RTCORBAC.h"
 #include "tao/Pool_Per_Endpoint.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test
@@ -301,7 +303,7 @@ main (int argc, char *argv[])
                                               poa_priority,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       poa_policy_list[1] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID,
                                               ACE_TRY_ENV);

@@ -1,3 +1,104 @@
+Sat Nov 18 09:41:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* docs/tutorials/Quoter/Simple/Client/index.html: 
+	* docs/tutorials/Quoter/Naming_Service/index.html: 
+	* docs/releasenotes/orbcore.html: 
+	* docs/releasenotes/index.html: 
+	* docs/Options.html: 
+	  Updated to replace iioploc with corbaloc and related
+	  information.
+		
+	* tao/ORB_Core.h : 
+	* tao/ORB_Core.cpp: 
+	  Added a new function set_resource_factory which is called by the
+	  advanced_resource.cpp to set TAO_ORB_Core::resource_factory_name_ 
+	  to Advanced_Resource_Factory which is 'Resource_Factory' by default.
+	
+	* tao/Strategies/advanced_resource.cpp : 
+	* tao/Strategies/advanced_resource.h : 
+	  Added a new class whose constructor calls
+	  TAO_ORB_Core::set_resource_factory passing it the value of the new
+	  advanced resource_factory. This change automates the loading of
+	  the default or advanced resource factory bu simply linking the
+	  TAO_Strategies library and including the header file
+	  'tao/Strategies/advanced_resource.h' in the application.
+	  
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf: 
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile: 
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile: 
+
+	* performance-tests/Latency/server.cpp: 
+	* performance-tests/Latency/client.cpp: 
+	* performance-tests/Latency/client-st-muxed.conf: 
+	* performance-tests/Latency/client-st-exclusive.conf: 
+	* performance-tests/Latency/client-mt-exclusive.conf: 
+	* performance-tests/Latency/st_client.conf: 
+	* performance-tests/Latency/st_server.conf: 
+	* performance-tests/Latency/Makefile: 
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.cpp : 
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.cpp : 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile : 
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf : 
+
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: 
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile : 
+
+	* tests/Param_Test/Makefile: 
+
+	* tests/NestedUpcall/Simple/svc.conf: 
+	* tests/NestedUpcall/Simple/Makefile: 
+	* tests/NestedUpcall/MT_Client_Test/client.conf: 
+
+	* tests/Leader_Followers/Makefile : 
+	* tests/Leader_Followers/client.cpp : 
+	* tests/Leader_Followers/server.cpp : 
+
+	* tests/Endpoint_Per_Priority/server.cpp: 
+	* tests/Endpoint_Per_Priority/client.cpp: 
+	* tests/Endpoint_Per_Priority/Makefile : 
+
+	* tests/Leader_Followers/single_threaded_event_loop.conf: 
+
+	* tests/RTCORBA/Server_Protocol/svc.conf: 
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server_shmiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf: 
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf: 
+	* tests/RTCORBA/Server_Protocol/server_nt.conf: 
+	* tests/RTCORBA/Server_Protocol/server_iiop.conf: 
+	* tests/RTCORBA/Server_Protocol/server.conf: 
+	* tests/RTCORBA/Server_Protocol/client_svc.conf: 
+	* tests/RTCORBA/Server_Protocol/client_nt.conf: 
+	* tests/RTCORBA/Server_Protocol/client.cpp: 
+	* tests/RTCORBA/Server_Protocol/server.cpp: 
+	* tests/RTCORBA/Server_Protocol/Makefile: 
+
+	* tests/RTCORBA/Server_Declared/server.conf: 
+	* tests/RTCORBA/Server_Declared/client.cpp: 
+	* tests/RTCORBA/Server_Declared/server.cpp: 
+	* tests/RTCORBA/Server_Declared/Makefile: 
+
+	* tests/RTCORBA/Client_Propagated/svc.conf: 
+	* tests/RTCORBA/Client_Propagated/client.cpp: 
+	* tests/RTCORBA/Client_Propagated/server.cpp: 
+	* tests/RTCORBA/Client_Propagated/Makefile: 
+
+	* tests/RTCORBA/Client_Protocol/svc_unix.conf: 
+	* tests/RTCORBA/Client_Protocol/svc_nt.conf: 
+	* tests/RTCORBA/Client_Protocol/svc.conf: 
+	* tests/RTCORBA/Client_Protocol/svc_win32.conf: 
+	* tests/RTCORBA/Client_Protocol/client.conf: 
+	* tests/RTCORBA/Client_Protocol/client.cpp: 
+	* tests/RTCORBA/Client_Protocol/server.cpp: 
+	* tests/RTCORBA/Client_Protocol/Makefile: 
+
+	  Updated the Makefiles to link TAO_Strategies, include
+	  'tao/Strategies/advanced_resource.h' in client and server
+	  implementation files and updated the conf files so that there is
+	  no differentation for using the default or advaned strategies.
+
 Fri Nov 17 16:33:39 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/interceptors.html:

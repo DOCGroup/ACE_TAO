@@ -10,6 +10,8 @@
 #include "tao/Timeprobe.h"
 #include "ace/Sched_Params.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(IDL_Cubit, client, "$Id$")
 
 // This function runs the client test.

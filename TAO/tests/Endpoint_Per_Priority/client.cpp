@@ -8,6 +8,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Latency, client, "$Id$")
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
