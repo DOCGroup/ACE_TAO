@@ -19,7 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..,..\..\spirit-1.6.0,..\..\spirit-1.6.0\miniboost"
+				AdditionalIncludeDirectories="..,$(SPIRIT_DIR),$(SPIRIT_DIR)\miniboost"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="0"
