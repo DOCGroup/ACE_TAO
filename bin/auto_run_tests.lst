@@ -21,6 +21,7 @@ TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM
 
 TAO/tests/OctetSeq/run_test.pl
 TAO/tests/Leader_Followers/run_test.pl: !ST
+TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !Linux
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST !Linux
