@@ -77,7 +77,7 @@ TAO_RT_Stub::exposed_priority_model (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
-  return CORBA::Policy::_duplicate (this->priority_model_policy_);
+  return CORBA::Policy::_duplicate (this->priority_model_policy_.in ());
 }
 
 void
@@ -95,7 +95,7 @@ TAO_RT_Stub::exposed_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
-  return CORBA::Policy::_duplicate (this->priority_banded_connection_policy_);
+  return CORBA::Policy::_duplicate (this->priority_banded_connection_policy_.in ());
 }
 
 void
@@ -114,7 +114,7 @@ TAO_RT_Stub::exposed_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
-  return CORBA::Policy::_duplicate (this->client_protocol_policy_);
+  return CORBA::Policy::_duplicate (this->client_protocol_policy_.in ());
 }
 
 void
