@@ -705,7 +705,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << bu->name () << "::" << ub->local_name () << " (" << bt->name ();
+      << bu->name () << "::" << ub->local_name () << " (const " << bt->name ();
 
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
