@@ -80,7 +80,7 @@ CORBA_Request::~CORBA_Request (void)
 // flow in some exotic situations.
 
 void
-CORBA_Request::invoke (void)
+CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
   STUB_Object *stub = this->target_->_stubobj ();
 
@@ -90,11 +90,11 @@ CORBA_Request::invoke (void)
                          result_,
                          flags_,
                          exceptions_,
-                         env_);
+                         ACE_TRY_ENV);
 }
 
 void
-CORBA_Request::send_oneway (void)
+CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
 {
   STUB_Object *stub = this->target_->_stubobj ();
 
@@ -104,5 +104,5 @@ CORBA_Request::send_oneway (void)
                          result_,
                          flags_,
                          exceptions_,
-                         env_);
+                         ACE_TRY_ENV);
 }
