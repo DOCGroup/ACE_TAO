@@ -58,12 +58,19 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl;
-
-  if (this->gen_insertion (os, node) != 0)
-    return -1;
-
-  *os << "}" << be_nl
+      << "{" << be_idt_nl
+      << "TAO_OutputCDR stream;" << be_nl
+      << "if (stream << _tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_any._tao_replace (" << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl
+      << "TAO_ENCAP_BYTE_ORDER," << be_nl
+      << "stream.begin ()," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_nl
       << "}" << be_nl
@@ -76,12 +83,26 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl;
-
-  if (this->gen_insertion_nocopy (os, node) != 0)
-    return -1;
-
-  *os << "}" << be_nl
+      << "{" << be_idt_nl
+      << "TAO_OutputCDR stream;" << be_nl
+      << "if (stream << *_tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_any._tao_replace (" << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl
+      << "TAO_ENCAP_BYTE_ORDER," << be_nl
+      << "stream.begin ()," << be_nl
+      << "1," << be_nl
+      << "_tao_elem," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "delete _tao_elem;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "delete _tao_elem;" << be_uidt_nl
@@ -114,16 +135,27 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "{" << be_idt_nl
       << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
       << be_nl
-
       << "TAO_InputCDR stream (" << be_idt << be_idt_nl
       << "_tao_any._tao_get_cdr ()," << be_nl
       << "_tao_any._tao_byte_order ()" << be_uidt_nl
-      << ");" << be_uidt_nl;
-
-  if (this->gen_extraction (os, node) != 0)
-    return -1;
-
-  *os << be_uidt_nl
+      << ");" << be_uidt_nl
+      << be_nl << "if (stream >> *_tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl
+      << "1," << be_nl
+      << "ACE_reinterpret_cast (void *, _tao_elem)," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "delete  _tao_elem;" << be_nl
+      << "_tao_elem = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
@@ -160,16 +192,32 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "{" << be_idt_nl
       << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
       << be_nl
-
       << "TAO_InputCDR stream (" << be_idt << be_idt_nl
       << "_tao_any._tao_get_cdr ()," << be_nl
       << "_tao_any._tao_byte_order ()" << be_uidt_nl
       << ");" << be_uidt_nl;
 
-  if (this->gen_const_extraction (os, node) != 0)
-    return -1;
-
-  *os << be_uidt_nl
+  *os << be_nl << "if (stream >> *(" << node->name ()
+      << " *)_tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "((CORBA::Any *)&_tao_any)->_tao_replace ("
+      << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl
+      << "1," << be_nl
+      << "ACE_reinterpret_cast (void *, ACE_const_cast ("
+      << node->name () << " *&, _tao_elem))," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "delete ACE_const_cast (" << node->name ()
+      << " *&, _tao_elem);" << be_nl
+      << "_tao_elem = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
@@ -221,164 +269,3 @@ be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
   return 0;
 }
 
-// ****************************************************************
-
-be_visitor_union_any_op_compiled_cs::
-be_visitor_union_any_op_compiled_cs (be_visitor_context *ctx)
-  : be_visitor_union_any_op_cs (ctx)
-{
-}
-
-int
-be_visitor_union_any_op_compiled_cs::
-gen_insertion (TAO_OutStream *os,
-               be_union *node)
-{
-  *os << "TAO_OutputCDR stream;" << be_nl
-      << "if (stream << _tao_elem)" << be_nl
-      << "{" << be_idt_nl
-      << "_tao_any._tao_replace (" << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl
-      << "TAO_ENCAP_BYTE_ORDER," << be_nl
-      << "stream.begin ()," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}" << be_uidt_nl;
-  return 0;
-}
-
-int
-be_visitor_union_any_op_compiled_cs::
-gen_insertion_nocopy (TAO_OutStream *os,
-                      be_union *node)
-{
-  *os << "TAO_OutputCDR stream;" << be_nl
-      << "if (stream << *_tao_elem)" << be_nl
-      << "{" << be_idt_nl
-      << "_tao_any._tao_replace (" << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl
-      << "TAO_ENCAP_BYTE_ORDER," << be_nl
-      << "stream.begin ()," << be_nl
-      << "1," << be_nl
-      << "_tao_elem," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_uidt_nl
-      << "}" << be_uidt_nl;
-  return 0;
-}
-
-int
-be_visitor_union_any_op_compiled_cs::
-gen_extraction (TAO_OutStream *os,
-                be_union *node)
-{
-  *os << be_nl << "if (stream >> *_tao_elem)" << be_nl
-      << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl
-      << "1," << be_nl
-      << "ACE_reinterpret_cast (void *, _tao_elem)," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "delete  _tao_elem;" << be_nl
-      << "_tao_elem = 0;" << be_uidt_nl
-      << "}";
-  return 0;
-}
-
-int
-be_visitor_union_any_op_compiled_cs::
-gen_const_extraction (TAO_OutStream *os,
-                      be_union *node)
-{
-  *os << be_nl << "if (stream >> *(" << node->name ()
-      << " *)_tao_elem)" << be_nl
-      << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->_tao_replace ("
-      << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl
-      << "1," << be_nl
-      << "ACE_reinterpret_cast (void *, ACE_const_cast ("
-      << node->name () << " *&, _tao_elem))," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "delete ACE_const_cast (" << node->name ()
-      << " *&, _tao_elem);" << be_nl
-      << "_tao_elem = 0;" << be_uidt_nl
-      << "}";
-  return 0;
-}
-
-// ****************************************************************
-
-be_visitor_union_any_op_interpretive_cs::
-be_visitor_union_any_op_interpretive_cs (be_visitor_context *ctx)
-  : be_visitor_union_any_op_cs (ctx)
-{
-}
-
-int
-be_visitor_union_any_op_interpretive_cs::
-gen_insertion (TAO_OutStream *os,
-               be_union *node)
-{
-  *os << "_tao_any.replace (" << node->tc_name ()
-      << ", _any_val, 1, ACE_TRY_ENV);" << " // copy the value" << be_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl;
-  return 0;
-}
-
-int
-be_visitor_union_any_op_interpretive_cs::
-gen_insertion_nocopy (TAO_OutStream *os,
-                      be_union *node)
-{
-  *os << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem, 1, ACE_TRY_ENV); // consume it" << be_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl;
-  return 0;
-}
-
-int
-be_visitor_union_any_op_interpretive_cs::
-gen_extraction (TAO_OutStream *os,
-                be_union *node)
-{
-  *os << "if (stream.decode (" << node->tc_name ()
-      << ", _tao_elem, 0, ACE_TRY_ENV)" << be_nl
-      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
-      << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->replace ("
-      << node->tc_name () << ", _tao_elem, 1, ACE_TRY_ENV);" << be_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}";
-  return 0;
-}
-
-int
-be_visitor_union_any_op_interpretive_cs::
-gen_const_extraction (TAO_OutStream *os,
-                      be_union *node)
-{
-  return this->gen_extraction (os,
-                               node);
-}

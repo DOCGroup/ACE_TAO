@@ -8,14 +8,14 @@
 //    TAO IDL
 //
 // = FILENAME
-//    post_docall_cs.cpp
+//    post_invoke_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for post-processing of arguments following a
-//    do_static_call
+//    Visitor generating code for post-processing of arguments following an
+//    invocation.
 //
 // = AUTHOR
-//    Aniruddha Gokhale
+//    Jeff Parsons
 //
 // ============================================================================
 
@@ -23,28 +23,28 @@
 #include "be.h"
 #include "be_visitor_argument.h"
 
-ACE_RCSID(be_visitor_argument, post_docall_cs, "$Id$")
+ACE_RCSID(be_visitor_argument, post_invoke_cs, "$Id$")
 
 
 // *************************************************************************
-// visitor for argument to do any post docall processing. Not all types need
+// visitor for argument to do any post invocation processing. Not all types need
 // this. Only those that have an _out type need this.  In addition, interfaces
 // need it because we need to convert from the interface type to the base Object
 // type and vice versa.
 // *************************************************************************
 
-be_visitor_args_post_docall_cs::be_visitor_args_post_docall_cs
+be_visitor_args_post_invoke_cs::be_visitor_args_post_invoke_cs
 (be_visitor_context *ctx)
   : be_visitor_args (ctx)
 {
 }
 
-be_visitor_args_post_docall_cs::~be_visitor_args_post_docall_cs (void)
+be_visitor_args_post_invoke_cs::~be_visitor_args_post_invoke_cs (void)
 {
 }
 
 int
-be_visitor_args_post_docall_cs::visit_argument (be_argument *node)
+be_visitor_args_post_invoke_cs::visit_argument (be_argument *node)
 {
   this->ctx_->node (node); // save the argument node
 
@@ -65,7 +65,7 @@ be_visitor_args_post_docall_cs::visit_argument (be_argument *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_pre_docall_cs::"
+                         "be_visitor_args_post_docall_compiled_cs::"
                          "visit_argument - "
                          "cannot accept visitor\n"),
                         -1);
@@ -75,35 +75,7 @@ be_visitor_args_post_docall_cs::visit_argument (be_argument *node)
 }
 
 int
-be_visitor_args_post_docall_cs::visit_interface (be_interface *node)
-{
-  // we must narrow the out object reference to the appropriate type
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
-      {
-        os->indent ();
-        // assign the narrowed obj reference
-        *os << arg->local_name () << " = " << node->name ()
-            << "::_narrow (_tao_base_" << arg->local_name ()
-            << ", ACE_TRY_ENV);" << be_nl;
-        *os << "CORBA::release (_tao_base_" << arg->local_name ()
-            << ");\n";
-      }
-      break;
-    default:
-      break;
-    }
-  return 0;
-}
-
-int
-be_visitor_args_post_docall_cs::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_args_post_invoke_cs::visit_interface (be_interface *)
 {
   // we must narrow the out object reference to the appropriate type
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -116,10 +88,7 @@ be_visitor_args_post_docall_cs::visit_interface_fwd (be_interface_fwd *node)
       {
         os->indent ();
         // assign the narrowed obj reference
-        *os << arg->local_name () << " = " << node->name ()
-            << "::_narrow (_tao_base_" << arg->local_name ()
-            << ", ACE_TRY_ENV);" << be_nl;
-        *os << "CORBA::release (_tao_base_" << arg->local_name ()
+        *os << "CORBA::release (" << arg->local_name ()
             << ");\n";
       }
       break;
@@ -130,7 +99,81 @@ be_visitor_args_post_docall_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_args_post_docall_cs::visit_string (be_string *node)
+be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *)
+{
+  // we must narrow the out object reference to the appropriate type
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_INOUT:
+      {
+        os->indent ();
+        // assign the narrowed obj reference
+        *os << "CORBA::release (" << arg->local_name ()
+            << ");\n";
+      }
+      break;
+    default:
+      break;
+    }
+  return 0;
+}
+
+#ifdef IDL_HAS_VALUETYPE
+
+int
+be_visitor_args_post_invoke_cs::visit_valuetype (be_valuetype *)
+{
+  // we must narrow the out object reference to the appropriate type
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_INOUT:
+      {
+        os->indent ();
+        *os << "CORBA::remove_ref (" << arg->local_name ()
+            << ");\n";
+      }
+      break;
+    default:
+      break;
+    }
+  return 0;
+}
+
+int
+be_visitor_args_post_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+{
+  // we must narrow the out object reference to the appropriate type
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_INOUT:
+      {
+        os->indent ();
+        *os << "CORBA::remove_ref (" << arg->local_name ()
+            << ");\n";
+      }
+      break;
+    default:
+      break;
+    }
+  return 0;
+}
+
+#endif /* IDL_HAS_VALUETYPE */
+
+int
+be_visitor_args_post_invoke_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -140,6 +183,7 @@ be_visitor_args_post_docall_cs::visit_string (be_string *node)
     case AST_Argument::dir_IN:
       break;
     case AST_Argument::dir_INOUT:
+      os->indent ();
 
       if (node->width () == sizeof (char))
         {
@@ -160,13 +204,13 @@ be_visitor_args_post_docall_cs::visit_string (be_string *node)
 }
 
 int
-be_visitor_args_post_docall_cs::visit_typedef (be_typedef *node)
+be_visitor_args_post_invoke_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_post_docall_cs::"
+                         "be_visitor_args_post_docall_compiled_cs::"
                          "visit_typedef - "
                          "accept on primitive type failed\n"),
                         -1);
