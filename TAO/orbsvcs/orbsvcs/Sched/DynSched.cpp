@@ -1443,10 +1443,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
       // same (see the definition of ptr_arith_t in ACE to grok how
       // this works portably).
       Task_Entry *dependency_entry_ptr =
-        ACE_reinterpret_cast (Task_Entry *,
-                              ACE_static_cast (ptr_arith_t,
-                                               dependency_info->
-                                                 volatile_token));
+        ACE_LONGLONG_TO_PTR (Task_Entry *, dependency_info->volatile_token);
 
       if (! dependency_entry_ptr)
       {

@@ -219,6 +219,14 @@ typedef ACE_UINT16 ACE_USHORT16;
 # error "Can't find a suitable type for doing pointer arithmetic."
 #endif /* ACE_SIZEOF_VOID_P */
 
+#if defined (ACE_LACKS_LONGLONG_T)
+# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
+  ACE_reinterpret_cast (PTR_TYPE, L.lo ())
+#else  /* ! ACE_LACKS_LONGLONG_T */
+# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
+  ACE_reinterpret_cast (PTR_TYPE, ACE_static_cast (ptr_arith_t, L))
+#endif /* ! ACE_LACKS_LONGLONG_T */
+
 // If the platform lacks a long long, define one.
 # if defined (ACE_LACKS_LONGLONG_T)
   class ACE_Export ACE_U_LongLong
@@ -306,18 +314,6 @@ typedef ACE_UINT16 ACE_USHORT16;
     ACE_UINT32 operator/ (const u_int) const;
     ACE_UINT32 operator/ (const int) const;
 #   endif /* ACE_SIZEOF_INT != 4 */
-
-    // Conversion operator.  Try to avoid adding more of these,
-    // because they can lead to subtle problems.  But a conversion to
-    // ptr_arith_t is useful.
-#   if ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT  || \
-       ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
-      operator ptr_arith_t () { return data_.lo_; }
-#   elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-      operator ptr_arith_t () { return data_.hi_ << 32U  &  data_.lo_; }
-#   else
-#     error "Can't find a suitable type for doing pointer arithmetic."
-#   endif /* ACE_SIZEOF_VOID_P */
 
     // = Helper methods.
     void output (FILE * = stdout) const;
