@@ -95,7 +95,7 @@ InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\tao_idl\tao_idl $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -123,7 +123,7 @@ InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\tao_idl\tao_idl $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
