@@ -1,3 +1,11 @@
+Thu Dec  9 14:04:12 2004  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Clarified that there is no leading '#' character
+	  for the 'include' statement in platform_macros.GNU. Thanks to
+	  Dave Dalapati <dalapati@comcast.net> for this suggestion.
+
+	* THANKS: Added Dave Dalapati to the Hall of Fame.
+
 Tue Dec  7 18:24:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/tao_other_tests.lst:
