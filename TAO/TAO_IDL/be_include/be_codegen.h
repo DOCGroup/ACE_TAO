@@ -549,6 +549,9 @@ public:
       // Generating the _var template parameter in sequence of arrays.
       TAO_ARRAY_SEQ_CH_TEMPLATE_VAR,
 
+      // Generating an AMH response handler operation.
+      TAO_AMH_RESPONSE_HANDLER_OPERATION,
+
       // Used to denote either error or don't care.
       TAO_SUB_STATE_UNKNOWN
     };

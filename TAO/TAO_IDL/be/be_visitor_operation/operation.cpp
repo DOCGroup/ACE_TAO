@@ -18,10 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_operation.h"
 
 ACE_RCSID(be_visitor_operation, operation, "$Id$")
@@ -163,8 +162,17 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
   // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
   // whether the operation node has parameters.
   const char *env_decl = "ACE_ENV_SINGLE_ARG_DECL";
-
-  if (argument_emitted || node->argument_count () > 0)
+  
+  if (this->ctx_->sub_state () 
+        == TAO_CodeGen::TAO_AMH_RESPONSE_HANDLER_OPERATION
+      && node->argument_count () == 0)
+    {
+      // Response handler operations don't use the environment arg
+      // unless there are other args in the operation.
+      env_decl = "ACE_ENV_SINGLE_ARG_DECL_NOT_USED";
+      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
+    }
+  else if (argument_emitted || node->argument_count () > 0)
     {
       env_decl = "ACE_ENV_ARG_DECL";
     }
