@@ -4,6 +4,7 @@ Wed Jun 25 01:11:50 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 	  changed all references of vfs_ to
 	  JAWS_Virtual_Filesystem::instance ().  Thanks to Detlef Becker
 	  <detlef.becker@med.siemens.de> for pointing this out.
+	  (init): Added initialization of reference_count_ to 0.
 
 	* JAWS_File.h: Removed private member JAWS_Virtual_Filesystem vfs_
 	  since JAWS_Virtual_Filesystem is a singleton already.  Caching
