@@ -105,7 +105,7 @@ module CosLifeCycle
       // = DESCRIPTION
       //   @@ Please fill in.
 
-      boolean supports (in Key k);
+      boolean _supports (in Key k);
       Object create_object (in Key k, 
                             in Criteria the_criteria)
         raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
