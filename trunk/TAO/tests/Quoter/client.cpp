@@ -258,10 +258,7 @@ Quoter_Client::init_naming_service (void)
                          -1);
     }
 
-    // Narrow it
-    // to a direct Quoter Factory
-    // factory_var_ = Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (), TAO_TRY_ENV);
-    // to a Quoter Generic Factory
+    // Narrow it to a Quoter Generic Factory
     generic_Factory_var_ = CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in (), TAO_TRY_ENV);
 
     TAO_CHECK_ENV;
@@ -319,49 +316,21 @@ Quoter_Client::init (int argc, char **argv)
           int naming_result = this->init_naming_service ();
           if (naming_result == -1)
             return naming_result;
-      /*}
-      else
-          {
-          if (this->quoter_factory_key_ == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: no quoter factory key specified\n",
-                              this->argv_[0]),
-                              -1);
-
-          CORBA::Object_var factory_object = 
-            this->orb_->string_to_object (this->quoter_factory_key_,
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-      
-          this->factory_var_ = Stock::Quoter_Factory::_narrow (factory_object.in (), 
-                                                           TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-      
-          if (CORBA::is_nil (this->factory_var_.in ()))
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,"invalid factory key <%s>\n",
-                                 this->quoter_factory_key_),
-                                -1);
-            }
-        }*/
     
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
     
-      // Now retrieve the Quoter obj ref corresponding to the key.
-      // direct Quoter Factory
-
-      // this->quoter_ = this->factory_var_->create_quoter (this->quoter_key_, TAO_TRY_ENV);
-
       // using the Quoter Generic Factory
       CosLifeCycle::Key genericFactoryName (1);  // max = 1 
       genericFactoryName.length(1);
-      genericFactoryName[0].id = CORBA::string_dup ("Generic_Quoter_Factory");
+      genericFactoryName[0].id = CORBA::string_dup ("Quoter_Factory"); 
+      // The final factory
 
       CosLifeCycle::Criteria criteria(1);
       criteria.length (1);
       criteria[0].name = CORBA::string_dup ("filter");
       criteria[0].value <<= CORBA::string_dup ("name=='Quoter_Generic_Factory'");
+      // used to find the last generic factory in the chain
       
       CORBA::Object_var quoterObject_var = 
 	this->generic_Factory_var_->create_object (genericFactoryName,

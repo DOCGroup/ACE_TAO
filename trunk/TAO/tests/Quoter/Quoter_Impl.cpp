@@ -138,7 +138,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       for (u_int i = 0; i < factories_ptr->length (); i++)
         {
           // Get the first object reference to a factory.
-          CORBA::Object_ptr generic_Obj_ptr = (*factories_ptr)[i];
+          CORBA::Object_ptr generic_FactoryObj_ptr = (*factories_ptr)[i];
 	  
           // Narrow it to a Quoter Factory.
           CosLifeCycle::GenericFactory_var generic_Factory_var =
@@ -153,40 +153,23 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
 	      return CosLifeCycle::LifeCycleObject::_nil();
 	    }
 	  
-                CosLifeCycle::Key genericFactoryName (1);  // max = 1 
-      genericFactoryName.length(1);
-      genericFactoryName[0].id = CORBA::string_dup ("Generic_Quoter_Factory");
-
-      CosLifeCycle::Criteria criteria(1);
-      criteria.length (1);
-      criteria[0].name = CORBA::string_dup ("filter");
-      criteria[0].value <<= CORBA::string_dup ("name=='Quoter_Generic_Factory'");
-      
-      CORBA::Object_var quoterObject_var = 
-        this->generic_Factory_var_->create_object (genericFactoryName,
-				                                    		   criteria,
-						                                        TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-            this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
-      TAO_CHECK_ENV;
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
-    
-      if (CORBA::is_nil (this->quoter_var_.in()))
-      {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "null quoter objref returned by factory\n"),
-                            -1);
-      }
-
-          // Try to get a Quoter created by this factory.
-          // and duplicate the pointer to it
-          quoter_var = Stock::Quoter::_duplicate ();
+	  CosLifeCycle::Key genericFactoryName (1);  // max = 1 
+	  genericFactoryName.length(1);
+	  genericFactoryName[0].id = CORBA::string_dup ("Quoter_Factory");
 	  
-          // @@ mk1: The create_quoter should return an exception
-          TAO_CHECK_ENV;
+	  CosLifeCycle::Criteria criteria(1);
+	  criteria.length (1);
+	  criteria[0].name = CORBA::string_dup ("filter");
+	  criteria[0].value <<= CORBA::string_dup ("name=='Quoter_Generic_Factory'");
+	  
+	  CORBA::Object_var quoterObject_var = 
+	    generic_Factory_var->create_object (genericFactoryName,
+						       criteria,
+						       TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  
+	  Stock::Quoter_var quoter_var = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
+	  TAO_CHECK_ENV;
 	  
           if (CORBA::is_nil (quoter_var.in ()))
             {
@@ -211,8 +194,11 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
             break;	  
         }
       
-      // Return an object reference to the newly created Quoter.
-      return (CosLifeCycle::LifeCycleObject_ptr) quoter_var.ptr();
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Quoter copied\n"));
+
+      // Duplicate and eturn an object reference to the newly created Quoter.
+      return CosLifeCycle::LifeCycleObject::_duplicate ((CosLifeCycle::LifeCycleObject_ptr) quoter_var.ptr());
     }
   TAO_CATCHANY
     {
