@@ -25,6 +25,10 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# ifndef ACE_IOCTL_TYPE_ARG2
+# define ACE_IOCTL_TYPE_ARG2 int
+# endif
+
 #include "ace/os_include/os_stropts.h"
 #include "ace/os_include/os_stdio.h"
 #include "ace/ACE_export.h"
@@ -105,7 +109,7 @@ namespace ACE_OS {
   /// UNIX-style <ioctl>.
   ACE_NAMESPACE_INLINE_FUNCTION
   int ioctl (ACE_HANDLE handle,
-             int cmd,
+             ACE_IOCTL_TYPE_ARG2 cmd,
              void * = 0);
 
   /// QoS-enabled <ioctl>.
