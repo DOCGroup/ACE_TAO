@@ -15,7 +15,7 @@
 
 PACE_INLINE
 int
-pace_mlock (const void * addr, size_t len)
+pace_mlock (const void * addr, pace_size_t len)
 {
   return mlock (((char*)addr), len);
 }
@@ -30,7 +30,7 @@ pace_mlockall (int flags)
 PACE_INLINE
 void *
 pace_mmap (void * addr,
-           size_t len,
+           pace_size_t len,
            int prot,
            int flags,
            int fildes,
@@ -41,7 +41,7 @@ pace_mmap (void * addr,
 
 PACE_INLINE
 int
-pace_munlock (const void * addr, size_t len)
+pace_munlock (const void * addr, pace_size_t len)
 {
   return munlock (((char*)addr), len);
 }
@@ -49,7 +49,7 @@ pace_munlock (const void * addr, size_t len)
 PACE_INLINE
 int
 pace_mprotect (void * addr,
-               size_t len,
+               pace_size_t len,
                int prot)
 {
   return mprotect ((char*)addr, len, prot);
@@ -58,7 +58,7 @@ pace_mprotect (void * addr,
 PACE_INLINE
 int
 pace_msync (void * addr,
-            size_t len,
+            pace_size_t len,
             int flags)
 {
   return msync ((char*)addr, len, flags);
@@ -73,7 +73,7 @@ pace_munlockall ()
 
 PACE_INLINE
 int
-pace_munmap (void * addr, size_t len)
+pace_munmap (void * addr, pace_size_t len)
 {
   return munmap ((char *) addr, len);
 }

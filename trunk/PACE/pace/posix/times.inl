@@ -14,8 +14,8 @@
  * ============================================================================= */
 
 PACE_INLINE
-clock_t
-pace_times (struct tms * buffer)
+pace_clock_t
+pace_times (pace_tms * buffer)
 {
   return times (buffer);
 }
