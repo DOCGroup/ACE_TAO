@@ -81,7 +81,7 @@ public:
    */
   int fini (ACE_ENV_SINGLE_ARG_DECL);
 
-  int idle(int & result);
+  int idle(int & result ACE_ENV_ARG_DECL);
 
 
   /**
@@ -98,7 +98,7 @@ public:
    * @param id the numerical id assigned to this replica.
    * @param replica a pointer to the Replica object (redundant for safety.)
    */
-  void remove_replica (CORBA::ULong id, FT_TestReplica_i * replica);
+  void remove_replica (CORBA::ULong id, FT_TestReplica_i * replica ACE_ENV_ARG_DECL);
 
   //////////////////
   // CORBA interface
@@ -148,7 +148,7 @@ private:
    * Actual replica creation happens in this method.
    * @param name becomes part of the objects identity.
    */
-  FT_TestReplica_i * create_replica(const char * name);
+  FT_TestReplica_i * create_replica(const char * name ACE_ENV_ARG_DECL);
 
   /**
    * Find or allocate an ID for a new replica

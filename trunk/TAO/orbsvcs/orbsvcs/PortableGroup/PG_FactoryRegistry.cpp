@@ -114,7 +114,7 @@ void TAO::PG_FactoryRegistry::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->quit_state_ = GONE;
 }
 
-int TAO::PG_FactoryRegistry::idle (int & result)
+int TAO::PG_FactoryRegistry::idle (int & result ACE_ENV_ARG_DECL_NOT_USED)
 {
   result = 0;
   int quit = 0;

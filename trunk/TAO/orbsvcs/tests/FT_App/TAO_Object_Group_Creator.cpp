@@ -42,7 +42,7 @@ int TAO::Object_Group_Creator::set_factory_registry (PortableGroup::FactoryRegis
 }
 
 
-int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USED)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -53,22 +53,31 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     // Find the ReplicationManager
     ACE_TRY_NEW_ENV
     {
-      CORBA::Object_var rm_obj = orb->resolve_initial_references ("ReplicationManager" ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var rm_obj
+        = orb->resolve_initial_references (
+          "ReplicationManager" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->replication_manager_ = ::FT::ReplicationManager::_narrow (rm_obj.in () ACE_ENV_ARG_PARAMETER);
+      this->replication_manager_
+        = ::FT::ReplicationManager::_narrow (
+          rm_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (!CORBA::is_nil (this->replication_manager_.in ()))
       {
         this->have_replication_manager_ = 1;
         // empty criteria
         ::PortableGroup::Criteria criteria;
-        this->registry_ = this->replication_manager_->get_factory_registry (criteria  ACE_ENV_ARG_PARAMETER);
+        this->registry_
+          = this->replication_manager_->get_factory_registry (
+            criteria  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
         if (!CORBA::is_nil (this->registry_.in ()))
         {
-          this->detector_infos_ = this->registry_->list_factories_by_role (FT::FAULT_DETECTOR_ROLE_NAME, this->detector_type_id_.out ()
-              ACE_ENV_ARG_PARAMETER)
+          this->detector_infos_
+            = this->registry_->list_factories_by_role (
+              FT::FAULT_DETECTOR_ROLE_NAME,
+              this->detector_type_id_.out ()
+              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           CORBA::ULong count = this->detector_infos_->length ();
           ACE_DEBUG ( (LM_DEBUG,
@@ -182,7 +191,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
             criteria.in (),
             factory_creation_id
             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_CHECK_RETURN(-1);
           result = 1;
         }
       }
@@ -260,7 +269,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
   PortableGroup::ObjectGroupId group_id = 0;
   CORBA::String_var type_id;
   ::PortableGroup::FactoryInfos_var infos = this->registry_->list_factories_by_role (role, type_id
-      ACE_ENV_ARG_PARAMETER)
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::ULong count = infos->length ();

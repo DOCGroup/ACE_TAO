@@ -236,7 +236,7 @@ const char * FT_ReplicaFactory_i::identity () const
   return this->identity_.c_str();
 }
 
-int FT_ReplicaFactory_i::idle (int & result)
+int FT_ReplicaFactory_i::idle (int & result ACE_ENV_ARG_DECL)
 {
   result = 0;
   size_t replicaCount = this->replicas_.size();
@@ -251,7 +251,7 @@ int FT_ReplicaFactory_i::idle (int & result)
         // ignore the return status (the replica should shut itself down
         // unless result is non-zero.
         // non-zero result means panic.
-        replica->idle(result);
+        replica->idle(result ACE_ENV_ARG_PARAMETER);
       }
     }
   }
@@ -499,7 +499,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     // shouldn't be necessary, but create_replica assumes this
     InternalGuard guard (this->internals_);
-    FT_TestReplica_i * replica = create_replica ("test");
+    FT_TestReplica_i * replica = create_replica ("test" ACE_ENV_ARG_PARAMETER);
 
     PortableServer::POA_var poa = replica->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
@@ -576,14 +576,15 @@ int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * replica)
+void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * replica ACE_ENV_ARG_DECL)
 {
   InternalGuard guard (this->internals_);
   if (id < this->replicas_.size())
   {
     if(this->replicas_[id] == replica)
     {
-      replica->fini();
+      replica->fini(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
       delete replica;
       this->replicas_[id] = 0;
       this->empty_slots_ += 1;
@@ -659,16 +660,16 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName
       ));
-    ACE_THROW ( PortableGroup::InvalidCriteria() );
+    ACE_THROW_RETURN ( PortableGroup::InvalidCriteria(), 0);
   }
 
-  FT_TestReplica_i * replica = create_replica(role);
+  FT_TestReplica_i * replica = create_replica(role ACE_ENV_ARG_PARAMETER);
   if (replica == 0)
   {
     ACE_ERROR ((LM_ERROR,
       "New Replica_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
-    ACE_THROW ( PortableGroup::ObjectNotCreated() );
+    ACE_THROW_RETURN ( PortableGroup::ObjectNotCreated(), 0);
   }
 
   ACE_NEW_THROW_EX ( factory_creation_id,
@@ -682,11 +683,12 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     ));
 
 
-  ::CORBA::Object_ptr replica_obj = replica->_default_POA()->servant_to_reference(replica);
-  METHOD_RETURN(FT_ReplicaFactory_i::create_object) replica_obj->_duplicate(replica_obj ACE_ENV_ARG_PARAMETER);
+  ::CORBA::Object_ptr replica_obj =
+    replica->_default_POA(ACE_ENV_SINGLE_ARG_PARAMETER)->servant_to_reference(replica);
+  METHOD_RETURN(FT_ReplicaFactory_i::create_object) replica_obj->_duplicate(replica_obj);
 }
 
-FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name)
+FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name ACE_ENV_ARG_DECL)
 {
   // assume mutex is locked
   CORBA::ULong factoryId = allocate_id();
@@ -739,14 +741,14 @@ void FT_ReplicaFactory_i::delete_object (
   METHOD_RETURN(FT_ReplicaFactory_i::delete_object);
 }
 
-CORBA::Boolean FT_ReplicaFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Boolean FT_ReplicaFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(FT_ReplicaFactory_i::is_alive)
     1;
 }
 
-void FT_ReplicaFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+void FT_ReplicaFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
