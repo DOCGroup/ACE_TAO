@@ -40,6 +40,14 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
 {
 }
 
+TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
+{
+  // Explicitly call close() to aid in post-error resource clean up.
+  // close() is called to ensure that the rendezvous point is removed
+  // from the filesystem.
+  this->close ();
+}
+
 int
 TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)

@@ -46,6 +46,9 @@ public:
   TAO_UIOP_Acceptor (void);
   // Create Acceptor object using addr.
 
+  virtual ~TAO_UIOP_Acceptor (void);
+  // Destructor
+
   int open (TAO_ORB_Core *orb_core,
             int version_major,
             int version_minor,
