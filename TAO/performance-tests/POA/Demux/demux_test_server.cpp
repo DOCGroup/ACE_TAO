@@ -47,6 +47,8 @@ int
 Demux_Test_Server::init (int argc, char *argv [], CORBA::Environment &env)
 {
 
+printf ("here\n");
+
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -109,6 +111,9 @@ Demux_Test_Server::init (int argc, char *argv [], CORBA::Environment &env)
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
 
+  ACE_DEBUG ((LM_DEBUG,
+              "Before Parse Args\n"));
+ 
   if (this->parse_args () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) Demux_Test_Server::init - "
@@ -236,7 +241,13 @@ Demux_Test_Server::init (int argc, char *argv [], CORBA::Environment &env)
               // activate the object
               TAO_TRY_EX (ACTIVATE_OBJ)
                 {
-                  id = this->child_poa_[i]->activate_object (&this->demux_test_[i][j],
+                  Demux_Test_i * demux_test_i_ptr;
+                  ACE_NEW_RETURN (demux_test_i_ptr,
+                                  Demux_Test_i,
+                                  -1);
+                  
+                  //id = this->child_poa_[i]->activate_object (&this->demux_test_[j],
+                  id = this->child_poa_[i]->activate_object (demux_test_i_ptr,
                                                              TAO_TRY_ENV);
                   TAO_CHECK_ENV_EX (ACTIVATE_OBJ);
                 }
@@ -473,12 +484,30 @@ Demux_Test_Server::run (CORBA::Environment &env)
   return 0;
 }
 
-//  #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-//  template class ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex>>;
+template class ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex> >;
+template class ACE_Unbounded_Set<ACE_Event_Descriptions>;
+template class ACE_Unbounded_Set_Iterator<ACE_Event_Descriptions>;
+template class ACE_Node<ACE_Event_Descriptions>;
 
-//  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-//  #pragma instantiate ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex>>;
+#pragma instantiate ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex> >
+#pragma instantiate ACE_Unbounded_Set<ACE_Event_Descriptions>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Descriptions>
+#pragma instantiate ACE_Node<ACE_Event_Descriptions>
 
-//  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
+
+
+
+
+
+
+
+
+
+
