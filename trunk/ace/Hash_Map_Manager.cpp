@@ -138,6 +138,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Manager (ACE_Alloca
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
 {
+  // Protect against double deletion in case the destructor also gets
+  // called.
   if (this->table_ != 0)
     {
       // Iterate through the entire map calling the destuctor of each
@@ -160,10 +162,11 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
           entry.ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
         }
 
-      // Free table memory
+      // Free table memory.
       this->allocator_->free (this->table_);
-      this->table_ = 0;
       this->cur_size_ = 0;
+      // Should be done last...
+      this->table_ = 0;
     }
   return 0;
 }
