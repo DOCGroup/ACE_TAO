@@ -1,34 +1,40 @@
+Sat Apr 14 18:08:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Configuration_Import_Export.h:
+          Fixed small typo in the @file comment for
+          Configuration_Import_Export.h
+
 Sat Apr 14 18:31:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Makefile.bor: Added new Configuration_Import_Export.obj file.
-    
-	* tests/Config_Test.cpp: Added tests for the new ACE_Configuration*
-	  stuff.  Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
- 	  contributing these.
+        * ace/Makefile.bor: Added new Configuration_Import_Export.obj file.
 
-	* ace/Configuration_Import_Export.{h,cpp}: Added two new files that
-	  do the following:
-  
+        * tests/Config_Test.cpp: Added tests for the new ACE_Configuration*
+          stuff.  Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
+          contributing these.
+
+        * ace/Configuration_Import_Export.{h,cpp}: Added two new files that
+          do the following:
+
           1. Remove the import and export functionality from the
-	     ACE_Configuration object.
-	  2. Provide two new classes to import/export ACE_Configuration
-	     objects:
-  
-	     * ACE_Registry_ImpExp import and exports in the Win32
-	       Registry format - this was the old import/export routine on
-	       ACE_Configuration.
-	     * ACE_Ini_ImpExp imports and exports in an INI format.  The
-	       import part of this was called import_config_as_strings in
-	       the old ACE_Configuration object.  While this object will
-	       export any ACE_Configuration object, it can only import data as
-	       strings.  This is due to the inability to distinguish type
-	       in the INI format. 
-	  3. Added operator== to ACE_Configuration.  This is to compare
-	     contents not type.
-	  4. Test programs were modified to exercise this new functionality.
+             ACE_Configuration object.
+          2. Provide two new classes to import/export ACE_Configuration
+             objects:
 
-	  Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
- 	  contributing these.
+             * ACE_Registry_ImpExp import and exports in the Win32
+               Registry format - this was the old import/export routine on
+               ACE_Configuration.
+             * ACE_Ini_ImpExp imports and exports in an INI format.  The
+               import part of this was called import_config_as_strings in
+               the old ACE_Configuration object.  While this object will
+               export any ACE_Configuration object, it can only import data as
+               strings.  This is due to the inability to distinguish type
+               in the INI format.
+          3. Added operator== to ACE_Configuration.  This is to compare
+             contents not type.
+          4. Test programs were modified to exercise this new functionality.
+
+          Thanks to Jerry Odenwelder <jerry.o@mindspring.com> for
+          contributing these.
 
 Sat Apr 14 12:44:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
