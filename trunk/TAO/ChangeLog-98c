@@ -1,22 +1,28 @@
+Tue Aug  4 16:00:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Added a section on the use of <corba.h>
+	  instead of <tao/corba.h>.  Also cleaned up some other
+	  sections about TAOACE.dsw and adding a IDL file to a MSVC
+	  project.
+
 Tue Aug  4 15:56:34 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp : Changed BUFSIZ to
-	 3*BUFSIZ to fit the arguments. Made the default base orb port
-	as 0.
+	  3*BUFSIZ to fit the arguments. Made the default base orb port
+	  as 0.
 
 Tue Aug 4 14:52:12 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
-      * TAO/tests/Param_Test/bd_struct_seq.{h,cpp}:
-        Same changes as other bounded sequence tests
-        checked in yesterday (non _var members for DII
-        OUT arg and return value). Test now works for DII
-        as well as SII.
+        * TAO/tests/Param_Test/bd_struct_seq.{h,cpp}:
+          Same changes as other bounded sequence tests
+          checked in yesterday (non _var members for DII
+          OUT arg and return value). Test now works for DII
+          as well as SII.
 
 Tue Aug  4 12:55:06 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Logger/run_test.pl: Revised test script to call
-	the executables in the correct directories.
- 	
+	  the executables in the correct directories.
 
 Tue Aug  4 12:11:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
@@ -29,19 +35,20 @@ Tue Aug 04 11:08:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Mon Aug 3 19:46:55 1998 Jeff Parsons <jp4@cs.wuslt.edu>
 
-      * tao_idl/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
-        moved buffer allocation in default constructor from body to
-        base class call - prevents debug assertion in param tests.
+        * tao_idl/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+          moved buffer allocation in default constructor from body to
+          base class call - prevents debug assertion in param tests.
 
-      * tao/Sequence_T.i:
-        change corresponding to the above
+        * tao/Sequence_T.i:
+          change corresponding to the above
 
-      * TAO/tests/Param_Test/bd_short_seq.{h,cpp}:
-        TAO/tests/Param_Test/bd_long_seq.{h,cpp}:
-        TAO/tests/Param_Test/bd_str_seq.{h,cpp}:
-        created non-_var members for OUT args and return values,
-        changed add_args and check_validity accordingly. These
-        param tests now work for SII and DII.
+        * TAO/tests/Param_Test/bd_short_seq.{h,cpp}:
+          TAO/tests/Param_Test/bd_long_seq.{h,cpp}:
+          TAO/tests/Param_Test/bd_str_seq.{h,cpp}:
+          created non-_var members for OUT args and return values,
+          changed add_args and check_validity accordingly. These
+          param tests now work for SII and DII.
+
 Mon Aug  3 17:21:42 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* IIOP/test/clnt.cpp: 
@@ -890,8 +897,8 @@ Fri Jul 31 15:34:55 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
       * Param_Test/bd_string.cpp:
       * Param_test/ub_string.cpp:
-      I had been playing around and left the files in a state
-      where dii wouldn't work - undid my oversight.
+        I had been playing around and left the files in a state
+        where dii wouldn't work - undid my oversight.
 
 Fri Jul 31 15:10:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -932,10 +939,10 @@ Fri Jul 31 13:51:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	
 Fri Jul 31 14:06:22 1998  Jeff Parsons <jp4@cs.wustl.edu>
          
-      * tao_idl/be/be_visitor_argument/post_upcal_ss.cpp:
-      added an action to visit_predefined_type for the 
-      PT_pseudo case (OUT arg) that fixes the typecode 
-      sii param test.
+        * tao_idl/be/be_visitor_argument/post_upcal_ss.cpp:
+          added an action to visit_predefined_type for the 
+          PT_pseudo case (OUT arg) that fixes the typecode 
+          sii param test.
 
 Fri Jul 31 07:58:36 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
@@ -1305,9 +1312,9 @@ Mon Jul 27 16:55:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Jul 27 1:26:44 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-      * TAO/tests/Param_Test/var_struct{.h,.cpp}: Committed my
-        changes so far so others can check it out. DII version
-        doesn't work yet.
+        * TAO/tests/Param_Test/var_struct{.h,.cpp}: Committed my
+          changes so far so others can check it out. DII version
+          doesn't work yet.
 
 Mon Jul 27 12:44:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -1653,17 +1660,17 @@ Wed Jul 22 14:16:53 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 Wed Jul 22 14:12:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-      * TAO/tests/Cubit/TAO/DII_Cubit/client.cpp
-        Changed ACE_OS::strdup () in constructor initializations to
-        CORBA::string_dup () and added corresponding CORBA::string_free ()
-        in destructor.
+        * TAO/tests/Cubit/TAO/DII_Cubit/client.cpp
+          Changed ACE_OS::strdup () in constructor initializations to
+          CORBA::string_dup () and added corresponding CORBA::string_free ()
+          in destructor.
 
 Wed Jul 22 13:43:15 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-      * TAO/tests/Param_Test/options.{h,cpp}:
-        fixed -f option in parse_args so a #define MAX_BUFFER_LENGTH
-        is no longer needed. Added private member function read_ior
-        which uses ACE_Read_Buffer.
+        * TAO/tests/Param_Test/options.{h,cpp}:
+          fixed -f option in parse_args so a #define MAX_BUFFER_LENGTH
+          is no longer needed. Added private member function read_ior
+          which uses ACE_Read_Buffer.
 
 Wed Jul 22 12:41:22 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
