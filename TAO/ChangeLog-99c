@@ -1,9 +1,3 @@
-Tue Nov  2 23:41:42 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
-
-	* poa.tex (paragraph{Servant demultiplexing:}): Added to the 
-	  description of figure 13 (Effect of POA depth on POA 
-	  Demultiplexing latency.
-
 Tue Nov  2 21:19:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/ORB.h:
