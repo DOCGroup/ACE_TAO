@@ -178,8 +178,6 @@ SSL_shutdown (ssl);
        [AC_SUBST([ACE_TLS_LIBS],[$ace_TLS_LIBS])],
        [])
 
- AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
-
  dnl Restore the original library list and preprocessor flags.
  LIBS="$ace_save_LIBS"
  CPPFLAGS="$ace_save_CPPFLAGS"
