@@ -1,3 +1,96 @@
+Mon Apr 30 18:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+	* TAO_IDL/be_include/be_visitor_root/root_sth.h:
+
+	  New files for a new visitor that begins a separate
+	  pass through the AST for generating the tie
+	  classes. Code generation for the tie classes has 
+ 	  been moved from *S.h to *S_T.h. Some compilers,
+	  notably SunCC 5.2, require that template class
+	  declarations and source be in the same
+	  'compilation unit', or corresponding .h and .cpp files.
+	  This new visitor handles code generation for the
+	  root scope and for modules. Tie class code generation
+	  for the other relevant data types (interfaces, attributes,
+	  and operations) is handled by existing visitors.
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_produce.cpp:
+	* TAO_IDL/be/be_visitor_decl.cpp:
+	* TAO_IDL/be/be_visitor_root.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+	* TAO_IDL/be/be_visitor_module/module_sh.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_root/root_sh.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_root.h:
+
+	  Modified to support the new location of tie class declaration
+	  code generation.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+
+	  Cosmetic changes to generated code.
+
+	* orbsvcs/IFR_Service/IFR_BaseS.h:
+	* orbsvcs/IFR_Service/IFR_BaseS_T.h:
+	* orbsvcs/IFR_Service/IFR_BaseS_T.i:
+	* orbsvcs/IFR_Service/IFR_BasicS.h:
+	* orbsvcs/IFR_Service/IFR_BasicS_T.h:
+	* orbsvcs/IFR_Service/IFR_BasicS_T.i:
+	* orbsvcs/IFR_Service/IFR_ComponentsS.h:
+	* orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+	* orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+	* orbsvcs/IFR_Service/IFR_ExtendedS.h:
+	* orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+	* orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
+	* orbsvcs/IFR_Service/diffs/IFR_BaseS.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_BaseS_T.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_BaseS_T.i.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_BasicS.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_BasicS_T.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_BasicS_T.i.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.i.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.h.diff:
+	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.i.diff:
+	* tao/Domain/DomainS.h:
+	* tao/Domain/DomainS_T.h:
+	* tao/Domain/DomainS_T.i:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ImplRepoS_T.h:
+	* tao/PortableServer/ImplRepoS_T.i:
+	* tao/PortableServer/MessagingS.h:
+	* tao/PortableServer/MessagingS_T.h:
+	* tao/PortableServer/MessagingS_T.i:
+	* tao/PortableServer/PolicyS.h:
+	* tao/PortableServer/PolicyS_T.h:
+	* tao/PortableServer/PolicyS_T.i:
+	* tao/diffs/DomainS.h.diff:
+	* tao/diffs/DomainS_T.h.diff:
+	* tao/diffs/DomainS_T.i.diff:
+	* tao/diffs/ImplRepoS.h.diff:
+	* tao/diffs/ImplRepoS.i.diff:
+	* tao/diffs/ImplRepoS_T.i.diff:
+	* tao/diffs/MessagingS.h.diff:
+	* tao/diffs/MessagingS_T.i.diff:
+	* tao/diffs/PolicyS.h.diff:
+
+	  Regenerated skeleton files and corresponding .diff files.
+
+	* tao/Domain/TAO_Domain.dsp:
+	* tao/Domain/TAO_Domain_Static.dsp:
+
+	  Added DomainS_T.h and DomainS_T.i to projects.
+
 Mon Apr 30 16:53:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * docs/releasenotes/index.html:
