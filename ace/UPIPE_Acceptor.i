@@ -3,7 +3,7 @@
 
 // UPIPE_Acceptor.i
 
-inline int
+ASYS_INLINE int
 ACE_UPIPE_Acceptor::remove (void)
 {
   ACE_TRACE ("ACE_UPIPE_Acceptor::remove");

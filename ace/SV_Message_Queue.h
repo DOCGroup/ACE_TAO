@@ -82,5 +82,8 @@ protected:
   // Returned from the underlying msgget() system call.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Message_Queue.i"
+#endif
+
 #endif /* ACE_MESSAGE_QUEUE_H */

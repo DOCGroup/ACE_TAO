@@ -59,6 +59,8 @@ protected:
   // Ensure that this class is an abstract base class 
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/DEV.i"
+#endif
 
 #endif /* ACE_DEV_H */

@@ -6,6 +6,10 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Pipe.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/Pipe.i"
+#endif
+
 void
 ACE_Pipe::dump (void) const
 {

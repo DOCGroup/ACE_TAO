@@ -3,7 +3,7 @@
 
 // SPIPE.i
 
-inline int
+ASYS_INLINE int
 ACE_SPIPE::disable (int signum) const
 {
 #if defined (ACE_WIN32)

@@ -91,6 +91,8 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Stream.i"
+#endif
 
 #endif /* ACE_SOCK_STREAM_H */

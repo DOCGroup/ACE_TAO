@@ -3,7 +3,7 @@
 
 // SOCK.i
 
-inline int 
+ASYS_INLINE int 
 ACE_SOCK::set_option (int level, 
 		      int option, 
 		      void *optval, 
@@ -16,7 +16,7 @@ ACE_SOCK::set_option (int level,
 
 // Provides access to the ACE_OS::getsockopt system call.
 
-inline int 
+ASYS_INLINE int 
 ACE_SOCK::get_option (int level, 
 		      int option, 
 		      void *optval, 

@@ -6,6 +6,10 @@
 #include "ace/Handle_Set.h"
 #include "ace/Synch.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SOCK_Dgram.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram)
 
 void

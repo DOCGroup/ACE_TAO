@@ -5,7 +5,7 @@
 
 // Here's the simple-minded constructor. 
 
-inline
+ASYS_INLINE
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
@@ -13,7 +13,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (void)
 
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_SOCK_Dgram::send (const void *buf, 
 		      size_t n, 
 		      const ACE_Addr &addr, 
@@ -29,7 +29,7 @@ ACE_SOCK_Dgram::send (const void *buf,
 
 // <recvfrom> an n byte datagram (connectionless version).
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_SOCK_Dgram::recv (void *buf, 
 		      size_t n, 
 		      ACE_Addr &addr, 

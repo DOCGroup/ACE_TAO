@@ -115,6 +115,8 @@ private:
   // Address of device we are connected to.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/DEV_IO.i"
+#endif
 
 #endif /* ACE_DEV_IO_H */

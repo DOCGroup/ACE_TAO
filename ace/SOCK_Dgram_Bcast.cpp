@@ -5,6 +5,10 @@
 #define ACE_BUILD_DLL
 #include "ace/SOCK_Dgram_Bcast.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SOCK_Dgram_Bcast.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Bcast)
 
 ACE_Bcast_Node::ACE_Bcast_Node (ACE_INET_Addr &addr,
