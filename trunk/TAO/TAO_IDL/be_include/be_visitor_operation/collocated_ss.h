@@ -47,6 +47,10 @@ public:
   virtual int visit_operation (be_operation *node);
   // visit operation node.
 
+  int gen_invoke (be_visitor_context &ctx, be_operation *node);
+  // A helper method to generate operation invocation code.
+
+  int gen_check_exception (be_type *bt);
 };
 
 #endif /* _BE_VISITOR_OPERATION_COLLOCATED_SS_H_ */

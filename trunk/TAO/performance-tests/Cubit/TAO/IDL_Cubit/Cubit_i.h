@@ -37,6 +37,9 @@ public:
   ~Cubit_i (void);
   // Destructor
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Returns the default POA for this servant.
+
   virtual void cube_oneway (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a oneway call.
@@ -98,7 +101,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown routine.
 
+  void set_default_poa (PortableServer::POA_ptr poa);
+  // Set default poa.
+
 protected:
+  PortableServer::POA_var poa_;
 
   CORBA::ORB_var orb_;
   // Keep a pointer to the ORB so we can shut it down.
@@ -121,6 +128,8 @@ public:
   virtual Cubit_ptr make_cubit (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Make a cubit object.
+
+  void set_default_poa (PortableServer::POA_ptr poa);
 
 private:
   Cubit_i my_cubit_;

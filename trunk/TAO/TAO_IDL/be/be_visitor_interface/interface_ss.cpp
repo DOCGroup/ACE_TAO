@@ -212,6 +212,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "return 0;" << be_uidt << be_uidt << be_uidt_nl
       << "}\n\n";
 
+  // the downcast method.
   os->indent ();
   *os << "void* " << node->full_skel_name ()
       << "::_downcast (" << be_idt << be_idt_nl
@@ -282,9 +283,18 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     //      << "if (ACE_TRY_ENV.exception () != 0)" << be_idt_nl
     //      << "return 0;" << be_uidt_nl
       << "return new " << node->full_coll_name ()
-      << " (this, stub);" << be_uidt << be_nl;
+      << " (this, stub);" << be_uidt_nl;
 
   *os << "}\n\n";
+
+  // the _create_collocated_objref method
+  *os << "void*" << be_nl
+      << node->full_skel_name ()
+      << "::_create_collocated_objref (CORBA::ULong type, TAO_Stub *stub)" << be_nl
+      << "{" << be_idt_nl
+      << "return new " << node->full_coll_name ()
+      << " (this, stub);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // generate the collocated class impl
   be_visitor_context ctx (*this->ctx_);
