@@ -3,6 +3,12 @@ Tue Feb 17 11:30:53 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/orbconf.h: set TAO_ALIGNMENT_MAGIC_NUMBER to 128 if
           ACE_SIZEOF_LONG > 4, e.g., on 64-bit CPUs.
 
+        * TAO_IDL/ast/ast_array.cpp,ast_operation.cpp,ast_sequence.cpp,
+          ast_string.cpp,
+          TAO_IDL/util/utl_decllist.cpp,utl_exceptlist.cpp,utl_exprlist.cpp,
+          utl_idlist.cpp,utl_labellist.cpp,utl_namelist.cpp,utl_strlist.cpp:
+          moved base class initialization to beginning of initializer list
+
 Tue Feb 17 10:43:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosTimeBase.idl: 
