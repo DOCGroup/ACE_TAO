@@ -56,12 +56,8 @@ PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_narrow (
     return PortableServer::CurrentBase::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::CurrentBase_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::CurrentBase::_nil ();
-
-    new_obj = new PortableServer::CurrentBase (istub); // construct obj ref using the stub object
+    PortableServer::CurrentBase_ptr new_obj =
+      new PortableServer::CurrentBase (obj->_get_parent ());
     return new_obj;
   } // end of if
 
@@ -77,20 +73,17 @@ PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_narrow (
 
 PortableServer::CurrentBase_ptr PortableServer::CurrentBase::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::CurrentBase::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::CurrentBase::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::CurrentBase::_nil ();
-  else // narrow it
-        return PortableServer::CurrentBase::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::CurrentBase::_nil ();
+    }
+  return PortableServer::CurrentBase::_narrow (objref, env);
 }
 
 CORBA::Boolean PortableServer::CurrentBase::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -131,12 +124,7 @@ PortableServer::Policy_ptr PortableServer::Policy::_narrow (
     return PortableServer::Policy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::Policy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::Policy::_nil ();
-
-    new_obj = new PortableServer::Policy (istub); // construct obj ref using the stub object
+    PortableServer::Policy_ptr new_obj = new PortableServer::Policy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -152,20 +140,16 @@ PortableServer::Policy_ptr PortableServer::Policy::_narrow (
 
 PortableServer::Policy_ptr PortableServer::Policy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
-  if (!data) return PortableServer::Policy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::Policy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::Policy::_nil ();
-  else // narrow it
-        return PortableServer::Policy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::Policy::_nil ();
+    }
+  return PortableServer::Policy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data PortableServer_Policy_copy_paramdata [] =
@@ -380,12 +364,7 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
     return PortableServer::ThreadPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::ThreadPolicy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::ThreadPolicy::_nil ();
-
-    new_obj = new PortableServer::ThreadPolicy (istub); // construct obj ref using the stub object
+    PortableServer::ThreadPolicy_ptr new_obj = new PortableServer::ThreadPolicy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -401,20 +380,17 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::ThreadPolicy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::ThreadPolicy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::ThreadPolicy::_nil ();
-  else // narrow it
-        return PortableServer::ThreadPolicy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::ThreadPolicy::_nil ();
+    }
+  return PortableServer::ThreadPolicy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data _get_PortableServer_ThreadPolicy_value_paramdata [] =
@@ -492,12 +468,7 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
     return PortableServer::LifespanPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::LifespanPolicy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::LifespanPolicy::_nil ();
-
-    new_obj = new PortableServer::LifespanPolicy (istub); // construct obj ref using the stub object
+    PortableServer::LifespanPolicy_ptr new_obj = new PortableServer::LifespanPolicy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -513,20 +484,17 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
 
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::LifespanPolicy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::LifespanPolicy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::LifespanPolicy::_nil ();
-  else // narrow it
-        return PortableServer::LifespanPolicy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::LifespanPolicy::_nil ();
+    }
+  return PortableServer::LifespanPolicy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data _get_PortableServer_LifespanPolicy_value_paramdata [] =
@@ -604,12 +572,7 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
     return PortableServer::IdUniquenessPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::IdUniquenessPolicy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::IdUniquenessPolicy::_nil ();
-
-    new_obj = new PortableServer::IdUniquenessPolicy (istub); // construct obj ref using the stub object
+    PortableServer::IdUniquenessPolicy_ptr new_obj = new PortableServer::IdUniquenessPolicy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -625,20 +588,17 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
 
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::IdUniquenessPolicy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::IdUniquenessPolicy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::IdUniquenessPolicy::_nil ();
-  else // narrow it
-        return PortableServer::IdUniquenessPolicy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::IdUniquenessPolicy::_nil ();
+    }
+  return PortableServer::IdUniquenessPolicy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data _get_PortableServer_IdUniquenessPolicy_value_paramdata [] =
@@ -716,12 +676,7 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
     return PortableServer::IdAssignmentPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::IdAssignmentPolicy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::IdAssignmentPolicy::_nil ();
-
-    new_obj = new PortableServer::IdAssignmentPolicy (istub); // construct obj ref using the stub object
+    PortableServer::IdAssignmentPolicy_ptr new_obj = new PortableServer::IdAssignmentPolicy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -737,20 +692,17 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
 
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::IdAssignmentPolicy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::IdAssignmentPolicy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::IdAssignmentPolicy::_nil ();
-  else // narrow it
-        return PortableServer::IdAssignmentPolicy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::IdAssignmentPolicy::_nil ();
+    }
+  return PortableServer::IdAssignmentPolicy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data _get_PortableServer_IdAssignmentPolicy_value_paramdata [] =
@@ -828,12 +780,7 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
     return PortableServer::ImplicitActivationPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::ImplicitActivationPolicy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::ImplicitActivationPolicy::_nil ();
-
-    new_obj = new PortableServer::ImplicitActivationPolicy (istub); // construct obj ref using the stub object
+    PortableServer::ImplicitActivationPolicy_ptr new_obj = new PortableServer::ImplicitActivationPolicy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -849,20 +796,17 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
 
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::ImplicitActivationPolicy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::ImplicitActivationPolicy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::ImplicitActivationPolicy::_nil ();
-  else // narrow it
-        return PortableServer::ImplicitActivationPolicy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::ImplicitActivationPolicy::_nil ();
+    }
+  return PortableServer::ImplicitActivationPolicy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data _get_PortableServer_ImplicitActivationPolicy_value_paramdata [] =
@@ -940,12 +884,7 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
     return PortableServer::ServantRetentionPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::ServantRetentionPolicy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::ServantRetentionPolicy::_nil ();
-
-    new_obj = new PortableServer::ServantRetentionPolicy (istub); // construct obj ref using the stub object
+    PortableServer::ServantRetentionPolicy_ptr new_obj = new PortableServer::ServantRetentionPolicy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -961,20 +900,17 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
 
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::ServantRetentionPolicy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::ServantRetentionPolicy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::ServantRetentionPolicy::_nil ();
-  else // narrow it
-        return PortableServer::ServantRetentionPolicy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::ServantRetentionPolicy::_nil ();
+    }
+  return PortableServer::ServantRetentionPolicy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data _get_PortableServer_ServantRetentionPolicy_value_paramdata [] =
@@ -1053,12 +989,8 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
     return PortableServer::RequestProcessingPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::RequestProcessingPolicy_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::RequestProcessingPolicy::_nil ();
-
-    new_obj = new PortableServer::RequestProcessingPolicy (istub); // construct obj ref using the stub object
+    PortableServer::RequestProcessingPolicy_ptr
+    new_obj = new PortableServer::RequestProcessingPolicy (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -1074,20 +1006,17 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
 
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::RequestProcessingPolicy::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::RequestProcessingPolicy::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::RequestProcessingPolicy::_nil ();
-  else // narrow it
-        return PortableServer::RequestProcessingPolicy::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::RequestProcessingPolicy::_nil ();
+    }
+  return PortableServer::RequestProcessingPolicy::_narrow (objref, env);
 }
 
 static const TAO_Param_Data _get_PortableServer_RequestProcessingPolicy_value_paramdata [] =
@@ -1152,12 +1081,8 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
     return PortableServer::POAManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::POAManager_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::POAManager::_nil ();
-
-    new_obj = new PortableServer::POAManager (istub); // construct obj ref using the stub object
+    PortableServer::POAManager_ptr
+    new_obj = new PortableServer::POAManager (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -1173,20 +1098,17 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::POAManager::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::POAManager::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::POAManager::_nil ();
-  else // narrow it
-        return PortableServer::POAManager::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::POAManager::_nil ();
+    }
+  return PortableServer::POAManager::_narrow (objref, env);
 }
 
 // copy constructor
@@ -1357,12 +1279,8 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
     return PortableServer::AdapterActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::AdapterActivator_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::AdapterActivator::_nil ();
-
-    new_obj = new PortableServer::AdapterActivator (istub); // construct obj ref using the stub object
+    PortableServer::AdapterActivator_ptr
+    new_obj = new PortableServer::AdapterActivator (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -1378,20 +1296,17 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::AdapterActivator::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::AdapterActivator::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::AdapterActivator::_nil ();
-  else // narrow it
-        return PortableServer::AdapterActivator::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::AdapterActivator::_nil ();
+    }
+  return PortableServer::AdapterActivator::_narrow (objref, env);
 }
 
 static const TAO_Param_Data PortableServer_AdapterActivator_unknown_adapter_paramdata [] =
@@ -1459,12 +1374,8 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
     return PortableServer::ServantManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::ServantManager_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::ServantManager::_nil ();
-
-    new_obj = new PortableServer::ServantManager (istub); // construct obj ref using the stub object
+    PortableServer::ServantManager_ptr
+    new_obj = new PortableServer::ServantManager (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -1480,20 +1391,17 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
 
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::ServantManager::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::ServantManager::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::ServantManager::_nil ();
-  else // narrow it
-        return PortableServer::ServantManager::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::ServantManager::_nil ();
+    }
+  return PortableServer::ServantManager::_narrow (objref, env);
 }
 
 CORBA::Boolean PortableServer::ServantManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
@@ -1534,12 +1442,8 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
     return PortableServer::ServantActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::ServantActivator_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::ServantActivator::_nil ();
-
-    new_obj = new PortableServer::ServantActivator (istub); // construct obj ref using the stub object
+    PortableServer::ServantActivator_ptr
+    new_obj = new PortableServer::ServantActivator (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -1555,20 +1459,17 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
 
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::ServantActivator::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::ServantActivator::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::ServantActivator::_nil ();
-  else // narrow it
-        return PortableServer::ServantActivator::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::ServantActivator::_nil ();
+    }
+  return PortableServer::ServantActivator::_narrow (objref, env);
 }
 
 PortableServer::Servant PortableServer::ServantActivator::incarnate (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, CORBA::Environment &env)
@@ -1624,12 +1525,8 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
     return PortableServer::ServantLocator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::ServantLocator_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::ServantLocator::_nil ();
-
-    new_obj = new PortableServer::ServantLocator (istub); // construct obj ref using the stub object
+    PortableServer::ServantLocator_ptr
+    new_obj = new PortableServer::ServantLocator (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -1645,20 +1542,17 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
 
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::ServantLocator::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::ServantLocator::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::ServantLocator::_nil ();
-  else // narrow it
-        return PortableServer::ServantLocator::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::ServantLocator::_nil ();
+    }
+  return PortableServer::ServantLocator::_narrow (objref, env);
 }
 
 PortableServer::Servant PortableServer::ServantLocator::preinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie & the_cookie, CORBA::Environment &env)
@@ -1714,12 +1608,8 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
     return PortableServer::POA::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::POA_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::POA::_nil ();
-
-    new_obj = new PortableServer::POA (istub); // construct obj ref using the stub object
+    PortableServer::POA_ptr
+    new_obj = new PortableServer::POA (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -1735,20 +1625,17 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
 
 PortableServer::POA_ptr PortableServer::POA::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::POA::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::POA::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::POA::_nil ();
-  else // narrow it
-        return PortableServer::POA::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::POA::_nil ();
+    }
+  return PortableServer::POA::_narrow (objref, env);
 }
 
 // copy constructor
@@ -2775,12 +2662,8 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
     return PortableServer::Current::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
   {
-    STUB_Object *istub;
-    PortableServer::Current_ptr new_obj; // to be returned
-    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
-      return PortableServer::Current::_nil ();
-
-    new_obj = new PortableServer::Current (istub); // construct obj ref using the stub object
+    PortableServer::Current_ptr
+    new_obj = new PortableServer::Current (obj->_get_parent ()); // construct obj ref using the stub object
     return new_obj;
   } // end of if
 
@@ -2796,20 +2679,17 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
 
 PortableServer::Current_ptr PortableServer::Current::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
 {
-  CORBA::Object_ptr objref = CORBA::Object::_nil ();
   IIOP_Object *data = new IIOP_Object (host, port, key);
   if (!data) return PortableServer::Current::_nil ();
-  // get the object_ptr using Query Interface
-  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)
-  {
-        env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-        return PortableServer::Current::_nil ();
-  }
-  data->Release (); // QueryInterface had bumped up our count
-  if (CORBA::is_nil (objref))
-        return PortableServer::Current::_nil ();
-  else // narrow it
-        return PortableServer::Current::_narrow (objref, env);
+  // create the CORBA level proxy
+  CORBA::Object_ptr objref = new CORBA_Object (data);
+  if (objref == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return PortableServer::Current::_nil ();
+    }
+  return PortableServer::Current::_narrow (objref, env);
 }
 
 // copy constructor

@@ -42,7 +42,6 @@ IIOP_Object::~IIOP_Object (void)
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id)
   : STUB_Object (repository_id),
-    base (this),
     refcount_ (1),
     fwd_profile_ (0)
 {
@@ -53,7 +52,6 @@ IIOP_Object::IIOP_Object (char *repository_id,
 			  const IIOP::Profile &a_profile)
   : STUB_Object (repository_id),
     profile (a_profile),
-    base (this),
     refcount_ (1),
     fwd_profile_ (0)
 {

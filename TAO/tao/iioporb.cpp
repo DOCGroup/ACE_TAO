@@ -262,12 +262,13 @@ iiop_string_to_object (CORBA::String string,
   TAO_POA::decode_string_to_sequence (data->profile.object_key,
                                       string);
   
-  // Return the objref.
-  CORBA::Object_ptr obj;
-
-  (void) data->QueryInterface (IID_CORBA_Object,
-                               (void **) &obj);
-  data->Release ();
+  // Create the CORBA level proxy.
+  CORBA_Object *obj = new CORBA_Object (data);
+  
+  // Clean up in case of error
+  if (obj == 0)
+    data->Release ();
+  
   return obj;
 }
 

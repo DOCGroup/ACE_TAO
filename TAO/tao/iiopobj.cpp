@@ -304,9 +304,6 @@ IIOP_Object::Release (void)
 // STUB_OBJECT ... inherited by this one
 // IIOP_OBJECT ... this one
 //
-// CORBA::Object ... contained within this; it delegates back
-//      to this one as its "parent"
-
 TAO_HRESULT
 IIOP_Object::QueryInterface (REFIID riid,
                              void **ppv)
@@ -317,8 +314,6 @@ IIOP_Object::QueryInterface (REFIID riid,
       || IID_STUB_Object == riid
       || IID_TAO_IUnknown == riid)
     *ppv = this;
-  else if (IID_CORBA_Object == riid)
-    *ppv = &base;
 
   if (*ppv == 0)
     return ResultFromScode (TAO_E_NOINTERFACE);
@@ -348,7 +343,6 @@ IIOP_Object::IIOP_Object (const char *host,
                           char *repository_id)
   : STUB_Object (repository_id),
     profile (host, port, objkey),
-    base (this),
     refcount_ (1),
     fwd_profile_ (0)
 {
@@ -360,7 +354,6 @@ IIOP_Object::IIOP_Object (char *repository_id,
                           const char *objkey)
   : STUB_Object (repository_id),
     profile (addr, objkey),
-    base (this),
     refcount_ (1),
     fwd_profile_ (0)
 {

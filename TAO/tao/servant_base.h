@@ -38,11 +38,6 @@ protected:
   TAO_ServantBase (const TAO_ServantBase &);
   // Copy constructor, protected so no instances can be created.
 
-  void _set_parent (TAO_IUnknown *p);
-  // Set the "parent" in the QueryInterface hierarchy.
-  // @@ TODO use a conformant name; since it is an
-  // internal (implementation) method its name should start with '_'
-
   virtual CORBA::Boolean _is_a (const char* logical_type_id,
 				CORBA::Environment &env);
   // Local implementation of the CORBA::Object::_is_a method.
@@ -70,9 +65,16 @@ protected:
   // @@ TODO use a conformant name; since it is an
   // internal (implementation) method its name should start with '_'
 
+#if 0
+  void _set_parent (TAO_IUnknown *p);
+  // Set the "parent" in the QueryInterface hierarchy.
+  // @@ TODO use a conformant name; since it is an
+  // internal (implementation) method its name should start with '_'
+
   TAO_IUnknown *_get_parent (void) const;
   // Get the "parent" in the QueryInterface hierarchy.
-
+#endif
+       
   virtual const char *_interface_repository_id (void) const = 0;
   // Get this interface's repository id
 
@@ -81,8 +83,10 @@ protected:
   // The operation table for this servant, it is initialized by the
   // most derived class.
 
+#if 0
   TAO_IUnknown *parent_;
   // @@ TODO find out why is this here....
+#endif
 };
 
 class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
