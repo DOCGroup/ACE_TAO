@@ -1,3 +1,9 @@
+Sat Apr 12 22:33:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/Test_Filter/Makefile:
+	* orbsvcs/tests/Notify/RT_lib/Makefile: Added guards for builds in
+	  which RTCORBA is turned off.
+
 Fri Apr 11 17:00:00 2003  Roy Pollock <rpollock@ghs.com>
 
 	* orbsvcs/orbsvcs/AV/global.h: INTEGRITY already has typedefs of
