@@ -1,3 +1,12 @@
+Wed Aug 26 17:35:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Reactors_Test.cpp (close): Oops, the ACE_ASSERT() was
+ 	  incorrect.  It should be
+	  
+	  ACE_ASSERT (Test_Task::task_count_ >= 0);
+
+	  Thanks to David Levine for reporting this.
+
 Wed Aug 26 07:47:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Select_Reactor.h: Added template specialization for

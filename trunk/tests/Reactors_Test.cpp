@@ -109,7 +109,7 @@ Test_Task::close (u_long)
               ASYS_TEXT ("(%t) close Test_Task::task_count_ = %d\n"),
               Test_Task::task_count_));
 
-  ACE_ASSERT (Test_Task::task_count_ < 0);
+  ACE_ASSERT (Test_Task::task_count_ >= 0);
 
   return 0;
 }
