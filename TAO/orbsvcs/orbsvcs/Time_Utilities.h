@@ -69,7 +69,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Time_Utilities.i"
+#include "orbsvcs/orbsvcs/Time_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
