@@ -140,7 +140,11 @@ public:
 
     ACE_UPIPE_Addr remote_addr (r_addr);
 
-    return this->connect (new Client_Service (this->thr_mgr_), remote_addr);
+    Client_Service *cs;
+    
+    ACE_NEW_RETURN (cs, Client_Service (this->thr_mgr_), -1);
+
+    return this->connect (cs, remote_addr);
   }
 
 private:
