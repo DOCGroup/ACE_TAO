@@ -1,3 +1,12 @@
+Thu Jan 14 20:41:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS: Moved some code around to consolidate the getuid() and
+ 	  isatty() functions.
+
+	* ace/OS: Added support for the setuid() call.  Thanks to Susan
+ 	  Liebeskind <susan.liebeskind@gtri.gatech.edu> for suggesting
+ 	  this.
+
 Thu Jan 14 16:18:37 EST 1999  James CE Johnson  <jcej@lads.com>
 
   * docs/tutorials/001/page02.html:

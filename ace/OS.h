@@ -4658,6 +4658,7 @@ public:
   static pid_t getpid (void);
   static pid_t getpgid (pid_t pid);
   static uid_t getuid (void);
+  static int setuid (uid_t);
   static pid_t setsid (void);
   static int system (const char *s);
   static pid_t wait (int * = 0);
