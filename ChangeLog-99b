@@ -9,6 +9,8 @@ Tue May 18 11:00:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/Task_T: Moved the ACE_Buffered_Task logic out of the Task
  	  abstraction since it doesn't belong there.
 
+	* ace/Makefile: Regenerated the dependencies.
+
 	* ace/FlReactor.cpp: We should be including <FL/Fl.h> rather than
  	  "FL/Fl.h".
 
