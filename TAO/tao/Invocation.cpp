@@ -30,7 +30,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
-                                  TAO_GIOP_SEND_REQUEST_START);
+                                  TAO_GIOP_INVOCATION_START_ENTER);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
