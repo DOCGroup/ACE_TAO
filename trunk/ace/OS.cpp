@@ -3774,7 +3774,12 @@ ACE_OS::fork (const char *program_name)
   ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
 # else
-  pid_t pid = ::fork ();
+  pid_t pid =
+# if defined (ACE_HAS_STHREADS)
+    ::fork1 ();
+#else
+    ::fork ();
+#endif /* ACE_HAS_STHREADS */
 
   if (pid == 0)
     ACE_LOG_MSG->sync (program_name);
@@ -4185,12 +4190,12 @@ ACE_OS::open (const char *filename,
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock = 0;)
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
-    { 
-      ACE_MT 
+    {
+      ACE_MT
         (
-          ace_os_monitor_lock = 
-            ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object (ACE_Object_Manager::ACE_OS_MONITOR_LOCK); 
-          ace_os_monitor_lock->acquire (); 
+          ace_os_monitor_lock =
+            ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+          ace_os_monitor_lock->acquire ();
          )
     }
 
@@ -4274,12 +4279,12 @@ ACE_OS::open (const wchar_t *filename,
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock = 0;)
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
-    { 
-      ACE_MT 
+    {
+      ACE_MT
         (
-          ace_os_monitor_lock = 
-            ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object (ACE_Object_Manager::ACE_OS_MONITOR_LOCK); 
-          ace_os_monitor_lock->acquire (); 
+          ace_os_monitor_lock =
+            ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object (ACE_Object_Manager::ACE_OS_MONITOR_LOCK);
+          ace_os_monitor_lock->acquire ();
          )
     }
 
