@@ -81,9 +81,9 @@ ResultFromScode(TAO_SCODE scode)
 }
 
 #define TAO_NOERROR         ((TAO_SCODE) 0)
-#if !defined(ACE_WIN32) && !defined(DIGITAL_UNIX)
+#if !defined(NOERROR)
 #  define NOERROR TAO_NOERROR
-#endif /* ! ACE_WIN32 && ! DIGITAL_UNIX */
+#endif /* ! NOERROR */
 #define TAO_E_NOINTERFACE   ((TAO_SCODE) 17)
 
 
