@@ -1,3 +1,11 @@
+Fri Mar 27 16:47:26 1998  Steve Huston  <shuston@riverace.com>
+
+	* tests/tests.mdp: Made settings for Env_Value_Test consistent with
+	  other tests, so that run_tests.bat can find it.
+
+	* netsvcs/servers/servers4.mdp: Added ..\lib to Include directories
+	  when building in Release mode.
+
 Fri Mar 27 13:55:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/High_Res_Timer.i (gettime): ACE_OS::gettimeofday doesn't
