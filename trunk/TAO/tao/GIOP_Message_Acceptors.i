@@ -23,6 +23,14 @@ TAO_GIOP_Message_Acceptors::
 }
 
 
+ACE_INLINE
+TAO_GIOP_Message_Acceptors::
+  ~TAO_GIOP_Message_Acceptors (void)
+{
+  this->output_.reset ();
+}
+
+
 ACE_INLINE CORBA::Boolean
 TAO_GIOP_Message_Acceptors::
   make_reply (CORBA::ULong request_id,
