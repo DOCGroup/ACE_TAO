@@ -1,3 +1,8 @@
+Mon Jun 22 01:33:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_SYNCH_{1,2}): These two macros were added back for
+	  backward compatibility.
+
 Mon Jun 22 01:12:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (dlerror): Just use FormatMessageA instead of

@@ -1374,6 +1374,11 @@ private:
 
 # endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
+// These two are only for backward compatibility. You should avoid
+// using them if not necessary.
+# define ACE_SYNCH_1 ACE_SYNCH_DECL
+# define ACE_SYNCH_2 ACE_SYNCH_USE
+
 // For Win32 compatibility...
 # if !defined (ACE_WSOCK_VERSION)
 #   define ACE_WSOCK_VERSION 0, 0
@@ -3873,7 +3878,7 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 # endif /* ACE_HAS_SIG_C_FUNC */
 
 # if defined (ACE_WIN32)
-// Default WIN32 structured exception handler.  
+// Default WIN32 structured exception handler.
 int ACE_SEH_Default_Exception_Selector (void *);
 int ACE_SEH_Default_Exception_Handler (void *);
 # endif /* ACE_WIN32 */
