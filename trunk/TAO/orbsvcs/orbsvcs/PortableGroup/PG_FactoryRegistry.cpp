@@ -6,6 +6,9 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/Vector_T.h>
+#include <ace/OS_NS_stdio.h>
+#include <tao/debug.h>
+#include <tao/ORB_Constants.h>
 #include <tao/PortableServer/ORB_Manager.h>
 #include "PG_Operators.h" // operator == on CosNaming::Name
 

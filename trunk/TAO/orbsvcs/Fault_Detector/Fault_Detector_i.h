@@ -26,6 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <ace/Manual_Event.h>
+
 //////////////////////////////////
 // Classes declared in this header
 namespace TAO
