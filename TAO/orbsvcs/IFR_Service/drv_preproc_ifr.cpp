@@ -107,7 +107,7 @@ DRV_cpp_putarg (const char *str)
       ACE_OS::exit (99);
     }
 
-  arglist[argcount++] = str == 0 ? 0 : ACE::strnew (str);
+  arglist[argcount++] = ACE::strnew (str);
 }
 
 // Expand the output argument with the given filename.
