@@ -173,9 +173,9 @@ ACE_Log_Msg::exists (void)
 
   // Get the tss_log_msg from thread-specific storage.
   return key_created_
-    && ACE_Thread::getspecific (
-         log_msg_tss_key_,
-         ACE_reinterpret_cast (void **, &tss_log_msg)) != -1
+    && ACE_Thread::getspecific (log_msg_tss_key_,
+                                ACE_reinterpret_cast (void **,
+                                                      &tss_log_msg)) != -1
     && tss_log_msg;
 # else
 #   error "Platform must support thread-specific storage if threads are used."
@@ -197,8 +197,8 @@ ACE_Log_Msg::instance (void)
     {
       ACE_thread_mutex_t *lock =
         ACE_reinterpret_cast (ACE_thread_mutex_t *,
-          ACE_OS_Object_Manager::preallocated_object[
-          ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
+                              ACE_OS_Object_Manager::preallocated_object
+                              [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
       ACE_OS::thread_mutex_lock (lock);
 
       if (key_created_ == 0)
