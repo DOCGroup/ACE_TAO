@@ -1,5 +1,16 @@
 Fri Jul 16 19:57:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* examples/Callback_Quoter/run_test.pl:
+	* examples/Quoter/run_test.pl:
+	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
+	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+	* orbsvcs/tests/EC_Multiple/run_test.pl:
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	* orbsvcs/tests/Property/run_test.pl: Fixed the use of
+	  "Naming_Server".  Thanks to Irfan for reminding this.
+
 	* orbsvcs/Naming_Service/Makefile: Updated makefile to use
 	  multiple source files and generate Naming_Server.
 
