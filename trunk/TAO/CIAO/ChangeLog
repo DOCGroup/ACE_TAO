@@ -1,3 +1,10 @@
+Thu Apr 29 22:34:41 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Changed all the structures in the TargetData Model
+          to match what is given in the spec.
+
 Thu Apr 29 22:26:05 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.idl:
