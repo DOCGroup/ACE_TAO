@@ -1,3 +1,9 @@
+Sun Jan  4 20:17:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Collocation/Makefile.main:
+
+	  Added the smart proxy library to the link line.
+
 Sun Jan 4 16:04:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Utils/Server_Main.cpp:
