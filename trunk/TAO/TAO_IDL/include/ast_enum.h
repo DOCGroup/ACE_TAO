@@ -80,15 +80,16 @@ class TAO_IDL_FE_Export AST_Enum : public virtual AST_ConcreteType,
                                    public virtual UTL_Scope
 {
 public:
-  // Operations
+  // Operations.
 
   // Constructor(s)
-  AST_Enum ();
+  AST_Enum (void);
   AST_Enum (UTL_ScopedName *n,
             UTL_StrList *p,
             idl_bool local,
             idl_bool abstract);
 
+  // Destructor.
   virtual ~AST_Enum (void);
 
   // Narrowing
@@ -96,28 +97,35 @@ public:
   DEF_NARROW_FROM_DECL(AST_Enum);
   DEF_NARROW_FROM_SCOPE(AST_Enum);
 
-  // AST Dumping
-  virtual void                  dump(ostream &);
-
-  // Other operations
+  // AST Dumping.
+  virtual void dump (ostream &);
 
   // Look up an AST_EnumVal by value
-  virtual AST_EnumVal           *lookup_by_value(const AST_Expression *v);
+  virtual AST_EnumVal *lookup_by_value (const AST_Expression *v);
 
-  // Get value to be assigned to next enumerator
-  virtual unsigned long         next_enum_val();
+  // Get value to be assigned to next enumerator.
+  virtual unsigned long next_enum_val (void);
+
+  // Return the count of members
+  virtual int member_count (void);
 
   // Cleanup function.
   virtual void destroy (void);
 
 private:
-  // Data
-  unsigned long                 pd_enum_counter;        // Value for next
-                                                        // enumerator
-  // Scope management
-  friend int tao_yyparse();
-  virtual AST_EnumVal           *fe_add_enum_val(AST_EnumVal    *v);
+  friend int tao_yyparse (void);
 
+  int compute_member_count (void);
+  // Count the number of members.
+
+  int member_count_;
+  // Number of members.
+
+  unsigned long pd_enum_counter;
+  // Value for next enumerator.
+
+  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  // Scope Management.
 };
 
 #endif           // _AST_ENUM_AST_ENUM_HH

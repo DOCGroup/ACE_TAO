@@ -62,14 +62,8 @@ public:
   virtual SIZE_TYPE size_type (void);
   // Return our size type.
 
-  const char *full_name (void);
-  // Return the stringified full name.
-
   const char *flat_name (void);
   // Return the flattened full scoped name.
-
-  const char *repoID (void);
-  // Retrieve the repository ID.
 
   // Methods used by the interface type strategy.
   void compute_full_name  (const char *prefix,
@@ -92,9 +86,6 @@ public:
   // repoID.  Both the parameters should be non-null.
 
   // End of Methods use by the interface type strategy.
-
-  const char* prefix (void);
-  // Retrieve the repository ID prefix.
 
   virtual idl_bool is_nested (void);
   // Determines if we are inside of a nested scope or not.
@@ -152,17 +143,8 @@ protected:
   virtual int compute_size_type (void);
   // Determine our size type and set it if it is unknown.
 
-  virtual void compute_full_name (void);
-  // Computes the fully scoped name
-
   virtual void compute_flat_name (void);
   // Compute the flattened fully scoped name.
-
-  virtual void compute_repoID (void);
-  // Computes the repoID.
-
-  virtual void compute_prefix (void);
-  // Computes the prefix for the repoID.
 
   virtual void destroy ();
   // Cleanup function.
@@ -183,17 +165,8 @@ protected:
   idl_bool cli_stub_cdr_op_gen_;
   idl_bool cli_inline_cdr_op_gen_;
 
-  char *full_name_;
-  // Our full scoped name.
-
   char *flat_name_;
   // Flattened fully scoped name.
-
-  char *repoID_;
-  // Repository ID.
-
-  char *prefix_;
-  // The repository ID prefix.
 
   SIZE_TYPE size_type_;
   // Whether we are fixed or variable size (by default fixed).

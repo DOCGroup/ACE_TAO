@@ -62,30 +62,27 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_concrete_type.cc - Implementation of class AST_ConcreteType
- *
- * AST_ConcreteType nodes denote all non-interface types of IDL.
- * They are AST_Type nodes.
- */
+// AST_ConcreteType nodes denote all non-interface types of IDL.
+// They are AST_Type nodes.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_concrete_type, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_ConcreteType::AST_ConcreteType ()
+// Constructor(s) and destructor.
+AST_ConcreteType::AST_ConcreteType (void)
 {
 }
 
-AST_ConcreteType::AST_ConcreteType (AST_Decl::NodeType nt, UTL_ScopedName *n,
-				     UTL_StrList *p)
-		 : AST_Decl (nt, n, p)
+AST_ConcreteType::AST_ConcreteType (AST_Decl::NodeType nt, 
+                                    UTL_ScopedName *n,
+				                            UTL_StrList *p)
+  : AST_Decl (nt, 
+              n, 
+              p)
 {
 }
 
@@ -93,20 +90,6 @@ AST_ConcreteType::~AST_ConcreteType (void)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_ConcreteType, AST_Type)
 IMPL_NARROW_FROM_DECL(AST_ConcreteType)

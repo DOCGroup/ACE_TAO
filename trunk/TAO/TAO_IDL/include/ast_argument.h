@@ -62,57 +62,58 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_ARGUMENT_AST_ARGUMENT_HH
 #define _AST_ARGUMENT_AST_ARGUMENT_HH
 
 // Representation of argument to operation:
-//
 // An argument is a field with a direction attached
 
-/*
-** DEPENDENCIES: ast_field.hh, utl_scoped_name.hh, ast_type.hh
-**               utl_strlist.hh, ast_decl.hh
-**
-** USE: Included from ast.hh
-*/
-
-#include        "idl_fwd.h"
-#include        "idl_narrow.h"
-#include        "ast_field.h"
+#include "idl_fwd.h"
+#include "idl_narrow.h"
+#include "ast_field.h"
 
 
 class TAO_IDL_FE_Export AST_Argument : public virtual AST_Field
 {
 public:
-  // Define enum with values denoting argument passing directions
-  enum Direction {dir_IN, dir_OUT, dir_INOUT};
+  // Define enum with values denoting argument passing directions.
+  enum Direction 
+    {
+      dir_IN, 
+      dir_OUT, 
+      dir_INOUT
+    };
 
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Argument  ();
-  AST_Argument  (Direction direction, 
-                 AST_Type *ft, 
-                 UTL_ScopedName *n,
-                 UTL_StrList *p);
+  // Constructor(s).
+  AST_Argument (void);
 
+  AST_Argument (Direction direction, 
+                AST_Type *ft, 
+                UTL_ScopedName *n,
+                UTL_StrList *p);
+
+  // Destructor.
   virtual ~AST_Argument (void);
 
-  // Data Accessors
-  Direction direction();
+  // Data Accessors.
+  Direction direction (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Argument, AST_Field);
   DEF_NARROW_FROM_DECL(AST_Argument);
 
-  // AST Dumping
-  virtual void          dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  const Direction       pd_direction;   // Argument direction
+  // Data.
+
+  const Direction pd_direction;
+  // Argument direction
 };
 
 #endif           // _AST_ARGUMENT_AST_ARGUMENT_HH

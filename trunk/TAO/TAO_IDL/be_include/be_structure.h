@@ -58,9 +58,6 @@ public:
                             char *full_name = 0);
   // Generate the _out implementation.
 
-  virtual idl_bool in_recursion (be_type *node = 0);
-  // Are we or the node represented by node involved in recursion.
-
   virtual void destroy (void);
   // Cleanup method.
 

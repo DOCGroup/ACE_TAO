@@ -43,52 +43,9 @@ be_enum::be_enum (UTL_ScopedName *n,
               p),
     UTL_Scope (AST_Decl::NT_enum),
     COMMON_Base (local, 
-                 abstract),
-    member_count_ (-1)
+                 abstract)
 {
   this->size_type (be_decl::FIXED);
-}
-
-// Compute total number of members.
-int
-be_enum::compute_member_count (void)
-{
-  UTL_ScopeActiveIterator *si = 0;
-
-  this->member_count_ = 0;
-
-  // if there are elements in this scope
-  if (this->nmembers () > 0)
-    {
-      // Instantiate a scope iterator.
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this, 
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!(si->is_done ()))
-	      {
-	        // Get the next AST decl node.
-          this->member_count_++;
-          si->next ();
-        } 
-
-      delete si;
-    }
-
-  return 0;
-}
-
-// return the member count
-int
-be_enum::member_count (void)
-{
-  if (this->member_count_ == -1)
-    {
-      this->compute_member_count ();
-    }
-
-  return this->member_count_;
 }
 
 // Convert a numeric value to the string name

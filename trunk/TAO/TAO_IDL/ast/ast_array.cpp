@@ -62,139 +62,134 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_array.cc - Implementation of class AST_Array
- *
- * AST_Array nodes denote array type and field modifiers.
- * AST_Array nodes have a list of dimensions (a UTL_ExprList)
- * a count of the number of dimensions and a base type (a
- * subtype of AST_ConcreteType. This means that we cannot have
- * arrays of AST_Interfaces???
- */
+// AST_Array nodes denote array type and field modifiers.
+// AST_Array nodes have a list of dimensions (a UTL_ExprList)
+// a count of the number of dimensions and a base type (a
+// subtype of AST_ConcreteType. This means that we cannot have
+// arrays of AST_Interfaces???
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_array, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Array::AST_Array()
-         : pd_n_dims(0),
-           pd_dims(NULL),
-           pd_base_type(NULL)
+// Constructor(s) and destructor.
+
+AST_Array::AST_Array (void)
+  : pd_n_dims (0),
+    pd_dims (0),
+    pd_base_type (0)
 {
 }
 
-AST_Array::AST_Array(UTL_ScopedName *n,
-                     unsigned long nd,
-                     UTL_ExprList *ds,
-                     idl_bool local,
-                     idl_bool abstract)
-         : AST_Decl(AST_Decl::NT_array, n, NULL),
-           COMMON_Base (local, abstract),
-           pd_n_dims(nd), pd_base_type(NULL)
+AST_Array::AST_Array (UTL_ScopedName *n,
+                      unsigned long nd,
+                      UTL_ExprList *ds,
+                      idl_bool local,
+                      idl_bool abstract)
+  : AST_Decl (AST_Decl::NT_array, 
+              n, 
+              0),
+    COMMON_Base (local, 
+                 abstract),
+    pd_n_dims (nd), 
+    pd_base_type (0)
 {
-  pd_dims = compute_dims(ds, nd);
+  this->pd_dims = compute_dims (ds, 
+                                nd);
 }
 
 AST_Array::~AST_Array (void)
 {
 }
 
-/*
- * Private operations
- */
+// Private operations.
 
-/*
- * Compute how many dimensions there are and collect their expressions
- * into an array
- */
+// Compute how many dimensions there are and collect their expressions
+// into an array.
 AST_Expression **
-AST_Array::compute_dims(UTL_ExprList *ds, unsigned long nds)
+AST_Array::compute_dims (UTL_ExprList *ds, 
+                         unsigned long nds)
 {
-  AST_Expression        **result;
-  UTL_ExprlistActiveIterator *l;
-  unsigned long         i;
+  if (ds == 0)
+    {
+      return 0;
+    }
 
-  if (ds == NULL)
-    return NULL;
+  AST_Expression **result = 0;
+  ACE_NEW_RETURN (result,
+                  AST_Expression *[nds],
+                  0);
 
-  result = new AST_Expression *[nds];
-  l      = new UTL_ExprlistActiveIterator(ds);
+  UTL_ExprlistActiveIterator *iter;
+  ACE_NEW_RETURN (iter,
+                  UTL_ExprlistActiveIterator (ds),
+                  0);
 
-  for (i = 0; !(l->is_done()) && i < nds; l->next(), i++)
-    result[i] = l->item();
-  delete l;
+  for (unsigned long i = 0; 
+       !iter->is_done() && i < nds; 
+       iter->next(), i++)
+    {
+      result[i] = iter->item ();
+    }
+
+  delete iter;
   return result;
 }
 
-/*
- * Public operations
- */
+// Redefinition of inherited virtual operations.
 
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_Array node to the ostream o
- */
+// Dump this AST_Array node to the ostream o.
 void
-AST_Array::dump(ostream &o)
+AST_Array::dump (ostream &o)
 {
-  unsigned long i;
-
-  pd_base_type->dump(o);
+  pd_base_type->dump (o);
   o << " ";
-  local_name()->dump(o);
-  for (i = 0; i < pd_n_dims; i++) {
-    o << "[";
-    pd_dims[i]->dump(o);
-    o << "]";
-  }
+  this->local_name ()->dump (o);
+
+  for (unsigned long i = 0; i < this->pd_n_dims; i++) 
+    {
+      o << "[";
+      pd_dims[i]->dump (o);
+      o << "]";
+    }
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 unsigned long
-AST_Array::n_dims()
+AST_Array::n_dims (void)
 {
-  return pd_n_dims;
+  return this->pd_n_dims;
 }
 
 AST_Expression **
-AST_Array::dims()
+AST_Array::dims (void)
 {
-  return pd_dims;
+  return this->pd_dims;
 }
 
 AST_Type *
-AST_Array::base_type()
+AST_Array::base_type (void)
 {
-  return pd_base_type;
+  return this->pd_base_type;
 }
 
 void
-AST_Array::set_base_type(AST_Type *nbt)
+AST_Array::set_base_type (AST_Type *nbt)
 {
-  pd_base_type = nbt;
+  this->pd_base_type = nbt;
 }
 
 void
-AST_Array::set_dims(AST_Expression **ds, unsigned long nds)
+AST_Array::set_dims (AST_Expression **ds, 
+                     unsigned long nds)
 {
-    pd_dims = ds;
-    pd_n_dims = nds;
+    this->pd_dims = ds;
+    this->pd_n_dims = nds;
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Array, AST_ConcreteType)
 IMPL_NARROW_FROM_DECL(AST_Array)

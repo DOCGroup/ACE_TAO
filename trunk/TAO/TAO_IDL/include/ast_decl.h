@@ -80,11 +80,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-#include        "idl_fwd.h"
-#include        "idl_narrow.h"
-#include        "idl_bool.h"
-#include        "utl_scoped_name.h"
-#include        "utl_string.h"
+#include "idl_fwd.h"
+#include "idl_narrow.h"
+#include "idl_bool.h"
+#include "utl_scoped_name.h"
+#include "utl_string.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
@@ -105,10 +105,10 @@ public:
   virtual idl_bool is_local (void);
   virtual idl_bool is_abstract (void);
 
-  // A no-op, overridden in the BE classes
+  // A no-op, overridden in the child classes.
   virtual void destroy (void);
 
-        // Narrowing
+        // Narrowing.
   DEF_NARROW_METHODS0(COMMON_Base);
 
 protected:
@@ -119,68 +119,93 @@ protected:
 class TAO_IDL_FE_Export AST_Decl : public virtual COMMON_Base
 {
 public:
-  // Enum defining the different kinds of AST nodes
+  // Enum defining the different kinds of AST nodes.
   enum NodeType {
-        NT_module                               // Denotes a module
-      , NT_root                                 // Denotes the root of AST
-      , NT_interface                            // Denotes an interface
-      , NT_interface_fwd                        // Fwd declared interface
-      , NT_const                                // Denotes a constant
-      , NT_except                               // Denotes an exception
-      , NT_attr                                 // Denotes an attribute
-      , NT_op                                   // Denotes an operation
-      , NT_argument                             // Denotes an op. argument
-      , NT_union                                // Denotes a union
-      , NT_union_branch                         // Denotes a union branch
-      , NT_struct                               // Denotes a structure
-      , NT_field                                // Denotes a field in structure
-      , NT_enum                                 // Denotes an enumeration
-      , NT_enum_val                             // Denotes an enum. value
-      , NT_string                               // Denotes an IDL string
-      , NT_wstring                              // Denotes an IDL wstring
-      , NT_array                                // Denotes an IDL array
-      , NT_sequence                             // Denotes an IDL sequence
-      , NT_typedef                              // Denotes a typedef
-      , NT_pre_defined                          // Denotes a predefined type
-      , NT_native                               // Denotes a native type
-                                                // dependent on the programming
-                                                // language
+        NT_module                   // Denotes a module
+      , NT_root                     // Denotes the root of AST
+      , NT_interface                // Denotes an interface
+      , NT_interface_fwd            // Fwd declared interface
+      , NT_const                    // Denotes a constant
+      , NT_except                   // Denotes an exception
+      , NT_attr                     // Denotes an attribute
+      , NT_op                       // Denotes an operation
+      , NT_argument                 // Denotes an op. argument
+      , NT_union                    // Denotes a union
+      , NT_union_branch             // Denotes a union branch
+      , NT_struct                   // Denotes a structure
+      , NT_field                    // Denotes a field in structure
+      , NT_enum                     // Denotes an enumeration
+      , NT_enum_val                 // Denotes an enum. value
+      , NT_string                   // Denotes an IDL string
+      , NT_wstring                  // Denotes an IDL wstring
+      , NT_array                    // Denotes an IDL array
+      , NT_sequence                 // Denotes an IDL sequence
+      , NT_typedef                  // Denotes a typedef
+      , NT_pre_defined              // Denotes a predefined type
+      , NT_native                   // Denotes a native type
+                                    // dependent on the programming
+                                    // language
   };
 
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Decl();
-  AST_Decl(NodeType type, UTL_ScopedName *n, UTL_StrList *pragmas);
-  virtual ~AST_Decl();
+  // Constructor(s).
+  AST_Decl (void);
 
-  // Data Accessors
-  idl_bool imported();
-  void set_imported(idl_bool is_it);
-  idl_bool in_main_file();
-  void set_in_main_file(idl_bool is_it);
-  UTL_Scope *defined_in();
-  void set_defined_in(UTL_Scope *);
-  NodeType node_type();
-  long line();
-  void set_line(long l);
-  UTL_String *file_name();
-  void set_file_name(UTL_String *s);
+  AST_Decl (NodeType type, 
+            UTL_ScopedName *n, 
+            UTL_StrList *pragmas);
 
-  UTL_ScopedName *name();
+  virtual ~AST_Decl (void);
 
-  UTL_ScopedName *compute_name (const char *prefix, const char *suffix);
+  // Data Accessors.
+
+  idl_bool imported (void);
+
+  void set_imported (idl_bool is_it);
+
+  idl_bool in_main_file (void);
+
+  void set_in_main_file (idl_bool is_it);
+
+  UTL_Scope *defined_in (void);
+
+  void set_defined_in (UTL_Scope *);
+
+  NodeType node_type (void);
+
+  long line (void);
+
+  void set_line (long l);
+
+  UTL_String *file_name (void);
+
+  void set_file_name (UTL_String *s);
+
+  UTL_ScopedName *name (void);
+
+  UTL_ScopedName *compute_name (const char *prefix, 
+                                const char *suffix);
   // Variation of the <name>. Computes scoped name string, applying
   // prefix and suffix to the local name component.
 
-  void set_name(UTL_ScopedName *n);
+  void set_name (UTL_ScopedName *n);
 
-  Identifier *local_name ();
+  Identifier *local_name (void);
 
-  Identifier *compute_local_name (const char *prefix, const char *sufix);
+  Identifier *compute_local_name (const char *prefix, 
+                                  const char *sufix);
   // Apply prefix and suffix to the local name and return.
 
-  //
+  virtual const char *full_name (void);
+  // Return the stringified full name.
+
+  const char *repoID (void);
+  // Retrieve the repository ID.
+
+  const char *prefix (void);
+  // Retrieve the repository ID prefix.
+
   // If there is _cxx_ in the beginning, we will remove that and keep
   // a copy of the original name. TAO IDL's front end adds _cxx_
   // prefix to the all the reserved keywords. But when we invoke the
@@ -194,44 +219,91 @@ public:
   void original_local_name (Identifier *);
   // Set.
 
-  void add_pragmas(UTL_StrList *p);
-  UTL_StrList *pragmas();
-  idl_bool added();
-  void set_added(idl_bool is_it);
+  void add_pragmas (UTL_StrList *p);
 
-  // Narrowing
+  UTL_StrList *pragmas (void);
+
+  idl_bool added (void);
+
+  void set_added (idl_bool is_it);
+
+  // Narrowing.
   DEF_NARROW_METHODS0(AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Decl);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
   // Cleanup method.
   virtual void destroy (void);
 
   // Other operations
 
-  // Return TRUE if "this" has "s" as an ancestor
-  idl_bool                      has_ancestor(AST_Decl *s);
+  // Return TRUE if "this" has "s" as an ancestor.
+  idl_bool has_ancestor (AST_Decl *s);
+
+protected:
+  // These are not private because they're used by
+  // be_predefined_type' constructor.
+
+  char *repoID_;
+  // Repository ID.
+
+  void compute_repoID (void);
+  // Computes the repoID.
+
+  void compute_full_name (void);
+  // Computes the stringified scoped name.
 
 private:
   // Data
-  idl_bool                      pd_imported;    // Imported?
-  idl_bool                      pd_in_main_file; // Defined in main file?
-  UTL_Scope                     *pd_defined_in; // Scope
-  NodeType                      pd_node_type;   // What kind of node
-  long                          pd_line;        // Line defined in
-  UTL_String                    *pd_file_name;  // What file defined in
-  UTL_ScopedName                *pd_name;       // As given
-  Identifier                    *pd_local_name; // Name in scope
-  Identifier                    *pd_original_local_name; // _cxx_ removed if any.
-  UTL_StrList                   *pd_pragmas;    // Pragmas
-  idl_bool                      pd_added;       // already added
+
+  idl_bool pd_imported;
+  // Imported?
+
+  idl_bool pd_in_main_file;
+  // Defined in main file?
+
+  UTL_Scope *pd_defined_in;
+  // Scope.
+
+  NodeType pd_node_type;
+  // What kind of node.
+
+  long pd_line;
+  // Line defined in.
+
+  UTL_String *pd_file_name;
+  // What file defined in.
+
+  UTL_ScopedName *pd_name;
+  // As given.
+
+  Identifier *pd_local_name;
+  // Name in scope.
+
+  Identifier *pd_original_local_name;
+  // _cxx_ removed if any.
+
+  UTL_StrList *pd_pragmas;
+  // Pragmas.
+
+  idl_bool pd_added;
+  // Already added.
+
+  char *full_name_;
+  // Our full scoped name.
+
+  char *prefix_;
+  // The repository ID prefix.
 
   // Operations
 
-  // Compute the full name of an AST node
-  void                          compute_full_name(UTL_ScopedName *n);
+  void compute_prefix (void);
+  // Computes the prefix for the repoID.
+
+  // Compute the full name of an AST node.
+  void compute_full_name (UTL_ScopedName *n);
 };
 
 #endif           // _AST_DECL_AST_DECL_HH

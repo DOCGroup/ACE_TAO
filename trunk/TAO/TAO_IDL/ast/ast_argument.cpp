@@ -62,58 +62,57 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_argument.cc - Implementation of class AST_Argument.cc
- *
- * AST_Argument nodes denote arguments to an operation. They
- * are AST_Fields with directions. Thus, they have a name
- * (an UTL_ScopedName) and a type (a subclass of AST_Type).
- * Additionally they have a direction field which takes values
- * from the enum AST_Argument::Direction.
- */
+// AST_Argument nodes denote arguments to an operation. They
+// are AST_Fields with directions. Thus, they have a name
+// (an UTL_ScopedName) and a type (a subclass of AST_Type).
+// Additionally they have a direction field which takes values
+// from the enum AST_Argument::Direction.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_argument, "$Id$")
 
-/*
- * Static functions
- */
+// Static functions.
 
-/*
- * Convert an enum Direction value to a char *
- */
+// Convert an enum Direction value to a char *.
 static const char *
-direction_to_string(AST_Argument::Direction d)
+direction_to_string (AST_Argument::Direction d)
 {
-  switch (d) {
-  case AST_Argument::dir_IN:
-    return "in";
-  case AST_Argument::dir_OUT:
-    return "out";
-  case AST_Argument::dir_INOUT:
-    return "inout";
-  }
-  return NULL;
+  switch (d) 
+    {
+    case AST_Argument::dir_IN:
+      return "in";
+    case AST_Argument::dir_OUT:
+      return "out";
+    case AST_Argument::dir_INOUT:
+      return "inout";
+    }
+
+  return 0;
 }
 
-/*
- * Constructor(s) and destructor
- */
+// Constructor(s) and destructor.
 
-AST_Argument::AST_Argument()
-	    : pd_direction(dir_IN)
+AST_Argument::AST_Argument (void)
+  : pd_direction(dir_IN)
 {
 }
 
-AST_Argument::AST_Argument(Direction d, AST_Type *ft, UTL_ScopedName *n,
-			   UTL_StrList *p)
-	   : AST_Field(AST_Decl::NT_argument, ft, n, p),
-	     AST_Decl(AST_Decl::NT_argument, n, p),
-	     pd_direction(d)
+AST_Argument::AST_Argument (Direction d, 
+                            AST_Type *ft, 
+                            UTL_ScopedName *n,
+			                      UTL_StrList *p)
+  : AST_Field (AST_Decl::NT_argument, 
+               ft, 
+               n, 
+               p),
+	  AST_Decl (AST_Decl::NT_argument, 
+              n, 
+              p),
+	  pd_direction (d)
 {
 }
 
@@ -121,40 +120,24 @@ AST_Argument::~AST_Argument (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_Argument node to the ostream o
- */
+// Dump this AST_Argument node to the ostream o.
 void
-AST_Argument::dump(ostream &o)
+AST_Argument::dump (ostream &o)
 {
   o << direction_to_string(pd_direction) << " ";
-  AST_Field::dump(o);
+  AST_Field::dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_Argument::Direction
-AST_Argument::direction()
+AST_Argument::direction (void)
 {
-  return pd_direction;
+  return this->pd_direction;
 }
 
-/*
- * Narrowing operations
- */
+// Narrowing operations.
 IMPL_NARROW_METHODS1(AST_Argument, AST_Field)
 IMPL_NARROW_FROM_DECL(AST_Argument)

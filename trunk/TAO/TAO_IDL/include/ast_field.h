@@ -62,13 +62,13 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_FIELD_AST_FIELD_HH
 #define _AST_FIELD_AST_FIELD_HH
 
 // Representation of a generic field
-//
+
 // Used as member in structures, exceptions and unions, and as a base
 // type for attributes and arguments to operations
 //
@@ -76,25 +76,25 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // is used directly inside a structure, the second when it is used as
 // the base type for attributes and operations.
 
-/*
-** DEPENDENCIES: ast_decl.hh, ast_type.hh, utl_scoped_name.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
-
-#include        "idl_fwd.h"
-#include        "idl_narrow.h"
-#include        "ast_decl.h"
+#include "idl_fwd.h"
+#include "idl_narrow.h"
+#include "ast_decl.h"
 
 
 class TAO_IDL_FE_Export AST_Field : public virtual AST_Decl
 {
 public:
-  enum Visibility {vis_NA, vis_PUBLIC, vis_PRIVATE};
-  // Operations
+  enum Visibility 
+    {
+      vis_NA, 
+      vis_PUBLIC, 
+      vis_PRIVATE
+    };
 
-  // Constructor(s)
-  AST_Field ();
+  // Operations.
+
+  // Constructor(s).
+  AST_Field (void);
 
   AST_Field (AST_Type *field_type,
              UTL_ScopedName *n, 
@@ -109,21 +109,25 @@ public:
 
   virtual ~AST_Field (void);
 
-  // Data Accessors
-  AST_Type *field_type();
-  Visibility visibility();
+  // Data Accessors.
+  AST_Type *field_type (void);
 
-  // Narrowing
+  Visibility visibility (void);
+
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_Field, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Field);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  AST_Type                      *pd_field_type; // Base type for field
-  Visibility                    pd_visibility;
+  // Data.
+
+  AST_Type *pd_field_type;
+  // Base type for field.
+
+  Visibility pd_visibility;
 };
 
 #endif           // _AST_FIELD_AST_FIELD_HH
