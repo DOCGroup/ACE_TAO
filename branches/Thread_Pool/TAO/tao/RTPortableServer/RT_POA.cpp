@@ -108,9 +108,7 @@ TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies,
           priority_model->priority_model (ACE_TRY_ENV);
         ACE_CHECK;
 
-        this->cached_policies ().priority_model (
-                                                 TAO_POA_Cached_Policies::PriorityModel (
-                                                                                         rt_priority_model));
+        this->cached_policies ().priority_model (TAO_POA_Cached_Policies::PriorityModel (rt_priority_model));
 
         RTCORBA::Priority priority =
           priority_model->server_priority (ACE_TRY_ENV);
