@@ -13,6 +13,7 @@ Fri Apr 14 11:02:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Object.cpp:
 	* tao/ORB.h:
 	* tao/ORB.cpp:
+	* tao/orbconf.h:
 	* tao/POA_CORBA.h:
 	* tao/TAO.dsp:
 	* tao/TAO_static.dsp:
