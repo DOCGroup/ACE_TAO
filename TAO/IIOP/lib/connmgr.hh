@@ -113,7 +113,7 @@ class server_endpoint {
     void			shutdown_connections (
 				    // add a flag saying some, all?
 				    void		(*close_conn)(
-							    int &fd,
+							    ACE_HANDLE &fd,
 							    void *info
 							),
 				    void		*info

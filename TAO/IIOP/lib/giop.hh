@@ -307,14 +307,14 @@ class GIOP {				// namespace
 
     static CORBA_Boolean	send_message (
 				    CDR			&stream,
-				    int			&connection
+				    ACE_HANDLE		&connection
 				);
 
     //
     // Reads message, returns message type from header
     //
     static MsgType		read_message (
-				    int			&connection,
+				    ACE_HANDLE		&connection,
 				    CDR			&msg,
 				    CORBA_Environment	&env
 				);
