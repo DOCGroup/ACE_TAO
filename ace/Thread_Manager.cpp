@@ -438,14 +438,26 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                              size_t stack_size,
                              ACE_Task_Base *task)
 {
-  ACE_Thread_Adapter *thread_args = 0;
+  ACE_Thread_Descriptor *new_thr_desc = 0;
+
+  ACE_NEW_RETURN (new_thr_desc,
+		  ACE_Thread_Descriptor,
+		  -1);
+
 #if !defined (ACE_NO_THREAD_ADAPTER)
-  ACE_NEW_RETURN (thread_args,
-                  ACE_Thread_Adapter (func,
-                                      args,
-                                      (ACE_THR_C_FUNC) ace_thread_manager_adapter,
-                                      this),
-                  -1);
+  // @@ Defining ACE_NO_THREAD_ADAPTER here really doesn't make any sense.
+  //    If we don't have thread adapter, thread manager won't work then.
+  ACE_Thread_Adapter *thread_args =
+    new ACE_Thread_Adapter (func,
+			    args,
+			    (ACE_THR_C_FUNC) ace_thread_manager_adapter,
+			    this,
+			    new_thr_desc);
+  if (thread_args == 0)
+    {
+      delete new_thr_desc;
+      return -1;
+    }
 #endif /* ACE_NO_THREAD_ADAPTER */
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
@@ -495,7 +507,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                ACE_THR_SPAWNED,
                                grp_id,
                                task,
-                               flags);
+                               flags,
+			       new_thr_desc);
     }
 }
 
@@ -612,13 +625,16 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
                                 ACE_Thread_State thr_state,
                                 int grp_id,
                                 ACE_Task_Base *task,
-                                long flags)
+				long flags,
+				ACE_Thread_Descriptor *td)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
-
-  // Create a new thread descriptor entry.
   ACE_Thread_Descriptor *thr_desc;
-  ACE_NEW_RETURN (thr_desc, ACE_Thread_Descriptor, -1);
+
+  if (td == 0)
+    ACE_NEW_RETURN (thr_desc, ACE_Thread_Descriptor, -1);
+  else
+    thr_desc = td;
 
   thr_desc->thr_id_ = t_id;
   thr_desc->thr_handle_ = t_handle;
@@ -1092,6 +1108,15 @@ ACE_Thread_Manager::at_exit (void *object,
                                              param);
 }
 
+int
+ACE_Thread_Manager::acquire_release (void)
+{
+  // Just try to acquire the lock then release it.
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+			    this->lock_, -1));
+  return 0;
+}
+
 // Must be called when thread goes out of scope to clean up its table
 // slot.
 
@@ -1180,11 +1205,17 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
         return -1;
   } // Let go of the guard, giving other threads a chance to run.
 
-  // @@ Hopefully, we can get rid of all this stuff if we keep a list
-  // of threads to join with...  In addition, we should be able to
-  // close down the HANDLE at this point, as well, on NT.  Note that
-  // we can also mark the thr_table_[entry] as ACE_THR_IDLE once we've
-  // joined with it.
+  // @@ This should be removed now.  But let me make sure my changes
+  // work first.
+
+  // Yield (four times) for each thread that we had to wait on.  This
+  // should give each of those threads a chance to clean up.  The
+  // problem arises because the threads that signalled zero_cond_ may
+  // not have had a chance to run after that, and therefore may not
+  // have finished cleaning themselves up.  This isn't a guaranteed
+  // fix, of course, but that would be very complicated.
+  for (size_t i = 0; i < 4 * threads_waited_on; ++i)
+    ACE_OS::thr_yield ();
 
 #if !defined (VXWORKS)
   {
