@@ -4,6 +4,39 @@
 #include "ace/Malloc_Base.h"
 
 ACE_INLINE
+ACE_NS_WString::ACE_NS_WString (ACE_Allocator *alloc)
+  : ACE_WString (alloc)
+{
+}
+
+ACE_INLINE
+ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+                                size_t len,
+                                ACE_Allocator *alloc)
+  : ACE_WString (s, len, alloc)
+{
+}
+
+ACE_INLINE
+ACE_NS_WString::ACE_NS_WString (size_t len, ACE_Allocator *alloc)
+  : ACE_WString (len, alloc)
+{
+}
+
+ACE_INLINE
+ACE_NS_WString::ACE_NS_WString (const ACE_NS_WString &s)
+  : ACE_WString (s)
+{
+}
+
+ACE_INLINE
+ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc)
+  : ACE_WString (c, alloc)
+{
+}
+
+
+ACE_INLINE
 ACE_SString::~ACE_SString (void)
 {
 }
@@ -170,218 +203,6 @@ ACE_SString::length (void) const
 {
   ACE_TRACE ("ACE_SString::length");
   return this->len_;
-}
-
-
-ACE_INLINE size_t
-ACE_WString::length (void) const
-{
-  ACE_TRACE ("ACE_WString::length");
-  return this->len_;
-}
-
-ACE_INLINE ACE_WString
-operator+ (const ACE_WString &s,
-           const ACE_WString &t)
-{
-  ACE_WString temp (s.length () + t.length ());
-  temp = s;
-  temp += t;
-  return temp;
-}
-
-ACE_INLINE ACE_WString
-ACE_WString::substr (size_t offset,
-                     ssize_t length) const
-{
-  return this->substring (offset, length);
-}
-
-// Get a copy of the underlying representation.
-
-ACE_INLINE ACE_WSTRING_TYPE *
-ACE_WString::rep (void) const
-{
-  ACE_TRACE ("ACE_WString::rep");
-
-  ACE_WSTRING_TYPE *t;
-  ACE_NEW_RETURN (t,
-                  ACE_WSTRING_TYPE[this->len_ + 1],
-                  0);
-  ACE_OS::memcpy (t,
-                  this->rep_,
-                  this->len_ * sizeof (ACE_WSTRING_TYPE));
-
-  // 0 terminate
-  t[this->len_] = 0;
-
-  return t;
-}
-
-// Get at the underlying representation directly!
-
-ACE_INLINE const ACE_WSTRING_TYPE *
-ACE_WString::fast_rep (void) const
-{
-  if (this->rep_ == 0)
-    return &ACE_WString::NULL_WString_;
-  else
-    return this->rep_;
-}
-
-ACE_INLINE const ACE_WSTRING_TYPE *
-ACE_WString::c_str (void) const
-{
-  if (this->rep_ == 0)
-    return &ACE_WString::NULL_WString_;
-  else
-    return this->rep_;
-}
-
-// Comparison operator.
-
-ACE_INLINE int
-ACE_WString::operator== (const ACE_WString &s) const
-{
-  ACE_TRACE ("ACE_WString::operator==");
-  return this->len_ == s.len_
-    && ACE_OS::memcmp ((const void *) this->rep_,
-                       (const void *) s.rep_,
-                       this->len_ * sizeof (ACE_WSTRING_TYPE)) == 0;
-}
-
-// Less than comparison operator.
-
-ACE_INLINE int
-ACE_WString::operator < (const ACE_WString &s) const
-{
-  ACE_TRACE ("ACE_WString::operator <");
-  return this->len_ < s.len_
-          ? ACE_OS::memcmp ((const void *) this->rep_,
-                            (const void *) s.rep_,
-                            this->len_ * sizeof (ACE_WSTRING_TYPE)) <= 0
-          : ACE_OS::memcmp ((const void *) this->rep_,
-                            (const void *) s.rep_,
-                            s.len_ * sizeof (ACE_WSTRING_TYPE)) < 0;
-}
-
-// Greater than comparison operator.
-
-ACE_INLINE int
-ACE_WString::operator > (const ACE_WString &s) const
-{
-  ACE_TRACE ("ACE_WString::operator >");
-  return this->len_ <= s.len_
-          ? ACE_OS::memcmp ((const void *) this->rep_,
-                            (const void *) s.rep_,
-                            this->len_ * sizeof (ACE_WSTRING_TYPE)) > 0
-          : ACE_OS::memcmp ((const void *) this->rep_,
-                            (const void *) s.rep_,
-                            s.len_ * sizeof (ACE_WSTRING_TYPE)) >= 0;
-}
-
-// Comparison operator.
-
-ACE_INLINE int
-ACE_WString::operator!= (const ACE_WString &s) const
-{
-  ACE_TRACE ("ACE_WString::operator!=");
-  return !(*this == s);
-}
-
-ACE_INLINE int
-ACE_WString::compare (const ACE_WString &s) const
-{
-  ACE_TRACE ("ACE_WString::compare");
-
-  return ACE_OS::memcmp ((const void *) this->rep_,
-                         (const void *) s.rep_,
-                         this->len_ * sizeof (ACE_WSTRING_TYPE));
-}
-
-// Return the <slot'th> character in the string.
-
-ACE_INLINE ACE_WSTRING_TYPE
-ACE_WString::operator[] (size_t slot) const
-{
-  ACE_TRACE ("ACE_WString::operator[]");
-  return this->rep_[slot];
-}
-
-// Return the <slot'th> character in the string.
-
-ACE_INLINE ACE_WSTRING_TYPE &
-ACE_WString::operator[] (size_t slot)
-{
-  ACE_TRACE ("ACE_WString::operator[]");
-  return this->rep_[slot];
-}
-
-ACE_INLINE int
-ACE_WString::find (const ACE_WSTRING_TYPE *s, int pos) const
-{
-  ACE_WSTRING_TYPE *substr = this->rep_ + pos;
-  const ACE_WSTRING_TYPE *pointer = ACE_WString::strstr (substr, s);
-  if (pointer == 0)
-    return ACE_WString::npos;
-  else
-    return pointer - this->rep_;
-}
-
-ACE_INLINE int
-ACE_WString::find (ACE_WSTRING_TYPE c, int pos) const
-{
-  if (pos == ACE_WString::npos)
-    pos = this->len_;
-
-  for (size_t i = pos; i < this->len_; i++)
-    if (this->rep_[i] == c)
-      return ACE_static_cast (int, i);
-
-  return ACE_WString::npos;
-}
-
-ACE_INLINE int
-ACE_WString::strstr (const ACE_WString &s) const
-{
-  ACE_TRACE ("ACE_WString::strstr");
-
-  return this->find (s.rep_);
-}
-
-ACE_INLINE int
-ACE_WString::find (const ACE_WString &str, int pos) const
-{
-  return this->find (str.rep_, pos);
-}
-
-ACE_INLINE int
-ACE_WString::rfind (ACE_WSTRING_TYPE c, int pos) const
-{
-  if (pos == ACE_WString::npos)
-    pos = this->len_;
-
-  for (int i = pos - 1; i >= 0; i--)
-    if (this->rep_[i] == c)
-      return i;
-
-  return ACE_WString::npos;
-}
-
-ACE_INLINE size_t
-ACE_WString::buffer_size(void) const
-{
-   ACE_TRACE ("ACE_WString::buffer_size");
-   return this->buf_len_;
-}
-
-ACE_INLINE u_long
-ACE_WString::hash (void) const
-{
-  return ACE::hash_pjw
-    (ACE_reinterpret_cast (char *, ACE_const_cast (ACE_WSTRING_TYPE *,
-                                                   this->rep_)),
-     this->len_ * sizeof (ACE_WSTRING_TYPE));
 }
 
 ACE_INLINE

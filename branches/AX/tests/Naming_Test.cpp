@@ -31,7 +31,7 @@ static char type[BUFSIZ];
 
 static void
 print_time (ACE_Profile_Timer &timer,
-	    const char *test)
+            const char *test)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   timer.stop ();
@@ -40,9 +40,9 @@ print_time (ACE_Profile_Timer &timer,
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n     *****  %s  *****     \n"), test));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
-	      et.real_time, et.user_time, et.system_time));
+              et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time per call = %f usecs\n\n"),
-	      (et.real_time / double (ACE_NS_MAX_ENTRIES)) * 1000000));
+              (et.real_time / double (ACE_NS_MAX_ENTRIES)) * 1000000));
 }
 
 static void
@@ -55,10 +55,10 @@ test_bind (ACE_Naming_Context &ns_context)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", array[i]);
-      ACE_WString w_name (name);
+      ACE_NS_WString w_name (name);
 
       ACE_OS::sprintf (value, "%s%d", "value", array[i]);
-      ACE_WString w_value (value);
+      ACE_NS_WString w_value (value);
 
       ACE_OS::sprintf (type, "%s%d", "type", array [i]);
       ACE_ASSERT (ns_context.bind (w_name, w_value, type) != -1);
@@ -69,8 +69,8 @@ static void
 test_find_failure (ACE_Naming_Context &ns_context)
 {
   ACE_OS::sprintf (name, "%s", "foo-bar");
-  ACE_WString w_name (name);
-  ACE_WString w_value;
+  ACE_NS_WString w_name (name);
+  ACE_NS_WString w_value;
   char *l_type = 0;
 
   // Do the finds.
@@ -88,10 +88,10 @@ test_rebind (ACE_Naming_Context &ns_context)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", array[i]);
-      ACE_WString w_name (name);
+      ACE_NS_WString w_name (name);
 
       ACE_OS::sprintf (value, "%s%d", "value", -array[i]);
-      ACE_WString w_value (value);
+      ACE_NS_WString w_value (value);
 
       ACE_OS::sprintf (type, "%s%d", "type", -array[i]);
       ACE_ASSERT (ns_context.rebind (w_name, w_value, type) != -1);
@@ -108,7 +108,7 @@ test_unbind (ACE_Naming_Context &ns_context)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", array[i]);
-      ACE_WString w_name (name);
+      ACE_NS_WString w_name (name);
       ACE_ASSERT (ns_context.unbind (w_name) != -1);
     }
 }
@@ -126,47 +126,47 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
       if (sign == 1)
-	{
-	  ACE_OS::sprintf (temp_val, "%s%d", "value", array[i]);
-	  ACE_OS::sprintf (temp_type, "%s%d", "type", array[i]);
-	}
+        {
+          ACE_OS::sprintf (temp_val, "%s%d", "value", array[i]);
+          ACE_OS::sprintf (temp_type, "%s%d", "type", array[i]);
+        }
       else
-	{
-	  ACE_OS::sprintf (temp_val, "%s%d", "value", -array[i]);
-	  ACE_OS::sprintf (temp_type, "%s%d", "type", -array[i]);
-	}
+        {
+          ACE_OS::sprintf (temp_val, "%s%d", "value", -array[i]);
+          ACE_OS::sprintf (temp_type, "%s%d", "type", -array[i]);
+        }
 
       ACE_OS::sprintf (name, "%s%d", "name", array[i]);
 
-      ACE_WString w_name (name);
-      ACE_WString w_value;
+      ACE_NS_WString w_name (name);
+      ACE_NS_WString w_value;
       char *type_out = 0;
-      ACE_WString val (temp_val);
+      ACE_NS_WString val (temp_val);
 
       ACE_ASSERT (ns_context.resolve (w_name, w_value, type_out) == result);
 
       char *l_value = w_value.char_rep ();
 
       if (l_value)
-	{
-	  ACE_ASSERT (w_value == val);
-	  if (ns_context.name_options ()->debug ())
-	    {
-	      if (type_out)
-		ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_ASSERT (w_value == val);
+          if (ns_context.name_options ()->debug ())
+            {
+              if (type_out)
+                ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("Name: %s\tValue: %s\tType: %s\n"),
-			    name, l_value, type_out));
-	      else
-		ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %s\tValue: %s\n"),
-			    name, l_value));
-	    }
+                            name, l_value, type_out));
+              else
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %s\tValue: %s\n"),
+                            name, l_value));
+            }
 
-	  if (type_out)
-	    {
-	      ACE_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
-	      delete[] type_out;
-	    }
-	}
+          if (type_out)
+            {
+              ACE_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
+              delete[] type_out;
+            }
+        }
 
       delete[] l_value;
     }
@@ -197,7 +197,7 @@ main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
-						ACE_DIRECTORY_SEPARATOR_CHAR));
+                                                ACE_DIRECTORY_SEPARATOR_CHAR));
       ACE_OS_String::strcat (temp_file, ACE_TEXT ("XXXXXX"));
 
       // Set the database name using mktemp to generate a unique file name
@@ -207,7 +207,7 @@ main (int argc, ACE_TCHAR *argv[])
   ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time to test %d iterations using %s\n"),
-	      ACE_NS_MAX_ENTRIES, name_options->use_registry () ?
+              ACE_NS_MAX_ENTRIES, name_options->use_registry () ?
               ACE_TEXT ("Registry") : ACE_TEXT ("ACE")));
 
   ACE_Profile_Timer timer;
@@ -243,9 +243,9 @@ main (int argc, ACE_TCHAR *argv[])
   print_time (timer, "Unbinds");
 
   ACE_OS::sprintf (temp_file, ACE_TEXT ("%s%s%s"),
-		   name_options->namespace_dir (),
-		   ACE_DIRECTORY_SEPARATOR_STR,
-		   name_options->database ());
+                   name_options->namespace_dir (),
+                   ACE_DIRECTORY_SEPARATOR_STR,
+                   name_options->database ());
 
   delete ns_context;
 
