@@ -21,7 +21,7 @@ Sun Jan 23 14:09:30 2000  Ossama Othman  <ossama@uci.edu>
 	  scheduling class is needed.  If the ORB must be started via the
 	  super-user account, and the real-time scheduling class won't be
 	  used, than the ORB's effective user ID should at least be
-	  changed to an unprivileged one.
+	  changed to an unprivileged one, such as 'nobody'.
 
 Sat Jan 22 21:08:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
