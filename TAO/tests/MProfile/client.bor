@@ -23,6 +23,9 @@ LIBFILES = \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_IORMANIP_LIB)
 
+IDLFILES = \
+        $(IDLDIR)\test.idl
+
 CPPDIR = .
 
 IDLDIR = .
