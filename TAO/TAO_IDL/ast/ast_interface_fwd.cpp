@@ -87,7 +87,8 @@ AST_InterfaceFwd::AST_InterfaceFwd()
 }
 
 AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
-                                    UTL_ScopedName *n, UTL_StrList *p)
+                                    UTL_ScopedName *n, 
+                                    UTL_StrList *p)
                  : AST_Decl(AST_Decl::NT_interface_fwd, n, p)
 {
   /*
@@ -96,14 +97,16 @@ AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
    * will fail
    */
   pd_full_definition = dummy;
-  // pd_full_definition = idl_global->gen()->create_interface(n, NULL, -1, p);
+
+  // The requirement that forward declared interfaces must be defined in the
+  // same 'translation unit' was removed in CORBA 2.3.1 (99-10-07).
   /*
    * Record the node in a list to be checked after the entire AST has been
    * parsed. All nodes in the list must have n_inherits >= 0, else this
    * indicates that a full definition was not seen for this forward
    * delcared interface
    */
-  AST_record_fwd_interface(this);
+//  AST_record_fwd_interface(this);
 }
 
 /*

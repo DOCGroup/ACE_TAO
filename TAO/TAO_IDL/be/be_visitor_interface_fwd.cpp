@@ -27,6 +27,7 @@
 // include all the individual files
 #include "be_visitor_interface_fwd/interface_fwd_ch.cpp"
 #include "be_visitor_interface_fwd/interface_fwd_ci.cpp"
+#include "be_visitor_interface_fwd/cdr_op_ch.cpp"
 #include "be_visitor_interface_fwd/cdr_op_ci.cpp"
 
 ACE_RCSID(be, be_visitor_interface_fwd, "$Id$")
