@@ -1,3 +1,9 @@
+Tue Aug 24 09:10:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/cvslog (find_changelogs): don't call basename immediately
+          after calling `pwd`, so that ChangeLogs in current directory
+          will be found.
+
 Tue Aug 24 07:11:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.*,Object_Manager.{h,cpp},README: with ACE_LACKS_ATEXIT,
