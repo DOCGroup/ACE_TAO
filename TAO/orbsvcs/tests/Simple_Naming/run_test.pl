@@ -38,7 +38,6 @@ sub name_server
     my $args = "@_ "."-ORBNameServicePort $ns_multicast_port -o $iorfile -m 1";
     my $prog = "../../Naming_Service/Naming_Service";
 
-    print "$prog $args\n";
     $NS = new PerlACE::Process ($prog, $args);
 
     unlink $iorfile;
@@ -57,7 +56,6 @@ sub client
     my $args = "@_"." ";
     my $prog = "client";
 
-    print "$prog $args\n";
     $CL = new PerlACE::Process ($prog, $args);
 
     $client = $CL->SpawnWaitKill (60);
