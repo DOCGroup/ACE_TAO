@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -21,6 +22,7 @@
 #define TAO_RECURSDEF_I_H
 
 #include "TypedefDef_i.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_stdlib.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

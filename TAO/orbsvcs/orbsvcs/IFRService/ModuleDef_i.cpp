@@ -1,12 +1,15 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ModuleDef_i.h"
 #include "Repository_i.h"
 
-ACE_RCSID (IFRService, 
-           ModuleDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           ModuleDef_i,
            "$Id$")
+
 
 TAO_ModuleDef_i::TAO_ModuleDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
