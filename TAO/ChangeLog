@@ -1,3 +1,8 @@
+Sat Aug  3 08:08:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/AMH/Sink_Server/Base_Server.cpp: Fixed a "reaches end
+	  of non-void" function warning in g++ builds.
+
 Fri Aug  2 17:44:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:
