@@ -15,6 +15,9 @@ Tue Oct 28 19:19:05 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* TAO/tests/IDL_Cubit: Added the _bind call in clnt.cpp. Improved
 	the README file.
 
+	*MAXNAMELEN : There was a clash with TAO_CodeGen::MAXNAMELEN. So
+	it has been substituted by NAMEBUFSIZE as a macro in be_codegen.h
+
 Mon Oct 27 22:22:22 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be_decl.cpp: Added a ptr () function to the _var classes
