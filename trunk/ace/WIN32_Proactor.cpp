@@ -121,7 +121,7 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
 #if defined (ACE_WIN64)
   ULONG_PTR comp_key (ACE_static_cast (ULONG_PTR, completion_key));
 #else
-  ULONG comp_key (ACE_static_cast (ULONG, completion_key));
+  ULONG comp_key (ACE_reinterpret_cast (ULONG, completion_key));
 #endif /* ACE_WIN64 */
 
   // No locking is needed here as no state changes.
@@ -680,7 +680,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 #if defined (ACE_WIN64)
   ULONG_PTR comp_key (ACE_static_cast (ULONG_PTR, completion_key));
 #else
-  ULONG comp_key (ACE_static_cast (ULONG, completion_key));
+  ULONG comp_key (ACE_reinterpret_cast (ULONG, completion_key));
 #endif /* ACE_WIN64 */
 
   // Post a completion
