@@ -1,5 +1,24 @@
 -*- mode: outline; outline-regexp: " *\\[" -*-
 
+[Current difficulties]
+
+  [FILETIME]
+     Win32's FILETIME format can be converted to struct timeval thru a
+     simple conversion.  However, the tricky part here is, FILETIME is
+     the total 100ns elapse since _1601_ (why the heck did Microsoft
+     choose this time?) whereas POSIX timeval gives you the
+     accumulated time since 1970.  This leads to data overflow in
+     timeval struture which ACE uses internally for its
+     ACE_Time_Value.  This also confuses ACE_OS::ctime, which, under
+     CE, is a home-brewed implementation, and corrupt the whole
+     program image.  I don't know of a way to deal with this yet
+     except adjusting for the time difference between the two
+     everytime a conversion is necessary.  This, of course, doesn't
+     seem to be a good choice.
+
+  [ARGV]
+     Is kind of falky.  I use it to pass in command line arguments.  
+
 [Hints on writing portable code using ACE]
 
   [Testing Non-Window based ACE programs]
