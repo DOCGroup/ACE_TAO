@@ -17,12 +17,13 @@ CFG=Logging_Sup - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Logging_Sup - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Logging_Sup - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Logging_Sup - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Logging_Sup - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -124,6 +125,7 @@ SOURCE=.\NavWeapC.h
 # Begin Source File
 
 SOURCE=.\NavWeap.idl
+USERDEP__NAVWE="..\$(InputName).idl"	
 
 !IF  "$(CFG)" == "Logging_Sup - Win32 Release"
 
