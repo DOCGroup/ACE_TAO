@@ -1,8 +1,16 @@
+Mon Apr  4 11:20:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/Process.pm:
+	* bin/Process_Unix.pm:
+	* bin/Process_Win32.pm:
+
+	  Removed.  Stale versions of files now in bin/PerlACE.
+
 Mon Apr  4 19:41:44 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
           Added #define ACE_HAS_ICMP_SUPPORT 1.
-        
+
         * tests/Reactor_Dispatch_Order_Test.cpp:
           Workaround needs to be applied to LynxOS 4.x as well.
 
