@@ -20,7 +20,7 @@ $SV = new PerlACE::Process ("server",
 
 $CL = new PerlACE::Process ("client",
                             "-k file://$iorfile "
-                            . " -i 10000");
+                            . " -i 150000");
 
 $SV->Spawn ();
 
