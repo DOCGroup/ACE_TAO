@@ -1,3 +1,12 @@
+Fri Jun 18 18:49:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile:
+	* tests/run_tests.psosim:
+	* tests/run_tests.sh:
+	* tests/run_tests.vxworks:
+	  Disabled Map_Manager_Test, it does not work with too many
+	  platforms and the features it tests are not used (yet).
+
 Fri Jun 18 16:54:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Message_Queue_Test.cpp:

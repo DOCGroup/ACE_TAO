@@ -133,7 +133,7 @@ run Reverse_Lock_Test                   # uses ACE_Reverse_Lock
 #Tokens_Test: threads not supported on this platform
 #run Tokens_Test
 
-run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
+# run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
 
 run Map_Test                            # uses Map + Forward and Reverse Map Iterators.
 
