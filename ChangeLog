@@ -1,3 +1,18 @@
+Tue Feb 12 20:30:53 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/WIN32_Proactor.cpp (handle_events): When the proactor
+	  was called by the reactor in handle_signal() this method should
+ 	  loop till all events are done. But the loop never got executed
+ 	  twice because handle_events returned 1 on success and the loop
+ 	  exits.  To catch more than one notifications handle_events
+ 	  should be called again.  Even if the loop is executed twice and
+ 	  no more events are outstanding handle_events should return 0 and
+ 	  not -1 when calling with timeout 0.  Calling
+ 	  GetQueuedCompletionStatus with timeout value 0 returns FALSE and
+ 	  errno "ERROR_SUCCESS".  This check has to be added to
+ 	  handle_events and 0 has to be returned.  Thanks to Hartmut Quast
+ 	  <HartmutQuast@t-online.de> for reporting this.
+
 Tue Feb 12 16:18:59 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Test.cpp (logflag): 
