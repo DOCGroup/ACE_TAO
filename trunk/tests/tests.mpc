@@ -530,6 +530,15 @@ project(Object Manager Test) : aceexe {
   }
 }
 
+project(Obstack Test) : aceexe {
+  exename = Obstack_Test
+  Source_Files {
+    Obstack_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(OrdMultiSet Test) : aceexe {
   exename = OrdMultiSet_Test
   Source_Files {
@@ -714,6 +723,15 @@ project(Reader Writer Test) : aceexe {
   exename = Reader_Writer_Test
   Source_Files {
     Reader_Writer_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(Recursive Condition Test) : aceexe {
+  exename = Recursive_Condition_Test
+  Source_Files {
+    Recursive_Condition_Test.cpp
   }
   Header_Files {
   }
