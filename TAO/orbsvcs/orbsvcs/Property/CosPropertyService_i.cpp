@@ -705,10 +705,10 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
   ACE_NEW_RETURN (property_modes,
                   CosPropertyService::PropertyModes,
                   1);
-  
+
   // Validate the length of names sequence.
   size_t sequence_length = property_names.length ();
-  
+
   if (sequence_length == 0)
     return 1;
 
@@ -996,12 +996,12 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
   ACE_NEW_RETURN (property_names,
                   CosPropertyService::PropertyNames,
                   0);
-  
+
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return 0;
-  
+
   size_t size = this->iterator_.map ().current_size ();
 
   property_names->length (how_many <= size ? how_many : size);
@@ -1066,7 +1066,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
   ACE_NEW_RETURN (nproperties,
                   CosPropertyService::Properties,
                   0);
-  
+
   CosProperty_Hash_Entry_ptr entry_ptr = 0;
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
@@ -1107,8 +1107,8 @@ template class ACE_Hash_Map_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_V
 template class ACE_Hash_Map_Iterator_Base_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
-template class TAO_PropertySet <POA_CosPropertyService::PropertySet>;
-template class TAO_PropertySet<POA_CosPropertyService::PropertySetDef>
+template class TAO_PropertySet<POA_CosPropertyService::PropertySet>;
+template class TAO_PropertySet<POA_CosPropertyService::PropertySetDef>;
 template class TAO_Unbounded_Sequence<TAO_PropertySet<POA_CosPropertyService::PropertySet>*>;
 template class TAO_Unbounded_Sequence<TAO_PropertySetDef*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -1122,7 +1122,7 @@ template class TAO_Unbounded_Sequence<TAO_PropertySetDef*>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate TAO_PropertySet <POA_CosPropertyService::PropertySet>;
+#pragma instantiate TAO_PropertySet<POA_CosPropertyService::PropertySet>
 #pragma instantiate TAO_PropertySet<POA_CosPropertyService::PropertySetDef>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySet<POA_CosPropertyService::PropertySet>*>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySetDef*>
