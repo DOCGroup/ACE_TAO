@@ -425,7 +425,8 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (bt->size_type () == be_type::VARIABLE)
+  if (bt->size_type () == be_type::VARIABLE
+      || node->has_constructor ())
     {
       *os << "this->u_." << ub->local_name () << "_ = new "
           << bt->name () << " (*u.u_."

@@ -375,7 +375,8 @@ be_visitor_union_branch_public_access_cs::visit_structure (be_structure *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  if (bt->size_type () == be_type::VARIABLE)
+  if (bt->size_type () == be_type::VARIABLE
+      || node->has_constructor ())
     {
       *os << "if (alloc_flag)" << be_idt_nl
           << "this->u_." << ub->local_name () << "_ = new " << bt->name ()

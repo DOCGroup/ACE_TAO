@@ -44,6 +44,7 @@ be_interface::be_interface (void)
     in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
+  this->has_constructor (I_TRUE);      // always the case
 }
 
 // constructor used to build the AST
@@ -63,6 +64,7 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
     in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
+  this->has_constructor (I_TRUE);      // always the case
 }
 
 be_interface::~be_interface (void)

@@ -958,6 +958,24 @@ be_decl::is_child (be_decl *node)
   return 0; // not a child
 }
 
+idl_bool
+be_decl::has_constructor (void)
+{
+  return this->has_constructor_;
+}
+
+void
+be_decl::has_constructor (idl_bool value)
+{
+  // Similarly to be_decl::size_type_, once this
+  // gets set to I_TRUE, we don't want it to
+  // change back.
+  if (!this->has_constructor_)
+    {
+      this->has_constructor_ = value;
+    }
+}
+
 // narrowing methods
 IMPL_NARROW_METHODS1 (be_decl, AST_Decl)
 IMPL_NARROW_FROM_DECL (be_decl)

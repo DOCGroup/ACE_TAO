@@ -359,7 +359,8 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
   os->indent ();
 
   // if we are variable sized, we need a pointer type
-  if (node->size_type () == be_type::VARIABLE)
+  if (node->size_type () == be_type::VARIABLE
+      || node->has_constructor ())
     {
       *os << bt->nested_type_name (bu) << " *" << ub->local_name () << "_;\n";
     }

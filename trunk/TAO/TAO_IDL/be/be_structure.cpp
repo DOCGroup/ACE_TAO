@@ -591,6 +591,9 @@ be_structure::compute_size_type (void)
               // guaranteed by the "size_type" call that once the value reached
               // be_decl::VARIABLE, nothing else can overwrite it.
               this->size_type (bd->size_type ());
+
+              // While we're iterating, we might as well do this one too.
+              this->has_constructor (bd->has_constructor ());
             }
           else
             {
