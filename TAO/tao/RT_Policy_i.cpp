@@ -116,7 +116,7 @@ TAO_ThreadpoolPolicy::~TAO_ThreadpoolPolicy (void)
 
 RTCORBA::ThreadpoolId
 TAO_ThreadpoolPolicy::threadpool (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->id_;
 }
@@ -293,7 +293,7 @@ TAO_TCP_Properties::~TAO_TCP_Properties (void)
 
 CORBA::Long
 TAO_TCP_Properties::send_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
 }
@@ -301,14 +301,14 @@ TAO_TCP_Properties::send_buffer_size (CORBA::Environment &)
 void
 TAO_TCP_Properties::send_buffer_size (CORBA::Long send_buffer_size,
                                       CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
 TAO_TCP_Properties::recv_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
 }
@@ -316,14 +316,14 @@ TAO_TCP_Properties::recv_buffer_size (CORBA::Environment &)
 void
 TAO_TCP_Properties::recv_buffer_size (CORBA::Long recv_buffer_size,
                                       CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
 
 CORBA::Boolean
 TAO_TCP_Properties::keep_alive (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->keep_alive_;
 }
@@ -331,14 +331,14 @@ TAO_TCP_Properties::keep_alive (CORBA::Environment &)
 void
 TAO_TCP_Properties::keep_alive (CORBA::Boolean keep_alive,
                                 CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->keep_alive_ = keep_alive;
 }
 
 CORBA::Boolean
 TAO_TCP_Properties::dont_route (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->dont_route_;
 }
@@ -346,13 +346,13 @@ TAO_TCP_Properties::dont_route (CORBA::Environment &)
 void
 TAO_TCP_Properties::dont_route (CORBA::Boolean dont_route,
                                 CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->dont_route_ = dont_route;
 }
 
 CORBA::Boolean TAO_TCP_Properties::no_delay (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->no_delay_;
 }
@@ -360,7 +360,7 @@ CORBA::Boolean TAO_TCP_Properties::no_delay (CORBA::Environment &)
 void
 TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
                               CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->no_delay_ = no_delay;
 }
@@ -412,7 +412,7 @@ TAO_Unix_Domain_Properties::~TAO_Unix_Domain_Properties (void)
 
 CORBA::Long
 TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
 }
@@ -420,14 +420,14 @@ TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Environment &)
 void
 TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Long send_buffer_size,
                                               CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
 TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
 }
@@ -435,7 +435,7 @@ TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Environment &)
 void
 TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Long recv_buffer_size,
                                               CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
@@ -471,7 +471,7 @@ TAO_SMEM_Properties::~TAO_SMEM_Properties (void)
 
 CORBA::Long
 TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->preallocate_buffer_size_;
 }
@@ -479,14 +479,14 @@ TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Environment &)
 void
 TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Long preallocate_buffer_size,
                                               CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->preallocate_buffer_size_ = preallocate_buffer_size;
 }
 
 char *
 TAO_SMEM_Properties::mmap_filename (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mmap_filename_.rep ();
 }
@@ -494,14 +494,14 @@ TAO_SMEM_Properties::mmap_filename (CORBA::Environment &)
 void
 TAO_SMEM_Properties::mmap_filename (const char * mmap_filename,
                                     CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mmap_filename_.set (mmap_filename);
 }
 
 char *
 TAO_SMEM_Properties::mmap_lockname (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mmap_lockname_.rep ();
 }
@@ -509,7 +509,7 @@ TAO_SMEM_Properties::mmap_lockname (CORBA::Environment &)
 void
 TAO_SMEM_Properties::mmap_lockname (const char * mmap_lockname,
                                     CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mmap_lockname_.set (mmap_lockname);
 }
@@ -603,9 +603,9 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                                 int &no_delay,
                                 const char *protocol_type)
 {
-  RTCORBA::ProtocolProperties_var properties = 
+  RTCORBA::ProtocolProperties_var properties =
     RTCORBA::ProtocolProperties::_nil ();
-  
+
   // ServerProtocolProperties policy controls protocols configuration.
   // Look for protocol properties in the effective ServerProtocolPolicy.
   CORBA::Policy_var policy =
@@ -814,9 +814,9 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                                 int &no_delay,
                                 const char *protocol_type)
 {
-  RTCORBA::ProtocolProperties_var properties = 
+  RTCORBA::ProtocolProperties_var properties =
     RTCORBA::ProtocolProperties::_nil ();
-  
+
   // Check ORB-level override for properties.
   CORBA::Policy_var policy =
     orb_core->policy_manager ()->client_protocol ();

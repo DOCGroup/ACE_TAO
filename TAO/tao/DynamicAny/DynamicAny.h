@@ -37,7 +37,7 @@ public:
                                            int argc,
                                            char *argv [],
                                            CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Creates a DynamicAny factory and returns it.
 
   static int Initializer (void);

@@ -61,12 +61,12 @@ public:
     : orb_ (orb) {}
 
   virtual void ping (CORBA::Environment &)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
     {
       this->orb_->shutdown (0, ACE_TRY_ENV);
       ACE_CHECK;

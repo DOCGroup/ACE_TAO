@@ -26,7 +26,7 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TA
 
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->relative_expiry_;
 }
