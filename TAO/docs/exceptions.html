@@ -12,26 +12,98 @@ TAO can be use on platforms with/without native exception support.
 However, there are certain guidelines that need to be followed in
 order for it to work on both platforms.
 
-<h3>Basics</h3>
+<h3>In a Nutshell</h3>
 
-Refer to <code>$TAO_ROOT/tao/try_macros.h</code> for detail
-definition of macros discussed here.
+This section explains some simple rules of writing programs for
+platforms with and without native exception support using TAO's try
+macros.
+
+<ol>
+  <li><em>Function definition:</em><br>
+      A function that throws exceptions or calls other exception
+      throwing functions must have an argument of reference of
+      <code>CORBA_Environment</code> for exceptions be passed back
+      thru it.  This arguemnt should <em>always</em> be named
+      <code>TAO_IN_ENV</code> (which means the passed in environment,)
+      and has a default value of
+      <code>CORBA_Environment::default_environment ()</code>.  For
+      example,<p>
+
+      <pre>
+      int foobar (int a, int b, CORBA_Environment &TAO_IN_ENV =
+                                  CORBA_Environment::default_environment);
+      </pre><p>
+
+  <li><em>Throwing exceptions:</em><br>
+      Use <code>TAO_THROW</code> and <code>TAO_THROW_RETURN</code> to
+      throw exceptions.
+
+  <li><em>Propagating exceptions:</em><br>
+      To simulate native exceptions on platforms without native
+      exceptions, <em>every</em> single function call that may throw
+      exceptions must be followed by <code>TAO_CHECK_RETURN</code> or
+      <code>TAO_CHECK_RETURN_VOID</code>.<p>
+
+      You should pass <code>TAO_IN_ENV</code> to these functions.<p>
+
+      Be very careful not to combine calls to several exception
+      throwing functions in one statement.<p>
+
+  <li><em>Catching exceptions:</em><br>
+      Use <code>TAO_TRY</code> and buddies to catch exceptions.<p>
+      <ul>
+        <li>Within a <code>TAO_TRY</code> block, use the variable
+            <code>TAO_TRY_ENV</code> to pass down the
+            <code>CORBA_Environment</code> (see <a
+            href="try_env">this</a> example.) <p>
+
+        <li>Follow <em>every</em> exception throwing function with
+            <code>TAO_CHECK_ENV</code>. <p>
+
+        <li>Use <code>TAO_CATCH</code> to catch exceptions of certain
+            type. <p>
+
+        <li><code>TAO_CATCHANY</code> catches <em>any</em> exceptions
+            of type <code>CORBA_Exception</code>.<p>
+
+        <li>Use <code>TAO_RETHROW</code> to rethrow the same exception
+            within a <code>TAO_CATCH</code> or
+            <code>TAO_CATCHANY</code> block.<p>
+
+        <li>A <code>TAO_TRY</code> block must be terminated with a
+            <code>TAO_ENDTRY</code> statement.<p>
+
+        <li>Throw an exception within a <code>TAO_TRY</code> block
+            using <a href="try_throw"><code>TAO_TRY_THROW</code></a><p>
+
+        <li>Notice that at the moment, <code>TAO_TRY</code> macros do
+            not propogate the exception up if one is not caught.<p>
+
+      </ul><p>
+
+</ol>
+
+<h3>Details</h3>
+
+Refer to <code>$TAO_ROOT/tao/try_macros.h</code> for complete
+definitions of macros discussed here.
 
 <ul>
   <li>Use <code>TAO_THROW</code>, <code>TAO_THROW_ENV</code>,
       <code>TAO_THROW_RETURN</code>, <code>TAO_THROW_ENV_RETURN</code>
-      to throw exceptions.  <code>TAO_THROW</code> and
+      to throw exceptions. <code>TAO_THROW</code> and
       <code>TAO_THROW_RETURN</code> assume that the name of the
       <code>CORBA_Environment</code> variable used to pass back the
-      exception is called <code>_env</code>.  Use
+      exception is called <code>_env</code>. Use
       <code>TAO_THROW_ENV</code> and <code>TAO_THROW_ENV_RETURN</code>
       to pass back thru the <code>CORBA_Environment</code> variable
       specified.  (Also see: <a href="try_throw">Throwing exceptions
       within try blocks.</a>)<p>
 
-  <li>Use <code>TAO_TRY</code>, <code>TAO_CHECK_ENV</code>,
-      <code>TAO_CATCH</code>, <code>TAO_CATCHANY</code>, and
-      <code>TAO_ENDTRY</code> macros. For example:<br>
+  <li><a name="#try_env"></a>Use <code>TAO_TRY</code>,
+      <code>TAO_CHECK_ENV</code>, <code>TAO_CATCH</code>,
+      <code>TAO_CATCHANY</code>, and <code>TAO_ENDTRY</code>
+      macros. For example:<br>
 
 <pre>
       TAO_TRY
@@ -198,7 +270,7 @@ definition of macros discussed here.
 
 <h2>TO-DO</h2>
 <ol>
-  <li>We need a new macro that support <code>nothrow new</code>.
+  <li>Automatic rethrow simpulated exceptions if not caught?
 </ol>
 
 <h3>General Guidelines of Exceptions</h3>
