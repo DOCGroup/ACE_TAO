@@ -20,7 +20,7 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
     return notify_factory._retn ();
   }
 
-  TAO_POA *poa = default_POA->_tao_poa_downcast();
+  TAO_POA *poa = dynamic_cast <TAO_POA*>(default_POA);
 
   if (poa == 0)
     return notify_factory._retn ();
