@@ -180,12 +180,12 @@ module RtecEventChannelAdmin
                                in ConsumerQOS qos)
       raises(AlreadyConnected, TypeError);
 
-    /// Temporarly suspend reception of events from the Event
+    /// Temporarily suspend reception of events from the Event
     /// Channel.
     /**
      * Calling this method is more efficient than dropping the
      * events when received by the consumer, and less expensive than
-     * disconnecting  and connecting again (but it is not free!!)
+     * disconnecting and connecting again (but it is not free!!)
      */
     void suspend_connection ();
 
