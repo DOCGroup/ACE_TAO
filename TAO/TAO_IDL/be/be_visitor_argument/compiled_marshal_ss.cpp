@@ -279,13 +279,13 @@ int be_visitor_args_compiled_marshal_ss::visit_interface_fwd (be_interface_fwd *
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name () << "out ()";
+          *os << arg->local_name () << ".out ()";
           break;
         case AST_Argument::dir_OUT:
           break;
         }
     }
-  else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
+  else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
       switch (this->direction ())
         {
@@ -301,7 +301,7 @@ int be_visitor_args_compiled_marshal_ss::visit_interface_fwd (be_interface_fwd *
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_args_compiled_marshal_ss::"
-                         "visit_interface - "
+                         "visit_interface_fwd - "
                          "Bad substate\n"),
                         -1);
     }
@@ -653,7 +653,7 @@ int be_visitor_args_compiled_marshal_ss::visit_string (be_string *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_args_compiled_marshal_ss::"
-                         "visit_interface - "
+                         "visit_string - "
                          "Bad substate\n"),
                         -1);
     }
@@ -699,7 +699,7 @@ int be_visitor_args_compiled_marshal_ss::visit_structure (be_structure *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_args_compiled_marshal_ss::"
-                         "visit_interface - "
+                         "visit_structure - "
                          "Bad substate\n"),
                         -1);
     }
@@ -745,7 +745,7 @@ int be_visitor_args_compiled_marshal_ss::visit_union (be_union *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_args_compiled_marshal_ss::"
-                         "visit_interface - "
+                         "visit_union - "
                          "Bad substate\n"),
                         -1);
     }
