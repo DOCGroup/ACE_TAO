@@ -178,7 +178,12 @@
 # undef ACE_LACKS_LLSEEK_PROTOTYPE
 # undef ACE_LACKS_LSEEK64_PROTOTYPE
 # include "ace/config-borland-common.h"
-#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__*/
+#elif defined (__PGI)
+// Portable group compiler
+# define ACE_LACKS_SWAB
+# define ACE_LACKS_TOWUPPER
+# define ACE_LACKS_TOWLOWER
+#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 
