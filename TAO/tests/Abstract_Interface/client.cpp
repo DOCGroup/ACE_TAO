@@ -58,7 +58,7 @@ parse_args (int argc, char *argv[])
 }
 
 void
-dump_node (BaseNode_ptr bn,
+dump_node (BaseNode* bn,
            int indent)
 {
   if (bn == 0)
@@ -70,7 +70,7 @@ dump_node (BaseNode_ptr bn,
   int i = indent;
   for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
 
-  StringNode_ptr sn = StringNode::_downcast (bn);
+  StringNode* sn = StringNode::_downcast (bn);
 
   if (debug)
     {
