@@ -1,3 +1,19 @@
+Wed Jun 21 20:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO.dsw:
+        * tao/TAO_Static.dsp:
+        * tao/ior_dll/ior_dll.dsp:
+        * tests/Object_Loader/Test_DLL.dsp:
+        * tests/Object_Loader/driver.dsp:
+          Fixed the project files.
+
+        * tests/Object_Loader/Test_i.h:
+          Fixed memory leaks in the test, use RefCountServantBase.
+
+        * tests/Object_Loader/driver.cpp:
+          Fixed memory leaks in the test, destroy the POA and ORBs.
+
 Wed Jun 21 15:40:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * tao/IOR_Parser.h:

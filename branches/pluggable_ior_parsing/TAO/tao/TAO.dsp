@@ -1525,6 +1525,25 @@ SOURCE=.\IOR_LookupTable.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_Parser.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1867,25 +1886,6 @@ SOURCE=.\Object_KeyC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Loader.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\ObjectIDList.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1982,6 +1982,25 @@ SOURCE=.\ORB_Core.cpp
 # Begin Source File
 
 SOURCE=.\params.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3650,6 +3669,10 @@ SOURCE=.\IOR_LookupTable.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORC.h
 # End Source File
 # Begin Source File
@@ -3718,10 +3741,6 @@ SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Loader.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
@@ -3747,6 +3766,10 @@ SOURCE=.\orbconf.h
 # Begin Source File
 
 SOURCE=.\params.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.h
 # End Source File
 # Begin Source File
 
@@ -4202,6 +4225,10 @@ SOURCE=.\IOPS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_Parser.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORC.i
 # End Source File
 # Begin Source File
@@ -4250,10 +4277,6 @@ SOURCE=.\Object_KeyC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Loader.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\ObjectIDList.i
 # End Source File
 # Begin Source File
@@ -4271,6 +4294,10 @@ SOURCE=.\ORB_Strategies_T.i
 # Begin Source File
 
 SOURCE=.\params.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.i
 # End Source File
 # Begin Source File
 
