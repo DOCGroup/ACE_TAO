@@ -28,6 +28,8 @@ Wed Oct 08 21:31:19 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
     * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h
     * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.inl
 
+    Changed for the seperation of FT framework.
+
 
 Wed Oct  8 20:05:20 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
