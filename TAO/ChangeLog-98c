@@ -1,5 +1,9 @@
 Thu Feb 26 05:39:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/NestedUpcall/client.cpp: Cast (char *) to 0 which is used
+	  to initialize remote_reactor_key.
+	  (main): Added ACE_const_cast in string_to_object call.
+
 	* tests/NestedUpcall/NestedUpcall.dsw:
 	* tests/NestedUpcall/client.dsp:
 	* tests/nestedupcall/server.dsp: New project files for NT.
