@@ -110,9 +110,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl;
 
-  if (!this->void_return_type (bt) ||
-      this->has_param_type (node, AST_Argument::dir_INOUT) ||
-      this->has_param_type (node, AST_Argument::dir_OUT))
+  if (node->flags () == AST_Operation::OP_oneway)
     {
       *os << "CORBA::ServerRequest &/* _tao_server_request */, " << be_nl;
     }
