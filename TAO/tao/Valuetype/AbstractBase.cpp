@@ -321,8 +321,9 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
           // We should throw an exception, if there were an appropriate one.
           if (factory.in() == 0)
             {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%N:%l): The following unknown type was received: `%s'."),
+                          repo_id_stream.in ()));
               return 0;
             }
 
