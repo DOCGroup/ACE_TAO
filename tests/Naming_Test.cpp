@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -99,6 +99,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
       ACE_WString val (temp_val);
       
       ACE_ASSERT (ns_context->resolve (w_name, w_value, type_out) == result);
+
       if (w_value.char_rep ())
 	{
 	  ACE_ASSERT (w_value == val);
@@ -134,8 +135,7 @@ main (int argc, char *argv[])
   // Set the database name using mktemp to generate a unique file name
   name_options->database (ACE_OS::mktemp (temp_file));
 
-  if (ns_context->open (ACE_Naming_Context::PROC_LOCAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
+  ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL) != -1);
 
   // Add some bindings to the database
   bind (ns_context, 0);
@@ -153,13 +153,17 @@ main (int argc, char *argv[])
   // No more bindings in database so find should return -1
   find (ns_context, -1, -1);
 
-  // Remove the temporary file
-  ACE_OS::strcpy (temp_file, name_options->namespace_dir ());
-  ACE_OS::strcat (temp_file, ACE_DIRECTORY_SEPARATOR_STR);
-  ACE_OS::strcat (temp_file, name_options->database ());
-  ACE_OS::unlink (temp_file);  // No need to check return value here
+  ::sprintf (temp_file, "%s%s%s",
+             name_options->namespace_dir (),
+	     ACE_DIRECTORY_SEPARATOR_STR,
+	     name_options->database ());
+
+  // Remove any existing files.  No need to check return value here
+  // since we don't care if the file doesn't exist.
+  ACE_OS::unlink (temp_file);  
 
   ACE_END_TEST;
   return 0;
 }
+
 
