@@ -1,4 +1,3 @@
-// Profile_Timer.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -10,7 +9,7 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Profile_Timer)
 
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) 
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
 
 void
 ACE_Profile_Timer::dump (void) const
@@ -18,7 +17,7 @@ ACE_Profile_Timer::dump (void) const
   ACE_TRACE ("ACE_Profile_Timer::dump");
 }
 
-// Initialize interval timer. 
+// Initialize interval timer.
 
 ACE_Profile_Timer::ACE_Profile_Timer (void)
 {
@@ -41,7 +40,7 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
 #endif /* ACE_HAS_PRUSAGE_T */
 }
 
-// Terminate the interval timer. 
+// Terminate the interval timer.
 ACE_Profile_Timer::~ACE_Profile_Timer (void)
 {
   ACE_TRACE ("ACE_Profile_Timer::~ACE_Profile_Timer");
@@ -51,7 +50,7 @@ ACE_Profile_Timer::~ACE_Profile_Timer (void)
 #endif /* ACE_HAS_PRUSAGE_T */
 }
 
-// Return the resource utilization. 
+// Return the resource utilization.
 
 void
 ACE_Profile_Timer::get_rusage (ACE_Profile_Timer::Rusage &usage)
@@ -62,7 +61,7 @@ ACE_Profile_Timer::get_rusage (ACE_Profile_Timer::Rusage &usage)
 
 #if defined (ACE_HAS_PRUSAGE_T)
 
-// Compute the amount of resource utilization since the start time. 
+// Compute the amount of resource utilization since the start time.
 
 void
 ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &rusage)
@@ -86,7 +85,7 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &rusage)
   rusage.pr_ioch  = this->end_usage_.pr_ioch - this->last_usage_.pr_ioch;
 }
 
-// Compute the elapsed time. 
+// Compute the elapsed time.
 
 void
 ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
@@ -108,7 +107,7 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
   et.system_time = td.tv_sec + ((double) td.tv_nsec) / ACE_ONE_SECOND_IN_NSECS;
 }
 
-// Determine the difference between T1 and T2. 
+// Determine the difference between T1 and T2.
 
 void
 ACE_Profile_Timer::subtract (timespec_t &tdiff, timespec_t &t1, timespec_t &t0)
@@ -117,7 +116,7 @@ ACE_Profile_Timer::subtract (timespec_t &tdiff, timespec_t &t1, timespec_t &t0)
   tdiff.tv_sec  = t1.tv_sec - t0.tv_sec;
   tdiff.tv_nsec = t1.tv_nsec - t0.tv_nsec;
 
-  // Normalize the time. 
+  // Normalize the time.
 
   while (tdiff.tv_nsec < 0)
     {
@@ -127,7 +126,7 @@ ACE_Profile_Timer::subtract (timespec_t &tdiff, timespec_t &t1, timespec_t &t0)
 }
 
 #elif defined (ACE_HAS_GETRUSAGE)
-// Compute the amount of resource utilization since the start time. 
+// Compute the amount of resource utilization since the start time.
 
 void
 ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
@@ -147,10 +146,10 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   // swaps
   usage.ru_nswap = this->end_usage_.ru_nswap - this->last_usage_.ru_nswap;
   // block input operations
-  usage.ru_inblock = this->end_usage_.ru_inblock - 
+  usage.ru_inblock = this->end_usage_.ru_inblock -
                        this->last_usage_.ru_inblock;
   // block output operations
-  usage.ru_oublock = this->end_usage_.ru_oublock - 
+  usage.ru_oublock = this->end_usage_.ru_oublock -
                        this->last_usage_.ru_oublock;
   // messages sent
   usage.ru_msgsnd = this->end_usage_.ru_msgsnd - this->last_usage_.ru_msgsnd;
@@ -164,7 +163,7 @@ ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
   // involuntary context switches
   usage.ru_nivcsw = this->end_usage_.ru_nivcsw - this->last_usage_.ru_nivcsw;
 #else
-	ACE_UNUSED_ARG(usage);
+        ACE_UNUSED_ARG(usage);
 #endif /* ACE_WIN32 */
 }
 
@@ -199,7 +198,7 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
 #endif /* ACE_WIN32 */
 }
 
-// Determine the difference between T1 and T2. 
+// Determine the difference between T1 and T2.
 
 void
 ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
@@ -208,7 +207,7 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
   tdiff.tv_sec  = t1.tv_sec - t0.tv_sec;
   tdiff.tv_usec = t1.tv_usec - t0.tv_usec;
 
-  // Normalize the time. 
+  // Normalize the time.
 
   while (tdiff.tv_usec < 0)
     {
@@ -219,7 +218,7 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
 
 #endif /* ACE_HAS_PRUSAGE_T */
 
-// Compute the amount of time that has elapsed between start and stop. 
+// Compute the amount of time that has elapsed between start and stop.
 
 int
 ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
@@ -246,10 +245,10 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   timer_.elapsed_time (delta_t);
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_USECS;
+  et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
 #else
-  et.real_time = (double) ULONG_MAX / (double) ACE_ONE_SECOND_IN_USECS * (double) delta_t.hi () +
-                 (double) delta_t.lo () / (double) ACE_ONE_SECOND_IN_USECS;
+  et.real_time = (double) ULONG_MAX / (double) ACE_ONE_SECOND_IN_NSECS * (double) delta_t.hi () +
+                 (double) delta_t.lo () / (double) ACE_ONE_SECOND_IN_NSECS;
 #endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
   et.user_time = 0;
   et.system_time = 0;
