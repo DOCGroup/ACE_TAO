@@ -166,7 +166,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
     }
   TAO_ENDTRY;
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
@@ -220,7 +220,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
     }
   TAO_ENDTRY;
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 // Destructor.
@@ -312,7 +312,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
     }
   TAO_ENDTRY;
 
-  return 0;
+  ACE_NOTREACED (return 0);
 }
 
 // Allows the client to create a new TAO_PropertySetDef with specific
@@ -368,7 +368,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
     }
   TAO_ENDTRY;
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 // Makes default sized hash_table_. All the sequences are set the max
@@ -611,19 +611,19 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
        ti++)
     {
       TAO_TRY
-	{
-	  ret_val = ((const CORBA::TypeCode *)this->allowed_property_types_[ti])->equal (type,
-											 TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  
-	  if (ret_val == 1)
-	    return 1;
-	}
+        {
+          ret_val = ((const CORBA::TypeCode *)this->allowed_property_types_[ti])->equal (type,
+                                                                                         TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          if (ret_val == 1)
+            return 1;
+        }
       TAO_CATCHANY
-	{
-	  TAO_TRY_ENV.print_exception ("TAO_PropertySet::is_type_allowed");
-	  return ret_val;
-	}
+        {
+          TAO_TRY_ENV.print_exception ("TAO_PropertySet::is_type_allowed");
+          return ret_val;
+        }
       TAO_ENDTRY;
     }
 
@@ -1039,7 +1039,7 @@ TAO_PropertySet::delete_property (const char *property_name,
       TAO_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_NO));
     }
 
-  // @@ Purify this and check. Deallocate the memory. 
+  // @@ Purify this and check. Deallocate the memory.
   // delete entry_ptr;
 
   ACE_DEBUG ((LM_DEBUG, "delete_property done\n"));
