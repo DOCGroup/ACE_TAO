@@ -13,7 +13,7 @@
 //
 #ifndef FT_TESTREPLICA_I_H_
 #define FT_TESTREPLICA_I_H_
-#include /**/ <ace/pre.h>
+#include /**/ "ace/pre.h"
 
 #include <ace/ACE.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -161,7 +161,7 @@ private:
   long load();
   /**
    * Store the persistent data.
-   * @param the data to be stored.
+   * @param value the data to be stored.
    */
   void store(long value);
 
@@ -191,7 +191,7 @@ private:
   unsigned long factory_id_;
 
   /**
-   * the factory that created thsi replica
+   * The factory that created this replica
    */
   FT_ReplicaFactory_i * factory_;
 
