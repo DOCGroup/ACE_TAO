@@ -29,7 +29,7 @@ namespace TAO
   namespace Portable_Server
   {
     class Cached_Policies;
-    class Thread_Strategy;
+    class ThreadStrategy;
     class Request_Processing_Strategy;
     class Id_Assignment_Strategy;
     class Lifespan_Strategy;
@@ -49,7 +49,7 @@ namespace TAO
                    TAO_POA* poa
                    ACE_ENV_ARG_DECL);
 
-      Thread_Strategy *thread_strategy (void) const;
+      ThreadStrategy *thread_strategy (void) const;
 
       Request_Processing_Strategy *request_processing_strategy (void) const;
 
@@ -64,7 +64,7 @@ namespace TAO
       ServantRetentionStrategy *servant_retention_strategy (void) const;
 
     private:
-      Thread_Strategy *thread_strategy_;
+      ThreadStrategy *thread_strategy_;
       Request_Processing_Strategy *request_processing_strategy_;
       Id_Assignment_Strategy *id_assignment_strategy_;
       Lifespan_Strategy *lifespan_strategy_;

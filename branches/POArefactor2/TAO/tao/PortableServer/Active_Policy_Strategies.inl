@@ -5,7 +5,7 @@ namespace TAO
   namespace Portable_Server
   {
     ACE_INLINE
-    Thread_Strategy*
+    ThreadStrategy*
     Active_Policy_Strategies::thread_strategy (void) const
     {
       return thread_strategy_;

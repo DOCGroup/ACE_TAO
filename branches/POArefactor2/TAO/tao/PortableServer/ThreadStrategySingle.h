@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Thread_Strategy.h
+ *  @file ThreadStrategy.h
  *
  *  $Id$
  *
@@ -10,12 +10,12 @@
  */
 //=============================================================================
 
-#ifndef TAO_THREAD_STRATEGY_H
-#define TAO_THREAD_STRATEGY_H
+#ifndef TAO_THREADSTRATEGYSINGLE_H
+#define TAO_THREADSTRATEGYSINGLE_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "Policy_Strategy.h"
+#include "ThreadStrategy.h"
 #include "ace/Service_Config.h"
 
 // Locking
@@ -32,33 +32,12 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
-
 namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Thread_Strategy :
-       public virtual Policy_Strategy
-    {
-    public:
-      virtual ~Thread_Strategy (void);
-
-      virtual int enter () = 0;
-
-      virtual int exit () = 0;
-
-      // @@ Johnny, its not clear what initialization this is going to
-      // do. My $0.02
-      void strategy_init (TAO_POA *poa);
-    };
-
     class TAO_PortableServer_Export Single_Thread_Strategy :
-       public virtual Thread_Strategy
+       public virtual ThreadStrategy
     {
     public:
       virtual ~Single_Thread_Strategy (void);
@@ -70,21 +49,10 @@ namespace TAO
     private:
       TAO_SYNCH_RECURSIVE_MUTEX lock_;
     };
-
-    class TAO_PortableServer_Export ORBControl_Thread_Strategy :
-       public virtual Thread_Strategy
-    {
-    public:
-      virtual ~ORBControl_Thread_Strategy (void);
-
-      virtual int enter ();
-
-      virtual int exit ();
-    };
   }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_THREAD_STRATEGY_H */
+#endif /* TAO_THREADSTRATEGYSINGLE_H */

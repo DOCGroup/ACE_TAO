@@ -11,7 +11,8 @@
 #include "ThreadPolicyC.h"
 #include "ServantRetentionPolicyC.h"
 
-#include "ThreadPolicyStrategy.h"
+#include "ThreadStrategy.h"
+#include "ThreadStrategyFactory.h"
 #include "Request_Processing_Strategy.h"
 #include "Id_Assignment_Strategy.h"
 #include "Lifespan_Strategy.h"
@@ -51,17 +52,24 @@ namespace TAO
                                       TAO_POA* poa
                                       ACE_ENV_ARG_DECL)
     {
-      // This has to changed into having a factory that checks this and loads the correct strategy
-      if (policies.thread() == ::PortableServer::ORB_CTRL_MODEL)
-      {
-        ACE_NEW (thread_strategy_, ORBControl_Thread_Strategy);
-      }
-      else
-      {
-        ACE_NEW (thread_strategy_, Single_Thread_Strategy);
-      }
+      ThreadStrategyFactory *thread_strategy_factory =
+        ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategyFactory");
 
-      thread_strategy_->strategy_init (poa);
+      if (thread_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic ThreadStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_ThreadStrategyFactoryImpl()"));
+          thread_strategy_factory =
+            ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategyFactory");
+        }
+
+      if (thread_strategy_factory != 0)
+        thread_strategy_ = thread_strategy_factory->create (policies.thread());
+
+      if (thread_strategy_ != 0)
+        thread_strategy_->strategy_init (poa);
+
+      /**/
 
       switch (policies.request_processing())
       {

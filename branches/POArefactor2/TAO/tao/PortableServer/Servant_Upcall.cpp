@@ -5,7 +5,7 @@
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
-#include "tao/PortableServer/ThreadPolicyStrategy.h"
+#include "tao/PortableServer/ThreadStrategy.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/POAManager.h"
 
