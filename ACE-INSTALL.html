@@ -746,6 +746,13 @@ original tree, make sure to remove all ".obj", ".shobj" and (any other
 files or directories) in all subdirectories before starting the build
 on your cloned tree. <P>
 
+Alternatively, the perl script
+<code>ACE_wrappers/bin/create_ace_build</code> can be used to create
+build trees.  It creates them below <code>ACE_wrappers/build</code>.
+It filters out all but the necessary files, so the warning above does
+not apply.  See the comments at the top of the script itself for usage
+information.
+
 <HR><P>
 <H4><A NAME="corba">Building CORBA Versions of ACE</A></H4>
 
