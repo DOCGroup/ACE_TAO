@@ -284,6 +284,8 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 
                   CosTrading::PropertySeq& props = iter_offers[i].properties;
                   TT_Info::dump_properties (props, 1, ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+
                   ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
                 }
 

@@ -195,7 +195,7 @@ TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& ACE_TRY_ENV)
             }
 
           this->export_to (link_info->target_reg.in (), ACE_TRY_ENV);
-          //ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
