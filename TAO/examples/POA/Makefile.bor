@@ -6,6 +6,9 @@ DIRS = \
         DSI \
         FindPOA \
         Forwarding \
+        Generic_Servant \
+        Adapter_Activator \
+        Explicit_Activation \
         NewPOA \
         RootPOA \
         TIE
