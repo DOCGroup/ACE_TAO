@@ -216,7 +216,7 @@ private:
 ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &,
                                               const ACE_CString &);
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ACE_Export ostream &operator << (ostream &, const ACE_CString &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 /**
@@ -420,7 +420,7 @@ private:
 ACE_Export ACE_INLINE ACE_WString operator+ (const ACE_WString &,
                                              const ACE_WString &);
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ACE_Export ostream &operator << (ostream &, const ACE_WString &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 /**
@@ -560,7 +560,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ACE_Export ostream &operator << (ostream &, const ACE_SString &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_SString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 // This allows one to use W or C String based on the Unicode
