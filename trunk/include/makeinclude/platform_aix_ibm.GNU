@@ -91,9 +91,9 @@ DCFLAGS     += -g
 # Now sort out the compiler differences here...
 ifeq ($(XLCVERSION),0x0306)
   SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
-  CCFLAGS    += -qlanglvl=ansi -qflag=e:e -qonce -qtempinc
-  SOFLAGS    += -p 0
   TEMPINCDIR  = tempinc
+  CCFLAGS    += -qlanglvl=ansi -qflag=e:e -qonce -qtempinc=$(TEMPINCDIR)
+  SOFLAGS    += -p 0
 # ibmcxx_build turns on the extra step for instantiating and compiling
 # template instances in rules.lib.GNU.
   ibmcxx_build = 1
@@ -101,12 +101,12 @@ ifeq ($(XLCVERSION),0x0306)
 else    # Visual Age 5 and 6
   SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
   ifeq ($(XLCVERSION),0x0500)
-    CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qonce -qtempinc
     TEMPINCDIR  = tempinc
+    CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qonce -qtempinc=$(TEMPINCDIR)
   else
     ifeq ($(XLCVERSION),0x0600)
-      CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc
       TEMPINCDIR = tempinc
+      CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtempinc=$(TEMPINCDIR)
     else
       CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
     endif

@@ -87,13 +87,16 @@ include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
 
 # To build multiple executables in the same directory on AIX, it works
-# best to wipe out any previously-created $(TEMPINCDIR) directory.
+# best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
-all: cleartmpincdir
+TEMPINCDIR := $(TEMPINCDIR)/<%project_name%>
 
-cleartmpincdir:  
-	$(RM) -r $(TEMPINCDIR)
+all: $(TEMPINCDIR)
+
+$(TEMPINCDIR):
+	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
+
 endif
 <%if(!exename)%>
 
