@@ -2,7 +2,9 @@
 MAKE		= gmake
 CC		= gcc
 CXX		= g++
-CCFLAGS		+= -O2 -fno-implicit-templates
+CFLAGS		+= $(DCFLAGS)
+CCFLAGS		+= $(CFLAGS) -O2 -fno-implicit-templates
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
 LDFLAGS		+=

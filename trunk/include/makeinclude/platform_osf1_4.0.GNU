@@ -2,8 +2,9 @@
 
 CC		= cxx
 CXX		= $(CC)
-CFLAGS          += -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository
+CFLAGS          += $(DCFLAGS) -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository
 CCFLAGS         += $(CFLAGS) -w0
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
 LIBS		+= -pthread -ltli -lrt

@@ -10,8 +10,9 @@ GCCLIB_DIR	= $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
 
 CC		= $(BIN_DIR)/g++ppc
 CXX		= $(CC)
-CCFLAGS		+= -B$(GCCLIB_DIR)/ -DCPU=PPC604 -DVXWORKS -O2
-CCFLAGS		+= -B$(GCCLIB_DIR)/ -DCPU=PPC604 -DVXWORKS -O2 -fno-implicit-templates
+CFLAGS		+= $(DCFLAGS) -B$(GCCLIB_DIR)/ -DCPU=PPC604 -DVXWORKS -O2
+CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
+DCFLAGS		+= -g
 INCLDIRS	+= -I$(TARGET_DIR)/h
 LD		= $(BIN_DIR)/ldppc
 LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR)

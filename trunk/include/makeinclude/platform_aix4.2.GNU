@@ -7,6 +7,9 @@
 
 CC	    = xlC
 CXX	    = xlC_r
+CFLAGS      += $(DCFLAGS)
+CCFLAGS     += $(CFLAGS)
+DCFLAGS     += -g
 DLD	    = makeC++SharedLib_r
 LD          = $(CXX)
 CPPFLAGS    += -qxcall -qtempinc -qcheck=nobounds:div:null  -M -qlanglvl=ansi -qextchk -qflag=w:w -qinfo 

@@ -5,6 +5,9 @@
 # SunOS 4.x (Solaris 1.x) with SunC++ 3.x
 CC		= cc
 CXX		= CC
+CFLAGS		+= $(DCFLAGS)
+CCFLAGS		+= $(CFLAGS)
+DCFLAGS		+= -g
 DLD		= /bin/ld
 LD		= $(CXX)
 LIBS		+= 

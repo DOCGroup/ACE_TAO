@@ -2,8 +2,10 @@
 # *not* using Orbix
 CC		= gcc
 CXX		= ec++
+CFLAGS		+= $(DCFLAGS)
 ## CCFLAGS	+= -relax -tproff
-CCFLAGS		+= -relax -v -eh
+CCFLAGS		+= $(CFLAGS) -relax -v -eh
+DCFLAGS		+= -g
 DLD		= $(CXX) 
 LIBS		+= -lgen -lsocket -ldl -lnsl -lc
 PIC		= -KPIC

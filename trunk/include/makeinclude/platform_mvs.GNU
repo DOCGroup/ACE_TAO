@@ -1,6 +1,9 @@
 # For MVS OpenEdition platform
  
 CXX           = cxx
+CFLAGS        += $(DCFLAGS)
+CCFLAGS       += $(CFLAGS)
+DCFLAGS	      += -g
 CPPFLAGS      = -+
 DEFFLAGS      = -D_ALL_SOURCE -DNDEBUG
 CC            = $(CXX)

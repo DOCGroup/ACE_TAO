@@ -3,8 +3,9 @@
 
 CC		= gcc
 CXX		= g++
-CFLAGS          += -D_REENTRANT -O2
-CCFLAGS         += -D_REENTRANT -O2 -fno-implicit-templates -fno-strict-prototypes
+CFLAGS          += $(DCFLAGS) -D_REENTRANT -O2
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
+DCFLAGS		+= -g
 LD		= $(CXX)
 DLD		= $(CXX)
 LIBS		+= -lpthread -lmach -lexc -ltli -lrt

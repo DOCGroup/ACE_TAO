@@ -2,8 +2,9 @@
 # *using* Orbix
 CC              = cc
 CXX             = CC
-CFLAGS          += +w -mt
+CFLAGS          += $(DCFLAGS) +w -mt
 CCFLAGS         += $(CFLAGS) -noex -pta
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
 INCLDIRS	= -I$(ORBIX_ROOT)/include

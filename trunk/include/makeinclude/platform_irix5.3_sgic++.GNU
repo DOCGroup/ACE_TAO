@@ -6,6 +6,9 @@
 
 CC		= cc
 CXX		= CC
+CFLAGS		+= $(DCFLAGS)
+CCFLAGS		+= $(CFLAGS)
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
 CPPFLAGS        += -ptused -prelink +pp -woff 3203,3209,3161,3262,3665

@@ -2,8 +2,9 @@
 
 CC		= cxx
 CXX		= $(CC)
-CFLAGS		+= -non_shared
+CFLAGS		+= $(DCFLAGS) -non_shared
 CCFLAGS		+= $(CFLAGS) -x cxx -w0
+DCFLAGS		+= -g
 #DLD		= ld -non_shared
 DLD		= ld -shared
 LD		= $(CXX)

@@ -4,8 +4,9 @@
 #
 CC		= gcc 
 CXX		= g++
-CFLAGS          += -O2
-CCFLAGS         += -O2 -fno-implicit-templates -fno-strict-prototypes
+CFLAGS          += $(DCFLAGS)
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
 LDFLAGS		+=     # -z muldefs

@@ -11,6 +11,9 @@
 
 CC		= cc
 CXX		= CC
+CFLAGS		+= $(DCFLAGS)
+CCFLAGS		+= $(CFLAGS)
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
 CPPFLAGS	+= -ptused -prelink -D_SGI_MP_SOURCE 

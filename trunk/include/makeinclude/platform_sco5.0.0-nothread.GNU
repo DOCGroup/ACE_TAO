@@ -2,9 +2,10 @@
 
 CC              = gcc
 CXX		= g++
-CFLAGS		+= -b elf -w -O2
-CCFLAGS		+= -b elf -w -O2 -Xpg4plus -fno-implicit-templates \
+CFLAGS		+= $(DCFLAGS) -b elf -w -O2
+CCFLAGS		+= $(CFLAGS) -Xpg4plus -fno-implicit-templates \
 		   -I/usr/progressive/lib/g++-include
+DCFLAGS		+= -gstabs
 DLD             = $(CXX)
 LD		= $(CXX)
 LIBS            += -lsocket -lnsl -ldl
