@@ -1,3 +1,10 @@
+Fri Jun  4 12:01:34 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_locate): Added the INS
+	  functionality for lookup of "simple" object keys when the
+	  incoming request is a GIOP LocateRequest message. This 
+	  was previously possible only for GIOP Request messages.
+
 Fri Jun 04 11:37:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Simple/Simple_util (class Client): Reordered the ORB
