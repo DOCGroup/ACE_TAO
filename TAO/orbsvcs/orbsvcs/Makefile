@@ -107,7 +107,8 @@ FILES= $(IDL_FILES) \
 	\
 	tmplinst-orbsvcs \
 	AV/AVStreams_i \
-	AV/Endpoint_Strategy
+	AV/Endpoint_Strategy \
+	AV/Endpoint_Strategy_T
 
 VPATH=.:Naming:Event:Sched:AV:Property:Trader:Concurrency:Log
 
