@@ -1,3 +1,7 @@
+Sun May 20 07:37:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/POSIX_Proactor.cpp: Fixed a compile error with g++. 
+
 Sun May 20 01:38:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h:
