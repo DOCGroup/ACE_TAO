@@ -35,9 +35,6 @@
 
 #define ACE_LACKS_SYSTIME_H
 
-#define ACE_LACKS_READDIR_R
-#define ACE_LACKS_RLIMIT
-
 #define ACE_HAS_SELECT_H
 
 #define ACE_LACKS_PRAGMA_ONCE
@@ -62,16 +59,27 @@
 # error unsupported compiler in ace/config-cygwin32.h
 #endif /* __GNUG__ */
 
+#define ACE_HAS_VOIDPTR_SOCKOPT 1
+#define ACE_HAS_UALARM 1
+#define ACE_HAS_SYS_ERRLIST 1
+#define ACE_HAS_STRNLEN 1
+#define ACE_HAS_POSIX_GETPWNAM_R 1
+#define ACE_HAS_POSIX_NONBLOCK 1
 #define ACE_HAS_POSIX_TIME
+#define ACE_HAS_CLOCK_GETTIME 1
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 #define ACE_HAS_MSG
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
-#define ACE_LACKS_GETHOSTENT
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-#define ACE_LACKS_GETPGID_PROTOTYPE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_VOIDPTR_MMAP
+#define ACE_HAS_CPLUSPLUS_HEADERS
+#define ACE_HAS_MEMCHR 1
+#define ACE_HAS_POLL
+#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
+#define ACE_HAS_SOCKADDR_MSG_NAME 1
+#define ACE_LACKS_PRI_T 1
 
 // Compiler/platform supports alloca().
 // Although ACE does have alloca() on this compiler/platform combination, it is
@@ -87,9 +95,7 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-#if !defined(ACE_HAS_IP_MULTICAST)
-# define ACE_HAS_IP_MULTICAST
-#endif /* #if ! defined(ACE_HAS_IP_MULTICAST) */
+#define ACE_HAS_IP_MULTICAST
 
 #define ACE_HAS_BIG_FD_SET
 
@@ -101,10 +107,6 @@
 
 #define ACE_HAS_GETPAGESIZE
 
-#define ACE_LACKS_STRRECVFD
-
-#define ACE_LACKS_MADVISE
-
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
 // Compiler/platform supports strerror ().
@@ -113,8 +115,7 @@
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
 
-// Compiler/platform defines the sig_atomic_t typedef.
-#define ACE_HAS_SIG_ATOMIC_T
+#define ACE_HAS_SOCKLEN_T 1
 
 #define ACE_HAS_GPERF
 
@@ -122,22 +123,38 @@
 #define ACE_HAS_STRPTIME
 
 #define ACE_LACKS_MKFIFO
-
 #define ACE_LACKS_SIGINFO_H
-
 #define ACE_LACKS_UCONTEXT_H
-
 #define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_FGETWC 1
+#define ACE_LACKS_NAMED_POSIX_SEM
+#define ACE_LACKS_STRRECVFD
+#define ACE_LACKS_MADVISE
+#define ACE_LACKS_GETPGID_PROTOTYPE
+#define ACE_LACKS_GETHOSTENT
+#define ACE_LACKS_ITOW 1
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS 1
+#define ACE_LACKS_READDIR_R
+#define ACE_LACKS_RLIMIT
+#define ACE_LACKS_RWLOCK_T 1
+
+#define ACE_LACKS_FGETWS 1
+#define ACE_LACKS_FPUTWS 1
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
-
 #define ACE_HAS_SNPRINTF
 
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIGINFO_T
+#define ACE_HAS_SIGACTION_CONSTP2
+#define ACE_HAS_SIGSUSPEND
+#define ACE_HAS_SIG_C_FUNC 1
+#define ACE_HAS_SIG_ATOMIC_T
 
 #define ACE_HAS_POSIX_SEM
-#define ACE_LACKS_NAMED_POSIX_SEM
+
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
 // Cygwin DLL suffix is .dll
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
@@ -158,6 +175,8 @@
 #   define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 #   define ACE_HAS_PTHREADS_UNIX98_EXT
+#   define ACE_HAS_PTHREAD_CONTINUE 1
+#   define ACE_HAS_PTHREAD_SUSPEND 1
 
 // ... and the final standard even!
 #  define ACE_HAS_PTHREADS_STD
@@ -168,6 +187,8 @@
 #  define ACE_LACKS_PTHREAD_CANCEL
 #  define ACE_LACKS_THREAD_PROCESS_SCOPING
 #  define ACE_LACKS_MUTEXATTR_PSHARED
+#  define ACE_LACKS_PTHREAD_THR_SIGSETMASK 1
+#  define ACE_LACKS_PTHREAD_YIELD 1
 
 // In the 1.5.9 release of Cygwin the pthread_kill gives an access violation
 // so for the time being we say Cygwin doesn't support pthread_kill.
