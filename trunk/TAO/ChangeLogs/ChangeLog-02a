@@ -1,3 +1,16 @@
+Fri Apr  6 11:38:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+
+          If the debug level is set to zero, and the ImplRepo is
+          run as an NT service when the registry keys specific to
+          it are not defined, it will fail.  This is because I had
+          included a return statement within a debugging if instead
+          of outside of it.
+
+          Thanks to Juergen Pfreundt <Juergen.Pfreundt@gft.com> for
+          bringing this to our attention.
+
 Fri Apr  6 10:43:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/RT_Endpoint_Selector_Factory.cpp:
