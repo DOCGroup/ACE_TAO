@@ -1794,11 +1794,17 @@ struct stat
 // programs to have their own ACE-wide "default".
 
 // PROCESS-level values
-#     define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
+#     if !defined(_UNICOS)
+#       define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
+#       define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
+#       define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
+#     else // UNICOS is missing a sched_get_priority_min() implementation
+#       define ACE_PROC_PRI_FIFO_MIN  0
+#       define ACE_PROC_PRI_RR_MIN    0
+#       define ACE_PROC_PRI_OTHER_MIN 0
+#     endif
 #     define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
-#     define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
 #     define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#     define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
 #     define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
 #     if !defined(ACE_PROC_PRI_FIFO_DEF)
 #       define ACE_PROC_PRI_FIFO_DEF (ACE_PROC_PRI_FIFO_MIN + (ACE_PROC_PRI_FIFO_MAX - ACE_PROC_PRI_FIFO_MIN)/2)

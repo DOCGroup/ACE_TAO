@@ -205,5 +205,10 @@ template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
 // The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
 #pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
+# if defined(_CRAYMPP)
+// MPP Cray ACE_HANDLE is 64-bit, defined as int, but ACE_INT32 is short
+// so instantiation in ace/Stats.cpp isn't used in this case
+#pragma instantiate ACE_Node<ACE_HANDLE>
+# endif
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

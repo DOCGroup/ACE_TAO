@@ -520,7 +520,12 @@ u_long ACE::crc_table_[] =
 u_long
 ACE::crc32 (const char *string)
 {
-#define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
+// UNICOS UINT32's are 64-bit on the Cray PVP architecture
+#if !defined(_UNICOS)
+#  define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
+#else /* ! _UNICOS */
+#  define COMPUTE(var, ch) (var) = ( 0x00000000ffffffff & ((var) << 8)) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
+#endif /* ! _UNICOS */
   register ACE_UINT32 crc = 0;
 
   u_long len = 0;
@@ -2708,16 +2713,30 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       if (hp == 0)
         return -1;
       else
+#if !defined(_UNICOS)
         ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
                         (char *) hp->h_addr,
                         hp->h_length);
+#else /* _UNICOS */
+        {
+          ACE_UINT64 haddr;  // a place to put the address
+          char * haddrp = (char *) &haddr;  // convert to char pointer
+          haddr += 4;   // adjust within the word
+          ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
+          ip_addr.sin_addr.s_addr = haddr;
+        }
+#endif /* ! _UNICOS */
     }
   else
     {
       ACE_OS::memset ((void *) &ip_addr, 0, sizeof ip_addr);
+#if !defined(_UNICOS)
       ACE_OS::memcpy ((void *) &ip_addr.sin_addr,
                       (void*) &host_addr,
                       sizeof ip_addr.sin_addr);
+#else /* _UNICOS */
+      ip_addr.sin_addr.s_addr = host_addr;   // just copy to the bitfield
+#endif /* ! _UNICOS */
     }
 
   for (int n = ifc.ifc_len / sizeof (struct ifreq);
@@ -3190,6 +3209,7 @@ ACE::get_ip_interfaces (size_t &count,
     {
       if (pcur->ifr_addr.sa_family == AF_INET)
         {
+#if !defined(_UNICOS)
           struct sockaddr_in *addr =
             ACE_reinterpret_cast(sockaddr_in *, &pcur->ifr_addr);
 
@@ -3202,6 +3222,23 @@ ACE::get_ip_interfaces (size_t &count,
                                 0);
               count++;
             }
+#else /* ! _UNICOS */
+          // need to explicitly copy on the Cray, since the bitfields kinda
+          // screw things up here
+          struct sockaddr_in inAddr;
+
+          inAddr.sin_len = pcur->ifr_addr.sa_len;
+          inAddr.sin_family = pcur->ifr_addr.sa_family;
+          memcpy((void *)&(inAddr.sin_addr),
+                 (const void *)&(pcur->ifr_addr.sa_data[8]),
+                 sizeof(struct in_addr));
+
+          if (inAddr.sin_addr.s_addr != 0)
+            {
+              addrs[count].set(&inAddr, sizeof(struct sockaddr_in));
+              count++;
+            }
+#endif /* ! _UNICOS */
         }
 
       pcur++;
