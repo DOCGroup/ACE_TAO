@@ -1365,6 +1365,12 @@ the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
 Tornado II cannot be used to build ACE.  Use Cygnus' make (version 3.75)
 instead.)<p>
 
+<strong>NOTE:</strong>Optimization is enabled be default in
+<a href=include/makeinclude/platform_vxworks5.x_g++.h>platform_vxworks5.x_g++.h</a>.  However, the compiler that is shipped with Tornado II has
+trouble compiling some files with -O2.  To disable optimization
+for an individual file, just add <code>optimize=0</code> to your
+make invocation when compiling that file.<p>
+
 Using the Cygnus tools, this approach works:
 <ul>
   <li>You'll build both your NT and VxWorks executables in the same
