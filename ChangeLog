@@ -2597,6 +2597,13 @@ Thu Oct 16 17:56:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           ptrdiff_t out of the std namespace. This fixes hundreds
           of compile errors in our CBX Preview build.
 
+Thu Oct 16 15:36:22 2003  Steve Huston  <shuston@riverace.com>
+
+	* bin/PerlACE/Process_Win32.pm: For testing using Pocket Controller,
+	  use "start/wait" instead of running the command and sleeping. Gets
+	  the tests run quicker and more reliably. Requires Pocket Controller
+	  Enterprise V4.01 or higher.
+
 Thu Oct 16 09:03:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
