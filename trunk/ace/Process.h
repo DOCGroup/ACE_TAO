@@ -310,7 +310,7 @@ public:
   virtual ~ACE_Process (void);
   // Destructor.
 
-  pid_t spawn (ACE_Process_Options &options);
+  virtual pid_t spawn (ACE_Process_Options &options);
   // Launch a new process as described by <options>.  Returns the
   // process id of the newly spawned child on success or -1 on
   // failure.
