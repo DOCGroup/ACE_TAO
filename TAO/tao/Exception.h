@@ -275,6 +275,8 @@ private:
  *
  * @brief This class is only used internally in TAO as an exception
  * that never gets thrown.  Never use this class anywhere.
+ *
+ * @internal
  */
 class TAO_Export TAO_DONT_CATCH
 {
