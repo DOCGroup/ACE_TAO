@@ -1,3 +1,33 @@
+Mon Aug  9 10:45:24 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp (handle_signal):  When working with an MMAP
+	  memory pool, a "real" segmentation fault (not related to
+ 	  updating the memory mapping) will cause the process to fail but
+ 	  not write a core file. This is because that on linux (and
+ 	  possibly other flavours of UNIX) core file writing is a default
+ 	  behaviour which is disabled once you register a signal handler.
+  	  Even if the signal handler returns a bad return value which
+ 	  crashes the program, a core file will not be written.
+  
+          The fix for this is to modify the mmap() signal handler so that
+ 	  it de-registers the signal handler when detecting a segfault
+ 	  with the mapping up to date and return an "ok" answer. the
+ 	  program will attempt to access the illegal address again and
+ 	  dump core.  Thanks to Joseph Weihs <joseph-w@Orbotech.Co.IL> for
+ 	  contributing this fix.
+  
+	* ace/Signal: Changed the new handle_i() and register_handler_i()
+	  methods to be static member functions so they can be called from
+ 	  the static dispatch() member function.  Thanks to Andreas
+ 	  Geisler <andreas.geisler@erls.siemens.de> for reporting this.
+
+Mon Aug  9 10:33:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/ASX/CCM_App/SC_Server.cpp: Make sure to enable
+	  the appropriate parameter for ACE_Service_Config::open() so that
+ 	  static services will be enabled.  Thanks to Michael Roth
+ 	  <ombelico@gmx.net> for reporting this.
+
 Mon Aug 09 10:21:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU (INCLDIRS):

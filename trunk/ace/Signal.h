@@ -261,17 +261,17 @@ public:
 protected:
   // = These methods and data members are shared by derived classes.
 
-  virtual ACE_Event_Handler *handler_i (int signum,
-                                        ACE_Event_Handler *);
+  static ACE_Event_Handler *handler_i (int signum,
+                                       ACE_Event_Handler *);
   // Set a new <ACE_Event_Handler> that is associated with <signum>.
   // Return the existing handler.  Does not acquire any locks so that
   // it can be called from a signal handler, such as <dispatch>.
 
-  virtual int register_handler_i (int signum,
-                                  ACE_Event_Handler *new_sh,
-                                  ACE_Sig_Action *new_disp = 0,
-                                  ACE_Event_Handler **old_sh = 0,
-                                  ACE_Sig_Action *old_disp = 0);
+  static int register_handler_i (int signum,
+                                 ACE_Event_Handler *new_sh,
+                                 ACE_Sig_Action *new_disp = 0,
+                                 ACE_Event_Handler **old_sh = 0,
+                                 ACE_Sig_Action *old_disp = 0);
   // This implementation method is called by <register_handler> and
   // <dispatch>.  It doesn't do any locking so that it can be called
   // within a signal handler, such as <dispatch>.  It adds a new
