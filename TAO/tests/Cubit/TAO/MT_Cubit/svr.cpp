@@ -9,30 +9,38 @@
 //    svr.cpp
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
+//    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
 //
 // ============================================================================
 
+// ACE includes.
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/ARGV.h"
 #include "ace/Sched_Params.h"
 
+// TAO includes.
 #include "tao/corba.h"
 
+// MT Cubit application includes.
 #include "cubit_i.h"
 
+// Sumedh, the following code should be factored into a special
+// "initialization" file, rather than cluttering the main file.
 #if defined (VME_DRIVER)
 #include <hostLib.h>
-extern "C" STATUS vmeDrv(void);
-extern "C" STATUS vmeDevCreate(char *);
-#endif
+extern "C" STATUS vmeDrv (void);
+extern "C" STATUS vmeDevCreate (char *);
+#endif /* VME_DRIVER */
 
 // Global Variables
 static CORBA::String key = CORBA::String ("Cubit");
 
+// Size of the string for holding the stringified object reference.
+// Sumedh, what is the rationale for a string of size 30?  Can you use
+// a more general parameter instead?  Perhaps this needs to go into
+// TAO somewhere?
 const u_int OBJECT_STRING_SIZE = 30;
-// size of the string for holding the stringified object reference
 
 class Cubit_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = TITLE
@@ -48,7 +56,7 @@ public:
   // Active Object entry point.
 
 protected:
-  Cubit_Task (void) {};
+  Cubit_Task (void);
   // No-op constructor.
 
 private:
@@ -62,6 +70,11 @@ private:
   // Number of objects we're managing.
 
 };
+
+Cubit_Task::Cubit_Task (void)
+{
+  // No-op.
+}
 
 Cubit_Task::Cubit_Task (const char *args,
                         const char *orbname,
@@ -77,10 +90,15 @@ Cubit_Task::svc (void)
 {
   CORBA::Environment env;
 
+  // Sumedh, this method is too long.  Please break it up into a
+  // number of smaller methods that are private to the Cubit_Task
+  // class.
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Beginning Cubit task with args = '%s'\n",
               orbargs_));
-  ACE_ARGV args (orbargs_);
+
+  ACE_ARGV args (this->orbargs_);
 
   int argc = args.argc ();
   char **argv = args.argv ();
@@ -101,25 +119,36 @@ Cubit_Task::svc (void)
   CORBA::POA_ptr oa_ptr = orb_ptr->POA_init (argc, argv, "POA");
 
   if (oa_ptr == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to initialize the POA.\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to initialize the POA.\n"),
+                      1);
 
   // Create implementation object with user specified key.
   Cubit_i **my_cubit;
 
-  ACE_NEW_RETURN (my_cubit, Cubit_i *[num_of_objs_], -1);
+  ACE_NEW_RETURN (my_cubit,
+                  Cubit_i *[num_of_objs_],
+                  -1);
 
   u_int i;
 
-  // this loop creates multiple servants
-  for (i = 0; i < num_of_objs_; i++)
+  // This loop creates multiple servants.
+  for (i = 0;
+       i < num_of_objs_;
+       i++)
     {
       CORBA::String obj_str =
         CORBA::string_alloc (ACE_OS::strlen ((char *) key) 
                              + OBJECT_STRING_SIZE);
 
-      ACE_OS::sprintf (obj_str, "%s%02d", (char *) key, i);
+      ACE_OS::sprintf (obj_str,
+                       "%s%02d",
+                       (char *) key,
+                       i);
 
-      ACE_NEW_RETURN (my_cubit[i], Cubit_i (obj_str), -1);
+      ACE_NEW_RETURN (my_cubit[i],
+                      Cubit_i (obj_str),
+                      -1);
 
       if (my_cubit[i] == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -181,11 +210,12 @@ Cubit_Task::svc (void)
   return 0;
 }
 
+// Global options used to configure various parameters.
 static char *hostname = NULL;
 static int base_port = 0;
 static int num_of_objs = 1;
 
-// Parses the command line arguments and returns an error status
+// Parses the command line arguments and returns an error status.
 
 static int
 parse_args (int argc, char *argv[])
@@ -212,31 +242,41 @@ parse_args (int argc, char *argv[])
 			   " -p port"
 			   " -h my_hostname"
                            " -t num_objects"
-			   "\n", argv [0]), 1);
+			   "\n", argv [0]),
+                          1);
       }
 
-  return 0;  // Indicates successful parsing of command line
+  // Indicates successful parsing of command line
+  return 0;  
 }
 
 // Standard command line parsing utilities used.
 
+// Sumedh, can you please talk with David Levine to figure out how to
+// make this main() function prototype cleaner?  For instance, take a
+// look at how we deal with this stuff in the $ACE_ROOT/tests/*.cpp
+// examples for VxWorks.
 int
 #if defined (VXWORKS) && defined (FORCE_ARGS)
 main (int arg_c, char *arg_v[])
 #else
 main (int argc, char *argv[])
-#endif
+#endif /* defined (VXWORKS) && defined (FORCE_ARGS) */
 {
+  // Sumedh, the following code should be factored into a special
+  // "initialization" function, rather than cluttering the main
+  // program.
 #if defined (VXWORKS)
-   hostAdd("mv2604e", "130.38.183.178");
+   hostAdd ("mv2604e", "130.38.183.178");
 #if defined (VME_DRIVER)
-   STATUS status = vmeDrv();
-   if( status != OK )
-      printf("ERROR on call to vmeDrv()\n");
-   status = vmeDevCreate("/vme");
-   if( status != OK )
-      printf("ERROR on call to vmeDevCreate()\n");
+   STATUS status = vmeDrv ();
+   if (status != OK)
+     printf ("ERROR on call to vmeDrv()\n");
+   status = vmeDevCreate ("/vme");
+   if (status != OK)
+     printf ("ERROR on call to vmeDevCreate()\n");
 #endif /* defined (VME_DRIVER) */
+
 #if defined (FORCE_ARGS)
    int argc = 5;
    char *argv[] = { "main",
@@ -248,6 +288,9 @@ main (int argc, char *argv[])
 #endif /* defined (FORCE_ARGS) */
 #endif /* defined (VXWORKS) */
 
+   // Sumedh, the main function is still too long.  Can you please
+   // break it up into a couple of smaller functions?
+
   parse_args (argc, argv);
 
   if (hostname == 0 || base_port == 0)
@@ -258,6 +301,8 @@ main (int argc, char *argv[])
                        argv[0]),
                       1);
   
+  // Sumedh, can you please document the following so that readers
+  // will know what's going on?!
   const size_t arg_size =
     ACE_OS::strlen ("rate20 -ORBport %d -ORBhost %s")
     + 5 /* port number */
@@ -266,21 +311,32 @@ main (int argc, char *argv[])
   
   char *args1 = 0;
 
-  ACE_NEW_RETURN (args1, char[arg_size], -1);
+  // Sumedh, can you please use a "smart auto pointer" of some type to
+  // make sure that args1 gets deleted automagically?  Please see
+  // $ACE_ROOT/tests/Conn_Test.cpp and the use of the
+  // ACE_Auto_Basic_Array_Ptr<> template for some examples.
 
-  ::sprintf (args1,
-             "rate20 -ORBport %d -ORBhost %s",
-             base_port, 
-             hostname);
+  ACE_NEW_RETURN (args1,
+                  char[arg_size],
+                  -1);
 
-  Cubit_Task high_priority_task (args1 , "internet", 1);
+  ACE_OS::sprintf (args1,
+                   "rate20 -ORBport %d -ORBhost %s",
+                   base_port, 
+                   hostname);
+
+  Cubit_Task high_priority_task (args1 ,
+                                 "internet",
+                                 1);
 
   ACE_Sched_Priority priority;
 
   // @@ Sumedh, can you please document why we need this VxWorks
   // #ifdef?  Is there a way to make this more general so we don't
   // need the #ifdef? 
-  //   Doug, I didn't put this in. Maybe David knows why ?
+  // Doug, I didn't put this in. Maybe David knows why ?
+  // Sumedh, can you please check with David or Brian (cc' me on the
+  // email).
 #if defined (VXWORKS)
   priority = 
     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, 
@@ -315,16 +371,18 @@ main (int argc, char *argv[])
               "Creating %d servants with low priority\n",
               num_of_objs - 1));
 
+  // Sumedh, can you please add a comment here explaining what this
+  // loop does?
   for (int i = 0; i < num_of_objs - 1; i++)
     {
 
       char *args = 0;
       ACE_NEW_RETURN (args, char[arg_size], -1);
 
-      ::sprintf (args, 
-                 "rate10 -ORBport %d -ORBhost %s", 
-                 base_port + 1 + i,
-                 hostname);
+      ACE_OS::sprintf (args, 
+                       "rate10 -ORBport %d -ORBhost %s", 
+                       base_port + 1 + i,
+                       hostname);
 
       ACE_NEW_RETURN (low_priority_task [i],
                       Cubit_Task (args, "internet", 1),
@@ -342,7 +400,7 @@ main (int argc, char *argv[])
 
     }
 
-  // Wait for the threads to exit.
+  // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
   delete [] args1;
