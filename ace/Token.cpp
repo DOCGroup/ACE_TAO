@@ -111,7 +111,7 @@ ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entr
   // if we've deleted the last entry.
 
   if (curr->next_ == 0)
-    this->tail_ = curr;
+    this->tail_ = prev;
 }
 
 ACE_Token::ACE_Token (LPCTSTR name, void *any)
