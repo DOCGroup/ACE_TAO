@@ -6,11 +6,17 @@ Sat Apr 24 07:24:51 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-vxworks5.x.h: added ACE_THR_PRI_OTHER_DEF
           #define, for use by MT_Cubit.
 
+        * ace/Object_Manager.cpp (fini): unconditionally set
+          instance_ to 0 at the end.  This allows init () to
+          work properly if called after fini (), such as for
+          repeated test on VxWorks.  Thanks to Todd Mullanix
+          <Todd.Mullanix@sylantro.com> for reporting this.
+
 Fri Apr 23 17:53:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
           for PPC860, changed -m=860 to -mcpu=860.  Thanks to
-          Todd Mullanix <Todd.Mullanix@sylantro.com> for reporting that.
+          Todd Mullanix <Todd.Mullanix@sylantro.com> for reporting this.
 
 Fri Apr 23 15:48:31 1999  James Hu <jxh@entera.com>
 
