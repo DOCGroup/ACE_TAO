@@ -51,7 +51,7 @@
 #include "ace/Svc_Handler.h"
 
 #if !defined (TAO_HAS_DLL)
-// Default is to build TAO DLL library on NT.
+// On Windows NT, the default is to build TAO as a DLL library.
 #  define TAO_HAS_DLL 1
 #endif /* TAO_HAS_DLL */
 
