@@ -159,7 +159,7 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
   //        However, applications may have trouble with it.
   //
   //     NOTE on the use of <::exit> -- <::exit> does not destroy
-  //     static objects.  Therefore, if
+  //     automatic objects.  Therefore, if
   //     ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled, the
   //     <ACE_Object_Manager> instance will *not* be destroyed if
   //     <::exit> is called!  However, <ACE_OS::exit> will properly
