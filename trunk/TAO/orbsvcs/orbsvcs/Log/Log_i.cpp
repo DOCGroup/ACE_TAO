@@ -446,10 +446,15 @@ Log_i::retrieve (DsLogAdmin::TimeT from_time,
 {
   // Decide between forward vs backward retrieval.
   char constraint[32];
+  char uint64_formating[32];
+
+  ACE_OS::sprintf (uint64_formating,
+                   ACE_UINT64_FORMAT_SPECIFIER, from_time);
+
   if (how_many >= 0)
-    ACE_OS::sprintf (constraint, "time >= %ull", from_time);
+    ACE_OS::sprintf (constraint, "time >= %s", uint64_formating);
   else
-    ACE_OS::sprintf (constraint, "time < %ull", from_time);
+    ACE_OS::sprintf (constraint, "time < %s", uint64_formating);
 
   DsLogAdmin::RecordList_ptr rec_list =
     this->query_i (constraint,

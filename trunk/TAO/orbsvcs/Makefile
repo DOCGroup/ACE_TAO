@@ -16,7 +16,8 @@ DIRS  =	orbsvcs \
 	Time_Service \
 	CosEvent_Service \
 	tests \
-	examples
+	examples \
+	Logging_Service
 
 # Not compiled by default
 #	Concurrency_Service \
