@@ -1,3 +1,9 @@
+Wed Apr 15 20:20:58 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer{Factory}.java.JDK1.2
+          added these two files, they can be used by the JDK 1.2 instead
+	  of by the Visigenic ORB.
+
 Wed Apr 15 15:59:58 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tao/append.cpp: Added a bunch of methods that take a CDR
