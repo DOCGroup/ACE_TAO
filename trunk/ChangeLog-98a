@@ -9,6 +9,9 @@ Sun Mar 08 14:29:30 1998  David L. Levine  <levine@cs.wustl.edu>
           be a typedef.  Thanks to Steve Coy <stevec@magna.com.au> for
           reporting this.
 
+        * Makefile: tag from ACE_wrappers, not its parent directory,
+          to avoid confusing CVS.
+
 Sat Mar 07 16:46:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.4.32, released Sat Mar 07 16:46:58 1998.
