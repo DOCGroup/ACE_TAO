@@ -115,8 +115,20 @@ ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
 ACE_INLINE ACE_UINT32
 ACE_U_LongLong::operator/ (const ACE_UINT32 ul) const
 {
-  return hi_ / ul * ULONG_MAX + lo_ / ul;
+  // This assumes integer division, so it's not always very accurate:
+  // Quotient = (hi_ * (ULONG_MAX + 1) + lo_) / ul
+  //          = (hi_ * ULONG_MAX + hi_ + lo_) / ul
+  //          = hi_ * (ULONG_MAX / ul)  +  (hi_ + lo_) / ul
+  return hi_ * (ULONG_MAX / ul)  +  (hi_ + lo_) / ul;
 }
+
+// ACE_INLINE ACE_UINT32
+// ACE_U_LongLong::operator% (const ACE_UINT32 ul) const
+// {
+//   // Just return lo_ portion.  Because the argument is an ACE_UINT32,
+//   // the result can never be bigger than 32 bits.
+//   return (*this  -  (ACE_U_LongLong) (*this / ul * ul)).lo_;
+// }
 
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator+= (const ACE_U_LongLong &ll)
@@ -124,6 +136,14 @@ ACE_U_LongLong::operator+= (const ACE_U_LongLong &ll)
   hi_ += ll.hi_;
   lo_ += ll.lo_;
   if (lo_ < ll.lo_) /* carry */ ++hi_;
+  return *this;
+}
+
+ACE_INLINE ACE_U_LongLong &
+ACE_U_LongLong::operator++ ()
+{
+  ++lo_;
+  if (lo_ == 0) /* carry */ ++hi_;
   return *this;
 }
 
