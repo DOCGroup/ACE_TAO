@@ -83,6 +83,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (io_vec);
+  ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
 #endif /* FIONREAD */
 }
