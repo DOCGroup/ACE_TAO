@@ -151,7 +151,7 @@ TAO_GIOP_Message_Handler::parse_header (void)
     }
 
   // By this point we are doubly sure that we have a more or less
-  // valid GIOP message with a valid major revisiosn number.
+  // valid GIOP message with a valid major revision number.
   if (this->message_state_.more_fragments &&
       this->message_state_.giop_version.minor == 2 &&
       this->current_buffer_.length () > TAO_GIOP_MESSAGE_FRAGMENT_HEADER)
@@ -241,7 +241,7 @@ TAO_GIOP_Message_Handler::get_payload_size (void)
       this->message_size_ = x + TAO_GIOP_MESSAGE_HEADER_LEN;
     }
 
-  // Set the read pointer to the end of the GIOP header
+  // Set the read pointer to the end of the GIOP message
   this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN -
                                 TAO_GIOP_MESSAGE_SIZE_OFFSET);
   return x;
@@ -279,22 +279,27 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
     {
       size_t len = this->current_buffer_.length ();
       char *buf = this->current_buffer_.rd_ptr ();
+      if (TAO_debug_level >= 4)
+        {
+          // Set the buf pointer to the start of the GIOP header
+          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
+        }
       if (len == this->message_state_.message_size)
         {
           // If the buffer length is equal to the size of the payload we
-          // have exactly one message. Check whether we have received
-          // only the first part of the fragment.
+          // have exactly one message.
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
 
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
-
           if (TAO_debug_level >= 4)
-            this->mesg_base_->dump_msg (
-                "Recv msg",
-                ACE_reinterpret_cast (u_char *,
-                                      buf),
-                len + TAO_GIOP_MESSAGE_HEADER_LEN);
-
+            {
+              this->mesg_base_->dump_msg (
+                  "Recv msg",
+                  ACE_reinterpret_cast (u_char *,
+                                        buf),
+                  len + TAO_GIOP_MESSAGE_HEADER_LEN);
+            }
+          // Check whether we have received only the first part of the
+          // fragment.
           return this->message_state_.is_complete (this->current_buffer_);
         }
       else if (len > this->message_state_.message_size)
@@ -304,16 +309,16 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
           // from  1 to N.
           this->message_status_ = TAO_GIOP_MULTIPLE_MESSAGES;
 
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
-
           if (TAO_debug_level >= 4)
-            this->mesg_base_->dump_msg (
-              "Recv msg",
-              ACE_reinterpret_cast (u_char *,
-                                    buf),
-              this->message_state_.message_size +
-              TAO_GIOP_MESSAGE_HEADER_LEN);
+            {
 
+              this->mesg_base_->dump_msg (
+                  "Recv msg",
+                  ACE_reinterpret_cast (u_char *,
+                                        buf),
+                  this->message_state_.message_size +
+                  TAO_GIOP_MESSAGE_HEADER_LEN);
+            }
           this->supp_buffer_.data_block (
             this->current_buffer_.data_block ()->clone ());
 
@@ -442,7 +447,11 @@ TAO_GIOP_Message_Handler::get_message (void)
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {
       size_t len = this->supp_buffer_.length ();
+      char * buf =
+        this->current_buffer_.rd_ptr ();
 
+      if (TAO_debug_level > 4)
+        buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
       if (len == this->message_state_.message_size)
         {
           // If the buffer length is equal to the size of the payload we
@@ -454,8 +463,6 @@ TAO_GIOP_Message_Handler::get_message (void)
 
           char * buf =
             this->current_buffer_.rd_ptr ();
-
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
 
           if (TAO_debug_level >= 4)
             this->mesg_base_->dump_msg (
@@ -477,11 +484,6 @@ TAO_GIOP_Message_Handler::get_message (void)
 
           this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
                                       this->message_state_.message_size);
-
-          char * buf =
-            this->current_buffer_.rd_ptr ();
-
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
 
           if (TAO_debug_level >= 4)
             this->mesg_base_->dump_msg (
