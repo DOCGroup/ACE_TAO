@@ -1,3 +1,9 @@
+Sat Jan 22 21:08:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Renamed
+	  EC_SupplierFiltering.* to EC_Supplier_Filter.*.
+
 Sat Jan 22 18:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
