@@ -222,7 +222,7 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
       //release!
 #endif //KOKYU_HAS_RELEASE_GUARD
 
-      this->enqueue (qitem);
+      this->enqueue_i (qitem);
 
 #ifdef KOKYU_HAS_RELEASE_GUARD
     } //else now >= release

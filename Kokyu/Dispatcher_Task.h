@@ -82,10 +82,14 @@ public:
   ~Dispatcher_Task ();
   int initialize();
 
+  /**
+   * Enqueues the given Dispatch_Command according to the given
+   * QoS. If KOKYU_HAS_RELEASE_GUARD is defined, this function checks
+   * the release guard before enqueuing to see if the enqueuing needs
+   * to be delayed.
+   */
   int enqueue (const Dispatch_Command* cmd,
            const QoSDescriptor& qos_info);
-
-  int enqueue (Dispatch_Queue_Item *qitem);
 
   /// Process the events in the queue.
   int svc (void);
@@ -111,6 +115,14 @@ private:
   ACE_Deadline_Message_Strategy deadline_msg_strategy_;
   ACE_Laxity_Message_Strategy laxity_msg_strategy_;
 
+  /**
+   * Enqueues the given Dispatch_Queue_Item. If
+   * KOKYU_HAS_RELEASE_GUARD is defined, this function does not check
+   * the release guard; it is a straight-forward enqueuing
+   * function.
+   */
+  int enqueue_i (Dispatch_Queue_Item *qitem);
+
 #ifdef KOKYU_HAS_RELEASE_GUARD
   //TODO: What's the best way to identify periodic events?
   //For now, use QoSDescriptor equivalence.
@@ -127,6 +139,8 @@ private:
   //For delaying dispatch until required by RG:
   Dispatch_Deferrer_Attributes deferrer_attr_;
   Dispatch_Deferrer deferrer_;
+
+  friend class Dispatch_Deferrer; //Dispatch_Deferrer needs access to enqueue_i()
 #endif //KOKYU_HAS_RELEASE_GUARD
 };
 
