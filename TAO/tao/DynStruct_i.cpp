@@ -34,8 +34,11 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
       // The type will be correct if this constructor called from a
       // factory function, but it could also be called by the user,
       // so.....
-      if (TAO_DynAny_i::unalias (this->type_.in (),
-                                 ACE_TRY_ENV) == CORBA::tk_struct)
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (this->type_.in (),
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (kind == CORBA::tk_struct)
         {
           CORBA::ULong numfields =
             this->type_.in ()->member_count (ACE_TRY_ENV);
@@ -108,7 +111,9 @@ TAO_DynStruct_i::TAO_DynStruct_i (CORBA_TypeCode_ptr tc)
             this->da_members_[i] = 0;
         }
       else
-        ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
+        {
+          ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
+        }
     }
   ACE_CATCHANY
     {
@@ -134,9 +139,15 @@ TAO_DynStruct_i::current_member_name (CORBA::Environment &)
 CORBA::TCKind
 TAO_DynStruct_i::current_member_kind (CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_,
-                                                                ACE_TRY_ENV),
-                                ACE_TRY_ENV);
+  CORBA::TypeCode_ptr tc = this->type_.in ()->member_type (this->current_index_,
+                                                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::tk_null);
+
+  CORBA::TCKind retval = TAO_DynAny_i::unalias (tc,
+                                                ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::tk_null);
+
+  return retval;
 }
 
 CORBA::NameValuePairSeq*
@@ -160,6 +171,8 @@ TAO_DynStruct_i::get_members (CORBA::Environment& ACE_TRY_ENV)
         CORBA::string_dup (this->type_.in ()->member_name (i));
 
       CORBA::Any_var temp = this->da_members_[i]->to_any (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::NameValuePairSeq::_nil ());
+
       (*members)[i].value = temp.in ();
     }
 
@@ -178,17 +191,24 @@ TAO_DynStruct_i::set_members (const CORBA::NameValuePairSeq& value,
       for (CORBA::ULong i = 0; i < length; i++)
         {
           // Check for type and name match.
-          if (value[i].value.type ()->equal (this->type_.in ()->member_type (i,
-                                                                             ACE_TRY_ENV))
+          CORBA_TypeCode_ptr tc = this->type_.in ()->member_type (i,
+                                                                  ACE_TRY_ENV);
+          ACE_CHECK;
+
+          if (value[i].value.type ()->equal (tc)
               && !ACE_OS::strcmp (value[i].id,
                                   this->type_.in ()->member_name (i)))
             {
               if (!CORBA::is_nil (this->da_members_[i].in ()))
-                this->da_members_[i]->destroy (ACE_TRY_ENV);
+                {
+                  this->da_members_[i]->destroy (ACE_TRY_ENV);
+                  ACE_CHECK;
+                }
 
               this->da_members_[i] =
                 TAO_DynAny_i::create_dyn_any (value[i].value,
                                               ACE_TRY_ENV);
+              ACE_CHECK;
             }
           else
             {
@@ -197,7 +217,9 @@ TAO_DynStruct_i::set_members (const CORBA::NameValuePairSeq& value,
         }
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidSeq ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidSeq ());
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -208,20 +230,39 @@ TAO_DynStruct_i::assign (CORBA_DynAny_ptr dyn_any,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   // *dyn_any->to_any raises Invalid if arg is bad.
-  if (this->type_.in ()->equal (dyn_any->type (ACE_TRY_ENV),
-                                ACE_TRY_ENV))
-    this->from_any (*dyn_any->to_any (ACE_TRY_ENV),
-                    ACE_TRY_ENV);
+  CORBA::TypeCode_ptr tc = dyn_any->type (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::Boolean equal = this->type_.in ()->equal (tc,
+                                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (equal)
+    {
+      CORBA_Any_ptr any_ptr = dyn_any->to_any (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->from_any (*any_ptr,
+                      ACE_TRY_ENV);
+      ACE_CHECK;
+    }
   else
-    ACE_THROW (CORBA_DynAny::Invalid ());
+    {
+      ACE_THROW (CORBA_DynAny::Invalid ());
+    }
 }
 
 CORBA_DynAny_ptr
 TAO_DynStruct_i::copy (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA_Any_ptr a = this->to_any (ACE_TRY_ENV);
-  return TAO_DynAny_i::create_dyn_any (*a,
-                                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
+
+  CORBA_DynAny_ptr retval = TAO_DynAny_i::create_dyn_any (*a,
+                                                          ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
+
+  return retval;
 }
 
 void
@@ -229,8 +270,13 @@ TAO_DynStruct_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Do a deep destroy
   for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
-    if (!CORBA::is_nil (this->da_members_[i].in ()))
-      this->da_members_[i]->destroy (ACE_TRY_ENV);
+    {
+      if (!CORBA::is_nil (this->da_members_[i].in ()))
+        {
+          this->da_members_[i]->destroy (ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+    }
 
   // Free the top level
   delete this;
@@ -240,8 +286,11 @@ void
 TAO_DynStruct_i::from_any (const CORBA_Any& any,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->type_.in ()->equal (any.type (),
-                                ACE_TRY_ENV))
+  CORBA::Boolean equal = this->type_.in ()->equal (any.type (),
+                                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (equal)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
@@ -254,6 +303,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
           CORBA::TypeCode_ptr field_tc =
             this->type_.in ()->member_type (i,
                                             ACE_TRY_ENV);
+          ACE_CHECK;
 
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
@@ -261,18 +311,24 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
                                cdr.start ());
 
           if (!CORBA::is_nil (this->da_members_[i].in ()))
-            this->da_members_[i]->destroy (ACE_TRY_ENV);
+            {
+              this->da_members_[i]->destroy (ACE_TRY_ENV);
+              ACE_CHECK;
+            }
 
           this->da_members_[i] =
             TAO_DynAny_i::create_dyn_any (field_any,
                                           ACE_TRY_ENV);
+          ACE_CHECK;
 
           // Move to the next field in the CDR stream.
           cdr.skip (field_tc);
         }
     }
   else
-    ACE_THROW (CORBA_DynAny::Invalid ());
+    {
+      ACE_THROW (CORBA_DynAny::Invalid ());
+    }
 }
 
 CORBA::Any_ptr
@@ -287,15 +343,18 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       // Each component must have been initialied.
       if (!this->da_members_[i].in ())
         {
-          ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 0);
+          ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                            0);
         }
 
       CORBA_TypeCode_ptr field_tc =
         this->da_members_[i]->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA_Any::_nil ());
 
       // Recursive step
       CORBA_Any_var field_any =
         this->da_members_[i]->to_any (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA_Any::_nil ());
 
       ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
 
@@ -304,17 +363,23 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       out_cdr.append (field_tc,
                       &field_cdr,
                       ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA_Any::_nil ());
     }
 
   TAO_InputCDR in_cdr (out_cdr);
 
   CORBA_Any *retval;
+
+  CORBA_TypeCode_ptr tc = this->type (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_Any::_nil ());
+
   ACE_NEW_THROW_EX (retval,
-                    CORBA_Any (this->type (ACE_TRY_ENV),
+                    CORBA_Any (tc,
                                0,
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA_Any::_nil ());
+
   return retval;
 }
 
@@ -331,11 +396,18 @@ CORBA_DynAny_ptr
 TAO_DynStruct_i::current_component (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->da_members_[this->current_index_].in ())
-    this->da_members_[this->current_index_] =
-      TAO_DynAny_i::create_dyn_any
-        (this->type_.in ()->member_type (this->current_index_,
-                                         ACE_TRY_ENV),
-         ACE_TRY_ENV);
+    {
+      CORBA_TypeCode_ptr tc = 
+        this->type_.in ()->member_type (this->current_index_,
+                                        ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
+
+      CORBA_DynAny_ptr dp = TAO_DynAny_i::create_dyn_any (tc,
+                                                          ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
+
+      this->da_members_[this->current_index_] = dp;
+    }
 
   return this->da_members_[this->current_index_].in ();
 }
@@ -381,256 +453,432 @@ void
 TAO_DynStruct_i::insert_boolean (CORBA::Boolean value,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_boolean)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_boolean)
     {
-      this->current_component (ACE_TRY_ENV)->insert_boolean (value,
-                                                     ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_boolean (value,
+                          ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_octet (CORBA::Octet value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_octet)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_octet)
     {
-      this->current_component (ACE_TRY_ENV)->insert_octet (value,
-                                                   ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_octet (value,
+                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_char (CORBA::Char value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_char)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_char)
     {
-      this->current_component (ACE_TRY_ENV)->insert_char (value,
-                                                  ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_char (value,
+                       ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_short (CORBA::Short value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_short)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_short)
     {
-      this->current_component (ACE_TRY_ENV)->insert_short (value,
-                                                   ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_short (value,
+                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_ushort (CORBA::UShort value,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_ushort)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_ushort)
     {
-      this->current_component (ACE_TRY_ENV)->insert_ushort (value,
-                                                    ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_ushort (value,
+                         ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_long (CORBA::Long value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_long)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_long)
     {
-      this->current_component (ACE_TRY_ENV)->insert_long (value,
-                                                  ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_long (value,
+                       ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_ulong (CORBA::ULong value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_long)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_ulong)
     {
-      this->current_component (ACE_TRY_ENV)->insert_ulong (value,
-                                                   ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_ulong (value,
+                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_float (CORBA::Float value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_float)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_float)
     {
-      this->current_component (ACE_TRY_ENV)->insert_float (value,
-                                                   ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_float (value,
+                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_double (CORBA::Double value,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_double)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_double)
     {
-      this->current_component (ACE_TRY_ENV)->insert_double (value,
-                                                    ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_double (value,
+                         ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_string (const char * value,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_string)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_string)
     {
-      this->current_component (ACE_TRY_ENV)->insert_string (value,
-                                                    ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_string (value,
+                         ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_reference (CORBA::Object_ptr value,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_objref)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_objref)
     {
-      this->current_component (ACE_TRY_ENV)->insert_reference (value,
-                                                       ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_reference (value,
+                            ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_typecode (CORBA::TypeCode_ptr value,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_TypeCode)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_TypeCode)
     {
-      this->current_component (ACE_TRY_ENV)->insert_typecode (value,
-                                                      ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_typecode (value,
+                           ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_longlong (CORBA::LongLong value,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_longlong)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_longlong)
     {
-      this->current_component (ACE_TRY_ENV)->insert_longlong (value,
-                                                      ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_longlong (value,
+                           ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_ulonglong (CORBA::ULongLong value,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_ulonglong)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_ulonglong)
     {
-      this->current_component (ACE_TRY_ENV)->insert_ulonglong (value,
-                                                       ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_ulonglong (value,
+                            ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_wchar (CORBA::WChar value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_wchar)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_wchar)
     {
-      this->current_component (ACE_TRY_ENV)->insert_wchar (value,
-                                                   ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_wchar (value,
+                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 void
 TAO_DynStruct_i::insert_any (const CORBA::Any& value,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  if (TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
-                             ACE_TRY_ENV)
-      == CORBA::tk_any)
+  CORBA::TCKind kind = 
+    TAO_DynAny_i::unalias (this->type_.in ()->member_type (this->current_index_),
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_any)
     {
-      this->current_component (ACE_TRY_ENV)->insert_any (value,
-                                                 ACE_TRY_ENV);
+      CORBA_DynAny_ptr dp = this->current_component (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      dp->insert_any (value,
+                      ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->next (ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA_DynAny::InvalidValue ());
+    {
+      ACE_THROW (CORBA_DynAny::InvalidValue ());
+    }
 }
 
 // Get functions
@@ -648,18 +896,32 @@ TAO_DynStruct_i::get_boolean (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_boolean)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_boolean)
         {
           val = dp->get_boolean (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -673,18 +935,32 @@ TAO_DynStruct_i::get_octet (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_octet)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_octet)
         {
           val = dp->get_octet (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -698,18 +974,32 @@ TAO_DynStruct_i::get_char (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_char)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_char)
         {
           val = dp->get_char (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -723,18 +1013,32 @@ TAO_DynStruct_i::get_short (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_short)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_short)
         {
           val = dp->get_short (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -748,18 +1052,32 @@ TAO_DynStruct_i::get_ushort (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_ushort)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_ushort)
         {
           val = dp->get_ushort (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -773,18 +1091,32 @@ TAO_DynStruct_i::get_long (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_long)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_long)
         {
           val = dp->get_long (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -798,18 +1130,32 @@ TAO_DynStruct_i::get_ulong (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_ulong)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_ulong)
         {
           val = dp->get_ulong (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -823,18 +1169,32 @@ TAO_DynStruct_i::get_float (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_float)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_float)
         {
           val = dp->get_float (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -848,18 +1208,32 @@ TAO_DynStruct_i::get_double (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_double)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_double)
         {
           val = dp->get_double (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -873,18 +1247,32 @@ TAO_DynStruct_i::get_string (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_string)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_string)
         {
           val = dp->get_string (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -898,18 +1286,32 @@ TAO_DynStruct_i::get_reference (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_objref)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_objref)
         {
           val = dp->get_reference (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -923,18 +1325,32 @@ TAO_DynStruct_i::get_typecode (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_TypeCode)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_TypeCode)
         {
           val = dp->get_typecode (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -951,18 +1367,32 @@ TAO_DynStruct_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-        == CORBA::tk_longlong)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_longlong)
         {
           val = dp->get_longlong (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -976,18 +1406,32 @@ TAO_DynStruct_i::get_ulonglong (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_ulonglong)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_ulonglong)
         {
           val = dp->get_ulonglong (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -1001,18 +1445,32 @@ TAO_DynStruct_i::get_wchar (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_wchar)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_wchar)
         {
           val = dp->get_wchar (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
@@ -1026,18 +1484,32 @@ TAO_DynStruct_i::get_any (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      if (TAO_DynAny_i::unalias (dp->type (ACE_TRY_ENV),
-                                 ACE_TRY_ENV)
-          == CORBA::tk_any)
+      CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind == CORBA::tk_any)
         {
           val = dp->get_any (ACE_TRY_ENV);
-          this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+         this->next (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
       else
-        ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), val);
+        {
+          ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (), 
+                            val);
+        }
     }
   else
-    ACE_THROW_RETURN (CORBA_DynAny::Invalid (), val);
+    {
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+                        val);
+    }
 
   return val;
 }
