@@ -1,3 +1,23 @@
+Wed Jun 25 17:06:18 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl: 
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf: 
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/colocated.conf: 
+	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README: 
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h: 
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp: 
+	* orbsvcs/tests/Notify/performance-tests/Throughput/README: 
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.h: 
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.cpp: 
+
+	  Replaced misspelling word "colocated" with correctly spelled
+	  "collocated" throughout these files.  I did not change actual
+	  file or directory names due to potential problems with CVS.
+
+	  The COLOCATED option in TAO_NS_EventChannel_Command::init is
+	  grandfathered in at the moment, but it also prints out a
+	  warning that you're using a deprecated misspelled option.
+
 Wed Jun 25 17:02:03 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * TAO/tests/OBV/Supports/Client.dsp
@@ -19,14 +39,14 @@ Wed Jun 25 17:02:03 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
-    * tao/IORInterceptor/IORInterceptor.mpc:
-    * tao/ObjRefTemplate/ObjRefTemplate.mpc:
-    * tao/PortableServer/PortableServer.mpc:
-    * tao/RTCORBA/Multi_Priority_Mapping.h:
-    * tao/Valuetype/Valuetype.mpc:
+	* tao/IORInterceptor/IORInterceptor.mpc:
+	* tao/ObjRefTemplate/ObjRefTemplate.mpc:
+	* tao/PortableServer/PortableServer.mpc:
+	* tao/RTCORBA/Multi_Priority_Mapping.h:
+	* tao/Valuetype/Valuetype.mpc:
 
-      Fixes for various mpc generation problems. 
-      Incorrect export macro used in the rtcorba header.
+	  Fixes for various mpc generation problems. 
+	  Incorrect export macro used in the rtcorba header.
 
 Wed Jun 25 16:05:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 

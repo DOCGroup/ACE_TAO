@@ -11,15 +11,15 @@ use PerlACE::Run_Test;
 $experiment_timeout = 600;
 $startup_timeout = 60;
 $naming_ior = PerlACE::LocalFile ("naming.ior");
-$colocated_conf = PerlACE::LocalFile ("colocated.conf");
+$collocated_conf = PerlACE::LocalFile ("colocated.conf");
 $status = 0;
 
 $Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service",
                                 "-o $naming_ior");
 
-$Colocated = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
+$Collocated = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Colocated_Args = "-ORBInitRef NameService=file://$naming_ior -ORBSvcConf $colocated_conf";
+$Collocated_Args = "-ORBInitRef NameService=file://$naming_ior -ORBSvcConf $collocated_conf";
 
 unlink $naming_ior;
 $Naming->Spawn ();
@@ -30,14 +30,14 @@ if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
   exit 1;
 }
 
-$Colocated->Arguments ($Colocated_Args);
-$args = $Colocated->Arguments ();
-print STDERR "Running Colocated with arguments: $args\n";
-$status = $Colocated->SpawnWaitKill ($experiment_timeout);
+$Collocated->Arguments ($Collocated_Args);
+$args = $Collocated->Arguments ();
+print STDERR "Running Collocated with arguments: $args\n";
+$status = $Collocated->SpawnWaitKill ($experiment_timeout);
 
 if ($status != 0)
   {
-    print STDERR "ERROR: Colocated returned $status\n";
+    print STDERR "ERROR: Collocated returned $status\n";
     $Notification->Kill ();
     $Naming->Kill ();
     exit 1;
