@@ -70,7 +70,7 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
-                    this->request_id_, request_id));
+                    this->request_id_, params.request_id_));
       return 0;
     }
 

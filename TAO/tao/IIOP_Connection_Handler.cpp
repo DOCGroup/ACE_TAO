@@ -221,6 +221,7 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
 {
   this->refcount_++;
 
+  cout << "Getting called " <<endl;
   // Call the transport read the message
   int result = this->transport_.read_process_message (max_wait_time);
 
@@ -284,7 +285,7 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
     this->decr_ref_count ();
   //this->TAO_IIOP_SVC_HANDLER::handle_close ();
 
-  return result;
+  return 0;
 }
 
 ACE_HANDLE
