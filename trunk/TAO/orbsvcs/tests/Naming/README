@@ -1,13 +1,16 @@
+// $Id$
 
-Currently the test app is compiled to:
+The ns_tree.cpp test application exercises various features of TAO's
+Naming Service.  It behaves as follows:
 
-	- binds a new context ("MyContext").
-	- binds the compound name ("MyContext;MyName") into the
-	  root context.
-	- resolves the compount name ("MyContext;MyName").
+	1. It binds a new context ("MyContext").
+	2. It binds the compound name ("MyContext;MyName") into the
+           root context.
+	3. It resolves the compount name ("MyContext;MyName").
 
-(Functioning of hierarchical test implies functioning of the flat case)
+In this case, proper functioning of the hierarchical test implies
+functioning of the "flat" test.
 
-
-A collection of various tests selectable by command line arguments will be available later.
+A collection of various tests selectable by command line arguments
+will be available later.
 

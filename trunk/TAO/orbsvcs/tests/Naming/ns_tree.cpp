@@ -10,7 +10,6 @@
 // = AUTHOR
 //	Ross Lillie <lillie@rsch.comm.mot.com>
 //	LMPS Systems Research Lab
-//
 //     
 // ============================================================================
 
@@ -40,23 +39,23 @@ main (int argc, char **argv)
       if (orbmgr.init_child_poa (argc, argv,"Rob",  TAO_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "failed to init ORB\n"),
-                           -1);
+                          -1);
       TAO_CHECK_ENV;
 
- 	  PortableServer::POA_var child_poa;
-	  CORBA::ORB_var orb = orbmgr.orb ();
+      PortableServer::POA_var child_poa;
+      CORBA::ORB_var orb = orbmgr.orb ();
 
-	  child_poa = orbmgr.child_poa ();
-	  result = my_name_server.init (orb, child_poa);
+      child_poa = orbmgr.child_poa ();
+      result = my_name_server.init (orb, child_poa);
 
-	  if (result < 0)
-		  return result;
+      if (result < 0)
+        return result;
 
-	  CosNaming::Name context_name;
-	  CosNaming::NamingContext_var ns_ctx;
-	  context_name.length (1);
-	  context_name[0].id = CORBA::string_dup ("NameService");
-	  ns_ctx = my_name_server->bind_new_context (context_name, TAO_TRY_ENV);
+      CosNaming::Name context_name;
+      CosNaming::NamingContext_var ns_ctx;
+      context_name.length (1);
+      context_name[0].id = CORBA::string_dup ("NameService");
+      ns_ctx = my_name_server->bind_new_context (context_name, TAO_TRY_ENV);
 
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
@@ -65,20 +64,19 @@ main (int argc, char **argv)
         myObject._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-
       // Create a child context.
       CosNaming::Name test_context (1);
       CosNaming::NamingContext_var my_context;
       test_context.length (1);
       test_context[0].id =
         CORBA::string_dup ("MyContext");
-	  my_context = my_name_server->bind_new_context (test_context, TAO_TRY_ENV);
+      my_context = my_name_server->bind_new_context (test_context, TAO_TRY_ENV);
 
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       cerr << "Created new context OK" << endl;
 
-      // bind an object to a child context     
+      // Bind an object to a child context.
       CosNaming::Name test_name (2);
       test_name.length (2);
       test_name[0].id = CORBA::string_dup ("MyContext");
