@@ -848,10 +848,10 @@ public:
   // currently supported.
 
   CORBA_Object_ptr resolve_initial_references (CORBA::String name);
-  // This method acts as a miniature name service provided by the ORB
-  // for certain well-known object references.  TAO supports the
-  // "NameService", "TradingService", "RootPOA", and "POACurrent" via
-  // this method.
+  // This method acts as a mini-bootstrapping Naming Service, which is
+  // provided by the ORB for certain well-known object references.
+  // TAO supports the "NameService", "TradingService", "RootPOA", and
+  // "POACurrent" via this method.
 
   // = TAO-specific Extensions
 
