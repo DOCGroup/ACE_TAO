@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "ace/Reactor.h"
 #include "ace/Reactor_Impl.h"
 #include "ace/Handle_Set.h"
@@ -19,6 +20,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Reactor, "$Id$")
+
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
@@ -264,6 +266,13 @@ ACE_Reactor::reset_reactor_event_loop (void)
   this->implementation_->deactivate (0);
 }
 
+
+int
+ACE_Reactor::resumable_handler (void)
+{
+  return this->implementation ()->resumable_handler ();
+}
+
 void
 ACE_Reactor::dump (void) const
 {
@@ -271,4 +280,3 @@ ACE_Reactor::dump (void) const
 
   implementation_->dump ();
 }
-

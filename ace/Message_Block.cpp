@@ -513,6 +513,89 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                 ACE_LIB_TEXT ("ACE_Message_Block")));
 }
 
+ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
+                                      size_t align)
+  :flags_ (0),
+   data_block_ (0)
+{
+  ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
+
+  if (ACE_BIT_DISABLED (mb.flags_,
+                        ACE_Message_Block::DONT_DELETE))
+    {
+      if (this->init_i (0,         // size
+                        MB_NORMAL, // type
+                        0,         // cont
+                        0,         // data
+                        0,         // allocator
+                        0,         // locking strategy
+                        0,         // flags
+                        0,         // priority
+                        ACE_Time_Value::zero,     // execution time
+                        ACE_Time_Value::max_time, // absolute time of deadline
+                        mb.data_block ()->duplicate (), // data block
+                        mb.data_block ()->data_block_allocator (),
+                        mb.message_block_allocator_) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("ACE_Message_Block")));
+
+      // Align ourselves
+      char *start = ACE_ptr_align_binary (this->base (),
+                                          align);
+      // Set our rd & wr pointers
+      this->rd_ptr (start);
+      this->wr_ptr (start);
+
+    }
+  else
+    {
+      if (this->init_i (0,         // size
+                        MB_NORMAL, // type
+                        0,         // cont
+                        0,         // data
+                        0,         // allocator
+                        0,         // locking strategy
+                        0,         // flags
+                        0,         // priority
+                        ACE_Time_Value::zero,     // execution time
+                        ACE_Time_Value::max_time, // absolute time of deadline
+                        mb.data_block ()->clone_nocopy (),// data block
+                        mb.data_block ()->data_block_allocator (),
+                        mb.message_block_allocator_) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("ACE_Message_Block")));
+
+      // Align ourselves
+      char *start = ACE_ptr_align_binary (this->base (),
+                                          align);
+      // Set our rd & wr pointers
+      this->rd_ptr (start);
+      this->wr_ptr (start);
+
+      // Get the alignment offset of the incoming ACE_Message_Block
+      start = ACE_ptr_align_binary (mb.base (),
+                                    align);
+
+
+      // Actual offset for the incoming message block assuming that it
+      // is also aligned to the same "align" byte
+      size_t wr_offset = mb.wr_ptr_ - (start - mb.base ());
+
+      // Copy wr_offset amount of data in to <this->data_block>
+      (void) ACE_OS::memcpy (this->wr_ptr (),
+                             start,
+                             wr_offset);
+
+      // Dont move the write pointer, just leave it to the application
+      // to do what it wants
+
+    }
+
+
+
+
+}
+
 int
 ACE_Message_Block::init_i (size_t size,
                            ACE_Message_Type msg_type,

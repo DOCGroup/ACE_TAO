@@ -335,6 +335,11 @@ public:
   /// Resume all <handles>.
   virtual int resume_handlers (void) = 0;
 
+  /// Does the reactor allow the application to resume the handle on
+  /// its own ie. can it pass on the control of handle resumption to
+  /// the application
+  virtual int resumable_handler (void) = 0;
+
   /// Return 1 if we any event associations were made by the reactor
   /// for the handles that it waits on, 0 otherwise.
   virtual int uses_event_associations (void) = 0;
@@ -355,11 +360,11 @@ public:
    * @see reset_timer_interval()
    *
    * @param event_handler  event handler to schedule on reactor
-   * @param arg   argument passed to the handle_timeout() method of  event_handler  
+   * @param arg   argument passed to the handle_timeout() method of  event_handler
    * @param delta  time interval after which the timer will expire
    * @param interval  time interval after which the timer will be automatically rescheduled
    * @return -1 on failure, a timer_id value on success
-   */                          
+   */
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,

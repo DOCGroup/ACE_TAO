@@ -15,6 +15,7 @@
 
 ACE_RCSID(ace, Select_Reactor_Base, "$Id$")
 
+
 #if defined (ACE_WIN32)
 #define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
 #define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)
@@ -1012,6 +1013,15 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
       return -1;
     }
   return omask;
+}
+
+int
+ACE_Select_Reactor_Impl::resumable_handler (void)
+{
+  // The select reactor has no handlers that can be resumed by the
+  // application. So return 0;
+
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
