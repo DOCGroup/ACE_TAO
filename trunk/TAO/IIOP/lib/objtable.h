@@ -19,7 +19,7 @@
 #include <ace/Hash_Map_Manager.h>
 #include <ace/SString.h>
 
-#include "orb.hh"
+#include "orb.h"
 
 // Dynamic Hashing scheme
 typedef ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_RW_Mutex>

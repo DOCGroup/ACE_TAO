@@ -14,14 +14,14 @@
 #include	<signal.h>
 #include	<string.h>
 
-#include	"orb.hh"
-#include	"stub.hh"
-#include	"debug.hh"
-#include	"iioporb.hh"		// XXX
+#include	"orb.h"
+#include	"stub.h"
+#include	"debug.h"
+#include	"iioporb.h"		// XXX
 
-#include        "params.hh"
-#include        "boa.hh"
-#include        "roa.hh"
+#include        "params.h"
+#include        "boa.h"
+#include        "roa.h"
 #include	<initguid.h>
 
 extern void __TC_init_table ();

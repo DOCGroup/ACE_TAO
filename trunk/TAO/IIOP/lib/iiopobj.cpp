@@ -11,14 +11,14 @@
 
 #include	<assert.h>
 #include	<limits.h>
-#include	<orb.hh>
+#include	<orb.h>
 
 #include	<initguid.h>
 #include	<string.h>
 
-#include	<stub.hh>
+#include	<stub.h>
 
-#include	"iiopobj.hh"
+#include	"iiopobj.h"
 
 
 IIOP::ProfileBody::ProfileBody (

@@ -11,7 +11,7 @@
 #ifndef SVRRQST_HDR
 #  define SVRRQST_HDR
 
-#include    "cdr.hh"
+#include    "cdr.h"
 
 void                              CORBA_release (CORBA_ServerRequest_ptr req);
 CORBA_Boolean                     CORBA_is_nil (CORBA_ServerRequest_ptr req);

@@ -8,10 +8,10 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	<stub.hh>
-#include	"debug.hh"
+#include	<stub.h>
+#include	"debug.h"
 
 #include	<initguid.h>
 

@@ -30,15 +30,15 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <orb.hh>
+#include <orb.h>
 
 #if defined(HAVE_WIDEC_H)
 #  include <widec.h>
 #endif
 
-#include "debug.hh"
+#include "debug.h"
 
-#include "xdr.hh"
+#include "xdr.h"
 
 
 //

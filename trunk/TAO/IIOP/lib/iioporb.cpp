@@ -11,17 +11,17 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<ctype.h>
 #include	<initguid.h>
-#include	<stub.hh>
+#include	<stub.h>
 
-#include	"cdr.hh"
-#include	"iioporb.hh"
-#include	"iiopobj.hh"
+#include	"cdr.h"
+#include	"iioporb.h"
+#include	"iiopobj.h"
 
 
 static const char ior_prefix [] = "IOR:";

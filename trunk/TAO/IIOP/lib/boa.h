@@ -13,8 +13,8 @@
 #  define ACE_ROA_BOA_HH
 
 #  include <ace/SOCK_Stream.h>
-#  include "orb.hh"
-#  include "corbacom.hh"
+#  include "orb.h"
+#  include "corbacom.h"
 
 CORBA_Boolean is_nil (CORBA_BOA_ptr obj);
 void release (CORBA_BOA_ptr obj);

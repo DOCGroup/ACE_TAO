@@ -30,12 +30,12 @@
 #include	<stdio.h>
 #include	<stdarg.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	"cdr.hh"
-#include	"debug.hh"
-#include	"giop.hh"
-#include "connmgr.hh"
+#include	"cdr.h"
+#include	"debug.h"
+#include	"giop.h"
+#include "connmgr.h"
 
 class ACE_Synchronous_Cancellation_Required
 // = TITLE

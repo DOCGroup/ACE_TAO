@@ -14,17 +14,17 @@
 #include	<stdio.h>
 #include	<string.h>
 
-#include	<orb.hh>
-#include	<boa.hh>
+#include	<orb.h>
+#include	<boa.h>
 
-#include	"thread.hh"
-#include	"debug.hh"
+#include	"thread.h"
+#include	"debug.h"
 
 // XXX this should not know implementation or other details of any
 // protocol modules!  This is an implementation shortcut only.
 
-#include	"iioporb.hh"
-#include	"roa.hh"
+#include	"iioporb.h"
+#include	"roa.h"
 
 #include	<initguid.h>
 

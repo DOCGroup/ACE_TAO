@@ -20,7 +20,7 @@
 #include <ace/SString.h>
 #include <ace/Singleton.h>
 
-#include "orb.hh"
+#include "orb.h"
 
 // Dynamic Hashing scheme
 typedef ACE_Hash_Map_Manager<ACE_CString, skeleton, ACE_RW_Mutex>

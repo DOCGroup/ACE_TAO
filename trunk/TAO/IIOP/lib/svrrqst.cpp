@@ -4,15 +4,15 @@
 //
 // Implementation of the Dynamic Server Skeleton Interface
 //
-#include	<orb.hh>
+#include	<orb.h>
 
 #include        <initguid.h>
 
-#include	"debug.hh"
-#include	"thread.hh"
-#include	"cdr.hh"
+#include	"debug.h"
+#include	"thread.h"
+#include	"cdr.h"
 
-#include	"svrrqst.hh"
+#include	"svrrqst.h"
 
 
 // {77420086-F276-11ce-9598-0000C07CA898}

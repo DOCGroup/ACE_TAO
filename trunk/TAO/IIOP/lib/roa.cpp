@@ -7,14 +7,14 @@
 // = VERSION
 //     $Id$
 
-#include "orb.hh"
-#include "debug.hh"
-#include "roa.hh"
-#include "boa.hh"
-#include "cdr.hh"
-#include "connect.hh"
-#include "giop.hh"
-#include "params.hh"
+#include "orb.h"
+#include "debug.h"
+#include "roa.h"
+#include "boa.h"
+#include "cdr.h"
+#include "connect.h"
+#include "giop.h"
+#include "params.h"
 
 #include <initguid.h>
 

@@ -51,12 +51,12 @@
 #	include	<winsock.h>
 #endif	// unix
 
-#include	"orb.hh"
-#include	"stub.hh"
+#include	"orb.h"
+#include	"stub.h"
 
-#include	"connmgr.hh"
-#include	"thread.hh"
-#include	"debug.hh"
+#include	"connmgr.h"
+#include	"thread.h"
+#include	"debug.h"
 
 
 //

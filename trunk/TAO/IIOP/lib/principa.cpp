@@ -8,7 +8,7 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.hh>
+#include	<orb.h>
 
 #include	<initguid.h>
 

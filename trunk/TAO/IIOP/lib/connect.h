@@ -7,7 +7,7 @@
 #  include <ace/Synch.h>
 #  include <ace/Svc_Handler.h>
 
-#  include "params.hh"
+#  include "params.h"
 
 class ROA_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {

@@ -60,12 +60,12 @@
 
 #endif
 
-#include	<orb.hh>
+#include	<orb.h>
 
-#include	"cdr.hh"
-#include	"debug.hh"
-#include	"thread.hh"
-#include	"giop.hh"
+#include	"cdr.h"
+#include	"debug.h"
+#include	"thread.h"
+#include	"giop.h"
 
 
 #define	GIOP_HDR_LEN	12		// defined by GIOP 1.0 protocol

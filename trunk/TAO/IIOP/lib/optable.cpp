@@ -1,4 +1,4 @@
-#include "optable.hh"
+#include "optable.h"
 
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable(CORBA_ULong size)
 {

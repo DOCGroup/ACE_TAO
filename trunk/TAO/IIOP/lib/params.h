@@ -13,9 +13,9 @@
 #  define ACE_ROA_PARAMS_H
 
 #  if defined(__IIOP_BUILD)
-#    include "boa.hh"
+#    include "boa.h"
 #  else
-#    include <corba/boa.hh>
+#    include <corba/boa.h>
 #  endif
 
 #  include <ace/SOCK_Acceptor.h>

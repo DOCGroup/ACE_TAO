@@ -1,4 +1,4 @@
-#include "objtable.hh"
+#include "objtable.h"
 
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable(CORBA_ULong size)
 {
@@ -140,3 +140,10 @@ TAO_Active_Demux_ObjTable::Entry::~Entry()
   this->obj = 0;  // cannot delete this as we do not own it
 }
 
+#if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<ACE_CString, CORBA_Object_ptr>;
+template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#endif

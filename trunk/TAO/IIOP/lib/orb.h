@@ -104,7 +104,7 @@ Mountain View, California  94043
 //
 // Get various definitions facilitating portability.
 //
-#include "orbconf.hh"
+#include "orbconf.h"
 
 //
 // Forward declarations of some data types are needed.
@@ -161,22 +161,22 @@ typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Object_ptr, CORBA_Environm
 //
 // Basic types used in the CORBA 2.0 runtime
 //
-#include	"corbacom.hh"
-#include	"except.hh"
-#include	"object.hh"
-#include	"sequence.hh"
-#include	"principa.hh"
-#include	"typecode.hh"
-#include	"any.hh"
-#include	"nvlist.hh"
-#include	"request.hh"
-#include	"svrrqst.hh"
-#include        "boa.hh"
+#include	"corbacom.h"
+#include	"except.h"
+#include	"object.h"
+#include	"sequence.h"
+#include	"principa.h"
+#include	"typecode.h"
+#include	"any.h"
+#include	"nvlist.h"
+#include	"request.h"
+#include	"svrrqst.h"
+#include        "boa.h"
 
 //
 // Bootstrapping, etc
 //
-#include	"orbobj.hh"
+#include	"orbobj.h"
 
 
 // NOTE:  stub APIs are nonportable, and must be explicitly #included
