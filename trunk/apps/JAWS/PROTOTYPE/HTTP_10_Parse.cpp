@@ -24,8 +24,9 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Parse_Task::handle_put");
 
-  JAWS_Dispatch_Policy *policy = data->policy ();
   JAWS_IO_Handler *handler = data->io_handler ();
+  JAWS_Dispatch_Policy *policy = this->policy ();
+  if (policy == 0) policy = data->policy ();
   JAWS_IO *io = policy->io ();
 
   JAWS_HTTP_10_Request *info;
@@ -55,13 +56,14 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
         }
 
       io->read (handler, data, next_read_size);
-      if (handler->status () == JAWS_IO_Handler::READ_OK)
+      switch (handler->status ())
         {
+        case JAWS_IO_Handler::READ_OK:
           // Behaved synchronously, reiterate
           continue;
-        }
-      else
-        {
+        case JAWS_IO_Handler::READ_ERROR:
+          return -1;
+        default:
           // This needs to be a value that tells the framework that
           // the call is asynchronous, but that we should remain in
           // the current task state.

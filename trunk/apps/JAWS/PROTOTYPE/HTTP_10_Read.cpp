@@ -24,9 +24,9 @@ JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put");
 
-  JAWS_Dispatch_Policy *policy = data->policy ();
   JAWS_IO_Handler *handler = data->io_handler ();
-  // JAWS_Pipeline_Handler *task = data->task ();
+  JAWS_Dispatch_Policy *policy = this->policy ();
+  if (policy == 0) policy = data->policy ();
 
   JAWS_IO *io = policy->io ();
 
@@ -37,10 +37,21 @@ JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
     }
 
   io->read (handler, data, data->size ());
-  if (handler->status () == JAWS_IO_Handler::READ_OK)
+  switch (handler->status ())
     {
-      JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put, READ_OK");
-      return 0;
+    case JAWS_IO_Handler::READ_OK:
+      {
+        JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put, READ_OK");
+        return 0;
+      }
+      break;
+    case JAWS_IO_Handler::READ_ERROR:
+      {
+        JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put, READ_ERROR");
+        return -1;
+      }
+    default:
+      break;
     }
 
   return 1;

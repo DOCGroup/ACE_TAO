@@ -24,9 +24,9 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put");
 
-  JAWS_Dispatch_Policy *policy = data->policy ();
   JAWS_IO_Handler *handler = data->io_handler ();
-  //  JAWS_Pipeline_Handler *task = data->task ();
+  JAWS_Dispatch_Policy *policy = this->policy ();
+  if (policy == 0) policy = data->policy ();
 
   JAWS_IO *io = policy->io ();
 
