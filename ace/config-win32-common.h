@@ -136,7 +136,7 @@
 
 // ----------------- "derived" defines and includes -----------
 
-#if (ACE_HAS_STANDARD_CPP_LIBRARY != 0) 
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0) 
 	#if defined (_MSC_VER) 
                 #if (_MSC_VER > 1020)
 			// Platform has its Standard C++ library in the namespace std
