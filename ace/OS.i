@@ -2146,8 +2146,8 @@ ACE_OS::sema_post (ACE_sema_t *s)
 
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
     {
-      // Check the original state of event object.
-      // We don't need to set it everytime.
+      // Check the original state of event object.  We don't need to
+      // set it everytime.
       if (s->count_++ <= 0)
         result = ACE_OS::event_signal (&s->count_nonzero_);
       else
@@ -2338,7 +2338,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   /* NOTREACHED */
 #  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   int result = -1;
-  while (1)
+  for (;;)
     switch (::WaitForSingleObject (s->count_nonzero_, INFINITE))
       {
       case WAIT_OBJECT_0:
