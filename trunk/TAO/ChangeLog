@@ -1,3 +1,9 @@
+Mon Dec 22 14:07:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO-INSTALL.html:
+
+          Updated building information for the TAOACE workspace with VC6.
+
 Mon Dec 22 12:05:26 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_Property_Validator.h:
@@ -34,22 +40,22 @@ Mon Dec 22 17:43:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Dec 22 11:29:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
 
-	  Fixed another instance where ; was generated.
+          Fixed another instance where ; was generated.
 
 Mon Dec 22 17:09:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/*.bor:
-	  Added missing Id tag to several Borland makefiles to fix fuzz errors.
+        * orbsvcs/*.bor:
+          Added missing Id tag to several Borland makefiles to fix fuzz errors.
 
 Mon Dec 22 16:55:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/BiDir_GIOP/TAO_BiDir_GIOP_Static.dsp:
-	* tao/TypeCodeFactory/TypeCodeFactory_Static.dsp:
-	* tao/IORTable/TAO_IORTable_Static.dsp:
-	* tao/DynamicAny/TAO_DynamicAny_Static.dsp:
-	  Enabled rtti in these projects.
+        * tao/BiDir_GIOP/TAO_BiDir_GIOP_Static.dsp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Static.dsp:
+        * tao/IORTable/TAO_IORTable_Static.dsp:
+        * tao/DynamicAny/TAO_DynamicAny_Static.dsp:
+          Enabled rtti in these projects.
 
 Mon Dec 22 10:38:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 
