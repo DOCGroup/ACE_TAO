@@ -15,6 +15,8 @@
 // TAO_AV_UDP_Flow_Handler
 //------------------------------------------------------------
 
+static int resv_error = 0;
+static int resv_confirm = 0;
 
 int
 FillQoSParams (ACE_QoS_Params &qos_params,
@@ -56,8 +58,122 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
+TAO_AV_UDP_QoS_Flow_Handler::translate (CosPropertyService::Properties &qos_params,
+					ACE_Flow_Spec *ace_flow_spec)
+{
+  for (unsigned int i = 0;
+       i < qos_params.length ();
+       i++)
+    {
+      if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
+        {
+          CORBA::Short type;
+          qos_params [i].property_value >>= type;
+          ace_flow_spec->service_type (type);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
+        { 
+          CORBA::ULong tok_rate;
+          qos_params [i].property_value >>= tok_rate;
+          ace_flow_spec->token_rate (tok_rate);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Bucket_Size") == 0)
+        {
+          CORBA::ULong tok_buck_size;
+          qos_params [i].property_value >>= tok_buck_size;
+          ace_flow_spec->token_bucket_size (tok_buck_size);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)   
+        {
+          CORBA::ULong peak_bw;
+          qos_params [i].property_value >>= peak_bw;
+          ace_flow_spec->peak_bandwidth (peak_bw);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Latency") == 0)
+        {
+          CORBA::ULong lat;
+          qos_params [i].property_value >>= lat;
+          ace_flow_spec->latency (lat);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
+        {
+          CORBA::ULong delay_var;
+          qos_params [i].property_value >>= delay_var;
+          ace_flow_spec->delay_variation (delay_var);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Max_SDU_Size") == 0)
+        {
+          CORBA::ULong max_sdu;
+          qos_params [i].property_value >>= max_sdu;
+          ace_flow_spec->max_sdu_size (max_sdu);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Minimum_Policed_Size") == 0)
+        {
+          CORBA::ULong min_pol_size;
+          qos_params [i].property_value >>= min_pol_size;
+          ace_flow_spec->minimum_policed_size (min_pol_size);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "TTL") == 0)
+        {
+          CORBA::ULong ttl;
+          qos_params [i].property_value >>= ttl;
+          ace_flow_spec->delay_variation (ttl);
+        }
+      else if (ACE_OS::strcmp (qos_params [i].property_name, "Priority") == 0)
+        {
+          CORBA::ULong priority;
+          qos_params [i].property_value >>= priority;
+          ace_flow_spec->ttl (priority);
+        }
+    }
+  
+  return 0;
+}
+
+int
+TAO_AV_UDP_QoS_Flow_Handler::translate (ACE_Flow_Spec *ace_flow_spec,
+					CosPropertyService::Properties &qos_params)
+{
+  int size = qos_params.length ();
+  qos_params.length (size + 1);
+
+  qos_params [size].property_name = CORBA::string_dup ("Service_Type");
+  qos_params [size].property_value <<= (CORBA::Short) ace_flow_spec->service_type ();
+
+  qos_params [size].property_name = CORBA::string_dup ("Token_Rate");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->token_rate ();
+  
+  qos_params [size].property_name = CORBA::string_dup ("Token_Bucket_Size");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->token_bucket_size ();
+  
+  qos_params [size].property_name = CORBA::string_dup ("Peak_Bandwidth");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->peak_bandwidth ();
+
+  qos_params [size].property_name = CORBA::string_dup ("Latency");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->latency ();
+
+  qos_params [size].property_name = CORBA::string_dup ("Delay_Variation");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->delay_variation ();
+  
+  qos_params [size].property_name = CORBA::string_dup ("Max_SDU_Size");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->max_sdu_size ();
+ 
+  qos_params [size].property_name = CORBA::string_dup ("Minimum_Policed_Size");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->minimum_policed_size ();
+
+  qos_params [size].property_name = CORBA::string_dup ("TTL");
+  qos_params [size].property_value <<= (CORBA::ULong) ace_flow_spec->ttl ();
+
+  return 0;
+}
+
+int
 TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 {
+  ACE_DEBUG ((LM_DEBUG,
+	      "TAO_AV_UDP_QoS_Flow_Handler::handle_qos\n"));
+
+  ACE_DECLARE_NEW_CORBA_ENV;
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"TAO_AV_UDP_QoS_Flow_Handler::handle_qos\n"));
@@ -69,7 +185,120 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
   else
     ACE_DEBUG ((LM_DEBUG,
                 " Updating QOS succeeds.\n"));
+
+  if (this->qos_session_->rsvp_event_type () == ACE_QoS_Session::RSVP_RESV_ERROR)
+    {
+      resv_error = 1;
+    }
+
+  if (this->qos_session_->rsvp_event_type () == ACE_QoS_Session::RSVP_RESV_CONFIRM)
+    {
+      resv_confirm = 1;
+    }
   
+  if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_SENDER)
+    {
+      if (this->qos_session_->rsvp_event_type () == ACE_QoS_Session::RSVP_RESV_EVENT)
+            {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "Resv Event Received\n"));
+	      if (!CORBA::is_nil (this->negotiator_))
+		{
+		  ACE_DEBUG ((LM_DEBUG,
+			      "Negotiator Specified\n"));
+
+		  AVStreams::streamQoS new_qos;
+		  ACE_Flow_Spec ace_flow_spec =
+		    this->qos_session_->qos ().receiving_flowspec ();
+		  new_qos.length (1);
+		  this->translate (&ace_flow_spec,
+				   new_qos [0].QoSParams);
+				   
+		  AVStreams::Negotiator_var remote_negotiator;
+		  this->negotiator_->negotiate (remote_negotiator.in (),
+						new_qos,
+						ACE_TRY_ENV);
+		}
+            }
+    }
+  else if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_RECEIVER)
+    {
+      if (this->qos_session_->rsvp_event_type () == ACE_QoS_Session::RSVP_PATH_EVENT)
+	{
+	  ACE_QoS_Manager qos_manager =
+	    this->get_socket ()->qos_manager ();
+	 
+	  this->qos_session_->qos (this->get_socket (),
+				   &qos_manager,
+				   this->qos_session_->qos ());
+	}
+    }         
+    
+  return 0;
+}
+
+int
+TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"TAO_AV_UDP_QoS_Flow_Handler::change_qos\n"));
+
+  ACE_QoS_Manager qos_manager =
+    this->get_socket ()->qos_manager ();
+  
+  ACE_Flow_Spec *ace_flow_spec;
+  ACE_NEW_RETURN (ace_flow_spec,
+                  ACE_Flow_Spec,
+                  -1);
+  
+  this->translate (new_qos.QoSParams,
+		   ace_flow_spec);
+
+  ACE_QoS* ace_qos;
+  
+  ACE_NEW_RETURN (ace_qos,
+                  ACE_QoS,
+                  -1);
+  
+  Fill_ACE_QoS fill_ace_qos;
+
+  if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_SENDER)
+    {
+      if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
+                                                ace_flow_spec) !=0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to fill simplex sender qos\n"),
+                          -1);
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "Filled up the Sender QoS parameters\n"));
+    }
+  else if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_RECEIVER)
+    {
+      if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
+                                                  ace_flow_spec) !=0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to fill simplex receiver qos\n"),
+                          -1);
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "Filled up the Receiver QoS parameters\n"));
+      
+    }
+  
+  ACE_QoS_Params qos_params;
+  FillQoSParams (qos_params, 
+		 0, 
+		 ace_qos);
+
+  
+  int result = this->qos_session_->qos (this->get_socket (),
+					&qos_manager,
+					*ace_qos);
+  if (result != 0)
+    return result;
+
   return 0;
 }
 
@@ -430,82 +659,11 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   return 0;
 }
 
-int
-TAO_AV_UDP_QoS_Acceptor::translate (CosPropertyService::Properties &qos_params,
-                                    ACE_Flow_Spec *ace_flow_spec)
-{
-  for (unsigned int i = 0;
-       i < qos_params.length ();
-       i++)
-    {
-      if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
-        {
-          CORBA::Short type;
-          qos_params [i].property_value >>= type;
-          ace_flow_spec->service_type (type);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
-        { 
-          CORBA::ULong tok_rate;
-          qos_params [i].property_value >>= tok_rate;
-          ace_flow_spec->token_rate (tok_rate);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Bucket_Size") == 0)
-        {
-          CORBA::ULong tok_buck_size;
-          qos_params [i].property_value >>= tok_buck_size;
-          ace_flow_spec->token_bucket_size (tok_buck_size);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)   
-        {
-          CORBA::ULong peak_bw;
-          qos_params [i].property_value >>= peak_bw;
-          ace_flow_spec->peak_bandwidth (peak_bw);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Latency") == 0)
-        {
-          CORBA::ULong lat;
-          qos_params [i].property_value >>= lat;
-          ace_flow_spec->latency (lat);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
-        {
-          CORBA::ULong delay_var;
-          qos_params [i].property_value >>= delay_var;
-          ace_flow_spec->delay_variation (delay_var);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Max_SDU_Size") == 0)
-        {
-          CORBA::ULong max_sdu;
-          qos_params [i].property_value >>= max_sdu;
-          ace_flow_spec->delay_variation (max_sdu);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Minimum_Policed_Size") == 0)
-        {
-          CORBA::ULong min_pol_size;
-          qos_params [i].property_value >>= min_pol_size;
-          ace_flow_spec->delay_variation (min_pol_size);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "TTL") == 0)
-        {
-          CORBA::ULong ttl;
-          qos_params [i].property_value >>= ttl;
-          ace_flow_spec->delay_variation (ttl);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Priority") == 0)
-        {
-          CORBA::ULong priority;
-          qos_params [i].property_value >>= priority;
-          ace_flow_spec->delay_variation (priority);
-        }
-    }
-  
-  return 0;
-}
 
 int
 TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   int result = -1;
   //  TAO_AV_Callback *callback = 0;  
   //   this->endpoint_->get_callback (this->flowname_.c_str (),
@@ -520,9 +678,17 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   ACE_NEW_RETURN (ace_flow_spec,
                   ACE_Flow_Spec,
                   -1);
+
+  TAO_AV_UDP_QoS_Flow_Handler* handler;
+  ACE_NEW_RETURN (handler,
+                  TAO_AV_UDP_QoS_Flow_Handler,
+                  -1);
   
-  this->translate (qos.QoSParams, 
-		   ace_flow_spec);
+  TAO_AV_Flow_Handler *flow_handler = 0;
+  flow_handler = handler;
+  
+  handler->translate (qos.QoSParams, 
+		      ace_flow_spec);
   
   ACE_QoS* ace_qos;
   
@@ -588,13 +754,6 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
     ACE_DEBUG ((LM_DEBUG,
                 "QoS session opened successfully\n"));
 
-  TAO_AV_UDP_QoS_Flow_Handler* handler;
-  ACE_NEW_RETURN (handler,
-                  TAO_AV_UDP_QoS_Flow_Handler,
-                  -1);
-  
-  TAO_AV_Flow_Handler *flow_handler = 0;
-  flow_handler = handler;
   
   result = handler->get_socket ()->subscribe (*inet_addr,
                                               qos_params,
@@ -664,6 +823,15 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                                                         flow_handler,
                                                         flow_handler->transport ());
   flow_handler->protocol_object (object);
+  AVStreams::Negotiator_ptr negotiator;
+  
+  CORBA::Any_ptr negotiator_any =
+    this->endpoint_->get_property_value ("Negotiator",
+					 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  
+  *negotiator_any >>= negotiator;
+  handler->negotiator (negotiator);
   //  callback->protocol_object (object);
 //   this->endpoint_->set_protocol_object (this->flowname_.c_str (),
 //                                         object);
@@ -772,7 +940,8 @@ int
 TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                    TAO_AV_Transport *&transport)
 {
-  int result = -1;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  int result = 0;
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
 
@@ -869,9 +1038,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   flow_handler = handler;
   
-  
-  
-  
   result = handler->get_socket ()->subscribe (*inet_addr,
                                               qos_params,
                                               1,
@@ -929,6 +1095,25 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                                         this->endpoint_,
                                                         flow_handler,
                                                         flow_handler->transport ());
+
+  AVStreams::Negotiator_ptr negotiator;
+  
+  ACE_TRY_EX (negotiator)
+    {
+      CORBA::Any_ptr negotiator_any =
+	this->endpoint_->get_property_value ("Negotiator",
+					     ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (negotiator);
+      
+      *negotiator_any >>= negotiator;
+      handler->negotiator (negotiator);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_AV_UDP_QoS_Connector::connect");
+    }
+  ACE_ENDTRY;
+  
   flow_handler->protocol_object (object);
   //  callback->protocol_object (object);
   //   this->endpoint_->set_protocol_object (this->flowname_.c_str (),

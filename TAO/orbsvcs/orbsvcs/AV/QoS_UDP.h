@@ -117,6 +117,7 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  virtual int change_qos (AVStreams::QoS);
   virtual int handle_qos (ACE_HANDLE fd);
   // Handles a QoS event. Right now, just 
   // prints a message.
@@ -124,11 +125,19 @@ public:
   virtual ACE_Event_Handler* event_handler (void){ return this; }
   virtual ACE_QoS_Session* qos_session (void);
   virtual void qos_session (ACE_QoS_Session *qos_session);
+  int translate (ACE_Flow_Spec *ace_flow_spec,
+		 CosPropertyService::Properties &qos_params);
+  int translate (CosPropertyService::Properties &qos_params,
+		 ACE_Flow_Spec *ace_flow_spec);
+
+  void negotiator (AVStreams::Negotiator_ptr);
+  
 protected:
   TAO_AV_Core *av_core_;
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast_QoS qos_sock_dgram_;
   ACE_QoS_Session *qos_session_;
+  AVStreams::Negotiator_ptr negotiator_;
 };
 
 class TAO_AV_UDP_QoS_Acceptor
@@ -153,8 +162,6 @@ public:
   //  virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
   
-  int translate (CosPropertyService::Properties &qos_params,
-		 ACE_Flow_Spec *ace_flow_spec);
 
 protected:
   TAO_Base_StreamEndPoint *endpoint_;

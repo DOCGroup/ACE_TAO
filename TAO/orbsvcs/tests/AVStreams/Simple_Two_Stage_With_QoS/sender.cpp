@@ -5,19 +5,47 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
+static ulong peak_bandwidth = 18400;
+
 typedef ACE_Singleton<Sender, ACE_Null_Mutex> SENDER;
 // Create a singleton instance of the Sender.
 
 // The time that should lapse between two consecutive frames sent.
 ACE_Time_Value inter_frame_time;
 
+CORBA::Boolean
+Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
+				   const AVStreams::flowSpec &the_flows,
+				   CORBA::Environment &ACE_TRY_ENV)
+{
+  if (TAO_debug_level > 0)
+  ACE_DEBUG ((LM_DEBUG,
+	      "Sender_StreamEndPoint::modify_QoS\n"));
+  
+  // Change the underlying network QoS
+  this->change_qos (new_qos, the_flows, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  return 1;
+}
 int
 Sender_StreamEndPoint::get_callback (const char *,
                                      TAO_AV_Callback *&callback)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   // Create and return the sender application callback to AVStreams
   // for further upcalls.
   callback = &this->callback_;
+  
+  // Specify a negotiator to be called when there is a change in QOS
+  TAO_Negotiator *negotiator;
+  ACE_NEW_RETURN (negotiator,
+		  TAO_Negotiator,
+		  -1);
+  AVStreams::Negotiator_var negotiator_obj =
+    negotiator->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->set_negotiator (negotiator_obj.in ());
   return 0;
 }
 
@@ -90,6 +118,13 @@ Sender::parse_args (int argc,
 void
 Sender::fill_qos (AVStreams::streamQoS &qos)
 {
+  peak_bandwidth += 100;
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Sender::fill_qos %d\n",
+		peak_bandwidth));
+  
   qos.length (1);
   qos [0].QoSType =  CORBA::string_dup ("Data_Receiver");
   
@@ -99,13 +134,14 @@ Sender::fill_qos (AVStreams::streamQoS &qos)
   qos [0].QoSParams [0].property_value <<= (CORBA::Short) ACE_SERVICETYPE_CONTROLLEDLOAD;
   
   qos [0].QoSParams [1].property_name = CORBA::string_dup ("Token_Rate");
-  qos [0].QoSParams [1].property_value <<= (CORBA::ULong) 9200;
+  qos [0].QoSParams [1].property_value <<= (CORBA::ULong) 9200 ;
   
   qos [0].QoSParams [2].property_name = CORBA::string_dup ("Token_Bucket_Size");
   qos [0].QoSParams [2].property_value <<= (CORBA::ULong) 9200;
   
   qos [0].QoSParams [3].property_name = CORBA::string_dup ("Peak_Bandwidth");
-  qos [0].QoSParams [3].property_value <<= (CORBA::ULong) 18400;
+  qos [0].QoSParams [3].property_value <<= (CORBA::ULong) peak_bandwidth;
+
   
   qos [0].QoSParams [4].property_name = CORBA::string_dup ("Latency");
   qos [0].QoSParams [4].property_value <<= (CORBA::ULong) 0;
@@ -205,8 +241,9 @@ Sender::init (int argc,
 
   ACE_INET_Addr addr (this->address_.c_str ());
 
+  this->flowname_ = "Data_Receiver";
   // Create the forward flow specification to describe the flow.
-  TAO_Forward_FlowSpec_Entry entry ("Data_Receiver",
+  TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
                                     "IN",
                                     "USER_DEFINED",
                                     "",
@@ -361,6 +398,23 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
           // Reset the message block.
           this->mb_.reset ();
+	  
+	  TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
+					    "IN",
+					    "USER_DEFINED",
+					    "",
+					    "QoS_UDP",
+					    0);
+	  AVStreams::flowSpec flow_spec (1);
+	  flow_spec.length (1);
+	  flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
+
+	  AVStreams::streamQoS qos;
+	  this->fill_qos (qos);
+	  this->streamctrl_->modify_QoS (qos,
+					 flow_spec,
+					 ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
 
 	} // end while
 

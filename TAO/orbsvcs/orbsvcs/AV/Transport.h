@@ -132,6 +132,8 @@ public:
   /// get the underlying event handler. To be overridden by the derived clases.
   virtual ACE_Event_Handler* event_handler (void) = 0;
 
+  virtual int change_qos (AVStreams::QoS);
+
 protected:
   TAO_AV_Transport *transport_;
   TAO_AV_Callback *callback_;
