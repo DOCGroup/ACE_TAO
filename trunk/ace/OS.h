@@ -3115,9 +3115,9 @@ typedef void (*ACE_SignalHandlerV)(...);
 #         define ACE_SEH_EXCEPT(X) while (0)
 #         define ACE_SEH_FINALLY if (1)
 #       endif
-#     elif defined (__IBMCPP__) && (__IBMCPP__ >= 400) 
+#     elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #         define ACE_SEH_TRY if (1)
-#         define ACE_SEH_EXCEPT(X) while (0) 
+#         define ACE_SEH_EXCEPT(X) while (0)
 #         define ACE_SEH_FINALLY if (1)
 #     else
 #       define ACE_SEH_TRY __try
@@ -5837,7 +5837,7 @@ public:
                     ACE_QoS *ace_qos,
                     u_long *bytes_returned);
   // Calls QoS-enabled <ioctl> with I/O control code as SIO_SET_QOS.
-  // Transforms an ACE_QoS into a windows QOS before passing it into 
+  // Transforms an ACE_QoS into a windows QOS before passing it into
   // WSAIoctl ().
   static int isastream (ACE_HANDLE handle);
   static int isatty (ACE_HANDLE handle);
@@ -6149,7 +6149,7 @@ public:
   static int enum_protocols (int *protocols,
                              ACE_Protocol_Info *protocol_buffer,
                              u_long *buffer_length);
-  // Retrieve information about available transport protocols 
+  // Retrieve information about available transport protocols
   // installed on the local machine.
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
                                const sockaddr *name,
@@ -8123,7 +8123,7 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
   // process that terminated normally.  0 means status wasn't
   // returned.
 #if !defined (WIFEXITED)
-#   define WIFEXITED(stat) 0
+#   define WIFEXITED(stat) 1
 #endif /* WIFEXITED */
 
   // If the value of WIFEXITED(stat) is non-zero, this macro evaluates
@@ -8131,7 +8131,7 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
   // that the child process returned from main.  Peaceful exit code is
   // 0.
 #if !defined (WEXITSTATUS)
-#   define WEXITSTATUS(stat) 0
+#   define WEXITSTATUS(stat) stat
 #endif /* WEXITSTATUS */
 
   // Evaluates to a non-zero value if status was returned for a child
