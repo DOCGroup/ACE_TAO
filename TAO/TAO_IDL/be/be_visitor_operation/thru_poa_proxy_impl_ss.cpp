@@ -183,8 +183,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
   if (si.is_done ())
     {
       *os << be_nl
-          << "ACE_ENV_SINGLE_ARG_PARAMETER"
-          << be_uidt_nl
+          << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
           << ");";
 
       return 0;
@@ -197,12 +196,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
     {
       arg = AST_Argument::narrow_from_decl (si.item ());
 
-      if (index > 1)
-        {
-          *os << ",";
-        }
-
-      *os << be_nl
+      *os << (index == 1 ? "" : ",") << be_nl
           << "((TAO::Arg_Traits<";
 
       this->gen_arg_template_param_name (arg->field_type (), 

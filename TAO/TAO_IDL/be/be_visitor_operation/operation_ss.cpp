@@ -126,7 +126,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{\n" << be_idt;
+  *os << "{" << be_idt_nl;
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -137,8 +137,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                          "gen_pre_skel_info failed\n"),
                         -1);
     }
-
-  os->indent ();
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl =" << be_idt_nl
@@ -197,6 +195,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
+  *os << be_nl << be_nl;
+
   // Make the upcall and assign to the return val.
   ctx = *this->ctx_;
   be_visitor_operation_rettype_assign_ss ora_visitor (&ctx);
@@ -233,6 +233,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     {
       *os << "TAO_INTERCEPTOR_CHECK;";
     }
+
+  *os << be_nl << be_nl;
 
   // Update the result.
   bt = be_type::narrow_from_decl (node->return_type ());
