@@ -63,6 +63,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 #if defined(ACE_WIN32)
 //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 
+// Static constant to remove time skew between FILETIME and POSIX
+// time.
+// 
+// In the beginning (Jan. 1, 1601), there was no time and no computer.
+// And Bill said: "Let there be time," and there was time....
+const DWORDLONG ACE_Time_Value::Time_To_The_Beginning
+                                             = 0x019db1ac8aa4100i64;
+
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
@@ -72,12 +80,15 @@ ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 void ACE_Time_Value::set (const FILETIME &file_time)
 {
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
-  ACE_QWORD _100ns = ACE_MAKE_QWORD (file_time.dwLowDateTime,
-                                     file_time.dwHighDateTime);
+  ULARGE_INTEGER _100ns = {file_time.dwLowDateTime,
+                           file_time.dwHighDateTime};
+  _100ns.QuadPart -= Time_To_The_Beginning;
+
   // Convert 100ns units to seconds;
-  this->tv_.tv_sec = long (_100ns / (10000 * 1000));
+  this->tv_.tv_sec = long (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = long ((_100ns - (this->tv_.tv_sec * (10000 * 1000))) / 10);
+  this->tv_.tv_usec = long ((_100ns.QuadPart -
+                             (this->tv_.tv_sec * (10000 * 1000))) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
@@ -85,10 +96,14 @@ void ACE_Time_Value::set (const FILETIME &file_time)
 ACE_Time_Value::operator FILETIME () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator FILETIME");
-  ACE_QWORD _100ns = ((ACE_QWORD) this->tv_.tv_sec * (1000 * 1000) + this->tv_.tv_usec) * 10;
+  ULARGE_INTEGER _100ns;
+  _100ns.QuadPart = ((DWORDLONG) this->tv_.tv_sec * (1000 * 1000) +
+                      this->tv_.tv_usec)
+                     * 10 + Time_To_The_Beginning;
   FILETIME file_time;
-  file_time.dwLowDateTime = ACE_LOW_DWORD (_100ns);
-  file_time.dwHighDateTime = ACE_HIGH_DWORD (_100ns);
+  file_time.dwLowDateTime = _100ns.LowPart;
+  file_time.dwHighDateTime = _100ns.HighPart;
+  
   return file_time;
 }
 
