@@ -1,7 +1,14 @@
+Wed Nov 24 17:01:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/TAO_Service/README:
+
+	  Update to reflect fact that services have been refactored
+	  into stub, skeleton, and implementation/service libraries.
+
 Wed Nov 24 14:35:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Removed generation of all ACE and TAO file includes in the
           skeleton source file if there is no non-local interface seen
           in the IDL file. Thanks once again to Johnny Willemsen
