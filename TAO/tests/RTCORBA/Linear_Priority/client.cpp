@@ -4,6 +4,7 @@
 #include "ace/Task.h"
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/ORB_Core.h"
 #include "../check_supported_priorities.cpp"
 #include "./readers.cpp"
 
@@ -202,9 +203,6 @@ main (int argc, char **argv)
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      long flags =
-        THR_NEW_LWP | THR_JOINABLE;
-
       u_long i = 0;
 
       // Workers.
@@ -223,6 +221,12 @@ main (int argc, char **argv)
                                          current.in (),
                                          priorities[i]),
                           -1);
+
+          long flags =
+            THR_NEW_LWP |
+            THR_JOINABLE |
+            orb->orb_core ()->orb_params ()->scope_policy () |
+            orb->orb_core ()->orb_params ()->sched_policy ();
 
           result =
             workers[i]->activate (flags);

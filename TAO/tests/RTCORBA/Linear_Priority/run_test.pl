@@ -71,7 +71,7 @@ sub run_client
     {
         print STDERR "ERROR: client returned $client\n";
         $status = 1;
-        zap_server ();
+        zap_server (1);
     }
 }
 
@@ -85,7 +85,7 @@ sub run_server
     {
         print STDERR "ERROR: cannot find ior file: $iorfile\n";
         $status = 1;
-        zap_server ();
+        zap_server (1);
     }
 }
 
@@ -100,6 +100,11 @@ sub zap_server
     }
 
     unlink $iorfile;
+
+    if ($_[0])
+    {
+        exit $status;
+    }
 }
 
 for $test (@configurations)
@@ -112,7 +117,7 @@ for $test (@configurations)
 
     run_client ($test->{client});
     
-    zap_server ();
+    zap_server (0);
 }
 
-exit $status
+exit $status;
