@@ -4,6 +4,7 @@
 // abstraction.
 
 #include "ace/TLI.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, TLI, "$Id$")
 
