@@ -1,3 +1,13 @@
+Wed Jun  9 15:04:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Array_VarOut_T.h (nocopy):
+	* tao/Array_VarOut_T.inl (nocopy):
+
+	  Reverted change that made the return type of this method bool
+	  instead of CORBA::Boolean.  It turns out it is a CORBA defined
+	  method, meaning that it should return CORBA::Boolean.  Thanks to
+	  Jeff Parsons for pointing this out.
+
 Wed Jun 09 16:49:17 2004  Simon McQueen  <sm@prismtechnologies.com>
 
 	* orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
