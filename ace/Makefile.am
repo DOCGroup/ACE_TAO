@@ -8,7 +8,10 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+includedir = @includedir@/ace
+
 ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
 
 SUBDIRS = \
         . \
@@ -345,9 +348,8 @@ Metrics = \
 lib_LTLIBRARIES = libACE.la
 
 libACE_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DACE_HAS_ACE_TOKEN \
   -DACE_HAS_ACE_SVCCONF \
   -DACE_BUILD_DLL
@@ -371,6 +373,9 @@ libACE_la_SOURCES = \
   $(Memory) \
   $(Timer) \
   $(Metrics)
+
+libACE_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 nobase_include_HEADERS = \
   ACE.h \

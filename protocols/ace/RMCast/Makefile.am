@@ -8,6 +8,8 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+includedir = @includedir@/ace/RMCast
+
 ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
 
@@ -50,6 +52,9 @@ libACE_RMCast_la_SOURCES = \
   RMCast_UDP_Reliable_Receiver.cpp \
   RMCast_UDP_Reliable_Sender.cpp \
   RMCast_Worker.cpp
+
+libACE_RMCast_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACE_RMCast_la_LIBADD = \
  $(ACE_BUILDDIR)/ace/libACE.la

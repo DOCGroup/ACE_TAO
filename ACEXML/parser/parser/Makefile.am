@@ -8,6 +8,8 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+includedir = @includedir@/parser/parser
+
 ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
 
@@ -24,6 +26,9 @@ libACEXML_Parser_la_SOURCES = \
   Parser.cpp \
   ParserContext.cpp \
   ParserInternals.cpp
+
+libACEXML_Parser_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACEXML_Parser_la_LIBADD = \
  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \

@@ -20,6 +20,9 @@ libDump_Restore_la_CPPFLAGS = \
 libDump_Restore_la_SOURCES = \
   Dump_Restore.cpp
 
+libDump_Restore_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libDump_Restore_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 

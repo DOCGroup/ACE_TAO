@@ -8,6 +8,8 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+includedir = @includedir@/ACEXML/common
+
 ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
 
@@ -44,6 +46,9 @@ libACEXML_la_SOURCES = \
   XMLFilterImpl.cpp \
   XML_Codecs.cpp \
   ZipCharStream.cpp
+
+libACEXML_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACEXML_la_LIBADD = \
  $(top_builddir)/ace/libACE.la

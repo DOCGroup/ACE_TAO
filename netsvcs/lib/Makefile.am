@@ -27,6 +27,9 @@ libnetsvcs_la_SOURCES = \
   TS_Server_Handler.cpp \
   Token_Handler.cpp
 
+libnetsvcs_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libnetsvcs_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
