@@ -137,7 +137,7 @@ protected:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  TAO_Naming_Client namingClient;
+  TAO_Naming_Client naming_client_;
   // helper class for getting access to Naming Service.
   
   int argc_;
