@@ -77,62 +77,25 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
           << "this->disc_ = ";
-      switch (bu->udisc_type ())
+
+      be_type* dt =
+        be_type::narrow_from_decl (bu->disc_type ());
+      if (dt == 0)
+        return -1;
+
+      // Find where was the enum defined, if it was defined in the globa
+      // scope, then it is easy to generate the enum values....
+      be_scope* scope =
+        be_scope::narrow_from_scope (dt->defined_in ());
+      if (scope == 0)
         {
-        case AST_Expression::EV_short:
-          *os << dv.u.short_val;
-          break;
-        case AST_Expression::EV_ushort:
-          *os << dv.u.ushort_val;
-          break;
-        case AST_Expression::EV_long:
-          *os << dv.u.long_val;
-          break;
-        case AST_Expression::EV_ulong:
-          *os << dv.u.ulong_val;
-          break;
-        case AST_Expression::EV_char:
-          os->print ("%d", dv.u.char_val);
-          break;
-        case AST_Expression::EV_bool:
-          *os << dv.u.bool_val;
-          break;
-        case AST_Expression::EV_any:
-        // The discriminant is an enum. Some compilers will
-        // not accept a numeric value assigned to this
-        // discriminant, so we must generate the string name.
-          {
-            be_type* dt =
-              be_type::narrow_from_decl (bu->disc_type ());
-            if (dt == 0)
-              return -1;
-
-            // Find where was the enum defined, if it was defined in the globa
-            // scope, then it is easy to generate the enum values....
-            be_scope* scope =
-              be_scope::narrow_from_scope (dt->defined_in ());
-            if (scope == 0)
-              {
-                *os << node->value_to_name (dv.u.enum_val);
-                return 0;
-              }
-
-            // The function value_to_name() takes care of adding
-            // any necessary scoping to the output.
-            *os << node->value_to_name (dv.u.enum_val);
-            break;
-          }
-        case AST_Expression::EV_longlong:
-        case AST_Expression::EV_ulonglong:
-          // unimplemented
-        default:
-          // error caught earlier.
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_discriminant_ci::"
-                             "visit_enum - "
-                             "bad or unimplemented discriminant type\n"),
-                        -1);
+          *os << node->value_to_name (dv.u.enum_val);
+          return 0;
         }
+
+      // The function value_to_name() takes care of adding
+      // any necessary scoping to the output.
+      *os << node->value_to_name (dv.u.enum_val);
       *os << ";" << be_uidt_nl << "}\n\n";
     }
 
@@ -172,6 +135,60 @@ be_visitor_union_discriminant_ci::visit_predefined_type (be_predefined_type
     bt = node;
 
   os = this->ctx_->stream ();
+
+  // now check if we need to generate the _default () method
+  be_union::DefaultValue dv;
+  if (bu->default_value (dv) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_discriminant_ci::"
+                         "visit_enum - "
+                         "computing default value failed\n"),
+                        -1);
+    }
+  if ((dv.computed_ != 0) && (bu->default_index () == -1))
+    {
+      // only if all cases are not covered AND there is no explicit
+      // default, we get the _default () method
+      os->indent ();
+      *os << "// the implicit _default () method" << be_nl;
+      *os << "ACE_INLINE void " << be_nl
+          << bu->name () << "::_default ()" << be_nl
+          << "{" << be_idt_nl
+          << "this->disc_ = ";
+      switch (bu->udisc_type ())
+        {
+        case AST_Expression::EV_short:
+          *os << dv.u.short_val;
+          break;
+        case AST_Expression::EV_ushort:
+          *os << dv.u.ushort_val;
+          break;
+        case AST_Expression::EV_long:
+          *os << dv.u.long_val;
+          break;
+        case AST_Expression::EV_ulong:
+          *os << dv.u.ulong_val;
+          break;
+        case AST_Expression::EV_char:
+          os->print ("%d", dv.u.char_val);
+          break;
+        case AST_Expression::EV_bool:
+          *os << dv.u.bool_val;
+          break;
+        case AST_Expression::EV_longlong:
+        case AST_Expression::EV_ulonglong:
+          // unimplemented
+        default:
+          // error caught earlier.
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_discriminant_ci::"
+                             "visit_predefined_type - "
+                             "bad or unimplemented discriminant type\n"),
+                        -1);
+        }
+      *os << ";" << be_uidt_nl << "}\n\n";
+    }
 
   os->indent ();
   // the set method
