@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Logging_Service"=.\Basic_Logging_Service.dsp - Package Owner=<4>
+Project: "Logging_Service"=.\Logging_Service.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
