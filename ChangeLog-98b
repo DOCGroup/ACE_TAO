@@ -526,13 +526,16 @@ Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
               for (ITERATOR iter = map.begin ();
                    iter != end;
-                   iter++)
+                   ++iter)
               {
                 ENTRY &entry = *iter;
-                i++;
+                ++i;
               }
             // ...
           }
+
+	  Note that as a general rule, it's better to use ++i rather than
+ 	  i++ to avoid unnecessary copies.
 
 Fri Oct 16 14:57:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
