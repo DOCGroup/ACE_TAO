@@ -1,5 +1,13 @@
 Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/OS.cpp (thr_create): on Chorus, double the stack size to
+          avoid bad problems.  Thanks to Wei Chang <chiang@tele.nokia.fi>
+          for diagnosting this.
+
+        * ace/Hash_Map_Manager.cpp (unbind_i): set the int_id
+          reference argument instead of ignoring it.  Thanks to
+          Wei Chang <chiang@tele.nokia.fi> for providing the patch.
+
         * ace/OS.h,README: wrapped #include of dlfcn.h with
           ACE_HAS_DLFCN_H_BROKEN_EXTERN_C to support RedHat 4.2
           Linux 2.0.30/Alpha.
