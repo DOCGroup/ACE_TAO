@@ -102,19 +102,6 @@ operator!= (const TAO_Object_Table_Iterator &l,
 }
 
 ACE_INLINE 
-TAO_Object_Table::TAO_Object_Table (TAO_Object_Table_Impl *impl,
-                                    int delete_impl)
-  : impl_ (impl),
-    delete_impl_ (delete_impl)
-{
-  if (this->impl_ == 0)
-    {
-      this->impl_ = TAO_ORB_Core_instance ()->server_factory ()->create_object_table ();
-      this->delete_impl_ = 1;
-    }
-}
-  
-ACE_INLINE 
 TAO_Object_Table::~TAO_Object_Table (void)
 {
   if (this->delete_impl_)
