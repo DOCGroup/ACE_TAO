@@ -27,8 +27,41 @@
 
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
 
+static const size_t STRING_TABLE_ENTRIES = 3;
+static const size_t MAX_HASH = 6;
+
 typedef ACE_Hash_Map_Entry<LPCTSTR,
                            LPCTSTR> HASH_STRING_ENTRY;
+
+// @@ The following requires too much internal implementation
+// information about the <ACE_Hash_Map_Manager>.  We need to figure
+// out how to simplify this.
+static const size_t STRING_TABLE_SIZE =
+  sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_ENTRIES + MAX_HASH);
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>;
+template class ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Static_Allocator<STRING_TABLE_SIZE>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Static_Allocator<STRING_TABLE_SIZE>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+static ACE_Static_Allocator<STRING_TABLE_SIZE> alloc;
+
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 
 typedef ACE_Hash_Map_Manager_Ex<LPCTSTR,
                                 LPCTSTR,
@@ -74,36 +107,6 @@ static String_Table string_table[] =
   }
 };
 
-static const size_t STRING_TABLE_ENTRIES = 3;
-static const size_t MAX_HASH = 6;
-
-// @@ The following requires too much internal implementation
-// information about the <ACE_Hash_Map_Manager>.  We need to figure
-// out how to simplify this.
-static const size_t STRING_TABLE_SIZE =
-  sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_ENTRIES + MAX_HASH);
-static ACE_Static_Allocator<STRING_TABLE_SIZE> alloc;
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>;
-template class ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
-template class ACE_Static_Allocator<STRING_TABLE_SIZE>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
-#pragma instantiate ACE_Static_Allocator<STRING_TABLE_SIZE>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB("..\ace\aced.lib");
-//---------------------------------------------------------------------------
-#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 static int
 run_test (void)
