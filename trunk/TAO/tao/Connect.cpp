@@ -5,7 +5,7 @@
 #include "tao/IIOP_Transport.h"
 #include "tao/debug.h"
 #include "tao/GIOP.h"
-#include "tao/IIOP_Server_Request.h"
+#include "tao/GIOP_Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/POA.h"
 #include "tao/CDR.h"
@@ -262,7 +262,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 {
   // This will extract the request header, set <response_required> as
   // appropriate.
-  IIOP_ServerRequest request (input,
+  GIOP_ServerRequest request (input,
                               output,
                               this->orb_core_,
                               ACE_TRY_ENV);
@@ -407,7 +407,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
   // this->handle_locate_i (....);
 
-  IIOP_ServerRequest serverRequest (locateRequestHeader.request_id,
+  GIOP_ServerRequest serverRequest (locateRequestHeader.request_id,
                                     response_required,
                                     tmp_key,
                                     "_non_existent",

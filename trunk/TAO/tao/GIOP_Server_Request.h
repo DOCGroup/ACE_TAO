@@ -7,35 +7,34 @@
 //    TAO
 //
 // = FILENAME
-//    Server_Request.h
+//    GIOP_Server_Request.h
 //
 // = DESCRIPTION
 //    Header file for CORBA's Dynamic Server Skeleton Interface's
-//    "Server Request" type. (for UIOP)
+//    "Server Request" type.  (for GIOP)
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc. and Chris Cleeland.
 //     Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98
-//     UIOP modifications by Ossama Othman -- Apr 99
 // ============================================================================
 
-#ifndef TAO_UIOP_SERVER_REQUEST_H
-#define TAO_UIOP_SERVER_REQUEST_H
+#ifndef TAO_GIOP_SERVER_REQUEST_H
+#define TAO_GIOP_SERVER_REQUEST_H
 
 #include "tao/Server_Request.h"
 
-class TAO_Export UIOP_ServerRequest : public CORBA_ServerRequest
+class TAO_Export GIOP_ServerRequest : public CORBA_ServerRequest
 {
   // = TITLE
-  //    Class representing an UIOP ServerRequest object.
+  //    Class representing an GIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  UIOP_ServerRequest (TAO_InputCDR &input,
+  GIOP_ServerRequest (TAO_InputCDR &input,
                       TAO_OutputCDR &output,
                       TAO_ORB_Core *orb_core,
                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Constructor
-  UIOP_ServerRequest (CORBA::ULong &request_id,
+  GIOP_ServerRequest (CORBA::ULong &request_id,
                       CORBA::Boolean &response_expected,
                       TAO_ObjectKey &object_key,
                       const ACE_CString &operation,
@@ -43,7 +42,7 @@ public:
                       TAO_ORB_Core *orb_core,
                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  virtual ~UIOP_ServerRequest (void);
+  virtual ~GIOP_ServerRequest (void);
   // Destructor.
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -121,8 +120,8 @@ public:
 
   // The pseudo object methods, not really needed because the class is
   // not in the spec, but we add them for the sake of completeness.
-  static UIOP_ServerRequest* _duplicate (UIOP_ServerRequest*);
-  static UIOP_ServerRequest* _nil (void);
+  static GIOP_ServerRequest* _duplicate (GIOP_ServerRequest*);
+  static GIOP_ServerRequest* _nil (void);
 
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
@@ -140,11 +139,11 @@ private:
   // Parse the request header and store the result on this object.
 
   void parse_header_std (CORBA::Environment &TAO_IN_ENV);
-  // Parse the standard UIOP request header and store the result on
+  // Parse the standard GIOP request header and store the result on
   // this object.
 
   void parse_header_lite (CORBA::Environment &TAO_IN_ENV);
-  // Parse the lightweight version of the UIOP request header and
+  // Parse the lightweight version of the GIOP request header and
   // store the result on this object.
 
 private:
@@ -197,7 +196,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/UIOP_Server_Request.i"
+# include "tao/GIOP_Server_Request.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_UIOP_SERVER_REQUEST_H */
+#endif /* TAO_GIOP_SERVER_REQUEST_H */
