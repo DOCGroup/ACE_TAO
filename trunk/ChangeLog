@@ -2,9 +2,10 @@ Fri Jan 07 22:54:41 2000  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Logging_Strategy.cpp:
 
-	  Reverting this change since it breaks MSVC builds! Working
-	  things for g++ 3.4 needs to wait. "Tue Mar 16 10:48:48 2004
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
+	  Reverting this change since it breaks MSVC builds! Looks like
+	  VC6 is an old compiler wrt to ANSI C++ standards. Working things
+	  for g++ 3.4 needs to wait. "Tue Mar 16 10:48:48 2004
+	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".  
 
 Wed Mar 17 14:20:31 2004  Steve Huston  <shuston@riverace.com>
 
