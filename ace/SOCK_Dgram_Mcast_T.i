@@ -1,9 +1,9 @@
 /* -*- C++ -*- */
 /* $Id$ */
 
-template <class ACE_SDMOPT_LOCK> ASYS_INLINE int 
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::set_option (int option,
-                                                      char optval)
+template <class ACE_SDM_LOCK> ASYS_INLINE int 
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::set_option (int option,
+                                                   char optval)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::set_option");
 #if defined (ACE_WIN32)
@@ -20,10 +20,10 @@ ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::set_option (int option,
 #endif /* !ACE_WIN32 */
 }
 
-template <class ACE_SDMOPT_LOCK> ASYS_INLINE ssize_t 
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::send (const void *buf,
-                                                size_t n,
-                                                int flags) const
+template <class ACE_SDM_LOCK> ASYS_INLINE ssize_t 
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::send (const void *buf,
+                                             size_t n,
+                                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::send");
   return this->ACE_SOCK_Dgram::send (buf,
@@ -32,10 +32,10 @@ ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::send (const void *buf,
                                      flags);
 }
 
-template <class ACE_SDMOPT_LOCK> ASYS_INLINE ssize_t 
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::send (const iovec iov[],
-                                                size_t n,
-                                                int flags) const
+template <class ACE_SDM_LOCK> ASYS_INLINE ssize_t 
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::send (const iovec iov[],
+                                             size_t n,
+                                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::send");
   return this->ACE_SOCK_Dgram::send (iov,
@@ -44,11 +44,11 @@ ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::send (const iovec iov[],
                                      flags);
 }
 
-template <class ACE_SDMOPT_LOCK> ASYS_INLINE ssize_t 
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::send (const void *buf,
-                                                size_t n,
-                                                const ACE_Addr &addr,
-                                                int flags) const
+template <class ACE_SDM_LOCK> ASYS_INLINE ssize_t 
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::send (const void *buf,
+                                             size_t n,
+                                             const ACE_Addr &addr,
+                                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::send");
   return this->ACE_SOCK_Dgram::send (buf,
@@ -57,11 +57,11 @@ ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::send (const void *buf,
                                      flags);
 }
 
-template <class ACE_SDMOPT_LOCK> ASYS_INLINE ssize_t 
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::send (const iovec iov[],
-                                                size_t n,
-                                                const ACE_Addr &addr,
-                                                int flags) const
+template <class ACE_SDM_LOCK> ASYS_INLINE ssize_t 
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::send (const iovec iov[],
+                                             size_t n,
+                                             const ACE_Addr &addr,
+                                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::send");
   return this->ACE_SOCK_Dgram::send (iov,

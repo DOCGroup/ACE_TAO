@@ -1,3 +1,18 @@
+Sun Jun 23 21:06:28 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+                              Bill Fulton <Bill_A_Fulton@raytheon.com>
+
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/SOCK_Dgram_Mcast_T.cpp:
+	* ace/SOCK_Dgram_Mcast_T.h:
+	* ace/SOCK_Dgram_Mcast_T.i:
+	  More SOCK_Dgram fixes supplied by Bill Fulton with modifications
+	  by Craig Rodrigues.
+	  - Remove proprietary typedefs for ACE mutex classes
+	  - Make default mutex strategy for SOCK_Dgram_Mcast ACE_SYNCH_MUTEX
+	  - (subscribe_ifs) fix check when determining if subscribed address
+	    is the same as the bound address 
+
 Sun Jun 23 14:51:48 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Synch.h: Put the class ACE_recursive_mutex_state inside

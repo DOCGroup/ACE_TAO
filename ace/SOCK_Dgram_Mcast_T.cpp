@@ -19,7 +19,7 @@ ACE_RCSID (ace,
 #endif /* ! defined (IMR_MULTIADDR) */
 
 // Short-hand for scoping the options enumeration.
-typedef ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_DEFOPT_LOCK> ACE_SDM_OPTIONS;
+typedef ACE_SOCK_Dgram_Mcast_Ex<ACE_SYNCH_MUTEX> ACE_SDM_OPTIONS;
 
 // Helper (inline) functions.
 class ACE_SDM_helpers
@@ -65,8 +65,8 @@ public:
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_Ex)
 
-template <class ACE_SDMOPT_LOCK>
-void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABLE
+template <class ACE_SDM_LOCK>
+void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::dump (void) ACE_CONST_WHEN_MUTABLE
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::dump");
 
@@ -96,7 +96,7 @@ void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABL
   // Show list of subscribed addresses.
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Subscription list:\n"), ""));
   {
-    ACE_GUARD (ACE_SDMOPT_LOCK, guard, this->subscription_list_lock_);
+    ACE_GUARD (ACE_SDM_LOCK, guard, this->subscription_list_lock_);
     subscription_list_iter_t  iter (this->subscription_list_);
     for ( ; !iter.done (); iter.advance ())
       {
@@ -126,11 +126,11 @@ void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABL
 }
 
 // Constructor.
-template <class ACE_SDMOPT_LOCK>
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::ACE_SOCK_Dgram_Mcast_Ex
-  (ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::options bind_addr_opt,
-   ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::options null_iface_opt,
-   ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::options dtor_unsub_opt)
+template <class ACE_SDM_LOCK>
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::ACE_SOCK_Dgram_Mcast_Ex
+  (ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::options bind_addr_opt,
+   ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::options null_iface_opt,
+   ACE_TYPENAME ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::options dtor_unsub_opt)
   :  bind_addr_opt_ (bind_addr_opt),
      null_iface_opt_ (null_iface_opt),
      dtor_unsub_opt_ (dtor_unsub_opt),
@@ -140,8 +140,8 @@ ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::ACE_SOCK_Dgram_Mcast_Ex
 }
 
 // Destructor.
-template <class ACE_SDMOPT_LOCK>
-ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::~ACE_SOCK_Dgram_Mcast_Ex (void)
+template <class ACE_SDM_LOCK>
+ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::~ACE_SOCK_Dgram_Mcast_Ex (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::~ACE_SOCK_Dgram_Mcast_Ex");
 
@@ -151,10 +151,10 @@ ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::~ACE_SOCK_Dgram_Mcast_Ex (void)
 }
 
 // Overloaded (public) method.
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::open (const ACE_INET_Addr &mcast_addr,
-                                                    const ACE_TCHAR *net_if,
-                                                    int reuse_addr)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::open (const ACE_INET_Addr &mcast_addr,
+                                                 const ACE_TCHAR *net_if,
+                                                 int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::open [public]");
 
@@ -258,27 +258,27 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::open (const ACE_INET_Addr &mcast_a
 // This is a hidden, non-virtual base-class method - it shouldn't be invoked
 // ... but it is forwarded to the public interface, with no send interface
 // specification, just in case.
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::open (const ACE_Addr &mcast_addr,
-                                                    int protocol_family,
-                                                    int protocol,
-                                                    int reuse_addr)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::open (const ACE_Addr &mcast_addr,
+                                                 int protocol_family,
+                                                 int protocol,
+                                                 int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::open [legacy]");
   // Note: Sun C++ 4.2 needs the useless const_cast.
-  return ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>
+  return ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>
                      ::open (ACE_reinterpret_cast (const ACE_INET_Addr&,
                                ACE_const_cast (ACE_Addr &, mcast_addr)),
                              ACE_static_cast (ACE_TCHAR*, NULL),
                              reuse_addr);
 }
 
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                                             const ACE_TCHAR *net_if,
-                                                             int protocol_family,
-                                                             int protocol,
-                                                             int reuse_addr)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
+                                                          const ACE_TCHAR *net_if,
+                                                          int protocol_family,
+                                                          int protocol,
+                                                          int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::subscribe_ifs");
 
@@ -364,7 +364,8 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe_ifs (const ACE_INET_Addr
   // If bind_addr_opt_ is enabled, check for address different than
   // bound address.
   if (bind_addr_opt_ == ACE_SDM_OPTIONS::OPT_BINDADDR_YES
-      && mcast_addr != this->bound_addr_)
+      && this->bound_addr_.get_ip_address() != INADDR_ANY
+      && this->bound_addr_.get_ip_address() != mcast_addr.get_ip_address())
     {
       ACE_TCHAR sub_addr_string[ACE_SDM_helpers::ADDR_STRING_MAX + 1],
                 bound_addr_string[ACE_SDM_helpers::ADDR_STRING_MAX + 1];
@@ -384,12 +385,12 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe_ifs (const ACE_INET_Addr
 }
 
 // Subscribe and add address/iface to subscription list if successful.
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe (const ACE_INET_Addr &mcast_addr,
-                                                         int reuse_addr,
-                                                         const ACE_TCHAR *net_if,
-                                                         int protocol_family,
-                                                         int protocol)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::subscribe (const ACE_INET_Addr &mcast_addr,
+                                                      int reuse_addr,
+                                                      const ACE_TCHAR *net_if,
+                                                      int protocol_family,
+                                                      int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::subscribe");
   ACE_INET_Addr subscribe_addr = mcast_addr;
@@ -418,7 +419,7 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe (const ACE_INET_Addr &mc
                                        subscribe_addr,
                                        net_if) != -1) // (should not fail)
         {
-          ACE_GUARD_RETURN (ACE_SDMOPT_LOCK, guard,
+          ACE_GUARD_RETURN (ACE_SDM_LOCK, guard,
                             this->subscription_list_lock_, -1);
           subscription_list_.insert_tail (pmreq);
         }
@@ -430,12 +431,12 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe (const ACE_INET_Addr &mc
 }
 
 // Attempt subscribe and return status.
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe_2 (const ACE_INET_Addr &mcast_addr,
-                                                           int reuse_addr,
-                                                           const ACE_TCHAR *net_if,
-                                                           int protocol_family,
-                                                           int protocol)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::subscribe_2 (const ACE_INET_Addr &mcast_addr,
+                                                        int reuse_addr,
+                                                        const ACE_TCHAR *net_if,
+                                                        int protocol_family,
+                                                        int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::subscribe_2");
   ip_mreq  mreq;
@@ -472,11 +473,11 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe_2 (const ACE_INET_Addr &
     return 0;
 }
 
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                                               const ACE_TCHAR *net_if,
-                                                               int protocol_family,
-                                                               int protocol)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
+                                                            const ACE_TCHAR *net_if,
+                                                            int protocol_family,
+                                                            int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::unsubscribe_ifs");
 
@@ -543,11 +544,11 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe_ifs (const ACE_INET_Ad
 // Note: If there are duplicate entries, only finds the first in the list (this
 // is a defined restriction - most environments don't allow duplicates to be
 // created.)
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe (const ACE_INET_Addr &mcast_addr,
-                                                           const ACE_TCHAR *net_if,
-                                                           int protocol_family,
-                                                           int protocol)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::unsubscribe (const ACE_INET_Addr &mcast_addr,
+                                                        const ACE_TCHAR *net_if,
+                                                        int protocol_family,
+                                                        int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::unsubscribe");
 
@@ -564,7 +565,7 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe (const ACE_INET_Addr &
                                    mcast_addr,
                                    net_if) != -1)
     {
-      ACE_GUARD_RETURN (ACE_SDMOPT_LOCK, guard,
+      ACE_GUARD_RETURN (ACE_SDM_LOCK, guard,
                         this->subscription_list_lock_, -1);
       for (subscription_list_iter_t iter (subscription_list_);
            !iter.done ();
@@ -584,11 +585,11 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe (const ACE_INET_Addr &
 }
 
 // Attempt unsubscribe and return status.
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe_2 (const ACE_INET_Addr &mcast_addr,
-                                                             const ACE_TCHAR *net_if,
-                                                             int protocol_family,
-                                                             int protocol)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::unsubscribe_2 (const ACE_INET_Addr &mcast_addr,
+                                                          const ACE_TCHAR *net_if,
+                                                          int protocol_family,
+                                                          int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::unsubscribe_2");
 
@@ -619,20 +620,20 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe_2 (const ACE_INET_Addr
     return 0;
 }
 
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::unsubscribe (void)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::unsubscribe (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::unsubscribe");
   return this->clear_subs_list (1);
 }
 
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::clear_subs_list (int do_unsubscribe)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::clear_subs_list (int do_unsubscribe)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::clear_subs_list");
   int  result = 0;
   {
-    ACE_GUARD_RETURN (ACE_SDMOPT_LOCK, guard,
+    ACE_GUARD_RETURN (ACE_SDM_LOCK, guard,
                       this->subscription_list_lock_, -1);
     for (subscription_list_iter_t iter (subscription_list_);
          !iter.done ();
@@ -655,10 +656,10 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::clear_subs_list (int do_unsubscrib
   return result;
 }
 
-template <class ACE_SDMOPT_LOCK>
-int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::make_multicast_ifaddr (ip_mreq *ret_mreq,
-                                                                     const ACE_INET_Addr &mcast_addr,
-                                                                     const ACE_TCHAR *net_if)
+template <class ACE_SDM_LOCK>
+int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_LOCK>::make_multicast_ifaddr (ip_mreq *ret_mreq,
+                                                                  const ACE_INET_Addr &mcast_addr,
+                                                                  const ACE_TCHAR *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::make_multicast_ifaddr");
   ip_mreq  lmreq;       // Scratch copy.
