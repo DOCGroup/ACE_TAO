@@ -18,11 +18,11 @@
 #ifndef PACE_SYS_TYPES_H
 #define PACE_SYS_TYPES_H
 
+#include <wtypes.h>
+
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
-
-typedef unsigned long DWORD;
 
   /* Wrap a handle. */
 # define PACE_HANDLE int
@@ -69,42 +69,50 @@ typedef unsigned long DWORD;
 
 #ifndef PACE_PTHREAD_ATTR_T
 #define PACE_PTHREAD_ATTR_T
+  typedef int pthread_attr_t;           /* temporary */
   typedef pthread_attr_t pace_pthread_attr_t;
 #endif /* PACE_PTHREAD_ATTR_T */
 
 #ifndef PACE_PTHREAD_CONDATTR_T
 #define PACE_PTHREAD_CONDATTR_T
+  typedef int pthread_condattr_t;        /* temporary */
   typedef pthread_condattr_t pace_pthread_condattr_t;
 #endif /* PACE_PTHREAD_CONDATTR_T */
 
 #ifndef PACE_PTHREAD_COND_T
 #define PACE_PTHREAD_COND_T
+  typedef int pthread_cond_t;            /* temporary */
   typedef pthread_cond_t pace_pthread_cond_t;
 #endif /* PACE_PTHREAD_COND_T */
 
 #ifndef PACE_PTHREAD_KEY_T
 #define PACE_PTHREAD_KEY_T
+  typedef int pthread_key_t;             /* temporary */
   typedef pthread_key_t pace_pthread_key_t;
 #endif /* PACE_PTHREAD_KEY_T */
 
 #ifndef PACE_PTHREAD_MUTEXATTR_T
 #define PACE_PTHREAD_MUTEXATTR_T
+  typedef int pthread_mutexattr_t;       /* temporary */
   typedef pthread_mutexattr_t pace_pthread_mutexattr_t;
 #endif /* PACE_PTHREAD_MUTEXATTR_T */
 
 #ifndef PACE_PTHREAD_MUTEX_T
 #define PACE_PTHREAD_MUTEX_T
+  typedef int pthread_mutex_t;           /* temporary */
   typedef pthread_mutex_t pace_pthread_mutex_t;
 #endif /* PACE_PTHREAD_MUTEX_T */
 
 #ifndef PACE_PTHREAD_ONCE_T
 #define PACE_PTHREAD_ONCE_T
+  typedef int pthread_once_t;            /* temporary */
   typedef pthread_once_t pace_pthread_once_t;
 #endif /* PACE_PTHREAD_ONCE_T */
 
 #ifndef PACE_PTHREAD_T
 #define PACE_PTHREAD_T
-  typedef pthread_t pace_pthread_t;
+  typedef DWORD pace_pthread_t;
+  typedef HANDLE pace_hpthread_t;
 #endif /* PACE_PTHREAD_T */
 
 #ifndef PACE_SIZE_T
