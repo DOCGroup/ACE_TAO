@@ -49,7 +49,8 @@ namespace TAO
            s == TAO_INVOKE_RESTART)
       {
         Profile_Transport_Resolver resolver (effective_target,
-                                             stub);
+                                             stub,
+                                             true);
 
         ACE_TRY
           {

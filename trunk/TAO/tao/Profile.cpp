@@ -636,6 +636,12 @@ TAO_Profile::supports_multicast (void) const
   return 0;
 }
 
+bool
+TAO_Profile::supports_non_blocking_oneways (void) const
+{
+  return !(this->version_.major == 1 && this->version_.minor == 0);
+}
+
 void
 TAO_Profile::addressing_mode (CORBA::Short addr
                               ACE_ENV_ARG_DECL)
