@@ -65,7 +65,7 @@ check:
 	-diff -b $(srcdir)/test-3.exp test-3.out
 	$(GPERF) -D -p -t < $(srcdir)/c-parse.gperf > test-4.out
 	-diff -b $(srcdir)/test-4.exp test-4.out
-	$(GPERF) -a -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf > test-5.out
+	$(GPERF) -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf > test-5.out
 	-diff -b $(srcdir)/test-5.exp test-5.out
 # prints out the help message
 	-$(GPERF) -a -h > test-6.out 2>&1 || [ a = a ]

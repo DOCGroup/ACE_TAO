@@ -123,11 +123,11 @@ is_reserved_word (str, len)
     {
       int key = hash (str, len);
 
-      if (key <= MAX_HASH_VALUE && key >= 0)
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
           char *s = wordlist[key].name;
 
-          if (*s == *str && !strcmp (str + 1, s + 1))
+          if (*str == *s && !strcmp (str + 1, s + 1))
             return &wordlist[key];
         }
     }

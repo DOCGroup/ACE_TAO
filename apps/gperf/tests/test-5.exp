@@ -101,7 +101,7 @@ is_reserved_word (str, len)
         {
           char *s = wordlist[key].name;
 
-          if (*s == *str && !strcmp (str + 1, s + 1))
+          if (*str == *s && !strcmp (str + 1, s + 1))
             return &wordlist[key];
         }
     }
