@@ -1,4 +1,9 @@
-Mon Aug 10 16:54:12 1998  Jeff Parsons  <jp4@cs.wustl.edu>
+Mon Aug 10 17:03:12 1998  Jeff Parsons  <jp4@cs.wustl.edu>
+
+  * Param_Test/bd_string.cpp:
+    Opname was being set to "test_unbounded_string" (oops).
+
+ Mon Aug 10 16:54:12 1998  Jeff Parsons  <jp4@cs.wustl.edu>
 
   * Param_Test/run_test.pl:
     Added run-through for typecodes (it was missing) and increased wait

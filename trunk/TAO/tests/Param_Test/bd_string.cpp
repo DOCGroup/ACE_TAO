@@ -27,7 +27,7 @@ ACE_RCSID(Param_Test, bd_string, "$Id$")
 // ************************************************************************
 
 Test_Bounded_String::Test_Bounded_String (void)
-  : opname_ (CORBA::string_dup ("test_unbounded_string")),
+  : opname_ (CORBA::string_dup ("test_bounded_string")),
     in_ (0),
     inout_ (0),
     out_ (0),
@@ -95,7 +95,9 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref,
 				   CORBA::Environment &env)
 {
   CORBA::String_out str_out (this->out_);
-  this->ret_ = objref->test_unbounded_string (this->in_, this->inout_, str_out,
+  this->ret_ = objref->test_unbounded_string (this->in_,
+                                              this->inout_,
+                                              str_out,
                                               env);
   return (env.exception () ? -1:0);
 }
@@ -142,25 +144,6 @@ Test_Bounded_String::add_args (CORBA::NVList_ptr param_list,
   return 0;
 }
 
-// Implementation coming soon
-/*
-int 
-Test_Bounded_String::add_args (CORBA::Request_ptr &req,
-                               CORBA::Environment &env)
-{
-  *req << this->in_ 
-       << CORBA::ARG_INOUT << this->inout_ 
-       << CORBA::ARG_OUT << this->out_;
-
-  req->result ()->value ()->replace (CORBA::_tc_string, 
-                                     &this->ret_, 
-                                     CORBA::B_TRUE, 
-                                     env);
-
-  return 0;
-}
-*/
-
 CORBA::Boolean
 Test_Bounded_String::check_validity (void)
 {
@@ -179,9 +162,7 @@ Test_Bounded_String::check_validity (void)
 CORBA::Boolean
 Test_Bounded_String::check_validity (CORBA::Request_ptr req)
 {
-  CORBA::Environment env;
-  //No need to retrieve anything because for all the args and
-  // the return, we provided the memory and we own it.
+  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
