@@ -143,7 +143,7 @@ Thu Oct 12 14:24:03 2000  Ossama Othman  <ossama@uci.edu>
 	  Call the newly added verify_secure_configuration() method prior
 	  to opening any endpoints to ensure that neither the endpoint
 	  configuration nor the ORB configuration violate security
-	  measures. 
+	  measures.
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
 
