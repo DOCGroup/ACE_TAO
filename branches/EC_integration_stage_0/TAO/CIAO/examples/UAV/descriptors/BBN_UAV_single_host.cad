@@ -105,7 +105,10 @@
       <homeplacement id="a_SatelliteHome">
         <componentfileref idref="com-Satellite"/>
           <componentinstantiation id="a_Satellite">
-
+          <registercomponent>
+            <!-- writeiortofile is a non-standard CIAO extension.  -->
+            <writeiortofile name="sat.ior"/>
+          </registercomponent>
         </componentinstantiation>
       </homeplacement>      
      <destination>EngagementBattleHost</destination>
