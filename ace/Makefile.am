@@ -8,10 +8,6 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.5
-
 ## Disable building of CLASSIX library for now.
 ## SUBDIRS = CLASSIX
 
@@ -110,6 +106,14 @@ LIBACE_TOKEN =
 #AM_CPPFLAGS += -DACE_LACKS_ACE_TOKEN
 endif
 
+if BUILD_CODECS_FILES
+LIBACE_CODECS = libACE_Codecs.la
+else
+LIBACE_CODECS =
+#AM_CPPFLAGS += -DACE_LACKS_ACE_CODECS
+endif
+
+
 if BUILD_OTHER_FILES
 LIBACE_OTHER = libACE_Other.la
 else
@@ -139,23 +143,26 @@ lib_LTLIBRARIES = \
   $(LIBACE_MEMORY) \
   $(LIBACE_TIMER) \
   $(LIBACE_TOKEN) \
+  $(LIBACE_CODECS) \
   $(LIBACE_OTHER)
 
 libACE_OS_la_SOURCES = \
   Basic_Types.cpp \
+  Time_Value.cpp \
   OS.cpp \
   OS_Dirent.cpp \
   OS_Errno.cpp \
   OS_Memory.cpp \
+  OS_QoS.cpp \
   OS_String.cpp \
   OS_TLI.cpp \
-  OS_Errno.cpp \
   Base_Thread_Adapter.cpp \
   OS_Thread_Adapter.cpp \
   OS_Log_Msg_Attributes.cpp \
   Thread_Hook.cpp \
   Sched_Params.cpp \
-  Handle_Set.cpp
+  Handle_Set.cpp \
+  Copy_Disabled.cpp
 
 libACE_Utils_la_SOURCES = \
   ACE.cpp \
@@ -167,15 +174,20 @@ libACE_Utils_la_SOURCES = \
   Configuration.cpp \
   Configuration_Import_Export.cpp \
   Containers.cpp \
-  Copy_Disabled.cpp \
   Dirent.cpp \
   Dirent_Selector.cpp \
   Dynamic.cpp \
   Filecache.cpp \
   Flag_Manip.cpp \
+  Framework_Component.cpp \
   Functor.cpp \
   Get_Opt.cpp \
   Hash_Map_Manager.cpp \
+  Connection_Recycling_Strategy.cpp \
+  Hashable.cpp \
+  Notification_Strategy.cpp \
+  Recyclable.cpp \
+  Refcountable.cpp \
   Handle_Ops.cpp \
   Init_ACE.cpp \
   Lib_Find.cpp \
@@ -186,7 +198,8 @@ libACE_Utils_la_SOURCES = \
   String_Base_Const.cpp \
   SString.cpp \
   Stats.cpp \
-  Sample_History.cpp
+  Sample_History.cpp \
+  Filecache.cpp
 
 libACE_Logging_la_SOURCES = \
   Dump.cpp \
@@ -195,13 +208,14 @@ libACE_Logging_la_SOURCES = \
   Log_Msg_Backend.cpp \
   Log_Msg_IPC.cpp \
   Log_Msg_NT_Event_Log.cpp \
-  Log_Msg_UNIX_Event_Syslog.cpp \
+  Log_Msg_UNIX_Syslog.cpp \
   Log_Record.cpp \
   Logging_Strategy.cpp \
   Trace.cpp
 
 libACE_Threads_la_SOURCES = \
   Activation_Queue.cpp \
+  Atomic_Op.cpp \
   Process.cpp \
   Process_Manager.cpp \
   Synch.cpp \
@@ -229,6 +243,7 @@ libACE_Demux_la_SOURCES = \
   Select_Reactor.cpp \
   Select_Reactor_Base.cpp \
   SUN_Proactor.cpp \
+  Dev_Poll_Reactor.cpp \
   TP_Reactor.cpp \
   TkReactor.cpp \
   WFMO_Reactor.cpp \
@@ -238,8 +253,9 @@ libACE_Demux_la_SOURCES = \
 libACE_Connection_la_SOURCES = \
   Asynch_IO.cpp \
   Asynch_IO_Impl.cpp \
+  Asynch_Pseudo_Task.cpp \
   POSIX_Asynch_IO.cpp \
-  Strategies.cpp
+  WIN32_Asynch_IO.cpp
 
 libACE_Sockets_la_SOURCES = \
   Addr.cpp \
@@ -315,6 +331,7 @@ libACE_IPC_la_SOURCES = \
 
 libACE_Svcconf_la_SOURCES = \
   DLL.cpp \
+  DLL_Manager.cpp \
   Dynamic_Service_Base.cpp \
   Parse_Node.cpp \
   Service_Config.cpp \
@@ -334,6 +351,7 @@ libACE_Streams_la_SOURCES = \
   CDR_Stream.cpp \
   Codeset_IBM1047.cpp \
   Message_Queue.cpp \
+  Reactor_Notification_Strategy.cpp \
   Task.cpp
 
 libACE_Memory_la_SOURCES = \
@@ -376,6 +394,9 @@ libACE_Timer_la_SOURCES = \
 # We only want `gethrtime.cpp' if building on Pentium(tm) so we need
 # to let Automake know that `gethrtime.cpp' is conditionally built.
 EXTRA_libACE_Timer_la_SOURCES = gethrtime.cpp
+
+libACE_Codecs_la_SOURCES = \
+  Codecs.cpp
 
 libACE_Other_la_SOURCES = \
   Local_Name_Space.cpp \
@@ -451,32 +472,31 @@ TEMPLATE_FILES = \
   Acceptor.cpp \
   Active_Map_Manager_T.cpp \
   Array_Base.cpp \
-  Node.cpp \
-  Unbounded_Set.cpp \
-  Unbounded_Queue.cpp \
   Asynch_Acceptor.cpp \
+  Asynch_Connector.cpp \
+  Atomic_Op_T.cpp \
   Auto_IncDec_T.cpp \
   Auto_Ptr.cpp \
   Based_Pointer_T.cpp \
-  Bound_Ptr.cpp \
-  Connector.cpp \
-  Containers_T.cpp \
   Cache_Map_Manager_T.cpp \
   Cached_Connect_Strategy_T.cpp \
   Caching_Strategies_T.cpp \
   Caching_Utility_T.cpp \
   Cleanup_Strategies_T.cpp \
+  Connector.cpp \
+  Containers_T.cpp \
   Dump_T.cpp \
   Dynamic_Service.cpp \
   Env_Value_T.cpp \
   Event_Handler_T.cpp \
+  Framework_Component_T.cpp \
   Free_List.cpp \
   Functor_T.cpp \
   Future.cpp \
   Future_Set.cpp \
+  Hash_Cache_Map_Manager_T.cpp \
   Hash_Map_Manager_T.cpp \
   Hash_Map_With_Allocator_T.cpp \
-  Hash_Cache_Map_Manager_T.cpp \
   IOStream_T.cpp \
   Intrusive_List.cpp \
   Intrusive_List_Node.cpp \
@@ -489,9 +509,9 @@ TEMPLATE_FILES = \
   Message_Block_T.cpp \
   Message_Queue_T.cpp \
   Module.cpp \
+  Node.cpp \
   Obstack_T.cpp \
   Pair_T.cpp \
-  Refcounted_Auto_Ptr.cpp \
   RB_Tree.cpp \
   Select_Reactor_T.cpp \
   Singleton.cpp \
@@ -500,9 +520,9 @@ TEMPLATE_FILES = \
   Stream_Modules.cpp \
   String_Base.cpp \
   Svc_Handler.cpp \
+  Swap.cpp \
   Synch_T.cpp \
   Task_T.cpp \
-  Template_Instantiations.cpp \
   Test_and_Set.cpp \
   Timeprobe_T.cpp \
   Timer_Hash_T.cpp \
@@ -512,13 +532,15 @@ TEMPLATE_FILES = \
   Timer_Queue_T.cpp \
   Timer_Wheel_T.cpp \
   Typed_SV_Message.cpp \
-  Typed_SV_Message_Queue.cpp
+  Typed_SV_Message_Queue.cpp \
+  Unbounded_Queue.cpp \
+  Unbounded_Set.cpp \
+  Vector_T.cpp
 
 HEADER_FILES = \
   ACE.h \
   ACE_export.h \
   ARGV.h \
-  Argv_Type_Converter.h \
   ATM_Acceptor.h \
   ATM_Addr.h \
   ATM_Connector.h \
@@ -531,11 +553,16 @@ HEADER_FILES = \
   Active_Map_Manager_T.h \
   Addr.h \
   Arg_Shifter.h \
+  Argv_Type_Converter.h \
   Array.h \
   Array_Base.h \
   Asynch_Acceptor.h \
+  Asynch_Connector.h \
   Asynch_IO.h \
   Asynch_IO_Impl.h \
+  Asynch_Pseudo_Task.h \
+  Atomic_Op.h \
+  Atomic_Op_T.h \
   Auto_IncDec_T.h \
   Auto_Ptr.h \
   Base_Thread_Adapter.h \
@@ -546,6 +573,7 @@ HEADER_FILES = \
   Bound_Ptr.h \
   CDR_Base.h \
   CDR_Stream.h \
+  CE_Screen_Output.h \
   CORBA_macros.h \
   Cache_Map_Manager_T.h \
   Cached_Connect_Strategy_T.h \
@@ -553,9 +581,11 @@ HEADER_FILES = \
   Caching_Utility_T.h \
   Capabilities.h \
   Cleanup_Strategies_T.h \
+  Codecs.h \
   Codeset_IBM1047.h \
   Configuration.h \
   Configuration_Import_Export.h \
+  Connection_Recycling_Strategy.h \
   Connector.h \
   Containers.h \
   Containers_T.h \
@@ -565,7 +595,10 @@ HEADER_FILES = \
   DEV_Connector.h \
   DEV_IO.h \
   DLL.h \
+  DLL_Manager.h \
   Date_Time.h \
+  Default_Constants.h \
+  Dev_Poll_Reactor.h \
   Dirent.h \
   Dirent_Selector.h \
   Dump.h \
@@ -576,6 +609,7 @@ HEADER_FILES = \
   Env_Value_T.h \
   Event_Handler.h \
   Event_Handler_T.h \
+  Exception_Macros.h \
   FIFO.h \
   FIFO_Recv.h \
   FIFO_Recv_Msg.h \
@@ -589,12 +623,15 @@ HEADER_FILES = \
   Filecache.h \
   FlReactor.h \
   Flag_Manip.h \
+  Framework_Component.h \
+  Framework_Component_T.h \
   Free_List.h \
   Functor.h \
   Functor_T.h \
   Future.h \
   Future_Set.h \
   Get_Opt.h \
+  Global_Macros.h \
   Handle_Gobbler.h \
   Handle_Ops.h \
   Handle_Set.h \
@@ -602,6 +639,7 @@ HEADER_FILES = \
   Hash_Map_Manager.h \
   Hash_Map_Manager_T.h \
   Hash_Map_With_Allocator_T.h \
+  Hashable.h \
   High_Res_Timer.h \
   INET_Addr.h \
   IOStream.h \
@@ -664,12 +702,14 @@ HEADER_FILES = \
   Name_Space.h \
   Naming_Context.h \
   Node.h \
+  Notification_Strategy.h \
   OS.h \
   OS_Dirent.h \
   OS_Errno.h \
   OS_Export.h \
   OS_Log_Msg_Attributes.h \
   OS_Memory.h \
+  OS_QoS.h \
   OS_String.h \
   OS_TLI.h \
   OS_Thread_Adapter.h \
@@ -679,6 +719,7 @@ HEADER_FILES = \
   Obstack_T.h \
   PI_Malloc.h \
   POSIX_Asynch_IO.h \
+  POSIX_CB_Proactor.h \
   POSIX_Proactor.h \
   Pair.h \
   Pair_T.h \
@@ -697,7 +738,10 @@ HEADER_FILES = \
   RW_Process_Mutex.h \
   Reactor.h \
   Reactor_Impl.h \
+  Reactor_Notification_Strategy.h \
   Read_Buffer.h \
+  Recyclable.h \
+  Refcountable.h \
   Refcounted_Auto_Ptr.h \
   Registry.h \
   Registry_Name_Space.h \
@@ -717,8 +761,6 @@ HEADER_FILES = \
   SPIPE_Addr.h \
   SPIPE_Connector.h \
   SPIPE_Stream.h \
-  String_Base_Const.h \
-  String_Base.h \
   SString.h \
   SUN_Proactor.h \
   SV_Message.h \
@@ -732,7 +774,6 @@ HEADER_FILES = \
   Select_Reactor_Base.h \
   Select_Reactor_T.h \
   Service_Config.h \
-  Service_Loader.h \
   Service_Manager.h \
   Service_Object.h \
   Service_Repository.h \
@@ -746,14 +787,16 @@ HEADER_FILES = \
   Singleton.h \
   Sock_Connect.h \
   Stats.h \
-  Strategies.h \
   Strategies_T.h \
   Stream.h \
   Stream_Modules.h \
+  String_Base.h \
+  String_Base_Const.h \
   Svc_Conf.h \
   Svc_Conf_Lexer_Guard.h \
   Svc_Conf_Tokens.h \
   Svc_Handler.h \
+  Swap.h \
   Synch.h \
   Synch_Options.h \
   Synch_T.h \
@@ -804,6 +847,7 @@ HEADER_FILES = \
   UPIPE_Stream.h \
   Unbounded_Queue.h \
   Unbounded_Set.h \
+  Vector_T.h \
   Version.h \
   WFMO_Reactor.h \
   WIN32_Asynch_IO.h \
@@ -812,19 +856,19 @@ HEADER_FILES = \
   XTI_ATM_Mcast.h \
   XtReactor.h \
   ace_wchar.h \
-  config-all.h \
   config.h \
+  config-all.h \
   iosfwd.h \
   post.h \
   pre.h \
   streams.h \
   svc_export.h
+
 ## Make sure config.h and config-all.h are in the above header list!
 
 INLINE_FILES = \
   ACE.i \
   ARGV.i \
-  Argv_Type_Converter.inl \
   ATM_Acceptor.i \
   ATM_Addr.i \
   ATM_Connector.i \
@@ -837,6 +881,7 @@ INLINE_FILES = \
   Addr.i \
   Asynch_IO_Impl.i \
   Atomic_Op.i \
+  Atomic_Op_T.i \
   Auto_IncDec_T.i \
   Auto_Ptr.i \
   Based_Pointer_T.i \
@@ -923,6 +968,7 @@ INLINE_FILES = \
   Obstack_T.i \
   PI_Malloc.i \
   POSIX_Asynch_IO.i \
+  POSIX_CB_Proactor.i \
   POSIX_Proactor.i \
   Pair_T.i \
   Parse_Node.i \
@@ -949,7 +995,6 @@ INLINE_FILES = \
   SPIPE_Addr.i \
   SPIPE_Connector.i \
   SPIPE_Stream.i \
-  String_Base.i \
   SString.i \
   SUN_Proactor.i \
   SV_Message.i \
@@ -961,7 +1006,6 @@ INLINE_FILES = \
   Select_Reactor_Base.i \
   Select_Reactor_T.i \
   Service_Config.i \
-  Service_Loader.i \
   Service_Manager.i \
   Service_Object.i \
   Service_Repository.i \
@@ -973,9 +1017,9 @@ INLINE_FILES = \
   Singleton.i \
   Sock_Connect.i \
   Stats.i \
-  Strategies.i \
   Strategies_T.i \
   Stream.i \
+  String_Base.i \
   Synch.i \
   Synch_Options.i \
   Synch_T.i \
@@ -1001,16 +1045,23 @@ INLINE_FILES = \
   UPIPE_Acceptor.i \
   UPIPE_Connector.i \
   UPIPE_Stream.i \
+  Vector_T.i \
   WFMO_Reactor.i \
   XTI_ATM_Mcast.i \
+  Argv_Type_Converter.inl \
   Array_Base.inl \
   Base_Thread_Adapter.inl \
   Basic_Stats.inl \
   CDR_Base.inl \
+  Dev_Poll_Reactor.inl \
   Dirent_Selector.inl \
   File_Lock.inl \
+  Framework_Component.inl \
+  Framework_Component_T.inl \
+  Hashable.inl \
   Intrusive_List.inl \
   Intrusive_List_Node.inl \
+  Notification_Strategy.inl \
   OS_Dirent.inl \
   OS_Errno.inl \
   OS_Log_Msg_Attributes.inl \
@@ -1021,9 +1072,14 @@ INLINE_FILES = \
   Process_Mutex.inl \
   Process_Semaphore.inl \
   RW_Process_Mutex.inl \
+  Reactor_Notification_Strategy.inl \
+  Recyclable.inl \
+  Refcountable.inl \
   Sample_History.inl \
+  Swap.inl \
   Thread_Adapter.inl \
   Thread_Control.inl \
+  Time_Value.inl \
   Unbounded_Queue.inl \
   Unbounded_Set.inl \
   ace_wchar.inl

@@ -10,10 +10,6 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4 #check-news
-
 bin_SCRIPTS = ace-config
 
 man_MANS = ace-config.1
@@ -21,11 +17,11 @@ man_MANS = ace-config.1
 ## Build the library directories first.
 ## The docs directory is currently handled by the "dist-hook" makefile target.
 SUBDIRS = \
-  ace \
-  netsvcs \
-  tests \
-  apps \
-  man
+  ace
+##  netsvcs \
+##  tests \
+##  apps \
+##  man
 
 ##SUBDIRS = \
 ##          docs \
@@ -43,26 +39,12 @@ EXTRA_DIST = \
   ACE-INSTALL.html \
   ACE-install.sh \
   BIBLIOGRAPHY \
-  ChangeLog-93 \
-  ChangeLog-94 \
-  ChangeLog-95 \
-  ChangeLog-96a \
-  ChangeLog-96b \
-  ChangeLog-97a \
-  ChangeLog-97b \
-  ChangeLog-98a \
-  ChangeLog-98b \
-  ChangeLog-99a \
-  ChangeLog-99b \
   FAQ \
   PROBLEM-REPORT-FORM \
   VERSION \
-  acconfig.h \
   ace-config.in \
   ace-config.1.in \
-  aceConf.sh.in \
-  ltcf-c.sh \
-  ltcf-cxx.sh
+  aceConf.sh.in
 
 DISTCLEANFILES = ace-config aceConf.sh ace-config.1 
 
@@ -79,7 +61,7 @@ confexec_DATA = aceConf.sh
 ## Directories to include in the distribution but which I am too lazy to
 ## create Makefile.am files for.  A Makefile.am for these directories isn't
 ## needed anyway.
-ACE_EXTRA_DIST = bin docs m4
+ACE_EXTRA_DIST = ChangeLogs bin docs m4
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.
