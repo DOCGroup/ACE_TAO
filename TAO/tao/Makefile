@@ -45,7 +45,7 @@ PUB_HDRS = \
   IORS \
   IORManipulation \
   BoundC \
-  GIOPC 
+  GIOPC
 
 POA_FILES = \
   Object_Adapter \
@@ -55,9 +55,7 @@ POA_FILES = \
   POAS \
   POAManager \
   Active_Object_Map \
-  Servant_Base \
-  ImplRepoC \
-  ImplRepoS
+  Servant_Base
 
 PLUGGABLE_PROTOCOLS_FILES = \
   Pluggable \
@@ -184,7 +182,9 @@ include $(TAO_ROOT)/rules.tao.GNU
 ifndef minimum_corba
 
 POA_FILES += \
-  Forwarding_Servant
+  Forwarding_Servant \
+  ImplRepoC \
+  ImplRepoS
 
 ORB_CORE_FILES += \
   Context \
