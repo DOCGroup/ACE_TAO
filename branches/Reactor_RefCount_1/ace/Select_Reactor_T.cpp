@@ -343,6 +343,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
   return this->register_handler_i (handles, handler, mask);
 }
 
+template <class ACE_SELECT_REACTOR_TOKEN> ACE_Event_Handler *
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler
+  (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_Select_Reactor_T::handler");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, 0));
+  return this->find_handler_i (handle);
+}
+
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler
   (ACE_HANDLE handle,
@@ -835,12 +844,28 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   if (event_handler == 0)
     return;
 
+  int reference_counting_required =
+    event_handler->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  // Call add_reference() if needed.
+  if (reference_counting_required)
+    {
+      event_handler->add_reference ();
+    }
+
   int status = (event_handler->*ptmf) (handle);
 
   if (status < 0)
     this->remove_handler_i (handle, mask);
   else if (status > 0)
     ready_mask.set_bit (handle);
+
+  // Call remove_reference() if needed.
+  if (reference_counting_required)
+    {
+      event_handler->remove_reference ();
+    }
 }
 
 // Perform GET, CLR, SET, and ADD operations on the select()
@@ -863,9 +888,42 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops
 {
   ACE_TRACE ("ACE_Select_Reactor_T::mask_ops");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
-  return this->bit_ops (handle, mask,
-                        this->wait_set_,
-                        ops);
+
+  // If the handle is not suspended, then set the ops on the
+  // <wait_set_>, otherwise set the <suspend_set_>.
+
+  if (this->is_suspended_i (handle))
+    return this->bit_ops (handle, mask,
+                          this->suspend_set_,
+                          ops);
+  else
+    return this->bit_ops (handle, mask,
+                          this->wait_set_,
+                          ops);
+}
+
+template <class ACE_SELECT_REACTOR_TOKEN> ACE_Event_Handler *
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler_i
+  (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_Select_Reactor_T::handler_i");
+
+  ACE_Event_Handler *event_handler =
+    this->handler_rep_.find (handle);
+
+  if (event_handler)
+    {
+      int requires_reference_counting =
+        event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+      if (requires_reference_counting)
+        {
+          event_handler->add_reference ();
+        }
+    }
+
+  return event_handler;
 }
 
 // Must be called with locks held.
@@ -874,12 +932,13 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask,
-   ACE_Event_Handler **handler)
+   ACE_Event_Handler **eh)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handler_i");
-  ACE_Event_Handler *h = this->handler_rep_.find (handle);
+  ACE_Event_Handler *event_handler =
+    this->handler_rep_.find (handle);
 
-  if (h == 0)
+  if (event_handler == 0)
     return -1;
   else
     {
@@ -895,8 +954,20 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
         return -1;
     }
 
-  if (handler != 0)
-    *handler = h;
+  if (eh != 0)
+    {
+      *eh = event_handler;
+
+      int requires_reference_counting =
+        event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+      if (requires_reference_counting)
+        {
+          event_handler->add_reference ();
+        }
+    }
+
   return 0;
 }
 

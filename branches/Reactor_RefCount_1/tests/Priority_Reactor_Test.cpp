@@ -402,12 +402,7 @@ template class auto_ptr<ACE_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Select_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Select_Reactor>;
-template class ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>;
-template class ACE_Svc_Tuple<Write_Handler>;
+template class ACE_NonBlocking_Connect_Handler<Write_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR>
@@ -416,10 +411,5 @@ template class ACE_Svc_Tuple<Write_Handler>;
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
 #pragma instantiate auto_ptr<ACE_Select_Reactor>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Select_Reactor>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<Write_Handler>*>
-#pragma instantiate ACE_Svc_Tuple<Write_Handler>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Write_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

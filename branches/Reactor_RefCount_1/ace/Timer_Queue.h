@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
  *   Irfan Pyarali <irfan@cs.wustl.edu>.
  */
 //=============================================================================

@@ -1548,3 +1548,75 @@ project(Unbounded Set Ex Test) : aceexe {
   Header_Files {
   }
 }
+
+project(WFMO Reactor Test) : aceexe {
+  exename = WFMO_Reactor_Test
+  Source_Files {
+    WFMO_Reactor_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(NonBlocking Conn Test) : aceexe {
+  exename = NonBlocking_Conn_Test
+  Source_Files {
+    NonBlocking_Conn_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(Reference Counted Event Handler Test) : aceexe {
+  exename = Reference_Counted_Event_Handler_Test
+  Source_Files {
+    Reference_Counted_Event_Handler_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(MT Reference Counted Event Handler Test) : aceexe {
+  exename = MT_Reference_Counted_Event_Handler_Test
+  Source_Files {
+    MT_Reference_Counted_Event_Handler_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(MT Reference Counted Notify Test) : aceexe {
+  exename = MT_Reference_Counted_Notify_Test
+  Source_Files {
+    MT_Reference_Counted_Notify_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(Timer Cancellation Test) : aceexe {
+  exename = Timer_Cancellation_Test
+  Source_Files {
+    Timer_Cancellation_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(Timer Queue Reference Counting Test) : aceexe {
+  exename = Timer_Queue_Reference_Counting_Test
+  Source_Files {
+    Timer_Queue_Reference_Counting_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
+project(Reactor Registration Test) : aceexe {
+  exename = Reactor_Registration_Test
+  Source_Files {
+    Reactor_Registration_Test.cpp
+  }
+  Header_Files {
+  }
+}

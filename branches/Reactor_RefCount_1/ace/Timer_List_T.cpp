@@ -126,14 +126,24 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_List_T (void)
 
   delete iterator_;
 
-  if (! this->is_empty()) {
-    for (ACE_Timer_Node_T<TYPE>* n = this->get_first(); n != this->head_;) {
-      ACE_Timer_Node_T<TYPE>* next = n->get_next();
-      this->upcall_functor ().deletion (*this, n->get_type(), n->get_act());
-      this->free_node(n);
-      n = next;
+  if (!this->is_empty())
+    {
+      for (ACE_Timer_Node_T<TYPE>* n = this->get_first();
+           n != this->head_;
+           )
+        {
+          this->upcall_functor ().deletion (*this,
+                                            n->get_type(),
+                                            n->get_act());
+
+          ACE_Timer_Node_T<TYPE> *next =
+            n->get_next ();
+
+          this->free_node (n);
+
+          n = next;
+        }
     }
-  }
 
   // delete the dummy node
   delete this->head_;
@@ -174,13 +184,12 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE>* n
 // is > 0, the handler will be reinvoked periodically.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> long
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
-                                                 const void *act,
-                                                 const ACE_Time_Value &future_time,
-                                                 const ACE_Time_Value &interval)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (const TYPE &type,
+                                                       const void *act,
+                                                       const ACE_Time_Value &future_time,
+                                                       const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_List_T::schedule");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   ACE_Timer_Node_T<TYPE>* n = this->alloc_node();
 
@@ -203,7 +212,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 /// The shared scheduling functionality between schedule() and reschedule()
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (ACE_Timer_Node_T<TYPE>* n,
-                                                        const ACE_Time_Value& expire)
+                                                       const ACE_Time_Value& expire)
 {
   if (this->is_empty()) {
     n->set_prev(this->head_);
@@ -230,7 +239,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (ACE_Timer_Node_T<TYPE>* n
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Node_T<TYPE>*
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::find_node(long timer_id) const
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::find_node (long timer_id) const
 {
   ACE_Timer_Node_T<TYPE>* n = this->get_first_i();
   if (n == 0)
@@ -269,12 +278,14 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
   ACE_TRACE ("ACE_Timer_List_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
   ACE_Timer_Node_T<TYPE>* n = this->find_node(timer_id);
-  if (n != 0) {
-    if (act != 0)
-      *act = n->get_act();
-    this->cancel_i(n, skip_close);
-    return 1;
-  }
+  if (n != 0)
+    {
+      if (act != 0)
+        *act = n->get_act ();
+      this->cancel_i (n, skip_close);
+
+      return 1;
+    }
   return 0;
 }
 
@@ -287,30 +298,28 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type, int skip_cl
 
   int num_canceled = 0; // Note : Technically this can overflow.
 
-  if (! this->is_empty()) {
+  if (this->is_empty())
+    return 0;
 
-    for (ACE_Timer_Node_T<TYPE>* n = this->get_first(); n != this->head_;)
+  for (ACE_Timer_Node_T<TYPE>* n = this->get_first();
+       n != this->head_;
+       )
     {
       if (n->get_type() == type) // Note: Typically Type is an ACE_Event_Handler*
-      {
-        ++num_canceled;
+        {
+          ++num_canceled;
 
-        ACE_Timer_Node_T<TYPE>* tmp = n;
-        n = n->get_next();
-        int always_skip_close = 1; // todo : Is this correct?
-        this->cancel_i(tmp, always_skip_close);
-      }
+          ACE_Timer_Node_T<TYPE>* tmp = n;
+          n = n->get_next();
+
+          this->cancel_i (tmp, skip_close);
+        }
       else
-      {
-        n = n->get_next();
-      }
+        {
+          n = n->get_next();
+        }
     }
 
-  }
-
-  if (! skip_close) { //  && num_canceled > 0) {
-    this->upcall_functor().cancellation (*this, type);
-  }
   return num_canceled;
 }
 
@@ -325,13 +334,15 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::unlink (ACE_Timer_Node_T<TYPE>* n)
 
 /// Shared subset of the two cancel() methods.
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel_i (ACE_Timer_Node_T<TYPE>* n, int skip_close)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel_i (ACE_Timer_Node_T<TYPE>* n,
+                                                     int skip_close)
 {
-  this->unlink(n);
+  this->unlink (n);
   this->free_node (n);
-  if (! skip_close) {
-    this->upcall_functor().cancellation (*this, n->get_type());
-  }
+
+  this->upcall_functor ().cancellation (*this,
+                                        n->get_type(),
+                                        skip_close);
 }
 
 // Reads the first node on the list and returns it.
