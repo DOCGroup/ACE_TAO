@@ -1942,10 +1942,45 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (sa);
+#   if defined (ACE_PSOS_HAS_MUTEX)
+
+    u_long flags = MU_LOCAL;
+    u_long ceiling = 0;
+
+#     if defined (ACE_HAS_RECURSIVE_MUTEXES)
+    flags |= MU_RECURSIVE;
+#     else /* ! ACE_HAS_RECURSIVE_MUTEXES */
+    flags |= MU_NONRECURSIVE;
+#     endif /* ACE_HAS_RECURSIVE_MUTEXES */
+
+#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
+
+    flags |= MU_PRIOR;
+
+#       if defined (ACE_PSOS_HAS_PRIO_INHERIT_MUTEX)
+    flags |= MU_PRIO_INHERIT;
+#       elif defined (ACE_PSOS_HAS_PRIO_PROTECT_MUTEX)
+    ceiling =  PSOS_TASK_MAX_PRIORITY;
+    flags |= MU_PRIO_PROTECT;
+#       else
+    flags |= MU_PRIO_NONE;
+#       endif /* ACE_PSOS_HAS_PRIO_INHERIT_MUTEX */
+
+#     else /* ! ACE_PSOS_HAS_PRIO_MUTEX */
+
+    flags |= MU_FIFO | MU_PRIO_NONE;
+
+#     endif
+
+    return (::mu_create (ACE_reinterpret_cast (char *, name),
+                         flags, ceiling, m) == 0) ? 0 : -1;
+
+#   else /* ! ACE_PSOS_HAS_MUTEX */
   return ::sm_create ((char *) name,
                       1,
                       SM_LOCAL | SM_PRIOR,
                       m) == 0 ? 0 : -1;
+#   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
@@ -1992,7 +2027,11 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
     }
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
+#   if defined (ACE_PSOS_HAS_MUTEX)
+  return (::mu_delete (*m) == 0) ? 0 : -1;
+#   else /* ! ACE_PSOS_HAS_MUTEX */
   return (::sm_delete (*m) == 0) ? 0 : -1;
+#   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   return ::semDelete (*m) == OK ? 0 : -1;
 # endif /* Threads variety case */
@@ -2043,7 +2082,11 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
     }
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
+#   if defined (ACE_PSOS_HAS_MUTEX)
+  return (::mu_lock (*m, MU_WAIT, 0) == 0) ? 0 : -1;
+#   else /* ACE_PSOS_HAS_MUTEX */
   return (::sm_p (*m, SM_WAIT, 0) == 0) ? 0 : -1;
+#   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
 # endif /* Threads variety case */
@@ -2143,6 +2186,9 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     }
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
+#   if defined (ACE_PSOS_HAS_MUTEX)
+   return (::mu_lock (*m, MU_NOWAIT, 0) == 0) ? 0 : -1;
+#   else /* ! ACE_PSOS_HAS_MUTEX */
    switch (::sm_p (*m, SM_NOWAIT, 0))
    {
      case 0:
@@ -2153,6 +2199,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
      default:
        return -1;
    }
+#   endif /* ACE_PSOS_HAS_MUTEX */
 
 # elif defined (VXWORKS)
   if (::semTake (*m, NO_WAIT) == ERROR)
@@ -2244,7 +2291,11 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
     }
   /* NOTREACHED */
 # elif defined (ACE_PSOS)
+#   if defined (ACE_PSOS_HAS_MUTEX)
+  return (::mu_unlock (*m) == 0) ? 0 : -1;
+#   else /* ! ACE_PSOS_HAS_MUTEX */
   return (::sm_v (*m) == 0) ? 0 : -1;
+#   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (VXWORKS)
   return ::semGive (*m) == OK ? 0 : -1;
 # endif /* Threads variety case */
@@ -2391,6 +2442,8 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), ace_result_), int, -1);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+  return (::cv_delete (*cv)) ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -2499,6 +2552,13 @@ ACE_OS::cond_init (ACE_cond_t *cv,
                                                     arg),
                                        ace_result_),
                      int, -1);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
+  u_long flags = CV_LOCAL | CV_PRIOR;
+#     else /* ACE_PSOS_HAS_PRIO_MUTEX */
+  u_long flags = CV_LOCAL | CV_FIFO;
+#     endif /* ACE_PSOS_HAS_PRIO_MUTEX */
+  return (::cv_create ((char *) name, flags, cv)) ? 0 : -1;
 #   endif /* ACE_HAS_PTHREADS && ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -2536,6 +2596,8 @@ ACE_TRACE ("ACE_OS::cond_signal");
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_signal (cv), ace_result_), int, -1);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+  return (::cv_signal (*cv)) ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -2560,6 +2622,8 @@ ACE_TRACE ("ACE_OS::cond_broadcast");
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_broadcast (cv),
                                        ace_result_),
                      int, -1);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+  return (::cv_broadcast (*cv)) ? 0 : -1;
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -2583,6 +2647,8 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #   elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), ace_result_),
                      int, -1);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
+  return (::cv_wait (*cv, *external_mutex, 0)) ? 0 : -1;
 #   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -6958,6 +7024,10 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 #endif /* pthread_getspecific */
 #   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
     return 0;
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+    ACE_hthread_t tid;
+    ACE_OS::thr_self (tid);
+    return (::tsd_getval (key, tid, data) == 0) ? 0 : -1;
 # elif defined (ACE_HAS_WTHREADS)
 
   // The following handling of errno is designed like this due to
