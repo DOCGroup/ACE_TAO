@@ -26,7 +26,7 @@
 class EXT_ID 
 {
   // = TITLE
-  //    Key for the Hash Table.
+  //     Key for the Hash Table.
 public: 
   EXT_ID (void);
   // Default constructor
