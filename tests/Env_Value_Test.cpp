@@ -37,7 +37,7 @@ main (int argc, ASYS_TCHAR* [])
       ACE_OS::putenv("TEST_VALUE_POSITIVE=10.2");
       ACE_OS::putenv("TEST_VALUE_NEGATIVE=-10.2");
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-main (int argc, ASYS_TCHAR* [], ASYS_TCHAR*envp[])
+main (int argc, LPTSTR [], LPTSTR envp[])
 {
   if (argc == 1)
     {
