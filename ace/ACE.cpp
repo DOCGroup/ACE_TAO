@@ -2146,6 +2146,7 @@ ACE::get_ip_interfaces (size_t &count,
 #endif /* ACE_WIN32 */
 }
 
+#if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 class ACE_Export ACE_Object_Manager_Destroyer
   // = TITLE
   //    Ensure that the <ACE_Object_Manager> gets initialized before any
@@ -2165,24 +2166,21 @@ public:
 ACE_Object_Manager_Destroyer::ACE_Object_Manager_Destroyer (void)
 {
   // Ensure that the Object_Manager gets initialized before any
-  // application threads have been spawned.  Because this will be call
+  // application threads have been spawned.  Because this will be called
   // during construction of static objects, that should always be the
   // case.
-  ACE_Object_Manager &object_manager =
-    *ACE_Object_Manager::instance ();
-
-  if (&object_manager)
-    /* null */;
+  ACE_Object_Manager &object_manager = *ACE_Object_Manager::instance ();
+  ACE_UNUSED_ARG (object_manager);
 }
 
 ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer (void)
 {
   delete ACE_Object_Manager::instance_;
-
   ACE_Object_Manager::instance_ = 0;
 }
 
 static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Array_Ptr<struct ifreq>;
