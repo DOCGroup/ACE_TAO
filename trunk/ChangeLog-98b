@@ -3,6 +3,9 @@ Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
         * Makefile: removed old release targets.  They're no longer
           used, or maintained.
 
+        * include/makeinclude/platform_sunos5_x86_g++.GNU: removed.
+          Use platform_sunos5_g++.GNU instead, on both sparcs and x86.
+
 Tue Jun 09 15:25:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.11 released.
