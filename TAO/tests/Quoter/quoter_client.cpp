@@ -263,21 +263,19 @@ Quoter_Client::init (int argc, char **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-	return -1;
+	      return -1;
 
-      if (this->use_naming_service_)
-	{
-	  naming_result = this->init_naming_service ();
-	  if (naming_result < 0)
-	    return naming_result;
-	}
-      else 
-	{
-	  if (this->quoter_factory_key_ == 0)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "%s: no quoter factory key specified\n",
-			       this->argv_[0]),
-			      -1);
+      if (this->use_naming_service_) {
+	      naming_result = this->init_naming_service ();
+	      if (naming_result < 0)
+	        return naming_result;
+	    }
+      else {
+	      if (this->quoter_factory_key_ == 0)
+	        ACE_ERROR_RETURN ((LM_ERROR,
+			         "%s: no quoter factory key specified\n",
+			         this->argv_[0]),
+			         -1);
 	  
 	  
 	  CORBA::Object_var factory_object = 
