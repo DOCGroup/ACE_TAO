@@ -72,7 +72,7 @@ process</A>, as well.<P>
 
 <P>Any UNIX/POSIX/Win32 variation is a potential target platform for
 ACE.  If you have <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-porting.html">porting
+HREF="docs/ACE-porting.html">porting
 questions</A> or have a problem compiling the ACE wrappers on the
 platforms shown above please send email to either <A
 HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
@@ -138,7 +138,7 @@ try to help you fix the problems.
       that these functions are called!  In particular, this means
       that the tests in the directory
       $(ACE_ROOT)/tests/Service_Configurator/IPC-tests/server/
-      will not work for statically linked services...<P>
+      will not work for statically linked services.<P>
 
       Some versions of SunOS 4.1.x do not contain the
       /usr/lib/libnsl.a library.  This library seems to be
@@ -210,7 +210,7 @@ make: *** [libACE.so] Error 8
       Here's how to optimise the ACE library generation:<P>
 
       Look at the <A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
+      HREF="ace/Makefile">Makefile</a>
       in <CODE>$ACE_ROOT/ace</CODE>. Create a file called
       <CODE>ACE_All_Src.cpp</CODE>, and add a line to #include
       each of the source files
@@ -278,7 +278,7 @@ make: *** [libACE.so] Error 8
       Arturo Montes &lt<A
       HREF="mailto:mitosys@colomsat.net.co">mitosys@colomsat.net.co</A>&gt
       maintains this code.  In addition, he also maintains a version of <A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/FSU-threads.ps.gz">FSU
+      HREF="FSU-threads.ps.gz">FSU
       pthreads</A>.<P>
 
   <LI><B>SGI IRIX 5.x and 6.x</B><P>
@@ -546,7 +546,7 @@ If you use the GNU GCC g++ compiler please note the following:
       self-contained:  you don't need to add the templates that
       they use internally.)  Examples of template specializations
       occur in quite a few ACE .cpp files; see the end of
-      <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/apps/Gateway/Gateway/Connection_Handler.cpp">$ACE_ROOT/apps/Gateway/Gateway/Connection_Handler.cpp</A> for one example.
+      <A HREF="apps/Gateway/Gateway/Connection_Handler.cpp">apps/Gateway/Gateway/Connection_Handler.cpp</A> for one example.
       An easy way to figure out what template instantiations are
       need is to try to build your executable and pipe the output
       through c++filt.  The linker will report the missing
@@ -705,7 +705,7 @@ need to do:<P>
       consider cd'ing into the $ACE_ROOT/ace/ directory and running
       <CODE>make</CODE> there to build just the ACE library.  As a sanity
       check, you might also want to build and run the automated <A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/README">``one-button'' tests</A> in
+      HREF="tests/README">``one-button'' tests</A> in
       $ACE_ROOT/tests/.<P>
 
   <LI>If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
@@ -914,7 +914,7 @@ for these notes):<p>
   <LI>C++ object modules must be post-processed by a VxWorks
       utility called ``munch.''  ACE includes a perl script called
       <A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/bin/ace_ld">$ACE_ROOT/bin/ace_ld</A>,
+      HREF="bin/ace_ld">$ACE_ROOT/bin/ace_ld</A>,
       which is called from the Makefiles, replacing
       the traditional <code>ld</code> step.  You must have Perl installed
       to use <code>ace_ld</code>. <P>
@@ -1246,7 +1246,7 @@ Here's what you need to do:<P>
       netsvcs static and shared object libraries should be built
       automatically.  In addition, the server driver program
       (<CODE>main</CODE>) contained in <A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/main.cpp">
+      HREF="netsvcs/servers/main.cpp">
       $ACE_ROOT/netsvcs/servers/main.cpp</A> should also be compiled and ready to run.<P>
 
   <LI>Set your LD_LIBRARY_PATH environment variable to where the binary
@@ -1261,7 +1261,7 @@ Here's what you need to do:<P>
       are linked into the <CODE>main</CODE> driver program dynamically.
       To specify which services should be linked in and executed, edit the
       <A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/netsvcs/servers/svc.conf">
+      HREF="netsvcs/servers/svc.conf">
       $ACE_ROOT/netsvcs/servers/svc.conf</A> file.  During your editing,
       you should update information (such as the default service port
       numbers) that affects the initialization of services in this
@@ -1291,7 +1291,7 @@ in your PATH.<P>
 
 <UL>
   <LI><A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</A>
+      HREF="docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</A>
   <LI><A HREF="#Non-static Object Manager">Non-static ACE_Object_Manager</A>
   <LI><A HREF="#cloning">Cloning the Source Tree</A>
   <LI><A HREF="#corba">Building CORBA Versions of ACE</A>
