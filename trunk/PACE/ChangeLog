@@ -1,3 +1,17 @@
+Fri Jun 16 14:11:44 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/posix/*.h
+
+	  Added all .h files to posix directory. The implementation
+	  specific .h files are simply lumped together into one large
+	  directory while the original interface files are still 
+	  found in the similarly names sunos directory.
+
+	  SunOS dirs (sys, netinet, arpa) ==> PACE implementation dir
+	  - - - -                             - - - -
+	  (pace/pace/sys/types.h          ==> pace/pace/posix/types.h)
+	  (pace/pace/unistd.h             ==> pace/pace/posix/unistd.h)
+
 Thu Jun 15 13:49:14 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/defaults.h
