@@ -44,6 +44,8 @@ namespace {
     ACE_ENV_ARG_DECL)
   {
     FTRTEC_TRACE("obtain_push_consumer_and_connect");
+    FTRTEC_LOGTIME("obtain_push_consumer_and_connect");
+
     Request_Context_Repository().set_object_id(oid ACE_ENV_ARG_PARAMETER);
 
     RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
@@ -367,6 +369,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
       )
 {
   FTRTEC_TRACE("TAO_FTEC_Event_Channel_Impl::connect_push_supplier");
+  FTRTEC_LOGTIME("TAO_FTEC_Event_Channel_Impl::connect_push_supplier");
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
