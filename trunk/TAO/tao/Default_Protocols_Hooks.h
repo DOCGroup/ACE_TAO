@@ -31,6 +31,8 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
   /// Destructor
   virtual ~TAO_Default_Protocols_Hooks (void);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
   virtual int
   call_client_protocols_hook (TAO_ORB_Core *orb_core,
                               RTCORBA::ProtocolProperties_var &
@@ -42,6 +44,8 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
                               RTCORBA::ProtocolProperties_var &
                               properties,
                               const char *protocol_type);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   virtual void call_policy_type_hook (CORBA::PolicyList *&policy_list,
                                       CORBA::ULong &policy_type);

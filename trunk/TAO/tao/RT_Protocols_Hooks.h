@@ -17,6 +17,8 @@
 
 #include "Protocols_Hooks.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -133,6 +135,8 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO, TAO_RT_Protocols_Hooks)
 ACE_STATIC_SVC_REQUIRE(TAO_RT_Protocols_Hooks)
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_PROTOCOLS_HOOKS_H */
