@@ -341,21 +341,18 @@ test_ostream (void)
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("fourth message\n")));
+  // Set the ostream back to the test's log file.
+  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
+  // Now close the ostream file and check its contents.
+  myostream.close ();
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
 
   // Open up the file.
   if (connector.connect (file,
-                         ACE_FILE_Addr (filename),
-                         0,
-                         ACE_Addr::sap_any,
-                         0,
-                         O_RDWR,
-                         ACE_DEFAULT_FILE_PERMS) == -1)
+                         ACE_FILE_Addr (filename)) == -1)
     {
-      // Set the ostream back to NULL to prevent "later functions using myostream".
-      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("connect failed for %p\n"),
                          filename),
@@ -370,8 +367,6 @@ test_ostream (void)
   ACE_FILE_Info info;
   if (file.get_info (info) == -1)
     {
-      // Set the ostream back to NULL to prevent "later functions using myostream".
-      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("get_info failed on %p\n"),
                          filename),
@@ -391,8 +386,6 @@ test_ostream (void)
                             info.size_);
   if (size != info.size_)
     {
-      // Set the ostream back to NULL to prevent "later functions using myostream".
-      ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
                          size,
@@ -402,8 +395,6 @@ test_ostream (void)
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
 
-  // Set the ostream back to NULL to prevent "confusion".
-  ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s"),

@@ -1,3 +1,11 @@
+Wed Jul 11 13:06:33 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/Log_Msg_Test.cpp: Changed the ostream test to close the
+          under-test ostream file before trying to open it and read the
+          contents. Avoids the "already open" error now that
+          ACE_FILE_Connector includes O_EXCL by default, and avoids any
+          potential file buffering issues reading an already-open file.
+
 Wed Jul 11 08:31:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Dirent_Test.cpp:
