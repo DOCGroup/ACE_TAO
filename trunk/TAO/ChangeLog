@@ -1,3 +1,8 @@
+Fri Dec 12 09:32:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1334_Regression/client.cpp:
+          Made this test compiling with emulated exceptions
+
 Thu Dec 11 23:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/OBV/Typed_Events/Typed_Events.mpc
@@ -11,24 +16,24 @@ Thu Dec 11 23:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
 	* orbsvcs/examples/ORT/ORT.mpc:
-	
+
 	  Do not compile the above tests when minimum_corba is disabled.
 
 Thu Dec 11 22:22:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/RTScheduling/VoidData/Makefile:
 
-	  Added IDL compiler options. 
+	  Added IDL compiler options.
 
-	* tests/RTScheduling/VoidData/test.idl: 
+	* tests/RTScheduling/VoidData/test.idl:
 
 	  Cosmetic fix.
-	
+
 	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
 	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
 	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
 
-	  Added RTScheduler_include.idl instead of the regular file. 
+	  Added RTScheduler_include.idl instead of the regular file.
 
 Thu Dec 11 17:04:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -61,7 +66,7 @@ Thu Dec 11 14:03:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Added virtual method to the be_visitor_interface_ss visitor called
           genrerate_send_reply, which is a no-op, but when overridden
           in the be_visitor_amh_interface_ss visitor, generates an explicit
-          send_reply call on _tao_server_request. This new method is then 
+          send_reply call on _tao_server_request. This new method is then
           used in the generation of the _is_a_skel, _nonexistent_skel,
           _interface_skel, and _component_skel methods, and the explicit
           send_reply call gets generated for the AMH version of the
@@ -84,7 +89,7 @@ Thu Dec 11 14:01:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/DynamicInterface/DynamicInterface.mpc:
 	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
 
-	  Added avoids += minimum_corba. 
+	  Added avoids += minimum_corba.
 
 Thu Dec 11 19:30:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
