@@ -665,6 +665,7 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
 
   while ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) > 0)
     {
+      ACE_ASSERT (n == sizeof buffer);
       // If eh == 0 then another thread is unblocking the ACE_Reactor
       // to update the ACE_Reactor's internal structures.  Otherwise,
       // we need to dispatch the appropriate handle_* method on the
