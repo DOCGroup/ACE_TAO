@@ -73,7 +73,7 @@ fe/lex.yy.cpp:	fe/idl.ll
 YACC = /home/cs/faculty/schmidt/bin/SunOS5/yacc
 
 lex.yy.cpp.target:
-		$(LEX) -t fe/idl.ll | \
+		$(LEX) -L -t fe/idl.ll | \
 		sed -e "s/yy/tao_yy/g" \
 		    -e "s/YY/TAO_YY/g" \
 		    -e "s@#include <unistd\.h>@#include \"ace/OS.h\"@" \
@@ -91,7 +91,7 @@ fe/y.tab.cpp:	fe/idl.yy
 .PHONY: y.tab
 
 y.tab: fe/idl.yy
-		$(YACC) -d fe/idl.yy
+		$(YACC) -l -d fe/idl.yy
 		sed -e 's/char \*getenv/char *ace_foo/g' \
 		    -e 's/= getenv/= ACE_OS::getenv/g' \
 		    -e 's/int yynew_state,/int,/g' \
