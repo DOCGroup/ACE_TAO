@@ -1254,7 +1254,7 @@ private:
 
 // Handle ACE_FILE_*
 #define ACE_FILE_CONNECTOR ACE_FILE_Connector
-#define ACE_FILE_STREAM ACE_FILE_Stream
+#define ACE_FILE_STREAM ACE_FILE_IO
 
 // Handle ACE_*_Memory_Pool.
 #define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool
