@@ -39,7 +39,6 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/client.o .shobj/client.so: client.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
  $(WRAPPER_ROOT)/ace/Trace.h \

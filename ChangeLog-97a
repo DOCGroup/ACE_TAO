@@ -1,3 +1,65 @@
+Wed Jan 22 15:04:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved the ACE_TIMER_SKEW macro to below the #inclusion
+ 	  of config.h and updated it so that it can be overridden in the
+ 	  config.h file if necessary.  Thanks to Bob Olson
+ 	  <olson@mcs.anl.gov> for motivating this.
+
+	* ace/OS.cpp: Fixed the implementation of
+ 	  ACE_Thread_ID::operator== so that it works correctly when thread
+ 	  ids and thread handles aren't ints.  Thanks to Chuck Gehr for
+ 	  reporting this.
+
+	* ace/OS.i (thr_getprio): Moved a stray #else into the right
+ 	  place.  Thanks to Chuck Gehr for reporting this.
+
+	* ace/OS.i (sema_post): this->count_++ should have been
+ 	  s->count_++.  Thanks to Chuck Gehr for reporting this.
+
+	* ace/Synch_T.cpp: Added an extern "C" definition for
+ 	  ACE_TSS_C_cleanup().  Thanks to Chuck Gehr for reporting this.
+
+	* ace: Added a new #define called ACE_LACKS_SYS_NERR to the
+	  config files for MVS and VxWorks.  This is used in OS.cpp
+	  as follows:
+
+	  #if defined (ACE_LACKS_SYS_NERR)
+	  int sys_nerr = ERRMAX + 1;
+	  #endif /* ACE_LACKS_SYS_NERR */
+
+	  Thanks to Chuck Gehr for reporting this.
+
+	* Removed all #inclusions of "ace/Time_Value.h."  This file
+	  no longer contains anything besides a #include "ace/OS.h"
+	  and is only kept around due to backwards compatibility.
+
+	* ace: Moved the contents of Time_Value.h into OS.h to reduce the
+ 	  confusion that arises from the #inclusion of "config.h" in
+ 	  Time_Value.h.  Also merged the contents of Time_Value.{i,cpp}
+ 	  into OS.{i,cpp}.  Thanks to the MDA guys for motivating this.
+
+	* tests/Reactor_Exceptions_Test.cpp: Added a new test that
+ 	  exercises the Reactor with C++ exceptions.  Thanks to Luca for
+ 	  the test.
+
+	* ace/Reactor.cpp (handle_events): Added Win32 structured
+ 	  exception handling support to the ACE_Reactor::handle_events()
+ 	  method so that it correctly releases the token lock when Win32
+ 	  SEH occur in callback routines.  Thanks to Luca for reporting
+ 	  this problem.
+
+	* ace: Added a new macro called ACE_HAS_EXCEPTIONS, which
+ 	  indicates that the compiler supports C++ exception handling.
+
+	* include/makeinclude/platform_sunos5_sunc++*.GNU: Commented out
+ 	  the -noex flag for now.  Hopefully, things will work correctly
+ 	  now.
+
+	* ace/Thread_Manager.cpp (exit): Removed the final acquire() on
+ 	  ace_mon, which is no longer necessary since the Guard classes
+ 	  now keep track of whether they are "owned".  Thanks to Karlheinz
+ 	  and Detlef for this fix.
+
 Wed Jan 22 09:05:31 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Makefile,VERSION: modified top-level Makefile (and VERSION)

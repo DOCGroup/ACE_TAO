@@ -47,7 +47,7 @@ protected:
 };
 
 class ACE_Export ACE_Timer_List : public ACE_Timer_Queue
-  // = TITLE 
+  // = TITLE
   //      Provides a simple implementation of timers.
   //
   // = DESCRIPTION

@@ -83,7 +83,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::remap (EXCEPTION_POINTERS *ep)
   // ACE_MMap_Memory_Pool.
   if (this->allocator_->alloc ().memory_pool ().remap (addr) == -1)
     // Kick it upstairs...
-    return (DWORD) EXCEPTION_CONTINUE_SEARCH; 
+    return (DWORD) EXCEPTION_CONTINUE_SEARCH;
 
 #if __X86__
   // This is 80x86-specific.

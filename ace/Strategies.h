@@ -48,8 +48,9 @@ protected:
 };
 
 class ACE_Export ACE_Reactor_Notification_Strategy : public ACE_Notification_Strategy
-  // = TITLE 
+  // = TITLE
   //     Used to notify an ACE_Reactor
+  //
   // = DESCRIPTION
   //     Integrates the ACE_Message_Queue notification into the
   //     ACE_Reactor::notify() method.
@@ -69,8 +70,9 @@ private:
 };
 
 class ACE_Export ACE_ReactorEx_Notification_Strategy : public ACE_Notification_Strategy
-  // = TITLE 
+  // = TITLE
   //     Used to notify an ACE_ReactorEx
+  //
   // = DESCRIPTION
   //     Integrates the ACE_Message_Queue notification into the
   //     ACE_ReactorEx::notify() method.

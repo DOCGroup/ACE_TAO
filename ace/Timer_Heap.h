@@ -47,7 +47,7 @@ protected:
 };
 
 class ACE_Export ACE_Timer_Heap : public ACE_Timer_Queue
-  // = TITLE 
+  // = TITLE
   //      Provides a very fast and predictable timer implementation.
   //
   // = DESCRIPTION

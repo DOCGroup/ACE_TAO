@@ -1,7 +1,7 @@
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.0.1 or earlier
 # *using* Orbix
 CC		= cc
-CXX		= CC -mt -pta -noex
+CXX		= CC -mt -pta # s-noex
 DLD		= $(CXX)
 LD		= $(CXX)
 INCLDIRS	= -I$(ORBIX_ROOT)/include

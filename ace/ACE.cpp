@@ -3,7 +3,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/IPC_SAP.h"
-#include "ace/Time_Value.h"
 #include "ace/Handle_Set.h"
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"

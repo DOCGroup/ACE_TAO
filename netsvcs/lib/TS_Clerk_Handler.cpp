@@ -4,12 +4,10 @@
 #define ACE_BUILD_SVC_DLL
 #include "ace/Service_Config.h"
 #include "ace/Connector.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Time_Value.h"
 #include "ace/Time_Request_Reply.h"
 #include "ace/OS.h"
 #include "ace/Malloc.h"
