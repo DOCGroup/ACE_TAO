@@ -633,6 +633,21 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Managed_Types.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Marshal.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -1135,6 +1150,10 @@ SOURCE=.\InconsistentTypeCodeC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Managed_Types.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
@@ -1312,6 +1331,10 @@ SOURCE=.\IIOP_Object.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Managed_Types.i
 # End Source File
 # Begin Source File
 
