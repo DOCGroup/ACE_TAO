@@ -1,3 +1,9 @@
+Mon Feb  9 09:15:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html: 
+	  Fixed reference to TAO-Install.html, thanks to Sreedharani
+	  <dharani@sutmyn.com> for reporting this one.
+
 Sun Feb 08 21:41:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao_util.cpp (run): added return 0 statement at end.
