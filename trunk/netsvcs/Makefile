@@ -11,9 +11,12 @@
 INFO  = README
 
 # lib must come first!
+ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
 DIRS  = lib \
         clients \
 	servers
+endif # ! Other
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
