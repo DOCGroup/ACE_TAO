@@ -45,3 +45,27 @@ project (CAIO_Container) : server {
     CCM_ComponentS.cpp
   }
 }
+
+project (CAIO_Server) : server {
+  depends += CIAO_Container CosNaming
+  sharedname  = CIAO_Server
+  libs       += TAO TAO_IFR_Client TAO_Security TAO_CosNaming
+  idlflags  += -Ge 1 -Sc -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Server_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+
+  dllflags    = CIAO_SERVER_BUILD_DLL
+  include_dir = CIAO orbsvcs/orbsvcs
+
+  IDL_Files {
+    CCM_Deployment.idl
+    HomeRegistrar.idl
+  }
+
+  Source_Files {
+    CCM_DeploymentC.cpp
+    CCM_DeploymentS.cpp
+    HomeRegistrarC.cpp
+    HomeRegistrarS.cpp
+    ContainerBase.cpp
+    HomeRegistrar_i.cpp
+  }
+}
