@@ -34,7 +34,10 @@ class TAO_Connector;
 class TAO_Strategies_Export TAO_DIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
+  /// Constructor.
   TAO_DIOP_Protocol_Factory (void);
+
+  /// Destructor.
   virtual ~TAO_DIOP_Protocol_Factory (void);
 
   // = Service Configurator hooks.
@@ -51,10 +54,16 @@ public:
   /// where its options begin.
   virtual char options_delimiter (void) const;
 
-  // = Check Protocol_Factory.h for a description of these methods.
+  /**
+   * @name Protocol factory methods
+   *
+   * Check Protocol_Factory.h for a description of these methods.
+   */
+  //@{
   virtual TAO_Acceptor  *make_acceptor (void);
   virtual TAO_Connector *make_connector  (void);
   virtual int requires_explicit_endpoint (void) const;
+  //@}
 
 private:
   /// Changing the version number can be used to provide backwards

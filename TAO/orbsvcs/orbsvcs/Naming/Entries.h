@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Entries.h
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Entries.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ENTRIES_H
 #define TAO_ENTRIES_H
@@ -31,103 +28,108 @@
 #include "orbsvcs/CosNamingC.h"
 #include "naming_export.h"
 
+/**
+ * @class TAO_IntId
+ *
+ * @brief Helper class for TAO_Transient_Bindings_Map: unifies several
+ * data items, so they can be stored together as a  <value>
+ * for a <key> in a hash table holding the state of a Transient
+ * Naming Context.
+ *
+ * This class holds CORBA Object pointer and a binding type, so
+ * they can be stored together as a <value> for a <key> in a
+ * hash table holding the state of a Transient Naming Context.
+ */
 class TAO_Naming_Export TAO_IntId
 {
-  // = TITLE
-  //     Helper class for TAO_Transient_Bindings_Map: unifies several
-  //     data items, so they can be stored together as a  <value>
-  //     for a <key> in a hash table holding the state of a Transient
-  //     Naming Context.
-  //
-  // = DESCRIPTION
-  //     This class holds CORBA Object pointer and a binding type, so
-  //     they can be stored together as a <value> for a <key> in a
-  //     hash table holding the state of a Transient Naming Context.
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_IntId (void);
-  // Constructor.
 
+  /// Constructor.
   TAO_IntId (CORBA::Object_ptr obj,
             CosNaming::BindingType type /* = CosNaming::nobject */);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_IntId (const TAO_IntId & rhs);
-  // Copy constructor.
 
+  /// Destructor.
   ~TAO_IntId (void);
-  // Destructor.
 
+  /// Assignment operator (does copy memory).
   void operator= (const TAO_IntId & rhs);
-  // Assignment operator (does copy memory).
 
   // = Data members.
 
+  /// Object reference to be stored in a Transient Naming Context.
   CORBA::Object_ptr ref_;
-  // Object reference to be stored in a Transient Naming Context.
 
+  /// Binding type for <ref_>.
   CosNaming::BindingType type_;
-  // Binding type for <ref_>.
 };
 
+/**
+ * @class TAO_ExtId
+ *
+ * @brief Helper class for TAO_Transient_Bindings_Map: unifies several
+ * data items, so they can be stored together as a  <key>
+ * for a <value> in a hash table holding the state of a Transient
+ * Naming Context.
+ *
+ * This class holds id and kind strings, so
+ * they can be stored together as a <key> for a <value> in a
+ * hash table holding the state of a Transient Naming Context.
+ */
 class TAO_Naming_Export TAO_ExtId
 {
-  // = TITLE
-  //     Helper class for TAO_Transient_Bindings_Map: unifies several
-  //     data items, so they can be stored together as a  <key>
-  //     for a <value> in a hash table holding the state of a Transient
-  //     Naming Context.
-  //
-  // = DESCRIPTION
-  //     This class holds id and kind strings, so
-  //     they can be stored together as a <key> for a <value> in a
-  //     hash table holding the state of a Transient Naming Context.
-  //
 public:
   // = Initialization and termination methods.
 
+  /// Constructor.
   TAO_ExtId (void);
-  // Constructor.
 
+  /// Constructor.
   TAO_ExtId (const char *id,
             const char *kind);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_ExtId (const TAO_ExtId & rhs);
-  // Copy constructor.
 
+  /// Destructor.
   ~TAO_ExtId (void);
-  // Destructor.
 
   // = Assignment and comparison operators.
 
+  /// Assignment operator (does copy memory).
   void operator= (const TAO_ExtId & rhs);
-  // Assignment operator (does copy memory).
 
+  /// Equality comparison operator (must match both id_ and kind_).
   int operator== (const TAO_ExtId &rhs) const;
-  // Equality comparison operator (must match both id_ and kind_).
 
+  /// Inequality comparison operator.
   int operator!= (const TAO_ExtId &rhs) const;
-  // Inequality comparison operator.
 
+  /// <hash> function is required in order for this class to be usable by
+  /// ACE_Hash_Map_Manager.
   u_long hash (void) const;
-  // <hash> function is required in order for this class to be usable by
-  // ACE_Hash_Map_Manager.
 
   // = Data members.
 
+  /// <kind> portion of the name to be associated with some object
+  /// reference in a Transient Naming Context.
   ACE_CString kind_;
-  // <kind> portion of the name to be associated with some object
-  // reference in a Transient Naming Context.
 
+  /// <id> portion of the name to be associated with some object
+  /// reference in a Transient Naming Context.
   ACE_CString id_;
-  // <id> portion of the name to be associated with some object
-  // reference in a Transient Naming Context.
 
-  // = Accessors: return <id_> and <kind_> in a const char * format.
+  // = Accessors
 
+  /// Return <id_> in a const char * format.
   const char * id (void);
+
+  /// Return <kind_> in a const char * format.
   const char * kind (void);
 };
 

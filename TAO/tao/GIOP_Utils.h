@@ -58,9 +58,9 @@ typedef enum GIOP_LocateStatusType
 
 /**
  * @class TAO_GIOP_Locate_Status_Msg
- =TITLE
- * Hold the relevant information for every type of Locate mesg.
- * =DESCRIPTION
+ *
+ * @brief Hold the relevant information for every type of Locate mesg.
+ *
  * This class is there to hold the relevant info for different
  * types of locate status messages. As on date we dont know much
  * about other mesg types other than OBJECT_FORWARD. This clss can
@@ -81,23 +81,23 @@ public:
 
 typedef enum GIOP_ReplyStatusType
 {
+  /// Request completed successfully
   TAO_GIOP_NO_EXCEPTION,
-  // Request completed successfully
 
+  /// Request terminated with user exception
   TAO_GIOP_USER_EXCEPTION,
-  // Request terminated with user exception
 
+  /// Request terminated with system exception
   TAO_GIOP_SYSTEM_EXCEPTION,
-  // Request terminated with system exception
 
+  /// Reply is a location forward type
   TAO_GIOP_LOCATION_FORWARD,
-  // Reply is a location forward type
 
+  /// GIOP 1.2, Reply is a location forward perm type..
   TAO_GIOP_LOCATION_FORWARD_PERM,
-  // GIOP 1.2, Reply is a location forward perm type..
 
+  /// GIOP1.2,
   TAO_GIOP_NEEDS_ADDRESSING_MODE
-  // GIOP1.2,
 
 } TAO_GIOP_Reply_Status_Type;
 

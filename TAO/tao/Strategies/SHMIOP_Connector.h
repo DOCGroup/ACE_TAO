@@ -49,15 +49,18 @@ class TAO_SHMIOP_Endpoint;
 class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_SHMIOP_Connector (CORBA::Boolean flag = 0);
 
   /// Default destructor
   ~TAO_SHMIOP_Connector (void);
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Pluggable.h
+  /**
+   * @name The TAO_Connector Methods
+   *
+   * Please check the documentation in Pluggable.h for details.
+   */
+  //@{
   int open (TAO_ORB_Core *orb_core);
   int close (void);
 
@@ -66,6 +69,7 @@ public:
   virtual int check_prefix (const char *endpoint);
 
   virtual char object_key_delimiter (void) const;
+  //@}
 
 public:
 
@@ -84,14 +88,19 @@ public:
           TAO_SHMIOP_BASE_CONNECTOR;
 
 protected:
-  // = More TAO_Connector methods, please check the documentation on
-  //   Transport_Connector.h
+  /**
+   * @name More TAO_Connector Methods
+   *
+   * Please check the documentation in Transport_Connector.h for details.
+   */
+  //@{
   int set_validate_endpoint (TAO_Endpoint *endpoint);
 
   int make_connection (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc);
 
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  //@}
 
 private:
 
@@ -100,16 +109,16 @@ private:
 
 private:
 
-  /// local address
+  /// Local address.
   ACE_MEM_Addr address_;
 
-  /// Our connect strategy
+  /// Our connect strategy.
   TAO_SHMIOP_CONNECT_STRATEGY connect_strategy_;
 
   /// The connector initiating connection requests for SHMIOP.
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
 
-  /// Are we using GIOP lite??
+  /// Are we using GIOP lite?
   CORBA::Boolean lite_flag_;
 };
 

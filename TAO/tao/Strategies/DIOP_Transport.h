@@ -49,11 +49,7 @@ template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_S
  *
  * @brief Specialization of the base TAO_Transport class to handle the
  *  DIOP protocol.
- *
- *
- *
  */
-
 class TAO_Strategies_Export TAO_DIOP_Transport : public TAO_Transport
 {
 public:
@@ -97,10 +93,10 @@ protected:
   /// Method to do whatever it needs to do when the connection
   /// handler is being closed and destroyed.
   virtual void transition_handler_state_i (void);
-
+  ///@}
 public:
-  /// @@TODO: These methods IMHO should have more meaningful
-  /// names. The names seem to indicate nothing.
+  /// @todo These methods IMHO should have more meaningful names.
+  /// The names seem to indicate nothing.
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,

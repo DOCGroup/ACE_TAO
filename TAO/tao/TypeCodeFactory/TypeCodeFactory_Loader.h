@@ -22,30 +22,28 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_TypeCodeFactory_Loader
+ *
+ * @brief Create an instance of TypeCodeFactory and return it to the caller.
+ */
 class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Loader
   : public TAO_Object_Loader
 {
-  // = TITLE
-  //     TAO_TypeCodeFactory_Loader
-  //
-  // = DESCRIPTION
-  //     Create an instance of TypeCodeFactory and return
-  //     it to the caller.
-  //
 public:
+  /// Constructor.
   TAO_TypeCodeFactory_Loader (void);
-  // Constructor.
 
+  /// Overload the base class method to create a new instance
+  /// of a TypeCodeFactory object.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
                                            ACE_TCHAR *argv []
                                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Overload the base class method to create a new instance
-  // of a TypeCodeFactory object.
 
+  /// Used to force the initialization of the ORB code.
   static int Initializer (void);
-  // Used to force the initialization of the ORB code.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Loader)

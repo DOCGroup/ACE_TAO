@@ -61,7 +61,7 @@ public:
                     const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
 
-  ///  Profile constructor, this is the most efficient since it
+  /// Profile constructor, this is the most efficient since it
   /// doesn't require any address resolution processing.
   TAO_DIOP_Profile (const char *host,
                     CORBA::UShort port,
@@ -116,7 +116,7 @@ public:
    */
   virtual int encode_endpoints (void);
 
-  /// @@ deprecated. return a reference to the Object Key.
+  /// @deprecated Return a reference to the Object Key.
   virtual const TAO_ObjectKey &object_key (void) const;
 
   /// Return a pointer to the Object Key.  The caller owns the memory
@@ -189,7 +189,7 @@ protected:
 
 private:
 
-  /// object_key associated with this profile.
+  /// Object_key associated with this profile.
   TAO_ObjectKey object_key_;
 
   /// Our tagged profile

@@ -75,9 +75,12 @@ public:
   /// Destructor.
   ~TAO_SHMIOP_Endpoint (void);
 
-  // = Implementation of abstract TAO_Endpoint methods.  See
-  // Endpoint.h for their documentation.
-
+  /**
+   * @name TAO_Endpoint Methods
+   *
+   * Please check the documentation in Endpoint.h for details.
+   */
+  //@{
   /// Return a copy of <this>
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
@@ -90,6 +93,7 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash (void);
+  //@}
 
   // = SHMIOP_Endpoint-specific methods.
 

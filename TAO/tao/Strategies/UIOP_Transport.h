@@ -16,18 +16,19 @@
 #define TAO_UIOP_TRANSPORT_H
 #include "ace/pre.h"
 
-#include "tao/Transport.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "strategies_export.h"
-
 # if TAO_HAS_UIOP == 1
+
+#include "strategies_export.h"
 #include "ace/LSOCK_Acceptor.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
+#include "tao/Transport.h"
 
 // Forward decls.
 
@@ -43,8 +44,6 @@ typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
  *
  * @brief Specialization of the base TAO_Transport class to handle the
  *  UIOP protocol.
- *
- *
  *
  */
 
@@ -88,8 +87,8 @@ protected:
   virtual void transition_handler_state_i (void);
 
 public:
-  /// @@TODO: These methods IMHO should have more meaningful
-  /// names. The names seem to indicate nothing.
+  /// @todo These methods IMHO should have more meaningful names.
+  /// The names seem to indicate nothing.
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,

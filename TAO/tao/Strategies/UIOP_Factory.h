@@ -18,45 +18,54 @@
 #define TAO_UIOP_FACTORY_H
 #include "ace/pre.h"
 
-#include "tao/Protocol_Factory.h"
-
-# if TAO_HAS_UIOP == 1
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# if TAO_HAS_UIOP == 1
+
+#include "tao/Protocol_Factory.h"
 #include "strategies_export.h"
 #include "ace/Service_Config.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
 
-
 class TAO_Strategies_Export TAO_UIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
+  /// Constructor.
   TAO_UIOP_Protocol_Factory (void);
+
+  /// Destructor.
   virtual ~TAO_UIOP_Protocol_Factory (void);
 
   // = Service Configurator hooks.
+  /// Dynamic linking hook
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  // Dynamic linking hook
 
+  /// Verify prefix is a match
   virtual int match_prefix (const ACE_CString &prefix);
-  // Verify prefix is a match
 
+  /// Returns the prefix used by the protocol.
   virtual const char *prefix (void) const;
-  // Returns the prefix used by the protocol.
 
+  /// Return the character used to mark where an endpoint ends and
+  /// where its options begin.
   virtual char options_delimiter (void) const;
-  // Return the character used to mark where an endpoint ends and
-  // where its options begin.
 
-  // = Check Protocol_Factory.h for a description of these methods.
+  /**
+   * @name Protocol factory methods
+   *
+   * Check Protocol_Factory.h for a description of these methods.
+   */
+  //@{
   virtual TAO_Acceptor  *make_acceptor (void);
   virtual TAO_Connector *make_connector  (void);
   virtual int requires_explicit_endpoint (void) const;
+  //@}
 
 private:
   int major_;

@@ -94,7 +94,7 @@ public:
   // @@ Frank: Similar to open, but called on server
   virtual int open_server (void);
 
-  /// = Active object activation method.
+  /// Active object activation method.
   virtual int activate (long flags = THR_NEW_LWP,
                         int n_threads = 1,
                         int force_active = 0,
@@ -127,6 +127,11 @@ public:
   */
 
   // DIOP Additions - Begin
+  /**
+   * @name The DIOP Additions
+   *
+   */
+  //@{
   ACE_HANDLE get_handle (void) const;
 
   const ACE_INET_Addr &addr (void);
@@ -142,31 +147,38 @@ public:
   void server_addr (const ACE_INET_Addr &addr);
 
   const ACE_SOCK_Dgram &dgram (void);
+  //@}
   // DIOP Additions - End
 
 protected:
 
   /// = Event Handler overloads
 
-  /// Reads a message from the <peer()>, dispatching and servicing it
-  /// appropriately.
-  /// handle_input() just delegates on handle_input_i() which timeouts
-  /// after <max_wait_time>, this is used in thread-per-connection to
-  /// ensure that server threads eventually exit.
-
+  /**
+   * Reads a message from the <peer()>, dispatching and servicing it
+   * appropriately.
+   * handle_input() just delegates on handle_input_i() which timeouts
+   * after <max_wait_time>, this is used in thread-per-connection to
+   * ensure that server threads eventually exit.
+   */
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
   virtual int handle_cleanup ();
 
   // DIOP Additions - Begin
+  /**
+   * @name The DIOP Additions
+   *
+   */
+  //@{
   ACE_SOCK_Dgram udp_socket_;
 
-  // This is always the remote address
+  /// This is always the remote address
   ACE_INET_Addr addr_;
 
-  // This is always the local address for the connector
+  /// This is always the local address for the connector
   ACE_INET_Addr local_addr_;
-
+  //@}
   // DIOP Additions - End
 
 private:

@@ -30,7 +30,8 @@ class TAO_ORB_Core;
 /**
  * @class TAO_PolicyFactory_Registry
  *
- * @brief
+ * @brief ORB-specific registry
+ *
  * ORB-specific registry that contains all portable interceptor
  * policy factories.
  */

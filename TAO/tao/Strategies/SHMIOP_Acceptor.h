@@ -37,28 +37,32 @@
 #include "tao/GIOP_Message_Version.h"
 // TAO SHMIOP_Acceptor concrete call defination
 
+/**
+ * @class TAO_SHMIOP_Acceptor
+ *
+ * @brief The SHMIOP-specific bridge class for the concrete acceptor.
+ *
+ */
 class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
 {
-  // = TITLE
-  //   TAO_SHMIOP_Acceptor
-  //
-  // = DESCRIPTION
-  //   The SHMIOP-specific bridge class for the concrete acceptor.
-  //
 public:
+  /// Constructor.
   TAO_SHMIOP_Acceptor (CORBA::Boolean flag = 0);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_SHMIOP_Acceptor (void);
-  // Destructor.
 
   typedef ACE_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler> TAO_SHMIOP_CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_ACCEPT_STRATEGY;
 
-  // = The TAO_Acceptor methods, check the documentation in
-  //   Pluggable.h for details.
+  /**
+   * @name The TAO_Acceptor Methods
+   *
+   * Please check the documentation in Pluggable.h for details.
+   */
+  //@{
   virtual int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
@@ -80,66 +84,67 @@ public:
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
+  //@}
 
+  /// Set the MMAP options the MEM_Stream this acceptor creates will
+  /// use.
   int set_mmap_options (const ACE_TCHAR *prefix,
                         off_t size);
-  // Set the MMAP options the MEM_Stream this acceptor creates will
-  // use.
 
 private:
+  /// Implement the common part of the open*() methods.
   int open_i (TAO_ORB_Core* orb_core,
               ACE_Reactor *reactor);
-  // Implement the common part of the open*() methods.
 
+  /// Parse protocol specific options.
   virtual int parse_options (const char *options);
-  // Parse protocol specific options.
 
+  /// Create a SHMIOP profile representing this acceptor.
   int create_new_profile (const TAO_ObjectKey &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
-  // Create a SHMIOP profile representing this acceptor.
 
+  /// Add the endpoints on this acceptor to a shared profile.
   int create_shared_profile (const TAO_ObjectKey &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
-  // Add the endpoints on this acceptor to a shared profile.
 
 protected:
+  /// Cache the information about the endpoint serviced by this
+  /// acceptor.
+  /// @todo There may in fact be multiple hostnames for this endpoint.
+  ///    For example it the IP address is INADDR_ANY
+  ///    (0.0.0.0) then there will be possibly a different hostname for
+  ///    each interface.
   ACE_CString host_;
-  // Cache the information about the endpoint serviced by this
-  // acceptor.
-  // @@ TODO there may in fact be multiple hostnames for this
-  //    endpoint. For example it the IP address is INADDR_ANY
-  //    (0.0.0.0) then there will be possibly a different hostname for
-  //    each interface.
 
+  /// A local endpoint.
   ACE_MEM_Addr address_;
-  // A local endpoint.
 
+  /// The GIOP version for this endpoint
   TAO_GIOP_Message_Version version_;
-  // The GIOP version for this endpoint
 
+  /// ORB Core.
   TAO_ORB_Core *orb_core_;
-  // ORB Core.
 
 private:
+  /// The concrete acceptor, as a pointer to it's base class.
   TAO_SHMIOP_BASE_ACCEPTOR base_acceptor_;
-  // the concrete acceptor, as a pointer to it's base class.
 
+  /// Acceptor strategies.
   TAO_SHMIOP_CREATION_STRATEGY *creation_strategy_;
   TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_;
-  // Acceptor strategies.
 
+  /// Determine the prefix (include path name) of the mmap file.
   const ACE_TCHAR *mmap_file_prefix_;
-  // Determine the prefix (include path name) of the mmap file.
 
+  /// Determine the minimum size of mmap file.  This dictate the
+  /// maximum size of a CORBA method invocation.
   off_t mmap_size_;
-  // Determine the minimum size of mmap file.  This dictate the
-  // maximum size of a CORBA method invocation.
 
+  /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
-  // Should we use GIOP lite??
 };
 
 #if defined(__ACE_INLINE__)

@@ -19,7 +19,7 @@
 #define TAO_UIOP_PROFILE_H
 #include "ace/pre.h"
 
-#include "tao/Profile.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,6 +28,7 @@
 # if TAO_HAS_UIOP == 1
 
 #include "strategies_export.h"
+#include "tao/Profile.h"
 #include "tao/Object_KeyC.h"
 #include "UIOP_Connection_Handler.h"
 #include "UIOP_Endpoint.h"
@@ -36,7 +37,6 @@
 #include "ace/Synch.h"
 
 
-// TAO UIOP_Profile concrete Profile definitions
 /**
  * @class TAO_UIOP_Profile
  *
@@ -109,7 +109,7 @@ public:
    */
   virtual int encode_endpoints (void);
 
-  /// @@ deprecated. return a reference to the Object Key.
+  /// @deprecated Return a reference to the Object Key.
   virtual const TAO_ObjectKey &object_key (void) const;
 
   /// Return a pointer to the Object Key.  The caller owns the memory
@@ -177,7 +177,7 @@ private:
   /// Number of endpoints in the list headed by <endpoint_>.
   size_t count_;
 
-  /// object_key associated with this profile.
+  /// Object_key associated with this profile.
   TAO_ObjectKey object_key_;
 
   /// Our tagged profile info

@@ -29,19 +29,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_Direct_Priority_Mapping
+ *
+ * @brief A simple implementation of the Priority_Mapping interface
+ *
+ * This implementation uses direct mapping.
+ */
 class TAO_RTCORBA_Export TAO_Direct_Priority_Mapping : public TAO_Priority_Mapping
 {
-  // = TITLE
-  //   A simple implementation of the Priority_Mapping interface
-  //
-  // = DESCRIPTION
-  //   This implementation uses direct mapping.
 public:
+  /// Default constructor
   TAO_Direct_Priority_Mapping (long);
-  // Default constructor
 
+  /// The destructor
   virtual ~TAO_Direct_Priority_Mapping (void);
-  // The destructor
 
   virtual CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,
