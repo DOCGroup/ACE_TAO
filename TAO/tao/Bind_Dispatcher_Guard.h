@@ -30,7 +30,7 @@ public:
 
   ~TAO_Bind_Dispatcher_Guard (void);
 
-  int status(void) const;
+  int& status(void);
 
 private:
   int                         status_;
@@ -40,7 +40,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Bind_Dispatcher_Guard.i"   
+# include "tao/Bind_Dispatcher_Guard.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
