@@ -1,5 +1,9 @@
 Fri Jan  9 11:35:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+ 	  Fixed a syntax error.  Thanks to John Mulhern
+ 	  <9107@MN3.LAWSON.lawson.com> for reporting this.
+
 	* ace/Log_Msg.cpp (log): Changed abort_prog == 0 to abort_prog so
  	  that STDERR would be printed correctly.  
 
