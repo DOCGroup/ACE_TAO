@@ -110,7 +110,7 @@ public:
                     int backlog = ACE_DEFAULT_BACKLOG,
                     int reuse_addr = 1,
                     ACE_Proactor *proactor = 0,
-                    int validate_connection = 0,
+                    int validate_new_connection = 0,
                     int reissue_accept = 1,
                     int number_of_initial_accepts = -1);
 
