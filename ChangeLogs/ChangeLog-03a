@@ -1,3 +1,9 @@
+Wed Nov 07 13:50:39 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Task_T.h (ACE_Task): Decorated ACE_Task with ACE_Export to
+	  avoid VC7's internal compiler error.  Thanks to Darrell for
+	  submitting the change.
+
 Fri Nov  7 10:59:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/platform_sunos5_g++.GNU: Append -D_REENTRANT
@@ -23,7 +29,7 @@ Tue Nov  6 13:25:40 2001  Chris Cleeland  <cleeland_c@ociweb.com>
  	int.  I wrote this to get a better understanding of how the
 	iterator and accessors on the iterator worked.
 
-	* tests/SString_Test.cpp (main): Added a test for the rep() method 
+	* tests/SString_Test.cpp (main): Added a test for the rep() method
 	that insures that the char array returned is equivalent to the
 	string in the ACE_CString from which it's obtained.
 
@@ -43,10 +49,10 @@ Sun Nov  4 12:11:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  bailout immediately in this case.  Thanks to Don Hinton for
  	  suggesting this.
 
-	* ace/Reactor.i: Moved the reactor_event_loop_done() method from 
+	* ace/Reactor.i: Moved the reactor_event_loop_done() method from
 	  the *.cpp file into the *.i file and made inlineable.
 
-	* ace/Select_Reactor_T.cpp: Be more careful about error handling in the 
+	* ace/Select_Reactor_T.cpp: Be more careful about error handling in the
 	  dispatch_notification_handlers() method.  If a failure occurs,
  	  when dispatch_notifications() is called, return -1, rather than
  	  erroneously "incrementing" the count of the number of handlers
@@ -55,7 +61,7 @@ Sun Nov  4 12:11:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Sat Nov  3 11:15:43 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* The following fixes are from Joachim Achtzehnter <joachima@netacquire.com>:
-  
+
 	  In ace/config-pharlap.h we had to explicitly #undef
  	  ACE_HAS_WCHAR after the #include "ace/config-win32.h"
  	  directive. Without this change the resulting DLL depended on
@@ -71,12 +77,12 @@ Sat Nov  3 11:15:43 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  ace/Log_Msg_NT_Event_Log.cpp we added !defined(ACE_HAS_PHARLAP)
  	  to completely bypass the contents of these two files.
 
-	* ace/DEV_Addr.i (addr_to_string): 
-	* ace/Local_Tokens.i (name): 
-	* ace/Module.i (name): 
-	* ace/OS.i (asctime_r): 
-	* ace/SPIPE_Addr.i (addr_to_string): 
-	* ace/UNIX_Addr.i (addr_to_string): 
+	* ace/DEV_Addr.i (addr_to_string):
+	* ace/Local_Tokens.i (name):
+	* ace/Module.i (name):
+	* ace/OS.i (asctime_r):
+	* ace/SPIPE_Addr.i (addr_to_string):
+	* ace/UNIX_Addr.i (addr_to_string):
 	* ace/SString.i (rep): Changed uses of strncpy() to ACE_OS::strsncpy().
 	  Thanks to Alain Decamps for these fixes.
 
@@ -115,7 +121,7 @@ Mon Nov  5 13:31:15 2001  Chad Elliott  <elliott_c@ociweb.com>
         * include/makeinclude/platform_hpux_aCC.GNU:
 
           Add a -L./ to allow the 64-bit HP-UX builds to link properly.
-          
+
 Mon Nov  5 11:17:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
@@ -130,7 +136,7 @@ Mon Nov  5 13:02:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS.cpp:
 
-          Changed the default thread scope to system (similar to Linux). 
+          Changed the default thread scope to system (similar to Linux).
           Process thread scope is not supported in HP-UX.
 
 Sun Nov 04 11:18:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
