@@ -21,8 +21,10 @@ void
 TAO_Notify_EventChannel_i::init (CORBA::Environment &ACE_TRY_ENV)
 {
   // TODO: init data members
-  dispatcher_ =
-    auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::create (ACE_TRY_ENV));
+  // ???? Pradeep: auto_ptr can't be used this way.
+  // dispatcher_ =
+  //  auto_ptr<TAO_Notify_Dispatcher>(TAO_Notify_Dispatcher::create (ACE_TRY_ENV));
+  dispatcher_ = TAO_Notify_Dispatcher::create (ACE_TRY_ENV);
   ACE_CHECK;
 
   TAO_Notify_FilterFactory_i* filter_factory_i;

@@ -164,7 +164,9 @@ protected:
                                                ACE_SYNCH_MUTEX>
   proxyconsumer_map_;
 
-  auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
+  // ???? Pradeep: auto_ptr can't be used this way.
+  // auto_ptr<TAO_Notify_Dispatcher> dispatcher_;
+  TAO_Notify_Dispatcher *dispatcher_;
   //
 };
 

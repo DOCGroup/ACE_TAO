@@ -1,3 +1,17 @@
+Sun Dec 19 08:58:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+          moved #pragma once to after first #include, to avoid
+          g++ warning.
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp},
+          orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp},
+          orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+          changed type of dispatcher_ data member from auto_ptr
+          to just a pointer.  It will cause a memory leak, but
+          auto_ptr wasn't being used correctly.  This needs to
+          be fixed properly when Pradeep returns.
+
 Sun Dec 19 08:52:05 1999 David L. Levine <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: updated dependencies.
@@ -35,7 +49,7 @@ Sat Dec 18 13:54:16 1999  David L. Levine  <levine@cs.wustl.edu>
           destructor virtual.
 
         * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
-          moved #pragma once to after first #include to, avoid
+          moved #pragma once to after first #include, to avoid
           g++ warning.
 
         * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp,
