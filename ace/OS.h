@@ -6466,8 +6466,9 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
-// Byte swapping macros to deal with differences between little endian and big
-// endian machines.
+// Byte swapping macros to deal with differences between little endian
+// and big endian machines.  Note that "long" here refers to 32 bit
+// quantities.
 # define ACE_SWAP_LONG(L) ((ACE_SWAP_WORD ((L) & 0xFFFF) << 16) \
             | ACE_SWAP_WORD(((L) >> 16) & 0xFFFF))
 # define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
