@@ -109,6 +109,14 @@ SOURCE=.\server.cpp
 # PROP Default_Filter ".h"
 # Begin Source File
 
+SOURCE=.\AnyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AnyS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\AnyS_impl.h
 # End Source File
 # End Group
@@ -122,7 +130,7 @@ SOURCE=.\Any.idl
 !IF  "$(CFG)" == "OBV Any Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__FACTO="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__ANY_I="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Any.idl
 InputName=Any
@@ -160,8 +168,8 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "OBV Any Server - Win32 Debug"
 
-USERDEP__FACTO="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+USERDEP__ANY_I="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\Any.idl
 InputName=Any
 
