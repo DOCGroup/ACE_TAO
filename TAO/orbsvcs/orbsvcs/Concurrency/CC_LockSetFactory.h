@@ -25,6 +25,7 @@
 #include "orbsvcs/CosConcurrencyControlS.h"
 
 class TAO_ORBSVCS_Export CC_LockSetFactory : public POA_CosConcurrencyControl::LockSetFactory
+{
   // = TITLE
   //     CC_LockSetFactory
   //
@@ -33,13 +34,13 @@ class TAO_ORBSVCS_Export CC_LockSetFactory : public POA_CosConcurrencyControl::L
   //     part of the CosConcurrency service. Please consult the idl
   //     file for detailed descriptions apart from the comments in
   //     this file.
-{
 public:
+
   // = Initialization and termination methods.
-  CC_LockSetFactory(void);
+  CC_LockSetFactory (void);
   // Default constructor.
 
-  ~CC_LockSetFactory(void);
+  ~CC_LockSetFactory (void);
   // Destructor.
 
   virtual CosConcurrencyControl::LockSet_ptr create (CORBA::Environment &env);
@@ -47,9 +48,8 @@ public:
   virtual CosConcurrencyControl::LockSet_ptr create_related (CosConcurrencyControl::LockSet_ptr which,
                                                              CORBA::Environment &env);
 private:
-  ACE_Lock *lock_;
+  ACE_Thread_Mutex lock_;
   // Lock to serialize the access to the factory.
-
 };
 
 #endif /* _CC_LOCKSETFACTORY_H */
