@@ -1,3 +1,15 @@
+Tue Nov 25 09:56:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/DLL_ORB/Makefile.Test_Client_Module:
+
+	  No need to compile and link in the skeleton files into the
+	  library. This is counter productive since the skeleton files
+	  bring in some symbols that are not completly resolved during
+	  loading time.
+
+	  This is just part of the problem that prevents the test from
+	  running in the daily builds.
+
 Tue Nov 25 09:15:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Xt_Stopwatch/Makefile:
