@@ -1,3 +1,9 @@
+Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Environment.h:
+	* tao/Environment.i: Added two methods _duplicate () and _nil ()
+	  to the class Environment so that they will conformant with v2.2.
+
 Fri Jun 25 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CurrentC.cpp:
