@@ -4,7 +4,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.4
 ====================================================
 
-. The ace-config script has been replaced by pkg-config metadata files 
+. The ace-config script has been replaced by pkg-config metadata files
   which are installed in ${prefix}/lib/pkgconfig by the automake build.
 
 . Remove ACE_OS::gets() implementation.  While this ACE implementation
@@ -16,6 +16,10 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.4
   looks like a standard gets() call results in behavior that is
   different from the standard.  Use ACE_OS::fgets() instead.
 
+. Removed ACE_Unbounded_Set_Ex, this gave the false idea that it had
+  thread safe iterators. Use ACE_Unbounded_Set instead
+
+. Improved VxWorks support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.2 and ACE-5.4.3
 ====================================================
