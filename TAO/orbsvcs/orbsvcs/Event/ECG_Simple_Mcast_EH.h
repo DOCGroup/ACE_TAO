@@ -9,7 +9,7 @@
  */
 #ifndef TAO_ECG_SIMPLE_MCAST_EH_H
 #define TAO_ECG_SIMPLE_MCAST_EH_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Event_Handler.h"
 
@@ -90,5 +90,5 @@ private:
 #include "ECG_Simple_Mcast_EH.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_SIMPLE_Mcast_EH_H */

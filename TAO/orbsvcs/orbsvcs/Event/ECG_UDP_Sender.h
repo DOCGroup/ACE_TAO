@@ -36,7 +36,7 @@
 
 #ifndef TAO_ECG_UDP_SENDER_H
 #define TAO_ECG_UDP_SENDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 
@@ -219,5 +219,5 @@ private:
 #include "ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_UDP_SENDER_H */

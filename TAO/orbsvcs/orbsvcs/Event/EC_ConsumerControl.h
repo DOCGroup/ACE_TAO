@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_CONSUMERCONTROL_H
 #define TAO_EC_CONSUMERCONTROL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Event/event_export.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -68,5 +68,5 @@ public:
 #include "EC_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_CONSUMERCONTROL_H */

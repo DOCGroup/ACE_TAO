@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_GATEWAY_IIOP_H
 #define TAO_EC_GATEWAY_IIOP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Event/event_export.h"
 #include "orbsvcs/Event/EC_Gateway.h"
@@ -153,5 +153,5 @@ protected:
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 };
 
-#include "ace/post.h"
-#endif /* ACE_EC_GATEWAY_H */
+#include /**/ "ace/post.h"
+#endif /* ACE_EC_GATEWAY_IIOP_H */

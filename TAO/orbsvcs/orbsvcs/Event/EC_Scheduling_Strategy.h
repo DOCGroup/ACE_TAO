@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_SCHEDULING_STRATEGY_H
 #define TAO_EC_SCHEDULING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecBaseC.h"
 #include "orbsvcs/RtecEventCommC.h"
@@ -64,5 +64,5 @@ public:
 #include "EC_Scheduling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_SCHEDULING_STRATEGY_H */

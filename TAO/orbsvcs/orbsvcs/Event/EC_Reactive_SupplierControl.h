@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_REACTIVE_SUPPLIERCONTROL_H
 #define TAO_EC_REACTIVE_SUPPLIERCONTROL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_SupplierControl.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
@@ -147,5 +147,5 @@ private:
 #include "EC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_SUPPLIERCONTROL_H */

@@ -14,7 +14,7 @@
  */
 #ifndef TAO_ECG_MCAST_EH_H
 #define TAO_ECG_MCAST_EH_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
@@ -283,5 +283,5 @@ private:
 #include "ECG_Mcast_EH.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_Mcast_EH_H */

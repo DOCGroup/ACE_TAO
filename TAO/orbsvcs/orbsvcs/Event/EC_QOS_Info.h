@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_QOS_INFO_H
 #define TAO_EC_QOS_INFO_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecBaseC.h"
 #include "event_export.h"
@@ -58,5 +58,5 @@ public:
 #include "EC_QOS_Info.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_EVENT_CHANNEL_H */

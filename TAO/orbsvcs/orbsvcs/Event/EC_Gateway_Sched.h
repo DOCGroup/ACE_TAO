@@ -16,7 +16,7 @@
 
 #ifndef TAO_EC_GATEWAY_SCHED_H
 #define TAO_EC_GATEWAY_SCHED_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Gateway_IIOP.h"
 #include "orbsvcs/RtecSchedulerC.h"
@@ -51,5 +51,5 @@ public:
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_EC_GATEWAY_SCHED_H */

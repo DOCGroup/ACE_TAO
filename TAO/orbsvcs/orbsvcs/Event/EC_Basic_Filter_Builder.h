@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_BASIC_FILTER_BUILDER_H
 #define TAO_EC_BASIC_FILTER_BUILDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Filter_Builder.h"
 #include "event_export.h"
@@ -69,5 +69,5 @@ private:
 #include "EC_Basic_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_BASIC_FILTER_BUILDER_H */

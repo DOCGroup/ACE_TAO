@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_NULL_SCHEDULING_H
 #define TAO_EC_NULL_SCHEDULING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Scheduling_Strategy.h"
 
@@ -55,5 +55,5 @@ private:
 #include "EC_Null_Scheduling.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_NULL_SCHEDULING_H */

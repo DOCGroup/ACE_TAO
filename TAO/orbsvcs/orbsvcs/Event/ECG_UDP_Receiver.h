@@ -35,7 +35,7 @@
 
 #ifndef TAO_ECG_UDP_RECEIVER_H
 #define TAO_ECG_UDP_RECEIVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 
@@ -229,5 +229,5 @@ private:
 #include "ECG_UDP_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_UDP_RECEIVER_H */
