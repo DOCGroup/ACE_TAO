@@ -876,18 +876,20 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
         this->link_follow_rule (ACE_TRY_ENV);
       ACE_CHECK;
 
-      follow_option = link_info.limiting_follow_rule < trader_max_follow_policy
-        ? (link_info.limiting_follow_rule < query_link_follow_rule
-           ? link_info.limiting_follow_rule
-           : query_link_follow_rule)
-        : (trader_max_follow_policy < query_link_follow_rule
-           ? trader_max_follow_policy
-           : query_link_follow_rule);
+      follow_option = (CosTrading::FollowOption)
+        (link_info.limiting_follow_rule < trader_max_follow_policy
+         ? (link_info.limiting_follow_rule < query_link_follow_rule
+            ? link_info.limiting_follow_rule
+            : query_link_follow_rule)
+         : (trader_max_follow_policy < query_link_follow_rule
+            ? trader_max_follow_policy
+            : query_link_follow_rule));
     }
   else
-    follow_option = link_info.def_pass_on_follow_rule < trader_max_follow_policy
-      ? link_info.def_pass_on_follow_rule
-      : trader_max_follow_policy;
+    follow_option = (CosTrading::FollowOption)
+      (link_info.def_pass_on_follow_rule < trader_max_follow_policy
+       ? link_info.def_pass_on_follow_rule
+       : trader_max_follow_policy);
 
   CORBA::ULong i = 0;
   for (i = 0; i < policy_seq.length (); i++)
