@@ -1,16 +1,20 @@
+Sun Apr  6 09:26:18 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/.depend.Makefile.RT_Notification
+
 Sat Apr  5 15:11:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynCommon.cpp:
 
 	  Changed the type of a cast to const Any *& to eliminate
-	  a build error that somehow didn't show up before the 
+	  a build error that somehow didn't show up before the
 	  last checkin.
 
 Sat Apr  5 09:58:37 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/RT_lib/TAO_RT_NotifyTests.dsp:
 	  Added missing path to ../lib
-	
+
 Fri Apr  4 19:46:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
@@ -55,7 +59,7 @@ Fri Apr  4 12:06:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed problems with demarshaling Anys that contain arrays
           or unions with an enum discriminator type. Thanks to
-          Phil Mesnier <mesnier_p@ociweb.com> for reporting the 
+          Phil Mesnier <mesnier_p@ociweb.com> for reporting the
           problem with arrays. Also changed the name of the first
           template parameter in Any_Array_Impl_T to T_slice, since
           it is the array slice pointer that is used for this
