@@ -9,6 +9,13 @@ Wed Oct 01 12:45:51 1997  David L. Levine  <levine@cs.wustl.edu>
 	  "__unix" because DEC CXX doesn't #define "unix".  Thanks to
 	  Billy Quinn <bquinn@lads.com> for reporting this.
 
+	* ace/High_Res_Timer.h: added comment from Gabe <begeddov@proaxis.com>           about ACE_OS::gethrtime () drift on MP machines.
+
+	* ace/OS.i (gethrtime, Solaris only): removed ACE_OSCALL_RETURN
+	  wrapper around ::gethrtime () because it was broken (the type
+	  was int) and not necessary (::gethrtime () should never fail),
+	  so we can remove its overhead.
+
 	* tests/run_tests.vxworks: added console printout before each test.
 
 Tue Sep 30 21:42:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
