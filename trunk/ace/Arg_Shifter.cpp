@@ -2,7 +2,7 @@
 
 #include "Arg_Shifter.h"
 
-Arg_Shifter::Arg_Shifter (int &argc, char **argv, char **temp)
+ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc, char **argv, char **temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -33,14 +33,14 @@ Arg_Shifter::Arg_Shifter (int &argc, char **argv, char **temp)
     }
 }
 
-Arg_Shifter::~Arg_Shifter (void)
+ACE_Arg_Shifter::~ACE_Arg_Shifter (void)
 {
   // Delete the temporary vector.
   delete [] temp_;
 }
 
 char * 
-Arg_Shifter::get_current (void) const
+ACE_Arg_Shifter::get_current (void) const
 {
   char *return_value = 0;
   
@@ -51,7 +51,7 @@ Arg_Shifter::get_current (void) const
 }
 
 int
-Arg_Shifter::consume_arg (int number)
+ACE_Arg_Shifter::consume_arg (int number)
 {
   int return_value = 0;
 
@@ -71,7 +71,7 @@ Arg_Shifter::consume_arg (int number)
 }
 
 int
-Arg_Shifter::ignore_arg (int number)
+ACE_Arg_Shifter::ignore_arg (int number)
 {
   int return_value = 0;
 
@@ -91,27 +91,27 @@ Arg_Shifter::ignore_arg (int number)
 }
 
 int
-Arg_Shifter::is_anything_left (void) const
+ACE_Arg_Shifter::is_anything_left (void) const
 {
   return this->total_size_ - this->current_index_;
 }
 
 int
-Arg_Shifter::is_option_next (void) const
+ACE_Arg_Shifter::is_option_next (void) const
 {
   return this->is_anything_left () &&
     this->temp_[this->current_index_][0] == '-';
 }
 
 int
-Arg_Shifter::is_parameter_next (void) const
+ACE_Arg_Shifter::is_parameter_next (void) const
 {
   return this->is_anything_left () 
     && this->temp_[this->current_index_][0] != '-';
 }
 
 int
-Arg_Shifter::num_ignored_args (void) const
+ACE_Arg_Shifter::num_ignored_args (void) const
 {
   return this->front_;
 }

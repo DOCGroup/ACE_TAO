@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -23,35 +24,31 @@
 
 class Naming_Service
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that encapsulates the implementation of a
   //   naming service.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   This class makes use of the TAO_Naming_Server and
   //   TAO_ORB_Manager class to implement the Naming_Service.
-
 public:
   Naming_Service (void);
   // Default Constructor.
 
-  Naming_Service (int argc, char* argv[]);
+  Naming_Service (int argc, char *argv[]);
   // Constructor taking the command-line arguments.
 
-
-  int
-  init (int argc, char* argv[]);
+  int init (int argc, char *argv[]);
   // Initialize the Naming Service with the arguments.
 
-  int
-  run (CORBA_Environment& env);
-  // Run the Naming_Service
+  int run (CORBA_Environment& env);
+  // Run the Naming_Service.
 
   ~Naming_Service (void);
   // Destructor.
 	
 private:
-  int parse_args (int argc,char *argv[]);
+  int parse_args (int argc, char *argv[]);
   // parses the arguments.
 
   TAO_ORB_Manager orb_manager_;

@@ -17,9 +17,9 @@
 //
 // ============================================================================
 
+#include "ace/Arg_Shifter.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/corba.h"
-#include "tao/Arg_Shifter.h"
 #include "Naming_Utils.h"
 
 // Default constructor
@@ -33,7 +33,8 @@ TAO_Naming_Server::TAO_Naming_Server (void)
 
 TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_var &orb,
                                       PortableServer::POA_var &child_poa,
-				      int argc, char **argv)
+				      int argc,
+                                      char **argv)
 {
   this->init (orb, child_poa, argc, argv);
 }
@@ -44,11 +45,12 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_var &orb,
 int
 TAO_Naming_Server::init (CORBA::ORB_var &orb,
                          PortableServer::POA_var &child_poa,
-			 int argc, char **argv)
+			 int argc, 
+                         char **argv)
 {
-  // Parse command line arguments to determine if this name server instance
-  // is part of a naming tree, under the default name server
-  Arg_Shifter args (argc, argv);
+  // Parse command line arguments to determine if this name server
+  // instance is part of a naming tree, under the default name server.
+  ACE_Arg_Shifter args (argc, argv);
 
   while (args.is_anything_left ())
     {
@@ -71,10 +73,12 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 
   TAO_TRY
     {
-      // Check if this invocation is creating a naming context different
-      // from the default NameService context, if not, instantiate a name
-      // service, and listen on multicast port.
-      if (ACE_OS::strcmp (this->naming_context_name_, "NameService") == 0)
+      // Check if this invocation is creating a naming context
+      // different from the default NameService context, if not,
+      // instantiate a name service, and listen on multicast port.
+
+      if (ACE_OS::strcmp (this->naming_context_name_,
+                          "NameService") == 0)
 	{
 	  PortableServer::ObjectId_var id =
 	    PortableServer::string_to_ObjectId (this->naming_context_name_);
@@ -84,9 +88,9 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 					      TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  // Stringify the objref we'll be implementing, and print it to
-	  // stdout.  Someone will take that string and give it to a
-	  // client.  Then release the object.
+	  // Stringify the objref we'll be implementing, and print it
+	  // to stdout.  Someone will take that string and give it to
+	  // a client.  Then release the object.
 	  CORBA::Object_var obj =
 	    child_poa->id_to_reference (id.in (),
 					TAO_TRY_ENV);
@@ -197,7 +201,8 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 	  ctx_name.length (1);
 	  ctx_name[0].id = CORBA::string_dup (naming_context_name_);
 
-	  default_ctx->bind_context (ctx_name, naming_context_impl_._this (TAO_TRY_ENV),
+	  default_ctx->bind_context (ctx_name,
+                                     naming_context_impl_._this (TAO_TRY_ENV),
 				     TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 

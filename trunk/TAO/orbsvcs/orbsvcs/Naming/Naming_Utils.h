@@ -43,13 +43,15 @@ public:
 
   TAO_Naming_Server (CORBA::ORB_var &orb,
                      PortableServer::POA_var &root_poa,
-		     int argc, char **argv);
+		     int argc = 0,
+                     char **argv = 0);
   // Takes the POA under which to register the Naming Service
   // implementation object.
 
   int init (CORBA::ORB_var &orb,
             PortableServer::POA_var &root_poa,
-	    int argc, char **argv);
+	    int argc = 0,
+            char **argv = 0);
   // Initialize the name server under the given ORB and POA.
 
   NS_NamingContext &GetNamingContext (void);
