@@ -402,7 +402,8 @@ namespace TAO
    *  don't have an Any insertion operator for Object.
    */
   ACE_TEMPLATE_SPECIALIZATION
-  class Ret_Object_Argument_T <CORBA::Object_ptr, CORBA::Object_var> : public Argument
+  class TAO_Export Ret_Object_Argument_T <CORBA::Object_ptr, CORBA::Object_var>
+    : public Argument
   {
   public:
     Ret_Object_Argument_T (void);
@@ -424,8 +425,10 @@ namespace TAO
 
 /// This function pointer is set only when the Portable server
 /// library is present.
-extern TAO_Export TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+extern 
+  TAO_Export TAO::Object_Proxy_Broker * 
+  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
+      CORBA::Object_ptr obj
     );
 
 TAO_Export CORBA::Boolean

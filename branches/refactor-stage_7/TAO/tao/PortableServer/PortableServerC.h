@@ -2907,6 +2907,18 @@ namespace PortableServer
 // Traits specializations.
 namespace TAO
 {
+  // Hand crafted.
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_PortableServer_Export Objref_Traits<PortableServer::POAManager>
+  {
+    static PortableServer::POAManager_ptr tao_duplicate (
+        PortableServer::POAManager_ptr
+      );
+    static void tao_release (PortableServer::POAManager_ptr);
+    static PortableServer::POAManager_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (PortableServer::POAManager_ptr p,
+                                       TAO_OutputCDR & cdr);
+  };
 };
 
 // TAO_IDL - Generated from

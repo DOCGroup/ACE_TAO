@@ -26,9 +26,8 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "tao/PortableInterceptorC.h"
-#include "tao/PICurrent.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/PICurrent.h"
 
 class TAO_Service_Context;
 
