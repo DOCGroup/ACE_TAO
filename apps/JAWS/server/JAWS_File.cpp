@@ -13,7 +13,7 @@
 // 
 // ============================================================================
 
-#include "JAWS/server/JAWS_File.h"
+#include "apps/JAWS/server/JAWS_File.h"
 
 static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
 static const int W_MASK = S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH;

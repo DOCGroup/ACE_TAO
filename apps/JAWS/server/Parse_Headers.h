@@ -18,7 +18,7 @@
 #if !defined (PARSE_HEADERS_H)
 #define PARSE_HEADERS_H
 
-#include <ace/OS.h>
+#include "ace/OS.h"
 
 class Headers_Map
 {
