@@ -70,16 +70,8 @@ public:
   /// Initializes instance variables.
   void base_set (int type, int size);
 
-#if defined (ACE_HAS_BROKEN_SAP_ANY)
-  /// Wild-card address.
-  static const ACE_Addr &sap_any (void);
-
-  // This #define works around broken C++ compilers...
-#define sap_any sap_any()
-#else
   /// Wild-card address.
   static const ACE_Addr sap_any;
-#endif /* ACE_HAS_BROKEN_SAP_ANY */
 
   /// Returns a hash value.  This should be overwritten by a subclass
   /// that can produce a better hash value.
