@@ -1,3 +1,13 @@
+Fri Apr 27 10:45:35 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Explicit_Event_Loop/client.cpp:
+        * tests/Explicit_Event_Loop/server.cpp:
+        * tests/Explicit_Event_Loop/run_test.pl:
+
+          Updated this test to use the newer style perl modules, which
+          supports running on Chorus.  This required a couple minor
+          modifications to the client and server code.
+
 Fri Apr 27 10:32:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/Makefile:
