@@ -20,7 +20,7 @@ TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
 }
 
 /* static */
-size_t TAO_Active_Object_Map::system_id_size_ (0);
+size_t TAO_Active_Object_Map::system_id_size_ = 0;
 
 void
 TAO_Active_Object_Map::set_system_id_size

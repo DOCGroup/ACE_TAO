@@ -384,6 +384,14 @@ public:
   // set the name of the include file that contains the export
   // macro definition.
 
+  virtual const char* pch_include (void) const;
+  // returns the name of the include file to be used for precompiled
+  // header support.
+
+  virtual void pch_include (const char* s);
+  // set the name of the include file to be used for precompiled
+  // header support.
+
   // = Set and get methods for different file name endings.
 
   virtual void client_hdr_ending (const char* s);
@@ -615,6 +623,7 @@ private:
 
   char* export_macro_;
   char* export_include_;
+  char* pch_include_;
 
   // Client's header file name ending. Default is "C.h".
   char*  client_hdr_ending_;

@@ -75,6 +75,7 @@ public:
   class  _tao_collocated_Current     : public virtual CORBA_Current
   {
   public:
+    _tao_collocated_Current (void) {} // Needed by the IBM VisualAge C++ compiler.
     _tao_collocated_Current (
         Current_ptr  servant,
         TAO_Stub *stub
