@@ -272,7 +272,7 @@ spawn (void)
 #if !defined (ACE_LACKS_FORK)
       for (size_t i = 0; i < ACE_MAX_CLIENTS; i++)
         {
-          switch (ACE_OS::fork ("child"))
+          switch (ACE_OS::fork (ASYS_TEXT ("child")))
             {
             case -1:
               ACE_ERROR ((LM_ERROR,
