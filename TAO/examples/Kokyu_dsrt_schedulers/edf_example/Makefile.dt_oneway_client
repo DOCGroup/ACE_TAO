@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       GNU Makefile
 #
-# @file Makefile.oneway_client
+# @file Makefile.dt_oneway_client
 #
 # gnu.mpd,v 1.56 2003/10/16 14:03:48 elliott_c Exp
 #
@@ -9,9 +9,9 @@
 # this file will be lost the next time it is generated.
 #
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile.oneway_client
-DEPENDENCY_FILE = .depend.Makefile.oneway_client
-BIN_UNCHECKED   = oneway_client
+MAKEFILE        = Makefile.dt_oneway_client
+DEPENDENCY_FILE = .depend.Makefile.dt_oneway_client
+BIN_UNCHECKED   = dt_oneway_client
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -26,7 +26,7 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 
 FILES = \
   test1C \
-  oneway_client
+  dt_oneway_client
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -41,7 +41,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 # best to have a template directory per project.
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
-TEMPINCDIR := $(TEMPINCDIR)/oneway_client
+TEMPINCDIR := $(TEMPINCDIR)/dt_oneway_client
 
 all: $(TEMPINCDIR)
 
@@ -65,7 +65,7 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-test1C.cpp oneway_client.cpp: idl_stubs
+test1C.cpp dt_oneway_client.cpp: idl_stubs
 endif
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
