@@ -1167,6 +1167,7 @@ ACE_TSS_Cleanup::free_all_key_left (void)
 
   for (int i = 0; i < idx; i++)
     ACE_OS::thr_keyfree (key_arr[i]);
+  return 0;
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
