@@ -180,7 +180,7 @@ ACE_String_Base<CHAR>::resize (size_t len, CHAR c)
   // Only reallocate if we don't have enough space...
   if (this->buf_len_ <= len)
     {
-      if (this->buf_len_ != 0)
+      if (this->buf_len_ != 0 && this->release_)
         this->allocator_->free (this->rep_);
 
       this->rep_ = (CHAR *)

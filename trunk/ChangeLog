@@ -1,3 +1,11 @@
+Mon Jun 21 13:21:38 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/String_Base.cpp (resize): Don't free() the existing buffer if
+	  release_ is 0. Caller controls the memory area and freeing it may
+	  be a very bad thing to do. The larger allocated area causes the
+	  release_ flag to be set to 1. Thanks to Kelly Hickel
+	  <kfh@mqsoftware.com> for reporting this.
+
 Mon Jun 21 12:45:20 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_SOCK_Connector.cpp: Added #include "ace/OS_NS_errno.h"
