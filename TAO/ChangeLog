@@ -1,3 +1,15 @@
+Mon Jun 30 16:02:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Distributable_Thread.h:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Current.cpp: 
+	* tao/RTScheduling/Request_Interceptor.cpp:
+	* tao/RTScheduling/Request_Interceptor.h:	
+	* tao/RTScheduling/RTScheduler_Initializer.cpp:
+	
+	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
+	  Template build.
+	
 Mon Jun 30 12:19:22 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp
