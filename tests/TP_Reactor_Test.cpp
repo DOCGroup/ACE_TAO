@@ -1137,24 +1137,14 @@ disable_signal (int sigmin, int sigmax)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Svc_Tuple<Sender>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
-template class ACE_Map_Entry<int, ACE_Svc_Tuple<Sender> * >;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
-template class ACE_Map_Reverse_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >;
+template class ACE_NonBlocking_Connect_Handler<Sender>;
 template class ACE_Connector<Sender,ACE_SOCK_CONNECTOR>;
 template class ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Svc_Tuple<Sender>
-#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
-#pragma instantiate ACE_Map_Entry<int, ACE_Svc_Tuple<Sender> * >
-#pragma instantiate ACE_Map_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
-#pragma instantiate ACE_Map_Reverse_Iterator<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
-#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<Sender> *, ACE_RW_Thread_Mutex >
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Sender>
 #pragma instantiate ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>

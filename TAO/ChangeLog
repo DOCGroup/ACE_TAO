@@ -1,3 +1,16 @@
+Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
+	* TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* TAO/tao/IIOP_Connector.cpp:
+	* TAO/tao/Strategies/DIOP_Connector.cpp:
+	* TAO/tao/Strategies/SHMIOP_Connector.cpp:
+	* TAO/tao/Strategies/UIOP_Connector.cpp:
+
+	  Fixed Connector related template instantiations.
+
 Mon Apr 28 12:24:39 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\Strategies\advanced_resource.cpp: 
