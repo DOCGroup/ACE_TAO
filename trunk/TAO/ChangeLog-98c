@@ -1,3 +1,18 @@
+Wed Mar  4 16:35:37 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
+
+	* tao/orbobj.*: Added an extension to the CORBA_ORB interface
+ 	that allows an application to preconnect to multiple servers by
+ 	specifying a string of host:port pairs.
+
+	* tao/orb_core.*: Broke the preconnection logic out of init()
+ 	and made it its own method, preconnect().  This also uses
+ 	Connector<>::connect_n() rather than implementing its own loop.
+  	It really didn't make things much easier, but we can take
+ 	advantage of future improvements to that implementation
+ 	transparently, now.
+
+	* docs/Options.html: Added more details on various options.
+
 Tue Mar 03 21:11:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/RtecScheduler.idl: updated a comment: the units
@@ -55,7 +70,7 @@ Mon Mar  2 13:13:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/orb_core.cpp: only instantiate ACE_Convert with g++.
+	* tao/orb_core.cpp: only instantiate ACE_Convert with g++.
           Even that shouldn't need it, because it's always inline.
           But, g++ typically creates out-of-line instantiations of
           inline template member functions.

@@ -139,7 +139,7 @@ properly establish multiple connections to that endpoint.</TD></TR>
 (<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 <TR>
 <TD HEIGHT="43"><CODE>-ORBpoa</CODE> <EM>which</EM></TD>
-<TD>Specify whether each thread uses a global 
+<TD><a name="-ORBpoa"></a>Specify whether each thread uses a global 
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the Root POA.</TD></TR>
 </TABLE>
@@ -175,18 +175,20 @@ combination of <CODE>THR_DETACHED</CODE>, <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_
 <CODE>THE_SUSPENDED</CODE>.</TD></TR>
 <TR>
 <TD HEIGHT="43"><CODE>-ORBpoalock</CODE> <EM>lock type</EM></TD>
-<TD>Specify the type of lock to be used for POA accesses.  Possible
-values for <em>lock type</em> are <code>thread</code>, which specifies
-that an inter-thread mutex is used to guarantee exclusive acccess, and
-<code>null</code>, which specifies that no locking be performed.  The
-default is <code>null</code>.</TD></TR>
+<TD><a name="-ORBpoalock"></a>Specify the type of lock to be used for
+POA accesses.  Possible values for <em>lock type</em> are
+<code>thread</code>, which specifies that an inter-thread mutex is
+used to guarantee exclusive acccess, and <code>null</code>, which
+specifies that no locking be performed.  The default is
+<code>null</code>.</TD></TR>
 <TR>
 <TD HEIGHT="43"><CODE>-ORBpoamgrlock</CODE> <EM>lock type</EM></TD>
-<TD>Specify the type of lock to be used for POA Manager accesses.
-Possible values for <em>lock type</em> are <code>thread</code>, which
-specifies that an inter-thread mutex is used to guarantee exclusive
-acccess, and <code>null</code>, which specifies that no locking be
-performed.  The default is <code>null</code>.</TD></TR>
+<TD><a name="-ORBpoamgrlock"></a>Specify the type of lock to be used for
+POA Manager accesses.  Possible values for <em>lock type</em> are
+<code>thread</code>, which specifies that an inter-thread mutex is
+used to guarantee exclusive acccess, and <code>null</code>, which
+specifies that no locking be performed.  The default is
+<code>null</code>.</TD></TR>
 </TABLE>
 </P>
 </blockquote>

@@ -160,6 +160,10 @@ public:
   // This is the same as the more "standard" <run> method, except that
   // you don't need to put the & in front of <tv>.
 
+  int preconnect (CORBA::String connections);
+  // Establish connectsion to each of the comma-separated
+  // <{host}>:<{port}> combinations specified in <connections>.
+
   ULONG AddRef (void);
   ULONG Release (void);
 
