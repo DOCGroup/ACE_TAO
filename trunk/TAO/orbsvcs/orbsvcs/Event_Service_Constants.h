@@ -1,4 +1,3 @@
-//
 // $Id$
 //
 // = DESCRIPTION
@@ -30,17 +29,17 @@ const int ACE_ES_MAX_CONSUMERS_PER_SUPPLIER = 100;
 
 // = Predefined event types.  All application defined types should be
 // relative to ACE_ES_EVENT_UNDEFINED.
-const u_long ACE_ES_EVENT_ANY = 0;
-const u_long ACE_ES_EVENT_SHUTDOWN = 1;
-const u_long ACE_ES_EVENT_ACT = 2;
-const u_long ACE_ES_EVENT_NOTIFICATION = 3;
-const u_long ACE_ES_EVENT_TIMEOUT = 4;
-const u_long ACE_ES_EVENT_INTERVAL_TIMEOUT = 5;
-const u_long ACE_ES_EVENT_DEADLINE_TIMEOUT = 6;
-const u_long ACE_ES_GLOBAL_DESIGNATOR = 7;
-const u_long ACE_ES_CONJUNCTION_DESIGNATOR = 8;
-const u_long ACE_ES_DISJUNCTION_DESIGNATOR = 9;
-const u_long ACE_ES_EVENT_UNDEFINED = 16;
+const long ACE_ES_EVENT_ANY = 0;
+const long ACE_ES_EVENT_SHUTDOWN = 1;
+const long ACE_ES_EVENT_ACT = 2;
+const long ACE_ES_EVENT_NOTIFICATION = 3;
+const long ACE_ES_EVENT_TIMEOUT = 4;
+const long ACE_ES_EVENT_INTERVAL_TIMEOUT = 5;
+const long ACE_ES_EVENT_DEADLINE_TIMEOUT = 6;
+const long ACE_ES_GLOBAL_DESIGNATOR = 7;
+const long ACE_ES_CONJUNCTION_DESIGNATOR = 8;
+const long ACE_ES_DISJUNCTION_DESIGNATOR = 9;
+const long ACE_ES_EVENT_UNDEFINED = 16;
 
 // The max number of priorities provided by the target platform.
 // TODO: This should be defined in ACE (somehow) and only mapped here
@@ -56,13 +55,13 @@ const TimeBase::TimeT ACE_Scheduler_Rates[ACE_Scheduler_MAX_PRIORITIES] = {
 };
 
 // The minimum preemption priority.
-const long ACE_Scheduler_MIN_PREEMPTION_PRIORITY = 
+const long ACE_Scheduler_MIN_PREEMPTION_PRIORITY =
       ACE_Scheduler_MAX_PRIORITIES - 1;
 // Max preemption priority.
 const long ACE_Scheduler_MAX_PREEMPTION_PRIORITY = 0;
 
 // This is the maximum sub priority.
-const u_long ACE_Scheduler_MAX_SUB_PRIORITY = 
+const u_long ACE_Scheduler_MAX_SUB_PRIORITY =
       ACE_Message_Block::MB_USER - 1;
 
 // This is the minimum sub priority.
