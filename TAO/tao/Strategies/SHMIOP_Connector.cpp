@@ -195,6 +195,7 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                                               remote_address,
                                               synch_options);
 
+  int status = svc_handler->successful ();
   // Reduce the refcount to the svc_handler that we have. The
   // increment to the handler is done in make_svc_handler (). Now
   // that we dont need the reference to it anymore we can decrement
@@ -229,7 +230,8 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       ACE_TEXT ("errno")));
         }
 
-      (void) this->active_connect_strategy_->post_failed_connect (svc_handler);
+      (void) this->active_connect_strategy_->post_failed_connect (svc_handler,
+                                                                  status);
 
       return -1;
     }
