@@ -1,3 +1,43 @@
+Mon Nov 18 00:13:25 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/stdcpp.h: Added this file to ACE.  This file contains the
+	  portability ugliness for the Standard C++ Library.  As
+ 	  implementations of the "standard" emerge, this file will need to
+ 	  be updated.  Although not very useful now, we are gearing up for
+ 	  a support for STL on UNIX and NT.
+
+	* ace/OS.h: Added an include "ace/stdcpp.h".
+
+	* ace/Log_Record.h (ACE_Log_Record): Removed the iostream include
+	  mess that got accidentally committed to the release.
+
+	* Log_Record.h: Added conditional inclusion of iostream and
+	  iostream.h to deal with STL.  So far, I haven't run into any
+	  problems related to changing semantics.  We'll see.
+
+Sun Nov 17 00:13:25 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* For some totally evil reason, MSVC++ will not allow any use of
+	  the "allocator" symbol.  It's an STL thing.  As a result, I've
+ 	  had to change all of the following files to rename allocator to
+ 	  alloc: Local_Name_Space_T.cpp, Map_Manager.cpp, Malloc_T.cpp,
+ 	  Message_Block.cpp, Read_Buffer.cpp, SString.cpp.  The root
+	  of the problem can be seen by compiling the code below:
+	  
+	  template <class TYPE>
+	  class foo {};
+
+	  int foo;  // compile error because of the foo<> class.
+
+	  int main () { return 0; }
+	
+	* Service_Config.{h,cpp}:  We have to change the allocator
+	  accessors to alloc.  This is probably going to break
+	  many things.  If necessary, we can conditionally compile in the
+	  old accessors for platforms that are not using STL and MSVC++.
+
+	* ace/Task.h:  Added ACE_Export macros to the class definitions.
+
 Sun Nov 17 13:00:02 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Added Thilo Kielmann's <kielmann@informatik.uni-siegen.de>
