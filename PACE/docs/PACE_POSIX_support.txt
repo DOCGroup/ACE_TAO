@@ -90,3 +90,19 @@ FILE                    linux   lynxos  sunos   win32
  shm_open()                                     X
  shm_unlink()                                   E
 .............................................................
+<mqueue.h>
+ mq_close()                                     X
+ mq_getattr()                                   X
+ mq_notify()                                    X
+ mq_open()                                      X
+ mq_receive()                                   X
+ mq_send()                                      X
+ mq_setattr()                                   X
+ mq_unlink()                                    X
+.............................................................
+<pwd.h>
+ getpwuid()                                     X
+ getpwuid_r()                                   X
+ getpwnam()                                     X
+ getpwnam_r()                                   X
+.............................................................

@@ -16,7 +16,6 @@
 #ifndef PACE_PWD_H_WIN32
 #define PACE_PWD_H_WIN32
 
-#include <pwd.h>
 #include "pace/sys/types.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
@@ -25,7 +24,7 @@ extern "C" {
 
 #ifndef PACE_PASSWD
 #define PACE_PASSWD
-  typedef struct passwd pace_passwd;
+  typedef struct passwd { int a_; } pace_passwd;
 #endif /* PACE_PASSWD */
 
 #if defined (PACE_HAS_CPLUSPLUS)
