@@ -22,10 +22,10 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core)
             orb_core->to_iso8859 (),
             orb_core->to_unicode ())
 {
-#if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (repbuf,
+#if defined (ACE_HAS_PURIFY)
+  (void) ACE_OS::memset (this->repbuf_,
                          '\0',
-                         sizeof repbuf);
+                         sizeof this->repbuf_);
 #endif /* ACE_HAS_PURIFY */
 }
 
@@ -550,7 +550,7 @@ TAO_GIOP_Message_Lite::
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
           
-          if (status == -1 || CORBA::is_nil (object_reference))
+          if (status == -1 || CORBA::is_nil (object_reference.in ()))
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
           
           // ObjectID present in the table with an associated NON-NULL
