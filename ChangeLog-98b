@@ -1,13 +1,30 @@
-Sat Jun  6 19:10:54 1998  Sergio Flores  <sergio@cs.wustl.edu>
-
-	* ace/config-vxworks5.x.h: changes the default thread priority
- 	from 6 to 101.
-
 Sat Jun  6 18:34:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/gperf/src: We no longer call the inline option "GNU" but
+	  now call it "INLINE".
+
+	* apps/gperf/src/{Options.h,Key_List.cpp,Gen_Perf.cpp}: Revised
+ 	  the LARGE_STACK_ARRAY code so that it only gets compiled if
+ 	  we're using GCC.
+
+	* apps/gperf/src/Key_List.cpp (output_switch): Fixed a bug where
+	  strcmp() was being used instead of strncmp().  Thanks to C++
+	  for finding this!
+
+	* apps/gperf/src/Key_List.cpp: Removed all uses of "register"
+ 	  since C++ compilers can do this automagically...
+
+	* apps/gperf/tests/test.cpp (main): Modified the test program to
+ 	  use C++ rather than C (ugh!).
 
 	* ace: Added two new files: Timeprobe_T.h and Timeprobe_T.cpp in
  	  order to solve problems with multiply defined symbols.  Thanks
  	  to Brian Mendel, David Levine, and Irfan for tracing this down.
+
+Sat Jun  6 19:10:54 1998  Sergio Flores  <sergio@cs.wustl.edu>
+
+	* ace/config-vxworks5.x.h: changes the default thread priority
+ 	from 6 to 101.
 
 Sat Jun 06 16:43:01 1998  David L. Levine  <levine@cs.wustl.edu>
 

@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Handles parsing the Options provided to the user.
-
 /* Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)
 
@@ -36,7 +34,7 @@ enum Option_Type
   ORDER        = 02,            // Apply ordering heuristic to speed-up search time.
   ANSI         = 04,            // Generate ANSI prototypes.
   ALLCHARS     = 010,           // Use all characters in hash function.
-  GNU          = 020,           // Assume GNU extensions (primarily function inline).
+  INLINE       = 020,           // Generate code for inline functions.
   TYPE         = 040,           // Handle user-defined type structured keyword input.
   RANDOM       = 0100,          // Randomly initialize the associated values table.
   DEFAULTCHARS = 0200,          // Make default char positions be 1,$ (end of keyword).
@@ -77,6 +75,7 @@ class Options
   // = TITLE
   //   This class provides a uniform interface to the various options
   //   available to a user of the gperf hash function generator.  
+  // 
   // = DESCRIPTION
   //   In addition to the run-time options, found in the <Option_Type>
   //   there is also the hash table Size and the Keys to be used in
@@ -165,5 +164,11 @@ private:
 
 // Global option coordinator for the entire program.
 extern Options option;       
+
+// If we're using GCC then we'll stack-allocate some large arrays.  If
+// this causes problems simple disable this #define.
+#if defined (__GNUC__)
+#define LARGE_STACK_ARRAYS 
+#endif /* LARGE_STACK_ARRAYS */
 
 #endif /* OPTIONS_H */

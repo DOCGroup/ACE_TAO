@@ -9,7 +9,7 @@
 
 static const int MAX_LEN = 80;
 
-char *in_word_set (char *str, unsigned int len);
+char *in_word_set (const char *str, int len);
 
 int 
 main (int argc, char *argv[])

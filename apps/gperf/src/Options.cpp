@@ -146,7 +146,7 @@ Options::~Options (void)
       char *ptr;
 
       ACE_OS::fprintf (stderr, "\ndumping Options:\nDEBUG is.......: %s\nORDER is.......: %s"
-                       "\nANSI is........: %s\nTYPE is........: %s\nGNU is.........: %s"
+                       "\nANSI is........: %s\nTYPE is........: %s\nINLINE is.........: %s"
                        "\nRANDOM is......: %s\nDEFAULTCHARS is: %s\nSWITCH is......: %s"
                        "\nPOINTER is.....: %s\nNOLENGTH is....: %s\nLENTABLE is....: %s"
                        "\nDUP is.........: %s\nFAST is........: %s\nCOMP is.....: %s"
@@ -160,7 +160,7 @@ Options::~Options (void)
                        ACE_BIT_ENABLED (option_word, ORDER) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, ANSI) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, TYPE) ? "enabled" : "disabled",
-                       ACE_BIT_ENABLED (option_word, GNU) ? "enabled" : "disabled",
+                       ACE_BIT_ENABLED (option_word, INLINE) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, RANDOM) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, DEFAULTCHARS) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, SWITCH) ? "enabled" : "disabled",
@@ -262,7 +262,7 @@ Options::operator() (int argc, char *argv[])
           }
         case 'g':               // Use the ``inline'' keyword for generated sub-routines.
           { 
-            ACE_SET_BITS (option_word, GNU);
+            ACE_SET_BITS (option_word, INLINE);
             break;
           }
         case 'G':               // Make the keyword table a global variable.
@@ -287,8 +287,7 @@ Options::operator() (int argc, char *argv[])
                              "\trunning time at the cost of minimizing generated table-size.\n"
                              "\tThe numeric argument represents the number of times to iterate when\n"
                              "\tresolving a collision.  `0' means ``iterate by the number of keywords.''\n"
-                             "-g\tAssume a GNU compiler, e.g., g++ or gcc.  This makes all generated\n"
-                             "\troutines use the ``inline'' keyword to remove cost of function calls.\n"
+                             "-g\tMake generated routines use ``inline'' to remove function overhead.\n"
                              "-G\tGenerate the static table of keywords as a static global variable,\n"
                              "\trather than hiding it inside of the lookup function (which is the\n"
                              "\tdefault behavior).\n"
@@ -348,10 +347,10 @@ Options::operator() (int argc, char *argv[])
                              "\tUse this option if the type is already defined elsewhere.\n"
                              "-v\tPrints out the current version number\n"
                              "-Z\tAllow user to specify name of generated C++ class.  Default\n"
-                             "\tname is `Perfect_Hash.'\n%e",
+                             "\tname is `Perfect_Hash.'\n",
                              DEFAULT_JUMP_VALUE,
-                             (MAX_KEY_POS - 1),
-                             usage);
+                             MAX_KEY_POS - 1);
+            Options::usage ();
             ACE_OS::exit (1);
           }
         case 'H':               // Sets the name for the hash function.
