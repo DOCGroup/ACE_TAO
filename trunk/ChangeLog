@@ -1,8 +1,20 @@
+Fri Aug  8 11:03:57 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Remove the 'perl' call before depgen.pl.
+
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Put back ACE_ROOT reference in the templates for the depgen.pl
+          script.  It is necessary since nmake doesn't support the windows
+          associates like the command prompt does.
+
 Fri Aug  8 10:42:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Makefile: Added Kokyu to CORE_DIRS list since
-	  TAO/orbsvcs/orbsvcs is in core build and
-	  TAO/orbsvcs/orbsvcs/Event/*Kokyu* depends on Kokyu framework.
+        * Makefile: Added Kokyu to CORE_DIRS list since
+          TAO/orbsvcs/orbsvcs is in core build and
+          TAO/orbsvcs/orbsvcs/Event/*Kokyu* depends on Kokyu framework.
 
 Fri Aug  8 13:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
