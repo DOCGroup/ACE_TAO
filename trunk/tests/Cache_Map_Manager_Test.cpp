@@ -687,7 +687,7 @@ template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, hash_key, ACE_Equal_To<KEY
 #pragma instantiate ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CACHING_UTILITY, MAP_LRU>
 #pragma instantiate ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, HASH_MAP_MANAGER, ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_LFU>
 #pragma instantiate ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CACHING_UTILITY, MAP_LFU>
-#pragma instantiate ACE_Caching_Strateg_Adaptery<KEY, CACHE_VALUE, HASH_MAP_MANAGER, ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_FIFO>
+#pragma instantiate ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, HASH_MAP_MANAGER, ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_FIFO>
 #pragma instantiate ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CACHING_UTILITY, MAP_FIFO>
 #pragma instantiate ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, HASH_MAP_MANAGER, ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_NULL>
 #pragma instantiate ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CACHING_UTILITY, MAP_NULL>
@@ -698,9 +698,9 @@ template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, hash_key, ACE_Equal_To<KEY
 #pragma instantiate ACE_Cleanup_Strategy<KEY, ACE_Pair<KEY, ATTR>, HASH_MAP_MANAGER>
 #pragma instantiate ACE_Cleanup_Strategy<KEY, ACE_Pair<KEY, ATTR>, MAP_MANAGER>
 
-#pragma instantiate ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER::iterator, MAP_MANAGER::reverse_iterator, MAP_CACHIN_STRATEGY, ATTR>
-#pragma instantiate ACE_Cache_Map_Iterator<KEY, VALUE, MAP_MANAGER::iterator, MAP_CACHIN_STRATEGY, ATTR>
-#pragma instantiate ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, MAP_MANAGER::reverse_iterator, MAP_CACHIN_STRATEGY, ATTR>
+#pragma instantiate ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER::iterator, MAP_MANAGER::reverse_iterator, MAP_CACHING_STRATEGY, ATTR>
+#pragma instantiate ACE_Cache_Map_Iterator<KEY, VALUE, MAP_MANAGER::iterator, MAP_CACHING_STRATEGY, ATTR>
+#pragma instantiate ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, MAP_MANAGER::reverse_iterator, MAP_CACHING_STRATEGY, ATTR>
 
 #pragma instantiate ACE_Cache_Map_Manager<KEY, VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_CACHING_STRATEGY, ATTR>
 #pragma instantiate ACE_Cache_Map_Iterator<KEY, VALUE, HASH_MAP_MANAGER::iterator, HASH_MAP_CACHING_STRATEGY, ATTR>
