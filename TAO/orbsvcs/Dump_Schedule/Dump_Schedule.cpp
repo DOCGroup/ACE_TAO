@@ -14,12 +14,12 @@ ACE_RCSID(Dump_Schedule, Dump_Schedule, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -29,12 +29,12 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        PortableServer::POA::_narrow (poa_object.in(), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
@@ -44,8 +44,8 @@ main (int argc, char *argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       const char *name = 0;
       if (argc > 1)
@@ -77,28 +77,28 @@ main (int argc, char *argv[])
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos_out, configs_out, anomalies_out, TAO_TRY_ENV);
+         infos_out, configs_out, anomalies_out, ACE_TRY_ENV);
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
 	(ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
 					 ACE_SCOPE_THREAD),
 	 ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
 					 ACE_SCOPE_THREAD),
-	 infos.out (), configs.out (), anomalies.out (), TAO_TRY_ENV);
+	 infos.out (), configs.out (), anomalies.out (), ACE_TRY_ENV);
 #endif /* ! __SUNPRO_CC */
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
-      ACE_Scheduler_Factory::dump_schedule (infos.in (), 
+      ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             configs.in (),
                                             anomalies.in (),
                                             "Scheduler_Runtime.cpp");
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Dump_Schedule");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

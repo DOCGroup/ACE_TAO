@@ -1,3 +1,10 @@
+Mon Jun 28 21:41:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp,
+          orbsvcs/Scheduling_Service/Scheduling_Service.cpp,
+          orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: Replaced TAO TRY macros
+          with ACE TRY macros.
+
 Mon Jun 28 19:28:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Generic_Servant/MyFooServant.cpp: Removed #define
