@@ -105,13 +105,13 @@ module wstr_b_skip
   };
 };
 
-interface foo {};
+interface bloo {};
 
 module obj_u_skip
 {
   module obj_u_hump
   {
-    typedef sequence<foo> obj_u_skip;
+    typedef sequence<bloo> obj_u_skip;
   };
 };
 
@@ -119,7 +119,7 @@ module obj_b_skip
 {
   module obj_b_hump
   {
-    typedef sequence<foo> obj_b_skip;
+    typedef sequence<bloo> obj_b_skip;
   };
 };
 
