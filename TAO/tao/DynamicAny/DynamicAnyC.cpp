@@ -1000,6 +1000,7 @@ TAO_NAMESPACE_END
   {
     DynamicAny::DynAny **tmp = ACE_static_cast (DynamicAny::DynAny**, target);
     *tmp = DynamicAny::DynAny::_narrow (src, ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   CORBA_Object*
@@ -1494,11 +1495,14 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::NameVa
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (DynamicAny::_tc_NameValuePair, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+    
+    CORBA::Boolean result = 
+      type->equivalent (DynamicAny::_tc_NameValuePair, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+    
+    if (!result)
+      return 0; // not equivalent
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1583,11 +1587,14 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::NameVa
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (DynamicAny::_tc_NameValuePairSeq, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+
+    CORBA::Boolean result = 
+      type->equivalent (DynamicAny::_tc_NameValuePairSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+    
+    if (!result)
+      return 0; // not equivalent
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1686,11 +1693,14 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::AnySeq
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (DynamicAny::_tc_AnySeq, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
+
+    CORBA::Boolean result = 
+      type->equivalent (DynamicAny::_tc_AnySeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
+    
+    if (!result)
+      return 0; // not equivalent
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(

@@ -118,11 +118,16 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
       CORBA::TypeCode_var s_out2 = ftc1->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (s_out2.in ()->equal (data.m_typecode1))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       // Not yet implemented.
 #if 0
@@ -139,14 +144,22 @@ Test_DynUnion::run_test (void)
 
       DynamicAny::DynAny_var dp2 = ftc1->get_discriminator (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (dp2->type (ACE_TRY_ENV)->kind ()
-          == ftc1->discriminator_kind (ACE_TRY_ENV))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
-      else
-        ++this->error_count_;
 
+      CORBA::TypeCode_var tc2 = dp2->type (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      CORBA::TCKind kind = ftc1->discriminator_kind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (tc2->kind () == kind)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing:member/member_kind/member_name\n"));
@@ -157,15 +170,20 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
       CORBA::TCKind tk = ftc1->member_kind (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::TypeCode_var tc = dp3->get_typecode (ACE_TRY_ENV);
+      CORBA::TypeCode_var tc3 = dp3->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (!ACE_OS::strcmp (m_nm.in (), "tc")
           && tk == CORBA::tk_TypeCode
-          && data.m_typecode1->equal (tc.in ()))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+          && data.m_typecode1->equal (tc3.in ()))
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_TRY_CHECK;
 

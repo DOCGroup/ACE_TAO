@@ -121,6 +121,7 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref,
   ACE_TRY
     {
       this->init_parameters (objref, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::TypeCode_out out (this->out_);
 
