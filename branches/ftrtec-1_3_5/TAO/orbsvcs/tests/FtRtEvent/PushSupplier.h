@@ -60,6 +60,8 @@ private:
   CORBA::ULong seq_no_;
   ReactorTask reactor_task_;
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
+  bool in_timeout_handler_;
+
   PushSupplier_impl(const PushSupplier_impl&);
   void operator==(const PushSupplier_impl&);
 };
