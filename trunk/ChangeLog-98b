@@ -1,10 +1,10 @@
 Fri Nov  6 23:08:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process.cpp (spawn): Set result correctly when execvp() is
- 	  called.  Also, make sure to check for putenv() failing.  Thanks
- 	  to David Levine for pointing this out.
+        * ace/Process.cpp (spawn): Set result correctly when execvp() is
+          called.  Also, make sure to check for putenv() failing.  Thanks
+          to David Levine for pointing this out.
 
-	* tests/Env_Value_Test.cpp: Reformatted the test a bit.
+        * tests/Env_Value_Test.cpp: Reformatted the test a bit.
 
 Fri Nov 06 22:41:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -15,7 +15,7 @@ Fri Nov 06 22:41:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h,Basic_Types.h: moved ACE_UINT64_FORMAT_SPECIFIER from
           OS.h to Basic_Types.h, because other 64-bit int support is
-          there.  Changes default ACE_UINT64_FORMAT_SPECIFIER to
+          there.  Changed default ACE_UINT64_FORMAT_SPECIFIER to
           "%llu", because that's what Solaris 2.x uses.
 
         * ace/config-win32-common.h,ace/config-linux-common.h: added
