@@ -1,6 +1,11 @@
+Thu Nov 18 22:49:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.lst: DISABLED Process_Manager_Test
+          because it fails on Solaris and HPUX_aCC.
+
 Thu Nov 18 20:47:49 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* THANKS: added Marcelo Matus <mmatus@dinha.acms.arizona.edu>
+        * THANKS: added Marcelo Matus <mmatus@dinha.acms.arizona.edu>
 
 Thu Nov 18 19:44:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
