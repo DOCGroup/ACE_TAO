@@ -1,3 +1,22 @@
+Tue May 15 20:37:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process_Mutex.{h cpp inl}: (Follow up to Thu May 10 change
+          later reverted on Mon May 14). Changed the preprocessor macros
+          that select use of ACE_SV_Semaphore_Complex over ACE_Mutex
+          as the underlying mechanism for ACE_Process_Mutex. If
+          ACE_HAS_SYSV_IPC is set in config.h, ACE_SV_Semaphore_Complex
+          is used, unless the new macro ACE_USES_MUTEX_FOR_PROCESS_MUTEX
+          is also set. If ACE_HAS_SYSV_IPC is not enabled, ACE_Mutex
+          is used, regardless of any other setting.
+          Also, doxygen-ized the member function comments.
+
+        * ace/Malloc.h: If ACE_Process_Mutex is to be used with
+          ACE_HAS_MALLOC_STATS, include ace/Process_Mutex.h, not Synch_T.h.
+
+        * tests/libDLL_Test.icc: Changed this to correctly generate shr.o,
+          not libDLL_Test.o, for insertion into libDLL_Test.a. This lets
+          it get picked up correctly from DLL_Test.
+
 Tue May 15 18:00:49 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: Added support for a new config macro,

@@ -23,8 +23,8 @@
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_MALLOC_STATS)
-#include "ace/Synch_T.h"
 #if defined (ACE_HAS_THREADS)
+#include "ace/Process_Mutex.h"
 #define ACE_PROCESS_MUTEX ACE_Process_Mutex
 #else
 #include "ace/SV_Semaphore_Simple.h"

@@ -4,7 +4,7 @@ include "vacpp_setup.icc"
 
 if $__TOS_AIX__ {
     TargetType = "shr"
-    TargetName = "libDLL_Test.o"
+    TargetName = "shr.o"
 }
 
 option
@@ -19,7 +19,7 @@ option
            source platformLinkLibs
         }
 if $__TOS_AIX__ {
-        run after targets( TargetName ) "ar -r -u libDLL_Test.a libDLL_Test.o"
+        run after targets( TargetName ) "ar -r -u libDLL_Test.a shr.o"
         run cleanup targets ( TargetName ) "rm -rf libDLL_Test.a"
 }
 
