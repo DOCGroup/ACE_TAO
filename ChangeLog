@@ -1,9 +1,9 @@
 Sun May 16 13:11:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
-          Don't run the Process_Strategy_Test with Cygwin. It hangs and
-          prevents the rest of the tests being ran. Will look into this later
-          but we need to know if other tests also fail.
+          Move the Process_Strategy_Test to the end of this file. It fails
+          with Cygwin and hangs and prevents the other tests of running. So
+          when it is last we will see the results of more tests on Cygwin.
 
 Sun May 16 12:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
