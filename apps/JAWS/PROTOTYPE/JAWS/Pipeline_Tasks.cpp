@@ -28,17 +28,20 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
     {
     case JAWS_IO_Handler::ACCEPT_OK:
       result = 0;
+      ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
       // At this point need to move to the next task in the pipeline!
-      // The framework will automatically call the next stage.
+      // The framework should automatically call the next stage.
       break;
     case JAWS_IO_Handler::ACCEPT_ERROR:
       result = -1;
+      ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_ERROR");
       // Should recycle the thread
       break;
     default:
       result = -1;
+      ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
       // Should mean that the IO is asynchronous, and the word isn't out
-      // yet
+      // yet.
       break;
     }
 
@@ -52,7 +55,9 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>;
 template class ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
 #pragma instantiate ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
