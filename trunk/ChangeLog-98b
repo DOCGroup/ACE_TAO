@@ -21,28 +21,32 @@ Fri Sep  4 13:53:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Sep 04 11:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/XtReactor_Test.cpp (main): Removed '.cpp' from
-	  ACE_START_TEST title string.  Thanks to Ossama for reporting
-	  this. 
+        * tests/XtReactor_Test.cpp (main): Removed '.cpp' from
+          ACE_START_TEST title string.  Thanks to Ossama for reporting
+          this.
 
-	* Makefile (CONTROLLED_FILES): Removed some documents from the
-	  list because they are in docs/ now.
+        * Makefile (CONTROLLED_FILES): Removed some documents from the
+          list because they are in docs/ now.
 
-	* tests/run_tests.bat: Removed trailing '.cpp' from
-	  Message_Queue_Notifications_Test.  Thanks to Erickson, Jack
-	  <JErickson@exchange.ml.com> for reporting this.
-	
-	* ace/OS.i (signal): Added check for ACE_WIN32 to defeat the
-	  effect of !defined (ACE_LACKS_UNIX_SIGNALS).  Although Win32
-	  does has ACE_LACKS_UNIX_SIGNALS defined, it also has limited
-	  support for signals.  Thanks to XuYifeng <wj@public.hz.zj.cn>
-	  for reporting this.
+        * tests/run_tests.bat: Removed trailing '.cpp' from
+          Message_Queue_Notifications_Test.  Thanks to Erickson, Jack
+          <JErickson@exchange.ml.com> for reporting this.
+
+        * ace/OS.i (signal): Added check for ACE_WIN32 to defeat the
+          effect of !defined (ACE_LACKS_UNIX_SIGNALS).  Although Win32
+          does has ACE_LACKS_UNIX_SIGNALS defined, it also has limited
+          support for signals.  Thanks to XuYifeng <wj@public.hz.zj.cn>
+          for reporting this.
 
 Fri Sep 04 07:26:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.bin.GNU,wrapper_macros.GNU:
           moved VBIN definition from rules.bin.GNU to wrapper_macros.GNU.
           With this change, individual Makefiles need not define VBIN.
+
+        * tests/run_tests.sh: removed -f so that temp file removal
+          works properly.  Don't printout ipcs output unless it
+          changes, for resources owned by the user.
 
 Fri Sep 04 01:01:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
