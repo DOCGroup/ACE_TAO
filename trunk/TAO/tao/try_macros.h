@@ -40,6 +40,7 @@
 // TAO_*_SYS macros don't declare a new environment variable but use
 // existing ones.
 #define TAO_TRY_SYS do { try {
+#define TAO_TRY_SYS_EX(LABEL) do { try {
 #define TAO_TRY_EX(LABEL) do { CORBA_Environment TAO_TRY_ENV; try {
 
 #define TAO_CATCH(TYPE,VAR) } catch (TYPE & VAR) { ACE_UNUSED_ARG (VAR);
@@ -57,6 +58,7 @@
 // No need to do checking, exception handling does it for us.
 #define TAO_CHECK_ENV
 #define TAO_CHECK_ENV_SYS
+#define TAO_CHECK_ENV_SYS_EX(LABEL)
 #define TAO_CHECK_ENV_EX(LABEL)
 #define TAO_CHECK_ENV_RETURN(X, Y)
 #define TAO_CHECK_ENV_SYS_RETURN(X, Y)
@@ -148,6 +150,13 @@ TAO_TRY_LABEL ## LABEL: \
 if (TAO_TRY_FLAG) \
 do {
 
+#define TAO_TRY_SYS_EX(LABEL) \
+do { \
+int TAO_TRY_FLAG = 1; \
+TAO_TRY_LABEL ## LABEL: \
+if (TAO_TRY_FLAG) \
+do {
+
 // Each CATCH statement ends the previous scope and starts a new one.
 // Since all CATCH statements can end the TAO_TRY macro, they must all
 // start a new scope for the next potential TAO_CATCH.  The TAO_ENDTRY
@@ -192,8 +201,18 @@ if (ENV.exception () != 0) \
   } \
 }
 
+#define TAO_CHECK_ENV_BASE_EX(ENV,LABEL) \
+{\
+if (ENV.exception () != 0) \
+  { \
+    TAO_TRY_FLAG = 0; \
+    goto TAO_TRY_LABEL ## LABEL; \
+  } \
+}
+
 #define TAO_CHECK_ENV TAO_CHECK_ENV_BASE(TAO_TRY_ENV)
 #define TAO_CHECK_ENV_SYS TAO_CHECK_ENV_BASE(env)
+#define TAO_CHECK_ENV_SYS_EX(LABEL) TAO_CHECK_ENV_BASE_EX(env,LABEL)
 
 // Same as above but for TAO_TRY_EX
 #define TAO_CHECK_ENV_EX(LABEL) \
