@@ -425,7 +425,8 @@ public:
                                 off_t minimum_bytes = 0,
                                 u_int flags = 0,
                                 int guess_on_fault = 1,
-                                LPSECURITY_ATTRIBUTES sa = 0);
+                                LPSECURITY_ATTRIBUTES sa = 0,
+                                mode_t file_mode = ACE_DEFAULT_FILE_PERMS);
 
   /// Base address of the memory-mapped backing store.
   const void *base_addr_;
@@ -464,6 +465,8 @@ public:
   /// Pointer to a security attributes object.  Only used on NT.
   LPSECURITY_ATTRIBUTES sa_;
 
+  /// File mode for mmaped file, if it is created.
+  mode_t file_mode_;
 };
 
 /**
@@ -607,6 +610,8 @@ protected:
   /// Security attributes object, only used on NT.
   LPSECURITY_ATTRIBUTES sa_;
 
+  /// Protection mode for mmaped file.
+  mode_t file_mode_;
 };
 
 /**
