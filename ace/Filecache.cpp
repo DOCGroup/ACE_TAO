@@ -1,18 +1,5 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    apps
-// 
-// = FILENAME
-//    Filecache.cpp
-//
-// = AUTHOR
-//    James Hu
-// 
-// ============================================================================
-
 #include "ace/Filecache.h"
 
 static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
@@ -101,35 +88,31 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const char * filename, int size)
 ACE_Filecache_Handle::~ACE_Filecache_Handle (void)
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
-    {
-      // this was dup ()'d
-      ACE_OS::close (this->handle_);
-    }
+    // this was dup ()'d
+    ACE_OS::close (this->handle_);
 
   if (this->file_ != 0)
-    {
-      switch (this->file_->action ())
-        {
-        case ACE_Filecache_Object::WRITING:
-          this->file_->release ();
-          // assert (this->file_->reference_count () == 0);
-          // put it into the CVF
-          ACE_Filecache::instance ()->replace (this->file_);
-          break;
+    switch (this->file_->action ())
+      {
+      case ACE_Filecache_Object::WRITING:
+	this->file_->release ();
+	// assert (this->file_->reference_count () == 0);
+	// put it into the CVF
+	ACE_Filecache::instance ()->replace (this->file_);
+	break;
 
-        default:
-          // last one using a stale file is resposible for deleting it
-          if (this->file_->release () == 0)
-            delete this->file_;
-          break;
-        }
-    }
+      default:
+	// last one using a stale file is resposible for deleting it
+	if (this->file_->release () == 0)
+	  delete this->file_;
+	break;
+      }
 }
 
 void *
 ACE_Filecache_Handle::address (void) const
 {
-  return ((this->file_ == 0) ? 0 : this->file_->address ());
+  return this->file_ == 0 ? 0 : this->file_->address ();
 }
 
 ACE_HANDLE
@@ -137,7 +120,8 @@ ACE_Filecache_Handle::handle (void) const
 {
   if (this->handle_ == ACE_INVALID_HANDLE && this->file_ != 0)
     {
-      ACE_Filecache_Handle *mutable_this = (ACE_Filecache_Handle *)this;
+      ACE_Filecache_Handle *mutable_this = 
+	(ACE_Filecache_Handle *) this;
       mutable_this->handle_ = ACE_OS::dup (this->file_->handle ());
     }
   return this->handle_;
@@ -442,15 +426,13 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char * filename, int size)
   this->action (ACE_Filecache_Object::WRITING);
   
   // Can we access the file?
-  if (ACE_OS::access (this->filename_, R_OK|W_OK) == -1)
-    {
+  if (ACE_OS::access (this->filename_, R_OK|W_OK) == -1
       // Does it exist?
-      if (ACE_OS::access (this->filename_, F_OK) != -1)
-        {
-          // File exists, but we cannot access it.
-          this->error (ACE_Filecache_Object::ACCESS_FAILED);
-          return;
-        }
+      && ACE_OS::access (this->filename_, F_OK) != -1)
+    {
+      // File exists, but we cannot access it.
+      this->error (ACE_Filecache_Object::ACCESS_FAILED);
+      return;
     }
 
   this->tempname_ = ACE_OS::tempnam (".", "zJAWS");
