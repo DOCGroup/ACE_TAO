@@ -1,3 +1,11 @@
+Tue Sep 29 00:18:22 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* examples/POA/FindPOA/run_test.pl 
+	* examples/POA/Forwarding/run_test.pl
+ 	  Perl escripts to run the tests in their respective
+	  directories. The Forwarding script is kinda hairy and was a pain 
+	  in the tookas. 
+
 Mon Sep 28 21:35:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.cpp: removed #define ACE_BUILD_DLL.
