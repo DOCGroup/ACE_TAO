@@ -32,10 +32,6 @@
 #include "tao/principa.h"
 #include "tao/xdr.h"
 
-#if defined (HAVE_WIDEC_H)
-#  include <widec.h>
-#endif /* HAVE_WIDEC_H */
-
 // I/O for 64 bit quantities -- integers, doubles
 
 CORBA_Boolean
@@ -89,7 +85,7 @@ XDR_stream::encoder (CORBA_TypeCode_ptr  tc,
   CORBA_Boolean	continue_encoding = CORBA_B_TRUE;
   XDR_stream		*stream = (XDR_stream *)context;
 
-  switch (tc->_kind) 
+  switch (tc->kind_) 
     {
     case tk_null:
     case tk_void:
@@ -153,11 +149,11 @@ XDR_stream::encoder (CORBA_TypeCode_ptr  tc,
 
 	tc2 = *(CORBA_TypeCode_ptr *)data;
 
-	continue_encoding = stream->put_ulong ((CORBA_ULong) tc2->_kind);
+	continue_encoding = stream->put_ulong ((CORBA_ULong) tc2->kind_);
 	if (continue_encoding == CORBA_B_FALSE)
 	  break;
 
-	switch (tc2->_kind) 
+	switch (tc2->kind_) 
 	  {
 	    // Most TypeCodes have empty parameter lists
 	  default:
@@ -168,7 +164,7 @@ XDR_stream::encoder (CORBA_TypeCode_ptr  tc,
 	    //
 	  case tk_string:
 	  case tk_wstring:
-	    continue_encoding = stream->put_ulong (tc2->_length);
+	    continue_encoding = stream->put_ulong (tc2->length_);
 	    break;
 
 	    //
@@ -195,8 +191,8 @@ XDR_stream::encoder (CORBA_TypeCode_ptr  tc,
 	    {
 	      u_int 	i;
 
-	      continue_encoding = stream->put_ulong (tc2->_length);
-	      for (i = 0; i < tc2->_length && continue_encoding; i++)
+	      continue_encoding = stream->put_ulong (tc2->length_);
+	      for (i = 0; i < tc2->length_ && continue_encoding; i++)
 		continue_encoding =
 		  stream->put_octet (tc2->_buffer [i]);
 	    }
@@ -325,8 +321,8 @@ XDR_stream::encoder (CORBA_TypeCode_ptr  tc,
 
     case tk_wstring:
       {
-	wchar_t		*str = *(wchar_t **) data;
-	CORBA_ULong		len, bounds;
+	wchar_t *str = *(wchar_t **) data;
+	CORBA_ULong len, bounds;
 
 	// Be nice to programmers: treat nulls as empty strings not
 	// errors.  (OMG-IDL supports languages that don't use the
@@ -346,7 +342,7 @@ XDR_stream::encoder (CORBA_TypeCode_ptr  tc,
 	bounds = tc->ulong_param (0, env);
 	if (env.exception () != 0)
 	  return CORBA_TypeCode::TRAVERSE_STOP;
-	len = wslen (str);
+	len = ACE_OS::strlen (str);
 	if (bounds != 0 && len > bounds) 
 	  {
 	    continue_encoding = CORBA_B_FALSE;
@@ -354,7 +350,7 @@ XDR_stream::encoder (CORBA_TypeCode_ptr  tc,
 	  }
 
 	// Encode the wide string, followed by a NUL character.
-	continue_encoding = stream->put_ulong (wslen (str) + 1);
+	continue_encoding = stream->put_ulong (ACE_OS::strlen (str) + 1);
 	while (continue_encoding != CORBA_B_FALSE && *str)
 	  continue_encoding = stream->put_wchar (*str++);
 	stream->put_wchar (0);
@@ -401,7 +397,7 @@ XDR_stream::decoder (CORBA_TypeCode_ptr  tc,
   CORBA_Boolean	continue_decoding = CORBA_B_TRUE;
   XDR_stream			*stream = (XDR_stream *)context;
 
-  switch (tc->_kind) 
+  switch (tc->kind_) 
     {
     case tk_null:
     case tk_void:

@@ -19,23 +19,7 @@
 // 
 // ============================================================================
 
-#if 0
-#include "tao/orb.h"
-#include "tao/align.h"
-#include "tao/cdr.h"
-#endif
-
 #include "tao/corba.h"
-
-#if	defined (HAVE_WIDEC_H)
-#		include <widec.h>
-#else
-extern "C" 
-{
-  u_int wslen (const CORBA::WChar *);
-  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
-}
-#endif /* HAVE_WIDEC_H */
 
 TAO_Marshal_Factory* TAO_Marshal::DEFAULT_MARSHAL_FACTORY = 0;
 
@@ -108,7 +92,7 @@ TAO_Marshal_Object* TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_pt
   env.clear ();
   if (tc)
     {
-      switch (tc->_kind)
+      switch (tc->kind_)
 	{
 	case CORBA::tk_null:
 	case CORBA::tk_void:

@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+
 // CORBA dup/release build on top of COM's (why not).
 
 ACE_INLINE void

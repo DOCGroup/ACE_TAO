@@ -19,19 +19,20 @@
 // ============================================================================
 
 #if !defined (TAO_REQUEST_H)
-#  define TAO_REQUEST_H
+#  define TAO_REQUEST_ H
+
+// @@ Please comment everything in this file.
 
 class ACE_Svc_Export CORBA_Request : public IUnknown
 {
 public:
-  // XXX these should not be inlined
-
-  CORBA::Object_ptr target (void) const { return _target; }
-  const CORBA::Char *operation (void) const { return _opname; }
-  CORBA::NVList_ptr arguments (void) { return _args; }
-  CORBA::NamedValue_ptr result (void) { return _result; }
-  CORBA::ExceptionList_ptr exceptions (void) { return &_exceptions; }
-  CORBA::Environment *env (void) { return &_env; }
+  // @@ These inlines should be moved into a *.i file.
+  CORBA::Object_ptr target (void) const { return target_; }
+  const CORBA::Char *operation (void) const { return opname_; }
+  CORBA::NVList_ptr arguments (void) { return args_; }
+  CORBA::NamedValue_ptr result (void) { return result_; }
+  CORBA::ExceptionList_ptr exceptions (void) { return &exceptions_; }
+  CORBA::Environment *env (void) { return &env_; }
 
   void invoke (void);
   void send_oneway (void);
@@ -57,13 +58,13 @@ private:
 
   virtual ~CORBA_Request (void);
 
-  CORBA::Object_ptr _target;
-  const CORBA::Char *_opname;
-  CORBA::NVList_ptr _args;
-  CORBA::NamedValue_ptr _result;
+  CORBA::Object_ptr target_;
+  const CORBA::Char *opname_;
+  CORBA::NVList_ptr args_;
+  CORBA::NamedValue_ptr result_;
   CORBA::Flags _flags;
-  CORBA::Environment _env;
-  CORBA::ExceptionList _exceptions;
+  CORBA::Environment env_;
+  CORBA::ExceptionList exceptions_;
 
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;

@@ -10,33 +10,16 @@
 // the modules knowing about IIOP.  In the future, a looser coupling
 // between OA initialiszation and protocol components is desired.
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "tao/orb.h"
-#include "tao/poa.h"
-
-// XXX this should not know implementation or other details of any
-// protocol modules!  This is an implementation shortcut only.
-
-#include "tao/iioporb.h"
-#endif  /* 0 */
-
 #include "tao/corba.h"
 
 // {A201E4C8-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_POA,
 0xa201e4c8, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98) ;
 
-#if !defined (__ACE_INLINE__) 
-#  include "poa.i"
-#endif
-
 // CORBA_POA::init() is used in get_poa() and get_named_poa() in order
-// to initialize the OA.  It was originally part of ROA, and may no
+// to initialize the OA.  It was originally part of POA, and may no
 // longer be useful.
+
 CORBA::POA_ptr
 CORBA_POA::init (CORBA::ORB_ptr parent,
                  ACE_INET_Addr &,
@@ -141,7 +124,7 @@ CORBA_POA::get_key (CORBA::Object_ptr,
 void
 CORBA_POA::please_shutdown (CORBA::Environment &env)
 {
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, poa_mon, lock_));
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, poa_mon, lock_));
 
   env.clear ();
   do_exit_ = CORBA::B_TRUE;
@@ -151,7 +134,7 @@ CORBA_POA::please_shutdown (CORBA::Environment &env)
 void
 CORBA_POA::clean_shutdown (CORBA::Environment &env)
 {
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, poa_mon, lock_));
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, poa_mon, lock_));
 
   env.clear ();
 
@@ -258,7 +241,7 @@ CORBA_POA::get_poa (CORBA::ORB_ptr orb,
 
         internet->Release ();
 
-        // ROA initialization with null name means anonymous OA
+        // POA initialization with null name means anonymous OA
 
         ACE_INET_Addr anonymous ((u_short) 0, (ACE_UINT32) INADDR_ANY);
 
@@ -438,7 +421,7 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
 ULONG __stdcall
 CORBA_POA::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, poa_mon, com_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, poa_mon, com_lock_, 0));
   return ++refcount_;
 }
 
@@ -446,7 +429,7 @@ ULONG __stdcall
 CORBA_POA::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, poa_mon, com_lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, poa_mon, com_lock_, 0));
 
     if (--refcount_ != 0)
       return refcount_;

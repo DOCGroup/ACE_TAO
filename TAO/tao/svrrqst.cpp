@@ -4,18 +4,6 @@
 //
 // Implementation of the Dynamic Server Skeleton Interface
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#include "tao/svrrqst.h"
-#include "tao/nvlist.h"
-#include "tao/debug.h"
-#endif
-
 #include "tao/corba.h"
 
 // {77420086-F276-11ce-9598-0000C07CA898}
@@ -26,9 +14,19 @@ DEFINE_GUID (IID_IIOP_ServerRequest,
 DEFINE_GUID (IID_CORBA_ServerRequest,
 0x4b48d881, 0xf7f0, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-#if !defined (__ACE_INLINE__)
-#  include "svrrqst.i"
-#endif /* __ACE_INLINE__ */
+IIOP_ServerRequest::IIOP_ServerRequest (CDR *msg,
+                                        CORBA::ORB_ptr the_orb,
+                                        CORBA::POA_ptr the_poa)
+  : incoming_ (msg),
+    params_ (0), 
+    retval_ (0),
+    exception_ (0),
+    ex_type_ (CORBA::NO_EXCEPTION),
+    refcount_ (1),
+    orb_ (the_orb),
+    poa_ (the_poa)
+{
+}
 
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {
@@ -45,7 +43,7 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
 ULONG __stdcall
 IIOP_ServerRequest::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
   ACE_ASSERT (refcount_ > 0);
   return refcount_++;
@@ -55,7 +53,7 @@ ULONG __stdcall
 IIOP_ServerRequest::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
 
     ACE_ASSERT (this != 0);
 

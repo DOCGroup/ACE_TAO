@@ -64,21 +64,22 @@ private:
 };
 
 class ACE_Svc_Export CORBA_NVList
-{
   // = TITLE
-  // NVList ... this is used in the (client side) DII (Dynamic
-  // Invocation Interface) to hold parameters, except for the return
-  // parameter. It's used in the same role in the (server side) DSI
-  // (Dynamic Skeleton Interface).
+  //   NVList ... this is used in the (client side) DII (Dynamic
+  //   Invocation Interface) to hold parameters, except for the return
+  //   parameter. It's used in the same role in the (server side) DSI
+  //   (Dynamic Skeleton Interface).
   //
-  // Each user (client, server) provides the typecode and memory for
-  // each parameter using an NVList, then talks to the ORB using a
-  // Request or ServerRequest pseudo-object.  The ORB copies data
-  // to/from the IPC messages (e.g. IIOP::Request, IIOP::Response) as
-  // appropriate.
+  // = DESCRIPTION
+  //   Each user (client, server) provides the typecode and memory for
+  //   each parameter using an NVList, then talks to the ORB using a
+  //   Request or ServerRequest pseudo-object.  The ORB copies data
+  //   to/from the IPC messages (e.g. IIOP::Request, IIOP::Response)
+  //   as appropriate.
+{
 public:
   CORBA::ULong count (void) const
-  { return _len; }
+  { return len_; }
 
   CORBA::NamedValue_ptr add_value (const CORBA::Char *_FAR ,
 				   const CORBA::Any _FAR &,
@@ -86,7 +87,7 @@ public:
 				   CORBA::Environment _FAR &);
 
   CORBA::NamedValue_ptr item (CORBA::Long n) const
-  { return &_values [(u_int) n]; }
+  { return &values_ [(u_int) n]; }
 
   ~CORBA_NVList (void);
 
@@ -99,16 +100,16 @@ public:
 
 private:
   // @@ Do we really need to keep these _FAR macros?
-  CORBA::NamedValue *_FAR _values;
-  u_int _max;
-  u_int _len;
+  CORBA::NamedValue *_FAR values_;
+  u_int max_;
+  u_int len_;
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
 
   CORBA_NVList (void)
-    : _values (0), 
-    _max (0),
-    _len (0), 
+    : values_ (0), 
+    max_ (0),
+    len_ (0), 
     refcount_ (1)
   { }
 

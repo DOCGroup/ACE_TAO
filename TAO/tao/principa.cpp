@@ -3,16 +3,6 @@
 // All Rights Reserved
 //
 // ORB:		Principal identifier pseudo-objref
-//
-
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "tao/orb.h"
-#include "tao/principa.h"
-#endif
 
 #include "tao/corba.h"
 
@@ -41,9 +31,7 @@ CORBA_Principal::~CORBA_Principal (void)
     delete [] id.buffer;
 }
 
-//
 // For COM -- IUnKnown operations
-//
 
 // {A201E4C0-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Principal,
@@ -53,7 +41,7 @@ DEFINE_GUID (IID_CORBA_Principal,
 ULONG __stdcall
 CORBA_Principal::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->lock_, 0));
 
   return ++refcount_;
 }
@@ -62,7 +50,7 @@ ULONG __stdcall
 CORBA_Principal::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
 
     if (--refcount_ != 0)
       return refcount_;

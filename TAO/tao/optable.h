@@ -49,16 +49,16 @@ public:
   virtual ~TAO_Operation_Table (void);
 };
 
-// Dynamic hashing. 
-// We use template specialization here to use const char* as
-// the external ID. The template specialization is needed since the "hash"
-// method is not defined on type "char *".
-typedef ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> OP_MAP_MANAGER;
+// Dynamic hashing.  We use template specialization here to use const
+// char* as the external ID. The template specialization is needed
+// since the "hash" method is not defined on type "char *".
+typedef ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> 
+        OP_MAP_MANAGER;
 
 class ACE_Svc_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
-{
   // = TITLE
   // Dynamic Hashing scheme for CORBA IDL operation name lookup
+{
 public:
   TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db, CORBA::ULong
 			    dbsize, CORBA::ULong hashtblsize = 0);
@@ -88,9 +88,9 @@ private:
 };
 
 struct ACE_Svc_Export TAO_Linear_OpTable_Entry
-{
   // = TITLE
-  // Table entry for linear search lookup strategy
+  //   Table entry for linear search lookup strategy.
+{
   CORBA::String opname_;
   // holds the operation name
 
@@ -105,6 +105,7 @@ struct ACE_Svc_Export TAO_Linear_OpTable_Entry
 };
 
 class ACE_Svc_Export TAO_Linear_OpTable : public TAO_Operation_Table
+// @@ Please comment me.
 {
 public:
   TAO_Linear_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
@@ -138,8 +139,8 @@ private:
 };
 
 struct ACE_Svc_Export TAO_Active_Demux_OpTable_Entry
-// = TITLE
-// Active Demux lookup table entry
+  // = TITLE
+  //   Active Demux lookup table entry.
 {
   TAO_Skeleton skel_ptr_;
   // skeleton pointer corresponding to the index
@@ -152,10 +153,10 @@ struct ACE_Svc_Export TAO_Active_Demux_OpTable_Entry
 };
 
 class ACE_Svc_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
+  // = TITLE
+  //   Implements the active demultiplexed lookup strategy. The key is
+  //   assumed to provide an index directly into the internal table.
 {
-  // =TITLE
-  // Implements the active demultiplexed lookup strategy. The key is assumed to
-  // provide an index directly into the internal table
 public:
   TAO_Active_Demux_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
   // Constructor
@@ -190,8 +191,8 @@ class ACE_Svc_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
 {
 };
 
-
 class ACE_Svc_Export TAO_Operation_Table_Parameters
+// @@ Please comment me.
 {
 public:
   enum DEMUX_STRATEGY
@@ -231,14 +232,15 @@ private:
   // the enumerated value indicating the lookup strategy
 };
 
-typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX> TAO_OP_TABLE_PARAMETERS;
-// define a singleton instance of operation table parameters
+// Define a singleton instance of operation table parameters.
+typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX> 
+        TAO_OP_TABLE_PARAMETERS;
 
 class ACE_Svc_Export TAO_Operation_Table_Factory
+  // = TITLE
+  //   Factory for producing operation table lookup objects based on
+  //   the enumerated value of strategy held by the parameters.
 {
-  // =TITLE
-  // Factory for producing operation table lookup objects based on the
-  // enumerated value of strategy held by the parameters
 public:
   TAO_Operation_Table *opname_lookup_strategy (void);
   // return an instance of the specified lookup strategy
@@ -250,7 +252,8 @@ public:
   // destructor
 };
 
-typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_OP_TABLE_FACTORY;
-// define a singleton instance of the operation table factory
+// Define a singleton instance of the operation table factory.
+typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_SYNCH_RECURSIVE_MUTEX> 
+        TAO_OP_TABLE_FACTORY;
 
 #endif /* TAO_OPTABLE_H */

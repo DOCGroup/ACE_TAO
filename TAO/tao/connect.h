@@ -82,6 +82,7 @@ public:
   // @@ Please document me...
 
 protected:
+  // @@ Please document all these methods and fields.
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 

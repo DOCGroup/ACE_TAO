@@ -23,16 +23,7 @@
 #if !defined (TAO_ORBOBJ_H)
 #  define TAO_ORBOBJ_H
 
-#if 0
-#  include "ace/OS.h"
-
-#  include "tao/factories.h"
-#  include "tao/params.h"
-#endif /* 0 */
-
 #include "tao/corba.h"
-#include "tao/connect.h"
-#include "tao/orb.h"
 
 class ACE_Svc_Export CORBA_ORB : public IUnknown
   // = TITLE
