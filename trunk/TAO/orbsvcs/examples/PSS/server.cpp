@@ -78,19 +78,13 @@ main (int argc, char *argv[])
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Simple_Naming::Name name = "Server";
+      Simple_Naming::Name name = CORBA::string_dup ("Server");
 
       // Bind the name to stringified objecte refernce
       simple_naming->bind (CORBA::string_dup (name),
                            string_obj_ref.in ()
                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      /*
-        ACE_DEBUG ((LM_DEBUG,
-                    "An entry for %s is binded\n",
-                    name));
-      */
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
