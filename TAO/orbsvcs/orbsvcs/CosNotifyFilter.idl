@@ -19,8 +19,8 @@
 #define _COS_NOTIFY_FILTER_IDL_
 #pragma prefix "omg.org"
 
-#include <orb.idl>
-#include <CosNotifyComm.idl>
+#include "orb.idl"
+#include "CosNotifyComm.idl"
 
 module CosNotifyFilter {
 
