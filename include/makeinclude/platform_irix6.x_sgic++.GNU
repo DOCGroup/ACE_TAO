@@ -11,6 +11,9 @@ endif
 ifeq (,$(optimize))
   optimize = 1
 endif
+ifeq (,$(threads))
+  threads = 1
+endif
 
 include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 
@@ -23,7 +26,12 @@ LD		= $(CXX)
 # Basic flags
 
 # In Irix 6.2 w/o the thread patches this macro should have no effect.
-CPPFLAGS	+= -D_SGI_MP_SOURCE
+ifeq ($(threads),1)
+	CPPFLAGS	+= -D_SGI_MP_SOURCE
+else
+	CPPFLAGS	+= -DACE_MT_SAFE=0
+endif
+
 OCCFLAGS	+= -O -OPT:Olimit=0
 DCCFLAGS	+= -g
 
@@ -53,7 +61,9 @@ LDFLAGS		+= -Wl,-woff,133
 # You need to remove this if you are using 6.2 without the Pthread
 # patches or if you want to compile without threads support.
 ifndef DONT_LINK_PTHREADS
- LIBS          += -lpthread
+ifeq ($(threads),1)
+	LIBS	+= -lpthread
+endif
 endif
 
 PIC		= -KPIC

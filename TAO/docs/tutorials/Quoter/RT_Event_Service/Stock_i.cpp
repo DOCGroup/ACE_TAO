@@ -44,7 +44,8 @@ Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
 
 Quoter_Stock_i::~Quoter_Stock_i (void)
 {
-  delete &this->supplier_personality_;
+  if (consumer_proxy_.in ())
+    consumer_proxy_->disconnect_push_consumer ();
 }
 
 char *

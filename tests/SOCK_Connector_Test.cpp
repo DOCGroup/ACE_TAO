@@ -122,7 +122,7 @@ find_another_host (ACE_TCHAR other_host[])
             {
                ACE_OS::strcpy (candidate[candidate_count].host_name,
                                h->h_name);
-               if (candidate_count++ >= MAX_CANDIDATES)
+               if (++candidate_count >= MAX_CANDIDATES)
                  break;
             }
         }

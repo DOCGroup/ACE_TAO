@@ -1,3 +1,20 @@
+Fri Jun  8 06:09:48 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp: Changed the
+	  ~Quoter_Stock_i so that it calls disconnect_push_consumer rather
+ 	  than deleting the tie.  Thanks to Dayisi <dayisi@163.com> for
+ 	  reporting this.
+
+Thu Jun  7 20:34:18 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp (open_services): Added support for the
+	  new -ORBServiceConfigLoggerKey option, which allows applications
+ 	  to specify which loggerkey to use for ORB logging.  Thanks to
+ 	  Paul Caffrey <pcaffrey@iel.ie> for reporting this.
+
+	* docs/Options.html: Added documentation for the new
+	  -ORBServiceConfigLoggerKey option.
+
 Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/Endpoint_Selector_Factory.cpp:
@@ -520,14 +537,13 @@ Mon Jun 11 11:26:38 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Updated certs to expire only after 10 years.
 	
 	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
-	(shutdown): 
-	  Modified the check parameters to go with the new certificates.
+  	  (shutdown): Modified the check parameters to go with the new
+	  certificates.  
 	
 Sun Jun 10 16:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Stub_Factory.cpp: Enclosed a debug statement within if
 	  statment. 
-	  
 
 Sat Jun 09 21:03:45 2001  Ossama Othman  <ossama@uci.edu>
 

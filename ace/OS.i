@@ -9300,17 +9300,12 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 # else
-  unsigned long count, result;
-  result = ::read_f (handle, buf, len, &count);
+  u_long count;
+  u_long result = ::read_f (handle, buf, len, &count);
   if (result != 0)
-    {
-      return ACE_static_cast (ssize_t, -1);
-    }
+    return ACE_static_cast (ssize_t, -1);
   else
-    {
-      return ACE_static_cast (ssize_t,
-                              (count = len ? count : 0));
-    }
+    return ACE_static_cast (ssize_t, count == len ? count : 0);
 # endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
 

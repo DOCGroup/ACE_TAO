@@ -458,7 +458,7 @@ public:
   // = Utility methods.
   /// 1 if locked, 0 if couldn't acquire the lock
   /// (errno will contain the reason for this).
-  int locked (void);
+  int locked (void) const;
 
   /// Explicitly remove the lock.
   int remove (void);

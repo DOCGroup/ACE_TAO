@@ -9,10 +9,9 @@
  *   Wrappers for various synchronization routines.
  *
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SYNCH_H
 #define ACE_SYNCH_H
@@ -719,12 +718,13 @@ public:
  *
  * Portable implementation of an Event mechanism, which is
  * native to Win32, but must be emulated on UNIX.  Note that
- * this only provides <USYNC_PROCESS> support on Win32 machines.
+ * this only provides global naming and <USYNC_PROCESS> support on
+ * Win32 machines.  
  */
 class ACE_Export ACE_Event
 {
 public:
-  /// Constructor which will create event.
+  /// Constructor that creates event.
   ACE_Event (int manual_reset = 0,
              int initial_state = 0,
              int type = USYNC_THREAD,
