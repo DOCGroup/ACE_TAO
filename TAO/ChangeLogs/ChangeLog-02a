@@ -1,3 +1,8 @@
+Mon Apr  2 16:17:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Fixed an error that showed up on static
+	  builds.  
+
 2001-04-02  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 
@@ -94,9 +99,8 @@ Mon Apr  2 13:07:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 	* orbsvcs/tests/Property/client.cpp:
 	* orbsvcs/tests/Property/main.cpp:
 
-	Fuzz..Fuzz...Fuzzzz
+	  Fuzz..Fuzz...Fuzzzz
 
->>>>>>> 1.3090
 Mon Apr  2 10:46:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TimeBase.pidl:

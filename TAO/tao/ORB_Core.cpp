@@ -62,15 +62,15 @@ TAO_default_environment ()
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
 
-const char * TAO_ORB_Core::resource_factory_name_ = 
+const char * TAO_ORB_Core::resource_factory_name_ =
   "Resource_Factory";
-const char * TAO_ORB_Core::protocols_hooks_name_ = 
+const char * TAO_ORB_Core::protocols_hooks_name_ =
   "Protocols_Hooks";
-const char * TAO_ORB_Core::dynamic_adapter_name_ = 
+const char * TAO_ORB_Core::dynamic_adapter_name_ =
   "Dynamic_Adapter";
-const char * TAO_ORB_Core::ifr_client_adapter_name_ = 
+const char * TAO_ORB_Core::ifr_client_adapter_name_ =
   "IFR_Client_Adapter";
-const char * TAO_ORB_Core::typecodefactory_adapter_name_ = 
+const char * TAO_ORB_Core::typecodefactory_adapter_name_ =
   "TypeCodeFactory_Adapter";
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
@@ -1409,32 +1409,15 @@ TAO_ORB_Core::bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV)
     {
       this->bidir_adapter_ =
       ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance ("BiDirGIOP_Loader");
-
-      if (this->bidir_adapter_ == 0)
-        {
-          // The Loader has not been statically configured, try to
-          // dynamically load it...
-          ACE_Service_Config::process_directive (
-              "dynamic BiDirGIOP_Loader Service_Object *"
-              "TAO_BiDirGIOP:_make_TAO_BiDirGIOP_Loader()");
-          this->bidir_adapter_ =
-            ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance ("BiDirGIOP_Loader");
-
-          if (this->bidir_adapter_ == 0)
-            {
-              if (TAO_debug_level > 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) Unable to BiDirectional \n")
-                                   ACE_TEXT ("GIOP library \n")),
-                                  -1);
-            }
-        }
     }
 
-  return this->bidir_adapter_->activate (this->orb_.in (),
-                                         0,
-                                         0,
-                                         ACE_TRY_ENV);
+  if (this->bidir_adapter_)
+      return this->bidir_adapter_->activate (this->orb_.in (),
+                                             0,
+                                             0,
+                                             ACE_TRY_ENV);
+  else
+    return 0;
 }
 
 void
