@@ -54,8 +54,6 @@ svr_worker (void *arg)
 int
 main (int argc, char **argv)
 {
-  int test_collocation = 0;
-
   ACE_Get_Opt get_opts (argc, argv, "s:c:");
   int c = -1;
   const char *client_cmd = 0;
