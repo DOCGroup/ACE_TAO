@@ -34,9 +34,9 @@
  *      Xyzzy_i (); // null constructor
  *      ~Xyzzy_i (); // destructor
  *      int parse_args (int argc, char * argv[]);
- *      int self_register (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+ *      int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
  *      int idle(int &result);
- *      int self_unregister (ACE_ENV_SINGLE_ARG_DECL);
+ *      int fini (ACE_ENV_SINGLE_ARG_DECL);
  *      const char * identity () const;
  *
  *      parse_args, self_register, self_unregister return 0 if ok, nonzero for error.

@@ -1,8 +1,27 @@
+Tue Sep 23 17:03:40 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        fix mpc->include path to find TAO/orbsvcs/orbsvcs/* stuff
+
+        * orbsvcs/tests/FT_App/FT_Replica.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h:
+        finish code (still untested) for ReplicaFactory.
+
+
+        * tao/Utils/ServantMain.h:
+        fix documentation
+
+        These changes were made in the oci_haft branch.
+
 Mon Sep 22 18:26:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: The
-	  set_component () created problems if we don't send a constant
-	  version of TAO_Tagged_Components. 
+  * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: The
+    set_component () created problems if we don't send a constant
+    version of TAO_Tagged_Components.
 
 Mon Sep 22 17:42:23 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp

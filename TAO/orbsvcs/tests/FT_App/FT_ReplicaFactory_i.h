@@ -140,6 +140,11 @@ public:
   // Implementation methods
 private:
   /**
+   * Actual replica creation happens in this method.
+   */
+  FT_TestReplica_i * createReplica();
+
+  /**
    * Find or allocate an ID for a new replica
    */
   CORBA::ULong allocateId();
@@ -147,7 +152,7 @@ private:
   /**
    * Write this factory's IOR to a file
    */
-  int write_IOR ();
+  int writeIOR (const char * outputFile, const char * ior);
 
   /**
    * Clean house for factory shut down.
@@ -157,6 +162,11 @@ private:
   ///////////////
   // Data Members
 private:
+
+  /**
+   * A human-readable string to distinguish this from other Notifiers.
+   */
+  ACE_CString identity_;
 
   /**
    * Protect internal state.
@@ -169,15 +179,11 @@ private:
   ACE_Mutex internals_;
   typedef ACE_Guard<ACE_Mutex> InternalGuard;
 
+  TAO_ORB_Manager * orbManager_;
   /**
    * The orb
    */
   CORBA::ORB_var orb_;
-
-  /**
-   * The poa for created objects.
-   */
-  PortableServer::POA_var poa_;
 
   /**
    * IOR of this object as assigned by orb.
@@ -187,7 +193,13 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const char * ior_output_file_;
+  const char * iorOutputFile;
+
+
+  /**
+   * A file to which the test replica's IOR will be written
+   */
+  const char * testOutputFile_;
 
   /**
    * A name to be used to register the factory with the name service.
@@ -202,11 +214,6 @@ private:
    * Quit on idle flag.
    */
   int quitOnIdle_;
-
-  /**
-   * A human-readable string to distinguish this from other Generic_Factories.
-   */
-  ACE_CString identity_;
 
   /**
    * A vector of Replicas.  Note that the Replica ID
