@@ -155,7 +155,6 @@ void Plan_Handler::process_irdd (DOMNodeIterator* iter,
 void Plan_Handler::process_add (DOMNodeIterator* iter,
                                 Deployment::ArtifactDeploymentDescription& add)
 {
-  ACE_DEBUG ((LM_DEBUG, "i am here in ADD\n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
@@ -197,7 +196,6 @@ void Plan_Handler::process_add (DOMNodeIterator* iter,
 void Plan_Handler::process_idd (DOMNodeIterator* iter,
                                 Deployment::InstanceDeploymentDescription& idd)
 {
-  ACE_DEBUG ((LM_DEBUG, "i am here in IDD\n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
@@ -214,7 +212,10 @@ void Plan_Handler::process_idd (DOMNodeIterator* iter,
       else if
         (process_reference (node, node_name, "implementation",
                             idd.implementationRef, 
-                            this->index_, this->idref_map_));
+                            this->index_, this->idref_map_))
+        {
+          this->index_ = this->index_ + 1;
+        }
       else if
         (process_sequence_common<Deployment::Property>(node->getOwnerDocument(), iter, node,
                                                 node_name, "configProperty", idd.configProperty,
@@ -248,9 +249,6 @@ void Plan_Handler::process_mdd
     {
       XStr node_name (node->getNodeName());
 
-      ACE_DEBUG ((LM_DEBUG, " Node Name is %s \n", XMLString::transcode
-        (node_name)));
-
       if (false);
       else if
         (process_string(iter, node_name, "name", mdd.name));
@@ -259,7 +257,10 @@ void Plan_Handler::process_mdd
       else if
         (process_reference_seq(node, node_name, "artifact",
                                mdd.artifactRef,
-                               this->index_, this->idref_map_));
+                               this->index_, this->idref_map_))
+        {
+          this->index_ = this->index_ + 1;
+        }
       else if
         (process_sequence_common<Deployment::Property>(node->getOwnerDocument(), this->iter_, node,
                                                 node_name, "execParameter", mdd.execParameter,
@@ -299,7 +300,10 @@ void Plan_Handler::process_pspr (DOMNodeIterator* iter,
       else if
         (process_string(iter, node_name, "propertyName", pspr.propertyName));
       else if
-        (process_reference(node, node_name, "instance", pspr.instanceRef, this->index_, this->idref_map_));
+        (process_reference(node, node_name, "instance", pspr.instanceRef, this->index_, this->idref_map_))
+        {
+          this->index_ = this->index_ + 1;
+        }
       else
         {
           iter->previousNode();
@@ -327,7 +331,10 @@ void Plan_Handler::process_pspe (DOMNodeIterator* iter,
       else if
         (process_reference(node, node_name, "instance",
                            pspe.instanceRef,
-                           this->index_, this->idref_map_));
+                           this->index_, this->idref_map_))
+        {
+          this->index_ = this->index_ + 1;
+        }
       else
         {
           iter->previousNode();
@@ -394,7 +401,6 @@ void Plan_Handler::process_crdd (DOMNodeIterator* iter,
 void Plan_Handler::process_pcd (DOMNodeIterator* iter,
                                 Deployment::PlanConnectionDescription& pcd)
 {
-  ACE_DEBUG ((LM_DEBUG, "i am here in PCD\n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
@@ -454,6 +460,7 @@ void Plan_Handler::update_mdd_refs (Deployment::DeploymentPlan& plan)
       for (y = 0; y < plan.implementation[x].artifactRef.length (); ++y)
         {
           ref_value = plan.implementation[x].artifactRef[y];
+          //ACE_DEBUG ((LM_DEBUG, "ref_value in ADD is %d \n", ref_value));
           if (idref_map_.find (ref_value, ref_name) == 0)
             {
               if (id_map_.find (ref_name, orig_value) == 0)
@@ -475,6 +482,7 @@ void Plan_Handler::update_idd_refs (Deployment::DeploymentPlan& plan)
   for (x = 0; x < plan.instance.length (); ++x)
     {
       ref_value = plan.instance[x].implementationRef;
+          //ACE_DEBUG ((LM_DEBUG, "ref_value in MDD is %d \n", ref_value));
       if (idref_map_.find (ref_value, ref_name) == 0)
         {
           if (id_map_.find (ref_name, orig_value) == 0)
@@ -499,6 +507,7 @@ void Plan_Handler::update_pspe_refs (Deployment::DeploymentPlan& plan)
         {
           ref_value = plan.connection[x].internalEndpoint[y].
             instanceRef;
+          //ACE_DEBUG ((LM_DEBUG, "ref_value in IDD is %d \n", ref_value));
           if (idref_map_.find (ref_value, ref_name) == 0)
             {
               if (id_map_.find (ref_name, orig_value) == 0)

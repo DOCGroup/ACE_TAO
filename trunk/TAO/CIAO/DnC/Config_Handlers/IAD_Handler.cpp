@@ -30,6 +30,10 @@ void IAD_Handler::process_ImplementationArtifactDescription
       XStr node_name (node->getNodeName());
 
       if (false);
+      else if (node_name == XStr 
+        (ACE_TEXT ("Deployment:ImplementationArtifactDescription")))
+        {
+        }
       else if
         (process_string(this->iter_, node_name, "label", iad.label));
       else if

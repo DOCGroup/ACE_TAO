@@ -22,8 +22,6 @@ BEGIN_DEPLOYMENT_NAMESPACE
 /// handle the package configuration and populate it
 void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration &pc)
 {
-  this->iter_->nextNode();
-
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
        node = this->iter_->nextNode())
@@ -31,6 +29,10 @@ void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration
       XStr node_name (node->getNodeName());
 
       if (false)
+        {
+        }
+      else if (node_name == XStr 
+                (ACE_TEXT ("Deployment:PackageConfiguration")))
         {
         }
       else if (process_string(this->iter_, node_name, "label", pc.label))

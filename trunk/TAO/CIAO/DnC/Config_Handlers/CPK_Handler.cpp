@@ -21,8 +21,6 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
 
 
   XStr kind_str = XStr (Utils::parse_string (iter));
-  ACE_DEBUG ((LM_DEBUG, " Kind Name is %s \n", XMLString::transcode
-(kind_str)));
 
   if ((ACE_OS::strcmp (XMLString::transcode (kind_str),
                        XMLString::transcode (facet))) == 0)
