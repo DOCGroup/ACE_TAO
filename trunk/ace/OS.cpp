@@ -5926,7 +5926,7 @@ ACE_OS_CString::ACE_OS_CString (const char *s)
 
 ACE_Object_Manager_Base::Object_Manager_State
   ACE_Object_Manager_Base::object_manager_state_ =
-  ACE_Object_Manager_Base::UNINITIALIZED_OBJ_MAN;
+    ACE_Object_Manager_Base::UNINITIALIZED_OBJ_MAN;
 
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
@@ -6023,7 +6023,7 @@ ACE_OS_Object_Manager::instance (void)
 int
 ACE_OS_Object_Manager::init (void)
 {
-  if (object_manager_state_ < INITIALIZING_ACE_OS_OBJ_MAN)
+  if (starting_up ())
     {
       // First, indicate that the ACE_OS_Object_Manager instance is being
       // initialized.
@@ -6079,7 +6079,7 @@ ACE_OS_Object_Manager::init (void)
 int
 ACE_OS_Object_Manager::fini (void)
 {
-  if (instance_ == 0  || object_manager_state_ >= SHUTTING_DOWN_ACE_OS_OBJ_MAN)
+  if (instance_ == 0  || shutting_down ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return -1;
@@ -6087,13 +6087,16 @@ ACE_OS_Object_Manager::fini (void)
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_OS_Object_Manager instance.
 
+  // If another Object_Manager has registered for termination, do it.
+  if (next_)
+    {
+      next_->fini ();
+      next_ = 0;  // Protect against recursive calls.
+    }
+
   // First, indicate that the ACE_OS_Object_Manager instance is being
   // shut down.
   object_manager_state_ = SHUTTING_DOWN_ACE_OS_OBJ_MAN;
-
-  // If another Object_Manager has registered for termination, do it.
-  if (next_)
-    next_->fini ();
 
   // Close down Winsock (no-op on other platforms).
   ACE_OS::socket_fini ();

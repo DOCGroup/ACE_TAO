@@ -155,7 +155,7 @@ ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations (void)
 int
 ACE_Object_Manager::init (void)
 {
-  if (object_manager_state_ < INITIALIZING_ACE_OBJ_MAN)
+  if (starting_up ())
     {
       // First, indicate that the ACE_Object_Manager instance is being
       // initialized.
@@ -223,7 +223,7 @@ ACE_Object_Manager::init (void)
 int
 ACE_Object_Manager::fini (void)
 {
-  if (instance_ == 0  || object_manager_state_ >= SHUTTING_DOWN_ACE_OBJ_MAN)
+  if (instance_ == 0  ||  shutting_down ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return -1;
