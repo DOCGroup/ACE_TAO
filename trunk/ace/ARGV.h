@@ -27,20 +27,27 @@
 /**
  * @class ACE_ARGV
  *
- * @brief Transforms a string <buf> into an <argv> style vector of
- * strings or an <argv> style vector of string <buf>, performing
- * environment variable substitutions if necessary.
+ * @brief Builds a counted argument vector (ala argc/argv) from either
+ * a string or a set of separate tokens. Can substitute environment
+ * variable values for tokens that are environment variable references.
  */
 class ACE_Export ACE_ARGV
 {
 public:
   // = Initialization and termination.
   /**
-   * Converts <buf> into an <argv>-style vector of strings.  If
-   * <substitute_env_args> is enabled then we'll substitute the
-   * environment variables for each $ENV encountered in the string.
-   * The subscript and <argv> operations are not allowed on an
-   * ACE_ARGV created this way.
+   * Splits the specified string into an argument vector, split at whitespace.
+   *
+   * @param buf   An ACE_TCHAR array to split into tokens for the vector.
+   *
+   * @param substitute_env_args  If non-zero, any token that is an
+   *              an environment variable reference ($VAR) will have
+   *              its environment variable value in the resultant vector
+   *              in place of the environment variable name. This only works
+   *              if the token is an environment variable reference and
+   *              nothing else; it doesn't substitute environment variable
+   *              references within a token. For example, @c $HOME/file will
+   *              not substitute the value of the HOME environment variable.
    */
   ACE_ARGV (const ACE_TCHAR buf[],
             int substitute_env_args = 1);
