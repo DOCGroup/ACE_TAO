@@ -70,13 +70,19 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const char *filename,
   : file_ (0), handle_ (0), mapit_ (mapit)
 {
   this->init ();
-  // Since this is being opened for a write, simply create a new
-  // ACE_Filecache_Object now, and let the destructor add it into CVF
-  // later
 
-  // Filecache will also do the acquire, since it holds the lock at
-  // that time.
-  this->file_ = ACE_Filecache::instance ()->create (filename, size);
+  if (size == 0)
+    ACE_Filecache::instance ()->remove (filename);
+  else
+    {
+      // Since this is being opened for a write, simply create a new
+      // ACE_Filecache_Object now, and let the destructor add it into CVF
+      // later
+
+      // Filecache will also do the acquire, since it holds the lock at
+      // that time.
+      this->file_ = ACE_Filecache::instance ()->create (filename, size);
+    }
 }
 
 ACE_Filecache_Handle::~ACE_Filecache_Handle (void)
@@ -289,6 +295,29 @@ int
 ACE_Filecache::find (const char *filename)
 {
   return this->hash_.find (filename);
+}
+
+
+ACE_Filecache_Object *
+ACE_Filecache::remove (const char *filename)
+{
+  ACE_Filecache_Object *handle = 0;
+
+  u_long loc = ACE::hash_pjw (filename) % this->size_;
+  ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
+  // ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
+
+  if (this->hash_.find (filename, handle) != -1)
+    {
+      ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX,
+                              ace_mon,
+                              hashlock,
+                              0);
+
+      return this->remove_i (filename);
+    }
+
+  return 0;
 }
 
 
