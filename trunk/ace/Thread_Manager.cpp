@@ -120,7 +120,7 @@ ACE_Thread_Descriptor::terminate()
 
 {
   ACE_TRACE ("ACE_Thread_Descriptor::terminate");
-	
+
   if (!terminated_)
    {
      terminated_ = 1;
@@ -129,7 +129,7 @@ ACE_Thread_Descriptor::terminate()
      // We must remove Thread_Descriptor from Thread_Manager list
      if (this->tm_!=0)
       {
-	 int close_handle = 0;
+         int close_handle = 0;
 
 #if !defined (VXWORKS)
         // Threads created with THR_DAEMON shouldn't exist here, but
@@ -222,14 +222,17 @@ ACE_Thread_Descriptor::dump (void) const
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
-  : grp_id_ (0),
-    thr_state_ (ACE_THR_IDLE),
+  :
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-    at_exit_list_(0),
     log_msg_(0),
-    terminated_(0),
+    at_exit_list_(0),
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+    grp_id_ (0),
+    thr_state_ (ACE_THR_IDLE),
     task_ (0)
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+    , terminated_(0)
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
 #if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
@@ -1515,7 +1518,9 @@ void *
 ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
+#if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   int close_handle = 0;
+#endif /* ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
 #if defined (ACE_WIN32)
   // Remove detached thread handle.
