@@ -1,7 +1,8 @@
 Wed Apr 14 15:33:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Replaced all uses of TAO_TRY
-	macros with ACE_TRY macros.
+	* orbsvcs/orbsvcs/AV/AVStreams_i_T.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	  Replaced all uses of TAO_TRY macros with ACE_TRY macros.
 
 Wed Apr 14 15:25:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
