@@ -1,23 +1,39 @@
+Sun Dec 30 20:30:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent.bor:
+          Removed compiler flags and library of RTSched and RTEvent because
+          they are not needed to build CosEvent
+
+        * orbsvcs/Notify_Service/Notify_Service.bor:
+        * orbsvcs/Notify_Service/NT_Notify_Service.bor:
+          Removed the Trading library, this is not needed to build this
+          service
+
+        * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+          Moved the include of its own header file out of the ACE_WIN32 define,
+          change the argument of the notify_service.run method from ACE_TRY_ENV
+          to TAO_ENV_SINGLE_ARG_PARAMETER
+
 Sun Dec 30 10:31:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional/server.cpp (main): Removed some ambigous
-	  comments. 
-	
+	  comments.
+
 	* tests/BiDirectional/README:
 	* tests/BiDirectional_NestedUpcall/README: Updated the above
 	  files.  Thanks to Scott Harris <harris_s@ociweb.com>  pointing
-	  out.  
+	  out.
 
 Sun Dec 30 09:14:04 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Notify_Server.cpp: 
+	* orbsvcs/Notify_Service/Notify_Server.cpp:
 	  orbsvcs/Notify_Service/Notify_Service.h:
           Fixed compile errors.
-	 
+
 Sat Dec 29 19:51:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Makefile: 
-	  Fixes in addition to Doug's fixes. Defined $NOTIFY_OBJS. 
+	* orbsvcs/Notify_Service/Makefile:
+	  Fixes in addition to Doug's fixes. Defined $NOTIFY_OBJS.
 
 Sat Dec 29 18:32:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -28,7 +44,7 @@ Sat Dec 29 18:32:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 Sat Dec 29 15:53:30 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Makefile: Updated the Makefile to 
+	* orbsvcs/Notify_Service/Makefile: Updated the Makefile to
 	  ensure that the Notify_Service executable is built using both
  	  the Notify_Server.cpp and Notify_Service.cpp files.  Thanks
 	  to Venkita for noticing this.
