@@ -521,6 +521,8 @@ void
 ImplRepo_i::find (const char * server,
                   ImplementationRepository::ServerInformation_out info,
                   CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ImplementationRepository::Administration::NotFound))
 {
   ACE_TString logical, command_line, working_directory;
   ACE_TString host, server_object_ior;
@@ -559,6 +561,7 @@ ImplRepo_i::list (CORBA::ULong how_many,
                   ImplementationRepository::ServerInformationList_out server_list,
                   ImplementationRepository::ServerInformationIterator_out server_iterator,
                   CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initialize the out variables, so if we return early, they will
   // not be dangling.
