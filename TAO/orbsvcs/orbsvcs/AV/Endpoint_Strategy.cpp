@@ -111,11 +111,11 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                     sizeof host);
   
   // create a unique semaphore name
-  ::sprintf (sem_str,
-             "%s:%s:%ld",
-             "TAO_AV_Process_Semaphore",
-             host,
-             pid);
+  ACE_OS::sprintf (sem_str,
+                   "%s:%s:%ld",
+                   "TAO_AV_Process_Semaphore",
+                   host,
+                   pid);
   
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",
