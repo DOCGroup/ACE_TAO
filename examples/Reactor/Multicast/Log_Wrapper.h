@@ -35,7 +35,7 @@ public:
   };
 
   int open (const int port, const char* mcast_addr);
-  // get an object reference from an orbixd
+  // Subscribe to a given UDP multicast group
 
   int log_message (Log_Priority type, char *message);
   // send a string to the logger

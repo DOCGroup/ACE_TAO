@@ -1,7 +1,6 @@
 # $Id$
 
 # AIX 4.x using the IBM C Set++ compiler.
-# *not* using Orbix
 #
 # NOTE! IBM is no longer supporting AIX at any version earlier than 4.3,
 # and Riverace is not testing or supporting ACE on them either. No steps

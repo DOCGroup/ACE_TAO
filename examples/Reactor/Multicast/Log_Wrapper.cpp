@@ -12,26 +12,26 @@ Log_Wrapper::Log_Wrapper (void)
   this->log_msg_.app_id = ACE_OS::getpid ();
 }
 
-Log_Wrapper::~Log_Wrapper (void) 
+Log_Wrapper::~Log_Wrapper (void)
 {
 }
 
 // Set the log_msg_ host address.
 
 int
-Log_Wrapper::open (const int port, const char *mcast_addr) 
+Log_Wrapper::open (const int port, const char *mcast_addr)
 {
   struct hostent *host_info;
   ACE_utsname host_data;
 
-  if (ACE_OS::uname (&host_data) < 0) 
+  if (ACE_OS::uname (&host_data) < 0)
     return -1;
-      
-  if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == NULL) 
+
+  if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == NULL)
     return -1;
-  else 
-    ACE_OS::memcpy ((char *) &this->log_msg_.host, 
-                    (char *) host_info->h_addr, 
+  else
+    ACE_OS::memcpy ((char *) &this->log_msg_.host,
+                    (char *) host_info->h_addr,
                     host_info->h_length);
 
   // This starts out initialized to all zeros!
@@ -50,7 +50,7 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
 
 int
 Log_Wrapper::log_message (Log_Priority type, char *message)
-{ 
+{
   sequence_number_++;
 
   this->log_msg_.type = type;
@@ -69,4 +69,3 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   // success.
   return 0;
 }
-

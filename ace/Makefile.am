@@ -374,8 +374,6 @@ libACE_Timer_la_SOURCES = \
 EXTRA_libACE_Timer_la_SOURCES = gethrtime.cpp
 
 libACE_Other_la_SOURCES = \
-  CORBA_Handler.cpp \
-  CORBA_Ref.cpp \
   Local_Name_Space.cpp \
   Name_Proxy.cpp \
   Name_Request_Reply.cpp \
@@ -542,8 +540,6 @@ HEADER_FILES = \
   Bound_Ptr.h \
   CDR_Base.h \
   CDR_Stream.h \
-  CORBA_Handler.h \
-  CORBA_Ref.h \
   CORBA_macros.h \
   Cache_Map_Manager_T.h \
   Cached_Connect_Strategy_T.h \
@@ -836,7 +832,6 @@ INLINE_FILES = \
   Basic_Types.i \
   Bound_Ptr.i \
   CDR_Stream.i \
-  CORBA_Handler.i \
   Cache_Map_Manager_T.i \
   Caching_Strategies_T.i \
   Capabilities.i \
