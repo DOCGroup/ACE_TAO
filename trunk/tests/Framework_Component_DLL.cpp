@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "Framework_Component_DLL.h"
 #include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 #include "ace/Framework_Component_T.h"
 #include "ace/OS.h"
 
