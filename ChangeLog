@@ -1,3 +1,10 @@
+Mon Jun 14 13:58:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* docs/ACE-guidelines.html: Updated the guidelines to
+	  recommend the use of ".inl" suffices for inline files, rather
+ 	  than ".i".  Thanks to Patrick Bennett <patrick.bennett@inin.com>
+ 	  for motivating this change.
+
 Mon Jun 14 18:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Misc/preempt.cpp:
