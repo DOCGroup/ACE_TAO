@@ -113,7 +113,9 @@ public:
   /// Extract the TagFTGroupTaggedComponent inside the <ior>
   CORBA::Boolean get_tagged_component (
       const CORBA::Object_ptr iogr,
-      FT::TagFTGroupTaggedComponent &ft_group) const;
+      FT::TagFTGroupTaggedComponent &ft_group
+      ACE_ENV_ARG_DECL) const
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

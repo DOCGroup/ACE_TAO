@@ -416,3 +416,13 @@ namespace TAO
   }
 
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_TSS<TAO::FT_TSS>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_TSS<TAO::FT_TSS>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
