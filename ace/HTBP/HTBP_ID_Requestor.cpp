@@ -14,7 +14,7 @@ ACE_RCSID(HTBP,
           "$Id$")
 
 ACE_TString ACE::HTBP::ID_Requestor::htid_;
-ACE_Thread_Mutex ACE::HTBP::ID_Requestor::htid_lock_;
+ACE_SYNCH_MUTEX ACE::HTBP::ID_Requestor::htid_lock_;
 
 ACE::HTBP::ID_Requestor::ID_Requestor (ACE::HTBP::Environment *env)
   : port_ (0),
