@@ -35,7 +35,7 @@ Cached_Conn_Test: !VxWorks
 Capabilities_Test
 Codecs_Test
 Collection_Test
-Config_Test !LynxOS
+Config_Test: !LynxOS
 Conn_Test: !chorus
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
@@ -43,7 +43,7 @@ Date_Time_Test
 Dev_Poll_Reactor_Test
 Dirent_Test
 Dynamic_Priority_Test
-Enum_Interfaces_Test !LynxOS
+Enum_Interfaces_Test: !LynxOS
 Env_Value_Test: !chorus !WinCE
 FIFO_Test: !Win32 !Cygwin
 Framework_Component_Test: !STATIC !LynxOS
@@ -57,7 +57,7 @@ High_Res_Timer_Test
 INET_Addr_Test
 IOStream_Test
 Lazy_Map_Manager_Test
-Log_Msg_Test !LynxOS
+Log_Msg_Test: !LynxOS
 Logging_Strategy_Test: !STATIC !ST
 MEM_Stream_Test: !VxWorks !LynxOS
 MM_Shared_Memory_Test: !chorus !Unicos !VxWorks
@@ -120,7 +120,7 @@ Service_Config_Test: !STATIC !LynxOS
 Sigset_Ops_Test
 Simple_Message_Block_Test: !chorus
 Svc_Handler_Test
-TP_Reactor_Test !LynxOS
+TP_Reactor_Test: !LynxOS
 TSS_Test
 TSS_Static_Test
 Task_Test
