@@ -1,3 +1,19 @@
+Mon Aug 10 13:33:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Added suspend_connection/resume_connection calls to the
+	  PushConsumerProxy interface ala Notification Service, using this
+	  methods a Consumer can temporarly disable the reception of
+	  events; the events are dropped on the Event Service side, thus
+	  minimizing network traffic (but the EC still has to do some
+	  computation).
+
+	* orbsvcs/tests/Simple_Naming/Makefile: 
+	  Updated dependencies.
+
 Mon Aug 10 12:45:01 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Added extra code to

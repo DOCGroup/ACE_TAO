@@ -41,6 +41,8 @@ module RtecEventChannelAdmin {
     void connect_push_consumer(
 		in RtecEventComm::PushConsumer push_consumer,
 		in ConsumerQOS qos) raises(AlreadyConnected, TypeError);
+    void suspend_connection ();
+    void resume_connection ();
   };
 
   // TODO: Find out the exception specs for the following interface's
