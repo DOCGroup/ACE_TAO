@@ -485,10 +485,6 @@ ACE_HAS_SVR4_GETTIMEOFDAY               Compiler/platform supports
                                         SVR4 gettimeofday() prototype
 ACE_HAS_SVR4_SIGNAL_T                   Compiler/platform supports
                                         SVR4 signal typedef
-ACE_HAS_SVR4_TIME                       Platform supports the SVR4
-                                        timestruc_t type. NOTE: This
-                                        macro is obsolete, ACE only
-                                        uses timespec_t.
 ACE_HAS_SVR4_TLI                        Compiler/platform supports
                                         SVR4 TLI (in particular,
                                         T_GETNAME stuff)...
