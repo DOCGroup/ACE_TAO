@@ -48,11 +48,52 @@ USELIB("..\ace\aced.lib");
 #include <X11/Xatom.h>
 #include <X11/Shell.h>
 
+#if !defined (ACE_LACKS_MOTIF)
+
 #include <Xm/Xm.h>
 #include <Xm/Label.h>
 #include <Xm/PushB.h>
-#include <Xm/Form.h>
 #include <Xm/RowColumn.h>
+
+static void set_label(Widget w, const char *p)
+{
+  XtVaSetValues (w, 
+		 XmNlabelString, 
+		 XmStringCreateLocalized( (char*) p), 
+		 NULL);
+}
+#define LABEL_WIDGET xmLabelWidgetClass
+#define BUTTON_WIDGET xmPushButtonWidgetClass
+#define PRESS_ME_CALLBACK XmNactivateCallback
+static Widget create_box(Widget parent, const char *name)
+{
+  Arg al[10];
+  int ac = 0;
+  XtSetArg (al[ac], XmNnumColumns, 3); ac++;
+  XtSetArg (al[ac], XmNpacking, XmPACK_COLUMN); ac++;
+  XtSetArg (al[ac], XmNentryAlignment, XmALIGNMENT_CENTER); ac++;
+  return XmCreateRowColumn (parent, (char *) name, al, ac);
+}
+
+#else  // Athena Widgets
+
+#include <X11/Xaw/Command.h>
+#include <X11/Xaw/Label.h>
+#include <X11/Xaw/Box.h>
+#include <X11/StringDefs.h>
+
+static void set_label(Widget w, const char *p)
+{
+    XtVaSetValues (w, XtNlabel, p, NULL);
+}
+#define LABEL_WIDGET labelWidgetClass
+#define BUTTON_WIDGET commandWidgetClass
+#define PRESS_ME_CALLBACK XtNcallback
+static Widget create_box(Widget parent, const char * name)
+{
+    return XtCreateWidget( (char*) name, boxWidgetClass, parent, NULL, 0);
+}
+#endif
 
 // Port we listen on.
 static const u_short SERV_TCP_PORT = 6670;
@@ -125,6 +166,11 @@ sock_callback (XtPointer , int * , XtInputId *)
 
 // Callback for "Press Me" button.
 
+#ifdef ACE_HAS_MOTIF
+#else
+
+#endif
+
 static void
 inc_count (Widget, XtPointer client_data, XtPointer)
 {
@@ -135,10 +181,7 @@ inc_count (Widget, XtPointer client_data, XtPointer)
            count1++,
            count2,
            count3);
-  XtVaSetValues ((Widget) client_data,
-                 XmNlabelString,
-                 XmStringCreateLocalized (new_string),
-                 NULL);
+  set_label((Widget) client_data, new_string);
 }
 
 // Callback for X Timer.
@@ -156,10 +199,7 @@ inc_tmo (void *w,XtIntervalId *)
            count2++,
            count3);
 
-  XtVaSetValues ((Widget) w,
-                 XmNlabelString,
-                 XmStringCreateLocalized (new_string),
-                 NULL);
+  set_label((Widget) w, new_string);
 
   (void) XtAppAddTimeOut (XtWidgetToApplicationContext ((Widget) w),
                           1000,
@@ -179,11 +219,7 @@ public:
              count1,
              count2,
              count3++);
-
-    XtVaSetValues ((Widget) arg,
-                   XmNlabelString,
-                   XmStringCreateLocalized (new_string),
-                   NULL);
+    set_label((Widget) arg, new_string);
     return 0;
   }
 };
@@ -240,8 +276,6 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_XT)
   XtAppContext app_context;
   Widget topLevel, goodbye, PressMe, lbl, digits_rc;
-  Arg al[10];
-  int ac = 0;
   Widget children[5];
 
 #if defined (HummingBird_X)
@@ -256,40 +290,31 @@ main (int argc, char *argv[])
                                 NULL,
                                 NULL);
 
-  XtSetArg (al[ac], XmNnumColumns, 3); ac++;
-  XtSetArg (al[ac], XmNpacking, XmPACK_COLUMN); ac++;
-  XtSetArg (al[ac], XmNentryAlignment, XmALIGNMENT_CENTER); ac++;
-  digits_rc = XmCreateRowColumn (topLevel,
- (char *) "digits_rc",
-                                 al,
-                                 ac);
+  digits_rc = create_box(topLevel, "digits_rc");
 
   //"Stop Test" button.
-  goodbye = XmCreatePushButton (digits_rc,
- (char *) "goodbye",
-                                NULL,
-                                0);
-  XtVaSetValues (goodbye,
-                 XtNlabel,
-                 "Stop Test",
-                 NULL);
+  goodbye = XtCreateWidget ( (char *) "goodbye",
+			     BUTTON_WIDGET,
+			     digits_rc,
+			     NULL,
+			     0);
+  set_label(goodbye, "Stop Test");
 
   //"Press Me" button
-  PressMe = XmCreatePushButton (digits_rc,
- (char *) "PressMe",
-                                NULL,
-                                0);
+  PressMe = XtCreateWidget ((char *) "PressMe",
+			    BUTTON_WIDGET,
+			    digits_rc,
+			    NULL,
+			    0);
 
   //Display for event counter
-  ac = 1;
-  XtSetArg (al[ac],
-            XmNlabelString,
-            XmStringCreateLocalized ((char *) "label_for_all_events\n"));
-  lbl = XmCreateLabel (digits_rc,
- (char *) "label_for_event_one",
-                       al,
-                       ac);
-  ac = 0;
+  lbl = XtCreateWidget ((char *) "label_for_event_one", 
+			LABEL_WIDGET, 
+			digits_rc, 
+			NULL, 
+			0);
+  set_label(lbl, "label_for_all_events");
+  int ac = 0;
   children[ac++] = goodbye;
   children[ac++] = PressMe;
   children[ac++] = lbl;
@@ -297,11 +322,11 @@ main (int argc, char *argv[])
   XtManageChild (digits_rc);
 
   //Register callback for "Stop Test" button
-  XtAddCallback (goodbye, XmNactivateCallback, Quit, 0);
+  XtAddCallback (goodbye, PRESS_ME_CALLBACK, Quit, 0);
 
   //Register callback for "Press Me" button
   XtAddCallback (PressMe,
-                 XmNactivateCallback,
+                 PRESS_ME_CALLBACK,
                  inc_count,
                  (XtPointer) lbl);
 

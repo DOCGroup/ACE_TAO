@@ -1,3 +1,10 @@
+Tue Sep  1 19:40:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/XtReactor_Test.cpp: 
+	  If ACE_LACKS_MOTIF is defined the test can use Athena
+	  Widgets. Thanks to Eric C. Newton <ecn@smart.net> for
+	  contributing this example.
+
 Tue Sep  1 19:05:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Shared_Malloc/test_malloc.cpp (spawn): Fixed a minor
