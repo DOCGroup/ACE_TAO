@@ -1,3 +1,8 @@
+Tue Sep 15 17:47:07 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/POA/Default_Servant/client.cpp: Added TAO_debug_level
+	  option to the arguments list  
+
 Tue Sep 15 17:07:19 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/POA/Default_Servant/test: Modified the permissions (they
