@@ -1,3 +1,16 @@
+Tue Jan 16 14:52:01 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Removed the Win32 #ifdef guards in function DRV_pre_prc.
+          The definition of ACE_DEFAULT_FILE_PERMS has changed to
+          make this unnecessary.
+
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+
+          Brought this file up to date with the recent set of
+          changes to TAO_IDL/driver/DRV_pre_proc.
+
 Tue Jan 16 13:25:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_global.cpp:
