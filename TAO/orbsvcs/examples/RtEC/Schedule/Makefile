@@ -25,7 +25,11 @@ endif # Event
 
 PSRC= Service.cpp Supplier.cpp Consumer.cpp
 LDLIBS = -lorbsvcs -lTAO
+
+# The complete path to orbsvcs/orbsvcs/Sched is required for DU/CXX
+# automatic template instantiation magic.
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
 Service_OBJS=$(addsuffix .o, Service Supplier Consumer)
