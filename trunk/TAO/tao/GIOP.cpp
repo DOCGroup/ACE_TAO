@@ -64,6 +64,12 @@ static const char *TAO_GIOP_Timeprobe_Description[] =
 
   "GIOP::LocateRequestHeader_init - start",
   "GIOP::LocateRequestHeader_init - end",
+
+  "GIOP_Invocation::start - enter",
+  "GIOP_Invocation::start - leave",
+  "GIOP_Invocation::start - connect",
+  "GIOP_Invocation::start - start_msg",
+  "GIOP_Invocation::start - request_hdr",
 };
 
 enum 
@@ -78,7 +84,13 @@ enum
   TAO_GIOP_READ_BUFFER_END,
 
   TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
-  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END
+  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END,
+
+  TAO_GIOP_INVOCATION_START_ENTER,
+  TAO_GIOP_INVOCATION_START_LEAVE,
+  TAO_GIOP_INVOCATION_START_CONNECT,
+  TAO_GIOP_INVOCATION_START_START_MSG,
+  TAO_GIOP_INVOCATION_START_REQUEST_HDR
 };
 
 #endif /* ACE_ENABLE_TIMEPROBES */
@@ -572,7 +584,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
     opname_ (operation),
     do_rsvp_ (is_roundtrip),
     my_request_id_ (0),
-    out_stream_ (CDR::DEFAULT_BUFSIZE), /* (buffer, sizeof buffer), */
+    out_stream_ (buffer, sizeof buffer), /* CDR::DEFAULT_BUFSIZE */
     inp_stream_ (CDR::DEFAULT_BUFSIZE),
     handler_ (0)
 {
@@ -608,6 +620,8 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 void
 TAO_GIOP_Invocation::start (CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
+
   const TAO_opaque *key;
 
   // First try to bind to the appropriate address.  We do that here
@@ -668,6 +682,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
       return;
     }
 
+  ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_CONNECT);
+
   // Use the TAO_SOCK_Stream from the Client_Connection_Handler for
   // communication inplace of the endpoint used below.
 
@@ -699,6 +715,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       return;
     }
+
+  ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_START_MSG);
 
   // Then fill in the rest of the RequestHeader
   //
@@ -740,9 +758,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
                                    &anybody,
                                    0,
                                    env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return; // right after fault
-  else
-    return; // no fault reported
+    return; // pass the exception through....
+
+  ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
 
 const char *

@@ -1,6 +1,6 @@
 // $Id$
 
-//===============================================================================
+// ================================================================
 //
 //
 // = FILENAME
@@ -12,14 +12,16 @@
 // = AUTHOR
 //     Irfan Pyarali
 //
-//==================================================================================
+// ================================================================
 
 #include "MyFooServant.h"
 
 // Constructor
-MyFooServant::MyFooServant (PortableServer::POA_ptr poa,
+MyFooServant::MyFooServant (CORBA::ORB_ptr orb,
+			    PortableServer::POA_ptr poa,
                             CORBA::Long value)
-  : poa_ (PortableServer::POA::_duplicate (poa)),
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa)),
     value_ (value)
 {
 }
@@ -36,15 +38,19 @@ MyFooServant::_default_POA (CORBA::Environment &/*env*/)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-// Return this->value
 CORBA::Long
 MyFooServant::doit (CORBA::Environment &/*env*/)
 {
   return this->value_;
 }
 
-// do nothing
 void
 MyFooServant::simply_doit (CORBA::Environment &/*env*/)
 {
+}
+
+void
+MyFooServant::shutdown (CORBA::Environment &env)
+{
+  this->orb_->shutdown ();
 }

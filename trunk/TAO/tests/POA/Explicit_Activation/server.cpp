@@ -1,6 +1,7 @@
 // $Id$
 
-// ===========================================================================================
+// ================================================================
+//
 // = LIBRARY
 //    TAO/tests/POA/Explicit_Activation
 //
@@ -12,13 +13,15 @@
 //     - A new POA ( firstPOA) is created, and the different functions
 //       for the explicit activation of objects are demonstrated.
 //     - The Foo application class objects (defined in
-//       ./../Generic_Servant/MyFooSerVant) are used as sample objects. 
+//       ./../Generic_Servant/MyFooServant) are used as sample objects. 
 //
 // = AUTHOR
 //    Irfan Pyarali
-// ===========================================================================================
+//
+// ================================================================
 
 #include "ace/streams.h"
+#include "ace/Timeprobe.h"
 #include "MyFooServant.h"
 
 int
@@ -123,8 +126,8 @@ main (int argc, char **argv)
   // Create two Objects of Class MyFooServant (defined in
   // ./../GenericServant/MyFooServant.h) Create one object at RootPOA
   // and the other at firstPOA.
-  MyFooServant first_foo_impl (root_poa.in (), 27);
-  MyFooServant second_foo_impl (first_poa.in (), 28);
+  MyFooServant first_foo_impl (orb.in (), root_poa.in (), 27);
+  MyFooServant second_foo_impl (orb.in (), first_poa.in (), 28);
 
   // Do "activate_object" to activate the first_foo_impl object.  It
   // returns ObjectId for that object.  Operation Used :
@@ -234,7 +237,7 @@ main (int argc, char **argv)
               third_ior.in ()));
 
   // Activate thirdPOA using its ObjectID.
-  MyFooServant third_foo_impl (second_poa.in (), 29);
+  MyFooServant third_foo_impl (orb.in (), second_poa.in (), 29);
   second_poa->activate_object_with_id (third_oid.in (),
                                        &third_foo_impl,
                                        env);
@@ -263,6 +266,8 @@ main (int argc, char **argv)
       env.print_exception ("PortableServer::POA::destroy");
       return -1;
     }
+
+  ACE_TIMEPROBE_PRINT;
 
   return 0;
 }

@@ -216,6 +216,8 @@ CORBA_ORB::perform_work (ACE_Time_Value *tv)
 int
 CORBA_ORB::run (ACE_Time_Value *tv)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
+
   if (this->shutdown_lock_ == 0)
     this->shutdown_lock_ =
       TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
@@ -246,6 +248,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
       if (monitor.release () == -1)
 	return -1;
 
+#if 0
       counter++;
       if (counter == max_iterations)
         {
@@ -255,6 +258,8 @@ CORBA_ORB::run (ACE_Time_Value *tv)
         }
 
       ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
+
+#endif
 
       switch (r->handle_events (tv))
         {
@@ -273,7 +278,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
       if (monitor.acquire () == -1)
 	return -1;
     }
-  /* NOTREACHED */
+
   return 0;
 }
 
