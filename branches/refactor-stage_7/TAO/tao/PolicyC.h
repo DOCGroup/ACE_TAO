@@ -274,18 +274,6 @@ namespace CORBA
   class Policy;
   typedef Policy *Policy_ptr;
 
-  typedef
-    TAO_Objref_Var_T<
-        Policy
-      >
-    Policy_var;
-
-  typedef
-    TAO_Objref_Out_T<
-        Policy
-      >
-    Policy_out;
-
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
@@ -300,7 +288,7 @@ namespace CORBA
   public:
     friend class TAO::Narrow_Utils<Policy>;
     typedef Policy_ptr _ptr_type;
-    typedef Policy_var _var_type;
+//    typedef Policy_var _var_type;
 
     // The static operations.
     static Policy_ptr _duplicate (Policy_ptr obj);
@@ -394,6 +382,18 @@ namespace CORBA
   };
 
 #endif /* end #if !defined */
+
+  typedef
+    TAO_Objref_Var_T<
+        Policy
+      >
+    Policy_var;
+
+  typedef
+    TAO_Objref_Out_T<
+        Policy
+      >
+    Policy_out;
 
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44

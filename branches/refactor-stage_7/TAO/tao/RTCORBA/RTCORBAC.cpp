@@ -743,6 +743,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::PriorityModelPolicy.
 
 RTCORBA::PriorityModelPolicy_ptr
@@ -775,6 +777,8 @@ TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -906,6 +910,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::ThreadpoolPolicy.
 
 RTCORBA::ThreadpoolPolicy_ptr
@@ -938,6 +944,8 @@ TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1069,6 +1077,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::ProtocolProperties.
 
 RTCORBA::ProtocolProperties_ptr
@@ -1101,6 +1111,8 @@ TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1561,6 +1573,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::ServerProtocolPolicy.
 
 RTCORBA::ServerProtocolPolicy_ptr
@@ -1593,6 +1607,8 @@ TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1726,6 +1742,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::ClientProtocolPolicy.
 
 RTCORBA::ClientProtocolPolicy_ptr
@@ -1758,6 +1776,8 @@ TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1891,6 +1911,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::PrivateConnectionPolicy.
 
 RTCORBA::PrivateConnectionPolicy_ptr
@@ -1923,6 +1945,8 @@ TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2056,6 +2080,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::TCPProtocolProperties.
 
 RTCORBA::TCPProtocolProperties_ptr
@@ -2088,6 +2114,8 @@ TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2221,6 +2249,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::GIOPProtocolProperties.
 
 RTCORBA::GIOPProtocolProperties_ptr
@@ -2253,6 +2283,8 @@ TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2386,6 +2418,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::UnixDomainProtocolProperties.
 
 RTCORBA::UnixDomainProtocolProperties_ptr
@@ -2418,6 +2452,8 @@ TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2555,6 +2591,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::SharedMemoryProtocolProperties.
 
 RTCORBA::SharedMemoryProtocolProperties_ptr
@@ -2587,6 +2625,8 @@ TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2983,6 +3023,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::PriorityBandedConnectionPolicy.
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr
@@ -3015,6 +3057,8 @@ TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3152,6 +3196,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::Current.
 
 RTCORBA::Current_ptr
@@ -3184,6 +3230,8 @@ TAO::Objref_Traits<RTCORBA::Current>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3309,6 +3357,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::Mutex.
 
 RTCORBA::Mutex_ptr
@@ -3341,6 +3391,8 @@ TAO::Objref_Traits<RTCORBA::Mutex>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3462,6 +3514,8 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
+#if defined (_MSC_VER)
+
 // Traits specializations for RTCORBA::RTORB.
 
 RTCORBA::RTORB_ptr
@@ -3494,6 +3548,8 @@ TAO::Objref_Traits<RTCORBA::RTORB>::tao_marshal (
 {
   return p->marshal (cdr);
 }
+
+#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
