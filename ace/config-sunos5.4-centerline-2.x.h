@@ -18,7 +18,7 @@
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Sun has the wrong prototype for sendmsg.
 #define ACE_HAS_BROKEN_SENDMSG
@@ -124,7 +124,7 @@
 /* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 
 // Platform supports threads.
@@ -140,6 +140,9 @@
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
 /* end threading defines */
+
+#define ACE_HAS_PRIOCNTL
+#define ACE_NEEDS_LWP_PRIO_SET
 
 // Platform supports ACE_TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
