@@ -1,3 +1,7 @@
+Fri Jan 15 14:23:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Repository.cpp (fini): Fixed a typo.
+
 Fri Jan 15 10:47:26 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Service_Repository.cpp: If a service being removed from the
