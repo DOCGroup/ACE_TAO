@@ -305,7 +305,14 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
                   this->skip_equal () == 0 &&
                   this->get_quoted_string (astring) == 0)
                 {
-                  seen_encoding = 1;
+                  if (seen_encoding)
+                    {
+                      xmlenv.exception (new ACEXML_SAXParseException
+                                        (ACE_LIB_TEXT ("Duplicate encoding defined")));
+                      return;
+                    }
+                  else
+                    seen_encoding = 1;
                   // @@ Handle encoding here.  We don't handle
                   // various encodings for this parser.
 
@@ -662,6 +669,8 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                 xmlns_prefix = ns_att.next ();
                 ns_name = ns_att.next ();
 
+                // @@ xmlns_prefix is not used now.
+                ACE_UNUSED_ARG (xmlns_prefix);
                 if (ns_name == 0)
                   {
                     // @@ Check return value?
@@ -936,7 +945,7 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t len)
         }
       more_digit = 1;
     }
-  return -1;
+  ACE_NOTREACHED (return -1;)
 }
 
 const ACEXML_String *
@@ -1705,7 +1714,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                               (ACE_LIB_TEXT ("Invalid Attribute Type while defining ATTLIST.")));
             return -1;
           }
-          break;
+          ACE_NOTREACHED (break;)
         }
 
       /*
