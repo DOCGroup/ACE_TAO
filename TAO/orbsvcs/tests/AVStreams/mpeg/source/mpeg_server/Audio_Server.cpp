@@ -647,14 +647,10 @@ Audio_Server::init (ACE_SOCK_Stream& control,
     ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
   if (this->dgram_.get_local_addr (server_data_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) UDP get_local_addr failed: %p\n"),
+                       "(%P|%t) UDP get_local_addr failed: %p\n",
+                       "address:"),
                       -1);
   ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) UDP IP address is %s, and the port number is %d\n",
-              server_data_addr.get_host_addr (),
-              server_data_addr.get_port_number ()));
-
   port = server_data_addr.get_port_number ();
   ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
   // %% we need to fix this ?
@@ -664,6 +660,12 @@ Audio_Server::init (ACE_SOCK_Stream& control,
   server_data_addr.set (port,
                         server_data_addr.get_host_name ());
   ACE_DEBUG ((LM_DEBUG,"%s,%d\n",__FILE__,__LINE__));
+
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) UDP IP address is %s, and the port number is %d\n",
+              server_data_addr.get_host_addr (),
+              server_data_addr.get_port_number ()));
+
   ip = server_data_addr.get_ip_address ();
 
   port = htons (port);

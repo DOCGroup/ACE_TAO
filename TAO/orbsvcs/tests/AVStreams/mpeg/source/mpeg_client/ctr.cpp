@@ -670,7 +670,7 @@ static int InitVideoChannel(char * phostname, char * vf)
 
 static int InitAudioChannel(char * phostname, char * af)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%T) InitAudioChannel called "));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) InitAudioChannel called\n"));
   int dataSocket = -1;
 
   if (!hasAudioDevice)
