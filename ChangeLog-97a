@@ -10,9 +10,17 @@ Tue Jun 17 15:11:09 1997  David L. Levine  <levine@cs.wustl.edu>
 	  So, we haven't enabled it by default.  Thanks to Chris Cleeland
 	  for suggesting not to enable it by default.
 
+	* ace/IOStream.h: added #include of "ace/config.h" so that
+	  ACE_LACKS_ACE_IOSTREAM can be checked.  Thanks to Ganesh Pai
+	  <gpai@voicetek.com> for reporting this problem.
+
 	* ace/ACE.cpp (get_handle): use /dev/udp instead of /dev/ip on
 	  SVR4 machines because it has other read permission by default
 	  (on Solaris 2.x).
+
+	* ace/ACE.cpp (get_ip_interfaces): use auto_array_ptr instead of
+	  auto_ptr so that the array gets deleted properly, and zero it
+	  out to avoid unitialized memory read reports from Purify.
 
 	* ace/Timer_Hash_T.cpp (cancel): added "[]" to delete of timer_ids
 	  array.  Purify rules.
