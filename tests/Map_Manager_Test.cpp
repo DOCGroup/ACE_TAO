@@ -932,7 +932,10 @@ main (int argc, ASYS_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  // The explicit instantiations are necessary with g++ 2.91.66
+  // with -frepo, because it misses some of them.
 template class ACE_Equal_To<TYPE>;
 template class ACE_Pair<TYPE, ATTR>;
 template class ACE_Reference_Pair<TYPE, TYPE>;
