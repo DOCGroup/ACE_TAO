@@ -6,37 +6,47 @@ URL="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO.tar.gz"
 
 cat <<@EOM
 
-A new version of The ACE ORB (TAO) has been released by the Disitributed 
-Object Computing (DOC) Group at Washington University in St. Louis, and 
-can be downloaded from the Internet.
+The first official beta release of The ACE ORB (TAO) has been released
+by the Distributed Object Computing (DOC) Group at Washington
+University in St. Louis.  TAO is a freely available CORBA
+2.x-compliant ORB that can be downloaded from the Internet at
 
-TAO is a freely-licensed CORBA 2.x-compliant ORB which uses IIOP 1.0 as 
-its default inter-ORB communication protocol.  TAO also sports the first 
-(as far as we know) implementation of the OMG's Portable Object Adapter 
-(POA) architecture!
+http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO.tar.gz
 
-TAO has been ported to OS platforms including Windows NT 4.x using MSVC++, 
-several versions of UNIX (e.g., Solaris 2.x, SGI IRIX 6.x, Linux, SCO, 
-NetBSD, and FreeBSD), and Real-Time OS's (RTOSs) (e.g., VxWorks and 
-Chorus).  Ultimately, TAO will be ported to all OS platforms on which ACE 
-runs.  We have used TAO to interwork with other ORBs (e.g., Orbix, COOL, 
-CORBAPlus, and VisiBroker), so we're confident that its IIOP implementation 
-is robust and interoperable.
-
-The release may be obtained from
-	$URL
-
-It's version information is:
 $VERSION
 
-For information on installation and system requirements, please see 
-TAO-INSTALL.html (or INSTALL) in the root directory of the unpacked tar 
-file.
+TAO uses IIOP 1.0 as its inter-ORB communication protocol and provides
+the first implementation of the OMG's Portable Object Adapter (POA)
+specification and latest IDL->C++ mappings.  For more information
+about the POA, please see
 
-Note that ACE is required to build TAO.  Typically the most recent beta 
-release is required--see the installation notes for more details.  Other 
-documentation is available in the 'docs/' directory (in HTML).
+TAO has been ported to a range of OS platforms including Windows NT
+4.x using MSVC++ 4.x and 5.x, several versions of UNIX (e.g., Solaris
+2.x, SGI IRIX 6.x, Linux, SCO, NetBSD, and FreeBSD), and Real-Time
+OS's (RTOSs) (e.g., VxWorks and Chorus).  Ultimately, TAO will be
+ported to all OS platforms on which ACE runs.  We have used TAO to
+interwork with other ORBs (e.g., Orbix, COOL, CORBAPlus, and
+VisiBroker), so we're confident that its IIOP implementation is robust
+and interoperable.
 
-Thanks for trying TAO!
-Team TAO
+For information on installation and system requirements, please see
+http://www.cs.wustl.edu/~schmidt/TAO-INSTALL.html (or INSTALL) in the
+root directory of the unpacked tar file.
+
+Note that ACE is required to build TAO.  Typically the most recent
+beta release is required, which you can obtain at
+
+http://www.cs.wustl.edu/~schmidt/ACE.html
+
+Please see the installation notes for more details.
+
+Other HTML documentation is available in the '$TAO_ROOT/docs/'
+directory.
+
+We welcome suggestions for improvement, bug fixes, portability
+enhancements, etc.  If you have any problems with TAO, please send
+email to Douglas C. Schmidt (schmidt@cs.wustl.edu) and Chris Cleeland
+(cleeland@cs.wustl.edu).
+
+The TAO Team
 @EOM
