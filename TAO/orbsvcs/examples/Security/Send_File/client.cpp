@@ -72,7 +72,7 @@ main (int argc, char *argv[])
           buf.alloc ()->free (line);
         }
         
-//      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);
