@@ -17,6 +17,9 @@ int CB::handle_timeout (const ACE_Time_Value &,
 
   const int *val = ACE_static_cast (const int*, arg);
   ACE_ASSERT ((*val) == timerID_);
+
+  ACE_UNUSED_ARG (val);
+
   if (count_ == 5)
     {
       ACE_DEBUG ((LM_DEBUG, 

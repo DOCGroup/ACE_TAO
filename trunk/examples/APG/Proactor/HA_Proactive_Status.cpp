@@ -7,6 +7,7 @@
 
 #include "HA_Proactive_Status.h"
 #include "ace/Proactor.h"
+#include "ace/os_include/arpa/os_inet.h"
 
 // Listing 1 code/ch08
 void

@@ -3,6 +3,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_pwd.h"
+#include "ace/OS_NS_pwd.h"
+
 // Listing 1 code/ch10
 class Manager : public ACE_Process
 {
