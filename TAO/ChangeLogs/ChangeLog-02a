@@ -1,3 +1,11 @@
+Mon Oct 23 14:32:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+	  Removed the generated ACH_CHECK following two function
+	  calls that no longer use ACE_TRY_ENV.
+
 Mon Oct 23 12:19:31 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/DomainS.cpp:
