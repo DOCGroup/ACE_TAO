@@ -1,3 +1,9 @@
+Mon Apr  9 06:54:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp : Was aligning a buffer that was
+	  used for supplementary purposes. This alignment was not
+	  needed. Thanks to Chris Kolhloff for poiting this out.
+
 Mon Apr  9 09:22:12 2001  Johnny Willemsen <jwillemsen@remedy>
 
         * orbsvcs/tests/property/*.bor
