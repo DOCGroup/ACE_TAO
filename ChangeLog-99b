@@ -1,5 +1,9 @@
 Thu Aug 19 13:03:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/ACE.h (ACE): Fixed a "cut & paste" error in the comment --
+ 	  basename should have been dirname.  Thanks to Mark Hyett
+ 	  <mhyett@std.saic.com> for reporting this.
+
 	* ace/ACE.cpp: Fixed a bug in ACE::dirname() that was causing problems
 	  if the pathname didn't have a delim character.  Thanks to Russ
  	  Noseworthy for reporting this and providing a fix.
