@@ -200,7 +200,7 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("C++ exceptions not supported on this platform\n")));
+              ASYS_TEXT ("C++ exception support not enabled on this platform\n")));
 #endif /* ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;
