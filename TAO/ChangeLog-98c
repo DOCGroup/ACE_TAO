@@ -1,3 +1,8 @@
+Wed Aug 19 17:37:51 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Integrated the Audio/video streams
+	stuff into the mainstream orbsvcs.
+
 Wed Aug 19 17:32:40 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: I decided not to add an
