@@ -1,3 +1,8 @@
+Sat May 01 11:20:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/tests/FIFO/test.cpp:
+          Fixed compile problems in unicode builds
+
 Sat May 01 09:44:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
