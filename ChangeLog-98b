@@ -1,9 +1,9 @@
 Fri May 29 21:59:01 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* RB_Tree.h:
-	* RB_Tree.i:
-	* RB_Tree.cpp: Debugged some minor typo errors, and changes
-	  related to internalizing the RED and BLACK enums.
+        * RB_Tree.h:
+        * RB_Tree.i:
+        * RB_Tree.cpp: Debugged some minor typo errors, and changes
+          related to internalizing the RED and BLACK enums.
 
 Fri May 29 21:55:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -11,6 +11,9 @@ Fri May 29 21:55:11 1998  David L. Levine  <levine@cs.wustl.edu>
           Solaris (ACE_HAS_HI_RES_TIMER) because it uses ::gethrtime ().
           (dump): on Solaris, print 64-bit ints with %llu format.  Other
           platforms may need that, also.
+
+        * ace/Makefile: replaced .o with $(OBJEXT) in gethrtime.o target,
+          so that make depend doesn't munge it.
 
 Fri May 29 17:52:37 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
