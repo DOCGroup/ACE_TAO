@@ -1,3 +1,13 @@
+Mon Apr 14 09:06:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+
+          Fixed problem with multiple members of the same anonymous
+          sequence type.
+
 Sat Apr 12 02:52:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_type.cpp:
