@@ -1,16 +1,26 @@
+Mon Apr 19 16:45:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},Object_Manager.{h,cpp} (ACE_OS_Object_Manager,
+          ACE_Object_Manager: added static counter to match init ()/fini ()
+          calls.  Don't destroy Object_Managers until final fini () call.
+          Thanks to Ian MacDonald <ianmacd@bg.com> for tracking down
+          the problem with multiple DLLs in a process.  This change
+          delays destruction of the ACE_Object_Manager until the final
+          fini () call.
+
 Mon Apr 19 15:24:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/TLI_Stream.cpp (ACE_TLI_Stream): Make sure to set the value
- 	  of rwflag_ to 0 so that purify is happy.  Thanks to Joe Hoffert
- 	  for reporting this.
+        * ace/TLI_Stream.cpp (ACE_TLI_Stream): Make sure to set the value
+          of rwflag_ to 0 so that purify is happy.  Thanks to Joe Hoffert
+          for reporting this.
 
 Mon Apr 19 14:35:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/IPC_SAP/UPIPE_SAP/ex2.cpp (supplier):
-	* examples/IPC_SAP/UPIPE_SAP/ex3.cpp (consumer):
+        * examples/IPC_SAP/UPIPE_SAP/ex2.cpp (supplier):
+        * examples/IPC_SAP/UPIPE_SAP/ex3.cpp (consumer):
 
           Avoided annoying g++ warning about <auto_ptr> by explicitly
-	  making a temporary. Thanks to David for pointing this out.
+          making a temporary. Thanks to David for pointing this out.
 
 Sun Apr 18 21:52:43 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -43,7 +53,7 @@ Sun Apr 18 00:26:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tests/Priority_Reactor_Test.cpp (main):
 
           Avoided annoying g++ warning about <auto_ptr> by explicitly
-	  making a temporary. Thanks to David for pointing this out.
+          making a temporary. Thanks to David for pointing this out.
 
 Sat Apr 17 18:52:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
