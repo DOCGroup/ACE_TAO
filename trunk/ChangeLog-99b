@@ -1,5 +1,12 @@
 Sun Jun 13 14:22:54 1999  Douglas C. Schmidt  <schmidt@maxixe.cs.wustl.edu>
 	
+	* ace/LSOCK_Acceptor.cpp: Rewrote the accept() method to use the
+	  same new technique that's used in ACE_SOCK_Acceptor::accept().
+	  This is necessary since there's no longer a shared_accept().
+	
+        * ace/SOCK_Acceptor: Removed shared_accept() since it's been split
+	  into two parts to make the QoS features easier to maintain.
+
 	* ace/SOCK_Acceptor: Added the new ACE_Accept_QoS_Params parameter
 	  to the ACE_SOCK_Acceptor::accept().  Also created two new
 	  private methods, shared_accept_start() and

@@ -95,12 +95,6 @@ protected:
   // Perform operations that must occur after <ACE_OS::accept> is
   // called.
 
-  ACE_HANDLE shared_accept (ACE_Addr *remote_addr,
-                            ACE_Time_Value *,
-                            int restart,
-                            int reset_new_handle) const;
-  // Shared by both the ACE_LSOCK_Acceptor and ACE_SOCK_Acceptor.
-
 private:
   int get_remote_addr (ACE_Addr &) const;
   // Do not allow this function to percolate up to this interface...

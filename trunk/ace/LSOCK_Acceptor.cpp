@@ -67,9 +67,13 @@ ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap,
 					int protocol)
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor");
-  if (this->open (remote_sap, reuse_addr,
-		  protocol_family, backlog, protocol) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor"));
+  if (this->open (remote_sap,
+		  reuse_addr,
+		  protocol_family,
+		  backlog,
+		  protocol) == -1)
+    ACE_ERROR ((LM_ERROR,
+		"ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor"));
 }
 
 // General purpose routine for accepting new connections.
@@ -82,10 +86,42 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_local_ipc_sap,
                             int reset_new_handle) const
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::accept");
-  ACE_HANDLE new_handle = 
-    ACE_SOCK_Acceptor::shared_accept (remote_addr, timeout, restart, reset_new_handle);
-  new_local_ipc_sap.set_handle (new_handle);
-  return new_handle == ACE_INVALID_HANDLE ? -1 : 0;
+
+  int in_blocking_mode = 0;
+  if (this->shared_accept_start (timeout,
+				 restart,
+				 in_blocking_mode) == -1)
+    return -1;
+  else
+    {
+      sockaddr *addr = 0;
+      int len = 0;
+
+      if (remote_addr != 0)
+	{
+	  len = remote_addr->get_size ();
+	  addr = (sockaddr *) remote_addr->get_addr ();
+	}
+
+      do
+	new_stream.set_handle (ACE_OS::accept (this->get_handle (),
+					       addr,
+					       &len));
+      while (new_stream.get_handle () == ACE_INVALID_HANDLE 
+	     && restart != 0
+	     && errno == EINTR
+	     && timeout == 0);
+
+      // Reset the size of the addr, which is only necessary for UNIX
+      // domain sockets.
+      if (new_stream.get_handle () != ACE_INVALID_HANDLE 
+	  && remote_addr != 0)
+	remote_addr->set_size (len);
+    }
+
+  return this->shared_accept_finish (new_stream,
+				     in_blocking_mode,
+				     reset_new_handle);
 }
 
 // Close down the UNIX domain stream and remove the rendezvous point

@@ -4535,7 +4535,7 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-int 
+ACE_INLINE int 
 ACE_OS::ioctl (ACE_HANDLE socket,
 	       u_long io_control_code,
 	       void *in_buffer_p,
