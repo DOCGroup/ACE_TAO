@@ -72,7 +72,7 @@ TAO_DIOP_Connector::close (void)
 
   while (!iter.done ())
     {
-      (*iter).int_id_->decr_refcount();
+      (*iter).int_id_->remove_reference ();
       iter++;
     }
 
@@ -156,8 +156,8 @@ TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
    }
 
   // @@ Michael: We do not use regular connection management.
-
-  transport = TAO_Transport::_duplicate (svc_handler->transport ());
+  svc_handler->add_reference ();
+  transport = svc_handler->transport ();
 
   return 0;
 }

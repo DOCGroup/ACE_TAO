@@ -52,12 +52,12 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
-  TAO_Transport::release (specific_transport);
 }
 
 
 TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 {
+  delete this->transport ();
   this->udp_socket_.close ();
 }
 
@@ -166,20 +166,57 @@ TAO_DIOP_Connection_Handler::close_connection (void)
 int
 TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_eh (h, this);
+  int result =
+    this->handle_input_eh (h, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
 TAO_DIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  return this->handle_output_eh (handle, this);
+  int result =
+    this->handle_output_eh (handle, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
-TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                           ACE_Reactor_Mask rm)
+TAO_DIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+                                             const void *)
 {
-  return this->handle_close_eh (handle, rm, this);
+  // We don't use this upcall from the Reactor.  However, we should
+  // override this since the base class returns -1 which will result
+  // in handle_close() getting called.
+  return 0;
+}
+
+int
+TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE,
+                                           ACE_Reactor_Mask)
+{
+  ACE_ASSERT (0);
+  return 0;
+}
+
+int
+TAO_DIOP_Connection_Handler::close (u_long)
+{
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->transport ()->remove_reference ();
+  return 0;
 }
 
 int

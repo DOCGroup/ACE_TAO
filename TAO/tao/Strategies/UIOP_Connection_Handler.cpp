@@ -47,17 +47,17 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
                      (TAO_UIOP_Properties *, arg))
 {
   TAO_UIOP_Transport* specific_transport = 0;
-  ACE_NEW(specific_transport,
-          TAO_UIOP_Transport(this, orb_core, flag));
+  ACE_NEW (specific_transport,
+           TAO_UIOP_Transport(this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
-  this->transport(specific_transport);
-  TAO_Transport::release (specific_transport);
+  this->transport (specific_transport);
 }
 
 
 TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
 {
+  delete this->transport ();
 }
 
 int
@@ -116,20 +116,57 @@ TAO_UIOP_Connection_Handler::close_connection (void)
 int
 TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_eh (h, this);
+  int result =
+    this->handle_input_eh (h, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
 TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  return this->handle_output_eh (handle, this);
+  int result =
+    this->handle_output_eh (handle, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
+}
+
+int
+TAO_UIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+                                             const void *)
+{
+  // We don't use this upcall from the Reactor.  However, we should
+  // override this since the base class returns -1 which will result
+  // in handle_close() getting called.
+  return 0;
 }
 
 int
 TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                            ACE_Reactor_Mask rm)
 {
-  return this->handle_close_eh (handle, rm, this);
+  ACE_ASSERT (0);
+  return 0;
+}
+
+int
+TAO_UIOP_Connection_Handler::close (u_long)
+{
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->transport ()->remove_reference ();
+  return 0;
 }
 
 int

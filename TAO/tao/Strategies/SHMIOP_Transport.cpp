@@ -34,13 +34,6 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
     connection_handler_ (handler),
     messaging_object_ (0)
 {
-  if (connection_handler_ != 0)
-    {
-      // REFCNT: Matches one of
-      // TAO_Transport::connection_handler_close() or
-      // TAO_Transport::close_connection_shared.
-      this->connection_handler_->incr_refcount();
-    }
   if (flag)
     {
       // Use the lite version of the protocol
@@ -57,7 +50,6 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
 
 TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport (void)
 {
-  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
@@ -81,9 +73,9 @@ TAO_SHMIOP_Transport::messaging_object (void)
 
 
 ssize_t
-TAO_SHMIOP_Transport::send_i (iovec *iov, int iovcnt,
-                              size_t &bytes_transferred,
-                              const ACE_Time_Value *max_wait_time)
+TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
   bytes_transferred = 0;
   for (int i = 0; i < iovcnt; ++i)
@@ -101,9 +93,9 @@ TAO_SHMIOP_Transport::send_i (iovec *iov, int iovcnt,
 }
 
 ssize_t
-TAO_SHMIOP_Transport::recv_i (char *buf,
-                              size_t len,
-                              const ACE_Time_Value *max_wait_time)
+TAO_SHMIOP_Transport::recv (char *buf,
+                            size_t len,
+                            const ACE_Time_Value *max_wait_time)
 {
   ssize_t n = 0;
 
@@ -200,32 +192,6 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
   return this->process_parsed_messages (&pqd, rh);
 }
 
-
-int
-TAO_SHMIOP_Transport::register_handler_i (void)
-{
-  if (TAO_debug_level > 4)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - SHMIOP_Transport::register_handler %d\n",
-                  this->id ()));
-    }
-  // @@ It seems like this method should go away, the right reactor is
-  //    picked at object creation time.
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  if (r == this->connection_handler_->reactor ())
-    return 0;
-
-  // Set the flag in the Connection Handler
-  this->ws_->is_registered (1);
-
-  // Register the handler with the reactor
-  return  r->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
-}
-
-
 int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
                                   TAO_ORB_Core *orb_core,
@@ -290,14 +256,6 @@ TAO_SHMIOP_Transport::messaging_init (CORBA::Octet major,
   this->messaging_object_->init (major,
                                  minor);
   return 1;
-}
-
-TAO_Connection_Handler *
-TAO_SHMIOP_Transport::invalidate_event_handler_i (void)
-{
-  TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
-  return eh;
 }
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

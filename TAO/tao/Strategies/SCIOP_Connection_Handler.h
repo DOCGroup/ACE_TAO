@@ -95,8 +95,9 @@ public:
  */
 
 
-class TAO_Export TAO_SCIOP_Connection_Handler : public TAO_SCIOP_SVC_HANDLER,
-                                               public TAO_Connection_Handler
+class TAO_Export TAO_SCIOP_Connection_Handler :
+  public TAO_SCIOP_SVC_HANDLER,
+  public TAO_Connection_Handler
 {
 
 public:
@@ -120,6 +121,10 @@ public:
   virtual int open_handler (void *);
   //@}
 
+  /// Close called by the Acceptor or Connector when connection
+  /// establishment fails.
+  int close (u_long = 0);
+
   //@{
   /** @name Event Handler overloads
    */
@@ -128,6 +133,8 @@ public:
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  virtual int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act = 0);
   //@}
 
   /// Add ourselves to Cache.
