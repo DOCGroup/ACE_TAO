@@ -1,3 +1,12 @@
+Sun May 30 16:23:17 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	* docs/releasenotes/orbcore.html:
+
+          Updated Pluggable Protocol release notes and updated all
+	  references of the now deprecated "-ORBhost" and "-ORBport"
+	  options with "-ORBendpoint." 
+
 Sun May 30 13:51:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp:
