@@ -1,3 +1,15 @@
+Sun Mar 15 06:18:58 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/{be_codegen, be_visitor_args}.h: Added a new
+	state called "POST_MARSHAL_SS" i.e., to do post processing after
+	the marshaling of return, inout, and out parameters is done in a
+	server skeleton. Added new visitor class to the argument visitors.
+
+	* TAO_IDL/be/{be_visitor_args, be_visitor_operation,
+	be_interpretive}.cpp: Code for post processing after marshaling in
+	the server skeletons. This was required to support object
+	references.
+
 Sat Mar 14 19:28:50 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_field.cpp: Added a case for handling

@@ -968,6 +968,20 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << be_uidt_nl;
   *os << ");" << be_nl;
 
+  // STEP 3F: do any post processing for the arguments
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ss::"
+                         "visit_operation - "
+                         "codegen for args in post upcall failed\n"),
+                        -1);
+    }
+
   // STEP 3C: setup parameters for marshaling and marshal them into the
   // outgoing stream
   *os << "_tao_server_request.marshal (" << be_idt_nl
@@ -1037,7 +1051,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // STEP 3F: do any post processing for the arguments
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
@@ -1045,7 +1059,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ss::"
                          "visit_operation - "
-                         "codegen for args in post upcall failed\n"),
+                         "codegen for args in post marshal failed\n"),
                         -1);
     }
 
@@ -3015,6 +3029,9 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS);
+      break;
+    case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_MARSHAL_SS);
       break;
     default:
       {
