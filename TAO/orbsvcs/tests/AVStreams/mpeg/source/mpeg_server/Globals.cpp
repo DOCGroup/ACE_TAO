@@ -341,6 +341,7 @@ Video_Global::SendPacket (int shtag, int gop, int frame, int timeToUse)
 
   if (frame >= this->gopTable[gop].totalFrames)
     {
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line in %s %d",__FILE__,__LINE__));
       this->packet->cmd = htonl (this->cmd);
       this->packet->cmdsn = htonl (this->cmdsn);
       this->packet->sh = htonl (sh);
