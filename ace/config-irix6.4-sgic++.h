@@ -190,6 +190,9 @@
 // Platform supports template specialization
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// Platform supports exceptions.
+#define ACE_HAS_EXCEPTIONS
+
 // The following three should be enabled/disabled together.
 #define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #define ACE_TEMPLATES_REQUIRE_SOURCE

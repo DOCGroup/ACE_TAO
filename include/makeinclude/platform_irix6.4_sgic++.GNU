@@ -14,14 +14,18 @@ LD		= $(CXX)
 # Basic flags
 CPPFLAGS	+= -D_SGI_MP_SOURCE
 CCFLAGS		+= -O
-#CCFLAGS		+= +pp
-#CCFLAGS		+= -woff 3203,3209,3161,3262,3665
-CCFLAGS		+= -woff 1188,1682,1171
+CCFLAGS		+= -woff 1188,1682,1171,1681
 # Instantiate everything; without this, apps/Gateway/Gateway/gatewayd might
 # not build due to missing template instantiations.
-CCFLAGS		+= -ptall
+#CCFLAGS		+= -ptall
 # Instantiate used templates, plus prelinking instantiation
-# CCFLAGS	+= -ptused -prelink
+#CCFLAGS	+= -ptused -prelink
+# Instantiate used templates, but do not run prelinker
+#CCFLAGS		+= -ptused
+# Instantiate no templates automatically, do not run prelinker
+CCFLAGS		+= -ptnone -no_prelink
+# Turn on exceptions
+CCFLAGS		+= -exceptions -ptv
 # Unknown version of SGI CC, -n32 mode
 # NOTE: -32/-n32/-64 mode is usually better set by the environment variable 'SGI_ABI'
 #CPPFLAGS	+= -n32 -woff 1174,1209,1375,1506,1110,1552,1021,1171
