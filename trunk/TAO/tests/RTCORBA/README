@@ -1,0 +1,16 @@
+$Id$
+
+This directory houses a collection of tests which exercise TAO support
+for features defined in the RTCORBA specification.  Each individual
+directory contains a README file with more information on the
+corresponding test:
+
+              . Client_Propagated
+
+                Tests PriorityModelPolicy with
+                RTCORBA::CLIENT_PROPAGATED value.
+
+              . Server_Protocol
+
+                Tests various settings of
+                RTCORBA::ServerProtocolPolicy.
