@@ -120,18 +120,14 @@ Core:
 
 CONTROLLED_FILES = \
         ACE-INSTALL.html \
-        ACE-configuration.txt \
         ACE-install.sh \
         ASNMP \
         AUTHORS \
-        BIBLIOGRAPHY \
         COPYING \
         ChangeLog* \
         FAQ \
         Makefile \
         Makefile.am \
-        Makefile.in \
-        NEWS \
         PACE \
         PROBLEM-REPORT-FORM \
         README \
@@ -139,29 +135,18 @@ CONTROLLED_FILES = \
         TODO \
         VERSION \
         acconfig.h \
-        aclocal.m4 \
         ace \
         ace-config.1.in \
         ace-config.in \
         aceConf.sh.in \
         apps \
         bin \
-        config.guess \
-        config.sub \
-        configure \
         configure.in \
         docs \
         etc \
         examples \
         include \
-        install-sh \
-        ltcf-c.sh \
-        ltcf-cxx.sh \
-        ltconfig \
-        ltmain.sh \
         m4 \
-        missing \
-        mkinstalldirs \
         netsvcs \
         os-patches \
         performance-tests \
