@@ -54,7 +54,7 @@ public:
    /**
     *  Default constructor.
     *
-    *  @param alloc ACE_Allocator associated with string
+    *  @param the_allocator ACE_Allocator associated with string
     *  @return Default ACE_String_Base string.
     */
   ACE_String_Base (ACE_Allocator *the_allocator = 0);
@@ -66,7 +66,7 @@ public:
    * is 0.
    *
    * @param s Zero terminated input string
-   * @param alloc ACE_Allocator associated with string
+   * @param the_allocator ACE_Allocator associated with string
    * @param release Allocator responsible(1)/not reponsible(0) for
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
@@ -83,7 +83,7 @@ public:
    *
    * @param s Non-zero terminated input string
    * @param len Length of non-zero terminated input string
-   * @param alloc ACE_Allocator associated with string
+   * @param the_allocator ACE_Allocator associated with string
    * @param release Allocator responsible(1)/not reponsible(0) for
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
@@ -105,7 +105,7 @@ public:
    *  Constructor that copies @a c into dynamically allocated memory.
    *
    *  @param c Single input character.
-   *  @param alloc ACE_Allocator associated with string
+   *  @param the_allocator ACE_Allocator associated with string
    *  @return ACE_String_Base containing CHAR 'c'
    */
   ACE_String_Base (CHAR c,
@@ -117,7 +117,7 @@ public:
    *
    *  @param len Length of character array 'c'
    *  @param c Input character array
-   *  @param alloc ACE_Allocator associated with string
+   *  @param the_allocator ACE_Allocator associated with string
    *  @return ACE_String_Base containing character array 'c'
    */
   ACE_String_Base (size_t len,

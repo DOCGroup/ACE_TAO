@@ -8,7 +8,7 @@
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  *  @author Matthias Kerkhoff
- *  @author and Per Andersson
+ *  @author Per Andersson
  */
 //=============================================================================
 

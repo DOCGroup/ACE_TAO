@@ -10,7 +10,7 @@
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Bill Fulton <bill_a_fulton@raytheon.com>
- *  @author and Don Hinton <dhinton@objectsciences.com>
+ *  @author Don Hinton <dhinton@objectsciences.com>
  */
 //=============================================================================
 
@@ -128,7 +128,7 @@ public:
 #if defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING) \
     && (ACE_LACKS_PERFECT_MULTICAST_FILTERING == 1)
       // Platforms that don't support perfect filtering. Note that perfect
-      // filtering only really applies to multicast traffic, not unicast 
+      // filtering only really applies to multicast traffic, not unicast
       // or broadcast.
       DEFOPT_BINDADDR  = OPT_BINDADDR_YES,
 # else
@@ -239,24 +239,24 @@ public:
    * and the address does not match the bound address.  Returns errno of
    * ENODEV if the addr/port#/interface parameters appeared valid, but no
    * subscription(s) succeeded.  An error is unconditionally returned if
-   * option OPT_NULLIFACE_ALL is used, <net_if> is NULL, and 
+   * option OPT_NULLIFACE_ALL is used, <net_if> is NULL, and
    * <ACE_Sock_Connect::get_ip_interfaces> is not implemented in this
    * environment.
    *
-   * Note that the optional <reuse_addr> parameter does not apply to 
+   * Note that the optional <reuse_addr> parameter does not apply to
    * subscriptions; it is only used if <open> is implicitly invoked (see above).
    *
    * NOTICE - This method has been deprecated, please use join() instead.  In
-   * addition, the following paramters have also been deprecated: 
-   * <protocol_family> and <protocol> have no effect. 
+   * addition, the following paramters have also been deprecated:
+   * <protocol_family> and <protocol> have no effect.
    */
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  int reuse_addr = 1,               // (see above)
                  const ACE_TCHAR *net_if = 0,
-                 int protocol_family = PF_INET,    
-                 int protocol = 0);                
+                 int protocol_family = PF_INET,
+                 int protocol = 0);
 
-  // join() replaces subscribe() and uses the mcast_addr to determine 
+  // join() replaces subscribe() and uses the mcast_addr to determine
   // protocol_family, and protocol which we always pass as 0 anyway.
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,               // (see above)
@@ -285,7 +285,7 @@ public:
                    int protocol_family = PF_INET,
                    int protocol = 0);
 
-  // leave() replaces unsubscribe() and uses mcast_addr to determine 
+  // leave() replaces unsubscribe() and uses mcast_addr to determine
   // protocol_family, and protocol which we always pass as 0 anyway.
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
@@ -297,11 +297,11 @@ public:
    * Returns -1 if any unsubscribe failed, 0 if there are no errors or no
    * current subscriptions.
    *
-   * This method has been deprecated.  Since a list of groups is not 
-   * maintained (except when ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined), 
-   * it isn't possible to unsubscribe to all the groups without closing 
+   * This method has been deprecated.  Since a list of groups is not
+   * maintained (except when ACE_SOCK_DGRAM_MCAST_DUMPABLE is defined),
+   * it isn't possible to unsubscribe to all the groups without closing
    * the socket.  Therefore, if applications wish to unsubscribe to all
-   * groups without closing the socket, they much keep track of the 
+   * groups without closing the socket, they much keep track of the
    * subscriptions and call the above unsubscribe () for each.
    */
   int unsubscribe (void);
@@ -326,9 +326,9 @@ public:
   /**
    * Set an ip option that takes a char as input, such as <IP_MULTICAST_LOOP>
    * or <IP_MULTICAST_TTL>.  This is just a more concise, nice interface to a
-   * subset of possible <ACE_SOCK::set_option> calls, but only works for 
-   * IPPROTO_IP or IPPROTO_IPV6 level options.  Use <ACE_SOCK::set_option> 
-   * directly to set anything else. 
+   * subset of possible <ACE_SOCK::set_option> calls, but only works for
+   * IPPROTO_IP or IPPROTO_IPV6 level options.  Use <ACE_SOCK::set_option>
+   * directly to set anything else.
    * \deprecated { This method has been deprecated since it cannot be used
    * easily with with IPv6 options.}
    * Returns 0 on success, -1 on failure.
@@ -355,7 +355,7 @@ private:
                      int reuse_addr);
 
   /// Do subscription processing w/out updating the subscription list.
-  //  (Layered method for <subscribe> processing).
+  // (Layered method for <subscribe> processing).
   int subscribe_i (const ACE_INET_Addr &mcast_addr,
                    int reuse_addr = 1,
                    const ACE_TCHAR *net_if = 0);
@@ -375,7 +375,7 @@ protected:
   /// reuse it.
   int open_i (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
               const ACE_TCHAR *net_if = 0,            // Net interface for sends.
-              int reuse_addr = 1); 
+              int reuse_addr = 1);
 
   /// Create a multicast addr/if pair, in format useful for system calls.
   /// If mreq param is NULL, just verify the passed addr/interface specs.
@@ -389,7 +389,7 @@ protected:
                                const ACE_INET_Addr &mcast_addr,
                                const ACE_TCHAR *net_if = ACE_LIB_TEXT ("le0"));
 
-  /// Empty the dynamic subscription list.  
+  /// Empty the dynamic subscription list.
   int clear_subs_list (void);
 
 private:

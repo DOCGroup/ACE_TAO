@@ -11,7 +11,7 @@
  *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
- *  @author and Prashant Jain
+ *  @author Prashant Jain
  */
 //=============================================================================
 
@@ -69,7 +69,7 @@ public:
   /// Default constructor.
   ACE_Name_Request (void);
 
-  /// Create a <ACE_Name_Request> message.
+  /// Create a ACE_Name_Request message.
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
                     const ACE_WCHAR_T name[], //
                     const ACE_UINT32 name_length,

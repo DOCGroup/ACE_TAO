@@ -8,7 +8,7 @@
  *
  *  @author Karl-Heinz Dorn <kdorn@erlh.siemens.de>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *  @author and Tim Harrison <harrison@cs.wustl.edu>
+ *  @author Tim Harrison <harrison@cs.wustl.edu>
  *
  * This file contains definitions for the following classes:
  *

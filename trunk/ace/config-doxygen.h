@@ -81,6 +81,7 @@
 #define TAO_HAS_MINIMUM_CORBA 0
 #define TAO_HAS_AMI 1
 #define TAO_HAS_INTERCEPTORS 1
+#define TAO_HAS_SCIOP 1
 
 /// Generate token library documentation
 #define ACE_HAS_TOKENS_LIBRARY
@@ -102,5 +103,8 @@
 
 /// Generate strptime documentation
 #define ACE_HAS_STRPTIME
+
+/// Doxygen is capable of parsing using
+#define ACE_HAS_USING_KEYWORD
 
 #endif /* ACE_CONFIG_DOXYGEN_H */
