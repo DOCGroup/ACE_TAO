@@ -108,6 +108,8 @@ pace_sigwait (const sigset_t * set, int * sig)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return sigwait (set, sig);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (set);
+  PACE_UNUSED_ARG (sig);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }

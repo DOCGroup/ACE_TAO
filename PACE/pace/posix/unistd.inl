@@ -184,6 +184,8 @@ pace_getlogin_r (char * name, size_t namesize)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return getlogin_r (name, namesize);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (name);
+  PACE_UNUSED_ARG (namesize);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -330,6 +332,9 @@ pace_ttyname_r (int fildes,
 #if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return ttyname_r (fildes, name, namesize);
 #else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (fildes);
+  PACE_UNUSED_ARG (name);
+  PACE_UNUSED_ARG (namesize);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
