@@ -22,8 +22,34 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
     target_ (target), // No need to duplicate.
     caught_exception_ (0),
     response_expected_ (1),
-    reply_status_ (-1)
+    reply_status_ (-1),
+    rs_pi_current_ ()
 {
+
+  // Retrieve the thread scope current (no TSS access incurred yet).
+  TAO_PICurrent *pi_current = inv->orb_core ()->pi_current ();
+
+  // If the slot count is zero, then there is nothing to copy.
+  // Prevent any copying (and hence TSS accesses) from occurring.
+  if (pi_current->slot_count () != 0)
+    {
+      // Retrieve the thread scope current.
+      TAO_PICurrent_Impl *tsc = pi_current->tsc ();
+
+      // Copy the TSC to the RSC.
+      this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
+
+      // PICurrent will potentially have to call back on the request
+      // scope current so that it can deep copy the contents of the
+      // thread scope current if the contents of the thread scope
+      // current are about to be modified.  It is necessary to do this
+      // deep copy once in order to completely isolate the request
+      // scope current from the thread scope current.  This is only
+      // necessary, if the thread scope current is modified after its
+      // contents have been *logically* copied to the request scope
+      // current.
+      tsc->pi_peer (&this->rs_pi_current_);
+    }
 }
 
 TAO_ClientRequestInfo_i::~TAO_ClientRequestInfo_i (void)
@@ -467,26 +493,8 @@ TAO_ClientRequestInfo_i::get_slot (PortableInterceptor::SlotId id
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  // @@ This implementation incurs a TSS access each time it is
-  //    invoked.  It need not do that.  This method can be invoked by
-  //    each client request interceptor multiple times.  At some point
-  //    we need to add the request scope current to the Invocation
-  //    object or some other object that is tied to a given
-  //    invocation.  That way, only one TSS access would be
-  //    introduced.
-  //        -Ossama
-
-  TAO_PICurrent *pi_current =
-    this->invocation_->orb_core ()->pi_current ();
-
-  if (pi_current == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
-
-  // PICurrent is read-only during a request invocation on the client
-  // side.  No copying is necessary.
-  return
-    pi_current->get_slot (id
-                           ACE_ENV_ARG_PARAMETER);
+  return this->rs_pi_current_.get_slot (id
+                                        ACE_ENV_ARG_PARAMETER);
 }
 
 IOP::ServiceContext *
