@@ -83,7 +83,8 @@ endif # ! x86-win32
 
 
 CC              = cc$(TOOLENV)
-CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
+CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
+                   -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
 #### Note: -f-no-implicit-templates doesn't seem to work well with
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.  Wind River knows
