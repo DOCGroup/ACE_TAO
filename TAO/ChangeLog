@@ -1,3 +1,10 @@
+Thu Aug 28 23:39:28 UTC 2003  Scott Harris <harris_s@ociweb.com>
+
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
+
+	  Fixed include error. "ace/Stream.h" -> "ace/streams.h"
+          Thanks Don Hinton.
+
 Thu Aug 28 18:10:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
