@@ -65,47 +65,42 @@
     <H3>Solution</H3>
     Compare your server.cpp with <a href = server.cpp>server.cpp</a> file. 
     
-    <H3>TESTING</H3>
-    <P>Before proceeding with anything, we would want the
-      implementation repository to be up and running. So, lets do that
-      first. 
+    <H3>Testing</H3>
+    <P>To test your changes, you need to run three programs. The first
+      step would be to startup the Implementation Repository provided 
+      with TAO. We need to dump the IOR of the ImplRepo_Service to a file
+      so that we can use it later to use the implementation repository
+      for the initial service. 
     </P>
     <PRE>
-       $ImplRepo_Service -o implrepo.ior -d 0 -ORBobjrefstyle URL &
+       $ $TAO_ROOT/orbsvcs/ImplRepo_Service -o implrepo.ior -d 0 -ORBobjrefstyle URL &
 
           TAO Implementation Repository
     </PRE>
-    <P>The IOR of the implementation repository is written to the
-      implrepo.ior. The <CODE>ORBobjrefstyle URL</CODE> tells to write
-      the IOR in the URL format. Set ImplRepo_Service to
-      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service</CODE>
-    </P>
-    <P>So, now the implementation repository is ready to register
-      servers and POAs.
-    </P>
-    <H4>SERVER SIDE</H4>
-    <P> The first step would be to register our server with the
-      implementation repository so that the server can communicate
-      with the latter.
+    
+    <P> Next, we need to register our server with the implementation
+      repository. We can use the
+      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr</CODE>
+      application provided with TAO to add our server to the server
+      database in the implementation repository. 
     </P>
     <PRE>
-       $tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior add childPOA -c
-       "./server -ORBUseIMR 1 -ORBobjrefstyle URL -ORBInitRef 
-       ImplRepoService=file://implrepo.ior"
+       $ $TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr -ORBInitRef 
+         ImplRepoService=file://implrepo.ior add childPOA -c
+         "./server -ORBUseIMR 1 -ORBobjrefstyle URL -ORBInitRef 
+         ImplRepoService=file://implrepo.ior"
 
           Successfully registered server <childPOA>
     </PRE>
-    <P> What does this mean? The <CODE>-ORBInitRef</CODE> option allows the
-      specification of an object reference for an initial
-      service. <CODE>implrepo.ior</CODE> contains the IOR for the
-      IMR. We want to add  <CODE>childPOA</CODE> of our server to it. 
-      The <CODE>-ORBUseIMR</CODE> option tells the server to use the
-      IMR for notification of startup and shutdown of the server. 
-      Set <CODE>tao_imr</CODE> to
-      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr</CODE>
+    <P> We use the <CODE>-ORBInitRef</CODE> option to the IOR in 
+      <CODE>implrepo.ior</CODE> file and the <CODE>-ORBUseIMR</CODE> 
+      option to tell the server to use the IMR for notification of its
+      startup and shutdown. 
     </P>
-    <P>The next step would be to generate a simple IOR for the server
-      which can be used with the IMR. 
+    <P>The next step would be to generate a simple IOR for our server
+      to be used with the IMR, using the
+      <CODE>ior</CODE> option and write it to <CODE>stock_factory.ior</CODE>. 
+     
     </P>
     <PRE>
        $tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior ior
@@ -113,12 +108,11 @@
 
          iioploc://1.1@doc.ece.uci.edu:2690/childPOA
     </PRE>
-    <P> The <CODE>-f</CODE> option lets us write the ior to
-      stock_factory.ior. With this, the interactions between the
-      server and the IMR is complete.
+    <P> From now, the implementation repository is all set to keep
+      track of our server and do the needful on a method invocaation
+      on our server.
     </P>
-    <P> Now lets run our client and see whats happening. First run the
-      client as usual.
+    <P> Now, execute the client as usual.
     </P>
     <PRE>
        ./client file://stock_factory.ior MSFT RHAT
@@ -126,7 +120,8 @@
        The price of a stock in "Microsoft, Inc." is $91
        The price of a stock in "RedHat, Inc." is $210
     </PRE>
-    <P> Lets shutdown the server and then run the client.
+    <P> For testing the persistency of the POA, lets shutdown the
+      server and then run the client.
     </P>
     <PRE>
        $tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior
@@ -140,9 +135,9 @@
          The price of a stock in "Microsoft, Inc." is $91
     </PRE>
     <H3>More Reading</H3>
-    <P>The Implementation Repository</A> is described in detail 
-     <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/implrepo/index.html">here</A>. 
-      </P>
+    <P>More information on Implementation Repository is 
+     <A	HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/implrepo/index.html">here</A>.  
+    </P>
       <P>The <A HREF="http://www.triodia.com/staff/michi-henning.html">Henning</A> and <A HREF="http://www.iona.com/hyplan/vinoski/">Vinoski</A> 
       <A HREF="http://www.iona.com/hyplan/vinoski/#book">CORBA book</A> discusses POA policies in detail.  Likewise, 
       the Schmidt and Vinoski 
@@ -155,7 +150,7 @@
     <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
 <!-- Created: Wed Mar 29 17:35:30 PST 2000 -->
 <!-- hhmts start -->
-Last modified: Fri Apr 14 18:12:40 PDT 2000
+Last modified: Fri May 12 12:32:03 PDT 2000
 <!-- hhmts end -->
   </body>
 </html>
