@@ -78,23 +78,24 @@ Sat Sep 28 13:55:56 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  memory-leak.  This has been fixed now along with the change in: 
 	  Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
+Sat Sep 28 13:30:32 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* orbsvcs/examples/Log:
 	 
 	  Removed the folders /Client and /test.
 
-2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
+Sat Sep 28 13:11:22 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/README:
 	* orbsvcs/Logging_Service/Event_Logging_Service/README:
 	* orbsvcs/Logging_Service/Notify_Logging_Service/README:
 	* orbsvcs/Logging_Service/README:
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/README:
-
 	* orbsvcs/tests/Log/README:
 	* orbsvcs/tests/Log/Basic_Log_Test/README:
-	  ChangeLogTag: Sat Sep 28 07:49:01 2002  D A Hanvey <d.hanvey@qub.ac.uk>
+
+	  Added the above README files to describe the Logging
+	  Service examples.	  
 
 Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
@@ -105,16 +106,15 @@ Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 Sat Sep 28 01:12:53 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* Branch qubdhanvey01 merged.
-	  ChangeLogTag: Sat Sep 28 11:54:50 2002  D A Hanvey
-	  <d.hanvey@qub.ac.uk> 
 
 Sat Sep 28 01:10:32 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin
 	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin
 	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin
-	  ChangeLogTag: Sat Sep 28 11:51:23 2002  D A Hanvey
-	  <d.hanvey@qub.ac.uk> 
+
+	  Files added as part of updated Logging Service.
+	
 Fri Sep 27 21:32:45 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -295,103 +295,20 @@ Thu Sep 26 10:59:22 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp, ChangeLog:
 	ChangeLogTag: Thu Sep 26 16:07:18 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
-Thu Sep 26 10:41:51 2002  Ossama Othman  <ossama@uci.edu>
-
-	* ChangeLog: *** empty log message ***
-
 Thu Sep 26 10:39:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_root/root.cpp, ChangeLog:
 	ChangeLogTag: Thu Sep 26 14:59:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
-2002-09-26  ossama  <ossama@SNS060100>
+Thu Sep 26 09:15:18 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
-	* TAO_IDL/Makefile.BE, TAO_IDL/Makefile.EXE, TAO_IDL/Makefile.FE:
-	Updated dependencies
-
-	* ChangeLog, tao/Dynamic.pidl, tao/ObjectReferenceTemplate.pidl, tao/PortableInterceptor.pidl:
-	ChangeLogTag:Thu Sep 26 12:41:51 2002  Ossama Othman  <ossama@uci.edu>
-
-2002-09-26  bala  <bala@SNS060100>
-
-	* ChangeLog, tao/Transport.cpp:
-	ChangeLogTag: Thu Sep 26 13:50:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
-
-2002-09-26  parsons  <parsons@SNS060100>
-
-	* orbsvcs/IFR_Service/ifr_visitor.cpp, orbsvcs/IFR_Service/ifr_visitor.h, TAO_IDL/ast/ast_decl.cpp, TAO_IDL/be/be_codegen.cpp, TAO_IDL/be/be_visitor_field/field_ch.cpp, TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp, TAO_IDL/be/be_visitor_module/module_sh.cpp, TAO_IDL/be/be_visitor_root/root.cpp, TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp, TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp, ChangeLog:
-	ChangeLogTag: Thu Sep 26 13:11:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
-
-2002-09-26  ossama  <ossama@SNS060100>
-
-	* ChangeLog, orbsvcs/orbsvcs/CosLoadBalancing.idl:
-	ChangeLogTag:Thu Sep 26 09:30:02 2002  Ossama Othman  <ossama@uci.edu>
-
-	* orbsvcs/orbsvcs/CosLoadBalancing.bor, orbsvcs/orbsvcs/CosLoadBalancing.dsp, orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp, orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp, orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp, ChangeLog:
-	ChangeLogTag:Thu Sep 26 09:25:19 2002  Ossama Othman  <ossama@uci.edu>
-
-	* ChangeLog: *** empty log message ***
-
-	* ChangeLog, orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.cpp, orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.h, orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.cpp, orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h, orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
-	ChangeLogTag:Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
-
-2002-09-26  coryan  <coryan@SNS060100>
-
-	* tao/Connection_Handler.h, tao/Connection_Handler.inl, ChangeLog:
-	Thu Sep 26 11:55:05 2002  Carlos O'Ryan  <coryan@atdesk.com>
-
-2002-09-26  jwillemsen  <jwillemsen@SNS060100>
-
-	* ChangeLog, tao/RTPortableServer/RT_Acceptor_Filters.h, tao/Abstract_Servant_Base.h, tao/Object.h, tao/TAO_Internal.h, orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
-	ChangeLogTag: Thu Sep 26 05:32:45 UTC 2002 Johnny Willemsen <jwillemsen@remedy.nl>
-
-2002-09-26  parsons  <parsons@SNS060100>
-
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp, TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp, TAO_IDL/be_include/be_visitor_interface/smart_proxy_ch.h, TAO_IDL/be_include/be_visitor_interface/smart_proxy_cs.h, ChangeLog:
-	ChangeLogTag: Wed Sep 25 19:02:21 2002  Jeff Parsons <parsons@cs.wustl.edu>
-
-2002-09-25  parsons  <parsons@SNS060100>
-
-	* TAO_IDL/fe/fe_tmplinst.cpp, ChangeLog:
-	ChangeLogTag: Wed Sep 25 18:50:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
-
-2002-09-25  coryan  <coryan@SNS060100>
-
-	* ChangeLog, orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp, tao/Strategies/DIOP_Connector.cpp:
-	Wed Sep 25 17:17:49 2002  Carlos O'Ryan  <coryan@atdesk.com>
-
-2002-09-25  parsons  <parsons@SNS060100>
-
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp, TAO_IDL/be/be_visitor_structure/structure_ch.cpp, ChangeLog:
-	ChangeLogTag: Wed Sep 25 17:58:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
-
-2002-09-26  ossama  <ossama@SNS060100>
-
-	* CosLoadBalancing.idl:
-	ChangeLogTag:Thu Sep 26 09:30:02 2002  Ossama Othman  <ossama@uci.edu>
-
-	* CosLoadBalancing.bor, CosLoadBalancing.dsp, CosLoadBalancing_Static.dsp, LoadBalancing/LB_LeastLoaded.cpp, LoadBalancing/LB_LoadManager.cpp:
-	ChangeLogTag:Thu Sep 26 09:25:19 2002  Ossama Othman  <ossama@uci.edu>
-
-	* LoadBalancing/LB_Location_Index_Map.cpp, LoadBalancing/LB_Location_Index_Map.h, LoadBalancing/LB_RoundRobin.cpp, LoadBalancing/LB_RoundRobin.h, Makefile.CosLoadBalancing:
-	ChangeLogTag:Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
-
-2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
-
-	  The following files added/amended for the new Logging Service.
 	* /orbsvcs/orbsvcs/Makefile
-
-	  Added Makefile.DsLogAdmin, Makefile.DsEventLogAdmin, Makefile.DsNotifyLogAdmin, Makefile.RTEventLogAdmin
-	
-	* /orbsvcs/orbsvcs/Makefile.DsLogAdmin
-
+	* /orbsvcs/orbsvcs/Makefile.DsLogAdmin	
 	* /orbsvcs/orbsvcs/RTEventLogAdmin.idl
 	* /orbsvcs/orbsvcs/DsEventLogAdmin.idl
 	* /orbsvcs/orbsvcs/DsLogAdmin.idl
 	* /orbsvcs/orbsvcs/DsLogNotification.idl
 	* /orbsvcs/orbsvcs/DsNotifyLogAdmin.idl
-
-
 	* /orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
 	* /orbsvcs/orbsvcs/Log/BasicLogFactory_i.h
 	* /orbsvcs/orbsvcs/Log/BasicLog_i.cpp
@@ -435,32 +352,30 @@ Thu Sep 26 10:39:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	* /orbsvcs/orbsvcs/Log/eventlog_export.h
 	* /orbsvcs/orbsvcs/Log/log_export.h
 	* /orbsvcs/orbsvcs/Log/notifylog_export.h
-	* /orbsvcs/orbsvcs/Log/rteventlog_export.h:
+	* /orbsvcs/orbsvcs/Log/rteventlog_export.h
 
-2002-09-26  jwillemsen  <jwillemsen@SNS060100>
+	  The above files were added and constitute the new Logging Service
+	  which is actually 4 separate services - Basic_Logging_Service [same functionality
+	  as previous Logging_Service] - Event_Logging_Service [an event-aware logging 
+	  service which integates the Logging_Service and the CosEvent Service] -
+	  Notify_Logging_Service [integrates Logging_Service and Notification Service] -
+	  RTEvent_Logging_Service [integrates with the RTEvent Service].
 
-	* ESF/ESF_Busy_Lock.h:
-	ChangeLogTag: Thu Sep 26 05:32:45 UTC 2002 Johnny Willemsen <jwillemsen@remedy.nl>
-
-2002-09-25  coryan  <coryan@SNS060100>
-
-	* PortableGroup/UIPMC_Connector.cpp:
-	Wed Sep 25 17:17:49 2002  Carlos O'Ryan  <coryan@atdesk.com>
-
-2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
-
+Thu Sep 26 09:10:38 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+	
 	* /orbsvcs/tests/Log
 
+	  Added directory for Telecom Log Service tests.
+
 	* /orbsvcs/tests/Log/Makefile
-
-	  Added a test of the Basic_Logging_Service to the /tests/ directory.
-
 	* /orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp
 	* /orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h
 	* /orbsvcs/tests/Log/Basic_Log_Test/Makefile
-	* /orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+	* /orbsvcs/tests/Log/Basic_Log_Test/client.cpp
 
-2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
+	  Added a test of the Basic_Logging_Service to the /tests/ directory.
+
+Thu Sep 26 08:57:51 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* /orbsvcs/Logging_Service
 
@@ -486,13 +401,12 @@ Thu Sep 26 10:39:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	
 	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile
 	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp
-	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h
 
+	  Files above added as part of new Telecom Log Service.
 
-
-
-2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
-
+Thu Sep 26 09:15:18 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+	
 	* /orbsvcs/examples/Log
 
 	  Examples of the 4 Logging Services
@@ -522,8 +436,9 @@ Thu Sep 26 10:39:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	* /orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp
 	* /orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h
 	* /orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp
-	* /orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
+	* /orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h
 
+	  Files above added as part of new Telecom Log Service.
 
 Thu Sep 26 13:50:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
