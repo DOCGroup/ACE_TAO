@@ -304,7 +304,7 @@ ACE_High_Res_Timer::print_ave (const char *str,
     }
   else
     ACE_OS::sprintf (buf, " total %3lu.%06lu secs\n",
-             total_secs, (extra_nsecs + 500u) / 1000u);
+             total_secs, (extra_nsecs + 500lu) / 1000lu);
 
   ACE_OS::write (handle, str, ACE_OS::strlen (str));
   ACE_OS::write (handle, buf, ACE_OS::strlen (buf));
