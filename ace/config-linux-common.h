@@ -29,6 +29,12 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
+#if defined (__USE_POSIX199309)
+#  if !defined (ACE_HAS_CLOCK_GETTIME)
+#    define ACE_HAS_CLOCK_GETTIME
+#  endif
+#endif
+
 // First the machine specific part
 
 #if defined (__alpha)
