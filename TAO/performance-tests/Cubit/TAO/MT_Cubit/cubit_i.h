@@ -23,7 +23,7 @@ class Cubit_i : public POA_Cubit
   //   Cubit implementation class.
 {
 public:
-  Cubit_i (const char *obj_name = 0);
+  Cubit_i (void);
   ~Cubit_i (void);
    
   virtual CORBA::Octet cube_octet (CORBA::Octet o,

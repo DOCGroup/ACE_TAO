@@ -16,8 +16,6 @@
 #include "server.h"
 
 Cubit_Task::Cubit_Task (void)
-  : orb_ptr_ (0),
-    oa_ptr_ (0)
 {
   // No-op.
 }
@@ -27,9 +25,7 @@ Cubit_Task::Cubit_Task (const char *args,
                         u_int num_of_objs)
   : orbname_ ((char *) orbname),
     orbargs_ ((char *) args),
-    num_of_objs_ (num_of_objs),
-    orb_ptr_ (0),
-    oa_ptr_ (0)
+    num_of_objs_ (num_of_objs)
 {
 }
 
@@ -42,23 +38,33 @@ Cubit_Task::svc (void)
   this->initialize_orb ();
   this->create_servants ();
 
-  // Handle requests for this object until we're killed, or one of the
-  // methods asks us to exit.
-  orb_ptr_->run ();
+  TAO_TRY
+    {
+      this->poa_manager_->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  // Shut down the OA -- recycles all underlying resources (e.g. file
-  // descriptors, etc).
+      // Handle requests for this object until we're killed, or one of the
+      // methods asks us to exit.
+      if (this->orb_->run () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+	
 
-  //  oa_ptr_->clean_shutdown (env);
+      // Shut down the OA.
+      this->poa_->destroy (CORBA::B_TRUE,
+			   CORBA::B_TRUE,
+			   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("poa->destroy()");
+    }
+  TAO_ENDTRY;
 
   // Need to clean up and do a CORBA::release on everything we've
   // created!
   for (u_int i = 0; i < num_of_objs_; i++)
     delete servants_ [i];
-
-  // Free resources
-  CORBA::release (orb_ptr_);
-  CORBA::release (oa_ptr_);
 
   return 0;
 }
@@ -66,108 +72,128 @@ Cubit_Task::svc (void)
 int
 Cubit_Task::initialize_orb (void)
 {
-  CORBA::Environment env;
- 
-  ACE_ARGV args (this->orbargs_);
-
-  int argc = args.argc ();
-  char **argv = args.argv ();
-
-  // Initialize the ORB.
-  orb_ptr_ = CORBA::ORB_init (argc, 
-                              argv, 
-                              this->orbname_, 
-                              env);
-
-  if (env.exception () != 0)
+  TAO_TRY
     {
-      env.print_exception ("ORB init");
-      return 1;
+      ACE_ARGV args (this->orbargs_);
+
+      int argc = args.argc ();
+      char **argv = args.argv ();
+
+      // Initialize the ORB.
+      this->orb_ = CORBA::ORB_init (argc, 
+				    argv, 
+				    this->orbname_, 
+				    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Initialize the Object Adapter
+      CORBA::Object_var poa_object = 
+	this->orb_->resolve_initial_references("RootPOA");
+      if (CORBA::is_nil (poa_object.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the POA.\n"),
+			  1);
+
+      this->root_poa_ =
+	PortableServer::POA::_narrow (poa_object, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      this->poa_manager_ =
+	this->root_poa_->the_POAManager (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      PortableServer::PolicyList policies (2);
+      policies.length (2);  
+      policies[0] =
+	this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
+						      TAO_TRY_ENV);
+      policies[1] =
+	this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
+						 TAO_TRY_ENV);
+
+      // We use a different POA, otherwise the user would have to
+      // change the object key each time it invokes the server.
+      this->poa_ =
+	this->root_poa_->create_POA ("Persistent_POA",
+				     this->poa_manager_.in (),
+				     policies,
+				     TAO_TRY_ENV);  
+      TAO_CHECK_ENV;
     }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("orb_init");
+      return -1;
+    }
+  TAO_ENDTRY;
 
-  // Initialize the Object Adapter.
-  oa_ptr_ = orb_ptr_->POA_init (argc, argv, "POA");
-
-  if (oa_ptr_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize the POA.\n"),
-                      1);
+  
   return 0;
 }
 
 int
 Cubit_Task::create_servants ()
 {
-  // Create implementation object with user specified key.
-
-  ACE_NEW_RETURN (servants_,
-                  Cubit_i *[num_of_objs_],
-                  -1);
-
-  u_int i;
-
-  // This loop creates multiple servants, and prints out their IORs
-  for (i = 0;
-       i < num_of_objs_;
-       i++)
+  TAO_TRY
     {
-      CORBA::String obj_str =
-        CORBA::string_alloc (ACE_OS::strlen ((char *) key) 
-                             + OBJECT_STRING_SIZE);
+      // Create implementation object with user specified key.
 
-      ACE_OS::sprintf (obj_str,
-                       "%s%02d",
-                       (char *) key,
-                       i);
+      ACE_NEW_RETURN (servants_,
+		      Cubit_i *[num_of_objs_],
+		      -1);
 
-      ACE_NEW_RETURN (servants_[i],
-                      Cubit_i (obj_str),
-                      -1);
+      char* buffer;
+      int l = ACE_OS::strlen (key) + 3;
+      ACE_NEW_RETURN (buffer, char[l], -1);
 
-      if (servants_[i] == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to create "
-			   "implementation object&d\n",
-			   i), 2);
-
-      TAO_opaque obj_key (ACE_OS::strlen (obj_str));
-      for (CORBA::ULong i = 0;
-	   i < obj_key.maximum ();
-	   ++i)
+      // This loop creates multiple servants, and prints out their IORs
+      for (u_int i = 0;
+	   i < num_of_objs_;
+	   i++)
 	{
-	  obj_key[i] = obj_str[i];
+	  ACE_OS::sprintf (buffer, "%s%02d",
+			   (char *) key, i);
+
+	  PortableServer::ObjectId_var id = 
+	    PortableServer::string_to_ObjectId (buffer);
+
+	  ACE_NEW_RETURN (this->servants_[i], Cubit_i, -1);
+
+	  if (this->servants_[i] == 0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       " (%P|%t) Unable to create "
+			       "implementation object&d\n",
+			       i), 2);
+
+	  this->poa_->activate_object_with_id (id.in (),
+					       this->servants_[i],
+					       TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  // Stringify the objref we'll be implementing, and print it
+	  // to stdout.  Someone will take that string and give it to
+	  // some client.  Then release the object.
+
+	  Cubit_var cubit = 
+	    this->servants_[i]->_this (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+	  CORBA::String_var str =
+	    this->orb_->object_to_string (cubit.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Object <%s> created\n",
+		      str.in ()));
 	}
-      obj_key.length (obj_key.maximum ());
-
-      CORBA::Object_ptr obj = 0;
-
-      if (this->oa_ptr_->find (obj_key, obj) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to locate object with key '%s', %p\n",
-                           key),
-                          3);
-
-      // Stringify the objref we'll be implementing, and print it to
-      // stdout.  Someone will take that string and give it to some
-      // client.  Then release the object.
-
-      CORBA::String str;
-
-      CORBA::Environment env;
-
-      str = orb_ptr_->object_to_string (obj, env);
-
-      if (env.exception () != 0)
-        {
-          env.print_exception ("object2string");
-          return 1;
-        }
-
-      ACE_OS::puts ((char *) str);
-      ACE_OS::fflush (stdout);
-      ACE_DEBUG ((LM_DEBUG,"Object Created at: '%ul'", obj));
-      CORBA::string_free (obj_str);
+      delete[] buffer;
     }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("print IOR");
+      return -1;
+    }
+  TAO_ENDTRY;
   return 0;
 }
 
