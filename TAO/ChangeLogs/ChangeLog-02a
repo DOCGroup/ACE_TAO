@@ -1,3 +1,17 @@
+Wed Nov  8 11:02:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/LifeCycle_Service/Makefile:
+          For static builds the DynamicAny library must be linked too.
+
+        * tao/Messaging_Policy_i.cpp:
+          Fixed problems in platforms that don't do conversions between
+          T_var and T_ptr& (vxworks).
+
+        * tests/IDL_Test/Makefile:
+          The path to the IDL compiler was hardcoded, use the TAO_IDL
+          macro instead, this is very important for cross-compilation
+          builds.
+
 Wed Nov  8 10:00:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/IDL_Test/Makefile:

@@ -81,14 +81,14 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 namespace_check.cpp: reopened_modulesC.h reopen_include1C.h reopen_include2C.h
 
-reopened_modulesC.h: reopened_modules.idl $(TAO_ROOT)/TAO_IDL/tao_idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopened_modules.idl
+reopened_modulesC.h: reopened_modules.idl $(TAO_IDL)
+	$(TAO_IDL) -w -Ge 1 reopened_modules.idl
 
-reopen_include1C.h: reopen_include1.idl $(TAO_ROOT)/TAO_IDL/tao_idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopen_include1.idl
+reopen_include1C.h: reopen_include1.idl $(TAO_IDL)
+	$(TAO_IDL) -w -Ge 1 reopen_include1.idl
 
-reopen_include2C.h: reopen_include2.idl $(TAO_ROOT)/TAO_IDL/tao_idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopen_include2.idl
+reopen_include2C.h: reopen_include2.idl $(TAO_IDL)
+	$(TAO_IDL) -w -Ge 1 reopen_include2.idl
 
 main:	$(addprefix $(VDIR),$(TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
