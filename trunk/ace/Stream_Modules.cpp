@@ -4,7 +4,7 @@
 #if !defined (ACE_STREAM_MODULES_C)
 #define ACE_STREAM_MODULES_C
 
-#if defined (HPUX) && defined (ACE_STREAM_MODULES)
+#if !defined (ACE_LACKS_STREAM_MODULES)
 
 #define ACE_BUILD_DLL
 #include "ace/Stream_Modules.h"
@@ -367,5 +367,5 @@ ACE_Thru_Task<ACE_SYNCH_2>::fini (void)
   return 0;
 }
 
-#endif /* defined (HPUX) && defined (ACE_STREAM_MODULES) */
+#endif /* !defined (ACE_LACKS_STREAM_MODULES) */
 #endif /* ACE_STREAM_MODULES_C */
