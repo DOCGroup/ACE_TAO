@@ -423,7 +423,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
 {
   int result = -1;
 
-  ACE_INET_Addr *local_addr;
+  ACE_INET_Addr *local_addr = 0;
   TAO_AV_Flow_Handler *flow_handler = 0;
 
   // if using a default address and this is the control flow component, the
@@ -634,6 +634,16 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
           // assume the ports will be OK
           get_new_port = 0;
 
+	  ACE_Addr *addr;
+	  if ((addr = entry->get_peer_addr ()) != 0)
+	    {
+	      local_addr = ACE_dynamic_cast (ACE_INET_Addr*,addr);
+	      char buf [BUFSIZ];
+	      local_addr->addr_to_string (buf, BUFSIZ);
+	      ACE_DEBUG ((LM_DEBUG,
+			  "local_addr %s\n",
+			  buf));
+	    }
           TAO_AV_UDP_Connection_Setup::setup (flow_handler,
                                               inet_addr,
                                               local_addr,
@@ -815,9 +825,16 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
     }
   else
     {
-      ACE_NEW_RETURN (local_addr,
-                      ACE_INET_Addr ("0"),
-                      -1);
+      if (local_addr == 0)
+	 	ACE_NEW_RETURN (local_addr,
+			ACE_INET_Addr ("0"),
+			-1);
+
+	  char buf [BUFSIZ];
+	  local_addr->addr_to_string (buf, BUFSIZ);
+	  ACE_DEBUG ((LM_DEBUG,
+				  "Local Address %s\n",
+				  buf));
 
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
@@ -851,13 +868,13 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
         return 0;
 
       if (ct == CONNECTOR)
-      handler->set_remote_address  (inet_addr);
-
+	handler->set_remote_address  (inet_addr);
+      
       result = handler->get_socket ()->get_local_addr (*local_addr);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
     }
-
+  
   return 1;
 }
 
