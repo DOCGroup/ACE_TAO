@@ -26,13 +26,6 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
-// also defines this value.  platform-specific config.h can
-// override this if need be.
-# if !defined (IOV_MAX)
-#  define IOV_MAX 16
-# endif /* IOV_MAX */
-
 // Get OS.h to compile on some of the platforms without DIR info yet.
 # if !defined (ACE_HAS_DIRENT)
     typedef int DIR;
@@ -2469,6 +2462,13 @@ protected:
 # include /**/ <string.h>
 # include /**/ <stdlib.h>
 # include /**/ <float.h>
+
+// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
+// also defines this value.  platform-specific config.h can
+// override this if need be.
+# if !defined (IOV_MAX)
+#  define IOV_MAX 16
+# endif /* IOV_MAX */
 
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
 
