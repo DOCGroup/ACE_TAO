@@ -286,10 +286,10 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & new_qos,
 {
   ACE_TRY
     {
-
-      ACE_DEBUG ((LM_DEBUG,
-		  "TAO_Basic_StreamCtrl::modify_QoS\n"));
-
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "TAO_Basic_StreamCtrl::modify_QoS\n"));
+      
       AVStreams::flowSpec in_flowspec;
       AVStreams::flowSpec out_flowspec;
 
@@ -1406,9 +1406,9 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &the_qos,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
 {
-
-  ACE_DEBUG ((LM_DEBUG,
-	      "TAO_StreamCtrl::modify_QoS\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"TAO_StreamCtrl::modify_QoS\n"));
 
   if (this->mcastconfigif_ != 0)
     {
@@ -2129,8 +2129,9 @@ TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &/* new_qos */,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "TAO_StreamEndPoint::modify_QoS\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"TAO_StreamEndPoint::modify_QoS\n"));
   return 1;
 }
 
@@ -3027,8 +3028,9 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed))
 {
-  ACE_DEBUG ((LM_DEBUG,
-	     "TAO_VDev::modify_QoS\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"TAO_VDev::modify_QoS\n"));
   
   if (flowspec.length () != 0)
     {
