@@ -15,6 +15,11 @@ Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_LACKS_CONDATTR_PSHARED, so that we can test whether
           it's necessary.
 
+        * ace/Stats.*,Makefile: added ACE_Stats class.
+
+        * performance-tests/Misc/context_switch_time.cpp: use
+          ACE_Stats to calculate standard deviations.
+
 Tue May 19 10:05:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/SString.cpp (strlen): Renamed ACE_WString::wstrlen to
