@@ -7,6 +7,7 @@
 #include "../Utils/Log.h"
 
 #include "tao/ORBInitializer_Registry.h"
+#include "tao/CDR.h"
 
 #include "ace/OS_NS_strings.h"
 
