@@ -19,4 +19,4 @@ done
 
 cd $TAO_ROOT/orbsvcs/tests/FtRtEvent
 export FTEC_TransactionDepth
-./supplier $EndpointParam 
+./ftrtec_supplier $EndpointParam

@@ -23,10 +23,10 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb,
                             const Options& options ACE_ENV_ARG_DECL)
 {
   orb_ = orb;
-  num_iterations_ = options.num_iterations;
+  num_iterations_ = options.num_iterations ? options.num_iterations : INT_MAX;
   num_events_to_end_ = options.num_events;
 
-  run_times_.assign(options.num_iterations, -1);
+  run_times_.assign(options.num_iterations+1, -1);   
 
   RtecEventChannelAdmin::ConsumerQOS qos;
   qos.is_gateway = 1;
@@ -79,6 +79,9 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
 
     num_events_recevied_ ++;
 
+    ACE_DEBUG((LM_DEBUG, " num_events_recevied_ = %d, num_events_to_end_ = %d\n"
+      , num_events_recevied_, num_events_to_end_));
+
     if ( num_iterations_ > static_cast<int>(x) && 
          num_events_recevied_ < num_events_to_end_ ) {
       run_times_[x] = static_cast<int>(elaps/10);
@@ -124,7 +127,7 @@ void
 PushConsumer_impl::output_result()
 {
   int lost = 0;
-  for (int i =0; i < num_iterations_; ++i)
+  for (int i =0; i < run_times_.size(); ++i)
     if (run_times_[i] == -1) lost++;
     else
       ACE_DEBUG((LM_DEBUG, "%5d received, elapsed time = %d\n",i, run_times_[i]));

@@ -49,7 +49,6 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       break;
     case 'e':
       options_.num_events = ACE_OS::atoi(get_opt.opt_arg ());
-      options_.num_iterations= INT_MAX;
       break;
     case 'i':
       {
@@ -62,7 +61,6 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       }
       break;
     case 'k':
-      options_.num_events = INT_MAX;
       options_.num_iterations = atoi(get_opt.opt_arg ());
       break;
     case 'n':
