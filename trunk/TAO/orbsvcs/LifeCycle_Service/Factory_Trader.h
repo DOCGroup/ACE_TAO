@@ -18,12 +18,9 @@
 #define FACTORY_TRADER_H
 
 #include "tao/corba.h"
-
-#ifdef TRADER_AVAILABLE
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "orbsvcs/CosLifeCycleC.h"
-#endif // TRADER_AVAILABLE
 
 
 class Factory_Trader 
@@ -46,15 +43,10 @@ public:
 
   static const char * GENERIC_FACTORY_INTERFACE_REPOSITORY_ID;
 private:
-
-#ifdef TRADER_AVAILABLE
-
   TAO_Service_Type_Repository repository_;
   TAO_Trader_Factory::TAO_TRADER *trader_ptr_;
   TAO_Trading_Components_Impl *trading_Components_ptr_;
   TAO_Support_Attributes_Impl *support_Attributes_ptr_;
-
-#endif // TRADER_AVAILABLE
 };
 
 #endif // FACTORY_TRADER_H
