@@ -80,7 +80,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
     {
       if (TAO_debug_level > 0)
 	{
-	  const char* reason = ex.reason.in ();
+	  const char *reason = ex.reason.in ();
 	  if (reason == 0)
 	    reason = "nil";
 	  ACE_DEBUG ((LM_DEBUG,
