@@ -21,13 +21,17 @@
 */
 class be_visitor_amh_operation_sh : public be_visitor_operation
 {
- public:
-    be_visitor_amh_operation_sh (be_visitor_context *ctx);
+public:
+  be_visitor_amh_operation_sh (be_visitor_context *ctx);
+  ~be_visitor_amh_operation_sh (void);
 
-    ~be_visitor_amh_operation_sh (void);
+  virtual int visit_operation (be_operation *node);
+  virtual int visit_attribute (be_attribute *node);
 
-    virtual int visit_operation (be_operation *node);
-
+private:
+  void generate_shared_prolog (be_decl *node,
+                               TAO_OutStream *os,
+                               const char *skel_prefix);
 };
 
 #endif /* AMH_OPERATION_SS_H */
