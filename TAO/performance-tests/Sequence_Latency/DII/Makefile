@@ -23,7 +23,7 @@ SERVER_OBJS = server.o Roundtrip.o $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#       Include macros and targets 
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
