@@ -1,3 +1,9 @@
+Thu Dec 14 10:20:49 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_lynxos.GNU
+          Allow users to set the debug option without using
+          'override debug='.  debug=0 now works properly.
+
 Wed Dec 13 18:33:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * html/README:
