@@ -32,3 +32,9 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
 ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
 PRELIB  = @true
+
+#### as appears to have a string limit of about 4096 characters.
+#### Suppressing the -g for a few files helps.  It really only
+#### needs to be suppressed on Alphas, so you can comment this line
+#### out if you're on an Intel platform.
+SUPPRESS_DASH_G = 1
