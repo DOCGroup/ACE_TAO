@@ -311,7 +311,7 @@ protected:
 
   virtual void map_dependency_i (RtecScheduler::handle_t key,
                                  RtecScheduler::handle_t handle,
-                                 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &map,
+                                 ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &map,
                                  CORBA::Long number_of_calls,
                                  RtecScheduler::Dependency_Type_t dependency_type,
                                  CORBA::Environment &env)
