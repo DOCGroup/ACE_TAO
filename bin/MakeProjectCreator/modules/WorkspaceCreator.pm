@@ -308,7 +308,10 @@ sub sort_dependencies {
   my(%prepend)  = ();
 
   foreach my $project (@list) {
-    $prepend{basename($project)} = dirname($project);
+    my($dname) = dirname($project);
+    if ($dname ne ".") {
+      $prepend{basename($project)} = dirname($project);
+    }
   }
 
   ## Put the projects in the order specified
@@ -317,7 +320,7 @@ sub sort_dependencies {
     my($project) = $list[$i];
     my($pi) = $$pjs{$project};
     my($name, $deps) = @$pi;
-    
+
     if ($deps ne "") {
       my($darr)  = $self->create_array($deps);
       my($moved) = 0;
