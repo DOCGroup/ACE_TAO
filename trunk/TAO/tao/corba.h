@@ -174,12 +174,6 @@ operator>>(TAO_InputCDR&, TAO_opaque&);
 #include "tao/Exception.h"
 #include "tao/Any.h"
 
-#include "tao/params.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/default_client.h"
-#include "tao/default_server.h"
-
 #include "tao/NVList.h"
 #include "tao/Principal.h"
 #include "tao/Request.h"
@@ -202,11 +196,18 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
                                   const TAO_ObjectKey &r);
 
 // TAO specific includes
+#include "tao/params.h"
+
 #include "tao/Connect.h"
 #include "tao/ORB_Core.h"
 #include "tao/Object_Table.h"
 #include "tao/Operation_Table.h"
 #include "tao/debug.h"
+
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/default_client.h"
+#include "tao/default_server.h"
 
 // GIOP - IIOP related includes
 #include "tao/IIOP_Object.h"
