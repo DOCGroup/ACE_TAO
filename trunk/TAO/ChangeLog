@@ -1,48 +1,48 @@
 Mon Jul 14 11:12:25 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp:
-	* tests\RTCORBA\Priority_Inversion_With_Bands\test_i.cpp:
+	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp:
+	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp:
 
 	  Fixed incorrect ACE_TRY usage.
 	
-	* tests\RTCORBA\Priority_Inversion_With_Bands\README:
+	* tests/RTCORBA/Priority_Inversion_With_Bands/README:
 
           Fixed minor typo in README and in ChangeLog dated Sat Jul 12 14:01:47 2003  
 	
 Sat Jul 12 18:43:31 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp (svc): 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp (svc): 
 
 	  Improved output format.
 
 Sat Jul 12 18:27:10 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp: 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp: 
 
 	  Thread priority should be determined after the real-time thread
 	  has been spawned.
 
 Sat Jul 12 17:43:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\RTCORBA\RT_Transport_Descriptor.cpp: 
+	* tao/RTCORBA/RT_Transport_Descriptor.cpp: 
 
  	  Zero time value should be specified as ACE_Time_Value::zero and
 	  not 0.
 	
-	* tao\RTCORBA\RT_Transport_Descriptor_Property.h:
+	* tao/RTCORBA/RT_Transport_Descriptor_Property.h:
 	  
 	  Based class destructor should be virtual.
 
-	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp: 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp: 
 
 	  Fixed member initialization.
 
-	* tao\RTCORBA\RT_Transport_Descriptor.cpp: 
+	* tao/RTCORBA/RT_Transport_Descriptor.cpp: 
 
 	  Must add "tao/" in front of TAO include files.
 
-	* tests\RTCORBA\Priority_Inversion_With_Bands\Makefile: 
-	* tao\RTCORBA\Makefile: 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile: 
+	* tao/RTCORBA/Makefile: 
 
 	  Updated Makefile dependencies.
 
@@ -116,10 +116,10 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
 
 	  Removed because obsolete.
 	
-	* tao\RTCORBA\TAO_RTCORBA.dsp: 
-	* tao\RTCORBA\TAO_RTCORBA_Static.dsp: 
-	* tao\RTCORBA\Makefile: 
-	* tao\RTCORBA\Makefile.bor: 
+	* tao/RTCORBA/TAO_RTCORBA.dsp: 
+	* tao/RTCORBA/TAO_RTCORBA_Static.dsp: 
+	* tao/RTCORBA/Makefile: 
+	* tao/RTCORBA/Makefile.bor: 
 
 	  Update project and Makefiles.
 
@@ -236,7 +236,7 @@ Fri Jul 11 18:41:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jul 11 16:23:05 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Strategies\DIOP_Acceptor.cpp (close): 
+	* tao/Strategies/DIOP_Acceptor.cpp (close): 
 
 	  Method should return 0.
 
@@ -254,20 +254,20 @@ Fri Jul 11 01:08:41 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Thu Jul 10 20:01:43 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Transport_Cache_Manager.cpp: 
+	* tao/Transport_Cache_Manager.cpp: 
 
 	  Fixed template instantiation goofs.
 
 Thu Jul 10 19:01:54 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\ORB_Core.cpp (lane_resources): 
+	* tao/ORB_Core.cpp (lane_resources): 
 
 	  This file got checked in by mistake.
 
 Thu Jul 10 18:58:43 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Acceptor.cpp: 
-	* tao\Strategies\DIOP_Acceptor.cpp: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp: 
+	* tao/Strategies/DIOP_Acceptor.cpp: 
 	
 	  - open_i() now transfers connection handler ownership to the
 	  Reactor after the handler successfully registers with the
@@ -276,12 +276,12 @@ Thu Jul 10 18:58:43 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - close() does nothing since the memory for the connection
 	  handler is automatically managed.
 
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
 
 	  - Forgot to remove the assert from ~TAO_UIPMC_Transport().
 
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connection_Handler.cpp (handle_close): 
-	* tao\Strategies\DIOP_Connection_Handler.cpp (handle_close): 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp (handle_close): 
+	* tao/Strategies/DIOP_Connection_Handler.cpp (handle_close): 
 
 	  No asserts in handle_close() since the handler is registered
 	  with the Reactor and the handler ownership is given to the
@@ -317,7 +317,7 @@ Tue Jul 08 15:24:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	
 Mon Jul 07 23:18:24 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Strategies\UIOP_Connector.cpp (make_connection): 
+	* tao/Strategies/UIOP_Connector.cpp (make_connection): 
 
 	  Changed is_finalized() to is_closed().
 
@@ -350,7 +350,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	Fri Jun 20 19:45:07 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Connection_Handler: 
+	* tao/Connection_Handler: 
 
 	  - Removed the incr_refcount() and decr_refcount() methods and
 	  the related <reference_count_> and <refcount_lock_> members.
@@ -388,7 +388,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - is_open() and is_connecting() were added to check the status
 	  of the connection handler.
 
-	* tao\IIOP_Connection_Handler: 
+	* tao/IIOP_Connection_Handler: 
 
 	  - Added close() method that will be called by the Acceptor or
 	  Connector when connection establishment fails.
@@ -409,7 +409,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - The unused constructor should assert(0).
 
-	* tao\Transport: 
+	* tao/Transport: 
 
 	  - The Transport class no longer needs to inherit from
 	  TAO_Synch_Refcountable.  The reference counting is provided by
@@ -467,7 +467,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  Reactor framework already does the proper reference counting for
 	  notifications.	
 
-	* tao\IIOP_Transport: 
+	* tao/IIOP_Transport: 
 
 	  - invalidate_event_handler_i() no longer needed.  
 
@@ -489,7 +489,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  to call check_event_handler_i() since the handler is always
 	  valid.
 
-	* tao\Acceptor_Impl.cpp (activate_svc_handler): 
+	* tao/Acceptor_Impl.cpp (activate_svc_handler): 
 
 	  Made several changes to this method.  Now the sequence is:
 
@@ -506,7 +506,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Success completion of method: #REFCOUNT# is two at this point.
 
-	* tao\IIOP_Connector.cpp (make_connection): 
+	* tao/IIOP_Connector.cpp (make_connection): 
 
 	  Made several changes to this method.  Now the sequence is:
 
@@ -578,12 +578,12 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - In case of success, handover the transport pointer to the
 	  Invocation class.
 
-	* tao\Connector_Impl.cpp (make_svc_handler): 
+	* tao/Connector_Impl.cpp (make_svc_handler): 
 
 	  We add to the #REFCOUNT# since the Connector needs this. See
 	  Connector::make_connection() for details.
 
-	* tao\Transport_Cache_Manager (close): 
+	* tao/Transport_Cache_Manager (close): 
 
 	  Previously, close() was returning a handle set and a set of
 	  event handlers.  This was changed such the only a set of
@@ -596,7 +596,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  Transport_Cache_Manager no longer needs to be friends with the
 	  Transport.
 
-	* tao\Thread_Lane_Resources.cpp (finalize): 
+	* tao/Thread_Lane_Resources.cpp (finalize): 
 
 	  We now close the transport cache and return the handlers that
 	  were still registered.  The cache will decrease the #REFCOUNT#
@@ -607,36 +607,36 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  is closed.  There is also a potential removal from the Reactor.
 	  Finally, the #REFCOUNT# related to the handler set decreases.
 
-	* tao\Notify_Handler:
+	* tao/Notify_Handler:
 
 	  These files are no longer required since the Reactor framework
 	  does the correct reference counting for notifications.
 
-	* tao\LF_CH_Event:
-	* tao\LF_Event:
+	* tao/LF_CH_Event:
+	* tao/LF_Event:
 
 	  Removed the LFS_CONNECTION_CLOSE_WAIT state since it is no
 	  longer needed.
 
-	* tao\Connect_Strategy: 
+	* tao/Connect_Strategy: 
 
 	  Removed Connect_Strategy::post_failed_connect() since
 	  *_Connector::make_connection() now does the right thing.
 
-	* tao\Asynch_Reply_Dispatcher_Base.cpp: 
-	* tao\Asynch_Reply_Dispatcher_Base.i: 
-	* tao\Cache_Entries.cpp:
-	* tao\Invocation.cpp:
-	* tao\Transport.cpp:
-	* tao\Notify_Handler.cpp:
-	* tao\Thread_Per_Connection_Handler.cpp:
-	* tao\PortableServer\AMH_Response_Handler.cpp:
+	* tao/Asynch_Reply_Dispatcher_Base.cpp: 
+	* tao/Asynch_Reply_Dispatcher_Base.i: 
+	* tao/Cache_Entries.cpp:
+	* tao/Invocation.cpp:
+	* tao/Transport.cpp:
+	* tao/Notify_Handler.cpp:
+	* tao/Thread_Per_Connection_Handler.cpp:
+	* tao/PortableServer/AMH_Response_Handler.cpp:
 
 	  Replace calls to Transport::_duplicate() and
 	  Transport::release() with new Transport::add_handler() and
 	  Transport::remove_handler() methods respectively.
 
-	* tests\TAO_Tests.dsw:
+	* tests/TAO_Tests.dsw:
 
 	  Added several missing tests:
 		
@@ -662,37 +662,37 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - Strategies 
 	  - Two_Objects 
 
-	* tao\Makefile.bor:
-	* tao\Makefile.tao:
-	* tao\TAO.dsp:
-	* tao\TAO_Static.dsp:
-	* tao\tao.mpc:
+	* tao/Makefile.bor:
+	* tao/Makefile.tao:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/tao.mpc:
 
 	  Removed Notify_Handler* from project/makefiles.
 
-	* tests\Connection_Timeout\client.dsp:
-	* tests\MProfile_Connection_Timeout\client.dsp:
-	* tests\MProfile_Connection_Timeout\server.dsp:
-	* tests\MT_BiDir\client.dsp:
-	* tests\MT_BiDir\server.dsp:
-	* tests\ORB_shutdown\server.dsp:
+	* tests/Connection_Timeout/client.dsp:
+	* tests/MProfile_Connection_Timeout/client.dsp:
+	* tests/MProfile_Connection_Timeout/server.dsp:
+	* tests/MT_BiDir/client.dsp:
+	* tests/MT_BiDir/server.dsp:
+	* tests/ORB_shutdown/server.dsp:
 
 	  Fixed the above project files.
 
-	* tests\Bug_1361_Regression\Bug_1361_Regression.dsw:
-	* tests\Bug_1361_Regression\client.dsp:
-	* tests\Bug_1361_Regression\server.dsp:
-	* tests\Bug_1361_Regression\shutdown.dsp:
+	* tests/Bug_1361_Regression/Bug_1361_Regression.dsw:
+	* tests/Bug_1361_Regression/client.dsp:
+	* tests/Bug_1361_Regression/server.dsp:
+	* tests/Bug_1361_Regression/shutdown.dsp:
 
 	  New project files.
 
 	Tue Jun 24 21:46:13 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Strategies\DIOP_Connection_Handler:
-	* tao\Strategies\SCIOP_Connection_Handler:
-	* tao\Strategies\SHMIOP_Connection_Handler:
-	* tao\Strategies\UIOP_Connection_Handler:
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connection_Handler:
+	* tao/Strategies/DIOP_Connection_Handler:
+	* tao/Strategies/SCIOP_Connection_Handler:
+	* tao/Strategies/SHMIOP_Connection_Handler:
+	* tao/Strategies/UIOP_Connection_Handler:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler:
 	
 	  - Constructor: Removed code to release the transport.  Lifetimes
 	  of transports and connection handlers are now coupled.
@@ -714,7 +714,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - The unused constructor should assert(0).
 
-	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connection_Handler:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler:
 
 	  - Constructor: Replaced the code to release the transport with
 	  explicit deletion.  Lifetimes of transports and connection
@@ -722,11 +722,11 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - The unused constructor should assert(0).
 
-	* tao\Strategies\DIOP_Transport: 
-	* tao\Strategies\SCIOP_Transport: 
-	* tao\Strategies\SHMIOP_Transport:
-	* tao\Strategies\UIOP_Transport:
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
+	* tao/Strategies/DIOP_Transport: 
+	* tao/Strategies/SCIOP_Transport: 
+	* tao/Strategies/SHMIOP_Transport:
+	* tao/Strategies/UIOP_Transport:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport:
 	
 	  - Constructor: No need to manage reference count on the
 	  connection handler.  Lifetimes of transports and connection
@@ -746,20 +746,20 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - invalidate_event_handler_i(): This is no longer required.
 
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Transport:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport:
 
 	  No need for acquiring <handler_lock_> and calling
 	  check_event_handler_i() in tear_listen_point_list() and
 	  get_listen_point() since <connection_handler_> is now always
 	  valid for the lifetime of the transport.
 
-	* tao\Strategies\DIOP_Transport: 
+	* tao/Strategies/DIOP_Transport: 
 
 	  - Removed commented out code. 
 
 	  - Renamed register_handler_i() to register_handler(). 
 
-	* tao\Strategies\SCIOP_Transport: 
+	* tao/Strategies/SCIOP_Transport: 
 
 	  - send_request(), get_listen_point(), tear_listen_point_list():
 	  Removed guard and check for valid connection handler.
@@ -767,75 +767,75 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - send_message_shared(): Removed check for valid connection
 	  handler.
 
-	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Transport:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport:
 
 	  Rename handle_input_i() to handle_input().
 
-	* tao\Strategies\SCIOP_Connector.cpp (make_connection): 
-	* tao\Strategies\UIOP_Connector.cpp (make_connection): 
-	* orbsvcs\orbsvcs\SSLIOP\IIOP_SSL_Connector.cpp (make_connection):
-	* orbsvcs\orbsvcs\SSLIOP\SSLIOP_Connector.cpp (ssliop_connect):
+	* tao/Strategies/SCIOP_Connector.cpp (make_connection): 
+	* tao/Strategies/UIOP_Connector.cpp (make_connection): 
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
 	
 	  Made this method similar to IIOP_Connector::make_connection().
 
-	* tao\Strategies\SHMIOP_Connector.cpp (make_connection): 
+	* tao/Strategies/SHMIOP_Connector.cpp (make_connection): 
 
 	  Made this method similar to IIOP_Connector::make_connection()
 	  except that the connects are always blocking.
 
-	* tao\Strategies\DIOP_Connector.cpp (make_connection):  
+	* tao/Strategies/DIOP_Connector.cpp (make_connection):  
 
 	  - Replaced decr_refcount() with remove_reference() and
 	  duplicate() with add_reference() respectively.
 
 	Wed Jun 25 15:56:14 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Strategies\DIOP_Acceptor:
+	* tao/Strategies/DIOP_Acceptor:
 
 	  Revised the management of the connection handler.  Replaced the
 	  call to handle_close() with call to remove_reference().
 
 	Thu Jun 26 19:34:26 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\Strategies\DIOP_Acceptor.cpp (close): 
+	* tao/Strategies/DIOP_Acceptor.cpp (close): 
 
 	  Added DONT_CALL mask to the remove_handler() call so that
 	  handle_close() is not called anymore.
 
 	Mon Jun 30 20:46:22 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connection_Handler: 
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connector.cpp:
-	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport:
 
 	  DIOP and UIPMC are very similar.  Therefore, similar changes
 	  were made.
 
-	* tests\Connection_Failure: 
+	* tests/Connection_Failure: 
 
 	  New test added that checks connection failures by connecting to
 	  a non-existent object.  
 
 	  The following files were added:
 
-	  - tests\Connection_Failure\Connection_Failure.dsw
-	  - tests\Connection_Failure\Connection_Failure.mpc
-	  - tests\Connection_Failure\Makefile
-	  - tests\Connection_Failure\Makefile.bor
-	  - tests\Connection_Failure\README
-	  - tests\Connection_Failure\client.bor
-	  - tests\Connection_Failure\client.cpp
-	  - tests\Connection_Failure\client.dsp
-	  - tests\Connection_Failure\run_test.pl
-	  - tests\Connection_Failure\test.idl
+	  - tests/Connection_Failure/Connection_Failure.dsw
+	  - tests/Connection_Failure/Connection_Failure.mpc
+	  - tests/Connection_Failure/Makefile
+	  - tests/Connection_Failure/Makefile.bor
+	  - tests/Connection_Failure/README
+	  - tests/Connection_Failure/client.bor
+	  - tests/Connection_Failure/client.cpp
+	  - tests/Connection_Failure/client.dsp
+	  - tests/Connection_Failure/run_test.pl
+	  - tests/Connection_Failure/test.idl
 
 	  and the following were modified:
 
-	  - tests\Makefile
-	  - tests\Makefile.bor
-	  - tests\TAO_Tests.dsw
-	  - tests\README
-	  - $ACE_ROOT\bin\tao_orb_tests.lst
+	  - tests/Makefile
+	  - tests/Makefile.bor
+	  - tests/TAO_Tests.dsw
+	  - tests/README
+	  - $ACE_ROOT/bin/tao_orb_tests.lst
 
 	Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
 
@@ -2076,8 +2076,8 @@ Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
-	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
-	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
+	  "Flowname/Direction/Format/Flow_Prtocol/Sender_Address" to
+	  "Flowname/Direction/Format/Flow_Prtocol/Sender_Address/Receiver_Address".
 	  The additional Receiver_Address field allows the user to specify
 	  the receiver address that will be used to receive the
 	  data. This addition helps to solve the problem arising on a
