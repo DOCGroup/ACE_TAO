@@ -1,3 +1,17 @@
+Fri Jan 18 15:41:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp (idl_store_pragma):
+
+          Changed the string "id" to match for #pragma ID to
+          upper case.
+
+        * TAO_IDL/ast/ast_decl.cpp:
+
+          Changed check in version setting function to correspond to
+          the CORBA 2.5 change that now allows the version to be reset
+          if it is reset to the same value.
+
 Fri Jan 18 13:19:00 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp: 
