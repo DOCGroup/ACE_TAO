@@ -693,8 +693,8 @@ public:
   static TypeCode_ptr _tc_Principal;
   static TypeCode_ptr _tc_Object;
   static TypeCode_ptr _tc_string;
-  static TypeCode_ptr _tc_alias;
-  static TypeCode_ptr _tc_except;
+  // static TypeCode_ptr _tc_alias;
+  // static TypeCode_ptr _tc_except;
   static TypeCode_ptr _tc_longlong;
   static TypeCode_ptr _tc_ulonglong;
   static TypeCode_ptr _tc_longdouble;
