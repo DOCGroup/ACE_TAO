@@ -1,7 +1,15 @@
+Mon Jul  2 14:29:49 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+
+	  Removed duplicate ACE and TAO library includes.  Should fix KCC
+	  linker warnings.
+
 Mon Jul 2  14:50:00 2001  Craig Rodrigues <crodrigu@bbn.com>
- 
+
         * orbsvcs/AV/AVStreams_i.cpp
- 
+
           Only display certain debug messages when higher ORB debug level
           is specified.
 
@@ -29,7 +37,7 @@ Mon Jul  2 10:57:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tests/Smart_Proxies/Benchmark/client.dsp:
         * tests/Smart_Proxies/Benchmark/server.dsp:
 
-          New files to build the smart proxies benchmark test on 
+          New files to build the smart proxies benchmark test on
           Win32 platforms.
 
         * tests/Smart_Proxies/Benchmark/client.cpp:
@@ -97,7 +105,7 @@ Fri Jun 29 03:14:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Strategies/Reactor_Per_Priority.cpp (reactor): Changed to
 	  use the new CORBA_Priority_Normalizer class.
-	  
+
 	* tao/RTCORBA/RT_ORB.cpp (class TAO_RT_CORBA_Priority_Normalizer):
 	  Added new class.  The class does the correct corba priority
 	  normalization when RT CORBA is used.
@@ -109,8 +117,8 @@ Fri Jun 29 03:14:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Thu Jun 28 23:49:13 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/RTCORBA/Linear_Priority_Mapping.cpp (TAO_Linear_Priority_Mapping): 
-	* tao/RTCORBA/Direct_Priority_Mapping.cpp (TAO_Direct_Priority_Mapping): 
+	* tao/RTCORBA/Linear_Priority_Mapping.cpp (TAO_Linear_Priority_Mapping):
+	* tao/RTCORBA/Direct_Priority_Mapping.cpp (TAO_Direct_Priority_Mapping):
 
 	  We have special behavior for SUNs.  This is because the results
 	  from ACE_Sched_Params::priority_min() and
@@ -201,7 +209,7 @@ Thu Jun 28 08:39:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
 
-          Bug report by Burkhard Neppert <b.neppert@dr-staedtler.de> 
+          Bug report by Burkhard Neppert <b.neppert@dr-staedtler.de>
           stated that tao_idl was crashing if passed an option like
           -o<output_dir> instead of -o <output_dir>. Fixed that to
           give an error message instead, and applied the same fix to
@@ -235,9 +243,9 @@ Wed Jun 27 14:15:13 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 	* tao/skip.cpp:
 
 	  Changed TAO_Marshall_WString::skip() to use skip_wstring() instead
-	  of skip_wchar(). This has been made necessary according to the 
+	  of skip_wchar(). This has been made necessary according to the
 	  changes made to skip_wchar() for GIOP 1.2 (BUGID 945)
-	
+
 Wed Jun 27 11:24:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Param_Test/anyop.dsp:
@@ -265,7 +273,7 @@ Tue Jun 26 14:47:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 Tue Jun 26 09:55:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Oneways_Invoking_Twoways/Sender_i.cpp: Fixed a warning in
-	  KCC. 
+	  KCC.
 
 Mon Jun 25 15:05:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -312,9 +320,9 @@ Mon Jun 25 11:12:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/fe/y.tab.h:
 
           In the yacc file, added a switch case for unsigned short
-          to the code that processes a union discriminator. This 
+          to the code that processes a union discriminator. This
           case has always been missing. Also regenerated the
-          corresponding C++ files. Thanks to Jules Colding 
+          corresponding C++ files. Thanks to Jules Colding
           <dsl11814@vip.cybercity.dk> for sending in the example
           IDL file that uncovered this bug.
 
@@ -324,8 +332,8 @@ Mon Jun 25 10:32:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Removed code that added "ValueBase" to the lookup table, since
           this string is now an IDL keyword. This was causing name clash
-          errors in any IDL file that included orb.idl. Thanks to Michael 
-          Kircher <Michael.Kircher@mchp.siemens.de> for reporting the 
+          errors in any IDL file that included orb.idl. Thanks to Michael
+          Kircher <Michael.Kircher@mchp.siemens.de> for reporting the
           problem.
 
 Mon Jun 25 07:20:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
