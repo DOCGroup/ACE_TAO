@@ -411,8 +411,19 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
 The default is <code>select_mt</code></TD>
 </TR>
 <TR>
-  <TD><CODE>-ORBProtocolFactory</CODE> <EM>which</EM></TD>
-  <TD><font color=red>Somebody document me. </font></TD>
+  <TD><CODE>-ORBProtocolFactory</CODE> <EM>factory</EM></TD>
+  <TD><a name="-ORBProtocolFactory"></a>
+      Specify which pluggable protocol factory to load.  By default,
+      the factories for the IIOP and UIOP protocols (<code>IIOP_Factory</code>
+      and <code>UIOP_Factory</code>, respectively) are loaded.
+      <p>
+      For example, if some protocol called <em><code>Foo</code></em> whose
+      factory was called <em><code>Foo_Factory</code></em> was available,
+      then it could be loaded into TAO by specifying
+      <code>-ORBProtocolFactory Foo_Factory</code> on the command line. The
+      <em><code>Foo</code></em> pluggable protocol would then be available
+      for use.
+  </TD>
 </TR>
 <TR>
   <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
