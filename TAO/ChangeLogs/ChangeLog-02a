@@ -1,3 +1,26 @@
+Sun Mar 04 09:44:18 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/BiDirectional/client.cpp (main):
+	* tests/BiDirectional/server.cpp (main):
+	* tests/BiDirectional_NestedUpcall/client.cpp (main):
+	* tests/BiDirectional_NestedUpcall/server.cpp (main):
+	* tests/MProfile/server.cpp (main):
+	* tests/MProfile_Forwarding/Manager.cpp (init):
+	* tests/MProfile_Forwarding/server.cpp (main):
+	* tests/QtTests/server.cpp (main):
+	* tests/Smart_Proxies/Collocation/Coll_Tester.cpp (init):
+	* tests/Xt_Stopwatch/server.cpp (main):
+
+	  Added missing ACE_TRY_ENV parameter to
+	  resolve_initial_references() call, and the corresponding
+	  ACE_CHECK/ACE_CHECK_RETURN/ACE_TRY_CHECK macro.
+
+	* tests/Smart_Proxies/Benchmark/server.cpp (main):
+	* tests/Smart_Proxies/Policy/server.cpp (main):
+
+	  Added missing ACE_TRY_CHECK after resolve_initial_references()
+	  call.
+
 Sun Mar 04 09:12:40 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IFR_Client/InterfaceC.cpp:
