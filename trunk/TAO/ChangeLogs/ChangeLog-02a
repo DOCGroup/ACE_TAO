@@ -23,7 +23,7 @@ Tue Apr 25 15:05:48 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Improved the hashing code to provide a more a unique hash by
 	  utilizing the ACE::hash_pjw() method, and the profile tag, in
-	  addition to values that were used before.  [Bug 
+	  addition to values that were used before.  [Bug 543]
 	
 	* tao/IIOP_Profile.cpp (set):
 	* tao/SHMIOP_Profile.cpp (set):
