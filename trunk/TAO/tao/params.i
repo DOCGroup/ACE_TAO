@@ -1,19 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    params.i
-//
-// = AUTHOR
-//    Chris Cleeland
-//
-// ============================================================================
-
 ACE_INLINE int
 TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
 {
@@ -61,7 +48,9 @@ TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 ACE_INLINE void
 TAO_ORB_Parameters::sock_rcvbuf_size (int s)
 {
-  sock_rcvbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ ? s : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  sock_rcvbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ 
+    ? s 
+    : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 }
 
 ACE_INLINE int
@@ -73,7 +62,9 @@ TAO_ORB_Parameters::sock_sndbuf_size (void) const
 ACE_INLINE void
 TAO_ORB_Parameters::sock_sndbuf_size (int s)
 {
-  sock_sndbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ ? s : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  sock_sndbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ 
+    ? s 
+    : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 }
 
 ACE_INLINE int
@@ -176,5 +167,17 @@ ACE_INLINE void
 TAO_ORB_Parameters::std_profile_components (int x)
 {
   this->std_profile_components_ = x;
+}
+
+ACE_INLINE int
+TAO_ORB_Parameters::nodelay (void) const
+{
+  return this->nodelay_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::nodelay (int x)
+{
+  this->nodelay_ = x;
 }
 

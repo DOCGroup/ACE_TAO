@@ -192,6 +192,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   size_t rcv_sock_size = 0;
   size_t snd_sock_size = 0;
 
+  // Use TCP_NODELAY.
+  size_t nodelay = 1;
+
   // Should we skip the <ACE_Service_Config::open> method, e.g., if we
   // already being configured by the ACE Service Configurator.
   int skip_service_config_open = 0;
@@ -402,6 +405,15 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // Unrelated to ORB Protocols, this is used for multicast.
 
           ns_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBNodelay")))
+        {
+          // Use TCP_NODELAY or not.
+          nodelay =
+            ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -912,6 +924,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   this->orb_params ()->trading_service_port (ts_port);
   this->orb_params ()->implrepo_service_port (ir_port);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
+  this->orb_params ()->nodelay (nodelay);
   if (rcv_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size != 0)

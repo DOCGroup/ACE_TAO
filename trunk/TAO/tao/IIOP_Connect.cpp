@@ -115,7 +115,9 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
 #if defined (TCP_NODELAY)
-  int nodelay = 1;
+  int nodelay = 
+    this->orb_core_->orb_params ()->nodelay ();
+
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &nodelay,
@@ -372,9 +374,9 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
     return -1;
 #endif /* ACE_LACKS_SOCKET_BUFSIZ */
 
-  int nodelay = 1;
-
 #if defined (TCP_NODELAY)
+  int nodelay = 
+    this->orb_core_->orb_params ()->nodelay ();
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &nodelay,
