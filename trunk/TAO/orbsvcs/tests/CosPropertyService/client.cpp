@@ -272,14 +272,27 @@ Client::test_get_all_property_names (CORBA::Environment &env)
 
   // Get half on the names and half of on the iterator.
   CORBA::ULong how_many = num_of_properties / 2;
+  
+  // The extra ptr's and out's required to avoind SunnCC's warning
+  // when foo.out () is passed to a funtion.
   CosPropertyService::PropertyNames_var names_var;
+  CosPropertyService::PropertyNames_ptr names_ptr = 0;
+  CosPropertyService::PropertyNames_out names_out (names_ptr);
+  
   CosPropertyService::PropertyNamesIterator_var iterator_var;
+  CosPropertyService::PropertyNamesIterator_ptr iterator_ptr;
+  CosPropertyService::PropertyNamesIterator_out iterator_out (iterator_ptr);
+  
   propsetdef_->get_all_property_names (how_many,
-                                           names_var.out (),
-                                           iterator_var.out (),
-                                           env);
+                                       names_out,
+                                       iterator_out,
+                                       env);
   TAO_CHECK_ENV_RETURN (env, -1);
-
+  
+  // Get the values back to var.
+  names_var = names_out.ptr ();
+  iterator_var = iterator_out.ptr ();
+  
   // Print out the names in the names-sequence.
   if (names_var.ptr () != 0)
     {
@@ -294,12 +307,27 @@ Client::test_get_all_property_names (CORBA::Environment &env)
   // Iterate thru and print out the names in the iterator, if any.
   if (iterator_var.ptr () != 0)
     {
-      CosPropertyService::PropertyName_var name_var;
-
-      while (iterator_var->next_one (name_var.out (), env) == CORBA::B_TRUE)
+      // Helper variables to stop the SunCC warnings on on foo.out
+      // (). 
+      CosPropertyService::PropertyName  name_ptr = 0;
+      CosPropertyService::PropertyName_out name_out (name_ptr);
+      
+      // Call the function.
+      CORBA::Boolean next_one_result = iterator_var->next_one (name_out, env);
+      
+      // Get the values back on a _var variable.
+      CosPropertyService::PropertyName_var name_var = name_out.ptr ();
+      
+      while (next_one_result == CORBA::B_TRUE)
         {
           TAO_CHECK_ENV_RETURN (env, -1);
           ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
+          
+          // Call the function to iterate again.
+          next_one_result = iterator_var->next_one (name_out, env);
+          
+          // Get the values back on a _var variable.
+          name_var = name_out.ptr ();
         }
 
       TAO_CHECK_ENV_RETURN (env, -1);
@@ -331,14 +359,19 @@ Client::test_get_properties (CORBA::Environment &env)
   names [2] = CORBA::string_dup ("char_property");
   //names [2] = CORBA::string_dup ("no_property");
 
-  CosPropertyService::Properties_var properties;
+
+  CosPropertyService::Properties_ptr properties_ptr = 0;
+  CosPropertyService::Properties_out properties_out (properties_ptr);
 
   // Get the properties.
   CORBA::Boolean return_val = propsetdef_->get_properties (names.in (),
-                                                                properties.out (),
-                                                                env);
+                                                           properties_out,
+                                                           env);
   TAO_CHECK_ENV_RETURN (env, -1);
-
+  
+  // Get the value to the _var.
+  CosPropertyService::Properties_var properties = properties_out.ptr ();
+  
   if (properties.ptr () != 0)
     {
       // Go thru the properties and print them out, if they are not
@@ -491,14 +524,23 @@ Client::test_get_all_properties (CORBA::Environment &env)
 
   // Get half on the properties and half of on the iterator.
   CORBA::ULong how_many = 0;
-  CosPropertyService::Properties_var properties;
-  CosPropertyService::PropertiesIterator_var iterator;
-  propsetdef_->get_all_properties (how_many,
-                                        properties.out (),
-                                        iterator.out (),
-                                        env);
-  TAO_CHECK_ENV_RETURN (env, -1);
 
+  // Helper variables to avoid SunCC warnings.
+  CosPropertyService::Properties_ptr properties_ptr = 0;
+  CosPropertyService::Properties_out properties_out (properties_ptr);
+  CosPropertyService::PropertiesIterator_ptr iterator_ptr = 0;
+  CosPropertyService::PropertiesIterator_out iterator_out (iterator_ptr);
+  
+  propsetdef_->get_all_properties (how_many,
+                                   properties_out,
+                                   iterator_out,
+                                   env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+  
+  // Get these values to the _var's.
+  CosPropertyService::Properties_var properties = properties_out.ptr ();
+  CosPropertyService::PropertiesIterator_var iterator = iterator_out.ptr ();
+  
   // Print out the properties now.
   if (properties.ptr () != 0)
     {
@@ -541,9 +583,18 @@ Client::test_get_all_properties (CORBA::Environment &env)
   // Pass thru the iterator.
   if (iterator.ptr () != 0)
     {
-      CosPropertyService::Property_var property;
+      // Helper variables to avoid warnings with .out () in SunCC.
+      CosPropertyService::Property* property_ptr = 0;
+      CosPropertyService::Property_out property_out (property_ptr);
+      
+      // Call the funtion.
+      CORBA::Boolean next_one_result = iterator->next_one (property_out,
+                                                           env); 
+      
+      // Get the value to the _var variable.
+      CosPropertyService::Property_var property = property_out.ptr ();
 
-      while (iterator->next_one (property.out (), env) != CORBA::B_FALSE)
+      while (next_one_result != CORBA::B_FALSE)
         {
           ACE_DEBUG ((LM_DEBUG, "Iteration over PropertyIterartor"));
           TAO_CHECK_ENV_RETURN (env, -1);
@@ -586,6 +637,13 @@ Client::test_get_all_properties (CORBA::Environment &env)
               property->property_value >>= l;
               ACE_DEBUG ((LM_DEBUG,"%d\n", l));
             }
+          
+          // Call the function for the next iteraton.
+          next_one_result = iterator->next_one (property_out,
+                                                env); 
+      
+          // Get the value to the _var variable.
+          property = property_out.ptr ();
         }
       TAO_CHECK_ENV_RETURN (env, -1);
     }
