@@ -1,3 +1,10 @@
+Wed Aug 22 12:05:27 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/config/constants.h: 
+	  Removed PACE_HAS_DLL and PACE_Export #defines since
+	  these are now implemented appropriately for PACE
+	  in pace/config/config.h.
+
 Wed Aug 22 09:04:28 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* Makefile: 

@@ -181,10 +181,6 @@
 
 #include "pace/sys/types.h"
 
-/* Need for NT */
-# define PACE_Export
-# define PACE_BUILD_DLL
-
 /* Tracing */
 # define PACE_DEBUG(X)
 # define PACE_LM_DEBUG PACE_stderr
