@@ -589,6 +589,7 @@ TAO_GIOP_Message_Lite::
       break;
     }
 
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return 1;
 }
 
