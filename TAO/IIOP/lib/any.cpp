@@ -35,9 +35,8 @@
 #include <assert.h>
 #include <limits.h>
 #include <string.h>
-#include <orb.h>
 
-#include "debug.h"
+#include "orb.h"
 
 #include <initguid.h>
 

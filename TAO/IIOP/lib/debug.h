@@ -33,7 +33,7 @@ extern "C" char *strerror (int);
 // "tao_debug_level", etc. to protect the namespace.
 
 // 0 to ??; higher == more
-extern u_int TAO_debug_level;	
+extern unsigned int TAO_debug_level;	
 
 // set by getopt
 extern char *TAO_debug_filter;

@@ -14,10 +14,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <orb.h>
-#include <boa.h>
-
-#include "debug.h"
+#include "orb.h"
+#include "boa.h"
 
 // XXX this should not know implementation or other details of any
 // protocol modules!  This is an implementation shortcut only.

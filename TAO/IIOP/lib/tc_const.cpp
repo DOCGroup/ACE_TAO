@@ -83,10 +83,27 @@ const CORBA_TypeCode_ptr _tc_CORBA_Char = &tc_char;
 static CORBA_TypeCode tc_wchar (tk_wchar);
 const CORBA_TypeCode_ptr _tc_CORBA_WChar = &tc_wchar;
 
-static CORBA_TypeCode tc_string (tk_string);
+// a string/wstring have a simple parameter list that indicates the length 
+static const CORBA_Long _oc_string [] = 
+{	// CDR typecode octets
+  1,				// native endian + padding; "tricky"
+  0				// ... unbounded string
+};
+static CORBA_TypeCode tc_string (tk_string,
+			  sizeof _oc_string,
+			  (u_char *) &_oc_string,
+			  CORBA_B_FALSE);
 const CORBA_TypeCode_ptr _tc_CORBA_String = &tc_string;
 
-static CORBA_TypeCode tc_wstring (tk_wstring);
+static const CORBA_Long _oc_wstring [] =
+{	// CDR typecode octets
+  1,				// native endian + padding; "tricky"
+  0				// ... unbounded string
+};
+static CORBA_TypeCode tc_wstring (tk_wstring,
+			  sizeof _oc_wstring,
+			  (u_char *) &_oc_wstring,
+			  CORBA_B_FALSE);
 const CORBA_TypeCode_ptr _tc_CORBA_WString = &tc_wstring;
 
 //

@@ -111,8 +111,9 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 #include "any.h"
 #include "nvlist.h"
 #include "request.h"
-#include "svrrqst.h"
 #include "object.h"
+#include "svrrqst.h"
+#include "debug.h"   // gets included only if the DEBUG flag is set
 
 #if !defined(__IIOP_BUILD)
 #  include "boa.h"
