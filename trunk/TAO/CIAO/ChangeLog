@@ -1,3 +1,9 @@
+Wed May  7 17:24:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Added new
+	  libraries and paths to them. This was forced due to the recent
+	  subestting in TAO.
+
 Wed May  7 17:09:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/ComponentServer_Impl.cpp (configuration): Used .inout ()
