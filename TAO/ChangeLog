@@ -1,3 +1,10 @@
+Tue Aug 10 00:41:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* utils/nslist/nslist.cpp (display_endpoint_info):
+
+	  Fixed compile-time error.  "CORBA::is_nil()", not
+	  "CORBA::Object::is_nil()".
+
 Mon Aug  9 23:31:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/PSS/PSDL_Scope.cpp:
