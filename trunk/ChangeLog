@@ -5,7 +5,7 @@ Mon Nov  3 06:09:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tests/Proactor_Scatter_Gather_Test.cpp:
         * tests/Proactor_Test.cpp:
         * tests/SPIPE_Test.cpp:
-          Added #included needed on Windows due to recent
+          Added #includes needed on Windows due to recent
           subsetting.
 
 Mon Nov  3 05:02:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -20,7 +20,7 @@ Mon Nov  3 04:43:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Makefile:
         * bin/reverseclean:
-          Pass the $(MAKE) variable to the reverseclean script and us it
+          Pass the $(MAKE) variable to the reverseclean script and use it
           instead of "make".  This fixes problems in autobuilds that
           assign something other than "make" to the make_program
           variable.
@@ -31,7 +31,7 @@ Mon Nov  3 03:04:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/Managed_Object.h:
         * ace/Object_Manager.h:
         * tests/Priority_Reactor_Test.cpp:
-          Added #included needed when not inlining due to recent
+          Added #include needed when not inlining due to recent
           subsetting.
 
         * ace/OS_NS_Thread.inl:
@@ -59,7 +59,7 @@ Sun Nov  2 15:58:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Fixed a couple of instances of ::memcpy that didn't include
           ACE_OS.
 
-        * ace/_S_NS_netdb.cpp:
+        * ace/OS_NS_netdb.cpp:
           Added #include Object_Manager_Base.h.
 
         * ace/OS_NS_unistd.cpp:
