@@ -17,7 +17,10 @@ Fri Oct  9 16:27:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  We do not overload operator new and operator delete anymore. The
 	  allocators we were using were problematic for this use case and
 	  we believe that a better speed up can be obtained by reducing
-	  the number of allocations.
+	  the number of allocations.  Thanks to "Mark Hyett"
+	  <mhyett@std.saic.com>, "Mark L. Boriack"
+	  <mboriack@std.saic.com>, "J. Russell Noseworthy"
+	  <rnosewor@objectsciences.com> for helping us with this bug.
 
 Fri Oct 09 15:27:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
