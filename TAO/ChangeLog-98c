@@ -1,3 +1,14 @@
+Wed Nov 11 22:11:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_Input_Handler.cpp (register_consumer): 
+	added check for carriage return while getting string input.
+	* examples/Callback_Quoter/Consumer.dsp
+	* examples/Callback_Quoter/Notifier.dsp
+	* examples/Callback_Quoter/Supplier.dsp
+	* examples/Callback_Quoter/Callback_Quoter.dsw
+	The Callback_Quoter example project workspace created for Win32
+	platform users and added to the repository.
+	
 Wed Nov 11 17:44:10 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/NestedUpcall/MT_Client_Test/run_test.pl:
@@ -77,6 +88,7 @@ Tue Nov 10 13:12:48 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/Sched/DynSched.cpp
           orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: Fixed compilation errors
           and warnings from g++, Sun C++ for scheduling anomaly features.
+
 
 Mon Nov  9 23:47:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
