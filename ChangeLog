@@ -1,3 +1,8 @@
+Sun Aug 10 06:17:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Export/dll.cpp:
+          Fixed a typo in last checkin, i.e., added a space.
+
 Sat Aug  9 20:55:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Connection/blocking/SPIPE-acceptor.cpp:
