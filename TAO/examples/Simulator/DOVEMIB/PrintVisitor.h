@@ -29,6 +29,11 @@ public:
   PrintVisitor (const char *file_name);
   ~PrintVisitor ();
 
+  void printTimeStamp (ACE_hrtime_t creation,
+                       ACE_hrtime_t ec_recv,
+                       ACE_hrtime_t ec_send);
+  // Print the time stamp
+
   void close ();
 
   void visitStructNode (StructNode *structNode);
@@ -38,6 +43,7 @@ public:
   void visitStringNode (StringNode *stringNode);
 private:
   void printPadding (unsigned int recursion_level);
+  void printSecNanoSec (ACE_hrtime_t total_nanoseconds);
 
   FILE *output_;
 };
