@@ -1,3 +1,12 @@
+Mon Mar 25 09:56:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * TAO/orbsvcs/Event_Service/Event_Service.cpp:
+          Added missing c_str() call for ACE_CString output on ACE_ERROR_RETURN.
+
+        * TAO/orbsvcs/Time_Service/Server_i.cpp:
+        * TAO/orbsvcs/Time_Service/Server_i.h:
+          Fixed incorrect env parameter macro for init_naming_service().
+
 Sun Mar 24 22:06:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
