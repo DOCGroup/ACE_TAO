@@ -157,7 +157,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "static " << node->local_name () << "_ptr " << "_duplicate ("
           << node->local_name () << "_ptr obj);" << be_nl
           << "static " << node->local_name () << "_ptr "
-                << "_narrow (" << be_idt << be_idt_nl
+          << "_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
           << "CORBA::Environment &env = " << be_idt_nl
           << "TAO_default_environment ()"
@@ -193,7 +193,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                              "codegen for scope failed\n"), -1);
         }
       // the _is_a method
-      os->indent ();
+      os->indent ();  
       *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
           << "const CORBA::Char *type_id, " << be_nl
           << "CORBA::Environment &env = " << be_idt_nl
@@ -219,16 +219,35 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "private:" << be_idt_nl;
       *os << node->local_name () << " (const " << node->local_name () << " &);"
           << be_nl
-          << "void operator= (const " << node->local_name () << " &);" << be_uidt_nl;
+          << "void operator= (const " << node->local_name () << " &);";
+      *os << be_uidt <<be_uidt_nl;
       *os << "};\n\n";
 
-      os->gen_endif ();
+      // Smart Proxy related classes.
+       be_visitor_context ctx (*this->ctx_);
+       be_visitor *visitor = 0;
 
+       ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
+       visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ch::"
+                             "visit_interface - "
+                             "codegen for smart proxy classes failed\n"),
+                            -1);
+        }
+      delete visitor;
+      visitor = 0;
+      
+      os->gen_endif ();
+      
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be
       // based on the command line options. This is still TO-DO
-      be_visitor *visitor;
-      be_visitor_context ctx (*this->ctx_);
+      // be_visitor *visitor;
+      visitor = 0;
       ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
