@@ -58,4 +58,10 @@ ACE_UNIX_Addr::get_path_name (void) const
   return this->unix_addr_.sun_path;
 }
 
+ACE_INLINE u_long 
+ACE_UNIX_Addr::hash (void) const
+{
+  return ACE::hash_pjw (this->unix_addr_.sun_path);
+}
+
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
