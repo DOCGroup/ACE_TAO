@@ -1,3 +1,8 @@
+Sat May 10 12:24:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Collocation/Makefile.test: Fixes to get it linking
+	  properly in static builds.
+
 Sat May 10 10:15:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/*/Makefile*: More updates. 
