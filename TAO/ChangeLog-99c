@@ -1,3 +1,10 @@
+Sat Mar 27 11:57:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	  Removed an Unbounded_Set<ACE_INET_Addr> that I moved from
+	  IIOP_ORB, but it was not used at all.
+
 Sat Mar 27 06:51:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Event_Comm/Makefile: updated dependencies so

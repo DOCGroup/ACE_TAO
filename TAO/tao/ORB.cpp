@@ -1225,7 +1225,7 @@ CORBA::ORB_init (int &argc,
     }
 
   // Get ORB Core
-  // @@ As part of the ORB re-architecture this may be the point where 
+  // @@ As part of the ORB re-architecture this may be the point where
   //    we locate the right ORB (from a table) and use that one
   //    instead of using TAO_ORB_Core_instance ().
   TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
@@ -1556,7 +1556,7 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
                                 servant != 0),
                   CORBA::Object::_nil ());
 
-  // @@EXC@@ This code is not exception safe, we should use auto_ptr<> 
+  // @@EXC@@ This code is not exception safe, we should use auto_ptr<>
   // or allocate <mp> from the stack!
   delete mp;
 
@@ -1654,16 +1654,16 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
       //    find the servant.
       //    How does the Acceptor Registry answer the question:
       //    - For each profile in the Stub it iterates over the
-      //      acceptors, if the profile and the acceptor have the same 
+      //      acceptors, if the profile and the acceptor have the same
       //      protocol then we pass the profile to the acceptor.
       //    - The acceptor downcast the profile, the derived class
       //      contains a method that returns the address in the
       //      favourite format for that protocol (i.e. this is not a
-      //      method of the base class); it uses that address to match 
+      //      method of the base class); it uses that address to match
       //      with the addresses it is accepting on.
       //    - A policy question: do we return when the first acceptor
       //      matches or if they all match?
-      //      Before answering: "only when they all match" think about 
+      //      Before answering: "only when they all match" think about
       //      a server that is restarted with more endpoints (or
       //      less), shouldn't old, persistent IORs, still be treated
       //      as collocated?
