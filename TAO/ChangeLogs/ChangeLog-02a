@@ -8,7 +8,8 @@ Tue May 01 19:45:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/RT_Policy_i.{h,cpp}: Changed the empty ACE_THROW_SPEC
 	  (()) with ACE_THROW_SPEC ((CORBA::SystemException)) so that
 	  TAO can compile with FORTE 6.1. Thanks to Russ Noseworthy
-          for the patches.
+          for the patches and to Carlton Teel <teel@signal-analysis.com>
+          for motivating these fixes
 
 Tue May 01 19:00:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
