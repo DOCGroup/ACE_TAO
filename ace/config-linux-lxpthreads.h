@@ -96,6 +96,11 @@ typedef struct timespec timespec_t; // Linux is missing this for POSIX spec 1003
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+// Linux "improved" the interface to select() so that it modifies
+// the struct timeval to reflect the amount of time not slept
+// (see NOTES in Linux's select(2) man page).
+#define ACE_HAS_NONCONST_SELECT_TIMEVAL
+
 // Linux defines struct msghdr in /usr/include/socket.h
 #define ACE_HAS_MSG
 
