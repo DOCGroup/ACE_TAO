@@ -303,8 +303,9 @@ ACE_Event_Channel::initiate_connector (void)
 void
 ACE_Event_Channel::initiate_acceptor (void)
 {
-  if (ACE_Reactor::instance ()->register_handler
-      (&this->acceptor_, ACE_Event_Handler::ACCEPT_MASK) == -1)
+  if (this->acceptor_.open (this->options ().acceptor_port_,
+                            ACE_Reactor::instance (),
+                            this->options ().blocking_semantics_) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n",
 		"cannot register acceptor"));
 }
