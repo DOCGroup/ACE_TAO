@@ -488,13 +488,13 @@ Cubit_Client::run (void)
 	  elapsed_time.user_time /= this->call_count_;
 	  elapsed_time.system_time /= this->call_count_;
 
-	  tmp = 1000/(elapsed_time.real_time+elapsed_time.user_time+elapsed_time.system_time);
+	  tmp = 1000/(elapsed_time.real_time + elapsed_time.user_time + elapsed_time.system_time);
 
 	  ACE_DEBUG ((LM_DEBUG,
-		      "cube average call:\treal_time\t= %0.06f ms, \t"
-		      "user_time\t= %0.06f ms, \t"
+		      "cube average call:\n\treal_time\t= %0.06f ms, \n\t"
+		      "user_time\t= %0.06f ms, \n\t"
 		      "system_time\t= %0.06f ms\n"
-		      "\t%0.06f calls/second\n",
+		      "\t%0.00f calls/second\n",
 		      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 		      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
 		      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
@@ -524,9 +524,14 @@ Cubit_Client::run (void)
 
   timer.stop ();
   timer.elapsed_time (elapsed_time);
+
+  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
+  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
+  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
+
   ACE_DEBUG ((LM_DEBUG,
-	      "cube_struct_dii() call:\treal_time\t= %0.06f ms, \t"
-	      "user_time\t= %0.06f ms, \t"
+	      "cube_struct_dii() call:\n\treal_time\t= %0.06f ms, \n\t"
+	      "user_time\t= %0.06f ms, \n\t"
 	      "system_time\t= %f ms\n",
 	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
