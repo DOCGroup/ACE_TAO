@@ -35,7 +35,7 @@ public:
       DEFAULT = 0,
       AMI_INTERFACE,
       AMI_HANDLER,
-      AMI_EXCEPTION_HOLDER,
+      AMI_EXCEPTION_HOLDER
       //      AMH_INTERFACE
   };
 
