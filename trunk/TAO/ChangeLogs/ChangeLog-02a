@@ -6,24 +6,24 @@ Thu Aug 31 10:58:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Thu Aug 31 12:31:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* MProfile.h:
-	* MProfile.cpp:
+	* tao/MProfile.h:
+	* tao/MProfile.cpp:
 	  
 	  Added double checked looking to the creation and
 	  initialization of policy list, to ensure that only
 	  one policy list is created.
 
-	* Profile.cpp:
+	* tao/Profile.cpp:
 	  
 	  Renamed some local variable.
 
-	* RT_Policy_i.cpp:
+	* tao/RT_Policy_i.cpp:
 	  
 	  Extended Protocol Properties Factory to enable
 	  the creation of TAO specific Protocol Properties.
 
-	* Stub.h:
-	* Stub.cpp:
+	* tao/Stub.h:
+	* tao/Stub.cpp:
 
 	  Improved the method to get the policies and the 
 	  caching strategy. Fixed memory leak caused by the
