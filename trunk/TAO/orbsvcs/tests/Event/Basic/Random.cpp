@@ -498,7 +498,6 @@ RND_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
 void
 RND_Supplier::push_new_event (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -511,7 +510,6 @@ RND_Supplier::push_new_event (CORBA::Environment &ACE_TRY_ENV)
 void
 RND_Supplier::push (RtecEventComm::EventSet &event,
                     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
