@@ -1,3 +1,11 @@
+Thu Jul 17 13:14:46 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* tests/Bug_1551_Regression/Reply_Handler.h
+	* tests/Bug_1551_Regression/Hello.h
+
+	  Fixed the Debian_SingleThreaded_Build error by adding
+	  the scope name when defining the variable "counter_".
+
 Wed Jul 16 16:28:47 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	Fix for the Discarding test failing:
