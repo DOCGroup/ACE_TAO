@@ -801,20 +801,6 @@ enum MCAST_SERVICEID
 #  define TAO_HAS_INTERFACE_REPOSITORY 0
 #endif  /* !TAO_HAS_INTERFACE_REPOSITORY */
 
-// With minimum CORBA, we don't have the ForwardRequest exception.
-// Therefore, we can't support the INS forwarding agent.  Otherwise,
-// we allow user to supress it.
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-# if defined (TAO_NO_IOR_TABLE)
-#   undef TAO_NO_IOR_TABLE
-# endif /* TAO_NO_IOR_TABLE */
-# define TAO_NO_IOR_TABLE 1
-#else
-# if !defined (TAO_NO_IOR_TABLE)
-#  define TAO_NO_IOR_TABLE 0
-# endif /* TAO_NO_IOR_TABLE */
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 // Interceptors is supported by default if we are not building for
 // MinimumCORBA.
 #if !defined (TAO_HAS_INTERCEPTORS)

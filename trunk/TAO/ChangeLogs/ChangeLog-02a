@@ -1,3 +1,19 @@
+Tue Sep 12 15:53:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+          Add missing -lTAO_IORTable library
+
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+          Use the IORTable instead of the obsolete (and removed)
+          _tao_add_to_IOR_table() method.
+
+        * tao/orbconf.h:
+          Removed unused TAO_NO_IOR_TABLE macro, the IORTable is now an
+          optional component in the ORB.
+
+        * orbsvcs/IFR_Service/Makefile:
+          Cosmetic fix
+
 Tue Sep 12 10:32:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
