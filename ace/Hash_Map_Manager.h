@@ -348,20 +348,24 @@ protected:
   int forward_i (void);
   // Move forward by one element in the set.  Returns 0 when there's
   // no more item in the set after the current items, else 1.
-
+  
   int reverse_i (void);
-  // Move backware by one element in the set.  Returns 0 when there's
+  // Move backward by one element in the set.  Returns 0 when there's
   // no more item in the set before the current item, else 1.
-
+  
+  void reset_i (int head);
+  // If head != 0, the iterator reset to the head  of the map else it
+  // is positioned to the end.
+  
   void dump_i (void) const;
   // Dump the state of an object.
-
+  
   ACE_Hash_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
   // Map we are iterating over.
-
+  
   ssize_t index_;
   // Keeps track of how far we've advanced in the table.
-
+  
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next_;
   // Keeps track of how far we've advanced in a linked list in each
   // table slot.
@@ -385,7 +389,10 @@ public:
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
-
+  
+  void reset (int tail = 0);
+  // Resets the iterator to the begining, if one exists.
+  
   void dump (void) const;
   // Dump the state of an object.
 
@@ -425,6 +432,9 @@ public:
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
+  
+  void reset (int head = 0);
+  // Resets the iterator to the end again.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -456,3 +466,4 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HASH_MAP_MANAGER_H */
+
