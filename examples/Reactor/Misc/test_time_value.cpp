@@ -1,5 +1,9 @@
-#include "ace/ACE.h"
 // $Id$
+
+#include "ace/ACE.h"
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# include <iostream.h>
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 
 inline int my_abs (int d) { return d > 0 ? d : -d; }
