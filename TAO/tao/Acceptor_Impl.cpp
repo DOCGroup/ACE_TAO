@@ -1,6 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
-
 
 // ============================================================================
 //
@@ -12,7 +10,7 @@
 //
 // = AUTHOR
 //     Carlos O'Ryan <coryan@uci.edu>
-//     Ossama Othman <othman@uci.edu>
+//     Ossama Othman <ossama@dre.vanderbilt.edu>
 //
 // ============================================================================
 
@@ -26,13 +24,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ORB_Core.h"
-// #include "ORB_Table.h"
 #include "Server_Strategy_Factory.h"
-// #include "Connector_Registry.h"
 #include "Transport_Cache_Manager.h"
 #include "Thread_Lane_Resources.h"
 #include "Transport.h"
 #include "Thread_Per_Connection_Handler.h"
+#include "debug.h"
 
 #include "ace/Object_Manager.h"
 

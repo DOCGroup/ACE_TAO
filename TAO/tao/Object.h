@@ -30,6 +30,12 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/IOP_IORC.h"
 
+#if defined (HPUX) && defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition.  See IOP_IORC.h. */
+# undef IOR
+#endif /* HPUX && IOR */
+
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_Object_Proxy_Broker;
