@@ -1,6 +1,6 @@
 Thu Jan 24 17:49:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.i: Fixed the check for the legnth within 
+	* ace/CDR_Stream.i: Fixed the check for the length within 
 	  ACE_InputCDR::read_*_array (). The method was checking just for
 	  length passed in, which happens to be the number of elements in
 	  the array, instead of the number of bytes necessary for the
