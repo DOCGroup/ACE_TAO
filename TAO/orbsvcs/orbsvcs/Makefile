@@ -26,12 +26,14 @@ include $(TAO_ROOT)/taoconfig.mk
 ifndef TAO_ORBSVCS
   #### Please see docs/configurations.html#orbsvcs for documentation of
   #### TAO_ORBSVCS.
-  TAO_ORBSVCS = Naming \
-                Time \
-                Property \
-                RTSched
+  TAO_ORBSVCS = Property \
+  		Concurrency
 
   ifeq ($(corba_messaging),1)
+  TAO_ORBSVCS += Naming \
+                 Time \
+                 RTSched
+
     TAO_ORBSVCS += RTEvent \
                    NativeCosEvent \
                    CosEvent \
@@ -41,12 +43,11 @@ ifndef TAO_ORBSVCS
                    CosEventLog \
                    RTEventLog \
                    NotifyLog
-  endif #corba_messaging
 
-  TAO_ORBSVCS += Concurrency \
-                 Trader \
+  TAO_ORBSVCS += Trader \
                  AV \
                  Log
+  endif #corba_messaging
 
   ifeq ($(minimum_corba),0)
       ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
@@ -61,33 +62,31 @@ ifndef TAO_ORBSVCS
     # Trader uses DynAny which is disabled when compiling with minimum
     # CORBA support.  LifeCycle, Log, AV and Notify depend on Trader
     # so don't build them either, with minimum CORBA.
-
-    TAO_ORBSVCS += LifeCycle
-
     ifeq ($(corba_messaging),1)
+      TAO_ORBSVCS += LifeCycle
       TAO_ORBSVCS += FaultTolerance
       TAO_ORBSVCS += FTORB
       TAO_ORBSVCS += RTCORBAEvent
+
+      # The PortableGroup library requires several methods in the POA,
+      # which are disabled by Minimum CORBA. Further it also needs AMI
+      # support
+      ifeq ($(ami),1)
+        TAO_ORBSVCS += PortableGroup
+        ifeq ($(interceptors),1)
+          # The Load Balancer requires AMI and Interceptor support.
+          TAO_ORBSVCS += CosLoadBalancing
+        endif #interceptors
+      endif #ami
     endif #corba_messaging
 
-    # The PortableGroup library requires several methods in the POA,
-    # which are disabled by Minimum CORBA. Further it also needs AMI
-    # support
-    ifeq ($(ami),1)
-      TAO_ORBSVCS += PortableGroup
-      ifeq ($(interceptors),1)
-        # The Load Balancer requires AMI and Interceptor support.
-        TAO_ORBSVCS += CosLoadBalancing
-      endif #interceptors
-    endif #ami
-
-    TAO_ORBSVCS += ImplRepo
+    TAO_ORBSVCS += ImplRepo # This is for Craig R
 
   endif # minimum_corba
 
   ifeq ($(interceptors),1)
       TAO_ORBSVCS += RTCosScheduling
-     endif
+  endif #RTCosScheduling
 
   ifeq ($(ssl),1)
     ifeq ($(corba_messaging),1)
@@ -97,7 +96,9 @@ ifndef TAO_ORBSVCS
       endif #corba_messaging
   endif # ssl
 
-  TAO_ORBSVCS += Notify
+   ifeq ($(corba_messaging),1)
+     TAO_ORBSVCS += Notify
+   endif # corba_messaging
 
   ifeq ($(rt_corba),1)
     TAO_ORBSVCS += RT_Notify
