@@ -85,7 +85,7 @@ public:
   public:
     POA_out (POA_ptr &);
     POA_out (POA_var &);
-    POA_out (POA_out &);
+    POA_out (const POA_out &);
     POA_out &operator= (POA_out &);
     POA_out &operator= (const POA_var &);
     POA_out &operator= (POA_ptr);
@@ -157,7 +157,7 @@ public:
   public:
     _tao_seq_Octet_out (_tao_seq_Octet *&);
     _tao_seq_Octet_out (_tao_seq_Octet_var &);
-    _tao_seq_Octet_out (_tao_seq_Octet_out &);
+    _tao_seq_Octet_out (const _tao_seq_Octet_out &);
     _tao_seq_Octet_out &operator= (_tao_seq_Octet_out &);
     _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
     operator _tao_seq_Octet *&();
@@ -279,7 +279,7 @@ public:
   public:
     ThreadPolicy_out (ThreadPolicy_ptr &);
     ThreadPolicy_out (ThreadPolicy_var &);
-    ThreadPolicy_out (ThreadPolicy_out &);
+    ThreadPolicy_out (const ThreadPolicy_out &);
     ThreadPolicy_out &operator= (ThreadPolicy_out &);
     ThreadPolicy_out &operator= (const ThreadPolicy_var &);
     ThreadPolicy_out &operator= (ThreadPolicy_ptr);
@@ -378,7 +378,7 @@ public:
   public:
     LifespanPolicy_out (LifespanPolicy_ptr &);
     LifespanPolicy_out (LifespanPolicy_var &);
-    LifespanPolicy_out (LifespanPolicy_out &);
+    LifespanPolicy_out (const LifespanPolicy_out &);
     LifespanPolicy_out &operator= (LifespanPolicy_out &);
     LifespanPolicy_out &operator= (const LifespanPolicy_var &);
     LifespanPolicy_out &operator= (LifespanPolicy_ptr);
@@ -477,7 +477,7 @@ public:
   public:
     IdUniquenessPolicy_out (IdUniquenessPolicy_ptr &);
     IdUniquenessPolicy_out (IdUniquenessPolicy_var &);
-    IdUniquenessPolicy_out (IdUniquenessPolicy_out &);
+    IdUniquenessPolicy_out (const IdUniquenessPolicy_out &);
     IdUniquenessPolicy_out &operator= (IdUniquenessPolicy_out &);
     IdUniquenessPolicy_out &operator= (const IdUniquenessPolicy_var &);
     IdUniquenessPolicy_out &operator= (IdUniquenessPolicy_ptr);
@@ -576,7 +576,7 @@ public:
   public:
     IdAssignmentPolicy_out (IdAssignmentPolicy_ptr &);
     IdAssignmentPolicy_out (IdAssignmentPolicy_var &);
-    IdAssignmentPolicy_out (IdAssignmentPolicy_out &);
+    IdAssignmentPolicy_out (const IdAssignmentPolicy_out &);
     IdAssignmentPolicy_out &operator= (IdAssignmentPolicy_out &);
     IdAssignmentPolicy_out &operator= (const IdAssignmentPolicy_var &);
     IdAssignmentPolicy_out &operator= (IdAssignmentPolicy_ptr);
@@ -678,7 +678,7 @@ public:
   public:
     ImplicitActivationPolicy_out (ImplicitActivationPolicy_ptr &);
     ImplicitActivationPolicy_out (ImplicitActivationPolicy_var &);
-    ImplicitActivationPolicy_out (ImplicitActivationPolicy_out &);
+    ImplicitActivationPolicy_out (const ImplicitActivationPolicy_out &);
     ImplicitActivationPolicy_out &operator= (ImplicitActivationPolicy_out &);
     ImplicitActivationPolicy_out &operator= (const ImplicitActivationPolicy_var &);
     ImplicitActivationPolicy_out &operator= (ImplicitActivationPolicy_ptr);
@@ -782,7 +782,7 @@ public:
   public:
     ServantRetentionPolicy_out (ServantRetentionPolicy_ptr &);
     ServantRetentionPolicy_out (ServantRetentionPolicy_var &);
-    ServantRetentionPolicy_out (ServantRetentionPolicy_out &);
+    ServantRetentionPolicy_out (const ServantRetentionPolicy_out &);
     ServantRetentionPolicy_out &operator= (ServantRetentionPolicy_out &);
     ServantRetentionPolicy_out &operator= (const ServantRetentionPolicy_var &);
     ServantRetentionPolicy_out &operator= (ServantRetentionPolicy_ptr);
@@ -887,7 +887,7 @@ public:
   public:
     RequestProcessingPolicy_out (RequestProcessingPolicy_ptr &);
     RequestProcessingPolicy_out (RequestProcessingPolicy_var &);
-    RequestProcessingPolicy_out (RequestProcessingPolicy_out &);
+    RequestProcessingPolicy_out (const RequestProcessingPolicy_out &);
     RequestProcessingPolicy_out &operator= (RequestProcessingPolicy_out &);
     RequestProcessingPolicy_out &operator= (const RequestProcessingPolicy_var &);
     RequestProcessingPolicy_out &operator= (RequestProcessingPolicy_ptr);
@@ -979,7 +979,7 @@ public:
   public:
     POAManager_out (POAManager_ptr &);
     POAManager_out (POAManager_var &);
-    POAManager_out (POAManager_out &);
+    POAManager_out (const POAManager_out &);
     POAManager_out &operator= (POAManager_out &);
     POAManager_out &operator= (const POAManager_var &);
     POAManager_out &operator= (POAManager_ptr);
@@ -1113,7 +1113,7 @@ public:
   public:
     AdapterActivator_out (AdapterActivator_ptr &);
     AdapterActivator_out (AdapterActivator_var &);
-    AdapterActivator_out (AdapterActivator_out &);
+    AdapterActivator_out (const AdapterActivator_out &);
     AdapterActivator_out &operator= (AdapterActivator_out &);
     AdapterActivator_out &operator= (const AdapterActivator_var &);
     AdapterActivator_out &operator= (AdapterActivator_ptr);
@@ -1205,7 +1205,7 @@ public:
   public:
     ServantManager_out (ServantManager_ptr &);
     ServantManager_out (ServantManager_var &);
-    ServantManager_out (ServantManager_out &);
+    ServantManager_out (const ServantManager_out &);
     ServantManager_out &operator= (ServantManager_out &);
     ServantManager_out &operator= (const ServantManager_var &);
     ServantManager_out &operator= (ServantManager_ptr);
@@ -1295,7 +1295,7 @@ public:
   public:
     ServantActivator_out (ServantActivator_ptr &);
     ServantActivator_out (ServantActivator_var &);
-    ServantActivator_out (ServantActivator_out &);
+    ServantActivator_out (const ServantActivator_out &);
     ServantActivator_out &operator= (ServantActivator_out &);
     ServantActivator_out &operator= (const ServantActivator_var &);
     ServantActivator_out &operator= (ServantActivator_ptr);
@@ -1387,7 +1387,7 @@ public:
   public:
     ServantLocator_out (ServantLocator_ptr &);
     ServantLocator_out (ServantLocator_var &);
-    ServantLocator_out (ServantLocator_out &);
+    ServantLocator_out (const ServantLocator_out &);
     ServantLocator_out &operator= (ServantLocator_out &);
     ServantLocator_out &operator= (const ServantLocator_var &);
     ServantLocator_out &operator= (ServantLocator_ptr);
@@ -1483,7 +1483,7 @@ public:
   public:
     POA_out (POA_ptr &);
     POA_out (POA_var &);
-    POA_out (POA_out &);
+    POA_out (const POA_out &);
     POA_out &operator= (POA_out &);
     POA_out &operator= (const POA_var &);
     POA_out &operator= (POA_ptr);
@@ -1988,7 +1988,7 @@ public:
   public:
     Current_out (Current_ptr &);
     Current_out (Current_var &);
-    Current_out (Current_out &);
+    Current_out (const Current_out &);
     Current_out &operator= (Current_out &);
     Current_out &operator= (const Current_var &);
     Current_out &operator= (Current_ptr);

@@ -141,8 +141,8 @@ PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor fro
 }
 
 ACE_INLINE
-PortableServer::POA_out::POA_out (PortableServer::POA_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::POA_out::POA_out (const PortableServer::POA_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (POA_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::POA_out &
@@ -337,8 +337,8 @@ PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq
 }
 
 ACE_INLINE
-PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (PortableServer::_tao_seq_Octet_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::_tao_seq_Octet_out::_tao_seq_Octet_out (const PortableServer::_tao_seq_Octet_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (_tao_seq_Octet_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::_tao_seq_Octet_out &
@@ -530,8 +530,8 @@ PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy
 }
 
 ACE_INLINE
-PortableServer::ThreadPolicy_out::ThreadPolicy_out (PortableServer::ThreadPolicy_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::ThreadPolicy_out::ThreadPolicy_out (const PortableServer::ThreadPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ThreadPolicy_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::ThreadPolicy_out &
@@ -725,8 +725,8 @@ PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::Lifespan
 }
 
 ACE_INLINE
-PortableServer::LifespanPolicy_out::LifespanPolicy_out (PortableServer::LifespanPolicy_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::LifespanPolicy_out::LifespanPolicy_out (const PortableServer::LifespanPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (LifespanPolicy_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::LifespanPolicy_out &
@@ -918,8 +918,8 @@ PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::
 }
 
 ACE_INLINE
-PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (PortableServer::IdUniquenessPolicy_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (const PortableServer::IdUniquenessPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IdUniquenessPolicy_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::IdUniquenessPolicy_out &
@@ -1111,8 +1111,8 @@ PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::
 }
 
 ACE_INLINE
-PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (PortableServer::IdAssignmentPolicy_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (const PortableServer::IdAssignmentPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IdAssignmentPolicy_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::IdAssignmentPolicy_out &
@@ -1306,8 +1306,8 @@ PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (Port
 }
 
 ACE_INLINE
-PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (PortableServer::ImplicitActivationPolicy_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (const PortableServer::ImplicitActivationPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ImplicitActivationPolicy_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::ImplicitActivationPolicy_out &
@@ -1499,8 +1499,8 @@ PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (Portable
 }
 
 ACE_INLINE
-PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (PortableServer::ServantRetentionPolicy_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (const PortableServer::ServantRetentionPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServantRetentionPolicy_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantRetentionPolicy_out &
@@ -1692,8 +1692,8 @@ PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (Portab
 }
 
 ACE_INLINE
-PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (PortableServer::RequestProcessingPolicy_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (const PortableServer::RequestProcessingPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (RequestProcessingPolicy_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::RequestProcessingPolicy_out &
@@ -1887,8 +1887,8 @@ PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_var &
 }
 
 ACE_INLINE
-PortableServer::POAManager_out::POAManager_out (PortableServer::POAManager_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::POAManager_out::POAManager_out (const PortableServer::POAManager_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (POAManager_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::POAManager_out &
@@ -2082,8 +2082,8 @@ PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::Adap
 }
 
 ACE_INLINE
-PortableServer::AdapterActivator_out::AdapterActivator_out (PortableServer::AdapterActivator_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::AdapterActivator_out::AdapterActivator_out (const PortableServer::AdapterActivator_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (AdapterActivator_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::AdapterActivator_out &
@@ -2275,8 +2275,8 @@ PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantM
 }
 
 ACE_INLINE
-PortableServer::ServantManager_out::ServantManager_out (PortableServer::ServantManager_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::ServantManager_out::ServantManager_out (const PortableServer::ServantManager_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServantManager_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantManager_out &
@@ -2468,8 +2468,8 @@ PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::Serv
 }
 
 ACE_INLINE
-PortableServer::ServantActivator_out::ServantActivator_out (PortableServer::ServantActivator_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::ServantActivator_out::ServantActivator_out (const PortableServer::ServantActivator_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServantActivator_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantActivator_out &
@@ -2661,8 +2661,8 @@ PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantL
 }
 
 ACE_INLINE
-PortableServer::ServantLocator_out::ServantLocator_out (PortableServer::ServantLocator_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::ServantLocator_out::ServantLocator_out (const PortableServer::ServantLocator_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ServantLocator_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::ServantLocator_out &
@@ -2850,8 +2850,8 @@ PortableServer::POA_out::POA_out (PortableServer::POA_var &p) // constructor fro
 }
 
 ACE_INLINE
-PortableServer::POA_out::POA_out (PortableServer::POA_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::POA_out::POA_out (const PortableServer::POA_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (POA_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::POA_out &
@@ -3043,8 +3043,8 @@ PortableServer::Current_out::Current_out (PortableServer::Current_var &p) // con
 }
 
 ACE_INLINE
-PortableServer::Current_out::Current_out (PortableServer::Current_out &p) // copy constructor
-  : ptr_ (p.ptr_)
+PortableServer::Current_out::Current_out (const PortableServer::Current_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Current_out&,p).ptr_)
 {}
 
 ACE_INLINE PortableServer::Current_out &
