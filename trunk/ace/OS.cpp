@@ -5268,7 +5268,7 @@ ACE_OS::pread (ACE_HANDLE handle,
   // Remember the original file pointer position
   off_t original_position = ACE_OS::lseek (handle,
                                            0,
-                                           SEEK_SET);
+                                           SEEK_CUR);
 
   if (original_position == -1)
     return -1;
@@ -5391,7 +5391,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   // Remember the original file pointer position
   off_t original_position = ACE_OS::lseek (handle,
                                            0,
-                                           SEEK_SET);
+                                           SEEK_CUR);
   if (original_position == -1)
     return -1;
 

@@ -1,11 +1,20 @@
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/OS.cpp (pwrite): The lseek() call must use SEEK_CUR rather
+	  than SEEK_SET.  Thanks to Duane Binder
+ 	  <duane.binder@veritas.com> for reporting this.  This fixes bugid
+ 	  1095.
+
 	* ace/Proactor.i (run_event_loop): Refactored the code to
 	  use the new ACE_Proactor::check_reconfiguration() static method,
  	  just like the Reactor!
 
 	* ace/Proactor.h: Added the check_reconfiguration() static method
 	  to ACE_Proactor, a la the Reactor!
+
+	* tests/Thread_Pool_Reactor_Test.cpp Changed the signature of the
+	  reactor_event_hook() method to conform to the minor
+ 	  modifications outlined below.
 
 	* ace/Reactor.h: Changed the signature of
 	  ACE_Reactor::check_reconfiguration() to reflect the following
