@@ -433,6 +433,12 @@ public:
   CORBA::Boolean _optimize_collocation_objects (void);
   // Get collocation optimization status.
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_ORB_ptr _ptr_type;
+  typedef CORBA_ORB_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (TAO_ORB_Core* orb_core);

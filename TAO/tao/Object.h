@@ -29,8 +29,6 @@
 
 class TAO_ServantBase;
 class TAO_Stub;
-class TAO_Context;
-typedef TAO_Context *TAO_Context_ptr;
 
 class TAO_Export CORBA_Object
 {
@@ -140,6 +138,12 @@ public:
   virtual void _use_locate_requests (CORBA::Boolean use_it);
   // the the object to use a locate request for the first call to
   // the object
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_Object_ptr _ptr_type;
+  typedef CORBA_Object_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
 
 protected:
   TAO_ServantBase *servant_;
