@@ -1,13 +1,23 @@
+Sat Dec  6 09:28:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_other_tests.lst:
+
+	  A bunch of tests depend on dynamic libraries being
+	  available. They have been prevented from running in the static
+	  builds. I am sending a seperate mail to the authors to fix
+	  this. 
+
 Sat Dec  6 12:55:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Reactor/WFMO_Reactor/APC.dsp:
 	* examples/Reactor/WFMO_Reactor/APCTest.dsp:
 	* examples/Reactor/WFMO_Reactor/WFMO_Reactor.dsw:
-	  The APC.dsp file was a normal test file, but it sould be a binary file,
-	  to preven all kinds of problems by adding and removing a file with the
-	  same name, just removed APC.dsp and added APCTest.dsp as binary. Also
-	  updated the corresponding dsw file. This should fix an error in the
-	  msvc6 debug build when cygwin cvs is used.
+	  The APC.dsp file was a normal test file, but it sould be a
+	  binary file, to preven all kinds of problems by adding and
+	  removing a file with the same name, just removed APC.dsp and
+	  added APCTest.dsp as binary. Also updated the corresponding dsw
+	  file. This should fix an error in the msvc6 debug build when
+	  cygwin cvs is used. 
 
 Fri Dec  5 21:48:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
