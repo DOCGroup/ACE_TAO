@@ -4,7 +4,10 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+
+#if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
+#endif  // ACE_HAS_WINCE
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Connector.i"
@@ -168,6 +171,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                                       result);
 }
 
+#if !defined (ACE_HAS_WINCE)
 int
 ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              const ACE_Addr &remote_sap,
@@ -205,6 +209,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                                       timeout,
                                       result);
 }
+#endif  // ACE_HAS_WINCE
 
 // Try to complete a non-blocking connection.
 
@@ -285,6 +290,7 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                 ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                                         const ACE_Addr &remote_sap,
                                         ACE_QoS_Params qos_params,
@@ -314,3 +320,4 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
+#endif  // ACE_HAS_WINCE
