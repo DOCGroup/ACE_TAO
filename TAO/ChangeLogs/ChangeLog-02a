@@ -2083,7 +2083,7 @@ Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
         * tao/Invocation.cpp (TAO_GIOP_Oneway_Invocation):
 
           Pass the sync_scope_ member directly to the
-          call_sync_scope_hook() call.         No need for a temporary.
+          call_sync_scope_hook() call.  No need for a temporary.
 
           (invoke):
 
@@ -2193,12 +2193,12 @@ Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
 
         * tao/Transport.cpp (handle_input_i):
 
-          Clarified a debbuging statement.
+          Clarified a debugging statement.
 
         * tao/Messaging/Messaging_ORBInitializer.cpp (pre_init):
         * tao/Messaging/Messaging_PolicyFactory.cpp (create_policy):
 
-            Use the PolicyTypes defined in the Messaging module instead of
+          Use the PolicyTypes defined in the Messaging module instead of
           the (now removed) macro constants defined in `tao/orbconf.h'.
 
         * tao/Messaging/Messaging_Policy_i.h (hook):
@@ -2388,7 +2388,7 @@ Mon Apr 15 16:58:40 2002  Ossama Othman  <ossama@uci.edu>
 
           Cast the port extracted from the "NameServicePort" environment
           variable via atoi() to a "u_short" before assigning it another
-          "u_short."  Silences a warning about loss of data when
+	  to "u_short."  Silences a warning about loss of data when
           converting from an "int" to a "u_short."
 
 Mon Apr 15 12:06:47 2002  Ossama Othman  <ossama@uci.edu>
@@ -3290,7 +3290,7 @@ Sat Mar 30 13:38:10 2002  Ossama Othman  <ossama@uci.edu>
           Initialize the underlying hash map's size to be equal to the
           maximum number of handles allowed for the current process.  This
           addresses a potential problem where more connections may be
-          opened then the Transport_Cache_Manager with a default size
+          opened than the Transport_Cache_Manager with a default size
           (ACE_DEFAULT_MAP_SIZE) is able to contain since the underlying
           hash map cannot be resized once it has been opened.
           Furthermore, it reduces the memory requirements for processes
