@@ -7569,9 +7569,9 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_UNUSED_ARG (thr_id);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_join
                                        (waiter_id, status),
@@ -7621,9 +7621,9 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcancelstate");
 #if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcancelstate
                                        (new_state, old_state),
                                        ace_result_), int, -1);
@@ -7670,9 +7670,9 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcanceltype");
 #if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcanceltype
                                        (new_type, old_type),
                                        ace_result_), int, -1);
@@ -7711,9 +7711,9 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 {
   ACE_OS_TRACE ("ACE_OS::thr_cancel");
 #if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_cancel (thr_id),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7866,9 +7866,9 @@ ACE_OS::thr_sigsetmask (int how,
 {
   ACE_OS_TRACE ("ACE_OS::thr_sigsetmask");
 #if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask
                                        (how, nsm, osm),
                                        ace_result_), int, -1);
@@ -7954,9 +7954,9 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::thr_kill");
 #if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_kill (thr_id, signum),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -8090,9 +8090,9 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   if (result == -1)
     return result; // error in pthread_getschedparam
   param.sched_priority = prio;
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setschedparam
                                        (thr_id, policy, &param),
                                        ace_result_), int, -1);
@@ -8253,8 +8253,8 @@ ACE_OS::readv (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::readv");
 #if defined (ACE_LACKS_READV)
-  ACE_OSCALL_RETURN (ACE_OS::readv_emulation (handle, iov, iovlen), 
-                     ssize_t, 
+  ACE_OSCALL_RETURN (ACE_OS::readv_emulation (handle, iov, iovlen),
+                     ssize_t,
                      -1);
 #else /* ACE_LACKS_READV */
   ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
@@ -8268,12 +8268,12 @@ ACE_OS::writev (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::writev");
 #if defined (ACE_LACKS_WRITEV)
-  ACE_OSCALL_RETURN (ACE_OS::writev_emulation (handle, 
-                                               (ACE_WRITEV_TYPE *) iov, 
+  ACE_OSCALL_RETURN (ACE_OS::writev_emulation (handle,
+                                               (ACE_WRITEV_TYPE *) iov,
                                                iovcnt), int, -1);
 #else /* ACE_LACKS_WRITEV */
-  ACE_OSCALL_RETURN (::writev (handle, 
-                               (ACE_WRITEV_TYPE *) iov, 
+  ACE_OSCALL_RETURN (::writev (handle,
+                               (ACE_WRITEV_TYPE *) iov,
                                iovcnt), int, -1);
 #endif /* ACE_LACKS_WRITEV */
 }
@@ -9451,6 +9451,11 @@ ACE_OS::tzset (void)
 # endif /* ACE_HAS_PACE */
 }
 
+/**
+ * @todo If ACE_TIMEZONE is defined we just return 0, this is broken
+ *    but at least compiles.  AFAIK there is no way to save the old
+ *    definition of a macro for later use
+ */
 ACE_INLINE long
 ACE_OS::timezone (void)
 {
@@ -9466,7 +9471,11 @@ ACE_OS::timezone (void)
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
 #   else
+#     if defined(ACE_TIMEZONE)
+  return 0;
+#     else
   return ::timezone;   // For UNIX platforms.
+#     endif /* ACE_TIMEZONE */
 #   endif
 # else
   ACE_NOTSUP_RETURN (0);
@@ -11630,9 +11639,9 @@ ACE_INLINE int
 ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_HAS_PACE)
-#   if defined (ACE_WIN32)  
+#   if defined (ACE_WIN32)
   int ace_result_ = 0;
-#   endif /* ACE_WIN32 */  
+#   endif /* ACE_WIN32 */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask (how, nsp, osp),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)

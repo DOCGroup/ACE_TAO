@@ -3519,7 +3519,10 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #   elif ! defined (VXWORKS)
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/ipc.h>
-#     include /**/ <sys/shm.h>
+#     if !defined(ACE_LACKS_SYSV_SHMEM)
+// No reason to #include this if the platform lacks support for SHMEM
+#       include /**/ <sys/shm.h>
+#     endif /* ACE_LACKS_SYSV_SHMEM */
 #     if ! defined (__MACOSX__)
 #       include /**/ <sys/sem.h>
 #     endif /* ! defined (__MACOSX__) */
@@ -4712,7 +4715,7 @@ private:
 /**
  * @class ACE_QoS
  *
- * @brief Wrapper class that holds the sender and receiver flow spec 
+ * @brief Wrapper class that holds the sender and receiver flow spec
  *     information, which is used by IntServ (RSVP) and DiffServ.
  */
 class ACE_OS_Export ACE_QoS
@@ -5316,6 +5319,11 @@ public:
 
   // wrapper for time zone information.
   static void tzset (void);
+
+# if defined (timezone)
+#   define ACE_TIMEZONE timezone
+#   undef timezone
+# endif /* timezone */
   static long timezone (void);
 
   static double difftime (time_t t1,
@@ -5404,7 +5412,7 @@ public:
   static int mutex_destroy (ACE_mutex_t *m);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
-  /// returned since the calling thread does get the ownership. 
+  /// returned since the calling thread does get the ownership.
   static int mutex_lock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
@@ -6213,14 +6221,14 @@ public:
 private:
 
 #if defined (ACE_LACKS_WRITEV)
-  static int writev_emulation (ACE_HANDLE handle, 
-                               ACE_WRITEV_TYPE *iov, 
+  static int writev_emulation (ACE_HANDLE handle,
+                               ACE_WRITEV_TYPE *iov,
                                int iovcnt);
 #endif /* ACE_LACKS_WRITEV */
 
 #if defined (ACE_LACKS_READV)
-  static ssize_t readv_emulation (ACE_HANDLE handle, 
-                                  ACE_READV_TYPE *iov, 
+  static ssize_t readv_emulation (ACE_HANDLE handle,
+                                  ACE_READV_TYPE *iov,
                                   int iovcnt);
 #endif /* ACE_LACKS_READV */
 
