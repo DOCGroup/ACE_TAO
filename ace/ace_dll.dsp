@@ -4272,6 +4272,10 @@ SOURCE=.\Hash_Map_Manager_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hash_Map_With_Allocator_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\High_Res_Timer.h
 # End Source File
 # Begin Source File
@@ -5053,6 +5057,10 @@ SOURCE=.\Hash_Map_Manager.i
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_With_Allocator_T.i
 # End Source File
 # Begin Source File
 
@@ -5839,6 +5847,29 @@ SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 
 SOURCE=.\Hash_Map_Manager_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_With_Allocator_T.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
