@@ -1,3 +1,14 @@
+Tue Jan  8 16:20:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+
+          Added '::' to instances of 'CORBA::TypeCode_ptr' in
+          type code generation. If there is a nested module
+          named 'CORBA', MSVC gets confused. Thanks to
+          Tom Howard <tom_howard@yahoo.com> for pointing out
+          the problem.
+
 Tue Jan  8 14:52:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_typedef.cpp:
