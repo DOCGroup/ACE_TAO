@@ -1,3 +1,10 @@
+Sat Feb 13 01:11:52 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+	  Replaced the  _env environment variable usages with the TAO_IN_ENV
+	  parameters.
+	
 Fri Feb 12 22:04:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
