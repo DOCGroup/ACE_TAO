@@ -2842,6 +2842,12 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
   return string;
 }
 
+TAO_Object_Adapter &
+TAO_POA::object_adapter (void)
+{
+  return *this->orb_core_.object_adapter ();
+}
+
 void
 TAO_POA::encode_sequence_to_string (char * &str,
                                     const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
