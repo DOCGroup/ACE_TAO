@@ -103,8 +103,8 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       this->qos_ = qos;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
-    ACE_DEBUG ((EC_FORMAT (DEBUG,
-                           "Building filters for consumer <%x>."),
+    ACE_DEBUG ((LM_DEBUG,
+                "Building filters for consumer <%x>.\n",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
     this->child_ =

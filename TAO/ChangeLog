@@ -1,3 +1,62 @@
+Mon Jul 14 18:53:02 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Added some documentation of setting TAO_ROOT with Cygwin and MinGW
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h:
+          Moved TAO_EC_Gateway_IIOP to a separate file. This in preparation for
+          several extensions to this class. TAO_EC_Gateway_IIOP::init now has a
+          return value so that caller can check if init succeeded or not.
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+          Updated these project files because of the change above
+
+        * orbsvcs/performance-tests/RTEvent/lib/Peer_Base.cpp:
+        * orbsvcs/tests/Event/Basic/Gateway.cpp:
+        * orbsvcs/tests/Event/Basic/Observer.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_Sched.h:
+          Updated these test because of the TAO_EC_Gateway_IIOP move.
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+
+          Doxygen fixes.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+          Improved debug message
+
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.cpp:
+          Fixed incorrect debug message.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+          Cleanup the strategies in reverse order then created this because
+          there are dependencies between the strategies. Thanks to
+          Carlos O'Ryan <coryan@atdesk.com> for reporting this and making
+          the patch, this fixes bugzilla [1549]
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
+          Removed workaround with usage of TAO_Objref_Var::_T_obj_type
+
+        * orbsvcs/tests/Bug_1393_Regression/Makefile:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile:
+          Removed windows specific parts from this makefile. This is not
+          needed and cause problems when using windows and the msys shell.
+          This solves several compile problems in the MinGW build.
+
+        * orbsvcs/tests/Notify/Basic/Makefile.bor:
+          Added missing library to fix BCB6 Static link errors.
+
 Mon Jul 14 14:21:46 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* docs/releasenotes/notify.html:
@@ -9,15 +68,15 @@ Mon Jul 14 12:55:13 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/ThreadPool/run_test.pl:
 
 	  Use <Kill> instead of <Wait> to stop the "Still Running on
-	  exit.." error by perl. 
+	  exit.." error by perl.
 
-	* orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp:	
+	* orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp:
 	* orbsvcs/tests/Notify/lib/Options_Parser.cpp:
 	* orbsvcs/tests/Notify/*.conf:
-	
+
 	  Changed inconsistent use of "ThreadPoolLanes" string to the
 	  easily readable "Lanes".
-	  
+
 	* orbsvcs/tests/Notify/lib/Driver.cpp:
  	* orbsvcs/tests/Notify/lib/Driver.h:
 	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
@@ -27,59 +86,59 @@ Mon Jul 14 12:55:13 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	  Added the "-Skip_Priority_Levels_Check" option. We need some
 	  Notify tests to run regardless of the available priority levels.
-	
+
 Mon Jul 14 11:12:25 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp:
 	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp:
 
 	  Fixed incorrect ACE_TRY usage.
-	
+
 	* tests/RTCORBA/Priority_Inversion_With_Bands/README:
 
-          Fixed minor typo in README and in ChangeLog dated Sat Jul 12 14:01:47 2003  
-	
+          Fixed minor typo in README and in ChangeLog dated Sat Jul 12 14:01:47 2003
+
 Sat Jul 12 18:43:31 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp (svc): 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp (svc):
 
 	  Improved output format.
 
 Sat Jul 12 18:27:10 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp: 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp:
 
 	  Thread priority should be determined after the real-time thread
 	  has been spawned.
 
 Sat Jul 12 17:43:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/RTCORBA/RT_Transport_Descriptor.cpp: 
+	* tao/RTCORBA/RT_Transport_Descriptor.cpp:
 
  	  Zero time value should be specified as ACE_Time_Value::zero and
 	  not 0.
-	
+
 	* tao/RTCORBA/RT_Transport_Descriptor_Property.h:
-	  
+
 	  Based class destructor should be virtual.
 
-	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp: 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp:
 
 	  Fixed member initialization.
 
-	* tao/RTCORBA/RT_Transport_Descriptor.cpp: 
+	* tao/RTCORBA/RT_Transport_Descriptor.cpp:
 
 	  Must add "tao/" in front of TAO include files.
 
-	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile: 
-	* tao/RTCORBA/Makefile: 
+	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile:
+	* tao/RTCORBA/Makefile:
 
 	  Updated Makefile dependencies.
 
-Sat Jul 12 17:31:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
+Sat Jul 12 17:31:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/RTSchedulerC.h:
-	  
+
 	  Forced the inclusion of RTScheduler.h file instead of directly
 	  including RTSchedulerC.h. This is to ensure RTScheduler is
 	  initialized when the application starts up.
@@ -88,24 +147,24 @@ Sat Jul 12 17:31:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	  Added debug messages.
 
-	* tao/RTScheduling/RTScheduler_Initializer.cpp:	 
+	* tao/RTScheduling/RTScheduler_Initializer.cpp:
 
-	  Removed unnecessary printf statement. 
+	  Removed unnecessary printf statement.
 
-	* tao/RTScheduling/Request_Interceptor.cpp:	 	  
+	* tao/RTScheduling/Request_Interceptor.cpp:
 
 	  Added a check to see if the service context received in a
 	  request is what was expected.
 
-  	* tao/RTScheduling/Current.h:	
-  	* tao/RTScheduling/RTSchedulerC.cpp:	
+  	* tao/RTScheduling/Current.h:
+  	* tao/RTScheduling/RTSchedulerC.cpp:
   	* tao/RTScheduling/RTScheduler_Initializer.cpp:
-	* tao/RTScheduling/Request_Interceptor.h:	 	  	
-	* tao/RTScheduling/RTScheduler_Manager.h:	 	  		
-	* tao/RTScheduling/Distributable_Thread.h:	 	  			
+	* tao/RTScheduling/Request_Interceptor.h:
+	* tao/RTScheduling/RTScheduler_Manager.h:
+	* tao/RTScheduling/Distributable_Thread.h:
 
 	  Included RTScheduler.h instead of RTSchedulerC.h.
-	
+
 Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and pradeep@oomworks.com>
 
 	* RTCORBA thread pools are assigned a single endpoint. When bands are
@@ -121,7 +180,7 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
 
 	* tao/RTCORBA/RT_Transport_Descriptor.h:
 	* tao/RTCORBA/RT_Transport_Descriptor.cpp:
-	* tao/RTCORBA/RT_Transport_Descriptor.inl:	
+	* tao/RTCORBA/RT_Transport_Descriptor.inl:
 
 	  RT transport descriptor is a container for transport descriptor
 	  properties.
@@ -145,11 +204,11 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
 	* tao/RTCORBA/Private_Transport_Descriptor.inl:
 
 	  Removed because obsolete.
-	
-	* tao/RTCORBA/TAO_RTCORBA.dsp: 
-	* tao/RTCORBA/TAO_RTCORBA_Static.dsp: 
-	* tao/RTCORBA/Makefile: 
-	* tao/RTCORBA/Makefile.bor: 
+
+	* tao/RTCORBA/TAO_RTCORBA.dsp:
+	* tao/RTCORBA/TAO_RTCORBA_Static.dsp:
+	* tao/RTCORBA/Makefile:
+	* tao/RTCORBA/Makefile.bor:
 
 	  Update project and Makefiles.
 
@@ -168,13 +227,13 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
 	  thread pool without lanes and another servant registered with a
 	  POA serviced by a thread pool with lanes.  The thread pool with
 	  lanes has a low and a high priority lane.
-	  
+
           The client makes several oneway low priority invocations
 	  followed by several oneway high priority invocations.  Each
 	  invocation performs about 2 seconds of CPU bound work.  Priority
 	  inversion occurs if low priority invocations get processed
 	  before high priority invocations.
-	  
+
           (a) shows the best result of high priority requests getting
 	  serviced before low priority requests even though low priority
 	  requests were sent before high priority requests.  This is
@@ -183,16 +242,16 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
 	  high priority lane.  In addition, low priority requests are sent
 	  on a different connection than the high priority requests since
 	  each lane has a different endpoint.
-	  
+
           (b) does not improve on (a) since the requests are already sent
 	  on different connections.
-	  
+
           (c) shows priority inversion as low priority requests get
 	  processed before high priority requests.  This is because only
 	  one connection is used for both low and high priority requests.
 	  Therefore, the high priority requests are queued behind the low
 	  priority requests.
-	  
+
           (d) shows improvement on (c) since using bands allows the high
 	  priority requests to go on a different connection than the low
 	  priority requests.  However, priority inversion still exists
@@ -226,7 +285,7 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
           - tests/RTCORBA/Priority_Inversion_With_Bands/svc.conf.xml
           - tests/RTCORBA/Priority_Inversion_With_Bands/test.idl
           - tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp
-          - tests/RTCORBA/Priority_Inversion_With_Bands/test_i.h	  
+          - tests/RTCORBA/Priority_Inversion_With_Bands/test_i.h
 
 	  The following files were modified:
 
@@ -236,9 +295,9 @@ Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and
           - tests/RTCORBA/README
           - tests/RTCORBA/RTCORBA-test-configurations.xls
           - tests/RTCORBA/RTCORBA_tests.dsw
-          - $ACE_ROOT/bin/tao_orb_tests.lst	 
+          - $ACE_ROOT/bin/tao_orb_tests.lst
 
-	
+
 Sat Jul 12 11:08:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_constant.cpp:
@@ -266,7 +325,7 @@ Fri Jul 11 18:41:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jul 11 16:23:05 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Strategies/DIOP_Acceptor.cpp (close): 
+	* tao/Strategies/DIOP_Acceptor.cpp (close):
 
 	  Method should return 0.
 
@@ -284,21 +343,21 @@ Fri Jul 11 01:08:41 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Thu Jul 10 20:01:43 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Transport_Cache_Manager.cpp: 
+	* tao/Transport_Cache_Manager.cpp:
 
 	  Fixed template instantiation goofs.
 
 Thu Jul 10 19:01:54 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/ORB_Core.cpp (lane_resources): 
+	* tao/ORB_Core.cpp (lane_resources):
 
 	  This file got checked in by mistake.
 
 Thu Jul 10 18:58:43 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp: 
-	* tao/Strategies/DIOP_Acceptor.cpp: 
-	
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+	* tao/Strategies/DIOP_Acceptor.cpp:
+
 	  - open_i() now transfers connection handler ownership to the
 	  Reactor after the handler successfully registers with the
 	  Reactor.
@@ -310,8 +369,8 @@ Thu Jul 10 18:58:43 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Forgot to remove the assert from ~TAO_UIPMC_Transport().
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp (handle_close): 
-	* tao/Strategies/DIOP_Connection_Handler.cpp (handle_close): 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp (handle_close):
+	* tao/Strategies/DIOP_Connection_Handler.cpp (handle_close):
 
 	  No asserts in handle_close() since the handler is registered
 	  with the Reactor and the handler ownership is given to the
@@ -323,7 +382,7 @@ Wed Jul  9 22:31:54 2003  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint): Valgrind
 	  found that the local variable `tos' was not initialized in all
-	  possible paths of control flow. 
+	  possible paths of control flow.
 
 Tue Jul 08 15:24:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
@@ -333,7 +392,7 @@ Tue Jul 08 15:24:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Updated information in the Notification Service section.
 
 	* orbvsvcs/Notify_Service/Notify_Service.cpp:
-	  
+
 	  Deprecated the "-Notify_TPReactor" option and updated it with
 	  the "-ORBRunThreads".
 
@@ -344,10 +403,10 @@ Tue Jul 08 15:24:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Service with the "-m 1" option or the -ORBInitRef option while
 	  starting these services. Thanks to Tram Nguyen <ttnguye@sandia.gov>
 	  for reporting this issue.
-	
+
 Mon Jul 07 23:18:24 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Strategies/UIOP_Connector.cpp (make_connection): 
+	* tao/Strategies/UIOP_Connector.cpp (make_connection):
 
 	  Changed is_finalized() to is_closed().
 
@@ -359,7 +418,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  independent lifetimes.  The reference counting was inadequate
 	  since it was not originated at the Reactor and the independent
 	  lifetimes unnecessarily completed protocol specific transport
-	  code.  
+	  code.
 
 	  These changes couple the lifetime of the connection handler with
 	  that of the transport and utilizes the reference count in the
@@ -380,7 +439,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	Fri Jun 20 19:45:07 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Connection_Handler: 
+	* tao/Connection_Handler:
 
 	  - Removed the incr_refcount() and decr_refcount() methods and
 	  the related <reference_count_> and <refcount_lock_> members.
@@ -418,7 +477,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - is_open() and is_connecting() were added to check the status
 	  of the connection handler.
 
-	* tao/IIOP_Connection_Handler: 
+	* tao/IIOP_Connection_Handler:
 
 	  - Added close() method that will be called by the Acceptor or
 	  Connector when connection establishment fails.
@@ -426,7 +485,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - No need to reference count the transport.  Handlers and
 	  transports now have the same lifespan.  Transport in created in
 	  the constructor and deleted in the destructor.
-	
+
 	  - handle_input() and handle_output() intercept any errors from
 	  handle_input_eh() and handle_output_eh() respectively and call
 	  close_connection().  We no longer rely on handle_close().
@@ -439,12 +498,12 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - The unused constructor should assert(0).
 
-	* tao/Transport: 
+	* tao/Transport:
 
 	  - The Transport class no longer needs to inherit from
 	  TAO_Synch_Refcountable.  The reference counting is provided by
 	  the Event_Handler class.
-	
+
 	  - Replaced the _duplicate() and release() methods with
 	  add_reference() and remove_reference() methods.  This matches
 	  the signature of the reference counting methods on the base
@@ -495,11 +554,11 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
           - No need for notify_reactor() to create a Notify_Handler.  The
 	  Reactor framework already does the proper reference counting for
-	  notifications.	
+	  notifications.
 
-	* tao/IIOP_Transport: 
+	* tao/IIOP_Transport:
 
-	  - invalidate_event_handler_i() no longer needed.  
+	  - invalidate_event_handler_i() no longer needed.
 
 	  - Override send() and recv() instead of send_i() and recv_i().
 
@@ -519,7 +578,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  to call check_event_handler_i() since the handler is always
 	  valid.
 
-	* tao/Acceptor_Impl.cpp (activate_svc_handler): 
+	* tao/Acceptor_Impl.cpp (activate_svc_handler):
 
 	  Made several changes to this method.  Now the sequence is:
 
@@ -536,7 +595,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Success completion of method: #REFCOUNT# is two at this point.
 
-	* tao/IIOP_Connector.cpp (make_connection): 
+	* tao/IIOP_Connector.cpp (make_connection):
 
 	  Made several changes to this method.  Now the sequence is:
 
@@ -608,12 +667,12 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - In case of success, handover the transport pointer to the
 	  Invocation class.
 
-	* tao/Connector_Impl.cpp (make_svc_handler): 
+	* tao/Connector_Impl.cpp (make_svc_handler):
 
 	  We add to the #REFCOUNT# since the Connector needs this. See
 	  Connector::make_connection() for details.
 
-	* tao/Transport_Cache_Manager (close): 
+	* tao/Transport_Cache_Manager (close):
 
 	  Previously, close() was returning a handle set and a set of
 	  event handlers.  This was changed such the only a set of
@@ -626,7 +685,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  Transport_Cache_Manager no longer needs to be friends with the
 	  Transport.
 
-	* tao/Thread_Lane_Resources.cpp (finalize): 
+	* tao/Thread_Lane_Resources.cpp (finalize):
 
 	  We now close the transport cache and return the handlers that
 	  were still registered.  The cache will decrease the #REFCOUNT#
@@ -648,13 +707,13 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  Removed the LFS_CONNECTION_CLOSE_WAIT state since it is no
 	  longer needed.
 
-	* tao/Connect_Strategy: 
+	* tao/Connect_Strategy:
 
 	  Removed Connect_Strategy::post_failed_connect() since
 	  *_Connector::make_connection() now does the right thing.
 
-	* tao/Asynch_Reply_Dispatcher_Base.cpp: 
-	* tao/Asynch_Reply_Dispatcher_Base.i: 
+	* tao/Asynch_Reply_Dispatcher_Base.cpp:
+	* tao/Asynch_Reply_Dispatcher_Base.i:
 	* tao/Cache_Entries.cpp:
 	* tao/Invocation.cpp:
 	* tao/Transport.cpp:
@@ -669,9 +728,9 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	* tests/TAO_Tests.dsw:
 
 	  Added several missing tests:
-		
+
 	  - AMH_Exceptions_Test
-	  - AMH_Oneway_Test 
+	  - AMH_Oneway_Test
 	  - Abstract Interface
 	  - Bug_1361_Regression
 	  - Bug_1482_Regression
@@ -689,8 +748,8 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - Objref_Sequence_Test
 	  - Oneway_Buffering
 	  - Stack_Recursion
-	  - Strategies 
-	  - Two_Objects 
+	  - Strategies
+	  - Two_Objects
 
 	* tao/Makefile.bor:
 	* tao/Makefile.tao:
@@ -723,7 +782,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	* tao/Strategies/SHMIOP_Connection_Handler:
 	* tao/Strategies/UIOP_Connection_Handler:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler:
-	
+
 	  - Constructor: Removed code to release the transport.  Lifetimes
 	  of transports and connection handlers are now coupled.
 
@@ -752,12 +811,12 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - The unused constructor should assert(0).
 
-	* tao/Strategies/DIOP_Transport: 
-	* tao/Strategies/SCIOP_Transport: 
+	* tao/Strategies/DIOP_Transport:
+	* tao/Strategies/SCIOP_Transport:
 	* tao/Strategies/SHMIOP_Transport:
 	* tao/Strategies/UIOP_Transport:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport:
-	
+
 	  - Constructor: No need to manage reference count on the
 	  connection handler.  Lifetimes of transports and connection
 	  handlers are now coupled.
@@ -783,13 +842,13 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  get_listen_point() since <connection_handler_> is now always
 	  valid for the lifetime of the transport.
 
-	* tao/Strategies/DIOP_Transport: 
+	* tao/Strategies/DIOP_Transport:
 
-	  - Removed commented out code. 
+	  - Removed commented out code.
 
-	  - Renamed register_handler_i() to register_handler(). 
+	  - Renamed register_handler_i() to register_handler().
 
-	* tao/Strategies/SCIOP_Transport: 
+	* tao/Strategies/SCIOP_Transport:
 
 	  - send_request(), get_listen_point(), tear_listen_point_list():
 	  Removed guard and check for valid connection handler.
@@ -801,19 +860,19 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Rename handle_input_i() to handle_input().
 
-	* tao/Strategies/SCIOP_Connector.cpp (make_connection): 
-	* tao/Strategies/UIOP_Connector.cpp (make_connection): 
+	* tao/Strategies/SCIOP_Connector.cpp (make_connection):
+	* tao/Strategies/UIOP_Connector.cpp (make_connection):
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection):
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
-	
+
 	  Made this method similar to IIOP_Connector::make_connection().
 
-	* tao/Strategies/SHMIOP_Connector.cpp (make_connection): 
+	* tao/Strategies/SHMIOP_Connector.cpp (make_connection):
 
 	  Made this method similar to IIOP_Connector::make_connection()
 	  except that the connects are always blocking.
 
-	* tao/Strategies/DIOP_Connector.cpp (make_connection):  
+	* tao/Strategies/DIOP_Connector.cpp (make_connection):
 
 	  - Replaced decr_refcount() with remove_reference() and
 	  duplicate() with add_reference() respectively.
@@ -827,24 +886,24 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	Thu Jun 26 19:34:26 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Strategies/DIOP_Acceptor.cpp (close): 
+	* tao/Strategies/DIOP_Acceptor.cpp (close):
 
 	  Added DONT_CALL mask to the remove_handler() call so that
 	  handle_close() is not called anymore.
 
 	Mon Jun 30 20:46:22 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler: 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport:
 
 	  DIOP and UIPMC are very similar.  Therefore, similar changes
 	  were made.
 
-	* tests/Connection_Failure: 
+	* tests/Connection_Failure:
 
 	  New test added that checks connection failures by connecting to
-	  a non-existent object.  
+	  a non-existent object.
 
 	  The following files were added:
 
@@ -898,7 +957,7 @@ Mon Jul 07 07:46:00 2003  Justin Michel  <michel_j@ociweb.com>
 	* examples/RTCORBA/Activity/main.cpp
 
           Reverted my changes to Activity from July 3. I thought
-        of a new way to write the mpc that's compatible with the 
+        of a new way to write the mpc that's compatible with the
         existing Makefile.
 
 Mon Jul 07 07:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -1114,7 +1173,7 @@ Thu Jul  3 11:22:47 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	  get rid of warnings regarding which conversion the G++ compiler
 	  was going to choose.
 
-	
+
 Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 
