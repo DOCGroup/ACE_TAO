@@ -57,9 +57,13 @@ template class ACE_Guard<ACE_RW_Thread_Mutex>;
 ACE_MT (template class ACE_TSS_Guard<ACE_Recursive_Thread_Mutex>);
 
 template class ACE_Array<ACE_Mutex *>;
+template class ACE_Array_Base<ACE_Mutex *>;
 template class ACE_Array<ACE_RW_Thread_Mutex *>;
+template class ACE_Array_Base<ACE_RW_Thread_Mutex *>;
 template class ACE_Array<ACE_TSS_Info>;
+template class ACE_Array_Base<ACE_TSS_Info>;
 template class ACE_Array<ACE_Thread_Mutex *>;
+template class ACE_Array_Base<ACE_Thread_Mutex *>;
 template class ACE_Array_Iterator<ACE_TSS_Info>;
 
 // ACE_PROCESS_MUTEX is defined in Malloc.h,

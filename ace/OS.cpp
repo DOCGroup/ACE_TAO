@@ -1858,11 +1858,13 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 
 # if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array<ACE_TSS_Info>;
+template class ACE_Array_Base<ACE_TSS_Info>;
 template class ACE_Array_Iterator<ACE_TSS_Info>;
 template class ACE_Node<ACE_TSS_Ref>;
 template class ACE_TSS<ACE_TSS_Keys>;
 # elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #   pragma instantiate ACE_Array<ACE_TSS_Info>
+#   pragma instantiate ACE_Array_Base<ACE_TSS_Info>
 #   pragma instantiate ACE_Array_Iterator<ACE_TSS_Info>
 #   pragma instantiate ACE_Node<ACE_TSS_Ref>
 #   pragma instantiate ACE_TSS<ACE_TSS_Keys>

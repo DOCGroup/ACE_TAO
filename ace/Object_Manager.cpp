@@ -961,8 +961,11 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     template class ACE_Array<ACE_Thread_Mutex *>;
+    template class ACE_Array_Base<ACE_Thread_Mutex *>;
     template class ACE_Array<ACE_Mutex *>;
+    template class ACE_Array_Base<ACE_Mutex *>;
     template class ACE_Array<ACE_RW_Thread_Mutex *>;
+    template class ACE_Array_Base<ACE_RW_Thread_Mutex *>;
     template class ACE_Cleanup_Adapter<ACE_Null_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
@@ -980,8 +983,11 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   pragma instantiate ACE_Array<ACE_Thread_Mutex *>
+#   pragma instantiate ACE_Array_Base<ACE_Thread_Mutex *>
 #   pragma instantiate ACE_Array<ACE_Mutex *>
+#   pragma instantiate ACE_Array_Base<ACE_Mutex *>
 #   pragma instantiate ACE_Array<ACE_RW_Thread_Mutex *>
+#   pragma instantiate ACE_Array_Base<ACE_RW_Thread_Mutex *>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Null_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
