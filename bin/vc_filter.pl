@@ -31,9 +31,9 @@ $line_break = "<BR>";
 $brief = 0;
 $results = 0;
 
-while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
+while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
 {
-    if ( $ARGV[0] =~ /(-|\/)c/) # Text format
+    if ( $ARGV[0] =~ /-c/) # Text format
     {
         $header = "" ;
         $trailer = "" ;
@@ -53,15 +53,15 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         $new_build_e = "";
         $line_break = "";
     }
-    elsif ( $ARGV[0] =~ /(-|\/)b/) 
+    elsif ( $ARGV[0] =~ /-b/) 
     {
         $brief = 1;
     }
-    elsif( $ARGV[0] =~ /(-|\/)r/)
+    elsif( $ARGV[0] =~ /-r/)
     {
         $results = 1;
     }
-    elsif ( $ARGV[0] =~ /(-|\/)(\?|h)/)
+    elsif ( $ARGV[0] =~ /-(\?|h)/)
     {
         print "Options\n";
         print "-b         = Brief output (only errors)\n";
@@ -87,6 +87,7 @@ $project = "NULL";
 $configuration = "NULL";
 $dsp = "NULL";
 $first_problem = 1;
+$ignored_warnings = 0;
 
 restart: while (<FP>)
 {
@@ -108,7 +109,16 @@ restart: while (<FP>)
     elsif (/\- (.*) error\(s\)\, (.*) warning\(s\)/)
     {
         print "$_$line_break"
-            if (!$brief || ($results && ($1 > 0 || $2 > 0)));
+            if (!$brief 
+                || ($results && ($1 > 0 || ($2 - $ignored_warnings) > 0)));
+        $ignored_warnings = 0;
+    }
+    elsif (/^LINK : warning LNK4089:/)
+    {
+        print "$_$line_break"
+            if (!$brief);
+
+        ++$ignored_warnings;
     }
     elsif (/warning/i)
     {
