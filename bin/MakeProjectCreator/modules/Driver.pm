@@ -101,6 +101,7 @@ sub optionError {
                $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
+               $spaces . "[-feature_file <file name>]\n" .
                $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
@@ -120,6 +121,9 @@ sub optionError {
   print STDERR
 "       -base           Add <project> as a base project to each generated\n" .
 "                       project file.\n" .
+"       -feature_file   Specifies the feature file to read before processing.\n" .
+"                       The default feature file is default.features under the\n" .
+"                       config directory.\n" .
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
 "       -include        Specifies a directory to search when looking for base\n" .
@@ -227,9 +231,18 @@ sub run {
     }
   }
 
+  ## Set the global feature file
+  my($global_feature_file) = $self->{'path'} . '/config/global.features';
+
   ## Set up default values
   if (!defined $options->{'input'}->[0]) {
     push(@{$options->{'input'}}, '');
+  }
+  if (!defined $options->{'feature_file'}) {
+    my($feature_file) = $self->{'path'} . '/config/default.features';
+    if (-r $feature_file) {
+      $options->{'feature_file'} = $feature_file;
+    }
   }
   if (!defined $options->{'global'}) {
     my($global) = $self->{'path'} . '/config/global.mpb';
@@ -310,7 +323,9 @@ sub run {
                                   $options->{'addproj'},
                                   (-t 1 ? \&progress : undef),
                                   $options->{'toplevel'},
-                                  $options->{'baseprojs'});
+                                  $options->{'baseprojs'},
+                                  $global_feature_file,
+                                  $options->{'feature_file'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$generator->cd($dir)) {
