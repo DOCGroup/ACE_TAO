@@ -40,12 +40,12 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
     {
       Drwho_Node *np =
         this->get_drwho_node (ACE::strnew (current_node->get_host_name ()),
-                              frp->drwho_list);
+                              frp->drwho_list_);
 
       if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
-	np->inactive_count++;
+	np->inactive_count_++;
       else
-	np->active_count++;
+	np->active_count_++;
     }
 
   return frp;
@@ -55,10 +55,11 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
 // packet.
 
 char *
-PM_Server::handle_protocol_entries (char *buf_ptr, Drwho_Node *np)
+PM_Server::handle_protocol_entries (char *buf_ptr,
+                                    Drwho_Node *np)
 {
 
-  for (; np != 0; np = np->next)
+  for (; np != 0; np = np->next_)
     {
       sprintf (buf_ptr,
                "%d %d %s",

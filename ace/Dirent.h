@@ -31,21 +31,21 @@ public:
   ACE_Dirent (void);
   // Default constructor.
 
-  ACE_Dirent (char *dirname);
+  ACE_Dirent (const char *dirname);
   // Constructor calls <opendir>
 
-  int opendir (char *filename);
+  int open (const char *filename);
   // Opens the directory named by filename and associates a directory
   // stream with it.
 
   ~ACE_Dirent (void);
   // Destructor calls <closedir>.
 
-  void closedir (void);
+  void close (void);
   // Closes the directory stream and frees the DIR structure.
 
   // = Iterator methods.
-  struct dirent *readdir (void);
+  dirent *read (void);
   // Returns a pointer to a structure representing the directory entry
   // at the current position in the directory stream to which dirp
   // refers, and positions the directory stream at the next entry,
@@ -62,18 +62,18 @@ public:
   // update the st_atime field of the directory each time the
   // directory is actually read.
 
-  int readdir_r (struct dirent *entry,
-                 struct dirent **result);
+  int read (struct dirent *entry,
+            struct dirent **result);
   // Has the equivalent functionality as <readdir> except that an
   // <entry> and <result> buffer must be supplied by the caller to
   // store the result.
 
   // = Manipulators.
-  long telldir (void);
+  long tell (void);
   // Returns the current location associated with the directory
   // stream.
 
-  void seekdir (long loc);
+  void seek (long loc);
   // Sets the position of the next <readdir> operation on the
   // directory stream.  The new position reverts to the position
   // associated with the directory stream at the time the <telldir>
@@ -85,7 +85,7 @@ public:
   // <telldir> value immediately after a call to <opendir> and before
   // any calls to readdir.
 
-  void rewinddir (void);
+  void rewind (void);
   // Resets the position of the directory stream to the beginning of
   // the directory.  It also causes the directory stream to refer to
   // the current state of the corresponding directory, as a call to

@@ -5,8 +5,8 @@
 
 // Initialize all the static member vars.
 int Multicast_Manager::received_host_count = 0;
-Multicast_Manager::Host_Elem *Multicast_Manager::drwho_list = 0;
-Multicast_Manager::Host_Elem *Multicast_Manager::current_ptr = 0;
+Host_Elem *Multicast_Manager::drwho_list = 0;
+Host_Elem *Multicast_Manager::current_ptr = 0;
 
 // Names of hosts to query for friend info. 
 char *Multicast_Manager::host_names[] =
@@ -33,7 +33,7 @@ int
 Multicast_Manager::insert_hosts_from_file (const char *filename)
 {
   ACE_Mem_Map mmap (filename);
-  char *host_ptr = mmap.addr ();
+  char *host_ptr = (char *) mmap.addr ();
 
   if (host_ptr == 0)
     return -1;
@@ -126,7 +126,8 @@ void
 Multicast_Manager::add_host (const char *host_name)
 {
   ACE_NEW (Multicast_Manager::drwho_list,
-           Host_Elem (host_name, Multicast_Manager::drwho_list));
+           Host_Elem (host_name,
+                      Multicast_Manager::drwho_list));
 }
 
 void 
@@ -160,8 +161,8 @@ Multicast_Manager::get_next_non_responding_host (char *&host_name)
   return 0;
 }
 
-Multicast_Manager::Host_Elem::Host_Elem (const char *h_name,
-                                         Multicast_Manager::Host_Elem *n)
+Host_Elem::Host_Elem (const char *h_name,
+                      Host_Elem *n)
   : host_name (h_name),
     checked_off (0),
     next (n)

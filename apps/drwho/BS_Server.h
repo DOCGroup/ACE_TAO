@@ -28,9 +28,9 @@ class BS_Server : public Binary_Search
   //    Provides the server's binary search lookup table abstraction. 
 public:
   // = Initialization.
-  BS_Server (char *packet);
+  BS_Server (const char *packet);
 
-  virtual Protocol_Record *insert (char *key_name,
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN);
   // This function is used to merge the <key_name> from server
   // <host_name> into the sorted list of userids kept on the client's

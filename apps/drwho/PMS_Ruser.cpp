@@ -78,7 +78,7 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
                                            MAXHOSTNAMELEN);
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (protocol_record.get_login (),
                                                        MAXUSERIDNAMELEN),
-                                         frp->drwho_list);
+                                         frp->drwho_list_);
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     np->set_real_name ("");
@@ -94,17 +94,18 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
     }
 
   if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
-    np->inactive_count++;
+    np->inactive_count_++;
   else
-    np->active_count++;
+    np->active_count_++;
   
   return frp;
 }
 
 char *
-PMS_Ruser::handle_protocol_entries (char *buf_ptr, Drwho_Node *np)
+PMS_Ruser::handle_protocol_entries (char *buf_ptr,
+                                    Drwho_Node *np)
 {
-  for (; np != 0; np = np->next)
+  for (; np != 0; np = np->next_)
     {
       sprintf (buf_ptr,
                "%d %d ",

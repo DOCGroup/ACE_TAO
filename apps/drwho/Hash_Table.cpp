@@ -34,7 +34,7 @@ Hash_Table::get_next_entry (void)
 	if (this->hash_table[this->current_index] != 0)
 	  {
 	    Protocol_Record *frp = this->hash_table[this->current_index++];
-	    this->current_ptr  = frp->next;
+	    this->current_ptr  = frp->next_;
 	    return frp;
 	  }
 
@@ -44,7 +44,7 @@ Hash_Table::get_next_entry (void)
   else 
     {
       Protocol_Record *frp = this->current_ptr;
-      this->current_ptr	 = this->current_ptr->next;
+      this->current_ptr	 = this->current_ptr->next_;
       return frp;
     }
 }
@@ -68,6 +68,6 @@ Hash_Table::~Hash_Table (void)
          frp != 0; )
       {
 	Protocol_Record *tmp = frp;
-	frp = frp->next;
+	frp = frp->next_;
       }
 }
