@@ -5,7 +5,7 @@ Thu Mar 16 14:20:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  implementation header file had the inclusion of the
 	  skeleton header file and the '#pragma once' in the
 	  wrong order. Thanks to Byron Harris <harris_b@ociweb.com>
-	  for pointing this out.
+	  for pointing this out. This closes out Bugzilla #478.
 
 Thu Mar 16 13:57:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
