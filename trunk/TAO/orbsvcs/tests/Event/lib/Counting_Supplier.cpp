@@ -139,6 +139,7 @@ EC_Counting_Supplier::push (const RtecEventComm::EventSet&,
   event.length (1);
   event[0].header.source = this->event_source_;
   event[0].header.type = this->event_type_;
+  event[0].header.ttl = 1;
 
   this->consumer_proxy_->push (event, ACE_TRY_ENV);
   ACE_CHECK;
