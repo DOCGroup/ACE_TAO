@@ -1,3 +1,10 @@
+Tue Apr  6 02:40:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Simple/Simple_util.cpp (init): We have to make sure we
+	  don't try to proceed if querying of naming service failed.
+	  Thanks to David Hauck <davidh@realtimeint.com> for reporting the
+	  bug.
+
 Tue Apr 06 00:12:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp (_is_a): Added back the code
