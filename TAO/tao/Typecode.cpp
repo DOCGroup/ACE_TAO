@@ -1773,9 +1773,8 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
         return 0;
 
       // @@EXC@@ Need to check memory allocation failure.
-      ACE_Message_Block* mb = ACE_Message_Block::duplicate(out.begin ());
       ACE_NEW_THROW_EX (label_list[i],
-                        CORBA::Any (tc, mb),
+                        CORBA::Any (tc, out.begin ()),
                         CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
