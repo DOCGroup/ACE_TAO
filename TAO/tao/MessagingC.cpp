@@ -9,6 +9,9 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/MessagingC.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 #include "tao/MessagingS.h"
 #include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
@@ -2283,3 +2286,5 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 #endif /* TAO_POLLER */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */

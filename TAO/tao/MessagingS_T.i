@@ -78,22 +78,6 @@ POA_Messaging::RebindPolicy_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::RebindPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 template <class T> ACE_INLINE
 Messaging::RebindMode POA_Messaging::RebindPolicy_tie<T>::rebind_mode  (
     CORBA::Environment &ACE_TRY_ENV
@@ -203,22 +187,6 @@ template <class T> ACE_INLINE void
 POA_Messaging::SyncScopePolicy_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::SyncScopePolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
 }
 
 template <class T> ACE_INLINE
@@ -332,22 +300,6 @@ POA_Messaging::RequestPriorityPolicy_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::RequestPriorityPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 template <class T> ACE_INLINE
 Messaging::PriorityRange POA_Messaging::RequestPriorityPolicy_tie<T>::priority_range  (
     CORBA::Environment &ACE_TRY_ENV
@@ -457,22 +409,6 @@ template <class T> ACE_INLINE void
 POA_Messaging::ReplyPriorityPolicy_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::ReplyPriorityPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
 }
 
 template <class T> ACE_INLINE
@@ -586,22 +522,6 @@ POA_Messaging::RequestStartTimePolicy_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::RequestStartTimePolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 template <class T> ACE_INLINE
 TimeBase::UtcT POA_Messaging::RequestStartTimePolicy_tie<T>::start_time  (
     CORBA::Environment &ACE_TRY_ENV
@@ -711,22 +631,6 @@ template <class T> ACE_INLINE void
 POA_Messaging::RequestEndTimePolicy_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::RequestEndTimePolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
 }
 
 template <class T> ACE_INLINE
@@ -840,22 +744,6 @@ POA_Messaging::ReplyStartTimePolicy_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::ReplyStartTimePolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 template <class T> ACE_INLINE
 TimeBase::UtcT POA_Messaging::ReplyStartTimePolicy_tie<T>::start_time  (
     CORBA::Environment &ACE_TRY_ENV
@@ -965,22 +853,6 @@ template <class T> ACE_INLINE void
 POA_Messaging::ReplyEndTimePolicy_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::ReplyEndTimePolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
 }
 
 template <class T> ACE_INLINE
@@ -1094,22 +966,6 @@ POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 template <class T> ACE_INLINE
 TimeBase::TimeT POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::relative_expiry  (
     CORBA::Environment &ACE_TRY_ENV
@@ -1219,22 +1075,6 @@ template <class T> ACE_INLINE void
 POA_Messaging::RelativeRoundtripTimeoutPolicy_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::RelativeRoundtripTimeoutPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
 }
 
 template <class T> ACE_INLINE
@@ -1348,22 +1188,6 @@ POA_Messaging::RoutingPolicy_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::RoutingPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 template <class T> ACE_INLINE
 Messaging::RoutingTypeRange POA_Messaging::RoutingPolicy_tie<T>::routing_range  (
     CORBA::Environment &ACE_TRY_ENV
@@ -1475,22 +1299,6 @@ POA_Messaging::MaxHopsPolicy_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::MaxHopsPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 template <class T> ACE_INLINE
 CORBA::UShort POA_Messaging::MaxHopsPolicy_tie<T>::max_hops  (
     CORBA::Environment &ACE_TRY_ENV
@@ -1600,22 +1408,6 @@ template <class T> ACE_INLINE void
 POA_Messaging::QueueOrderPolicy_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::QueueOrderPolicy_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
 }
 
 template <class T> ACE_INLINE
@@ -1730,22 +1522,6 @@ POA_Messaging::ReplyHandler_tie<T>::_is_owner (CORBA::Boolean b)
   this->rel_ = b;
 }
 
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::ReplyHandler_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
-}
-
 #endif /* ACE_HAS_USING_KEYWORD */
 
 #if defined (ACE_HAS_USING_KEYWORD)
@@ -1815,22 +1591,6 @@ template <class T> ACE_INLINE void
 POA_Messaging::Poller_tie<T>::_is_owner (CORBA::Boolean b)
 {
   this->rel_ = b;
-}
-
-template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_Messaging::Poller_tie<T>::_default_POA (CORBA::Environment &env)
-{
-  if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
 }
 
 template <class T> ACE_INLINE

@@ -260,7 +260,10 @@
 // #define TAO_HAS_MINIMUM_CORBA
 
 // CORBA Messaging
-// #define TAO_HAS_CORBA_MESSAGING
+#if defined(ACE_WIN32)
+// In other platforms this is defined in the command-line
+#define TAO_HAS_CORBA_MESSAGING
+#endif /* ACE_WIN32 */
 
 // The maximum value for an standard PolicyType, we use this trick to
 // pack the standard policies and the TAO extension in a single

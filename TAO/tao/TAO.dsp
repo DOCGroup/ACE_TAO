@@ -16955,6 +16955,36 @@ NODEP_CPP_MARSH=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\MessagingC.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\MessagingS.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\MProfile.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -22455,6 +22485,21 @@ NODEP_CPP_POAS_=\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Manager.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -30699,6 +30744,14 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MessagingC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MessagingS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\MProfile.h
 # End Source File
 # Begin Source File
@@ -30768,6 +30821,10 @@ SOURCE=.\POAManager.h
 # Begin Source File
 
 SOURCE=.\poaS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Manager.h
 # End Source File
 # Begin Source File
 
@@ -30903,6 +30960,14 @@ SOURCE=.\marshal.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\MessagingC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MessagingS.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\NVList.i
 # End Source File
 # Begin Source File
@@ -30940,6 +31005,10 @@ SOURCE=.\POAManager.i
 # Begin Source File
 
 SOURCE=.\poaS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Manager.i
 # End Source File
 # Begin Source File
 
