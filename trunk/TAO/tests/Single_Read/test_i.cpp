@@ -18,6 +18,12 @@ test_i::method (CORBA::ULong request_number,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("server: Iteration %d @ %T\n"),
               request_number));
+
+  // Time required to process this request.
+  ACE_Time_Value work_time (0,
+                            3000 * 1000);
+
+  ACE_OS::sleep (work_time);
 }
 
 void
