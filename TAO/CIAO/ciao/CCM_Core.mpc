@@ -2,7 +2,7 @@ project (CAIO_Client) : taolib_with_idl {
   depends += IFR_Client
   sharedname  = CIAO_Client
   libs       += TAO TAO_IFR_Client
-  idlflags  += -I../.. -Wb,stub_export_include=CIAO_Client_Export.h -Wb,skel_export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  idlflags  += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,skel_export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
   dllflags    = CIAO_CLIENT_BUILD_DLL
   include_dir = CIAO
 
@@ -26,7 +26,7 @@ project (CAIO_Container) : taolib_with_idl {
   depends += CIAO_Client PortableServer Security
   sharedname  = CIAO_Container
   libs       += TAO TAO_PortableServer TAO_IFR_Client TAO_Security CIAO_Client
-  idlflags  += -I../.. -I$../../orbsvcs/orbsvcs -Wb,export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  idlflags  += -I $(TAO_ROOT) -I$ $(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Container_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
   dllflags    = CIAO_CONTAINER_BUILD_DLL
   include_dir = CIAO orbsvcs/orbsvcs
 
