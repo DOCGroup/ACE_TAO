@@ -478,15 +478,27 @@ sub update_version_files () {
 sub update_changelog () {
   my $logname = $ENV{'LOGNAME'};
   my $signature = $ENV{'SIGNATURE'} || $logname;
-  my $message = "$now  $signature  <$logname\\\@cs.wustl.edu>\n\n" .
+  my $message = "$now  $signature  <$logname\@cs.wustl.edu>\n\n" .
                 "        * $KIT version $version released.\n\n";
 
-  &ex ("perl -pi -e 'BEGIN {\$message_printed = 0;} " .
-                     "if (! \$message_printed) { " .
-                       "print \"$message\"; " .
-                       "++\$message_printed; " .
-                     "}' ChangeLog");
-  return 1 if $? >> 8;
+  if ("$exec_prefix") {
+    print "Adding to ChangeLog: \n", $message, "\n";
+    return 0;
+  }
+  open (NEW_CHANGELOG, ">ChangeLog.bak")
+    || return 1;
+  open (CHANGELOG, "ChangeLog")
+    || return 1;
+  print NEW_CHANGELOG $message;
+  while (<CHANGELOG>) {
+    print NEW_CHANGELOG $_;
+  }
+  close (CHANGELOG)
+    || return 1;
+  close (NEW_CHANGELOG)
+    || return 1;
+  rename "ChangeLog.bak", "ChangeLog"
+    || return 1;
 
   my $version_h = $kit =~ /^ace/  ?  'ace/Version.h'  :  'tao/Version.h';
 
@@ -508,7 +520,13 @@ sub tag () {
   $tag =~ tr/./_/;
 
   print "start tagging $tag\n";
+  if ($KIT eq "TAO") {
+    chdir "..";
+  }
   &ex ("$cvs -q tag $tag $controlled_files > /dev/null");
+  if ($KIT eq "TAO") {
+    chdir "TAO";
+  }
   return 1 if $? >> 8;
   print "finished tagging $tag\n";
 
