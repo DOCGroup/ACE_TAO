@@ -364,6 +364,10 @@ public:
   /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
   bool do_byte_swap (void) const;
 
+  /// If <do_byte_swap> returns 0, this returns ACE_CDR_BYTE_ORDER else
+  /// it returns !ACE_CDR_BYTE_ORDER.
+  int byte_order (void) const;
+
   /// For use by a gateway, which creates the output stream for the
   /// reply to the client in its native byte order, but which must
   /// send the reply in the byte order of the target's reply to the
