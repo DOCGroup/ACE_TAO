@@ -1,3 +1,13 @@
+Tue Jan 16 10:47:33 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* ace/config-win32-common.h:
+	* ace/config-win32-msvc.h:
+	  Moved #define ACE_HAS_LLSEEK from config-win32-common.h to 
+	  config-win32-msvc.h, since _lseeki64 isn't defined for 
+	  Borland.  Also implicitly removed ACE_HAS_LLSEEK for the
+	  VisualAge compiler - it might have worked (didn't know,
+	  couldn't test)
+
 Mon Jan 15 15:22:42 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Asynch_IO.h: Changed the ACE_Asynch_Read_Stream::read()
