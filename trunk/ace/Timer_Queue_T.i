@@ -126,8 +126,8 @@ ACE_Timer_Node_T<TYPE>::get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T<TYPE> 
   // Yes, do a copy
   info.type_ = this->type_;
   info.act_  = this->act_;
-  info.recurring_timer_ = 
-    this->interval_ > ACE_Time_Value::zero;
+  info.recurring_timer_ =
+    this->interval_ > ACE_Time_Value::zero_time_value();
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
@@ -165,9 +165,9 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
                                                     const ACE_Time_Value &cur_time)
 {
-  this->upcall_functor ().timeout (*this, 
-                                   info.type_, 
-                                   info.act_, 
+  this->upcall_functor ().timeout (*this,
+                                   info.type_,
+                                   info.act_,
                                    info.recurring_timer_,
                                    cur_time);
 }
@@ -177,9 +177,9 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (ACE_Timer_Node_Dispatch_I
                                                        const ACE_Time_Value &cur_time,
                                                        const void *&upcall_act)
 {
-  this->upcall_functor ().preinvoke (*this, 
-                                     info.type_, 
-                                     info.act_, 
+  this->upcall_functor ().preinvoke (*this,
+                                     info.type_,
+                                     info.act_,
                                      info.recurring_timer_,
                                      cur_time,
                                      upcall_act);
@@ -190,9 +190,9 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::postinvoke (ACE_Timer_Node_Dispatch_
                                                         const ACE_Time_Value &cur_time,
                                                         const void *upcall_act)
 {
-  this->upcall_functor ().postinvoke (*this, 
-                                      info.type_, 
-                                      info.act_, 
+  this->upcall_functor ().postinvoke (*this,
+                                      info.type_,
+                                      info.act_,
                                       info.recurring_timer_,
                                       cur_time,
                                       upcall_act);

@@ -113,7 +113,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::earliest_time (void) const
   ACE_Timer_Node_T<TYPE>* first = this->get_first_i();
   if (first != 0)
     return first->get_timer_value ();
-  return ACE_Time_Value::zero;
+  return ACE_Time_Value::zero_time_value();
 }
 
 

@@ -99,6 +99,10 @@ public:
   /// Constant "0".
   static const ACE_Time_Value zero;
 
+  /// Accessor method for zero for exported use (since some compilers,
+  /// i.e. MingW, have trouble handling exported class data members).
+  static const ACE_Time_Value& zero_time_value (void);
+
   /**
    * Constant for maximum time representable.  Note that this time is
    * not intended for use with <select> or other calls that may have
@@ -108,6 +112,10 @@ public:
    * class.
    */
   static const ACE_Time_Value max_time;
+
+  /// Accessor method for max_time for exported use (since some compilers,
+  /// i.e. MingW, have trouble handling exported class data members).
+  static const ACE_Time_Value& max_time_value (void);
 
   // = Initialization methods.
 
