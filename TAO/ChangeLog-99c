@@ -1,3 +1,11 @@
+Thu Dec 16 21:11:40 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/pluggable_protocols/index.html:
+
+	  Added a note stressing the fact that it should not be necessary
+	  to make any changes to ACE or TAO in order to implement a
+	  pluggable protocol.
+
 Thu Dec 16 20:37:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/Options.html:
