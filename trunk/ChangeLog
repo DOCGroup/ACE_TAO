@@ -1,3 +1,86 @@
+Sat Nov  1 17:16:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/ace.mpc:
+          Reordered new files to make them easer to verify.
+
+        * ace/Makefile.ace:
+          Added new files and removed OS, OS_String, OS_Memory, and
+          OS_Dirent.
+
+        * Kokyu/Makefile.Kokyu:
+        * ace/Makefile.ace:
+        * ace/ace.mpc:
+        * ace/RMCast/Makefile:
+        * apps/Gateway/Gateway/Makefile:
+        * apps/Gateway/Peer/Makefile:
+        * apps/drwho/Makefile:
+        * apps/gperf/src/Makefile:
+        * apps/gperf/tests/Makefile:
+        * examples/ASX/CCM_App/Makefile:
+        * examples/ASX/Event_Server/Event_Server/Makefile:
+        * examples/ASX/Event_Server/Transceiver/Makefile:
+        * examples/ASX/Message_Queue/Makefile:
+        * examples/ASX/UPIPE_Event_Server/Makefile:
+        * examples/C++NPv1/Makefile:
+        * examples/Connection/misc/Makefile:
+        * examples/Connection/non_blocking/Makefile:
+        * examples/IOStream/client/Makefile:
+        * examples/IOStream/server/Makefile:
+        * examples/IPC_SAP/DEV_SAP/reader/Makefile:
+        * examples/IPC_SAP/DEV_SAP/writer/Makefile:
+        * examples/IPC_SAP/FIFO_SAP/Makefile:
+        * examples/IPC_SAP/FILE_SAP/Makefile:
+        * examples/IPC_SAP/SOCK_SAP/Makefile:
+        * examples/IPC_SAP/SPIPE_SAP/Makefile:
+        * examples/IPC_SAP/TLI_SAP/Makefile:
+        * examples/IPC_SAP/UPIPE_SAP/Makefile:
+        * examples/Log_Msg/Makefile:
+        * examples/Logger/Acceptor-server/Makefile:
+        * examples/Logger/client/Makefile:
+        * examples/Logger/simple-server/Makefile:
+        * examples/Map_Manager/Makefile:
+        * examples/Mem_Map/IO-tests/Makefile:
+        * examples/Mem_Map/file-reverse/Makefile:
+        * examples/Misc/Makefile:
+        * examples/Naming/Makefile:
+        * examples/RMCast/Send_File/Makefile:
+        * examples/Reactor/Dgram/Makefile:
+        * examples/Reactor/FIFO/Makefile:
+        * examples/Reactor/Misc/Makefile:
+        * examples/Reactor/Multicast/Makefile:
+        * examples/Reactor/Ntalker/Makefile:
+        * examples/Service_Configurator/IPC-tests/client/Makefile:
+        * examples/Service_Configurator/IPC-tests/server/Makefile:
+        * examples/Shared_Malloc/Makefile:
+        * examples/Shared_Memory/Makefile:
+        * examples/Synch/Makefile:
+        * examples/System_V_IPC/SV_Message_Queues/Makefile:
+        * examples/System_V_IPC/SV_Semaphores/Makefile:
+        * examples/System_V_IPC/SV_Shared_Memory/Makefile:
+        * examples/Threads/Makefile:
+        * examples/Timer_Queue/Makefile:
+        * netsvcs/clients/Logger/Makefile:
+        * netsvcs/clients/Naming/Client/Makefile:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile:
+        * netsvcs/clients/Tokens/collection/Makefile:
+        * netsvcs/clients/Tokens/deadlock/Makefile:
+        * netsvcs/clients/Tokens/invariant/Makefile:
+        * netsvcs/clients/Tokens/mutex/Makefile:
+        * netsvcs/clients/Tokens/rw_lock/Makefile:
+        * netsvcs/lib/Makefile:
+        * netsvcs/servers/Makefile:
+        * performance-tests/Misc/Makefile:
+        * performance-tests/SCTP/Makefile:
+        * performance-tests/Server_Concurrency/Leader_Follower/Makefile:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile:
+        * performance-tests/TCP/Makefile:
+        * performance-tests/UDP/Makefile:
+        * tests/Makefile.tests:
+        * tests/RMCast/Makefile:
+        * websvcs/lib/Makefile:
+        * websvcs/tests/Makefile
+          Updated dependencies.
+
 Sat Nov  1 16:27:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/os_signal.h:
