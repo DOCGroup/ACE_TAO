@@ -17,12 +17,14 @@ MyImpl::RoundTrip_exec_i::~RoundTrip_exec_i ()
 {
 }
 
+/*
 ::NodeAppTest::CCM_LatencyTest *
 MyImpl::RoundTrip_exec_i::get_latency (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::NodeAppTest::CCM_LatencyTest::_duplicate (this);
 }
+*/
 
 /* Main method that invokes the octet_sequence */
 CORBA::Long
@@ -34,23 +36,15 @@ MyImpl::RoundTrip_exec_i::cube_long (CORBA::Long data)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr ctx
+MyImpl::RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr 
                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::set_session_context\n"));
-  //cout << "MyImpl::RoundTrip_exec_i::set_session_context\n" << endl;
-
-  this->context_ =
-    NodeAppTest::CCM_NodeAppTest_RoundTrip_Context::_narrow (ctx
-                                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
-  // Urm, we actually discard exceptions thown from this operation.
 }
 
 void

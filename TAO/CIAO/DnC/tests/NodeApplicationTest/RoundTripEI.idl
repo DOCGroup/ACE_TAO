@@ -24,7 +24,6 @@ module NodeAppTest
    * define the component executor interface explicitly here.
    */
   local interface RoundTrip_Exec : CCM_NodeAppTest_RoundTrip, 
-                                   CCM_LatencyTest,
 				   Components::SessionComponent
   {
   };

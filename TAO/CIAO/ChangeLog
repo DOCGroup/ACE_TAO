@@ -1,3 +1,14 @@
+Mon May 31 15:18:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/test/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
+        * DnC/test/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DnC/test/NodeApplicationTest/RoundTripEI.idl:
+        * DnC/test/NodeApplicationTest/RoundTrip_exec.cpp:
+        * DnC/test/NodeApplicationTest/RoundTrip_exec.h:
+
+          Changed the idl interface to supports rather than provides as
+          this feature has not been implemented yet.
+
 Mon May 31 14:48:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager.mpc:
