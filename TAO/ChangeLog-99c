@@ -10,6 +10,10 @@ Thu Jan 14 00:52:48 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Thanks to JM Strauss <jms97@club-internet.fr> for suggesting
  	  this change.
 
+	  Also, fixed the timeout by reference version of the run() method
+ 	  such that it no longer pretends to be dealing with const
+ 	  timeouts.
+
 Wed Jan 13 14:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp
