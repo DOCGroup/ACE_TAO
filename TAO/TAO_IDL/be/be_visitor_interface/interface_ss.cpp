@@ -184,6 +184,35 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "return CORBA::B_FALSE;" << be_uidt << be_uidt << be_uidt_nl
       << "}\n\n";
 
+  // generate code for the _non_existent skeleton
+  os->indent ();
+  *os << "void " << node->full_skel_name ()
+      << "::_non_existent_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
+      << "void * _tao_object_reference," << be_nl
+      << "void * /*context*/," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl;
+  *os << "{" << be_idt_nl;
+  *os << "static const TAO_Param_Data_Skel " << node->flatname ()
+      << "_non_existent_paramdata [] = " << be_nl
+      << "{" << be_idt_nl
+      << "{CORBA::_tc_boolean, 0, 0}" << be_uidt_nl
+      << "};" << be_nl;
+  *os << "static const TAO_Call_Data_Skel " << node->flatname ()
+      << "_non_existent_calldata = " << be_nl
+      << "{\"_non_existent\", 1, 2, " << node->flatname ()
+      << "_non_existent_paramdata};" << be_nl;
+  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
+  *os << "CORBA::Boolean _tao_retval = CORBA::B_FALSE;" << be_nl;
+  *os << "_tao_server_request.marshal (" << be_idt_nl
+      << "_tao_environment, " << be_nl
+      << "_tao_skel_environment," << be_nl
+      << "&" << node->flatname () << "_non_existent_calldata, " << be_nl
+      << "&_tao_retval " << be_uidt_nl
+      << ");" << be_nl;
+  *os << "}\n\n";
+
   os->indent ();
   *os << "void* " << node->full_skel_name ()
       << "::_downcast (" << be_idt << be_idt_nl

@@ -32,7 +32,7 @@ CC_LockSetFactory::create (CORBA::Environment &_env)
 {
   CC_LockSet *ls = 0;
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW_RETURN (ls,
@@ -49,7 +49,7 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which,
 {
   CC_LockSet *ls = 0;
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW_RETURN (ls,

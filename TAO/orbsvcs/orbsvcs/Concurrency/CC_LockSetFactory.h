@@ -48,7 +48,7 @@ public:
   virtual CosConcurrencyControl::LockSet_ptr create_related (CosConcurrencyControl::LockSet_ptr which,
                                                              CORBA::Environment &env);
 private:
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
   // Lock to serialize the access to the factory.
 };
 

@@ -1,3 +1,19 @@
+Tue Jul 14 12:00:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/be_interface.cpp: 
+	  Added server side support for CORBA::Object::_non_existent, in
+	  the future it could be implemented in the POA, saving an
+	  operation lookup and reducing the footprint somewhat.
+
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.h: 
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: 
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h: 
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp: 
+	  Replaced ACE_Thread_Mutex with ACE_SYNCH_MUTEX so it compiles in
+	  platforms without threads, not that it will work though.
+
 Tue Jul 14 12:30:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test):
