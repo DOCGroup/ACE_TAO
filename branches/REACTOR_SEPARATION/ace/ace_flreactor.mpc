@@ -1,7 +1,11 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // ace_flreactor.mpc,v
 
-project(ACE_FlReactor) : acedefaults, aceversion, core, acelib, ace_fl {
+// @@ Marek, can't we have all the projects in ace.mpc instead of so 
+// many files? 
+project(ACE_FlReactor) : acedefaults, aceversion, core, acelib, ace_fl{
+
+  // @@ Marek, is this necessary? I don't think so. 
   requires     += ace_flreactor
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE_FlReactor
