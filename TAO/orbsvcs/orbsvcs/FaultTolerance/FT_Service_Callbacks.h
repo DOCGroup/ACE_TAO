@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Service_Callbacks.h"
+#include "orbsvcs/FT_CORBAC.h"
+
 class TAO_Profile;
 class TAO_MProfile;
 
@@ -40,6 +42,9 @@ class TAO_FT_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
 public:
   TAO_FT_Service_Callbacks (void);
   // Constructor
+
+  virtual ~TAO_FT_Service_Callbacks (void);
+  // Dtor
 
   virtual CORBA::Boolean  select_profile (TAO_MProfile *mprofile,
                                           TAO_Profile *&pfile);
@@ -59,9 +64,38 @@ public:
   // Check whether <obj> is nil or not. FT spec suggests some
   // extensions for a CORBA::is_nil () operation.
 
-
   // Need to do is_equivalent and hash also here
+
+  virtual CORBA::Policy_ptr service_create_policy (
+      CORBA::PolicyType policy,
+      CORBA::Any &val,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Create a CORBA::Policy from CORBA::Policy
+
+  virtual void service_context_list (TAO_Stub *&stub,
+                                     IOP::ServiceContextList &service_list,
+                                     CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  // Add relevant stuff to the service context list
+
 private:
+
+  void request_service_context (TAO_Stub *&stub,
+                                IOP::ServiceContextList &service_list,
+                                CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Makes  the  request service_context list
+
+  void group_version_service_context (TAO_Stub *&stub,
+                                      IOP::ServiceContextList &service_list,
+                                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Make the group version service context list
+
+  void get_object_group_version (TAO_Profile *profile);
+  // Get the ObjectGroupRef version from the profile in use.
 
   CORBA::Boolean primary_failed_;
   // A flag that indicates that the primary has already failed. So any
@@ -72,6 +106,13 @@ private:
   // A flag to indicate that a secondary has been selected for
   // invocation. We do this only once in the cycle. When we get there
   // again we dont select a primary again and again.
+
+  FT::TagFTGroupTaggedComponent group_component_;
+  // FT group component in the IOGR
+
+  CORBA::Boolean group_component_flag_;
+  // A flag to indicate whether we have extracted the
+  // <group_component> before.
 };
 
 #if defined (__ACE_INLINE__)

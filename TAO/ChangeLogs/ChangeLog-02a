@@ -1,3 +1,21 @@
+Fri Sep 29 11:30:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+	  Implementation of the ORB level hooks for the creations of
+	  policies and service context lists.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i: New files for the
+	  FT policy object.
+
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Added the new files to
+	  the Makefile.
+
+
+
 Fri Sep 29 11:14:52 2000 Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO.dsp:
@@ -12,7 +30,7 @@ Fri Sep 29 11:11:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
 
 	  Added call to base class user exception constructor for
-	  local exceptions (since the call no longer takes a 
+	  local exceptions (since the call no longer takes a
 	  typecode argument). Thanks to Irfan for reporting this.
 
 	  Also took the usual opportunity to cosmetize the source
