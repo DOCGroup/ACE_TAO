@@ -114,25 +114,28 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
       CORBA::Boolean_out disconnected
       ACE_ENV_ARG_DECL)
 {
-  ACE_GUARD_THROW_EX (
+  CORBA::Object_var consumer;
+  {
+    ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
-    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK_RETURN (0);
+    ACE_CHECK_RETURN (0);
 
-  disconnected = 0;
-  if (this->is_connected_i () == 0)
-    {
-      disconnected = 1;
-      return 0;
-    }
-  if (CORBA::is_nil (this->consumer_.in ()))
-    {
-      return 0;
-    }
+    disconnected = 0;
+    if (this->is_connected_i () == 0)
+      {
+        disconnected = 1;
+        return 0;
+      }
+    if (CORBA::is_nil (this->consumer_.in ()))
+      {
+        return 0;
+      }
+    consumer = CORBA::Object::_duplicate (this->consumer_.in ());
+  }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  return this->consumer_->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return consumer->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -1,3 +1,23 @@
+Thu Feb 14 15:20:19 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp (supplier_non_existent): 
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp (consumer_non_existent): 
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp (supplier_non_existent): 
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp (consumer_non_existent): 
+	  Do not hold the mutex while checking if the peer stil exists.
+	  Doing so can result in dead-locks whenever there is a nested
+	  upcall as part of the request.
+	  Thanks to mhoffm1060 <mhoffm1060@aol.com> for reporting this one.
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+	  Fixed shutdown() method, removing an Event_Handler from the
+	  Reactor does not reset the reactor() pointer to 0, unfortunately
+	  that means that the Event_Handler destructor tries to remove the
+	  handler *again*, at which point the reactor may have been
+	  destroyed.
+
 Thu Feb 14 14:21:31 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/POA.cpp:
