@@ -498,8 +498,17 @@ Test_String_Sequence::init_parameters (Param_Test_ptr objref,
   ACE_UNUSED_ARG (objref);
   ACE_UNUSED_ARG (env);
 
+  const char *choiceList[] =
+  {
+    "one",
+    "two",
+    "three"
+  };
+
+  CORBA::ULong len = sizeof(choiceList)/sizeof(char *);
+
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  //  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
   this->in_->length (len);
@@ -508,8 +517,10 @@ Test_String_Sequence::init_parameters (Param_Test_ptr objref,
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
-      char *str = gen->gen_string ();
-      this->in_[i] = str;
+      //      char *str = gen->gen_string ();
+      //this->in_[i] = str;
+      this->in_[i] = choiceList[i];
+
     }
   return 0;
 }
@@ -595,24 +606,52 @@ Test_String_Sequence::check_validity (CORBA::Request_ptr req)
 void
 Test_String_Sequence::print_values (void)
 {
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  CORBA::ULong i;
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
+  for (i=0; this->in_.ptr () && (i < this->in_->length ()); i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n*=*=*=*=*=*=*=*=*=*=\n"
-                  "Element # %d\n"
-                  "in (len = %d): %s\n"
-                  "inout (len = %d): %s\n"
-                  "out (len = %d): %s\n"
-                  "ret (len = %d): %s\n",
-                  this->in_->length (),
-                  (this->in_->length ()? (char *)this->in_[i]:"<nul>"),
-                  this->inout_->length (),
-                  (this->inout_->length ()? (char *)this->inout_[i]:"<nul>"),
-                  this->out_->length (),
-                  (this->out_->length ()? (char *)this->out_[i]:"<nul>"),
-                  this->ret_->length (),
-                  (this->ret_->length ()? (char *)this->ret_[i]:"<nul>")));
+                  "Element #%d\n"
+                  "in : %s\n",
+                  i,
+                  (this->in_[i].in ()? (char *)this->in_[i].in ():"<nul>")));
     }
+  if (!this->in_.ptr ())
+    ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
+  for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); i++)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "in : %s\n",
+                  i,
+                  (this->inout_[i].in ()? (char *)this->inout_[i].in ():"<nul>")));
+    }
+  if (!this->inout_.ptr ())
+    ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
+  for (i=0; this->out_.ptr () && (i < this->out_->length ()); i++)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "in : %s\n",
+                  i,
+                  (this->out_[i].in ()? (char *)this->out_[i].in ():"<nul>")));
+    }
+  if (!this->out_.ptr ())
+    ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
+  for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); i++)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "in : %s\n",
+                  i,
+                  (this->ret_[i].in ()? (char *)this->ret_[i].in ():"<nul>")));
+    }
+  if (!this->ret_.ptr ())
+    ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }
 
 // ************************************************************************
@@ -653,6 +692,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr objref,
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
+  this->in_.dummy = gen->gen_string ();
   this->in_.seq.length (len);
   // now set each individual element
   for (CORBA::ULong i=0; i < this->in_.seq.length (); i++)
@@ -712,7 +752,10 @@ CORBA::Boolean
 Test_Var_Struct::check_validity (void)
 {
   CORBA::Boolean flag = 0;
-  if ((this->in_.seq.length () == this->inout_->seq.length ()) &&
+  if ((!ACE_OS::strcmp (this->in_.dummy, this->inout_->dummy)) &&
+      (!ACE_OS::strcmp (this->in_.dummy, this->out_->dummy)) &&
+      (!ACE_OS::strcmp (this->in_.dummy, this->ret_->dummy)) &&
+      (this->in_.seq.length () == this->inout_->seq.length ()) &&
       (this->in_.seq.length () == this->out_->seq.length ()) &&
       (this->in_.seq.length () == this->ret_->seq.length ()))
     {
@@ -746,6 +789,17 @@ Test_Var_Struct::check_validity (CORBA::Request_ptr req)
 void
 Test_Var_Struct::print_values (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "\n*=*=*=*=*=*=*=*=*=*=\n"
+              "in_.dummy = %s\n"
+              "inout_.dummy = %s\n"
+              "out_.dummy = %s\n"
+              "ret_.dummy = %s\n",
+              this->in_.dummy.in (),
+              this->inout_->dummy.in (),
+              this->out_->dummy.in (),
+              this->ret_->dummy.in ()));
+
   for (CORBA::ULong i=0; i < this->in_.seq.length (); i++)
     {
       ACE_DEBUG ((LM_DEBUG,

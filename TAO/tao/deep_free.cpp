@@ -32,10 +32,6 @@
 
 extern CORBA::TypeCode TC_opaque;
 
-// Deep copy from "source" to "dest" ... this code "knows" a bit about
-// representations, verify it when porting to oddball platforms with
-// non-IEEE floating point values or atypical byte and word sizes.
-
 CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
 	   const void *source,
@@ -226,7 +222,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
                           retval = TAO_Marshal_Union::deep_free (param, source, dest, env);
                           break;
                         case CORBA::tk_string:
-                          retval = TAO_Marshal_String::deep_free (param, &source, dest, env);
+                          //retval = TAO_Marshal_String::deep_free (param, &source, dest, env);
                           break;
                         case CORBA::tk_sequence:
                           retval = TAO_Marshal_Sequence::deep_free (param, source, dest, env);
