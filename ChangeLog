@@ -1,3 +1,16 @@
+Fri Jan 28 20:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Applied some changes from  Thomas Lockhart
+          <Thomas dot Lockhart at jpl dot nasa dot gov>:
+          - set versioned_so to 0, VxWorks doesn't support this
+          - set shared_libs to 0, by default we build staticly, but this
+            can be overridden by our users. For dynamic builds Thomas
+            supplied more fixes but we have to test some more before adding
+            those.
+          - added some more notes
+          - removed remark of Tornado 1.0, it is not usable anymore
+
 Fri Jan 28 14:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/README:
