@@ -1,3 +1,10 @@
+Tue Apr 20 02:35:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Param_Test/except.{h,cpp}: Differentiated results based on
+	  the exception received in that iteration so we can determine if
+	  the exception is the one the test is waiting.  Egcs on Linux
+	  seems to have trouble downcasting exceptions.
+
 Mon Apr 19 22:17:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
