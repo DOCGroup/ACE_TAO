@@ -1,17 +1,22 @@
+Tue Sep 22 10:58:04 1998  Ossama Othman <othman@astrosun.tn.cornell.edu>
+
+        * ace/OS.i (ACE_cond_t::waiters): only define this function if
+          ACE_HAS_THREADS.
+
 Tue Sep 22 03:09:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.41 released.
 
 Tue Sep 22 00:31:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Log_Record.cpp (print): Make sure that the process id and
- 	  timestamp are fixed width.  Thanks to Valery Arkhangorodsky
- 	  <avalery@geocities.com> for this fix.
+        * ace/Log_Record.cpp (print): Make sure that the process id and
+          timestamp are fixed width.  Thanks to Valery Arkhangorodsky
+          <avalery@geocities.com> for this fix.
 
 Mon Sep 21 22:54:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Bounded_Packet_Relay: Removed a gratuitous
- 	  parameterized type which was causing problems for SunC++.
+        * examples/Bounded_Packet_Relay: Removed a gratuitous
+          parameterized type which was causing problems for SunC++.
 
 Mon Sep 21 21:47:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
