@@ -1,3 +1,26 @@
+Thu Sep 28 11:14:29 2000  Martin Stack <mstack@cambertx.com>
+
+	* ace/config-freebsd.h:
+	* ace/config-freebsd-pthread.h:
+	* ace/config-linux-common.h:
+	* ace/config-irix6.x-common.h: Added/Renamed to
+	  ACE_USES_NEW_TERMIOS_STRUCT.
+
+	* ace/TTY_IO.h:
+	* ace/TTY_IO.cpp: The Win32 section was modified to implement a
+	  non-blocking read when read-timeout=0 is set.  Also, it was
+	  modified to ensure proper operations when a read_timeout is
+	  required.
+
+	  Code was added to enable the DTR line on both Win32 and unix
+	  platforms when the port is opened.
+
+	  Several new flags where added to give proper access to the
+	  serial device.
+
+	  Relabled macro "ACE_USES_OLD_TERMIOS_STRUCT" to
+	  "ACE_USES_NEW_TERMIOS_STRUCT" to properly indicate its purpose.
+
 Thu Sep 28 09:01:19 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-g++-common.h:

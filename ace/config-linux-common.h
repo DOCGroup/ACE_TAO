@@ -241,4 +241,8 @@
 #endif /* ACE_NTRACE */
 
 #include "ace/post.h"
+
+// Enables use of POSIX termios struct
+#define ACE_USES_NEW_TERMIOS
+
 #endif /* ACE_LINUX_COMMON_H */
