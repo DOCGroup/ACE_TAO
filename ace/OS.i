@@ -4159,6 +4159,51 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 }
 
 
+ACE_INLINE void 
+ACE_OS::thr_self (ACE_hthread_t &self)
+{
+  // ACE_TRACE ("ACE_OS::thr_self");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_DCETHREADS)
+  // Note, don't use "::" here since the following call is often a macro.
+  self = pthread_self ();
+#elif defined (ACE_HAS_THREAD_SELF)
+  self = ::thread_self ();
+#elif defined (ACE_HAS_PTHREADS)
+  // Note, don't use "::" here since the following call is often a macro.
+  self = pthread_self ();
+#elif defined (ACE_HAS_STHREADS)
+  self = ::thr_self ();
+#elif defined (ACE_HAS_WTHREADS)
+  self = ::GetCurrentThread ();
+#elif defined (VXWORKS)
+  self = ::taskIdSelf ();
+#endif /* ACE_HAS_STHREADS */
+#else
+  self = 1; // Might as well make it the main thread ;-)
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE ACE_thread_t 
+ACE_OS::thr_self (void)
+{
+  // ACE_TRACE ("ACE_OS::thr_self");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  // Note, don't use "::" here since the following call is often a macro.
+  ACE_OSCALL_RETURN (pthread_self (), int, -1);
+#elif defined (ACE_HAS_STHREADS)
+  ACE_OSCALL_RETURN (::thr_self (), int, -1);
+#elif defined (ACE_HAS_WTHREADS)
+  return ::GetCurrentThreadId ();
+#elif defined (VXWORKS)
+  return ::taskName (::taskIdSelf ());
+#endif /* ACE_HAS_STHREADS */
+#else
+  return 1; // Might as well make it the first thread ;-)
+#endif /* ACE_HAS_THREADS */		     
+}
+
 # if defined (ACE_HAS_TSS_EMULATION)
 ACE_INLINE
 void **&
@@ -4654,51 +4699,6 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */            
-}
-
-ACE_INLINE void 
-ACE_OS::thr_self (ACE_hthread_t &self)
-{
-  // ACE_TRACE ("ACE_OS::thr_self");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS)
-  // Note, don't use "::" here since the following call is often a macro.
-  self = pthread_self ();
-#elif defined (ACE_HAS_THREAD_SELF)
-  self = ::thread_self ();
-#elif defined (ACE_HAS_PTHREADS)
-  // Note, don't use "::" here since the following call is often a macro.
-  self = pthread_self ();
-#elif defined (ACE_HAS_STHREADS)
-  self = ::thr_self ();
-#elif defined (ACE_HAS_WTHREADS)
-  self = ::GetCurrentThread ();
-#elif defined (VXWORKS)
-  self = ::taskIdSelf ();
-#endif /* ACE_HAS_STHREADS */
-#else
-  self = 1; // Might as well make it the main thread ;-)
-#endif /* ACE_HAS_THREADS */		     
-}
-
-ACE_INLINE ACE_thread_t 
-ACE_OS::thr_self (void)
-{
-  // ACE_TRACE ("ACE_OS::thr_self");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  // Note, don't use "::" here since the following call is often a macro.
-  ACE_OSCALL_RETURN (pthread_self (), int, -1);
-#elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (::thr_self (), int, -1);
-#elif defined (ACE_HAS_WTHREADS)
-  return ::GetCurrentThreadId ();
-#elif defined (VXWORKS)
-  return ::taskName (::taskIdSelf ());
-#endif /* ACE_HAS_STHREADS */
-#else
-  return 1; // Might as well make it the first thread ;-)
-#endif /* ACE_HAS_THREADS */		     
 }
 
 ACE_INLINE size_t
