@@ -65,7 +65,8 @@ public:
     TAO_AV_SFP_UDP    =  8,
     TAO_AV_UDP_MCAST  =  9,
     TAO_AV_RTP_UDP_MCAST = 10,
-    TAO_AV_SFP_UDP_MCAST = 11
+    TAO_AV_SFP_UDP_MCAST = 11,
+    TAO_AV_QOS_UDP       = 12
   };
 
   /// Default constructor.

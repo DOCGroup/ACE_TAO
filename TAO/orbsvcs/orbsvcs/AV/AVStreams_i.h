@@ -465,6 +465,38 @@ protected:
   ACE_DLList_Iterator<Peer_Info> peer_list_iterator_;
 };
 
+/**
+ * @class TAO_AV_QoS
+ * @brief Class for getting and setting the QoS characteristics of
+ *        an AV Stream.
+ */
+class TAO_AV_Export TAO_AV_QoS
+{
+public:
+  /// constructor.
+  TAO_AV_QoS (void);
+
+  /// constructor taking a stream qos parameter.
+  TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
+
+  /// sets the maps with the QoS paramter.
+  int set (AVStreams::streamQoS &stream_qos);
+
+  /// gets the flow_qos.
+  int get_flow_qos (const char *flowname,AVStreams::QoS &flow_qos);
+
+  /// converts the application level QoS to Network-level QoS.
+  int convert (AVStreams::streamQoS &network_qos);
+
+
+protected:
+  /// Stream Qos.
+  AVStreams::streamQoS stream_qos_;
+
+  ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex> qos_map_;
+};
+
+
 // Forward declarations.
 class TAO_AV_TCP_Flow_Handler;
 class TAO_AV_UDP_Flow_Handler;
@@ -530,6 +562,11 @@ public:
 
   virtual void set_flow_handler (const char *flowname,
                             TAO_AV_Flow_Handler *handler);
+
+  TAO_AV_QoS &qos (void);
+  
+private:
+  TAO_AV_QoS qos_;
 };
 
 // Forward declarations.
@@ -1557,36 +1594,6 @@ public:
 
 };
 
-/**
- * @class TAO_AV_QoS
- * @brief Class for getting and setting the QoS characteristics of
- *        an AV Stream.
- */
-class TAO_AV_Export TAO_AV_QoS
-{
-public:
-  /// constructor.
-  TAO_AV_QoS (void);
-
-  /// constructor taking a stream qos parameter.
-  TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
-
-  /// sets the maps with the QoS paramter.
-  int set (AVStreams::streamQoS &stream_qos);
-
-  /// gets the flow_qos.
-  int get_flow_qos (const char *flowname,AVStreams::QoS &flow_qos);
-
-  /// converts the application level QoS to Network-level QoS.
-  int convert (AVStreams::streamQoS &network_qos);
-
-
-protected:
-  /// Stream Qos.
-  AVStreams::streamQoS stream_qos_;
-
-  ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex> qos_map_;
-};
 
 #include "Transport.h"
 
