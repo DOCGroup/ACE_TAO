@@ -1,3 +1,25 @@
+Sat Dec  6 13:26:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Advanced/README_DOCGROUP:
+
+	  A README file that explains why we cannot support the following
+	  examples anymore. 
+	
+	* examples/Advanced/ch_12/Advanced_ch_12.mpc:
+	* examples/Advanced/ch_18/Advanced_ch_18.mpc:
+	* examples/Advanced/ch_21/Advanced_ch_21.mpc:
+
+	  Removed all these MPC files. These directories will not be
+	  henceforth compiled  in the daily builds. The reason is
+	  explained in the file above. The crux of the problem is the
+	  dependancy between the examples and old iostream
+	  library. Graduating them to the new iostream library introduces
+	  lots of changes and does break code with old iostream library. I
+	  don't think the doc_group will have any time in the near future
+	  to get these examples compiling reliably with older and new
+	  generation of compilers. If someone can give patches we will, as
+	  usual, integrate them. 
+
 Sat Dec  6 12:37:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
