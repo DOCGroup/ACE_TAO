@@ -7,7 +7,7 @@ Thu Sep 16 12:51:35 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  wstring compatibility with the Unix 4-byte
 	  wchar_t, the wstring versions here just input and
 	  output CORBA::WChars one at a time, but the string
-	  versions are functional, and required by CORBA 2.3.
+	  versions are functional, and all are required by CORBA 2.3.
 
 	* Sequence_T.cpp:
 	  Eliminated some temporary variables in an attempt to
