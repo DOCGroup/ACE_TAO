@@ -19,9 +19,7 @@
 INFO    = VERSION
 
 DIRS    = CIDLC \
-	  bin \
 	  ciao \
-	  docs \
 	  examples \
 	  tests \
 	  tools 
@@ -34,6 +32,17 @@ CLONE   = Makefile \
 	  examples \
 	  tests \
 	  tools 
+
+CORE_DIRS = tools \
+	    ciao
+
+# Just realclean for the core directories. This is temporary. Will be 
+# removed at a later date. 
+coreclean:
+	@for dir in $(CORE_DIRS); \
+        do \
+        	($(MAKE) realclean -C $$dir) \
+        done
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

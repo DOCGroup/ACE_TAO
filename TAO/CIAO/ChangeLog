@@ -1,3 +1,10 @@
+Thu Nov  6 07:55:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile:
+	  
+	  Added coreclean target for doing realclean on a core set of
+	  directories in the nightly build.
+
 Wed Nov  5 14:07:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
