@@ -526,6 +526,10 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_sh (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_SS:
       return new be_compiled_visitor_operation_ss (new_ctx);
+	case TAO_CodeGen::TAO_OPERATION_IS:
+      return new be_visitor_operation_is (new_ctx);	 
+	 case TAO_CodeGen::TAO_OPERATION_IH:
+      return new be_visitor_operation_ih (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH:
       return new be_visitor_operation_collocated_sh (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_COLLOCATED_SS:
@@ -560,6 +564,8 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_decl (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+	case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+	case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:
       return new be_visitor_operation_arglist (new_ctx);
