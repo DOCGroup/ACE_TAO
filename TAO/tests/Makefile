@@ -17,6 +17,9 @@ DIRS  = CDR \
 	BiDirectional_NestedUpcall \
 	Bug_1269_Regression \
 	Bug_1270_Regression \
+	Bug_1020_Regression \
+	Bug_1361_Regression \
+	Bug_1020_Basic_Regression \
 	Collocation \
 	Connection_Timeout \
         IDL_Test \
