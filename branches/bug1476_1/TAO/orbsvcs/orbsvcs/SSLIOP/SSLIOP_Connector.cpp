@@ -411,7 +411,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::connect, ")
+                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
                     ACE_TEXT ("got existing transport[%d]\n"),
                     transport->id ()));
 
@@ -421,19 +421,19 @@ TAO::SSLIOP::Connector::ssliop_connect (
           if (!this->wait_for_connection_completion (resolver,
                                                      transport,
                                                      max_wait_time))
-            { 
-              ACE_ERROR ((LM_ERROR, 
-                          ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::connect,")
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect,")
                           ACE_TEXT ("wait for completion failed\n")));
 
             }
-        }                                      
+        }
     }
   else
     {
       if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::connect, ")
+                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, ")
                     ACE_TEXT ("making a new connection \n")));
 
       // Purge connections (if necessary)
@@ -573,7 +573,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                 {
                   if (TAO_debug_level > 2)
                     ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SSLIOP_Connector::"
-                                          "make_connection, "
+                                          "ssliop_connect, "
                                           "wait for completion failed\n"));
                 }
             }
@@ -632,9 +632,31 @@ TAO::SSLIOP::Connector::ssliop_connect (
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - SLIIOP_Connector::make_connection, "
+                          "TAO (%P|%t) - SLIIOP_Connector::ssliop_connect, "
                           "could not add the new connection to cache\n"));
             }
+
+          return 0;
+        }
+
+      if (transport->is_connected () &&
+          transport->wait_strategy ()->register_handler () != 0)
+        {
+          // Registration failures.
+
+          // Purge from the connection cache, if we are not in the cache, this
+          // just does nothing.
+          (void) transport->purge_entry ();
+
+          // Close the handler.
+          (void) transport->close_connection ();
+
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) - SSLIOP_Connector [%d]::ssliop_connect, "
+                        "could not register the transport "
+                        "in the reactor.\n",
+                        transport->id ()));
 
           return 0;
         }

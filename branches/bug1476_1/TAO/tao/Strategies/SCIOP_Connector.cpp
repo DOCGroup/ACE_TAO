@@ -256,8 +256,8 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIO_Connector::"
-                                      "make_connection, "
+                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SCIOP_Connector::"
+                                      "make_connection_i, "
                                       "wait for completion failed\n"));
             }
          }
@@ -275,7 +275,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_ERROR,
-                      "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                      "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                       "connection to <%s:%d> failed (%p)\n",
                       iiop_endpoint->host (), iiop_endpoint->port (),
                       "errno"));
@@ -288,7 +288,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                 "new %s connection to <%s:%d> on Transport[%d]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 sciop_endpoint->host (), sciop_endpoint->port (),
@@ -308,9 +308,31 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                      "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                       "could not add the new connection to cache\n"));
         }
+
+      return 0;
+    }
+
+  if (transport->is_connected () &&
+      transport->wait_strategy ()->register_handler () != 0)
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) transport->purge_entry ();
+
+      // Close the handler.
+      (void) transport->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - SCIOP_Connector [%d]::make_connection_i, "
+                    "could not register the transport "
+                    "in the reactor.\n",
+                    transport->id ()));
 
       return 0;
     }

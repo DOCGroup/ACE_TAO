@@ -155,7 +155,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) SHMIO_Connector::make_connection - ")
+                  ACE_TEXT ("TAO (%P|%t) SHMIOP_Connector::make_connection - ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
@@ -243,6 +243,28 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                       "could not add the new connection to cache\n"));
         }
+
+      return 0;
+    }
+
+  if (transport->is_connected () &&
+      transport->wait_strategy ()->register_handler () != 0)
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) transport->purge_entry ();
+
+      // Close the handler.
+      (void) transport->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - SHMIOP_Connector [%d]::make_connection, "
+                    "could not register the transport "
+                    "in the reactor.\n",
+                    transport->id ()));
 
       return 0;
     }
