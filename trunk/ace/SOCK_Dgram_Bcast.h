@@ -101,7 +101,7 @@ public:
                 int flags = 0) const;
 
   /**
-   * Broadcast an <iovec> of size <n> to <addr> as a datagram (note
+   * Broadcast an @a iovec of size @a n to @a addr as a datagram (note
    * that addr must be preassigned to the broadcast address of the
    * subnet...)
    */

@@ -89,10 +89,6 @@ private:
 #endif /* ACE_HAS_IPV6 */
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Sock_Connect.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include /**/ "ace/post.h"
 
 #endif  /* ACE_SOCK_CONNECT_H */

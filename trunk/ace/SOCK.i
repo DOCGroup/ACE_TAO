@@ -5,13 +5,13 @@
 
 #include "ace/OS_NS_sys_socket.h"
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK::~ACE_SOCK (void)
 {
   // ACE_TRACE ("ACE_SOCK::~ACE_SOCK");
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SOCK::set_option (int level,
 		      int option,
 		      void *optval,
@@ -24,7 +24,7 @@ ACE_SOCK::set_option (int level,
 
 // Provides access to the ACE_OS::getsockopt system call.
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SOCK::get_option (int level,
 		      int option,
 		      void *optval,

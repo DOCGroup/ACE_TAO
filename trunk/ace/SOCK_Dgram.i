@@ -3,15 +3,17 @@
 
 // SOCK_Dgram.i
 
+#include "ace/OS_NS_sys_socket.h"
+
 // Here's the simple-minded constructor.
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_Dgram::~ACE_SOCK_Dgram (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::~ACE_SOCK_Dgram");
@@ -19,7 +21,7 @@ ACE_SOCK_Dgram::~ACE_SOCK_Dgram (void)
 
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram::send (const void *buf,
 		      size_t n,
 		      const ACE_Addr &addr,
@@ -38,7 +40,7 @@ ACE_SOCK_Dgram::send (const void *buf,
 
 // <recvfrom> an n byte datagram (connectionless version).
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram::recv (void *buf,
 		      size_t n,
 		      ACE_Addr &addr,
@@ -59,7 +61,7 @@ ACE_SOCK_Dgram::recv (void *buf,
   return status;
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram::send (const iovec buffers[],
                       int buffer_count,
                       size_t &number_of_bytes_sent,
@@ -82,7 +84,7 @@ ACE_SOCK_Dgram::send (const iovec buffers[],
                          func);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram::recv (iovec buffers[],
                       int buffer_count,
                       size_t &number_of_bytes_recvd,
@@ -111,7 +113,7 @@ ACE_SOCK_Dgram::recv (iovec buffers[],
 
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram::send (const void *buf,
 		      size_t n,
 		      const ACE_Addr &addr,
@@ -136,7 +138,7 @@ ACE_SOCK_Dgram::send (const void *buf,
 
 // <recvfrom> an n byte datagram (connectionless version).
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram::recv (void *buf,
 		      size_t n,
 		      ACE_Addr &addr,

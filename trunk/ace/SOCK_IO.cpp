@@ -3,12 +3,12 @@
 
 #include "ace/SOCK_IO.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_IO.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include "ace/Handle_Set.h"
 #include "ace/OS_NS_sys_select.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/SOCK_IO.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_IO, "$Id$")
 

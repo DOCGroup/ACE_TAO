@@ -5,19 +5,19 @@
 
 // Send an n byte message to the connected socket.
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_IO::ACE_SOCK_IO (void)
 {
   // ACE_TRACE ("ACE_SOCK_IO::ACE_SOCK_IO");
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_IO::~ACE_SOCK_IO (void)
 {
   // ACE_TRACE ("ACE_SOCK_IO::~ACE_SOCK_IO");
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf,
                    size_t len,
                    int flags,
@@ -31,7 +31,7 @@ ACE_SOCK_IO::recv (void *buf,
                     timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf,
                    size_t len,
                    const ACE_Time_Value *timeout) const
@@ -43,7 +43,7 @@ ACE_SOCK_IO::recv (void *buf,
                     timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::recvv (iovec iov[],
                     int n,
                     const ACE_Time_Value *timeout) const
@@ -55,7 +55,7 @@ ACE_SOCK_IO::recvv (iovec iov[],
                      timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::recv (iovec iov[],
                    size_t n,
                    const ACE_Time_Value *timeout) const
@@ -66,7 +66,7 @@ ACE_SOCK_IO::recv (iovec iov[],
                       timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::recv (iovec *io_vec,
                    const ACE_Time_Value *timeout) const
 {
@@ -75,7 +75,7 @@ ACE_SOCK_IO::recv (iovec *io_vec,
                       timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf,
                    size_t n,
                    ACE_OVERLAPPED *overlapped) const
@@ -87,7 +87,7 @@ ACE_SOCK_IO::recv (void *buf,
                        overlapped);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf,
                    size_t len,
                    int flags,
@@ -101,7 +101,7 @@ ACE_SOCK_IO::send (const void *buf,
                     timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf,
                    size_t len,
                    const ACE_Time_Value *timeout) const
@@ -113,7 +113,7 @@ ACE_SOCK_IO::send (const void *buf,
                     timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::sendv (const iovec iov[],
                     int n,
                     const ACE_Time_Value *timeout) const
@@ -125,7 +125,7 @@ ACE_SOCK_IO::sendv (const iovec iov[],
                      timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::send (const iovec iov[],
                    size_t n,
                    const ACE_Time_Value *timeout) const
@@ -136,7 +136,7 @@ ACE_SOCK_IO::send (const iovec iov[],
                       timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf,
                    size_t n,
                    ACE_OVERLAPPED *overlapped) const
