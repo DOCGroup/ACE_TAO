@@ -1,12 +1,57 @@
+Thu May 20 10:36:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * DnC/Core/CCM_Base.idl
+        * DnC/Core/CCM_Component.idl
+        * DnC/Core/CCM_Container.idl
+        * DnC/Core/CCM_Container_Ex.idl
+        * DnC/Core/CCM_Core.mpc
+        * DnC/Core/CCM_Deployment.idl
+        * DnC/Core/CCM_Event.idl
+        * DnC/Core/CCM_Transaction.idl
+        * DnC/Core/CIAO_Client_Export.h
+        * DnC/Core/CIAO_Container_Export.h
+        * DnC/Core/CIAO_Server_Export.h
+        * DnC/Core/CIAO_Value.idl
+        * DnC/Core/CIAO_common.h
+        * DnC/Core/Client_init.cpp
+        * DnC/Core/Client_init.h
+        * DnC/Core/ComponentInstallation_Impl.cpp
+        * DnC/Core/ComponentInstallation_Impl.h
+        * DnC/Core/ComponentInstallation_Impl.inl
+        * DnC/Core/ComponentServer_Impl.cpp
+        * DnC/Core/ComponentServer_Impl.h
+        * DnC/Core/ComponentServer_Impl.inl
+        * DnC/Core/Component_Base.idl
+        * DnC/Core/Components.idl
+        * DnC/Core/Container_Base.cpp
+        * DnC/Core/Container_Base.h
+        * DnC/Core/Container_Base.inl
+        * DnC/Core/Container_Base.pidl
+        * DnC/Core/Container_Impl.cpp
+        * DnC/Core/Container_Impl.h
+        * DnC/Core/Container_Impl.inl
+        * DnC/Core/Cookies.cpp
+        * DnC/Core/Cookies.h
+        * DnC/Core/Cookies.inl
+        * DnC/Core/CosPersistentState.idl
+        * DnC/Core/Object_Set_T.cpp
+        * DnC/Core/Object_Set_T.h
+        * DnC/Core/Object_Set_T.inl
+        * DnC/Core/Server_init.cpp
+        * DnC/Core/Server_init.h
+        * DnC/Core/Version.h
+
+	 Finished refactoring the Core part of CIAO.
+
 Wed May 19 15:15:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCCM\DiffServ: 
+	* tests\RTCCM\DiffServ:
 
 	  Added a new DiffServ test. This test is similar to the
 	  RTCORBA/DiffServ test but uses components instead of a client
 	  and server.
 
-	  Here are the new files:	
+	  Here are the new files:
 
 	  - Controller/Controller.cpp
 	  - Controller/Controller.mpc
@@ -40,7 +85,7 @@ Wed May 19 15:15:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  - descriptors/default.cad
 	  - descriptors/remote.cad
 	  - descriptors/rtsvc.conf
-	  - descriptors/test.dat	
+	  - descriptors/test.dat
 
 Tue May 18 23:20:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
