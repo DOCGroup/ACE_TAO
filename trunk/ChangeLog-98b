@@ -1,13 +1,13 @@
 Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/test_config.h: Don't close the ofstream before opening the
-	  log stream in ACE_APPEND_LOG on Win32.  It it not necessary
-	  because Win32 doesn't have fork anyway and it somehow confuses
-	  Win32 (becuase no file was openen at that point.)
+        * tests/test_config.h: Don't close the ofstream before opening the
+          log stream in ACE_APPEND_LOG on Win32.  It it not necessary
+          because Win32 doesn't have fork anyway and it somehow confuses
+          Win32 (becuase no file was openen at that point.)
 
-	* performance-tests/Makefile: Temporarily removed Synch-Benchmark
-	  from the targets.  It should be added back once the work is
-	  done.
+        * performance-tests/Makefile: Temporarily removed Synch-Benchmark
+          from the targets.  It should be added back once the work is
+          done.
 
 Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -32,6 +32,17 @@ Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/basic_perf.cpp (per_iteration): use
           ACE_CU64_TO_CU32 for narrowing the const ACE_UIN64 argument.
+
+        * ace/config-sunos5.5.h: added ACE_HAS_ANSI_CASTS with Sun C++ 4.2.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: added
+          -features=castop to CCFLAGS, to enable use of ANSI casts.
+
+          Thanks to  J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for recommending the above two changes.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Added
+          support for rtti=1 option to make, to optionally enable RTTI.
 
 Fri Jun 26 11:39:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
