@@ -15,6 +15,18 @@
 
 #include "TestS.h"
 
+#if defined (_MSC_VER)
+# if (_MSC_VER >= 1200)
+#  pragma warning(push)
+# endif /* _MSC_VER >= 1200 */
+# pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
+/// Implement the Test::Big_Reply interface
+/**
+ * Simply return a Big_Reply
+ */
+
 class Big_Reply_i
   : public virtual POA_Test::Big_Reply
   , public virtual PortableServer::RefCountServantBase
@@ -33,6 +45,7 @@ public:
 
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   /// Our local ORB ptr
   CORBA::ORB_ptr orb_;
