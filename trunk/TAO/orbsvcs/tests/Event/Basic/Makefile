@@ -376,6 +376,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
@@ -1012,6 +1013,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
@@ -1355,6 +1357,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.i \

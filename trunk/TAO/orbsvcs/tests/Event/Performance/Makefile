@@ -374,6 +374,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
@@ -695,8 +696,8 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i
+ $(ACE_ROOT)/ace/Arg_Shifter.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

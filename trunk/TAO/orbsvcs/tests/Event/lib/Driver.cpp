@@ -47,7 +47,9 @@ EC_Driver::EC_Driver (void)
      module_factory_ (0),
 #endif
      scheduler_impl_ (0),
-     ec_impl_ (0)
+     ec_impl_ (0),
+     busy_hwm_ (TAO_EC_DEFAULT_BUSY_HWM),
+     max_write_delay_ (TAO_EC_DEFAULT_MAX_WRITE_DELAY)
 {
   TAO_EC_Default_Factory::init_svcs ();
 }

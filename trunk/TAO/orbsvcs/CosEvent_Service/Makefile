@@ -55,24 +55,23 @@ CosEvent_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  CosEvent_Service.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -114,6 +113,8 @@ CosEvent_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -328,39 +329,14 @@ CosEvent_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
@@ -371,83 +347,48 @@ CosEvent_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
- $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor_T.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.h \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Select_Reactor_Base.i \
- $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(ACE_ROOT)/ace/Select_Reactor.i \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/EventChannel_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Basic_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Basic_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Default_Factory.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

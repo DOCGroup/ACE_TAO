@@ -25,9 +25,8 @@ system ("Shutdown -verbose -suppliers 5 -consumers 5");
 print STDERR "\n\nComplex event channel test,",
   "multiple ECs connected through gateways\n";
 system ("Observer -ORBsvcconf observer.conf"
-	." -consumer_tshift 0 -consumers 5"
-	." -supplier_tshift 0 -suppliers 2"
-	." -burstsize 10 -burstcount 10 -burstpause 0"
-	." -busyhwm 1024 -maxwritedelay 1024");
+        ." -consumer_tshift 0 -consumers 5"
+        ." -supplier_tshift 0 -suppliers 2"
+        ." -burstsize 10 -burstcount 10 -burstpause 0");
 
 exit 0;
