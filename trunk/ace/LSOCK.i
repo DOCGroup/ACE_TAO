@@ -7,6 +7,7 @@
 
 ASYS_INLINE
 ACE_LSOCK::ACE_LSOCK (void)
+  : aux_handle_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_LSOCK::ACE_LSOCK");
 }

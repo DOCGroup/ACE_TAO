@@ -6,10 +6,10 @@
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 ACE_INLINE
 ACE_At_Thread_Exit::ACE_At_Thread_Exit()
-  : td_(0),
-    was_applied_(0),
-    is_owner_(1)
-
+  : next_ (0),
+    td_ (0),
+    was_applied_ (0),
+    is_owner_ (1)
 {
 }
 
@@ -97,7 +97,9 @@ ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
     thr_handle_ (ACE_OS::NULL_hthread),
     grp_id_ (0),
     thr_state_ (ACE_Thread_Manager::ACE_THR_IDLE),
-    task_ (0)
+    task_ (0),
+    next_ (0),
+    prev_ (0)
 {
 }
 
