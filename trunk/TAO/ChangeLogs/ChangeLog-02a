@@ -1,3 +1,11 @@
+Wed Mar  7 10:50:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_operation/operation_cs.cpp:
+
+          Broke up a chain of generated calls in the stub
+          operation implementation into separate statements,
+          and inserted a needed ACE_CHECK.
+
 Wed Mar  7 08:33:39 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * utils/wxNamingViewer/wxNamingViewer.dsp:
