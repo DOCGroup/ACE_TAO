@@ -55,9 +55,7 @@ be_decl::be_decl (void)
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_decl_gen_ (I_FALSE),
-    flat_name_ (0),
-    size_type_ (be_decl::SIZE_UNKNOWN),
-    has_constructor_ (I_FALSE)
+    flat_name_ (0)
 {
 }
 
@@ -79,49 +77,13 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
-    flat_name_ (0),
-    size_type_ (be_decl::SIZE_UNKNOWN),
-    has_constructor_ (I_FALSE)
+    flat_name_ (0)
 {
 }
 
 // Destructor
 be_decl::~be_decl (void)
 {
-}
-
-// Return our size type.
-be_decl::SIZE_TYPE
-be_decl::size_type (void)
-{
-  if (this->size_type_ == be_decl::SIZE_UNKNOWN)
-    {
-      (void) this->compute_size_type ();
-    }
-
-  return this->size_type_;
-}
-
-// Set our size type and that of all our ancestors.
-void
-be_decl::size_type (be_decl::SIZE_TYPE st)
-{
-  // Precondition - you cannot set somebody's sizetype to unknown.
-  ACE_ASSERT (st != be_decl::SIZE_UNKNOWN);
-
-  // Size type can be VARIABLE or FIXED.
-  if (this->size_type_ == be_decl::SIZE_UNKNOWN) // not set yet
-    {
-      this->size_type_ = st; // set it
-    }
-  else if ((this->size_type_ == be_decl::FIXED)
-           && (st == be_decl::VARIABLE))
-    {
-      // Once we are VARIABLE, we cannot be FIXED. But if we were FIXED and then
-      // get overwritten to VARIABLE, it is fine. Such a situation occurs only
-      // when setting the sizes of structures and unions.
-      this->size_type_ = st;
-    }
 }
 
 void
@@ -374,13 +336,6 @@ be_decl::is_nested (void)
   return I_FALSE;
 }
 
-// Compute the size type of the node in question
-int
-be_decl::compute_size_type (void)
-{
-  return 0;
-}
-
 // Return the scope created by this node (if one exists, else NULL).
 be_scope *
 be_decl::scope (void)
@@ -591,24 +546,6 @@ int
 be_decl::accept (be_visitor *visitor)
 {
   return visitor->visit_decl (this);
-}
-
-idl_bool
-be_decl::has_constructor (void)
-{
-  return this->has_constructor_;
-}
-
-void
-be_decl::has_constructor (idl_bool value)
-{
-  // Similarly to be_decl::size_type_, once this
-  // gets set to I_TRUE, we don't want it to
-  // change back.
-  if (this->has_constructor_ == 0)
-    {
-      this->has_constructor_ = value;
-    }
 }
 
 // Narrowing methods.

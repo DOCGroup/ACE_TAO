@@ -96,7 +96,7 @@ be_union::gen_var_defn (char *)
       << " &);" << be_nl;
 
   // Fixed-size types only.
-  if (this->size_type () == be_decl::FIXED)
+  if (this->size_type () == AST_Type::FIXED)
     {
       *ch << namebuf << " (const " << this->local_name ()
           << " &); // fixed-size types only" << be_nl;
@@ -114,7 +114,7 @@ be_union::gen_var_defn (char *)
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
 
   // Fixed-size types only.
-  if (this->size_type () == be_decl::FIXED)
+  if (this->size_type () == AST_Type::FIXED)
     {
       *ch << namebuf << " &operator= (const " << this->local_name ()
           << " &); // fixed-size types only" << be_nl;
@@ -131,7 +131,7 @@ be_union::gen_var_defn (char *)
   *ch << "operator " << this->local_name () << " &();" << be_nl;
   *ch << "operator " << this->local_name () << " &() const;" << be_nl;
 
-  if (this->size_type () == be_decl::VARIABLE)
+  if (this->size_type () == AST_Type::VARIABLE)
     {
       *ch << "  // Variable size types only." << be_nl;
       *ch << "operator " << this->local_name ()
@@ -143,7 +143,7 @@ be_union::gen_var_defn (char *)
 
   // The return types of in, out, inout, and _retn are based on the parameter
   // passing rules and the base type.
-  if (this->size_type () == be_decl::FIXED)
+  if (this->size_type () == AST_Type::FIXED)
     {
       *ch << "const " << local_name () << " &in (void) const;" << be_nl;
       *ch << this->local_name () << " &inout (void);" << be_nl;
@@ -241,7 +241,7 @@ be_union::gen_var_impl (char *,
   *ci << "}\n\n";
 
   // Fixed-size types only.
-  if (this->size_type () == be_decl::FIXED)
+  if (this->size_type () == AST_Type::FIXED)
     {
       *ci << "// fixed-size types only" << be_nl;
       *ci << "ACE_INLINE" << be_nl;
@@ -309,7 +309,7 @@ be_union::gen_var_impl (char *,
       << "}\n\n";
 
   // Fixed-size types only.
-  if (this->size_type () == be_decl::FIXED)
+  if (this->size_type () == AST_Type::FIXED)
     {
       ci->indent ();
       *ci << "// fixed-size types only" << be_nl;
@@ -382,7 +382,7 @@ be_union::gen_var_impl (char *,
   *ci << "}\n\n";
 
   // Variable-size types only.
-  if (this->size_type () == be_decl::VARIABLE)
+  if (this->size_type () == AST_Type::VARIABLE)
     {
       ci->indent ();
       *ci << "// variable-size types only" << be_nl;
@@ -417,7 +417,7 @@ be_union::gen_var_impl (char *,
 
   // The out and _retn are handled differently based on our size type.
   ci->indent ();
-  if (this->size_type () == be_decl::VARIABLE)
+  if (this->size_type () == AST_Type::VARIABLE)
     {
       *ci << "// mapping for variable size " << be_nl;
       *ci << "ACE_INLINE ::" << this->name () << " *&" << be_nl;
@@ -685,15 +685,16 @@ be_union::compute_size_type (void)
     {
       // Get the next AST decl node.
       AST_Decl *d = si.item ();
-      be_decl *bd = be_decl::narrow_from_decl (d);
+      AST_Field *f = AST_Field::narrow_from_decl (d);
 
-      if (bd != 0)
+      if (f != 0)
         {
+          AST_Type *t = f->field_type ();
           // Our sizetype depends on the sizetype of our members. Although
           // previous value of sizetype may get overwritten, we are
           // guaranteed by the "size_type" call that once the value reached
           // be_decl::VARIABLE, nothing else can overwrite it.
-          this->size_type (bd->size_type ());
+          this->size_type (t->size_type ());
         }
       else
         {

@@ -161,7 +161,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
 
       // An out defn is generated only for a variable length struct
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         {
           if (this->gen_out_defn (node) == -1)
             {
@@ -351,7 +351,7 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   *os << "operator " << namebuf << "_slice * const &() const;"
       << be_nl;
 
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << "operator " << namebuf << "_slice *&();" << be_nl;
     }
@@ -370,7 +370,7 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   *os << "// in, inout, out, _retn " << be_nl;
   *os << "const " << namebuf << "_slice *in (void) const;" << be_nl;
 
-  if (node->size_type () == be_decl::FIXED)
+  if (node->size_type () == AST_Type::FIXED)
     {
       *os << namebuf << "_slice *inout (void);" << be_nl;
     }

@@ -92,6 +92,11 @@ int be_visitor::visit_structure (be_structure *)
   return 0;
 }
 
+int be_visitor::visit_structure_fwd (be_structure_fwd *)
+{
+  return 0;
+}
+
 int be_visitor::visit_exception (be_exception *)
 {
   return 0;
@@ -128,6 +133,11 @@ int be_visitor::visit_attribute (be_attribute *)
 }
 
 int be_visitor::visit_union (be_union *)
+{
+  return 0;
+}
+
+int be_visitor::visit_union_fwd (be_union_fwd *)
 {
   return 0;
 }

@@ -127,7 +127,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_LABEL_TYPE:
       return "label type incompatible with union discriminator type, ";
     case UTL_Error::EIDL_ILLEGAL_ADD:
-      return "illegal add operation, ";
+      return "forward declared type may be used only as a sequence element, ";
     case UTL_Error::EIDL_ILLEGAL_USE:
       return "illegal type used in expression, ";
     case UTL_Error::EIDL_ILLEGAL_RAISES:
@@ -246,7 +246,7 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 {
   switch (ps) {
   case IDL_GlobalData::PS_NoState:
-    return "Statement can not be parsed";
+    return "Statement cannot be parsed";
   case IDL_GlobalData::PS_TypeDeclSeen:
     return "Malformed typedef declaration";
   case IDL_GlobalData::PS_ConstDeclSeen:
@@ -281,7 +281,7 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following interface identifier";
   case IDL_GlobalData::PS_InheritSpecSeen:
     return "Missing '{' or illegal syntax following inheritance spec";
-  case IDL_GlobalData::PS_ForwardDeclSeen:
+  case IDL_GlobalData::PS_InterfaceForwardSeen:
     return "Missing ';' following forward interface declaration";
   case IDL_GlobalData::PS_InterfaceSqSeen:
     return "Illegal syntax following interface '{' opener";
@@ -902,7 +902,7 @@ UTL_Error::ambiguous (UTL_Scope *s,
 
 // Report a forward declared interface which was never defined.
 void
-UTL_Error::fwd_decl_not_defined (AST_Interface *d)
+UTL_Error::fwd_decl_not_defined (AST_Type *d)
 {
   idl_error_header (EIDL_DECL_NOT_DEFINED,
                     d->line (),

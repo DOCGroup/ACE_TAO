@@ -171,7 +171,7 @@ int be_visitor_args_invoke_cs::visit_array (be_array *node)
           *os << "_tao_argument_" << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
+          if (node->size_type () == AST_Type::VARIABLE)
             {
               *os << "_tao_argument_" << arg->local_name ();
             }
@@ -707,7 +707,7 @@ int be_visitor_args_invoke_cs::visit_structure (be_structure *node)
           *os << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
+          if (node->size_type () == AST_Type::VARIABLE)
             *os << "*" << arg->local_name () << ".ptr ()";
           else
             *os << arg->local_name ();
@@ -753,7 +753,7 @@ int be_visitor_args_invoke_cs::visit_union (be_union *node)
           *os << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
+          if (node->size_type () == AST_Type::VARIABLE)
             *os << "*" << arg->local_name () << ".ptr ()";
           else
             *os << arg->local_name ();

@@ -54,13 +54,6 @@ be_enum_val::destroy (void)
   this->be_decl::destroy ();
 }
 
-int
-be_enum_val::compute_size_type (void)
-{
-  this->size_type_ = be_decl::FIXED;
-  return 0;
-}
-
 // Narrowing
 IMPL_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl)
 IMPL_NARROW_FROM_DECL (be_enum_val)

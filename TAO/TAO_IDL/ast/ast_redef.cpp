@@ -89,7 +89,9 @@ can_be_redefined (AST_Decl *d)
     case AST_Decl::NT_array:
     case AST_Decl::NT_sequence:
     case AST_Decl::NT_union:
+    case AST_Decl::NT_union_fwd:
     case AST_Decl::NT_struct:
+    case AST_Decl::NT_struct_fwd:
     case AST_Decl::NT_enum:
     case AST_Decl::NT_typedef:
       return I_TRUE;

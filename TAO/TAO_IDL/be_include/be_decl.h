@@ -36,15 +36,6 @@ class be_decl : public virtual AST_Decl
   //    interface.
   //
 public:
-  enum SIZE_TYPE
-  {
-    SIZE_UNKNOWN,
-    FIXED,
-    VARIABLE
-  };
-  // Undicates if we are fixed size or variable. Most useful for structs,
-  // unions, and arrays.
-
   be_decl (void);
   // Default constructor.
 
@@ -54,12 +45,6 @@ public:
 
   ~be_decl (void);
   // Destructor.
-
-  virtual void size_type (SIZE_TYPE);
-  // Set the size type.
-
-  virtual SIZE_TYPE size_type (void);
-  // Return our size type.
 
   const char *flat_name (void);
   // Return the flattened full scoped name.
@@ -87,12 +72,6 @@ public:
 
   // Visiting
   virtual int accept (be_visitor *visitor);
-
-  idl_bool has_constructor (void);
-  // Accessor for protected member.
-
-  void has_constructor (idl_bool value);
-  // Mutator for protected member.
 
   virtual void destroy (void);
   // Cleanup function.
@@ -134,9 +113,6 @@ public:
   DEF_NARROW_FROM_DECL (be_decl);
 
 protected:
-  virtual int compute_size_type (void);
-  // Determine our size type and set it if it is unknown.
-
   virtual void compute_flat_name (void);
   // Compute the flattened fully scoped name.
 
@@ -159,13 +135,6 @@ protected:
 
   char *flat_name_;
   // Flattened fully scoped name.
-
-  SIZE_TYPE size_type_;
-  // Whether we are fixed or variable size (by default fixed).
-
-  idl_bool has_constructor_;
-  // Attribute that helps a union determine whether a member
-  // should be included by value or by reference.
 };
 
 #endif // if !defined

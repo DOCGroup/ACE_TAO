@@ -222,6 +222,10 @@ SOURCE=.\be\be_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_sunsoft.cpp
 # End Source File
 # Begin Source File
@@ -243,6 +247,10 @@ SOURCE=.\be\be_union.cpp
 # Begin Source File
 
 SOURCE=.\be\be_union_branch.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_union_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -342,6 +350,10 @@ SOURCE=.\be\be_visitor_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_typecode.cpp
 # End Source File
 # Begin Source File
@@ -355,6 +367,10 @@ SOURCE=.\be\be_visitor_union.cpp
 # Begin Source File
 
 SOURCE=.\be\be_visitor_union_branch.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_union_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -490,6 +506,10 @@ SOURCE=.\be_include\be_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_sunsoft.h
 # End Source File
 # Begin Source File
@@ -507,6 +527,10 @@ SOURCE=.\be_include\be_union.h
 # Begin Source File
 
 SOURCE=.\be_include\be_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_union_fwd.h
 # End Source File
 # Begin Source File
 
@@ -606,6 +630,10 @@ SOURCE=.\be_include\be_visitor_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_typecode.h
 # End Source File
 # Begin Source File
@@ -619,6 +647,10 @@ SOURCE=.\be_include\be_visitor_union.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_union_fwd.h
 # End Source File
 # Begin Source File
 

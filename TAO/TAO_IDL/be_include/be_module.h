@@ -50,10 +50,6 @@ public:
   DEF_NARROW_METHODS3 (be_module, AST_Module, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_module);
   DEF_NARROW_FROM_SCOPE (be_module);
-
-protected:
-  virtual int compute_size_type (void);
-  // Compute the size type if it is unknown.
 };
 
 #endif

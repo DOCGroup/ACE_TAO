@@ -371,7 +371,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                             -1);
         }
 
-      if (bt->size_type () == be_decl::VARIABLE
+      if (bt->size_type () == AST_Type::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
           *os << " _tao_retval_info = _tao_retval._retn ();" << be_nl

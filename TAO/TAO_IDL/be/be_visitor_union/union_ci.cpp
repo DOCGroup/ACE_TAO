@@ -107,7 +107,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       // _out impl
       os->gen_ifdef_macro (node->flat_name (), "_out");
 
-      if (node->size_type () == be_decl::VARIABLE
+      if (node->size_type () == AST_Type::VARIABLE
           && node->gen_out_impl () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

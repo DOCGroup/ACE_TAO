@@ -158,7 +158,19 @@ be_visitor_sequence_buffer_type::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_sequence_buffer_type::visit_structure_fwd (be_structure_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_buffer_type::visit_union (be_union *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_buffer_type::visit_union_fwd (be_union_fwd *node)
 {
   return this->visit_node (node);
 }

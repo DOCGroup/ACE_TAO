@@ -29,13 +29,9 @@ class AST_PredefinedType;
 class AST_Module;
 class AST_Interface;
 class AST_InterfaceFwd;
-
-// These classes don't exist now, but they may someday.
-//  class AST_Valuetype;
-//  class AST_ValuetypeFwd;
 class AST_Factory;
-
 class AST_Structure;
+class AST_StructureFwd;
 class AST_Exception;
 class AST_Expression;
 class AST_Enum;
@@ -44,6 +40,7 @@ class AST_Field;
 class AST_Argument;
 class AST_Attribute;
 class AST_Union;
+class AST_UnionFwd;
 class AST_UnionBranch;
 class AST_UnionLabel;
 class AST_Constant;
@@ -109,6 +106,9 @@ public:
   virtual int visit_structure (AST_Structure *node) = 0;
   // Visit a structure.
 
+  virtual int visit_structure_fwd (AST_StructureFwd *node) = 0;
+  // Visit a structure.
+
   virtual int visit_exception (AST_Exception *node) = 0;
   // Visit exception
 
@@ -131,6 +131,9 @@ public:
   // Visit an attribute.
 
   virtual int visit_union (AST_Union *node) = 0;
+  // Visit union.
+
+  virtual int visit_union_fwd (AST_UnionFwd *node) = 0;
   // Visit union.
 
   virtual int visit_union_branch (AST_UnionBranch *node) = 0;

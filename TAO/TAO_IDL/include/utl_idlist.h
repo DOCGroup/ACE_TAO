@@ -110,6 +110,9 @@ public:
 
   Identifier *last_component (void);
   // Get last element in this list.
+
+  int compare (UTL_IdList *other);
+  // Compares each component for equality.
 private:
   Identifier *pd_car_data;
 };

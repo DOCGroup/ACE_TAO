@@ -84,7 +84,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
                              "var_defn failed\n"),
                             -1);
         }
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         {
           if (this->gen_out_impl (node) == -1)
             {
@@ -249,7 +249,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}\n\n";
 
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       os->indent ();
       *os << "ACE_INLINE " << be_nl;
@@ -304,7 +304,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "}\n\n";
 
   os->indent ();
-  if (node->size_type () == be_decl::FIXED)
+  if (node->size_type () == AST_Type::FIXED)
     {
       *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
     }

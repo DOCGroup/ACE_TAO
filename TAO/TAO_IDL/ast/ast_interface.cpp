@@ -81,9 +81,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum.h"
 #include "ast_enum_val.h"
 #include "ast_union.h"
+#include "ast_union_fwd.h"
+#include "ast_structure_fwd.h"
 #include "ast_native.h"
 #include "ast_factory.h"
 #include "ast_visitor.h"
+#include "ast_extern.h"
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -170,7 +173,7 @@ AST_Interface::be_replace_operation (AST_Decl *old_op,
 void
 AST_Interface::be_add_operation (AST_Operation *op)
 {
-  fe_add_operation (op);
+  this->fe_add_operation (op);
 }
 
 // Add an AST_Constant node (a constant declaration) to this scope.
@@ -445,42 +448,66 @@ AST_Interface::fe_add_operation (AST_Operation *t)
 AST_Structure *
 AST_Interface::fe_add_structure (AST_Structure *t)
 {
-  AST_Decl *d = 0;
+  AST_Decl *predef = 0;
+  AST_StructureFwd *fwd = 0;
 
-  // Can't add to interface which was not yet defined.
-  if (!this->is_defined ())
+  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
-                                  this,
-                                  t);
-      return 0;
-    }
+      // Treat fwd declared interfaces specially
+      if (predef->node_type () == AST_Decl::NT_struct_fwd)
+        {
+          fwd = AST_StructureFwd::narrow_from_decl (predef);
 
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
+          if (fwd == 0)
+            {
+              return 0;
+            }
+
+          // Forward declared and not defined yet.
+          if (!fwd->is_defined ())
+            {
+              if (fwd->defined_in () == this)
+                {
+                  fwd->set_full_definition (t);
+                }
+              else
+                {
+                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
+                                              fwd,
+                                              t,
+                                              this);
+
+                  return 0;
+                }
+            }
+          // OK, not illegal redef of forward declaration. Now check whether.
+          // it has been referenced already.
+          else if (this->referenced (predef, t->local_name ()))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                          t,
+                                          this,
+                                          predef);
+
+              return 0;
+            }
+        }
+      else if (!can_be_redefined (predef))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
                                       this,
-                                      d);
+                                      predef);
+
           return 0;
         }
-
-      if (this->referenced (d, t->local_name ()))
+      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
                                       t,
                                       this,
-                                      d);
-          return 0;
-        }
+                                      predef);
 
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
           return 0;
         }
     }
@@ -493,6 +520,84 @@ AST_Interface::fe_add_structure (AST_Structure *t)
                            I_FALSE,
                            t->local_name ());
 
+  return t;
+}
+
+// Add this AST_StructureFwd node (a forward declaration of an IDL
+// struct) to this scope.
+AST_StructureFwd *
+AST_Interface::fe_add_structure_fwd (AST_StructureFwd *t)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+    {
+      AST_Decl::NodeType nt = d->node_type ();
+
+      // There used to be another check here ANDed with the one below:
+      // d->defined_in () == this. But lookup_for_add() calls only
+      // lookup_by_name_local(), which does not bump up the scope.
+      if (nt == AST_Decl::NT_struct_fwd)
+        {
+          // It's legal to forward declare something more than once,
+          // but we need only one entry in the scope for lookup.
+          AST_StructureFwd *fd = AST_StructureFwd::narrow_from_decl (d);
+          t->destroy ();
+          delete t;
+          t = 0;
+          return fd;
+        }
+      else if (nt == AST_Decl::NT_struct)
+        {
+          AST_Structure *s = AST_Structure::narrow_from_decl (d);
+          t->set_full_definition (s);
+
+          if (t->added () == 0)
+            {
+              t->set_added (1);
+              this->add_to_scope (t);
+
+              // Must check later that all struct and union forward declarations
+              // are defined in the same IDL file.
+              AST_record_fwd_decl (t);
+            }
+
+          return t;
+        }
+      else
+        {
+          if (!can_be_redefined (d)) 
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                          t,
+                                          this,
+                                          d);
+              return 0;
+            }
+
+          if (this->referenced (d, t->local_name ()))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                          t,
+                                          this,
+                                          d);
+              return 0;
+            }
+        }
+    }
+
+  // Add it to scope
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols
+  this->add_to_referenced (t,
+                           I_FALSE,
+                           t->local_name ());
+
+  // Must check later that all struct and union forward declarations
+  // are defined in the same IDL file.
+  AST_record_fwd_decl (t);
   return t;
 }
 
@@ -555,42 +660,66 @@ AST_Interface::fe_add_enum (AST_Enum *t)
 AST_Union *
 AST_Interface::fe_add_union (AST_Union *t)
 {
-  AST_Decl *d = 0;
+  AST_Decl *predef = 0;
+  AST_UnionFwd *fwd = 0;
 
-  // Can't add to interface which was not yet defined.
-  if (!this->is_defined ())
+  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
-                                  this,
-                                  t);
-      return 0;
-    }
+      // Treat fwd declared interfaces specially
+      if (predef->node_type () == AST_Decl::NT_union_fwd)
+        {
+          fwd = AST_UnionFwd::narrow_from_decl (predef);
 
-  // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
-    {
-      if (!can_be_redefined (d))
+          if (fwd == 0)
+            {
+              return 0;
+            }
+
+          // Forward declared and not defined yet.
+          if (!fwd->is_defined ())
+            {
+              if (fwd->defined_in () == this)
+                {
+                  fwd->set_full_definition (t);
+                }
+              else
+                {
+                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
+                                              fwd,
+                                              t,
+                                              this);
+
+                  return 0;
+                }
+            }
+          // OK, not illegal redef of forward declaration. Now check whether.
+          // it has been referenced already.
+          else if (this->referenced (predef, t->local_name ()))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                          t,
+                                          this,
+                                          predef);
+
+              return 0;
+            }
+        }
+      else if (!can_be_redefined (predef))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
                                       this,
-                                      d);
+                                      predef);
+
           return 0;
         }
-
-      if (this->referenced (d, t->local_name ()))
+      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
                                       t,
                                       this,
-                                      d);
-          return 0;
-        }
+                                      predef);
 
-      if (t->has_ancestor (d))
-        {
-          idl_global->err ()->redefinition_in_scope (t,
-                                                     d);
           return 0;
         }
     }
@@ -603,6 +732,84 @@ AST_Interface::fe_add_union (AST_Union *t)
                            I_FALSE,
                            t->local_name ());
 
+  return t;
+}
+
+// Add this AST_UnionFwd node (a forward declaration of an IDL
+// union) to this scope.
+AST_UnionFwd *
+AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
+{
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+    {
+      AST_Decl::NodeType nt = d->node_type ();
+
+      // There used to be another check here ANDed with the one below:
+      // d->defined_in () == this. But lookup_for_add() calls only
+      // lookup_by_name_local(), which does not bump up the scope.
+      if (nt == AST_Decl::NT_union_fwd)
+        {
+          // It's legal to forward declare something more than once,
+          // but we need only one entry in the scope for lookup.
+          AST_UnionFwd *fd = AST_UnionFwd::narrow_from_decl (d);
+          t->destroy ();
+          delete t;
+          t = 0;
+          return fd;
+        }
+      else if (nt == AST_Decl::NT_union)
+        {
+          AST_Union *s = AST_Union::narrow_from_decl (d);
+          t->set_full_definition (s);
+
+          if (t->added () == 0)
+            {
+              t->set_added (1);
+              this->add_to_scope (t);
+
+              // Must check later that all struct and union forward declarations
+              // are defined in the same IDL file.
+              AST_record_fwd_decl (t);
+            }
+
+          return t;
+        }
+      else
+        {
+          if (!can_be_redefined (d)) 
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                          t,
+                                          this,
+                                          d);
+              return 0;
+            }
+
+          if (this->referenced (d, t->local_name ()))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                          t,
+                                          this,
+                                          d);
+              return 0;
+            }
+        }
+    }
+
+  // Add it to scope
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols
+  this->add_to_referenced (t,
+                           I_FALSE,
+                           t->local_name ());
+
+  // Must check later that all struct and union forward declarations
+  // are defined in the same IDL file.
+  AST_record_fwd_decl (t);
   return t;
 }
 
@@ -935,8 +1142,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           // a new pointer in created, and the first term below will be
           // true. In that case, the scoped names must be compared.
           if (fd->defined_in () != s
-              && !AST_Interface::compare_names (fd,
-                                                i))
+              && i->name ()->compare (fd->name ()) != 0)
             {
               idl_global->err ()->error2 (UTL_Error::EIDL_SCOPE_CONFLICT,
                                           i,
@@ -1042,42 +1248,6 @@ void
 AST_Interface::set_n_inherits_flat (long i)
 {
   this->pd_n_inherits_flat = i;
-}
-
-// Get the scoped names and, if they are the same
-// length, iterate over them, comparing each term.
-idl_bool
-AST_Interface::compare_names (AST_Interface *that,
-                              AST_Interface *other)
-{
-  UTL_ScopedName *that_name = that->name ();
-  UTL_ScopedName *other_name = other->name ();
-
-  long that_length = that_name->length ();
-
-  if (that_length != other_name->length ())
-    {
-      return I_FALSE;
-    }
-
-  Identifier *that_id = 0;
-  Identifier *other_id = 0;
-
-  for (UTL_IdListActiveIterator that_iter (that_name), other_iter (other_name);
-       !that_iter.is_done ();
-       that_iter.next (), other_iter.next ())
-    {
-      that_id = that_iter.item ();
-      other_id = other_iter.item ();
-
-      if (ACE_OS::strcmp (that_id->get_string (),
-                          other_id->get_string ()))
-        {
-          return I_FALSE;
-        }
-    }
-
-  return I_TRUE;
 }
 
 void

@@ -34,7 +34,7 @@ be_valuetype::be_valuetype (void)
   : full_obv_skel_name_ (0)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
+  this->size_type (AST_Type::VARIABLE);
 
   AST_Module *m = AST_Module::narrow_from_scope (this->defined_in ());
 
@@ -79,7 +79,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
   // Check that redefine() copies all members.
 
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
+  this->size_type (AST_Type::VARIABLE);
 
   AST_Module *m = AST_Module::narrow_from_scope (this->defined_in ());
 

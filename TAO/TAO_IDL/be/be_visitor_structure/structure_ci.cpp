@@ -47,7 +47,7 @@ int be_visitor_structure_ci::visit_structure (be_structure *node)
                              "visit_structure - "
                              "codegen for _var failed\n"), -1);
         }
-      if (node->size_type () == be_decl::VARIABLE &&
+      if (node->size_type () == AST_Type::VARIABLE &&
           node->gen_out_impl () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

@@ -210,6 +210,10 @@ SOURCE=.\ast\ast_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_type.cpp
 # End Source File
 # Begin Source File
@@ -223,6 +227,10 @@ SOURCE=.\ast\ast_union.cpp
 # Begin Source File
 
 SOURCE=.\ast\ast_union_branch.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ast\ast_union_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -442,6 +450,10 @@ SOURCE=.\include\ast_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_type.h
 # End Source File
 # Begin Source File
@@ -455,6 +467,10 @@ SOURCE=.\include\ast_union.h
 # Begin Source File
 
 SOURCE=.\include\ast_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_union_fwd.h
 # End Source File
 # Begin Source File
 

@@ -88,7 +88,7 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
       *os << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         if (this->ctx_->state ()
             == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
           *os << arg->local_name ();
@@ -377,7 +377,7 @@ int be_visitor_args_upcall_ss::visit_structure (be_structure *node)
       *os << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         if (this->ctx_->state ()
             == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
           *os << arg->local_name ();
@@ -402,7 +402,7 @@ int be_visitor_args_upcall_ss::visit_union (be_union *node)
       *os << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         if (this->ctx_->state ()
             == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
           *os << arg->local_name ();

@@ -6,10 +6,10 @@
 //    TAO IDL
 //
 // = FILENAME
-//    be_interface.h
+//    be_interface_fwd.cpp
 //
 // = DESCRIPTION
-//    Extension of class AST_Interface_Fwd that provides additional means for C++
+//    Extension of class AST_InterfaceFwd that provides additional means for C++
 //    mapping of an interface.
 //
 // = AUTHOR
@@ -29,7 +29,7 @@ ACE_RCSID (be,
 be_interface_fwd::be_interface_fwd (void)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
+  this->size_type (AST_Type::VARIABLE);
 }
 
 be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
@@ -40,7 +40,7 @@ be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
               n)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
+  this->size_type (AST_Type::VARIABLE);
 }
 
 be_interface_fwd::~be_interface_fwd (void)

@@ -48,9 +48,11 @@ FILES = be/be_array \
         be/be_sequence \
         be/be_string \
         be/be_structure \
+        be/be_structure_fwd \
         be/be_type \
         be/be_typedef \
         be/be_union \
+        be/be_union_fwd \
         be/be_union_branch \
         be/be_union_label \
         be/be_generator \
@@ -84,9 +86,11 @@ FILES = be/be_array \
         be/be_visitor_scope \
         be/be_visitor_sequence \
         be/be_visitor_structure \
+        be/be_visitor_structure_fwd \
         be/be_visitor_typecode \
         be/be_visitor_typedef \
         be/be_visitor_union \
+        be/be_visitor_union_fwd \
         be/be_visitor_union_branch \
         be/be_tmplinst
 

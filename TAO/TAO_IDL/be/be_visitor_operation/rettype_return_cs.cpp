@@ -150,7 +150,7 @@ be_visitor_operation_rettype_return_cs::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << "_tao_retval._retn ()";
     }
@@ -185,7 +185,7 @@ be_visitor_operation_rettype_return_cs::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << "_tao_retval._retn ()";
     }

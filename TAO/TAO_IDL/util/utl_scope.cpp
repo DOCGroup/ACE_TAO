@@ -79,13 +79,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_concrete_type.h"
 #include "ast_sequence.h"
 #include "ast_string.h"
-#include "ast_structure.h"
+#include "ast_structure_fwd.h"
 #include "ast_exception.h"
 #include "ast_constant.h"
 #include "ast_attribute.h"
 #include "ast_operation.h"
 #include "ast_argument.h"
 #include "ast_union.h"
+#include "ast_union_fwd.h"
 #include "ast_union_branch.h"
 #include "ast_field.h"
 #include "ast_enum_val.h"
@@ -391,6 +392,28 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
   return 0;
 }
 
+idl_bool
+UTL_Scope::redef_clash (AST_Decl::NodeType new_nt,
+                        AST_Decl::NodeType scope_elem_nt)
+{
+  switch (new_nt)
+  {
+    case AST_Decl::NT_module:
+      return scope_elem_nt != AST_Decl::NT_module;
+    case AST_Decl::NT_struct:
+    case AST_Decl::NT_struct_fwd:
+      return scope_elem_nt != AST_Decl::NT_struct_fwd;
+    case AST_Decl::NT_union:
+    case AST_Decl::NT_union_fwd:
+      return scope_elem_nt != AST_Decl::NT_union_fwd;
+    case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
+      return scope_elem_nt != AST_Decl::NT_interface_fwd;
+    default:
+      return I_TRUE;
+  }
+}
+
 // Public operations.
 
 // Scope Management Protocol.
@@ -555,6 +578,18 @@ UTL_Scope::add_union (AST_Union *u)
   return u;
 }
 
+AST_UnionFwd *
+UTL_Scope::add_union_fwd (AST_UnionFwd *u)
+{
+  if (u == 0)
+    {
+      return 0;
+    }
+
+  u->set_added (I_TRUE);
+  return u;
+}
+
 AST_UnionBranch *
 UTL_Scope::add_union_branch (AST_UnionBranch *u)
 {
@@ -577,6 +612,18 @@ UTL_Scope::add_union_branch (AST_UnionBranch *u)
 
 AST_Structure *
 UTL_Scope::add_structure (AST_Structure *s)
+{
+  if (s == 0)
+    {
+      return 0;
+    }
+
+  s->set_added (I_TRUE);
+  return s;
+}
+
+AST_StructureFwd *
+UTL_Scope::add_structure_fwd (AST_StructureFwd *s)
 {
   if (s == 0)
     {
@@ -806,6 +853,12 @@ UTL_Scope::fe_add_union (AST_Union *)
   return 0;
 }
 
+AST_UnionFwd *
+UTL_Scope::fe_add_union_fwd (AST_UnionFwd *)
+{
+  return 0;
+}
+
 AST_UnionBranch *
 UTL_Scope::fe_add_union_branch (AST_UnionBranch *)
 {
@@ -814,6 +867,12 @@ UTL_Scope::fe_add_union_branch (AST_UnionBranch *)
 
 AST_Structure *
 UTL_Scope::fe_add_structure (AST_Structure *)
+{
+  return 0;
+}
+
+AST_StructureFwd *
+UTL_Scope::fe_add_structure_fwd (AST_StructureFwd *)
 {
   return 0;
 }
@@ -1267,9 +1326,11 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
         {
           if (index == 0)
             {
-              // Special case for forward declared interfaces.
-              // Look through the forward declaration and retrieve
-              // the full definition.
+              AST_Decl::NodeType nt = d->node_type ();
+
+              // Special case for forward declared interfaces,
+              // In this case, we want to return
+              // the full definition member, whether defined yet or not
               if (d->node_type () == AST_Decl::NT_interface_fwd)
                 {
                   d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
@@ -1708,9 +1769,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           // then only the top level of whatever scoped name
           // is used may clash with a local declaration.
           UTL_ScopedName *s = (*tmp)->name ();
-
           UTL_IdListActiveIterator iter (s);
-
           ref_name = iter.item ();
           ref_string = ref_name->get_string ();
 
@@ -1729,13 +1788,11 @@ UTL_Scope::add_to_scope (AST_Decl *e,
       // error, unless they're both modules (which can be
       // reopened) or we have a belated definition of a
       // forward-declared interface.
-      AST_Decl::NodeType nt = e->node_type ();
+      AST_Decl::NodeType new_nt = e->node_type ();
+      AST_Decl::NodeType scope_elem_nt = (*tmp)->node_type ();
 
       if (decl_name->compare (ref_name) == I_TRUE
-          && nt != AST_Decl::NT_module
-          && nt != AST_Decl::NT_interface_fwd
-          && ((*tmp)->node_type () != AST_Decl::NT_interface_fwd
-              || nt != AST_Decl::NT_interface))
+          && this->redef_clash (new_nt, scope_elem_nt) == I_TRUE)
         {
           idl_global->err ()->redef_error (decl_string,
                                            ref_string);
@@ -1894,14 +1951,16 @@ UTL_Scope::referenced (AST_Decl *e,
           return I_TRUE;
         }
 
-      if ((*tmp)->node_type () == AST_Decl::NT_interface_fwd
-          && e->node_type () == AST_Decl::NT_interface)
+      // Are we definging a forward declared struct, union, or interface,
+      // or reopening a module?
+      idl_bool forward_redef = this->redef_clash (e->node_type (),
+                                                  (*tmp)->node_type ());
+
+      if (forward_redef == I_FALSE)
         {
           member = (*tmp)->local_name ();
           test = e->local_name ();
 
-          // If we're just defining a forward
-          // declared interface, no need to go any further.
           if (member->compare (test) == I_TRUE)
             {
               return I_FALSE;

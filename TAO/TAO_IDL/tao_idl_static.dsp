@@ -95,15 +95,7 @@ SOURCE=.\driver\drv_args.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\driver\drv_init.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\driver\drv_preproc.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\driver\drv_private.cpp
 # End Source File
 # Begin Source File
 
@@ -116,10 +108,6 @@ SOURCE=.\tao_idl.cpp
 # Begin Source File
 
 SOURCE=.\include\drv_extern.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\include\drv_private.h
 # End Source File
 # End Group
 # End Target

@@ -44,7 +44,6 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
     {
       os = this->ctx_->stream ();
 
-      *os << "struct " << node->local_name () << ";" << be_nl;
       *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
       *os << "struct " << be_global->stub_export_macro () << " "
@@ -89,7 +88,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
       // A class is generated for an out defn only for a variable
       // length struct.
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         {
           if (node->gen_out_defn () == -1)
             {

@@ -75,6 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class AST_Root;
 class UTL_LabelList;
 class UTL_ExprList;
+class AST_StructureFwd;
+class AST_UnionFwd;
 
 // Defines base class for node generators.
 
@@ -114,14 +116,14 @@ public:
       idl_bool abstract
     );
 
-  // Create a node representing an valuetype.
+  // Create a node representing a valuetype.
   virtual AST_Interface *create_valuetype (
       UTL_ScopedName *n,
       AST_Interface **ih,
       long nih
     );
 
-  // Create a node representing a forward declaration of an valuetype.
+  // Create a node representing a forward declaration of a valuetype.
   virtual AST_InterfaceFwd *create_valuetype_fwd (
       UTL_ScopedName *n
     );
@@ -139,6 +141,9 @@ public:
       idl_bool local,
       idl_bool abstract
     );
+
+  // Create a node representing a forward declaration of a structure.
+  virtual AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n);
 
   // Create a node representing an enum.
   virtual AST_Enum *create_enum (UTL_ScopedName *n,
@@ -182,6 +187,9 @@ public:
                                    UTL_ScopedName *n,
                                    idl_bool local,
                                    idl_bool abstract);
+
+  // Create a node representing a forward declaration of a union.
+  virtual AST_UnionFwd *create_union_fwd (UTL_ScopedName *n);
 
   // Create a node representing one branch in a union.
   virtual AST_UnionBranch *create_union_branch (

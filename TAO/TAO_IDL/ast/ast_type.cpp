@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_type.h"
 #include "ast_visitor.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (ast, 
            ast_type, 
@@ -76,7 +77,9 @@ ACE_RCSID (ast,
 
 AST_Type::AST_Type (void)
   : ifr_added_ (0),
-    ifr_fwd_added_ (0)
+    ifr_fwd_added_ (0),
+    size_type_ (AST_Type::SIZE_UNKNOWN),
+    has_constructor_ (0)
 {
 }
 
@@ -85,7 +88,9 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
   : AST_Decl (nt,
               n),
     ifr_added_ (0),
-    ifr_fwd_added_ (0)
+    ifr_fwd_added_ (0),
+    size_type_ (AST_Type::SIZE_UNKNOWN),
+    has_constructor_ (0)
 {
 }
 
@@ -94,6 +99,47 @@ AST_Type::~AST_Type (void)
 }
 
 // Public operations.
+
+// Return our size type.
+AST_Type::SIZE_TYPE
+AST_Type::size_type (void)
+{
+  if (this->size_type_ == AST_Type::SIZE_UNKNOWN)
+    {
+      (void) this->compute_size_type ();
+    }
+
+  return this->size_type_;
+}
+
+// Set our size type and that of all our ancestors.
+void
+AST_Type::size_type (AST_Type::SIZE_TYPE st)
+{
+  // Precondition - you cannot set somebody's sizetype to unknown.
+  ACE_ASSERT (st != AST_Type::SIZE_UNKNOWN);
+
+  // Size type can be VARIABLE or FIXED.
+  if (this->size_type_ == AST_Type::SIZE_UNKNOWN) // not set yet
+    {
+      this->size_type_ = st; // set it
+    }
+  else if ((this->size_type_ == AST_Type::FIXED)
+           && (st == AST_Type::VARIABLE))
+    {
+      // Once we are VARIABLE, we cannot be FIXED. But if we were FIXED and then
+      // get overwritten to VARIABLE, it is fine. Such a situation occurs only
+      // when setting the sizes of structures and unions.
+      this->size_type_ = st;
+    }
+}
+
+// Compute the size type of the node in question
+int
+AST_Type::compute_size_type (void)
+{
+  return 0;
+}
 
 idl_bool
 AST_Type::in_recursion (AST_Type *)
@@ -132,6 +178,24 @@ void
 AST_Type::ifr_fwd_added (idl_bool val)
 {
   this->ifr_fwd_added_ = val;
+}
+
+idl_bool
+AST_Type::has_constructor (void)
+{
+  return this->has_constructor_;
+}
+
+void
+AST_Type::has_constructor (idl_bool value)
+{
+  // Similarly to be_decl::size_type_, once this
+  // gets set to I_TRUE, we don't want it to
+  // change back.
+  if (this->has_constructor_ == 0)
+    {
+      this->has_constructor_ = value;
+    }
 }
 
 int

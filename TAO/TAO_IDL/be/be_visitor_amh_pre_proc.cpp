@@ -204,7 +204,9 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                             0);
         }
 
-      if (d->node_type () == AST_Decl::NT_attr)
+      AST_Decl::NodeType nt = d->node_type ();
+
+      if (nt == AST_Decl::NT_attr)
         {
           be_attribute *attribute = be_attribute::narrow_from_decl (d);
 
@@ -213,7 +215,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
               return 0;
             }
         }
-      else
+      else if (nt == AST_Decl::NT_op)
         {
           be_operation* operation = be_operation::narrow_from_decl (d);
 
@@ -223,6 +225,10 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                                                        response_handler,
                                                        exception_holder);
             }
+        }
+      else
+        {
+          continue;
         }
     }
 
@@ -648,8 +654,9 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
         }
 
       be_decl *op = be_decl::narrow_from_decl (d);
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if (d->node_type () == AST_Decl::NT_attr)
+      if (nt == AST_Decl::NT_attr)
         {
           AST_Attribute *attribute = AST_Attribute::narrow_from_decl (d);
 
@@ -669,11 +676,15 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                             SET_OPERATION);
             }
         }
-      else
+      else if (nt == AST_Decl::NT_op)
         {
           this->create_raise_operation (op,
                                         excep_holder,
                                         NORMAL);
+        }
+      else
+        {
+          continue;
         }
     }
 

@@ -576,6 +576,70 @@ be_visitor_valuetype::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_valuetype::visit_structure_fwd (be_structure_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_VALUETYPE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_FWD_CH);
+        be_visitor_structure_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_VALUETYPE_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_IH:
+    case TAO_CodeGen::TAO_VALUETYPE_SI:
+    case TAO_CodeGen::TAO_VALUETYPE_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_IS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_valuetype::"
+                           "visit_structure_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype::"
+                         "visit_structure_fwd - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int
 be_visitor_valuetype::visit_union (be_union *node)
 {
   be_visitor_context ctx (*this->ctx_);
@@ -664,6 +728,70 @@ be_visitor_valuetype::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_union - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_valuetype::visit_union_fwd (be_union_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_VALUETYPE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_FWD_CH);
+        be_visitor_union_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_VALUETYPE_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_IH:
+    case TAO_CodeGen::TAO_VALUETYPE_SI:
+    case TAO_CodeGen::TAO_VALUETYPE_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_IS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_valuetype::"
+                           "visit_union_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype::"
+                         "visit_union_fwd - "
                          "failed to accept visitor\n"),  
                         -1);
     }

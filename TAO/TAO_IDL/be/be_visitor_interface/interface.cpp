@@ -966,6 +966,97 @@ be_visitor_interface::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_interface::visit_structure_fwd (be_structure_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_INTERFACE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_FWD_CH);
+        be_visitor_structure_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_INTERFACE_CI:
+    case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
+    case TAO_CodeGen::TAO_INTERFACE_SI:
+    case TAO_CodeGen::TAO_INTERFACE_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
+
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_BROKER_CH:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_BROKER_CS:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CH:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS:
+    case TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH:
+    case TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CS:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
+
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_interface::"
+                           "visit_structure_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_structure_fwd - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int
 be_visitor_interface::visit_union (be_union *node)
 {
   // Instantiate a visitor context with a copy of our context. This info
@@ -1091,6 +1182,97 @@ be_visitor_interface::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface::"
                          "visit_union - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_interface::visit_union_fwd (be_union_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_INTERFACE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_FWD_CH);
+        be_visitor_union_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_INTERFACE_CI:
+    case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_INTERFACE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_IH:
+    case TAO_CodeGen::TAO_INTERFACE_IS:
+    case TAO_CodeGen::TAO_INTERFACE_SI:
+    case TAO_CodeGen::TAO_INTERFACE_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
+
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_BROKER_CH:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_BROKER_CS:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CH:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS:
+    case TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SH:
+    case TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CS:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
+
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_interface::"
+                           "visit_union_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_union_fwd - "
                          "failed to accept visitor\n"),  
                         -1);
     }

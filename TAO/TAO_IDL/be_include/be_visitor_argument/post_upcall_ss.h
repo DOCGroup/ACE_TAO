@@ -27,7 +27,7 @@
 // class be_visitor_args_post_upcall_ss
 // ************************************************************
 
-class be_visitor_args_post_upcall_ss : public be_visitor_scope
+class be_visitor_args_post_upcall_ss : public be_visitor_args
 {
   //
   // = TITLE

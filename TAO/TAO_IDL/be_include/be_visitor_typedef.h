@@ -22,7 +22,7 @@
 #ifndef TAO_BE_VISITOR_TYPEDEF_H
 #define TAO_BE_VISITOR_TYPEDEF_H
 
-#include "be_visitor_scope.h"
+#include "be_visitor_decl.h"
 #include "be_visitor_typedef/typedef.h"
 #include "be_visitor_typedef/typedef_ch.h"
 #include "be_visitor_typedef/typedef_ci.h"

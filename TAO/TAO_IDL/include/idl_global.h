@@ -113,7 +113,7 @@ public:
     , PS_InterfaceSeen          // Seen an INTERFACE keyword
     , PS_InterfaceIDSeen        // Seen the interface ID
     , PS_InheritSpecSeen        // Seen a complete inheritance spec
-    , PS_ForwardDeclSeen        // Forward interface decl seen
+    , PS_InterfaceForwardSeen   // Forward interface decl seen
     , PS_InterfaceSqSeen        // '{' seen for interface
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
@@ -137,11 +137,13 @@ public:
     , PS_StructSqSeen           // '{' seen for struct
     , PS_StructQsSeen           // '}' seen for struct
     , PS_StructBodySeen         // Seen complete body of struct decl
+    , PS_StructForwardSeen      // Forward struct decl seen
     , PS_MemberTypeSeen         // Seen type of struct or except member
     , PS_MemberDeclsSeen        // Seen decls of struct or except members
     , PS_MemberDeclsCompleted   // Completed one struct or except member to ';'
     , PS_UnionSeen              // Seen a UNION keyword
     , PS_UnionIDSeen            // Seen the union ID
+    , PS_UnionForwardSeen       // Forward union decl seen
     , PS_SwitchSeen             // Seen the SWITCH keyword
     , PS_SwitchOpenParSeen      // Seen the switch open par.
     , PS_SwitchTypeSeen         // Seen the switch type spec

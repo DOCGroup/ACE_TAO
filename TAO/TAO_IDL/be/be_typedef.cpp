@@ -86,7 +86,7 @@ be_typedef::compute_size_type (void)
   // Our size type is the same as our type.
   this->size_type (type->size_type ());
 
-  //While we're here, take care of has_constructor.
+  // While we're here, take care of has_constructor.
   this->has_constructor (type->has_constructor ());
 
   return 0;

@@ -215,6 +215,10 @@ SOURCE=.\be\be_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_sunsoft.cpp
 # End Source File
 # Begin Source File
@@ -236,6 +240,10 @@ SOURCE=.\be\be_union.cpp
 # Begin Source File
 
 SOURCE=.\be\be_union_branch.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_union_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -335,6 +343,10 @@ SOURCE=.\be\be_visitor_structure.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_structure_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_typecode.cpp
 # End Source File
 # Begin Source File
@@ -351,6 +363,10 @@ SOURCE=.\be\be_visitor_union_branch.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_union_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_valuetype.cpp
 # End Source File
 # Begin Source File
@@ -361,10 +377,6 @@ SOURCE=.\be\be_visitor_valuetype_fwd.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\be_include\be.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\be_include\be_argument.h
@@ -404,6 +416,10 @@ SOURCE=.\be_include\be_exception.h
 # Begin Source File
 
 SOURCE=.\be_include\be_expression.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_extern.h
 # End Source File
 # Begin Source File
 
@@ -483,6 +499,10 @@ SOURCE=.\be_include\be_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_sunsoft.h
 # End Source File
 # Begin Source File
@@ -500,6 +520,10 @@ SOURCE=.\be_include\be_union.h
 # Begin Source File
 
 SOURCE=.\be_include\be_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_union_fwd.h
 # End Source File
 # Begin Source File
 
@@ -595,6 +619,10 @@ SOURCE=.\be_include\be_visitor_structure.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_visitor_structure_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor_typecode.h
 # End Source File
 # Begin Source File
@@ -608,6 +636,10 @@ SOURCE=.\be_include\be_visitor_union.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_union_fwd.h
 # End Source File
 # Begin Source File
 

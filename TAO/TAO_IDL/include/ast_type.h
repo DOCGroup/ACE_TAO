@@ -77,15 +77,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
 {
 public:
+  enum SIZE_TYPE
+  {
+    SIZE_UNKNOWN,
+    FIXED,
+    VARIABLE
+  };
+  // Indicates if we are fixed size or variable. Most useful for structs,
+  // unions, and arrays.
+
   // Operations.
 
-  // Constructor(s).
   AST_Type (void);
 
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 
-  // Destructor.
   virtual ~AST_Type (void);
 
   virtual idl_bool in_recursion (AST_Type *node = 0);
@@ -97,7 +104,19 @@ public:
   // the corresponding forward declaration classes.
   virtual idl_bool is_defined (void);
 
+  virtual void size_type (SIZE_TYPE);
+  // Set the size type.
+
+  virtual SIZE_TYPE size_type (void);
+  // Return our size type.
+
   // Accessors/mutators for the private members.
+
+  idl_bool has_constructor (void);
+  // Accessor for protected member.
+
+  void has_constructor (idl_bool value);
+  // Mutator for protected member.
 
   idl_bool ifr_added (void);
   void ifr_added (idl_bool val);
@@ -116,12 +135,22 @@ public:
   virtual void destroy (void);
 
 protected:
+  virtual int compute_size_type (void);
+  // Determine our size type and set it if it is unknown.
+
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
   idl_bool ifr_added_;
 
   // Has this node been forward declared in this IDL file?
   idl_bool ifr_fwd_added_;
+
+  SIZE_TYPE size_type_;
+  // Whether we are fixed or variable size (by default fixed).
+
+  idl_bool has_constructor_;
+  // Attribute that helps a union determine whether a member
+  // should be included by value or by reference.
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

@@ -700,7 +700,7 @@ int be_visitor_args_marshal_ss::visit_structure (be_structure *node)
           *os << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
+          if (node->size_type () == AST_Type::VARIABLE)
             *os << arg->local_name () << ".in ()";
           else
             *os << arg->local_name ();
@@ -746,7 +746,7 @@ int be_visitor_args_marshal_ss::visit_union (be_union *node)
           *os << arg->local_name ();
           break;
         case AST_Argument::dir_OUT:
-          if (node->size_type () == be_decl::VARIABLE)
+          if (node->size_type () == AST_Type::VARIABLE)
             *os << arg->local_name () << ".in ()";
           else
             *os << arg->local_name ();

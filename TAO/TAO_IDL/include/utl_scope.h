@@ -99,8 +99,10 @@ class AST_Attribute;
 class AST_Operation;
 class AST_Argument;
 class AST_Union;
+class AST_UnionFwd;
 class AST_UnionBranch;
 class AST_Structure;
+class AST_StructureFwd;
 class AST_Field;
 class AST_Enum;
 class AST_EnumVal;
@@ -155,9 +157,13 @@ public:
 
   virtual AST_Union *add_union (AST_Union *u);
 
+  virtual AST_UnionFwd *add_union_fwd (AST_UnionFwd *u);
+
   virtual AST_UnionBranch *add_union_branch (AST_UnionBranch *b);
 
   virtual AST_Structure *add_structure (AST_Structure *s);
+
+  virtual AST_StructureFwd *add_structure_fwd (AST_StructureFwd *s);
 
   virtual AST_Field *add_field (AST_Field *f);
 
@@ -277,6 +283,10 @@ protected:
   // and an IDL keyword?
   int idl_keyword_clash (Identifier *e);
 
+  // Checks for modules, or defns of forward declared struct or unions.
+  idl_bool redef_clash (AST_Decl::NodeType new_nt,
+                        AST_Decl::NodeType scope_elem_nt);
+
 private:
   // Data.
 
@@ -338,9 +348,13 @@ private:
 
   virtual AST_Union *fe_add_union (AST_Union *u);
 
+  virtual AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+
   virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
+
+  virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
 
   virtual AST_Field *fe_add_field (AST_Field *f);
 

@@ -87,9 +87,6 @@ public:
   DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
-  int compute_size_type (void);
-  // Compute the size type if it is unknown.
-
   be_operation_strategy *strategy_;
   // Member for holding the strategy for covering
   // differences between various operations, e.g. sendc_, raise_

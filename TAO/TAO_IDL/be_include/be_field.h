@@ -45,10 +45,6 @@ public:
   // Narrowing.
   DEF_NARROW_METHODS2 (be_field, AST_Field, be_decl);
   DEF_NARROW_FROM_DECL (be_field);
-
-protected:
-  virtual int compute_size_type (void);
-  // Compute the size type if it is unknown.
 };
 
 #endif
