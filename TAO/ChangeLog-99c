@@ -1,3 +1,16 @@
+Mon Mar  8 16:46:36 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/README:
+ 	  Changed description of correct test output to reflect change
+	  from get_host_by_name () to get_host_by_addr ().
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: 
+	  Altered the return values in verbosity_conversion to correspond
+	  to the changed values in ace/Log_Msg.h. Also modified logv to
+	  use get_host_by_addr () rather than get_host_by_name (). This
+	  speeds things up somewhat. Thanks to Ulf Jährig for pointing
+	  this out.
+	
 Mon Mar  8 14:27:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Invocation.cpp:
