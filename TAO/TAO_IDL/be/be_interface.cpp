@@ -564,9 +564,14 @@ be_interface::gen_client_stubs (void)
       << "return " << this->name () << "::_nil ();" << be_uidt_nl
       << "void* servant = obj->_servant ()->_downcast (\""
       << this->repoID () << "\");" << be_nl
-      << "return new "
-      << this->full_coll_name () << "(" << be_idt << be_idt_nl
-      << "ACE_reinterpret_cast(" << this->full_skel_name ()
+      << "return new ";
+
+  // This may be necessary to work around a GCC compiler bug!
+  const char *coll_name = this->full_coll_name ();
+  const char *skel_name = this->full_skel_name ();
+
+  *cs << coll_name << "(" << be_idt << be_idt_nl
+      << "ACE_reinterpret_cast(" << skel_name
       << "_ptr, servant)," << be_nl
       << "stub" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
