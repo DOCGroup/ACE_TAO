@@ -1,3 +1,8 @@
+Fri Sep 19 12:50:37 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ACE-INSTALL*: added requirement for explicit main () arguments
+	  and int return type on VxWorks.
+
 Thu Sep 18 22:45:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp (close): Fixed a 
