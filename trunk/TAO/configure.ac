@@ -203,6 +203,18 @@ AC_CONFIG_FILES([
   orbsvcs/Time_Service/Makefile
   orbsvcs/Trading_Service/Makefile
   orbsvcs/orbsvcs/Makefile
+  orbsvcs/performance-tests/Makefile
+  orbsvcs/performance-tests/LoadBalancing/Makefile
+  orbsvcs/performance-tests/LoadBalancing/LBPerf/Makefile
+  orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile
+  orbsvcs/performance-tests/RTEvent/Makefile
+  orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile
+  orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile
+  orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile
+  orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile
+  orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile
+  orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile
+  orbsvcs/performance-tests/RTEvent/lib/Makefile
  ])
 
 dnl Note that the "TAO_VERSION" in the message below is an M4 macro
