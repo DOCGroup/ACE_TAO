@@ -1,3 +1,9 @@
+Fri Mar 15 12:19:58 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+
+          Added support for building with exceptions enabled.
+
 Fri Mar 15 05:59:45 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/SPIPE_Acceptor.cpp: Removed the ACE_ASSERT (result == FALSE)
