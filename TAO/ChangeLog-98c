@@ -1,3 +1,9 @@
+Fri Aug 21 15:00:21 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/Any.i:
+	  Oops, forgot to implement the from_wchar and to_wchar
+	  constructors (see my last ChangeLog entry).
+
 Fri Aug 21 14:27:27 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: Added virtual 
