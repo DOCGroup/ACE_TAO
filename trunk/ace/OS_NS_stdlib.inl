@@ -174,22 +174,27 @@ ACE_OS::itoa (int value, wchar_t *string, int radix)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if !defined (ACE_LACKS_MKSTEMP)
 ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (char *s)
 {
+#if !defined (ACE_LACKS_MKSTEMP)
   return ::mkstemp (s);
+#else
+  return ACE_OS::mkstemp_emulation (ACE_TEXT_CHAR_TO_TCHAR (s));
+#endif  /* !ACE_LACKS_MKSTEMP */
 }
 
-#  if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (wchar_t *s)
 {
-  ACE_Wide_To_Ascii narrow_s (s);
-  return ::mkstemp (narrow_s.char_rep ());
+#  if !defined (ACE_LACKS_MKSTEMP)
+  return ::mkstemp (ACE_TEXT_WCHAR_TO_TCHAR (ACE_TEXT_ALWAYS_CHAR (s)));
+#  else
+  return ACE_OS::mkstemp_emulation (ACE_TEXT_WCHAR_TO_TCHAR (s));
+#  endif  /* !ACE_LACKS_MKSTEMP */
 }
-#  endif /* ACE_HAS_WCHAR */
-#endif /* !ACE_LACKS_MKSTEMP */
+#endif /* ACE_HAS_WCHAR */
 
 #if !defined (ACE_LACKS_MKTEMP)
 ACE_INLINE char *

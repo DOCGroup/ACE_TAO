@@ -120,6 +120,7 @@ public:
           KEY;
   typedef INT_ID
           VALUE;
+  typedef ACE_LOCK lock_type;
   typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID>
           ENTRY;
 
