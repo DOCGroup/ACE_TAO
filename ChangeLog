@@ -1,3 +1,10 @@
+Sun May 16 12:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_PTHREAD_KILL. Cygwin 1.5.9 gives a stackdump
+          when pthread_kill is used, so disable this feature until we
+          get a cygwin with this bug fixed.
+
 Sun May 16 12:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
