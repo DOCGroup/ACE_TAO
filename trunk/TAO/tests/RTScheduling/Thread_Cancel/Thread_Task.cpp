@@ -26,7 +26,9 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
-      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
+      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
+									      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       this->current_ = RTScheduling::Current::_narrow (current_obj
                                                        ACE_ENV_ARG_PARAMETER);
