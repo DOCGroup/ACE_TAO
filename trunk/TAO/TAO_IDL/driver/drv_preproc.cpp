@@ -378,7 +378,7 @@ DRV_pre_proc(char *myfile)
     exit(99);
   }
 
-#if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
+#if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   if (ACE_OS::unlink(tmp_file) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp output file ")
