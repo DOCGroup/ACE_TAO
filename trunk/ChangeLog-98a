@@ -6,8 +6,8 @@ Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/IOStream.h (ACE_Quoted_String::operator <): changed return
           type from bool to int.
 
-        * ace/config-vxworks*.h: removed ACE_LACKS_SOCKET_BUFSIZ; added
-          ACE_DEFAULT_MAX_SOCKET_BUFSIZ of 32768.
+        * ace/config-vxworks*.h,README: removed ACE_LACKS_SOCKET_BUFSIZ;
+          added ACE_DEFAULT_MAX_SOCKET_BUFSIZ of 32768.
 
         * examples/IPC_SAP/SOCK_SAP/C-in{client,server}.cpp: added
           support to optionally set socket buffer sizes.
