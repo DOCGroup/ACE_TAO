@@ -1,3 +1,109 @@
+Wed Apr  7 12:03:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	* tao/Current.pidl:
+	* tao/DynAnyC.cpp:
+	* tao/DynAnyS.cpp:
+	* tao/IOP.pidl:
+	* tao/iopfwd.h:
+	* tao/corbafwd.h:
+	* tao/POA_CORBA.h:
+	* tao/Typecode_Constants.cpp:
+	* tao/InconsistentTypeCodeC.cpp:
+	* tao/Messaging.pidl:
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/MessagingC.i:
+	* tao/MessagingS.cpp:
+	* tao/MessagingS.h:
+	* tao/MessagingS.i:
+	* tao/MessagingS_T.cpp:
+	* tao/MessagingS_T.h:
+	* tao/MessagingS_T.i:
+	* tao/Policy.pidl:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+	* tao/PolicyS.cpp:
+	* tao/Pollable.pidl:
+	* tao/PollableC.cpp:
+	* tao/PollableC.h:
+	* tao/PollableC.i:
+	* tao/PollableS.cpp:
+	* tao/PollableS.h:
+	* tao/PollableS.i:
+	* tao/PollableS_T.cpp:
+	* tao/PollableS_T.h:
+	* tao/PollableS_T.i:
+	* tao/TimeBase.pidl:
+	* tao/TimeBaseC.cpp:
+	* tao/TimeBaseC.h:
+	* tao/TimeBaseC.i:
+	* tao/TimeBaseS.cpp:
+	* tao/TimeBaseS.h:
+	* tao/TimeBaseS.i:
+	* tao/TimeBaseS_T.cpp:
+	* tao/TimeBaseS_T.h:
+	* tao/TimeBaseS_T.i:
+	  Started work on the Messaging spec policy framework. I added new 
+	  modules (such as Messaging, TimeBase and IOP) and extended
+	  others to include more features (such as Policy).
+	  Right now the modules are not compiled by default, I want to
+	  test the changes in more platforms before moving on.
+	  Also added support for more system exceptions and left some
+	  place holders for the Poller and Handler objects that are part
+	  of the AMI support.
+
+	* TAO_IDL/fe/fe_lookup.cpp:
+	* TAO_IDL/fe/keywords.dat:
+	  Added support for the "export" C++ keyword.
+
+	* TAO_IDL/util/utl_global.cpp:
+	  Added support for files with .IDL, .pidl and .PIDL extensions.
+
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+	  Any helper classes for the fields of an exception must be
+	  generated *before* the code for the ctor, because the ctor uses
+	  them.
+
+	* orbsvcs/orbsvcs/CosTimeBase.idl:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/RtecEventComm.idl:
+	* orbsvcs/orbsvcs/RtecScheduler.idl:
+	* orbsvcs/orbsvcs/TimeBase.idl:
+	* orbsvcs/orbsvcs/TimeService.idl:
+	* orbsvcs/orbsvcs/Time_Utilities.h:
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.i:
+	  Removed all references to CosTimeBase.idl, the standard file
+	  name is TimeBase.idl, I also changed things so the code is
+	  actually defined in $TAO_ROOT/tao/TimeBase.pidl because the ORB
+	  needs those types.
+	  Many dependencies where updated to match this.
+
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.h:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.h:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+	* orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
+	* orbsvcs/LifeCycle_Service/Factory_Trader.h:
+	* orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
+	  Changed all the calls to export() into _cxx_export() the people
+	  responsible for this code should revise my changes.
+
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	  Added some missing files to the SRC variable, the dependencies
+	  were incomplete.
+
 Wed Apr  7 11:27:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp: 
@@ -1762,6 +1868,90 @@ Wed Mar 17 22:53:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           - Advance POA features:
             - Servant Managers
             - Adaptor Activators
+            - Most POA Manager features
+
+          On platforms that use the Makefiles, simply minimum_corba=1. On
+          Win32, define TAO_HAS_MINIMUM_CORBA in the orbconf.h file.
+
+        * tao/Makefile: Added support for measuring subsets of TAO.  These
+          subsets are not independent, but are useful in providing an idea
+          of how big different components of the ORB are.
+
+        * tao/Server_Strategy_Factory.cpp: Remove the active object map
+          creation responsibilities from this class.  Now it simply holds
+          on to the creation parameters and feeds them to the active
+          object map constructor.
+
+        * tao/Sequence_T.i (operator->): Added operator-> to
+          TAO_Object_Manager.  Also, made the in() method return a
+          non-const pointer.  Missing still is operator= taking
+          T::var_type. Other managers should also be check for these
+          features (Carlos said he'll look into it).
+
+        * examples/POA/Loader/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+
+          - We now have support for active demuxing of user defined
+            ids. This is achieved by using a active demux hint field in
+            the object key.
+
+          - We have support for reactivating servants with system
+            generated ids.  In this case, system ids are simply generated
+            by incrementing a counter. Note that in this case, the id ->
+            servant map is a hash map since active demux keys cannot be
+            reused once deactivated. However, the good news is that the
+            active demux key can be used as the hint in the object key.
+
+          - The use of the hint in the object key is optional.  If used,
+            the lookups are faster (unless the hint is invalidated by a
+            deactivation or by restarting a persistent POA).  However,
+            using the hint results in a larger IOR, and more memory being
+            used in the active object map.  This option can be controlled
+            through the -ORBactivehintinids runtime switch and is turned
+            on by default.
+
+          - If the applications knows that reactivations will not occur,
+            they can simply use the old scheme of directly using the
+            active demux key as the system id.  This will (a) make the IOR
+            shorter, (b) less memory will be used in the active object
+            map, and (c) the lookups will be quicker and (more)
+            predictable.
+
+          - Etherialization of servants (through the use of a Servant
+            Activator) is temporarily disabled.  Once we fix the reference
+            counting on the servants, this will start working again.
+
+          - Removed the POA exceptions from the list of system exceptions,
+            and reverted them back to being user exceptions.
+
+          - Timestamps are no longer used in persistent object keys.
+
+          - Removed the TAO specific synchronization POA policy.  In the
+            new POA design, this scheme will not be required.  Also,
+            removed the POA locking example in
+            $TAO_ROOT/examples/POA/locking.
+
+        * examples/POA/Identity/: Added new example to test a whole bunch
+          of conversions from servant to id to reference. The example is
+          designed to test the new POA IOR creation and its Active Object
+          Map.
+
+        * tao: Added support for minimalCORBA to TAO. For some
+          applications CORBA is too large to meet exacting size and
+          performance requirements. Such scenarios require a cut-down
+          version of CORBA. This cut-down version is called
+          minimumCORBA. minimumCORBA defines a profile (or subset) of
+          CORBA where the following features are removed:
+
+          - Dynamic Invocation Interface
+          - Dynamic Skeleton Interface
+          - Dynamic Any
+          - Interface Repository
+          - Interceptors
+          - Advance POA features:
+            - Servant Managers
+            - Adpator Activators
             - Most POA Manager features
 
           On platforms that use the Makefiles, simply minimum_corba=1. On

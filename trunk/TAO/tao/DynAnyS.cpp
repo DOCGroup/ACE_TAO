@@ -30,6 +30,8 @@
 #include "tao/Servant_Base.h"
 #include "tao/POAC.h"
 
+ACE_RCSID(tao, DynAnyS, "$Id$")
+
 // constructor
 POA_CORBA::DynAny::DynAny (void)
 {

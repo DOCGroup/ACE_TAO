@@ -7,10 +7,10 @@
 //    TAO
 //
 // = FILENAME
-//    POA_CORBA.h
+//   POA_CORBA.h
 //
-//    This file is created by merging the PolicyS.h and CurrentS.h files which
-//    have been removed.
+//   This file is created by merging the CurrentS.h, PolicyS.h,
+//   PollableS.h and DynAnyS.h files which have been removed.
 //
 // = AUTHOR
 //
@@ -29,14 +29,64 @@
 #ifndef TAO_IDL_POA_CORBA_H
 #define TAO_IDL_POA_CORBA_H
 
-#include "tao/PolicyC.h"
 #include "tao/CurrentC.h"
+#include "tao/PolicyC.h"
+#include "tao/PollableC.h"
 #include "tao/DynAnyC.h"
 #include "tao/Servant_Base.h"
 
 class TAO_Export  POA_CORBA
 {
 public:
+  // ****************************************************************
+
+  class Current;
+  typedef Current *Current_ptr;
+  class  Current :  public virtual TAO_ServantBase
+  {
+  protected:
+    Current (void);
+  public:
+    virtual ~Current (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    ACE_CORBA_1(Current) *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef Current_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
+  };
+
+  class  _tao_collocated_Current     : public virtual CORBA_Current
+  {
+  public:
+    _tao_collocated_Current (
+        Current_ptr  servant,
+        TAO_Stub *stub
+      );
+    Current_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+      );
+
+  private:
+    Current_ptr servant_;
+  };
+
+  // ****************************************************************
+
   class Policy;
   typedef Policy *Policy_ptr;
   class TAO_Export  Policy :  public virtual TAO_ServantBase
@@ -44,6 +94,7 @@ public:
   protected:
     Policy (void);
   public:
+    Policy (const Policy& rhs);
     virtual ~Policy (void);
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
@@ -81,11 +132,32 @@ public:
         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
       );
 
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA_Environment &TAO_IN_ENV =
+          CORBA::default_environment ()
+      );
 
-    virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
 
-    ACE_CORBA_1(Policy) *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA_Environment &TAO_IN_ENV =
+          CORBA::default_environment ()
+      );
+
+    CORBA_Policy_ptr _this (
+        CORBA_Environment &TAO_IN_ENV =
+          CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -94,10 +166,6 @@ public:
   // Useful for template programming.
 
   };
-
-
-#if !defined (_CORBA_POLICY___COLLOCATED_SH_)
-#define _CORBA_POLICY___COLLOCATED_SH_
 
   class TAO_Export  _tao_collocated_Policy     : public virtual CORBA_Policy
   {
@@ -125,67 +193,539 @@ public:
     Policy_ptr servant_;
   };
 
+  // ****************************************************************
 
-#endif /* end #if !defined */
-
-
-
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-  class Current;
-  typedef Current *Current_ptr;
-  class  Current :  public virtual TAO_ServantBase
+  class PolicyManager;
+  typedef PolicyManager *PolicyManager_ptr;
+  class TAO_Export PolicyManager :  public virtual PortableServer::ServantBase
   {
   protected:
-    Current (void);
+    PolicyManager (void);
   public:
-    virtual ~Current (void);
+    PolicyManager (const PolicyManager& rhs);
+    virtual ~PolicyManager (void);
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
     virtual void* _downcast (
         const char* logical_type_id
       );
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::PolicyList * get_policy_overrides (
+        const CORBA::PolicyTypeSeq & ts,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void get_policy_overrides_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
 
-    virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual void set_policy_overrides (
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void set_policy_overrides_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
 
-    ACE_CORBA_1(Current) *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::PolicyManager *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
     virtual const char* _interface_repository_id (void) const;
-
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef Current_ptr _ptr_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
-
   };
 
-
-#if !defined (_CORBA_CURRENT___COLLOCATED_SH_)
-#define _CORBA_CURRENT___COLLOCATED_SH_
-
-  class  _tao_collocated_Current     : public virtual CORBA_Current
+  class TAO_Export _tao_collocated_PolicyManager     : public virtual CORBA::PolicyManager
   {
   public:
-    _tao_collocated_Current (
-        Current_ptr  servant,
+    _tao_collocated_PolicyManager (
+        PolicyManager_ptr  servant,
         TAO_Stub *stub
       );
-    Current_ptr _get_servant (void) const;
+    PolicyManager_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
         const char *logical_type_id,
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual CORBA::PolicyList * get_policy_overrides (
+        const CORBA::PolicyTypeSeq & ts,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual void set_policy_overrides (
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
       );
 
   private:
-    Current_ptr servant_;
+    PolicyManager_ptr servant_;
   };
 
+  // ****************************************************************
 
-#endif /* end #if !defined */
+  class PolicyCurrent;
+  typedef PolicyCurrent *PolicyCurrent_ptr;
+  class TAO_Export PolicyCurrent : public virtual PolicyManager, public virtual Current
+  {
+  protected:
+    PolicyCurrent (void);
+  public:
+    PolicyCurrent (const PolicyCurrent& rhs);
+    virtual ~PolicyCurrent (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
 
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void get_policy_overrides_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void set_policy_overrides_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::PolicyCurrent *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
+  };
+
+  class TAO_Export _tao_collocated_PolicyCurrent     : public virtual CORBA::PolicyCurrent,
+      public virtual _tao_collocated_PolicyManager,
+      public virtual _tao_collocated_Current
+  {
+  public:
+    _tao_collocated_PolicyCurrent (
+        PolicyCurrent_ptr  servant,
+        TAO_Stub *stub
+      );
+    PolicyCurrent_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+  private:
+    PolicyCurrent_ptr servant_;
+  };
+
+  // ****************************************************************
+
+#if defined (TAO_POLLER)
+  class Pollable;
+  typedef Pollable *Pollable_ptr;
+  class TAO_Export Pollable :  public virtual PortableServer::ServantBase
+  {
+  protected:
+    Pollable (void);
+  public:
+    Pollable (const Pollable& rhs);
+    virtual ~Pollable (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+    virtual CORBA::Boolean is_ready (
+        CORBA::ULong timeout,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void is_ready_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual CORBA::PollableSet_ptr create_pollable_set (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void create_pollable_set_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Pollable *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
+  };
+
+  class TAO_Export _tao_collocated_Pollable     : public virtual CORBA::Pollable
+  {
+  public:
+    _tao_collocated_Pollable (
+        Pollable_ptr  servant,
+        TAO_Stub *stub
+      );
+    Pollable_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual CORBA::Boolean is_ready (
+        CORBA::ULong timeout,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual CORBA::PollableSet_ptr create_pollable_set (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+  private:
+    Pollable_ptr servant_;
+  };
+
+  // ****************************************************************
+
+  class DIIPollable;
+  typedef DIIPollable *DIIPollable_ptr;
+  class TAO_Export DIIPollable : public virtual Pollable
+  {
+  protected:
+    DIIPollable (void);
+  public:
+    DIIPollable (const DIIPollable& rhs);
+    virtual ~DIIPollable (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::Boolean in_mult_inheritance (void);
+
+    static void is_ready_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void create_pollable_set_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &env =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::DIIPollable *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
+  };
+
+  class TAO_Export _tao_collocated_DIIPollable     : public virtual CORBA::DIIPollable,
+      public virtual _tao_collocated_Pollable
+  {
+  public:
+    _tao_collocated_DIIPollable (
+        DIIPollable_ptr  servant,
+        TAO_Stub *stub
+      );
+    DIIPollable_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+  private:
+    DIIPollable_ptr servant_;
+  };
+
+  // ****************************************************************
+
+  class PollableSet;
+  typedef PollableSet *PollableSet_ptr;
+  class TAO_Export PollableSet :  public virtual PortableServer::ServantBase
+  {
+  protected:
+    PollableSet (void);
+  public:
+    PollableSet (const PollableSet& rhs);
+    virtual ~PollableSet (void);
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+    virtual CORBA::DIIPollable_ptr create_dii_pollable (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void create_dii_pollable_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual void add_pollable (
+        CORBA::Pollable_ptr potential,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void add_pollable_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual CORBA::Pollable_ptr poll (
+        CORBA::ULong timeout,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void poll_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual void remove (
+        CORBA::Pollable_ptr potential,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void remove_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual CORBA::UShort number_left (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      ) = 0;
+    static void number_left_skel (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_context,
+        CORBA::Environment &_tao_env =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _is_a_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    static void _non_existent_skel (
+        CORBA::ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    virtual void _dispatch (
+        CORBA::ServerRequest &_tao_req,
+        void *_tao_context,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+    CORBA::PollableSet *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
+  };
+
+  class TAO_Export _tao_collocated_PollableSet     : public virtual CORBA::PollableSet
+  {
+  public:
+    _tao_collocated_PollableSet (
+        PollableSet_ptr  servant,
+        TAO_Stub *stub
+      );
+    PollableSet_ptr _get_servant (void) const;
+    virtual CORBA::Boolean _is_a (
+        const char *logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual CORBA::DIIPollable_ptr create_dii_pollable (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual void add_pollable (
+        CORBA::Pollable_ptr potential,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual CORBA::Pollable_ptr poll (
+        CORBA::ULong timeout,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual void remove (
+        CORBA::Pollable_ptr potential,
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+    virtual CORBA::UShort number_left (
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::Environment::default_environment ()
+      );
+
+  private:
+    PollableSet_ptr servant_;
+  };
+#endif /* 0 */
+
+  // ****************************************************************
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -1217,7 +1757,6 @@ private:
 #endif /* _MSC_VER */
 
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(default:4250)

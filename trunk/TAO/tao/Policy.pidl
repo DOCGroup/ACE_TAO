@@ -1,15 +1,77 @@
+//
 // $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Policy.pidl
+//
+// = DESCRIPTION
+//   This file was used to generate the code in Policy{C,S,S_T}.{h,i,cpp}
+//   The code is then hand-crafted to compile it inside the ORB, avoid
+//   cyclic dependencies and enforce the locality constraints on
+//   certain objects.
+//
+// ================================================================
+
+
+#pragma prefix "omg.org"
 
 module CORBA
 {
-  typedef unsigned long PolicyType;
+  typedef short PolicyErrorCode;
+  const PolicyErrorCode BAD_POLICY               = 0;
+  const PolicyErrorCode UNSUPPORTED_POLICY       = 1;
+  const PolicyErrorCode BAD_POLICY_TYPE          = 2;
+  const PolicyErrorCode BAD_POLICY_VALUE         = 3;
+  const PolicyErrorCode UNSUPPORTED_POLICY_VALUE = 4;
 
+  exception PolicyError
+  {
+    PolicyErrorCode reason;
+  };
+
+  exception InvalidPolicies
+  {
+    sequence<unsigned short> indices;
+  };
+
+  typedef unsigned long PolicyType;
   interface Policy
-    {
-      readonly attribute PolicyType policy_type;
-      Policy copy ();
-      void destroy ();
-    };
+  {
+    readonly attribute PolicyType policy_type;
+    Policy copy ();
+    void destroy ();
+  };
 
   typedef sequence<Policy> PolicyList;
+
+  typedef sequence<PolicyType> PolicyTypeSeq;
+
+  enum SetOverrideType
+  {
+    SET_OVERRIDE,
+    ADD_OVERRIDE
+  };
+
+  interface PolicyManager
+  {
+    PolicyList get_policy_overrides (in PolicyTypeSeq ts);
+    void set_policy_overrides (
+             in PolicyList policies,
+             in SetOverrideType set_add)
+        raises (InvalidPolicies);
+  };
+
+  interface Current
+  {
+  };
+
+  interface PolicyCurrent : PolicyManager, Current
+  {
+  };
+
 };

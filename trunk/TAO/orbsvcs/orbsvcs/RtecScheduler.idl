@@ -3,7 +3,7 @@
 #ifndef TAO_RTEC_SCHEDULER_IDL
 #define TAO_RTEC_SCHEDULER_IDL
 
-#include "CosTimeBase.idl"
+#include "TimeBase.idl"
 #pragma prefix ""
 
 module RtecScheduler
@@ -123,7 +123,7 @@ module RtecScheduler
     // The operations we depend upon.
     Dependency_Set dependencies;
 
-    // The OS thread priority for processing the 
+    // The OS thread priority for processing the
     // events generated from this RT_Info.
     OS_Priority priority;
 
@@ -167,7 +167,7 @@ module RtecScheduler
     // OS priority of the dispatching thread associated with the queue
     OS_Priority thread_priority;
 
-    // type of dispatching queue 
+    // type of dispatching queue
     Dispatching_Type_t dispatching_type;
   };
 
@@ -344,7 +344,7 @@ module RtecScheduler
     // If the schedule has not been computed:
     //    raises (NOT_SCHEDULED);
     //
-    // If the schedule has been computed, but the passed 
+    // If the schedule has been computed, but the passed
     // priority level is outside those assigned:
     //    raises (UNKNOWN_PRIORITY_LEVEL);
 
@@ -353,7 +353,7 @@ module RtecScheduler
       raises (NOT_SCHEDULED);
     // Returns the last priority number assigned to an operation in the schedule.
     // The number returned is one less than the total number of scheduled priorities.
-    // All scheduled priorities range from 0 to the number returned, inclusive. 
+    // All scheduled priorities range from 0 to the number returned, inclusive.
     //
     // If the schedule has not been computed:
     //    raises (NOT_SCHEDULED);

@@ -56,6 +56,7 @@ int be_visitor_exception_ctor::visit_exception (be_exception *node)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
 
+  os->indent ();
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     *os << node->local_name ();
   else

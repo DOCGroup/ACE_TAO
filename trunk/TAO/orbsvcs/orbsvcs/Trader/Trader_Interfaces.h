@@ -310,10 +310,10 @@ public:
 
   virtual ~TAO_Register (void);
 
-  virtual CosTrading::OfferId export (CORBA::Object_ptr reference,
-                                      const char *type,
-                                      const CosTrading::PropertySeq& properties,
-                                      CORBA::Environment& _env)
+  virtual CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
+                                           const char *type,
+                                           const CosTrading::PropertySeq& properties,
+                                           CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::Register::InvalidObjectRef,
                     CosTrading::IllegalServiceType,

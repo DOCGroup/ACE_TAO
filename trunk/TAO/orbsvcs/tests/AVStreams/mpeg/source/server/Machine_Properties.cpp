@@ -9,9 +9,9 @@ const int TAO_Machine_Properties::NUM_PROPERTIES = 10;
 const int DEFAULT_TIMEOUT_SEC = 1;
 const int DEFAULT_TIMEOUT_USEC = 0;
 
-const char* TAO_Machine_Properties::PROP_NAMES[] = 
+const char* TAO_Machine_Properties::PROP_NAMES[] =
 {
-  "CPU", 
+  "CPU",
   "Disk",
   "Pages",
   "Swaps",
@@ -52,7 +52,7 @@ TAO_Machine_Properties::init (void)
   if (this->rstat_client_ == 0)
     {
       ACE_ERROR ((LM_ERROR, "(%P|%t) %s\n",
-		  ::clnt_spcreateerror ("localhost")));
+                  ::clnt_spcreateerror ("localhost")));
     }
 
   ::memset (&this->old_stats_, 0, sizeof (statstime));
@@ -70,27 +70,27 @@ TAO_Machine_Properties::retrieve_stats (void)
   if (this->rstat_client_ == 0)
     {
       ACE_ERROR ((LM_ERROR, "(%P|%t) %s\n",
-		  ::clnt_spcreateerror ("localhost")));
+                  ::clnt_spcreateerror ("localhost")));
     }
 
   ::memset (&this->old_stats_, 0, sizeof (statstime));
 
   //  if (this->rstat_client_ == 0)
   //    return -1;
-  
+
   static struct timeval timeout = {25, 0};
   u_int result;
   if ((result =clnt_call (this->rstat_client_,
-		 RSTATPROC_STATS,
-		 xdr_void,
-		 0,
-		 (xdrproc_t) xdr_statstime,
-		 (caddr_t) &this->stats_,
-		 timeout)) != RPC_SUCCESS)
+                 RSTATPROC_STATS,
+                 xdr_void,
+                 0,
+                 (xdrproc_t) xdr_statstime,
+                 (caddr_t) &this->stats_,
+                 timeout)) != RPC_SUCCESS)
     {
       ACE_DEBUG ((LM_DEBUG,"rpc-error:%d\n",result));
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %s\n",
-			 ::clnt_sperror (this->rstat_client_, "localhost")), -1);
+                         ::clnt_sperror (this->rstat_client_, "localhost")), -1);
     }
   else
       ACE_DEBUG ((LM_DEBUG,"rpc client call worked\n"));
@@ -110,19 +110,19 @@ TAO_Machine_Properties::evalDP (const char* prop_name,
   CORBA::Any* return_value;
 
   ACE_DEBUG ((LM_DEBUG, "Evaluating machine properties.\n"));
-  
+
   ACE_NEW_RETURN (return_value, CORBA::Any, 0);
-  
+
   if (ACE_OS::gettimeofday () - this->timestamp_ > this->timeout_)
     {
       if (this->retrieve_stats () == -1)
-	return return_value;
+        return return_value;
     }
-  
+
   CORBA::String_var prop_name_var (prop_name);
   int elapsed_seconds = this->sample_time_.sec () +
     (this->sample_time_.usec () > 500000) ? 1 : 0;
-  
+
   if (ACE_OS::strcmp (prop_name, PROP_NAMES[CPU]) == 0)
     this->compute_cpu (*return_value, elapsed_seconds);
   else if (ACE_OS::strcmp (prop_name, PROP_NAMES[DISK]) == 0)
@@ -160,9 +160,9 @@ export_properties (TAO_Property_Exporter& prop_exporter)
       const char* name = PROP_NAMES[i];
       const CORBA::TypeCode_ptr prop_type = CORBA::_tc_float;
 
-      CosTradingDynamic::DynamicProp* dp_struct = 
-	this->construct_dynamic_prop (name, prop_type, extra_info);
-     
+      CosTradingDynamic::DynamicProp* dp_struct =
+        this->construct_dynamic_prop (name, prop_type, extra_info);
+
       prop_exporter.add_dynamic_property (name, dp_struct);
     }
 }
@@ -170,7 +170,7 @@ export_properties (TAO_Property_Exporter& prop_exporter)
 int
 TAO_Machine_Properties::
 define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
-		   CORBA::ULong offset) const
+                   CORBA::ULong offset) const
 {
   prop_seq.length (NUM_PROPERTIES + offset);
   for (int j = prop_seq.length () - offset - 1, i = offset; j >= 0; j--, i++)
@@ -191,12 +191,12 @@ TAO_Machine_Properties::compute_cpu (CORBA::Any& value, int elapsed_seconds)
   CORBA::ULong used = 0.0;
   for (int i = 0; i < RSTAT_CPUSTATES - 1; i++)
     used += (this->stats_.cp_time[i] - this->old_stats_.cp_time[i]);
-  
+
   // The last is the amount idle.
   CORBA::ULong idle =
     this->stats_.cp_time[RSTAT_CPUSTATES - 1] -
     this->old_stats_.cp_time[RSTAT_CPUSTATES - 1];
-  
+
   // The CPU usage is the amount used over the total available.
   value <<= (CORBA::Float) ((((CORBA::Float) used) / (used + idle)) * 100.0);
 }
@@ -207,7 +207,7 @@ TAO_Machine_Properties::compute_disk (CORBA::Any& value, int elapsed_seconds)
   CORBA::Float used = 0.0;
   for (int i = 0; i < RSTAT_DK_NDRIVE; i++)
     used += (this->stats_.dk_xfer[i] - this->old_stats_.dk_xfer[i]);
-  
+
   value <<= (CORBA::Float)(used / (float) elapsed_seconds);
 }
 
@@ -217,7 +217,7 @@ TAO_Machine_Properties::compute_pages (CORBA::Any& value, int elapsed_seconds)
   CORBA::Float pages =
     (this->stats_.v_pgpgin - this->old_stats_.v_pgpgin) +
     (this->stats_.v_pgpgout - this->old_stats_.v_pgpgout);
-  
+
   value <<= (CORBA::Float) (pages / elapsed_seconds);
 }
 

@@ -277,8 +277,8 @@ int
 CORBA_UnknownUserException::_is_a (const char* interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
-			   "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
-	  || CORBA_UserException::_is_a (interface_id));
+                           "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
+          || CORBA_UserException::_is_a (interface_id));
 }
 
 CORBA_UnknownUserException*
@@ -300,7 +300,7 @@ CORBA_UnknownUserException::_raise (void)
 
 void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-					    CORBA::Environment &TAO_IN_ENV)
+                                            CORBA::Environment &TAO_IN_ENV)
 {
   // Create the TypeCode for the CORBA_UnknownUserException
   TAO_OutputCDR stream;
@@ -316,8 +316,8 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.write_ulong (1L) == 0
       || stream.write_string (field_name) == 0
       || stream.encode (CORBA::_tc_TypeCode,
-			&CORBA::_tc_any, 0,
-			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        &CORBA::_tc_any, 0,
+                        TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
 
   tcp = new CORBA::TypeCode (CORBA::tk_except,
@@ -426,7 +426,9 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (DATA_CONVERSION) \
     TAO_SYSTEM_EXCEPTION (INV_POLICY) \
     TAO_SYSTEM_EXCEPTION (REBIND) \
-    TAO_SYSTEM_EXCEPTION (TIMEOUT)
+    TAO_SYSTEM_EXCEPTION (TIMEOUT) \
+    TAO_SYSTEM_EXCEPTION (TRANSACTION_UNAVAILABLE) \
+    TAO_SYSTEM_EXCEPTION (TRANSACTION_MODE)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
@@ -461,12 +463,12 @@ TAO_Exceptions::init (CORBA::Environment &env)
 
   if (env.exception () == 0)
     TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException,
-						env);
+                                                env);
 }
 
 CORBA_Exception*
 TAO_Exceptions::create_system_exception (const char* id,
-					 CORBA::Environment& env)
+                                         CORBA::Environment& env)
 {
 #define TAO_SYSTEM_EXCEPTION(name) \
   { \
@@ -526,8 +528,8 @@ STANDARD_EXCEPTION_LIST
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA_##name :: CORBA_##name (void) \
   :  CORBA_SystemException (CORBA::_tc_ ## name, \
-			    0xffff0000L, \
-			    CORBA::COMPLETED_NO) \
+                            0xffff0000L, \
+                            CORBA::COMPLETED_NO) \
 { \
 }
 STANDARD_EXCEPTION_LIST
@@ -549,7 +551,7 @@ CORBA_ExceptionList::~CORBA_ExceptionList (void)
     {
       CORBA::TypeCode_ptr *tc;
       if (this->tc_list_.get (tc, i) == -1)
-	return;
+        return;
       CORBA::release (*tc);
     }
 #endif

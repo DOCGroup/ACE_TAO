@@ -83,14 +83,14 @@ Task_Entry::merge_dispatches (
       //       is problematic: how do we map the dispatches for this ?
       if (prohibit_dispatches (RtecScheduler::TWO_WAY_CALL) < 0)
         {
-          result = TWO_WAY_DISJUNCTION; 
+          result = TWO_WAY_DISJUNCTION;
         }
-      if (disjunctive_merge (RtecScheduler::ONE_WAY_CALL, 
+      if (disjunctive_merge (RtecScheduler::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
         {
-          result = INTERNAL_ERROR; 
+          result = INTERNAL_ERROR;
         }
       break;
 
@@ -106,14 +106,14 @@ Task_Entry::merge_dispatches (
       //       buy us anything, anyway).
       if (prohibit_dispatches (RtecScheduler::TWO_WAY_CALL) < 0)
         {
-          result = TWO_WAY_CONJUNCTION; 
+          result = TWO_WAY_CONJUNCTION;
         }
-      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, 
+      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
         {
-          result = INTERNAL_ERROR; 
+          result = INTERNAL_ERROR;
         }
       break;
 
@@ -122,19 +122,19 @@ Task_Entry::merge_dispatches (
 
       // Disjunctively merge the operation's two-way dispatches,
       // and conjunctively merge its one-way dispatches.
-      if (disjunctive_merge (RtecScheduler::TWO_WAY_CALL, 
+      if (disjunctive_merge (RtecScheduler::TWO_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
         {
-          result = INTERNAL_ERROR; 
+          result = INTERNAL_ERROR;
         }
-      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, 
+      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
         {
-          result = INTERNAL_ERROR; 
+          result = INTERNAL_ERROR;
         }
       break;
 
@@ -142,7 +142,7 @@ Task_Entry::merge_dispatches (
 
       // There should not be any other kind of RT_Info, or if
       // there is, the above switch logic is in need of repair.
-      result = UNRECOGNIZED_INFO_TYPE; 
+      result = UNRECOGNIZED_INFO_TYPE;
       break;
   }
 
@@ -204,7 +204,7 @@ Task_Entry::disjunctive_merge (
     // the link matches the dependency type given
     if ((*link)->dependency_type () == dt)
     {
-      // Check for and warn about unresolved remote 
+      // Check for and warn about unresolved remote
       // dependencies in the ONE_WAY call graph.
       if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL &&
           (*link)->caller ().has_unresolved_remote_dependencies () &&
@@ -296,7 +296,7 @@ Task_Entry::conjunctive_merge (
     // The link matches the dependency type given.
     if ((*link)->dependency_type () == dt)
     {
-      // Check for and warn about unresolved remote 
+      // Check for and warn about unresolved remote
       // dependencies in the ONE_WAY call graph.
       if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL &&
           (*link)->caller ().has_unresolved_remote_dependencies () &&
@@ -318,7 +318,7 @@ Task_Entry::conjunctive_merge (
             ACE_CString (string_buffer);
         }
 
-      // Check for and warn about unresolved local 
+      // Check for and warn about unresolved local
       // dependencies in the ONE_WAY call graph.
       if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL &&
           (*link)->caller ().has_unresolved_local_dependencies () &&
@@ -500,7 +500,7 @@ Task_Entry::reframe (
 {
   int result = 0;
 
-  // if the set period is zero, treat it as uninitialized, 
+  // if the set period is zero, treat it as uninitialized,
   // and simply value the set period with the new period
   if (set_period)
   {
@@ -530,7 +530,7 @@ Task_Entry::reframe (
       {
         return -1;
       }
-  
+
       if (new_set.insert (*link, new_iter) < 0)
       {
         return -1;
@@ -601,9 +601,9 @@ Task_Entry::merge_frames (
     ACE_NEW_RETURN (entry_ptr,
                     Dispatch_Entry (src_iter.arrival (),
                                     src_iter.deadline (),
-                                    src_iter.priority (), 
-				    src_iter.OS_priority (),
-				    owner),
+                                    src_iter.priority (),
+                                    src_iter.OS_priority (),
+                                    owner),
                     -1);
 
     // if even one new dispatch was inserted, status is "something happened".
@@ -709,7 +709,7 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
 
   // lowest laxity (highest dynamic sub-priority) third
   // Just use low 32 bits of worst_case_execution_time.  This will
-  // have to change when CosTimeBase.idl is finalized.
+  // have to change when TimeBase.idl is finalized.
   Time this_laxity = deadline_ -
                      task_entry ().rt_info ()->worst_case_execution_time;
   Time that_laxity = d.deadline_ -
@@ -902,7 +902,7 @@ Dispatch_Proxy_Iterator::arrival () const
   }
 
   // Just use low 32 bits of arrival.  This will
-  // have to change when CosTimeBase.idl is finalized.
+  // have to change when TimeBase.idl is finalized.
   return link->dispatch_entry ().arrival () + current_frame_offset_;
 }
   // returns the adjusted arrival time of the virtual entry
@@ -917,7 +917,7 @@ Dispatch_Proxy_Iterator::deadline () const
   }
 
   // Just use low 32 bits of deadline.  This will
-  // have to change when CosTimeBase.idl is finalized.
+  // have to change when TimeBase.idl is finalized.
   return link->dispatch_entry ().deadline () + current_frame_offset_;
 }
   // returns the adjusted deadline time of the virtual entry
