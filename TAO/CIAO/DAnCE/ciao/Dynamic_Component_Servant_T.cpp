@@ -30,6 +30,17 @@ namespace CIAO
             typename EXEC,
             typename EXEC_VAR,
             typename COMP>
+  Dynamic_Component_Servant<COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR,
+    EXEC, EXEC_VAR, COMP>::~Dynamic_Component_Servant (void)
+  {
+  } 
+
+  template <typename COMP_SVNT,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename COMP>
   PortableServer::Servant Dynamic_Component_Servant
     <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
      EXEC, EXEC_VAR, COMP>::create (void)

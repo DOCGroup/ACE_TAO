@@ -32,7 +32,7 @@ namespace CIAO
   public:
     explicit Dynamic_Component_Servant_Base (void);
 
-    Dynamic_Component_Servant_Base (Session_Container *c);
+    Dynamic_Component_Servant_Base (Swapping_Container *c);
 
     virtual ~Dynamic_Component_Servant_Base (void);
 

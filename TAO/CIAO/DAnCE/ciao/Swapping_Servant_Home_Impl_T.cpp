@@ -25,9 +25,9 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::Swapping_Servant_Home_Impl (
       EXEC * exe,
-      Swapping_Container * c)
+      Swapping_Container * c, const char* obj_id, const char* repo_id)
     : Swapping_Servant_Home_Impl_Base (c),
-      executor_ (EXEC::_duplicate (exe))
+      executor_ (EXEC::_duplicate (exe)), obj_id_ (obj_id), repo_id_ (repo_id)
   {
   }
 
@@ -142,6 +142,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
   {
+    ACE_DEBUG ((LM_DEBUG, "i am creating the home here inside create ()\n"));
     if (this->executor_.in () == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
