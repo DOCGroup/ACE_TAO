@@ -29,13 +29,15 @@ public class DemoCore extends Frame {
   private GridBagLayout gridbag_;
   private GridBagConstraints constraints_;
 
-  DemoCore (String nameServiceIOR, String[] args, java.applet.Applet applet) {
+  DemoCore (String nameServiceIOR, 
+	    String[] args, 
+	    java.applet.Applet applet) {
     super ();
-
+    
     setSize (600,400);
     setBounds (new Rectangle (50,50,800,500));
     setVisible (true);
-
+    
     gridbag_ = new GridBagLayout();
     constraints_ = new GridBagConstraints();
     constraints_.fill = GridBagConstraints.BOTH;
@@ -89,65 +91,64 @@ public class DemoCore extends Frame {
     
     // instantiate the Factory for Visualization Components
     visCompFactory_ = new VisCompFactory ();
-
+    
     // in here the factory is needed
     addConnection ("Cpu_UsageObservable");
   }
   
-	public boolean addConnection (String selected) {	
+  public boolean addConnection (String selected) {	
 		// to not fill too many into it
-		if (countVisComp_ < MAX_VIS_COMPS) {
+    if (countVisComp_ < MAX_VIS_COMPS) {
       
-			// get a reference to the Observable
-			DemoObservable observable_ = dataHandler_.getObservable (selected);
-	
-			if (observable_ != null) {
+      // get a reference to the Observable
+      DemoObservable observable_ = dataHandler_.getObservable (selected);
+      
+      if (observable_ != null) {
 	
         VisComp visComp_ = visCompFactory_.getNewVisComp (observable_.getProperty (), selected);
 
-	  		if (visComp_ != null) {
-		  		vis_comp_list_.addElement (visComp_);	 
-	    
-			  	// connect the Observer with the Observable
-  				observable_.addObserver (visComp_);
+	if (visComp_ != null) {
+	  vis_comp_list_.addElement (visComp_);	 
 	  
-	  			countVisComp_++;
+	  // connect the Observer with the Observable
+	  observable_.addObserver (visComp_);
+	  
+	  countVisComp_++;
 	  
           // not more than three in a row
-		  		if (countVisComp_ == 3){
-			    	constraints_.gridwidth = GridBagConstraints.REMAINDER;
+	  if (countVisComp_ == 3){
+	    constraints_.gridwidth = GridBagConstraints.REMAINDER;
           }
           if (countVisComp_ > 3) {
-				    constraints_.gridwidth = 1;
-			    } 
+	    constraints_.gridwidth = 1;
+	  } 
 	  
-			    gridbag_.setConstraints ((java.awt.Component) visComp_, constraints_);
+	  gridbag_.setConstraints ((java.awt.Component) visComp_, constraints_);
 	  
-			    // add the Visualization Component to the Frame
-			    DemoCore.this.add ((java.awt.Component) visComp_);
-			    DemoCore.this.show ();
+	  // add the Visualization Component to the Frame
+	  DemoCore.this.add ((java.awt.Component) visComp_);
+	  DemoCore.this.show ();
 	  
           return true;
         }
-		  }
+      }
     }
-	  return false;
-	}
-  
-  public void init () {
-
+    return false;
   }
-
+  
+  public void init () 
+    {
+    }
+  
   public void paint (Graphics g) 
     {
     }
-
-  public void run () {
-
-    // Wait passive until events come in
-    pushConsumerFactory_.run ();
-
-  } 
+  
+  public void run () 
+    {
+      // Wait passive until events come in
+      pushConsumerFactory_.run ();
+    } 
 }
   
   
