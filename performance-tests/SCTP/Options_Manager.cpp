@@ -11,6 +11,7 @@ extern "C" {
 // main() with an error message.
 #ifdef ACE_HAS_SCTP
 extern "C" {
+#include <netinet/in.h>
 #include <netinet/sctp.h>
 };
 #else
