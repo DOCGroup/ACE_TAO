@@ -1,4 +1,4 @@
-project(gperf) : aceexe {
+project(gperf) : aceexe, core {
   exename = gperf
   install = ../../../bin
 
