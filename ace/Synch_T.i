@@ -168,13 +168,6 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::ACE_Reverse_Lock (ACE_LOCKING_MECHANISM
 {
 }
 
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE
-ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
-{
-  if (this->delete_lock_)
-    delete this->lock_;
-}
-
 // Explicitly destroy the lock.
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::remove (void)
