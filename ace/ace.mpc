@@ -270,6 +270,7 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor, other, codecs,
       Message_Queue.cpp
       Reactor_Notification_Strategy.cpp
       Task.cpp
+      ace_dsui_vars.cpp
     }
 
     Memory {

@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE NAMESPACE SYSTEM "file:///usr/local/share/doc/kurt_filters/namespace.dtd">
+<NAMESPACE>
+  <FAMILY name="MSG_QUEUE" id="10">
+    <EVENT name="AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE" id="12" />
+    <EVENT name="BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE" id="11" />
+    <EVENT name="AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE" id="10" />
+    <EVENT name="BEFORE_ENQUEUE_TAIL_LOCK_ACQUIRE" id="9" />
+    <EVENT name="AFTER_DEQUEUE_HEAD" id="8"/>
+    <EVENT name="BEFORE_DEQUEUE_HEAD" id="7"/>
+    <EVENT name="AFTER_ENQUEUE_TAIL" id="6"/>
+    <EVENT name="BEFORE_ENQUEUE_TAIL" id="5"/>
+    <EVENT name="AFTER_PUTQ_CALL" id="4"/>
+    <EVENT name="BEFORE_PUTQ_CALL" id="3"/>
+    <EVENT name="AFTER_GETQ_CALL" id="2"/>
+    <EVENT name="BEFORE_GETQ_CALL" id="1"/>
+    <EVENT name="QUEUE_LEVEL" id="0"/>
+  </FAMILY>
+</NAMESPACE>

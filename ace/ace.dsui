@@ -1,0 +1,16 @@
+DSTRM_FAMILY    MSG_QUEUE       10      "Message Queue events"
+
+# Messsage_Queue (Message_Queue_T.cpp)
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE     12      "Mark time after dequeue head lock call"     print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE    11      "Mark time before dequeue head lock call"    print_string
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE     10      "Mark time after enqueue tail lock call"     print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_ENQUEUE_TAIL_LOCK_ACQUIRE    9       "Mark time before enqueue tail lock call"    print_string
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_DEQUEUE_HEAD     8       "Mark time after dequeue head call"     print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_DEQUEUE_HEAD    7       "Mark time before dequeue head call"    print_string
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_ENQUEUE_TAIL     6       "Mark time after enqueue tail call"     print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_ENQUEUE_TAIL    5       "Mark time before enqueue_tail call"    print_string
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_PUTQ_CALL        4       "Mark time after putq call"             print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_PUTQ_CALL       3       "Mark time before putq call"            print_string
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_GETQ_CALL        2       "Mark time after getq call"             print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_GETQ_CALL       1       "Mark time before getq call"            print_string
+DSTRM_EVENT     MSG_QUEUE       10       QUEUE_LEVEL            0       "Queue level after an event added"      print_string

@@ -17,6 +17,12 @@
 #include "ace/Message_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_DSUI)
+#include "ace_dsui_config.h"
+#include "ace_dsui_families.h"
+#include <dsui.h>
+#endif // ACE_HAS_DSUI
+
 #include "ace/Notification_Strategy.h"
 
 ACE_RCSID(ace, Message_Queue_T, "$Id$")
@@ -219,6 +225,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail (ACE_MESSAGE
                   -1);
 
   int result = this->queue_.enqueue_tail (mb, timeout);
+
   if (result == -1)
     // Zap the message.
     mb->release ();
@@ -496,9 +503,11 @@ ACE_Message_Queue<ACE_SYNCH_USE>::message_length (size_t new_value)
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                                                      size_t lwm,
-                                                     ACE_Notification_Strategy *ns)
+                                                     ACE_Notification_Strategy *ns,
+                                                     uint8_t enabled_dsui)
   : not_empty_cond_ (this->lock_),
-    not_full_cond_ (this->lock_)
+    not_full_cond_ (this->lock_),
+    enabled_dsui_ (enabled_dsui)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 
@@ -1271,7 +1280,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
   int queue_count = 0;
   {
+    DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_TAIL_LOCK_ACQUIRE, 0, 0, NULL);
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+    DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE, 0, 0, NULL);
 
     if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
       {
@@ -1282,7 +1293,22 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
     if (this->wait_not_full_cond (ace_mon, timeout) == -1)
       return -1;
 
+#if defined (ACE_HAS_DSUI)
+    if (enabled_dsui_ == 1)
+      {
+        DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_TAIL, 0, 0, NULL);
+      }
+#endif // ACE_HAS_DSUI
+
     queue_count = this->enqueue_tail_i (new_item);
+
+#if defined (ACE_HAS_DSUI)
+  if (enabled_dsui_ == 1)
+    {
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_TAIL, 0, 0, NULL);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL,  queue_count, 0, NULL);
+    }
+#endif // ACE_HAS_DSUI
 
     if (queue_count == -1)
       return -1;
@@ -1301,7 +1327,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
                                                 ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
+
+  DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, 0, NULL);
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+  DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, 0, NULL);
 
   if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
@@ -1312,7 +1341,24 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
   if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
     return -1;
 
-  return this->dequeue_head_i (first_item);
+#if defined (ACE_HAS_DSUI)
+  if (enabled_dsui_ == 1)
+    {
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD, 0, 0, NULL);
+    }
+#endif // ACE_HAS_DSUI
+
+  int queue_count = this->dequeue_head_i (first_item);
+
+#if defined (ACE_HAS_DSUI)
+  if (enabled_dsui_ == 1)
+    {
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD, 0, 0, NULL);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL,  queue_count, 0, NULL);
+    }
+#endif // ACE_HAS_DSUI
+
+  return queue_count;
 }
 
 // Remove item with the lowest priority from the queue.  If timeout == 0 block
