@@ -1,3 +1,17 @@
+Fri Jan 12 11:32:01 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+
+	  Fixed a memory leak that occured each time a request was
+	  forwarded.  The object reference was duplicated during each
+	  location forward, which isn't necessary since the callee (in
+	  this case the PortableServer::ForwardRequest exception) is
+	  supposed to duplicate the reference if it wishes to retain
+	  ownership.  On top of that, the Object_var that held the object
+	  reference was forced to drop ownership by invoking its _retn()
+	  method, so the object reference was in effect duplicated twice!
+	  I must have had too much chocolate that day. :-)
+
 Fri Jan 12 07:49:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * docs/compiler.html:
