@@ -222,40 +222,19 @@ int be_visitor_args_decl::visit_sequence (be_sequence *node)
   return this->dump_structure ();
 }
 
-int be_visitor_args_decl::visit_string (be_string *node)
+int be_visitor_args_decl::visit_string (be_string *)
 {
-  if (this->current_type_name_ == node->name ())
+  switch (this->argument_direction_)
     {
-      // Strings have special mapping, the <name> returned by
-      // be_string is not useful for this.
-
-      switch (this->argument_direction_)
-	{
-	case AST_Argument::dir_IN:
-	  this->stream () << "const char*";
-	  break;
-	case AST_Argument::dir_INOUT:
-	  this->stream () << "char*";
-	  break;
-	case AST_Argument::dir_OUT:
-	  this->stream () << "CORBA::String_out";
-	  break;
-	}
-    }
-  else
-    {
-      switch (this->argument_direction_)
-	{
-	case AST_Argument::dir_IN:
-	  this->stream () << "const " << this->current_type_name_;
-	  break;
-	case AST_Argument::dir_INOUT:
-	  this->stream () << this->current_type_name_;
-	  break;
-	case AST_Argument::dir_OUT:
-	  this->stream () << this->current_type_name_ << "_out";
-	  break;
-	}
+    case AST_Argument::dir_IN:
+      this->stream () << "const char*";
+      break;
+    case AST_Argument::dir_INOUT:
+      this->stream () << "char*";
+      break;
+    case AST_Argument::dir_OUT:
+      this->stream () << "CORBA::String_out";
+      break;
     }
   return 0;
 }

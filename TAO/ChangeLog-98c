@@ -1,3 +1,13 @@
+Wed Jan 21 17:35:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  Generate CORBA_Object instead of CORBA::Object to keep NT
+	  happy.
+
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Fixed mapping for strings as arguments, they should always be
+	  char*.
+
 Mon Jan 19 22:03:38 1998    <coryan@MILONGA>
 
 	* tao/sequence_T.i: 
