@@ -14,7 +14,7 @@ ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy_i::relative_expiry (
-      CORBA::Environment &ACE_TRY_ENV
+      CORBA::Environment &
     )
 {
   return this->relative_expiry_;
@@ -22,7 +22,7 @@ TAO_RelativeRoundtripTimeoutPolicy_i::relative_expiry (
 
 CORBA::PolicyType
 TAO_RelativeRoundtripTimeoutPolicy_i::policy_type (
-      CORBA_Environment &ACE_TRY_ENV
+      CORBA_Environment &
     )
 {
   // Future policy implementors: notice how this minimizes the
@@ -107,7 +107,7 @@ TAO_RelativeRoundtripTimeoutPolicy_i::destroy (
 
 PortableServer::POA_ptr
 TAO_RelativeRoundtripTimeoutPolicy_i::_default_POA (
-      CORBA_Environment &ACE_TRY_ENV
+      CORBA_Environment &
     )
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());

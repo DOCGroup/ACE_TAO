@@ -43,18 +43,18 @@ TAO_Muxed_TMS::request_id (void)
 // Bind the dispatcher with the request id.
 int
 TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
-                                TAO_Reply_Dispatcher *rh)
+                                TAO_Reply_Dispatcher *)
 {
   // @@
   return 0;
 }
 
 int
-TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
-                               CORBA::ULong reply_status,
-                               const TAO_GIOP_Version& version,
-                               TAO_GIOP_ServiceContextList& reply_ctx,
-                               TAO_GIOP_Message_State* message_state)
+TAO_Muxed_TMS::dispatch_reply (CORBA::ULong /* request_id */,
+                               CORBA::ULong /* reply_status */,
+                               const TAO_GIOP_Version&,
+                               TAO_GIOP_ServiceContextList& /* reply_ctx */,
+                               TAO_GIOP_Message_State*)
 {
   // @@
   return -1;

@@ -118,8 +118,8 @@ CORBA_ValueBase::_tao_marshal (TAO_OutputCDR &strm,
 
 
 CORBA::Boolean
-CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
-                                  CORBA_ValueBase *& new_object)
+CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &,
+                                  CORBA_ValueBase *&)
 {
   // This is for the special case only that one unmarshals in order
   // to assign the newly created object directly to a ValueBase pointer.
@@ -143,7 +143,7 @@ CORBA::Boolean
 CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                                      CORBA_ValueFactory_ptr &factory,
                                      CORBA_ValueBase *&valuetype,
-                                     const char * const repo_id)
+                                     const char * const /* repo_id */)
 { // %! dont leak on error case !
   // %! postconditions
   CORBA::Boolean retval = 1;
@@ -208,7 +208,7 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 }
 
 CORBA::Boolean
-CORBA_ValueBase::_tao_unmarshal_post (TAO_InputCDR &strm)
+CORBA_ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
 {
   CORBA::Boolean retval = 1;
 

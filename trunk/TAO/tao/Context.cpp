@@ -60,8 +60,8 @@ CORBA_Context::parent (CORBA::Environment &ACE_TRY_ENV) const
 }
 
 void
-CORBA_Context::create_child (const char *child_ctx_name,
-                             CORBA_Context_out child_ctx,
+CORBA_Context::create_child (const char * /* child_ctx_name */,
+                             CORBA_Context_out /* child_ctx */,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
@@ -69,8 +69,8 @@ CORBA_Context::create_child (const char *child_ctx_name,
 }
 
 void
-CORBA_Context::set_one_value (const char *propname,
-                              const CORBA_Any &propvalue,
+CORBA_Context::set_one_value (const char * /* propname */,
+                              const CORBA_Any & /* propvalue */,
                               CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
@@ -86,7 +86,7 @@ CORBA_Context::set_values (CORBA::NVList_ptr values,
 }
 
 void
-CORBA_Context::delete_values (const char *propname,
+CORBA_Context::delete_values (const char * /* propname */,
                               CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
@@ -94,10 +94,10 @@ CORBA_Context::delete_values (const char *propname,
 }
 
 void
-CORBA_Context::get_values (const char *start_scope,
-                           CORBA::Flags op_flags,
-                           const char *pattern,
-                           CORBA::NVList_ptr &values,
+CORBA_Context::get_values (const char * /* start_scope */,
+                           CORBA::Flags /* op_flags */,
+                           const char * /* pattern */,
+                           CORBA::NVList_ptr & /* values */,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,

@@ -21,8 +21,8 @@ ACE_RCSID(tao, CDR_Interpreter, "$Id$")
 TAO_CDR_Interpreter::Table_Element
 TAO_CDR_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 {
-  { 0, 1, 0 },                            // CORBA::tk_null
-  { 0, 1, 0 },                            // CORBA::tk_void
+  { 0, 1, 0, 0 },                         // CORBA::tk_null
+  { 0, 1, 0, 0 },                         // CORBA::tk_void
 
   { 0, 1, 0, 0 },                         // CORBA::tk_short
   { 0, 1, 0, 0 },                         // CORBA::tk_long
