@@ -1,158 +1,158 @@
 Fri Jun 26 21:24:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Logger: Rename clnt.{cpp,h} and svc.cpp to
- 	  client.{cpp,h} and server.cpp to be more consistent with other
- 	  naming schemes in TAO.
+        * orbsvcs/tests/Logger: Rename clnt.{cpp,h} and svc.cpp to
+          client.{cpp,h} and server.cpp to be more consistent with other
+          naming schemes in TAO.
 
 Fri Jun 26 16:57:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/encode.cpp: 
-	  Check the length of a string before encoding.
+        * tao/encode.cpp:
+          Check the length of a string before encoding.
 
-	* tao/CDR.h: 
-	* tao/CDR.i: 
-	* tao/CDR.cpp: 
-	  Added operations to write strings with known lengths
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/CDR.cpp:
+          Added operations to write strings with known lengths
 
-	* tests/Param_Test/Makefile: 
-	* tests/Param_Test/README: 
-	* tests/Param_Test/tests.h: 
-	* tests/Param_Test/bd_string.h: 
-	* tests/Param_Test/bd_string.cpp: 
-	* tests/Param_Test/driver.cpp: 
-	* tests/Param_Test/helper.h: 
-	* tests/Param_Test/helper.cpp: 
-	* tests/Param_Test/options.h: 
-	* tests/Param_Test/options.cpp: 
-	* tests/Param_Test/param_test.idl: 
-	* tests/Param_Test/param_test_i.h: 
-	* tests/Param_Test/param_test_i.cpp: 
-	  Added a test for bounded strings.
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/README:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/bd_string.h:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/helper.h:
+        * tests/Param_Test/helper.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+          Added a test for bounded strings.
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	  Use the TAO extensions to create an octet sequence using a
-	  message block.
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+          Use the TAO extensions to create an octet sequence using a
+          message block.
 
 Fri Jun 26 16:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-        * orbsvcs/tests/Simulator/README: Added information about the 
-	  new version of the event service.
+        * orbsvcs/tests/Simulator/README: Added information about the
+          new version of the event service.
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: removed the
-	  "cout" commands.
-	
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp: Made the 
-	  Event consumer work.
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: removed the
+          "cout" commands.
+
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp: Made the
+          Event consumer work.
 
 Fri Jun 26 14:22:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tests/Param_Test:
+        * tests/Param_Test:
 
-	The ever increasing tests.{h, cpp} files have been broken down
-	into the following files to make modifications and adding new
-	tests simpler. The tests.cpp file is removed. Any new tests that
-	are added will have their individual *.h and *.cpp files.
+        The ever increasing tests.{h, cpp} files have been broken down
+        into the following files to make modifications and adding new
+        tests simpler. The tests.cpp file is removed. Any new tests that
+        are added will have their individual *.h and *.cpp files.
 
-	We now keep a tests.h file that includes all the individual *.h
-	files for each test. This way, we just need to include the tests.h
-	file. Individual files for different tests are given below.
+        We now keep a tests.h file that includes all the individual *.h
+        files for each test. This way, we just need to include the tests.h
+        file. Individual files for different tests are given below.
 
-	any.h
-	bd_long_seq.h
-	bd_short_seq.h
-	bd_str_seq.h
-	bd_struct_seq.h
-	fixed_array.h
-	fixed_struct.h
-	nested_struct.h
-	objref.h
-	short.h
-	typecode.h
-	ub_any_seq.h
-	ub_long_seq.h
-	ub_objref_seq.h
-	ub_short_seq.h
-	ub_str_seq.h
-	ub_string.h
-	ub_struct_seq.h
-	var_array.h
-	var_struct.h
+        any.h
+        bd_long_seq.h
+        bd_short_seq.h
+        bd_str_seq.h
+        bd_struct_seq.h
+        fixed_array.h
+        fixed_struct.h
+        nested_struct.h
+        objref.h
+        short.h
+        typecode.h
+        ub_any_seq.h
+        ub_long_seq.h
+        ub_objref_seq.h
+        ub_short_seq.h
+        ub_str_seq.h
+        ub_string.h
+        ub_struct_seq.h
+        var_array.h
+        var_struct.h
 
-	These are the different *.cpp files implementing various tests.
+        These are the different *.cpp files implementing various tests.
 
-	any.cpp
-	bd_long_seq.cpp
-	bd_short_seq.cpp
-	bd_str_seq.cpp
-	bd_struct_seq.cpp
-	fixed_array.cpp
-	fixed_struct.cpp
-	nested_struct.cpp
-	objref.cpp
-	short.cpp
-	typecode.cpp
-	ub_any_seq.cpp
-	ub_long_seq.cpp
-	ub_objref_seq.cpp
-	ub_short_seq.cpp
-	ub_str_seq.cpp
-	ub_string.cpp
-	ub_struct_seq.cpp
-	var_array.cpp
-	var_struct.cpp
+        any.cpp
+        bd_long_seq.cpp
+        bd_short_seq.cpp
+        bd_str_seq.cpp
+        bd_struct_seq.cpp
+        fixed_array.cpp
+        fixed_struct.cpp
+        nested_struct.cpp
+        objref.cpp
+        short.cpp
+        typecode.cpp
+        ub_any_seq.cpp
+        ub_long_seq.cpp
+        ub_objref_seq.cpp
+        ub_short_seq.cpp
+        ub_str_seq.cpp
+        ub_string.cpp
+        ub_struct_seq.cpp
+        var_array.cpp
+        var_struct.cpp
 
-	We use the bd_* convention for the bounded sequences/strings tests
-	and the ub_* convention for the unbounded cases.
+        We use the bd_* convention for the bounded sequences/strings tests
+        and the ub_* convention for the unbounded cases.
 
-	*NEW TESTS* :
+        *NEW TESTS* :
 
-	Tests for arrays of fixed and varying sizes are included in this
-	release.
+        Tests for arrays of fixed and varying sizes are included in this
+        release.
 
 Fri Jun 26 14:20:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence.h:
-	* tao/Sequence.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	  TAO provides an extension for octet sequences: a constructor
-	  taking a Message_Block.
+        * tao/Sequence.h:
+        * tao/Sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          TAO provides an extension for octet sequences: a constructor
+          taking a Message_Block.
 
-	* TAO_IDL/be_include/be_array.h:
-	* TAO_IDL/be_include/be_enum.h:
-	* TAO_IDL/be_include/be_exception.h:
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be_include/be_interface_fwd.h:
-	* TAO_IDL/be_include/be_native.h:
-	* TAO_IDL/be_include/be_predefined_type.h:
-	* TAO_IDL/be_include/be_sequence.h:
-	* TAO_IDL/be_include/be_string.h:
-	* TAO_IDL/be_include/be_structure.h:
-	* TAO_IDL/be_include/be_type.h:
-	* TAO_IDL/be_include/be_typedef.h:
-	* TAO_IDL/be_include/be_union.h:
-	* TAO_IDL/be/be_array.cpp:
-	* TAO_IDL/be/be_enum.cpp:
-	* TAO_IDL/be/be_exception.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_interface_fwd.cpp:
-	* TAO_IDL/be/be_native.cpp:
-	* TAO_IDL/be/be_predefined_type.cpp:
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_string.cpp:
-	* TAO_IDL/be/be_structure.cpp:
-	* TAO_IDL/be/be_type.cpp:
-	* TAO_IDL/be/be_typedef.cpp:
-	* TAO_IDL/be/be_union.cpp:
-	  Removed a method that was not used anymore.
+        * TAO_IDL/be_include/be_array.h:
+        * TAO_IDL/be_include/be_enum.h:
+        * TAO_IDL/be_include/be_exception.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_native.h:
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_string.h:
+        * TAO_IDL/be_include/be_structure.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_native.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_union.cpp:
+          Removed a method that was not used anymore.
 
 Fri Jun 26 12:54:25 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/{rettype_post_docall_cs,
-	rettype_pre_docall_cs}.cpp: We were using the underlying node
-	names in the generated code even when those nodes were Typedefed
-	to other names. So in such cases, we should use the typedef name.
-	Thanks to John Geiss <jtgb@eci-esyst.com> for reporting the
-	problem.
+        * TAO_IDL/be/be_visitor_operation/{rettype_post_docall_cs,
+        rettype_pre_docall_cs}.cpp: We were using the underlying node
+        names in the generated code even when those nodes were Typedefed
+        to other names. So in such cases, we should use the typedef name.
+        Thanks to John Geiss <jtgb@eci-esyst.com> for reporting the
+        problem.
 
 Fri Jun 26 11:46:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
