@@ -1,3 +1,36 @@
+Mon Dec 04 23:54:10 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp: 
+
+	  - Receiver::open(): Only duplicate the message block when we are
+	  faking the result.  Otherwise, initiate_read_stream will create
+	  its own message block.
+
+	  - Receiver::open(): Delete the fake result.
+
+	  - Receiver::handle_read_stream(): When there is no more data to
+	  read, release the message block and delete the receiver.
+	  
+	  - Sender::transmit_file(): No need to duplicate the trailer.
+
+	* ace/Proactor.cpp (~ACE_Proactor_Timer_Handler): 
+
+	  The following was changed:
+	
+	  this->thr_mgr ()->wait ();
+	  
+	  to:
+
+	  this->thr_mgr ()->wait_grp (this->grp_id ());
+
+	  since Thread_Manager::wait() if called while the
+	  ACE_Object_Manager is shutting down (as a result of program
+	  shutdown or ACE::fini), it will not wait for any threads to
+	  complete.
+
+	  Also, the timer_handler thread was not created detached since
+	  Thread_Manager::wait_grp() does not wait on detached threads.
+
 Mon Dec 04 16:32:11 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.i (recv):
