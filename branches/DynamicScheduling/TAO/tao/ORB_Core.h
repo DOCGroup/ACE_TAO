@@ -1398,6 +1398,8 @@ public:
    */
   void *poa_current_impl_;
 
+  void *rtscheduler_current_impl_;
+
   /// The default environment for the thread.
   CORBA_Environment *default_environment_;
 
