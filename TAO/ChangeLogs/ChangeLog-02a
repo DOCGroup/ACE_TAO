@@ -1,3 +1,10 @@
+Thu Aug  2 09:09:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Smart_Proxies/On_Demand/client.cpp (parse_args): Fixed a 
+	  but where there was a missing ":" in the get_opts string.
+  	  Thanks to Goran Lowkrantz <goran.lowkrantz@ismobile.com> for
+ 	  reporting this.  Fixes bugid 995.
+
 Wed Aug  1 18:17:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/ImplRepoC.h:
