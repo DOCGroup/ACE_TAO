@@ -45,7 +45,7 @@ class ACE_Command_Base
   //    to implement it.
 public:
   // = Initialization and termination methods.
-  ACE_Command_Base (void)
+  ACE_Command_Base (void);
   // Default constructor.
 
   virtual ~ACE_Command_Base (void);

@@ -17,6 +17,7 @@
 #if !defined (ACE_MALLOC_H)
 #define ACE_MALLOC_H
 
+#include "ace/ACE.h"
 #include "ace/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -536,30 +536,34 @@ protected:
   // <number_dispatched> is set to the number of timer handlers
   // dispatched.
 
-  virtual int dispatch_notification_handlers (int &number_of_active_handles,
-                                              ACE_Select_Reactor_Handle_Set &dispatch_set);
+  virtual int dispatch_notification_handlers (ACE_Select_Reactor_Handle_Set &dispatch_set,
+                                              int &number_of_active_handles,
+                                              int &number_of_handlers_dispatched);
   // Dispatch any notification handlers.  Returns -1 if the state of
   // the <wait_set_> has changed, else returns number of handlers
   // notified.
 
-  virtual int dispatch_io_handlers (int &number_of_active_handles,
-                                    ACE_Select_Reactor_Handle_Set &dispatch_set);
+  virtual int dispatch_io_handlers (ACE_Select_Reactor_Handle_Set &dispatch_set,
+                                    int &number_of_active_handles,
+                                    int &number_of_handlers_dispatched);
   // Dispatch all the input/output/except handlers that are enabled in
-  // the <dispatch_set>.  Returns -1 if the state of the <wait_set_>
-  // has changed, else returns number of handlers dispatched.
+  // the <dispatch_set>.  Updates <number_of_active_handles> and
+  // <number_of_handlers_dispatched> according to the behavior of the
+  // number Returns -1 if the state of the <wait_set_> has changed,
+  // else 0.
 
   virtual int dispatch_io_set (int number_of_active_handles,
-                               int& number_dispatched,
+                               int &number_of_handlers_dispatched,
                                int mask,
                                ACE_Handle_Set& dispatch_mask,
                                ACE_Handle_Set& ready_mask,
                                ACE_EH_PTMF callback);
   // Factors the dispatching of an io handle set (each WRITE, EXCEPT
-  // or READ set of handles).
-  // It updates the number of handles already dispatched and
-  // invokes this->notify_handle for all the handles in <dispatch_set>
-  // using the <mask>, <ready_set> and <callback> parameters.
-  // Must return -1 if this->state_changed otherwise it must return 0.
+  // or READ set of handles).  It updates the
+  // <number_of_handlers_dispatched> and invokes this->notify_handle
+  // for all the handles in <dispatch_set> using the <mask>,
+  // <ready_set> and <callback> parameters.  Must return -1 if
+  // this->state_changed otherwise it must return 0.
 
   virtual void notify_handle (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask,
