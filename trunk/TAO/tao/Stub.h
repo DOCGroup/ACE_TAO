@@ -74,8 +74,8 @@ struct TAO_Exception_Data
   //    for the exception as well as a static function pointer that
   //    does the job of memory allocation.
 
-  CORBA::TypeCode_ptr tc;
-  // Typecode describing the exception.
+  char *id;
+  // Repository id of the exception.
 
   TAO_Exception_Alloc alloc;
   // The allocator for this exception.

@@ -688,45 +688,61 @@ be_visitor_operation_interceptors_cs::
 
   *os << "::exceptions (CORBA::Environment &ACE_TRY_ENV)"<< be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "// Generate the exception list on demand." << be_nl
-      << "Dynamic::ExceptionList *exception_list ="  << be_idt_nl
-      << "TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);"
-      << be_uidt_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl
-      << be_nl;
+      << "{" << be_idt_nl;
 
-  if (!node->exceptions ())
+  if (be_global->tc_support ())
     {
-      *os << "return exception_list;" << be_uidt_nl;
+      *os << "// Generate the exception list on demand." << be_nl
+          << "Dynamic::ExceptionList *exception_list ="  << be_idt_nl
+          << "TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);"
+          << be_uidt_nl
+          << "ACE_CHECK_RETURN (0);" << be_nl
+          << be_nl;
+
+      if (!node->exceptions ())
+        {
+          *os << "return exception_list;";
+        }
+      else
+        {
+          *os << "Dynamic::ExceptionList_var safe_exception_list = "
+              << "exception_list;" << be_nl;
+
+          // We change our scope to be able to generate the exceptionlist.
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST);
+          visitor = tao_cg->make_visitor (&ctx);
+
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "visit_operation - "
+                                 "codegen for exceptlist failed\n"),
+                                -1);
+            }
+
+          delete visitor;
+
+          *os << be_nl
+              << "return safe_exception_list._retn ();";
+        }
     }
   else
     {
-      *os << "Dynamic::ExceptionList_var safe_exception_list = "
-          << "exception_list;" << be_nl;
-
-      // We change our scope to be able to generate the exceptionlist.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (node->accept (visitor) == -1))
+      if (be_global->use_raw_throw ())
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for exceptlist failed\n"),
-                            -1);
+          *os << "throw (CORBA::NO_IMPLEMENT ());" << be_nl
+              << "return 0;";
         }
-
-      delete visitor;
-
-      *os << be_nl
-          << "return safe_exception_list._retn ();" << be_uidt_nl;
+      else
+        {
+          *os << "ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);";
+        }
     }
 
-  *os << "}\n\n" << be_nl;
+  *os << be_uidt_nl << "}\n\n" << be_nl;
 
   os->decr_indent ();
 
@@ -769,54 +785,70 @@ be_visitor_operation_interceptors_cs::
 
   *os << "::result (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "// Generate the result on demand." << be_nl;
+      << "{" << be_idt_nl;
 
-  bt = be_type::narrow_from_decl (node->return_type ());
-
-  if (this->void_return_type (bt))
+  if (be_global->any_support ())
     {
-      // Return an Any with tk_void TypeCode.
-      *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
-          << "CORBA::Any *result_any ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
-          << be_uidt_nl
-          << "ACE_CHECK_RETURN (0);" << be_nl
-          << be_nl
-          << "return result_any;" << be_uidt_nl;
+      *os << "// Generate the result on demand." << be_nl;
+
+      bt = be_type::narrow_from_decl (node->return_type ());
+
+      if (this->void_return_type (bt))
+        {
+          // Return an Any with tk_void TypeCode.
+          *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
+              << "CORBA::Any *result_any ="  << be_idt_nl
+              << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
+              << be_uidt_nl
+              << "ACE_CHECK_RETURN (0);" << be_nl
+              << be_nl
+              << "return result_any;";
+        }
+      else
+        {
+          *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
+              << "CORBA::Any *result_any ="  << be_idt_nl
+              << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
+              << be_uidt_nl
+              << "ACE_CHECK_RETURN (0);" << be_nl
+              << be_nl
+              << "CORBA::Any_var safe_result_any = "
+              << "result_any;" << be_nl << be_nl;
+
+          // Generate the insertion of result into Any.
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
+          visitor = tao_cg->make_visitor (&ctx);
+
+          if (!visitor || (bt->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "visit_operation - "
+                                 "codegen for result failed\n"),
+                                -1);
+            }
+
+          delete visitor;
+
+          *os << "return safe_result_any._retn ();";
+        }
     }
   else
     {
-      *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
-          << "CORBA::Any *result_any ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
-          << be_uidt_nl
-          << "ACE_CHECK_RETURN (0);" << be_nl
-          << be_nl
-          << "CORBA::Any_var safe_result_any = "
-          << "result_any;" << be_nl << be_nl;
-
-      // Generate the insertion of result into Any.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (bt->accept (visitor) == -1))
+      if (be_global->use_raw_throw ())
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for result failed\n"),
-                            -1);
+          *os << "throw (CORBA::NO_IMPLEMENT ());" << be_nl
+              << "return 0;";
         }
-
-      delete visitor;
-
-      *os << "return safe_result_any._retn ();" << be_uidt_nl;
+      else
+        {
+          *os << "ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);";
+        }
     }
 
-  *os << "}\n\n";
+  *os << be_uidt_nl << "}\n\n";
 
   os->decr_indent ();
 
