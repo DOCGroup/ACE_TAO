@@ -216,15 +216,17 @@ AST_PredefinedType::dump (ACE_OSTREAM_TYPE &o)
 int
 AST_PredefinedType::compute_size_type (void)
 {
-  if (this->pt () == AST_PredefinedType::PT_any
-      || this->pt () == AST_PredefinedType::PT_pseudo)
-    {
+  switch (this->pd_pt)
+  {
+    case AST_PredefinedType::PT_any:
+    case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       this->size_type (AST_Type::VARIABLE);
-    }
-  else
-    {
+      break;
+    default:
       this->size_type (AST_Type::FIXED);
-    }
+      break;
+  }
 
   return 0;
 }

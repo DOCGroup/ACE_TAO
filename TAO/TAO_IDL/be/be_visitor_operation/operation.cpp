@@ -532,20 +532,8 @@ be_visitor_operation::gen_stub_operation_body (
       if (!this->void_return_type (return_type))
         {
           // Now generate the normal successful return statement.
-          AST_Decl::NodeType nt = return_type->base_node_type ();
-          AST_PredefinedType *pdt = 0;
-          AST_PredefinedType::PredefinedType pt = AST_PredefinedType::PT_void;
-
-          if (nt == AST_Decl::NT_pre_defined)
-            {
-              pdt = AST_PredefinedType::narrow_from_decl (return_type);
-              pt = pdt->pt ();
-            }
-
           if (return_type->size_type () == AST_Type::VARIABLE
-              || nt == AST_Decl::NT_array
-              || (nt == AST_Decl::NT_pre_defined 
-                  && pt == AST_PredefinedType::PT_object))
+              || return_type->node_type () == AST_Decl::NT_array)
             {
               *os << "return _tao_retval._retn ();";
             }
@@ -1087,20 +1075,8 @@ be_visitor_operation::gen_marshal_and_invoke (
           );
         }
 
-      AST_Decl::NodeType nt = bt->base_node_type ();
-      AST_PredefinedType *pdt = 0;
-      AST_PredefinedType::PredefinedType pt = AST_PredefinedType::PT_void;
-
-      if (nt == AST_Decl::NT_pre_defined)
-        {
-          pdt = AST_PredefinedType::narrow_from_decl (bt);
-          pt = pdt->pt ();
-        }
-
       if (bt->size_type () == AST_Type::VARIABLE
-          || nt == AST_Decl::NT_array
-          || (nt == AST_Decl::NT_pre_defined 
-              && pt == AST_PredefinedType::PT_object))
+          || bt->node_type () == AST_Decl::NT_array)
         {
           *os << " _tao_retval_info =" << be_idt_nl
               << "_tao_retval._retn ();" << be_uidt_nl
