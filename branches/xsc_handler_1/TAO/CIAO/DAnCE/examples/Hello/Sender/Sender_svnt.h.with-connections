@@ -344,7 +344,7 @@ namespace Sender_Impl
   namespace CIAO_GLUE_Hello
   {
     class SENDER_SVNT_Export SenderHome_Servant
-      : public virtual CIAO::Swapping_Servant_Home_Impl<
+      : public virtual CIAO::Swapping_Home_Servant_Impl<
           POA_Hello::SenderHome,
           ::Hello::CCM_SenderHome,
           ::Hello::CCM_SenderHome_var,
@@ -357,7 +357,7 @@ namespace Sender_Impl
     {
       public:
       /// Hack for VC6.
-      typedef CIAO::Swapping_Servant_Home_Impl<
+      typedef CIAO::Swapping_Home_Servant_Impl<
           POA_Hello::SenderHome,
           ::Hello::CCM_SenderHome,
           ::Hello::CCM_SenderHome_var,

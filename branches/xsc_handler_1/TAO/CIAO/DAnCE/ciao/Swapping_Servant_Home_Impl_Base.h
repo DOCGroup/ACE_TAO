@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Swapping_Servant_Home_Impl_Base.h
+ *  @file    Swapping_Home_Servant_Impl_Base.h
  *
  *  $Id$
  *
@@ -28,7 +28,7 @@ namespace CIAO
   class Swapping_Container;
 
   /**
-   * @class Swapping_Servant_Home_Impl_Base
+   * @class Swapping_Home_Servant_Impl_Base
    *
    */
   // @@ Jai, why are you inheriting from "home" here? What is the
@@ -37,15 +37,15 @@ namespace CIAO
   // This is a home implementation and that is why inheriting from
   // "home".
   //
-  class CIAO_SERVER_Export Swapping_Servant_Home_Impl_Base
+  class CIAO_SERVER_Export Swapping_Home_Servant_Impl_Base
     : public virtual POA_Components::CCMHome
   {
   public:
-    explicit Swapping_Servant_Home_Impl_Base (void);
+    explicit Swapping_Home_Servant_Impl_Base (void);
 
-    Swapping_Servant_Home_Impl_Base (Swapping_Container * c);
+    Swapping_Home_Servant_Impl_Base (Swapping_Container * c);
 
-    virtual ~Swapping_Servant_Home_Impl_Base (void);
+    virtual ~Swapping_Home_Servant_Impl_Base (void);
 
     // Operations for CCMHome interface.
     virtual ::CORBA::IRObject_ptr

@@ -48,17 +48,17 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  class Swapping_Servant_Home_Impl
+  class Swapping_Home_Servant_Impl
     : public virtual BASE_SKEL,
       public virtual Home_Servant_Impl_Base,
       public virtual PortableServer::RefCountServantBase
   {
   public:
-    Swapping_Servant_Home_Impl (EXEC * exe,
+    Swapping_Home_Servant_Impl (EXEC * exe,
                        Session_Container * c,
                        const char* obj_id, const char* repo_id);
 
-    virtual ~Swapping_Servant_Home_Impl (void);
+    virtual ~Swapping_Home_Servant_Impl (void);
 
     // Operations for CCMHome interface.
 
