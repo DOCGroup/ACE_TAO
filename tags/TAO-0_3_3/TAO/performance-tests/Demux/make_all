@@ -1,0 +1,19 @@
+rm -fr server_*_* client_*_*
+gen_bin 1 1
+gen_bin 1 10
+gen_bin 1 100
+gen_bin 100 1
+gen_bin 100 10
+gen_bin 100 100
+gen_bin 200 1
+gen_bin 200 10
+gen_bin 200 100
+gen_bin 300 1
+gen_bin 300 10
+gen_bin 300 100
+gen_bin 400 1
+gen_bin 400 10
+gen_bin 400 100
+gen_bin 500 1
+gen_bin 500 10
+gen_bin 500 100
