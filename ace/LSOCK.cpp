@@ -7,6 +7,7 @@ ACE_RCSID(ace, LSOCK, "$Id$")
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_socket.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/LSOCK.i"
@@ -140,7 +141,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
         {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
           // Close down the socket that was returned by the MSG_PEEK.
-          ACE_OS::closesocket (*(ACE_HANDLE *) CMSG_DATA ((cmsghdr *) cmsgbuf)); 
+          ACE_OS::closesocket (*(ACE_HANDLE *) CMSG_DATA ((cmsghdr *) cmsgbuf));
           recv_msg.msg_control = cmsgbuf;
           recv_msg.msg_controllen = sizeof cmsgbuf;
 #else
