@@ -44,8 +44,9 @@ module SFP
   
   struct start_message
   { 
-    sequence <char> magic_number; 
+    //    sequence <char> magic_number; 
     // '=', 'S', 'T', 'A' 
+    unsigned long magic_number;
     octet major_version; 
     octet minor_version; 
     octet flags; 
