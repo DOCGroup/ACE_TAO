@@ -21,6 +21,10 @@
 #include "tao/POA_CORBA.h"
 #include "tao/ORB.h"
 
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+#include "tao/InterfaceC.h"
+#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+
 #if !defined (__ACE_INLINE__)
 #include "DomainC.i"
 #endif /* !defined INLINE */
@@ -227,7 +231,7 @@ CORBA::ConstructionPolicy::_duplicate (CORBA::ConstructionPolicy_ptr obj)
 }
 
 void CORBA::ConstructionPolicy::make_domain_manager (
-    CORBA::InterfaceDef_ptr object_type,
+    IR_InterfaceDef *object_type,
     CORBA::Boolean constr_policy,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -260,7 +264,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
                               ACE_TRY_ENV);
     ACE_CHECK;
 
-#if 0
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
   // @@ The insertion operation (<<) for InterfaceDef will be
   // defined, and thus this code will work.
@@ -269,10 +273,10 @@ void CORBA::ConstructionPolicy::make_domain_manager (
           (_tao_out << CORBA::Any::from_boolean (constr_policy))
       ))
       ACE_THROW (CORBA::MARSHAL ());
-#else
+#else /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
     ACE_UNUSED_ARG (object_type);
     ACE_UNUSED_ARG (constr_policy);
-#endif /* 0 */
+#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);

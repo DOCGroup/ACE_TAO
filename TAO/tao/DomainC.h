@@ -18,6 +18,8 @@
 #include "tao/Environment.h"
 #include "tao/Any.h"
 
+class IR_InterfaceDef;
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -264,11 +266,12 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual void make_domain_manager (
-      CORBA::InterfaceDef_ptr object_type,
+      IR_InterfaceDef *object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
+
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
       CORBA::Environment &ACE_TRY_ENV =

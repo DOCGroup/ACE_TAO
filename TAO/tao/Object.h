@@ -32,6 +32,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+  class IR_InterfaceDef;
+#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+
 class TAO_ServantBase;
 class TAO_Stub;
 
@@ -90,8 +94,12 @@ public:
   // This method is deprecated in the CORBA 2.2 spec, we just return 0
   // every time.
 
-  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &ACE_TRY_ENV =
-                                                    TAO_default_environment ());
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+
+  virtual IR_InterfaceDef *_get_interface (CORBA_Environment &ACE_TRY_ENV =
+                                                 TAO_default_environment ());
+
+#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
   // Interface repository related operations.
 
