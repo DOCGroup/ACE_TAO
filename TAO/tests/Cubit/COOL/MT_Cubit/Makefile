@@ -16,7 +16,7 @@ SVR_OBJS = cubit_impl.o server.o cubit.o
 
 CLT_OBJS = Task_Client.o client.o cubit.o Util_Thread.o
 
-LDLIBS	 = -lm -lOrb-mt -lposix4 
+LDLIBS	 = -lOrb-mt 
 
 VLDLIBS	 = $(LDLIBS:%=%$(VAR))
 
