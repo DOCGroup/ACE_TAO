@@ -1,3 +1,16 @@
+1998-11-06  James CE Johnson  <jim@adt1.lads.com>
+
+        * docs/tutorials/013/block.cpp
+        * docs/tutorials/013/page05.html
+        * docs/tutorials/015/Compressor.cpp
+        * docs/tutorials/015/Crypt.cpp
+        * docs/tutorials/015/Recv.cpp
+        * docs/tutorials/015/Xmit.cpp
+        * docs/tutorials/015/*.html
+          Susan Liebeskind (susan.liebeskind@gtri.gatech.edu) discovered
+          that you can't use the 'inherited' typedef to initialize a
+          baseclass if you use the AIX C++ compiler.
+
 Fri Nov  6 10:12:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Process.h: Clarified the behavior of ACE_Process and
