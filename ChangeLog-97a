@@ -29,6 +29,9 @@ Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	  it can be accessed with the new class arrangement.  Also, made the
 	  auto_array_ptr operator-> const.
 
+	* ace/Sched_Params.cpp (previous_priority, VxWorks only): removed
+	  ACE_UNUSED_ARG (policy) because policy is used in this function.
+
 	* netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): wrapped TCHAR
 	  argument to sizeof in parenthesis.
 
