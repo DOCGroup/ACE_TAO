@@ -194,6 +194,9 @@ DualEC_Supplier::init ()
        root_POA_var_->the_POAManager (ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
+    poa_manager_->activate (ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
     // Get the Naming Service object reference.
     CORBA::Object_var namingObj_var =
       TAO_ORB_Core_instance()->orb()->resolve_initial_references ("NameService");
@@ -370,6 +373,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
               }
 
             sup->navigation_Supplier_.notify (any);
+            ACE_TRY_CHECK;
           }
         else
           {
@@ -440,6 +444,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
             ACE_OS::sleep (sup->weap_pause_);
 
             sup->weapons_Supplier_.notify (any);
+            ACE_TRY_CHECK;
           }
         else
           {
@@ -534,7 +539,7 @@ DualEC_Supplier::create_schedulers (void)
           this->sched_hi_->
             set (this->sched_hi_rt_info_hi_,
                  ACE_static_cast (RtecScheduler::Criticality_t,
-	                          this->rt_info_dummy_hi_.criticality),
+                                  this->rt_info_dummy_hi_.criticality),
                  this->rt_info_dummy_hi_.worst_case_execution_time,
                  this->rt_info_dummy_hi_.typical_execution_time,
                  this->rt_info_dummy_hi_.cached_execution_time,
@@ -559,7 +564,7 @@ DualEC_Supplier::create_schedulers (void)
           this->sched_hi_->
             set (this->sched_hi_rt_info_lo_,
                  ACE_static_cast (RtecScheduler::Criticality_t,
-	                          this->rt_info_dummy_lo_.criticality),
+                                  this->rt_info_dummy_lo_.criticality),
                  this->rt_info_dummy_lo_.worst_case_execution_time,
                  this->rt_info_dummy_lo_.typical_execution_time,
                  this->rt_info_dummy_lo_.cached_execution_time,
@@ -584,7 +589,7 @@ DualEC_Supplier::create_schedulers (void)
           this->sched_lo_->
             set (this->sched_hi_rt_info_hi_,
                  ACE_static_cast (RtecScheduler::Criticality_t,
-	                          this->rt_info_dummy_hi_.criticality),
+                                  this->rt_info_dummy_hi_.criticality),
                  this->rt_info_dummy_hi_.worst_case_execution_time,
                  this->rt_info_dummy_hi_.typical_execution_time,
                  this->rt_info_dummy_hi_.cached_execution_time,
@@ -609,7 +614,7 @@ DualEC_Supplier::create_schedulers (void)
           this->sched_lo_->
             set (this->sched_hi_rt_info_lo_,
                  ACE_static_cast (RtecScheduler::Criticality_t,
-	                          this->rt_info_dummy_lo_.criticality),
+                                  this->rt_info_dummy_lo_.criticality),
                  this->rt_info_dummy_lo_.worst_case_execution_time,
                  this->rt_info_dummy_lo_.typical_execution_time,
                  this->rt_info_dummy_lo_.cached_execution_time,
@@ -675,7 +680,7 @@ DualEC_Supplier::create_event_channels (void)
       ACE_TRY_CHECK;
 
       naming_context_->bind (this->channel_lo_name_,
-		                     this->ec_lo_.in (), ACE_TRY_ENV);
+                                     this->ec_lo_.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
   }
@@ -781,10 +786,6 @@ DualEC_Supplier::start_generating_events (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // Activate the POA manager.
-      poa_manager_->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Spawn a thread that runs the orb event loop
       ACE_Thread_Manager orb_thread_manager;
       orb_thread_manager.spawn (DualEC_Supplier::run_orb);
@@ -798,7 +799,7 @@ DualEC_Supplier::start_generating_events (void)
 
       // Sleep for 10 seconds to give time for registrations.
       ACE_DEBUG ((LM_DEBUG,
-		  "\nDUAL_SCHED_HI, DUAL_SCHED_LO, DUAL_EC_HI and "
+                  "\nDUAL_SCHED_HI, DUAL_SCHED_LO, DUAL_EC_HI and "
                   "DUAL_EC_LO are registered with the Naming Service.\n"
                   "Sleeping 10 seconds before generating events\n"));
       ACE_Time_Value tv (10, 0);
@@ -861,8 +862,8 @@ DualEC_Supplier::load_schedule_data ()
 
   // constants for periods (in units of one hundred nanoseconds)
   const TimeBase::TimeT ONE_HZ_PERIOD = 10000000;
-  const TimeBase::TimeT FIVE_HZ_PERIOD = ONE_HZ_PERIOD / 5 ;
-  const TimeBase::TimeT TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
+  // const TimeBase::TimeT FIVE_HZ_PERIOD = ONE_HZ_PERIOD / 5;
+  // const TimeBase::TimeT TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
   const TimeBase::TimeT TWENTY_HZ_PERIOD = ONE_HZ_PERIOD / 20;
 
   if (this->input_file_name_)

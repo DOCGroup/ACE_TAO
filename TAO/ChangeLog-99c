@@ -1,3 +1,11 @@
+Fri Dec 10 09:00:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
+          (start_generating_events, init): moved POA activation from
+          start_generating_events () to init ().  (load_schedule_data):
+          commented out some unused variables.  (run_nav_thread,
+          run_weap_thread): added a couple of ACE_TRY_CHECK's.
+
 Fri Dec 10 08:58:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simulator/DOVEMIB/DOVEMIB.cpp (disconnect_push_consumer):
