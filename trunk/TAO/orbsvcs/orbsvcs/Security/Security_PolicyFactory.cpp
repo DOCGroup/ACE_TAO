@@ -6,16 +6,20 @@ ACE_RCSID (Security,
            Security_PolicyFactory,
            "$Id$")
 
-#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
+#include "SL2_QOPPolicy.h"
+#include "SL2_EstablishTrustPolicy.h"
 
-#include "QOPPolicy.h"
-#include "EstablishTrustPolicy.h"
-#include "InvocationCredentialsPolicy.h"
+#include "SL3_ContextEstablishmentPolicy.h"
+#include "SL3_ObjectCredentialsPolicy.h"
+
+#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
+
 
 #include "tao/ORB_Constants.h"
 
 CORBA::Policy_ptr
-TAO_Security_PolicyFactory::create_policy (
+TAO::Security::PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value
     ACE_ENV_ARG_DECL)
@@ -26,9 +30,9 @@ TAO_Security_PolicyFactory::create_policy (
   // ORB::create_policy() mechanism.  Only those that can be created
   // using that mechanism are supported by this factory.
 
-  if (type == Security::SecQOPPolicy)
+  if (type == ::Security::SecQOPPolicy)
     {
-      Security::QOP qop;
+      ::Security::QOP qop;
 
       // Extract the desired Quality-of-Protection value from the
       // given Any.
@@ -40,9 +44,9 @@ TAO_Security_PolicyFactory::create_policy (
                             CORBA::COMPLETED_NO),
                           CORBA::Policy::_nil ());
 
-      TAO_QOPPolicy *qop_policy = 0;
+      TAO::Security::QOPPolicy * qop_policy = 0;
       ACE_NEW_THROW_EX (qop_policy,
-                        TAO_QOPPolicy (qop),
+                        TAO::Security::QOPPolicy (qop),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -53,9 +57,9 @@ TAO_Security_PolicyFactory::create_policy (
       return qop_policy;
     }
 
-  else if (type == Security::SecEstablishTrustPolicy)
+  else if (type == ::Security::SecEstablishTrustPolicy)
     {
-      Security::EstablishTrust *trust = 0;
+      ::Security::EstablishTrust *trust = 0;
 
       // Extract the desired establishing of trust value from the
       // given Any.
@@ -67,9 +71,9 @@ TAO_Security_PolicyFactory::create_policy (
                             CORBA::COMPLETED_NO),
                           CORBA::Policy::_nil ());
 
-      TAO_EstablishTrustPolicy *trust_policy = 0;
+      TAO::Security::EstablishTrustPolicy * trust_policy = 0;
       ACE_NEW_THROW_EX (trust_policy,
-                        TAO_EstablishTrustPolicy (*trust),
+                        TAO::Security::EstablishTrustPolicy (*trust),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -80,9 +84,42 @@ TAO_Security_PolicyFactory::create_policy (
       return trust_policy;
     }
 
-  else if (type == Security::SecInvocationCredentialsPolicy)
+  else if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
-      SecurityLevel2::CredentialsList *creds = 0;
+      SecurityLevel3::ContextEstablishmentPolicyArgument * args = 0;
+
+      // Extract the desired establishing of trust value from the
+      // given Any.
+      if (!(value >>= args))
+        ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                          CORBA::Policy::_nil ());
+
+      TAO::SL3::ContextEstablishmentPolicy * policy = 0;
+      ACE_NEW_THROW_EX (policy,
+                        TAO::SL3::ContextEstablishmentPolicy (
+                          args->creds_directive,
+                          args->creds_list,
+                          args->use_client_auth,
+                          args->use_target_auth,
+                          args->use_confidentiality,
+                          args->use_integrity),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+      return policy;
+    }
+
+  else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
+    {
+      SecurityLevel3::OwnCredentialsList * creds = 0;
 
       // Extract the desired establishing of trust value from the
       // given Any.
@@ -94,9 +131,9 @@ TAO_Security_PolicyFactory::create_policy (
                             CORBA::COMPLETED_NO),
                           CORBA::Policy::_nil ());
 
-      TAO_InvocationCredentialsPolicy *inv_policy = 0;
-      ACE_NEW_THROW_EX (inv_policy,
-                        TAO_InvocationCredentialsPolicy (*creds),
+      TAO::SL3::ObjectCredentialsPolicy * policy = 0;
+      ACE_NEW_THROW_EX (policy,
+                        TAO::SL3::ObjectCredentialsPolicy (*creds),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -104,12 +141,13 @@ TAO_Security_PolicyFactory::create_policy (
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      return inv_policy;
+      return policy;
     }
 
-  else if (type == Security::SecMechanismsPolicy
-           || type == Security::SecFeaturePolicy               // Deprecated.
-           || type == Security::SecDelegationDirectivePolicy)
+  else if (type == ::Security::SecInvocationCredentialsPolicy
+           || type == ::Security::SecMechanismsPolicy
+           || type == ::Security::SecFeaturePolicy             // Deprecated.
+           || type == ::Security::SecDelegationDirectivePolicy)
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
                       CORBA::Policy::_nil ());
   else

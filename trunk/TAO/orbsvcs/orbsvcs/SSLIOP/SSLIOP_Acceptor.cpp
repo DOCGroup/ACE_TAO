@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Current.h"
@@ -8,43 +6,45 @@
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/debug.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/CDR.h"
+#include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_SSLIOP,
+
+ACE_RCSID (SSLIOP,
            SSLIOP_Acceptor,
            "$Id$")
 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
+template class ACE_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
+template class ACE_Scheduling_Strategy<TAO::SSLIOP::Connection_Handler>;
+template class TAO_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
+template class TAO_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
+#pragma instantiate ACE_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate TAO_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate TAO_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (Security::QOP qop,
-                                          const ACE_Time_Value & timeout)
-  : TAO_IIOP_SSL_Acceptor (),
+TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
+                                 const ACE_Time_Value & timeout)
+  : TAO::IIOP_SSL_Acceptor (),
     ssl_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
@@ -52,34 +52,63 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (Security::QOP qop,
     handler_state_ (),
     timeout_ (timeout)
 {
+  // --- CSIv1 ---
+
   // Clear all bits in the SSLIOP::SSL association option fields.
   this->ssl_component_.target_supports = 0;
   this->ssl_component_.target_requires = 0;
 
   // SSLIOP requires these Security::AssociationOptions by default.
   ACE_SET_BITS (this->ssl_component_.target_requires,
-                Security::Integrity
-                | Security::Confidentiality
-                | Security::NoDelegation);
+                ::Security::Integrity
+                | ::Security::Confidentiality
+                | ::Security::NoDelegation);
 
   // SSLIOP supports these Security::AssociationOptions by default.
   ACE_SET_BITS (this->ssl_component_.target_supports,
-                Security::Integrity
-                | Security::Confidentiality
-                | Security::EstablishTrustInTarget
-                | Security::NoDelegation);
+                ::Security::Integrity
+                | ::Security::Confidentiality
+                | ::Security::EstablishTrustInTarget
+                | ::Security::NoDelegation);
 
   // Initialize the default SSL port to zero (wild card port).
   this->ssl_component_.port = 0;
 
   // @@ This should go away once we support setting security
   //    association options through policies.
-  if (qop == Security::SecQOPNoProtection)
+  if (qop == ::Security::SecQOPNoProtection)
     ACE_SET_BITS (this->ssl_component_.target_supports,
-                  Security::NoProtection);
+                  ::Security::NoProtection);
+
+
+  // --- CSIv2 ---
+
+  // Clear all bits in the CSIIOP::TLS_SEC_TRANS association option
+  // fields.
+  this->csiv2_component_.target_supports = 0;
+  this->csiv2_component_.target_requires = 0;
+
+  // SSLIOP requires these CSIIOP::AssociationOptions by default.
+  ACE_SET_BITS (this->csiv2_component_.target_requires,
+                CSIIOP::Integrity
+                | CSIIOP::Confidentiality
+                | CSIIOP::NoDelegation);
+
+  // SSLIOP supports these CSIIOP::AssociationOptions by default.
+  ACE_SET_BITS (this->csiv2_component_.target_supports,
+                CSIIOP::Integrity
+                | CSIIOP::Confidentiality
+                | CSIIOP::EstablishTrustInTarget
+                | CSIIOP::NoDelegation);
+
+  // @@ This should go away once we support setting security
+  //    association options through policies.
+  if (qop == CSIIOP::NoProtection)
+    ACE_SET_BITS (this->csiv2_component_.target_supports,
+                  CSIIOP::NoProtection);
 }
 
-TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
+TAO::SSLIOP::Acceptor::~Acceptor (void)
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -91,9 +120,9 @@ TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
 }
 
 int
-TAO_SSLIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
-                                     TAO_MProfile &mprofile,
-                                     CORBA::Short priority)
+TAO::SSLIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
+                                       TAO_MProfile &mprofile,
+                                       CORBA::Short priority)
 {
   // Sanity check.
   if (this->endpoint_count_ == 0)
@@ -112,12 +141,12 @@ TAO_SSLIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
-                                         TAO_MProfile &mprofile,
-                                         CORBA::Short priority)
+TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
+                                           TAO_MProfile &mprofile,
+                                           CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  int count = mprofile.profile_count ();
+  const int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
@@ -136,12 +165,12 @@ TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       //    below default SSLIOP::SSL component.
       ACE_NEW_RETURN (pfile,
                       TAO_SSLIOP_Profile (this->hosts_[i],
-                                          this->addrs_[i].get_port_number (),
-                                          object_key,
-                                          this->addrs_[i],
-                                          this->version_,
-                                          this->orb_core_,
-                                          &(this->ssl_component_)),
+                                            this->addrs_[i].get_port_number (),
+                                            object_key,
+                                            this->addrs_[i],
+                                            this->version_,
+                                            this->orb_core_,
+                                            &(this->ssl_component_)),
                       -1);
       pfile->endpoint ()->priority (priority);
 
@@ -157,11 +186,11 @@ TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
-      this->orb_core_->codeset_manager()->
-	set_codeset(pfile->tagged_components());
+      this->orb_core_->codeset_manager ()->
+	set_codeset (pfile->tagged_components());
 
       IOP::TaggedComponent component;
-      component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
+      component.tag = ::SSLIOP::TAG_SSL_SEC_TRANS;
 
       // @@???? Check this code, only intended as guideline...
       TAO_OutputCDR cdr;
@@ -178,7 +207,7 @@ TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
       // TAO extension, replace the contents of the octet sequence with
       // the CDR stream
-      CORBA::ULong length = cdr.total_length ();
+      const CORBA::ULong length = cdr.total_length ();
       component.component_data.length (length);
       CORBA::Octet *buf = component.component_data.get_buffer ();
       for (const ACE_Message_Block *i = cdr.begin ();
@@ -197,9 +226,9 @@ TAO_SSLIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 
 
 int
-TAO_SSLIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
-                                            TAO_MProfile &mprofile,
-                                            CORBA::Short priority)
+TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
+                                              TAO_MProfile &mprofile,
+                                              CORBA::Short priority)
 {
   size_t index = 0;
   TAO_Profile *pfile = 0;
@@ -211,8 +240,7 @@ TAO_SSLIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == IOP::TAG_INTERNET_IOP)
         {
-          ssliop_profile = ACE_dynamic_cast (TAO_SSLIOP_Profile *,
-                                             pfile);
+          ssliop_profile = dynamic_cast<TAO_SSLIOP_Profile *> (pfile);
           if (ssliop_profile == 0)
             return -1;
           break;
@@ -232,17 +260,16 @@ TAO_SSLIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       //    below default SSLIOP::SSL component.
       ACE_NEW_RETURN (ssliop_profile,
                       TAO_SSLIOP_Profile (this->hosts_[0],
-                                          this->addrs_[0].get_port_number (),
-                                          object_key,
-                                          this->addrs_[0],
-                                          this->version_,
-                                          this->orb_core_,
-                                          &(this->ssl_component_)),
+                                            this->addrs_[0].get_port_number (),
+                                            object_key,
+                                            this->addrs_[0],
+                                            this->version_,
+                                            this->orb_core_,
+                                            &(this->ssl_component_)),
                       -1);
 
       TAO_SSLIOP_Endpoint *ssliop_endp =
-        ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
-                          ssliop_profile->endpoint ());
+        dynamic_cast<TAO_SSLIOP_Endpoint *> (ssliop_profile->endpoint ());
 
       ssliop_endp->priority (priority);
       ssliop_endp->iiop_endpoint ()->priority (priority);
@@ -262,7 +289,7 @@ TAO_SSLIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
             set_codeset(ssliop_profile->tagged_components());
 
           IOP::TaggedComponent component;
-          component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
+          component.tag = ::SSLIOP::TAG_SSL_SEC_TRANS;
           // @@???? Check this code, only intended as guideline...
           TAO_OutputCDR cdr;
           cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
@@ -323,11 +350,10 @@ TAO_SSLIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO_SSLIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SSLIOP_Endpoint *endp =
-    ACE_dynamic_cast (const TAO_SSLIOP_Endpoint *,
-                      endpoint);
+    dynamic_cast<const TAO_SSLIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -349,22 +375,22 @@ TAO_SSLIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_SSLIOP_Acceptor::close (void)
+TAO::SSLIOP::Acceptor::close (void)
 {
   int r = this->ssl_acceptor_.close ();
-  if (this->TAO_IIOP_SSL_Acceptor::close () != 0)
+  if (this->IIOP_SSL_Acceptor::close () != 0)
     r = -1;
 
   return r;
 }
 
 int
-TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
-                           ACE_Reactor *reactor,
-                           int major,
-                           int minor,
-                           const char *address,
-                           const char *options)
+TAO::SSLIOP::Acceptor::open (TAO_ORB_Core *orb_core,
+                             ACE_Reactor *reactor,
+                             int major,
+                             int minor,
+                             const char *address,
+                             const char *options)
 {
   // Ensure that neither the endpoint configuration nor the ORB
   // configuration violate security measures.
@@ -375,12 +401,12 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
-  if (this->TAO_IIOP_SSL_Acceptor::open (orb_core,
-                                         reactor,
-                                         major,
-                                         minor,
-                                         address,
-                                         options) != 0)
+  if (this->IIOP_SSL_Acceptor::open (orb_core,
+                                     reactor,
+                                     major,
+                                     minor,
+                                     address,
+                                     options) != 0)
     return -1;
 
   // The SSL port is set in the parse_options() method. All we have
@@ -394,11 +420,11 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
-                                   ACE_Reactor *reactor,
-                                   int major,
-                                   int minor,
-                                   const char *options)
+TAO::SSLIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                     ACE_Reactor *reactor,
+                                     int major,
+                                     int minor,
+                                     const char *options)
 {
   // Ensure that neither the endpoint configuration nor the ORB
   // configuration violate security measures.
@@ -409,11 +435,11 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
-  if (this->TAO_IIOP_SSL_Acceptor::open_default (orb_core,
-                                                 reactor,
-                                                 major,
-                                                 minor,
-                                                 options) == -1)
+  if (this->IIOP_SSL_Acceptor::open_default (orb_core,
+                                             reactor,
+                                             major,
+                                             minor,
+                                             options) == -1)
     return -1;
 
   // Now that each network interface's hostname has been cached, open
@@ -424,7 +450,7 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // this->ssl_component_.port is initialized to zero or it is set in
   // this->parse_options().
   if (addr.set (this->ssl_component_.port,
-                ACE_static_cast(ACE_UINT32, INADDR_ANY),
+                static_cast<ACE_UINT32> (INADDR_ANY),
                 1) != 0)
     return -1;
 
@@ -434,34 +460,34 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
-                                    const ACE_INET_Addr& addr,
-                                    ACE_Reactor *reactor)
+TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
+                                      const ACE_INET_Addr& addr,
+                                      ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
-  int giop_lite = 0;
   // Explicitly disable GIOPlite support since it introduces security
   // holes.
+  static const int giop_lite = 0;
 
-  if (TAO_SSLIOP_Util::setup_handler_state (this->orb_core_,
-                                            &(this->tcp_properties_),
-                                            this->handler_state_) != 0)
+  if (TAO::SSLIOP::Util::setup_handler_state (this->orb_core_,
+                                              &(this->tcp_properties_),
+                                              this->handler_state_) != 0)
       return -1;
 
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_SSLIOP_CREATION_STRATEGY (this->orb_core_,
-                                                &(this->handler_state_),
-                                                giop_lite),
+                  CREATION_STRATEGY (this->orb_core_,
+                                     &(this->handler_state_),
+                                     giop_lite),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
-                  TAO_SSLIOP_CONCURRENCY_STRATEGY (this->orb_core_),
+                  CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->accept_strategy_,
-                  TAO_SSLIOP_ACCEPT_STRATEGY (this->orb_core_,
-                                              this->timeout_),
+                  ACCEPT_STRATEGY (this->orb_core_,
+                                   this->timeout_),
                   -1);
 
   if (this->ssl_acceptor_.open (addr,
@@ -497,11 +523,11 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
   // the user if provided.
   this->ssl_component_.port = ssl_address.get_port_number ();
 
-  (void) this->ssl_acceptor_.acceptor().enable (ACE_CLOEXEC);
   // This avoids having child processes acquire the listen socket
   // thereby denying the server the opportunity to restart on a
   // well-known endpoint.  This does not affect the aberrent behavior
   // on Win32 platforms.
+  (void) this->ssl_acceptor_.acceptor ().enable (ACE_CLOEXEC);
 
   if (TAO_debug_level > 5)
     {
@@ -520,7 +546,7 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_SSLIOP_Acceptor::parse_options (const char *str)
+TAO::SSLIOP::Acceptor::parse_options (const char *str)
 {
   if (str == 0)
     return 0;  // No options to parse.  Not a problem.
@@ -531,7 +557,7 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
 
   ACE_CString options (str);
 
-  size_t len = options.length ();
+  const size_t len = options.length ();
 
   const char option_delimiter = '&';
 
@@ -544,7 +570,7 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -579,9 +605,9 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
         {
           ACE_CString opt = options.substring (begin, end);
 
-          int slot = opt.find ("=");
+          const int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast<int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) IIOP/SSL")
@@ -609,7 +635,7 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
             }
           else if (ACE_OS::strcmp (name.c_str (), "ssl_port") == 0)
             {
-              int ssl_port = ACE_OS::atoi (value.c_str ());
+              const int ssl_port = ACE_OS::atoi (value.c_str ());
 
               if (ssl_port >= 0 && ssl_port < 65536)
                 this->ssl_component_.port = ssl_port;
@@ -634,13 +660,14 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
+
   return 0;
 }
 
 int
-TAO_SSLIOP_Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
-                                                  int major,
-                                                  int minor)
+TAO::SSLIOP::Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
+                                                    int major,
+                                                    int minor)
 {
   // Sanity check.
   if (major < 1)
@@ -667,7 +694,7 @@ TAO_SSLIOP_Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
   if ((orb_core->orb_params ()->std_profile_components () == 0
        || (major == 1 && minor == 0))
       && ACE_BIT_DISABLED (this->ssl_component_.target_requires,
-                           Security::NoProtection))
+                           ::Security::NoProtection))
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,

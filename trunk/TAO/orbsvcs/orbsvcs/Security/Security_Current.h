@@ -109,7 +109,7 @@ protected:
    * There is no function that places the implementation pointer in
    * TSS.  The underlying security mechanism does that.
    */
-  TAO_Security_Current_Impl *implementation (void);
+  TAO::Security::Current_Impl *implementation (void);
 
 private:
 

@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/orbsvcs/CSIIOPC.h"
 #include "orbsvcs/orbsvcs/SecurityC.h"
 
 #include "tao/PortableInterceptorC.h"
@@ -36,43 +37,57 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/**
- * @name TAO_SSLIOP_ORBInitializer
- *
- * @brief
- * ORB initializer that registers all SSLIOP-specific interceptors and
- * object references.
- */
-class TAO_SSLIOP_Export TAO_SSLIOP_ORBInitializer :
-  public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+namespace TAO
 {
-public:
+  namespace SSLIOP
+  {
 
-  /// Constructor.
-  TAO_SSLIOP_ORBInitializer (Security::QOP qop);
+    /**
+     * @name ORBInitializer
+     *
+     * @brief
+     * ORB initializer that registers all SSLIOP-specific interceptors and
+     * object references.
+     */
+    class TAO_SSLIOP_Export ORBInitializer :
+      public virtual PortableInterceptor::ORBInitializer,
+      public virtual TAO_Local_RefCounted_Object
+    {
+    public:
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
+      /// Constructor.
+      ORBInitializer (::Security::QOP qop,
+                      CSIIOP::AssociationOptions csiv2_target_supports,
+                      CSIIOP::AssociationOptions csiv2_target_requires);
+
+      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-private:
+    private:
 
-  // Obtain the TSS slot ID assigned to the "SSLIOPCurrent" object.
-  size_t get_tss_slot_id (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL);
+      // Obtain the TSS slot ID assigned to the "SSLIOPCurrent" object.
+      size_t get_tss_slot_id (PortableInterceptor::ORBInitInfo_ptr info
+                              ACE_ENV_ARG_DECL);
 
-private:
+    private:
 
-  /// The default quality-of-protection settings in use.
-  Security::QOP qop_;
+      /// The default quality-of-protection settings in use.
+      ::Security::QOP qop_;
 
-};
+      /// Default support CSIv2 association options.
+      CSIIOP::AssociationOptions csiv2_target_supports_;
+
+      /// Default required CSIv2 association options.
+      CSIIOP::AssociationOptions csiv2_target_requires_;
+    };
+
+  }  // End SSLIOP namespace.
+}  // End TAO namespace.
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

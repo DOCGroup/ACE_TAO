@@ -41,34 +41,59 @@
 #endif /* _MSC_VER */
 
 /// Security ORB initializer.
-class TAO_Security_Export TAO_Security_ORBInitializer
-  : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+namespace TAO
 {
-public:
+  namespace Security
+  {
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    /**
+     * @class ORBInitializer
+     *
+     * @brief ORBInitializer that configures CORBA Security features
+     *        into an ORB.
+     *
+     * This ORBInitializer configures CORBA Security features into an
+     * ORB, such as CSIv2, security objects, security policy
+     * factories, etc, into an ORB.
+     */
+    class TAO_Security_Export ORBInitializer
+      : public virtual PortableInterceptor::ORBInitializer,
+        public virtual TAO_Local_RefCounted_Object
+    {
+    public:
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      /**
+       * @name PortableInterceptor::ORBInitializer Methods.
+       *
+       * Methods required by the PortableInterceptor::ORBInitializer
+       * interface.
+       */
+      //@{
+      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-private:
+      virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      //@}
 
-  /// Register Security policy factories.
-  void register_policy_factories (
-         PortableInterceptor::ORBInitInfo_ptr info
-         ACE_ENV_ARG_DECL);
+    private:
 
-private:
+      /// Register Security policy factories.
+      void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
+                                      ACE_ENV_ARG_DECL);
 
-  /// PolicyFactory that is used to create all security related
-  /// policies capable of being created via ORB::create_policy().
-  TAO_Security_PolicyFactory policy_factory_;
+    private:
 
-};
+      /// PolicyFactory that is used to create all security related
+      /// policies capable of being created via ORB::create_policy().
+      TAO::Security::PolicyFactory policy_factory_;
+
+    };
+
+  } // End Security namespace
+}  // End TAO namespace
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

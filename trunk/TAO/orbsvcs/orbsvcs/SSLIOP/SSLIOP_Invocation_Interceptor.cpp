@@ -1,38 +1,38 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "SSLIOP_Invocation_Interceptor.h"
 
 #include "tao/debug.h"
 
 // #include <openssl/x509.h>   // @@ For debugging code below
 
-ACE_RCSID (TAO_SSLIOP, SSLIOP_Invocation_Interceptor, "$Id$")
 
-TAO_SSLIOP_Server_Invocation_Interceptor::
-TAO_SSLIOP_Server_Invocation_Interceptor (SSLIOP::Current_ptr current,
-                                          Security::QOP qop)
-  : ssliop_current_ (SSLIOP::Current::_duplicate (current)),
+ACE_RCSID (SSLIOP,
+           SSLIOP_Invocation_Interceptor,
+           "$Id$")
+
+
+TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor (
+   ::SSLIOP::Current_ptr current,
+   ::Security::QOP qop)
+  : ssliop_current_ (::SSLIOP::Current::_duplicate (current)),
     qop_ (qop)
 {
 }
 
-TAO_SSLIOP_Server_Invocation_Interceptor::
-~TAO_SSLIOP_Server_Invocation_Interceptor (void)
+TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor (
+  void)
 {
 }
 
 char *
-TAO_SSLIOP_Server_Invocation_Interceptor::name (
+TAO::SSLIOP::Server_Invocation_Interceptor::name (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup ("TAO_SSLIOP_Server_Invocation_Interceptor");
+  return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor");
 }
 
 void
-TAO_SSLIOP_Server_Invocation_Interceptor::destroy (
+TAO::SSLIOP::Server_Invocation_Interceptor::destroy (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -40,7 +40,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::destroy (
 
 
 void
-TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
+TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -59,7 +59,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
     this->ssliop_current_->no_context (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (no_ssl && this->qop_ != Security::SecQOPNoProtection)
+  if (no_ssl && this->qop_ != ::Security::SecQOPNoProtection)
     ACE_THROW (CORBA::NO_PERMISSION ());
 
 #if 0
@@ -69,8 +69,9 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
       // this method will throw the SSLIOP::Current::NoContext
       // exception.  Otherwise, it will return a DER encoded X509
       // certificate.
-      SSLIOP::ASN_1_Cert_var cert =
-        this->ssliop_current_->get_peer_certificate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ::SSLIOP::ASN_1_Cert_var cert =
+        this->ssliop_current_->get_peer_certificate (
+          ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // @@ The following debugging code works but I don't think that
@@ -106,7 +107,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
             }
         }
     }
-  ACE_CATCH (SSLIOP::Current::NoContext, exc)
+  ACE_CATCH (::SSLIOP::Current::NoContext, exc)
     {
       // The current upcall is not being performed through an SSL
       // connection.  If server is configured to disallow insecure
@@ -117,7 +118,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
       //          SecTargetSecureInvocationPolicy so that we can
       //          accept or reject requests on a per-object basis
       //          instead on a per-endpoint basis.
-      if (this->qop_ != Security::SecQOPNoProtection)
+      if (this->qop_ != ::Security::SecQOPNoProtection)
         ACE_THROW (CORBA::NO_PERMISSION ());
     }
   ACE_ENDTRY;
@@ -126,7 +127,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
 }
 
 void
-TAO_SSLIOP_Server_Invocation_Interceptor::receive_request (
+TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -135,7 +136,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request (
 }
 
 void
-TAO_SSLIOP_Server_Invocation_Interceptor::send_reply (
+TAO::SSLIOP::Server_Invocation_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -143,7 +144,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::send_reply (
 }
 
 void
-TAO_SSLIOP_Server_Invocation_Interceptor::send_exception (
+TAO::SSLIOP::Server_Invocation_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -152,7 +153,7 @@ TAO_SSLIOP_Server_Invocation_Interceptor::send_exception (
 }
 
 void
-TAO_SSLIOP_Server_Invocation_Interceptor::send_other (
+TAO::SSLIOP::Server_Invocation_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,

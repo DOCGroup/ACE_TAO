@@ -22,8 +22,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
-  TAO_SSLIOP_Connection_Handler *handler,
+TAO::SSLIOP::Transport::Transport (
+  TAO::SSLIOP::Connection_Handler *handler,
   TAO_ORB_Core *orb_core,
   CORBA::Boolean /* flag */)
   : TAO_Transport (IOP::TAG_INTERNET_IOP, orb_core),
@@ -35,39 +35,39 @@ TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
            TAO_GIOP_Message_Base (orb_core));
 }
 
-TAO_SSLIOP_Transport::~TAO_SSLIOP_Transport (void)
+TAO::SSLIOP::Transport::~Transport (void)
 {
   delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
-TAO_SSLIOP_Transport::event_handler_i (void)
+TAO::SSLIOP::Transport::event_handler_i (void)
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_SSLIOP_Transport::connection_handler_i (void)
+TAO::SSLIOP::Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
 }
 
 TAO_Pluggable_Messaging *
-TAO_SSLIOP_Transport::messaging_object (void)
+TAO::SSLIOP::Transport::messaging_object (void)
 {
   return this->messaging_object_;
 }
 
 int
-TAO_SSLIOP_Transport::handle_input (TAO_Resume_Handle &rh,
-                                    ACE_Time_Value *max_wait_time,
-                                    int block)
+TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
+                                      ACE_Time_Value *max_wait_time,
+                                      int block)
 {
   int result = 0;
 
   // Set up the SSLIOP::Current object.
-  TAO_SSL_State_Guard ssl_state_guard (this->connection_handler_,
-                                       result);
+  TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_,
+                                            result);
 
   if (result == -1)
     return -1;
@@ -78,10 +78,10 @@ TAO_SSLIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 }
 
 ssize_t
-TAO_SSLIOP_Transport::send (iovec *iov,
-                            int iovcnt,
-                            size_t &bytes_transferred,
-                            const ACE_Time_Value *max_wait_time)
+TAO::SSLIOP::Transport::send (iovec *iov,
+                              int iovcnt,
+                              size_t &bytes_transferred,
+                              const ACE_Time_Value *max_wait_time)
 {
   const ssize_t retval =
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
@@ -93,9 +93,9 @@ TAO_SSLIOP_Transport::send (iovec *iov,
 }
 
 ssize_t
-TAO_SSLIOP_Transport::recv (char *buf,
-                            size_t len,
-                            const ACE_Time_Value *max_wait_time)
+TAO::SSLIOP::Transport::recv (char *buf,
+                              size_t len,
+                              const ACE_Time_Value *max_wait_time)
 {
   const ssize_t n = this->connection_handler_->peer ().recv (buf,
                                                              len,
@@ -131,11 +131,11 @@ TAO_SSLIOP_Transport::recv (char *buf,
 }
 
 int
-TAO_SSLIOP_Transport::send_request (TAO_Stub *stub,
-                                    TAO_ORB_Core *orb_core,
-                                    TAO_OutputCDR &stream,
-                                    int message_semantics,
-                                    ACE_Time_Value *max_wait_time)
+TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
+                                      TAO_ORB_Core *orb_core,
+                                      TAO_OutputCDR &stream,
+                                      int message_semantics,
+                                      ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
@@ -152,10 +152,10 @@ TAO_SSLIOP_Transport::send_request (TAO_Stub *stub,
 }
 
 int
-TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
-                                    TAO_Stub *stub,
-                                    int message_semantics,
-                                    ACE_Time_Value *max_wait_time)
+TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
+                                      TAO_Stub *stub,
+                                      int message_semantics,
+                                      ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)
@@ -188,7 +188,7 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
 
 
 int
-TAO_SSLIOP_Transport::generate_request_header (
+TAO::SSLIOP::Transport::generate_request_header (
   TAO_Operation_Details &opdetails,
   TAO_Target_Specification &spec,
   TAO_OutputCDR &msg)
@@ -219,8 +219,8 @@ TAO_SSLIOP_Transport::generate_request_header (
 }
 
 int
-TAO_SSLIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
+TAO::SSLIOP::Transport::messaging_init (CORBA::Octet major,
+                                        CORBA::Octet minor)
 {
   this->messaging_object_->init (major,
                                  minor);
@@ -229,13 +229,13 @@ TAO_SSLIOP_Transport::messaging_init (CORBA::Octet major,
 
 
 int
-TAO_SSLIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
+TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
 
-  cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
@@ -251,7 +251,8 @@ TAO_SSLIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 
 
 void
-TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
+TAO::SSLIOP::Transport::set_bidir_context_info (
+  TAO_Operation_Details &opdetails)
 {
   // Get a handle on to the acceptor registry
   TAO_Acceptor_Registry &ar =
@@ -298,13 +299,12 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
 
 int
-TAO_SSLIOP_Transport::get_listen_point (
+TAO::SSLIOP::Transport::get_listen_point (
   IIOP::ListenPointList &listen_point_list,
   TAO_Acceptor *acceptor)
 {
-  TAO_SSLIOP_Acceptor *ssliop_acceptor =
-    ACE_dynamic_cast (TAO_SSLIOP_Acceptor *,
-                      acceptor);
+  TAO::SSLIOP::Acceptor *ssliop_acceptor =
+    dynamic_cast<TAO::SSLIOP::Acceptor *> (acceptor);
 
   if (ssliop_acceptor == 0)
     return -1;
@@ -320,7 +320,7 @@ TAO_SSLIOP_Transport::get_listen_point (
 
   // The SSL port is stored in the SSLIOP::SSL component associated
   // with the SSLIOP_Acceptor.
-  const SSLIOP::SSL &ssl = ssliop_acceptor->ssl_component ();
+  const ::SSLIOP::SSL &ssl = ssliop_acceptor->ssl_component ();
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;

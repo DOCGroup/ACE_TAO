@@ -23,82 +23,102 @@
 
 #include "SSLIOP_Credentials.h"
 
-class TAO_SSLIOP_TargetCredentials;
-typedef TAO_SSLIOP_TargetCredentials* TAO_SSLIOP_TargetCredentials_ptr;
-
-/**
- * @class TAO_SSLIOP_TargetCredentials
- *
- * @brief SSLIOP-specific implementation of the
- *        SecurityLevel2::TargetCredentials interface.
- *
- *
- */
-class TAO_SSLIOP_TargetCredentials
-  : public virtual TAO_SSLIOP_Credentials,
-    public virtual SecurityLevel2::TargetCredentials
+namespace TAO
 {
-public:
-
-  TAO_SSLIOP_TargetCredentials (X509 *cert, EVP_PKEY *evp);
-
-  /**
-   * @name SecurityLevel2::Credentials Methods
-   *
-   * SecurityLevel2::Credentials methods implemented for
-   * SecurityLevel2::TargetCredentials.
-   */
-  //@{
-  virtual SecurityLevel2::Credentials_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual Security::InvocationCredentialsType credentials_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  //@}
-
-  /**
-   * @name SecurityLevel2::TargetCredentials Methods
-   *
-   * Methods required by the SecurityLevel2::TargetCredentials
-   * interface.
-   */
-  //@{
-  virtual SecurityLevel2::Credentials_ptr initiating_credentials (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual Security::AssociationOptions association_options_used (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  //@}
-
-  //@{
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef TAO_SSLIOP_TargetCredentials_ptr _ptr_type;
-  // typedef TAO_SSLIOP_TargetCredentials_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-  static int _tao_class_id;
-
-  // The static operations.
-  static TAO_SSLIOP_TargetCredentials_ptr _duplicate (TAO_SSLIOP_TargetCredentials_ptr obj);
-
-  static TAO_SSLIOP_TargetCredentials_ptr _narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    );
-
-  static TAO_SSLIOP_TargetCredentials_ptr _nil (void)
+  namespace SSLIOP
+  {
+    /**
+     * @class TargetCredentials
+     *
+     * @brief SSLIOP-specific implementation of the
+     *        SecurityLevel3::TargetCredentials interface.
+     *
+     * This class implements SSLIOP-specific
+     * SecurityLevel3::TargetCredentials.
+     */
+    class TAO_SSLIOP_Export TargetCredentials
+      : public virtual SecurityLevel3::TargetCredentials,
+        public virtual Credentials
     {
-      return (TAO_SSLIOP_TargetCredentials_ptr)0;
-    }
+    public:
 
-  //@}
+      TargetCredentials (::X509 *cert, ::EVP_PKEY *evp);
 
-};
+      /**
+       * @name SecurityLevel3::Credentials Methods
+       *
+       * Methods required by the SecurityLevel3::Credentials
+       * interface.
+       */
+      //@{
+      virtual SecurityLevel3::CredentialsType creds_type (
+          ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      //@}
 
+      /**
+       * @name SecurityLevel3::TargetCredentials Methods
+       *
+       * Methods required by the SecurityLevel3::TargetCredentials
+       * interface.
+       */
+      //@{
+      virtual char * context_id (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual SecurityLevel3::Principal * client_principal (
+          ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual SecurityLevel3::StatementList * client_supporting_statements (
+          ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual SecurityLevel3::ResourceNameList * client_restricted_resources (
+          ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual SecurityLevel3::Principal * target_principal (
+          ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual SecurityLevel3::StatementList * target_supporting_statements (
+         ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual SecurityLevel3::ResourceNameList * target_restricted_resources (
+          ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual SecurityLevel3::OwnCredentials_ptr parent_credentials (
+          ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean client_authentication (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_authentication (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean confidentiality (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean integrity (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_embodied (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual CORBA::Boolean target_endorsed (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      virtual void release (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+      //@}
+
+    };
+  }
+}
 
 #include /**/ "ace/post.h"
 

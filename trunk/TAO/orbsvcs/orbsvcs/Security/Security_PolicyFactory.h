@@ -34,19 +34,33 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/// Policy factory for all security related policies.
-class TAO_Security_Export TAO_Security_PolicyFactory
-  : public PortableInterceptor::PolicyFactory,
-    public CORBA::LocalObject
+namespace TAO
 {
-public:
+  namespace Security
+  {
 
-  virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value
+    /**
+     * @class PolicyFactory
+     *
+     * @brief Policy factory for all security related policies.
+     *
+     * Policy factory for all security related policies.
+     */
+    class TAO_Security_Export PolicyFactory
+      : public PortableInterceptor::PolicyFactory,
+        public CORBA::LocalObject
+    {
+    public:
+
+      virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                               const CORBA::Any & value
                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
-};
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError));
+    };
+
+  } // End Security namespace
+}  // End TAO namespace
 
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

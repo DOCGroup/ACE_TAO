@@ -28,4 +28,3 @@
 
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/cdr_op_ci.cpp:81
-

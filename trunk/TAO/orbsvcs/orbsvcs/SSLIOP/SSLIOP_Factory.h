@@ -26,71 +26,95 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/orbsvcs/SecurityC.h"
+#include "orbsvcs/orbsvcs/CSIIOPC.h"
 
 #include "tao/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
 
+
 class TAO_Acceptor;
 class TAO_Connector;
 
-/**
- * @class TAO_SSLIOP_Protocol_Factory
- *
- * @brief SSLIOP-specific protocol factory implementation.
- *
- * This class implements the SSLIOP-specific protocol factory
- * implementation for use in TAO's pluggable protocols framework.
- */
-class TAO_SSLIOP_Export TAO_SSLIOP_Protocol_Factory
-  : public TAO_Protocol_Factory
+
+namespace TAO
 {
-public:
-  TAO_SSLIOP_Protocol_Factory (void);
-  virtual ~TAO_SSLIOP_Protocol_Factory (void);
+  namespace SSLIOP
+  {
 
-  // = Service Configurator hooks.
-  virtual int init (int argc, char* argv[]);
-  // Dynamic linking hook
+    /**
+     * @class Protocol_Factory
+     *
+     * @brief SSLIOP-specific protocol factory implementation.
+     *
+     * This class implements the SSLIOP-specific protocol factory
+     * implementation for use in TAO's pluggable protocols framework.
+     */
+    class TAO_SSLIOP_Export Protocol_Factory
+      : public TAO_Protocol_Factory
+    {
+    public:
 
-  /// Create and register the SSLIOP ORB initializer.
-  int register_orb_initializer (void);
+      /// Constructor.
+      Protocol_Factory (void);
 
-  virtual int match_prefix (const ACE_CString &prefix);
-  // Verify prefix is a match
+      /// Destructor.
+      virtual ~Protocol_Factory (void);
 
-  virtual const char *prefix (void) const;
-  // Returns the prefix used by the protocol.
+      // = Service Configurator hooks.
+      /// Dynamic linking hook
+      virtual int init (int argc, char* argv[]);
 
-  virtual char options_delimiter (void) const;
-  // Return the character used to mark where an endpoint ends and
-  // where its options begin.
+      /// Verify prefix is a match
+      virtual int match_prefix (const ACE_CString & prefix);
 
-  // = Check Protocol_Factory.h for a description of these methods.
-  virtual TAO_Acceptor  *make_acceptor (void);
-  virtual TAO_Connector *make_connector  (void);
-  virtual int requires_explicit_endpoint (void) const;
+      /// Returns the prefix used by the protocol.
+      virtual const char * prefix (void) const;
 
-private:
+      /// Return the character used to mark where an endpoint ends and
+      /// where its options begin.
+      virtual char options_delimiter (void) const;
 
-  /// Changing the version number can be used to provide backwards
-  /// compatibility with old clients.
-  int major_;
-  int minor_;
+      // = Check Protocol_Factory.h for a description of these methods.
+      virtual TAO_Acceptor  * make_acceptor (void);
+      virtual TAO_Connector * make_connector  (void);
+      virtual int requires_explicit_endpoint (void) const;
 
-  /// Default quality-of-protection settings for the SSLIOP pluggable
-  /// protocol.
-  Security::QOP qop_;
+    private:
 
-  /// The accept() timeout.
-  /**
-   * This timeout includes the overall time to complete the SSL
-   * handshake.  This includes both the TCP handshake and the SSL
-   * handshake.
-   */
-  ACE_Time_Value timeout_;
+      /// Create and register the SSLIOP ORB initializer.
+      int register_orb_initializer (
+        CSIIOP::AssociationOptions csiv2_target_supports,
+        CSIIOP::AssociationOptions csiv2_target_requires);
 
-};
+    private:
+
+      /// Default quality-of-protection settings for the SSLIOP
+      /// pluggable protocol.
+      ::Security::QOP qop_;
+
+      /// The accept() timeout.
+      /**
+       * This timeout includes the overall time to complete the SSL
+       * handshake.  This includes both the TCP handshake and the SSL
+       * handshake.
+       */
+      ACE_Time_Value timeout_;
+
+      /// The SSLIOP-specific CSIv2 transport mechanism component.
+      /**
+       * This SSLIOP-specific structure is embedded in the CSIv2 transport
+       * mechanism list of the @c CSIIOP::CompoundSecMechList IOR tagged
+       * component.
+       */
+      CSIIOP::TLS_SEC_TRANS * csiv2_component_;
+
+    };
+  }  // End SSLIOP namespace.
+}  // End TAO namespace.
+
+// Work around preprocessor tokenization.
+typedef TAO::SSLIOP::Protocol_Factory TAO_SSLIOP_Protocol_Factory;
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)
