@@ -1,3 +1,9 @@
+Thu Mar 10 03:37:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Leader_Follower.cpp:
+
+	  Fixed some typos. 
+
 Wed Mar  9 23:04:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Leader_Follower.cpp (wait_for_event):
