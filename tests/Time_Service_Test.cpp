@@ -64,8 +64,9 @@ main (int, ASYS_TCHAR *[])
       backing_store[0] = 0;
     }
 
-  // Add the filename to the end
-  ACE_OS::strcat (backing_store, "ace-malloc-XXXXXX");
+  // Add the filename to the end.
+  ACE_OS::strcat (backing_store,
+                  ASYS_TEXT ("ace-malloc-XXXXXX"));
 
 #endif /* ACE_DEFAULT_BACKING_STORE */
   
