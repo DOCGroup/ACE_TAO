@@ -1,3 +1,14 @@
+Fri Feb  7 17:22:39 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp (ACE_OS::thr_create): Moved the pthread_setstack() call
+          (and the check for whether it's available) from inside the
+          Pthreads draft 4/6 section to the Pthreads standard section
+          and corrected the condition it's used (defined
+          ACE_HAS_PTHREAD_SETSTACK, not !defined ACE_HAS_PTHREAD_SETSTACK).
+
+          Also see:
+          Thu Jan 16 19:06:19 2003  Stephen Torri <storri@cse.wustl.edu>
+
 Fri Feb  7 16:55:58 2003  Heather Drury  <drury_h@ociweb.com>
 
         * ace/config-aix-4.x.h: Reverted change to aix config file:
