@@ -153,12 +153,17 @@ class Test_Output_Export ACE_Test_Output
 public:
   ACE_Test_Output (void);
   ~ACE_Test_Output (void);
-  static ACE_Test_Output *instance ();
+  static ACE_Test_Output *instance (void);
   int set_output (const ACE_TCHAR *filename, int append = 0);
   OFSTREAM *output_file (void);
   void close (void);
+  const ACE_TCHAR *dll_name (void);
+  const ACE_TCHAR *name (void);
+  static void close_singleton (void);
 
 private:
+  static ACE_Test_Output *instance_;
+
   OFSTREAM *output_file_;
 };
 
