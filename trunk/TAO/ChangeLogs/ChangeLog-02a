@@ -1,3 +1,12 @@
+Mon Sep 18 09:29:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+          The object references are passed and stored by value in
+          interceptors.  Both Nanbor and myself believe that this should
+          work.  At least it compiles, but there are no tests for this,
+          nor anyway to obtain feedback about it.
+
 Sun Sep 17 19:28:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
