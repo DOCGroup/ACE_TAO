@@ -37,6 +37,7 @@ ACE_RCSID (tests,
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Task.h"
+#include "ace/Object_Manager.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
@@ -279,10 +280,11 @@ class Acceptor : public ACE_Asynch_Acceptor<Receiver>
 {
   friend class Receiver;
 public:
-  long get_number_sessions (void) { return this->sessions_; }
 
   Acceptor (void);
   virtual ~Acceptor (void);
+
+  long get_number_sessions (void) { return this->sessions_; }
 
   void stop (void);
 
@@ -299,6 +301,7 @@ private:
 };
 
 Acceptor::Acceptor (void)
+  : sessions_ (0)
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, locker, this->lock_);
 
@@ -663,20 +666,20 @@ private:
 
   long io_count_;
 
-  static ACE_SYNCH_RECURSIVE_MUTEX glb_lock_;
   static Sender *list_senders_[MAX_SENDERS];
 
   static long sessions_;
 };
 
 long Sender::sessions_ = 0;
-ACE_SYNCH_RECURSIVE_MUTEX Sender::glb_lock_;
 Sender * Sender::list_senders_[MAX_SENDERS];
 
 void
 Sender::init (void)
 {
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, locker, glb_lock_);
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
+             locker,
+             *ACE_Static_Object_Lock::instance ());
 
   for (int i = 0; i < MAX_SENDERS; ++i)
     list_senders_[i] = 0;
@@ -685,7 +688,10 @@ Sender::init (void)
 int
 Sender::activate (int num)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, locker, glb_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                    locker,
+                    *ACE_Static_Object_Lock::instance (),
+                    -1);
 
   if (num > MAX_SENDERS)
     num = MAX_SENDERS;
@@ -721,7 +727,9 @@ Sender::stop (void)
   // after proactor event loop id done
   // in all threads
 
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, locker, glb_lock_);
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
+             locker,
+             *ACE_Static_Object_Lock::instance ());
 
   for (int i = 0; i < MAX_SENDERS ; ++i)
     {
@@ -735,7 +743,9 @@ Sender::Sender (int index)
     handle_   (ACE_INVALID_HANDLE),
     io_count_ (0)
 {
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, locker, glb_lock_);
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
+             locker,
+             *ACE_Static_Object_Lock::instance ());
   this->sessions_++;
   this->list_senders_[index_] = this ;
 
@@ -748,7 +758,9 @@ Sender::Sender (int index)
 
 Sender::~Sender (void)
 {
-  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, locker, glb_lock_);
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX,
+             locker,
+             *ACE_Static_Object_Lock::instance ());
 
   if (this->handle_ != ACE_INVALID_HANDLE)
     {
@@ -1196,8 +1208,8 @@ main (int argc, ACE_TCHAR *argv[])
   task1.wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\nNumber of Receivers objects = %l\n")
-              ACE_TEXT ("\nNumber of Sender objects = %l\n"),
+              ACE_TEXT ("\nNumber of Receivers objects = %d\n")
+              ACE_TEXT ("\nNumber of Sender objects = %d\n"),
               acceptor.get_number_sessions (),
               Sender::get_number_sessions ()));
 
