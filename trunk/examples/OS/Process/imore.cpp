@@ -253,7 +253,7 @@ main (int argc, char *argv[])
 #endif /* ! ACE_WIN32 */
 
   // Wait till we are done.
-  int status;
+  ACE_exitcode status;
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
 

@@ -1,3 +1,69 @@
+Thu Apr 20 18:11:48 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/DLL/Main.dsp:
+        * examples/DLL/Newsweek.dsp:
+        * examples/DLL/Today.dsp
+        * examples/Configuration/Configuration.dsw:
+        * examples/Bounded_Packet_Relay/Bounded_Packet_Relay.dsp:
+        * examples/Configuration/Test.dsp:
+        * examples/IPC_SAP/ATM_SAP/ATM_SAP.dsw:
+        * examples/IPC_SAP/ATM_SAP/CPP_client.dsp:
+        * examples/IPC_SAP/ATM_SAP/CPP_server.dsp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_memclient.dsp:
+        * examples/Mem_Map/file-reverse/file_reverse.dsp:
+        * examples/NT_Service/NT_Service.dsp:
+        * examples/NT_Service/NT_Service.dsw:
+        * examples/OS/Process/Process.dsp:
+        * examples/OS/Process/imore.dsp:
+        * examples/QOS/client.dsp:
+        * examples/QOS/server.dsp:
+        * examples/Reactor/Misc/demuxing.dsp:
+        * examples/Reactor/Multicast/client.dsp:
+        * examples/Reactor/Multicast/server.dsp:
+        * examples/Service_Configurator/Misc/Timer.dsp:
+        * examples/Service_Configurator/Misc/main.dsp:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.dsp:
+        * examples/Timer_Queue/Timer_Queue.dsw:
+        * examples/Web_Crawler/Web_Crawler.dsp:
+
+          Fixed miscellaneous problems with these projects and workspaces.
+          Some projects were missing from workspaces or listed incorrectly.
+          Many project didn't have the correct include paths or definitions.
+
+        * examples/Reactor/Proactor/post_completion.dsp: (removed)
+
+          There was already a post_completions.dsp that was being used.
+
+        * examples/OS/Process/imore.cpp:
+        * examples/OS/Process/process.cpp:
+
+          Changed the type of the variables used with Process::wait from
+          int to ACE_exitcode.
+
+        * examples/Reactor/WFMO_Reactor/test_abandoned.cpp:
+        * examples/Reactor/WFMO_Reactor/test_apc.cpp:
+
+          Missing parentheses.
+
+        * Synch-Benchmarks/Synch_Lib/Synch_Lib.dsp:
+          
+          Changed the name of the project so win32_auto_compile.pl works
+          with it properly.
+
+        * bin/msvc_auto_compile.pl: (added)
+
+          This is a new script for autocompiling with MSVC 6.
+          Eventually this should replace auto_compile_win32.pl.  It still 
+          needs more directories added to it and tested before we put it 
+          into production
+
+        * bin/vc_filter.pl:
+
+          Updated to properly color code output from msvc_auto_compile.pl 
+          also.
+
 Thu Apr 20 09:50:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RB_Tree.h:

@@ -85,22 +85,22 @@ print $header;
 
 $project = "NULL";
 $configuration = "NULL";
+$dsp = "NULL";
 $first_problem = 1;
 
 restart: while (<FP>)
 {
-
-    if (/^--------------------Configuration:/)
+    if (/^Auto_compiling (.*)/)
     {
-        /--------------------Configuration: (.*) - (.*)--------------------/;
-
-        if (!$brief && !$results)
-        {
-            print $new_build_b;
-            print;
-            print $new_build_e;
-            print $line_break;
-        }
+        print "$new_build_b$_$new_build_e$line_break"
+            if (!$brief && !$results);  
+        $dsp = $1;
+        $first_problem = 1;
+    }
+    elsif (/^--------------------Configuration: (.*) - (.*)--------------------/)
+    {
+        print $config_b.$_.$new_build_e.$line_break
+            if (!$brief && !$results);
         $project = $1;
         $configuration = $2;
         $first_problem = 1;
@@ -114,8 +114,11 @@ restart: while (<FP>)
     {
         if (!$results)
         {
-            print "$config_b-------------------- $project: $configuration$config_e$line_break"
-                if ($first_problem && $brief);
+            if ($first_problem && $brief)
+            {
+                print "$config_b----- $dsp$config_e$line_break";
+                print "$config_b-------------------- $project: $configuration$config_e$line_break";
+            }
             $first_problem = 0;
             print "$warning_b$_$warning_e$line_break";
         }
@@ -124,8 +127,11 @@ restart: while (<FP>)
     {
         if (!$results)
         {
-            print "$config_b-------------------- $project: $configuration$config_e$line_break"
-                if ($first_problem && $brief);
+            if ($first_problem && $brief)
+            {
+                print "$config_b----- $dsp$config_e$line_break";
+                print "$config_b-------------------- $project: $configuration$config_e$line_break";
+            }
             $first_problem = 0;
             print "$error_b$_$error_e$line_break";
         }

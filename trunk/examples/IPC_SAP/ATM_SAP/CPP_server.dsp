@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=CPP_server - Win32 Win32 Debug Static
+CFG=CPP_server - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=CPP_server - Win32 Win32 Debug Static
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "CPP_server.mak" CFG="CPP_server - Win32 Win32 Debug Static"
+!MESSAGE NMAKE /f "CPP_server.mak" CFG="CPP_server - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "CPP_server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "CPP_server - Win32 Win32 Debug Static" (based on "Win32 (x86) Console Application")
+!MESSAGE "CPP_server - Win32 Static Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD LINK32 aced.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "CPP_server - Win32 Win32 Debug Static"
+!ELSEIF  "$(CFG)" == "CPP_server - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -85,7 +85,7 @@ LINK32=link.exe
 # Begin Target
 
 # Name "CPP_server - Win32 Debug"
-# Name "CPP_server - Win32 Win32 Debug Static"
+# Name "CPP_server - Win32 Static Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
