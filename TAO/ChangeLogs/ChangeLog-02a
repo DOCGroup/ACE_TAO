@@ -1,3 +1,8 @@
+Wed Aug 15 14:26:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Single_Threaded_Latency/svc.conf: Add the
+	  exclusive Transport_Mux_Strategy to this test.
+	
 Wed Aug 15 12:11:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/constants.idl:
