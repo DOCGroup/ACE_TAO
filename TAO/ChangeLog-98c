@@ -1,3 +1,15 @@
+Fri Jul 17 18:46:17 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.h: Added new fields for verbosity
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Adjusted for new fields
+	* orbsvcs/tests/client.h: Added new methods- resolve_name () & 
+	  nesting_test () 
+	* orbsvcs/tests/client.cpp: Compacted code somewhat. Broke run () and 
+	  init () into smaller functions 
+	* orbsvcs/orbsvcs/Logger.idl: Adjusted TAO_MAXLOGMSGLEN
+	* orbsvcs/tests/server.cpp: Partialy incomplete incorporation of 
+	  name service
+	
 Fri Jul 17 17:42:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Started adding the new
