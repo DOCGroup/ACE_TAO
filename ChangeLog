@@ -1,3 +1,13 @@
+Tue Apr 22 07:10:14 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/ChangeLogEditor/ChangeLogEdit.pm:
+        * bin/ChangeLogEditor/ChangeLogEntry.pm:
+        * bin/ChangeLogEditor/FileLocator.pm:
+        * bin/cle.pl:
+
+          Allow the user to specify directories to be considered for the
+          ChangeLog entry.
+
 Tue Apr 22 12:43:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* tests/Proactor_Scatter_Gather_Test.cpp:

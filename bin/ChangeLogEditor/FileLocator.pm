@@ -27,6 +27,7 @@ sub new {
 
 sub locate {
   my($self)      = shift;
+  my(@dirs)      = @_;
   my($fh)        = new FileHandle();
   my(@modified)  = ();
   my(@removed)   = ();
@@ -36,7 +37,7 @@ sub locate {
   my($nul)       = ($^O eq 'MSWin32' ? 'nul' : '/dev/null');
 
   if (open($fh, 'cvs -q ' . (defined $cvsroot ? "-d $cvsroot " : '') .
-                "-n update 2> $nul |")) {
+                "-n update @dirs 2> $nul |")) {
     while(<$fh>) {
       my($line) = $_;
       if ($line =~ /^[AM]\s+(.*)/) {
