@@ -1,14 +1,13 @@
 Tue Oct 06 22:50:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Re-structured MFC related macros
-	  (_AFXDLL and _WINDLL) so that to allow us to use MFC in static
-	  ACE libraries and the setting of MFC can propagate to
-	  applications.  By default, ACE uses MFC DLL if ACE_HAS_MFC=1.
-	  If you want to use MFC as a static library, besides
-	  ACE_HAS_MFC=1, also define ACE_USES_STATIC_MFC.
-
-	  Thanks to Jason Milley <Jason.Milley.jcmilley@nt.com> for
-	  noticing the problem of compiling static ACE library with MFC.
+	  (_AFXDLL and _WINDLL) so that it allows us to use MFC in static
+ 	  ACE libraries and the setting of MFC can propagate to
+ 	  applications.  By default, ACE uses MFC DLL if ACE_HAS_MFC=1.
+  	  If you want to use MFC as a static library, besides
+ 	  ACE_HAS_MFC=1, also define ACE_USES_STATIC_MFC.  Thanks to Jason
+ 	  Milley <Jason.Milley.jcmilley@nt.com> for noticing the problem
+ 	  of compiling static ACE library with MFC.
 
 Tue Oct  6 15:06:21 1998  Steve Huston  <shuston@riverace.com>
 
