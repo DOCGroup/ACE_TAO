@@ -1,13 +1,18 @@
+Thu Oct 23 23:14:44 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (various):
+	  Hacked 'til it compiled.  (Chased down syntax errors.)
+
 Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (find_hthread): Replaced the call
-	
+
 	  if (iter.next ()->thr_handle_ == h_id)
 
-	  to 
+	  to
 
 	  if (ACE_OS::thr_equal (iter.next ()->thr_handle_, h_id))
-	  
+
 	  since the other one isn't portable to Pthreads.  Thanks to
  	  Stephen Coy <stevec@magna.com.au> for reporting this.
 
