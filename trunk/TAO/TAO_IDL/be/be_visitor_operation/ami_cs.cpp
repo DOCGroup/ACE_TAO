@@ -251,9 +251,9 @@ be_visitor_operation_ami_cs::gen_raise_exception (be_type *bt,
   if (this->void_return_type (bt))
     {
       if (idl_global->use_raw_throw ())
-        *os << "ACE_THROW (";
-      else
         *os << "throw (";
+      else
+        *os << "ACE_THROW (";
       *os << excep << " (" << completion_status << "));\n";
     }
   else
