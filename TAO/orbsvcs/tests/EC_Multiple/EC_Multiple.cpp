@@ -32,8 +32,6 @@ EC_Proxy::open (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
                 const RtecEventChannelAdmin::SupplierQOS& publications,
                 CORBA::Environment &_env)
 {
-  ACE_UNUSED_ARG (_env);
-
   TAO_TRY
     {
       // = Connect as a supplier to the local EC
@@ -74,7 +72,7 @@ EC_Proxy::open (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("EC_Proxy::open");
-      return -1;
+      TAO_RETHROW_RETURN (-1);
     }
   TAO_ENDTRY;
 

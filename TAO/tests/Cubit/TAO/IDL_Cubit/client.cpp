@@ -8,7 +8,7 @@
 
 #define quote(x) #x
 
-const int max_sequence_length = 10;
+const int max_sequence_length = 100;
 // Limit the sequence length, otherwise the time to run the test
 // increases to fast....
 
