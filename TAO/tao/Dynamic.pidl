@@ -1,23 +1,26 @@
 // -*- IDL -*-
-//
-// $Id$:
 
 // ================================================================
-//
-//   This file was used to generate the code in DynamicC.* The command
-//   used to generate code is:
-//
-//     tao_idl
-//          -Ge 1 \
-//          -DCORBA3 \
-//          -Wb,export_macro=TAO_Export \
-//          -Wb,export_include="tao/corbafwd.h" \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          Dynamic.pidl
-//
-//   Patches for changes to the generated code are available in the
-//   `diffs' directory.
+/**
+ *  @file   Dynamic.pidl
+ *
+ * $Id$
+ *
+ *   This file was used to generate the code in DynamicC.* The command
+ *   used to generate code is:
+ *
+ *     tao_idl
+ *          -Ge 1
+ *          -DCORBA3
+ *          -Wb,export_macro=TAO_Export
+ *          -Wb,export_include="tao/corbafwd.h"
+ *          -Wb,pre_include="ace/pre.h"
+ *          -Wb,post_include="ace/post.h"
+ *          Dynamic.pidl
+ *
+ *   Patches for changes to the generated code are available in the
+ *   `diffs' directory.
+ */
 // ================================================================
 
 

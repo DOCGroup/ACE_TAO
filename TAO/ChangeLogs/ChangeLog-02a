@@ -1,3 +1,12 @@
+Mon Mar  5 19:01:15 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Dynamic.pidl:
+	* tao/Messaging.pidl:
+	* tao/Pollable.pidl:
+
+	  Removed backslashes from the comments in these files.  Some
+	  preprocessors complain about "multi-line" comments.
+
 Mon Mar  5 18:46:42 2001  Fuzz Master D <brunsch@uci.edu>
 
         * examples/Simple/time-date/run_test.pl:
