@@ -139,8 +139,8 @@ public:
     //   is greater in the order, 0 if they are equivalent, or 1 if the
     //   second Dispatch_Entry is greater in the order
 
-  virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                    u_long current_time) = 0;
+    virtual long dynamic_subpriority (Dispatch_Entry &entry,
+                                      u_long current_time) = 0;
     // = returns a dynamic subpriority value
     //   for the given timeline entry at the current time
 
@@ -204,8 +204,8 @@ public:
 
 protected:
 
-  virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                    u_long current_time);
+    virtual long dynamic_subpriority (Dispatch_Entry &entry,
+                                      u_long current_time);
     // = returns a dynamic subpriority value at the current time for
     //   the given timeline entry: if the operation has
     //   non-negative laxity, then the value is positive, and a lower
@@ -263,8 +263,8 @@ public:
 
 protected:
 
-  virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                    u_long current_time);
+    virtual long dynamic_subpriority (Dispatch_Entry &entry,
+                                      u_long current_time);
     // = just returns 0: all operations have
     //   the same dynamic subpriority value
 
@@ -317,7 +317,7 @@ public:
 
 protected:
 
-  virtual long dynamic_subpriority (Dispatch_Entry &entry,
+    virtual long dynamic_subpriority (Dispatch_Entry &entry,
                                     u_long current_time);
     // = returns a dynamic subpriority value at the current time for
     //   the given timeline entry: if the operation has
@@ -372,8 +372,8 @@ public:
 
 protected:
 
-  virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                    u_long current_time);
+    virtual long dynamic_subpriority (Dispatch_Entry &entry,
+                                      u_long current_time);
     // = returns a dynamic subpriority value at the current time for the
     //   given timeline entry: if the operation has non-negative
     //   time to deadline, then value is positive, and a shorter time to
@@ -433,8 +433,8 @@ public:
 
 protected:
 
-  virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                    u_long current_time);
+    virtual long dynamic_subpriority (Dispatch_Entry &entry,
+                                      u_long current_time);
     // = returns a dynamic subpriority value at the current time for the
     //   given timeline entry: if the operation is in the
     //   critical set, the dynamic subpriority value is always 0; if the
@@ -462,103 +462,6 @@ private:
   static ACE_RMS_Dyn_Scheduler_Strategy *instance_;
     // instance of the strategy
 
-};
-
-
-/////////////////////////////////////////////
-// Runtime Dispatch Subpriority Strategies //
-/////////////////////////////////////////////
-
-class TAO_ORBSVCS_Export ACE_Dispatch_Subpriority_Strategy
-{
-public:
-
-  ACE_Dispatch_Subpriority_Strategy (long frame_size = ACE_ONE_SECOND_IN_USECS);
-  // ctor: frame size is the number of microseconds in a complete
-  //       dispatch frame (defaults to one million = one second).
-
-  virtual RtecScheduler::Preemption_Subpriority 
-          runtime_subpriority (const ACE_Time_Value &current_time,
-                               const ACE_Time_Value &deadline_time,
-                               const ACE_Time_Value &execution_time,
-                               RtecScheduler::Preemption_Subpriority static_subpriority) = 0;
-  // abstract method to compute the dispatch subpriority for an operation
-
-  virtual RtecScheduler::Preemption_Subpriority 
-          response_function (const ACE_Time_Value &time_metric,
-                             RtecScheduler::Preemption_Subpriority static_subpriority);
-  // response function for run time subpriority: stepwise linear function that
-  // gives appoximately the same dispatching behavior as a hyperbolic function,
-  // but does not require us to use floating point math.
-
-
-protected:
-
-  long frame_size_;
-  // number of microseconds per scheduling frame
-
-  long dynamic_max_;
-  // max value that a dynamic priority representation can have
-
-  long static_max_;
-  // number of bits available for static subpriority representation
-
-  u_int static_bits_;
-  // number of bits available for static subpriority representation
-
-  ACE_Time_Value max_time_;
-  // maximum time value that can be represented
-
-  ACE_Time_Value min_time_;
-  // minimum time value that can be represented
-
-};
-
-
-class TAO_ORBSVCS_Export ACE_Deadline_Subpriority_Strategy
-                         : public ACE_Dispatch_Subpriority_Strategy
-{
-public:
-
-  ACE_Deadline_Subpriority_Strategy (long frame_size = ACE_ONE_SECOND_IN_USECS);
-  // ctor: frame size is the number of microseconds in a complete
-  //       dispatch frame (defaults to one million = one second).
-
-
-  virtual RtecScheduler::Preemption_Subpriority 
-          runtime_subpriority (const ACE_Time_Value &current_time,
-                               const ACE_Time_Value &deadline_time,
-                               const ACE_Time_Value &execution_time,
-                               RtecScheduler::Preemption_Subpriority static_subpriority);
-};
-
-class TAO_ORBSVCS_Export ACE_Laxity_Subpriority_Strategy
-                         : public ACE_Dispatch_Subpriority_Strategy
-{
-public:
-
-  ACE_Laxity_Subpriority_Strategy (long frame_size = ACE_ONE_SECOND_IN_USECS);
-  // ctor: frame size is the number of microseconds in a complete 
-  //       dispatch frame (defaults to one million = one second).
-
-
-  virtual RtecScheduler::Preemption_Subpriority 
-          runtime_subpriority (const ACE_Time_Value &current_time,
-                               const ACE_Time_Value &deadline_time,
-                               const ACE_Time_Value &execution_time,
-                               RtecScheduler::Preemption_Subpriority static_subpriority);
-};
-
-class TAO_ORBSVCS_Export ACE_Static_Subpriority_Strategy
-                         : public ACE_Dispatch_Subpriority_Strategy
-{
-public:
-
-  virtual RtecScheduler::Preemption_Subpriority 
-          runtime_subpriority (const ACE_Time_Value &current_time,
-                               const ACE_Time_Value &deadline_time,
-                               const ACE_Time_Value &execution_time,
-                               RtecScheduler::Preemption_Subpriority static_subpriority);
 };
 
 

@@ -175,6 +175,35 @@ ACE_Message_Block::msg_priority (u_long pri)
   this->priority_ = pri;
 }
 
+ACE_INLINE const ACE_Time_Value & 
+ACE_Message_Block::msg_execution_time (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::msg_execution_time (void)");
+  return this->execution_time_;
+}
+
+
+ACE_INLINE void 
+ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)
+{
+  ACE_TRACE ("ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)");
+  this->execution_time_ = et;
+}
+
+ACE_INLINE const ACE_Time_Value & 
+ACE_Message_Block::msg_deadline_time (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::msg_deadline_time (void)");
+  return this->deadline_time_;
+}
+
+ACE_INLINE void 
+ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & dt)
+{
+  ACE_TRACE ("ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & et)");
+  this->deadline_time_ = dt;
+}
+
 ACE_INLINE char *
 ACE_Message_Block::base (void) const
 {

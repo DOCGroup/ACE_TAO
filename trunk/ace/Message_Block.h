@@ -24,6 +24,7 @@
 // Forward declaration.
 class ACE_Data_Block;
 class ACE_Lock;
+class ACE_Time_Value;
 
 class ACE_Export ACE_Message_Block
 {
@@ -113,7 +114,9 @@ public:
 		     const char *data = 0,
 		     ACE_Allocator *allocator_strategy = 0,
 		     ACE_Lock *locking_strategy = 0,
-		     u_long priority = 0);
+		     u_long priority = 0,
+                     const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
+                     const ACE_Time_Value & deadline_time = ACE_Time_Value::zero);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -138,7 +141,9 @@ public:
 	    const char *data = 0,
 	    ACE_Allocator *allocator_strategy = 0,
 	    ACE_Lock *locking_strategy = 0,
-	    u_long priority = 0);
+	    u_long priority = 0,
+            const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
+            const ACE_Time_Value & deadline_time = ACE_Time_Value::zero);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -185,6 +190,18 @@ public:
 
   void msg_priority (u_long priority);
   // Set priority of the message.
+
+  const ACE_Time_Value & msg_execution_time (void) const;
+  // Get execution time associated with the message.
+
+  void msg_execution_time (const ACE_Time_Value & et);
+  // Set execution time associated with the message.
+
+  const ACE_Time_Value & msg_deadline_time (void) const;
+  // Get absolute time of deadline associated with the message.
+
+  void msg_deadline_time (const ACE_Time_Value & dt);
+  // Set absolute time of deadline associated with the message.
 
   // = Deep copy and shallow copy methods.
 
@@ -314,6 +331,8 @@ private:
 		     ACE_Lock *locking_strategy,
 		     Message_Flags flags,
 		     u_long priority,
+                     const ACE_Time_Value & execution_time,
+                     const ACE_Time_Value & deadline_time,
 		     ACE_Data_Block *db);
   // Perform the actual initialization.
 
@@ -328,6 +347,8 @@ private:
 	      ACE_Lock *locking_strategy,
 	      Message_Flags flags,
 	      u_long priority,
+              const ACE_Time_Value & execution_time,
+              const ACE_Time_Value & deadline_time,
 	      ACE_Data_Block *db);
   // Perform the actual initialization.
 
@@ -339,6 +360,12 @@ private:
 
   u_long priority_;
   // Priority of message.
+
+  ACE_Time_Value execution_time_;
+  // execution time associated with the message
+
+  ACE_Time_Value deadline_time_;
+  // absolute deadline time for message
 
   // = Links to other ACE_Message_Block *s.
   ACE_Message_Block *cont_;

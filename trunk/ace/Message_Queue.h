@@ -363,6 +363,275 @@ private:
   // Keeps track of how far we've advanced...
 };
 
+class ACE_Export ACE_Dynamic_Message_Strategy
+{
+  // = TITLE
+  //     An abstract base class which provides dynamic priority evaluation
+  //     methods for use by the ACE_Dynamic_Message_Queue class
+  //     or any other class which needs to manage the priorities
+  //     of a collection of ACE_Message_Blocks dynamically 
+  //
+  // = DESCRIPTION
+  //     Methods for deadline and laxity based priority evaluation
+  //     are provided.  These methods assume a specific partitioning
+  //     of the message priority number into a higher order dynamic
+  //     bit field and a lower order static priority bit field.  The
+  //     default partitioning assumes an unsigned dynamic message
+  //     priority field of 22 bits and an unsigned static message
+  //     priority field of 10 bits.  This corresponds to the initial
+  //     values of the static class members.  To provide a different
+  //     partitioning, assign a different set of values to the static
+  //     class memebers before using the static member functions.  
+public:
+
+  ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
+                                u_long static_bit_field_shift,
+                                u_long pending_threshold,
+                                u_long dynamic_priority_max,
+                                u_long dynamic_priority_offset);
+  // ctor
+  
+  virtual ~ACE_Dynamic_Message_Strategy ();
+  // virtual dtor
+
+  virtual int update_priority (ACE_Message_Block & mb, 
+                               const ACE_Time_Value & tv) = 0;
+  // abstract dynamic priority evaluation function:
+  // updates the synamic priority bit field but does not
+  // alter the static priority bit field
+
+  int is_pending (const ACE_Message_Block & mb,     
+                  const ACE_Time_Value & tv);
+  // returns true if the message has a pending (not late) priority value
+
+  virtual int is_beyond_late (const ACE_Message_Block & mb, 
+                              const ACE_Time_Value & tv) = 0;
+  // returns true if the message is later than can can be represented
+
+  u_long static_bit_field_mask (void);
+  // get static bit field mask
+
+  void static_bit_field_mask (u_long);
+  // set static bit field mask
+
+  u_long static_bit_field_shift (void);
+  // get left shift value to make room for static bit field
+
+  void static_bit_field_shift (u_long);
+  // set left shift value to make room for static bit field
+
+  u_long pending_threshold (void);
+  // get pending threshold priority value
+
+  void pending_threshold (u_long);
+  // set pending threshold priority value
+
+  u_long dynamic_priority_max (void);
+  // get maximum supported priority value
+
+  void dynamic_priority_max (u_long);
+  // set maximum supported priority value
+
+  u_long dynamic_priority_offset (void);
+  // get axis shift to map signed range into unsigned range
+
+  void dynamic_priority_offset (u_long);
+  // set axis shift to map signed range into unsigned range
+
+protected:
+
+  u_long static_bit_field_mask_;
+  // this is a bit mask with all ones in the static bit field
+
+  u_long static_bit_field_shift_;
+  // this is a left shift value to make room for static bit 
+  // field: this value should be the logarithm base 2 of
+  // (static_bit_field_mask_ + 1)
+
+  u_long pending_threshold_;
+  // threshold priority value below which a message is considered late
+
+  u_long dynamic_priority_max_;
+  // maximum supported priority value
+
+  u_long dynamic_priority_offset_;
+  // axis shift added to all values, in order to map signed 
+  // range into unsigned range (priority is an unsigned value).
+};
+
+class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Strategy
+{
+public:
+
+  ACE_Deadline_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
+                                 u_long static_bit_field_shift = 10,            // 10 low order bits
+                                 u_long pending_threshold = 0x200000UL,         // 2^(22-1)
+                                 u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
+                                 u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  // ctor, with all arguments defaulted
+
+  virtual ~ACE_Deadline_Message_Strategy ();
+  // virtual dtor
+
+  virtual int update_priority (ACE_Message_Block & mb, 
+                            const ACE_Time_Value & tv);
+  // dynamic priority evaluation function based on time to
+  // deadline: updates the synamic priority bit field but
+  // does not alter the static priority bit field
+
+  int is_beyond_late (const ACE_Message_Block & mb,
+                      const ACE_Time_Value & tv);
+  // returns true if the message is later than can can be represented  
+};
+
+class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strategy
+{
+public:
+
+  ACE_Laxity_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
+                               u_long static_bit_field_shift = 10,            // 10 low order bits
+                               u_long pending_threshold = 0x200000UL,         // 2^(22-1)
+                               u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
+                               u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+  // ctor, with all arguments defaulted
+
+  virtual ~ACE_Laxity_Message_Strategy ();
+  // virtual dtor
+
+  virtual int update_priority (ACE_Message_Block & mb, 
+                            const ACE_Time_Value & tv);
+  // dynamic priority evaluation function based on time to
+  // deadline: updates the dynamic priority bit field but
+  // does not alter the static priority bit field
+  
+  int is_beyond_late (const ACE_Message_Block & mb,
+                      const ACE_Time_Value & tv);
+  // returns true if the message is later than can can be represented  
+};
+
+
+template <ACE_SYNCH_DECL>
+class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
+{
+  // = TITLE
+  //     A derived class which adapts the ACE_Message_Queue
+  //     class in order to maintain dynamic priorities for enqueued 
+  //     ACE_Message_Blocks and manage the queue dynamically.  
+  //
+  // = DESCRIPTION
+  //     Priorities and queue orderings are refreshed at each enqueue and 
+  //     dequeue operation.  Head and tail enqueue methods were made private
+  //     to prevent out-of-order messages from confusing the pending 
+  //     and late portions of the queue.  Messages in the pending portion of
+  //     the queue whose dynamic priority becomes negative are placed into
+  //     the late portion of the queue.  Messages in the late portion of
+  //     the queue whose dynamic priority becomes positive are dropped.
+  //     These behaviors support a limited schedule overrun corresponding
+  //     to one full cycle through dynamic priority values.  These behaviors 
+  //     can be modified in derived classes by providing alternative 
+  //     definitions for the appropriate virtual methods.
+  //
+public:
+
+  // = Initialization and termination methods.
+  ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
+                             size_t hwm = DEFAULT_HWM,
+                             size_t lwm = DEFAULT_LWM,
+                             ACE_Notification_Strategy * = 0);
+
+  virtual ~ACE_Dynamic_Message_Queue (void);
+  // Close down the message queue and release all resources.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+
+  virtual int enqueue_i (ACE_Message_Block *new_item);
+  // Enqueue an <ACE_Message_Block *> in accordance with its priority.
+  // priority may be *dynamic* or *static* or a combination or *both*
+  // It calls the priority evaluation function passed into the Dynamic
+  // Message Queue constructor to update the priorities of all enqueued 
+  // messages.
+
+  virtual int dequeue_head_i (ACE_Message_Block *&first_item);
+  // Dequeue and return the <ACE_Message_Block *> at the head of the
+  // queue.
+
+  virtual int refresh_priorities (const ACE_Time_Value & tv);
+  // refresh the priorities in the queue according
+  // to a specific priority assignment function
+
+  virtual int refresh_queue (const ACE_Time_Value & tv);
+  // refresh the order of messages in the queue
+  // after refreshing their priorities
+
+  ACE_Message_Block *pending_list_tail_;
+  // Pointer to tail of the pending messages (those whose priority is 
+  // and has been non-negative) in the ACE_Message_Block list.
+
+  ACE_Dynamic_Message_Strategy & message_strategy_;
+  // Pointer to a dynamic priority evaluation function
+
+private:
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &))
+
+  // External invocation of these could cause extreme wierdness
+  // in a dynamically prioritized queue: disallow their use until 
+  // and unless a coherent semantics for head and tail enqueueing
+  // can be identified.
+  ACE_UNIMPLEMENTED_FUNC (virtual int 
+                          enqueue_tail (ACE_Message_Block *new_item, 
+                                        ACE_Time_Value *timeout = 0))
+  ACE_UNIMPLEMENTED_FUNC (virtual int 
+                          enqueue_head (ACE_Message_Block *new_item, 
+                                        ACE_Time_Value *timeout = 0))
+
+  // As messages are *dynamically* prioritized, it is not possible to
+  // guarantee that the message at the head of the queue when this 
+  // method is called will still be at the head when the next method
+  // is called: disallow its use until and unless a coherent semantics
+  // for peeking at the head of the queue can be identified.
+  ACE_UNIMPLEMENTED_FUNC (virtual int 
+                          peek_dequeue_head (ACE_Message_Block *&first_item,
+                                             ACE_Time_Value *tv = 0))
+};
+
+
+template <ACE_SYNCH_DECL>
+class ACE_Export ACE_Message_Queue_Factory
+{
+public:
+
+  static ACE_Message_Queue<ACE_SYNCH_USE> * 
+    create_static_message_queue (size_t hwm = DEFAULT_HWM,
+                                 size_t lwm = DEFAULT_LWM,
+                                 ACE_Notification_Strategy * = 0);
+
+  static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> * 
+    create_deadline_message_queue (size_t hwm = DEFAULT_HWM,
+                                   size_t lwm = DEFAULT_LWM,
+                                   ACE_Notification_Strategy * = 0,
+                                   u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
+                                   u_long static_bit_field_shift = 10,            // 10 low order bits
+                                   u_long pending_threshold = 0x200000UL,         // 2^(22-1)
+                                   u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
+                                   u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+
+  static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> * 
+    create_laxity_message_queue (size_t hwm = DEFAULT_HWM, 
+                                 size_t lwm = DEFAULT_LWM,
+                                 ACE_Notification_Strategy * = 0,
+                                 u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
+                                 u_long static_bit_field_shift = 10,            // 10 low order bits
+                                 u_long pending_threshold = 0x200000UL,         // 2^(22-1)
+                                 u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
+                                 u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+};
+
 // This must go here to avoid problems with circular includes.
 #include "ace/Strategies.h"
 
