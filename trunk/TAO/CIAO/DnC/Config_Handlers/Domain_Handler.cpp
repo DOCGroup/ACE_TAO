@@ -78,111 +78,33 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("sharedResource")))
             {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong i (domain.sharedResource.length ());
-                  domain.sharedResource.length (i + 1);
-                  if (length == 1)
-                    {
-                      this->process_sr 
-                        (this->doc_, this->iter_, domain.sharedResource[i]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_sr
-                        (named_node_map, this->doc_,
-                         this->iter_, i, domain.sharedResource[i]);
-                    }
-                }
+              this->process_sr_element (node, this->doc_,
+                                        this->iter_,
+                                        domain);
             }
           else if (node_name == XStr (ACE_TEXT ("node")))
             {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong i (domain.node.length ());
-                  domain.node.length (i + 1);
-                  if (length == 1)
-                    {
-                      this->process_node (this->doc_,
+              this->process_node_element (node, this->doc_,
                                           this->iter_,
-                                          domain.node[i]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_node
-                        (named_node_map, this->doc_,
-                         this->iter_, i, domain.node[i]);
-                    }
-                }
+                                          domain);
             }
           else if (node_name == XStr (ACE_TEXT ("interconnect")))
             {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong i (domain.interconnect.length ());
-                  domain.interconnect.length (i + 1);
-                  if (length == 1)
-                    {
-                      this->process_interconnect 
-                         (this->doc_, this->iter_, domain.interconnect[i]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_ic
-                        (named_node_map, this->doc_,
-                         this->iter_, i, domain.interconnect[i]);
-                    }
-                }
+              this->process_ic_element (node, this->doc_,
+                                        this->iter_,
+                                        domain);
             }
           else if (node_name == XStr (ACE_TEXT ("bridge")))
             {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong i (domain.bridge.length ());
-                  domain.bridge.length (i + 1);
-                  if (length == 1)
-                    {
-                      this->process_bridge (this->doc_,
-                                                   this->iter_,
-                                                   domain.bridge[i]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_bridge
-                        (named_node_map, this->doc_,
-                         this->iter_, i, domain.bridge[i]);
-                    }
-                }
+              this->process_bridge_element (node, this->doc_,
+                                            this->iter_,
+                                            domain);
             }
           else if (node_name == XStr (ACE_TEXT ("infoProperty")))
             {
-              if (node->hasAttributes ())
-                {
-                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  CORBA::ULong i (domain.infoProperty.length ());
-                  domain.infoProperty.length (i + 1);
-                  if (length == 1)
-                    {
-                      Property_Handler::process_Property 
-                         (this->iter_,
-                          domain.infoProperty[i]);
-                    }
-                  else if (length > 1)
-                    {
-                      this->process_attributes_for_property
-                        (named_node_map, this->doc_,
-                         this->iter_, i, domain.infoProperty[i]);
-                    }
-                }
+              this->process_property_element (node, this->doc_,
+                                              this->iter_,
+                                              domain);
             }
           else
             {
@@ -197,6 +119,137 @@ namespace CIAO
       this->update_sr_refs (domain);
 
       return;
+    }
+
+    // handle the sr element
+    void Domain_Handler::process_sr_element (DOMNode* node,
+                                             DOMDocument* doc,
+                                             DOMNodeIterator* iter,
+                                             Deployment::Domain& domain)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (domain.sharedResource.length ());
+          domain.sharedResource.length (i + 1);
+          if (length == 1)
+            {
+              this->process_sr
+                (doc, iter, domain.sharedResource[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_sr
+                (named_node_map, doc,
+                 iter, i, domain.sharedResource[i]);
+            }
+        }      
+    }
+
+    // handle the node element
+    void Domain_Handler::process_node_element (DOMNode* node,
+                                               DOMDocument* doc,
+                                               DOMNodeIterator* iter,
+                                               Deployment::Domain& domain)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (domain.node.length ());
+          domain.node.length (i + 1);
+          if (length == 1)
+            {
+              this->process_node (doc,
+                                  iter,
+                                  domain.node[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_node
+                (named_node_map, doc,
+                 iter, i, domain.node[i]);
+            }
+        }
+    }
+
+    // handle the interconnect element
+    void Domain_Handler::process_ic_element (DOMNode* node,
+                                             DOMDocument* doc,
+                                             DOMNodeIterator* iter,
+                                             Deployment::Domain& domain)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (domain.interconnect.length ());
+          domain.interconnect.length (i + 1);
+          if (length == 1)
+            {
+              this->process_interconnect
+                 (doc, iter, domain.interconnect[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_ic
+                (named_node_map, doc,
+                 iter, i, domain.interconnect[i]);
+            }
+        }
+    }
+
+    // handle the bridge element
+    void Domain_Handler::process_bridge_element (DOMNode* node,
+                                                 DOMDocument* doc,
+                                                 DOMNodeIterator* iter,
+                                                 Deployment::Domain& domain)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (domain.interconnect.length ());
+          domain.interconnect.length (i + 1);
+          if (length == 1)
+            {
+              this->process_bridge
+                 (doc, iter, domain.bridge[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_bridge
+                (named_node_map, doc,
+                 iter, i, domain.bridge[i]);
+            }
+        }
+    }
+
+    // handle the sr element
+    void Domain_Handler::process_property_element (DOMNode* node,
+                                                   DOMDocument* doc,
+                                                   DOMNodeIterator* iter,
+                                                   Deployment::Domain& domain)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (domain.interconnect.length ());
+          domain.interconnect.length (i + 1);
+          if (length == 1)
+            {
+              Property_Handler::process_Property 
+                 (iter, domain.infoProperty[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_property
+                (named_node_map, doc,
+                 iter, i, domain.infoProperty[i]);
+            }
+        }
     }
 
     /// handle uuid attribute

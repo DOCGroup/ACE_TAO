@@ -99,6 +99,36 @@ namespace CIAO
       void process_label (const XMLCh* label,
                           Deployment::Domain& domain);
 
+      /// process the shared resource element
+      void process_sr_element (DOMNode* node,
+                               DOMDocument* doc,
+                               DOMNodeIterator* iter,
+                               Deployment::Domain& domain);
+
+      /// process the shared resource element
+      void process_node_element (DOMNode* node,
+                                 DOMDocument* doc,
+                                 DOMNodeIterator* iter,
+                                 Deployment::Domain& domain);
+
+      /// process the shared resource element
+      void process_ic_element (DOMNode* node,
+                               DOMDocument* doc,
+                               DOMNodeIterator* iter,
+                               Deployment::Domain& domain);
+
+      /// process the shared resource element
+      void process_bridge_element (DOMNode* node,
+                                   DOMDocument* doc,
+                                   DOMNodeIterator* iter,
+                                   Deployment::Domain& domain);
+
+      /// process the shared resource element
+      void process_property_element (DOMNode* node,
+                                     DOMDocument* doc,
+                                     DOMNodeIterator* iter,
+                                     Deployment::Domain& domain);
+
       /// Process the attributes for the shared resource
       void process_attributes_for_sr (DOMNamedNodeMap* named_node_map,
                                       DOMDocument* doc,
