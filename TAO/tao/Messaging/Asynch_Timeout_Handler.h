@@ -28,8 +28,6 @@
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
-
 #include "ace/Event_Handler.h"
 
 class TAO_Asynch_Reply_Dispatcher_Base;
@@ -74,8 +72,6 @@ public:
   /// Our reactor
   ACE_Reactor *reactor_;
 };
-
-#endif /* (TAO_HAS_AMI_CALLBACK == 1)*/
 
 #include /**/ "ace/post.h"
 

@@ -69,7 +69,7 @@ endif # cxx
 .PRECIOUS: cubitC.cpp cubitS.cpp cubitC.h cubitS.h
 
 client: $(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) -lTAO_Valuetype $(VLDLIBS) $(POSTLINK)
 
 ../IDL_Cubit/server:
 	cd ../IDL_Cubit; $(MAKE) BIN=server

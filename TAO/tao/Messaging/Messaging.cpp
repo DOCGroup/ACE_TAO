@@ -64,7 +64,6 @@ TAO_Messaging_Initializer::init (void)
   return 0;
 }
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
 
 void TAO_Messaging_Helper::
 exception_holder_raise (TAO::Exception_Data *exception_data,
@@ -156,4 +155,3 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
                              CORBA::COMPLETED_YES));
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK */
