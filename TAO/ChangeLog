@@ -1,3 +1,20 @@
+Sun Jun  8 23:21:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
+
+	  More changes toward support of components, valuetypes and eventtypes
+	  in the IFR.
+
 Sun Jun  8 18:50:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Sequence_Latency/Single_Threaded: New test for
