@@ -1,3 +1,12 @@
+Sun Jun  4 14:48:32 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/components.html:
+        * docs/events_tutorial.html:
+        * docs/reactivator.html:
+        * examples/Simulator/DOVEBrowser/DOVEBrowser.html:
+
+          Added in some missing CVS Id strings.
+
 Sun Jun  4 13:33:43 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
