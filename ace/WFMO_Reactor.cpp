@@ -1622,15 +1622,33 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
   // mut and event.
   countdown.update ();
 
-  // Calculate timeout
-  int timeout = this->calculate_timeout (max_wait_time);
+  do
+    {
+      // Calculate timeout
+      int timeout = this->calculate_timeout (max_wait_time);
 
-  // Wait for event to happen
-  int wait_status = this->wait_for_multiple_events (timeout,
-                                                    alertable);
+      // Wait for event to happen
+      int wait_status = this->wait_for_multiple_events (timeout,
+                                                        alertable);
 
-  // Upcall
-  result = this->safe_dispatch (wait_status);
+      // Upcall
+      result = this->safe_dispatch (wait_status);
+      if (0 == result)
+        {
+          // wait_for_multiple_events timed out without dispatching
+          // anything.  Because of rounding and conversion errors and
+          // such, it could be that the wait loop timed out, but
+          // the timer queue said it wasn't quite ready to expire a
+          // timer. In this case, max_wait_time won't have quite been
+          // reduced to 0, and we need to go around again. If max_wait_time
+          // is all the way to 0, just return, as the entire time the
+          // caller wanted to wait has been used up.
+          countdown.update ();     // Reflect time waiting for events
+          if (max_wait_time->usec () == 0)
+            break;
+        }
+    }
+  while (result == 0);
 
   return result;
 }

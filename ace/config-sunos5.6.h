@@ -112,6 +112,8 @@
 #define ACE_HAS_AIO_CALLS
 #endif /* ACE_HAS_AIO_CALLS */
 
+#define ACE_HAS_POSIX_SEM
+
 // Sunos 5.6's aio_* with RT signals is broken.
 #define ACE_POSIX_AIOCB_PROACTOR
 
