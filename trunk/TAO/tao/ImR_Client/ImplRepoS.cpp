@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:606
+// be\be_codegen.cpp:595
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOS_CPP_
 #define _TAO_IDL_ORIG_IMPLREPOS_CPP_
@@ -474,10 +474,7 @@ ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_Ini
 static int
 ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_Initializer (
-      reinterpret_cast<
-          size_t> (
-          ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_Initializer
-        )
+      reinterpret_cast<size_t> (ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_Initializer)
     );
 
 
@@ -504,9 +501,8 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Direct_Proxy_Impl::
   ))
 {
   ((TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *) args[0])->arg () =
-    dynamic_cast<
-        POA_ImplementationRepository::ServerInformationIterator_ptr> (
-        servant)
+    dynamic_cast<POA_ImplementationRepository::ServerInformationIterator_ptr>
+      (servant)
     ->next_n (
           ((TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val *) args[1])->arg (),
           ((TAO::Arg_Traits< ImplementationRepository::ServerInformationList>::out_arg_val *) args[2])->arg ()
@@ -528,9 +524,8 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Direct_Proxy_Impl::
     CORBA::SystemException
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::ServerInformationIterator_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::ServerInformationIterator_ptr>
+    (servant)
   ->destroy (
         ACE_ENV_SINGLE_ARG_PARAMETER
       );
@@ -1353,10 +1348,7 @@ ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_Initializer (s
 static int
 ImplementationRepository__TAO_Administration_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_Initializer (
-      reinterpret_cast<
-          size_t> (
-          ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_Initializer
-        )
+      reinterpret_cast<size_t> (ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_Initializer)
     );
 
 
@@ -1384,9 +1376,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::activate_se
     ::ImplementationRepository::CannotActivate
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->activate_server (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg ()
         ACE_ENV_ARG_PARAMETER
@@ -1409,9 +1400,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::register_se
     ::ImplementationRepository::NotFound
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->register_server (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ImplementationRepository::StartupOptions>::in_arg_val *) args[2])->arg ()
@@ -1435,9 +1425,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::reregister_
     ::ImplementationRepository::NotFound
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->reregister_server (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ImplementationRepository::StartupOptions>::in_arg_val *) args[2])->arg ()
@@ -1460,9 +1449,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::remove_serv
     ::ImplementationRepository::NotFound
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->remove_server (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg ()
         ACE_ENV_ARG_PARAMETER
@@ -1484,9 +1472,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::shutdown_se
     ::ImplementationRepository::NotFound
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->shutdown_server (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg ()
         ACE_ENV_ARG_PARAMETER
@@ -1508,9 +1495,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::server_is_r
     ::ImplementationRepository::NotFound
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->server_is_running (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[2])->arg (),
@@ -1534,9 +1520,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::server_is_s
     ::ImplementationRepository::NotFound
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->server_is_shutting_down (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg ()
         ACE_ENV_ARG_PARAMETER
@@ -1558,9 +1543,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::find (
     ::ImplementationRepository::NotFound
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->find (
         ((TAO::Arg_Traits< CORBA::Char *>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ImplementationRepository::ServerInformation>::out_arg_val *) args[2])->arg ()
@@ -1582,9 +1566,8 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::list (
     CORBA::SystemException
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::Administration_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::Administration_ptr>
+    (servant)
   ->list (
         ((TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ImplementationRepository::ServerInformationList>::out_arg_val *) args[2])->arg (),

@@ -44,7 +44,7 @@
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_ImplementationRepository_AlreadyRegistered = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_ImplementationRepository_AlreadyRegistered = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -66,7 +66,7 @@ namespace ImplementationRepository
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_ImplementationRepository_CannotActivate[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_CannotActivate[] =
   {
     { "reason", &CORBA::_tc_string }
     
@@ -92,7 +92,7 @@ namespace ImplementationRepository
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_ImplementationRepository_NotFound = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_ImplementationRepository_NotFound = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -114,7 +114,7 @@ namespace ImplementationRepository
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_ImplementationRepository_EnvironmentVariable[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_EnvironmentVariable[] =
   {
     { "name", &CORBA::_tc_string },
     { "value", &CORBA::_tc_string }
@@ -144,7 +144,7 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:743
+// be\be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -209,7 +209,7 @@ namespace ImplementationRepository
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_ImplementationRepository_StartupOptions[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_StartupOptions[] =
   {
     { "command_line", &CORBA::_tc_string },
     { "environment", &ImplementationRepository::_tc_EnvironmentList },
@@ -240,7 +240,7 @@ namespace ImplementationRepository
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_ImplementationRepository_ServerInformation[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_ImplementationRepository_ServerInformation[] =
   {
     { "server", &CORBA::_tc_string },
     { "startup", &ImplementationRepository::_tc_StartupOptions },
@@ -271,7 +271,7 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:743
+// be\be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -923,7 +923,7 @@ TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>::to_object 
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -978,7 +978,7 @@ TAO::Any_Impl_T<ImplementationRepository::Administration>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 // Copying insertion.

@@ -206,7 +206,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerObject;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ServerObject;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -267,7 +267,7 @@ TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Implemen
 TAO_IMR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerObject_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:947
 
 #if defined (__ACE_INLINE__)
 #include "ServerObjectC.inl"

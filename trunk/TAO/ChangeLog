@@ -1,3 +1,15 @@
+Thu Mar 31 11:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Generated missing ;
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          Generate true instead of 1
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+          Instead of TAO_NAMESPACE_STORAGE_CLASS generate extern with
+          after that the export macro
+
 Thu Mar 31 09:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:

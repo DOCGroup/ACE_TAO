@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:606
+// be\be_codegen.cpp:595
 
 #ifndef _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
 #define _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
@@ -290,10 +290,7 @@ ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_Initializer (siz
 static int
 ImplementationRepository__TAO_ServerObject_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_Initializer (
-      reinterpret_cast<
-          size_t> (
-          ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_Initializer
-        )
+      reinterpret_cast<size_t> (ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_Initializer)
     );
 
 
@@ -319,9 +316,8 @@ POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::ping (
     CORBA::SystemException
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::ServerObject_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::ServerObject_ptr>
+    (servant)
   ->ping (
         ACE_ENV_SINGLE_ARG_PARAMETER
       );
@@ -341,9 +337,8 @@ POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::shutdown (
     CORBA::SystemException
   ))
 {
-  dynamic_cast<
-      POA_ImplementationRepository::ServerObject_ptr> (
-      servant)
+  dynamic_cast<POA_ImplementationRepository::ServerObject_ptr>
+    (servant)
   ->shutdown (
         ACE_ENV_SINGLE_ARG_PARAMETER
       );

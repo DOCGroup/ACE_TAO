@@ -108,7 +108,7 @@ TAO::Any_Impl_T<PortableServer::POAManager>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
