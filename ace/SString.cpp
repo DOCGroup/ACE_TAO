@@ -12,7 +12,7 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_CString)
 
-char ACE_String_null_string_ = '\0';
+char ACE_CString::NULL_CString_ = '\0';
 
 // Copy constructor.
 
@@ -27,7 +27,7 @@ ACE_CString::ACE_CString (const ACE_CString &s)
 
   if (s.fast_rep ()[0] == '\0')
     {
-      this->rep_ = &ACE_String_null_string_;
+      this->rep_ = &ACE_CString::NULL_CString_;
     }
   else
     {
@@ -47,7 +47,7 @@ ACE_CString::~ACE_CString (void)
 {
   ACE_TRACE ("ACE_CString::~ACE_CString");
 
-  if (this->rep_ != &ACE_String_null_string_)
+  if (this->rep_ != &ACE_CString::NULL_CString_)
     {
       this->allocator_->free (this->rep_);
     }
@@ -65,7 +65,7 @@ ACE_CString::length (void) const
 ACE_CString::ACE_CString (ACE_Allocator *alloc)
   : allocator_ (alloc),
     len_ (0), 
-    rep_ (&ACE_String_null_string_)
+    rep_ (&ACE_CString::NULL_CString_)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
@@ -86,7 +86,7 @@ ACE_CString::ACE_CString (const char *s, ACE_Allocator *alloc)
   if (s == 0 || s[0] == 0')
     {
       this->len_ = 0;
-      this->rep_ = &ACE_String_null_string_;
+      this->rep_ = &ACE_CString::NULL_CString_;
     }
   else
     {
@@ -111,7 +111,7 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
   if (s == 0 || s[0] == (ACE_USHORT16) '\0')
     {
       this->len_ = 0;
-      this->rep_ = &ACE_String_null_string_;
+      this->rep_ = &ACE_CString::NULL_CString_;
     }
   else
     {
@@ -141,7 +141,7 @@ ACE_CString::ACE_CString (const char *s,
   if (s == 0 || s[0] == '\0')
     {
       this->len_ = 0;
-      this->rep_ = &ACE_String_null_string_;
+      this->rep_ = &ACE_CString::NULL_CString_;
     }
   else
     {
@@ -165,22 +165,19 @@ ACE_CString::operator = (const ACE_CString &s)
       // Only reallocate if we don't have enough space...
       if (this->len_ < s.len_)
 	{
-          if (this->rep_ != &ACE_String_null_string_)
-            {
-	      this->allocator_->free (this->rep_);
-            }
+          if (this->rep_ != &ACE_CString::NULL_CString_)
+	    this->allocator_->free (this->rep_);
+
           // s.len_ is greather than 0, so must allocate space for it.
 	  this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
 	}
+
       this->len_ = s.len_;
+
       if (s[0] == '\0')
-        {
-          this->rep_ = &ACE_String_null_string_;
-        }
+	this->rep_ = &ACE_CString::NULL_CString_;
       else
-        {
-          ACE_OS::strcpy (this->rep_, s.rep_);
-        }
+	ACE_OS::strcpy (this->rep_, s.rep_);
     }
 }
 
@@ -226,19 +223,26 @@ ACE_CString::operator += (const ACE_CString &s)
 
   if (s.len_ > 0)
     {
-      if (this->len_ > 0)
-        {
-          char *t = (char *) this->allocator_->malloc (this->len_ + s.len_ + 1);
-          ACE_OS::memcpy (t, this->rep_, this->len_);
-          ACE_OS::memcpy (t + this->len_, s.rep_, s.len_);
-          this->len_ += s.len_;
-          t[this->len_] = '\0';
-          if (this->rep_ != &ACE_String_null_string_)
-            {
-              this->allocator_->free (this->rep_);
-            }
-          this->rep_ = t;
-        }
+      size_t oldlen = this->len_;
+      size_t newlen = oldlen + s.len_ + 1;
+      this->len_ += s.len_;
+      char *t = 0;
+
+      if (oldlen < newlen)
+	{
+	  // Allocate memory for the new string.
+	  ACE_ALLOCATOR (t,
+			 (char *) this->allocator_->malloc (newlen));
+	  // Copy memory from old string into new string.
+	  ACE_OS::memcpy (t, this->rep_, oldlen);
+	}
+
+      ACE_OS::memcpy (t + oldlen, s.rep_, s.len_);
+      t[this->len_] = '\0';
+
+      if (this->rep_ != &ACE_CString::NULL_CString_)
+	this->allocator_->free (this->rep_);
+      this->rep_ = t;
     }
 }
 

@@ -98,7 +98,9 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
 
   *buf = '\0';	// Initialize the string
 
-  if (!(stream >> c)) // eat space up to the first char
+  stream >> c;
+
+  if (!stream) // eat space up to the first char
     return stream;
 
   // if we don't have a quote, append until we see space
@@ -192,11 +194,17 @@ client (void *arg = 0)
   // iostream will pull them out by using the whitespace provided by
   // the server.
 
-  int i;
-  float f1, f2;
-  long l;
-  double d;
-  server >> i >> f1 >> l >> f2 >> d;
+   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Receiving\n"));
+ 
+   int i;
+   float f1, f2;
+   long l;
+   double d;
+   server >> i;
+   server >> f1;
+   server >> l;
+   server >> f2;
+   server >> d;
 
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%P|%t) Client Received: int %d float %f long %d float %f double %f\n", 

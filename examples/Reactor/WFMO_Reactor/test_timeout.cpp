@@ -28,13 +28,15 @@ class Timeout_Handler : public ACE_Event_Handler
 //     Generic timeout handler.
 {
 public:
-  Timeout_Handler (void) : count_ (0) {;}
+  Timeout_Handler (void)
+    : count_ (0) {}
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
 			      const void *arg)
     // Print out when timeouts occur.
     {
-      ACE_DEBUG ((LM_DEBUG, "%d timeout occurred for %s.\n", 
+      ACE_DEBUG ((LM_DEBUG, 
+		  "%d timeout occurred for %s.\n", 
 		  ++count_,
 		  (char *) arg));
       return 0;
@@ -45,7 +47,7 @@ private:
 };
 
 int
-main ()
+main (void)
 {
   Timeout_Handler handler;
 

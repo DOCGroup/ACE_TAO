@@ -47,9 +47,8 @@ ACE_Reactor::remove_handler (int signum,
   return this->signal_handler_->remove_handler (signum, new_disp, old_disp, sigkey);
 }
 
-// The remaining methods in this file must be called with locks held
-
-// Note the queue handles its own locking.
+// = The remaining methods in this file must be called with locks
+// held.  Note the queue handles its own locking.
 
 ACE_INLINE int
 ACE_Reactor::cancel_timer (ACE_Event_Handler *handler,
@@ -61,12 +60,13 @@ ACE_Reactor::cancel_timer (ACE_Event_Handler *handler,
 }
 
 ACE_INLINE int
-ACE_Reactor::cancel_timer (int timer_id, 
+ACE_Reactor::cancel_timer (long timer_id, 
 			   const void **arg,
 			   int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Reactor::cancel_timer");
-  return this->timer_queue_->cancel (timer_id, arg, 
+  return this->timer_queue_->cancel (timer_id, 
+				     arg,
 				     dont_call_handle_close);
 }
 

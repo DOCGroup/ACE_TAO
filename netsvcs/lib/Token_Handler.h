@@ -120,7 +120,7 @@ private:
   ACE_Token_Collection collection_;
   // collection of the client's token proxies.
 
-  int timeout_id_;
+  long timeout_id_;
   // ID returned by the Reactor that is used to kill registered timers
   // when a token operation times out.
 

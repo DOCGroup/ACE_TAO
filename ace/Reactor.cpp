@@ -1084,7 +1084,7 @@ ACE_Reactor::remove_handler (const ACE_Sig_Set &sigset)
 
 // Note the queue handles its own locking. 
 
-int
+long
 ACE_Reactor::schedule_timer (ACE_Event_Handler *handler, 
                              const void *arg,
                              const ACE_Time_Value &delta_time, 

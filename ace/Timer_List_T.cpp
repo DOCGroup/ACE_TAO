@@ -147,7 +147,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *ex
 // is > 0, the handler will be reinvoked periodically.
 
 
-template <class TYPE, class FUNCTOR> int
+template <class TYPE, class FUNCTOR> long
 ACE_Timer_List_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
 					   const void *act,
 					   const ACE_Time_Value &future_time, 
@@ -157,7 +157,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Increment the sequence number (it will wrap around).
-  int timer_id = this->timer_id ();
+  long timer_id = this->timer_id ();
   
   if (this->is_empty () || future_time < this->earliest_time ())
     {
@@ -218,7 +218,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::timer_id (void)
 
 
 template <class TYPE, class FUNCTOR> int
-ACE_Timer_List_T<TYPE, FUNCTOR>::cancel (int timer_id, 
+ACE_Timer_List_T<TYPE, FUNCTOR>::cancel (long timer_id,
 					 const void **act,
 					 int dont_call)
 {

@@ -444,10 +444,10 @@ public:
   // Resume all the <Event_Handlers> in the Reactor.
 
   // = Timer management. 
-  virtual int schedule_timer (ACE_Event_Handler *, 
-			      const void *arg,
-			      const ACE_Time_Value &delta,
-			      const ACE_Time_Value &interval = ACE_Time_Value::zero);  
+  virtual long schedule_timer (ACE_Event_Handler *, 
+			       const void *arg,
+			       const ACE_Time_Value &delta,
+			       const ACE_Time_Value &interval = ACE_Time_Value::zero);  
   // Schedule an <event_handler> that will expire after <delay> amount
   // of time.  If it expires then <arg> is passed in as the value to
   // the <event_handler>'s <handle_timeout> callback method.  If
@@ -469,7 +469,7 @@ public:
   // <handle_close> method of <event_handler> will be invoked.
   // Returns number of handler's cancelled.
 
-  virtual int cancel_timer (int timer_id, 
+  virtual int cancel_timer (long timer_id, 
 			    const void **arg = 0,
 			    int dont_call_handle_close = 1);
   // Cancel the single <ACE_Event_Handler> that matches the <timer_id>

@@ -496,7 +496,7 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
 	    {
 	      if (ACE_Service_Config::reactor ()->schedule_timer (handler, 
 								  0, 
-								  handler->timeout ()) == 0)
+								  handler->timeout ()) == -1)
 		ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "schedule_timer"), -1);
 	    }
 	  else 

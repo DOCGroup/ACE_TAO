@@ -90,10 +90,10 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
   // Returns the time of the earlier node in the Timer_Queue.
 
-  virtual int schedule (const TYPE &type, 
-		        const void *act, 
-		        const ACE_Time_Value &delay,
-		        const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  virtual long schedule (const TYPE &type, 
+			 const void *act, 
+			 const ACE_Time_Value &delay,
+			 const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule <type> that will expire after <delay> amount of time.
   // If it expires then <act> is passed in as the value to the
   // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
@@ -113,7 +113,7 @@ public:
   // then the <functor> will be invoked.  Returns number of timers
   // cancelled.
 
-  virtual int cancel (int timer_id, 
+  virtual int cancel (long timer_id, 
 		      const void **act = 0,
 		      int dont_call_handle_close = 1);
   // Cancel the single timer that matches the <timer_id> value (which
@@ -197,7 +197,7 @@ private:
   // ordered, almost complete" binary tree, which is stored in an
   // array.
 
-  int *timer_ids_;
+  long *timer_ids_;
   // An array of "pointers" that allows each <ACE_Timer_Node> in the
   // <heap_> to be located in O(1) time.  Basically, <timer_id_[i]>
   // contains the index in the <heap_> array where an <ACE_Timer_Node>
@@ -207,7 +207,7 @@ private:
   // treated as "pointers" for the <freelist_>, whereas positive
   // values are treated as "pointers" into the <heap_> array.
 
-  int timer_ids_freelist_;
+  long timer_ids_freelist_;
   // "Pointer" to the first element in the freelist contained within
   // the <timer_ids_> array, which is organized as a stack.
 

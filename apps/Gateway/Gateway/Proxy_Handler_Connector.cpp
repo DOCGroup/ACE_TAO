@@ -65,8 +65,8 @@ Proxy_Handler_Connector::initiate_connection (Proxy_Handler *proxy_handler,
 	  if (synch_options[ACE_Synch_Options::USE_REACTOR])
 	    {
 	      if (ACE_Service_Config::reactor ()->schedule_timer 
-		  (proxy_handler, 0, proxy_handler->timeout ()) == 0)
-		ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
+		  (proxy_handler, 0, proxy_handler->timeout ()) == -1)
+		ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n",
 				  "schedule_timer"), -1);
 	    }
 	  else 

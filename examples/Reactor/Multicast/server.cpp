@@ -165,10 +165,11 @@ Server_Events::handle_input (ACE_HANDLE)
       if (this->initialized_ == 0)
         {
 	  // Restart the timer since we've received events again.
-	  reactor()->schedule_timer (this,
-				     (void *) this->hostname_,
-				     ACE_Time_Value::zero,
-				     ACE_Time_Value (DURATION));
+	  if (reactor()->schedule_timer (this,
+					 (void *) this->hostname_,
+					 ACE_Time_Value::zero,
+					 ACE_Time_Value (DURATION)) == -1)
+	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 	  this->initialized_ = 1;
         }
 

@@ -109,6 +109,9 @@ private:
 
   char *rep_;
   // Pointer to data.
+
+  static char NULL_CString_;
+  // Represents the "NULL" string to simplify the internal logic.
 };
 
 class ACE_Export ACE_SString

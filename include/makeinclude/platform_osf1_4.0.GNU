@@ -2,12 +2,12 @@
 
 CC		= cxx
 CXX		= $(CC)
-CFLAGS          += $(DCFLAGS) -pthread -ptr $(WRAPPER_ROOT)/ace/cxx_repository
+CFLAGS          += $(DCFLAGS) -pthread -ptr ptrepository
 CCFLAGS         += $(CFLAGS) -w0
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
-LIBS		+= -pthread -ltli -lrt
+LIBS		+= -pthread -ltli -lrt -ptr ptrepository
 PIC		= 
 ARFLAGS		= ruvZ
 # When libraries are archived, a hash index is automatically created so there

@@ -1,8 +1,7 @@
-// The following is another test that exercises the Eric C. Newton's
 // $Id$
 
+// The following is another test that exercises the Eric C. Newton's
 // <ecn@clark.net> XtReactor implementation.
-
 
 #include "ace/XtReactor.h"
 #include "ace/Message_Block.h"
@@ -119,7 +118,10 @@ main (int argc, char**argv)
   reactor.register_handler (stdin_, ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds.
-  reactor.schedule_timer (stdin_, 0, ACE_Time_Value (10), ACE_Time_Value (10));
+  if (reactor.schedule_timer (stdin_, 0, 
+			      ACE_Time_Value (10), 
+			      ACE_Time_Value (10)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   // Show the top_level widget.
   XtRealizeWidget (top_level);
