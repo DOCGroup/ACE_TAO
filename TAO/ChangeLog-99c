@@ -1,3 +1,7 @@
+Sat Mar 13 00:44:51 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.11 released.
+
 Fri Mar 12 20:48:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/IR_Helper.cpp: 
