@@ -1,3 +1,13 @@
+Sat Nov  4 19:33:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Fixed the mail message, the path to the CGI script was garbled.
+
+        * include/makeinclude/rules.local.GNU:
+          My last fixed did not work for static builds, the SOLINK rules
+          got in the way.  It works correctly for both static and shared
+          builds now.
+
 Sat Nov  4 18:19:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast_IO_UDP.cpp:
