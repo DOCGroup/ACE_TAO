@@ -46,12 +46,6 @@ be_visitor_operation_rettype_is::visit_array (be_array *node)
 
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
   *os << "return 0;" <<be_nl;
   return 0;
 }
@@ -61,13 +55,6 @@ be_visitor_operation_rettype_is::visit_enum (be_enum *node)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   *os << "return 0;" <<be_nl;
   return 0;
 }
@@ -77,14 +64,7 @@ be_visitor_operation_rettype_is::visit_interface (be_interface *node)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  *os << "return 0;" <<be_nl;
+   *os << "return 0;" <<be_nl;
   return 0;
 }
 
@@ -93,12 +73,7 @@ be_visitor_operation_rettype_is::visit_interface_fwd (be_interface_fwd *node)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
   *os << "return 0;" <<be_nl;
   return 0;
 }
@@ -108,12 +83,7 @@ be_visitor_operation_rettype_is::visit_native (be_native *node)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
   *os << "return 0;" <<be_nl;
   return 0;
 }
@@ -123,12 +93,6 @@ be_visitor_operation_rettype_is::visit_predefined_type (be_predefined_type *node
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   switch (node->pt ())
     {
@@ -151,12 +115,7 @@ be_visitor_operation_rettype_is::visit_sequence (be_sequence *node)
   // we should never directly be here because anonymous sequence return types
   // are not allowed
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
   *os << "return 0;" <<be_nl;
   return 0;
 }
@@ -177,17 +136,6 @@ be_visitor_operation_rettype_is::visit_structure (be_structure *node)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  
-  *os << bt->name () << "_var _tao_retval;";
-  
-  *os << "return _tao_retval._retn ();";
   
   *os << "return 0;" <<be_nl;
   return 0;
@@ -215,12 +163,6 @@ be_visitor_operation_rettype_is::visit_union (be_union *node)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
-
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
 
   *os << "return 0;" <<be_nl;
 
