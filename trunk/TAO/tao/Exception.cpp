@@ -664,7 +664,7 @@ CORBA_SystemException::_tao_get_omg_exception_description (
         "Unable to locate value factory.",  // 1
         "ServerRequest::set_result called before ServerRequest::ctx when the operation IDL contains a context clause.", // 2
         "NVList passed to ServerRequest::arguments does not describe all parameters passed by client.", // 3
-        "Attempt to marshal Local object.", // 4
+        "Attempt to marshal Local object." // 4
     };
 
   static const char *BAD_TYPECODE_TABLE[] =
