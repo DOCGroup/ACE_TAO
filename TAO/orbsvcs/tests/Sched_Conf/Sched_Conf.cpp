@@ -393,15 +393,15 @@ main (int argc, char *argv[])
           // initialize the RT_Info
           ACE_Scheduler_Factory::server ()->
             set (config_infos[i].handle,
-                 static_cast<RtecScheduler::Criticality_t>(config_infos[i].criticality),
+                 static_cast<RtecScheduler::Criticality_t> (config_infos[i].criticality),
                  config_infos[i].worst_case_execution_time,
                  config_infos[i].typical_execution_time,
                  config_infos[i].cached_execution_time,
                  config_infos[i].period,
-                 static_cast<RtecScheduler::Importance_t>(config_infos[i].importance),
+                 static_cast<RtecScheduler::Importance_t> (config_infos[i].importance),
                  config_infos[i].quantum,
                  config_infos[i].threads,
-                 static_cast<RtecScheduler::Info_Type_t>(config_infos[i].info_type)
+                 static_cast<RtecScheduler::Info_Type_t> (config_infos[i].info_type)
                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

@@ -16,7 +16,7 @@ static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
 
 extern "C" void tao_lb_random_init_routine (void)
 {
-  ACE_OS::srand (static_cast<unsigned int>(ACE_OS::time ()));
+  ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
 }
 
 
@@ -145,7 +145,7 @@ TAO_LB_Random::_tao_next_member (
   //       random as the higher order bits.
 
   // Prevent integer arithmetic overflow.
-  const CORBA::Float flen = static_cast<CORBA::Float>(len);
+  const CORBA::Float flen = static_cast<CORBA::Float> (len);
                                   
   const CORBA::ULong i =
     ACE_static_cast (CORBA::ULong,

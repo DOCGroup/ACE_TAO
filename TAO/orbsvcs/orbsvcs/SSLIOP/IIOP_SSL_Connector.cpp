@@ -298,7 +298,7 @@ TAO::IIOP_SSL_Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
 {
   IIOP_SSL_Connection_Handler* handler=
-    dynamic_cast<IIOP_SSL_Connection_Handler*>(svc_handler);
+    dynamic_cast<IIOP_SSL_Connection_Handler*> (svc_handler);
 
   if (handler)
     {

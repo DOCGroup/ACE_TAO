@@ -121,7 +121,7 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
       // reset it so that the request demarshals correctly.
       TAO_InputCDR &tao_in = request.incoming ();
       ACE_Message_Block *msgblk =
-          const_cast<ACE_Message_Block *>(tao_in.start ());
+          const_cast<ACE_Message_Block *> (tao_in.start ());
       char *read_ptr = msgblk->rd_ptr ();
 
       // Iterate through the list of ObjectKeys.

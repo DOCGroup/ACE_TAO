@@ -76,7 +76,7 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
       if (i->length () > 0)
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = static_cast<u_long>(i->length ());
+          iov[iovcnt].iov_len  = static_cast<u_long> (i->length ());
           iovcnt++;
 
           // The buffer is full make a OS call.  @@ TODO this should
@@ -478,7 +478,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
   else
     this->flowname_ = entry->flowname ();
   ACE_Addr *remote_addr = entry->address ();
-  ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *>(remote_addr);
+  ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (remote_addr);
   TAO_AV_SCTP_SEQ_Flow_Handler *handler = 0;
 
   ACE_Multihomed_INET_Addr remote_multi_addr;
@@ -492,7 +492,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
   ACE_INET_Addr *addr;
   if (entry->get_peer_addr () != 0)
     {
-      addr = dynamic_cast<ACE_INET_Addr *>(entry->get_peer_addr ());
+      addr = dynamic_cast<ACE_INET_Addr *> (entry->get_peer_addr ());
     }
   else
     {

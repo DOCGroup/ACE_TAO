@@ -435,7 +435,7 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
     {
       ACE_ERROR (( LM_ERROR,
         "Remove detector %d mismatch.\n",
-        static_cast<int>(id)
+        static_cast<int> (id)
         ));
     }
   }
@@ -443,8 +443,8 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
   {
     ACE_ERROR (( LM_ERROR,
       "Attempt to remove invalid detector %d. Limit %d.\n",
-      static_cast<int>(id),
-      static_cast<int>(this->detectors_.size())
+      static_cast<int> (id),
+      static_cast<int> (this->detectors_.size())
       ));
   }
 }
@@ -566,7 +566,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   if (::TAO::find (decoder, ::FT::FT_DOMAIN_ID, domain_id_string) )
   {
     // NOTE the assumption that we can assign a char * to a domain id
-    domain_id = const_cast<char *>(domain_id_string);
+    domain_id = const_cast<char *> (domain_id_string);
   }
   else
   {
@@ -597,7 +597,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   const char * object_type_string;
   if (::TAO::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
   {
-    object_type = const_cast<char *>(object_type_string);
+    object_type = const_cast<char *> (object_type_string);
   }
   else
   {

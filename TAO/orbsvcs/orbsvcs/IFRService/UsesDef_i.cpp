@@ -175,7 +175,7 @@ TAO_UsesDef_i::is_multiple_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_multiple",
                                              val);
-  return static_cast<CORBA::Boolean>(val);
+  return static_cast<CORBA::Boolean> (val);
 }
 
 void 

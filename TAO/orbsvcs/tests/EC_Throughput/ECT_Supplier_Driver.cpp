@@ -111,7 +111,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
-                               static_cast<long>(ACE_OS::getpid ()));
+                               static_cast<long> (ACE_OS::getpid ()));
               ACE_OS::fclose (pid);
             }
         }

@@ -2866,7 +2866,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
               result = this->mcast_entry_map_.find (mcast_key, entry);
               if (result == 0)
                 {
-                  mcast_addr = dynamic_cast<ACE_INET_Addr *>(entry->address ());
+                  mcast_addr = dynamic_cast<ACE_INET_Addr *> (entry->address ());
                   char str_addr [BUFSIZ];
                   result = mcast_addr->addr_to_string (str_addr, BUFSIZ);
                   if (result < 0)
@@ -3066,7 +3066,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
             {
               TAO_FlowSpec_Entry *mcast_entry = 0;
               ACE_INET_Addr *mcast_addr;
-              mcast_addr = dynamic_cast<ACE_INET_Addr *>(forward_entry->address ());
+              mcast_addr = dynamic_cast<ACE_INET_Addr *> (forward_entry->address ());
               if (mcast_addr == 0)
                 ACE_ERROR_RETURN ((LM_ERROR, "TAO_StreamEndPoint_B::multiconnect::Address missing in flowspec_entry\n"), 0);
               result = this->mcast_entry_map_.find (mcast_key, mcast_entry);
@@ -5231,7 +5231,7 @@ TAO_Tokenizer::parse (const char *string, char delimiter)
       else
         {
           substring = new_string.substring (pos);
-          pos = static_cast<int>(new_string.length ());
+          pos = static_cast<int> (new_string.length ());
         }
       char *token = CORBA::string_dup (substring.c_str ());
       result = this->token_array_.set (token, count);
@@ -5281,7 +5281,7 @@ TAO_Tokenizer::token (void)
 int
 TAO_Tokenizer::num_tokens (void)
 {
-  return static_cast<int>(this->num_tokens_);
+  return static_cast<int> (this->num_tokens_);
 }
 
 const char *

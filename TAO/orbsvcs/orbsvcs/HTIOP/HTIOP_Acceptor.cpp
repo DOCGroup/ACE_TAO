@@ -283,8 +283,8 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet>(major),
-                                static_cast<CORBA::Octet>(minor));
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
@@ -294,7 +294,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
   // @ Mostly the address is just a host:port but in case it is
   // host:port#token, remove the #token before this is processed
   // - priyanka
-  address = ACE_OS::strtok (const_cast<char *>(address), "#");
+  address = ACE_OS::strtok (const_cast<char *> (address), "#");
 
   // In the common scenario, Acceptor is in the server that is
   // outside the firewall. It means the address that is sent to
@@ -324,7 +324,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Now reset the port and set the host.
       if (addr.ACE_INET_Addr::set (addr.get_port_number (),
-                                   static_cast<ACE_UINT32>(INADDR_ANY),
+                                   static_cast<ACE_UINT32> (INADDR_ANY),
                                    1) != 0)
         return -1;
       else
@@ -422,8 +422,8 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
     }
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet>(major),
-                                static_cast<CORBA::Octet>(minor));
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -464,7 +464,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
   ACE::HTBP::Addr addr;
 
   if (addr.ACE_INET_Addr::set (ACE_static_cast(u_short, 0),
-                               static_cast<ACE_UINT32>(INADDR_ANY),
+                               static_cast<ACE_UINT32> (INADDR_ANY),
                                1) != 0)
     return -1;
 
@@ -674,7 +674,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->endpoint_count_ = static_cast<CORBA::ULong>(if_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
   else
     this->endpoint_count_ = ACE_static_cast(CORBA::ULong, if_cnt - lo_cnt);
 
@@ -748,7 +748,7 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
 #else
-  TAO_InputCDR cdr (reinterpret_cast<char*>(profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char*> (profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -838,7 +838,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<CORBA::ULong>(len)
+        end = static_cast<CORBA::ULong> (len)
           - begin;  // Handle last endpoint differently
 
       if (end == begin)

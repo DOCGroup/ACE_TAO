@@ -49,7 +49,7 @@ TAO_EC_And_Filter::end (void) const
 int
 TAO_EC_And_Filter::size (void) const
 {
-  return static_cast<CORBA::ULong>(this->n_);
+  return static_cast<CORBA::ULong> (this->n_);
 }
 
 int

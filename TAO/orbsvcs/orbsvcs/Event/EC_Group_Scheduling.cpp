@@ -26,7 +26,7 @@ TAO_EC_Group_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
 {
   TAO_EC_QOS_Info event_info;
   // @@ yuck...
-  filter->push_scheduled_event (const_cast<RtecEventComm::EventSet&>(event),
+  filter->push_scheduled_event (const_cast<RtecEventComm::EventSet&> (event),
                                 event_info
                                 ACE_ENV_ARG_PARAMETER);
 }

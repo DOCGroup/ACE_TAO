@@ -146,7 +146,7 @@ Basic_Logging_Service::startup (int argc, char *argv[]
 	{
 	  ACE_OS::fprintf (pidf,
 			   "%ld\n",
-			   static_cast<long>(ACE_OS::getpid ()));
+			   static_cast<long> (ACE_OS::getpid ()));
 	  ACE_OS::fclose (pidf);
 	}
     }

@@ -114,7 +114,7 @@ EC_Driver::run_init (int &argc, char* argv[]
       if (pid != 0)
         {
           ACE_OS::fprintf (pid, "%ld\n",
-                           static_cast<long>(ACE_OS::getpid ()));
+                           static_cast<long> (ACE_OS::getpid ()));
           ACE_OS::fclose (pid);
         }
     }
@@ -1092,13 +1092,13 @@ EC_Driver::cleanup_ec (void)
 int
 EC_Driver::decode_consumer_cookie (void* cookie) const
 {
-  return static_cast<EC_Consumer**>(cookie) - this->consumers_;
+  return static_cast<EC_Consumer**> (cookie) - this->consumers_;
 }
 
 int
 EC_Driver::decode_supplier_cookie (void* cookie) const
 {
-  return static_cast<EC_Supplier**>(cookie) - this->suppliers_;
+  return static_cast<EC_Supplier**> (cookie) - this->suppliers_;
 }
 
 void

@@ -361,7 +361,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                     }
                 }
 
-              CORBA::ULong n_parents = static_cast<CORBA::ULong>(node->n_inherits ());
+              CORBA::ULong n_parents = static_cast<CORBA::ULong> (node->n_inherits ());
 
               CORBA::InterfaceDefSeq bases (n_parents);
               bases.length (n_parents);
@@ -739,15 +739,15 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
 
               // Truncatable, abstract, custom.
 
-              extant_def->is_abstract (static_cast<CORBA::Boolean>(node->is_abstract ())
+              extant_def->is_abstract (static_cast<CORBA::Boolean> (node->is_abstract ())
                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              extant_def->is_truncatable (static_cast<CORBA::Boolean>(node->truncatable ())
+              extant_def->is_truncatable (static_cast<CORBA::Boolean> (node->truncatable ())
                                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              extant_def->is_custom (static_cast<CORBA::Boolean>(node->custom ())
+              extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ())
                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -868,7 +868,7 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
             CORBA::Container::_nil ();
             
           CORBA::Boolean abstract = 
-            static_cast<CORBA::Boolean>(v->is_abstract ());
+            static_cast<CORBA::Boolean> (v->is_abstract ());
 
           if (be_global->ifr_scopes ().top (current_scope) == 0)
             {
@@ -1436,15 +1436,15 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
 
               // Truncatable, abstract, custom.
 
-              extant_def->is_abstract (static_cast<CORBA::Boolean>(node->is_abstract ())
+              extant_def->is_abstract (static_cast<CORBA::Boolean> (node->is_abstract ())
                                        ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              extant_def->is_truncatable (static_cast<CORBA::Boolean>(node->truncatable ())
+              extant_def->is_truncatable (static_cast<CORBA::Boolean> (node->truncatable ())
                                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              extant_def->is_custom (static_cast<CORBA::Boolean>(node->custom ())
+              extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ())
                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
@@ -1574,7 +1574,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
               ACE_TRY_CHECK;
               
               CORBA::Boolean abstract =
-                static_cast<CORBA::Boolean>(v->is_abstract ());
+                static_cast<CORBA::Boolean> (v->is_abstract ());
 
               this->ir_current_ =
                 ccm_scope->create_event (
@@ -1856,7 +1856,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
       if (CORBA::is_nil (prev_def.in ()))
         {
           CORBA::ULong member_count =
-            static_cast<CORBA::ULong>(node->member_count ());
+            static_cast<CORBA::ULong> (node->member_count ());
 
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);
@@ -2341,7 +2341,7 @@ ifr_adding_visitor::visit_string (AST_String *node)
 
   AST_Expression::AST_ExprValue *ev = ex->ev ();
 
-  CORBA::ULong bound = static_cast<CORBA::ULong>(ev->u.ulval);
+  CORBA::ULong bound = static_cast<CORBA::ULong> (ev->u.ulval);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -2698,10 +2698,10 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
       any <<= ev->u.usval;
       break;
     case AST_Expression::EV_long:
-      any <<= static_cast<CORBA::Long>(ev->u.lval);
+      any <<= static_cast<CORBA::Long> (ev->u.lval);
       break;
     case AST_Expression::EV_ulong:
-      any <<= static_cast<CORBA::ULong>(ev->u.ulval);
+      any <<= static_cast<CORBA::ULong> (ev->u.ulval);
       break;
 #if !defined (ACE_LACKS_LONGLONG_T)
     case AST_Expression::EV_longlong:
@@ -2746,7 +2746,7 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
 
         for (size_t i = 0; i < len; ++i)
           {
-            wstr[i] = static_cast<CORBA::WChar>(str[i]);
+            wstr[i] = static_cast<CORBA::WChar> (str[i]);
           }
 
         wstr[len] = 0;
@@ -2800,7 +2800,7 @@ int
 ifr_adding_visitor::create_interface_def (AST_Interface *node
                                           ACE_ENV_ARG_DECL)
 {
-  CORBA::ULong n_parents = static_cast<CORBA::ULong>(node->n_inherits ());
+  CORBA::ULong n_parents = static_cast<CORBA::ULong> (node->n_inherits ());
   AST_Interface **parents = node->inherits ();
   CORBA::Contained_var result;
   CORBA::AbstractInterfaceDefSeq abs_bases;
@@ -3072,10 +3072,10 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node
                            node->repoID (),
                            node->local_name ()->get_string (),
                            node->version (),
-                           static_cast<CORBA::Boolean>(node->custom ()),
-                           static_cast<CORBA::Boolean>(node->is_abstract ()),
+                           static_cast<CORBA::Boolean> (node->custom ()),
+                           static_cast<CORBA::Boolean> (node->is_abstract ()),
                            base_value.in (),
-                           static_cast<CORBA::Boolean>(node->truncatable ()),
+                           static_cast<CORBA::Boolean> (node->truncatable ()),
                            abstract_base_values,
                            supported_interfaces,
                            initializers
@@ -3457,10 +3457,10 @@ ifr_adding_visitor::create_event_def (AST_EventType *node
                        node->repoID (),
                        node->local_name ()->get_string (),
                        node->version (),
-                       static_cast<CORBA::Boolean>(node->custom ()),
-                       static_cast<CORBA::Boolean>(node->is_abstract ()),
+                       static_cast<CORBA::Boolean> (node->custom ()),
+                       static_cast<CORBA::Boolean> (node->is_abstract ()),
                        base_value.in (),
-                       static_cast<CORBA::Boolean>(node->truncatable ()),
+                       static_cast<CORBA::Boolean> (node->truncatable ()),
                        abstract_base_values,
                        supported_interfaces,
                        initializers
@@ -3844,7 +3844,7 @@ ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
   if (s_length > 0)
     {
       AST_Interface **list = node->inherits ();
-      CORBA::ULong u_length = static_cast<CORBA::ULong>(s_length);
+      CORBA::ULong u_length = static_cast<CORBA::ULong> (s_length);
       idl_bool first_abs = list[0]->is_abstract ();
       result.length (first_abs ? u_length : u_length - 1);
 
@@ -3932,7 +3932,7 @@ ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
   // existing entries, if any,  from the repository.
   if (length > 0)
     {
-      CORBA::ULong u_length = static_cast<CORBA::ULong>(length);
+      CORBA::ULong u_length = static_cast<CORBA::ULong> (length);
       result.length (u_length);
 
       for (CORBA::ULong i = 0; i < u_length; ++i)
@@ -3987,7 +3987,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
   for (CORBA::ULong i = 0; i < n_factories; ++i)
     {
       result[i].name = factories[i]->local_name ()->get_string ();
-      n_args = static_cast<CORBA::ULong>(factories[i]->argument_count ());
+      n_args = static_cast<CORBA::ULong> (factories[i]->argument_count ());
       result[i].members.length (n_args);
 
       // The factory should have nothing in its scope but args.
@@ -4019,7 +4019,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         }
 
       CORBA::ULong n_exceptions = 
-        static_cast<CORBA::ULong>(factories[i]->n_exceptions ());
+        static_cast<CORBA::ULong> (factories[i]->n_exceptions ());
       result[i].exceptions.length (n_exceptions);
       index = 0;
 
@@ -4100,7 +4100,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
       return;
     }
 
-  result.length (static_cast<CORBA::ULong>(list->length ()));
+  result.length (static_cast<CORBA::ULong> (list->length ()));
   CORBA::ULong index = 0;
   AST_Decl *d = 0;
   CORBA::Contained_var holder;
@@ -4133,7 +4133,7 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
                                  ACE_ENV_ARG_DECL)
 {
   AST_Argument *arg = 0;
-  CORBA::ULong n_args = static_cast<CORBA::ULong>(node->argument_count ());
+  CORBA::ULong n_args = static_cast<CORBA::ULong> (node->argument_count ());
   result.length (n_args);
   CORBA::ULong index = 0;
   CORBA::Contained_var holder;
@@ -4230,7 +4230,7 @@ ifr_adding_visitor::visit_all_uses (AST_Component *node,
                                 local_name,
                                 tmp->impl->version (),
                                 interface_type.in (),
-                                static_cast<CORBA::Boolean>(tmp->is_multiple)
+                                static_cast<CORBA::Boolean> (tmp->is_multiple)
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

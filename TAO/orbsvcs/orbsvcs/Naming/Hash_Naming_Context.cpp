@@ -71,7 +71,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name
   CORBA::ULong name_len = name.length ();
   CosNaming::Name comp_name (name.maximum (),
                              name_len - 1,
-                             const_cast<CosNaming::NameComponent*>(name.get_buffer ()));
+                             const_cast<CosNaming::NameComponent*> (name.get_buffer ()));
   ACE_TRY
     {
       // Resolve the name.
@@ -459,7 +459,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
           CosNaming::Name rest_of_name
             (n.maximum () - 1,
              n.length () - 1,
-             const_cast<CosNaming::NameComponent*>(n.get_buffer ())
+             const_cast<CosNaming::NameComponent*> (n.get_buffer ())
              + 1);
 
           // If there are any exceptions, they will propagate up.

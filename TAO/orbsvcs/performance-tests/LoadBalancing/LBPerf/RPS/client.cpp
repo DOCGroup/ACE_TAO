@@ -129,7 +129,7 @@ main (int argc, char *argv[])
 
       // const float usecs = 1.0 / rate * 1e6;
 
-      // ACE_Time_Value tv (0, static_cast<const long>(usecs));
+      // ACE_Time_Value tv (0, static_cast<const long> (usecs));
 
       // const timespec ts = tv;
 

@@ -80,7 +80,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_NOT_USE
           CORBA::ULong count = this->detector_infos_->length ();
           ACE_DEBUG ( (LM_DEBUG,
             "%T %n (%P|%t)Object_Group_Creator: found %u factories for FaultDetectors\n",
-             static_cast<unsigned>(count)
+             static_cast<unsigned> (count)
              ));
         }
         else
@@ -379,7 +379,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
           }
           else if (factory_creation_id >>= long_id)
           {
-            ulong_id = static_cast<CORBA::ULong>(long_id);
+            ulong_id = static_cast<CORBA::ULong> (long_id);
           }
           else
           {
@@ -394,7 +394,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
           ACE_OS::snprintf (replica_ior_filename, sizeof (replica_ior_filename)-1, "%s_%s_%lu.ior",
             role,
             loc_name,
-            static_cast<unsigned long>(ulong_id));
+            static_cast<unsigned long> (ulong_id));
           replica_ior_filename[sizeof (replica_ior_filename)-1] = '\0';
 
           ACE_ERROR ( (LM_INFO,

@@ -910,7 +910,7 @@ TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
   this->repo_->config ()->get_integer_value (param_key,
                                              "mode",
                                              val);
-  pd.mode = static_cast<CORBA::ParameterMode>(val);
+  pd.mode = static_cast<CORBA::ParameterMode> (val);
 }
 
 void 

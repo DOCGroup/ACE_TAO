@@ -245,7 +245,7 @@ TAO_FTEC_Event_Channel_Impl::~TAO_FTEC_Event_Channel_Impl()
 TAO_FTEC_Basic_Factory*
 TAO_FTEC_Event_Channel_Impl::factory()
 {
-  return static_cast<TAO_FTEC_Basic_Factory*>(TAO_EC_Event_Channel_Base::factory());
+  return static_cast<TAO_FTEC_Basic_Factory*> (TAO_EC_Event_Channel_Base::factory());
 }
 
 
@@ -523,14 +523,14 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
 
 TAO_FTEC_ConsumerAdmin* TAO_FTEC_Event_Channel_Impl::consumer_admin (void) const
 {
-  return static_cast<TAO_FTEC_ConsumerAdmin*>(TAO_EC_Event_Channel_Base::consumer_admin());
+  return static_cast<TAO_FTEC_ConsumerAdmin*> (TAO_EC_Event_Channel_Base::consumer_admin());
 }
 
 /// Access the supplier admin implementation, useful for controlling
 /// the activation...
 TAO_FTEC_SupplierAdmin* TAO_FTEC_Event_Channel_Impl::supplier_admin (void) const
 {
-  return static_cast<TAO_FTEC_SupplierAdmin*>(TAO_EC_Event_Channel_Base::supplier_admin());
+  return static_cast<TAO_FTEC_SupplierAdmin*> (TAO_EC_Event_Channel_Base::supplier_admin());
 }
 
 
@@ -541,7 +541,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAd
     PortableServer::POA_var poa = consumer_poa();
 
     const PortableServer::Servant servant = poa->id_to_servant(
-      reinterpret_cast<const PortableServer::ObjectId&>(id)
+      reinterpret_cast<const PortableServer::ObjectId&> (id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr obj =
@@ -550,7 +550,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAd
       servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushSupplier:1.0")
       );
 
-    return static_cast<TAO_FTEC_ProxyPushSupplier*>(obj);
+    return static_cast<TAO_FTEC_ProxyPushSupplier*> (obj);
   }
   ACE_CATCHALL {
   }
@@ -565,7 +565,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
     PortableServer::POA_var poa= supplier_poa();
 
     const PortableServer::Servant servant = poa->id_to_servant(
-      reinterpret_cast<const PortableServer::ObjectId&>(id)
+      reinterpret_cast<const PortableServer::ObjectId&> (id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -575,7 +575,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
       servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushConsumer:1.0")
       );
 
-    return static_cast<TAO_FTEC_ProxyPushConsumer*>(obj);
+    return static_cast<TAO_FTEC_ProxyPushConsumer*> (obj);
   }
   ACE_CATCHALL {
   }

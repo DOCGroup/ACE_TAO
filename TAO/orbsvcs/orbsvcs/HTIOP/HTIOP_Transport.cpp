@@ -284,7 +284,7 @@ TAO::HTIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
 
-  cdr.reset_byte_order (static_cast<int>(byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   ::HTIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)

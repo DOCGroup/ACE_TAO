@@ -268,7 +268,7 @@ TAO_Notify_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
                       CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong current_size = static_cast<CORBA::ULong>(this->constraint_expr_list_.current_size ());
+  CORBA::ULong current_size = static_cast<CORBA::ULong> (this->constraint_expr_list_.current_size ());
 
   // Create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq *infoseq_ptr;
@@ -293,7 +293,7 @@ TAO_Notify_ETCL_Filter::get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
           // copy of the string. It wouldn't unless we coax it to use
           // the correct assignment operator.
           infoseq[index].constraint_expression =
-            static_cast<const CosNotifyFilter::ConstraintExp>(entry->int_id_->constr_expr);
+            static_cast<const CosNotifyFilter::ConstraintExp> (entry->int_id_->constr_expr);
 
           infoseq[index].constraint_id = entry->ext_id_;
         }

@@ -43,7 +43,7 @@ namespace
     state[offset    ] = ACE_static_cast (unsigned char, value >> 24);
     state[offset + 1] = ACE_static_cast (unsigned char, value >> 16);
     state[offset + 2] = ACE_static_cast (unsigned char, value >>  8);
-    state[offset + 3] = static_cast<unsigned char>(value      );
+    state[offset + 3] = static_cast<unsigned char> (value      );
   }
 
   /**
@@ -421,7 +421,7 @@ int FT_TestReplica_i::idle (int & result ACE_ENV_ARG_DECL)
       "%s@%s#%d: Simulated fault WHILE_IDLE",
       this->name_.c_str(),
       this->factory_->location(),
-      static_cast<int>(this->factory_id_ )
+      static_cast<int> (this->factory_id_ )
       ));
     this->poa_->deactivate_object (this->object_id_.in ()
                  ACE_ENV_ARG_PARAMETER);

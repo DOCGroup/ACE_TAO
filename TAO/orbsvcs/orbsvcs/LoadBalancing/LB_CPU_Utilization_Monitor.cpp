@@ -77,7 +77,7 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * loc
         {
           // Couldn't determine hostname.  Use the current time
           // instead.
-          CORBA::ULong t = static_cast<CORBA::ULong>(ACE_OS::time ());
+          CORBA::ULong t = static_cast<CORBA::ULong> (ACE_OS::time ());
 
           // A 64 byte buffer is more than enough to contain the
           // string representation of a 32 bit unsigned integer.

@@ -231,7 +231,7 @@ TAO_FT_IOGR_Property::set_primary (
   cdr << ACE_OutputCDR::from_boolean (val);
 
   // Get the length of the CDR stream
-  CORBA::ULong length = static_cast<CORBA::ULong>(cdr.total_length ());
+  CORBA::ULong length = static_cast<CORBA::ULong> (cdr.total_length ());
 
   // Set the length
   tagged_components.component_data.length (length);
@@ -288,7 +288,7 @@ TAO_FT_IOGR_Property::encode_properties (
     cdr << this->ft_group_tagged_component_->object_group_ref_version;
 
   // Get the length of the CDR stream
-  CORBA::ULong length = static_cast<CORBA::ULong>(cdr.total_length ());
+  CORBA::ULong length = static_cast<CORBA::ULong> (cdr.total_length ());
 
   // Set the length
   tagged_components.component_data.length (length);
@@ -375,7 +375,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
       // Look for the primary
       if (pfile_tagged.get_component (tc) == 1)
         {
-          TAO_InputCDR cdr (reinterpret_cast<const char*>(tc.component_data.get_buffer ()),
+          TAO_InputCDR cdr (reinterpret_cast<const char*> (tc.component_data.get_buffer ()),
                             tc.component_data.length ());
           CORBA::Boolean byte_order;
 
@@ -383,7 +383,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
             ACE_THROW_RETURN (CORBA::MARSHAL (),
                               0);
 
-          cdr.reset_byte_order (static_cast<int>(byte_order));
+          cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> fgtc) == 1)
             return 1;

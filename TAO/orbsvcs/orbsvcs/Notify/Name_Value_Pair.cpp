@@ -47,7 +47,7 @@ namespace TAO_Notify
     : name(p.name())
   {
     char buf[64];
-    long temp = static_cast<long>(p.value ());
+    long temp = static_cast<long> (p.value ());
     ACE_OS::sprintf (buf, "%ld", temp);
     value = buf;
   }
@@ -149,7 +149,7 @@ namespace TAO_Notify
     const char * v;
     if (find(p.name (), v))
     {
-      p.assign (static_cast<TimeBase::TimeT>(string_to_uint64(v)));
+      p.assign (static_cast<TimeBase::TimeT> (string_to_uint64(v)));
     }
   }
 
@@ -174,7 +174,7 @@ namespace TAO_Notify
     const char * val;
     if (find(n, val))
     {
-      v = static_cast<CORBA::Long>(ACE_OS::atoi(val));
+      v = static_cast<CORBA::Long> (ACE_OS::atoi(val));
       return true;
     }
     return false;
