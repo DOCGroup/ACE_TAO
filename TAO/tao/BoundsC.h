@@ -111,7 +111,7 @@ namespace CORBA
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:127
     
-    virtual CORBA::TypeCode_ptr _type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
   // TAO_IDL - Generated from

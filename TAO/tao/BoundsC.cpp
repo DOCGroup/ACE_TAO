@@ -31,7 +31,10 @@
 
 #include "BoundsC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 
@@ -152,44 +155,9 @@ void CORBA::Bounds::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr CORBA::Bounds::_type (void) const
+CORBA::TypeCode_ptr CORBA::Bounds::_tao_type (void) const
 {
   return ::CORBA::_tc_Bounds;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_CORBA_Bounds[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  29,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f426f), 
-  ACE_NTOHL (0x756e6473), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
-    7,
-  ACE_NTOHL (0x426f756e), 
-  ACE_NTOHL (0x64730000),  // name = Bounds
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Bounds (
-    CORBA::tk_except,
-    sizeof (_oc_CORBA_Bounds),
-    (char *) &_oc_CORBA_Bounds,
-    0,
-    0
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_Bounds =
-    &_tc_TAO_tc_CORBA_Bounds;
 }
 
 // TAO_IDL - Generated from

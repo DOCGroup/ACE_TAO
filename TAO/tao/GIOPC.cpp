@@ -52,7 +52,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 GIOP::Version::_tao_any_destructor (
@@ -65,7 +65,7 @@ GIOP::Version::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 GIOP::IORAddressingInfo::_tao_any_destructor (
@@ -391,7 +391,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

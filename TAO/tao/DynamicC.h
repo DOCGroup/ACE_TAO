@@ -44,6 +44,7 @@
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/TypeCode.h"
+#include "tao/TypeCode_Constants.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
@@ -277,7 +278,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "DynamicC.inl"

@@ -99,7 +99,7 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_ch.cpp:50
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ParameterMode &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, CORBA::ParameterMode);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ParameterMode &);
 
 // TAO_IDL - Generated from

@@ -229,7 +229,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_PolicyValueC.inl"
