@@ -107,6 +107,11 @@ CORBA_Object::_is_a (const char *type_id,
   if (this->is_local_)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 
+  if (this->_stubobj ()->type_id.in () != 0
+      && ACE_OS::strcmp (type_id,
+                         this->_stubobj ()->type_id.in ()) == 0)
+    return 1;
+
   CORBA::Boolean _tao_retval = 0;
 
   // Get the right Proxy Implementation.
