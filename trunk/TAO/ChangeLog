@@ -1,3 +1,10 @@
+Thu Jan 29 09:14:59 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Trading_Service/Trading_Service.mpc:
+
+          Change the order of inheritance between naming and trading to get
+          the right library link order for static builds on UNIX.
+
 Thu Jan 29 00:09:00 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/tests/FT_App/FT_Client.cpp:
