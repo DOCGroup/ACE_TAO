@@ -44,7 +44,7 @@ ACE_Mutex::lock (void) const
 #if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
   if (this->process_lock_)
     return *this->process_lock_;
-#endif /* CHORUS */
+#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return this->lock_;
 }
 
@@ -124,45 +124,47 @@ ACE_INLINE int
 ACE_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_Mutex::remove");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
-   int result = 0;
-   // In the case of a interprocess mutex, the owner is the first
-   // process that created the shared memory object. In this case, the
-   // lockname_ pointer will be non-zero (points to allocated memory
-   // for the name).  Owner or not, the memory needs to be unmapped
-   // from the process.  If we are the owner, the file used for
-   // shm_open needs to be deleted as well.
-   if (this->process_lock_)
-     {
-       if (this->removed_ == 0)
-         {
-           this->removed_ = 1;
-
-           // Only destroy the lock if we're the ones who initialized
-           // it.
-           if (!this->lockname_)
-             ACE_OS::munmap ((void *) this->process_lock_,
-                             sizeof (ACE_mutex_t));
-           else
-             {
-               result = ACE_OS::mutex_destroy (this->process_lock_);
-               ACE_OS::munmap ((void *) this->process_lock_,
-                               sizeof (ACE_mutex_t));
-               ACE_OS::shm_unlink (this->lockname_);
-               ACE_OS::free (ACE_static_cast (void *,
-                                              ACE_const_cast (ACE_TCHAR *,
-                                                            this->lockname_)));
-             }
-         }
-     }
-   return result;
-#else /* !CHORUS && !ACE_HAS_PTHREADS && !ACE_HAS_STHREADS */
   int result = 0;
-  if (this->removed_ == 0)
+#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
+  // In the case of a interprocess mutex, the owner is the first
+  // process that created the shared memory object. In this case, the
+  // lockname_ pointer will be non-zero (points to allocated memory
+  // for the name).  Owner or not, the memory needs to be unmapped
+  // from the process.  If we are the owner, the file used for
+  // shm_open needs to be deleted as well.
+  if (this->process_lock_)
     {
-      this->removed_ = 1;
-      result = ACE_OS::mutex_destroy (&this->lock_);
+      if (this->removed_ == 0)
+        {
+          this->removed_ = 1;
+          // Only destroy the lock if we're the ones who initialized
+          // it.
+          if (!this->lockname_)
+            ACE_OS::munmap ((void *) this->process_lock_,
+                            sizeof (ACE_mutex_t));
+          else
+            {
+              result = ACE_OS::mutex_destroy (this->process_lock_);
+              ACE_OS::munmap ((void *) this->process_lock_,
+                              sizeof (ACE_mutex_t));
+              ACE_OS::shm_unlink (this->lockname_);
+              ACE_OS::free (ACE_static_cast (void *,
+                                             ACE_const_cast (ACE_TCHAR *,
+                                                           this->lockname_)));
+            }
+        }
     }
-  return result;
+  else
+  {
+#else /* !CHORUS && !ACE_HAS_PTHREADS && !ACE_HAS_STHREADS */
+    if (this->removed_ == 0)
+      {
+        this->removed_ = 1;
+        result = ACE_OS::mutex_destroy (&this->lock_);
+      }
 #endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
+  }
+#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+  return result;
 }
