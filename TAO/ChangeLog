@@ -23,7 +23,7 @@ Tue Mar 18 15:31:06 2003  Ossama Othman  <ossama@uci.edu>
 
 	  New file containing this example's concrete
 	  ObjectReferenceFactory valuetype.  The example incorrectly
-	  attempt to use an abstract valuetype.
+	  attempted to use an abstract valuetype.
 
 	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
 
