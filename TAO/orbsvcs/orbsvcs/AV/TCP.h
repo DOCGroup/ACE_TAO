@@ -15,9 +15,10 @@
 #define TAO_AV_TCP_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
 #include "Protocol_Factory.h"
 #include "FlowSpec_Entry.h"
+
+#include "ace/Service_Config.h"
 
 /**
  * @class TAO_AV_TCP_Factory

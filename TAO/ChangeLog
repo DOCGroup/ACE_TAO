@@ -1,6 +1,17 @@
+Fri Jan 28 21:39:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/AV/RTP.h:
+	* orbsvcs/orbsvcs/AV/TCP.h:
+	* orbsvcs/orbsvcs/AV/UDP.h:
+
+	  Include "ace/Service_Config.h" to pull in
+	  complete ACE_Static_Svc_Descriptor class declaration.
+	  Necessitated by interheader dependency reductions in ACE.
+
 Fri Jan 28 21:07:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/CORBANAME_Parser.cpp:
+	* tao/DynamicInterface/Request.h:
 
 	  Include "ace/SString.h" since to pull in complete ACE string
 	  class declarations.  Necessitated by include directive
