@@ -63,14 +63,17 @@ TAO_NS_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNot
       // Note call to rebind. This allows to call <init> to set updates.
     }
 
-  // Now, init the supported properties
-  this->priority_.set (*this);
-  this->timeout_.set (*this);
-  this->stop_time_supported_.set (*this);
-  this->maximum_batch_size_.set (*this);
-  this->pacing_interval_.set (*this);
-  this->thread_pool_.set (*this);
-  this->thread_pool_lane_.set (*this);
+  if (prop_seq.length () > 0)
+  {
+	// Now, init the supported properties
+	this->priority_.set (*this);
+	this->timeout_.set (*this);
+	this->stop_time_supported_.set (*this);
+	this->maximum_batch_size_.set (*this);
+	this->pacing_interval_.set (*this);
+	this->thread_pool_.set (*this);
+	this->thread_pool_lane_.set (*this);
+  }
 
   return err_index == -1 ? 0 : 1;
 }
