@@ -471,6 +471,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 
   this->cur_count_--;
 
+  if (this->cur_count_ == 0 && this->head_ == this->tail_)
+    this->head_ = this->tail_ = 0;
+
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
   if (this->cur_bytes_ <= this->low_water_mark_
