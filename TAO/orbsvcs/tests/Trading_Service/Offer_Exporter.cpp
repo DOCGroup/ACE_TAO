@@ -60,7 +60,7 @@ TAO_Offer_Exporter (PortableServer::POA_ptr poa_object,
       
       poa_object->activate_object (&dp_fs_[i], _env);
       TAO_CHECK_ENV_RETURN (_env,);
-    }
+    }    
 }
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
