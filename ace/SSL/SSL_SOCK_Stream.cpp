@@ -76,10 +76,6 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
 
   ssize_t bytes_sent = 0;
 
-  ACE_HANDLE handle = this->get_handle ();
-
-  int val = 0;
-
   ACE_Time_Value t;
   ACE_Time_Value *timeout =
     ACE_const_cast (ACE_Time_Value *, max_wait_time);
