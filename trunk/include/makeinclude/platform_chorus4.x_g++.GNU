@@ -27,8 +27,7 @@ CROSS-COMPILE = 1
 debug       = 1
 exceptions  = 0
 optimize    = 1
-shared_libs =
-static_libs = 1
+static_libs_only = 1
 
 #
 # Directory where the Chorus Development System is installed
