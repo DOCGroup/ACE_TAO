@@ -1,4 +1,7 @@
-Tue Apr 27 00:47:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Apr 27 11:08:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Basic_Types.h: Forced KAI compiler to use ACE_U_LongLong if
+	  ACE_LACKS_LONGLONG_T is defined.
 
 	* ace/DLL.cpp:
 	* ace/Service_Config.i:
