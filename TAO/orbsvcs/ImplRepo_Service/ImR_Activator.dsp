@@ -91,6 +91,14 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Activator_NT_Service.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Activator_Options.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImR_Activator.cpp
 # End Source File
 # Begin Source File
@@ -100,18 +108,6 @@ SOURCE=.\ImR_Activator_i.cpp
 # Begin Source File
 
 SOURCE=.\Iterator.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Locator.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\NT_Service.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Options.cpp
 # End Source File
 # Begin Source File
 
@@ -135,23 +131,19 @@ SOURCE=.\XML_ContentHandler.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Activator_NT_Service.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Activator_Options.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImR_Activator_i.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Iterator.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Locator.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\NT_Service.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Options.h
 # End Source File
 # Begin Source File
 
