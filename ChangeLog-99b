@@ -1,3 +1,8 @@
+Wed Aug 11 15:49:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: cleaned up ACE doc tool discussion.
+          Added Carlos' inlining heuristics.
+
 Wed Aug 11 13:53:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-win32.h,config-win32-borland.h: added

@@ -109,15 +109,17 @@ bgcolor="#ffffff">
           'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
         </pre><p>
 
-    <li>Comments, especially in header files, must follow the
-        <a href=http://www.dscpl.com.au>OSE</a> Tools format requirements.
-        Please see the ``Classinfo Tools'' section of the
-        <a href=http://www.dscpl.com.au>OSE</a> ``Tools Manual''
-        for these requirements.<p>
-
     <li>Be sure to follow the guidelines and restrictions for use of the
         <a href="../bin/README.html">ACE documentation tools</a>, notably
         for header files.<p>
+
+    <li>One example of such guidelines is that comments, especially in
+        header files, must follow the
+        <a href=http://www.dscpl.com.au>OSE</a> Tools format requirements.
+        Please see the ``Classinfo Tools'' section of the
+        <a href=http://www.dscpl.com.au>OSE</a> ``Tools Manual''
+        for these requirements.  One example is that method names must
+        be enclosed in brackets (&lt;&gt;).<p>
   </ul>
 
   <li><strong>Preprocessor</strong><p>
@@ -429,6 +431,27 @@ The correct way to write that guard is:
         Therefore, the inline functions in the .i file should be arranged
         properly.  Some compilers, such as <code>g++</code> with the
         <code>-Wall</code> option, will issue warnings for violations.<p>
+
+    <li>Some inlining heuristics:<p>
+      <ul>
+        <li>One liners should almost always be inline, as in:
+<pre>
+ACE_INLINE
+Foo::bar ()
+{
+  this-&gt;baz();
+}
+</pre><p>
+
+        <li>The notable exception is virtual functions, which should never be
+          inlined.<p>
+
+        <li>Big (more than 10 lines) and complex function (more than one if ()
+          statement, or a switch, or a loop) should not be inlined.<p>
+
+        <li>Medium sized stuff depends on how performance critical it is.
+          If you know that it's in the critical path, then make it inline.<p>
+      </ul>
 
     <li><code>ACE_Export</code> must be inserted between the
         <code>class</code> keyword and class name for all classes that
