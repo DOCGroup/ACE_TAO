@@ -1,6 +1,7 @@
 Sun Jun  1 10:08:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Simulator/Makefile: Updated dependencies. 
+	* examples/Simulator/Event_Supplier/Makefile: Updated 
+	  dependencies. 
 
 Sat May 31 23:57:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
