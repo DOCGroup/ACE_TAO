@@ -254,6 +254,7 @@ int
 TAO_AV_TCP_Object::destroy (void)
 {
   this->callback_->handle_destroy ();
+  delete this;
   return 0;
 }
 
@@ -353,6 +354,7 @@ TAO_AV_TCP_Connector::TAO_AV_TCP_Connector (void)
 
 TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector (void)
 {
+  delete this->entry_->handler ();
 }
 
 int
@@ -403,9 +405,10 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Transport *&transport,
                                TAO_AV_Core::Flow_Component flow_comp)
 {
-  ACE_UNUSED_ARG (flow_comp);
-
   this->entry_ = entry;
+  if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
+    this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
+  else
   this->flowname_ = entry->flowname ();
   ACE_Addr *remote_addr = entry->address ();
   ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr *,remote_addr);
@@ -505,8 +508,6 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                            TAO_AV_Flow_Protocol_Factory *factory,
                            TAO_AV_Core::Flow_Component flow_comp)
 {
-  ACE_UNUSED_ARG (flow_comp);
-
   this->flow_protocol_factory_ = factory;
 
   if (TAO_debug_level > 0)
@@ -516,6 +517,9 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
+  if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
+    this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
+  else
   this->flowname_ = entry->flowname ();
   ACE_Addr *address = entry->address ();
 
@@ -555,12 +559,13 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
                                    TAO_AV_Flow_Protocol_Factory *factory,
                                    TAO_AV_Core::Flow_Component flow_comp)
 {
-  ACE_UNUSED_ARG (flow_comp);
-
   this->flow_protocol_factory_ = factory;
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
+  if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
+    this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname());
+  else
   this->flowname_ = entry->flowname ();
 
   ACE_INET_Addr *address;
@@ -613,6 +618,11 @@ TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback * /*callback*/
 {
   ACE_NEW (this->transport_,
            TAO_AV_TCP_Transport (this));
+}
+
+TAO_AV_TCP_Flow_Handler::~TAO_AV_TCP_Flow_Handler (void)
+{
+  delete this->transport_;
 }
 
 TAO_AV_Transport *

@@ -1,3 +1,43 @@
+Mon Jan 14 15:35:13 2002  Rob Ruff <rruff@scires.com>
+                          Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Add remove_acceptor(), remove_connector(),
+	  get_control_flowname() methods.
+
+	* orbsvcs/orbsvcs/AV/UDP.h: Add close() method.
+	* orbsvcs/orbsvcs/AV/UDP.i: Add close() method.
+	* orbsvcs/orbsvcs/AV/UDP.cpp: Improve cleanup in TAO_AV_UDP_Connector
+	  TAO_AV_UDP_Flow_Handler, and TAO_AV_UDP_Acceptor classes.  Close
+	  socket in TAO_AV_UDP_Flow_Handler destructor.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Improve cleanup in destructors
+	  and destroy() method.  TAO_Tokenizer::operator[] returns
+	  a const char * instead of dynamically allocated char *.
+	  In TAO_StreamEndpoint::destroy(), call destroy() on protocol
+	  objects AFTER calling remove_connector() on the AV core.
+
+	* orbsvcs/orbsvcs/AV/TCP.h: Add virtual destructor to TAO_AV_TCP_Flow_Handler.
+	* orbsvcs/orbsvcs/AV/TCP.cpp: Add destructor to TAO_AV_TCP_Flow_Handler, improve cleanup in other classes.
+	* orbsvcs/orbsvcs/AV/Transport.h: Add close() methods to
+	  TAO_AV_Connector_Registry and TAO_AV_Acceptor_Registry.
+	* orbsvcs/orbsvcs/AV/Transport.cpp: Add close() methods to
+	  TAO_AV_Connector_Registry and TAO_AV_Acceptor_Registry.
+	  Return result of reactor()->cancel_timer() in 
+	  TAO_AV_Flow_Handler::cancel_timer().
+	* orbsvcs/orbsvcs/AV/RTCP.cpp: In TAO_AV_RTCP_Object::destroy(),
+	  delete this.
+	* orbsvcs/orbsvcs/AV/RTP.cpp: In TAO_AV_RTP_Object::destroy(), 
+	  delete this.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h: Make operator[] return 
+	  const char *.  Add variables for cleanup.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Add variables for cleanup.
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: Memory leak fixes.
+	  Comment out calls to activate_with_poa().
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+	  Do not call orb->shutdown(), instead set a flag.
+
+
 Mon Jan 14 14:04:36 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.PortableGroup: Regenerated

@@ -7,7 +7,7 @@
 #include "orbsvcs/AV/UDP.h"
 #include "orbsvcs/AV/TCP.h"
 #include "orbsvcs/AV/RTP.h"
-#include "RTCP.h"
+#include "orbsvcs/AV/RTCP.h"
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/default_resource.h"
 
@@ -488,14 +488,6 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
                                            entry->flowname ());
               if (forward_entry != 0)
                 forward_entry->set_peer_addr (address);
-              // Now we have to match the control and data flow objects.
-              // Check if there's a control object.
-              char control_flowname [BUFSIZ];
-              ACE_OS::sprintf (control_flowname,"%s_control",entry->flowname ());
-              TAO_FlowSpec_Entry *control_entry = this->get_flow_spec_entry (forward_flow_spec_set,
-                                                                             control_flowname);
-              if (control_entry != 0)
-                forward_entry->protocol_object ()->control_object (control_entry->protocol_object ());
             }
           else
             connector_flow_set.insert (entry);
@@ -563,6 +555,36 @@ TAO_AV_Core::get_acceptor (const char *flowname)
   return 0;
 }
 
+int
+TAO_AV_Core::remove_acceptor (const char *flowname)
+{
+
+  ACE_TRY_NEW_ENV
+    {
+
+      TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
+      ACE_TRY_CHECK;
+
+      TAO_AV_AcceptorSetItor end =
+        this->acceptor_registry_->end ();
+
+      for (;acceptor != end; ++acceptor)
+        {
+          if (ACE_OS::strcmp ((*acceptor)->flowname (),flowname) == 0)
+            {
+              this->acceptor_registry_->close (*acceptor);
+              return 0;
+            }
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_AV_Core::get_acceptor");
+    }
+  ACE_ENDTRY;
+  return -1;
+}
+
 TAO_AV_Connector*
 TAO_AV_Core::get_connector (const char *flowname)
 {
@@ -577,6 +599,25 @@ TAO_AV_Core::get_connector (const char *flowname)
         return *connector;
     }
   return 0;
+}
+
+int
+TAO_AV_Core::remove_connector (const char *flowname)
+{
+  TAO_AV_ConnectorSetItor connector =
+    this->connector_registry_->begin ();
+  TAO_AV_ConnectorSetItor end =
+    this->connector_registry_->end ();
+
+  for (;connector != end; ++connector)
+    {
+      if (ACE_OS::strcmp ((*connector)->flowname (),flowname) == 0)
+        {
+          this->connector_registry_->close (*connector);
+          return 0;
+        }
+    }
+  return -1;
 }
 
 TAO_AV_Flow_Protocol_Factory *
@@ -1012,6 +1053,20 @@ TAO_AV_Core::get_flowname (const char *flow_spec_entry_str)
     flow_name = flow_spec_entry_str;
   return CORBA::string_dup (flow_name.c_str ());
 }
+
+
+ACE_CString
+TAO_AV_Core::get_control_flowname(const char *flowname)
+{
+  ACE_CString control_flowname;
+  control_flowname = "c_";
+  control_flowname = control_flowname + flowname;
+
+  return flowname;
+}
+
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>;
