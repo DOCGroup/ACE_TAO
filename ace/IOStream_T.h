@@ -130,7 +130,7 @@ public:
   GETPUT_FUNC_SET (ACE_IOStream_T<STREAM>)
 
 #if defined (ACE_LACKS_IOSTREAM_FX)
-  virtual int ipfx (int need = 0) {  return good(); }
+  virtual int ipfx (int /* need */ = 0) {  return good(); }
   virtual int ipfx0(void)         {  return good(); }  // Optimized ipfx(0)
   virtual int ipfx1(void)         {  return good(); }  // Optimized ipfx(1)
   virtual void isfx (void)        {  return; }
