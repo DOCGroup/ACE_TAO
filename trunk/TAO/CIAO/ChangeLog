@@ -1,3 +1,10 @@
+Wed Apr 21 10:53:50 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+
+	 Fixed the error in the "struct SubcomponentPortEndpoint"
+         definition in the IDL file.
+
 Wed Apr 21 10:33:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Deployment.idl:
