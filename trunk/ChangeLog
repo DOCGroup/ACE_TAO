@@ -1,3 +1,9 @@
+Thu Oct 28 13:12:18 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp:
+
+          If IPPROTO_SCTP is not defined, let the protocol default.
+
 Thu Oct 28 11:16:26 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/HTBP/HTBP_Environment.cpp:
@@ -6,9 +12,9 @@ Thu Oct 28 11:16:26 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Thu Oct 28 11:48:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Reactor/Misc/pingpong.cpp: Added missing includes
-	  "ace/Barrier.h" and "ace/Thread.h" for ACE_WIN32. Also added
-	  some missing ACE_TEXT() around string literals.
+        * examples/Reactor/Misc/pingpong.cpp: Added missing includes
+          "ace/Barrier.h" and "ace/Thread.h" for ACE_WIN32. Also added
+          some missing ACE_TEXT() around string literals.
 
 Thu Oct 28 07:03:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 
