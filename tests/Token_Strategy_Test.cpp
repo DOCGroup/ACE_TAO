@@ -249,9 +249,9 @@ template class ACE_Guard<ACE_Token>;
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Vector<ACE_INT32>
-#pragma instantiate ACE_Array<ACE_INT32>;
-#pragma instantiate ACE_Array_Base<ACE_INT32>;
-#pragma instantiate ACE_Array_Iterator<ACE_INT32>;
+#pragma instantiate ACE_Array<ACE_INT32>
+#pragma instantiate ACE_Array_Base<ACE_INT32>
+#pragma instantiate ACE_Array_Iterator<ACE_INT32>
 #pragma instantiate ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> >
 #pragma instantiate ACE_Guard<ACE_Token>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

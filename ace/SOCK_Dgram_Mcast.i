@@ -11,7 +11,7 @@ ACE_SOCK_Dgram_Mcast::set_option (int option,
     return -1;
 
   int level = IPPROTO_IP;
-#if defined (IPPROTO_IPV6)
+#if defined (IPPROTO_IPV6) && ! defined (INTEGRITY)
   if (this->send_addr_.get_type () == PF_INET6)
     level = IPPROTO_IPV6;
 #endif /* IPPROTO_IPV6 */
