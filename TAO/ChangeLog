@@ -1,3 +1,9 @@
+Thu Nov 14 16:21:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1270_Regression/run_test.pl: Reduced the runtime from
+	  70 minutes to 7 minutes. This will make them usable in the daily
+	  builds. 
+
 Thu Nov 14 13:47:10 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
