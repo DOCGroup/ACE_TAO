@@ -1,0 +1,10 @@
+#
+# $Id$
+#
+
+DIRS = \
+	lib \
+	Basic \
+	Performance
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

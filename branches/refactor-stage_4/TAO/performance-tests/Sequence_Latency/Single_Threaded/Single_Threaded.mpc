@@ -1,0 +1,18 @@
+project(* sequence server) : server, strategies {
+  avoids += minimum_corba
+
+  Source_Files {
+    Roundtrip.cpp
+    server.cpp
+  }
+}
+
+project(* sequence client): client, strategies {
+  avoids += minimum_corba
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,9 @@
+project(*client): messaging, taoserver {
+  exename  = client
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

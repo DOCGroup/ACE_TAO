@@ -1,0 +1,80 @@
+project(hello_stub): ciao_client {
+  sharedname = hello_stub
+  idlflags += -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs
+  idlflags +=  -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  idlflags += -Wb,stub_export_macro=HELLO_STUB_Export -Wb,stub_export_include=hello_stub_export.h -Wb,skel_export_macro=HELLO_SERVANT_Export -Wb,skel_export_include=hello_servants_export.h
+  dynamicflags   = HELLO_STUB_BUILD_DLL
+
+  IDL_Files {
+    hello.idl
+  }
+
+  Source_Files {
+    helloC.cpp
+  }
+}
+
+project(hello_servants) : ciao_servant {
+  after += hello_stub
+  sharedname  = hello_servants
+  libs    += hello_stub
+  idlflags  +=  -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_SERVANT_Export -Wb,export_include=hello_servants_export.h
+  dynamicflags = HELLO_SERVANT_BUILD_DLL
+
+  CIDL_Files {
+// CIDL files are not used in handcrafted examples.
+  }
+
+  IDL_Files {
+    helloE.idl
+  }
+
+  Source_Files {
+    helloEC.cpp
+    helloS.cpp
+    hello_servants.cpp
+  }
+}
+
+project(hello_executors) : ciao_component {
+  after   += hello_servants
+  sharedname = hello_executors
+  libs      += hello_stub hello_servants
+  dynamicflags   = HELLO_EXECUTOR_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    hello_executors.cpp
+  }
+}
+
+project (client) : ciao_client {
+  exename = client
+  after += hello_stub
+  libs += hello_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}
+
+// Client for interacting with the Simple_Component_Server
+project (simple_client) : ciao_client {
+  libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
+  after += hello_stub Simple_Server_Stbu
+  libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
+  libs += hello_stub CIAO_Simple_Server_Stub
+  exename = simple_client
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    simple_client.cpp
+  }
+}

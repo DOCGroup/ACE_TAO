@@ -1,0 +1,20 @@
+project(*AMH server): taoserver, strategies {
+  idlflags += -GH
+  requires += ami
+
+  Source_Files {
+    Roundtrip.cpp
+    server.cpp
+  }
+}
+
+project(*AMH client): taoclient, strategies {
+  idlflags += -GH
+  requires += ami
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,16 @@
+project(* security server): taoserver {
+  Source_Files {
+    Server_Worker.cpp
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(* security client): taoclient {
+  Source_Files {
+    testC.cpp
+    Client_Worker.cpp
+    client.cpp
+  }
+}
+

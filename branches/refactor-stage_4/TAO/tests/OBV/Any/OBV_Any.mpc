@@ -1,0 +1,18 @@
+project(*Server): taoserver {
+  idlflags += -Gv
+
+  Source_Files {
+    AnyS_impl.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient {
+  idlflags += -Gv
+
+  Source_Files {
+    AnyC.cpp
+    client.cpp
+  }
+}
+

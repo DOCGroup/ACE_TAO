@@ -1,0 +1,3 @@
+project(*notify perf Throughput): notifytest, strategies, messaging {
+  exename  = Throughput
+}

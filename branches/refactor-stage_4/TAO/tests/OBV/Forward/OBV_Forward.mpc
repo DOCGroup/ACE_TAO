@@ -1,0 +1,20 @@
+project(*Server): taoserver {
+  idlflags += -Gv
+
+  Source_Files {
+    Test_impl.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient {
+  idlflags += -Gv
+
+  Source_Files {
+    TreeBaseC.cpp
+    TreeControllerC.cpp
+    TreeNodeC.cpp
+    client.cpp
+  }
+}
+
