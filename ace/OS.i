@@ -118,48 +118,47 @@ ACE_Time_Value::operator timeval * () const
   return (timeval *) &this->tv_;
 }
 
-// Add TV to this.
-
-ACE_INLINE void
-ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
-{
-  // ACE_TRACE ("ACE_Time_Value::operator+=");
-  this->tv_.tv_sec += tv.tv_.tv_sec;
-  this->tv_.tv_usec += tv.tv_.tv_usec;
-  this->normalize ();
-}
-
-// Subtract TV to this.
-
-ACE_INLINE void
-ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
-{
-  // ACE_TRACE ("ACE_Time_Value::operator-=");
-  this->tv_.tv_sec -= tv.tv_.tv_sec;
-  this->tv_.tv_usec -= tv.tv_.tv_usec;
-  this->normalize ();
-}
-
-// Adds two ACE_Time_Value objects together, returns the sum.
-
-ACE_INLINE ACE_Time_Value 
-operator + (const ACE_Time_Value &tv1, 
-	    const ACE_Time_Value &tv2)
-{
-  // ACE_TRACE ("operator +");
-  ACE_Time_Value sum (tv1.tv_.tv_sec + tv2.tv_.tv_sec, 
-		      tv1.tv_.tv_usec + tv2.tv_.tv_usec); 
-
-  sum.normalize ();
-  return sum;
-}
-
 ACE_INLINE void
 ACE_Time_Value::set (long sec, long usec)
 {
   // ACE_TRACE ("ACE_Time_Value::set");
   this->tv_.tv_sec = sec;
   this->tv_.tv_usec = usec;
+}
+
+ACE_INLINE void
+ACE_Time_Value::set (double d)
+{
+  // ACE_TRACE ("ACE_Time_Value::set");
+  long l = (long) d;
+  this->tv_.tv_sec = l;
+  this->tv_.tv_usec = ((long) (d - (double) l)) * 1000000;
+  this->normalize ();
+}
+
+// Initializes a timestruc_t.  Note that this approach loses precision
+// since it converts the nano-seconds into micro-seconds.  But then
+// again, do any real systems have nano-second timer precision
+// anyway?!
+
+ACE_INLINE void
+ACE_Time_Value::set (const timestruc_t &tv)
+{
+  // ACE_TRACE ("ACE_Time_Value::set");
+  this->tv_.tv_sec = tv.tv_sec;
+  this->tv_.tv_usec = tv.tv_nsec / 1000;
+
+  this->normalize ();
+}
+
+ACE_INLINE void
+ACE_Time_Value::set (const timeval &tv)
+{
+  // ACE_TRACE ("ACE_Time_Value::set");
+  this->tv_.tv_sec = tv.tv_sec;
+  this->tv_.tv_usec = tv.tv_usec;
+
+  this->normalize ();
 }
 
 ACE_INLINE
@@ -175,29 +174,6 @@ ACE_Time_Value::ACE_Time_Value (long sec, long usec)
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (sec, usec);
   this->normalize ();
-}
-
-ACE_INLINE void
-ACE_Time_Value::set (double d)
-{
-  // ACE_TRACE ("ACE_Time_Value::set");
-  long l = (long) d;
-  this->tv_.tv_sec = l;
-  this->tv_.tv_usec = ((long) (d - (double) l)) * 1000000;
-  this->normalize ();
-}
-
-// Subtracts two ACE_Time_Value objects, returns the difference.
-
-ACE_INLINE ACE_Time_Value 
-operator - (const ACE_Time_Value &tv1, 
-	    const ACE_Time_Value &tv2)
-{
-  // ACE_TRACE ("operator -");
-  ACE_Time_Value delta (tv1.tv_.tv_sec - tv2.tv_.tv_sec, 
-			tv1.tv_.tv_usec - tv2.tv_.tv_usec); 
-  delta.normalize ();
-  return delta;
 }
 
 // True if tv1 > tv2.
@@ -232,21 +208,6 @@ operator >= (const ACE_Time_Value &tv1,
     return 0;
 }
 
-// Initializes a timestruc_t.  Note that this approach loses precision
-// since it converts the nano-seconds into micro-seconds.  But then
-// again, do any real systems have nano-second timer precision
-// anyway?!
-
-ACE_INLINE void
-ACE_Time_Value::set (const timestruc_t &tv)
-{
-  // ACE_TRACE ("ACE_Time_Value::set");
-  this->tv_.tv_sec = tv.tv_sec;
-  this->tv_.tv_usec = tv.tv_nsec / 1000;
-
-  this->normalize ();
-}
-
 // Returns the value of the object as a timestruc_t. 
 
 ACE_INLINE 
@@ -266,16 +227,6 @@ ACE_Time_Value::ACE_Time_Value (const timestruc_t &tv)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
-}
-
-ACE_INLINE void
-ACE_Time_Value::set (const timeval &tv)
-{
-  // ACE_TRACE ("ACE_Time_Value::set");
-  this->tv_.tv_sec = tv.tv_sec;
-  this->tv_.tv_usec = tv.tv_usec;
-
-  this->normalize ();
 }
 
 // Initializes the ACE_Time_Value object from another ACE_Time_Value
@@ -383,6 +334,55 @@ operator != (const ACE_Time_Value &tv1,
 {
   // ACE_TRACE ("operator !=");
   return !(tv1 == tv2);
+}
+
+// Add TV to this.
+
+ACE_INLINE void
+ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
+{
+  // ACE_TRACE ("ACE_Time_Value::operator+=");
+  this->tv_.tv_sec += tv.tv_.tv_sec;
+  this->tv_.tv_usec += tv.tv_.tv_usec;
+  this->normalize ();
+}
+
+// Subtract TV to this.
+
+ACE_INLINE void
+ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
+{
+  // ACE_TRACE ("ACE_Time_Value::operator-=");
+  this->tv_.tv_sec -= tv.tv_.tv_sec;
+  this->tv_.tv_usec -= tv.tv_.tv_usec;
+  this->normalize ();
+}
+
+// Adds two ACE_Time_Value objects together, returns the sum.
+
+ACE_INLINE ACE_Time_Value 
+operator + (const ACE_Time_Value &tv1, 
+	    const ACE_Time_Value &tv2)
+{
+  // ACE_TRACE ("operator +");
+  ACE_Time_Value sum (tv1.tv_.tv_sec + tv2.tv_.tv_sec, 
+		      tv1.tv_.tv_usec + tv2.tv_.tv_usec); 
+
+  sum.normalize ();
+  return sum;
+}
+
+// Subtracts two ACE_Time_Value objects, returns the difference.
+
+ACE_INLINE ACE_Time_Value 
+operator - (const ACE_Time_Value &tv1, 
+	    const ACE_Time_Value &tv2)
+{
+  // ACE_TRACE ("operator -");
+  ACE_Time_Value delta (tv1.tv_.tv_sec - tv2.tv_.tv_sec, 
+			tv1.tv_.tv_usec - tv2.tv_.tv_usec); 
+  delta.normalize ();
+  return delta;
 }
 
 #if !defined (ACE_WIN32)
