@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_valuetype/valuetype_ci.cpp:56
+// be\be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)

@@ -97,7 +97,7 @@ namespace RTScheduling
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -117,7 +117,7 @@ static TAO::TypeCode::Struct<char const *,
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:743
+// be\be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -151,7 +151,7 @@ static TAO::TypeCode::Alias<char const *,
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:743
+// be\be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -218,7 +218,7 @@ namespace RTScheduling
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISCIPLINES = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,

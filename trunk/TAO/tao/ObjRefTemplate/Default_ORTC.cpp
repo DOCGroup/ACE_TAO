@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:291
 
 
 #include "Default_ORTC.h"
@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_cs.cpp:66
+// be\be_visitor_valuetype/valuetype_cs.cpp:66
 
 void
 TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::add_ref (
@@ -151,7 +151,7 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_obv_cs.cpp:58
+// be\be_visitor_valuetype/valuetype_obv_cs.cpp:58
 
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
 {}
@@ -172,7 +172,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal__TAO_Default_ORT_Ob
 }
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:487
+// be\be_valuetype.cpp:487
 
 void
 CORBA::add_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
@@ -193,7 +193,7 @@ CORBA::remove_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/cdr_op_cs.cpp:73
+// be\be_visitor_valuetype/cdr_op_cs.cpp:73
 
 CORBA::Boolean
 operator<< (
@@ -219,7 +219,7 @@ operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/marshal_cs.cpp:44
+// be\be_visitor_valuetype/marshal_cs.cpp:44
 
 CORBA::Boolean
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_state (TAO_OutputCDR &) const
@@ -238,7 +238,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1528
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

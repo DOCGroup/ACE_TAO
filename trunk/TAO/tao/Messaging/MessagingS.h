@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:398
+// be\be_codegen.cpp:387
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_H_
@@ -203,7 +203,7 @@ namespace POA_Messaging
 } // module Messaging
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1005
+// be\be_codegen.cpp:983
 
 #include "MessagingS_T.h"
 
