@@ -1,25 +1,31 @@
+Fri Oct 16 23:16:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: 1) use complete sentences for
+          comments and 2) use prefix operators where possible, such
+          as on an iteration loop index.
+
 Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config.cpp (parse_args): Modified the -S option to
- 	  enqueue the directives in FIFO order rather than in LIFO order.
-  	  It's more intuitive to process them in the order they are
- 	  received!
+        * ace/Service_Config.cpp (parse_args): Modified the -S option to
+          enqueue the directives in FIFO order rather than in LIFO order.
+          It's more intuitive to process them in the order they are
+          received!
 
-	* ace/Service_Config: It's now possible to give multiple -f
- 	  options to the Service Configurator and it will open multiple
- 	  files and process each one in the order specified in argv.
-  	  Thanks to David O'Farrell <dave.ofarrell@aersoft.ie> for
- 	  suggesting this.
+        * ace/Service_Config: It's now possible to give multiple -f
+          options to the Service Configurator and it will open multiple
+          files and process each one in the order specified in argv.
+          Thanks to David O'Farrell <dave.ofarrell@aersoft.ie> for
+          suggesting this.
 
-	* ace: Replaced all #if !defined (ACE_FOO_H) with #ifndef
- 	  ACE_FOO_H since many C++ preprocessors can recognize this idiom
- 	  and optimize for it.
+        * ace: Replaced all #if !defined (ACE_FOO_H) with #ifndef
+          ACE_FOO_H since many C++ preprocessors can recognize this idiom
+          and optimize for it.
 
-	* tests/Upgradable_RW_Test.cpp: Revised the programming style ;-).
+        * tests/Upgradable_RW_Test.cpp: Revised the programming style ;-).
 
-	* tests/Map_Manager_Test.cpp: Replaced all uses of postfix ++
- 	  operators with prefix ++ operators because they are faster when
- 	  iterating over the various Maps.
+        * tests/Map_Manager_Test.cpp: Replaced all uses of postfix ++
+          operators with prefix ++ operators because they are faster when
+          iterating over the various Maps.
 
         * ace/[Hash_]Map_Manager: Today we decided to remove the use of
           locking for the ACE[_Hash]_Map_Manager Iterators.  The original
@@ -46,20 +52,20 @@ Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           typedef ACE_Map_Iterator <TYPE1, TYPE2, ACE_Thread_Mutex> ITERATOR;
           typedef ACE_Map_Entry <TYPE1, TYPE2> ENTRY;
 
-          void 
+          void
           foo (MAP_MANAGER &map)
           {
             // ...
             {
-              // Explicitly grab the lock and hold it for the duration of 
+              // Explicitly grab the lock and hold it for the duration of
               // the iteration.
               ACE_READ_GUARD (ACE_Thread_Mutex, ace_mon, map.mutex ());
- 
+
               ITERATOR end = map.end ();
 
               for (ITERATOR iter = map.begin ();
                    iter != end;
-                   iter++) 
+                   iter++)
               {
                 ENTRY &entry = *iter;
                 i++;
