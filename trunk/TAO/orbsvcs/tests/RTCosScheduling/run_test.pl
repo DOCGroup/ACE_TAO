@@ -231,7 +231,7 @@ sub evaluate_output
   ($DTtimeC3,$client,$activity)=split(/\t/,@arrayC3[5]);
 
 
-  if ($BAtimeC1 gt $BAtimeC2 || $BAtimeC2 gt $BAtimeC3)
+  if ($BAtimeC1 gt $BAtimeC2 || $BAtimeC1 gt $BAtimeC3)
     {
       print STDERR "Scheduler Test Failed - activities did not ".
                    "begin in correct order\n";
