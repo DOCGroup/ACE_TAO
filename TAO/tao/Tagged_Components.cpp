@@ -120,6 +120,7 @@ TAO_Tagged_Components::set_known_component_i (
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                           component.component_data.get_buffer ()),
                     component.component_data.length ());
+
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return;
@@ -127,6 +128,7 @@ TAO_Tagged_Components::set_known_component_i (
 
   if (component.tag == IOP::TAG_ORB_TYPE)
     {
+  cout << "Amba 1 " << endl;
       CORBA::ULong orb_type;
       if ((cdr >> orb_type) == 0)
         return;
@@ -136,6 +138,7 @@ TAO_Tagged_Components::set_known_component_i (
     }
   else if (component.tag == IOP::TAG_CODE_SETS)
     {
+  cout << "Amba 2 " << endl;
       CONV_FRAME::CodeSetComponentInfo ci;
       if ((cdr >> ci) == 0)
         return;
