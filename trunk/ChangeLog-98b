@@ -1,10 +1,14 @@
 Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus.GNU: added support for
-          exceptions=0/1 make option.
+          exceptions=0/1 make option.  Thanks to Wei Chiang for
+          requesting this.
 
         * include/makeinclude/platform_chorus_ghs.GNU: removed
           trailing / from MVME_DIR definition.
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU: added
+          optimize=1, to enable optimization by default.
 
 Mon Nov 24 03:30:36 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
