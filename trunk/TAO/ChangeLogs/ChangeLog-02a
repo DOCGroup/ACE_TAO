@@ -1,3 +1,11 @@
+Fri Oct 13 18:17:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+
+	  Added missing 'const' to code generation of request
+	  info class private member declaration for simple
+	  predefined types.
+
 Fri Oct 13 14:32:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
