@@ -48,6 +48,7 @@ class ACE_Export ACE_Message_Block
   //     <next_> pointers to form a queue of messages (e.g., this is how
   //     <ACE_Message_Queue> works).  
 {
+  friend class ACE_Data_Block;
 public:  
   enum ACE_Message_Type
   {
