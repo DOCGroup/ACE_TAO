@@ -26,16 +26,6 @@
 #include "ace/Containers_T.h"
 #include "ace/Synch_T.h"
 
-// Parameters to define per-instance optional functionality, passed as
-// template parameters.
-/// Locking options.
-// Disable locking.
-typedef ACE_Null_Mutex       ACE_SDM_OPT_LOCK_NO;
-// Enable locking.
-typedef ACE_Thread_Mutex     ACE_SDM_OPT_LOCK_YES;
-// Suggested default type.
-typedef ACE_SDM_OPT_LOCK_NO  ACE_SDM_DEFOPT_LOCK;
-
 /**
  * @class ACE_SOCK_Dgram_Mcast_Ex
  *
@@ -87,7 +77,7 @@ typedef ACE_SDM_OPT_LOCK_NO  ACE_SDM_DEFOPT_LOCK;
  *   alphanumeric form and <subscribe> will convert them into numbers via
  *   <ACE_OS::atoi>.
  */
-template <class ACE_SDMOPT_LOCK>
+template <class ACE_SDM_LOCK>
 class ACE_SOCK_Dgram_Mcast_Ex : public ACE_SOCK_Dgram
 {
 public:
@@ -135,23 +125,23 @@ public:
       DEFOPT_BINDADDR  = OPT_BINDADDR_NO,
 #endif /* linux */
   //
-  /// Define the interpretation of 'NULL' as a recv interface specification.
-  // If the interface part of a multicast address specification is NULL, it
+  /// Define the interpretation of 0 as a recv interface specification.
+  // If the interface part of a multicast address specification is 0, it
   // will be interpreted to mean either "the default interface" or "all
   // interfaces", depending on the setting of this option.
   // Notes:
   // - The 'nulliface_all' option can not be used in environments which do
   //   not fully support the <ACE_Sock_Connect::get_ip_interfaces> method
   //   (e.g. non-Windows).
-  //   If it is, using NULL for iface will _always_ fail.
+  //   If it is, using 0 for iface will _always_ fail.
   // - The default behavior in most IP stacks is to use the 'default' interface,
   //   where 'default' has rather ad-hoc semantics.
   // - This applies only to receives, not sends (which always use only one
-  //   interface; NULL means use the "system default" interface).
+  //   interface; 0 means use the "system default" interface).
   // Supported values:
-    /// If (net_if==NULL), use default interface.
+    /// If (net_if==0), use default interface.
     OPT_NULLIFACE_ONE  = 0,
-    /// If (net_if==NULL), use all mcast interfaces.
+    /// If (net_if==0), use all mcast interfaces.
     OPT_NULLIFACE_ALL  = 2,
     /// Default value for NULLIFACE option. (Environment-dependent.)
 #ifdef ACE_WIN32
@@ -228,7 +218,7 @@ public:
    * or socket option processing.
    */
   int open (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
-            const ACE_TCHAR *send_net_if = NULL,    // Net interface for sends.
+            const ACE_TCHAR *send_net_if = 0,    // Net interface for sends.
             int reuse_addr = 1);                    // Reuse addr/port sock opt.
 
   // = Multicast group subscribe/unsubscribe routines.
@@ -266,7 +256,7 @@ public:
    */
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  int reuse_addr = 1,               // (see above)
-                 const ACE_TCHAR *net_if = NULL,
+                 const ACE_TCHAR *net_if = 0,
                  int protocol_family = PF_INET,    // (deprecated - not used)
                  int protocol = 0);                // (deprecated - not used)
 
@@ -290,7 +280,7 @@ public:
    * these default parameters.
    */
   int unsubscribe (const ACE_INET_Addr &mcast_addr,
-                   const ACE_TCHAR *net_if = NULL,
+                   const ACE_TCHAR *net_if = 0,
                    int protocol_family = PF_INET,  // (deprecated - not used)
                    int protocol = 0);              // (deprecated - not used)
 
@@ -421,7 +411,7 @@ private:
   /// Per-instance option: Bind address as well as port#.
   int bind_addr_opt_;
 
-  /// Per-instance option: Interpretation of NULL interface specification.
+  /// Per-instance option: Interpretation of 0 interface specification.
   int null_iface_opt_;
 
   /// Per-instance option: Dtor does explicit <unsubscribe>.
@@ -435,12 +425,12 @@ private:
   /// Network interface to which all <send> methods send multicast datagrams.
   ACE_TCHAR *send_net_if_;
 
-  typedef ACE_DLList<ip_mreq> subscription_list_t;
+  typedef ACE_DLList<ip_mreq>  subscription_list_t;
   typedef ACE_DLList_Iterator<ip_mreq>  subscription_list_iter_t;
   /// List of currently subscribed addr/iface pairs (and assc. types).
   ACE_MUTABLE subscription_list_t  subscription_list_;
   /// Lock used to protect subscription list.
-  ACE_MUTABLE ACE_SDMOPT_LOCK subscription_list_lock_;
+  ACE_MUTABLE ACE_SDM_LOCK subscription_list_lock_;
       // (Lock type does not need to support recursive locking.)
 };
 
