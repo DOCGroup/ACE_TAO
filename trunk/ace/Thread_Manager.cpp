@@ -1828,8 +1828,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
                     -1);
 #else
     ACE_NEW_RETURN (copy_table,
-                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()
-                                                + this->terminated_thr_list_.size ()],],
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
                     -1);
 #endif /* VXWORKS */
 
