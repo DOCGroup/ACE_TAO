@@ -1,3 +1,17 @@
+Tue May 28 09:02:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Cached_Policies.h:
+        * tao/PortableServer/POA_Policy_Set.h:
+        * tao/PortableServer/PortableServer.h:
+        * orbsvcs/orbsvcs/Event/BCU.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Manip.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/Module_Factory.h:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
+          Fixed fuzz errors about @file mismatch
+
 Tue May 28 08:03:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.h:
