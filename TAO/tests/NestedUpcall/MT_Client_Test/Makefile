@@ -1,11 +1,11 @@
 #----------------------------------------------------------------------------
 #
-#	$Id$
+#       $Id$
 #
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -16,15 +16,15 @@ LDLIBS = -lTAO
 
 IDL_SRC = MT_Client_TestC.cpp MT_Client_TestS.cpp
 PROG_SRCS = $(IDL_SRC) server.cpp client.cpp \
-	local_server.cpp MT_Object_i.cpp
+        local_server.cpp MT_Object_i.cpp
 
 SRC = $(PROG_SRCS)
 
 CLIENT_OBJS = MT_Client_TestS.o MT_Client_TestC.o \
-	MT_Object_i.o local_server.o client.o
+        MT_Object_i.o local_server.o client.o
 
 SERVER_OBJS = MT_Client_TestS.o MT_Client_TestC.o server.o \
-	MT_Object_i.o
+        MT_Object_i.o
 
 BIN = client server
 BUILD = $(BIN)
@@ -32,7 +32,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -44,11 +44,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao 
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs 
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 .PRECIOUS: MT_Client_TestC.h MT_Client_TestC.i MT_Client_TestC.cpp
 .PRECIOUS: MT_Client_TestS.h MT_Client_TestS.i MT_Client_TestS.cpp
@@ -61,7 +61,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf Triangle_TestS.* Triangle_TestC.* Triangle_TestS_T.*
+	-/bin/rm -rf MT_Client_Test[CS].* MT_Client_TestS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
@@ -154,7 +154,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -384,7 +384,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -614,7 +614,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -753,9 +753,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h \
- MT_Client_TestC.i MT_Client_TestS_T.h MT_Client_TestS_T.i \
- MT_Client_TestS_T.cpp MT_Client_TestS.i
+ MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h MT_Client_TestC.i \
+ MT_Client_TestS_T.h MT_Client_TestS_T.i MT_Client_TestS_T.cpp \
+ MT_Client_TestS.i
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -811,7 +811,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Read_Buffer.i client.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Task.h \
@@ -844,7 +845,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
@@ -1081,7 +1082,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1220,9 +1221,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h \
- MT_Client_TestC.i MT_Client_TestS_T.h MT_Client_TestS_T.i \
- MT_Client_TestS_T.cpp MT_Client_TestS.i
+ MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h MT_Client_TestC.i \
+ MT_Client_TestS_T.h MT_Client_TestS_T.i MT_Client_TestS_T.cpp \
+ MT_Client_TestS.i
 .obj/MT_Object_i.o .obj/MT_Object_i.so .shobj/MT_Object_i.o .shobj/MT_Object_i.so: MT_Object_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1311,7 +1312,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1450,8 +1451,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h \
- MT_Client_TestC.i MT_Client_TestS_T.h MT_Client_TestS_T.i \
- MT_Client_TestS_T.cpp MT_Client_TestS.i
+ MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h MT_Client_TestC.i \
+ MT_Client_TestS_T.h MT_Client_TestS_T.i MT_Client_TestS_T.cpp \
+ MT_Client_TestS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
