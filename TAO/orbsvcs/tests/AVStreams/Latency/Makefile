@@ -52,7 +52,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
 
 .obj/ping.o .obj/ping.so .shobj/ping.o .shobj/ping.so: ping.cpp ping.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -76,10 +77,12 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -96,7 +99,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
@@ -132,7 +136,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -242,7 +247,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -293,6 +299,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/Sequence_T.h \
   $(TAO_ROOT)/tao/Sequence_T.i \
   $(TAO_ROOT)/tao/Sequence_T.cpp \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
   $(TAO_ROOT)/tao/CDR.h \
@@ -301,38 +311,46 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/Principal.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/BoundsC.h \
   $(TAO_ROOT)/tao/BoundsC.i \
@@ -340,16 +358,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
-  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -396,7 +408,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
@@ -420,6 +431,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
   $(TAO_ROOT)/tao/default_resource.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -462,7 +475,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
 
 .obj/pong.o .obj/pong.so .shobj/pong.o .shobj/pong.so: pong.cpp pong.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -486,10 +500,12 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -506,7 +522,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
@@ -542,7 +559,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -652,7 +670,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -703,6 +722,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/Sequence_T.h \
   $(TAO_ROOT)/tao/Sequence_T.i \
   $(TAO_ROOT)/tao/Sequence_T.cpp \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
   $(TAO_ROOT)/tao/CDR.h \
@@ -711,38 +734,46 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/Principal.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/BoundsC.h \
   $(TAO_ROOT)/tao/BoundsC.i \
@@ -750,16 +781,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
-  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -806,7 +831,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
@@ -830,6 +854,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
   $(TAO_ROOT)/tao/default_resource.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -872,7 +898,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
 
 .obj/control.o .obj/control.so .shobj/control.o .shobj/control.so: control.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/pre.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -896,10 +923,12 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -916,7 +945,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
@@ -952,7 +982,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -1062,7 +1093,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(ACE_ROOT)/ace/Synch_Options.i \
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/Svc_Handler.h \
-  $(ACE_ROOT)/ace/Task.h $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Task.i \
   $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1113,6 +1145,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/Sequence_T.h \
   $(TAO_ROOT)/tao/Sequence_T.i \
   $(TAO_ROOT)/tao/Sequence_T.cpp \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
   $(TAO_ROOT)/tao/CDR.h \
@@ -1121,38 +1157,46 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/Principal.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/BoundsC.h \
   $(TAO_ROOT)/tao/BoundsC.i \
@@ -1160,16 +1204,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
-  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1216,7 +1254,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
@@ -1237,6 +1274,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
   $(TAO_ROOT)/tao/Strategies/strategies_export.h \
   $(TAO_ROOT)/tao/default_resource.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
   $(TAO_ROOT)/tao/default_resource.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
