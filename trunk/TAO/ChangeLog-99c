@@ -1,3 +1,24 @@
+Wed Apr 28 15:56:23 1999  Carlos O'Ryan  <coryan@JIG>
+
+	* tao/orbconf.h:
+	* tao/MessagingC.h:
+	* tao/MessagingC.cpp:
+	* tao/MessagingS.h:
+	* tao/MessagingS.cpp:
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.cpp:
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
+	  Added the Messaging components to the NT build, not very
+	  relevant since this are just the skeleton features that we will
+	  need, but good for validation.
+
+	* tao/MessagingS_T.i:
+	* tao/MessagingS_T.cpp:
+	  Fixed problems under HP-UX/aCC thanks to Brian Wallis
+	  <Brian.Wallis@sr.com.au> for initially reporting this problem
+	  and helping us with the fix validation.
+
 Wed Apr 28 14:00:20 1999  Carlos O'Ryan  <coryan@JIG>
 
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:

@@ -8,6 +8,10 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 #include "tao/MessagingS.h"
 #include "tao/POA_CORBA.h"
 #include "tao/Operation_Table.h"
@@ -1844,3 +1848,5 @@ POA_Messaging::Poller::_this (CORBA_Environment &ACE_TRY_ENV)
   return new POA_Messaging::_tao_collocated_Poller (this, stub);
 }
 #endif /* TAO_POLLER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */

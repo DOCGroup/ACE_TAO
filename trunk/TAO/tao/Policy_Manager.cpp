@@ -1,5 +1,7 @@
 // $Id$
 
+#include "tao/orbconf.h"
+
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/Policy_Manager.h"

@@ -230,6 +230,14 @@ SOURCE=.\Marshal.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MessagingC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MessagingS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\MProfile.cpp
 # End Source File
 # Begin Source File
@@ -279,6 +287,10 @@ SOURCE=.\POAManager.cpp
 # Begin Source File
 
 SOURCE=.\POAS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Manager.cpp
 # End Source File
 # Begin Source File
 
@@ -482,6 +494,14 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MessagingC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MessagingS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\MProfile.h
 # End Source File
 # Begin Source File
@@ -551,6 +571,10 @@ SOURCE=.\POAManager.h
 # Begin Source File
 
 SOURCE=.\poaS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Manager.h
 # End Source File
 # Begin Source File
 
@@ -690,6 +714,14 @@ SOURCE=.\marshal.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\MessagingC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MessagingS.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\NVList.i
 # End Source File
 # Begin Source File
@@ -731,6 +763,10 @@ SOURCE=.\POAManager.i
 # Begin Source File
 
 SOURCE=.\poaS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Manager.i
 # End Source File
 # Begin Source File
 
