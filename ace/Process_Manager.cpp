@@ -193,7 +193,7 @@ ACE_Process_Manager::resize (size_t size)
   if (size <= this->max_process_table_size_)
     return 0;
 
-  ACE_Process_Descriptor *temp;
+  ACE_Process_Descriptor *temp = 0;
 
   ACE_NEW_RETURN (temp,
                   ACE_Process_Descriptor[size],
