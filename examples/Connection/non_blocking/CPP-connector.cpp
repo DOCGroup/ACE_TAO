@@ -181,7 +181,6 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
   ACE_Time_Value timeout (argc > 2 
 			  ? ACE_OS::atoi (argv[2]) 
 			  : ACE_DEFAULT_TIMEOUT);
-  char *l_addr = argc > 3 ? argv[3] : ACE_DEFAULT_LOCAL_PORT_STR;
 
   // Handle signals through the ACE_Reactor.
   if (ACE_Reactor::instance ()->register_handler
@@ -189,7 +188,6 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 
   PR_AD remote_addr (r_addr);
-  PR_AD local_addr (l_addr);
 
   this->options_.set (ACE_Synch_Options::USE_REACTOR, timeout);
 
@@ -198,7 +196,7 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
   ACE_NEW_RETURN (sh, SH (this->reactor ()), -1);
 
   // Connect to the peer, reusing the local addr if necessary.
-  if (this->connect (sh, remote_addr, this->options_, local_addr, 1) == -1
+  if (this->connect (sh, remote_addr, this->options_) == -1
       && errno != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
   else
