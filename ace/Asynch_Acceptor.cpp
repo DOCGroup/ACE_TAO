@@ -44,7 +44,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 				    int reuse_addr,
 				    ACE_Proactor *proactor,
                                     int validate_new_connection,
-                                    int reissue_accept)
+                                    int reissue_accept,
+                                    int number_of_initial_accepts)
 {
   this->proactor (proactor);
   this->pass_addresses_ = pass_addresses;
@@ -97,15 +98,35 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                        "%p\n",
                        "ACE_OS::listen"), -1);
 
-  // For the number of <backlog>.
+  // For the number of <intial_accepts>.
+  if (number_of_initial_accepts == -1)
+    number_of_initial_accepts = backlog;
 
-  for (int i = 0; i < backlog; i++)
+  for (int i = 0; i < number_of_initial_accepts; i++)
     // Initiate accepts.
     if (this->accept (bytes_to_read) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "ACE_Asynch_Acceptor::accept"), -1);	
   return 0;
+}
+ 
+template <class HANDLER> void
+ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_socket)
+{
+  // Take ownership of the <listen_socket>
+  this->listen_socket_ = listen_socket;
+
+  // Initialize the ACE_Asynch_Accept
+  this->asynch_accept_.set_handle (this->listen_handle_);
+
+  return 0;
+}
+ 
+template <class HANDLER> ACE_HANDLE 
+ACE_Asynch_Acceptor<HANDLER>::get_handle (void) const
+{
+  return this->listen_socket_;
 }
  
 template <class HANDLER> int
