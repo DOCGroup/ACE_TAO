@@ -262,8 +262,9 @@ ACE_Mutex::remove (void)
        result = 0;
      }
    return result;
-#endif /* */
+#else /* !CHORUS */
   return ACE_OS::mutex_destroy (&this->lock_);
+#endif /* CHORUS */
 }
 
 ACE_INLINE const ACE_sema_t &

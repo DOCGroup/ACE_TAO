@@ -1,3 +1,11 @@
+1998-10-13  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* ace/OS.cpp : Added static member definition
+		KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS]
+	for CHORUS.
+	
+	* ace/config-chorus.h: Added ACE_HAS_TSS_EMULATION.
+	
 Tue Oct 13 22:40:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Makefile: 
