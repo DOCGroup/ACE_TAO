@@ -209,8 +209,8 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS	Platform does not support reentrant netdb fu
 ACE_LACKS_RPC_H				Platform lacks the ONC RPC header files.  
 ACE_LACKS_PARAM_H			Platform lacks <sys/param.h> (e.g., MVS)
 ACE_LACKS_NAMED_POSIX_SEM		Platform lacks named POSIX semaphores (e.g., Chorus)
-ACE_LACKS_RLIMIT_PROTO			Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)
-ACE_LACKS_POSIX_PROTO			Platform lacks POSIX prototypes for certain System V functions like shared memory and message queues.
+ACE_LACKS_RLIMIT_PROTOTYPE			Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)
+ACE_LACKS_POSIX_PROTOTYPES			Platform lacks POSIX prototypes for certain System V functions like shared memory and message queues.
 ACE_LACKS_PRI_T				Platform lacks pri_t (e.g., Tandem NonStop UNIX).
 ACE_LACKS_PTHREAD_CANCEL		Platform lacks pthread_cancel().
 ACE_LACKS_PTHREAD_THR_SIGSETMASK	Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2)
@@ -239,11 +239,11 @@ ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES	Compiler doesn't support static data memb
 ACE_LACKS_STRCASECMP			Compiler/platform lacks strcasecmp() (e.g., DG/UX, UNIXWARE, VXWORKS)
 ACE_LACKS_STRRECVFD			Platform doesn't define struct strrecvfd.
 ACE_LACKS_SYSCALL			Platform doesn't have syscall() prototype
-ACE_LACKS_SYSV_MSQ_PROTOS		Platform doesn't have prototypes for Sys V msg()* queues.
 ACE_LACKS_T_ERRNO			Header files lack t_errno for TLI
 ACE_LACKS_TCP_H				Platform doesn't have netinet/tcp.h
 ACE_LACKS_THREAD_STACK_SIZE		Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)
 ACE_LACKS_TIMEDWAIT_PROTOTYPES		MIT pthreads platform lacks the timedwait prototypes
+ACE_LACKS_UALARM_PROTOTYPE		Platform/compiler lacks the ualarm() prototype (e.g., Solaris)
 ACE_LACKS_UCONTEXT_H			Platform lacks the ucontext.h file
 ACE_LACKS_UNIX_DOMAIN_SOCKETS		ACE platform has no UNIX domain sockets
 ACE_LACKS_UNIX_SIGNALS			Platform lacks full signal support (e.g., Win32 and Chorus).

@@ -11,7 +11,7 @@
 #define ACE_LACKS_GETPGID
 
 #define ACE_HAS_CHARPTR_SPRINTF
-#define ACE_LACKS_POSIX_PROTO
+#define ACE_LACKS_POSIX_PROTOTYPES
 // #define ACE_HAS_UNION_WAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)

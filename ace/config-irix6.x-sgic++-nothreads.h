@@ -26,6 +26,7 @@
 #define ACE_HAS_SETOWN
 #define ACE_HAS_SYSENT_H
 #define ACE_HAS_SYSINFO
+#define ACE_HAS_UALARM
 
 // We need to setup a very high address or Naming_Test won't run.
 #define ACE_DEFAULT_BASE_ADDR ((char *) (1024U * 1024 * 1024)) 

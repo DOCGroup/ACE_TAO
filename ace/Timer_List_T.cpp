@@ -10,13 +10,12 @@
 // Default Constructor
 
 template <class TYPE, class FUNCTOR, class LOCK>
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &listParm)
-  : timer_list_ (listParm),
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &list)
+  : timer_list_ (list),
     position_ (NULL)
 {
   // Nothing
 }
-
 
 // Positions the iterator at the node right after the dummy node
 
@@ -25,7 +24,6 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::first (void)
 {
   this->position_ = this->timer_list_.head_->get_next ();
 }
-
 
 // Positions the iterator at the next node in the Timer Queue
 
@@ -37,7 +35,6 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::next (void)
     this->position_ = this->position_->get_next ();
 }
 
-
 // Returns true when we are at <head_>
 
 template <class TYPE, class FUNCTOR, class LOCK> int 
@@ -45,7 +42,6 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::isdone (void)
 {
   return this->position_ == this->timer_list_.head_;
 }
-
 
 // Returns the node at <position_> or NULL if we are at the end
 
@@ -57,7 +53,6 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::item (void)
   return NULL;
 }
 
-
 // Return our instance of the iterator
 
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
@@ -65,7 +60,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::iter (void)
 {
   return this->iterator_;
 }
-
 
 // Create an empty list.
 

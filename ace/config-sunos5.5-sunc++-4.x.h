@@ -46,6 +46,8 @@
 #define ACE_HAS_P_READ_WRITE
 
 #define ACE_HAS_UNICODE
+#define ACE_HAS_UALARM
+#define ACE_LACKS_UALARM_PROTOTYPE
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
