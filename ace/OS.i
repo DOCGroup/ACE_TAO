@@ -6766,11 +6766,11 @@ ACE_OS::unlink (const wchar_t *path)
   ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
 }
 
-ACE_INLINE void *
+ACE_INLINE ACE_SHLIB_HANDLE
 ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
 {
   // ACE_TRACE ("ACE_OS::dlopen");
-  ACE_OSCALL_RETURN (::LoadLibraryW (filename), void *, 0);
+  ACE_OSCALL_RETURN (::LoadLibraryW (filename), ACE_SHLIB_HANDLE, 0);
 }
 
 ACE_INLINE wchar_t *
