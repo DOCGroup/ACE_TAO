@@ -1,3 +1,10 @@
+Fri Aug  1 14:55:00 2003  Dan Troesser  <troesser_d@ociweb.com>
+
+        * bin/create_ace_build.pl:
+
+          Added -a (absolute) option to correspond with original 
+          create_ace_build script.
+
 Fri Aug  1 14:52:17 2003  Justin Michel  <michel_j@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
