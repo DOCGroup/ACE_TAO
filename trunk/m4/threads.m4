@@ -351,22 +351,22 @@ AC_DEFUN(ACE_CHECK_THREAD_FLAGS, dnl
 [
 ACE_CONVERT_WARNINGS_TO_ERRORS([
 AC_TRY_LINK(
-ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
-extern "C"
-#endif
-
+[
 #ifndef _REENTRANT
 #error _REENTRANT was not defined
 THROW ME AN ERROR!
 #endif
-])dnl
+]
+ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
+extern "C"
+#endif
+])
 [
 char thr_create();
 ], [
 thr_create();
 ], [$1],
 [
-dnl
   AC_REQUIRE([AC_PROG_AWK])
 
   AC_TRY_CPP(
@@ -394,13 +394,14 @@ EOF
   fi dnl test "$ace_header_not_exist" != yes
 
 AC_TRY_LINK(
-ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
-extern "C"
-#endif
-
+[
 #ifndef _REENTRANT
 #error _REENTRANT was not defined
 THROW ME AN ERROR!
+#endif
+]
+ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
+extern "C"
 #endif
 ])dnl
 [
@@ -409,7 +410,6 @@ char $ace_real_function();
 $ace_real_function();
 ], [$1],[$2])
 
-dnl
   ])
  ])
 ])
