@@ -143,8 +143,54 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
 HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> using the GNU
 g++ 2.7.2 compiler.<P>
 
-With RedHat 5.0 distributions of Linux, it's best to use the
-Cyngus egcs compiler, at least version 1.0.1.<p>
+With RedHat 5.0 distributions of Linux, it's best to upgrade
+the distribution with these:
+<ul>
+  <li>egcs 1.0.1
+  <li>glibc-2.0.6 (from ftp://sunsite.unc.edu/pub/gnu plus Torbjörn's patch)
+  <li>linuxthreads 0.7? for the glibc-2.0.6 above
+</ul>
+
+And, apply Torbjorn Lindgren's &lt;tl@funcom.com&gt; patch to
+glibc-2.0.6's LinuxThread:<p>
+
+<pre>
+--- signals.c.old	Wed Jan 14 01:09:02 1998
++++ signals.c	Wed Jan 14 01:11:37 1998
+@@ -82,7 +82,7 @@
+   pthread_mutex_lock(&sigwaited_mut);
+   /* Make sure no other thread is waiting on our signals */
+ test_again:
+-  for (s = 0; s &lt; NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && sigismember(&sigwaited, s)) {
+       pthread_cond_wait(&sigwaited_changed, &sigwaited_mut);
+       goto test_again;
+@@ -96,7 +96,7 @@
+   /* Install our signal handler on all signals in set,
+      and unblock them in mask.
+      Also mark those signals as being sigwaited on */
+-  for (s = 1; s &lt;= NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
+       sigdelset(&mask, s);
+       action.sa_handler = __pthread_sighandler;
+@@ -121,7 +121,7 @@
+   self-&gt;p_cancel_jmp = NULL;
+   /* The signals are now reblocked. Restore the sighandlers. */
+   pthread_mutex_lock(&sigwaited_mut);
+-  for (s = 1; s &lt;= NSIG; s++) {
++  for (s = 1; s &lt; NSIG; s++) {
+     if (sigismember(set, s) && s != PTHREAD_SIG_CANCEL) {
+       sigaction(s, &(saved_signals[s]), NULL);
+       sigdelset(&sigwaited, s);
+</pre>
+
+Thanks to James CE Johnson &lt;jjohnson@lads.com&gt;, Torbjorn
+Lindgren &lt;tl@funcom.com&gt;, and Oleg Krivosheev
+&lt;kriol@fnal.gov&gt; for this information; Torbjorn supplied the
+above patch.  With the above configuration, Jame and Torbjorn report
+that only ACE Thread_Manager_Test seg faults!<p>
 
 With RedHat 5.0 on Alpha CPUs, two system patches are necessary.
 Even with them, threads are not stable.  It's best to use ACE
