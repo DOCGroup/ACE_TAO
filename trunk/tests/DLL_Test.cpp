@@ -31,7 +31,7 @@
 #   define ACE_OBJ_SUFFIX ".o"
 #endif
 
-class Hello 
+class Hello
 {
   // = TITLE
   //    The Hello class in the dynamically linkable library.
@@ -77,9 +77,9 @@ Hello *get_hello (void)
 
 typedef Hello *(*TC) (void);
 
-int 
+int
 main (int argc, char *argv[])
-{ 
+{
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
@@ -119,6 +119,8 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <Hello>;
+template class ACE_Auto_Basic_Ptr <Hello>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate auto_ptr <Hello>
+#pragma instantiate ACE_Auto_Basic_Ptr <Hello>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
