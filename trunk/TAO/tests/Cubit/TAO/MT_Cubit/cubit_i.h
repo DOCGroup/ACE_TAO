@@ -9,12 +9,12 @@
 //    cubit_i.h
 //
 // = AUTHOR
-//    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
+//    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
 //
 // ============================================================================
 
-#ifndef	_CUBIT_I_HH
-#define	_CUBIT_I_HH
+#if !defined (_CUBIT_I_HH)
+#define _CUBIT_I_HH
 
 #include "cubitS.h"
 
@@ -41,4 +41,4 @@ public:
   virtual void please_exit (CORBA::Environment &env);
 };
 
-#endif	// _CUBIT_I_HH
+#endif /* _CUBIT_I_HH */
