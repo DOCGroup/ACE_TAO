@@ -717,8 +717,46 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-        // Demarshal the system exception and raise it!
-        return TAO_INVOKE_EXCEPTION;
+        // @@ Add the location macros for this exceptions...
+
+        CORBA::String_var type_id;
+        if ((this->inp_stream_ >> type_id.inout ()) == 0)
+          {
+            // Could not demarshal the exception id, raise an local
+            // CORBA::MARSHAL
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                              CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_OK);
+          }
+        CORBA::ULong minor = 0;
+        CORBA::ULong completion = 0;
+        if ((this->inp_stream_ >> minor) == 0
+            || (this->inp_stream_ >> completion) == 0)
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                            CORBA::COMPLETED_MAYBE),
+                            TAO_INVOKE_OK);
+
+        CORBA::SystemException* ex =
+          TAO_Exceptions::create_system_exception (type_id.in (),
+                                                   ACE_TRY_ENV);
+        ACE_CHECK_RETURN (TAO_INVOKE_OK);
+
+        if (ex == 0)
+          {
+            // @@ We should raise a CORBA::NO_MEMORY, but we ran out
+            //    of memory already. We need a pre-allocated, TSS,
+            //    CORBA::NO_MEMORY instance
+            ACE_NEW_RETURN (ex, CORBA::UNKNOWN, TAO_INVOKE_EXCEPTION);
+          }
+        ex->minor (minor);
+        ex->completed (CORBA::CompletionStatus (completion));
+
+
+        // @@ There should be a better way to raise this exception!
+        //    This code works for both native and emulated exceptions, 
+        //    but it is ugly.
+        ACE_TRY_ENV.exception (ex);
+        return TAO_INVOKE_OK;
       }
       // NOTREACHED.
 

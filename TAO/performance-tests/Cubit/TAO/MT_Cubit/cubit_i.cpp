@@ -6,8 +6,10 @@
 
 ACE_RCSID(MT_Cubit, cubit_i, "$Id$")
 
-Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
-  :orb_ (CORBA::ORB::_duplicate (orb))
+Cubit_i::Cubit_i (CORBA::ORB_ptr orb,
+                  PortableServer::POA_ptr poa)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 
@@ -36,7 +38,7 @@ Cubit_i::cube_long (CORBA::Long l,
   return (CORBA::Long) (l * l * l);
 }
 
-Cubit::Many 
+Cubit::Many
 Cubit_i::cube_struct (const Cubit::Many &values,
                       CORBA::Environment &)
 {
@@ -49,7 +51,7 @@ Cubit_i::cube_struct (const Cubit::Many &values,
   return out_values;
 }
 
-void 
+void
 Cubit_i::noop (CORBA::Environment &)
 {
   // does nothing.
@@ -57,7 +59,13 @@ Cubit_i::noop (CORBA::Environment &)
 
 void Cubit_i::shutdown (CORBA::Environment &)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) Calling orb ()->shutdown ()\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Calling orb ()->shutdown ()\n"));
   this->orb_->shutdown ();
+}
+
+PortableServer::POA_ptr
+Cubit_i::_default_POA (CORBA::Environment &)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }

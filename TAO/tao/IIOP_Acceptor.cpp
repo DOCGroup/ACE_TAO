@@ -133,31 +133,56 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                            const ACE_INET_Addr& addr)
 {
   if (this->base_acceptor_.open (orb_core, addr) == -1)
-    return -1;
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n",
+                    "cannot open acceptor"));
+      return -1;
+    }
 
   // @@ Should this be a catastrophic error???
   if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
-    return -1;
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n",
+                    "cannot get local addr"));
+      return -1;
+    }
 
   if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
       const char *tmp;
       if ((tmp = addr.get_host_addr ()) == 0)
-        return -1;
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n",
+                        "cannot cache hostname"));
+          return -1;
+        }
       this->host_ = tmp;
     }
   else
     {
       char tmp_host[MAXHOSTNAMELEN+1];
-       if (addr.get_host_name (tmp_host, sizeof(tmp_host)) != 0)
-         return -1;
-       this->host_ = tmp_host;
+      if (addr.get_host_name (tmp_host, sizeof(tmp_host)) != 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n",
+                        "cannot cache hostname"));
+          return -1;
+        }
+      this->host_ = tmp_host;
     }
 
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) listening on: <%s:%u>\n",
+                  "\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n",
+                  "listening on: <%s:%u>\n",
                   this->host_.c_str (),
                   this->address_.get_port_number ()));
     }

@@ -1,3 +1,28 @@
+Mon Jun  7 16:13:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	* tao/Invocation.cpp:
+	  The system exceptions were not beign demarshaled on the server
+	  side.
+	  Fixed the signature of TAO_Exceptions::create_system_exception,
+	  it was returning a CORBA::Exception* but a
+	  CORBA::SystemException* was better.
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Connector.cpp:
+	  Added a few debugging messages if there is an error.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	  The Cubit_i objects were activated with the _default_POA(), but
+	  that was not overriden, hence they were using the
+	  default/_default_POA which is the RootPOA of the default ORB.
+	  There was also an activation under a child POA but that was not
+	  exported through the IORs printed to the file.
+
 Mon Jun 07 15:14:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * utils/catior/catior.cpp (cat_iiop_profile): added missing

@@ -120,6 +120,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
   // object; but we obtain the transport in the <result>
   // variable. Other threads may modify the hint, but we are not
   // affected.
+  errno = 0;
   if (this->base_connector_.connect (iiop_profile->hint (),
                                      result,
                                      oa) == -1)

@@ -325,8 +325,10 @@ public:
   static void fini (void);
   // Runtime finalization of all standard exception typecodes.
 
-  static CORBA_Exception *create_system_exception (const char *id,
-                                                   CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
+  static CORBA_SystemException *
+       create_system_exception (const char *id,
+                                CORBA_Environment &TAO_IN_ENV =
+                                    TAO_default_environment ());
   // Create a CORBA::SystemException given the interface repository
   // ID.
 
