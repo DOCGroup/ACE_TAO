@@ -203,6 +203,9 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
       // Decrement the reference count
       this->decr_ref_count ();
+
+      // Purge the entry
+      this->purge_entry ();
     }
 
   return 0;

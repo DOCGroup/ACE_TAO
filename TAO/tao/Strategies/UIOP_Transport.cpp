@@ -78,10 +78,6 @@ TAO_UIOP_Transport::close_connection (void)
 {
   // Now close the handler
   this->connection_handler_->handle_close ();
-
-  // Purge the entry from the Cache map first and then close the
-  // handler
-  this->connection_handler_->purge_entry ();
 }
 
 int
@@ -386,7 +382,7 @@ TAO_UIOP_Transport::process_message (void)
           // The reply dispatcher was no longer registered.
           // This can happened when the request/reply
           // times out.
-          // To throw away all registered reply handlers is 
+          // To throw away all registered reply handlers is
           // not the right thing, as there might be just one
           // old reply coming in and several valid new ones
           // pending. If we would invoke <connection_closed>

@@ -72,11 +72,8 @@ TAO_IIOP_Transport::event_handler (void)
 void
 TAO_IIOP_Transport::close_connection (void)
 {
-  // First close the handle
+  // Cal handle close
   this->connection_handler_->handle_close ();
-
-  // Now, purge the entry
-  this->connection_handler_->purge_entry ();
 }
 
 int
@@ -425,7 +422,7 @@ TAO_IIOP_Transport::process_message (void)
           // The reply dispatcher was no longer registered.
           // This can happened when the request/reply
           // times out.
-          // To throw away all registered reply handlers is 
+          // To throw away all registered reply handlers is
           // not the right thing, as there might be just one
           // old reply coming in and several valid new ones
           // pending. If we would invoke <connection_closed>
