@@ -1,3 +1,17 @@
+Sun May  4 19:01:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Fixed C++ keyword lookup to prepend '_cxx' if the string
+          in question is escaped and the unescaped version matches a
+          C++ keyword. If there is no match, the escaped version is
+          passed along to the IDL keyword check, which strips
+          the leading underscore as required for compliance if there
+          is a match with an IDL keyword. Thanks to Nick Lewycky
+          <nicholas@fresco.org> for reporting the problem. This closes
+          [BUGID:1503].
+
 Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Merge of a branch in which 3 new libraries are split off from TAO.

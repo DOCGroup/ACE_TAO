@@ -1423,16 +1423,29 @@ TAO_YY_RULE_SETUP
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
   const TAO_IDL_CPP_Keyword_Entry *entry = 0;
+
   if (!idl_global->preserve_cpp_keywords())
     {
-      entry = cpp_key_tbl.lookup (ace_tao_yytext,
-                        ACE_static_cast (unsigned int,
-                          ACE_OS::strlen (ace_tao_yytext)));
-    }  
+      // This check will ensure that escaped C++ keywords will be
+      // caught and prepended with '_cxx' as non-escaped keywords
+      // are now prepended with '_cxx_'.
+      const char *tmp = 
+        ace_tao_yytext[0] == '_' ? ace_tao_yytext + 1 : ace_tao_yytext;
+
+      entry = 
+        cpp_key_tbl.lookup (tmp,
+                            ACE_static_cast (unsigned int,
+                                             ACE_OS::strlen (tmp)));
+    }
+
   if (entry)
-    tao_yylval.strval = ACE_OS::strdup (entry->mapping_);
+    {
+      tao_yylval.strval = ACE_OS::strdup (entry->mapping_);
+    }
   else
-    tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
+    {
+      tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
+    }
 
   return IDENTIFIER;
 }
