@@ -1,3 +1,18 @@
+Tue Aug 10 21:55:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO/fe/lex.yy.cpp.diff:
+	  Substituted a hard 'break;' for TAO_YY_BREAK in
+	  two places. TAO_YY_BREAK is defined as
+	  ACE_NOTREACHED (break;), which, for some compilers,
+	  is defined in OS.h as a null statement. TAO_YY_BREAK
+	  is used in many places after a 'return xxx' statement,
+	  but in the aforementioned two places, there was no
+	  'return', so for those compilers, control was falling
+	  through to the next case. Thanks to
+	  Christopher Kohlhoff <chris@kohlhoff.com> for tracking
+	  this down on Borland C++ Builder.
+
 Tue Aug 10 20:40:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
