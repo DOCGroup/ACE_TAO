@@ -1,3 +1,11 @@
+Thu Feb 12 10:21:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/TAO/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): added .in ()
+          to objref and cb so that it will compile with g++.
+
+        * tao/Makefile,xdr.{h,cpp},t-xdr.cpp,corba.h: removed xdr files
+          because they're no longer used.
+
 Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/iiopobj.h,stub.h (operator =): added return type to avoid
@@ -21,9 +29,6 @@ Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: added default_vxworks target to prevent make
           warning.
-
-        * tests/TAO/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): added .in ()
-          to objref and cb so that it will compile with g++.
 
 Tue Feb 10 17:39:13 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
