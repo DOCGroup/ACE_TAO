@@ -8,8 +8,13 @@
 #include "ace/Process_Manager.h"
 #include "Iterator_Handler.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID(AMI_Iterator, Iterator_Handler, "$Id$")
+
+ACE_RCSID (AMI_Iterator,
+           Iterator_Handler,
+           "$Id$")
+
 
 Iterator_Handler::Iterator_Handler (void)
   : file_ (ACE_sap_any_cast (const ACE_FILE_Addr &)),

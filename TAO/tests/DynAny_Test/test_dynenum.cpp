@@ -16,6 +16,7 @@
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
+#include "ace/OS_NS_string.h"
 
 Test_DynEnum::Test_DynEnum (CORBA::ORB_var orb, int debug)
   : orb_ (orb),

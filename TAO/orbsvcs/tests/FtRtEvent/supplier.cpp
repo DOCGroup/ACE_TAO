@@ -3,6 +3,7 @@
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "PushSupplier.h"
 #include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 

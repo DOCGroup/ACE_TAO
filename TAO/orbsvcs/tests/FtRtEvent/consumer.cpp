@@ -5,6 +5,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "PushConsumer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 
@@ -15,7 +16,7 @@
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
 ACE_RCSID (FtRtEvent,
-           PushConsumer,
+           consumer,
            "$Id$")
 
 CORBA::ORB_var orb;
@@ -147,4 +148,3 @@ int main(int argc, ACE_TCHAR** argv)
 
   return 0;
 }
-
