@@ -4290,7 +4290,7 @@ ACE_Flow_Spec::delay_variation (u_long dv)
 ACE_INLINE ACE_SERVICE_TYPE 
 ACE_Flow_Spec::service_type (void) 
 { 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
   return this->ServiceType; 
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4300,7 +4300,7 @@ ACE_Flow_Spec::service_type (void)
 ACE_INLINE void 
 ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st) 
 { 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
   this->ServiceType = st; 
 #else
   ACE_UNUSED_ARG (st);
@@ -4310,7 +4310,7 @@ ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st)
 ACE_INLINE u_long 
 ACE_Flow_Spec::max_sdu_size (void) 
 { 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
   return this->MaxSduSize; 
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4320,7 +4320,7 @@ ACE_Flow_Spec::max_sdu_size (void)
 ACE_INLINE void 
 ACE_Flow_Spec::max_sdu_size (u_long mss) 
 { 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
   this->MaxSduSize = mss; 
 #else
   ACE_UNUSED_ARG (mss);
@@ -4330,7 +4330,7 @@ ACE_Flow_Spec::max_sdu_size (u_long mss)
 ACE_INLINE u_long 
 ACE_Flow_Spec::minimum_policed_size (void) 
 { 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
   return this->MinimumPolicedSize; 
 #else
   ACE_NOTSUP_RETURN (0);
@@ -4340,7 +4340,7 @@ ACE_Flow_Spec::minimum_policed_size (void)
 ACE_INLINE void 
 ACE_Flow_Spec::minimum_policed_size (u_long mps) 
 { 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && defined (ACE_HAS_WINNT5)
   this->MinimumPolicedSize = mps; 
 #else
   ACE_UNUSED_ARG (mps);
