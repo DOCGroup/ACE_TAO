@@ -50,7 +50,8 @@ public:
   const BackupList& backups() const;
 
   Info* setup_info(const FTRT::ManagerInfoList & info_list,
-              int my_position
+              int my_position,
+              CORBA::ULong object_group_ref_version
               ACE_ENV_ARG_DECL);
 
   void update_info(Info_ptr& info);

@@ -57,7 +57,8 @@ IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
 
 
 CORBA::Object_ptr
-IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
+IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
+                      CORBA::ULong object_group_ref_version
                       ACE_ENV_ARG_DECL)
 {
   /// generate a new IOGR if the object group changes.
@@ -66,7 +67,7 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
 
   FT::TagFTGroupTaggedComponent ft_tag_component(ft_tag_component_);
   /// the generated IOGR should use a new object_group_ref_version 
-  ft_tag_component.object_group_ref_version++;
+  ft_tag_component.object_group_ref_version = object_group_ref_version;
   set_tag_components(obj.in(), list[0], ft_tag_component
                      ACE_ENV_ARG_PARAMETER);
 

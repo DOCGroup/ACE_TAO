@@ -108,8 +108,10 @@ void TAO_FTEC_Group_Manager::create_group (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
   GroupInfoPublisherBase::Info_ptr info (
-    publisher->setup_info(impl_->info_list, impl_->my_position
-                    ACE_ENV_ARG_PARAMETER));
+    publisher->setup_info(impl_->info_list, 
+                          impl_->my_position,
+                          object_group_ref_version
+                          ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
 
   publisher->update_info(info);
@@ -167,7 +169,9 @@ void TAO_FTEC_Group_Manager::add_member (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
   GroupInfoPublisherBase::Info_ptr group_info (
-    publisher->setup_info(new_impl->info_list, new_impl->my_position
+    publisher->setup_info(new_impl->info_list, 
+                          new_impl->my_position,
+                          object_group_ref_version
                     ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
 
@@ -194,7 +198,8 @@ void TAO_FTEC_Group_Manager::add_member (
 
       GroupInfoPublisherBase::Info_ptr group_info1 (
         publisher->setup_info(new_impl->info_list,
-                              new_impl->my_position
+                              new_impl->my_position,
+                              object_group_ref_version
                               ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;
       ACE_AUTO_PTR_RESET(group_info, group_info1.release(), GroupInfoPublisherBase::Info);
@@ -207,57 +212,57 @@ void TAO_FTEC_Group_Manager::add_member (
 
   if (last_one)
   {
-  // this is the last replica in the list
-  // synchornize the state with the newly joined replica.
-  FtRtecEventChannelAdmin::EventChannelState state;
-  get_state(state ACE_ENV_ARG_PARAMETER);
+    // this is the last replica in the list
+    // synchornize the state with the newly joined replica.
+    FtRtecEventChannelAdmin::EventChannelState state;
+    get_state(state ACE_ENV_ARG_PARAMETER);
 
-  TAO_OutputCDR cdr;
-  cdr << state;
+    TAO_OutputCDR cdr;
+    cdr << state;
 
-  FTRT::State s;
-  if (cdr.begin()->cont()) {
-    ACE_Message_Block* blk;
-    ACE_NEW_THROW_EX(blk, ACE_Message_Block, CORBA::NO_MEMORY());
-    ACE_CDR::consolidate(blk, cdr.begin());
+    FTRT::State s;
+    if (cdr.begin()->cont()) {
+      ACE_Message_Block* blk;
+      ACE_NEW_THROW_EX(blk, ACE_Message_Block, CORBA::NO_MEMORY());
+      ACE_CDR::consolidate(blk, cdr.begin());
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-    s.replace(blk->length(), blk);
+      s.replace(blk->length(), blk);
 #else
-    // If the replace method is not available, we will need
-    // to do the copy manually.  First, set the octet sequence length.
-    CORBA::ULong length = blk->length ();
-    s.length (length);
+      // If the replace method is not available, we will need
+      // to do the copy manually.  First, set the octet sequence length.
+      CORBA::ULong length = blk->length ();
+      s.length (length);
 
-    // Now copy over each byte.
-    char* base = blk->data_block ()->base ();
-    for(CORBA::ULong i = 0; i < length; i++)
+      // Now copy over each byte.
+      char* base = blk->data_block ()->base ();
+      for(CORBA::ULong i = 0; i < length; i++)
       {
         s[i] = base[i];
       }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-    blk->release();
-  }
-  else {
+      blk->release();
+    }
+    else {
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-    s.replace(cdr.begin()->length(), cdr.begin());
+      s.replace(cdr.begin()->length(), cdr.begin());
 #else
-    // If the replace method is not available, we will need
-    // to do the copy manually.  First, set the octet sequence length.
-    CORBA::ULong length = cdr.begin ()->length ();
-    s.length (length);
+      // If the replace method is not available, we will need
+      // to do the copy manually.  First, set the octet sequence length.
+      CORBA::ULong length = cdr.begin ()->length ();
+      s.length (length);
 
-    // Now copy over each byte.
-    char* base = cdr.begin()->data_block ()->base ();
-    for(CORBA::ULong i = 0; i < length; i++)
+      // Now copy over each byte.
+      char* base = cdr.begin()->data_block ()->base ();
+      for(CORBA::ULong i = 0; i < length; i++)
       {
         s[i] = base[i];
       }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-  }
+    }
 
     TAO_FTRTEC::Log(2, "Setting state\n");
-  info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
+    info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     info.ior->create_group(new_impl->info_list,
                            object_group_ref_version
@@ -314,7 +319,9 @@ void TAO_FTEC_Group_Manager::remove_member (
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
 
   GroupInfoPublisherBase::Info_ptr info (
-    publisher->setup_info(impl_->info_list, impl_->my_position
+    publisher->setup_info(impl_->info_list, 
+                          impl_->my_position,
+                          object_group_ref_version
                           ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
   publisher->update_info(info);
