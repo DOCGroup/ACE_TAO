@@ -1,3 +1,13 @@
+Tue Sep 14 18:18:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	* tests/IDL_Test/typedef.idl:
+	  The method documented in my last ChangeLog entry
+	  for generating CDR operators for sequences of 
+	  arrays also works for arrays of arrays. This means
+	  that a portion of the typedef.idl file that was
+	  commented out can now be uncommented.
+
 Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/Endpoint_Per_Priority/client.cpp:
