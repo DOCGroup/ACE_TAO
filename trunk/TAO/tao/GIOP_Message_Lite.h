@@ -94,7 +94,7 @@ public:
                               CORBA::Octet message_type);
   // Processes the messages from the connectors so that they can be
   // passed on to the appropriate states.
-  
+
   CORBA::Boolean write_reply_header (TAO_OutputCDR &cdr,
                                      TAO_Pluggable_Reply_Params &reply,
                                      CORBA::Environment &ACE_TRY_ENV =
@@ -166,7 +166,7 @@ private:
                  const u_char *ptr,
                  size_t len);
   // Print out the contents of the buffer.
-  
+
   ACE_Allocator *cdr_buffer_alloc_;
   ACE_Allocator *cdr_dblock_alloc_;
   // Allocators for the outpur CDR that we hold. As we cannot rely on
@@ -174,7 +174,7 @@ private:
   // reason that we cannot believe the ORB core is that, for a
   // multi-threaded servers it dishes out resources cached in
   // TSS. This would be dangerous as TSS gets destroyed before we
-  // would. So we have our own memory that we can rely on. 
+  // would. So we have our own memory that we can rely on.
 
   TAO_OutputCDR *output_;
   // The output cdr for the GIOP lite message

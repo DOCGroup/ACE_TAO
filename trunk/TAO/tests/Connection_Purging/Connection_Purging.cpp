@@ -9,8 +9,8 @@
 //     Connection_Purging.cpp
 //
 // = DESCRIPTION
-//     This program tests automatic purging in TAO. Collocation is off 
-//     which helps us test the usage and purging of handles from the 
+//     This program tests automatic purging in TAO. Collocation is off
+//     which helps us test the usage and purging of handles from the
 //     connection cache.
 //
 // = AUTHOR
@@ -279,8 +279,8 @@ int
 invoke_remote_calls (CORBA::ORB_ptr client_orb)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-    
-  ACE_TRY 
+
+  ACE_TRY
     {
       for (size_t j = 0;
            j < remote_calls;
@@ -300,12 +300,12 @@ invoke_remote_calls (CORBA::ORB_ptr client_orb)
                 client_orb->string_to_object (info[i].ior.in (),
                                               ACE_TRY_ENV);
               ACE_TRY_CHECK;
-                  
+
               test_var test_object =
                 test::_narrow (object.in (),
                                    ACE_TRY_ENV);
               ACE_TRY_CHECK;
- 
+
               size_t invoke_exception = 0;
               for (int try_invoke = 0; try_invoke < 3; ++try_invoke)
                 {
@@ -360,7 +360,7 @@ orbs_shutdown (void)
           info[i].orb->shutdown (1,
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
           info[i].root_poa->destroy (1,
                                      1,
                                      ACE_TRY_ENV);
@@ -373,7 +373,7 @@ orbs_shutdown (void)
        ACE_ASSERT (0);
      }
   ACE_ENDTRY;
-  
+
   delete[] info;
 }
 
@@ -438,6 +438,10 @@ main (int argc,
       ACE_ASSERT (0);
     }
   //orbs_shutdown ();
+
+  go_to_next_orb = 1;
+
+  server_task.wait ();
 
   return 0;
 }

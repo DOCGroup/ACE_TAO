@@ -453,8 +453,10 @@ TAO_SHMIOP_Client_Connection_Handler::close (u_long)
 int
 TAO_SHMIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  // Call the waiter to handle the input.
-  return this->transport ()->wait_strategy ()->handle_input ();
+  int r = this->transport ()->handle_client_input ();
+  if (r == -1)
+    return -1;
+  return 0;
 }
 
 int

@@ -8,10 +8,12 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "InterfaceC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation.h"
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+#include "tao/NVList.h"
 
 #if !defined (__ACE_INLINE__)
 #include "InterfaceC.i"

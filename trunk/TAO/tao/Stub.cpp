@@ -16,21 +16,20 @@
 #include "tao/NVList.h"
 #include "tao/Invocation.h"
 #include "tao/Asynch_Invocation.h"
+#include "tao/DII_Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/debug.h"
 #include "tao/Sync_Strategies.h"
-#include "ace/Auto_Ptr.h"
-
 #include "tao/Buffering_Constraint_Policy.h"
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
+#include "tao/debug.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
-
 # include "tao/RT_Policy_i.h"
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"
