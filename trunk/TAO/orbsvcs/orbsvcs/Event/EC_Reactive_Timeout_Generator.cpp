@@ -2,6 +2,7 @@
 
 #include "EC_Reactive_Timeout_Generator.h"
 #include "tao/corba.h"
+#include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Reactive_Timeout_Generator.i"

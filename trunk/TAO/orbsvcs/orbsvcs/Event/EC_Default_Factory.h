@@ -24,6 +24,8 @@
 
 #include "EC_Defaults.h"
 
+#include "ace/Service_Config.h"
+
 /**
  * @class TAO_EC_Default_Factory
  *

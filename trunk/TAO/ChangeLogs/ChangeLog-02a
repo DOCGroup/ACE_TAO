@@ -1,3 +1,26 @@
+Sat Jan 27 00:30:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_POA_Factory.h:
+	  Add missing ace/Service_Config.h #include, required for
+	  platforms that do not define ACE_TEMPLATES_REQUIRE_SOURCE.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
+	  Add missing ace/Reactor.h #include, required for
+	  platforms that do not define ACE_TEMPLATES_REQUIRE_SOURCE.
+
 Fri Jan 26 22:24:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Default_Protocols_Hooks.cpp (ACE_RCSID):

@@ -5,6 +5,7 @@
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ProxyPushConsumer.h"
 #include "CEC_ProxyPullConsumer.h"
+#include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_Reactive_SupplierControl.i"
