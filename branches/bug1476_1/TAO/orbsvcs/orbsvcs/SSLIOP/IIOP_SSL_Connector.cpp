@@ -10,6 +10,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Connect_Strategy.h"
 #include "tao/Wait_Strategy.h"
+#include "tao/Profile_Transport_Resolver.h"
 
 #include "ace/Strategies_T.h"
 
@@ -125,7 +126,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) IIOP_SSL connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
                       ACE_TEXT ("failure.\n")));
@@ -139,7 +140,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 TAO_Transport *
 TAO::IIOP_SSL_Connector::make_connection (
-  TAO::Profile_Transport_Resolver *,
+  TAO::Profile_Transport_Resolver *r,
   TAO_Transport_Descriptor_Interface &desc,
   ACE_Time_Value *max_wait_time)
 {
@@ -162,6 +163,16 @@ TAO::IIOP_SSL_Connector::make_connection (
 
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
+
+  // If we don't need to block for a transport just set the timeout to
+  // be zero.
+  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
+  if (!r->blocked ())
+    {
+      synch_options.timeout (ACE_Time_Value::zero);
+      max_wait_time = &tmp_zero;
+    }
+
 
   IIOP_SSL_Connection_Handler *svc_handler = 0;
 
@@ -189,97 +200,45 @@ TAO::IIOP_SSL_Connector::make_connection (
   // another thread pick up the completion and potentially deletes the
   // handler before we get a chance to increment the reference count.
 
-  // No immediate result.  Wait for completion.
-  if (result == -1 && errno == EWOULDBLOCK)
+  // Make sure that we always do a remove_reference
+  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
+
+  TAO_Transport *transport =
+    svc_handler->transport ();
+
+  if (result == -1)
     {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - IIOP_SSL_Connector::make_connection(), "
-                    "going to wait for connection completion on local"
-                    "handle [%d]\n",
-                    svc_handler->get_handle ()));
-
-      // Wait for connection completion.  No need to specify timeout
-      // to wait() since the correct timeout was passed to the
-      // Connector. The Connector will close the handler in the case
-      // of timeouts, so the event will complete (either success or
-      // failure) within timeout.
-      result =
-        this->active_connect_strategy_->wait (svc_handler,
-                                              0);
-
-      if (TAO_debug_level > 2)
+      // No immediate result, wait for completion
+      if (errno == EWOULDBLOCK)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - IIOP_SSL_Connector::make_connection(), "
-                      "wait done for handle[%d], result = %d\n",
-                      svc_handler->get_handle (), result));
-        }
-
-      // There are three possibilities when wait() returns: (a)
-      // connection succeeded; (b) connection failed; (c) wait()
-      // failed because of some other error.  It is easy to deal with
-      // (a) and (b).  (c) is tricky since the connection is still
-      // pending and may get completed by some other thread.  The
-      // following code deals with (c).
-
-      // Check if the handler has been closed.
-      int closed =
-        svc_handler->is_closed ();
-
-      // In case of failures and close() has not be called.
-      if (result == -1 &&
-          !closed)
-        {
-          // First, cancel from connector.
-          this->base_connector_.cancel (svc_handler);
-
-          // Double check to make sure the handler has not been closed
-          // yet.  This double check is required to ensure that the
-          // connection handler was not closed yet by some other
-          // thread since it was still registered with the connector.
-          // Once connector.cancel() has been processed, we are
-          // assured that the connector will no longer open/close this
-          // handler.
-          closed =
-            svc_handler->is_closed ();
-
-          // If closed, there is nothing to do here.  If not closed,
-          // it was either opened or is still pending.
-          if (!closed)
+          // Try to wait until connection completion. Incase we block, then we
+          // get a connected transport or not. In case of non block we get
+          // a connected or not connected transport
+          if (!this->wait_for_connection_completion (r,
+                                                     transport,
+                                                     max_wait_time))
             {
-              // Check if the handler has been opened.
-              int open =
-                svc_handler->is_open ();
-
-              // Some other thread was able to open the handler even
-              // though wait failed for this thread.
-              if (open)
-                // Overwrite <result>.
-                result = 0;
-              else
-                {
-                  // Assert that it is still connecting.
-                  ACE_ASSERT (svc_handler->is_connecting ());
-
-                  // Force close the handler now.
-                  svc_handler->close ();
-                }
+              if (TAO_debug_level > 2)
+                ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIOP_SSL_Connector::"
+                                      "make_connection, "
+                                      "wait for completion failed\n"));
             }
+        }
+      else 
+        {
+          // Transport is not usable
+          transport = 0;
         }
     }
 
-  // Irrespective of success or failure, remove the extra #REFCOUNT#.
-  svc_handler->remove_reference ();
-
-  // In case of errors.
-  if (result == -1)
+  // In case of errors transport is zero
+  if (transport == 0)
     {
       // Give users a clue to the problem.
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_ERROR,
-                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                      "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
                       iiop_endpoint->host (), iiop_endpoint->port (),
                       "errno"));
@@ -292,13 +251,10 @@ TAO::IIOP_SSL_Connector::make_connection (
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                 "new connection to <%s:%d> on Transport[%d]\n",
                 iiop_endpoint->host (), iiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
-
-  TAO_Transport *transport =
-    svc_handler->transport ();
 
   // Add the handler to Cache
   int retval =
@@ -315,36 +271,32 @@ TAO::IIOP_SSL_Connector::make_connection (
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                      "TAO (%P|%t) - IIOP_SSL_Connector::make_connection, "
                       "could not add the new connection to cache\n"));
         }
 
       return 0;
     }
 
-  // If the wait strategy wants us to be registered with the reactor
-  // then we do so. If registeration is required and it succeeds,
-  // #REFCOUNT# becomes two.
-  retval =  transport->wait_strategy ()->register_handler ();
+  return transport;
+}
 
-  // Registration failures.
-  if (retval != 0)
+int
+TAO::IIOP_SSL_Connector::cancel_svc_handler (
+  TAO_Connection_Handler * svc_handler)
+{
+  IIOP_SSL_Connection_Handler* handler=
+    dynamic_cast<IIOP_SSL_Connection_Handler*>(svc_handler);
+
+  if (handler)
     {
-      // Purge from the connection cache.
-      transport->purge_entry ();
-
-      // Close the handler.
-      svc_handler->close ();
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                      "could not register the new connection in the reactor\n"));
-        }
+      // Cancel from the connector
+      this->base_connector_.cancel (handler);
 
       return 0;
     }
-
-  return transport;
+  else
+    {
+      return -1;
+    }
 }

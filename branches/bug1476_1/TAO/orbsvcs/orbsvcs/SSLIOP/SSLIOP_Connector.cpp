@@ -126,7 +126,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                  ACE_TEXT ("TAO (%P|%t) - Connector::connect, ")
                   ACE_TEXT ("looking for SSLIOP connection.\n")));
 
   TAO_Endpoint *endpoint = desc->endpoint ();
@@ -411,15 +411,29 @@ TAO::SSLIOP::Connector::ssliop_connect (
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::connect, ")
                     ACE_TEXT ("got existing transport[%d]\n"),
                     transport->id ()));
+
+      // When the transport is not connected wait for completion
+      if (!transport->is_connected())
+        {
+          if (!this->wait_for_connection_completion (resolver,
+                                                     transport,
+                                                     max_wait_time))
+            { 
+              ACE_ERROR ((LM_ERROR, 
+                          ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::connect,")
+                          ACE_TEXT ("wait for completion failed\n")));
+
+            }
+        }                                      
     }
   else
     {
       if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                    ACE_TEXT ("TAO (%P|%t) - SSLIOP_Connector::connect, ")
                     ACE_TEXT ("making a new connection \n")));
 
       // Purge connections (if necessary)
@@ -447,7 +461,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Unable to create SSLIOP ")
+                        ACE_TEXT ("TAO (%P|%t) Unable to create SSLIOP ")
                         ACE_TEXT ("service handler.\n")));
 
           return 0;
@@ -515,6 +529,15 @@ TAO::SSLIOP::Connector::ssliop_connect (
       this->active_connect_strategy_->synch_options (max_wait_time,
                                                      synch_options);
 
+      // If we don't need to block for a transport just set the timeout to
+      // be zero.
+      ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
+      if (!resolver->blocked ())
+        {
+          synch_options.timeout (ACE_Time_Value::zero);
+          max_wait_time = &tmp_zero;
+        }
+
       // We obtain the transport in the <svc_handler> variable.  As we
       // know now that the connection is not available in Cache we can
       // make a new connection
@@ -530,91 +553,39 @@ TAO::SSLIOP::Connector::ssliop_connect (
       // the #REFCOUNT# on the handler is one since close() gets
       // called on the handler.
 
-      // No immediate result.  Wait for completion.
-      if (result == -1 && errno == EWOULDBLOCK)
+      // Make sure that we always do a remove_reference
+      ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
+
+      transport =
+        svc_handler->transport ();
+
+      if (result == -1)
         {
-          if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect(), "
-                        "going to wait for connection completion on local"
-                        "handle [%d]\n",
-                        svc_handler->get_handle ()));
-
-          // Wait for connection completion.  No need to specify timeout
-          // to wait() since the correct timeout was passed to the
-          // Connector. The Connector will close the handler in the case
-          // of timeouts, so the event will complete (either success or
-          // failure) within timeout.
-          result =
-            this->active_connect_strategy_->wait (svc_handler,
-                                                  0);
-
-          if (TAO_debug_level > 2)
+          // No immediate result, wait for completion
+          if (errno == EWOULDBLOCK)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection"
-                          "wait done for handle[%d], result = %d\n",
-                          svc_handler->get_handle (), result));
-            }
-
-          // There are three possibilities when wait() returns: (a)
-          // connection succeeded; (b) connection failed; (c) wait()
-          // failed because of some other error.  It is easy to deal with
-          // (a) and (b).  (c) is tricky since the connection is still
-          // pending and may get completed by some other thread.  The
-          // following code deals with (c).
-
-          // Check if the handler has been closed.
-          int closed =
-            svc_handler->is_closed ();
-
-          // In case of failures and close() has not be called.
-          if (result == -1 &&
-              !closed)
-            {
-              // First, cancel from connector.
-              this->base_connector_.cancel (svc_handler);
-
-              // Double check to make sure the handler has not been closed
-              // yet.  This double check is required to ensure that the
-              // connection handler was not closed yet by some other
-              // thread since it was still registered with the connector.
-              // Once connector.cancel() has been processed, we are
-              // assured that the connector will no longer open/close this
-              // handler.
-              closed =
-                svc_handler->is_closed ();
-
-              // If closed, there is nothing to do here.  If not closed,
-              // it was either opened or is still pending.
-              if (!closed)
+              // Try to wait until connection completion. Incase we block, then we
+              // get a connected transport or not. In case of non block we get
+              // a connected or not connected transport
+              if (!this->wait_for_connection_completion (resolver,
+                                                         transport,
+                                                         max_wait_time))
                 {
-                  // Check if the handler has been opened.
-                  int open =
-                    svc_handler->is_open ();
-
-                  // Some other thread was able to open the handler even
-                  // though wait failed for this thread.
-                  if (open)
-                    // Overwrite <result>.
-                    result = 0;
-                  else
-                    {
-                      // Assert that it is still connecting.
-                      ACE_ASSERT (svc_handler->is_connecting ());
-
-                      // Force close the handler now.
-                      svc_handler->close ();
-                    }
+                  if (TAO_debug_level > 2)
+                    ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - SSLIOP_Connector::"
+                                          "make_connection, "
+                                          "wait for completion failed\n"));
                 }
+            }
+          else
+            {
+              // Transport is not usable
+              transport = 0;
             }
         }
 
-      // Irrespective of success or failure, remove the extra #REFCOUNT#.
-      svc_handler->remove_reference ();
-
-      // In case of errors.
-      if (result == -1)
+      // In case of errors transport is zero
+      if (transport == 0)
         {
           // Give users a clue to the problem.
           if (TAO_debug_level)
@@ -623,7 +594,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
               ssl_endpoint->addr_to_string (buffer,
                                             sizeof (buffer) - 1);
               ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) %N:%l, SSL connection to ")
+                          ACE_TEXT ("TAO (%P|%t) - SSL connection to ")
                           ACE_TEXT ("<%s:%d> failed (%p)\n"),
                           buffer,
                           remote_address.get_port_number (),
@@ -637,13 +608,10 @@ TAO::SSLIOP::Connector::ssliop_connect (
       // #REFCOUNT# is one.
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect(): "
+                    "TAO (%P|%t) - SSLIOP_Connector::ssliop_connect, "
                     "new SSL connection to port %d on transport[%d]\n",
                     remote_address.get_port_number (),
                     svc_handler->peer ().get_handle ()));
-
-      transport =
-        svc_handler->transport ();
 
       ssl_endpoint->qop (qop);
       ssl_endpoint->trust (trust);
@@ -664,33 +632,8 @@ TAO::SSLIOP::Connector::ssliop_connect (
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                          "TAO (%P|%t) - SLIIOP_Connector::make_connection, "
                           "could not add the new connection to cache\n"));
-            }
-
-          return 0;
-        }
-
-      // If the wait strategy wants us to be registered with the reactor
-      // then we do so. If registeration is required and it succeeds,
-      // #REFCOUNT# becomes two.
-      retval =  transport->wait_strategy ()->register_handler ();
-
-      // Registration failures.
-      if (retval != 0)
-        {
-          // Purge from the connection cache.
-          transport->purge_entry ();
-
-          // Close the handler.
-          svc_handler->close ();
-
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                          "could not register the new connection in the "
-                          "reactor\n"));
             }
 
           return 0;
@@ -770,4 +713,24 @@ TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
     }
 
   return ssliop_credentials._retn ();
+}
+
+int
+TAO::SSLIOP::Connector::cancel_svc_handler (
+  TAO_Connection_Handler * svc_handler)
+{
+  TAO::SSLIOP::Connection_Handler* handler=
+    dynamic_cast<TAO::SSLIOP::Connection_Handler*>(svc_handler);
+
+  if (handler)
+    {
+      // Cancel from the connector
+      this->base_connector_.cancel (handler);
+
+      return 0;
+    }
+  else
+    {
+      return -1;
+    }
 }
