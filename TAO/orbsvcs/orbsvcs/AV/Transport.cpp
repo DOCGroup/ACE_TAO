@@ -491,6 +491,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
         }
       else
         {
+          ACE_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
           TAO_AV_TransportFactorySetItor transport_factory_end =
             av_core->transport_factories ()->end ();
           for (;transport_factory != transport_factory_end;
@@ -506,7 +507,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                     ACE_ERROR ((LM_ERROR,
                                 "TAO (%P|%t) Unable to match protocol prefix "
                                 "for <%s>\n",
-                                flow_protocol));
+                                transport_protocol));
                   continue;
                 }
 

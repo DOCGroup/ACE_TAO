@@ -1,3 +1,11 @@
+Thu Jun 14 00:45:08 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp
+           Do not pass a null ACE_Flow_Spec object to handler->translate()
+
+        * orbsvcs/orbsvcs/AV/Transport.cpp
+           Improve debugging messages.
+
 Wed Jun 13 17:28:18 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/ORB_Core.h:
