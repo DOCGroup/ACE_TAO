@@ -63,6 +63,33 @@ Package=<4>
 
 ###############################################################################
 
+Project: "IORTable"=.\IORTable\TAO_IORTable.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORTable_Static"=.\IORTable\TAO_IORTable_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "PortableServer"=.\PortableServer\TAO_PortableServer.dsp - Package Owner=<4>
 
 Package=<5>
@@ -128,3 +155,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+

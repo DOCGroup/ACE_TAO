@@ -1259,25 +1259,6 @@ SOURCE=.\IOPS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOR_LookupTable.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3197,10 +3178,6 @@ SOURCE=.\IOPC.h
 # Begin Source File
 
 SOURCE=.\IOPS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOR_LookupTable.h
 # End Source File
 # Begin Source File
 
