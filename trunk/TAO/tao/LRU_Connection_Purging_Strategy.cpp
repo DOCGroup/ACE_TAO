@@ -22,6 +22,7 @@ TAO_LRU_Connection_Purging_Strategy::update_item_i (
                                        TAO_DESCRIPTOR_INTERFACE* prop,
                                        TAO_PURGING_CACHE_ITEM* item)
 {
+  ACE_UNUSED_ARG (item);
   TAO_Cache_ExtId ext_id (prop);
   ATTRIBUTE_TYPE int_id (this->order_++);
   this->tracking_map ().rebind(ext_id, int_id);
