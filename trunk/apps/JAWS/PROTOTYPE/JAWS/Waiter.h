@@ -11,8 +11,10 @@
 
 class JAWS_IO_Handler;
 
-typedef JAWS_Assoc_Array<ACE_Thread_ID, JAWS_IO_Handler *> JAWS_Waiter_Base;
-typedef JAWS_Assoc_Array_Iterator<ACE_Thread_ID, JAWS_IO_Handler *>
+typedef ACE_thread_t JAWS_Thread_ID;
+
+typedef JAWS_Assoc_Array<JAWS_Thread_ID, JAWS_IO_Handler *> JAWS_Waiter_Base;
+typedef JAWS_Assoc_Array_Iterator<JAWS_Thread_ID, JAWS_IO_Handler *>
         JAWS_Waiter_Base_Iterator;
 
 class JAWS_Export JAWS_Waiter : public JAWS_Waiter_Base

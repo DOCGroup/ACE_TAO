@@ -238,7 +238,6 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
   this->nthreads_ = nthreads;
   this->maxthreads_ = maxthreads;
 
-  ACE_hthread_t *thr_handles = new ACE_hthread_t[nthreads];
   ACE_thread_t *thr_names = new ACE_thread_t[nthreads];
 
   if (this->activate (flags | THR_SUSPENDED,
@@ -247,7 +246,7 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
                       ACE_DEFAULT_THREAD_PRIORITY,
                       -1,         // group id
                       0,          // ACE_Task_Base
-                      thr_handles,
+                      0,          // thread handles
                       0,          // stack
                       0,          // stack size
                       thr_names) == -1)
@@ -256,13 +255,12 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
 
   for (int i = 0; i < nthreads; i++)
     {
-      ACE_Thread_ID thr_id(thr_names[i], thr_handles[i]);
+      JAWS_Thread_ID thr_id(thr_names[i]);
       JAWS_IO_Handler *dummy = 0;
 
       JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
     }
 
-  delete[] thr_handles;
   delete[] thr_names;
 
   this->thr_mgr_->resume_all ();
@@ -303,7 +301,6 @@ JAWS_Thread_Per_Task::activate_hook (void)
   const int force_active = 1;
   const int nthreads = 1;
 
-  ACE_hthread_t thr_handle;
   ACE_thread_t thr_name;
 
   if (this->activate (this->flags_ | THR_SUSPENDED,
@@ -312,14 +309,14 @@ JAWS_Thread_Per_Task::activate_hook (void)
                       ACE_DEFAULT_THREAD_PRIORITY,
                       -1,         // group id
                       0,          // ACE_Task_Base
-                      &thr_handle,
+                      0,          // thread handle
                       0,          // stack
                       0,          // stack size
                       &thr_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
 
-  ACE_Thread_ID thr_id(thr_name, thr_handle);
+  JAWS_Thread_ID thr_id(thr_name);
   JAWS_IO_Handler *dummy = 0;
 
   JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
