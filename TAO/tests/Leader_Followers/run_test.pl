@@ -107,10 +107,10 @@ if ($server != 0 || $client != 0) {
   exit 1;
 }
 
-print STDERR "\n\n*** Thread-per-connection server ***\n\n\n";
+print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
-                       "-ORBsvcconf thread_per_connection.conf");
+                       "multi_threaded_event_loop.conf -e 5");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
