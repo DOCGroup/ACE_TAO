@@ -1,3 +1,10 @@
+Mon Aug 23 22:19:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/CDR_Test.cpp (run_main):
+
+	  Added run-time assertions that verify proper CDR type sizes
+	  (e.g. sizeof (ACE_CDR::Boolean) == 1).
+
 Mon Aug 23 19:18:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:
