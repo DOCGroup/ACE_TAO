@@ -12,7 +12,7 @@ Thu Jan 20 18:29:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Thu Jan 20 09:54:04 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/Display/descriptors/NOTE.txt: 
+	* examples/OEP/Display/descriptors/NOTE.txt:
 	* examples/OEP/Display/descriptors/NOTE-win.txt: Fixed the
 	  discrepancy on using Assembly_Deployer.  Thanks to Martina Yen
 	  <martina_h_yen@raytheon.com> for reporting this.
@@ -25,16 +25,16 @@ Wed Jan 19 09:39:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc
 	* DAnCE/examples/BasicSP/EC/EC.mpc
 
-          Changed the shared component library name from 
+          Changed the shared component library name from
           <what_ever_component>_DnC_<stub> to <What_ever_component>_<stub>,
           since it doesn't make sense to let the modelers to put _DnC
           trailing a component name.
 
-          The same change applied to _svnt and _exec libraries. 
-         
+          The same change applied to _svnt and _exec libraries.
+
 	* DAnCE/examples/BasicSP/descriptors/basicNodeDaemon.pl
 
-          Fixed this script since Some earlier cosmetic change make 
+          Fixed this script since Some earlier cosmetic change make
           this perl script broken.
 
           Thanks Steven Baker <Steven_D_Baker@raytheon.com> and
@@ -52,10 +52,10 @@ Sat Jan 15 15:16:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 Mon Jan 10 09:45:14 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* DAnCE/RTNodeApplication/RTServer_Impl.h: 
+	* DAnCE/RTNodeApplication/RTServer_Impl.h:
 	* DAnCE/RTNodeApplication/RTServer_Impl.cpp: Removed init method
 	  altogether.  VC6 can't handle the syntax and we'll deal with
-	  later. 
+	  later.
 
 Fri Jan  7 10:02:02 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -156,7 +156,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           {
             char * temp = Utils::parse_string (iter);
             any_obj <<= temp;
-            XMLString::release (&temp); 
+            XMLString::release (&temp);
           }
           break;
 
