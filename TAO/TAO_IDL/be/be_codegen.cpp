@@ -981,8 +981,12 @@ int
 TAO_CodeGen::end_server_header (void)
 {
   // insert the template header
-  *this->server_header_ << "#include \"" <<
-    idl_global->be_get_server_template_hdr_fname (1) << "\"\n";
+  if (idl_global->gen_tie_classes ())
+    {
+      *this->server_header_ << "#include \"" 
+                            << idl_global->be_get_server_template_hdr_fname (1) 
+                            << "\"\n";
+    }
 
   // insert the code to include the inline file
   *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
