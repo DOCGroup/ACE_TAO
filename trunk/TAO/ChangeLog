@@ -1,3 +1,9 @@
+Thu Mar 17 14:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+          Added include of CORBA_methods.h to resolve compile problems in
+          FC3 build
+
 Thu Mar 17 13:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
