@@ -35,9 +35,10 @@ class TAO_NS_Event_Map_Observer;
 template <class PROXY, class ACE_LOCK>
 class TAO_NS_Event_Map_T
 {
-  typedef TAO_NS_Event_Map_Entry_T<PROXY> ENTRY;
 
 public:
+  typedef ACE_TYPENAME TAO_NS_Event_Map_Entry_T<PROXY> ENTRY;
+  
   /// Constuctor
   TAO_NS_Event_Map_T (void);
 
@@ -57,10 +58,10 @@ public:
   int remove (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Find the collection mapped to the <event_type>
-  ENTRY::COLLECTION* find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
+  ACE_TYPENAME ENTRY::COLLECTION* find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Find the default broadcast list.
-  ENTRY::COLLECTION* broadcast_collection (void);
+  ACE_TYPENAME ENTRY::COLLECTION* broadcast_collection (void);
 
   /// Access count, number of different event types in the map.
   int event_type_count (void);

@@ -3,7 +3,7 @@
 /*************************************************************************************************/
 
 template<class OBJECT> ACE_INLINE OBJECT*
-TAO_NS_Object_Find_Worker_T<OBJECT>::find (TAO_NS_Object_Find_Worker_T<OBJECT>::COLLECTION* collection ACE_ENV_ARG_DECL)
+TAO_NS_Object_Find_Worker_T<OBJECT>::find ( ACE_TYPENAME TAO_NS_Object_Find_Worker_T::COLLECTION* collection ACE_ENV_ARG_DECL)
 {
   collection->for_each (this ACE_ENV_ARG_PARAMETER);
   return this->result_;

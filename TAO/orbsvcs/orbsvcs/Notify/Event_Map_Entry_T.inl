@@ -1,8 +1,8 @@
 // $Id$
 
-template <class PROXY> ACE_INLINE TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
-TAO_NS_Event_Map_Entry_T<PROXY>::collection (void)
-{
+template <class PROXY> ACE_INLINE ACE_TYPENAME
+TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
+TAO_NS_Event_Map_Entry_T<PROXY>::collection (void) {
   return collection_;
 }
 

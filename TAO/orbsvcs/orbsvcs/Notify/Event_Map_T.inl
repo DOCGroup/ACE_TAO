@@ -1,6 +1,6 @@
 // $Id$
 
-template <class PROXY, class ACE_LOCK> ACE_INLINE TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
+template <class PROXY, class ACE_LOCK> ACE_INLINE  ACE_TYPENAME TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
 TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL_NOT_USED)
 {
   TAO_NS_Event_Map_Entry_T<PROXY>* entry;
@@ -13,7 +13,7 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_NS_EventType& event_type AC
     return 0;
 }
 
-template <class PROXY, class ACE_LOCK> ACE_INLINE TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
+template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
 TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::broadcast_collection (void)
 {
   return this->broadcast_entry_.collection ();
