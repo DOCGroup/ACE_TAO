@@ -1,3 +1,18 @@
+Wed Jun 20 17:37:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAnyFactory.cpp:
+
+          Initialized all the TAO_*_i pointers to 0, before they are
+          passed to ACE_NEW_THROW_EX, in the make_dyn_any functions.
+
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+
+          Removed the guards around get_(u)longlong and insert_(u)longlong
+          functions. Modified body of get_longlong() to use the new
+          ACE_CDR_LONGLONG_INITIALIZER macro added to class ACE. Implemented
+          insert_longdouble() and get_longdouble().
+
 Wed Jun 20 15:36:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
