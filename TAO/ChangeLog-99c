@@ -1,5 +1,8 @@
 Tue Jul 13 16:15:43 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* tao/Wait_Strategy.cpp:  Added debug statements. 
+	* tao/GIOP.cpp : Modifications to the dump message routine.   
+  
 	* tao/IIOP_Connect.cpp
 	* tao/IIOP_Connect.h
 	* tao/ORB_Core.cpp
