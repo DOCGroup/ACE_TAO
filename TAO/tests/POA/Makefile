@@ -15,7 +15,8 @@ DIRS  = Destruction \
 	Deactivation \
 	Non_Servant_Upcalls \
 	Single_Threaded_POA \
-	Identity
+	Identity \
+	Multiple_Deactivations
 
 # The following test hasn't been updated yet
 # Demux_Test

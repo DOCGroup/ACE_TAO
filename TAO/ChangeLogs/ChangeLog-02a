@@ -1,3 +1,25 @@
+Thu Mar 22 15:32:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/PortableServer/POA.cpp (deactivate_object_i): 
+	  The deactivation code did not check for previous deactivations,
+	  this can result in crashes as the ORB deactivates objects in the
+	  middle of a request. This fixes [BUGID:834]
+	  Also fixed compilation problems under Minimum CORBA
+	  configurations.
+
+	* tests/POA/Makefile:
+	* tests/POA/Makefile.bor:
+	* tests/POA/README:
+	* tests/POA/Multiple_Deactivations/README:
+	* tests/POA/Multiple_Deactivations/Makefile:
+	* tests/POA/Multiple_Deactivations/Makefile.bor:
+	* tests/POA/Multiple_Deactivations/run_test.pl:
+	* tests/POA/Multiple_Deactivations/Test.idl:
+	* tests/POA/Multiple_Deactivations/Empty.h:
+	* tests/POA/Multiple_Deactivations/Empty.cpp:
+	* tests/POA/Multiple_Deactivations/server.cpp:
+	  New regression test for the previous bug.
+
 Thu Mar 22 12:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * docs/releasenotes/index.html:
