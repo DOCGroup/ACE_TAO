@@ -4,7 +4,7 @@ Thu Jul 16 08:55:48 1998  David L. Levine  <levine@cs.wustl.edu>
           from local void * obj, because the function return value
           isn't const.  Sun C++ caught this.
 
-        * STL: removed STL from ACE, for good this time.  There
+        * STL,Makefile: removed STL from ACE, for good this time.  There
           are no more STL dependencies in TAO's AVStreams.
 
 Wed Jul 15 19:00:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
