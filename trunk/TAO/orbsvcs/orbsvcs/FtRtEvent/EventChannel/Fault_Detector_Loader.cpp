@@ -56,7 +56,7 @@ namespace FTRTEC {
 
   /////////////////////////////////////////////////////////////////////
 
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Fault_Detector_Loader);
+  ACE_FACTORY_DEFINE (TAO_FTRTEC, Fault_Detector_Loader)
 
   ACE_STATIC_SVC_DEFINE (Fault_Detector_Loader,
     ACE_TEXT ("FTRTEC_Fault_Detector"),
@@ -64,5 +64,5 @@ namespace FTRTEC {
     &ACE_SVC_NAME (Fault_Detector_Loader),
     ACE_Service_Type::DELETE_THIS
     | ACE_Service_Type::DELETE_OBJ,
-    0);
+    0)
 }
