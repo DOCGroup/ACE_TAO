@@ -3672,7 +3672,7 @@ TAO_MMDevice::~TAO_MMDevice (void)
 // default constructor.
 TAO_FlowConnection::TAO_FlowConnection (void)
   :fp_name_ (CORBA::string_dup ("")),
-   ip_multicast_ (1)
+   ip_multicast_ (0)
 {
 }
 
