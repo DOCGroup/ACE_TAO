@@ -22,40 +22,6 @@ Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
           recursive make to build libDLL_Test.so, only do that if it
           needs to be built.  And, added dependencies to Makefile.DLL.
 
-        * tests/Message_Queue_Notification_Test.cpp (svc):
-          use prefix ACE_Atomic_Op operator++ instead of postfix, to
-          avoid a race condition.  On a multiple CPU UltraSparc,
-          both threads acquired the producer role.  That shouldn't
-          happen, because the the increment is on an ACE_Atomic_Op
-          value.  However, g++ compiles the ACE_Atomic_Op postfix
-          operator++ to this:
-
-        mov %i0,%l0
-        .stabn 68,0,46,.LM2-ACE_Atomic_Op<ACE_Thread_Mutex,
-          int>::operator++(int)
-        .LM2:
-        add %fp,-24,%l1
-        mov %l1,%o0
-        call ACE_Guard<ACE_Thread_Mutex>::ACE_Guard(ACE_Thread_Mutex &),0
-        mov %l0,%o1
-        .stabn 68,0,47,.LM3-ACE_Atomic_Op<ACE_Thread_Mutex,
-          int>::operator++(int)
-        .LM3:
-        mov %l1,%o0
-        // Load the value into register %i0:
-        ld [%l0+32],%i0
-        mov 2,%o1
-        // Increment the value in register %i0, store the result in %o2:
-        add %i0,1,%o2
-        // Release the guard:
-        call ACE_Guard<ACE_Thread_Mutex>::~ACE_Guard(void),0
-        // Store the incremented result in %o2 to memory:
-        st %o2,[%l0+32]
-
-        Ooooops!  The guard was released _before_ the result was stored
-        to memory.  Maybe this was supposed to take advantage of pipelining,
-        but that apparently didn't work, at least on a multiple CPU system :-/
-
 Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>
 
         * ace/IOStream_T.{cpp|h|i}: Those last changes break (at least)
