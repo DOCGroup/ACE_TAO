@@ -1,169 +1,177 @@
+Sun Mar 04 13:14:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PP_Memory_Management.txt:
+          The memory management rules for TAO's pluggable protocol
+          framework were poorly documented.  This file should capture
+          that, currently it describes a proposal more than the current
+          behavior.
+
 Sun Mar  4 13:29:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/RTCORBA.pidl:
-	* tao/IOP.pidl:
-	* tao/RTPOA.pidl:
-	  Updated to CORBA v2.4.2 (February 2001) versions.  Only comments
-	  were changed in IOP.pidl and RTPOA.pidl.  In RTCORBA.pidl, all
-	  of the PolicyTypes were changed from TAO specific numbers to OMG
-	  assigned numbers.  Also, the create_tcp_protocol_properties
-	  factor method was added to RTORB, so that users can now
-	  instantiate instances of TCPProtocolProperties.
+        * tao/RTCORBA.pidl:
+        * tao/IOP.pidl:
+        * tao/RTPOA.pidl:
+          Updated to CORBA v2.4.2 (February 2001) versions.  Only comments
+          were changed in IOP.pidl and RTPOA.pidl.  In RTCORBA.pidl, all
+          of the PolicyTypes were changed from TAO specific numbers to OMG
+          assigned numbers.  Also, the create_tcp_protocol_properties
+          factor method was added to RTORB, so that users can now
+          instantiate instances of TCPProtocolProperties.
 
-	* tao/RT_ORB.{h,cpp} (create_tcp_protocol_properties):
-	  Added implementation to return a new TCPProtocolProperties
-	  instance.
+        * tao/RT_ORB.{h,cpp} (create_tcp_protocol_properties):
+          Added implementation to return a new TCPProtocolProperties
+          instance.
 
-	* tao/RTCORBAC.{cpp,h,i}:
-	* tao/RTCORBAS.{cpp,h,i}:
-	* tao/RTCORBAS_T.{cpp,h,i}:
-	* tao/diffs/RTCORBAC.cpp.diff:
-	* tao/diffs/RTCORBAC.h.diff:
-	* tao/diffs/RTCORBAS.cpp.diff:
-	* tao/diffs/RTCORBAS.h.diff:
-	  Updated all the files generated from RTCORBA.pidl.
+        * tao/RTCORBAC.{cpp,h,i}:
+        * tao/RTCORBAS.{cpp,h,i}:
+        * tao/RTCORBAS_T.{cpp,h,i}:
+        * tao/diffs/RTCORBAC.cpp.diff:
+        * tao/diffs/RTCORBAC.h.diff:
+        * tao/diffs/RTCORBAS.cpp.diff:
+        * tao/diffs/RTCORBAS.h.diff:
+          Updated all the files generated from RTCORBA.pidl.
 
 Sun Mar 04 08:10:04 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* Changed the following files to correctly use the
-	  CORBA::Environment parameter when calling
-	  <ORB::resolve_initial_references>.  Thanks to Ossama for
-	  pointing this out.
+        * Changed the following files to correctly use the
+          CORBA::Environment parameter when calling
+          <ORB::resolve_initial_references>.  Thanks to Ossama for
+          pointing this out.
 
-	  Under examples/POA:
+          Under examples/POA:
 
-	  - Adapter_Activator/server.cpp
-	  - DSI/Database_i.cpp
-	  - DSI/server.cpp
-	  - Default_Servant/File_i.cpp
-	  - Default_Servant/server.cpp
-	  - Explicit_Activation/server.cpp
-	  - FindPOA/FindPOA.cpp
-	  - Forwarding/server.cpp
-	  - Loader/Server_Manager.cpp
-	  - NewPOA/NewPOA.cpp
-	  - On_Demand_Activation/server.cpp
-	  - On_Demand_Loading/Server_Manager.cpp
-	  - Reference_Counted_Servant/server.cpp
-	  - RootPOA/RootPOA.cpp
-	  - TIE/server.cpp
+          - Adapter_Activator/server.cpp
+          - DSI/Database_i.cpp
+          - DSI/server.cpp
+          - Default_Servant/File_i.cpp
+          - Default_Servant/server.cpp
+          - Explicit_Activation/server.cpp
+          - FindPOA/FindPOA.cpp
+          - Forwarding/server.cpp
+          - Loader/Server_Manager.cpp
+          - NewPOA/NewPOA.cpp
+          - On_Demand_Activation/server.cpp
+          - On_Demand_Loading/Server_Manager.cpp
+          - Reference_Counted_Servant/server.cpp
+          - RootPOA/RootPOA.cpp
+          - TIE/server.cpp
 
-	  Under tests/POA:
+          Under tests/POA:
 
-	  - Deactivation/Deactivation.cpp
-	  - Destruction/Destruction.cpp
-	  - Identity/Identity.cpp
-	  - Non_Servant_Upcalls/Non_Servant_Upcalls.cpp
-	  - wait_for_completion/wait_for_completion.cpp
+          - Deactivation/Deactivation.cpp
+          - Destruction/Destruction.cpp
+          - Identity/Identity.cpp
+          - Non_Servant_Upcalls/Non_Servant_Upcalls.cpp
+          - wait_for_completion/wait_for_completion.cpp
 
 Sun Mar 04 10:11:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Smart_Proxies/Policy/server.cpp (shutdown):
+        * tests/Smart_Proxies/Policy/server.cpp (shutdown):
 
-	  Added missing ACE_TRY_ENV parameter to the ORB::shutdown() call.
+          Added missing ACE_TRY_ENV parameter to the ORB::shutdown() call.
 
-	  (main):
+          (main):
 
-	  Fixed ORB::run() call so that it uses the standard calling
-	  convention (void return).
+          Fixed ORB::run() call so that it uses the standard calling
+          convention (void return).
 
 Sun Mar 04 10:02:18 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Smart_Proxies/Benchmark/server.cpp (box_prices, tickets):
+        * tests/Smart_Proxies/Benchmark/server.cpp (box_prices, tickets):
 
-	  Fixed "unused argument" warnings.
+          Fixed "unused argument" warnings.
 
-	  (shutdown):
+          (shutdown):
 
-	  Added missing ACE_TRY_ENV parameter to the ORB::shutdown() call.
+          Added missing ACE_TRY_ENV parameter to the ORB::shutdown() call.
 
-	  (main):
+          (main):
 
-	  Fixed ORB::run() call so that it uses the standard calling
-	  convention (void return).
+          Fixed ORB::run() call so that it uses the standard calling
+          convention (void return).
 
 Sun Mar 04 09:44:18 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/BiDirectional/client.cpp (main):
-	* tests/BiDirectional/server.cpp (main):
-	* tests/BiDirectional_NestedUpcall/client.cpp (main):
-	* tests/BiDirectional_NestedUpcall/server.cpp (main):
-	* tests/MProfile/server.cpp (main):
-	* tests/MProfile_Forwarding/Manager.cpp (init):
-	* tests/MProfile_Forwarding/server.cpp (main):
-	* tests/QtTests/server.cpp (main):
-	* tests/Smart_Proxies/Collocation/Coll_Tester.cpp (init):
-	* tests/Xt_Stopwatch/server.cpp (main):
+        * tests/BiDirectional/client.cpp (main):
+        * tests/BiDirectional/server.cpp (main):
+        * tests/BiDirectional_NestedUpcall/client.cpp (main):
+        * tests/BiDirectional_NestedUpcall/server.cpp (main):
+        * tests/MProfile/server.cpp (main):
+        * tests/MProfile_Forwarding/Manager.cpp (init):
+        * tests/MProfile_Forwarding/server.cpp (main):
+        * tests/QtTests/server.cpp (main):
+        * tests/Smart_Proxies/Collocation/Coll_Tester.cpp (init):
+        * tests/Xt_Stopwatch/server.cpp (main):
 
-	  Added missing ACE_TRY_ENV parameter to
-	  resolve_initial_references() call, and the corresponding
-	  ACE_CHECK/ACE_CHECK_RETURN/ACE_TRY_CHECK macro.
+          Added missing ACE_TRY_ENV parameter to
+          resolve_initial_references() call, and the corresponding
+          ACE_CHECK/ACE_CHECK_RETURN/ACE_TRY_CHECK macro.
 
-	* tests/Smart_Proxies/Benchmark/server.cpp (main):
-	* tests/Smart_Proxies/Policy/server.cpp (main):
+        * tests/Smart_Proxies/Benchmark/server.cpp (main):
+        * tests/Smart_Proxies/Policy/server.cpp (main):
 
-	  Added missing ACE_TRY_CHECK after resolve_initial_references()
-	  call.
+          Added missing ACE_TRY_CHECK after resolve_initial_references()
+          call.
 
 Sun Mar 04 09:12:40 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IFR_Client/InterfaceC.cpp:
+        * tao/IFR_Client/InterfaceC.cpp:
 
-	  Moved inclusion of the `tao/PortableInterceptor.h' header
-	  outside of the "TAO_HAS_INTERCEPTORS" protected block.  This
-	  header must remain visible since it contains the
-	  "TAO_INTERCEPTOR" macros.  Note that this won't cause problems
-	  when portable interceptor support is disabled since those macros
-	  are always visible, too.
+          Moved inclusion of the `tao/PortableInterceptor.h' header
+          outside of the "TAO_HAS_INTERCEPTORS" protected block.  This
+          header must remain visible since it contains the
+          "TAO_INTERCEPTOR" macros.  Note that this won't cause problems
+          when portable interceptor support is disabled since those macros
+          are always visible, too.
 
 Sun Mar  4 11:06:25 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/README:
-	* examples/PluggableUDP/DIOP/README:
-	  Added infomation about DIOP and PluggableUDP directories.
+        * examples/PluggableUDP/README:
+        * examples/PluggableUDP/DIOP/README:
+          Added infomation about DIOP and PluggableUDP directories.
 
-	* examples/PluggableUDP/tests/README:
-	  Moved some information about the implementation of DIOP into the
-	  ../DIOP/README file.
+        * examples/PluggableUDP/tests/README:
+          Moved some information about the implementation of DIOP into the
+          ../DIOP/README file.
 
 Sun Mar  4 10:03:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/server.cpp:
-	* examples/PluggableUDP/tests/client.cpp:
-	  Added missing ACE_TRY_ENV parameter to
-	  resolve_initial_references() per Ossama's request.
+        * examples/PluggableUDP/tests/server.cpp:
+        * examples/PluggableUDP/tests/client.cpp:
+          Added missing ACE_TRY_ENV parameter to
+          resolve_initial_references() per Ossama's request.
 
-	* examples/PluggableUDP/tests/UDP_i.cpp:
-	  Fixed some compiler warnings under Linux.
+        * examples/PluggableUDP/tests/UDP_i.cpp:
+          Fixed some compiler warnings under Linux.
 
 Sat Mar 03 23:32:29 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/AMI_Timeouts/timeout_client.cpp (init):
-	* tests/AMI_Timeouts/timeout_client.cpp (init, svc):
+        * tests/AMI_Timeouts/timeout_client.cpp (init):
+        * tests/AMI_Timeouts/timeout_client.cpp (init, svc):
 
-	  Renamed "init()" method to "initialize()."  It conflicted with
-	  its base class "ACE_Task_Base::init()" method.
+          Renamed "init()" method to "initialize()."  It conflicted with
+          its base class "ACE_Task_Base::init()" method.
 
 Sat Mar 03 22:56:20 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/AMI_Timeouts/client.cpp (main):
-	* tests/AMI_Timeouts/timeout_client.cpp (svc, init):
-	* tests/AMI_Timeouts/server.cpp (main):
+        * tests/AMI_Timeouts/client.cpp (main):
+        * tests/AMI_Timeouts/timeout_client.cpp (svc, init):
+        * tests/AMI_Timeouts/server.cpp (main):
 
-	  Fixed compile-time problems related to emulated exceptions.
-	  ACE_TRY_NEW_ENV declares a CORBA::Environment within a do-while
-	  loop scope, so that Environment is not available outside of the
-	  loop.  However, an ACE_CHECK_RETURN is done outside of the
-	  ACE_TRY_NEW_ENV block.  Use ACE_DECLARE_NEW_CORBA_ENV instead.
+          Fixed compile-time problems related to emulated exceptions.
+          ACE_TRY_NEW_ENV declares a CORBA::Environment within a do-while
+          loop scope, so that Environment is not available outside of the
+          loop.  However, an ACE_CHECK_RETURN is done outside of the
+          ACE_TRY_NEW_ENV block.  Use ACE_DECLARE_NEW_CORBA_ENV instead.
 
-	  Added missing ACE_TRY_ENV parameter to the
-	  resolve_initial_references() and shutdown() calls.
+          Added missing ACE_TRY_ENV parameter to the
+          resolve_initial_references() and shutdown() calls.
 
-	  Corrected spelling.  "Caught," not "Catched!"
+          Corrected spelling.  "Caught," not "Catched!"
 
-	* tests/AMI_Timeouts/Makefile:
+        * tests/AMI_Timeouts/Makefile:
 
-	  Added missing dependencies.
+          Added missing dependencies.
 
 Sat Mar  3 16:31:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -194,336 +202,336 @@ Sat Mar  3 16:31:31 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Mar  3 16:31:07 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,i,h}:
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.{cpp,i,h}:
-	* examples/PluggableUDP/DIOP/DIOP_Connector.{cpp,h}:
-	* examples/PluggableUDP/DIOP/DIOP_Endpoint.{cpp,i,h}:
-	* examples/PluggableUDP/DIOP/DIOP_Factory.{cpp,h}:
-	* examples/PluggableUDP/DIOP/DIOP_Profile.{cpp,i,h}:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.{cpp,i,h}:
-	* examples/PluggableUDP/DIOP/diop_export.h:
-	* examples/PluggableUDP/DIOP/Makefile:
-	* examples/PluggableUDP/DIOP/Makefile.bor:
-	* examples/PluggableUDP/DIOP/TAO_DIOP.dsp:
-	* examples/PluggableUDP/DIOP/TAO_DIOP.dsw:
-	* examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
-	* examples/PluggableUDP/tests/Makefile:
-	* examples/PluggableUDP/tests/Makefile.bor:
-	* examples/PluggableUDP/tests/README:
-	* examples/PluggableUDP/tests/UDP.dsw:
-	* examples/PluggableUDP/tests/UDP.idl:
-	* examples/PluggableUDP/tests/UDP_Client_i.{cpp,h}:
-	* examples/PluggableUDP/tests/UDP_i.{cpp,h}:
-	* examples/PluggableUDP/tests/client.cpp:
-	* examples/PluggableUDP/tests/client.dsp:
-	* examples/PluggableUDP/tests/run_test.pl:
-	* examples/PluggableUDP/tests/server.cpp:
-	* examples/PluggableUDP/tests/server.dsp:
-	* examples/PluggableUDP/tests/svc.conf:
-	  Added UDP pluggable protocol and unit tests as a TAO example.
-	  This code was contributed by Michael Kircher
-	  <Michael.Kircher@mchp.siemens.de> and John Mackenzie
-	  <John.Mackenzie.extern@icn.siemens.de> as a TAO 1.1a
-	  pluggable protocol.  The main changes from the original code
-	  include upgrading the pluggable protocol interfaces with the latest
-	  changes and  moving the code from TAO/tao to a separate library.
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,i,h}:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.{cpp,i,h}:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.{cpp,h}:
+        * examples/PluggableUDP/DIOP/DIOP_Endpoint.{cpp,i,h}:
+        * examples/PluggableUDP/DIOP/DIOP_Factory.{cpp,h}:
+        * examples/PluggableUDP/DIOP/DIOP_Profile.{cpp,i,h}:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.{cpp,i,h}:
+        * examples/PluggableUDP/DIOP/diop_export.h:
+        * examples/PluggableUDP/DIOP/Makefile:
+        * examples/PluggableUDP/DIOP/Makefile.bor:
+        * examples/PluggableUDP/DIOP/TAO_DIOP.dsp:
+        * examples/PluggableUDP/DIOP/TAO_DIOP.dsw:
+        * examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
+        * examples/PluggableUDP/tests/Makefile:
+        * examples/PluggableUDP/tests/Makefile.bor:
+        * examples/PluggableUDP/tests/README:
+        * examples/PluggableUDP/tests/UDP.dsw:
+        * examples/PluggableUDP/tests/UDP.idl:
+        * examples/PluggableUDP/tests/UDP_Client_i.{cpp,h}:
+        * examples/PluggableUDP/tests/UDP_i.{cpp,h}:
+        * examples/PluggableUDP/tests/client.cpp:
+        * examples/PluggableUDP/tests/client.dsp:
+        * examples/PluggableUDP/tests/run_test.pl:
+        * examples/PluggableUDP/tests/server.cpp:
+        * examples/PluggableUDP/tests/server.dsp:
+        * examples/PluggableUDP/tests/svc.conf:
+          Added UDP pluggable protocol and unit tests as a TAO example.
+          This code was contributed by Michael Kircher
+          <Michael.Kircher@mchp.siemens.de> and John Mackenzie
+          <John.Mackenzie.extern@icn.siemens.de> as a TAO 1.1a
+          pluggable protocol.  The main changes from the original code
+          include upgrading the pluggable protocol interfaces with the latest
+          changes and  moving the code from TAO/tao to a separate library.
 
 Sat Mar 03 15:28:34 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableServer/Object_Adapter.cpp (open):
+        * tao/PortableServer/Object_Adapter.cpp (open):
 
-	  Fixed broken memory management that I inadvertently introduced.
-	  This brings the code back to what it used to do before my
-	  change, but it uses a POA_Manager_var instead of an auto_ptr.
-	  Using the _var allows us to remove the auto_ptr template
-	  instantiation(s) for the POA_Manager.  We technically shouldn't
-	  be using auto_ptrs on reference counted objects anyway, even
-	  though in this case there was no harm in doing so.
+          Fixed broken memory management that I inadvertently introduced.
+          This brings the code back to what it used to do before my
+          change, but it uses a POA_Manager_var instead of an auto_ptr.
+          Using the _var allows us to remove the auto_ptr template
+          instantiation(s) for the POA_Manager.  We technically shouldn't
+          be using auto_ptrs on reference counted objects anyway, even
+          though in this case there was no harm in doing so.
 
-	* tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.cpp:
 
-	  Removed auto_ptr<TAO_POA> and auto_ptr<TAO_POA_Manager> template
-	  instantiations.  They are no longer needed, thus reducing the
-	  POA footprint slightly.
+          Removed auto_ptr<TAO_POA> and auto_ptr<TAO_POA_Manager> template
+          instantiations.  They are no longer needed, thus reducing the
+          POA footprint slightly.
 
-	  (create_POA_i):
+          (create_POA_i):
 
-	  Use a POA_var instead of an auto_ptr.  The same reasoning from
-	  above applies here as well, i.e. auto_ptrs should not be used on
-	  reference counted objects.
+          Use a POA_var instead of an auto_ptr.  The same reasoning from
+          above applies here as well, i.e. auto_ptrs should not be used on
+          reference counted objects.
 
 Sat Mar  3 13:12:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/PortableServer/Object_Adapter.cpp:
-	  Fixed minor typo in the creation of the RootPOA
+        * tao/PortableServer/Object_Adapter.cpp:
+          Fixed minor typo in the creation of the RootPOA
 
 Sat Mar 03 12:18:12 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Codec/client.cpp (verify_data):
+        * tests/Codec/client.cpp (verify_data):
 
-	  Cleaned up test output so that it is HTML friendly (i.e. no tab
-	  characters).  The output in our HTML build logs was slightly
-	  confusing.
+          Cleaned up test output so that it is HTML friendly (i.e. no tab
+          characters).  The output in our HTML build logs was slightly
+          confusing.
 
-	* tests/Codec/README:
+        * tests/Codec/README:
 
-	  Updated expected test output.
+          Updated expected test output.
 
 Sat Mar 03 11:46:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/server.bor:
+        * tests/Portable_Interceptors/ForwardRequest/server.bor:
 
-	  Fixed typo in the rule that builds the ServerRequestInterceptor
-	  stub.  The test should once again build with Borland C++.
+          Fixed typo in the rule that builds the ServerRequestInterceptor
+          stub.  The test should once again build with Borland C++.
 
 Sat Mar 03 11:14:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Added the CORBA::_tc_{OctetSeq,StringSeq,WStringSeq} TypeCode
-	  declarations.  They were previously renamed to get around
-	  problems with compilers that lack support for namespaces.  The
-	  proper workaround is to actually put them in the CORBA namespace
-	  by using the forward declaration / typedef trick used in this
-	  file.  This also fixes a problem with these TypeCodes not being
-	  available due to the renaming.
+          Added the CORBA::_tc_{OctetSeq,StringSeq,WStringSeq} TypeCode
+          declarations.  They were previously renamed to get around
+          problems with compilers that lack support for namespaces.  The
+          proper workaround is to actually put them in the CORBA namespace
+          by using the forward declaration / typedef trick used in this
+          file.  This also fixes a problem with these TypeCodes not being
+          available due to the renaming.
 
-	* tao/OctetSeqC.h:
-	* tao/StringSeqC.h:
+        * tao/OctetSeqC.h:
+        * tao/StringSeqC.h:
 
-	  Removed the _tc_CORBA_{OctetSeq,StringSeq,WStringSeq}
-	  declarations.  They were hacks to get around compilers that do
-	  not support namespaces.  The proper TypeCodes are now declared
-	  in the CORBA namespace in `corbafwd.h'.
+          Removed the _tc_CORBA_{OctetSeq,StringSeq,WStringSeq}
+          declarations.  They were hacks to get around compilers that do
+          not support namespaces.  The proper TypeCodes are now declared
+          in the CORBA namespace in `corbafwd.h'.
 
-	* tao/OctetSeqC.cpp:
-	* tao/StringSeqC.cpp:
+        * tao/OctetSeqC.cpp:
+        * tao/StringSeqC.cpp:
 
-	  Use the proper CORBA::_tc_{OctetSeq,StringSeq,WStringSeq}
-	  TypeCodes rather than broken renamed ones described above.  This
-	  addresses CORBA compliance and interoperability problems.
+          Use the proper CORBA::_tc_{OctetSeq,StringSeq,WStringSeq}
+          TypeCodes rather than broken renamed ones described above.  This
+          addresses CORBA compliance and interoperability problems.
 
-	* tao/diffs/OctetSeq.diff:
-	* tao/diffs/StringSeq.diff:
+        * tao/diffs/OctetSeq.diff:
+        * tao/diffs/StringSeq.diff:
 
-	  Regenerated these diffs to include the above changes.
+          Regenerated these diffs to include the above changes.
 
 Sat Mar  3 10:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (forward_references):
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (forward_references):
 
-	  Fixed an exception specification.
+          Fixed an exception specification.
 
 Sat Mar 03 02:10:00 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/PortableServer/ServerRequestInfo.cpp:
 
-	  Include "tao/PolicyC.h" to pull in declaration of
-	  CORBA::Policy::_nil().  This is particularly necessary for
-	  builds that disable compile-time support for CORBA Messaging
-	  since the Policy header doesn't get pulled in otherwise.
+          Include "tao/PolicyC.h" to pull in declaration of
+          CORBA::Policy::_nil().  This is particularly necessary for
+          builds that disable compile-time support for CORBA Messaging
+          since the Policy header doesn't get pulled in otherwise.
 
 Sat Mar  3 00:16:46 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+        * tests/Portable_Interceptors/ForwardRequest/Makefile:
 
-	  Updated dependencies.  Fixed one part of the build problems.
+          Updated dependencies.  Fixed one part of the build problems.
 
-	  (TAO_IDLFLAGS):
+          (TAO_IDLFLAGS):
 
-	  Added missing IDL include path.  `ServerRequestInterceptor.idl'
-	  includes "tao/PortableInterceptor.pidl".  This is the other part
-	  of the build fix.
+          Added missing IDL include path.  `ServerRequestInterceptor.idl'
+          includes "tao/PortableInterceptor.pidl".  This is the other part
+          of the build fix.
 
-	  (realclean):
+          (realclean):
 
-	  Added missing clean rules for the `ServerRequestInterceptor*'
-	  stubs and skeletons.
+          Added missing clean rules for the `ServerRequestInterceptor*'
+          stubs and skeletons.
 
 Fri Mar 02 23:54:41 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/OctetSeqC.cpp:
-	* tao/StringSeqC.cpp:
+        * tao/OctetSeqC.cpp:
+        * tao/StringSeqC.cpp:
 
-	  Use the TAO_NAMESPACE_{TYPE,DEFINE} preprocessor to macros
-	  correct compile-time errors on platforms that do not define the
-	  ACE_HAS_USING_KEYWORD.  Fixes a "multiple definition"
-	  compile-time error on those platforms.
+          Use the TAO_NAMESPACE_{TYPE,DEFINE} preprocessor to macros
+          correct compile-time errors on platforms that do not define the
+          ACE_HAS_USING_KEYWORD.  Fixes a "multiple definition"
+          compile-time error on those platforms.
 
-	* tao/diffs/OctetSeq.diff:
-	* tao/diffs/StringSeq.diff:
+        * tao/diffs/OctetSeq.diff:
+        * tao/diffs/StringSeq.diff:
 
-	  Regenerated these diffs so that they include the above changes.
+          Regenerated these diffs so that they include the above changes.
 
 Fri Mar  2 20:28:27  Angelo Corsaro  <angelo@hermes.doc.wustl.edu>
 
-	* rules.tao.GNU:
-	* orbsvcs/CosEvent_Service/Makefile:
-	* orbsvcs/Dump_Schedule/Makefile:
-	* orbsvcs/Event_Service/Makefile:
-	* orbsvcs/LifeCycle_Service/Makefile:
-	* orbsvcs/Logging_Service/Makefile:
-	* orbsvcs/Notify_Service/Makefile:
-	* orbsvcs/Scheduling_Service/Makefile:
-	* orbsvcs/tests/AVStreams/benchmark/Makefile:
-	* orbsvcs/tests/CosEvent/Basic/Makefile:
-	* orbsvcs/tests/EC_Basic/Makefile:
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
-	* orbsvcs/tests/EC_Multiple/Makefile:
-	* orbsvcs/tests/EC_Throughput/Makefile:
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Performance/Makefile:
-	* orbsvcs/tests/Event_Latency/Makefile:
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
-	* orbsvcs/tests/Sched/Makefile:
-	* orbsvcs/tests/Trading/Makefile:
-	* orbsvcs/tests/ior_corbaname/Makefile:
+        * rules.tao.GNU:
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/LifeCycle_Service/Makefile:
+        * orbsvcs/Logging_Service/Makefile:
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/tests/AVStreams/benchmark/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/EC_Basic/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/Trading/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
 
-	  Added the new macros:
-	      - TAO_DYNAMIC_LIBS
-	      - TAO_COS_NOTIFICATION_LIBS
-	      - TAO_RT_SCHED_LIBS
-	      - TAO_FAULT_TOLERANCE_LIBS
-	      - TAO_COS_TRADING_LIBS
+          Added the new macros:
+              - TAO_DYNAMIC_LIBS
+              - TAO_COS_NOTIFICATION_LIBS
+              - TAO_RT_SCHED_LIBS
+              - TAO_FAULT_TOLERANCE_LIBS
+              - TAO_COS_TRADING_LIBS
 
-	  this macros expand to  multiple libraries on QNX RTP,
-	  and this enable to work around a problem that is present
-	  currently in the QNX linker. For all othe platform these
-	  macro expand to the only library associated to the CORBA
-	  service. With this work aroun all the orbsvcs  and almost
-	  all the orbsvcs test build.
+          this macros expand to  multiple libraries on QNX RTP,
+          and this enable to work around a problem that is present
+          currently in the QNX linker. For all othe platform these
+          macro expand to the only library associated to the CORBA
+          service. With this work aroun all the orbsvcs  and almost
+          all the orbsvcs test build.
 
 Fri Mar  2 16:16:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Object.cpp (operator>>):
+        * tao/Object.cpp (operator>>):
 
-	  Added "ERROR" to the error output so that our automated test
-	  suite will pick up the error message.  Previously it was not
-	  detected.  Clarified the error message a bit, as well.
+          Added "ERROR" to the error output so that our automated test
+          suite will pick up the error message.  Previously it was not
+          detected.  Clarified the error message a bit, as well.
 
 Fri Mar 02 15:39:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbconf.h: Since MEM_Stream is not supported if position
-	  independent pointers are not, we need to disable SHMIOP in that
-	  case.
+        * tao/orbconf.h: Since MEM_Stream is not supported if position
+          independent pointers are not, we need to disable SHMIOP in that
+          case.
 
 Fri Mar 02 15:20:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * tests/AMI_Timeouts/timout_client.cpp:
-	  Fixed a missing ".in ()" on a var type.
+          Fixed a missing ".in ()" on a var type.
 
 Fri Mar  2 11:46:40 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/CodecFactory.cpp (create_codec):
+        * tao/CodecFactory.cpp (create_codec):
 
-	  Fixed a "statement is unreachable" warning.
+          Fixed a "statement is unreachable" warning.
 
-	* tao/PortableInterceptorC.h (sync_scope):
+        * tao/PortableInterceptorC.h (sync_scope):
 
-	  Hide the ClientRequestInfo::sync_scope() method declaration if
-	  CORBA Messaging support isn't enabled.
+          Hide the ClientRequestInfo::sync_scope() method declaration if
+          CORBA Messaging support isn't enabled.
 
 Fri Mar  2 11:37:43 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptor.cpp:
+        * tao/PortableInterceptor.cpp:
 
-	  Moved code within the "TAO_HAS_INTERCEPTORS" block.  Fixes a
-	  compile-time error on platforms with request interceptors
-	  disabled.
+          Moved code within the "TAO_HAS_INTERCEPTORS" block.  Fixes a
+          compile-time error on platforms with request interceptors
+          disabled.
 
 Fri Mar 02 11:57:03 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Connection_Handler.cpp (set_socket_option):
+        * tao/Connection_Handler.cpp (set_socket_option):
 
-	   Fixed mispelling in ACE_UNUSED_ARG, that was breaking
-	   QNX build.
+           Fixed mispelling in ACE_UNUSED_ARG, that was breaking
+           QNX build.
 
 Fri Mar 02 09:32:33 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (~Server_Request_Interceptor, destroy):
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (~Server_Request_Interceptor, destroy):
 
-	  Moved release of the forward object references from the
-	  destructor to the destroy() method.  There was a strange problem
-	  with interdependent object life cycles.  The forward object
-	  references wouldn't be released unless the server request
-	  interceptor was destroyed (destructor called), and the
-	  interceptor wouldn't be destroyed unless the object references
-	  were released!  I'll need to examine this issue further.  In the
-	  meantime, the ServerRequestInterceptor::destroy() change gets
-	  around the problem nicely, and fixes the memory leaks.
+          Moved release of the forward object references from the
+          destructor to the destroy() method.  There was a strange problem
+          with interdependent object life cycles.  The forward object
+          references wouldn't be released unless the server request
+          interceptor was destroyed (destructor called), and the
+          interceptor wouldn't be destroyed unless the object references
+          were released!  I'll need to examine this issue further.  In the
+          meantime, the ServerRequestInterceptor::destroy() change gets
+          around the problem nicely, and fixes the memory leaks.
 
-	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp
-	  (post_init):
+        * tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp
+          (post_init):
 
-	  Use ACE_TRY_ENV instead of TAO_ENV_ARG_PARAMETER.  There is no
-	  reason to use the latter when calling ORB supplied methods.
+          Use ACE_TRY_ENV instead of TAO_ENV_ARG_PARAMETER.  There is no
+          reason to use the latter when calling ORB supplied methods.
 
-	* tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
 
-	  Removed debugging message from the destructor.
+          Removed debugging message from the destructor.
 
 Fri Mar 02 08:29:53 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/index.html:
-	* docs/minimumTAO.html:
-	* docs/pluggable_protocols/index.html:
-	* docs/releasenotes/index.html:
+        * docs/index.html:
+        * docs/minimumTAO.html:
+        * docs/pluggable_protocols/index.html:
+        * docs/releasenotes/index.html:
 
-	  Fixed references to Doug's web site.  Just link to the local
-	  files.  There is no need to go remote.  Thanks to Darrell's
-	  "Fuzz" script for picking these up.
+          Fixed references to Doug's web site.  Just link to the local
+          files.  There is no need to go remote.  Thanks to Darrell's
+          "Fuzz" script for picking these up.
 
 Fri Mar 02 08:13:34 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/Makefile
-	  (TAO_IDLFLAGS):
+        * tests/Portable_Interceptors/ForwardRequest/Makefile
+          (TAO_IDLFLAGS):
 
-	  Define the "CORBA3" preprocessor macro to make sure that the
-	  "local" keyword is enabled in the `tao/PortableInterceptor.pidl'
-	  file included by `ServerRequestInterceptor.idl'.
+          Define the "CORBA3" preprocessor macro to make sure that the
+          "local" keyword is enabled in the `tao/PortableInterceptor.pidl'
+          file included by `ServerRequestInterceptor.idl'.
 
 Fri Mar 02 07:40:28 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
+        * tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
 
-	  Added this missing file.  I neglected to commit it with my
-	  previous set of changes for this test.
+          Added this missing file.  I neglected to commit it with my
+          previous set of changes for this test.
 
-	* tests/Portable_Interceptors/ForwardRequest/Makefile:
-	* tests/Portable_Interceptors/ForwardRequest/server.bor:
+        * tests/Portable_Interceptors/ForwardRequest/Makefile:
+        * tests/Portable_Interceptors/ForwardRequest/server.bor:
 
-	  Added missing `ServerRequestInterceptor.idl' related rules to
-	  these Makefiles.
+          Added missing `ServerRequestInterceptor.idl' related rules to
+          these Makefiles.
 
-	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+        * tests/Portable_Interceptors/ForwardRequest/server.dsp:
 
-	  Added missing header files to the header file list.
+          Added missing header files to the header file list.
 
 Fri Mar 02 07:25:50 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.cpp (destroy_interceptors):
+        * tao/ORB_Core.cpp (destroy_interceptors):
 
-	  Fixed a compile-time warning that occured on native exception
-	  builds.
+          Fixed a compile-time warning that occured on native exception
+          builds.
 
 Fri Mar  02 02:18:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI_Timeouts/timeout_i.cpp:
-	* tests/AMI_Timeouts/server.cpp:
-	* tests/AMI_Timeouts/client.cpp:
-	  Fixed exception handling code.
+        * tests/AMI_Timeouts/timeout_i.cpp:
+        * tests/AMI_Timeouts/server.cpp:
+        * tests/AMI_Timeouts/client.cpp:
+          Fixed exception handling code.
 
 Fri Mar  2 02:15:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tao/Connection_Handler.cpp:
-	  Fixed a wrong "#elsif".
+        * tao/Connection_Handler.cpp:
+          Fixed a wrong "#elsif".
 
 Fri Mar  2 01:32:32 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Connection_Handler.cpp (set_socket_option):
-	  Added ACE_UNUSED_ARG to avoid warning on those platform
-	  that lack SOCK_BUF_SIZE.
+        * tao/Connection_Handler.cpp (set_socket_option):
+          Added ACE_UNUSED_ARG to avoid warning on those platform
+          that lack SOCK_BUF_SIZE.
 
 Fri Mar  2 07:51:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -582,22 +590,22 @@ Thu Mar  1 18:51:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Mar  1 15:54:54 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp
-	  (destroy):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp
+          (destroy):
 
-	  Added missing PortableInterceptor::Interceptor::destroy()
-	  implementation.
+          Added missing PortableInterceptor::Interceptor::destroy()
+          implementation.
 
 Thu Mar  1 17:49:51 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 
-	  Removed unncessary ACE_DEBUGS and ensconced the others with
-	  TAO_debug_level checks. This should fix the tests from failing.
+          Removed unncessary ACE_DEBUGS and ensconced the others with
+          TAO_debug_level checks. This should fix the tests from failing.
 
 Thu Mar  1 14:14:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -670,234 +678,234 @@ Thu Mar  1 14:09:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Mar  1 12:07:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ClientRequestInfo.cpp (get_request_policy):
+        * tao/ClientRequestInfo.cpp (get_request_policy):
 
-	  Fixed "unused argument" warning in the case where compile-time
-	  support for CORBA Messaging is disabled.
+          Fixed "unused argument" warning in the case where compile-time
+          support for CORBA Messaging is disabled.
 
-	* tests/Makefile.bor (DIRS):
+        * tests/Makefile.bor (DIRS):
 
-	  Added the `Codec' test directory to list of directories to
-	  recurse into.
+          Added the `Codec' test directory to list of directories to
+          recurse into.
 
 Thu Mar  1 11:10:58 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Makefile (DIRS):
+        * tests/Makefile (DIRS):
 
-	  Added the `Codec' test directory to list of directories to
-	  recurse into.
+          Added the `Codec' test directory to list of directories to
+          recurse into.
 
 Thu Mar  1 10:51:14 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Codec/client.cpp:
+        * tests/Codec/client.cpp:
 
-	  Fixed compiler warnings.
+          Fixed compiler warnings.
 
-	* tests/Codec/Makefile:
+        * tests/Codec/Makefile:
 
-	  Fixed typo, and updated dependencies.
+          Fixed typo, and updated dependencies.
 
 Thu Mar  1 10:39:49 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ClientRequestInfo.inl (forward_reference):
+        * tao/ClientRequestInfo.inl (forward_reference):
 
-	  Fixed "unused argument" warning.
+          Fixed "unused argument" warning.
 
-	* tao/ClientRequestInfo.cpp (get_request_policy):
+        * tao/ClientRequestInfo.cpp (get_request_policy):
 
-	  Only call CORBA::Object::_get_policy() if CORBA Messaging is
-	  enabled at compile-time.  Fixes a compile-time error reported by
-	  Erik Johannes <ejohannes@oresis.com>.
+          Only call CORBA::Object::_get_policy() if CORBA Messaging is
+          enabled at compile-time.  Fixes a compile-time error reported by
+          Erik Johannes <ejohannes@oresis.com>.
 
-	* tao/PortableServer/Object_Adapter.cpp (dispatch):
+        * tao/PortableServer/Object_Adapter.cpp (dispatch):
 
-	  Cleaned up the interceptor related code slightly.
+          Cleaned up the interceptor related code slightly.
 
 Thu Mar 01 12:18:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI_Timeouts/client.cpp:
+        * tests/AMI_Timeouts/client.cpp:
 
-	  Added a ".in ()" when passing a _var as _ptr.
+          Added a ".in ()" when passing a _var as _ptr.
 
-	* tests/AMI_Timeouts/Makefile:
+        * tests/AMI_Timeouts/Makefile:
 
-	  Added a missing space.
+          Added a missing space.
 
-	* tests/AMI_Timeouts/timeout_i.cpp:
+        * tests/AMI_Timeouts/timeout_i.cpp:
 
-	  Removed the name of some parameters which were not used.
+          Removed the name of some parameters which were not used.
 
-	  This should fix several compile warnings and errors. Thanks to
-	  Bala for hooking up the AMI_Timeouts test and reporting this.
+          This should fix several compile warnings and errors. Thanks to
+          Bala for hooking up the AMI_Timeouts test and reporting this.
 
 Thu Mar 01 09:38:28 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/CodecFactory.h:
-	* tao/CodecFactory.cpp:
+        * tao/CodecFactory.h:
+        * tao/CodecFactory.cpp:
 
-	  New files containing the implementation of the IOP::CodecFactory
-	  interface as defined by the adopted Portable Interceptor
-	  specification (ptc/00-08-05).
+          New files containing the implementation of the IOP::CodecFactory
+          interface as defined by the adopted Portable Interceptor
+          specification (ptc/00-08-05).
 
-	* tao/Codec_ORBInitializer.h:
-	* tao/Codec_ORBInitializer.cpp:
+        * tao/Codec_ORBInitializer.h:
+        * tao/Codec_ORBInitializer.cpp:
 
-	  ORBInitializer that registers the CodecFactory reference with
-	  the ORB.
+          ORBInitializer that registers the CodecFactory reference with
+          the ORB.
 
-	* tao/CDR_Encaps_Codec.h:
-	* tao/CDR_Encaps_Codec.cpp:
+        * tao/CDR_Encaps_Codec.h:
+        * tao/CDR_Encaps_Codec.cpp:
 
-	  New files containing the implementation of the IOP::Codec
-	  interface specifically for CDR encapsulations.
+          New files containing the implementation of the IOP::Codec
+          interface specifically for CDR encapsulations.
 
-	* tao/ORB.cpp (init_orb_globals):
+        * tao/ORB.cpp (init_orb_globals):
 
-	  Register the CodecFactory ORBInitializer with the ORB.
+          Register the CodecFactory ORBInitializer with the ORB.
 
-	* tao/ORBInitInfo.h:
-	* tao/ORBInitInfo.cpp (codec_factory):
+        * tao/ORBInitInfo.h:
+        * tao/ORBInitInfo.cpp (codec_factory):
 
-	  Implemented this method, as required by the Portable Interceptor
-	  specification.  Each ORBInitInfo method now retains its own
-	  copy of a CodecFactory.  This was to done for ease of
-	  implementation.
+          Implemented this method, as required by the Portable Interceptor
+          specification.  Each ORBInitInfo method now retains its own
+          copy of a CodecFactory.  This was to done for ease of
+          implementation.
 
-	* tao/OctetSeq.pidl:
-	* tao/StringSeq.pidl:
+        * tao/OctetSeq.pidl:
+        * tao/StringSeq.pidl:
 
-	  Place the typedef in each of these PIDL files in the CORBA
-	  module.  Previously they were incorrectly placed in the global
-	  namespace.  [Bug 793]
+          Place the typedef in each of these PIDL files in the CORBA
+          module.  Previously they were incorrectly placed in the global
+          namespace.  [Bug 793]
 
-	* tao/OctetSeqC.h:
-	* tao/OctetSeqC.i:
-	* tao/OctetSeqC.cpp:
-	* tao/diffs/OctetSeq.diff
-	* tao/StringSeqC.h:
-	* tao/StringSeqC.i:
-	* tao/StringSeqC.cpp:
-	* tao/diffs/StringSeq.diff:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
+        * tao/OctetSeqC.cpp:
+        * tao/diffs/OctetSeq.diff
+        * tao/StringSeqC.h:
+        * tao/StringSeqC.i:
+        * tao/StringSeqC.cpp:
+        * tao/diffs/StringSeq.diff:
 
-	  Regenerated these files against the updated PIDL files.
-	  [Bug 793]
+          Regenerated these files against the updated PIDL files.
+          [Bug 793]
 
-	* tao/PortableInterceptor.pidl:
-	* tao/IOP.pidl:
+        * tao/PortableInterceptor.pidl:
+        * tao/IOP.pidl:
 
-	  Updated with changes made in ptc/00-08-05.  These changes
-	  include (1) moving Codec related interfaces to the IOP module,
-	  (2) addition of the Interceptor::destroy() method, and (3)
-	  addition of the IOP::TaggedComponentSeq type to the IOP module.
+          Updated with changes made in ptc/00-08-05.  These changes
+          include (1) moving Codec related interfaces to the IOP module,
+          (2) addition of the Interceptor::destroy() method, and (3)
+          addition of the IOP::TaggedComponentSeq type to the IOP module.
 
-	* tao/PortableInterceptorC.h:
-	* tao/PortableInterceptorC.i:
-	* tao/PortableInterceptorC.cpp:
-	* tao/diffs/PortableInterceptor.diff:
-	* tao/IOPC.h:
-	* tao/IOPC.i:
-	* tao/IOPC.cpp:
-	* tao/diffs/IOP.diff:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/PortableInterceptorC.cpp:
+        * tao/diffs/PortableInterceptor.diff:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/IOPC.cpp:
+        * tao/diffs/IOP.diff:
 
-	  Regenerated these files against the updated PIDL files.
+          Regenerated these files against the updated PIDL files.
 
-	* tao/ClientRequestInfo.inl:
-	* tao/ClientRequestInfo.cpp:
-	* tao/PortableServer/ServerRequestInfo.inl:
-	* tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/ClientRequestInfo.inl:
+        * tao/ClientRequestInfo.cpp:
+        * tao/PortableServer/ServerRequestInfo.inl:
+        * tao/PortableServer/ServerRequestInfo.cpp:
 
-	  Removed all reference to LOCATION_FORWARD_PERMANENT.  It is
-	  currently not supported by the CORBA and Portable Interceptor
-	  specifications.  This may change in the future as FT CORBA
-	  issues are resolved.
+          Removed all reference to LOCATION_FORWARD_PERMANENT.  It is
+          currently not supported by the CORBA and Portable Interceptor
+          specifications.  This may change in the future as FT CORBA
+          issues are resolved.
 
-	  Added all missing exception minor codes.  The final adopted
-	  Portable Interceptor specification specifies what they are (the
-	  joint submission did not).
+          Added all missing exception minor codes.  The final adopted
+          Portable Interceptor specification specifies what they are (the
+          joint submission did not).
 
-	* tao/ClientRequestInfo.h:
+        * tao/ClientRequestInfo.h:
 
-	  Made target_ member a "_ptr."  The TAO_ClientRequestInfo no
-	  longer needs to release the reference.
+          Made target_ member a "_ptr."  The TAO_ClientRequestInfo no
+          longer needs to release the reference.
 
-	* tao/ClientRequestInfo.cpp (TAO_ClientRequestInfo):
+        * tao/ClientRequestInfo.cpp (TAO_ClientRequestInfo):
 
-	  Do not duplicate the target object reference.  There is no need
-	  to do so since it is guaranteed to be valid for the lifetime of
-	  the request.  This removes a pair of locks from the critical
-	  path, thus improving performance.  [Bug 795]
+          Do not duplicate the target object reference.  There is no need
+          to do so since it is guaranteed to be valid for the lifetime of
+          the request.  This removes a pair of locks from the critical
+          path, thus improving performance.  [Bug 795]
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp (destroy_interceptors):
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp (destroy_interceptors):
 
-	  New helper method that invokes Interceptor::destroy() on all
-	  registered interceptors when ORB::destroy() is called.
+          New helper method that invokes Interceptor::destroy() on all
+          registered interceptors when ORB::destroy() is called.
 
-	  (destroy):
+          (destroy):
 
-	  Invoke the TAO_ORB_Core::destroy_interceptors() help method when
-	  ORB::destroy() is called.
+          Invoke the TAO_ORB_Core::destroy_interceptors() help method when
+          ORB::destroy() is called.
 
-	* tao/PortableInterceptor.i:
-	* tao/PortableInterceptor.cpp:
+        * tao/PortableInterceptor.i:
+        * tao/PortableInterceptor.cpp:
 
-	  Un-inlined the destructors.  They're already no-ops, and
-	  inlining them only serves to increase the footprint since
-	  inlined destructor code is placed at all exit points.
+          Un-inlined the destructors.  They're already no-ops, and
+          inlining them only serves to increase the footprint since
+          inlined destructor code is placed at all exit points.
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/Makefile:
-	* tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.bor:
 
-	  Added Codec related filenames to these files.
+          Added Codec related filenames to these files.
 
-	* tests/Codec/Codec.dsw:
-	* tests/Codec/Makefile:
-	* tests/Codec/Makefile.bor:
-	* tests/Codec/README:
-	* tests/Codec/client.bor:
-	* tests/Codec/client.cpp:
-	* tests/Codec/client.dsp:
-	* tests/Codec/run_test.pl:
-	* tests/Codec/test.idl:
+        * tests/Codec/Codec.dsw:
+        * tests/Codec/Makefile:
+        * tests/Codec/Makefile.bor:
+        * tests/Codec/README:
+        * tests/Codec/client.bor:
+        * tests/Codec/client.cpp:
+        * tests/Codec/client.dsp:
+        * tests/Codec/run_test.pl:
+        * tests/Codec/test.idl:
 
-	  New test that verifies the CodecFactory and CDR encapsulation
-	  Codec objects are functioning properly.
+          New test that verifies the CodecFactory and CDR encapsulation
+          Codec objects are functioning properly.
 
-	* tests/README:
+        * tests/README:
 
-	  Added a description of the Codec test.
+          Added a description of the Codec test.
 
-	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
-	* tests/Portable_Interceptors/Benchmark/interceptors.h:
-	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
-	* tests/Portable_Interceptors/Dynamic/interceptors.h:
-	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h:
-	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h:
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
-	* tests/Portable_Interceptors/ForwardRequest/server.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
-	* tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
-	* tests/Portable_Interceptors/ForwardRequest/test_i.h:
-	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.cpp:
-	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
-	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
-	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.h:
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.h:
+        * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ForwardRequest/server.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/server.dsp:
+        * tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/test_i.h:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.cpp:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.h:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
 
-	  Updated to conform to the Portable Interceptor support updates.
+          Updated to conform to the Portable Interceptor support updates.
 
-	* docs/interceptors.html:
+        * docs/interceptors.html:
 
-	  Updated current status of TAO's interceptor support
-	  (e.g. addition of the CodecFactory and CDR encapsulation Codec),
-	  and the reference list (URL for the adopted Portable Interceptor
-	  specification).
+          Updated current status of TAO's interceptor support
+          (e.g. addition of the CodecFactory and CDR encapsulation Codec),
+          and the reference list (URL for the adopted Portable Interceptor
+          specification).
 
 Thu Mar  1 09:30:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -913,52 +921,52 @@ Thu Mar  1 09:30:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Feb 28 20:44:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Latency/pong.h:
-	* orbsvcs/tests/AVStreams/Latency/ping.h:
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.h:
+        * orbsvcs/tests/AVStreams/Latency/ping.h:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
 
-	  Fixed compile errors and warnings.
+          Fixed compile errors and warnings.
 
 Wed Feb 28 15:43:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/orbconf.h: Fixed a small mistake for the default case.
+        * tao/orbconf.h: Fixed a small mistake for the default case.
 
 Wed Feb 28 15:23:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/Options.html: Added documentation for the option
-	  "-ORBConnectionCacheLock".
+        * docs/Options.html: Added documentation for the option
+          "-ORBConnectionCacheLock".
 
 Wed Feb 28 15:20:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/orbconf.h: Added a check to notify the users that compiling
-	  RT CORBA without CORBA Messaging support is an error.
+        * tao/orbconf.h: Added a check to notify the users that compiling
+          RT CORBA without CORBA Messaging support is an error.
 
 Wed Feb 28 14:23:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Tagged_Profile.h:
-	* tao/Tagged_Profile.i:
-	* tao/TAgged_Profile.cpp: This class held an instance of
-	  GIOP::IORAddressingInfo which in turn held an instance of
-	  TAO_String_Manager. This was a source of allocation and
-	  deallocation for every call along the critical path. We now rip
-	  open the GIOP::IORAddressingInfo structure and store the
-	  information that is just required like the <type_id> and the
-	  <IOP::TaggedProfile>.
+        * tao/Tagged_Profile.h:
+        * tao/Tagged_Profile.i:
+        * tao/TAgged_Profile.cpp: This class held an instance of
+          GIOP::IORAddressingInfo which in turn held an instance of
+          TAO_String_Manager. This was a source of allocation and
+          deallocation for every call along the critical path. We now rip
+          open the GIOP::IORAddressingInfo structure and store the
+          information that is just required like the <type_id> and the
+          <IOP::TaggedProfile>.
 
-	* tao/GIOP_Message_Generator_Parser.cpp: Added code to do a lazy
-	  evaluation of GIOP::IORAddressingInfo structure that we may
-	  receive. These changes should fix the bugzilla bug #798.
+        * tao/GIOP_Message_Generator_Parser.cpp: Added code to do a lazy
+          evaluation of GIOP::IORAddressingInfo structure that we may
+          receive. These changes should fix the bugzilla bug #798.
 
 Wed Feb 28 14:17:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Makefile: Added AMI_Timeouts to the list of directories.
+        * tests/Makefile: Added AMI_Timeouts to the list of directories.
 
 Wed Feb 28 14:16:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Stub.h:
-	* tao/Stub.cpp (TAO_Stub): Changed the signature of the method
-	  create_ior_info ().
+        * tao/Stub.h:
+        * tao/Stub.cpp (TAO_Stub): Changed the signature of the method
+          create_ior_info ().
 
 Wed Feb 28 13:55:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -994,12 +1002,12 @@ Web Feb 28 09:02:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Feb 27 17:45:55 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Latency/control.cpp:
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
-	* orbsvcs/tests/AVStreams/Latency/run_test.pl:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/run_test.pl:
 
-	  Added script to run test.
+          Added script to run test.
 
 Tue Feb 27 16:36:06 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -1012,22 +1020,22 @@ Tue Feb 27 16:36:06 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Tue Feb 27 15:23:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
-	  Fixed unused args compile warnings.
+          Fixed unused args compile warnings.
 
 Tue Feb 27 12:21:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connector.cpp: Moved the template instantiations to the
-	  top of the file as this was creating problem with SunCC
-	  5.0. Thanks to Christian Mueffling <cvm@aiss.de> for reporting
-	  this.
+        * tao/IIOP_Connector.cpp: Moved the template instantiations to the
+          top of the file as this was creating problem with SunCC
+          5.0. Thanks to Christian Mueffling <cvm@aiss.de> for reporting
+          this.
 
-	* tao/UIOP_Connector.cpp:
-	* tao/SHMIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Added the same
-	  fix for these protocols too.
+        * tao/UIOP_Connector.cpp:
+        * tao/SHMIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Added the same
+          fix for these protocols too.
 
 Tue Feb 27 12:17:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1064,73 +1072,73 @@ Tue Feb 27 12:17:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Feb 27 11:34:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	* tao/Invocation.h: Removed the instance of IOP::IOR that was
-	  created on the stack in every call. This structure had a
-	  TAO_String_Manager which allocates memory in the constructor and
-	  destroys memory in the destructor. This allocation and
-	  deallocation comes into play for every call even when it is not
-	  used.
+        * tao/Invocation.cpp:
+        * tao/Invocation.h: Removed the instance of IOP::IOR that was
+          created on the stack in every call. This structure had a
+          TAO_String_Manager which allocates memory in the constructor and
+          destroys memory in the destructor. This allocation and
+          deallocation comes into play for every call even when it is not
+          used.
 
-	* tao/Stub.cpp:
-	* tao/Stub.h:
-	* tao/Stub.i: Added a pointer to the IOP::IOR in this class. When
-	  the client receives an exception LOC_NEEDS_ADDRESSING_MODE, the
-	  actual information is prepared only once and passed on to the
-	  invocation classes for every subsequent call.
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+        * tao/Stub.i: Added a pointer to the IOP::IOR in this class. When
+          the client receives an exception LOC_NEEDS_ADDRESSING_MODE, the
+          actual information is prepared only once and passed on to the
+          invocation classes for every subsequent call.
 
 Tue Feb 27 06:35:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h (operands.): Fixed a
-	  typo that was generating quite a bit of errors.
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h (operands.): Fixed a
+          typo that was generating quite a bit of errors.
 
 Tue Feb 27 04:32:00 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
-	* orbsvcs/tests/AVStreams/Multicast/run_test.pl:
-	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
-	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+        * orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+        * orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
 
-	  Added scripts to run the AVStreams tests.
+          Added scripts to run the AVStreams tests.
 
 Mon Feb 26 20:01:06 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
-	* orbsvcs/tests/AVStreams/Latency/control.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
-	  Ensured clean termination of the processes.
+          Ensured clean termination of the processes.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
 
-	  Corrected multicasting address formating to fix the Multicast
-	  and Multicast_Full_Profile tests.
+          Corrected multicasting address formating to fix the Multicast
+          and Multicast_Full_Profile tests.
 
-	  Also fixed the iteration through the reverse flow spec set in
-	  TAO_StreamEndPoint::start.
+          Also fixed the iteration through the reverse flow spec set in
+          TAO_StreamEndPoint::start.
 
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for reporting these
-	  bugs.
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for reporting these
+          bugs.
 
 
 
 Mon Feb 26 19:05:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
-	* orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.h:
-	  Added some TAO_Trading_Export macros to export some classes from
- 	  the Trading Service library.  Thanks to Lothar Werzinger
- 	  <werzinger.lothar@krones.de> for reporting this and submitting
- 	  the patches.
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.h:
+          Added some TAO_Trading_Export macros to export some classes from
+          the Trading Service library.  Thanks to Lothar Werzinger
+          <werzinger.lothar@krones.de> for reporting this and submitting
+          the patches.
 
 Mon Feb 26 16:34:55 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
