@@ -1,3 +1,25 @@
+Fri Jan  9 12:17:02 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/Event_Service/GPlot_File.cpp: 
+	* orbsvcs/Event_Service/Memory_Pools.cpp: 
+	* orbsvcs/Event_Service/Task_Manager.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduler_Generic.cpp: 
+	  Added missing instantiation for platforms with
+	  ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA (IRIX) 
+
+	* orbsvcs/Event_Service/CORBA_Utils_T.h: 
+	  Added missing member to ACE_ES_Array_Iterator.
+
+	* orbsvcs/Scheduling_Service/Scheduler.h: 
+	  Use ACE_SYNCH_MUTEX instead of ACE_HAS_THREADS and
+	  ACE_Null_Mutex vs ACE_Thread_Mutex.
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  The IDL generated files are .PRECIOUS
+
 Thu Jan  8 21:58:18 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp: be_interface::relative_skel_name ()
