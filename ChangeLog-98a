@@ -1,5 +1,10 @@
 Wed Dec 17 19:42:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/IPC_SAP/SOCK_SAP: Enhanced the
+ 	  CPP-{inserver,inclient}.cpp tests so that they will spawn
+ 	  multiple client and server threads to perform the data transfer.
+  	  Thanks to Brian Mendel and Bryan Doerr for suggesting this.
+
 	* ace/OS.i: Fixed some very subtle bugs with cond_signal() and
  	  cond_broadcast().  Thanks to Patrick J. McNerthney
  	  <pat@thememedia.com> for reporting these and sending the fixes.
