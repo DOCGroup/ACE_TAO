@@ -1,3 +1,8 @@
+Wed Jun 25 17:18:25 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Parse_Node.cpp: Insure that ACE_Object_Node::symbol(void)
+	  returns 0 if the underlying shared library can't be loaded.
+
 Wed Jun 25 12:59:00 1997    <irfan@TWOSTEP>
 
 	* ace/Synch_T.h (ACE_SYNCH_PROCESS_MUTEX): Added new template
