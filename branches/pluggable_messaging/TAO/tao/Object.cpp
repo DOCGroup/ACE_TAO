@@ -1,4 +1,5 @@
 // @(#) $Id$
+
 //
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -16,9 +17,9 @@
 #include "tao/Connector_Registry.h"
 #include "tao/debug.h"
 
-#if defined (TAO_HAS_INTERFACE_REPOSITORY)
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 #include "tao/InterfaceC.h"
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY */
+#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
 
 #include "ace/Auto_Ptr.h"
@@ -28,6 +29,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Object, "$Id$")
+
 
 CORBA_Object::~CORBA_Object (void)
 {
@@ -222,7 +224,7 @@ CORBA::Object::_key (CORBA::Environment &)
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
     return this->_stubobj ()->profile_in_use ()->_key ();
 
-  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
+  ACE_ERROR_RETURN((LM_ERROR, ASYS_TEXT ("(%P|%t) Null stub obj!!!\n")), 0);
 }
 
 const TAO_ObjectKey &
@@ -406,11 +408,11 @@ CORBA_Object::_request (const CORBA::Char *operation,
 CORBA::InterfaceDef_ptr
 CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 {
-#if defined (TAO_HAS_INTERFACE_REPOSITORY)
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
   CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil();
 #else
   CORBA::InterfaceDef_ptr _tao_retval = 0;
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY */
+#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
@@ -451,7 +453,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
       break;
     }
 
-#if defined (TAO_HAS_INTERFACE_REPOSITORY)
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
         (_tao_in >> _tao_retval)
@@ -462,7 +464,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 #else
   ACE_UNUSED_ARG (_tao_retval);
   ACE_THROW_RETURN (CORBA::INTF_REPOS (), _tao_retval);
-#endif  /* TAO_HAS_INTERFACE_REPOSITORY */
+#endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 }
 
 CORBA::ImplementationDef_ptr
@@ -478,7 +480,7 @@ CORBA_Object::_get_implementation (CORBA::Environment &)
 // @@ Does it make sense to support policy stuff for locality constrained
 //    objects?  Also, does it make sense to bind policies with stub object?
 //    - nw.
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 CORBA::Policy_ptr
 CORBA_Object::_get_policy (
     CORBA::PolicyType type,
@@ -559,7 +561,7 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
   return 0;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // ****************************************************************
 
@@ -629,7 +631,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "WARNING: extracting object from default ORB_Core\n"));
+                      ASYS_TEXT ("WARNING: extracting object from default ORB_Core\n")));
         }
     }
 
@@ -647,8 +649,8 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   if (mp.profile_count () != profile_count)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) could not create all "
-                  "the profiles\n"));
+                  ASYS_TEXT ("TAO (%P|%t) could not create all ")
+                  ASYS_TEXT ("the profiles\n")));
       return 0;
     }
 

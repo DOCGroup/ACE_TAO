@@ -135,9 +135,9 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 
 // *********************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
@@ -229,9 +229,9 @@ TAO_Asynch_Reply_Dispatcher::message_state (void)
   return this->message_state_;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // *********************************************************************
 
@@ -274,7 +274,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
+                  ASYS_TEXT ("(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n")));
     }
 
   ACE_TRY_NEW_ENV

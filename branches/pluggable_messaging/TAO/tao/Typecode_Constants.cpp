@@ -1,5 +1,6 @@
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -41,11 +42,13 @@
 #include "tao/NVList.h"
 #include "tao/BoundsC.h"
 
-#if defined(TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_POLLER == 1)
 #include "tao/PollableC.h"
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_POLLER == 1 */
+
 
 ACE_RCSID(tao, Typecode_Constants, "$Id$")
+
 
 // Declare all the standard typecodes owned by the ORB
 
@@ -1615,7 +1618,7 @@ TAO_TypeCodes::init (void)
 
  // ****************************************************************
 
-#if defined(TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_POLLER == 1)
   static const CORBA::Long _oc_CORBA_Pollable[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
@@ -1693,7 +1696,7 @@ TAO_TypeCodes::init (void)
                         0,
                         sizeof (CORBA_PollableSet));
 
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
  // ****************************************************************
 
@@ -1977,13 +1980,13 @@ TAO_TypeCodes::fini (void)
 
   CORBA::release (CORBA::_tc_DomainManagerList);
 
-#if defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_AMI_POLLER == 1)
   CORBA::release (CORBA::_tc_Pollable);
 
   CORBA::release (CORBA::_tc_DIIPollable);
 
   CORBA::release (CORBA::_tc_PollableSet);
-#endif /* defined (TAO_HAS_AMI_POLLER) */
+#endif /* (TAO_HAS_AMI_POLLER == 1) */
 
   // Service types
    //= Service type

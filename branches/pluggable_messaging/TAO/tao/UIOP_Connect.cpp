@@ -1,8 +1,9 @@
 // $Id$
 
+
 #include "tao/UIOP_Connect.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Transport.h"
 #include "tao/debug.h"
@@ -11,12 +12,14 @@
 #include "tao/CDR.h"
 #include "tao/Timeprobe.h"
 
+#include "tao/Messaging_Policy_i.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID(tao, UIOP_Connect, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -415,8 +418,26 @@ TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // This method is called when buffering timer expires.
   //
 
+  ACE_Time_Value *max_wait_time = 0;
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
+    this->orb_core_->stubless_relative_roundtrip_timeout ();
+
+  ACE_Time_Value max_wait_time_value;
+
+  // If max_wait_time is not zero then this is not the first attempt
+  // to send the request, the timeout value includes *all* those
+  // attempts.
+  if (timeout_policy != 0)
+    {
+      timeout_policy->set_time_value (max_wait_time_value);
+      max_wait_time = &max_wait_time_value;
+    }
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages ();
+  this->transport ()->send_buffered_messages (max_wait_time);
 
   return 0;
 }
@@ -497,4 +518,4 @@ TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_UIOP */
+#endif /* TAO_HAS_UIOP == 1 */

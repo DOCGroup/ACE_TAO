@@ -19,11 +19,11 @@
 
 #include "tao/PollableS.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_CORBA_MESSAGING == 1) && (TAO_HAS_AMI_POLLER == 1)
 
 #include "tao/Operation_Table.h"
 #include "tao/Server_Request.h"
-
+#include "tao/ORB.h"
 #if !defined (__ACE_INLINE__)
 #include "tao/PollableS.i"
 #endif /* !defined INLINE */
@@ -971,4 +971,4 @@ POA_CORBA::PollableSet::_this (CORBA_Environment &ACE_TRY_ENV)
 
   return retval;
 }
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_AMI_POLLER == 1 */

@@ -1,8 +1,10 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
+
 
 #include "tao/UIOP_Transport.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Connect.h"
 #include "tao/UIOP_Profile.h"
@@ -59,12 +61,18 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
 
 TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
-  // Cannot deal with errors, and therefore they are ignored.
-  this->send_buffered_messages ();
+  // If the socket has not already been closed.
+  if (this->handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->dequeue_all ();
+    }
 
-  // Note that it also doesn't matter how much of the data was
-  // actually sent.
-  this->dequeue_all ();
 }
 
 TAO_UIOP_Handler_Base *&
@@ -183,7 +191,7 @@ TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
   TAO_Pluggable_Connector_Params params;
   params.request_id = request_id;
   if (this->client_mesg_factory_->write_message_header (params,
-                                                        TAO_LOCATE_REQUEST_HEADER,
+                                                        TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER,
                                                         spec,
                                                         output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
@@ -204,7 +212,8 @@ TAO_UIOP_Client_Transport::send_request (TAO_Stub *stub,
   if (this->client_mesg_factory_->send_message (this,
                                                 stream,
                                                 max_wait_time,
-                                                stub) == -1)
+                                                stub,
+                                                two_way) == -1)
     return -1;
 
   return this->idle_after_send ();
@@ -337,7 +346,7 @@ TAO_UIOP_Client_Transport::send_request_header (const IOP::ServiceContextList & 
   // layer. It should take care of this request
   CORBA::Boolean retval = 
     this->client_mesg_factory_->write_message_header (params,
-                                                      TAO_REQUEST_HEADER,
+                                                      TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,
                                                       spec,
                                                       msg);
   return retval;
@@ -347,10 +356,11 @@ TAO_UIOP_Client_Transport::send_request_header (const IOP::ServiceContextList & 
 
 ssize_t
 TAO_UIOP_Transport::send (TAO_Stub *stub,
+                          int two_way,
                           const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time)
 {
-  if (stub == 0)
+  if (stub == 0 || two_way)
     {
       return this->send (message_block,
                          max_wait_time);
@@ -425,3 +435,4 @@ TAO_UIOP_Transport::send_request_header (const IOP::ServiceContextList & /*svc_c
 }
 
 #endif  /* TAO_HAS_UIOP */
+

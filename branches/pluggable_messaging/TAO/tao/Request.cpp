@@ -12,7 +12,9 @@
 # include "tao/Request.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID(tao, Request, "$Id$")
+
 
 CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
@@ -94,7 +96,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 
 CORBA_Request::~CORBA_Request (void)
 {
-  assert (refcount_ == 0);
+  ACE_ASSERT (refcount_ == 0);
 
   CORBA::release (this->target_);
   CORBA::string_free ((char*) this->opname_);
@@ -219,7 +221,7 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) unhandled reply status\n"));
+                  ASYS_TEXT ("(%P|%t) unhandled reply status\n")));
   }
 }
 

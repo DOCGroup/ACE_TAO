@@ -12,7 +12,7 @@
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 
-#if defined TAO_HAS_INTERFACE_REPOSITORY
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
 #if !defined (__ACE_INLINE__)
 #include "tao/InterfaceC.i"
@@ -18177,4 +18177,4 @@ CORBA::Boolean operator>> (
 }
 
 
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
+#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */

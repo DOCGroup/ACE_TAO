@@ -1,4 +1,6 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
+
 
 // ============================================================================
 //
@@ -18,7 +20,7 @@
 
 #include "tao/UIOP_Acceptor.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -27,6 +29,7 @@
 #include "tao/debug.h"
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -385,4 +388,4 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
-#endif  /* TAO_HAS_UIOP */
+#endif  /* TAO_HAS_UIOP == 1 */

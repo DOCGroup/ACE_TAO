@@ -11,6 +11,7 @@
 
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
+
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 int
 TAO_IIOP_Connector::purge_connections (void)
@@ -222,8 +223,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
 
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-#pragma instantiate CACHED_CONNECT_STRATEGY;
-#pragma instantiate TAO_ADDR;
+#pragma instantiate CACHED_CONNECT_STRATEGY
+#pragma instantiate TAO_ADDR
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -478,8 +479,8 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
           profile->addr_to_string (buffer,
                                    (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) %s:%u, connection to "
-                      "%s failed (%p)\n",
+                      ASYS_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ASYS_TEXT ("%s failed (%p)\n"),
                       __FILE__,
                       __LINE__,
                       buffer,
@@ -559,8 +560,8 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) No port specified for <%s>.  "
-                              "Using <%d> as default port.\n",
+                              ASYS_TEXT ("TAO (%P|%t) No port specified for <%s>.  ")
+                              ASYS_TEXT ("Using <%d> as default port.\n"),
                               where,
                               dest.get_port_number ()));
                 }
@@ -619,14 +620,14 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "TAO (%P|%t) Preconnection <%s:%d> "
-                            "succeeded.\n",
+                            ASYS_TEXT ("TAO (%P|%t) Preconnection <%s:%d> ")
+                            ASYS_TEXT ("succeeded.\n"),
                             remote_addrs[slot].get_host_name (),
                             remote_addrs[slot].get_port_number ()));
             }
           else if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) Preconnection <%s:%d> failed.\n",
+                        ASYS_TEXT ("TAO (%P|%t) Preconnection <%s:%d> failed.\n"),
                         remote_addrs[slot].get_host_name (),
                         remote_addrs[slot].get_port_number ()));
         }
@@ -635,8 +636,8 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) IIOP preconnections: %d successes and "
-                    "%d failures.\n",
+                    ASYS_TEXT ("TAO (%P|%t) IIOP preconnections: %d successes and ")
+                    ASYS_TEXT ("%d failures.\n"),
                     successes,
                     num_connections - successes));
     }
@@ -711,5 +712,5 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
 char
 TAO_IIOP_Connector::object_key_delimiter (void) const
 {
-  return TAO_IIOP_Profile::object_key_delimiter;
+  return TAO_IIOP_Profile::object_key_delimiter_;
 }

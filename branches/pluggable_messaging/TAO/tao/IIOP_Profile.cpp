@@ -3,6 +3,7 @@
 
 
 
+
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Connect.h"
 #include "tao/CDR.h"
@@ -14,13 +15,20 @@
 
 ACE_RCSID(tao, IIOP_Profile, "$Id$")
 
+
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
 static const char prefix_[] = "iiop";
 
-const char TAO_IIOP_Profile::object_key_delimiter = '/';
+const char TAO_IIOP_Profile::object_key_delimiter_ = '/';
+
+char 
+TAO_IIOP_Profile::object_key_delimiter (void) const
+{
+  return TAO_IIOP_Profile::object_key_delimiter_;
+}
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
@@ -150,7 +158,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n",
+                    ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
                     this->version_.major,
                     this->version_.minor));
       }
@@ -163,8 +171,8 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) IIOP_Profile::decode - "
-                      "error while decoding host/port"));
+                      ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
+                      ASYS_TEXT ("error while decoding host/port")));
         }
       return -1;
     }
@@ -188,7 +196,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
       ACE_DEBUG ((LM_DEBUG,
-                  "%d bytes out of %d left after IIOP profile data\n",
+                  ASYS_TEXT ("%d bytes out of %d left after IIOP profile data\n"),
                   cdr.length (),
                   encap_len));
     }
@@ -254,7 +262,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
         -1);
     }
 
-  char *okd = ACE_OS::strchr (start, this->object_key_delimiter);
+  char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
 
   if (okd == 0)
     {
@@ -419,7 +427,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
                    digits [this->version_.minor],
                    this->host_.in (),
                    this->port_,
-                   this->object_key_delimiter,
+                   this->object_key_delimiter_,
                    key.in ());
   return buf;
 }

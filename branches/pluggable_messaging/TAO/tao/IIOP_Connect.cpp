@@ -7,13 +7,13 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
+#include "tao/Messaging_Policy_i.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, IIOP_Connect, "$Id$")
-
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -121,7 +121,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
     return -1;
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
-#if defined (TCP_NODELAY)
+#if !defined (ACE_LACKS_TCP_NODELAY)
   int nodelay =
     this->orb_core_->orb_params ()->nodelay ();
 
@@ -130,7 +130,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
     return -1;
-#endif /* TCP_NODELAY */
+#endif /* ! ACE_LACKS_TCP_NODELAY */
 
   (void) this->peer ().enable (ACE_CLOEXEC);
   // Set the close-on-exec flag for that file descriptor. If the
@@ -149,7 +149,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) IIOP connection from client <%s> on %d\n",
+                ASYS_TEXT ("TAO (%P|%t) IIOP connection from client <%s> on %d\n"),
                 client, this->peer ().get_handle ()));
 
   return 0;
@@ -169,8 +169,8 @@ TAO_IIOP_Server_Connection_Handler::activate (long flags,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) IIOP_Server_Connection_Handler::activate %d "
-                 "threads, flags = %d\n",
+                 ASYS_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::activate %d ")
+                 ASYS_TEXT ("threads, flags = %d\n"),
                  n_threads,
                  flags,
                  THR_BOUND));
@@ -193,8 +193,8 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) IIOP_Server_Connection_Handler::handle_close "
-                 "(%d, %d)\n",
+                 ASYS_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::handle_close ")
+                 ASYS_TEXT ("(%d, %d)\n"),
                  handle,
                  rm));
 
@@ -218,7 +218,7 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) IIOP_Server_Connection_Handler::svc begin\n"));
+                ASYS_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::svc begin\n")));
 
   // Here we simply synthesize the "typical" event loop one might find
   // in a reactive handler, except that this can simply block waiting
@@ -246,13 +246,13 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
       current_timeout = timeout;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) IIOP_Server_Connection_Handler::svc - "
-                    "loop <%d>\n", current_timeout.msec ()));
+                    ASYS_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::svc - ")
+                    ASYS_TEXT ("loop <%d>\n"), current_timeout.msec ()));
     }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) IIOP_Server_Connection_Handler::svc end\n"));
+                 ASYS_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::svc end\n")));
 
   return result;
 }
@@ -277,9 +277,9 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - %p\n",
-                  "IIOP_Server_Connection_Handler::handle_input, "
-                  "handle_input"));
+                  ASYS_TEXT ("TAO (%P|%t) - %p\n"),
+                  ASYS_TEXT ("IIOP_Server_Connection_Handler::handle_input, ")
+                  ASYS_TEXT ("handle_input")));
     }
 
   if (result == 0 || result == -1)
@@ -388,7 +388,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
     return -1;
 #endif /* ACE_LACKS_SOCKET_BUFSIZ */
 
-#if defined (TCP_NODELAY)
+#if !defined (ACE_LACKS_TCP_NODELAY)
   int nodelay =
     this->orb_core_->orb_params ()->nodelay ();
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
@@ -396,9 +396,9 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "NODELAY failed\n"),
+                       ASYS_TEXT ("NODELAY failed\n")),
                       -1);
-#endif /* TCP_NODELAY */
+#endif /* ! ACE_LACKS_TCP_NODELAY */
 
   (void) this->peer ().enable (ACE_CLOEXEC);
   // Set the close-on-exec flag for that file descriptor. If the
@@ -418,7 +418,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) IIOP connection to server <%s> on %d\n",
+                ASYS_TEXT ("TAO (%P|%t) IIOP connection to server <%s> on %d\n"),
                 server, this->peer ().get_handle ()));
 
   // Register the handler with the Reactor if necessary.
@@ -448,8 +448,26 @@ TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // This method is called when buffering timer expires.
   //
 
+  ACE_Time_Value *max_wait_time = 0;
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
+    this->orb_core_->stubless_relative_roundtrip_timeout ();
+
+  ACE_Time_Value max_wait_time_value;
+
+  // If max_wait_time is not zero then this is not the first attempt
+  // to send the request, the timeout value includes *all* those
+  // attempts.
+  if (timeout_policy != 0)
+    {
+      timeout_policy->set_time_value (max_wait_time_value);
+      max_wait_time = &max_wait_time_value;
+    }
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages ();
+  this->transport ()->send_buffered_messages (max_wait_time);
 
   return 0;
 }
@@ -467,8 +485,8 @@ TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) IIOP_Client_Connection_Handler::"
-                 "handle_close (%d, %d)\n", handle, rm));
+                 ASYS_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
+                 ASYS_TEXT ("handle_close (%d, %d)\n"), handle, rm));
 
   if (this->recycler ())
     this->recycler ()->mark_as_closed (this->recycling_act ());
@@ -490,8 +508,8 @@ TAO_IIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) IIOP_Client_Connection_Handler::"
-                 "handle_close_i (%d, %d)\n", handle, rm));
+                 ASYS_TEXT ("TAO (%P|%t) IIOP_Client_Connection_Handler::")
+                 ASYS_TEXT ("handle_close_i (%d, %d)\n"), handle, rm));
 
   if (this->recycler ())
     this->recycler ()->mark_as_closed_i (this->recycling_act ());

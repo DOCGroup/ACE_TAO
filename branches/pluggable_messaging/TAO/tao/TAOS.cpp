@@ -13,7 +13,7 @@
 #include "tao/TAOS.i"
 #endif /* !defined INLINE */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 // skeleton constructor
 POA_TAO::ClientPriorityPolicy::ClientPriorityPolicy (void)
@@ -219,4 +219,10 @@ TAO::BufferingConstraint POA_TAO::_tao_direct_collocated_BufferingConstraintPoli
 
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+TAO::BufferingConstraint POA_TAO::_tao_direct_collocated_BufferingConstraintPolicy::buffering_constraint  (void)
+{
+  return this->servant_->buffering_constraint ();
+
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
