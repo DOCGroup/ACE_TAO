@@ -1,3 +1,24 @@
+Thu Jul 13 17:45:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/reopen_include1.idl:
+	* tests/IDL_Test/reopen_include2.idl:
+
+	  New idl files included in reopened_modules.idl, to
+	  test use cases where modules are reopened in 
+	  several files.
+
+	* namespace_check.cpp:
+
+	  Generated files from the two new idl files are included
+	  here, conditionally so platforms without namespaces won't
+	  see them.
+
+	* Makefile:
+	* Makefile.bor:
+	* IDL_Test.dsp:
+
+	  Updated to reflect the above changes.
+
 Thu Jul 13 13:03:57 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP.dsp:
