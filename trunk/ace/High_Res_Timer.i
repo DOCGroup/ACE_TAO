@@ -27,10 +27,12 @@ ACE_INLINE ACE_Time_Value
 ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
 {
 #if defined (ACE_WIN32)
-  // If the global_scale_factor_ == 1 and we're on a WIN32 platform,
-  // then a scale factor is needed by the platform gethrtime.  Since
-  // one has not been set, just return ACE_OS::gettimeofday.
-  if (ACE_High_Res_Timer::global_scale_factor () == 1)
+  // Get the global scale factor if there isn't one yet.
+  if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
+    ACE_High_Res_Timer::global_scale_factor ();
+
+  // If there isn't a high-res timer, use gettimeofday ();
+  if (ACE_High_Res_Timer::global_scale_factor_status_ == -1)
     return ACE_OS::gettimeofday ();
 #endif /* ACE_WIN32 */
 
@@ -45,10 +47,12 @@ ACE_INLINE ACE_hrtime_t
 ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
 {
 #if defined (ACE_WIN32)
-  // If the global_scale_factor_ == 1 and we're on a WIN32 platform,
-  // then a scale factor is needed by the platform gethrtime.  Since
-  // one has not been set, just return ACE_OS::gettimeofday.
-  if (ACE_High_Res_Timer::global_scale_factor () == 1)
+  // Get the global scale factor if there isn't one yet.
+  if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
+    ACE_High_Res_Timer::global_scale_factor ();
+
+  // If there isn't a high-res timer, use gettimeofday ();
+  if (ACE_High_Res_Timer::global_scale_factor_status_ == -1)
     {
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
       // Return the time in microseconds because the global_scale_factor_

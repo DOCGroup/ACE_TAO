@@ -206,6 +206,12 @@ private:
   static ACE_UINT32 global_scale_factor_;
   // Converts ticks to microseconds.  That is, ticks /
   // global_scale_factor_ == microseconds.
+
+  static int global_scale_factor_status_;
+  // Indicates the status of the global scale factor, 
+  // 0  = hasn't been set
+  // 1  = been set 
+  // -1 = HR timer not supported
 };
 
 #if defined (__ACE_INLINE__)
