@@ -130,7 +130,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_AlreadyRegistered;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_AlreadyRegistered;
 
 #endif /* end #if !defined */
   
@@ -188,7 +188,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_CannotActivate;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_CannotActivate;
 
 #endif /* end #if !defined */
   
@@ -238,7 +238,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_NotFound;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_NotFound;
 
 #endif /* end #if !defined */
   
@@ -275,7 +275,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EnvironmentVariable;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_EnvironmentVariable;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -328,7 +328,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EnvironmentList;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_EnvironmentList;
   
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
@@ -346,7 +346,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ActivationMode;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ActivationMode;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -385,7 +385,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_StartupOptions;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_StartupOptions;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -421,7 +421,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerInformation;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ServerInformation;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -474,7 +474,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerInformationList;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ServerInformationList;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -606,7 +606,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerInformationIterator;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ServerInformationIterator;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -833,7 +833,7 @@ namespace ImplementationRepository
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Administration;
+  extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_Administration;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -1080,7 +1080,7 @@ TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Implemen
 TAO_IMR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::Administration_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:947
 
 #if defined (__ACE_INLINE__)
 #include "ImplRepoC.inl"
