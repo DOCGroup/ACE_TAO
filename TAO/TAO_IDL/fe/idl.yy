@@ -1138,30 +1138,26 @@ primary_expr
            * as a constant value).
            */
           UTL_Scope *s = idl_global->scopes()->top_non_null ();
-          AST_Decl *d = 0;
-          AST_Constant *c = 0;
 
-          d = s->lookup_by_name ($1,
-                                 1);
-
-          if (d != 0)
-            {
-              c = AST_Constant::narrow_from_decl (d);
-            }
+          AST_Decl *d = s->lookup_by_name ($1,
+                                            1);
 
           /*
-           * If an array dim, string bound, or sequence bound is an
-           * IDL constant, the constant's value and type must be
-           * assigned to this expression so they can be checked later.
+           * If the scoped name is an IDL constant, it may be used in an
+           * array dim, a string bound, or a sequence bound. If so, it 
+           * must be unsigned and > 0. We assign the constant's value
+           * and type to the expression created here so we can check 
+           * them later.
            */
-          if (c != 0)
+          if (d != 0 && d->node_type () == AST_Decl::NT_const)
             {
-              $$ = idl_global->gen()->create_expr (c->constant_value (),
-                                                   c->et ());
+              AST_Constant *c = AST_Constant::narrow_from_decl (d);
+              $$ = idl_global->gen ()->create_expr (c->constant_value (),
+                                                    c->et ());
             }
           else
             {
-              $$ = idl_global->gen()->create_expr ($1);
+              $$ = idl_global->gen ()->create_expr ($1);
             }
         }
         | literal
@@ -1218,46 +1214,56 @@ positive_int_expr :
         {
           int good_expression = 1;
 
-          switch ($1->ev ()->et)
-          {
-            case AST_Expression::EV_ushort:
-              if ($1->ev ()->u.usval == 0)
-                {
+          $1->evaluate (AST_Expression::EK_const);
+
+          AST_Expression::AST_ExprValue *ev = $1->ev ();
+
+          /*
+           * If const_expr is an enum value (AST_EnumVal inherits from
+           * AST_Constant), the AST_ExprValue will probably not be set,
+           * but there's no need to check anyway
+          if (ev != 0)
+            {
+              switch (ev->et)
+              {
+                case AST_Expression::EV_ushort:
+                  if ($1->ev ()->u.usval == 0)
+                    {
+                      good_expression = 0;
+                    }
+                  break;
+                case AST_Expression::EV_ulong:
+                  if ($1->ev ()->u.ulval == 0)
+                    {
+                      good_expression = 0;
+                    }
+                  break;
+                case AST_Expression::EV_ulonglong:
+                  if ($1->ev ()->u.ullval == 0)
+                    {
+                      good_expression = 0;
+                    }
+                  break;
+                case AST_Expression::EV_octet:
+                  if ($1->ev ()->u.oval == 0)
+                    {
+                      good_expression = 0;
+                    }
+                  break;
+                case AST_Expression::EV_bool:
+                  if ($1->ev ()->u.bval == 0)
+                    {
+                      good_expression = 0;
+                    }
+                  break;
+                default:
                   good_expression = 0;
-                }
-              break;
-            case AST_Expression::EV_ulong:
-              if ($1->ev ()->u.ulval == 0)
-                {
-                  good_expression = 0;
-                }
-              break;
-            case AST_Expression::EV_ulonglong:
-              if ($1->ev ()->u.ullval == 0)
-                {
-                  good_expression = 0;
-                }
-              break;
-            case AST_Expression::EV_octet:
-              if ($1->ev ()->u.oval == 0)
-                {
-                  good_expression = 0;
-                }
-              break;
-            case AST_Expression::EV_bool:
-              if ($1->ev ()->u.bval == 0)
-                {
-                  good_expression = 0;
-                }
-              break;
-            default:
-              good_expression = 0;
-              break;
-          }
+                  break;
+              }
+            }
 
           if (good_expression)
             {
-              $1->evaluate (AST_Expression::EK_const);
               $$ = 
                 idl_global->gen()->create_expr ($1, 
                                                 AST_Expression::EV_ulong);
