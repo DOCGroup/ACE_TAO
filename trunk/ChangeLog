@@ -1,21 +1,26 @@
+Tue Jan 18 22:53:18 2000  Toshio HORI <toshi@etl.go.jp>
+
+        * include/makeinclude/platform_vxworks_5.x_g++.GNU:
+          added support for compiling ACE for VxWorks/SPARC target.
+
 Tue Jan 18 15:55:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/ACE-netsvcs.html: Fixed a typo.  Thanks to
-	  Brian Jones <bjones@edgemail.com> for reporting this.
+        * netsvcs/ACE-netsvcs.html: Fixed a typo.  Thanks to
+          Brian Jones <bjones@edgemail.com> for reporting this.
 
-	* ACE-INSTALL.html: Updated the text from 
-	  Dr. Toshio HORI <toshi@etl.go.jp>.
+        * ACE-INSTALL.html: Updated the text from
+          Dr. Toshio HORI <toshi@etl.go.jp>.
 
 Tue Jan 18 15:37:25 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
-	* ace/ATM_Connector.{cpp,h,i}, ATM_QoS.{cpp,h}, ATM_Stream.{cpp,i}:
- 	  Adding changes to support FORE's latest WinSock2 ATM support.
+        * ace/ATM_Connector.{cpp,h,i}, ATM_QoS.{cpp,h}, ATM_Stream.{cpp,i}:
+          Adding changes to support FORE's latest WinSock2 ATM support.
 
 Tue Jan 18 13:44:34 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Thread_Pool_Test.cpp: Replaced int with size_t to
-	  prevent compiler warnings comparing signed and unsigned
- 	  quantities.  
+        * tests/Thread_Pool_Test.cpp: Replaced int with size_t to
+          prevent compiler warnings comparing signed and unsigned
+          quantities.
 
 Tue Jan 18 09:13:43 2000  David L. Levine  <levine@cs.wustl.edu>
 

@@ -108,8 +108,16 @@ ifeq ($(CPU),I80386)
   CFLAGS += -DCPU=I80386
   TOOLENV = 386
 else
+ifeq ($(CPU),SPARC)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SPARC
+  CCFLAGS += -fno-implicit-templates
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sparc-wrs-vxworks/cygnus-2.7.2-960126
+  TOOLENV = sparc
+else
   BINXSYM_NAME = xsym
   CCFLAGS += -fno-implicit-templates
+endif # SPARC
 endif # I80386
 endif # I80486
 endif # SIMNT
