@@ -406,8 +406,6 @@
 // variable (e.g., VxWorks and MVS).
 //ACE_LACKS_SYSV_MSG_H                  Platform lacks sys/msg.h
 //(e.g., Chorus and VxWorks)
-//ACE_LACKS_KEYDELETE                   Platform lacks TSS keydelete
-//(e.g., HP/UX)
 //ACE_LACKS_KEY_T                       Platform lacks key_t
 //(e.g., Chorus, VxWorks, Win32)
 //ACE_LACKS_SENDMSG                     Platform lacks sendmsg()
