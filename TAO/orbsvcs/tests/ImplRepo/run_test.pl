@@ -41,7 +41,7 @@ $endpoint = "-ORBEndpoint " . "$protocol" . "://" . "$host" . ":" . $port;
 
 $IMR_LOCATOR = new PerlACE::Process ("../../ImplRepo_Service/ImplRepo_Service");
 $IMR_ACTIVATOR = new PerlACE::Process ("../../ImplRepo_Service/ImR_Activator");
-$TAO_IMR = new PerlACE::Process("../../ImplRepo_Service/tao_imr");
+$TAO_IMR = new PerlACE::Process("$ACE_ROOT/bin/tao_imr");
 
 $A_SVR = new PerlACE::Process (PerlACE::LocalFile ("airplane_server"));
 $A_CLI = new PerlACE::Process (PerlACE::LocalFile ("airplane_client"),
