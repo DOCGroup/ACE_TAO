@@ -27,12 +27,12 @@ POA_CORBA::Current::~Current (void)
 
 CORBA::Boolean POA_CORBA::Current::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Current:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
       return 1;
     else
       return 0;
@@ -71,12 +71,12 @@ POA_CORBA::Current_ptr POA_CORBA::_tao_collocated_Current::_get_servant (void) c
 
 CORBA::Boolean POA_CORBA::_tao_collocated_Current::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      ACE_TRY_ENV
     );
 }
 
