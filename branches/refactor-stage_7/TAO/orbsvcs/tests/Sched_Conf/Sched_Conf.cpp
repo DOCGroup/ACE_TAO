@@ -5,7 +5,6 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
-#include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"

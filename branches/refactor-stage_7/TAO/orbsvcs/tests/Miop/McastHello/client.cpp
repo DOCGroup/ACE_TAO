@@ -3,6 +3,8 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
+#include "tao/Object_T.h"
+
 ACE_RCSID(Hello, client, "$Id$")
 
 const char *ior = "file://test.ior";
@@ -54,8 +56,10 @@ main (int argc, char *argv[])
        * a multicast reference (yet...).
        */
       Test::McastHello_var hello =
-        Test::McastHello::_unchecked_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        TAO::Narrow_Utils<Test::McastHello>::unchecked_narrow (
+            tmp.in (),
+            Test__TAO_McastHello_Proxy_Broker_Factory_function_pointer
+          );
 
       if (CORBA::is_nil (hello.in ()))
         {
