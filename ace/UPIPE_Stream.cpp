@@ -102,7 +102,19 @@ ACE_UPIPE_Stream::send (const char *buffer,
                   ACE_Message_Block (n),
                   -1);
   mb_p->copy (buffer, n);
-  return this->stream_.put (mb_p, timeout) == -1 ? -1 : n;
+  return
+    this->stream_.put (mb_p, timeout) == -1
+    ? -1
+    : ACE_static_cast (ssize_t, n); // @@ Steve, I silenced the
+                                    //    warning with a
+                                    //    static_cast<>.  Is this
+                                    //    okay?  BTW, even without the
+                                    //    cast, isn't this code
+                                    //    broken?  What if 'n" is
+                                    //    greater than the maximum
+                                    //    value of a ssize_t?  The
+                                    //    return value won't make any
+                                    //    sense.
 }
 
 // Receive a buffer.
