@@ -113,7 +113,6 @@ namespace CORBA
     static CORBA::Object_ptr _nil (void);
 
     /// No-op it is just here to simplify some templates.
-    ACE_INLINE_FOR_GNUC
     static CORBA::Object_ptr _narrow (CORBA::Object_ptr obj
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
