@@ -290,7 +290,6 @@ be_visitor_ccm_pre_proc::gen_uses (be_component *node)
 {
   ACE_Unbounded_Queue<AST_Component::port_description> &s = node->uses ();
   AST_Component::port_description *pd = 0;
-  AST_Operation *uses_op = 0;
 
   for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> iter (s);
        ! iter.done ();
@@ -443,7 +442,6 @@ be_visitor_ccm_pre_proc::gen_consumes (be_component *node)
 {
   ACE_Unbounded_Queue<AST_Component::port_description> &s = node->consumes ();
   AST_Component::port_description *pd = 0;
-  AST_Operation *provides_op = 0;
 
   for (ACE_Unbounded_Queue_Iterator<AST_Component::port_description> iter (s);
        ! iter.done ();
