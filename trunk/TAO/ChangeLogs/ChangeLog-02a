@@ -1,3 +1,10 @@
+Mon Mar  4 13:38:11 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tests/Hello/Makefile:
+	* tests/LongUpcalls/Makefile:
+	* tests/Two_Objects/Makefile:
+	  Removed the links to TAO_Messaging library.
+
 Mon Mar  4 11:49:27 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosNaming:
