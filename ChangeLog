@@ -1,3 +1,13 @@
+Mon Sep 27 18:53:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/script.mpb:
+	* bin/MakeProjectCreator/config/man.mpb:
+
+	  New files to support scripts and manpages.  Inherit from these
+	  files, add the list of scripts or manapages to Script_Files or
+	  Man_Files, and MPC templates with script/manpage support will
+	  do the right thing.
+
 Mon Sep 27 21:16:24 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* bin/fuzz.pl:
