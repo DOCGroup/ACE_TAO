@@ -159,7 +159,11 @@ public:
   virtual int wait (void);
   // Wait for all threads running in this task to exit.
 
-  // = Suspend/resume a Task
+  // = Suspend/resume a Task.
+
+  // Note that these methods are not portable and should be avoided
+  // since they are inherently error-prone to use.  They are only here
+  // for (the rare) applications that know how to use them correctly.
   virtual int suspend (void);
   // Suspend a task.
   virtual int resume (void);

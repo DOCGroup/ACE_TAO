@@ -4,6 +4,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Naming_Context.h"
+#include "ace/ARGV.h"
 #include "Client_Test.h"
 
 ACE_RCSID(Client, main, "$Id$")
@@ -22,14 +23,15 @@ main (int argc, char *argv[])
                     1));
       else // Use static binding.
 	{
-	  char *l_argv[3];
-          char port[] = "-p 10011";
-	  l_argv[0] = argv[0];
-	  l_argv[1] = port;
-	  l_argv[2] = 0;
-	  ACE_Service_Object *so = ACE_SVC_INVOKE (ACE_Naming_Context);
+          ACE_ARGV args;
 
-	  if (so->init (2, l_argv) == -1)
+          args.add (argv[0]);
+	  args.add ("-p10011"); // Port number.
+	  ACE_Service_Object *so =
+            ACE_SVC_INVOKE (ACE_Naming_Context);
+
+	  if (so->init (args.argc (),
+                        args.argv ()) == -1)
 	    ACE_ERROR ((LM_ERROR,
                         "%p\n%a",
                         "ACE_Naming_Context",
@@ -37,7 +39,8 @@ main (int argc, char *argv[])
 
 	  so = ACE_SVC_INVOKE (Client_Test);
 
-	  if (so->init (0, l_argv) == -1)
+	  if (so->init (0,
+                        args.argv ()) == -1)
 	    ACE_ERROR ((LM_ERROR,
                         "%p\n%a",
                         "Client_Test",
