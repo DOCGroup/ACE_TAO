@@ -100,7 +100,7 @@ void
 JAWS_HTTP_10_Request::parse_header_line (char *header_line)
 {
   char *ptr = header_line;
-  // char *buf = header_line;
+  char *buf = header_line;
   int offset = 1;
 
   ptr = ACE_OS::strchr (header_line, '\n');
@@ -120,24 +120,20 @@ JAWS_HTTP_10_Request::parse_header_line (char *header_line)
   *ptr = '\0';
   ptr += offset;
 
-#if 0
   char *value;
   char *header = ACE_OS::strtok_r (buf, ":", &value);
 
-  ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line [%s]\n",
-             header ? header : "<empty>"));
+  while (isspace (*value))
+    value++;
 
-  if (header != NULL && this->map_.mapped (header))
-    {
-      while (isspace (*value))
-	value++;
+  this->table_.insert (ACE_OS::strdup (header), ACE_OS::strdup (value));
 
-      this->map_[header] = value;
-
-      ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line <%s>\n",
-                 value ? value : "<empty>"));
-    }
-#endif 0
+  ACE_DEBUG((LM_DEBUG,
+             " (%t) Headers::parse_header_line\n"
+             "      []%s\n"
+             "      <>%s\n",
+             header ? header : "<empty>",
+             value ? value : "<empty>"));
 
   // Write back the unused portion of the input.
   ACE_OS::memmove (header_line, ptr, strlen(ptr) + 1);
@@ -362,6 +358,11 @@ JAWS_HTTP_10_Request::path (const char *uri_string)
   return this->path_;
 }
 
+JAWS_HTTP_10_Headers *
+JAWS_HTTP_10_Request::table (void)
+{
+  return &(this->table_);
+}
 
 ACCESSOR(int,JAWS_HTTP_10_Request,got_request_line)
 ACCESSOR(int,JAWS_HTTP_10_Request,end_of_headers)
