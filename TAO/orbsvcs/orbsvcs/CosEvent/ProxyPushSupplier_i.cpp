@@ -87,7 +87,8 @@ TAO_CosEC_ProxyPushSupplier_i::TAO_CosEC_ProxyPushSupplier_i
 (const RtecEventChannelAdmin::ConsumerQOS &qos,
  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps)
   : qos_ (qos),
-    pps_ (RtecEventChannelAdmin::ProxyPushSupplier::_duplicate (pps))
+    pps_ (RtecEventChannelAdmin::ProxyPushSupplier::_duplicate (pps)),
+    wrapper_ (0)
 {
   // No-Op.
 }
