@@ -321,6 +321,52 @@ ACE_OS::netdb_release (void)
 }
 #endif /* defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 
+struct hostent *
+ACE_OS::gethostbyname (const char *name)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyname");
+#if defined (VXWORKS)
+  // not thread safe!
+  static hostent ret;
+  static int first_addr;
+  static char *hostaddr[2];
+
+  if ((first_addr = ::hostGetByName ((char *) name)) < 0)
+    return 0;
+  hostaddr[0] = (char *) &first_addr;
+  hostaddr[1] = 0;
+
+  ret.h_name = (char *) name;  /* might not be official: just echo input arg */
+  ret.h_addrtype = AF_INET;
+  ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
+  ret.h_addr_list = hostaddr;
+
+  return &ret;
+#elif defined (ACE_HAS_NONCONST_GETBY)
+  ACE_SOCKCALL_RETURN ((char *) ::gethostbyname (name), struct hostent *, 0);
+#else
+  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0); 
+#endif /* ACE_HAS_NONCONST_GETBY */
+}
+
+#if defined (VXWORKS)
+// not inline because it has the static char array
+char *
+ACE_OS::inet_ntoa (const struct in_addr addr)
+{
+  // ACE_TRACE ("ACE_OS::inet_ntoa");
+
+  // the following storage is not thread-specific!
+  static char buf[32];
+  // assumes that addr is already in network byte order
+  sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
+	   addr.s_addr / (256*256) & 255,
+	   addr.s_addr / 256 & 255,
+	   addr.s_addr & 255);
+  return buf;
+}
+#endif /* VXWORKS */ 
+
 void 
 ACE_OS::flock_t::dump (void) const
 {
