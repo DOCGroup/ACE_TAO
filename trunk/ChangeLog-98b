@@ -1,3 +1,10 @@
+Sat Jul 18 19:47:45 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/ACE.cpp: Looks like we are having some trouble with the
+	  loading of *d.dll before *.dll on NT, so it is now disabled
+	  by default (until the problem is solved).  To enable use:
+	  ACE_USE_DEBUG_DLL_CHECK.
+
 Sat Jul 18 13:51:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Makefile: Always compile the gperf directory by default
