@@ -22,15 +22,15 @@ module PortableGroup
   typeprefix PortableGroup "omg.org";
 
   /// MembershipStyle
-  const string PG_MEMBERSHIP_STYLE = 
+  const string PG_MEMBERSHIP_STYLE =
   "org.omg.PortableGroup.MembershipStyle";
 
   /// InitialNumberMembers
-  const string PG_INITIAL_NUMBER_MEMBERS = 
+  const string PG_INITIAL_NUMBER_MEMBERS =
   "org.omg.PortableGroup.InitialNumberMembers";
 
   /// MinimumNumberMembers
-  const string PG_MINIMUM_NUMBER_MEMBERS = 
+  const string PG_MINIMUM_NUMBER_MEMBERS =
   "org.omg.PortableGroup.MinimumNumberMembers";
 
   /// Factories
@@ -248,7 +248,7 @@ module PortableGroup
      * @param location where the factory formerly created objects.
      * @throws MemberNotPresent if no factory is available for the given role at this location.
      */
-    void unregister_factory(in RoleName role, in Location location)
+    void unregister_factory(in RoleName role, in Location the_location)
       raises (MemberNotFound);
 
     /**
@@ -265,7 +265,7 @@ module PortableGroup
      * This is not an error.
      * @param location where the factories formerly created objects.
      */
-    void unregister_factory_by_location(in Location location);
+    void unregister_factory_by_location(in Location the_location);
 
     /**
      * List all the factories that create objects that fill a given role
@@ -281,7 +281,7 @@ module PortableGroup
      * This is not an error.
      * @param location where the factories create objects.
      */
-    FactoryInfos list_factories_by_location(in Location location);
+    FactoryInfos list_factories_by_location(in Location the_location);
 
   }; // end of FactoryRegistry
 
