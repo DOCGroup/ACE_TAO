@@ -267,12 +267,12 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 {
   this->refcount_++;
 
-  int result = 
-    this->acceptor_factory_->handle_input (this->transport (), 
+  int result =
+    this->acceptor_factory_->handle_input (this->transport (),
                                            this->orb_core_,
                                            this->transport_.message_state_,
                                            max_wait_time);
-  
+
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -312,12 +312,12 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
-  result = 
+  result =
     this->acceptor_factory_->process_client_message (this->transport (),
                                                      this->orb_core_,
                                                      input_cdr,
                                                      message_type);
-                                                           
+
   if (result != -1)
     result = 0;
 
@@ -433,6 +433,9 @@ TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
   TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
     this->orb_core_->stubless_relative_roundtrip_timeout ();
+
+  // Automatically release the policy
+  CORBA::Object_var auto_release = timeout_policy;
 
   ACE_Time_Value max_wait_time_value;
 

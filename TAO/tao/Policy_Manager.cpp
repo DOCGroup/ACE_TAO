@@ -588,6 +588,66 @@ TAO_Policy_Manager_Impl::get_policy (CORBA::PolicyType type,
   return CORBA::Policy::_nil ();
 }
 
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
+TAO_RelativeRoundtripTimeoutPolicy *
+TAO_Policy_Manager_Impl::relative_roundtrip_timeout (void) const
+{
+ TAO_RelativeRoundtripTimeoutPolicy *result =
+   this->relative_roundtrip_timeout_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
+
+TAO_Client_Priority_Policy *
+TAO_Policy_Manager_Impl::client_priority (void) const
+{
+ TAO_Client_Priority_Policy *result =
+   this->client_priority_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
+TAO_Sync_Scope_Policy *
+TAO_Policy_Manager_Impl::sync_scope (void) const
+{
+ TAO_Sync_Scope_Policy *result =
+   this->sync_scope_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
+TAO_Buffering_Constraint_Policy *
+TAO_Policy_Manager_Impl::buffering_constraint (void) const
+{
+ TAO_Buffering_Constraint_Policy *result =
+   this->buffering_constraint_;
+
+ if (result != 0)
+   result->_add_ref ();
+  return result;
+}
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
 // ****************************************************************
 
 TAO_Policy_Current_Impl &

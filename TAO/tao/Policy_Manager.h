@@ -188,29 +188,32 @@ public:
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
-  TAO_Client_Priority_Policy *client_priority (void) const;
+  TAO_Client_Priority_Policy *client_priority (void);
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-  TAO_Sync_Scope_Policy *sync_scope (void) const;
+  TAO_Sync_Scope_Policy *sync_scope (void);
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void) const;
+  TAO_Buffering_Constraint_Policy *buffering_constraint (void);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 private:
+  ACE_SYNCH_MUTEX mutex_;
+  // Protect access
+
   TAO_Policy_Manager_Impl impl_;
   // The implementation.
 };

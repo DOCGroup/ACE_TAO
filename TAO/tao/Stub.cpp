@@ -49,7 +49,7 @@ TAO_Stub::TAO_Stub (char *repository_id,
     orb_ (),
     servant_orb_ (),
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-    
+
   policies_ (0),
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
