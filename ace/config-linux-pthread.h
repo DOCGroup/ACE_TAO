@@ -13,6 +13,7 @@
 
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG
+#define ACE_HAS_STRING_CLASS
 
 // Fixes a problem with new versions of Linux...
 #ifndef msg_accrights
