@@ -26,13 +26,15 @@ ACE_RCSID(be_visitor_argument, docall_cs, "$Id$")
 
 
 // ****************************************************************************
-// visitor for argument passing to do_static_call. The do_static_call method takes a variable
-// number of parameters. The total number of parameters is determined by the
+// visitor for argument passing to do_static_call. The do_static_call
+// method takes an array with pointers to each argument (the type is
+// actually void*). The total number of parameters is determined by the
 // "calldata" parameter that must be passed before the variable list
-// starts. Each argument to the do_static_call is considered to be of type "void *".
+// starts.
 // Hence we pass the address of each argument. The case for _out is a bit
-// tricky where we must first retrieve the pointer, allocate memory and pass it
-// to do_static_call. This is done in the "pre_do_static_call" processing.
+// tricky where we must first retrieve the pointer, allocate memory
+// and pass it to do_static_call. This is done in the
+// "pre_do_static_call" processing.
 // ****************************************************************************
 
 be_visitor_args_docall_cs::be_visitor_args_docall_cs (be_visitor_context *ctx)
@@ -62,6 +64,10 @@ int be_visitor_args_docall_cs::visit_argument (be_argument *node)
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
 
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  os->indent ();
+  *os << "*_tao_arg = ";
+
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -70,6 +76,8 @@ int be_visitor_args_docall_cs::visit_argument (be_argument *node)
                          "cannot accept visitor\n"),
                         -1);
     }
+
+  *os << "; _tao_arg++;\n";
 
   return 0;
 }
@@ -80,7 +88,6 @@ int be_visitor_args_docall_cs::visit_array (be_array *node)
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
 
-  os->indent ();
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:

@@ -213,9 +213,12 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
 
   PortableServer::ThreadPolicyValue retval =
     ACE_static_cast (PortableServer::ThreadPolicyValue, -1);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
   this->_stubobj ()->do_static_call (env,
 				     &_get_PortableServer_ThreadPolicy_value_calldata,
-				     &retval);
+				     _tao_arguments);
   return retval;
 
 }
@@ -300,7 +303,12 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
   PortableServer::LifespanPolicyValue retval =
     ACE_static_cast (PortableServer::LifespanPolicyValue, -1);
 
-  this->_stubobj ()->do_static_call (env, &_get_PortableServer_LifespanPolicy_value_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env,
+	&_get_PortableServer_LifespanPolicy_value_calldata,
+	_tao_arguments);
   return retval;
 
 }
@@ -385,7 +393,10 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
   PortableServer::IdUniquenessPolicyValue retval =
     ACE_static_cast (PortableServer::IdUniquenessPolicyValue, -1);
 
-  this->_stubobj ()->do_static_call (env, &_get_PortableServer_IdUniquenessPolicy_value_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_IdUniquenessPolicy_value_calldata, _tao_arguments);
   return retval;
 
 }
@@ -470,7 +481,10 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
   PortableServer::IdAssignmentPolicyValue retval =
     ACE_static_cast (PortableServer::IdAssignmentPolicyValue, -1);
 
-  this->_stubobj ()->do_static_call (env, &_get_PortableServer_IdAssignmentPolicy_value_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_IdAssignmentPolicy_value_calldata, _tao_arguments);
   return retval;
 
 }
@@ -555,7 +569,10 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
   PortableServer::ImplicitActivationPolicyValue retval =
     ACE_static_cast (PortableServer::ImplicitActivationPolicyValue, -1);
 
-  this->_stubobj ()->do_static_call (env, &_get_PortableServer_ImplicitActivationPolicy_value_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_ImplicitActivationPolicy_value_calldata, _tao_arguments);
   return retval;
 
 }
@@ -640,7 +657,10 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
   PortableServer::ServantRetentionPolicyValue retval =
     ACE_static_cast (PortableServer::ServantRetentionPolicyValue, -1);
 
-  this->_stubobj ()->do_static_call (env, &_get_PortableServer_ServantRetentionPolicy_value_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_ServantRetentionPolicy_value_calldata, _tao_arguments);
   return retval;
 
 }
@@ -727,7 +747,10 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
   PortableServer::RequestProcessingPolicyValue retval =
     ACE_static_cast (PortableServer::RequestProcessingPolicyValue, -1);
 
-  this->_stubobj ()->do_static_call (env, &_get_PortableServer_RequestProcessingPolicy_value_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_RequestProcessingPolicy_value_calldata, _tao_arguments);
   return retval;
 
 }
@@ -819,7 +842,10 @@ PortableServer::SynchronizationPolicyValue PortableServer::SynchronizationPolicy
   PortableServer::SynchronizationPolicyValue retval =
     ACE_static_cast (PortableServer::SynchronizationPolicyValue, -1);
 
-  this->_stubobj ()->do_static_call (env, &_get_PortableServer_SynchronizationPolicy_value_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env, &_get_PortableServer_SynchronizationPolicy_value_calldata, _tao_arguments);
   return retval;
 
 }
@@ -2383,7 +2409,10 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
 
   PortableServer::ObjectId *retval = 0;
 
-  this->_stubobj ()->do_static_call (env, &PortableServer_Current_get_object_id_calldata, &retval);
+  void* _tao_arguments[1];
+  void** _tao_current_arg = _tao_arguments;
+  *_tao_current_arg = &retval; _tao_current_arg++;
+  this->_stubobj ()->do_static_call (env, &PortableServer_Current_get_object_id_calldata, _tao_arguments);
   return retval;
 
 }

@@ -75,10 +75,13 @@ CORBA::PolicyType CORBA_Policy::policy_type (
   STUB_Object *istub = this->_stubobj ();
   if (istub)
   {
+    void* _tao_arguments[1];
+    void** _tao_current_arg = _tao_arguments;
+    *_tao_current_arg = &_tao_retval; _tao_current_arg++;
     istub->do_static_call (
       _tao_environment,
       &_get_CORBA_Policy_policy_type_calldata,
-      &_tao_retval
+      _tao_arguments
     );
   } // end of if (istub)
   return _tao_retval;
@@ -101,10 +104,13 @@ CORBA_Policy_ptr CORBA_Policy::copy (
   if (istub)
   {
     CORBA::Object_ptr _tao_base_retval = CORBA::Object::_nil ();
+    void* _tao_arguments[1];
+    void** _tao_current_arg = _tao_arguments;
+    *_tao_current_arg = &_tao_base_retval; _tao_current_arg++;
     istub->do_static_call (
       _tao_environment,
       &CORBA_Policy_copy_calldata,
-      &_tao_base_retval
+      _tao_arguments
     );
     _tao_retval = CORBA_Policy::_narrow (_tao_base_retval, _tao_environment);
     CORBA::release (_tao_base_retval);
@@ -127,10 +133,13 @@ void CORBA_Policy::destroy (
   STUB_Object *istub = this->_stubobj ();
   if (istub)
   {
+    void* _tao_arguments[1];
+    void** _tao_current_arg = _tao_arguments;
+    *_tao_current_arg = 0; _tao_current_arg++;
     istub->do_static_call (
       _tao_environment,
       &CORBA_Policy_destroy_calldata,
-      0
+      _tao_arguments
     );
   } // end of if (istub)
   return;
