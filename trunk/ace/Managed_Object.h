@@ -38,6 +38,9 @@ public:
   ACE_Cleanup_Adapter (void);
   // Default constructor.
 
+  virtual ~ACE_Cleanup_Adapter (void);
+  // Virtual destructor, needed by some compilers for vtable placement.
+
   TYPE &object (void);
   // Accessor for contained object.
 
