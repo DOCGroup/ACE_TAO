@@ -61,6 +61,7 @@ malloc_recurse (int count)
   return 0;
 }
 
+#if defined (ACE_HAS_THREADS)
 static void *
 worker (void *arg)
 {
@@ -68,9 +69,10 @@ worker (void *arg)
   // thread from the thread manager on exit.
   ACE_Thread_Control tc (&thread_manager);
 
-  malloc_recurse (int (arg));
+  malloc_recurse ((int) arg);
   return 0;
 }
+#endif /* ACE_HAS_THREADS */
 
 // Create the appropriate type of process/thread.
 

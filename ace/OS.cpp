@@ -18,6 +18,27 @@
 // Static constant representing `zero-time'.
 const ACE_Time_Value ACE_Time_Value::zero;
 
+#if defined (ACE_MT_SAFE)
+
+// This is lock defines a monitor that is shared by all threads
+// calling certain ACE_OS methods.
+static ACE_Thread_Mutex ace_os_monitor_lock;
+
+#if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+int 
+ACE_OS::netdb_acquire (void)
+{
+  return ace_os_monitor_lock.acquire ();
+}
+
+int 
+ACE_OS::netdb_release (void)
+{
+  return ace_os_monitor_lock.release ();
+}
+#endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+#endif /* defined (ACE_MT_SAFE) */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
 // Initializes the ACE_Time_Value object from a timeval.
@@ -229,43 +250,6 @@ ACE_OS::uname (struct utsname *name)
 }
 #endif /* ACE_WIN32 || VXWORKS */
 
-
-#if defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-
-int ACE_OS::netdb_mutex_inited_ = 0;
-
-ACE_mutex_t ACE_OS::netdb_mutex_;
-
-int 
-ACE_OS::netdb_acquire (void)
-{
-  if (ACE_OS::netdb_mutex_inited_ == 0)
-    {
-      if (ACE_OS::thread_mutex_init (&ACE_OS::netdb_mutex_) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-			   "ACE_OS::netdb_acquire[init]"), -1);
-      ACE_OS::netdb_mutex_inited_ = 1;
-    }
-
-  if (ACE_OS::thread_mutex_lock (&ACE_OS::netdb_mutex_) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-		       "ACE_OS::netdb_acquire[lock]"), -1);
-  return 0;
-}
-
-int 
-ACE_OS::netdb_release (void)
-{
-  if (ACE_OS::netdb_mutex_inited_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-		       "ACE_OS::netdb_release[inited]"), -1);
-  
-  if (ACE_OS::thread_mutex_unlock (&ACE_OS::netdb_mutex_) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-		       "ACE_OS::netdb_release[unlock]"), -1);
-  return 0;
-}
-#endif /* defined(ACE_MT_SAFE) && defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 
 struct hostent *
 ACE_OS::gethostbyname (const char *name)
@@ -2328,4 +2312,95 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
   else
     return 1;
 }
+
+ssize_t 
+ACE_OS::pread (ACE_HANDLE handle, 
+	       void *buf,  
+	       size_t nbyte,
+	       off_t offset)
+{
+#if defined (ACE_HAS_P_READ_WRITE)
+#if defined (ACE_WIN32)
+  // This will work irrespective of whether the <handle> is in
+  // OVERLAPPED mode or not.  
+  OVERLAPPED overlapped;
+  overlapped.Internal = 0;
+  overlapped.InternalHigh = 0;
+  overlapped.Offset = offset;
+  overlapped.OffsetHigh = 0;
+  overlapped.hEvent = 0;
+  
+  DWORD bytes_written; // This is set to 0 byte WriteFile.
+  
+  if (::ReadFile (handle, buf, nbyte, &bytes_written, &overlapped))
+    return (ssize_t) bytes_written;
+  else if (::GetLastError () == ERROR_IO_PENDING)
+    if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
+      return (ssize_t) bytes_written;
+  
+  return -1;
+#else
+  return ::pread (handle, buf, nbyte, offset);
+#endif /* ACE_WIN32 */  
+#elif (ACE_HAS_THREADS)
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, -1);
+
+  if (ACE_OS::lseek (handle, offset, SEEK_SET) == -1)
+    return -1;
+  else
+    return ACE_OS::read (handle, buf, nbytes);
+#else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (nbyte);
+  ACE_UNUSED_ARG (offset);
+  ACE_NOTSUP_RETURN (-1);  
+#endif /* ACE_HAD_P_READ_WRITE */
+}
+
+ssize_t 
+ACE_OS::pwrite (ACE_HANDLE handle, 
+		const void *buf,  
+		size_t nbyte,
+		off_t offset)
+{
+#if defined (ACE_HAS_P_READ_WRITE)
+#if defined (ACE_WIN32)
+  // This will work irrespective of whether the <handle> is in
+  // OVERLAPPED mode or not.
+  OVERLAPPED overlapped;
+  overlapped.Internal = 0;
+  overlapped.InternalHigh = 0;
+  overlapped.Offset = offset;
+  overlapped.OffsetHigh = 0;
+  overlapped.hEvent = 0;
+
+  DWORD bytes_written; // This is set to 0 byte WriteFile.
+
+  if (::WriteFile (handle, buf, nbyte, &bytes_written, &overlapped))
+    return (ssize_t) bytes_written;
+  else if (::GetLastError () == ERROR_IO_PENDING)
+    if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
+      return (ssize_t) bytes_written;
+  
+  return -1;
+#else
+  return ::pwrite (handle, buf, nbyte, offset);
+#endif /* ACE_WIN32 */  
+#elif defined (ACE_HAS_THREADS)
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, -1);
+
+  if (ACE_OS::lseek (handle, offset, SEEK_SET) == -1)
+    return -1;
+  else
+    return ACE_OS::write (handle, buf, nbytes);
+#else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (nbyte);
+  ACE_UNUSED_ARG (offset);
+  ACE_NOTSUP_RETURN (-1);  
+#endif /* ACE_HAD_P_READ_WRITE */
+}
+
 
