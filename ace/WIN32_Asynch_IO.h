@@ -686,6 +686,7 @@ public:
             int priority,
             int signal_number = 0);
 
+#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
@@ -699,6 +700,7 @@ public:
              const void *act,
              int priority,
              int signal_number = 0);
+#endif /**/
 
   /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_File (void);
@@ -891,6 +893,7 @@ public:
              int priority,
              int signal_number = 0);
 
+#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -904,6 +907,7 @@ public:
               const void *act,
               int priority,
               int signal_number = 0);
+#endif /**/
 
   /// Destrcutor.
   virtual ~ACE_WIN32_Asynch_Write_File (void);
@@ -1432,17 +1436,17 @@ protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Transmit_File factory.
   ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler &handler,
-					 ACE_HANDLE socket,
-					 ACE_HANDLE file,
-					 ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-					 size_t bytes_to_write,
-					 u_long offset,
-					 u_long offset_high,
-					 size_t bytes_per_send,
-					 u_long flags,
-					 const void *act,
-					 ACE_HANDLE event,
-					 int priority,
+                                         ACE_HANDLE socket,
+                                         ACE_HANDLE file,
+                                         ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
+                                         size_t bytes_to_write,
+                                         u_long offset,
+                                         u_long offset_high,
+                                         size_t bytes_per_send,
+                                         u_long flags,
+                                         const void *act,
+                                         ACE_HANDLE event,
+                                         int priority,
                 int signal_number = 0);
 
   /// Proactor will call this method when the write completes.

@@ -1,3 +1,20 @@
+Sun Oct 13 15:57:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Asynch_IO.cpp:
+	* ace/Asynch_IO.h: Protected  ACE_Asynch_Read_File::readv () and
+	  ACE_Asynch_Write_File::writev () from being called when
+	  ACE_HAS_WINNT4 == 0.
+	* ace/WIN32_Asynch_IO.cpp:
+	* ace/WIN32_Asynch_IO.h: Protected
+	  ACE_WIN32_Asynch_Read_File::readv () and
+	  ACE_WIN32_Asynch_Write_File::writev () from being called when
+	  ACE_HAS_WINNT4 == 0. 
+
+	  Thanks to Eric Frias <efrias@syncad.com> for reporting the
+	  problem and Alex Libman for suggesting the fix.
+
+	* THANKS: Added Eric Frias <efrias@syncad.com> to the hall of
+	  fame. 
 Sun Oct 13 15:54:59 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * ACEXML/apps/svcconf/Svcconf_Handler.cpp: Fixed a couple of
