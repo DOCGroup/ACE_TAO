@@ -105,7 +105,7 @@ public:
 
   CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
       TAO_InputCDR *src,
-      CORBA_Environment &TAO_IN_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         CORBA::default_environment ());
   // Append the contents of the CDR stream based on information
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
@@ -118,7 +118,7 @@ public:
   CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
       const void *data,
       const void *,
-      CORBA_Environment &TAO_IN_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         CORBA::default_environment ());
   // Marshalls the contents of <data> as described by the TypeCode in
   // <tc>. Any errors are reported though the <TAO_IN_ENV> parameter.
@@ -210,14 +210,14 @@ public:
       CORBA::TypeCode_ptr tc,
       const void *data,
       const void *,
-      CORBA_Environment &TAO_IN_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         CORBA::default_environment ());
   // Demarshall the contents of the CDR stream into <data> as
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
 
   CORBA::TypeCode::traverse_status skip (
       CORBA::TypeCode_ptr tc,
-      CORBA_Environment &TAO_IN_ENV =
+      CORBA_Environment &ACE_TRY_ENV =
         CORBA::default_environment ());
   // Skip the contents of the CDR stream based on information
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
