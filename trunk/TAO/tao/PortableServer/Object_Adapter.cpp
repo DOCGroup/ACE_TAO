@@ -228,10 +228,11 @@ TAO_Object_Adapter::create_lock (int enable_locking,
   return the_lock;
 }
 
-void
+int
 TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
                                       TAO_ServerRequest &req,
                                       void *context,
+                                      CORBA::Object_out forward_to,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_START);
@@ -243,10 +244,15 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
   // Set up state in the POA et al (including the POA Current), so
   // that we know that this servant is currently in an upcall.
   const char *operation = req.operation ();
-  servant_upcall.prepare_for_upcall (key,
-                                     operation,
-                                     ACE_TRY_ENV);
-  ACE_CHECK;
+  int result =
+    servant_upcall.prepare_for_upcall (key,
+                                       operation,
+                                       forward_to,
+                                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (result);
+
+  if (result != TAO_Adapter::DS_OK)
+    return result;
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -259,7 +265,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
 
   // Set thread's priority.
   priority_processing.pre_invoke (req.service_info (), ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (result);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -270,7 +276,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
     servant_upcall.servant ()->_dispatch (req,
                                           context,
                                           ACE_TRY_ENV);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (result);
   }
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -279,9 +285,11 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
   // isn't reached, i.e., because of an exception, the reset takes
   // place in Priority_Model_Processing destructor.
   priority_processing.post_invoke (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (result);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
+  return result;
 }
 
 void
@@ -627,31 +635,11 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
       return TAO_Adapter::DS_MISMATCHED_KEY;
     }
 
-  ACE_TRY
-    {
-      this->dispatch_servant (key,
-                              request,
-                              context,
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
-    {
-      forward_to =
-        CORBA::Object::_duplicate (forward_request.forward_reference.in ());
-      return TAO_Adapter::DS_FORWARD;
-    }
-#else
-  ACE_CATCHANY
-    {
-      ACE_UNUSED_ARG (forward_to);
-      ACE_RE_THROW;
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
-  ACE_ENDTRY;
-
-  return TAO_Adapter::DS_OK;
+  return this->dispatch_servant (key,
+                                 request,
+                                 context,
+                                 forward_to,
+                                 ACE_TRY_ENV);
 }
 
 const char *
@@ -1047,16 +1035,18 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)
   this->object_adapter_ = object_adapter;
 }
 
-void
+int
 TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key,
                                                         const char *operation,
+                                                        CORBA::Object_out forward_to,
                                                         CORBA::Environment &ACE_TRY_ENV)
 {
   // Acquire the object adapter lock first.
   int result = this->object_adapter_->lock ().acquire ();
   if (result == -1)
     // Locking error.
-    ACE_THROW (CORBA::OBJ_ADAPTER ());
+    ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                      TAO_Adapter::DS_FAILED);
 
   // We have acquired the object adapater lock.  Record this for later
   // use.
@@ -1066,18 +1056,18 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
   this->object_adapter_->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
   // Locate the POA.
   this->object_adapter_->locate_poa (key,
                                      this->id_,
                                      this->poa_,
                                      ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
   // Check the state of the POA Manager.
   this->poa_->check_poa_manager_state (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
   // Setup current for this request.
   this->current_context_.setup (this->poa_,
@@ -1090,17 +1080,33 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // We have setup the POA Current.  Record this for later use.
   this->state_ = POA_CURRENT_SETUP;
 
-  {
-    ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
+  ACE_TRY
+    {
+      ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
 
-    // Lookup the servant.
-    this->servant_ = this->poa_->locate_servant_i (operation,
-                                                   this->id_,
-                                                   *this,
-                                                   this->current_context_,
-                                                   ACE_TRY_ENV);
-    ACE_CHECK;
-  }
+      // Lookup the servant.
+      this->servant_ = this->poa_->locate_servant_i (operation,
+                                                     this->id_,
+                                                     *this,
+                                                     this->current_context_,
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
+    {
+      forward_to =
+        CORBA::Object::_duplicate (forward_request.forward_reference.in ());
+      return TAO_Adapter::DS_FORWARD;
+    }
+#else
+  ACE_CATCHANY
+    {
+      ACE_UNUSED_ARG (forward_to);
+      ACE_RE_THROW;
+    }
+#endif /* TAO_HAS_MINIMUM_CORBA */
+  ACE_ENDTRY;
 
   // Now that we know the servant.
   this->current_context_.servant (this->servant_);
@@ -1119,12 +1125,13 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
 
   // Lock servant (if appropriate).
   this->single_threaded_poa_setup (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
   // We have acquired the servant lock.  Record this for later use.
   this->state_ = SERVANT_LOCK_ACQUIRED;
 
   // After this point, <this->servant_> is ready for dispatching.
+  return TAO_Adapter::DS_OK;
 }
 
 TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()

@@ -88,9 +88,11 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << "servant_orb_var ()->orb_core ()"
       << be_uidt_nl
       << ");" << be_uidt_nl
+      << "CORBA::Object_var forward_to;" << be_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "this->_object_key ()," << be_nl
       << "\"" << "_is_a" << "\"," << be_nl
+      << "forward_to.out ()," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_CHECK_RETURN (0);" << be_nl;
@@ -115,9 +117,11 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << "servant_orb_var ()->orb_core ()"
       << be_uidt_nl
       << ");" << be_uidt_nl
+      << "CORBA::Object_var forward_to;" << be_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "this->_object_key ()," << be_nl
       << "\"" << "_non_existent" << "\"," << be_nl
+      << "forward_to.out ()," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_CHECK_RETURN (0);" << be_nl;
@@ -165,4 +169,3 @@ be_visitor_interface_thru_poa_collocated_ss::collocated_ctor_helper (be_interfac
 
   return 0;
 }
-

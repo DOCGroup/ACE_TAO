@@ -19,12 +19,15 @@ TAO_ThruPOA_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
                                       const CORBA::Char *logical_type_id,
                                       CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Object_Adapter::Servant_Upcall 
+  TAO_Object_Adapter::Servant_Upcall
     servant_upcall (target->_stubobj ()->servant_orb_var ()->orb_core ());
 
-  servant_upcall.prepare_for_upcall (target->_object_key (),
-                                     "_is_a",
-                                     ACE_TRY_ENV);
+  CORBA::Object_var forward_to;
+  servant_upcall.prepare_for_upcall (
+    target->_object_key (),
+    "_is_a",
+    forward_to.out (),
+    ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   return servant_upcall.servant ()->_is_a (logical_type_id, ACE_TRY_ENV);
 }
@@ -39,12 +42,15 @@ TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
   CORBA::Boolean _tao_retval = 0;
   ACE_TRY
     {
-      TAO_Object_Adapter::Servant_Upcall 
+      TAO_Object_Adapter::Servant_Upcall
         servant_upcall (target->_stubobj ()->servant_orb_var ()->orb_core ());
 
-      servant_upcall.prepare_for_upcall (target->_object_key (),
-                                         "_non_existent",
-                                         ACE_TRY_ENV);
+      CORBA::Object_var forward_to;
+      servant_upcall.prepare_for_upcall (
+         target->_object_key (),
+         "_non_existent",
+         forward_to.out (),
+         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
     }
@@ -61,4 +67,3 @@ TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
 }
 
 #endif // TAO_HAS_MINIMUM_CORBA == 0 //
-

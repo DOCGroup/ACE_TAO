@@ -73,6 +73,9 @@ public:
     // The operation was successfully dispatched, an exception may
     // have been raised, but that is a correct execution too.
 
+    DS_FAILED,
+    // There was a problem in dispatching the operation.
+
     DS_MISMATCHED_KEY,
     // The key is not in the right format for this Adapter, try the
     // next one.

@@ -173,9 +173,11 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
       << "this->_stubobj ()->servant_orb_var ()->orb_core ()"
       << be_uidt_nl
       << ");" << be_uidt_nl
+      << "CORBA::Object_var forward_to;" << be_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "this->_object_key ()," << be_nl
-      << "\"" << node->original_local_name () << "\"";
+      << "\"" << node->original_local_name () << "\"," << be_nl
+      << "forward_to.out ()";
   if (!be_global->exception_support ())
     *os << "," << be_nl
         << "ACE_TRY_ENV" << be_uidt_nl

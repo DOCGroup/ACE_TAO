@@ -1,3 +1,46 @@
+Mon Oct 30 18:57:22 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/POA: Removed the Forwarding Servant.  The
+	  forwarding servant was ill-constructed: (a) it threw exceptions
+	  the incorrect way since the correct way is to call
+	  set_exception() on the ServerRequest and not to throw an
+	  exception; (b) the forward_object() method on the POA leads to
+	  deadlock if called from an upcall on the object being forwarded;
+	  (c) Servant Managers is the only correct way to forward requests
+	  - Default Servants is not the correct solution.
+
+	* tao/PortableServer/Object_Adapter.cpp (dispatch,
+	  dispatch_servant, and prepare_for_upcall): Changed these methods
+	  such that the forwarding exception can only be raised by the
+	  servant managers.  Now the forward exception is caught in
+	  prepare_for_upcall() when we are looking for the servant and may
+	  potentially call the servant managers.  If this exception is
+	  raised by a regular servant or by a default servant, the
+	  exception is reported to the client as an unknown exception.
+	  Thanks to Ossama for reporting this problem.  This fix closes
+	  bug 690.
+
+	* Since the signature of
+	  TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall() got
+	  changed because of the above fix, it required a change to
+	  collocation code that performs through POA calls.  The following
+	  files were effected:
+
+	  - tao/PortableServer/Collocated_Object.cpp
+	  - tao/PortableServer/DomainS.cpp
+	  - tao/PortableServer/ImplRepoS.cpp
+	  - tao/PortableServer/MessagingS.cpp
+	  - tao/PortableServer/PolicyS.cpp
+	  - tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp
+
+	  and
+
+	  - TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp
+	  - TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp	  
+
+	* tao/Adapter.h (TAO_Adapter): Added a new return value for failed
+	  dispatching of upcalls.
+
 Mon Oct 30 18:38:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp:

@@ -79,10 +79,6 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-
-// Forwarding Servant class
-#include "Forwarding_Servant.h"
-
 #if !defined (__ACE_INLINE__)
 # include "POA.i"
 #endif /* ! __ACE_INLINE__ */
@@ -2159,46 +2155,6 @@ TAO_POA::validate_policies (CORBA::Environment &ACE_TRY_ENV)
 }
 
 #endif /* TAO_HAS_RT_CORBA */
-
-//
-// Forwarding related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-void
-TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
-                           CORBA::Object_ptr forward_to,
-                           CORBA::Environment &ACE_TRY_ENV)
-{
-  // First, deactivate the object
-  this->deactivate_object_i (oid,
-                             ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Create a forwarding servant
-  TAO_Forwarding_Servant *forwarding_servant = 0;
-  ACE_NEW_THROW_EX (forwarding_servant,
-                    TAO_Forwarding_Servant (forward_to,
-                                            forward_to->_interface_repository_id ()),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  // Give ownership to the auto pointer.
-  auto_ptr<TAO_Forwarding_Servant> new_forwarding_servant (forwarding_servant);
-
-  // Register the forwarding servant with the same object Id.
-  this->activate_object_with_id_i (oid,
-                                   forwarding_servant,
-                                   TAO_INVALID_PRIORITY,
-                                   ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Finally everything is fine.  Make sure to take ownership away
-  // from the auto pointer.
-  new_forwarding_servant.release ();
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 TAO_SERVANT_LOCATION
 TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
@@ -4296,16 +4252,6 @@ TAO_POA::imr_notify_shutdown (void)
 template class ACE_Array<PortableServer::ObjectId>;
 template class ACE_Array_Base<PortableServer::ObjectId>;
 
-//
-// Forwarding related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-template class ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>;
-template class auto_ptr<TAO_Forwarding_Servant>;
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 //template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_POA>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
@@ -4332,16 +4278,6 @@ template class ACE_Node<TAO_POA *>;
 
 #pragma instantiate ACE_Array<PortableServer::ObjectId>
 #pragma instantiate ACE_Array_Base<PortableServer::ObjectId>
-
-//
-// Forwarding related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>
-#pragma instantiate auto_ptr<TAO_Forwarding_Servant>
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 //#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA>

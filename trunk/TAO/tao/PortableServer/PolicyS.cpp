@@ -377,9 +377,11 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_Policy::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -400,9 +402,11 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_Policy::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -427,9 +431,11 @@ CORBA::PolicyType POA_CORBA::_tao_thru_poa_collocated_Policy::policy_type  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "policy_type",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -456,9 +462,11 @@ CORBA_Policy_ptr POA_CORBA::_tao_thru_poa_collocated_Policy::copy  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "copy",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -483,9 +491,11 @@ void POA_CORBA::_tao_thru_poa_collocated_Policy::destroy  (
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "destroy",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
