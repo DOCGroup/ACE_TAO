@@ -1,3 +1,31 @@
+Fri Mar  4 10:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Operation_Table.{h,cpp}:
+        * tao/PortableServer/Operation_Table_Binary_Search.{h,cpp}:
+        * tao/PortableServer/Operation_Table_Dynamic_Hash.{h,cpp}:
+        * tao/PortableServer/Operation_Table_Factory.{h,cpp}:
+        * tao/PortableServer/Operation_Table_Linear_Search.{h,cpp}:
+        * tao/PortableServer/Operation_Table_Parameters.{h,cpp}:
+        * tao/PortableServer/Operation_Table_Perfect_Hash.{h,cpp}:
+          Splitted the Operation_Table in multiple files so that only the
+          strategy that is used is linked into the applicatin. Removed the
+          TAO_Active_Demux_OpTable it seems not to be used.
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Dependent on the specified lookup strategy include on of the
+          specific operation table strategy files which are listed above
+
+        * tao/Domain/DomainS.cpp:
+        * tao/ImR_Client/ImplRepoS.cpp:
+        * tao/ImR_Client/ServerObjectS.cpp:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp
+          Updated include of Operation_Table.h to the right strategy
+
 Thu Mar  3 15:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Exposed_Policies/Counter.idl:
