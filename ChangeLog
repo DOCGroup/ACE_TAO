@@ -1,3 +1,15 @@
+Sun Jan  6 09:37:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (accept, ssl_accept):
+
+	  Take into account the time to complete the basic TCP handshake
+	  and the SSL handshake.  Specifically, ACE_Countdown_Time is used
+	  to reduce the timeout value after each IO operation
+	  (e.g. accept(), SSL_accept()) used during SSL passive connection
+	  establishment.  [Bug 1110]
+
+	  Commented out debugging statements.
+
 Sat Jan  5 20:57:36 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ace/Future.cpp (get): Added another ACE_const_cast in addition
