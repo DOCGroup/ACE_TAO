@@ -670,6 +670,16 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
   return *retv;
 }
 
+// Returns the reference to the map_manager that is being
+// iterated over. 
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>&
+ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map (void)
+{
+  ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::map");
+  return *this->map_man_;
+}
+
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &rhs) const
 {
