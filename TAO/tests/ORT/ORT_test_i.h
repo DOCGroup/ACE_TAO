@@ -1,4 +1,4 @@
-// $Id$
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,13 +20,19 @@
 
 class ORT_test_i : public virtual POA_ObjectReferenceTemplate::ORT_test
 {
- public:
+public:
 
-  /// Constructor
-  ORT_test_i ();
+  ORT_test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Boolean request_server (ACE_ENV_SINGLE_ARG_DECL)
+  CORBA::Boolean request_server (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+
+  CORBA::ORB_var orb_;
 };
 
-#endif /* ORT_TEST_I_H */
+#endif  /* ORT_TEST_I_H */

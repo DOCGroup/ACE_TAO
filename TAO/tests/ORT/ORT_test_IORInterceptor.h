@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef ORT_TEST_IORINTERCEPTOR_H
@@ -19,13 +21,13 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class ORT_test_IORInterceptor :
-  public virtual PortableInterceptor::IORInterceptor,
-  public virtual TAO_Local_RefCounted_Object
+class ORT_test_IORInterceptor
+  : public virtual PortableInterceptor::IORInterceptor,
+    public virtual TAO_Local_RefCounted_Object
 {
- public:
+public:
 
-  ORT_test_IORInterceptor ();
+  ORT_test_IORInterceptor (void);
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -68,7 +70,7 @@ class ORT_test_IORInterceptor :
 
   //@}
 
- private:
+private:
 
   CORBA::Long establish_count_;
 

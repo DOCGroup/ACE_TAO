@@ -40,8 +40,6 @@ int main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-#if TAO_HAS_INTERCEPTORS == 1
-
       PortableInterceptor::ORBInitializer_ptr orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
@@ -55,8 +53,6 @@ int main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer_var.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -87,31 +83,30 @@ int main (int argc, char *argv[])
 
       // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// Activate it.
-      poa_manager->activate (ACE_ENV_ARG_PARAMETER);
+      // Activate it.
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      //@}
 
       // First lets check if the new -ORBId, -ORBServerId options are
       // working correctly.
-      CORBA::String_var orb_id =
-        orb->orb_core ()->orbid (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // @@ NON-PORTABLE!!!!!!!!!
+      const char * orb_id = orb->orb_core ()->orbid ();
       ACE_TRY_CHECK;
 
-      if (ACE_OS::strcmp (orb_id.in (), "ORT_test_ORB") != 0)
+      if (ACE_OS::strcmp (orb_id, "ORT_test_ORB") != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "-ORBId option not working correctly"));
           return -1;
         }
 
-      CORBA::String_var server_id = orb->orb_core ()->server_id ();
+      // @@ NON-PORTABLE!!!!!!!
+      const char * server_id = orb->orb_core ()->server_id ();
 
-      if (ACE_OS::strcmp (server_id.in (), "ORT_test_server") != 0)
+      if (ACE_OS::strcmp (server_id, "ORT_test_server") != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "-ORBServerId option not working correctly"));
@@ -150,10 +145,10 @@ int main (int argc, char *argv[])
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ORT_test_i ort_test_impl;
+      ORT_test_i ort_test_impl (orb.in ());
 
-      /// Activate
-      obj = ort_test_impl._this (ACE_ENV_ARG_PARAMETER);
+      // Activate
+      obj = ort_test_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow it down.
@@ -172,7 +167,8 @@ int main (int argc, char *argv[])
 
       // Convert the object reference to a string format.
       CORBA::String_var ior =
-        orb->object_to_string (ort_test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (ort_test.in ()
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the IOR to it.
@@ -189,7 +185,7 @@ int main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (ACE_ENV_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
