@@ -1,3 +1,14 @@
+Wed Nov  8 02:57:15 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * Local_Name_Space.cpp:
+        * Local_Name_Space.h:
+
+          Conversion between ACE_WString and ACE_NS_String depended on
+          ACE_WString storing two byte char's (because it was using
+          fast_rep ())  Changed to ushort_rep (), but this required
+          ACE_NS_String to clean up the string once it is done.  Added
+          a destructor and a flag to ACE_NS_String for this purpose.
+
 Tue Nov  7 11:47:42 2000 Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Cached_Accept_Conn_Test.cpp:
