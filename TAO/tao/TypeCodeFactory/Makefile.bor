@@ -8,21 +8,24 @@ OBJFILES = \
 	$(OBJDIR)\TypeCodeFactoryC.obj \
 	$(OBJDIR)\TypeCodeFactory_i.obj \
 	$(OBJDIR)\TypeCodeFactory_Loader.obj \
-        $(OBJDIR)\TypeCodeFactory_Adapter_Impl.obj
+	$(OBJDIR)\TypeCodeFactory_Adapter_Impl.obj
 
 !ifdef STATIC
-TCF_DLLFLAG=0
-!else
-TCF_DLLFLAG=1
-!endif
-
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_IFR_CLIENT_CFLAGS) \
-	-DTCF_HAS_DLL=$(TCF_DLLFLAG) \
-	-DTCF_BUILD_DLL
+	$(TAO_TYPECODEFACTORY_CFLAGS)
+!else
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_IFR_CLIENT_CFLAGS) \
+	$(TAO_TYPECODEFACTORY_CFLAGS) \
+	-DTAO_TYPECODEFACTORY_BUILD_DLL=1
+!endif
 
 CPPDIR = .
 

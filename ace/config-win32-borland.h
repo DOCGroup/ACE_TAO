@@ -31,7 +31,7 @@
 // default. The debug configuration of ACE is built with functions
 // out-of-line, so when linking your application against a debug ACE
 // build, you can choose to use the out-of-line functions by adding
-// __ACE_INLINE__=0 to your project settings.
+// ACE_NO_INLINE=1 to your project settings.
 #  if !defined (__ACE_INLINE__)
 #   define __ACE_INLINE__ 1
 #  endif /* __ACE_INLINE__ */

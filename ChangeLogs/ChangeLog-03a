@@ -1,3 +1,13 @@
+Sat Mar 31 02:06:09 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/config-win32-borland.h:
+        * include/makeinclude/ace_flags.bor:
+          Fixed up use of inline functions in DEBUG build.
+
+        * include/makeinclude/ace_flags.bor:
+          Added macros for the TAO_BiDirGIOP and TAO_TypeCodeFactory
+          libraries.
+
 Fri Mar 30 11:17:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/fuzz.pl:
