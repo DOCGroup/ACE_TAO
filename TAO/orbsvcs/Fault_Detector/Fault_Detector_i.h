@@ -44,10 +44,10 @@ public:
   Fault_Detector_i (
     FT_FaultDetectorFactory_i & factory,
     CORBA::ULong id,
-    FT::FaultNotifier_var & notifier,
-    FT::PullMonitorable_var & monitorable,
+    FT::FaultNotifier_ptr & notifier,
+    FT::PullMonitorable_ptr & monitorable,
     FT::FTDomainId domain_id,
-    FT::Location object_location,
+    const FT::Location & object_location,
     FT::TypeId object_type,
     FT::ObjectGroupId group_id
     );

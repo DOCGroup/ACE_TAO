@@ -18,17 +18,15 @@
 Fault_Detector_i::Fault_Detector_i (
       FT_FaultDetectorFactory_i & factory,
       CORBA::ULong id,
-      FT::FaultNotifier_var & notifier,
-      FT::PullMonitorable_var & monitorable,
+      FT::FaultNotifier_ptr & notifier,
+      FT::PullMonitorable_ptr & monitorable,
       FT::FTDomainId domain_id,
-      FT::Location object_location,
+      const FT::Location & object_location,
       FT::TypeId object_type,
       FT::ObjectGroupId group_id
       )
   : factory_(factory)
   , id_(id)
-  , notifier_(notifier)
-  , monitorable_(monitorable)
   , domain_id_(domain_id)
   , object_location_(object_location)
   , object_type_(object_type)
@@ -36,6 +34,8 @@ Fault_Detector_i::Fault_Detector_i (
   , sleep_(0)           // initially not signaled
   , quitRequested_(0)
 {
+  notifier_ = FT::FaultNotifier::_duplicate(notifier);
+  monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
 }
 
 Fault_Detector_i::~Fault_Detector_i ()
@@ -53,16 +53,23 @@ void Fault_Detector_i::run()
         ACE_TRY_CHECK;
         // use this rather than ACE_OS::sleep
         // to allow the nap to be interruped see requestQuit
-        sleep_.wait (&sleepTime_);
+        sleep_.wait (&sleepTime_, 0);
       }
       else
       {
+        ACE_ERROR ((LM_ERROR,
+          "FaultDetector%d FAULT: not alive.\n",
+          id_
+          ));
         notify();
         quitRequested_ = 1;
       }
     }
     ACE_CATCHANY  // todo refine this
     {
+      ACE_ERROR ((LM_ERROR,
+        "FaultDetector FAULT: exception.\n"
+        ));
       notify();
       quitRequested_ = 1;
     }

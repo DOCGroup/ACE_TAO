@@ -1,9 +1,10 @@
 v3 echo commands
 =0
 +5
-d5 die before increment
-#d5 die after increment
+d6  FMI: d6 is die before increment; d7 is die after increment
 +5
 c10
 +5
+z5 sleep for a while
++7 
 q1 quit and bring down primary replica

@@ -13,3 +13,14 @@ project(*Client): taoclient, fault_tolerance {
   }
 }
 
+project(*Notifier): taoclient, fault_tolerance {
+  exename = ft_notifier
+  Source_Files {
+    FTAPP_Notifier_Main.cpp
+    StubFaultNotifier.cpp
+  }
+  IDL_Files {
+  }
+}
+
+

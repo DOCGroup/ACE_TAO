@@ -116,6 +116,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
+      , FT::InvalidProperty
     ));
 
   virtual void shutdown ()
@@ -201,6 +202,10 @@ private:
   ACE_Thread_Manager threadManager_;
 
   DetectorVec detectors_;
+  /**
+   * count of entries in detectors_ that have been deleted
+   */
+  size_t removed_;
 };
 
 #endif /* FT_FAULTDETECTORFACTORY_I_H_  */

@@ -41,12 +41,13 @@ namespace
 // exit code 0 tells test drivers "I meant to do that!"
 #define KEVORKIAN(value)                                  \
   if (death_pending_ == (FT_TEST::TestReplica::value)){   \
-    std::cout << "FT Replica: Simulated fault " #value << std::endl;  \
+    std::cout << "FT Replica" << identity_ << ": Simulated fault " #value << std::endl;  \
     exit(0);                                              \
     } else ;
 
-FT_TestReplica_i::FT_TestReplica_i (CORBA::ORB_var & orb)
+FT_TestReplica_i::FT_TestReplica_i (CORBA::ORB_var & orb, int identity)
   : orb_(orb)
+  , identity_(identity)
   , death_pending_(FT_TEST::TestReplica::NOT_YET)
   , verbose_(1)
 {
@@ -73,6 +74,12 @@ CORBA::Boolean FT_TestReplica_i::is_alive ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN(DURING_IS_ALIVE)
+  ACE_ERROR ((LM_ERROR,
+    "FT Replica%d: is_alive: %d\n",
+    identity_,
+    (death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE)
+    ));
+
   return death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE;
 }
 
@@ -193,9 +200,21 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+//  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
 }
 
+int FT_TestReplica_i::idle (int & result)
+{
+  int quit = 0;
+  if (death_pending_ == FT_TEST::TestReplica::WHILE_IDLE)
+  {
+    std::cout << "FT Replica" << identity_ << ": Simulated fault WHILE_IDLE" << std::endl;
+    result = 0;
+    quit = 1;
+  }
+  return quit;
+}
 
 
 void FT_TestReplica_i::store(long counter)
@@ -209,7 +228,7 @@ void FT_TestReplica_i::store(long counter)
     ACE_OS::fclose(f);
     if (verbose_)
     {
-      std::cout << "FT Replica: " << counter << std::endl;
+      std::cout << "FT Replica" << identity_ << ": " << counter << std::endl;
     }
   }
 
