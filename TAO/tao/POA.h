@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-#if !defined (POA_H)
-#define POA_H
+#ifndef TAO_POA_H
+#define TAO_POA_H
 
 // CORBA
 #include "tao/corba.h"
@@ -948,4 +948,4 @@ protected:
 # include "tao/POA.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* POA_H */
+#endif /* TAO_POA_H */

@@ -18,7 +18,7 @@
 //     Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98
 // ============================================================================
 
-#if !defined (TAO_SERVER_REQUEST_H)
+#ifndef TAO_SERVER_REQUEST_H
 #define TAO_SERVER_REQUEST_H
 
 class TAO_POA;

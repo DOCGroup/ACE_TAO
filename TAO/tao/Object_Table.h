@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (TAO_OBJTABLE_H)
+#ifndef TAO_OBJTABLE_H
 #define TAO_OBJTABLE_H
 
 struct TAO_Object_Table_Entry

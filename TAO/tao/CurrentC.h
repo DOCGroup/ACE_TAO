@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -22,10 +23,10 @@
 //
 // ============================================================================
 
-#if !defined (_TAO_IDL_CURRENTC_H_)
-#define _TAO_IDL_CURRENTC_H_
+#ifndef TAO_IDL_CURRENTC_H
+#define TAO_IDL_CURRENTC_H
 
-#if !defined (TAO_EXPORT_MACRO)
+#ifndef TAO_EXPORT_MACRO
 #define TAO_EXPORT_MACRO
 #endif
 #include "tao/corba.h"
@@ -141,4 +142,4 @@ CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_Current *&);
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* if !defined */
+#endif /* TAO_IDL_CURRENTC_H */

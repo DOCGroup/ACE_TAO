@@ -22,8 +22,8 @@
 //
 // ============================================================================
 
-#if !defined (_TAO_IDL_INCONSISTENTTYPECODEC_H_)
-#define _TAO_IDL_INCONSISTENTTYPECODEC_H_
+#ifndef TAO_IDL_INCONSISTENTTYPECODEC_H
+#define TAO_IDL_INCONSISTENTTYPECODEC_H
 
 #include "tao/corba.h"
 
@@ -64,4 +64,4 @@
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* if !defined */
+#endif /* TAO_IDL_INCONSISTENTTYPECODEC_H */

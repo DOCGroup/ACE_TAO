@@ -13,7 +13,7 @@
 //
 // ========================================================================
 
-#if !defined TAO_DYNENUM_I_H
+#ifndef TAO_DYNENUM_I_H
 #define TAO_DYNENUM_I_H
 
 #include "ace/Containers.h"

@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (TAO_TIMEPROBE_H)
+#ifndef TAO_TIMEPROBE_H
 #define TAO_TIMEPROBE_H
 
 // Please see ace/Timeprobe.h for details on these #defines.

@@ -12,7 +12,7 @@
 //
 // ====================================================================
 
-#if !defined TAO_DYNUNION_I_T_H
+#ifndef TAO_DYNUNION_I_T_H
 #define TAO_DYNUNION_I_T_H
 
 #include "tao/corba.h"

@@ -32,7 +32,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_GIOP_H)
+#ifndef TAO_GIOP_H
 #  define TAO_GIOP_H
 
 class TAO_Export TAO_InputCDR;

@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_NVLIST_H)
+#ifndef TAO_NVLIST_H
 #  define TAO_NVLIST_H
 
 class TAO_Export CORBA_NamedValue

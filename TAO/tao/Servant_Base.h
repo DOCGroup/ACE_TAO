@@ -14,8 +14,8 @@
 //
 // ============================================================================
 
-#if !defined (SERVANT_BASE_H)
-#define SERVANT_BASE_H
+#ifndef TAO_SERVANT_BASE_H
+#define TAO_SERVANT_BASE_H
 
 class TAO_Export TAO_ServantBase
 {
@@ -135,4 +135,4 @@ protected:
   // Turns around and calls invoke.
 };
 
-#endif /* SERVANT_BASE_H */
+#endif /* TAO_SERVANT_BASE_H */

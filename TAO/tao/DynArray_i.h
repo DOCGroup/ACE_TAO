@@ -13,7 +13,7 @@
 //
 // ===================================================================
 
-#if !defined TAO_DYNARRAY_I_H
+#ifndef TAO_DYNARRAY_I_H
 #define TAO_DYNARRAY_I_H
 
 #include "ace/Containers.h"
@@ -21,33 +21,31 @@
 class TAO_Export TAO_DynArray_i : public POA_CORBA::DynArray
 {
 public:
-                        TAO_DynArray_i      (const CORBA_Any& any);
+  TAO_DynArray_i      (const CORBA_Any& any);
+  TAO_DynArray_i      (CORBA_TypeCode_ptr tc);
+  ~TAO_DynArray_i     (void);
 
-                        TAO_DynArray_i      (CORBA_TypeCode_ptr tc);
+  // = Functions specific to DynArray
 
-                        ~TAO_DynArray_i     (void);
+  AnySeq_ptr get_elements        (CORBA::Environment& env);
 
-  // Functions specific to DynArray
-
-  AnySeq_ptr            get_elements        (CORBA::Environment& env);
-
-  void                  set_elements        (const AnySeq& value,
+  void set_elements        (const AnySeq& value,
                                              CORBA::Environment& env);
-  // Common functions
+  // = Common functions
 
-  void                  assign              (CORBA_DynAny_ptr dyn_any,
+  void assign              (CORBA_DynAny_ptr dyn_any,
                                              CORBA::Environment &env);
 
-  CORBA_DynAny_ptr      copy                (CORBA::Environment &env);
+  CORBA_DynAny_ptr copy                (CORBA::Environment &env);
 
-  void                  destroy             (CORBA::Environment &env);
+  void destroy             (CORBA::Environment &env);
 
-  void                  from_any            (const CORBA::Any& any,
+  void from_any            (const CORBA::Any& any,
                                              CORBA::Environment &env);
 
-  CORBA::Any_ptr        to_any              (CORBA::Environment &env);
+  CORBA::Any_ptr to_any              (CORBA::Environment &env);
 
-  CORBA::TypeCode_ptr   type                (CORBA::Environment &);
+  CORBA::TypeCode_ptr type                (CORBA::Environment &);
 
   CORBA_DynAny_ptr      current_component   (CORBA::Environment &env);
 
@@ -88,7 +86,7 @@ public:
                                              CORBA::Environment &env);
 
   void                  insert_string       (const char * value,
-                                            CORBA::Environment &env);
+                                             CORBA::Environment &env);
 
   void                  insert_reference    (CORBA::Object_ptr value,
                                              CORBA::Environment &env);
@@ -100,10 +98,10 @@ public:
                                              CORBA::Environment &env);
 
   void                  insert_ulonglong    (CORBA::ULongLong value,
-                                            CORBA::Environment &env);
+                                             CORBA::Environment &env);
 
   void                  insert_wchar        (CORBA::WChar value,
-                                            CORBA::Environment &env);
+                                             CORBA::Environment &env);
 
   void                  insert_any          (const CORBA::Any& value,
                                              CORBA::Environment &env);
@@ -155,10 +153,10 @@ private:
   ACE_Array<CORBA_DynAny_var>   da_members_;
 
   // Must be instantiated with at least a typecode
-                        TAO_DynArray_i      (void);
+  TAO_DynArray_i      (void);
 
   // Use copy() or assign()
-                        TAO_DynArray_i      (const TAO_DynArray_i &src);
+  TAO_DynArray_i      (const TAO_DynArray_i &src);
   TAO_DynArray_i &      operator=           (const TAO_DynArray_i &src);
 };
 

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (TAO_MARSHAL_H)
+#ifndef TAO_MARSHAL_H
 #define TAO_MARSHAL_H
 
 CORBA::TypeCode::traverse_status
