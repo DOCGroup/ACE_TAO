@@ -1,3 +1,8 @@
+Mon Oct 12 10:43:09 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Asynch_IO.cpp (ACE_Asynch_Result): Fixed a double deletion
+	problem. Thanks to James Hu for reporting this. 
+
 Mon Oct 12 09:43:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Containers_T.h: 
