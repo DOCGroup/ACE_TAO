@@ -96,7 +96,6 @@ my $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
 my $update_versions = 0;
 my $create_zips = 1;
 
-
 ########
 ######## Process command line args.
 ########
