@@ -611,7 +611,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
     {
       // initialize an iterator to iterate thru our scope
       for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-           si.is_done ();
+           !si.is_done ();
            si.next ())
         {
           AST_Decl *d = si.item ();
