@@ -27,16 +27,16 @@
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 
-#define HASH_STRING_ENTRY ACE_Hash_Map_Entry<char *, char *>
-#define HASH_STRING_MAP ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>
-#define HASH_STRING_ITER ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>
-#define HASH_STRING_REVERSE_ITER ACE_Hash_Map_Reverse_Iterator<char *, char *, ACE_Null_Mutex>
+#define HASH_STRING_ENTRY ACE_Hash_Map_Entry<ASYS_TCHAR *, ASYS_TCHAR *>
+#define HASH_STRING_MAP ACE_Hash_Map_Manager<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Null_Mutex>
+#define HASH_STRING_ITER ACE_Hash_Map_Iterator<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Null_Mutex>
+#define HASH_STRING_REVERSE_ITER ACE_Hash_Map_Reverse_Iterator<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Null_Mutex>
 
-#define MAP_STRING char *
+#define MAP_STRING ASYS_TCHAR *
 #define ENTRY entry
 
-HASH_STRING_ENTRY::ACE_Hash_Map_Entry (char *const &ext_id,
-                                       char *const &int_id,
+HASH_STRING_ENTRY::ACE_Hash_Map_Entry (ASYS_TCHAR *const &ext_id,
+                                       ASYS_TCHAR *const &int_id,
                                        HASH_STRING_ENTRY *next,
                                        HASH_STRING_ENTRY *prev)
   : ext_id_ (ACE_OS::strdup (ext_id)),
@@ -44,7 +44,7 @@ HASH_STRING_ENTRY::ACE_Hash_Map_Entry (char *const &ext_id,
     next_ (next),
     prev_ (prev)
 {
-  ACE_DEBUG ((LM_DEBUG, "Creating `%s' and `%s'\n", ext_id_, int_id_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Creating `%s' and `%s'\n"), ext_id_, int_id_));
 }
 
 HASH_STRING_ENTRY::ACE_Hash_Map_Entry (HASH_STRING_ENTRY *next,
@@ -58,26 +58,26 @@ HASH_STRING_ENTRY::ACE_Hash_Map_Entry (HASH_STRING_ENTRY *next,
 
 HASH_STRING_ENTRY::~ACE_Hash_Map_Entry (void)
 {
-  char *key = ext_id_;
-  char *value = int_id_;
+  ASYS_TCHAR *key = ext_id_;
+  ASYS_TCHAR *value = int_id_;
 
   if (key != 0 && value != 0)
-    ACE_DEBUG ((LM_DEBUG, "Freeing `%s' and `%s'\n", key, value));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Freeing `%s' and `%s'\n"), key, value));
   ACE_OS::free (key);
   ACE_OS::free (value);
 }
 
 // We need this template specialization since KEY is defined as a
-// char*, which doesn't have a hash() method defined on it.
+// ASYS_TCHAR*, which doesn't have a hash() method defined on it.
 
 long unsigned int
-HASH_STRING_MAP::hash (char *const &ext_id)
+HASH_STRING_MAP::hash (ASYS_TCHAR *const &ext_id)
 {
   return ACE::hash_pjw (ext_id);
 }
 
 int
-HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
+HASH_STRING_MAP::equal (ASYS_TCHAR *const &id1, ASYS_TCHAR *const &id2)
 {
   return ACE_OS::strcmp (id1, id2) == 0;
 }
@@ -97,9 +97,9 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
         ACE_Hash_Map_Reverse_Iterator<Dumb_String, Dumb_String, ACE_Null_Mutex>
 
 #define MAP_STRING Dumb_String
-#define ENTRY ((char *) entry)
+#define ENTRY ((ASYS_TCHAR *) entry)
 
-Dumb_String::Dumb_String (char *s)
+Dumb_String::Dumb_String (ASYS_TCHAR *s)
   : s_ (s ? ACE_OS::strdup (s) : s),
     copy_ (s ? *(new int (1)) : junk_),
     junk_ (1)
@@ -131,7 +131,7 @@ Dumb_String::hash (void) const
 }
 
 int
-Dumb_String::operator== (char const * s) const
+Dumb_String::operator== (ASYS_TCHAR const * s) const
 {
   return ACE_OS::strcmp (s_, s) == 0;
 }
@@ -142,7 +142,7 @@ Dumb_String::operator== (const Dumb_String &ds) const
   return ACE_OS::strcmp (s_, ds.s_) == 0;
 }
 
-char *
+ASYS_TCHAR *
 Dumb_String::operator= (const Dumb_String &ds)
 {
   this->Dumb_String::~Dumb_String ();
@@ -150,7 +150,7 @@ Dumb_String::operator= (const Dumb_String &ds)
   return s_;
 }
 
-Dumb_String::operator char * (void) const
+Dumb_String::operator ASYS_TCHAR * (void) const
 {
   return s_;
 }
@@ -162,20 +162,20 @@ Dumb_String::operator char * (void) const
 
 struct String_Table
 {
-  char *key_;
-  char *value_;
+  ASYS_TCHAR *key_;
+  ASYS_TCHAR *value_;
 };
 
 static String_Table string_table[] =
 {
-  { "hello",
-    "guten Tag"
+  { ASYS_TEXT ("hello"),
+    ASYS_TEXT ("guten Tag")
   },
-  { "goodbye",
-    "auf wiedersehen"
+  { ASYS_TEXT ("goodbye"),
+    ASYS_TEXT ("auf wiedersehen")
   },
-  { "funny",
-    "lustig"
+  { ASYS_TEXT ("funny"),
+    ASYS_TEXT ("lustig")
   },
   { 0,
     0
@@ -204,8 +204,8 @@ run_test (void)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p failed for %s \n",
-                         "bind",
+                         ASYS_TEXT ("%p failed for %s \n"),
+                         ASYS_TEXT ("bind"),
                          string_table[i].key_), -1);
 
   MAP_STRING entry;
@@ -214,12 +214,12 @@ run_test (void)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
-                  "`%s' found `%s'\n",
+                  ASYS_TEXT ("`%s' found `%s'\n"),
                   string_table[i].key_,
                   ENTRY));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "`%s' not found\n",
+                         ASYS_TEXT ("`%s' not found\n"),
                          string_table[i].key_),
                         -1);
 
@@ -231,10 +231,10 @@ run_test (void)
     for (HASH_STRING_ITER hash_iter (hash);
          hash_iter.next (entry) != 0;
          hash_iter.advance (), i++)
-      ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
                   i,
-                  (char *) entry->ext_id_,
-                  (char *) entry->int_id_));
+                  (ASYS_TCHAR *) entry->ext_id_,
+                  (ASYS_TCHAR *) entry->int_id_));
   }
 
   hash.unbind (string_table[2].key_, entry);
@@ -243,12 +243,12 @@ run_test (void)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
-                  "`%s' found `%s'\n",
+                  ASYS_TEXT ("`%s' found `%s'\n"),
                   string_table[i].key_,
                   ENTRY));
     else if (i != 2)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "`%s' not found\n",
+                         ASYS_TEXT ("`%s' not found\n"),
                          string_table[i].key_),
                         -1);
 
@@ -260,10 +260,10 @@ run_test (void)
     for (HASH_STRING_REVERSE_ITER hash_iter (hash);
          hash_iter.next (entry) != 0;
          hash_iter.advance (), i++)
-      ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
                   i,
-                  (char *) entry->ext_id_,
-                  (char *) entry->int_id_));
+                  (ASYS_TCHAR *) entry->ext_id_,
+                  (ASYS_TCHAR *) entry->int_id_));
   }
 
   allocator.dump ();
@@ -271,9 +271,9 @@ run_test (void)
 }
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Hash_Map_Manager_Test");
+  ACE_START_TEST (ASYS_TEXT ("Hash_Map_Manager_Test"));
 
   run_test ();
 
