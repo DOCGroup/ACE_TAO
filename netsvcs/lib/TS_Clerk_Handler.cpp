@@ -613,12 +613,14 @@ ACE_TS_Clerk_Processor::resume (void)
 ACE_SVC_FACTORY_DEFINE (ACE_TS_Clerk_Processor)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Connector_Base<ACE_TS_Clerk_Handler>;
 template class ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Node<ACE_TS_Clerk_Handler *>;
 template class ACE_NonBlocking_Connect_Handler<ACE_TS_Clerk_Handler>;
 template class ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>;
 template class ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector_Base<ACE_TS_Clerk_Handler>
 #pragma instantiate ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Node<ACE_TS_Clerk_Handler *>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<ACE_TS_Clerk_Handler>

@@ -1,3 +1,30 @@
+Fri Jul 11 01:08:41 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ACEXML/common/Mem_Map_Stream.cpp:
+	* apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
+	* apps/Gateway/Peer/Peer.cpp:
+	* apps/JAWS/clients/Blobby/Blob.cpp:
+	* apps/JAWS/clients/Caching/http_handler.cpp:
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+	* examples/Connection/blocking/SPIPE-connector.cpp:
+	* examples/Connection/misc/test_upipe.cpp:
+	* examples/Connection/non_blocking/test_lsock_connector.cpp:
+	* examples/Connection/non_blocking/test_sock_connector.cpp:
+	* examples/Connection/non_blocking/test_spipe_connector.cpp:
+	* examples/Connection/non_blocking/test_tli_connector.cpp:
+	* examples/Web_Crawler/URL_Visitor.cpp:
+	* netsvcs/lib/TS_Clerk_Handler.cpp:
+	* tests/Cached_Accept_Conn_Test.cpp:
+	* tests/Cached_Conn_Test.cpp:
+	* tests/Dev_Poll_Reactor_Test.cpp:
+	* tests/NonBlocking_Conn_Test.cpp:
+	* tests/Priority_Reactor_Test.cpp:
+	* tests/Reactor_Performance_Test.cpp:
+	* tests/TP_Reactor_Test.cpp:
+	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
+
+	  Added explicit template instantiation for ACE_Connector_Base.
+
 Fri Jul 11 00:38:16 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\Dev_Poll_Reactor.h (ACE_Dev_Poll_Reactor): 
