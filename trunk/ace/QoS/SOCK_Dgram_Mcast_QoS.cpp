@@ -18,7 +18,11 @@
 #define IMR_MULTIADDR imr_multiaddr
 #endif /* ! defined (IMR_MULTIADDR) */
 
-ACE_RCSID(ace, SOCK_Dgram_Mcast_QoS, "$Id $")
+
+ACE_RCSID (QoS,
+           SOCK_Dgram_Mcast_QoS,
+           "$Id$")
+
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)
 
@@ -100,8 +104,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       ACE_INET_Addr *if_addrs = 0;
       size_t if_cnt;
 
-      if (ACE_Sock_Connect::get_ip_interfaces (if_cnt,
-                                               if_addrs) != 0)
+      if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
         return -1;
 
       size_t nr_subscribed = 0;
@@ -251,7 +254,3 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       return 0;
     }
 }
-
-
-
-

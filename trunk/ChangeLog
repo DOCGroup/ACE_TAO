@@ -1,3 +1,11 @@
+Sat Aug 14 13:07:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp (subscribe_ifs):
+
+	  The "ACE_Sock_Connect" interim pseudo namespace no longer
+	  exists.  Use the true "ACE" C++ namespace instead.  Fixes a
+	  compile-time error.
+
 Sat Aug 14 14:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/templates/gnu.mpd:
