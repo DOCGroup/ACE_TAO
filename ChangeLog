@@ -1,3 +1,17 @@
+Wed Dec 22 11:35:07 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+	* m4/ace.m4:
+	* m4/compiler.m4:
+	* m4/platform.m4:
+
+	  Reverted change described in "Sun Dec 19 14:23:53 2004 ..." that
+	  changed "$host" to "$target".  The latter is only used by tool
+	  chains (compilers, linkers, etc) and is not needed in ACE's
+	  case.  To enable cross-compilation support, users should set the
+	  host platform via the "--host" configure script option, as
+	  described in the "./configure --help" output.
+
 Wed Dec 22 11:17:57 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/show_unused_macros.pl:

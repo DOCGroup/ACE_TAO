@@ -354,7 +354,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
     dnl The default is to disable UI threads. However, on Solaris, we
     dnl enable it by default since it's functionality is very useful and
     dnl has traditionally been enabled in ACE.
-    case "$target" in
+    case "$host" in
       *solaris2*)
         ace_user_enable_uithreads=yes
         AC_MSG_NOTICE([[--enable-uithreads enabled by default for Solaris; use --enable-uithreads=no to disable it.]])
@@ -415,7 +415,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],
   [
-    case "$target" in
+    case "$host" in
       *win*)
            ace_user_enable_wfmo=yes
                ;;
@@ -442,7 +442,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    esac
   ],
   [
-    case "$target" in
+    case "$host" in
       *win*)
            ace_user_enable_winregistry=yes
                ;;
@@ -837,7 +837,7 @@ dnl    fi
    case "${enableval}" in
     yes)
       if test "$GXX" = no; then
-        case "$target" in
+        case "$host" in
           *solaris*)
                ace_user_enable_rtti=yes
                ;;
