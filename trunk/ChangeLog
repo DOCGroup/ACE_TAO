@@ -1,3 +1,9 @@
+Thu Oct  7 11:42:40 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added the new Typedef_String_Array test to the list.
+
 Thu Oct  7 11:21:37 2004  john_c  <john_c@ociweb.com>
 
         * ace/SPIPE.cpp
@@ -28,85 +34,85 @@ Thu Oct  7 07:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct  6 13:58:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Process.cpp:
-	* ace/Process.inl:
+        * ace/Process.cpp:
+        * ace/Process.inl:
 
-	  Moved virtual method ACE_Managed_Process::unmanage() from
-	  *.inl to *.cpp.
+          Moved virtual method ACE_Managed_Process::unmanage() from
+          *.inl to *.cpp.
 
 Wed Oct  6 13:41:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Functor.cpp:
-	* ace/Functor.inl:
+        * ace/Functor.cpp:
+        * ace/Functor.inl:
 
-	  Moved virtual dtor ACE_Command_Base::~ACE_Command_Base from
-	  *.inl to *.cpp.
+          Moved virtual dtor ACE_Command_Base::~ACE_Command_Base from
+          *.inl to *.cpp.
 
 Wed Oct  6 16:34:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_wchar.cpp: For ACE_HAS_WCHAR, #include "ace/OS_NS_string.h"
-	  since it's needed in some of the emulation methods.
+        * ace/OS_NS_wchar.cpp: For ACE_HAS_WCHAR, #include "ace/OS_NS_string.h"
+          since it's needed in some of the emulation methods.
 
 Wed Oct  6 14:50:53 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Message_Queue_Test.cpp (iterator_test): Changed initial
-	  HWM specification for the QUEUE size to match the size of
-	  'buffer'.  It seems very strange to try to send each element of
-	  'buffer' into the queue, but to set QUEUE's HWM potentially
-	  lower than sizeof(buffer).  This makes the test run to
-	  completion on platforms like RH8 where it had been failing for a
-	  good long while.
+        * tests/Message_Queue_Test.cpp (iterator_test): Changed initial
+          HWM specification for the QUEUE size to match the size of
+          'buffer'.  It seems very strange to try to send each element of
+          'buffer' into the queue, but to set QUEUE's HWM potentially
+          lower than sizeof(buffer).  This makes the test run to
+          completion on platforms like RH8 where it had been failing for a
+          good long while.
 
 Wed Oct  6 11:20:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Message_Queue.cpp:
-	* ace/Message_Queue.inl:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue.inl:
 
-	  Move virtual dtor ACE_Message_Queue_Base::~ACE_Message_Queue_Base
-	  and virtual method ACE_Message_Queue_Base::state() from *.inl to
-	  *.cpp.
+          Move virtual dtor ACE_Message_Queue_Base::~ACE_Message_Queue_Base
+          and virtual method ACE_Message_Queue_Base::state() from *.inl to
+          *.cpp.
 
-	* ace/Signal.cpp:
-	* ace/Signal.inl:
+        * ace/Signal.cpp:
+        * ace/Signal.inl:
 
-	  Move virtual dtor ACE_Sig_Adapter::~ACE_Sig_Adapter() from *.inl
-	  to *.cpp.
+          Move virtual dtor ACE_Sig_Adapter::~ACE_Sig_Adapter() from *.inl
+          to *.cpp.
 
 Wed Oct  6 12:25:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Logging/Change_Mask.cpp:
-	* examples/APG/Logging/Howto_Syslog.cpp:
-	* examples/APG/Logging/Simple1.cpp:
-	* examples/APG/Logging/Simple2.cpp:
-	* examples/APG/Logging/Trace_Return.cpp:
-	* examples/APG/Logging/Use_Callback.cpp:
-	* examples/APG/Logging/Use_Callback2.cpp:
-	* examples/APG/Logging/Use_Logger.cpp:
-	* examples/APG/Logging/Use_Logging_Server.cpp:
-	* examples/APG/Logging/Use_Logging_Strategy.cpp:
-	* examples/APG/Logging/Use_LogManager.cpp:
-	* examples/APG/Logging/Use_Multiple_Sinks.cpp:
-	* examples/APG/Logging/Use_Ostream.cpp:
-	* examples/APG/Logging/Use_Stderr.cpp:
-	* examples/APG/Logging/Use_Syslog.cpp:
-	* examples/APG/Logging/Wrap_Macros.cpp:
-	* examples/APG/Logging/Wrap_Macros_Alt.cpp:
-	* examples/APG/Processes/Spawn.cpp:
-	* examples/APG/Reactor/Client.cpp:
-	* examples/APG/Shared_Memory/Hash_Map.cpp:
-	* examples/APG/Shared_Memory/Pool_Growth.cpp:
-	* examples/APG/Streams/RecordingDevice_Text.cpp:
-	  ACE_TRACE string gets ACE_LIB_TEXT applied - don't wrap it in
-	  ACE_TEXT.
+        * examples/APG/Logging/Change_Mask.cpp:
+        * examples/APG/Logging/Howto_Syslog.cpp:
+        * examples/APG/Logging/Simple1.cpp:
+        * examples/APG/Logging/Simple2.cpp:
+        * examples/APG/Logging/Trace_Return.cpp:
+        * examples/APG/Logging/Use_Callback.cpp:
+        * examples/APG/Logging/Use_Callback2.cpp:
+        * examples/APG/Logging/Use_Logger.cpp:
+        * examples/APG/Logging/Use_Logging_Server.cpp:
+        * examples/APG/Logging/Use_Logging_Strategy.cpp:
+        * examples/APG/Logging/Use_LogManager.cpp:
+        * examples/APG/Logging/Use_Multiple_Sinks.cpp:
+        * examples/APG/Logging/Use_Ostream.cpp:
+        * examples/APG/Logging/Use_Stderr.cpp:
+        * examples/APG/Logging/Use_Syslog.cpp:
+        * examples/APG/Logging/Wrap_Macros.cpp:
+        * examples/APG/Logging/Wrap_Macros_Alt.cpp:
+        * examples/APG/Processes/Spawn.cpp:
+        * examples/APG/Reactor/Client.cpp:
+        * examples/APG/Shared_Memory/Hash_Map.cpp:
+        * examples/APG/Shared_Memory/Pool_Growth.cpp:
+        * examples/APG/Streams/RecordingDevice_Text.cpp:
+          ACE_TRACE string gets ACE_LIB_TEXT applied - don't wrap it in
+          ACE_TEXT.
 
-	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
-	* examples/ASX/UPIPE_Event_Server/Options.{cpp i h}:
-	* examples/ASX/UPIPE_Event_Server/Consumer_Router.{cpp h}:
-	* examples/ASX/UPIPE_Event_Server/Peer_Router.{cpp h}:
-	* examples/ASX/UPIPE_Event_Server/Event_Analyzer.{cpp h}:
-	* examples/ASX/UPIPE_Event_Server/Supplier_Router.{cpp h}:
-	* examples/C++NPv2/Service_Reporter.cpp:
-	  Corrected narrow/wide-char issues.
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.{cpp i h}:
+        * examples/ASX/UPIPE_Event_Server/Consumer_Router.{cpp h}:
+        * examples/ASX/UPIPE_Event_Server/Peer_Router.{cpp h}:
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.{cpp h}:
+        * examples/ASX/UPIPE_Event_Server/Supplier_Router.{cpp h}:
+        * examples/C++NPv2/Service_Reporter.cpp:
+          Corrected narrow/wide-char issues.
 
 Wed Oct  6 15:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -120,11 +126,11 @@ Wed Oct  6 15:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct  6 09:59:28 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Connector.cpp (connect_i): On connect fail, use
-	  ACE_OS::last_error(), not errno, to check the cause. Thanks to
-	  Todd Marshall for reporting this.
+        * ace/Connector.cpp (connect_i): On connect fail, use
+          ACE_OS::last_error(), not errno, to check the cause. Thanks to
+          Todd Marshall for reporting this.
 
-	* THANKS: Added Todd Marshall to the Hall of Fame.
+        * THANKS: Added Todd Marshall to the Hall of Fame.
 
 Tue Oct  5 13:12:56 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -139,7 +145,7 @@ Tue Oct  5 11:16:53 2004  Dale Wilson  <wilson_d@ociweb.com>
         * ace/OS_NS_stdlib.cpp:
           Build error on VC7.1: initializing float w/ double may lose data
           There was already a cast there to suppress the warning.  I included
-	  entire expression in the cast.
+          entire expression in the cast.
 
 Tue Oct  5 08:54:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
