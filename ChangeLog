@@ -1,5 +1,17 @@
 Sat Jan  8 09:44:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Threads/thread_pool.cpp: Revised the example to
+	  illustrate the new "wait_for_threads_in_destructor" feature of
+ 	  ACE_Task.
+
+	* examples/Threads/task_four.cpp: Reformatted the code.
+
+	* ace/Task_T: Added a new flag to the constructor that enables
+	  applications to request that an ACE_Task will wait in its
+ 	  destructor for any and all threads in the task to exit before
+ 	  returning.  Thanks to Valery Arkhangorodsky
+ 	  <valerya@servicesoft.com> for suggesting this.
+
 	* ace/OS.i: Needed to add an extern "C" {} block around the 
 	  setregid() and setreuid() functions.  Thanks to David Levine
 	  for reporting this.
