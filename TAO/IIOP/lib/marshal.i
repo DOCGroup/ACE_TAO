@@ -55,6 +55,23 @@ ACE_INLINE TAO_Marshal_WString::TAO_Marshal_WString()
 {
 }
 
+// factory method
+//
+// Based on the kind of the typecode, return the appropriate marshal object
+ACE_INLINE TAO_MarshalObject* TAO_MarshalFactory::make_marshal_object(CORBA_TypeCode_ptr tc,
+							   CORBA_Environment &env)
+{
+  if ((tc) && (tc->_kind >= 0) && (tc->_kind < TC_KIND_COUNT))
+    {
+      return this->mobj_table_[tc->_kind].obj_;
+    }
+  else
+    {
+      env.exception(new CORBA_BAD_TYPECODE(COMPLETED_NO));
+      return 0;
+    }
+}
+
 //destructor for the MarshalObject class
 ACE_INLINE TAO_MarshalObject::~TAO_MarshalObject()
 {

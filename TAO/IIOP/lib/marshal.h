@@ -71,6 +71,14 @@ public:
 						 CORBA_Environment &env);
   // factory method that returns the appropriate marshal object
 private:
+  struct TAO_MarshalObject_Entry
+  {
+    TAO_MarshalObject *obj_;  
+  };
+  // A table of specialized marshal objects indexed by the _kind field
+  TAO_MarshalObject_Entry   mobj_table_[TC_KIND_COUNT];
+
+#if 0
   // define data members that are instances of various MarshalObject classes
   TAO_Marshal_Primitive *m_primitive_;
   TAO_Marshal_Any       *m_any_;
@@ -85,6 +93,7 @@ private:
   TAO_Marshal_Alias     *m_alias_;
   TAO_Marshal_Except    *m_except_;
   TAO_Marshal_WString   *m_wstring_;
+#endif
 };
 
 // Create a type for the singleton factory
