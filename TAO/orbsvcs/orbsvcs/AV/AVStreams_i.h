@@ -59,6 +59,9 @@ extern "C" int gethostname(char* name, int len);
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined (_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
@@ -104,8 +107,6 @@ typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr> Flo
 typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
 
 #include "AV_Core.h"
-
-typedef ACE_Singleton <TAO_AV_Core,ACE_Null_Mutex> TAO_AV_CORE;
 
 int deactivate_servant (PortableServer::Servant servant);
 char *get_flowname (const char *flow_spec_entry_str);
@@ -1561,6 +1562,10 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "Flows_T.h"
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include "ace/post.h"
 #endif /* AVSTREAMS_I_H */

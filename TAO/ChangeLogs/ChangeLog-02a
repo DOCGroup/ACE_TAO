@@ -1,3 +1,25 @@
+Thu May  4 10:40:17 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+
+          Added in the warning(push)/(pop) stuff for MSVC. 
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+
+          I have quite a bit of AV stuff for NT in a separate workspace
+          that has unfortunately gotten out of date (and some changes
+          were not fully completed either).  One important one is the
+          definition of the TAO_AV_CORE template which was busted on
+          NT.  The problem was that two singletons existed, one in the
+          DLL and one in the program itself.  I changed the template
+          delcaration to use the special macros we have for this 
+          situation.  This means that the benchmarking test should now
+          work.
+
+          Thanks to Ferran Boladeres Salvad <salvadof@iis.fhg.de> for
+          being the latest one to mention this.
+
 Thu May  4 10:10:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
