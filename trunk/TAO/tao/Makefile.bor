@@ -71,7 +71,6 @@ OBJFILES = \
 	$(OBJDIR)\IOR_LookupTable.obj \
 	$(OBJDIR)\IORC.obj \
 	$(OBJDIR)\IORManipulation.obj \
-	$(OBJDIR)\IORS.obj \
 	$(OBJDIR)\Key_Adapters.obj \
 	$(OBJDIR)\Leader_Follower.obj \
 	$(OBJDIR)\Linear_Priority_Mapping.obj \
