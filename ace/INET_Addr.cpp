@@ -273,7 +273,8 @@ ACE_INET_Addr::set (u_short port_number,
 
 int
 ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
-                    const ASYS_TCHAR host_name[])
+                    const ASYS_TCHAR host_name[],
+                    const ASYS_TCHAR protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
@@ -286,7 +287,7 @@ ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
   ACE_SERVENT_DATA buf;
 
   servent *sp = ACE_OS::getservbyname_r ((char *) port_name,
-                                         "tcp",
+                                         (char *) protocol,
                                          &sentry,
                                          buf);
   if (sp == 0)
@@ -301,7 +302,8 @@ ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
 
 int
 ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
-                    ACE_UINT32 inet_address)
+                    ACE_UINT32 inet_address,
+                    const ASYS_TCHAR protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
@@ -314,7 +316,7 @@ ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
   ACE_SERVENT_DATA buf;
 
   servent *sp = ACE_OS::getservbyname_r ((char *) port_name,
-                                         "tcp",
+                                         (char *) protocol,
                                          &sentry,
                                          buf);
   if (sp == 0)
@@ -329,10 +331,13 @@ ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
 
 
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
-                              const ASYS_TCHAR host_name[])
+                              const ASYS_TCHAR host_name[],
+                              const ASYS_TCHAR protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  if (this->set (port_number, host_name) == -1)
+  if (this->set (port_number,
+                 host_name,
+                 protocol) == -1)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
     ACE_ERROR ((LM_ERROR,
                 (char *) "ACE_INET_Addr::ACE_INET_Addr: %p\n",
@@ -397,10 +402,13 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 // HOST_NAME.
 
 ACE_INET_Addr::ACE_INET_Addr (const ASYS_TCHAR port_name[],
-                              const ASYS_TCHAR host_name[])
+                              const ASYS_TCHAR host_name[],
+                              const ASYS_TCHAR protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  if (this->set (port_name, host_name) == -1)
+  if (this->set (port_name,
+                 host_name,
+                 protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
@@ -408,17 +416,21 @@ ACE_INET_Addr::ACE_INET_Addr (const ASYS_TCHAR port_name[],
 // Creates a ACE_INET_Addr from a PORT_NAME and an Internet address.
 
 
-ACE_INET_Addr::ACE_INET_Addr (const ASYS_TCHAR *port_name,
-                              ACE_UINT32 inet_address)
+ACE_INET_Addr::ACE_INET_Addr (const ASYS_TCHAR port_name[],
+                              ACE_UINT32 inet_address,
+                              const ASYS_TCHAR protocol[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  if (this->set (port_name, inet_address) == -1)
+  if (this->set (port_name,
+                 inet_address,
+                 protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
 }
 
 int
-ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
+ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[],
+                              size_t len) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
@@ -433,8 +445,9 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
     {
 #if defined (VXWORKS)
       ACE_UNUSED_ARG (len);
-      int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
-                                   hostname);
+      int error = 
+        ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
+                         hostname);
       if (error == OK)
         return 0;
       else
