@@ -1,3 +1,12 @@
+Mon May  5 10:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Content_Server/SMI_Iterator/server.bor:
+        * examples/Content_Server/SMI_Iterator/client.bor:
+        * examples/Buffered_Oneways/Buffered_Oneways_server.bor:
+        * examples/Buffered_Oneways/Buffered_Oneways_client.bor:
+          Removed -GC from tao_idl options, this is not set in the other
+          makefiles
+
 Mon May  5 02:20:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/*/Makefile: Updated dependencies.
