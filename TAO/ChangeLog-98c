@@ -1,3 +1,10 @@
+Thu Jan  8 12:53:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/corbacom.i (wstring_dup): Added this, which simply calls
+ 	wstring_copy().  Of course, I can't find any mention of EITHER of
+ 	these functions in the 2.0 or 2.1 spec, but what good are wstrings
+ 	if you can't make copies?  Plus, Irfan really wanted it.
+
 Wed Jan  7 15:09:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/fe/y.tab.cpp: 
