@@ -189,14 +189,14 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
     monitor->the_location (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (ACE_OS::strcasecmp (::mstyle, "PULL"))
+  if (ACE_OS::strcasecmp (::mstyle, "PULL") == 0)
     {
       manager->register_load_monitor (monitor,
                                       location.in ()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-  else if (ACE_OS::strcasecmp (::mstyle, "PUSH"))
+  else if (ACE_OS::strcasecmp (::mstyle, "PUSH") == 0)
     {
       ACE_Time_Value interval (::push_interval, 0);
       ACE_Time_Value restart (::push_interval, 0);
@@ -284,6 +284,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (timer_id != -1 && reactor->cancel_timer (timer_id) == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -292,9 +295,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           // Just keep going.  We're shutting down anyway.
         }
-
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -1,3 +1,30 @@
+Tue Aug 13 13:52:15 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadManager.cpp (ACE_TMAIN):
+
+	  Changed default load balancing strategy to "Random."  The
+	  previous default, "RoundRobin," is currently unimplemented.
+
+	  Corrected type of value inserted into
+	  "omg.org.CosLoadBalancing.Strategy" property.  The correct type
+	  is CosLoadBalancing::StrategyInfo, not a string.
+
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp (register_load_monitor):
+
+	  Missing check for zero return from strcasecmp() caused the
+	  "PULL" load monitoring style to always be used.  Added missing
+	  zero check.  Both "PUSH" and "PULL" load monitoring styles work
+	  now.
+
+	  (ACE_TMAIN):
+
+	  Corrected problem where the "push handler" timer was cancelled
+	  before the Reactor's event loop ever started.
+
+	* orbsvcs/LoadBalancer/Push_Handler.cpp (handle_timeout):
+
+	  Added some debugging code.
+
 Tue Aug 13 11:25:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/Push_Handler.h:
