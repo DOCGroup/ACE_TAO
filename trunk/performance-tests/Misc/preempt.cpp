@@ -285,9 +285,9 @@ Low_Priority_Task::svc (void)
 ///////////////////////////////////////////////////////////////////////////////
 
 static int
-get_options (int argc, char *argv[])
+get_options (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "fh:l:n:p:y?");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("fh:l:n:p:y?"));
   int opt;
   while ((opt = get_opt ()) != EOF) {
     switch (opt) {
@@ -356,9 +356,9 @@ get_options (int argc, char *argv[])
 ///////////////////////////////////////////////////////////////////////////////
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_LOG_MSG->open (argv[0] ? argv[0] : "preempt");
+  ACE_LOG_MSG->open (argv[0] ? argv[0] : ACE_TEXT("preempt"));
 
 #if defined (ACE_HAS_THREADS) || !defined (ACE_LACKS_FORK)
 
@@ -401,7 +401,7 @@ main (int argc, char *argv[])
   pid_t child = 0;
   if (use_fork == 1)
     {
-      switch ((child = ACE_OS::fork ("preempt-low_priority_process")))
+      switch ((child = ACE_OS::fork (ACE_TEXT("preempt-low_priority_process"))))
         {
         case -1:
           ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
