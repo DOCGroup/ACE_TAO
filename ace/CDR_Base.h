@@ -181,26 +181,40 @@ public:
       typedef long LongLong;
   # elif ACE_SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
   #   if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T) && !defined	(__KCC)
-	// sun #defines	u_longlong_t, maybe other platforms do also.
-	// Use it, at least with g++, so that its -pedantic doesn't
-	// complain about no ANSI C++ long long.
-	typedef	longlong_t LongLong;
+	      // sun #defines	u_longlong_t, maybe other platforms do also.
+	      // Use it, at least with g++, so that its -pedantic doesn't
+	      // complain about no ANSI C++ long long.
+	      typedef	longlong_t LongLong;
   #   else
-	// LynxOS 2.5.0	and Linux don't	have u_longlong_t.
-	typedef	long long LongLong;
+	      // LynxOS 2.5.0	and Linux don't	have u_longlong_t.
+	      typedef	long long LongLong;
   #   endif /* sun */
   # else  /* no	native 64 bit integer type */
-
-      // If "long long"	isn't native, programs can't use these data
-      // types in normal arithmetic expressions.  If any particular
-      // application can cope with the loss of range, it can define
-      // conversion operators itself.
+  #   define NONNATIVE_LONGLONG
   #   if defined (ACE_BIG_ENDIAN)
-	struct LongLong	{ ACE_CDR::Long	h, l; };
+	      struct ACE_Export LongLong 
+        { 
+          ACE_CDR::Long	h;
+          ACE_CDR::Long l; 
+          int operator== (const LongLong &rhs) const;
+          int operator!= (const LongLong &rhs) const;
+        };
   #   else
-	struct LongLong	{ ACE_CDR::Long	l, h; };
+	      struct ACE_Export LongLong 
+        { 
+          ACE_CDR::Long	l;
+          ACE_CDR::Long h; 
+          int operator== (const LongLong &rhs) const;
+          int operator!= (const LongLong &rhs) const;
+        };
   #   endif /* ! ACE_BIG_ENDIAN	*/
   # endif /* no	native 64 bit integer type */
+
+  # if defined (NONNATIVE_LONGLONG)
+  #   define ACE_CDR_LONGLONG_INITIALIZER {0,0}
+  # else
+  #   define ACE_CDR_LONGLONG_INITIALIZER 0
+  # endif /* NONNATIVE_LONGLONG */
 
   # if ACE_SIZEOF_FLOAT	== 4
       typedef float Float;
@@ -244,18 +258,18 @@ public:
     // extension, not yet standard.
 
   #  if	  ACE_SIZEOF_LONG_DOUBLE == 16
-    typedef long double	LongDouble;
-#define	ACE_CDR_LONG_DOUBLE_INITIALIZER	0
+       typedef long double	LongDouble;
+       #define	ACE_CDR_LONG_DOUBLE_INITIALIZER	0
   #  else
   #    define NONNATIVE_LONGDOUBLE
-#define	ACE_CDR_LONG_DOUBLE_INITIALIZER	{{0}}
-    struct ACE_Export LongDouble
-    {
-      char ld[16];
-      int operator== (const LongDouble &rhs) const;
-      int operator!= (const LongDouble &rhs) const;
-      // @@ also need other comparison operators.
-    };
+  #    define	ACE_CDR_LONG_DOUBLE_INITIALIZER	{{0}}
+       struct ACE_Export LongDouble
+       {
+         char ld[16];
+         int operator== (const LongDouble &rhs) const;
+         int operator!= (const LongDouble &rhs) const;
+         // @@ also need other comparison operators.
+       };
   #  endif /* ACE_SIZEOF_LONG_DOUBLE !=	16 */
 
 #if !defined (ACE_CDR_GIOP_MAJOR_VERSION)
