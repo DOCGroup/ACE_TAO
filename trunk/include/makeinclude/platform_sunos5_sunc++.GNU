@@ -1,20 +1,18 @@
 # $Id$
 
-# SunOS 5.x (Solaris 2.x) with SunC++ 4.2 or earlier
-# *not* using Orbix
+# SunOS 5.x (Solaris 2.x) with Sun C++ 4.2, *not* using Orbix.
 #
-# Note: some ACE files might generate these kinds of warnings:
-# 1) "Warning: Could not find source for " one of the following:
+# With slight modification, this file could be used with Sun C++ 4.1.
+# However, it's likely that you won't be able to build all of ACE
+# with Sun C++ 4.1.
+#
+# Note: some ACE files might generate this warning:
+#   "Warning: Could not find source for " one of the following:
 #    default constructor, copy constructor, destructor, or assignment
 #    operator.  It appears that with +w, Sun C++ 4.x issues this warning
 #    whenever it has to generate one of these functions (because it wasn't
 #    defined by the user).  This isn't really a problem.
 #    This warning appears to be fixed by Sun C++ 4.2 jumbo patch 104631-02.
-# 2) "Warning: <foo> hides the function " or "hides the same name in an
-#    outer scope".  A useful warning, perhaps, but not really a problem.
-#    Again, this appears much more often with +w.  The jumbo patch did not
-#    remove it.
-# There should be no other warnings from Sun C++ when building ACE.
 
 debug = 1
 threads = 1
