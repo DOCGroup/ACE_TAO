@@ -721,99 +721,76 @@ and transport protocols for a given platform.</li>
 
 <h3> <a NAME="rtcorba"></a>Real-Time CORBA </h3>
 
-Point of contact: <a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a>
+<h4> Last Updated:  04/27/2000 </h4>
 
-<P>
-The Real-Time CORBA specification (RT-CORBA) defines a framework for
-supporting end-to-end deterministic behavior for a fixed priority CORBA
-system.  This specification builds on the CORBA Architecture
-Specification version 2.2 and the CORBA Messaging Specification.
-Primarily, RT-CORBA adds to the Policy framework defined in the
-Messaging specification and adds to GIOP/IIOP version 1.1 to support
-these extensions. <P>
-
-This effort will implement the RT-CORBA specification and required
-parts of the Messaging specification.  Our implementation of RT-CORBA
-in TAO will occur in stages.  Our initial focus will be the support of
-statically configured, real-time embedded systems where it is possible
-to eliminate many sources of unbounded priority inversion.  This will
-be followed by a more general implementation which supports more
-dynamic environments and scheduling mechanisms. <P>
-
-Support for statically configured applications requires a framework
-which allows for explicit mappings between CORBA priorities,
-connections (client side), endpoints (server side), threads, objects
-and invocations.  By supporting such mappings, applications will
-realize a greater degree of control over end-to-end priority mappings.
-Essentially, applications are able to assign priorities to connections
-between server and client, then using the existing Policy framework
-along with new Policy objects, requests are routed to the appropriate
-connections.  By assigning equivalent thread and object priorities,
-applications are able to ensure end-to-end priority preservation. <P>
-
-As a part of this initial effort we are also adding support for both
-reliable and buffered oneway operations.  Reliable oneway operations
-are specified in the messaging specification.  Reliable oneways is a
-method for providing different levels of support for reliable message
-delivery. Traditional oneway semantics are unacceptable in many
-environments.  For example, there is no guarantee that a particular
-invocation will actually be delivered.  Additionally, location
-forwarding will not occur with traditional oneway invocations. <P>
-
-<P>
-The Messaging specification has defined four alternative
-interpretations of the oneway interface.  Two of these cases do provide
-for both location forwarding and positive acknowledgment from the
-server that a message was received.  The <CODE>SyncScopePolicy</CODE>
-Policy from the Messaging Specification is used to specify the level of
-reliability required.  The policy is set on the client side and uses a
-new flags field in the GIOP 1.2 header.  The server checks this flag to
-determine if a reply is required for the oneway invocation.  Four
-different levels synchronization are defined in the RT specification:
-
-        <p>
-        <ul>
-          <li>
-            <CODE>SYNC_NONE</CODE><BR>
-            The ORB returns control to the client before passing the
-            request to the transport layer.  Client is guaranteed not
-            to block.  No location forward is done.
-          </li>
-          <li>
-            <CODE>SYNC_WITH_TRANSPORT</CODE><BR>
-            The ORB returns control to the client only after the
-            transport layer (e.g. TCP) has accepted the request.
-            Client can block. No location forwarding is done.
-          </li>
-          <li>
-            <CODE>SYNC_WITH_SERVER</CODE><BR>
-            The server sends a reply before invoking the target
-            implementation.  A reply of NO_EXCEPTION implies that all
-            location forwarding has been performed and the ORB shall
-            return control to the client.  Thus the client will block
-            for remote invocations.  Server send reply after invoking
-            any ServantManager but before delivering request to
-            servant.
-          </li>
-          <li>
-            <CODE>SYNC_WITH_TARGET</CODE><BR>
-            Equivalent to a synchronous twoway operation in CORBA 2.2.
-            Server sends a reply only after the target has completed
-            the invoked operation.  Any location forwarding will have
-            occurred and a SYSTEM_EXCEPTION reply may be sent.  The
-            client is assured that the target has acted upon the
-            request.
-          </li>
-        </ul>
-
+Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
+Spivak</a> and <a href="mailto:irfan@cs.wustl.edu">Irfan
+Pyarali</a>
 <P>
 
-The underlying transport object will be enhanced to support different
-oneway buffering strategies.  This feature can be used to optimize
-message throughput, possibly at the expense of latency. The One-Way
-Buffer will be flushed under 5 conditions as specified by the
-Buffering Constraint Policy:
+Work in Progress:
+<P>
+We are currently working on implementing RT CORBA 1.0 specification in
+TAO.  Features in progress include POA Threadpools, Client-Propagated
+and Server-Declared Priority Models, and Priority-Banded Connections.
+A version of TAO supporting these features is expected in July.
+<P>
+Our design is an extension of the <em>endpoint-per-priority</em>
+architecture mentioned in the <tt>Recently Completed Work</tt> section
+below.  In this design, codenamed <em>reactor-per-lane</em>, each
+threadpool lane owns a set of I/O resources, i.e., <tt>Reactor</tt>,
+<tt>Acceptor</tt>, and <tt>Connector_Registry.</tt>  Each request is
+serviced by a single thread without context switches, i.e., the same thread
+performs I/O and runs the servant code.  Document
+describing the design in detail will be available this summer.
+<P>
 
+Recently Completed Work:
+<ul>
+
+<li> Implemented Policy framework (defined in the Messaging
+specification, used in RT CORBA). </li>
+<p>
+<li> Added support for Real-time CORBA Priority and implemented two
+Priority Mappings: <tt>Linear</tt> and <tt>Direct</tt>. </li>
+<p>
+<li> Added support for end-to-end CORBA request priority preservation.
+This is achieved through <em>multiple listening endpoint</em> architecture,
+a.k.a. <em>endpoint-per-priority</em>, on the server and a Client Priority
+Policy on the client.  Following is a brief description of how this is
+implemented.
+<p>
+Server ORB uses multiple transport endpoints to accept
+connections from clients.  Each transport endpoint has a priority,
+which is the priority of the thread(s) servicing the endpoint as well
+as all connections it accepts.  When a server ORB creates an IOR for
+one of its objects, it embeds all of the server's listening endpoints
+along with their priorities into the object's IOR.  Then, a client ORB
+selects the priority that best matches client's need (as specified by
+the Client Priority Policy) from those offered by the server, and uses
+the corresponding transport endpoint specified by the server to obtain
+the desired level of service.
+<p>
+For more details and performance results for
+<em>endpoint-per-priority</em> architecture, see <a
+href="http://www.cs.wustl.edu/~marina/boeing.pdf">this paper.</a> See
+<tt>TAO/tao/TAO.pidl</tt> for Client Priority Policy interface
+definition, and <tt>TAO/tests/Endpoint_Per_Priority</tt> for
+example of using priority preservation in TAO. </li>
+<p>
+<li> Implemented reliable one-way requests, i.e., SyncScope Policy from
+the Messaging specification.  This is relevant to
+RT CORBA because of the following feature: setting SyncScope Policy to
+SYNC_NONE enables buffering of one-way requests in the client ORB.
+Request buffering can be used to optimize message throughput, possibly
+at the expense of latency.  ORB buffering behavior is controlled by
+the Buffering Constraint Policy, which is described next. </li>
+<p>
+<li> Added support for buffered one-way and asynchronous requests in
+the client ORB.  Buffering Constraint Policy gives users control over
+queueing and flushing of requests in the ORB.  A combination of the
+following conditions for initiating buffer flush can be specified
+using this policy:
         <ul>
           <li> Timeout value expires. </li>
           <li> Max byte count is exceeded. </li>
@@ -821,45 +798,33 @@ Buffering Constraint Policy:
           <li> Max message count is exceeded, or </li>
           <li> ORB shutdown.</li>
         </ul>
-
-
-<p>Current Status:
-<ul>
-
-<li> SyncScopePolicy has been fully implemented. Setting a
-SyncScope Policy value of SYNC_NONE will enable buffering of
-oneway requests according to the current Buffering Constraint
-Policy. </li>
-
-<li> Buffering Constraint Policy is completely supported by TAO
-providing flexible levels of flushing and queueing in the ORB.  This
-includes eager and delayed buffering and timed invocations.</li>
-
-<li> ClientPriorityPolicy has been implemented.  This TAO-specific
-policy allows clients to specify priority to be used as a
-selection criteria in choosing server endpoints for carrying out
-consequent corba requests on objects. This client-side feature
-together with the server-side capability to create multiple endpoints with
-different priorities directly contributes to maintaining end-to-end
-priority in a distributed system.  Please see TAO/tao/TAO.pidl for
-ClientPriorityPolicy interface, and TAO/tests/Endpoint_Per_Priority for
-its use.  Current implementation does not work properly in presence of
-location forward messages. <P>
-
+<p>
+Also supported are out-of-band requests, i.e., requests that bypass
+buffers and are delivered to the server immediately.
+<p>
+Buffering Constraint Policy is a TAO-specific feature.  See
+<tt>TAO/tao/TAO.pidl</tt> for policy interface definition and
+<tt>TAO/examples/Buffered_Oneways</tt> and
+<tt>TAO/examples/Buffered_AMI</tt> directories for its use.  For
+motivation and performance of buffered one-ways see <a
+href="http://www.cs.wustl.edu/~marina/boeing.pdf">this paper.</a>
 </ul>
+
 Known issues:
 <ul>
-<li>
-</ul>
-
-Critial Work:
-<ul>
-<li>
+<li> When using <em>endpoint-per-priority</em> model in TAO, the client
+ORB does not use a connection of the right priority if
+it encounters LOCATION_FORWARD.</li>
 </ul>
 
 Future work:
 <ul>
-<li> Integrate SyncScope policy with DII deferred synchronous requests.
+<li> Provide server-side RT CORBA implementation using a
+<em>queue-per-lane</em> approach.  In this approach each threadpool
+lane owns a queue, while I/O resources are being shared among all the
+threadpool lanes of the same priority within the server.  Strategize TAO
+to use either <em>queue-per-lane</em> or <em>reactor-per-lane</em>
+implementation, and compare the two.
 </ul>
 
 <hr>
@@ -868,7 +833,7 @@ Future work:
 <h3>
 <a NAME="poa"></a>Portable Object Adapter (POA)</h3>
 Point of contact: <a href="mailto:irfan@cs.wustl.edu">Irfan Pyarali</a>
-
+<P>
 The POA associates servants with the ORB and demultiplexes incoming
 requests to servants. <P>
 
