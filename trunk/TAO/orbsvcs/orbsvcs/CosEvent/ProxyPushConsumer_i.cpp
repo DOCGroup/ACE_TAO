@@ -76,9 +76,9 @@ TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &TAO
 }
 
 TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
-                                                              RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc)
+                                                              RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer)
   : qos_ (qos),
-    ppc_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (ppc)),
+    proxypushconsumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (proxypushconsumer)),
     wrapper_ (0)
 {
   // No-Op.
@@ -121,14 +121,14 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   e.data.any_value = data;
 
-  this->ppc_->push (events,
-                    TAO_TRY_ENV);
+  this->proxypushconsumer_->push (events,
+                                  TAO_TRY_ENV);
 }
 
 void
 TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
 {
-  this->ppc_->disconnect_push_consumer (TAO_TRY_ENV);
+  this->proxypushconsumer_->disconnect_push_consumer (TAO_TRY_ENV);
 
   // Deactivate the ProxyPushConsumer
   PortableServer::POA_var poa =
@@ -159,9 +159,9 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
                  TAO_CosEC_PushSupplierWrapper (push_supplier),
                  CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
-  this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_IN_ENV),
-                                     this->qos_,
-                                     TAO_IN_ENV);
+  this->proxypushconsumer_->connect_push_supplier (this->wrapper_->_this (TAO_IN_ENV),
+                                                   this->qos_,
+                                                   TAO_IN_ENV);
 }
 
 int
