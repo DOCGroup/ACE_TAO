@@ -1,3 +1,8 @@
+Wed Aug 19 13:38:40 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_TSS_Cleanup::detach): only declare local
+          temp_key ifdef ACE_WIN32, because it's only used there.
+
 Wed Aug 19 10:13:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_Thread_Cleanup::remove): Don't bother to check
