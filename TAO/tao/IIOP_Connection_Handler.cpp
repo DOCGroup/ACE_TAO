@@ -326,10 +326,11 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (this->refcount_ == 0)
     this->decr_ref_count ();
 
-  if (result == 0 || result == -1)
-    {
-      return result;
-    }
+  if (result == -1)
+    return result;
+  else if (result == 0)
+    // Requires another call to handle_input ()
+    return 1;
 
   return 0;
 }

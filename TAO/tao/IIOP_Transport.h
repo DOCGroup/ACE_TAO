@@ -96,6 +96,11 @@ public:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
+  /// Read len bytes from the socket into buf
+  virtual ssize_t read (char *buf,
+                        size_t len,
+                        const ACE_Time_Value *s = 0);
+
   /// Read and process the message from the connection. The processing
   /// of the message is done by delegating the work to the underlying
   /// messaging object
