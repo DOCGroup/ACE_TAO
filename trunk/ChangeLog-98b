@@ -1,42 +1,48 @@
+Sun Sep 27 18:25:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (readdir_r): added __USE_POSIX test for three-arg
+          ::readdir_r ().  Thanks to james@tsunami.com for providing
+          the patch.
+
 Sun Sep 27 09:35:04 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	*  docs/tutorials/013/*
-	   Completed Tutorial 013!  The code is up to date and compilable on
-	   RedHat Linux with egcs 1.1.  It may need some template help on other
-	   platforms.  The HTML is done and in synch with the code.
+        *  docs/tutorials/013/*
+           Completed Tutorial 013!  The code is up to date and compilable on
+           RedHat Linux with egcs 1.1.  It may need some template help on other
+           platforms.  The HTML is done and in synch with the code.
 
 Sun Sep 27 01:52:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp: 
-	  The get_host_name() method was returning the first name, and not
-	  looking up in the alias list for the right match with the
-	  address.
+        * ace/INET_Addr.cpp:
+          The get_host_name() method was returning the first name, and not
+          looking up in the alias list for the right match with the
+          address.
 
 Sun Sep 27 00:18:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Makefile: Updated dependency.
+        * ace/Makefile: Updated dependency.
 
-	* ace/OS.cpp (invoke):
-	* ace/Thread_Manager.cpp (ace_thread_manager_adapter):
-	  (ACE_Thread_Exit::instance): Removed conditional macro
-	  ACE_HAS_PTHREAD_SIGMASK so the Thread_Exit instance can be place
-	  in TSS.  This was guarded by ACE_HAS_PTHERAD_1003_DOT_3 which
-	  later merged with ACE_HAS_PTHERAD_SIGMASK.  However, the
-	  origianl intension of this condition was to fix a bug in Xavier
-	  pthread implementation.  The effect of merging the two macros
-	  forces ACE_Thread_Exit be allocated from stacks which, in turn,
-	  prevent threads from exiting properly when pthread_cancel is
-	  used.
+        * ace/OS.cpp (invoke):
+        * ace/Thread_Manager.cpp (ace_thread_manager_adapter):
+          (ACE_Thread_Exit::instance): Removed conditional macro
+          ACE_HAS_PTHREAD_SIGMASK so the Thread_Exit instance can be place
+          in TSS.  This was guarded by ACE_HAS_PTHERAD_1003_DOT_3 which
+          later merged with ACE_HAS_PTHERAD_SIGMASK.  However, the
+          origianl intension of this condition was to fix a bug in Xavier
+          pthread implementation.  The effect of merging the two macros
+          forces ACE_Thread_Exit be allocated from stacks which, in turn,
+          prevent threads from exiting properly when pthread_cancel is
+          used.
 
-	  Linux is the only platform that I know which uses Xavier thread
-	  library.  The bug has apparently been fixed.  If your platform
-	  segfaults while spawning threads, please let me know.  Thanks to
-	  Chris Gill for noticing the abnormal behavior when calling
-	  ACE_Thread::thr_cancel.
+          Linux is the only platform that I know which uses Xavier thread
+          library.  The bug has apparently been fixed.  If your platform
+          segfaults while spawning threads, please let me know.  Thanks to
+          Chris Gill for noticing the abnormal behavior when calling
+          ACE_Thread::thr_cancel.
 
 Sat Sep 26 23:20:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Proactor.cpp: Fixed the g++ warnings.
+        * ace/Proactor.cpp: Fixed the g++ warnings.
 
 Fri Sep 25 23:19:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -48,24 +54,24 @@ Fri Sep 25 23:19:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Sep 25 21:58:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (set_handle_limit): Added appropriate return value.
+        * ace/ACE.cpp (set_handle_limit): Added appropriate return value.
 
 Fri Sep 25 22:10:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Map_Manager.cpp:
-	  Map_Manager::close() did not reset the capacity or current size
-	  of the map.
+        * ace/Map_Manager.cpp:
+          Map_Manager::close() did not reset the capacity or current size
+          of the map.
 
 Fri Sep 25 18:24:17 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/Proactor.{h,cpp}: Had to allow the definition of
-	  POSIX_COMPLETION_STRATEGY for the do-nothing constructor on
-	  NT.
+        * ace/Proactor.{h,cpp}: Had to allow the definition of
+          POSIX_COMPLETION_STRATEGY for the do-nothing constructor on
+          NT.
 
 Fri Sep 25 18:07:19 EDT 1998   James CE Johnson  <jcej@lads.com>
 
-	* A few more minor changes to docs/tutorials/013.  With luck, the
-	  HTML part will be done this weekend!
+        * A few more minor changes to docs/tutorials/013.  With luck, the
+          HTML part will be done this weekend!
 
 Fri Sep 25 14:51:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
