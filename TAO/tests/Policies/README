@@ -2,9 +2,9 @@
 
 Description:
 
-	This is a stress test for the Policy interfaces.  It randomly
-creates, removes, destroys or modifies the policy setting at the
-object, thread and ORB level.  The operations are performed
+	This is a stress test for the ORB's Policy interfaces.  It
+randomly creates, removes, destroys or modifies the policy setting at
+the object, thread and ORB level.  The operations are performed
 concurrently, by threads.
 
 	The only output from this test is 'threads finished', anything

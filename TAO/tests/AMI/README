@@ -3,7 +3,6 @@
 Description:
 This is a simple test for AMI callback model.
 
-
 Note:
 Use TAO_HAS_CORBA_MESSAGING
 and TAO_HAS_AMI_CALLBACK

@@ -1,7 +1,7 @@
 # $Id$
 
-A small test that tests the birectional connection implementation in
-TAO. Start the server like this
+This is a test that exercises the birectional GIOP connection
+implementation in TAO. Start the server like this
 
 $ server -o <file.ior> -i <no_iterations>
 $ client -k file://<file.ior> -x 
