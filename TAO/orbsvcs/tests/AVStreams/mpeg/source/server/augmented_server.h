@@ -56,17 +56,42 @@
 #include "Machine_Properties.h"
 #include "Video_Repository.h"
 
+#include "mpeg_shared/MMDevice_ExporterS.h"
+
+
+
 class AV_Audio_MMDevice
-  : public TAO_MMDevice,
-    public TAO_Exportable
+  : public TAO_MMDevice
 {
 public:
 
   static const char* NUMBER_OF_CONNECTIONS;
   static const char* MAX_CONNECTIONS;
   static const char* SERVER_NAME;
-
+  
   AV_Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy);
+  // Default constructor
+
+  virtual AVStreams::StreamEndPoint_B_ptr
+  create_B (AVStreams::StreamCtrl_ptr the_requester, 
+	    AVStreams::VDev_out the_vdev, 
+	    AVStreams::streamQoS &the_qos, 
+	    CORBA::Boolean_out met_qos, 
+	    char *&named_vdev, 
+	    const AVStreams::flowSpec &the_spec,  
+	    CORBA::Environment &env);
+  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
+
+ 
+};
+
+class AV_Video_MMDevice
+  : public TAO_MMDevice//,
+  //    public TAO_Exportable   
+{
+public:
+
+    AV_Video_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy);
   // Default constructor
 
   virtual AVStreams::StreamEndPoint_B_ptr
@@ -79,21 +104,47 @@ public:
             CORBA::Environment &env);
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
+  
+};
+
+class MMDevice_Exporter_i 
+  : public POA_MMDevice_Exporter,
+    public TAO_Exportable,
+    public TAO_PropertySet
+{
+  
+  public:
+  CORBA_Object_ptr audio_mmdevice_;
+  CORBA_Object_ptr video_mmdevice_;
+
+  static const char* NUMBER_OF_CONNECTIONS;
+  static const char* MAX_CONNECTIONS;
+  static const char* SERVER_NAME;
+
+  MMDevice_Exporter_i();
+
   CORBA::ULong connections (void) const;
   // Retrieve the number of connections.
 
+//   virtual CORBA::Object_ptr audio_mmdevice_reference_ (CORBA_Environment &_env = CORBA_Environment::default_environment ()); 
+
+//   virtual CORBA::Object_ptr video_mmdevice_reference_ (CORBA_Environment &_env = CORBA_Environment::default_environment ()); 
+
+  virtual CORBA::Object_ptr get_audio_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ()); 
+  virtual CORBA::Object_ptr get_video_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ()); 
+
   virtual void export_properties (TAO_Property_Exporter& prop_exporter);
-
-  virtual int define_properties
-    (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
-     CORBA::ULong offset = 0) const;
-
-private:
-
+  
+  virtual int define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
+                                 CORBA::ULong offset = 0) const;
+  
+  private:
+  
   CORBA::ULong connections_;
   // Number of active connections
-
-  CORBA::ULong max_connections_;
+  
+  CORBA::ULong max_connections_; 
+  
 };
 
 class AV_Server;
@@ -153,8 +204,8 @@ class AV_Server
   //   run. It uses an acceptor with the default ACE_Reactor::instance ().
 public:
 
-  static const char* SERVICE_TYPE;
-
+  static const char* MMDEVICE_SERVICE_TYPE;
+  
   AV_Server (void);
   // constructor
 
@@ -201,8 +252,11 @@ private:
 
   CosTrading::Lookup_var trader_;
   // Reference to the Lookup interface of the trading service.
+  
+  //  CosTrading::OfferId_var audio_offer_id_;
+  // Server offer id.
 
-  CosTrading::OfferId_var offer_id_;
+  CosTrading::OfferId_var mmdevice_offer_id_;
   // Server offer id.
 
   CosTradingRepos::ServiceTypeRepository::PropStructSeq prop_seq_;
@@ -223,7 +277,7 @@ private:
   TAO_AV_Endpoint_Process_Strategy_B video_process_strategy_;
   // The proces strategy for the video.
 
-  TAO_MMDevice *video_mmdevice_;
+  //  TAO_MMDevice *video_mmdevice_;
   // The video server multimedia device
 
   ACE_Process_Options audio_process_options_;
@@ -236,7 +290,13 @@ private:
   AV_Audio_MMDevice *audio_mmdevice_;
   // The audio server multimedia device
 
+  AV_Video_MMDevice *video_mmdevice_;
+  // The video server multimedia device
+
+  MMDevice_Exporter_i *mmdevice_exporter_;
 };
+
+
 
 typedef ACE_Singleton<AV_Server,ACE_Null_Mutex> AV_SERVER;
 
