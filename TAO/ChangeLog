@@ -1,3 +1,10 @@
+Fri Sep 12 15:13:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/examples/Notify/Lanes/Supplier.dsp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.dsp:
+
+          Fixed release configuration settings.
+
 Fri Sep 12 13:36:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/RTKokyuEvent.dsp:
