@@ -33,7 +33,7 @@ dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
 dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 
-dnl Check if compiler accepts specific flag to enable threads
+ dnl Check if compiler accepts specific flag to enable threads
  ACE_CACHE_CHECK(if compiler may need a thread flag,
    ace_cv_feature_may_need_thread_flag,
    [
@@ -51,7 +51,7 @@ dnl Check if compiler accepts specific flag to enable threads
     dnl If no thread flag is found then the remaining tests should still
     dnl figure out how to enable thread support via library checks.
     ACE_SEARCH_THREAD_FLAGS(
-      [mt pthread pthreads mthreads threads Kthread -thread_safe],,)
+      [mt pthread pthreads mthreads threads Kthread kthread -thread_safe],,)
       dnl NOTE: "-thread_safe" is correct, not "thread_safe."
       dnl       KAI C++ uses the flag "--thread_safe" which is why
       dnl       "-thread_safe" is passed as the flag to test.
@@ -74,6 +74,9 @@ dnl Check if compiler accepts specific flag to enable threads
  dnl -lthread, so try a more "exotic" function.
  ACE_SEARCH_LIBS(rwlock_destroy, thread,,)
 
+ dnl Check if any thread related preprocessor flags are needed.
+ ACE_CHECK_THREAD_CPPFLAGS
+
  dnl Check for POSIX threads
  dnl
  dnl Check if platform provides pthreads backward compatibility macros
@@ -87,6 +90,10 @@ dnl Check if compiler accepts specific flag to enable threads
  ACE_CACHE_CHECK(for pthreads backward compatibility macros,
    ace_cv_lib_pthread_compat_macros,
    [
+    dnl Add thread preprocessor flags, if any.
+    ace_save_CPPFLAGS="$CPPFLAGS"
+    CPPFLAGS="$CPPFLAGS $ACE_THR_CPPFLAGS"
+
     AC_EGREP_CPP(ACE_PTHREAD_MACROS,
       [
 #include <pthread.h>
@@ -101,6 +108,9 @@ dnl Check if compiler accepts specific flag to enable threads
       [
        ace_cv_lib_pthread_compat_macros=no
       ])
+
+    dnl Reset the preprocessor flags
+    CPPFLAGS="$ace_save_CPPFLAGS"
    ],
    [
     dnl Check if pthread function names are mangled (e.g. DU 4.0)
@@ -186,10 +196,16 @@ AC_DEFUN(ACE_CHECK_THREAD_FLAGS, dnl
 ACE_CONVERT_WARNINGS_TO_ERRORS([
 AC_TRY_LINK(
 [
-#ifndef _REENTRANT
-#error _REENTRANT was not defined
-THROW ME AN ERROR!
-#endif
+/*
+ * Don't use definition of specific preprocessor macros as criterion
+ * for determining if thread support is found.
+ *
+ * #if !defined (_REENTRANT) && !defined (_THREAD_SAFE)
+ * #error Neither _REENTRANT nor _THREAD_SAFE were defined.
+ * THROW ME AN ERROR!
+ * #endif
+ *
+ */
 ]
 ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
 extern "C"
@@ -229,10 +245,16 @@ EOF
 
 AC_TRY_LINK(
 [
-#ifndef _REENTRANT
-#error _REENTRANT was not defined
-THROW ME AN ERROR!
-#endif
+/*
+ * Don't use definition of specific preprocessor macros as criterion
+ * for determining if thread support is found.
+ *
+ * #if !defined (_REENTRANT) && !defined (_THREAD_SAFE)
+ * #error Neither _REENTRANT nor _THREAD_SAFE were defined.
+ * THROW ME AN ERROR!
+ * #endif
+ *
+ */
 ]
 ifelse(AC_LANG, CPLUSPLUS, [#ifdef __cplusplus
 extern "C"
@@ -296,5 +318,32 @@ AC_DEFUN(ACE_SEARCH_THREAD_FLAGS, dnl
    ],
    [
     $3
+   ])
+])
+
+
+dnl Check if the compiler defines thread related preprocessor flags.
+dnl If not, then provide them.
+dnl Usage: ACE_CHECK_THREAD_CPPFLAGS
+AC_DEFUN(ACE_CHECK_THREAD_CPPFLAGS, dnl
+[
+ dnl A compile-time test is used instead of a preprocessor-time test
+ dnl because compiler thread flags defined in CFLAGS or CXXFLAGS
+ dnl should be used for this test.
+ AC_TRY_COMPILE(
+   [
+#if !defined (_REENTRANT) && !defined (_THREAD_SAFE)
+#error Neither _REENTRANT nor _THREAD_SAFE were defined.
+THROW ME AN ERROR!
+#endif
+   ],
+   [
+    int a = 0; a++;
+   ],
+   [
+    ACE_THR_CPPFLAGS=
+   ],
+   [
+    ACE_THR_CPPFLAGS="-D_REENTRANT -D_THREAD_SAFE"
    ])
 ])
