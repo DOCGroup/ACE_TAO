@@ -26,11 +26,11 @@ IDL_FILES = RTCosScheduling
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
 RTCosScheduling = \
+  RTCosSchedulingC \
+  RTCosSchedulingS \
   RTCosScheduling/RTCosScheduling_ClientScheduler_i \
   RTCosScheduling/RTCosScheduling_PCP_Manager \
-  RTCosScheduling/RTCosScheduling_ServerScheduler_i \
-  RTCosSchedulingC \
-  RTCosSchedulingS
+  RTCosScheduling/RTCosScheduling_ServerScheduler_i
 
 ifndef ORBSVCS_COMPONENTS
   ORBSVCS_COMPONENTS = \
@@ -126,14 +126,14 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp RTCosScheduling/RTCosScheduling_PCP_Manager.cpp RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp RTCosSchedulingC.cpp RTCosSchedulingS.cpp: idl_stubs
+RTCosSchedulingC.cpp RTCosSchedulingS.cpp RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp RTCosScheduling/RTCosScheduling_PCP_Manager.cpp RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp: idl_stubs
 endif
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 
-INSTALL_CHECK = ../../../ace
+INSTALL_CHECK = ../../../lib
 ifeq ($(INSTALL_CHECK),.)
   INSLIB = $(PWD)
 else
@@ -144,7 +144,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I../../orbsvcs -I../.. -I../../tao -I../../..
+CPPFLAGS     += -I../../orbsvcs/orbsvcs -I../../orbsvcs -I../.. -I../../tao -I../../..
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
     CPPFLAGS += -DTAO_RTCOSSCHEDULING_BUILD_DLL
@@ -157,7 +157,7 @@ ifeq ($(static_libs),1)
 endif
 
 
-LDFLAGS      += -L../../../ace
+LDFLAGS      += -L../../../lib
 
 TAO_IDLFLAGS += -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_include=RTCosScheduling/RTCosScheduling_export.h -Gv -I../.. -I../../orbsvcs -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
 #----------------------------------------------------------------------------
@@ -166,6 +166,9 @@ TAO_IDLFLAGS += -Gd -Wb,export_macro=TAO_RTCosScheduling_Export -Wb,export_inclu
 require_warning:
 	@echo This project will not be built due to one of the following missing features:
 	@echo interceptors rt_corba
+
+../../../lib:
+	-@mkdir -p "../../../lib"
 
 
 .PHONY: ORBSVCS_COMPONENTS
