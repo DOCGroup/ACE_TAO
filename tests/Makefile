@@ -28,6 +28,7 @@ BIN =	Atomic_Op_Test \
 	Message_Queue_Notifications_Test \
 	Mutex_Test \
 	Naming_Test \
+	Notify_Performance_Test \
 	Process_Mutex_Test \
 	Process_Strategy_Test \
 	Priority_Buffer_Test \
@@ -37,6 +38,7 @@ BIN =	Atomic_Op_Test \
 	Reactors_Test \
 	Reactor_Exceptions_Test \
 	Reactor_Notify_Test \
+	Reactor_Performance_Test \
 	Reactor_Timer_Test \
 	Reader_Writer_Test \
 	Recursive_Mutex_Test \
@@ -62,6 +64,8 @@ LSRC   = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD = $(VBIN)
+
+TEMPLATE_REPOSITORY = 1
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
