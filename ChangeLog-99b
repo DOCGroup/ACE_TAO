@@ -1,11 +1,18 @@
+Thu Sep 09 12:31:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Handle_Set_Test (handle_vector[]):
+          limit the maximum handle in handle_vector to 31, 63, 127, and
+          254 if ACE_DEFAULT_REACTOR_SIZE is less than or equal to
+          32, 64, 128, and 256, respectively. [Bug 315]
+
 Thu Sep  9 09:39:46 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* etc/purify.solaris2: Added suppression for MLK due to OS accept
-	  call.
+        * etc/purify.solaris2: Added suppression for MLK due to OS accept
+          call. [Bug 227]
 
 Thu Sep 09 09:24:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tests/run_tests.lst: disabled Signal_Test.  [Bug 309]
+        * tests/run_tests.lst: disabled Signal_Test. [Bug 309]
 
 Thu Sep  9 08:46:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
