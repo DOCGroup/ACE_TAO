@@ -47,7 +47,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
   # This example does not compile with g++ 2.7.2.3
 all clean realclean:
-	@echo orbsvcs/examples/RtEC/Schedule is not built with older versions of g++
+	@echo This cannot built with older versions of g++
 else # ! ACE_HAS_GNUG_PRE_2_8
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
