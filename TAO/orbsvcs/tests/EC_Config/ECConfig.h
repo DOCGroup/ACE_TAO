@@ -111,7 +111,7 @@ private:
 
   SupplierList suppliers;
 
-  bool configured;
+  int configured; //boolean
 };
 
 } /* namespace TestConfig */
