@@ -939,7 +939,7 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
   int has_synchronization = 0;
-  int scope = 0;
+  int scope = this->sync_scope_;
   this->orb_core_->call_sync_scope_hook (this->stub_,
                                          has_synchronization,
                                          scope);
@@ -969,6 +969,10 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       || this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
       return TAO_GIOP_Invocation::invoke (0, ACE_TRY_ENV);
+    }
+  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT)
+    {
+      return TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
     }
 
   int retval = this->invoke_i (0, ACE_TRY_ENV);

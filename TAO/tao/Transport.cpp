@@ -413,7 +413,12 @@ TAO_Transport::send_synchronous_message_i (TAO_Stub *stub,
   if (n == -1)
     return -1; // Error while sending...
   else if (n == 1)
-    return 1;  // Empty queue, message was sent..
+    {
+      ACE_ASSERT (synch_message.all_data_sent ());
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
+      return 1;  // Empty queue, message was sent..
+    }
 
   ACE_ASSERT (n == 0); // Some data sent, but data remains.
 
@@ -439,6 +444,7 @@ TAO_Transport::send_synchronous_message_i (TAO_Stub *stub,
                                                &synch_message);
 
   }
+  ACE_ASSERT (synch_message.all_data_sent () != 0);
   ACE_ASSERT (synch_message.next () == 0);
   ACE_ASSERT (synch_message.prev () == 0);
   return result;
@@ -764,7 +770,7 @@ TAO_Transport::drain_queue_i (void)
       // IOV_MAX elements ...
       if (iovcnt == IOV_MAX)
         {
-          size_t byte_count;
+          size_t byte_count = 0;
 
           // ... send the message ...
           ssize_t retval =
@@ -804,7 +810,7 @@ TAO_Transport::drain_queue_i (void)
       i = i->next ();
     }
 
-  size_t byte_count;
+  size_t byte_count = 0;
   ssize_t retval =
     this->send (iov, iovcnt, byte_count);
 
