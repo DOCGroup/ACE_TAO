@@ -494,8 +494,6 @@ private:
 };
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
-#include "ace/Containers.h"
-
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
 ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context);

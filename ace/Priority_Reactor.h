@@ -15,7 +15,7 @@
 #define ACE_PRIORITY_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Containers.h"
+#include "ace/Unbounded_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

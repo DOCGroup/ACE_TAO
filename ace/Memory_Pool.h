@@ -27,6 +27,8 @@
 #include "ace/SV_Semaphore_Complex.h"
 #endif /* !ACE_WIN32 */
 
+#include "ace/Unbounded_Set.h"
+
 #if !defined (ACE_LACKS_SBRK)
 /**
  * @class ACE_Sbrk_Memory_Pool_Options

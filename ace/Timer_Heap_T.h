@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Free_List.h"
-#include "ace/Containers.h"
+#include "ace/Unbounded_Set.h"
 
 // Forward declaration
 template <class TYPE, class FUNCTOR, class ACE_LOCK>

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers_T.h"
+#include "ace/Unbounded_Set.h"
 
 /**
  * @class ACE_Handle_Gobbler

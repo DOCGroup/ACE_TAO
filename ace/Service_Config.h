@@ -22,7 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Signal.h"
-#include "ace/Containers.h"
+#include "ace/Unbounded_Queue.h"
+#include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 
 // Forward decl.
