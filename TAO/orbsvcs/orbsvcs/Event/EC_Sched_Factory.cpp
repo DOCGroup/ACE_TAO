@@ -21,6 +21,13 @@ TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory (void)
 }
 
 int
+TAO_EC_Sched_Factory::init_svcs (void)
+{
+  return ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_TAO_EC_Sched_Factory);
+}
+
+int
 TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
@@ -132,7 +139,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
                 {
                   this->scheduling_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("group")) == 0)
                 {
                   this->scheduling_ = 1;
                 }
@@ -206,7 +213,7 @@ TAO_EC_Sched_Factory::create_scheduling_strategy (TAO_EC_Event_Channel* ec)
         RtecScheduler::Scheduler::_narrow (tmp.in ());
       return new TAO_EC_Priority_Scheduling (scheduler.in ());
     }
-  return this->TAO_EC_Sched_Factory::create_scheduling_strategy (ec);
+  return this->TAO_EC_Default_Factory::create_scheduling_strategy (ec);
 }
 
 // ****************************************************************
