@@ -128,7 +128,46 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
   return mb;
 }
 
+ACE_Message_Block *
+SFP_Encoder::encode_start_reply_message ()
+{
+  // Reset the internal buffer of the CDR stream
+  this->encoder_->reset ();
 
+  TAO_TRY
+    {
+      // construct the stop message
+      SFP::start_reply start_reply_message;
+      
+
+      // flags field is all zeroes
+      start_reply_message.flags = 0;
+      
+      // encode the start frame
+      if (encoder_->encode (SFP::_tc_start_reply,
+                            &start_reply_message,
+                            0,
+                            TAO_TRY_ENV) 
+          == CORBA_TypeCode::TRAVERSE_CONTINUE)
+        {
+          ACE_DEBUG ((LM_DEBUG, 
+                      "(%P|%t) encode of start_reply message succeeded:"
+                      "length == %d\n",
+                      encoder_->length ()));
+
+        }
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("SFP_Encoder::"
+                                   "encode_start_reply_message");
+      return 0;
+    }
+  TAO_ENDTRY;
+  
+  return this->create_message_block ();
+}
 
 SFP_Encoder::~SFP_Encoder ()
 {
@@ -157,6 +196,7 @@ SFP_Encoder::create_message_block (void)
   
   return message;
 }
+
 
 // ----------------------------------------------------------------------
 
@@ -257,6 +297,43 @@ SFP_Decoder::decode_simple_frame (ACE_Message_Block *message)
   return 0;
 
 }
+
+// Attempts to decode the message as an SFP start message
+// returns 0 on success, -1 on failure
+int
+SFP_Decoder::decode_start_reply_message (ACE_Message_Block *message)
+{
+
+  this->decoder_->reset ();
+
+  SFP::start_reply start_reply_message;
+
+  TAO_TRY
+    {
+      this->create_cdr_buffer (message->rd_ptr (),
+                               message->length ());
+      
+      decoder_->decode (SFP::_tc_start_reply,
+			&start_reply_message,
+			0,
+			TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("SFP_Decoder::"
+                                   "decode_start_message");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, 
+	      "Decoded start_reply message\n"));
+
+  return 0;
+}
+
 
 // Copies length bytes from the given message into the
 // CDR buffer. Returns 0 on success, -1 on failure
