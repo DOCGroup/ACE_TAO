@@ -813,7 +813,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS:
-    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS:
       return new be_visitor_operation_argument (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
@@ -887,7 +887,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_compiled_visitor_args_ami_handler_vardecl_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS:
-    case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS:
       return new be_visitor_args_ami_handler_upcall_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_DEMARSHAL_CS:
