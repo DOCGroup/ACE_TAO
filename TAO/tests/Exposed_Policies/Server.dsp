@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Exposed_Policies Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Server - Win32 Debug
+CFG=Exposed_Policies Server - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Server.mak" CFG="Server - Win32 Debug"
+!MESSAGE NMAKE /f "Server.mak" CFG="Exposed_Policies Server - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Exposed_Policies Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Exposed_Policies Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Server - Win32 Release"
+!IF  "$(CFG)" == "Exposed_Policies Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -51,9 +51,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib  TAO_RTCORBA.lib TAO_RTPortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\RTCORBA" /libpath:"..\..\tao\RTPortableServer"
 
-!ELSEIF  "$(CFG)" == "Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Exposed_Policies Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -76,14 +76,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /out:"Server.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib TAO_RTCORBAd.lib TAO_RTPortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /out:"Server.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\RTCORBA" /libpath:"..\..\tao\RTPortableServer"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Server - Win32 Release"
-# Name "Server - Win32 Debug"
+# Name "Exposed_Policies Server - Win32 Release"
+# Name "Exposed_Policies Server - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat"
@@ -143,7 +143,7 @@ SOURCE=.\RT_Properties.h
 
 SOURCE=.\Counter.idl
 
-!IF  "$(CFG)" == "Server - Win32 Release"
+!IF  "$(CFG)" == "Exposed_Policies Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__COUNT="..\..\..\bin\Release\tao_idl.exe"	
@@ -182,7 +182,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Exposed_Policies Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build
