@@ -15,6 +15,11 @@
 #ifndef IMR_NT_SERVICE_H
 #define IMR_NT_SERVICE_H
 
+#include "ace/config.h"
+
+// Only on windows
+#if defined (ACE_WIN32)
+
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
@@ -57,6 +62,8 @@ private:
 };
 
 typedef ACE_Singleton<ImR_NT_Service, ACE_Mutex> SERVICE;
+
+#endif /* ACE_WIN32 */
 
 #endif /* IMR_NT_SERVICE_H */
 
