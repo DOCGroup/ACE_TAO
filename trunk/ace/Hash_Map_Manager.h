@@ -335,7 +335,12 @@ public:
   // Returns 1 when all items have been seen, else 0.
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void);
-  // Returns a reference to the interal element <this> is pointing to.
+  // Returns a reference to the interal element <this> is pointing
+  // to. 
+  
+  ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void);
+  // Returns reference the Hash_Map_Manager that is being iterated
+  // over. 
 
   int operator== (const ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   int operator!= (const ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
