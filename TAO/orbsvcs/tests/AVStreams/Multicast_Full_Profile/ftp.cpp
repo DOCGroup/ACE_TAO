@@ -29,8 +29,9 @@ int
 FTP_Client_Callback::handle_timeout (void *)
 {
   ACE_Message_Block mb (BUFSIZ);
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
+  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame\n"));
   char *buf = mb.rd_ptr ();
+
   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
   if (n < 0)
     {
@@ -48,11 +49,6 @@ FTP_Client_Callback::handle_timeout (void *)
                 {
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
                   AVStreams::flowSpec stop_spec (1);
-                  //ACE_DECLARE_NEW_CORBA_ENV;
-                  CLIENT::instance ()->streamctrl ()->stop (stop_spec ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
-                  // CLIENT::instance ()->streamctrl ()->destroy (stop_spec ACE_ENV_ARG_PARAMETER);
-                  //ACE_TRY_CHECK;
                   ACE_DEBUG ((LM_DEBUG, "Just before Orb Shutdown\n"));
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
                   ACE_TRY_CHECK;
@@ -251,7 +247,7 @@ Client::init (int argc,char **argv)
 
       this->parse_args (this->argc_, this->argv_);
 
-      ACE_DEBUG ((LM_DEBUG, "Parsed Address TWO%s\n", this->address_));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %s\n", this->address_));
 
       ACE_NEW_RETURN (this->fdev_,
                       FTP_Client_FDev,
@@ -306,16 +302,17 @@ Client::run (void)
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
       // Bind the client and server mmdevices.
-      ACE_DEBUG ((LM_DEBUG, "Parsed Address ONE%s\n", this->address_));
-      ACE_INET_Addr addr (this->address_);
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address %s\n", this->address_));
+      ACE_INET_Addr *addr = new ACE_INET_Addr(this->address_);
       TAO_Forward_FlowSpec_Entry entry (this->flowname_,
                                         "IN",
                                         "USER_DEFINED",
                                         flow_protocol_str,
                                         this->protocol_,
-                                        &addr);
-      flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
+                                        addr);
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) flowspec: %s\n", entry.entry_to_string() ));
       flow_spec.length (1);
+      flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 
       AVStreams::MMDevice_var client_mmdevice =
         this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -328,7 +325,7 @@ Client::run (void)
                                      flow_spec
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Suuceessful ONE\n"));
+
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for client_mmdevice failed\n"),-1);
       if (this->bind_to_server ("Server_MMDevice1") == -1)
@@ -342,10 +339,8 @@ Client::run (void)
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Suuceessful TWO\n"));
-
       if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,"(%N,%l) streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
       ACE_TRY_CHECK;
       if (this->bind_to_server ("Server_MMDevice2") == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -357,9 +352,9 @@ Client::run (void)
                                             flow_spec
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Suuceessful THREE\n"));
+
       if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 2 failed\n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,"(%N,%l) streamctrl::bind_devs for mmdevice 2 failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
       start_spec.length (1);
       start_spec [0] = CORBA::string_dup (this->flowname_);

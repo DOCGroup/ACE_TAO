@@ -96,10 +96,11 @@ TAO_AV_Callback::handle_destroy (void)
 }
 
 void
-TAO_AV_Callback::get_timeout (ACE_Time_Value *& /*tv*/,
+TAO_AV_Callback::get_timeout (ACE_Time_Value *& tv,
                               void *& /*arg*/)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::get_timeout\n"));
+  tv = 0;
 }
 
 int

@@ -139,10 +139,10 @@ Client::file (void)
   return this->fp_;
 }
 
-char*
+const char*
 Client::flowname (void)
 {
-  return this->flowname_;
+  return this->flowname_.c_str();
 }
 
 AVStreams::protocolSpec
@@ -176,9 +176,7 @@ Client::streamctrl (void)
 }
 
 Client::Client (void)
-  : client_mmdevice_ (&endpoint_strategy_),
-    fdev_ (0),
-    address_ (ACE_OS::strdup ("224.9.9.2:12345")),
+  : address_ (ACE_OS::strdup ("127.0.0.1:12345")),
     fp_ (0),
     protocol_ (ACE_OS::strdup ("UDP")),
     orb_ (TAO_AV_CORE::instance ()->orb ()),
@@ -188,48 +186,6 @@ Client::Client (void)
                            TAO_AV_CORE::instance ()->poa ());
 }
 
-
-int
-Client::bind_to_server (void)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
-    {
-      // Initialize the naming services
-      if (my_naming_client_.init (this->orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                          -1);
-
-      CosNaming::Name server_mmdevice_name (1);
-      server_mmdevice_name.length (1);
-      server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
-      CORBA::Object_var server_mmdevice_obj =
-        my_naming_client_->resolve (server_mmdevice_name
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      this->server_mmdevice_ =
-        AVStreams::MMDevice::_narrow (server_mmdevice_obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (this->server_mmdevice_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Server_Mmdevice in Naming service <%s>\n"),
-                          -1);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::bind_to_server\n");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-  return 0;
-}
 
 int
 Client::init (int argc,char **argv)
@@ -249,30 +205,22 @@ Client::init (int argc,char **argv)
 
       this->parse_args (this->argc_, this->argv_);
 
-      ACE_NEW_RETURN (this->fdev_,
-                      FTP_Client_FDev,
-                      -1);
+      ACE_NEW_RETURN ( this->streamendpoint_a_,
+		      TAO_StreamEndPoint_A, -1 );
 
-      ACE_NEW_RETURN (this->flowname_,
-                      char [BUFSIZ],
-                      0);
+      ACE_NEW_RETURN ( this->fep_a_, FTP_Client_Producer, -1 );
+      this->flowname_ = "Data";
 
-      ACE_OS::sprintf (this->flowname_,
-                       "Data");
-
-      this->fdev_->flowname (this->flowname ());
-      AVStreams::MMDevice_var mmdevice = this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      sep_a_ = this->streamendpoint_a_->_this( ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      AVStreams::FDev_var fdev = this->fdev_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      mmdevice->add_fdev (fdev.in ()
-                          ACE_ENV_ARG_PARAMETER);
 
-      if (this->my_naming_client_.init (this->orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                          -1);
+      fep_a_obj_ = this->fep_a_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
 
       this->fp_ = ACE_OS::fopen (this->filename_,"r");
 
@@ -281,10 +229,6 @@ Client::init (int argc,char **argv)
           ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
         }
 
-      if (this->bind_to_server () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Error binding to the naming service\n"),
-                          -1);
     }
   ACE_CATCHANY
     {
@@ -309,37 +253,37 @@ Client::run (void)
         ACE_OS::strcpy (flow_protocol_str,"");
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
+      flow_spec.length (1);
 
       ACE_INET_Addr addr (this->address_);
-      TAO_Forward_FlowSpec_Entry entry (this->flowname_,
+      TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str(),
                                         "IN",
                                         "USER_DEFINED",
                                         flow_protocol_str,
                                         this->protocol_,
                                         &addr);
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
-      flow_spec.length (1);
+
       ACE_High_Res_Timer timer;
       ACE_Time_Value elapsed;
       timer.start ();
 
-      AVStreams::MMDevice_var client_mmdevice
-        = this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      // Bind the client and server mmdevices.
+      CORBA::Object_var obj_b = this->orb_->string_to_object("corbaname:rir:#Server_StreamEndPoint_b");
+      AVStreams::StreamEndPoint_B_var sep_b = AVStreams::StreamEndPoint_B::_narrow ( obj_b.in() );
+
       CORBA::Boolean result =
-        this->streamctrl_.bind_devs (client_mmdevice.in (),
-                                     this->server_mmdevice_.in (),
-                                     the_qos.inout (),
-                                     flow_spec
-                                     ACE_ENV_ARG_PARAMETER);
+        this->streamctrl_.bind ( sep_a_.in(), sep_b.in(), 
+			         the_qos.inout(), flow_spec 
+				 ACE_ENV_ARG_PARAMETER );
+
       timer.stop ();
       timer.elapsed_time (elapsed);
       elapsed.dump ();
       ACE_TRY_CHECK;
       if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind failed\n"),-1);
+
       AVStreams::flowSpec start_spec (1);
       this->streamctrl_.start (start_spec ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -416,7 +360,6 @@ main (int argc,
 template class ACE_Singleton <Client,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>

@@ -337,7 +337,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   // No matching flow protocol.
   if (flow_factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) Unable to match protocol prefix "
+                       "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
                        "for <%s>\n",
                        flow_protocol),
                       -1);
@@ -350,7 +350,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   if (transport_factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                        "TAO (%P|%t) Unable to match protocol prefix "
+                        "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
                         "for <%s>\n",
                         transport_protocol),
                        -1);
@@ -535,8 +535,6 @@ TAO_AV_Flow_Handler::schedule_timer (void)
                                                            0,
                                                            *tv);
 
-  delete tv;
-
   if (this->timer_id_ < 0)
     return -1;
 
@@ -590,8 +588,6 @@ TAO_AV_Flow_Handler::handle_timeout (const ACE_Time_Value & /*tv*/,
   this->timer_id_ =  event_handler->reactor ()->schedule_timer (event_handler,
                                                                 0,
                                                                 *timeout);
-
-  delete timeout;
 
   if (this->timer_id_ < 0)
     return -1;
