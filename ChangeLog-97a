@@ -8,6 +8,9 @@ Sun Jan 12 18:20:49 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/config-irix*.h and config-win*.h: removed ACE_PAGE_SIZE
 	  definition because these platforms no longer use it
 
+	* tests/UNIX*.conf and Win32server.config:  replace net_svcs
+	  with netsvcs
+
 Sat Jan 11 15:11:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i (thr_setprio): The POSIX implementation of
