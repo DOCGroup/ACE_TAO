@@ -1,3 +1,15 @@
+Wed Jun 20 09:29:20 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTCORBA/RT_ORB_Loader.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+          
+          Added checks to make sure that all of the RTCORBA hooks have
+          been successfully registered before allowing an application
+          to resolve the RTORB and RTCurrent.  This should make errors
+          when the RT CORBA service configurator option is missing
+          a little easier to diagnose.  Thanks to Craig Rodrigues for
+          instigating this change with his questions.
+
 Wed Jun 20 09:19:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:

@@ -19,13 +19,11 @@ TAO_RT_ORB_Loader::Initializer (void)
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_RT_ORB_Loader);
 
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_RT_Current_Loader);
-
   return 0;
 }
 
 TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
+  : initialized_ (0)
 {
 }
 
@@ -147,6 +145,13 @@ TAO_RT_ORB_Loader::init (int argc,
     }
   ACE_ENDTRY;
 
+  // Allow someone to retrieve RTORB.
+  this->initialized_ = 1;
+
+  // Allow someone to retrieve RTCurrent now.
+  ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_TAO_RT_Current_Loader);
+
   return 0;
 }
 
@@ -157,17 +162,22 @@ TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr orb,
                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /// Return RT_ORB
-  CORBA::Object_ptr rt_orb;
+  // Return RT_ORB
+  CORBA::Object_ptr rt_orb = CORBA::Object::_nil ();
 
-  ACE_NEW_THROW_EX (rt_orb,
-                    TAO_RT_ORB (orb),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  // Check that all of the RTCORBA hooks have been initialized 
+  // successfully.
+  if (this->initialized_)
+    {
+      ACE_NEW_THROW_EX (rt_orb,
+                        TAO_RT_ORB (orb),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
 
   return rt_orb;
 }
