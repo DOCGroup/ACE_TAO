@@ -16,6 +16,7 @@
 
 #include "ExecutorMappingGenerator.hpp"
 #include "ServantGenerator.hpp"
+#include "DescriptorGenerator.hpp"
 
 #include <iostream>
 
@@ -45,6 +46,7 @@ int main (int argc, char* argv[])
 
     ExecutorMappingGenerator lem_gen;
     ServantGenerator svnt_gen (cl);
+    DescriptorGenerator desc_gen;
 
 
     if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
@@ -53,6 +55,7 @@ int main (int argc, char* argv[])
 
       lem_gen.options (d);
       svnt_gen.options (d);
+      desc_gen.options (d);
 
       d.add_option (CL::OptionDescription (
                       "trace-semantic-actions",
@@ -237,11 +240,15 @@ int main (int argc, char* argv[])
       lem_gen.generate (cl, unit);
     }
 
-    // Generate Servant code
+    // Generate servant code
     {
       svnt_gen.generate (unit);
     }
 
+    // Generate descriptor code
+    {
+      desc_gen.generate (cl, unit);
+    }
   }
   catch (Declaration::NotInScope const&)
   {

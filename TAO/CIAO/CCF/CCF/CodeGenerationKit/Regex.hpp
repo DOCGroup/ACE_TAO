@@ -14,10 +14,8 @@ namespace regex
   using boost::regex_merge;
 
   inline std::string
-  perl_s (std::string src, std::string e)
+  perl_s (std::string src, std::string e, char delimiter = '/')
   {
-    char delimiter = '/';
-
     std::string::size_type first = e.find (delimiter);
     std::string::size_type middle = e.find (delimiter, first + 1);
     std::string::size_type last = e.find (delimiter, middle + 1);
