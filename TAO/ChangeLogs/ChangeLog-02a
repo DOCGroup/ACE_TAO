@@ -1,3 +1,10 @@
+Fri Mar 24 23:07:51 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/mfc/StdAfx.h:
+
+          Added in a comment about how we have to include ACE/TAO
+          headers before MFC headers.
+
 Fri Mar 24 22:24:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
