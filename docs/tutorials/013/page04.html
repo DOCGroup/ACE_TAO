@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 013</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 013</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Multiple thread pools</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+<P>
+We'll go back to our tradition of looking at main() first.  The only
+change here from our "normal" thread pool is the ability to specify
+the number of subtasks for the pool.  (Each subtask is another thread
+pool in the chain.  I suppose I should have named that better...)
+I've still got the custom Message_Block so that, at this level, we
+don't even know about custom Data_Blocks.
+<P>
+<HR WIDTH="100%">
+<PRE>
+</PRE>
+<HR WIDTH="100%">
+<P>
+Nothing really surprising here...  Just remember that your total
+number of threads is ( ( 1 + subtasks ) * threads ).  You probably
+don't want to get too carried away with that!
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page04.html">Continue
+This Tutorial</A>]</CENTER>
+
+</BODY>
+</HTML>
