@@ -8,12 +8,13 @@
  */
 //=====================================================================
 
-// -*- C++ -*-
 /*
  *  Process string values
  */
 
-#include <iostream>
+using xercesc::DOMNode;
+using xercesc::XMLString;
+using xercesc::DOMText;
 
 inline bool
 process_string (DOMNodeIterator* iter,

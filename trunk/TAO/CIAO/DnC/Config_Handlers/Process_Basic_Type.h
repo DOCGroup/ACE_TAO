@@ -11,6 +11,13 @@
 #ifndef PROCESS_BASIC_TYPE_H
 #define PROCESS_BASIC_TYPE_H
 
+#include <xercesc/dom/DOM.hpp>
+#include "XercesString.h"
+#include "../DeploymentC.h"
+
+using xercesc::DOMNodeIterator;
+using Config_Handler::XStr;
+
 inline bool
 process_string (DOMNodeIterator* iter,
                 const XStr& node_name, const char* name,
@@ -24,7 +31,7 @@ process_string_seq(DOMNodeIterator* iter,
 inline bool
 process_boolean(DOMNodeIterator* iter,
                 const XStr& node_name, const char* name,
-                CORBA::Boolean& var)
+                CORBA::Boolean& var);
 
 #include "Process_Basic_Type.i"
 

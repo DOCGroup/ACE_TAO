@@ -25,7 +25,7 @@ void IR_Handler::process_ImplementationRequirement
       XStr node_name (node->getNodeName());
 
       if (false);
-      else if (name == XStr (ACE_TEXT ("resourceUsage")))
+      else if (node_name == XStr (ACE_TEXT ("resourceUsage")))
         RUK_Handler::process_ResourceUsageKind (this->iter_, ir.resourceUsage);
       else if
         (process_string (this->iter_, node_name, "resourcePort", ir.resourcePort));

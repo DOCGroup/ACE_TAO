@@ -110,8 +110,8 @@ process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 // Process function for non-sequential non-local elements
 template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
 inline bool
-process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* note,
-                       XStr& node_name, const chat*name,
+process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                       XStr& node_name, const char* name,
                        ELEMENT& elem, OBJECT* obj, FUNCTION func,
                        REF_MAP& id_map);
 
