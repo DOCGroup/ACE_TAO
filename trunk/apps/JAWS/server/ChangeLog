@@ -1,5 +1,8 @@
 Wed May 21 15:33:33 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
+	* JAWS_File.{h,cpp}: Added some comments.  Will add a copy ()
+	  method soon, after I move my workspace over to lambada.
+
 	* JAWS_Tilde.{h,cpp}: This class is being implemented but has not
 	  been added to the repository yet, since JAWS as yet does not use
 	  it, and it is still being developed.  This will be a cache of
