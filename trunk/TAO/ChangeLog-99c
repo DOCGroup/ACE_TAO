@@ -1,3 +1,11 @@
+Sun Jun 13 16:18:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/orbcore.html:
+	  Documented the GIOP 1.1 implementation.
+
+	* docs/releasenotes/TODO.html:
+	  Made a pass marking the completed tasks as such
+
 Sun Jun 13 15:35:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp:

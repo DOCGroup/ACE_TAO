@@ -32,8 +32,15 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
 
 <ul>
   <li><p>Trying to figure out a better <em>resource</em> management
-      scheme.  <em>Resouces</em> here include ORB, POA, connections,
-      profiles.... that provide services for CORBA invocations.</p>
+	  scheme.  <em>Resouces</em> here include ORB, POA, connections,
+	  profiles.... that provide services for CORBA invocations.
+	</p>
+	<P>[STATUS]: The current version keeps very few objects
+	  managed by the resource factory. Most are ORB specific. It
+	  seems like the correct implementation is to make the few
+	  remaining resources (such as the Reactor) a
+	  per-ORB-per-thread entity.
+	</P>
   </li>
 </ul>
 
@@ -71,26 +78,6 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       access the already destroyed ORB resources.  A temporary
       workaround is to close the sockets when the ORB is shutting
       down.  But this is not portable and only works on NT.</p>
-  </li>
-
-  <li><p>Some CORBA objects need to have access to the ORB. We tend to
-      use <code>TAO_ORB_Core_instance()->orb()</code> to fetch the
-      right ORB the object is using. This is most often true when
-      implementing the shutdown method which allow other process to
-      shutdown a remote ORB. Althought this may be the "right" thing
-      to do in TAO, it is not CORBA compliant and hurts the
-      portability of object implementation.  A common way of getting
-      around this problem is to cache the ORB pointer in the object
-      when it is created and simply use the cached ORB when needed.
-      However, remember that there could be multiple ORBs in a process
-      and a POA may be shared by several ORBs. That means, we may not
-      handling the object with the same ORB it was
-      created. Collocation optimization further complicated the
-      problem.</p>
-
-      <p> At the moment, using
-      <code>TAO_ORB_Core_instance()->orb()</code> is the only sane way
-      to get arond the problem. Though there may be a better way.</p>
   </li>
 
   <li><p>Object references for objects dynamically created within a
@@ -442,6 +429,11 @@ new ORB Core structure.
 	  ORB if it is called twice with the same ORBid parameter or
 	  if the "-ORBid value" option is present in the argv-list.
 	  Please consult the CORBA specification for more details.
+	</p>
+  </li>
+
+  <li><p>We implemented <CODE>GIOP 1.1</CODE>, including the support
+	  for tagged components in IIOP profiles.
 	</p>
   </li>
 
