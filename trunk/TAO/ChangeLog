@@ -151,8 +151,6 @@ Thu Feb 20 09:07:56 2003  Ossama Othman  <ossama@uci.edu>
 	  Forward declare TAO_ServerRequest.  Necessitated by inter-header
 	  dependency reductions.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
-
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 
 	  Removed obsolete comment.
