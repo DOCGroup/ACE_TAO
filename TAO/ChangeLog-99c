@@ -38,6 +38,12 @@ Thu Jul  8 23:34:42 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  server. Please refer to the README file in that directory for
 	  info on how to build and run the tests.
 
+Thu Jul 08 23:55:46 1999  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp: Added the Files Pollable{C,S}.{h,cpp}
+	  and Asynch_Invocation.{h,cpp} to the MSVC project files.
+
 Thu Jul 08 23:29:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Servant_Base.{h,cpp}: Removed the _create_collocated_objref method.
