@@ -120,7 +120,7 @@ main (int argc, char *argv[])
           || task1.too_big_difference_calls () > iterations/20)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "ERROR: Too many calls have a too big difference between "
+                      "Warning: Too many calls have a too big difference between "
                       "timeout and elapsed time (task0: %d, task1: %d)\n",
                       task0.too_big_difference_calls (),
                       task1.too_big_difference_calls ()));
