@@ -97,9 +97,7 @@ CDR_Test::CDR_Test (ACE_CDR::Char o,
 void 
 operator << (ACE_OutputCDR &os, const CDR_Test &t)
 {
-  // There's no operator<< defined for ACE_CDR::Char so we need to use
-  // <write_char> to avoid incorrect type promotions.
-  os.write_char (t.char_);
+  os << t.char_;
   os << t.word_;
   os << t.fpoint_;
   os << t.dprec_;
