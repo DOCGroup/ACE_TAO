@@ -16,7 +16,7 @@
 #include "CCF/IDL2/Parsing/Action.hpp"
 #include "CCF/IDL2/Parsing/Recovery.hpp"
 
-// #$%^ing MS
+// #$%^ing MS.
 //
 #ifdef CONST
 #undef CONST
@@ -689,7 +689,7 @@ namespace CCF
 
       NoArgAction<SemanticAction::Typedef>
       act_typedef_begin_bounded_wstring;
-      
+
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Typedef>
       act_typedef_declarator;
 
@@ -765,6 +765,26 @@ namespace CCF
 
       NoArgAction<SemanticAction::ValueType>
       act_value_type_end;
+
+
+      // ValueTypeMember
+      //
+      //
+      NoArgAction<SemanticAction::ValueTypeMember>
+      act_value_type_member_begin_private;
+
+      NoArgAction<SemanticAction::ValueTypeMember>
+      act_value_type_member_begin_public;
+
+      OneArgAction<IdentifierPtr, SemanticAction::ValueTypeMember>
+      act_value_type_member_type;
+
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::ValueTypeMember>
+      act_value_type_member_name;
+
+      NoArgAction<SemanticAction::ValueTypeMember>
+      act_value_type_member_end;
+
     };
   }
 }

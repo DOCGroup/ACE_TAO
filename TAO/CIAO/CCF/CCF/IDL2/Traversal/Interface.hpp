@@ -24,6 +24,7 @@ namespace CCF
         }
       };
 
+
       template <typename T>
       struct InterfaceTemplate : ScopeTemplate<T>
       {

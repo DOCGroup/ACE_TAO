@@ -432,6 +432,7 @@ namespace CCF
       TypeInfo const& Inherits::
       static_type_info () { return inherits_; }
 
+
       // Contains
       //
       //

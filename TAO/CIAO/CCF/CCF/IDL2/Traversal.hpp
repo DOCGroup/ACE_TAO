@@ -23,5 +23,6 @@
 #include "CCF/IDL2/Traversal/TypeId.hpp"
 #include "CCF/IDL2/Traversal/Union.hpp"
 #include "CCF/IDL2/Traversal/ValueType.hpp"
+#include "CCF/IDL2/Traversal/ValueTypeMember.hpp"
 
 #endif  // CCF_IDL2_TRAVERSAL_HPP
