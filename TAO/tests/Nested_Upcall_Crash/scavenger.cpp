@@ -83,10 +83,11 @@ main (int argc, char *argv[])
         ACE_TRY_CHECK;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger - event loop finished\n"));
+      /* Warning with TRU 64 builds
+       ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger - event loop finished\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK;*/
     }
   ACE_CATCHANY
     {
