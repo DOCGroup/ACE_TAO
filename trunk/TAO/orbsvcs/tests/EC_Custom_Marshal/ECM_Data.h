@@ -9,13 +9,13 @@
 //
 // ============================================================================
 
-#if !defined (ECT_DATA_H)
-#define ECT_DATA_H
+#if !defined (ECM_DATA_H)
+#define ECM_DATA_H
 
 #include "ace/Map_Manager.h"
 #include "dataC.h"
 
-struct ECT_Data
+struct ECM_Data
 {
   typedef ACE_Map_Manager<CORBA::ULong,CORBA::Double,ACE_Null_Mutex> Inventory;
   // Yes, an STL type could be used here and yes, we could write
@@ -29,9 +29,9 @@ struct ECT_Data
 };
 
 extern TAO_OutputCDR&
-operator<< (TAO_OutputCDR& cdr, ECT_Data& x);
+operator<< (TAO_OutputCDR& cdr, ECM_Data& x);
 
 extern TAO_InputCDR&
-operator>> (TAO_InputCDR& cdr, ECT_Data& x);
+operator>> (TAO_InputCDR& cdr, ECM_Data& x);
 
-#endif /* ECT_SUPPLIER_H */
+#endif /* ECM_SUPPLIER_H */

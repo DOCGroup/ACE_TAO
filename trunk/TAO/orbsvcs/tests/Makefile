@@ -14,6 +14,7 @@ DIRS  =	Simple_Naming \
 	EC_Multiple \
 	EC_Throughput \
 	EC_Mcast \
+	EC_Custom_Marshal \
 	Concurrency \
 	Trading
 

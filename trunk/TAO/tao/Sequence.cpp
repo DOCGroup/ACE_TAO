@@ -245,8 +245,21 @@ TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &rhs)
   CORBA::Octet *tmp1 = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->maximum_);
   CORBA::Octet * const tmp2 = ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST, rhs.buffer_);
 
-  for (CORBA::ULong i = 0; i < this->length_; ++i)
-    tmp1[i] = tmp2[i];
+  // for (CORBA::ULong i = 0; i < this->length_; ++i)
+  // tmp1[i] = tmp2[i];
+  if (rhs.mb_ == 0)
+    ACE_OS::memcpy (tmp1, tmp2, this->length_);
+  else
+    {
+      size_t offset = 0;
+      for (const ACE_Message_Block *i = rhs.mb_;
+	   i != 0;
+	   i = i->cont ())
+	{
+	  ACE_OS::memcpy (tmp1 + offset, i->rd_ptr (), i->length ());
+	  offset += i->length ();
+	}
+    }
 
   this->buffer_ = tmp1;
 }
@@ -285,8 +298,21 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
   CORBA::Octet *tmp1 = ACE_reinterpret_cast (CORBA::Octet *, this->buffer_);
   CORBA::Octet * const tmp2 = ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST, rhs.buffer_);
 
-  for (CORBA::ULong i = 0; i < this->length_; ++i)
-    tmp1[i] = tmp2[i];
+  // for (CORBA::ULong i = 0; i < this->length_; ++i)
+  // tmp1[i] = tmp2[i];
+  if (rhs.mb_ == 0)
+    ACE_OS::memcpy (tmp1, tmp2, this->length_);
+  else
+    {
+      size_t offset = 0;
+      for (const ACE_Message_Block *i = rhs.mb_;
+	   i != 0;
+	   i = i->cont ())
+	{
+	  ACE_OS::memcpy (tmp1 + offset, i->rd_ptr (), i->length ());
+	  offset += i->length ();
+	}
+    }
 
   return *this;
 }

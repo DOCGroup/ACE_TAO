@@ -390,11 +390,6 @@ public:
   ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
 
-  TAO_Unbounded_Sequence (CORBA::ULong length,
-			  const ACE_Message_Block* mb);
-  // Create a sequence of octets from a single message block (i.e. it
-  // ignores any chaining in the meesage block).
-
   TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &);
   TAO_Unbounded_Sequence<CORBA::Octet>& operator= (const TAO_Unbounded_Sequence<CORBA::Octet> &);
   // The copy constructor and assignment operators *do* copy the data,
@@ -405,6 +400,8 @@ public:
   CORBA::Octet &operator[] (CORBA::ULong);
   const CORBA::Octet &operator[] (CORBA::ULong) const;
   // See the general description in "Sequence_T.h"
+  // NOTE: This last two methods can be rendered useless in certain
+  // cases, see below.
 
   // = Static operations.
 
@@ -423,20 +420,38 @@ public:
   // = orbos/98-01-11 proposed extensions.
   CORBA::Octet *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE);
   const CORBA::Octet *get_buffer (void) const;
+  // NOTE: This last two methods can be rendered useless in certain
+  // cases, see below.
   void replace (CORBA::ULong max,
                 CORBA::ULong length,
                 CORBA::Octet *data,
                 CORBA::Boolean release = CORBA::B_FALSE);
   // See the general description of this methods in "Sequence_T.h".
 
-  // = TAO extension
+  // = TAO extensions
+
   ACE_Message_Block* mb (void) const;
   // Returns the underlying message block, the caller must *not*
   // release the copy.
 
+  TAO_Unbounded_Sequence (CORBA::ULong length,
+			  const ACE_Message_Block* mb);
+  // Create a sequence of octets from a single message block (i.e. it
+  // ignores any chaining in the meesage block).
+
   void replace (CORBA::ULong length, const ACE_Message_Block* mb);
   // Replaces the current buffer with <mb>, using only <length> bytes.
   // It takes a duplicate of <mb> so the user still owns it.
+
+  //
+  // NOTE:
+  // In the last two methods if the <mb> is the head of a chain then
+  // the following methods are not warranteed to work properly:
+  //    operator[]
+  //    get_buffer ()
+  // the main purpose of this method is to support custom marshaling;
+  // so the complete chain is marshaled when the octet sequence is.
+  //
 
 private:
   ACE_Message_Block* mb_;

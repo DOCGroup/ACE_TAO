@@ -11,24 +11,25 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
-#include "ECT_Supplier.h"
+#include "ECM_Supplier.h"
+#include "ECM_Data.h"
 
-ACE_RCSID(EC_Throughput, ECT_Supplier, "$Id$")
+ACE_RCSID(EC_Custom_Marshal, ECM_Supplier, "$Id$")
 
 int
 main (int argc, char *argv [])
 {
-  ECTS_Driver driver;
+  ECMS_Driver driver;
   return driver.run (argc, argv);
 }
 
 // ****************************************************************
 
-ECTS_Driver::ECTS_Driver (void)
+ECMS_Driver::ECMS_Driver (void)
   : n_suppliers_ (1),
     event_count_ (100),
     event_period_ (100),
-    event_size_ (128),
+    event_size_ (32),
     event_a_ (ACE_ES_EVENT_UNDEFINED),
     event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
     pid_file_name_ (0)
@@ -38,7 +39,7 @@ ECTS_Driver::ECTS_Driver (void)
 
 
 int
-ECTS_Driver::run (int argc, char* argv[])
+ECMS_Driver::run (int argc, char* argv[])
 {
   TAO_TRY
     {
@@ -186,16 +187,62 @@ ECTS_Driver::run (int argc, char* argv[])
 }
 
 int
-ECTS_Driver::supplier_task (Test_Supplier *supplier,
-			    void* cookie)
+ECMS_Driver::supplier_task (Test_Supplier *supplier,
+                       void* cookie)
 {
   TAO_TRY
     {
       ACE_Time_Value tv (0, this->event_period_);
 
-      const ACE_Message_Block mb (this->event_size_);
+      CORBA::ULong n = this->event_size_;
 
-      for (int i = 0; i < this->event_count_; ++i)
+      ECM_IDLData::Info info;
+      info.mobile_name = CORBA::string_copy ("test");
+      info.mobile_speed = 1;
+      info.trajectory.length (n);
+
+      ECM_Data other;
+      other.description = CORBA::string_copy ("some data");
+
+      for (CORBA::ULong j = 0; j < n; ++j)
+        {
+          info.trajectory[j].x = j;
+          info.trajectory[j].y = j*j;
+          other.inventory.bind (j, j + 1);
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "The inventory contains (%d) elements\n",
+		  other.inventory.current_size ()));
+
+      // We have to make it big enough so we get a contiguous block,
+      // otherwise the octet sequence will not work correctly.
+      // NOTE: we could pre-allocate enough memory in the CDR stream
+      // but we want to show that chaining works!
+      TAO_OutputCDR cdr;
+
+      CORBA::Boolean byte_order = TAO_ENCAP_BYTE_ORDER;
+      cdr << byte_order;
+
+      // The typecode name standard, the encode method is not (in
+      // general the CDR interface is not specified).
+      // @@ TODO once the compiled marshalling approach is in place
+      // this will read: cdr << info;
+      cdr.encode (ECM_IDLData::_tc_Info, &info, 0, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Here we marshall a non-IDL type.
+      cdr << other;
+
+      if (!cdr.good_bit ())
+	ACE_ERROR ((LM_ERROR, "Problem marshalling C++ data\n"));
+
+      const ACE_Message_Block* mb = cdr.begin ();
+      // NOTE: total_length () return the length of the complete
+      // chain. 
+      CORBA::ULong mblen = cdr.total_length ();
+
+      for (CORBA::ULong i = 0; i < this->event_count_; ++i)
         {
           RtecEventComm::EventSet event (1);
           event.length (1);
@@ -219,8 +266,7 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
 
           // We use replace to minimize the copies, this should result
           // in just one memory allocation;
-          event[0].data_.payload.replace (this->event_size_,
-					  &mb);
+          event[0].data_.payload.replace (mblen, mb);
 
           supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -243,7 +289,7 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
 }
 
 void
-ECTS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
+ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
                            CORBA::Environment &_env)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
@@ -264,7 +310,7 @@ ECTS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
 }
 
 void
-ECTS_Driver::activate_suppliers (CORBA::Environment &)
+ECMS_Driver::activate_suppliers (CORBA::Environment &)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -273,7 +319,7 @@ ECTS_Driver::activate_suppliers (CORBA::Environment &)
 }
 
 void
-ECTS_Driver::disconnect_suppliers (CORBA::Environment &_env)
+ECMS_Driver::disconnect_suppliers (CORBA::Environment &_env)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -283,9 +329,9 @@ ECTS_Driver::disconnect_suppliers (CORBA::Environment &_env)
 }
 
 int
-ECTS_Driver::parse_args (int argc, char *argv [])
+ECMS_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "ds:n:t:b:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, "ds:n:t:h:p:b:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -331,7 +377,6 @@ ECTS_Driver::parse_args (int argc, char *argv [])
                       "-s <nsuppliers> "
                       "-n <event count> "
                       "-t <event period (usecs)> "
-		      "-b <event payload size> "
                       "-h <eventa,eventb> "
                       "-p <pid file name> "
                       "\n",
@@ -353,11 +398,11 @@ ECTS_Driver::parse_args (int argc, char *argv [])
   if (this->event_size_ < 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "%s: event size (%d) is out of range, "
-		  "reseting to default (%d)\n",
-		  argv[0], this->event_size_,
-		  128));
-      this->event_size_ = 128;
+                  "%s: event size (%d) is out of range, "
+                  "reset to default (%d)\n",
+                  argv[0], this->event_size_,
+                  32));
+      this->event_count_ = 32;
     }
 
   if (this->n_suppliers_ <= 0)
@@ -374,7 +419,7 @@ ECTS_Driver::parse_args (int argc, char *argv [])
 
 // ****************************************************************
 
-Test_Supplier::Test_Supplier (ECTS_Driver *driver)
+Test_Supplier::Test_Supplier (ECMS_Driver *driver)
   :  driver_ (driver),
      supplier_ (this)
 {
