@@ -1,3 +1,19 @@
+Sun Jan 23 14:26:58 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h (setgid):
+
+	  Added prototype for ACE_OS::setgid() method.
+
+	* ace/OS.i (setgid):
+
+	  Added wrapper for setgid() system call.
+
+	  (getgid):
+
+	  Removed duplicate getgid() wrapper, and fixed it so that it
+	  returns with ENOTSUP on Win32 platforms, just like the getuid()
+	  wrapper.
+
 Sat Jan 22 21:10:49 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
