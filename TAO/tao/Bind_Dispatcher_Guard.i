@@ -30,16 +30,6 @@ TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (
                                                this->rd_);
 }
 
-
-ACE_INLINE
-TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard (void)
-{
-  if (this->status_ == 0) {
-    this->tms_->unbind_dispatcher (this->request_id_);
-  }
-}
-
-
 ACE_INLINE int &
 TAO_Bind_Dispatcher_Guard::status (void)
 {
