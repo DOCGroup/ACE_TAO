@@ -134,7 +134,7 @@ main (int argc, char *argv[])
           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (!(*result >>= dst) || dst->id () != magic)
+      if (!(result.inout () >>= dst) || dst->id () != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - test failed.\n"),
@@ -148,7 +148,7 @@ main (int argc, char *argv[])
           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (!(*result >>= dst_vb) || dst_vb->id () != magic)
+      if (!(result.inout () >>= dst_vb) || dst_vb->id () != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - test failed.\n"),

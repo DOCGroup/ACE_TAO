@@ -28,7 +28,7 @@ Test_impl::get_something (
 
       vb->id (magic);
 
-      *ret_val <<= vb.in ();
+      ret_val.inout () <<= vb.in ();
     }
   else
     {
@@ -38,7 +38,7 @@ Test_impl::get_something (
       va->id (magic);
 
       OBV_AnyTest::VA *va_ptr = va._retn ();
-      *ret_val <<= &va_ptr;
+      ret_val.inout () <<= &va_ptr;
 
       //*ret_val <<= va.in ();
     }
