@@ -1,3 +1,12 @@
+Mon Jan 18 20:31:47 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/006/client_handler.cpp: 
+	Typo...
+	
+	* docs/tutorials/006/*.html: 
+	* docs/tutorials/006/combine.shar: 
+	Colorized, added Kirthika's abstract.
+
 Mon Jan 18 16:19:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (open): If a file is open with _O_TEMPORARY flag set

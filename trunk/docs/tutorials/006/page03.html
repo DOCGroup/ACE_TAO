@@ -15,7 +15,6 @@
 
 <P>
 <HR WIDTH="100%">
-
 <P>In <A HREF="client_acceptor.h">client_acceptor.h</A>, we've extended
 our object just a bit.&nbsp; The primary reason is to allow us to select
 the previous single-threaded implementation or our new thread-per-connection
@@ -26,142 +25,98 @@ to the Tutorial 5 version of this file.
 
 <P>
 <HR WIDTH="100%">
+<PRE>
 
-<P><FONT FACE="Arial,Helvetica">// $Id: client_acceptor.h,v 1.1 1998/08/30
-13:38:27 jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>// $Id$</font>
 
-<P><FONT FACE="Arial,Helvetica">#ifndef CLIENT_ACCEPTOR_H</FONT>
-<BR><FONT FACE="Arial,Helvetica">#define CLIENT_ACCEPTOR_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#ifndef</font> <font color=purple>CLIENT_ACCEPTOR_H</font>
+<font color=blue>#define</font> <font color=purple>CLIENT_ACCEPTOR_H</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; The ACE_Acceptor&lt;> template
-lives in the ace/Acceptor.h header file. You'll</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; find a very consitent naming
-convention between the ACE objects and the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; headers where they can be
-found.&nbsp; In general, the ACE object ACE_Foobar will</FONT>
-<BR><FONT FACE="Arial,Helvetica"></FONT>&nbsp;<FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   The ACE_Acceptor&lt;> template lives in the ace/Acceptor.h header file. You'll
+   find a very consitent naming convention between the ACE objects and the
+   headers where they can be found.  In general, the ACE object ACE_Foobar will
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; be found in ace/Foobar.h.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P><FONT FACE="Arial,Helvetica">#include "ace/Acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+   be found in ace/Foobar.h.
+ */</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Since we want to work with
-sockets, we'll need a SOCK_Acceptor to allow the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; clients to connect to us.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "ace/SOCK_Acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#include</font> "<font color=green>ace/Acceptor.h</font>"
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; The Client_Handler object
-we develop will be used to handle clients once</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; they're connected.&nbsp;
-The ACE_Acceptor&lt;> template's first parameter requires</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; such an object.&nbsp; In
-some cases, you can get by with just a forward</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; declaration on the class,
-in others you have to have the whole thing.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">#include "client_handler.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Parameterize the ACE_Acceptor&lt;>
-such that it will listen for socket</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; connection attempts and create
-Client_Handler objects when they happen. In</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Tutorial 001, we wrote the
-basic acceptor logic on our own before we</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; realized that ACE_Acceptor&lt;>
-was available.&nbsp; You'll get spoiled using the</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; ACE templates because they
-take away a lot of the tedious details!</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">typedef ACE_Acceptor &lt; Client_Handler,
-ACE_SOCK_ACCEPTOR > Client_Acceptor_Base;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Since we want to work with sockets, we'll need a SOCK_Acceptor to allow the
+   clients to connect to us.
+ */</font>
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Acceptor.h</font>"
 
-<P><FONT FACE="Arial,Helvetica">/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Here, we use the parameterized
-ACE_Acceptor&lt;> as a baseclass for our customized</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Client_Acceptor object.&nbsp;
-I've done this so that we can provide it with our choice</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; of concurrency strategies
-when the object is created.&nbsp; Each Client_Handler it</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; creates will use this information
-to determine how to act.&nbsp; If we were going</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to create a system that was
-always thread-per-connection, we would not have</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; bothered to extend&nbsp;
-Client_Acceptor.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">class Client_Acceptor : public Client_Acceptor_Base</FONT>
-<BR><FONT FACE="Arial,Helvetica">{</FONT>
-<BR><FONT FACE="Arial,Helvetica">public:</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-This is always a good idea.&nbsp; If nothing else, it makes your code more</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-orthogonal no matter what baseclasses your objects have.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-typedef Client_Acceptor_Base inherited;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   The Client_Handler object we develop will be used to handle clients once
+   they're connected.  The ACE_Acceptor&lt;> template's first parameter requires
+   such an object.  In some cases, you can get by with just a forward
+   declaration on the class, in others you have to have the whole thing.
+ */</font>
+<font color=blue>#include</font> "<font color=green>client_handler.h</font>"
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Construct the object with the concurrency strategy.&nbsp; Since this tutorial</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-is focused on thread-per-connection, we make that the default.&nbsp; We
-could</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-have chosen to omitt the default and populate it in main() instead.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Client_Acceptor( int _thread_per_connection = 1 )</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-: thread_per_connection_(_thread_per_connection)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Parameterize the ACE_Acceptor&lt;> such that it will listen for socket
+   connection attempts and create Client_Handler objects when they happen. In
+   Tutorial 001, we wrote the basic acceptor logic on our own before we
+   realized that ACE_Acceptor&lt;> was available.  You'll get spoiled using the
+   ACE templates because they take away a lot of the tedious details!
+ */</font>
+typedef ACE_Acceptor &lt; Client_Handler, ACE_SOCK_ACCEPTOR > Client_Acceptor_Base;
 
-<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-/*</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Return the value of our strategy flag.&nbsp; This is used by the Client_Handler</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-to decide how to act.&nbsp; If 'true' then the handler will behave in a</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-thread-per-connection manner.</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-*/</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-int thread_per_connection(void)</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{ return this->thread_per_connection_; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
+<font color=red>/*
+   Here, we use the parameterized ACE_Acceptor&lt;> as a baseclass for our customized
+   Client_Acceptor object.  I've done this so that we can provide it with our choice
+   of concurrency strategies when the object is created.  Each Client_Handler it
+   creates will use this information to determine how to act.  If we were going
+   to create a system that was always thread-per-connection, we would not have
+   bothered to extend  Client_Acceptor.
+ */</font>
+class Client_Acceptor : public Client_Acceptor_Base
+{
+public:
+        <font color=red>/*
+           This is always a good idea.  If nothing else, it makes your code more
+           orthogonal no matter what baseclasses your objects have.
+         */</font>
+        typedef Client_Acceptor_Base inherited;
 
-<P><FONT FACE="Arial,Helvetica">protected:</FONT>
-<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-int thread_per_connection_;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+        <font color=red>/*
+           Construct the object with the concurrency strategy.  Since this tutorial
+           is focused on thread-per-connection, we make that the default.  We could
+           have chosen to omitt the default and populate it in main() instead.
+         */</font>
+        Client_Acceptor( int _thread_per_connection = 1 )
+         : thread_per_connection_(_thread_per_connection)
+        {
+        }
 
-<P><FONT FACE="Arial,Helvetica">};</FONT><FONT FACE="Arial,Helvetica"></FONT>
+        <font color=red>/*
+           Return the value of our strategy flag.  This is used by the Client_Handler
+           to decide how to act.  If 'true' then the handler will behave in a
+           thread-per-connection manner.
+         */</font>
+        int thread_per_connection(void)
+                { return this->thread_per_connection_; }
 
-<P><FONT FACE="Arial,Helvetica">#endif // CLIENT_ACCEPTOR_H</FONT>
+protected:
+        int thread_per_connection_;
 
-<P>
+};
+
+<font color=blue>#endif</font> <font color=red>// CLIENT_ACCEPTOR_H</font>
+</PRE>
 <HR WIDTH="100%">
 
 <P>Ok, so far we haven't done much to change our concurrency strategy.&nbsp;
 Let's move on to the Client_Handler and see if it has changed any.
 
 <P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
