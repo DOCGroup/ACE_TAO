@@ -143,7 +143,7 @@ class TAO_ServantBase;
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
-typedef ACE_UINT32 CORBA_Boolean;
+typedef u_char CORBA_Boolean;
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
