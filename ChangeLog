@@ -1,8 +1,13 @@
+Tue Nov  2 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/SCTP/Options_Manager.cpp:
+          Removed extern C around the include of an ACE header file, this
+          fixes the compile problems in the Borland builds
+
 Mon Nov  1 10:21:00 2004  Gary Maxey  <gary.maxey@hp.com>
 
 	* ace/TP_Reactor.cpp: performace enhancement in handle_timer_events
 	  See Bugzilla #1971 for details.
-
 
 Mon Nov  1 08:37:47 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
