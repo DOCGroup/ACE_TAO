@@ -340,8 +340,11 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
   poa = parent;
   result = 0;
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#else
+  ACE_UNUSED_ARG (folded_name);
+  ACE_UNUSED_ARG (poa);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* !TAO_HAS_MINIMUM_CORBA */
 
   return result;
 }
@@ -931,8 +934,9 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
         // Locking error.
         ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#else
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* !TAO_HAS_MINIMUM_CORBA */
 }
 
 void
