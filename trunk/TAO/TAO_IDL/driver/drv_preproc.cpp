@@ -116,10 +116,17 @@ DRV_cpp_putarg(char *str)
 void
 DRV_cpp_init()
 {
+
+  char *cpp_loc;
+
   // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
   ACE_Env_Value<char*> cpp_path ("CPP_LOCATION", (char *) 0);
 
-  DRV_cpp_putarg(cpp_path != 0 ? cpp_path : idl_global->cpp_location());
+  if (cpp_path != 0)
+      cpp_loc = cpp_path;
+  else
+      cpp_loc = idl_global->cpp_location();
+  DRV_cpp_putarg(cpp_loc);
   DRV_cpp_putarg("-E");
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg("-I.");
