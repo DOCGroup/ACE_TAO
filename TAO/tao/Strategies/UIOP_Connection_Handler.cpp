@@ -68,7 +68,7 @@ TAO_UIOP_Connection_Handler::open (void*)
                                this->uiop_properties_->recv_buffer_size) == -1)
     return -1;
 
-  //  if (this->transport ()->wait_strategy ()->non_blocking ())
+  if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
         return -1;
