@@ -1,3 +1,25 @@
+Tue May 29 18:44:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_module.cpp (fe_add_interface_fwd, add_to_previous):
+
+          Fixed fe_add_interface_fwd to find the full definition (and set
+          the full_definition_ member) of a forward declared interface
+          even if the full definition comes in a previous opening of the
+          enclosing module. Then add_to_previous can skip over such a 
+          forward declared interface, since its presence confuses the logic
+          of look_in_previous(). Thanks to Russell Mora <rd.mora@econz.co.nz>
+          for sending in the example IDL file that uncovered this bug.
+
+          Also made cosmetic changes.
+
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+
+          Cosmetic changes.
+
 Tue May 29 16:08:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
