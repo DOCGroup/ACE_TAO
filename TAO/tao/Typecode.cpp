@@ -2248,7 +2248,8 @@ CORBA_TypeCode::_tao_decode (const CORBA_TypeCode *parent,
       //                - 4);
       ACE_Message_Block *mb = (ACE_Message_Block *)cdr.start ();
       TAO_InputCDR indir_stream (mb->rd_ptr () + offset - 4,
-                                 -1 * (offset - 4));
+                                 -1 * (offset - 4),
+                                 cdr.byte_order ());
 
       if (!indir_stream.good_bit ())
         ACE_THROW (CORBA::BAD_TYPECODE ());
