@@ -3,13 +3,13 @@
 #include "arg_shifter.h"
 
 Arg_Shifter::Arg_Shifter(int& argc, char** argv, char** temp)
-  : argc_ (argc),    
-    argv_ (argv),
+  : argc_ (argc),
+    temp_ (temp),
     total_size_ (argc),
+    argv_ (argv),
     current_index_ (0),
     back_ (argc - 1),
-    front_ (0),
-    temp_ (temp)
+    front_ (0)
 {
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
