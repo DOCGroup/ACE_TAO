@@ -19,12 +19,9 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
 int
-ACE_SSL_SOCK_Connector::shared_connect_start(ACE_SSL_SOCK_Stream &new_stream,
-					     ACE_Time_Value *timeout,
-					     const ACE_Addr &local_sap,
-					     int /* reuse_addr */,
-					     int /* protocol_family */,
-					     int /* protocol */)
+ACE_SSL_SOCK_Connector::shared_connect_start (ACE_SSL_SOCK_Stream &new_stream,
+                                              ACE_Time_Value *timeout,
+                                              const ACE_Addr &local_sap)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::shared_connect_start");
 
@@ -46,19 +43,19 @@ ACE_SSL_SOCK_Connector::shared_connect_start(ACE_SSL_SOCK_Stream &new_stream,
     }
 
   // Enable non-blocking, if required.
-  if (timeout != 0
-      && ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK) == -1)
+  if (timeout != 0 && new_stream.disable (ACE_NONBLOCK) == -1)
     return -1;
   else
     return 0;
 }
 
 int
-ACE_SSL_SOCK_Connector::shared_connect_finish(ACE_SSL_SOCK_Stream &new_stream,
-					      ACE_Time_Value *timeout,
-					      int result)
+ACE_SSL_SOCK_Connector::shared_connect_finish (ACE_SSL_SOCK_Stream &new_stream,
+                                               ACE_Time_Value *timeout,
+                                               int result)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::shared_connect_finish");
+  // Save/restore errno.
   ACE_Errno_Guard error (errno);
 
   if (result == -1 && timeout != 0)
@@ -84,7 +81,7 @@ ACE_SSL_SOCK_Connector::shared_connect_finish(ACE_SSL_SOCK_Stream &new_stream,
   // check if we are already connected.
   if (result != -1 || error == EISCONN)
     // Start out with non-blocking disabled on the <new_stream>.
-    ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
+    new_stream.disable (ACE_NONBLOCK);
   else if (!(error == EWOULDBLOCK || error == ETIMEDOUT))
     new_stream.close ();
 
@@ -119,10 +116,10 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   if (new_stream.get_SSL_fd () != new_stream.get_handle ())
     {
-      new_stream.set_SSL_fd ((int)new_stream.get_handle ());
+      new_stream.set_SSL_fd (new_stream.get_handle ());
 
-    if (timeout)
-      ACE::set_flags (new_stream.get_handle (), ACE_NONBLOCK);
+      if (timeout)
+        new_stream.disable (ACE_NONBLOCK);
     }
 
   return new_stream.connect ();
@@ -162,10 +159,10 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 
   if (new_stream.get_SSL_fd () != new_stream.get_handle ())
     {
-      new_stream.set_SSL_fd ((int)new_stream.get_handle ());
+      new_stream.set_SSL_fd (new_stream.get_handle ());
 
       if (timeout)
-        ACE::set_flags (new_stream.get_handle (), ACE_NONBLOCK);
+        new_stream.disable (ACE_NONBLOCK);
     }
 
   return new_stream.connect ();
@@ -187,10 +184,10 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 
   if (new_stream.get_SSL_fd () != new_stream.get_handle ())
     {
-      new_stream.set_SSL_fd ((int)new_stream.get_handle ());
+      new_stream.set_SSL_fd (new_stream.get_handle ());
 
       if (tv)
-        ACE::set_flags (new_stream.get_handle (), ACE_NONBLOCK);
+        new_stream.disable (ACE_NONBLOCK);
     }
 
   return new_stream.connect ();
@@ -229,7 +226,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
     {
       if (new_stream.get_SSL_fd () != new_stream.get_handle ())
         {
-          if (new_stream.set_SSL_fd ((int)new_stream.get_handle ())
+          if (new_stream.set_SSL_fd (new_stream.get_handle ())
               == ACE_INVALID_HANDLE)
             ACE_ERROR ((LM_ERROR,
                         ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
@@ -237,7 +234,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
                                    "invalid handle\n")));
 
           if (timeout)
-            ACE::set_flags(new_stream.get_handle (), ACE_NONBLOCK);
+            new_stream.disable (ACE_NONBLOCK);
         }
 
       if (new_stream.connect () != 0)
@@ -294,16 +291,17 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
     {
       if (new_stream.get_SSL_fd () != new_stream.get_handle())
         {
-          if (new_stream.set_SSL_fd ((int)new_stream.get_handle ())
+          if (new_stream.set_SSL_fd (new_stream.get_handle ())
               == ACE_INVALID_HANDLE)
             ACE_ERROR ((LM_ERROR,
                         ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
                                    "ACE_SSL_SOCK_Connector: "
                                    "invalid handle\n")));
 
-          // if (timeout)
-          //   ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);
+          if (timeout)
+            new_stream.disable (ACE_NONBLOCK);
         }
+
       if (new_stream.connect () != 0)
         {
 //           ACE_ERROR ((LM_ERROR,

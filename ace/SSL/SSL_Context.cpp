@@ -133,6 +133,12 @@ ACE_SSL_Context::set_mode (int mode)
     }
 
   this->context_ = ::SSL_CTX_new (method);
+  if (this->context_ == 0)
+    {
+      ::ERR_print_errors_fp (stderr);
+      return -1;
+    }
+
   this->mode_ = mode;
 
   const char *cert_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
@@ -145,7 +151,7 @@ ACE_SSL_Context::set_mode (int mode)
   ::SSL_CTX_load_verify_locations (this->context_,
                                    cert_file,
                                    cert_dir);
-  ERR_print_errors_fp (stderr);
+  ::ERR_print_errors_fp (stderr);
 
   if (this->certificate_.type () != -1
       && ::SSL_CTX_use_certificate_file (this->context_,

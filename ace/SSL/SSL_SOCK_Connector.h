@@ -175,10 +175,7 @@ public:
 protected:
   int shared_connect_start(ACE_SSL_SOCK_Stream &new_stream,
 			   ACE_Time_Value *timeout = 0,
-			   const ACE_Addr &local_sap = 0,
-			   int reuse_addr = 0,
-			   int protocol_family = PF_INET,
-			   int protocol = 0);
+			   const ACE_Addr &local_sap = 0);
 
   int shared_connect_finish(ACE_SSL_SOCK_Stream &new_stream,
 			    ACE_Time_Value *timeout = 0,
