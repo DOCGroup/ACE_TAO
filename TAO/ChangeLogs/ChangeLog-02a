@@ -1,3 +1,15 @@
+Thu Mar 16 17:16:53 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Fixed some code to work in platforms without exceptions.
+
+	* tao/orb.idl:
+	  Added a missing #pragma prefix ""
+
+	* tests/Param_Test/anyop.cpp:
+	  Fixed so the Object Reference test works on any host.  Not very
+	  elegant or portable, but it does the job.
+
 Mon Mar 13 15:37:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/TAO.dsp:
