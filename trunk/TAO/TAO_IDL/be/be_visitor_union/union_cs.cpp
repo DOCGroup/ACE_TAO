@@ -152,7 +152,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name ()
-          << " (const " << node->name () << " &u)" << be_nl
+          << " (const ::" << node->name () << " &u)" << be_nl
           << "  : TAO_Base_Union ()" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "this->disc_ = u.disc_;" << be_nl;
@@ -188,7 +188,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       os->indent ();
       *os << "// destructor" << be_nl
-          << node->name () << "::~" << node->local_name () << " (void)" << be_nl
+          << node->name () << "::~" << node->local_name () 
+          << " (void)" << be_nl
           << "{" << be_idt_nl
           << "// finalize" << be_nl
           << "this->_reset (this->disc_, 1);" << be_uidt_nl
@@ -203,8 +204,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->indent ();
       *os << "// assignment operator" << be_nl;
       *os << node->name () << " &" << be_nl; // return type
-      *os << node->name () << "::operator= (const " <<
-        node->name () << " &u)" << be_nl;
+      *os << node->name () << "::operator= (const ::" 
+          << node->name () << " &u)" << be_nl;
       *os << "{\n";
       os->incr_indent ();
       // first reset and set the discriminant

@@ -54,22 +54,6 @@ int be_visitor_interface_thru_poa_collocated_ss::visit_interface (be_interface *
       << "TAO_Stub *stub" << be_uidt_nl
       << ")" << be_idt_nl;
 
-  // We shouldn't have to call a default base class constructor explicitly
-#if 0
-  if (node->is_nested ())
-    {
-      be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << ": ACE_NESTED_CLASS (" << scope->full_name () << ","
-          << node->local_name () << ") ()," << be_nl;
-    }
-  else
-    {
-      *os << ": " << node->full_name () << " ()," << be_nl;
-    }
-#endif
-
-  // If the above goes back in, this goes out.
   *os << ":";
 
   // @@ We should call the constructor for all base classes, since we
