@@ -89,7 +89,7 @@ namespace TAO_Notify
         ACEXML_CATCH (ACEXML_Exception, ex)
         {
           // The only way to find out what it is, it to let it print itself, so...
-          ACE_ERROR ((LM_ERROR, "Error during load of \"%s\".\n Will try backup file.\n", this->file_name_.c_str ()));
+          ACE_ERROR ((LM_ERROR, "Unable to load \"%s\".\n Will try backup file.\n", this->file_name_.c_str ()));
           ex.print ();
           result = false;
         }
@@ -144,7 +144,7 @@ namespace TAO_Notify
       ACEXML_CATCH (ACEXML_Exception, ex)
       {
         // The only way to find out what it is, it to let it print itself, so...
-        ACE_ERROR ((LM_ERROR, "Error during load of \"%s\".\n", this->file_name_.c_str ()));
+        ACE_ERROR ((LM_ERROR, "Unable to load \"%s\".\n", this->file_name_.c_str ()));
         ex.print ();
         ACE_THROW(CORBA::INTERNAL());
       }

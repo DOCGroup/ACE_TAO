@@ -14,6 +14,8 @@ use File::Compare;
 $ACE_ROOT = $ENV{ACE_ROOT};
 $TAO_ROOT = "$ACE_ROOT/TAO";
 
+$port = 12000 + PerlACE::uniqueid ();
+
 sub cleanup() {
   unlink "loadtest.xml";
   unlink "abc.xml";
@@ -29,7 +31,7 @@ cleanup();
 
 $ret = 0;
 
-$UTEST = new PerlACE::Process("main");
+$UTEST = new PerlACE::Process("main", "-ORBEndpoint iiop://:$port");
 $ret = $UTEST->SpawnWaitKill(10);
 if ($ret != 0) {
   print "ERROR : main returned $ret\n";

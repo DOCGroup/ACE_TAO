@@ -110,10 +110,28 @@ int main(int ac, char **av)
     PortableServer::POAManager_var mgr = poa->the_POAManager();
     mgr->activate();
 
+    CORBA::PolicyList policies (1);
+    policies.length (1);
+
+    policies[0] =
+      poa->create_lifespan_policy (PortableServer::PERSISTENT
+                                   ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    PortableServer::POA_var persistentPOA = poa->create_POA (
+                                                    "PersistentPOA",
+                                                    mgr.in (),
+                                                    policies
+                                                    ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
     if (pass1)
     {
       CosNotifyChannelAdmin::EventChannelFactory_var cosecf =
-        TAO_Notify_EventChannelFactory_i::create(poa.in () ACE_ENV_ARG_PARAMETER);
+        TAO_Notify_EventChannelFactory_i::create(persistentPOA.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       NotifyExt::EventChannelFactory_var ecf =
@@ -294,9 +312,26 @@ int main(int ac, char **av)
 
       // Connect a PushConsumer and PushSupplier
       TestSupplier test_supplier_svt;
-      CosNotifyComm::StructuredPushSupplier_var push_sup = test_supplier_svt._this();
+      PortableServer::ObjectId_var oid1 = persistentPOA->activate_object (&test_supplier_svt
+                                                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::Object_var obj1 = persistentPOA->id_to_reference (oid1.in ()
+                                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CosNotifyComm::StructuredPushSupplier_var push_sup = CosNotifyComm::StructuredPushSupplier::_narrow (obj1.in ()
+                                                                                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       TestConsumer test_consumer_svt;
-      CosNotifyComm::StructuredPushConsumer_var push_cons = test_consumer_svt._this();
+      PortableServer::ObjectId_var oid2 = persistentPOA->activate_object (&test_consumer_svt
+                                                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::Object_var obj2 = persistentPOA->id_to_reference (oid2.in ()
+                                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CosNotifyComm::StructuredPushConsumer_var push_cons = CosNotifyComm::StructuredPushConsumer::_narrow (obj2.in ()
+                                                                                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
       strpc->connect_structured_push_supplier(push_sup.in());
       strps->connect_structured_push_consumer(push_cons.in());
 
@@ -315,7 +350,7 @@ int main(int ac, char **av)
 
       // Create a new ecf, which should load itself from loadtest.xml
       CosNotifyChannelAdmin::EventChannelFactory_var
-        cosecf = TAO_Notify_EventChannelFactory_i::create(poa.in () ACE_ENV_ARG_PARAMETER);
+        cosecf = TAO_Notify_EventChannelFactory_i::create(persistentPOA.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_TRY_CHECK;
