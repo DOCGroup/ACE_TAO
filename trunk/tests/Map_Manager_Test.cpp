@@ -49,7 +49,7 @@ typedef ACE_Hash_Map_Entry <TYPE, TYPE> HASH_ENTRY;
 typedef ACE_Active_Map_Manager <TYPE> ACTIVE_MAP_MANAGER;
 
 static void
-test_active_map_manager (size_t table_size, 
+test_active_map_manager (size_t table_size,
                          size_t iterations,
                          int test_iterators)
 {
@@ -58,7 +58,7 @@ test_active_map_manager (size_t table_size,
   TYPE j;
   ssize_t k;
 
-  ACTIVE_MAP_MANAGER::key_type *active_keys 
+  ACTIVE_MAP_MANAGER::key_type *active_keys
     = new ACTIVE_MAP_MANAGER::key_type[iterations];
 
   for (i = 0; i < iterations; i++)
@@ -78,8 +78,8 @@ test_active_map_manager (size_t table_size,
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("(%d|%d-%d|%d)"),
                         i,
-                        entry.ext_id_.index (),
-                        entry.ext_id_.generation (),
+                        entry.ext_id_.slot_index (),
+                        entry.ext_id_.slot_generation (),
                         entry.int_id_));
             ++i;
           }
@@ -103,8 +103,8 @@ test_active_map_manager (size_t table_size,
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("(%d|%d-%d|%d)"),
                         k,
-                        entry.ext_id_.index (),
-                        entry.ext_id_.generation (),
+                        entry.ext_id_.slot_index (),
+                        entry.ext_id_.slot_generation (),
                         entry.int_id_));
             k--;
           }
@@ -133,7 +133,7 @@ test_active_map_manager (size_t table_size,
 }
 
 static void
-test_hash_map_manager (size_t table_size, 
+test_hash_map_manager (size_t table_size,
                        size_t iterations,
                        int test_iterators)
 {
@@ -339,7 +339,7 @@ test_hash_map_manager (size_t table_size,
 }
 
 static void
-test_map_manager (size_t table_size, 
+test_map_manager (size_t table_size,
                   size_t iterations,
                   int test_iterators)
 {
@@ -658,4 +658,3 @@ template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>;
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
