@@ -160,7 +160,6 @@ public:
 
 #     define ACE_TMAIN \
 ace_tmain_i (int, ACE_TCHAR *[]); \
-ACE_Export int ace_os_wintmain_i (ACE_Main_Base&, HINSTANCE, HINSTANCE, LPWSTR, int);  /* forward declaration */ \
 class ACE_Main : public ACE_Main_Base {int run_i (int argc, ACE_TCHAR *argv[]);}; \
 inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
 { \
@@ -169,7 +168,7 @@ inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
   ACE_Main m; \
-  return ace_os_wintmain_i (m, hInstance, hPrevInstance, lpCmdLine, nCmdShow); \
+  return m.run (hInstance, hPrevInstance, lpCmdLine, nCmdShow); \
 } \
 int ace_tmain_i
 
