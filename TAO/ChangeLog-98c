@@ -1,3 +1,31 @@
+Sat Nov 22 18:21:10 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_codegen.h, be/be_codegen.cpp: Added a
+	number of states to handle attributes
+
+	* TAO_IDL/be/{be_attribute,be_state_attribute}.cpp: Code added to
+	handle attributes. This code is a mix of code that is used to
+	handle operations as well as arguments because for attributes we
+	have 2 methods, one to set the value and one which returns the
+	value. For a readonly attribute, there is only the get method.
+
+	A special note: Due to the large switch statement, I had to use
+	-fPIC for g++. We are working on abstracting all the commin
+	functionality once we have the basic IDL compiler working.
+
+	* TAO_IDL/be/be_interface.cpp: Operation table now also includes
+	methods to set and get the attributes if they are present. In
+	addition, the variable name for the operation tables is now the
+	full flattened name to avoid conflicts.
+
+	* TAO_IDL/be/be_sequence.cpp: In the length method, the index of
+	lookp variable "i" is changed from "int" to CORBA::ULong as g++
+	was issuing a warning.
+
+	* TAO_IDL/be/be_string.cpp, be_state_argument,cpp: Proper handling
+	of in, inout, and out strings that are either anonymous or are
+	typedefed.
+
 Fri Nov 21 13:22:39 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.40, released Fri Nov 21 13:22:39 1997.
@@ -16,7 +44,7 @@ Thu Nov 20 10:31:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Thu Nov 20 00:10:52 1997  Sergio Flores  <sergio@cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/clnt.h : 
+	* orbsvcs/tests/Logger/clnt.h :
 	* orbsvcs/tests/Logger/clnt.cpp (Logger_Client): Fixed a bug
  	dealing with using "_bind" when the naming service is not
  	available.
