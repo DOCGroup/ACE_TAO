@@ -1,8 +1,14 @@
 // $Id$
-
-#define ACE_BUILD_SVC_DLL
+//
+#ifndef SMART_PROXY_IMPL_H
+#define SMART_PROXY_IMPL_H
 
 #include "DiamondC.h"
+
+#if !defined (ACE_BUILD_SVC_DLL)
+#define ACE_BUILD_SVC_DLL
+#endif /*ACE_BUILD_SVC_DLL*/
+
 #include "ace/svc_export.h"
 
 class ACE_Svc_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Diamond_Top_Default_Proxy_Factory
@@ -35,3 +41,4 @@ class ACE_Svc_Export Smart_Diamond_Top_Proxy : public virtual Diamond::TAO_Diamo
   // Dont need to add any extra functionality into shutdown()
   // hence neednt define it.
 };
+#endif /*SMART_PROXY_IMPL_H*/

@@ -16,7 +16,7 @@ endif # ! TAO_ROOT
 MAKEFILE = Makefile.main
 
 
-SRC = Coll_Tester.cpp
+SRC = Coll_Tester.cpp Smart_Proxy_Impl.cpp
 
 BIN = main
 
@@ -33,8 +33,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-LDLIBS += -lCollocation_Test_Stub \
-         -lDiamond \
+LDLIBS += -lDiamond -lCollocation_Test_Stub \
          -lTAO_Strategies \
 	 $(TAO_SRVR_LIBS)
 #----------------------------------------------------------------------------

@@ -1,3 +1,17 @@
+Fri Jan  2 14:50:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
+	
+	  Cosmetic fixes!
+	
+	* tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
+	* tests/Smart_Proxies/Collocation/Makefile.Diamond:
+	* tests/Smart_Proxies/Collocation/Makefile.main:
+
+	  Fixed the makefiles so that they can build properly in our daily
+	  builds. 
+
 Fri Jan  2 14:14:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h:

@@ -23,8 +23,8 @@ TAO_IDLFLAGS += -Wb,skel_export_macro=Diamond_Export \
                 -Wb,stub_export_include=stub_export.h \
                 -Ge 1 -Gsp
 
-LDLIBS = -lTAO
-ACE_SHLIBS = -lTAO -lACE
+LDLIBS = $(TAO_CLNT_LIBS)
+ACE_SHLIBS = $(TAO_CLNT_LIBS)
 SHLIB = libCollocation_Test_Stub.$(SOEXT)
 LIB = libCollocation_Test_Stub.a
 
