@@ -59,7 +59,6 @@ Sun Jul 16 08:49:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  
 	  to be consistent with the terminology in the POSA2 book.
 
->>>>>>> 4.811
 Fri Jul 14 19:31:39 2000  Eric Ding  <qnd1@cs.wustl.edu>
 
         * ace/config-linux.h
