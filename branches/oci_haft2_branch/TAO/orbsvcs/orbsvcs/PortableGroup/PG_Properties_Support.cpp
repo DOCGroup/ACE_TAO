@@ -119,7 +119,7 @@ TAO::PG_Properties_Support::remove_type_properties (
 }
 
 
-TAO_PG::Properties_Decoder * 
+TAO_PG::Properties_Decoder *
 TAO::PG_Properties_Support::find_typeid_properties (
     const char *type_id
     ACE_ENV_ARG_PARAMETER)

@@ -47,7 +47,7 @@ namespace TAO
     void set_type_properties (
         const char *type_id,
         const PortableGroup::Properties & overrides
-        ACE_ENV_ARG_DECL)  
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableGroup::InvalidProperty,

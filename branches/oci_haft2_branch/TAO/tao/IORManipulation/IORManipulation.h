@@ -77,7 +77,7 @@ public:
       ));
 
   virtual CORBA::Object_ptr remove_profiles (
-    CORBA::Object_ptr ior1,
+    CORBA::Object_ptr group,
     CORBA::Object_ptr ior2
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
@@ -89,7 +89,7 @@ public:
 
   virtual CORBA::Boolean set_property (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior
+      CORBA::Object_ptr group
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
@@ -98,10 +98,11 @@ public:
       TAO_IOP::Duplicate
     ));
 
+  // @@ note awkward argument order
   virtual CORBA::Boolean set_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior1,
-      CORBA::Object_ptr ior2
+      CORBA::Object_ptr new_primary,
+      CORBA::Object_ptr group
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
@@ -113,7 +114,7 @@ public:
 
   virtual CORBA::Object_ptr get_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior
+      CORBA::Object_ptr group
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
@@ -123,7 +124,7 @@ public:
 
   virtual CORBA::Boolean is_primary_set (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior
+      CORBA::Object_ptr group
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
@@ -148,7 +149,7 @@ public:
       ));
 
   virtual CORBA::ULong get_profile_count (
-    CORBA::Object_ptr ior
+    CORBA::Object_ptr group
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
         CORBA::SystemException,

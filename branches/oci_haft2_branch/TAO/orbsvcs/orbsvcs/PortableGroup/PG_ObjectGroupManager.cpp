@@ -19,9 +19,9 @@ TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
     object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     location_map_ (TAO_PG_MAX_LOCATIONS),
     generic_factory_ (0),
-    lock_ (),
-    lock_ogid_ (),
-    next_ogid_ (1)   // don't use ogid 0
+    lock_ ()
+//   , lock_ogid_ (),
+//    next_ogid_ (1)   // don't use ogid 0
 {
 }
 
@@ -505,32 +505,6 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
     PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
 }
 
-
-
-void TAO_PG_ObjectGroupManager::allocate_ogid (PortableGroup::ObjectGroupId & ogid)
-{
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_ogid_);
-  //@@ NOTE: as always, ACE_GUARD_XXXX does the wrong thing if the lock fails
-
-  // The numerical value used for the ObjectId increases
-  // monotonically.
-
-  ogid = this->next_ogid_;
-  this->next_ogid_ += 1;
-}
-
-PortableServer::ObjectId * TAO_PG_ObjectGroupManager::convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid)
-{
-  // 4294967295 -- Largest 32 bit unsigned integer
-  char oid_str[11];
-  ACE_OS::snprintf (oid_str, sizeof(oid_str),
-                   "%lu",
-                   ACE_static_cast (ACE_UINT32,ogid));
-  oid_str[sizeof(oid_str) - 1] = '\0';
-
-  return PortableServer::string_to_ObjectId (oid_str);
-}
-
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
   const char * type_id,
@@ -539,29 +513,13 @@ TAO_PG_ObjectGroupManager::create_object_group (
     PortableGroup::ObjectGroupId & group_id
   ACE_ENV_ARG_DECL)
 {
-   allocate_ogid(group_id);
-   PortableServer::ObjectId_var oid = convert_ogid_to_oid (group_id);
-
-  // Create a reference for the ObjectGroup corresponding to the
-  // RepositoryId of the object being created.
-  CORBA::Object_var object_group =
-    this->poa_->create_reference_with_id (group_id,
-                                          type_id
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  PortableGroup::TagGroupTaggedComponent tag_component;
-
-  tag_component.component_version.major = (CORBA::Octet) 1;
-  tag_component.component_version.minor = (CORBA::Octet) 0;
-  tag_component.group_domain_id = domain_id;
-  tag_component.object_group_id = group_id;
-  tag_component.object_group_ref_version = 0;
-
-  // Set the property
-  TAO::PG_Utils::set_tagged_component (object_group,
-                                       tag_component);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  CORBA::Object_var object_group = manipulator_.create_object_group (
+    type_id,
+    domain_id,
+    the_criteria,
+    group_id
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
@@ -674,22 +632,15 @@ TAO_PG_ObjectGroupManager::member_count (
 int
 TAO_PG_ObjectGroupManager::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr p)
 {
+  int result = 0;
+
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()) && !CORBA::is_nil (orb));
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   ACE_ASSERT (CORBA::is_nil (this->poa_.in ()) && !CORBA::is_nil (p));
   this->poa_ = PortableServer::POA::_duplicate (p);
 
-  int result = 0;
-
-  // Get an object reference for the ORBs IORManipulation object!
-  CORBA::Object_var IORM = this->orb_->resolve_initial_references (
-    TAO_OBJID_IORMANIPULATION, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
-    IORM.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  result = manipulator_.init (orb, p);
 
   return result;
 }
