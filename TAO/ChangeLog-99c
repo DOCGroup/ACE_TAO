@@ -1,3 +1,15 @@
+Mon Dec 20 12:59:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/time/Time_Client.java: Changed the name of the
+	  class from TimeClient to Time_Client to make Java IDL 1.2 happy.
+  	  Thanks to Andrey Nechypurenko <andreynech@yahoo.com> for
+ 	  reporting this.
+
+	* utils/NamingViewer: Added a new utility that contains an
+ 	  MFC-based CosNaming viewer that that allows users to manipulate
+ 	  a Naming Context visually.  Thanks to Chris Hafey
+ 	  <chris@stentorsoft.com> for contributing this.
+  
 Tue Dec 21 11:34:45 1999  bala  <bala@cs.wustl.edu>
 
         * TAO version 1.0.10 released.
@@ -61,26 +73,25 @@ Mon Dec 20 18:25:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Dec 20 14:22:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp: Fixed
-          warnings on SunOS_EGCS.
-
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp: Fixed
+	  warnings on SunOS_EGCS. 
 
 Mon Dec 20 13:52:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tao/Tagged_Components.i (components):
-        * tao/Tagged_Components.h :Added a method components () that would
-          return read/write access to the underlying
-          IOP::MultipleComponentProfile in the TAO_Tagged_Components
-          class. Thanks to Chris Hafey <chris@sternsoft.com> for
-          suggesting this.
+	* tao/Tagged_Components.i (components):
+	* tao/Tagged_Components.h :Added a method components () that would
+	  return read/write access to the underlying
+ 	  IOP::MultipleComponentProfile in the TAO_Tagged_Components
+ 	  class. Thanks to Chris Hafey <chris@sternsoft.com> for
+ 	  suggesting this.
 
 Mon Dec 20 12:21:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -135,7 +146,6 @@ Mon Dec 20 11:10:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp: Changed some
           template instantiations.
-
 
 Mon Dec 20 10:17:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 

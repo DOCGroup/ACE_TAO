@@ -11,3 +11,8 @@ with TAO.
 
         . nslist -- This utility lists the current entries in the
           Naming Service in a nicely formatter manner. 
+
+        . NamingViewer -- This utility is an MFC-based CosNaming
+          viewer that allows users to manipulate a Naming Context
+          visually.
+
