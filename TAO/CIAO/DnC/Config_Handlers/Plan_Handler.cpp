@@ -155,6 +155,7 @@ void Plan_Handler::process_irdd (DOMNodeIterator* iter,
 void Plan_Handler::process_add (DOMNodeIterator* iter,
                                 Deployment::ArtifactDeploymentDescription& add)
 {
+  ACE_DEBUG ((LM_DEBUG, "i am here in ADD\n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
@@ -393,6 +394,7 @@ void Plan_Handler::process_crdd (DOMNodeIterator* iter,
 void Plan_Handler::process_pcd (DOMNodeIterator* iter,
                                 Deployment::PlanConnectionDescription& pcd)
 {
+  ACE_DEBUG ((LM_DEBUG, "i am here in PCD\n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
