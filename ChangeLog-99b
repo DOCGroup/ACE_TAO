@@ -1,3 +1,12 @@
+Mon Feb 22 22:03:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/auto_compile_win32.pl: Perl script for compiling all the
+	  million different config. combination on Win32.  Hey, it also
+	  works on Alpha.  Thanks to Darrell Brunsch for testing it on
+	  Alpha/NT.
+
+	* ace/ace_{dll,lib}.dsp: Fixed broken project settings.
+
 Mon Feb 22 21:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Sched_Params.cpp: removed #include of ACE.h because it's
