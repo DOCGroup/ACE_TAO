@@ -1,3 +1,14 @@
+Fri Jun 20 10:07:39 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/qt_moc.mpb:
+
+          Switch this to be a project instead of a feature.  It doesn't hurt
+          to inherit from it if you don't use the MOC_Files component.
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Added + and - to the escape_regex_special() method.
+
 Fri Jun 20 09:52:44 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:

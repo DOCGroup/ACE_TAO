@@ -172,7 +172,7 @@ sub escape_regex_special {
   my($self) = shift;
   my($name) = shift;
 
-  $name =~ s/([\\\$\[\]\(\)\.])/\\$1/g;
+  $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
   return $name;
 }
 
