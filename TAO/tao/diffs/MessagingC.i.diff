@@ -1,5 +1,5 @@
---- orig/MessagingC.i	Sat Mar 31 14:51:18 2001
-+++ MessagingC.i	Sat Mar 31 14:51:46 2001
+--- orig/MessagingC.i	Tue Apr  3 22:01:25 2001
++++ patched/MessagingC.i	Tue Apr  3 22:05:33 2001
 @@ -27,6 +27,8 @@
  // Inline operations for class Messaging::RebindPolicy_var
  // *************************************************************
@@ -9,33 +9,6 @@
  ACE_INLINE
  Messaging::RebindPolicy_var::RebindPolicy_var (void) // default constructor
    : ptr_ (RebindPolicy::_nil ())
-@@ -69,14 +71,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RebindPolicy_var::operator const ::Messaging::RebindPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::RebindPolicy_var::operator ::Messaging::RebindPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::RebindPolicy_var::operator ::Messaging::RebindPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -168,7 +170,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RebindPolicy_out::operator ::Messaging::RebindPolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -208,6 +210,10 @@
    return this->ptr_;
  }
@@ -47,33 +20,6 @@
  ACE_INLINE
  Messaging::SyncScopePolicy_var::SyncScopePolicy_var (const ::Messaging::SyncScopePolicy_var &p) // copy constructor
    : TAO_Base_var (),
-@@ -239,14 +245,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::SyncScopePolicy_var::operator const ::Messaging::SyncScopePolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::SyncScopePolicy_var::operator ::Messaging::SyncScopePolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::SyncScopePolicy_var::operator ::Messaging::SyncScopePolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -338,7 +344,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::SyncScopePolicy_out::operator ::Messaging::SyncScopePolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -359,6 +365,10 @@
  
  #endif /* end #if !defined */
@@ -85,103 +31,6 @@
  // *************************************************************
  // Inline operations for class Messaging::PriorityRange_var
  // *************************************************************
-@@ -417,7 +427,7 @@
-         {
-           PriorityRange *deep_copy =
-             new PriorityRange (*p.ptr_);
--          
-+
-           if (deep_copy != 0)
-             {
-               PriorityRange *tmp = deep_copy;
-@@ -427,7 +437,7 @@
-             }
-         }
-     }
--  
-+
-   return *this;
- }
- 
-@@ -462,13 +472,13 @@
- }
- 
- ACE_INLINE
--Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() // cast 
-+Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() // cast
- {
-   return *this->ptr_;
- }
- 
- ACE_INLINE
--Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() const // cast 
-+Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() const // cast
- {
-   return *this->ptr_;
- }
-@@ -485,7 +495,7 @@
-   return *this->ptr_;
- }
- 
--// mapping for fixed size 
-+// mapping for fixed size
- ACE_INLINE ::Messaging::PriorityRange &
- Messaging::PriorityRange_var::out (void)
- {
-@@ -554,14 +564,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RequestPriorityPolicy_var::operator const ::Messaging::RequestPriorityPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::RequestPriorityPolicy_var::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::RequestPriorityPolicy_var::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -653,7 +663,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RequestPriorityPolicy_out::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast
- {
-   return this->ptr_;
-@@ -724,14 +734,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyPriorityPolicy_var::operator const ::Messaging::ReplyPriorityPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::ReplyPriorityPolicy_var::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::ReplyPriorityPolicy_var::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -823,7 +833,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyPriorityPolicy_out::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -852,6 +862,10 @@
  // Inline operations for class Messaging::RequestStartTimePolicy_var
  // *************************************************************
@@ -193,33 +42,6 @@
  ACE_INLINE
  Messaging::RequestStartTimePolicy_var::RequestStartTimePolicy_var (void) // default constructor
    : ptr_ (RequestStartTimePolicy::_nil ())
-@@ -894,14 +908,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RequestStartTimePolicy_var::operator const ::Messaging::RequestStartTimePolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::RequestStartTimePolicy_var::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::RequestStartTimePolicy_var::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -993,7 +1007,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RequestStartTimePolicy_out::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -1039,6 +1053,10 @@
      ptr_ (RequestEndTimePolicy::_duplicate (p.ptr ()))
  {}
@@ -231,33 +53,6 @@
  ACE_INLINE
  Messaging::RequestEndTimePolicy_var::~RequestEndTimePolicy_var (void) // destructor
  {
-@@ -1064,14 +1082,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RequestEndTimePolicy_var::operator const ::Messaging::RequestEndTimePolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::RequestEndTimePolicy_var::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::RequestEndTimePolicy_var::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -1163,7 +1181,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RequestEndTimePolicy_out::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -1209,6 +1227,10 @@
      ptr_ (ReplyStartTimePolicy::_duplicate (p.ptr ()))
  {}
@@ -269,33 +64,6 @@
  ACE_INLINE
  Messaging::ReplyStartTimePolicy_var::~ReplyStartTimePolicy_var (void) // destructor
  {
-@@ -1234,14 +1256,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyStartTimePolicy_var::operator const ::Messaging::ReplyStartTimePolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::ReplyStartTimePolicy_var::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::ReplyStartTimePolicy_var::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -1333,7 +1355,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyStartTimePolicy_out::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -1379,6 +1401,10 @@
      ptr_ (ReplyEndTimePolicy::_duplicate (p.ptr ()))
  {}
@@ -307,33 +75,6 @@
  ACE_INLINE
  Messaging::ReplyEndTimePolicy_var::~ReplyEndTimePolicy_var (void) // destructor
  {
-@@ -1404,14 +1430,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyEndTimePolicy_var::operator const ::Messaging::ReplyEndTimePolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::ReplyEndTimePolicy_var::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::ReplyEndTimePolicy_var::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -1503,7 +1529,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyEndTimePolicy_out::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -1549,6 +1575,10 @@
      ptr_ (RelativeRequestTimeoutPolicy::_duplicate (p.ptr ()))
  {}
@@ -345,33 +86,6 @@
  ACE_INLINE
  Messaging::RelativeRequestTimeoutPolicy_var::~RelativeRequestTimeoutPolicy_var (void) // destructor
  {
-@@ -1574,14 +1604,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RelativeRequestTimeoutPolicy_var::operator const ::Messaging::RelativeRequestTimeoutPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::RelativeRequestTimeoutPolicy_var::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::RelativeRequestTimeoutPolicy_var::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -1673,7 +1703,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RelativeRequestTimeoutPolicy_out::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -1719,6 +1749,10 @@
      ptr_ (RelativeRoundtripTimeoutPolicy::_duplicate (p.ptr ()))
  {}
@@ -383,33 +97,6 @@
  ACE_INLINE
  Messaging::RelativeRoundtripTimeoutPolicy_var::~RelativeRoundtripTimeoutPolicy_var (void) // destructor
  {
-@@ -1744,14 +1778,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RelativeRoundtripTimeoutPolicy_var::operator const ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::RelativeRoundtripTimeoutPolicy_var::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::RelativeRoundtripTimeoutPolicy_var::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -1843,7 +1877,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RelativeRoundtripTimeoutPolicy_out::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -1868,6 +1902,10 @@
  // Inline operations for class Messaging::RoutingTypeRange_var
  // *************************************************************
@@ -421,76 +108,6 @@
  ACE_INLINE
  Messaging::RoutingTypeRange_var::RoutingTypeRange_var (void) // default constructor
    : ptr_ (0)
-@@ -1922,7 +1960,7 @@
-         {
-           RoutingTypeRange *deep_copy =
-             new RoutingTypeRange (*p.ptr_);
--          
-+
-           if (deep_copy != 0)
-             {
-               RoutingTypeRange *tmp = deep_copy;
-@@ -1932,7 +1970,7 @@
-             }
-         }
-     }
--  
-+
-   return *this;
- }
- 
-@@ -1967,13 +2005,13 @@
- }
- 
- ACE_INLINE
--Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() // cast 
-+Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() // cast
- {
-   return *this->ptr_;
- }
- 
- ACE_INLINE
--Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() const // cast 
-+Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() const // cast
- {
-   return *this->ptr_;
- }
-@@ -1990,7 +2028,7 @@
-   return *this->ptr_;
- }
- 
--// mapping for fixed size 
-+// mapping for fixed size
- ACE_INLINE ::Messaging::RoutingTypeRange &
- Messaging::RoutingTypeRange_var::out (void)
- {
-@@ -2059,14 +2097,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RoutingPolicy_var::operator const ::Messaging::RoutingPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::RoutingPolicy_var::operator ::Messaging::RoutingPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::RoutingPolicy_var::operator ::Messaging::RoutingPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -2158,7 +2196,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::RoutingPolicy_out::operator ::Messaging::RoutingPolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -2204,6 +2242,10 @@
      ptr_ (MaxHopsPolicy::_duplicate (p.ptr ()))
  {}
@@ -502,51 +119,6 @@
  ACE_INLINE
  Messaging::MaxHopsPolicy_var::~MaxHopsPolicy_var (void) // destructor
  {
-@@ -2229,14 +2271,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::MaxHopsPolicy_var::operator const ::Messaging::MaxHopsPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::MaxHopsPolicy_var::operator ::Messaging::MaxHopsPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::MaxHopsPolicy_var::operator ::Messaging::MaxHopsPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
-@@ -2328,7 +2370,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::MaxHopsPolicy_out::operator ::Messaging::MaxHopsPolicy_ptr &() // cast
- {
-   return this->ptr_;
-@@ -2399,14 +2441,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::QueueOrderPolicy_var::operator const ::Messaging::QueueOrderPolicy_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::QueueOrderPolicy_var::operator ::Messaging::QueueOrderPolicy_ptr &() // cast 
-+ACE_INLINE
-+Messaging::QueueOrderPolicy_var::operator ::Messaging::QueueOrderPolicy_ptr &() // cast
- {
-   return this->ptr_;
- }
 @@ -2457,6 +2499,10 @@
  // Inline operations for class Messaging::QueueOrderPolicy_out
  // *************************************************************
@@ -558,15 +130,6 @@
  ACE_INLINE
  Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (QueueOrderPolicy_ptr &p)
    : ptr_ (p)
-@@ -2498,7 +2544,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::QueueOrderPolicy_out::operator ::Messaging::QueueOrderPolicy_ptr &() // cast
- {
-   return this->ptr_;
 @@ -2519,6 +2565,8 @@
  
  #endif /* end #if !defined */
@@ -576,288 +139,6 @@
  // *************************************************************
  // Inline operations for class Messaging::PolicyValue_var
  // *************************************************************
-@@ -2570,7 +2618,7 @@
-         {
-           PolicyValue *deep_copy =
-             new PolicyValue (*p.ptr_);
--          
-+
-           if (deep_copy != 0)
-             {
-               PolicyValue *tmp = deep_copy;
-@@ -2580,7 +2628,7 @@
-             }
-         }
-     }
--  
-+
-   return *this;
- }
- 
-@@ -2603,20 +2651,20 @@
- }
- 
- ACE_INLINE
--Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() // cast 
-+Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() // cast
- {
-   return *this->ptr_;
- }
- 
- ACE_INLINE
--Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() const // cast 
-+Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() const // cast
- {
-   return *this->ptr_;
- }
- 
- // variable-size types only
- ACE_INLINE
--Messaging::PolicyValue_var::operator ::Messaging::PolicyValue *&() // cast 
-+Messaging::PolicyValue_var::operator ::Messaging::PolicyValue *&() // cast
- {
-   return this->ptr_;
- }
-@@ -2633,7 +2681,7 @@
-   return *this->ptr_;
- }
- 
--// mapping for variable size 
-+// mapping for variable size
- ACE_INLINE ::Messaging::PolicyValue *&
- Messaging::PolicyValue_var::out (void)
- {
-@@ -2694,7 +2742,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::PolicyValue_out::operator ::Messaging::PolicyValue *&() // cast
- {
-   return this->ptr_;
-@@ -2714,7 +2762,7 @@
- 
- 
- #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
--  
-+
- #if !defined (__TAO_UNBOUNDED_SEQUENCE_MESSAGING_POLICYVALUESEQ_CI_)
- #define __TAO_UNBOUNDED_SEQUENCE_MESSAGING_POLICYVALUESEQ_CI_
- 
-@@ -2727,24 +2775,24 @@
-     ACE_NEW_RETURN (retval, Messaging::PolicyValue[size], 0);
-     return retval;
-   }
--  
-+
-   ACE_INLINE void Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::freebuf (Messaging::PolicyValue *buffer)
-   // Free the sequence.
-   {
-     delete [] buffer;
-   }
--  
-+
-   ACE_INLINE
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (void) // Default constructor.
-   {
-   }
--  
-+
-   ACE_INLINE
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (maximum))
-   {
-   }
--  
-+
-   ACE_INLINE
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (CORBA::ULong maximum,
-     CORBA::ULong length,
-@@ -2753,7 +2801,7 @@
-   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-   {
-   }
--  
-+
-   ACE_INLINE
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (const _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq &rhs)
-   // Copy constructor.
-@@ -2763,10 +2811,10 @@
-     {
-       Messaging::PolicyValue *tmp1 = _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (this->maximum_);
-       Messaging::PolicyValue * const tmp2 = ACE_reinterpret_cast (Messaging::PolicyValue * ACE_CAST_CONST, rhs.buffer_);
--      
-+
-       for (CORBA::ULong i = 0; i < this->length_; ++i)
-         tmp1[i] = tmp2[i];
--      
-+
-       this->buffer_ = tmp1;
-     }
-     else
-@@ -2774,14 +2822,14 @@
-       this->buffer_ = 0;
-     }
-   }
--  
-+
-   ACE_INLINE Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq &
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::operator= (const _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq &rhs)
-   // Assignment operator.
-   {
-     if (this == &rhs)
-       return *this;
--    
-+
-     if (this->release_)
-     {
-       if (this->maximum_ < rhs.maximum_)
-@@ -2794,18 +2842,18 @@
-     }
-     else
-       this->buffer_ = _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (rhs.maximum_);
--    
-+
-     TAO_Unbounded_Base_Sequence::operator= (rhs);
--    
-+
-     Messaging::PolicyValue *tmp1 = ACE_reinterpret_cast (Messaging::PolicyValue *, this->buffer_);
-     Messaging::PolicyValue * const tmp2 = ACE_reinterpret_cast (Messaging::PolicyValue * ACE_CAST_CONST, rhs.buffer_);
--    
-+
-     for (CORBA::ULong i = 0; i < this->length_; ++i)
-       tmp1[i] = tmp2[i];
--    
-+
-     return *this;
-   }
--  
-+
-   // = Accessors.
-   ACE_INLINE Messaging::PolicyValue &
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::operator[] (CORBA::ULong i)
-@@ -2815,7 +2863,7 @@
-     Messaging::PolicyValue* tmp = ACE_reinterpret_cast(Messaging::PolicyValue*,this->buffer_);
-     return tmp[i];
-   }
--  
-+
-   ACE_INLINE const Messaging::PolicyValue &
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::operator[] (CORBA::ULong i) const
-   // operator []
-@@ -2824,9 +2872,9 @@
-     Messaging::PolicyValue * const tmp = ACE_reinterpret_cast (Messaging::PolicyValue* ACE_CAST_CONST, this->buffer_);
-     return tmp[i];
-   }
--  
-+
-   // Implement the TAO_Base_Sequence methods (see Sequence.h)
--  
-+
-   ACE_INLINE Messaging::PolicyValue *
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::get_buffer (CORBA::Boolean orphan)
-   {
-@@ -2860,13 +2908,13 @@
-     }
-     return result;
-   }
--  
-+
-   ACE_INLINE const Messaging::PolicyValue *
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::get_buffer (void) const
-   {
-     return ACE_reinterpret_cast(const Messaging::PolicyValue * ACE_CAST_CONST, this->buffer_);
-   }
--  
-+
-   ACE_INLINE void
-   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::replace (CORBA::ULong max,
-   CORBA::ULong length,
-@@ -2883,11 +2931,11 @@
-     this->buffer_ = data;
-     this->release_ = release;
-   }
--  
-+
- #endif /* end #if !defined */
- 
- 
--#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
- 
- #if !defined (_MESSAGING_POLICYVALUESEQ_CI_)
- #define _MESSAGING_POLICYVALUESEQ_CI_
-@@ -2943,7 +2991,7 @@
-         {
-           PolicyValueSeq *deep_copy =
-             new PolicyValueSeq (*p.ptr_);
--          
-+
-           if (deep_copy != 0)
-             {
-               PolicyValueSeq *tmp = deep_copy;
-@@ -2953,7 +3001,7 @@
-             }
-         }
-     }
--  
-+
-   return *this;
- }
- 
-@@ -2969,27 +3017,27 @@
-   return this->ptr_;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::PolicyValueSeq_var::operator const ::Messaging::PolicyValueSeq &() const // cast
- {
-   return *this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() // cast 
-+ACE_INLINE
-+Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() // cast
- {
-   return *this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() const // cast 
-+ACE_INLINE
-+Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() const // cast
- {
-   return *this->ptr_;
- }
- 
- // variable-size types only
- ACE_INLINE
--Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq *&() // cast 
-+Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq *&() // cast
- {
-   return this->ptr_;
- }
-@@ -3018,7 +3066,7 @@
-   return *this->ptr_;
- }
- 
--// mapping for variable size 
-+// mapping for variable size
- ACE_INLINE ::Messaging::PolicyValueSeq *&
- Messaging::PolicyValueSeq_var::out (void)
- {
-@@ -3079,7 +3127,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::PolicyValueSeq_out::operator ::Messaging::PolicyValueSeq *&() // cast
- {
-   return this->ptr_;
 @@ -3106,6 +3154,8 @@
  
  #endif /* end #if !defined */
@@ -867,57 +148,6 @@
  ACE_INLINE
  Messaging::ExceptionHolder::ExceptionHolder () // default constructor
  {}
-@@ -3114,7 +3164,7 @@
- Messaging::ExceptionHolder::~ExceptionHolder () // destructor
- {}
- 
--ACE_INLINE const char* 
-+ACE_INLINE const char*
- Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
- {
-   return "IDL:omg.org/Messaging/ExceptionHolder:1.0";
-@@ -3143,7 +3193,7 @@
-   : ptr_ (ACE_const_cast(ExceptionHolder*, p))
- {}
- 
--ACE_INLINE Messaging::ExceptionHolder* 
-+ACE_INLINE Messaging::ExceptionHolder*
- Messaging::ExceptionHolder_var::ptr (void) const
- {
-   return this->ptr_;
-@@ -3183,19 +3233,19 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ExceptionHolder_var::operator const Messaging::ExceptionHolder* () const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder* () // cast 
-+ACE_INLINE
-+Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder* () // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE Messaging::ExceptionHolder* 
-+ACE_INLINE Messaging::ExceptionHolder*
- Messaging::ExceptionHolder_var::operator-> (void) const
- {
-   return this->ptr_;
-@@ -3221,7 +3271,7 @@
-   return this->ptr_;
- }
- 
--ACE_INLINE Messaging::ExceptionHolder* 
-+ACE_INLINE Messaging::ExceptionHolder*
- Messaging::ExceptionHolder_var::_retn (void)
- {
-   // yield ownership of managed obj reference
 @@ -3237,6 +3287,9 @@
  #if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CI_)
  #define _MESSAGING_EXCEPTIONHOLDER___OUT_CI_
@@ -928,42 +158,6 @@
  // *************************************************************
  // Inline operations for class Messaging::ExceptionHolder_out
  // *************************************************************
-@@ -3284,7 +3337,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ExceptionHolder_out::operator Messaging::ExceptionHolder* &() // cast
- {
-   return this->ptr_;
-@@ -3296,7 +3349,7 @@
-   return this->ptr_;
- }
- 
--ACE_INLINE Messaging::ExceptionHolder* 
-+ACE_INLINE Messaging::ExceptionHolder*
- Messaging::ExceptionHolder_out::operator-> (void)
- {
-   return this->ptr_;
-@@ -3372,14 +3425,14 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyHandler_var::operator const ::Messaging::ReplyHandler_ptr &() const // cast
- {
-   return this->ptr_;
- }
- 
--ACE_INLINE 
--Messaging::ReplyHandler_var::operator ::Messaging::ReplyHandler_ptr &() // cast 
-+ACE_INLINE
-+Messaging::ReplyHandler_var::operator ::Messaging::ReplyHandler_ptr &() // cast
- {
-   return this->ptr_;
- }
 @@ -3445,6 +3498,10 @@
    this->ptr_ = ::Messaging::ReplyHandler::_nil ();
  }
@@ -975,15 +169,6 @@
  ACE_INLINE
  Messaging::ReplyHandler_out::ReplyHandler_out (const ::Messaging::ReplyHandler_out &p) // copy constructor
    : ptr_ (ACE_const_cast (ReplyHandler_out &, p).ptr_)
-@@ -3471,7 +3528,7 @@
-   return *this;
- }
- 
--ACE_INLINE 
-+ACE_INLINE
- Messaging::ReplyHandler_out::operator ::Messaging::ReplyHandler_ptr &() // cast
- {
-   return this->ptr_;
 @@ -3492,6 +3549,8 @@
  
  #endif /* end #if !defined */
@@ -993,60 +178,6 @@
  ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::PriorityRange &_tao_aggregate)
  {
    if (
-@@ -3501,7 +3560,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PriorityRange &_tao_aggregate)
-@@ -3513,7 +3572,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::RoutingTypeRange &_tao_aggregate)
-@@ -3525,7 +3584,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::RoutingTypeRange &_tao_aggregate)
-@@ -3537,7 +3596,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- 
-@@ -3564,7 +3623,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValue &_tao_aggregate)
-@@ -3576,7 +3635,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- 
 @@ -3594,6 +3653,8 @@
  
  #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_I_ */
@@ -1056,24 +187,6 @@
  ACE_INLINE CORBA::Boolean
  operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder *_tao_valuetype)
  {
-@@ -3619,7 +3680,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- ACE_INLINE CORBA::Boolean
-@@ -3633,7 +3694,7 @@
-     return 1;
-   else
-     return 0;
--  
-+
- }
- 
- ACE_INLINE CORBA::Boolean
 @@ -3685,3 +3746,4 @@
    return 0;
  }

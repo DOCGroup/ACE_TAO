@@ -42,7 +42,6 @@
 #include "Any.h"
 #include "CDR.h"
 #include "Remote_Object_Proxy_Impl.h"
-#include "tao/SmartProxies/Smart_Proxies.h"
 #include "TimeBaseC.h"
 #include "IOPC.h"
 #include "PolicyC.h"
@@ -2442,125 +2441,40 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
     static void _tao_any_destructor (void*);
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id,
-        CORBA::Environment &ACE_TRY_ENV =
+        const CORBA::Char *type_id, 
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   private:
     _TAO_ReplyHandler_Proxy_Broker *the_TAO_ReplyHandler_Proxy_Broker_;
-
+    
   protected:
     ReplyHandler (int collocated = 0);
-
+    
     protected:
       // This methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode
       virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
-
+      
       ReplyHandler (
-        TAO_Stub *objref,
+        TAO_Stub *objref, 
         CORBA::Boolean _tao_collocated = 0,
         TAO_Abstract_ServantBase *servant = 0
         );
-
+      
       friend class _TAO_ReplyHandler_Remote_Proxy_Impl;
       friend class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
       friend class _TAO_ReplyHandler_Direct_Proxy_Impl;
-
+    
     virtual ~ReplyHandler (void);
   private:
     ReplyHandler (const ReplyHandler &);
     void operator= (const ReplyHandler &);
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-    // Generation of interceptors related RequestInfo classes per operation.
-    // This needed to be able to store the arguments, exceptions, contexts
-    // and build the lists dynamically on demand so that unnecessary time overhead
-    // of building these lists when they arent used is avoided.
-    #endif /* TAO_HAS_INTERCEPTORS */
-
   };
-
-#if (TAO_HAS_SMART_PROXIES == 1)
-class TAO_Export TAO_Messaging_ReplyHandler_Default_Proxy_Factory
-  {
-  public:
-
-    TAO_Messaging_ReplyHandler_Default_Proxy_Factory (int permanent = 1);
-    // <permanent> signifies that the proxy factory will remain
-    // registered with the Proxy Factory Adapter until the program
-    // terminates. That is, it will be a one-shot factory for the
-    // interface.  If this value is set to 0, then the factory will
-    // be unregistered after the first invocation providing the
-    // flexibility of having a different smart proxy per object
-    // instead of per interface.
-
-    virtual ~TAO_Messaging_ReplyHandler_Default_Proxy_Factory (void);
-
-    virtual ReplyHandler_ptr create_proxy (
-        ReplyHandler_ptr proxy,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-  };
-
-class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
-  {
-  public:
-
-    friend class TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
-
-    int register_proxy_factory (
-        TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
-        int one_shot_factory = 1,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    int unregister_proxy_factory (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-    ReplyHandler_ptr create_proxy (
-        ReplyHandler_ptr proxy,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-
-  protected:
-    TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void);
-    ~TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter (void);
-    TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter &operator= (
-        const TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter &
-      );
-    TAO_Messaging_ReplyHandler_Default_Proxy_Factory *proxy_factory_;
-    int one_shot_factory_;
-    int disable_factory_;
-    TAO_SYNCH_RECURSIVE_MUTEX lock_;
-
-  };
-
-  typedef TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
-
-  class TAO_Export TAO_Messaging_ReplyHandler_Smart_Proxy_Base
-    : public virtual ReplyHandler,
-      public virtual TAO_Smart_Proxy_Base
-  {
-  public:
-    TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void);
-    ~TAO_Messaging_ReplyHandler_Smart_Proxy_Base (void);
-    virtual TAO_Stub *_stubobj (void) const;
-    protected:
-    ::Messaging::ReplyHandler_ptr get_proxy (void);
-    ::Messaging::ReplyHandler_var proxy_;
-  };
-
-#endif /* TAO_HAS_SMART_PROXIES */
 
 
 // The Proxy Implementations are used by each interface to
@@ -2832,11 +2746,11 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_pt
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
 #if defined (__BORLANDC__)
 #pragma option pop
 #endif /* __BORLANDC__ */
 
 #include "ace/post.h"
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 #endif /* ifndef */
