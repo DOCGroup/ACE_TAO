@@ -10,7 +10,8 @@ Mon Jan  7 15:08:25 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  Changed ::taskDelay (1) to ::taskDelay (0) for VxWorks in 
 	  thr_yield ().  The change with (0), now does seem to perform
 	  the yield correctly as reflected in the Yield-Test of 
-	  context_switch_time.
+	  context_switch_time.  Thanks to Charlie Grames <charlie.grames@windriver.com>
+	  for this tip.
 
 Mon Jan  7 15:16:10 2002  Ossama Othman  <ossama@uci.edu>
 
