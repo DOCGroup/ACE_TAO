@@ -91,6 +91,11 @@ ACE_Timeprobe<ACE_LOCK>::event_descriptions (const char **descriptions,
 template <class ACE_LOCK> void
 ACE_Timeprobe<ACE_LOCK>::print_times (void)
 {
+  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+
+  // Sort the event descriptions
+  this->sort_event_descriptions_i ();
+
   ACE_DEBUG ((LM_DEBUG,
               "\nACE_Timeprobe; %d timestamps were recorded:\n",
               this->current_size_));
@@ -106,7 +111,7 @@ ACE_Timeprobe<ACE_LOCK>::print_times (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "%-50.50s %8.8x %13.13s\n",
-              this->find_description (0),
+              this->find_description_i (0),
               this->timeprobes_[0].thread_,
               "START"));
 
@@ -120,22 +125,22 @@ ACE_Timeprobe<ACE_LOCK>::print_times (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   "%-50.50s %8.8x %13u\n",
-                  this->find_description (i),
+                  this->find_description_i (i),
                   this->timeprobes_[i].thread_,
                   (unsigned int) elapsed_time_in_micro_seconds));
     }
 }
 
 template <class ACE_LOCK> const char *
-ACE_Timeprobe<ACE_LOCK>::find_description (u_long i)
+ACE_Timeprobe<ACE_LOCK>::find_description_i (u_long i)
 {
   if (this->timeprobes_[i].event_type_ == timeprobe_t::STRING)
     return this->timeprobes_[i].event_.event_description_;
   else
     {
-      EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
+      EVENT_DESCRIPTIONS::iterator iterator = this->sorted_event_descriptions_.begin ();
       for (u_long j = 0;
-           j < this->event_descriptions_.size () - 1;
+           j < this->sorted_event_descriptions_.size () - 1;
            iterator++, j++)
         {
           EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
@@ -145,6 +150,31 @@ ACE_Timeprobe<ACE_LOCK>::find_description (u_long i)
             break;
         }
       return (*iterator).descriptions_[this->timeprobes_[i].event_.event_number_ - (*iterator).minimum_id_];
+    }
+}
+
+template <class ACE_LOCK> void
+ACE_Timeprobe<ACE_LOCK>::sort_event_descriptions_i (void)
+{
+  size_t total_elements = this->event_descriptions_.size ();
+
+  for (size_t i = 0;
+       i < total_elements;
+       i++)
+    {
+      EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
+      Event_Descriptions min_entry = *iterator;
+
+      for (;
+           iterator != this->event_descriptions_.end ();
+           iterator++)
+        {
+          if ((*iterator).minimum_id_ < min_entry.minimum_id_)
+            min_entry = *iterator;
+        }
+
+      this->sorted_event_descriptions_.insert (min_entry);
+      this->event_descriptions_.remove (min_entry);
     }
 }
 
