@@ -32,14 +32,14 @@
 class  simple_i : public virtual POA_simple
 {
 public:
-  //Constructor 
+  //Constructor
   simple_i (void);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~simple_i (void);
-  
+
 virtual void test (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
