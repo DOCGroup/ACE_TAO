@@ -415,39 +415,41 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
     );
 
   for (;;)
-  {
-    _tao_call.start (ACE_TRY_ENV);
-    ACE_CHECK_RETURN (_tao_retval);
+    {
+      _tao_call.start (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
-    ACE_CHECK_RETURN (_tao_retval);
+      _tao_call.prepare_header (1, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (_tao_retval);
 
-    int _invoke_status =
-      _tao_call.invoke (0, 0, ACE_TRY_ENV);
-    ACE_CHECK_RETURN (_tao_retval);
+      int _invoke_status =
+        _tao_call.invoke (0, 0, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (_tao_retval);
 
-    if (_invoke_status == TAO_INVOKE_RESTART)
-      continue;
-    // if (_invoke_status == TAO_INVOKE_EXCEPTION)
+      if (_invoke_status == TAO_INVOKE_RESTART)
+        continue;
+      // if (_invoke_status == TAO_INVOKE_EXCEPTION)
       // cannot happen
-    if (_invoke_status != TAO_INVOKE_OK)
-      {
-        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                          CORBA::COMPLETED_YES),
-                          _tao_retval);
-      }
-    break;
-  }
+      if (_invoke_status != TAO_INVOKE_OK)
+        {
+          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                            CORBA::COMPLETED_YES),
+                            _tao_retval);
+        }
+      break;
+    }
 
 #if defined (TAO_HAS_INTERFACE_REPOSITORY)
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
         (_tao_in >> _tao_retval)
-    ))
+        ))
     ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+
+  return _tao_retval;
 #else
-    ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INTF_REPOS (), _tao_retval);
+  ACE_UNUSED_ARG (_tao_retval);
+  ACE_THROW_RETURN (CORBA::INTF_REPOS (), _tao_retval);
 #endif
 }
 
