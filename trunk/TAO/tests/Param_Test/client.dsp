@@ -134,10 +134,6 @@ SOURCE=.\helper.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\longlong.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\nested_struct.cpp
 # End Source File
 # Begin Source File
@@ -203,6 +199,10 @@ SOURCE=.\ub_string.cpp
 # Begin Source File
 
 SOURCE=.\ub_struct_seq.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ulonglong.cpp
 # End Source File
 # Begin Source File
 
@@ -327,6 +327,10 @@ SOURCE=.\ub_string.h
 # Begin Source File
 
 SOURCE=.\ub_struct_seq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ulonglong.h
 # End Source File
 # Begin Source File
 

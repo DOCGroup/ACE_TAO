@@ -1,3 +1,12 @@
+Tue Aug 18 15:43:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Param_Test/ub_objref_seq.cpp:
+	* Param_Test/client.dsp:
+	* Param_Test/README:
+	  DII test now works with objref sequences. Also changed client
+	  file to reflect that longlong.cpp was changed to ulonglong.cpp.
+	  Updated README file.
+
 Tue Aug 18 15:23:21 1998  Steve Huston  <shuston@riverace.com>
 
 	* tao/Any.cpp: Use operator delete directly, rather than delete, to
