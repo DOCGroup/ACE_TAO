@@ -2,7 +2,7 @@
 
 #include "ace/Registry_Name_Space.h"
 
-#if (defined (ACE_WIN32) && (defined (UNICODE)))
+#if (defined (ACE_WIN32) && defined (UNICODE))
 // This only works on Win32 platforms when UNICODE is turned on
 
 ACE_Registry_Name_Space::ACE_Registry_Name_Space (void)

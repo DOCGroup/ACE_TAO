@@ -1300,8 +1300,10 @@ typedef void (*ACE_SignalHandlerV)(...);
 // The following 3 defines are used by the ACE Name Server...
 #define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp"
 #define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
-#define ACE_DEFAULT_LOCALNAME "\\localnames"
-#define ACE_DEFAULT_GLOBALNAME "\\globalnames"
+#define ACE_DEFAULT_LOCALNAME_A "\\localnames"
+#define ACE_DEFAULT_LOCALNAME_W L"\\localnames"
+#define ACE_DEFAULT_GLOBALNAME_A "\\globalnames"
+#define ACE_DEFAULT_GLOBALNAME_W L"\\globalnames"
 
 // Used for ACE_MMAP_Memory_Pool
 #define ACE_DEFAULT_BACKING_STORE __TEXT ("C:\\temp\\ace-malloc-XXXXXX")
@@ -1552,13 +1554,17 @@ typedef char TCHAR;
 
 // The following 3 defines are used by the ACE Name Server...
 #define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#define ACE_DEFAULT_LOCALNAME_A "/localnames"
+#define ACE_DEFAULT_GLOBALNAME_A "/globalnames"
 #if defined (ACE_HAS_UNICODE)
 #define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
+#define ACE_DEFAULT_LOCALNAME_W L"/localnames"
+#define ACE_DEFAULT_GLOBALNAME_W L"/globalnames"
 #else
 #define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
+#define ACE_DEFAULT_LOCALNAME_W "/localnames"
+#define ACE_DEFAULT_GLOBALNAME_W "/globalnames"
 #endif /* ACE_HAS_UNICODE */
-#define ACE_DEFAULT_LOCALNAME "/localnames"
-#define ACE_DEFAULT_GLOBALNAME "/globalnames"
 
 // Used for ACE_MMAP_Memory_Pool
 #define ACE_DEFAULT_BACKING_STORE "/tmp/ace-malloc-XXXXXX" 
@@ -2783,6 +2789,8 @@ private:
 #if defined (UNICODE)
 
 #define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_W
+#define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_W 
+#define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_W
 #define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_W
 #define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_W
 
@@ -2792,6 +2800,8 @@ private:
 #else
 
 #define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_A
+#define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_A
+#define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_A
 #define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_A
 #define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_A
 

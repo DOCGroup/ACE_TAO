@@ -364,10 +364,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
   ACE_TRACE ("ACE_Local_Name_Space::create_manager");
   // Get directory name
   LPCTSTR dir = this->name_options_->namespace_dir ();
+  LPCTSTR database = this->name_options_->database ();
 
   // Use process name as the file name.
   size_t len = ACE_OS::strlen (dir);
-  len += ACE_OS::strlen (this->name_options_->database ()) + 1;
+  len += ACE_OS::strlen (database) + 1;
 
   if (len >= MAXNAMELEN)
     {
@@ -377,20 +378,30 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
 
   ACE_OS::strcpy (this->context_file_, dir);
   ACE_OS::strcat (this->context_file_, ACE_DIRECTORY_SEPARATOR_STR);
-  ACE_OS::strcat (this->context_file_, this->name_options_->database ());
+  ACE_OS::strcat (this->context_file_, database);
 
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
 
   TCHAR lock_name_for_local_name_space [MAXNAMELEN];
   TCHAR lock_name_for_backing_store [MAXNAMELEN];
-  LPCTSTR prefix = ACE::basename (this->context_file_,
-				  ACE_DIRECTORY_SEPARATOR_CHAR);
+  LPCTSTR postfix = database;
 
-  ACE_OS::strcpy (lock_name_for_local_name_space , prefix);
-  ACE_OS::strcat (lock_name_for_local_name_space, "_name_space");
-
-  ACE_OS::strcpy (lock_name_for_backing_store, prefix);
-  ACE_OS::strcat (lock_name_for_backing_store, "_backing_store");
+  size_t length = 0;
+  length = sizeof lock_name_for_local_name_space / sizeof TCHAR;
+  ACE_OS::strncpy (lock_name_for_local_name_space, 
+		   __TEXT ("name_space_"),
+		   length);
+  ACE_OS::strcat (lock_name_for_local_name_space, 
+		  postfix,
+		  length - ACE_OS::strlen (__TEXT ("name_space_")));
+  
+  length = sizeof lock_name_for_backing_store / sizeof TCHAR;
+  ACE_OS::strncpy (lock_name_for_local_backing_store, 
+		   __TEXT ("backing_store_"),
+		   length);
+  ACE_OS::strcat (lock_name_for_backing_store, 
+		  postfix,
+		  length - ACE_OS::strlen (__TEXT ("backing_store_")));
 
   // Create the allocator with the appropriate options.
   ACE_NEW_RETURN (this->allocator_, 
