@@ -42,7 +42,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::pop_back (void)
 
 // Compare this vector with <s> for inequality.
 
-template <class T, size_t DEFAULT_SIZE> ACE_INLINE int
+template <class T, size_t DEFAULT_SIZE> ACE_INLINE bool
 ACE_Vector<T, DEFAULT_SIZE>::operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const
 {
   return !(*this == s);

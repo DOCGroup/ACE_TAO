@@ -64,50 +64,50 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-- (int)
   return this->value_--;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator== (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator==");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, false);
   return this->value_ == rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator!= (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator!=");
   return !(*this == rhs);
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator>= (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator>=");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, false);
   return this->value_ >= rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator> (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator>");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, false);
   return this->value_ > rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator<= (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator<=");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, false);
   return this->value_ <= rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator< (const TYPE &rhs) const
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator<");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, false);
   return this->value_ < rhs;
 }
 
@@ -202,37 +202,37 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-= (const TYPE &rhs)
   return this->impl_ -= rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator== (const TYPE &rhs) const
 {
   return this->impl_ == rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator!= (const TYPE &rhs) const
 {
   return this->impl_ != rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator>= (const TYPE &rhs) const
 {
   return this->impl_ >= rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator> (const TYPE &rhs) const
 {
   return this->impl_ > rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator<= (const TYPE &rhs) const
 {
   return this->impl_ <= rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
+template <class ACE_LOCK, class TYPE> ACE_INLINE bool
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator< (const TYPE &rhs) const
 {
   return this->impl_ < rhs;

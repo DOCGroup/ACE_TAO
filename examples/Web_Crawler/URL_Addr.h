@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -79,12 +80,12 @@ public:
   ~ACE_URL_Addr (void);
   // Destructor.
 
-  int operator == (const ACE_URL_Addr &SAP) const;
+  bool operator == (const ACE_URL_Addr &SAP) const;
   // Compare two addresses for equality.  The addresses are considered
   // equal if they contain the same IP address, port number, and path
   // name.
 
-  int operator != (const ACE_URL_Addr &SAP) const;
+  bool operator != (const ACE_URL_Addr &SAP) const;
   // Compare two addresses for inequality.
 
   virtual u_long hash (void) const;

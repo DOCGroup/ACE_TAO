@@ -341,14 +341,14 @@ ACE_Unbounded_Set_Iterator<T>::operator* (void)
   return *retv;
 }
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_Set_Iterator<T>::operator== (const ACE_Unbounded_Set_Iterator<T> &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_Set_Iterator<T>::operator!= (const ACE_Unbounded_Set_Iterator<T> &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator!=");

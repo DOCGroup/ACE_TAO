@@ -74,13 +74,13 @@ ACE_Errno_Guard::operator= (int error)
   return this->error_ = error;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Errno_Guard::operator== (int error)
 {
   return this->error_ == error;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Errno_Guard::operator!= (int error)
 {
   return this->error_ != error;

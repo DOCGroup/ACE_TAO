@@ -1,9 +1,125 @@
+Thu Apr 22 20:01:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ATM_Addr.cpp:
+	* ace/ATM_Addr.h:
+	* ace/ATM_Addr.i:
+	* ace/Active_Map_Manager.h:
+	* ace/Active_Map_Manager.i:
+	* ace/Addr.h:
+	* ace/Addr.i:
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.i:
+	* ace/Atomic_Op_T.h:
+	* ace/Atomic_Op_T.i:
+	* ace/Based_Pointer_T.h:
+	* ace/Based_Pointer_T.i:
+	* ace/Basic_Types.h:
+	* ace/Basic_Types.i:
+	* ace/Bound_Ptr.h:
+	* ace/Bound_Ptr.i:
+	* ace/CDR_Base.cpp:
+	* ace/CDR_Base.h:
+	* ace/Cache_Map_Manager_T.h:
+	* ace/Cache_Map_Manager_T.i:
+	* ace/Cleanup.cpp:
+	* ace/Cleanup.h:
+	* ace/Configuration.cpp:
+	* ace/Configuration.h:
+	* ace/Containers_T.cpp:
+	* ace/Containers_T.h:
+	* ace/Containers_T.i:
+	* ace/DEV_Addr.h:
+	* ace/DEV_Addr.i:
+	* ace/FILE_Addr.h:
+	* ace/FILE_Addr.i:
+	* ace/Functor_T.h:
+	* ace/Functor_T.i:
+	* ace/Future.cpp:
+	* ace/Future.h:
+	* ace/Get_Opt.h:
+	* ace/Get_Opt.i:
+	* ace/Hash_Map_Manager_T.h:
+	* ace/Hash_Map_Manager_T.i:
+	* ace/INET_Addr.cpp:
+	* ace/INET_Addr.h:
+	* ace/INET_Addr.i:
+	* ace/IOStream.h:
+	* ace/Local_Name_Space.cpp:
+	* ace/Local_Name_Space.h:
+	* ace/Local_Tokens.h:
+	* ace/Local_Tokens.i:
+	* ace/MEM_Addr.h:
+	* ace/MEM_Addr.i:
+	* ace/Map_Manager.h:
+	* ace/Map_Manager.i:
+	* ace/Map_T.h:
+	* ace/Map_T.i:
+	* ace/Name_Space.cpp:
+	* ace/Name_Space.h:
+	* ace/OS_Errno.h:
+	* ace/OS_Errno.inl:
+	* ace/OS_NS_Thread.cpp:
+	* ace/OS_NS_Thread.h:
+	* ace/Pair_T.h:
+	* ace/Pair_T.i:
+	* ace/RB_Tree.h:
+	* ace/RB_Tree.i:
+	* ace/Refcounted_Auto_Ptr.h:
+	* ace/Refcounted_Auto_Ptr.i:
+	* ace/Registry.cpp:
+	* ace/Registry.h:
+	* ace/SPIPE_Addr.h:
+	* ace/SPIPE_Addr.i:
+	* ace/SString.h:
+	* ace/SString.i:
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_Base.i:
+	* ace/Service_Config.h:
+	* ace/Service_Config.i:
+	* ace/Strategies_T.h:
+	* ace/Strategies_T.i:
+	* ace/String_Base.cpp:
+	* ace/String_Base.h:
+	* ace/String_Base.i:
+	* ace/Thread_Manager.h:
+	* ace/Thread_Manager.i:
+	* ace/Time_Value.h:
+	* ace/Time_Value.inl:
+	* ace/Timeprobe.h:
+	* ace/Timeprobe.i:
+	* ace/UNIX_Addr.h:
+	* ace/UNIX_Addr.i:
+	* ace/Unbounded_Set.cpp:
+	* ace/Unbounded_Set.h:
+	* ace/Unbounded_Set_Ex.cpp:
+	* ace/Unbounded_Set_Ex.h:
+	* ace/Vector_T.cpp:
+	* ace/Vector_T.h:
+	* ace/Vector_T.i:
+	* ace/CLASSIX/CLASSIX_Group.h:
+	* ace/CLASSIX/CLASSIX_Group.i:
+	* ace/CLASSIX/CLASSIX_Port.h:
+	* ace/CLASSIX/CLASSIX_Port.i:
+	* apps/Gateway/Gateway/Event.h:
+	* apps/JAWS/clients/Caching/Local_Locator.h:
+	* apps/JAWS/clients/Caching/Local_Locator.i:
+	* apps/JAWS/clients/Caching/URL_Properties.h:
+	* apps/JAWS/clients/Caching/URL_Properties.i:
+	* docs/tutorials/016/Condition_i.cpp:
+	* docs/tutorials/016/Condition_i.h:
+	* docs/tutorials/016/condition.cpp:
+	* examples/Web_Crawler/URL_Addr.cpp:
+	* examples/Web_Crawler/URL_Addr.h:
+
+	  Changed all return types for equality, relational and logical
+	  operators to "bool", as is the norm for modern C++.
+	  
 Thu Apr 22 17:06:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.inl (mutex_init):
 
-          Explicitly cast the unused returned values of two
-          ACE_ADAPT_RETVAL macro calls to "void" to address a "right-hand
+          Explicitly cast the unused returned values of an
+	  ACE_ADAPT_RETVAL macro call to "void" to address a "right-hand
           operand of comma has no effect" warning exhibited by GNU g++ 3.4
           (pre-release).
 

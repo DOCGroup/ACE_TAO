@@ -70,8 +70,8 @@ public:
   void encode (void *data) const;
 
   /// Compare keys.
-  int operator== (const ACE_Active_Map_Manager_Key &rhs) const;
-  int operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
+  bool operator== (const ACE_Active_Map_Manager_Key &rhs) const;
+  bool operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
 
   // = This really should be protected but because of template
   // friends, they are not.

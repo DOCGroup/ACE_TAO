@@ -1967,7 +1967,7 @@ public:
    * if their <size>'s are equal and all the elements from 0 .. <size>
    * are equal.
    */
-  int operator== (const ACE_Array<T> &s) const;
+  bool operator== (const ACE_Array<T> &s) const;
 
   ///Inequality comparison operator.
   /**
@@ -1975,7 +1975,7 @@ public:
    * <s> is always the complement of the boolean return value of
    * <*this> == <s>.
    */
-  int operator!= (const ACE_Array<T> &s) const;
+  bool operator!= (const ACE_Array<T> &s) const;
 };
 
 #if defined (__ACE_INLINE__)

@@ -173,7 +173,7 @@ public:
    * Compare this vector with @arg s for equality.  Two vectors are equal
    * if their sizes are equal and all the elements are equal.
    */
-  int operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+  bool operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
 
   ///Inequality comparison operator.
   /**
@@ -181,7 +181,7 @@ public:
    * @arg s is always the complement of the boolean return value of
    * @c *this == @arg s.
    */
-  int operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+  bool operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
 
 protected:
 
@@ -206,7 +206,7 @@ protected:
 
 /**
  * Compare two vectors in the range of [from_ndx..to_ndx].  This
- * template function requires class T to have the operator!=()
+ * template function requires class T to have the bool operator!=()
  * declared in the class.  It is safe to define vectors of scalar data
  * types, like int, double, etc., including class ACE_TString.
  *

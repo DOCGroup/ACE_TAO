@@ -575,10 +575,10 @@ public:
   const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree (void);
 
   /// Comparison operator: returns 1 if both iterators point to the same position, otherwise 0.
-  int operator== (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
 
   /// Comparison operator: returns 1 if the iterators point to different positions, otherwise 0.
-  int operator!= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator!= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -790,9 +790,9 @@ public:
                                 int set_last = 1);
 
   /**
-   * Constructor.  Takes an ACE_RB_Tree over which to iterate, and 
+   * Constructor.  Takes an ACE_RB_Tree over which to iterate, and
    * a point to a node in the tree.
-   */  
+   */
   ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                                 ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry);
 

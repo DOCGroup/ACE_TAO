@@ -544,13 +544,13 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
 }
 
 #if defined (NONNATIVE_LONGLONG)
-int
+bool
 ACE_CDR::LongLong::operator== (const ACE_CDR::LongLong &rhs) const
 {
   return this->h == rhs.h && this->l == rhs.l;
 }
 
-int
+bool
 ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
 {
   return this->l != rhs.l || this->h != rhs.h;
@@ -559,13 +559,13 @@ ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
 #endif /* NONNATIVE_LONGLONG */
 
 #if defined (NONNATIVE_LONGDOUBLE)
-int
+bool
 ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
 {
   return ACE_OS::memcmp (this->ld, rhs.ld, 16) == 0;
 }
 
-int
+bool
 ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 {
   return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
@@ -589,9 +589,9 @@ ACE_CDR::Float::operator= (const float & /* rhs */)
   return *this;
 }
 
-int
+bool
 ACE_CDR::Float::operator!= (const ACE_CDR::Float & /* rhs */) const
 {
-  return 0;
+  return false;
 }
 #endif /* _UNICOS */

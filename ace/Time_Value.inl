@@ -176,7 +176,7 @@ operator * (const ACE_Time_Value &tv, double d)
 
 // True if tv1 > tv2.
 
-ACE_INLINE int
+ACE_INLINE bool
 operator > (const ACE_Time_Value &tv1,
             const ACE_Time_Value &tv2)
 {
@@ -192,7 +192,7 @@ operator > (const ACE_Time_Value &tv1,
 
 // True if tv1 >= tv2.
 
-ACE_INLINE int
+ACE_INLINE bool
 operator >= (const ACE_Time_Value &tv1,
              const ACE_Time_Value &tv2)
 {
@@ -237,7 +237,7 @@ ACE_Time_Value::ACE_Time_Value (const timespec_t &tv)
 
 // True if tv1 < tv2.
 
-ACE_INLINE int
+ACE_INLINE bool
 operator < (const ACE_Time_Value &tv1,
             const ACE_Time_Value &tv2)
 {
@@ -247,7 +247,7 @@ operator < (const ACE_Time_Value &tv1,
 
 // True if tv1 >= tv2.
 
-ACE_INLINE int
+ACE_INLINE bool
 operator <= (const ACE_Time_Value &tv1,
              const ACE_Time_Value &tv2)
 {
@@ -257,7 +257,7 @@ operator <= (const ACE_Time_Value &tv1,
 
 // True if tv1 == tv2.
 
-ACE_INLINE int
+ACE_INLINE bool
 operator == (const ACE_Time_Value &tv1,
              const ACE_Time_Value &tv2)
 {
@@ -268,7 +268,7 @@ operator == (const ACE_Time_Value &tv1,
 
 // True if tv1 != tv2.
 
-ACE_INLINE int
+ACE_INLINE bool
 operator != (const ACE_Time_Value &tv1,
              const ACE_Time_Value &tv2)
 {
@@ -326,4 +326,3 @@ operator - (const ACE_Time_Value &tv1,
   delta.normalize ();
   return delta;
 }
-

@@ -188,14 +188,14 @@ ACE_Thread_ID::to_string (char* thr_id)
 #endif /* ACE_WIN32 */
 }
 
-int
+bool
 ACE_Thread_ID::operator== (const ACE_Thread_ID &rhs) const
 {
   return ACE_OS::thr_cmp (this->thread_handle_, rhs.thread_handle_) == 0
     && ACE_OS::thr_equal (this->thread_id_, rhs.thread_id_) == 0;
 }
 
-int
+bool
 ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 {
   return !(*this == rhs);
@@ -475,7 +475,7 @@ ACE_TSS_Ref::ACE_TSS_Ref (void)
 }
 
 // Check for equality.
-int
+bool
 ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 {
   ACE_OS_TRACE ("ACE_TSS_Ref::operator==");
@@ -485,7 +485,7 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 
 // Check for inequality.
 ACE_SPECIAL_INLINE
-int
+bool
 ACE_TSS_Ref::operator != (const ACE_TSS_Ref &tss_ref) const
 {
   ACE_OS_TRACE ("ACE_TSS_Ref::operator !=");
@@ -518,21 +518,21 @@ ACE_TSS_Info::ACE_TSS_Info (void)
 }
 
 # if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-static inline int operator== (const ACE_thread_key_t &lhs,
-                              const ACE_thread_key_t &rhs)
+static inline bool operator== (const ACE_thread_key_t &lhs,
+                               const ACE_thread_key_t &rhs)
 {
   return ! ACE_OS::memcmp (&lhs, &rhs, sizeof (ACE_thread_key_t));
 }
 
-static inline int operator!= (const ACE_thread_key_t &lhs,
-                              const ACE_thread_key_t &rhs)
+static inline bool operator!= (const ACE_thread_key_t &lhs,
+                               const ACE_thread_key_t &rhs)
 {
   return ! (lhs == rhs);
 }
 # endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
 // Check for equality.
-int
+bool
 ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 {
   ACE_OS_TRACE ("ACE_TSS_Info::operator==");
@@ -541,7 +541,7 @@ ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 }
 
 // Check for inequality.
-int
+bool
 ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
 {
   ACE_OS_TRACE ("ACE_TSS_Info::operator !=");

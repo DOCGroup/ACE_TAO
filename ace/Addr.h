@@ -62,10 +62,10 @@ public:
 
   // = Equality/inequality tests
   /// Check for address equality.
-  int operator == (const ACE_Addr &sap) const;
+  bool operator == (const ACE_Addr &sap) const;
 
   /// Check for address inequality.
-  int operator != (const ACE_Addr &sap) const;
+  bool operator != (const ACE_Addr &sap) const;
 
   /// Initializes instance variables.
   void base_set (int type, int size);

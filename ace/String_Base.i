@@ -239,7 +239,7 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 
 // Comparison operator.
 
-template <class CHAR> ACE_INLINE int
+template <class CHAR> ACE_INLINE bool
 ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator==");
@@ -249,7 +249,7 @@ ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 
 // Less than comparison operator.
 
-template <class CHAR> ACE_INLINE int
+template <class CHAR> ACE_INLINE bool
 ACE_String_Base<CHAR>::operator < (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator <");
@@ -258,7 +258,7 @@ ACE_String_Base<CHAR>::operator < (const ACE_String_Base<CHAR> &s) const
 
 // Greater than comparison operator.
 
-template <class CHAR> ACE_INLINE int
+template <class CHAR> ACE_INLINE bool
 ACE_String_Base<CHAR>::operator > (const ACE_String_Base &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator >");
@@ -268,7 +268,7 @@ ACE_String_Base<CHAR>::operator > (const ACE_String_Base &s) const
 
 // Comparison operator.
 
-template <class CHAR> ACE_INLINE int
+template <class CHAR> ACE_INLINE bool
 ACE_String_Base<CHAR>::operator!= (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator!=");

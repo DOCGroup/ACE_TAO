@@ -33,7 +33,7 @@ ACE_Active_Map_Manager_Key::slot_generation (void) const
   return this->key_data_.slot_generation_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) const
 {
   return
@@ -41,7 +41,7 @@ ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) c
     this->key_data_.slot_generation_ == rhs.key_data_.slot_generation_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Active_Map_Manager_Key::operator!= (const ACE_Active_Map_Manager_Key &rhs) const
 {
   return !this->operator== (rhs);

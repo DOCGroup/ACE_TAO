@@ -78,37 +78,37 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (long rhs)
 #endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator== (long rhs) const
 {
   return (this->value_ == rhs);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator!= (long rhs) const
 {
   return (this->value_ != rhs);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator>= (long rhs) const
 {
   return (this->value_ >= rhs);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator> (long rhs) const
 {
   return (this->value_ > rhs);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator<= (long rhs) const
 {
   return (this->value_ <= rhs);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator< (long rhs) const
 {
   return (this->value_ < rhs);

@@ -372,18 +372,18 @@ typedef ptrdiff_t ptr_arith_t;
     ~ACE_U_LongLong (void);
 
     // = Overloaded relation operators.
-    int operator== (const ACE_U_LongLong &) const;
-    int operator== (const ACE_UINT32) const;
-    int operator!= (const ACE_U_LongLong &) const;
-    int operator!= (const ACE_UINT32) const;
-    int operator< (const ACE_U_LongLong &) const;
-    int operator< (const ACE_UINT32) const;
-    int operator<= (const ACE_U_LongLong &) const;
-    int operator<= (const ACE_UINT32) const;
-    int operator> (const ACE_U_LongLong &) const;
-    int operator> (const ACE_UINT32) const;
-    int operator>= (const ACE_U_LongLong &) const;
-    int operator>= (const ACE_UINT32) const;
+    bool operator== (const ACE_U_LongLong &) const;
+    bool operator== (const ACE_UINT32) const;
+    bool operator!= (const ACE_U_LongLong &) const;
+    bool operator!= (const ACE_UINT32) const;
+    bool operator< (const ACE_U_LongLong &) const;
+    bool operator< (const ACE_UINT32) const;
+    bool operator<= (const ACE_U_LongLong &) const;
+    bool operator<= (const ACE_UINT32) const;
+    bool operator> (const ACE_U_LongLong &) const;
+    bool operator> (const ACE_UINT32) const;
+    bool operator>= (const ACE_U_LongLong &) const;
+    bool operator>= (const ACE_UINT32) const;
 
     ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
     ACE_U_LongLong operator+ (const ACE_UINT32) const;

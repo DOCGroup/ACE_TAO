@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,6 +15,7 @@
 
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Unbounded_Set.h"
@@ -64,7 +65,7 @@ protected:
  * An ACE_Future_Observer object implements an object that is
  * subscribed with an ACE_Future object so that it may be notified
  * when the value of the ACE_Future object is written to by a writer
- * thread.  It uses the Observer pattern. 
+ * thread.  It uses the Observer pattern.
  */
 template <class T>
 class ACE_Future_Observer
@@ -266,15 +267,16 @@ public:
   int cancel (void);
 
   /**
-   * Equality operator that returns 1 if both ACE_Future objects
-   * point to the same ACE_Future_Rep object.  Attention: It also
-   * returns 1 if both objects have just been instantiated and not
-   * used yet.
+   * Equality operator that returns @c true if both ACE_Future objects
+   * point to the same ACE_Future_Rep object.
+   *
+   * @note It also returns @c true if both objects have just been
+   *       instantiated and not used yet.
    */
-  int operator == (const ACE_Future<T> &r) const;
+  bool operator == (const ACE_Future<T> &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  int operator != (const ACE_Future<T> &r) const;
+  bool operator != (const ACE_Future<T> &r) const;
 
   /**
    * Make the result available. Is used by the server thread to give
@@ -374,5 +376,7 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_FUTURE_H */

@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE size_t
@@ -29,7 +29,7 @@ ACE_URL_Property::ACE_URL_Property (const ACE_URL_Property &p)
     value_ (p.value_)
 {
 }
-  
+
 ACE_INLINE
 ACE_URL_Property::~ACE_URL_Property (void)
 {
@@ -46,17 +46,17 @@ ACE_URL_Property::operator= (const ACE_URL_Property &rhs)
   return *this;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_URL_Property::operator== (const ACE_URL_Property &rhs) const
 {
   if (this == &rhs || this->name_ != rhs.name_ ||
       this->value_ != rhs.value_)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_URL_Property::operator!= (const ACE_URL_Property &rhs) const
 {
   return !(*this == rhs);
@@ -84,7 +84,7 @@ ACE_INLINE void
 ACE_URL_Property::name (const ACE_USHORT16 *n)
 {
   this->name_ = ACE_WString (n);
-}  
+}
 
 ACE_INLINE ACE_WString &
 ACE_URL_Property::value_rep (void)
@@ -149,18 +149,18 @@ ACE_URL_Offer::operator= (const ACE_URL_Offer &rhs)
   return *this;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_URL_Offer::operator== (const ACE_URL_Offer &rhs) const
 {
   if (this == &rhs
       && this->url_ == rhs.url_
       && this->prop_ == rhs.prop_)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_URL_Offer::operator!= (const ACE_URL_Offer &rhs) const
 {
   return !(*this == rhs);
@@ -195,7 +195,7 @@ ACE_URL_Offer::url_properties (void)
 {
   return this->prop_;
 }
-  
+
 ACE_INLINE void
 ACE_URL_Offer::url_properties (const ACE_URL_Property_Seq &prop)
 {

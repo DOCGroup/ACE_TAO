@@ -119,12 +119,12 @@ public:
 
   /// Compare two addresses for equality.  The addresses are considered
   /// equal if they contain the same IP address and port number.
-  int operator == (const ACE_MEM_Addr &SAP) const;
-  int operator == (const ACE_INET_Addr &SAP) const;
+  bool operator == (const ACE_MEM_Addr &SAP) const;
+  bool operator == (const ACE_INET_Addr &SAP) const;
 
   /// Compare two addresses for inequality.
-  int operator != (const ACE_MEM_Addr &SAP) const;
-  int operator != (const ACE_INET_Addr &SAP) const;
+  bool operator != (const ACE_MEM_Addr &SAP) const;
+  bool operator != (const ACE_INET_Addr &SAP) const;
 
   /// Computes and returns hash value.
   virtual u_long hash (void) const;

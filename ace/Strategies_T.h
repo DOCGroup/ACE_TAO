@@ -800,8 +800,8 @@ public:
   virtual ~ACE_Refcounted_Hash_Recyclable (void);
 
   /// Compares two instances.
-  int operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
-  int operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
+  bool operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
+  bool operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
 
   T &subject ();
 

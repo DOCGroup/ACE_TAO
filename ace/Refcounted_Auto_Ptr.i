@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Refcounted_Auto_Ptr.i
-
-#include "ace/Synch_T.h"
+#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 
 template <class X, class ACE_LOCK> inline int
@@ -165,13 +164,13 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::~ACE_Refcounted_Auto_Ptr (void)
   AUTO_REFCOUNTED_PTR_REP::detach (rep_);
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator== (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const
 {
   return r.rep_ == this->rep_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator!= (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const
 {
   return r.rep_ != this->rep_;
@@ -220,4 +219,3 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator = (const ACE_Refcounted_Auto_Ptr<
   AUTO_REFCOUNTED_PTR_REP::assign (this->rep_,
                                    AUTO_REFCOUNTED_PTR_REP::attach (r.rep_));
 }
-

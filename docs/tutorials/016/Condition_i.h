@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef CONDITION_H
@@ -53,7 +55,7 @@ public:
 
   /* These four operators perform the actual waiting.  For instance:
 
-     operator!=(int _value)
+     bool operator!=(int _value)
 
      is implemented as:
 
@@ -74,19 +76,19 @@ public:
      ...  */
 
   // As long as the condition variable is NOT EQUAL TO <value>, we wait
-  int operator!= (value_t value);
+  bool operator!= (value_t value);
 
   // As long as the condition variable is EXACTLY EQUAL TO <value>, we
   // wait
-  int operator== (value_t value);
+  bool operator== (value_t value);
 
   // As long as the condition variable is LESS THAN OR EQUAL TO
   // <value>, we wait
-  int operator<= (value_t value);
+  bool operator<= (value_t value);
 
   // As long as the condition variable is GREATER THAN OR EQUAL TO
   // <value>, we wait
-  int operator>= (value_t value);
+  bool operator>= (value_t value);
 
   // Return the value of the condition variable
   operator value_t (void);
@@ -107,7 +109,7 @@ public:
      This is a little odd since we're not really testing equality.
      Just be sure that _compare(value_) will return non-zero when you
      consider the condition to be met.  */
-  int operator== (Compare & compare);
+  bool operator== (Compare & compare);
 
 private:
   // Prevent copy construction and assignment.

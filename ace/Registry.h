@@ -49,8 +49,8 @@ public:
     ACE_TString id_;
     ACE_TString kind_;
 
-    int operator== (const Name_Component &rhs) const;
-    int operator!= (const Name_Component &rhs) const;
+    bool operator== (const Name_Component &rhs) const;
+    bool operator!= (const Name_Component &rhs) const;
     // Comparison
   };
   // The <id_> field is used,
@@ -86,8 +86,8 @@ public:
     Binding (const ACE_TString &binding_name,
              Binding_Type binding_type);
 
-    int operator== (const Binding &rhs) const;
-    int operator!= (const Binding &rhs) const;
+    bool operator== (const Binding &rhs) const;
+    bool operator!= (const Binding &rhs) const;
     // Comparison
 
     /// Name accessor

@@ -203,16 +203,16 @@ public:
   int rfind (char c, int pos = npos) const;
 
   /// Equality comparison operator (must match entire string).
-  int operator == (const ACE_SString &s) const;
+  bool operator == (const ACE_SString &s) const;
 
   /// Less than comparison operator.
-  int operator < (const ACE_SString &s) const;
+  bool operator < (const ACE_SString &s) const;
 
   /// Greater than comparison operator.
-  int operator > (const ACE_SString &s) const;
+  bool operator > (const ACE_SString &s) const;
 
   /// Inequality comparison operator.
-  int operator != (const ACE_SString &s) const;
+  bool operator != (const ACE_SString &s) const;
 
   /// Performs a <strcmp>-style comparison.
   int compare (const ACE_SString &s) const;

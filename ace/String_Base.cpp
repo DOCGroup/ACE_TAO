@@ -121,7 +121,7 @@ ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
 
   if (s.len_ > 0)
     {
-      size_t new_buf_len = this->len_ + s.len_ + 1;
+      const size_t new_buf_len = this->len_ + s.len_ + 1;
 
       // case 1. No memory allocation needed.
       if (this->buf_len_ >= new_buf_len)

@@ -40,31 +40,31 @@ ACE_U_LongLong::~ACE_U_LongLong (void)
 {
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator== (const ACE_U_LongLong &n) const
 {
   return h_ () == n.h_ ()  &&  l_ () == n.l_ ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator== (const ACE_UINT32 n) const
 {
   return h_ () == 0  &&  l_ () == n;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator!= (const ACE_U_LongLong &n) const
 {
   return ! (*this == n);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator!= (const ACE_UINT32 n) const
 {
   return ! (*this == n);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator< (const ACE_U_LongLong &n) const
 {
   return h_ () < n.h_ () ? 1
@@ -72,13 +72,13 @@ ACE_U_LongLong::operator< (const ACE_U_LongLong &n) const
                                            : l_ () < n.l_ ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator< (const ACE_UINT32 n) const
 {
   return operator< (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator<= (const ACE_U_LongLong &n) const
 {
   return h_ () < n.h_ () ? 1
@@ -86,13 +86,13 @@ ACE_U_LongLong::operator<= (const ACE_U_LongLong &n) const
                                            : l_ () <= n.l_ ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator<= (const ACE_UINT32 n) const
 {
   return operator<= (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator> (const ACE_U_LongLong &n) const
 {
   return h_ () > n.h_ () ? 1
@@ -100,13 +100,13 @@ ACE_U_LongLong::operator> (const ACE_U_LongLong &n) const
                                            : l_ () > n.l_ ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator> (const ACE_UINT32 n) const
 {
   return operator> (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator>= (const ACE_U_LongLong &n) const
 {
   return h_ () > n.h_ () ? 1
@@ -114,7 +114,7 @@ ACE_U_LongLong::operator>= (const ACE_U_LongLong &n) const
                                            : l_ () >= n.l_ ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_U_LongLong::operator>= (const ACE_UINT32 n) const
 {
   return operator>= (ACE_static_cast (const ACE_U_LongLong, n));

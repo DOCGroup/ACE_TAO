@@ -1,10 +1,10 @@
-
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// UNIX_Addr.i
 
 #include "ace/OS_NS_string.h"
+
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -37,7 +37,7 @@ ACE_UNIX_Addr::addr_to_string (char s[], size_t len) const
 
 // Compare two addresses for equality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
 {
   return ACE_OS::strncmp (this->unix_addr_.sun_path,
@@ -47,7 +47,7 @@ ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
 
 // Compare two addresses for inequality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_UNIX_Addr::operator != (const ACE_UNIX_Addr &sap) const
 {
   return !((*this) == sap);	// This is lazy, of course... ;-)
@@ -61,7 +61,7 @@ ACE_UNIX_Addr::get_path_name (void) const
   return this->unix_addr_.sun_path;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_UNIX_Addr::hash (void) const
 {
   return ACE::hash_pjw (this->unix_addr_.sun_path);

@@ -370,7 +370,7 @@ private:
     /// Default dtor.
     ~ACE_Get_Opt_Long_Option (void);
 
-    int operator < (const ACE_Get_Opt_Long_Option &rhs);
+    bool operator < (const ACE_Get_Opt_Long_Option &rhs);
 
     /// Long option name.
     const ACE_TCHAR *name_;

@@ -73,7 +73,7 @@ public:
   u_long minimum_id_;
 
   /// Comparison
-  int operator== (const ACE_Event_Descriptions &rhs) const;
+  bool operator== (const ACE_Event_Descriptions &rhs) const;
 };
 
 /**

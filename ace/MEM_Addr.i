@@ -1,11 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// MEM_Addr.i
 
 #include "ace/Global_Macros.h"
 
-// Default dtor.
+
 ACE_INLINE
 ACE_MEM_Addr::~ACE_MEM_Addr (void)
 {
@@ -79,7 +79,7 @@ ACE_MEM_Addr::get_remote_addr (void) const
 
 // Compare two addresses for equality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_MEM_Addr::operator == (const ACE_MEM_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator ==");
@@ -88,7 +88,7 @@ ACE_MEM_Addr::operator == (const ACE_MEM_Addr &sap) const
     this->internal_ == sap.internal_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_MEM_Addr::operator == (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator ==");
@@ -98,14 +98,14 @@ ACE_MEM_Addr::operator == (const ACE_INET_Addr &sap) const
 
 // Compare two addresses for inequality.
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_MEM_Addr::operator != (const ACE_MEM_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator !=");
   return !((*this) == sap);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_MEM_Addr::operator != (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator !=");

@@ -85,22 +85,22 @@ public:
   long operator-= (long rhs);
 
   /// Atomically compare <value_> with rhs.
-  int operator== (long rhs) const;
+  bool operator== (long rhs) const;
 
   /// Atomically compare <value_> with rhs.
-  int operator!= (long rhs) const;
+  bool operator!= (long rhs) const;
 
   /// Atomically check if <value_> greater than or equal to rhs.
-  int operator>= (long rhs) const;
+  bool operator>= (long rhs) const;
 
   /// Atomically check if <value_> greater than rhs.
-  int operator> (long rhs) const;
+  bool operator> (long rhs) const;
 
   /// Atomically check if <value_> less than or equal to rhs.
-  int operator<= (long rhs) const;
+  bool operator<= (long rhs) const;
 
   /// Atomically check if <value_> less than rhs.
-  int operator< (long rhs) const;
+  bool operator< (long rhs) const;
 
   /// Atomically assign rhs to <value_>.
   void operator= (long rhs);

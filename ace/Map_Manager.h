@@ -470,8 +470,8 @@ public:
   ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void);
 
   /// Check if two iterators point to the same position
-  int operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
-  int operator!= (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
+  bool operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
+  bool operator!= (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -529,8 +529,8 @@ public:
   const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void) const;
 
   /// Check if two iterators point to the same position
-  int operator== (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
-  int operator!= (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
+  bool operator== (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
+  bool operator!= (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //==========================================================================
 /**
  *  @file    DEV_Addr.h
@@ -57,10 +58,10 @@ public:
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
 
   /// Compare two addresses for equality.
-  int operator == (const ACE_DEV_Addr &SAP) const;
+  bool operator == (const ACE_DEV_Addr &SAP) const;
 
   /// Compare two addresses for inequality.
-  int operator != (const ACE_DEV_Addr &SAP) const;
+  bool operator != (const ACE_DEV_Addr &SAP) const;
 
   /// Return the path name used for the rendezvous point.
   const ACE_TCHAR *get_path_name (void) const;
