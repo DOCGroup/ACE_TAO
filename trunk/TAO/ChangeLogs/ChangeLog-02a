@@ -1,3 +1,8 @@
+Fri Sep  7 12:56:45 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+       * orbsvcs/AV/Protocol_Factory.cpp: Add default constructor.
+         Thanks to Joe Loyall <jloyall@bbn.com> for finding this. 
+
 Thu Sep  6 20:07:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile.bor: Added MCAST_Parser to the Makefile.
