@@ -1,3 +1,8 @@
+Wed Apr 21 21:56:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Quoter/client.cpp (main): adding missing ,
+          between arguments to activate ().
+
 Wed Apr 21 19:11:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/DOVEBrowser/NS_Resolve.java:
@@ -6,46 +11,46 @@ Wed Apr 21 19:11:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
           Hans Ridder <ridder@veritas.com> for contributing these changes.
 
         * examples/Simulator/NavWeap.idl
-          examples/Simulator/Event_Supplier/{DualEC_Sup, Event_Sup, 
-	                                     Logging_Sup}.dsp:
-	  Changes to use the new CORBA standard TimeBase.idl
+          examples/Simulator/Event_Supplier/{DualEC_Sup, Event_Sup,
+                                             Logging_Sup}.dsp:
+          Changes to use the new CORBA standard TimeBase.idl
 
 Wed Apr 21 14:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	  Use Recursive_Mutexes for the Basic_Factory, otherwise we risk a 
-	  dead-lock if the user decides to disconnect or push a new event
-	  that it finally reaches the same consumer.
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+          Use Recursive_Mutexes for the Basic_Factory, otherwise we risk a
+          dead-lock if the user decides to disconnect or push a new event
+          that it finally reaches the same consumer.
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Added new method push_to_consumer() to the ProxyPushSupplier
-	  implementation, this method is invoked by the dispatching module
-	  to really push the event. Its job is to verify that the consumer
-	  is not disconnected and/or suspended.
-	  The Dispatching module does not need to receive the consumer
-	  anymore.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Added new method push_to_consumer() to the ProxyPushSupplier
+          implementation, this method is invoked by the dispatching module
+          to really push the event. Its job is to verify that the consumer
+          is not disconnected and/or suspended.
+          The Dispatching module does not need to receive the consumer
+          anymore.
 
-	* orbsvcs/orbsvcs/Event_Service_Constants.h:
-	* orbsvcs/orbsvcs/Event_Utilities.i:
-	  Added new macro for the ANY_SOURCE source id.
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
+          Added new macro for the ANY_SOURCE source id.
 
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
-	  Timeout filters should not accept any events in the filter()
-	  methods.
-	  The Timeout generator passes the event directly to their
-	  push_nocopy() methods.
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+          Timeout filters should not accept any events in the filter()
+          methods.
+          The Timeout generator passes the event directly to their
+          push_nocopy() methods.
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Fixed little problem with the Time -> ImplRepo dependency in
-	  TAO_ORBSVCS
+        * orbsvcs/orbsvcs/Makefile:
+          Fixed little problem with the Time -> ImplRepo dependency in
+          TAO_ORBSVCS
 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	  Added compile-time support for the new Event Channel, just for
-	  experimentation purposes.
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          Added compile-time support for the new Event Channel, just for
+          experimentation purposes.
 
 Wed Apr 21 11:06:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
