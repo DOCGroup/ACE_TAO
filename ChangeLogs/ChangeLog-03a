@@ -1,3 +1,10 @@
+Tue Jan 29 16:01:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/fuzz.pl (check_for_missing_rir_env):
+
+	  Check for ACE_ENV_ARG_PARAMETER instead of
+	  TAO_ENV_ARG_PARAMETER.  The latter is deprecated.
+
 Tue Jan 29 20:47:24 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* docs/exceptions.html: Document the new ACE_ENV_ macros.
