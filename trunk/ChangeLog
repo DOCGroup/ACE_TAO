@@ -1,3 +1,8 @@
+Fri Sep 24 10:55:34 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-linux-common.h: If __USE_POSIX199309 is defined from
+	  <features.h> set ACE_HAS_CLOCK_GETTIME. This is most often the case.
+
 Fri Sep 24 10:40:11 2004  Steve Huston  <shuston@riverace.com>
 
 	* apps/JAWS/clients/Blobby/blobby.cpp:
