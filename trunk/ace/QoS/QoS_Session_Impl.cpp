@@ -69,38 +69,38 @@ rsvp_callback (rapi_sid_t sid,
                     flow_spec_no, csxp->spec_type));
 
         ACE_Flow_Spec receiving_fs (csxp->xspec_r,
-				    csxp->xspec_b,
-				    csxp->xspec_p,
-				    0,
-				    csxp->xspec_S,
-				    1,
-				    csxp->xspec_M,
-				    csxp->xspec_m,
-				    25,
-				    0);
-	
+                                    csxp->xspec_b,
+                                    csxp->xspec_p,
+                                    0,
+                                    csxp->xspec_S,
+                                    1,
+                                    csxp->xspec_M,
+                                    csxp->xspec_m,
+                                    25,
+                                    0);
 
-	ACE_DEBUG ((LM_DEBUG,
-		    "\nTSpec :\n"
-		    "\t Spec Type = %d\n"
-		    "\t Rate = %f\n"
-		    "\t Bucket = %f\n"
-		    "\t Peak = %f\n"
-		    "\t MPU = %d\n"
-		    "\t MDU = %d\n"
+
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nTSpec :\n"
+                    "\t Spec Type = %d\n"
+                    "\t Rate = %f\n"
+                    "\t Bucket = %f\n"
+                    "\t Peak = %f\n"
+                    "\t MPU = %d\n"
+                    "\t MDU = %d\n"
               "\t TTL = %d\n",
-		    csxp->spec_type,
-		    csxp->xspec_r,
-		    csxp->xspec_b,
-		    csxp->xspec_p,
-		    csxp->xspec_m,
-		    csxp->xspec_M,
-		    25));
-	
+                    csxp->spec_type,
+                    csxp->xspec_r,
+                    csxp->xspec_b,
+                    csxp->xspec_p,
+                    csxp->xspec_m,
+                    csxp->xspec_M,
+                    25));
+
         // Set the sending flowspec QoS of the given session.
         ace_qos.receiving_flowspec (receiving_fs);
-	
-	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_EVENT);
+
+        qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_EVENT);
       }
 
     break;
@@ -147,7 +147,7 @@ rsvp_callback (rapi_sid_t sid,
       ace_qos.sending_flowspec (sending_flow);
 
       qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_EVENT);
-      
+
       break;
 
     case RAPI_PATH_ERROR:
@@ -245,14 +245,14 @@ ACE_RAPI_Session::close (void)
   return 0;
 }
 
-//Get the most recent RSVP event that occured 
+//Get the most recent RSVP event that occured
 ACE_QoS_Session::RSVP_Event_Type
 ACE_RAPI_Session::rsvp_event_type (void)
 {
   return this->rsvp_event_type_;
 }
 
-//Set the most recent RSVP event that occured 
+//Set the most recent RSVP event that occured
 void
 ACE_RAPI_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 {
@@ -321,7 +321,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               t_spec->tspecbody_qosx.xtspec_m,
               t_spec->tspecbody_qosx.xtspec_M,
               sending_flowspec.ttl ()));
-  
+
   // This the source sender port.
   ACE_INET_Addr sender_addr (this->source_port ());
 
@@ -455,8 +455,8 @@ ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
   ctxp->xtspec_p  = flow_spec.peak_bandwidth ();       // Peak Data Rate (B/s)
   ctxp->xtspec_m  = flow_spec.minimum_policed_size (); // Minimum policed unit.
 
-  // @@Hardcoded for the time being.
-  ctxp->xtspec_M  = 1024;                             // Maximum SDU size.
+
+  ctxp->xtspec_M  = flow_spec.max_sdu_size();          // Maximum SDU size.
 
   t_spec->len = sizeof(rapi_hdr_t) + sizeof(qos_tspecx_t);
   t_spec->form = RAPI_TSPECTYPE_Simplified;
@@ -499,8 +499,7 @@ ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
       csxp->xspec_p = flow_spec.peak_bandwidth ();        // Peak Data Rate (B/s)
       csxp->xspec_m = flow_spec.minimum_policed_size ();  // Minimum Policed Unit (B)
 
-      // @@Hardcoded Max. Pkt. size.
-      csxp->xspec_M = 65535;                              // Max Packet Size (B)
+      csxp->xspec_M = flow_spec.max_sdu_size();          // Max Packet Size (B)
 
       flowsp->form = RAPI_FLOWSTYPE_Simplified;
       break;
@@ -591,21 +590,16 @@ ACE_GQoS_Session::update_qos (void)
   return 0;
 }
 
-//Get the most recent RSVP event that occured 
+//Get the most recent RSVP event that occured
 ACE_QoS_Session::RSVP_Event_Type
 ACE_GQoS_Session::rsvp_event_type (void)
 {
   return this->rsvp_event_type_;
 }
 
-//Set the most recent RSVP event that occured 
+//Set the most recent RSVP event that occured
 void
 ACE_GQoS_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 {
   this->rsvp_event_type_ = event_type;
 }
-
-
-
-
-
