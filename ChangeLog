@@ -1,3 +1,9 @@
+Wed Jan 19 22:30:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/pkgconfig.mpb:
+
+	  New file, custom file definition for pkgconfig *.pc.in file.
+
 Wed Jan 19 15:20:19 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Dev_Poll_Reactor.inl: Add #include "ace/Log_Msg.h" to pick up
