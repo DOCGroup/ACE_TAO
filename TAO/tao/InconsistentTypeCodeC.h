@@ -25,6 +25,10 @@
 #ifndef TAO_IDL_INCONSISTENTTYPECODEC_H
 #define TAO_IDL_INCONSISTENTTYPECODEC_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/Exception.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -48,11 +52,11 @@ class TAO_Export CORBA_ORB_InconsistentTypeCode : public CORBA::UserException
   //   function if the typecode argument is neither a basic type nor a
   //   sequence, enum, array, struct or union.
 public:
-  CORBA_ORB_InconsistentTypeCode (void); 
+  CORBA_ORB_InconsistentTypeCode (void);
   // default ctor
-  CORBA_ORB_InconsistentTypeCode (const CORBA_ORB_InconsistentTypeCode &); 
+  CORBA_ORB_InconsistentTypeCode (const CORBA_ORB_InconsistentTypeCode &);
   // copy ctor
-  ~CORBA_ORB_InconsistentTypeCode (void); 
+  ~CORBA_ORB_InconsistentTypeCode (void);
   // dtor
 
   CORBA_ORB_InconsistentTypeCode &operator= (const CORBA_ORB_InconsistentTypeCode &);
@@ -71,5 +75,7 @@ public:
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* TAO_IDL_INCONSISTENTTYPECODEC_H */

@@ -144,18 +144,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "POA Locking"=.\POA\locking\locking.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "POA NewPOA"=.\POA\NewPOA\NewPOA.dsp - Package Owner=<4>
 
 Package=<5>

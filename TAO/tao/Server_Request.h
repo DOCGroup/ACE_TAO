@@ -110,6 +110,8 @@ public:
   static CORBA_ServerRequest *_nil (void);
   // the standard _nil method on pseudo objects
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual void arguments (CORBA::NVList_ptr &list,
                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // Implementation uses this to provide the ORB with the operation's
@@ -141,8 +143,16 @@ public:
   // this stuff is a catastrophic error since this is all part of the
   // basic CORBA Object Model.
 
+  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+  // marshal outgoing parameters. Used by DSI
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   virtual const char *operation (void) const = 0;
   // get the operation name
+
+  virtual void init_reply (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+  // Start a Reply message.
 
   //  CORBA::Context_ptr ctx (void) = 0;
   // return the context pointer
@@ -165,12 +175,6 @@ public:
                         const TAO_Call_Data_Skel *info,
                         ...) = 0;
   // marshal outgoing parameters
-
-  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-  // marshal outgoing parameters. Used by DSI
-
-  virtual void init_reply (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
-  // Start a Reply message.
 
   virtual TAO_InputCDR &incoming (void) = 0;
   // Retrieve the incoming stream.
@@ -204,6 +208,8 @@ public:
   virtual ~IIOP_ServerRequest (void);
   // Destructor.
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   // = General ServerRequest operations
   void arguments (CORBA::NVList_ptr &list,
                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -213,6 +219,12 @@ public:
 
   void set_exception (const CORBA::Any &value,
                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // does the marshaling of outgoing parameters and is used by the DSI based
+  // scheme
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // = Request attributes.
 
@@ -247,10 +259,6 @@ public:
                         ...);
   // marshal outgoing parameters and return value. This is used by the SSI
   // i.e., by the IDL compiler generated skeletons.
-
-  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-  // does the marshaling of outgoing parameters and is used by the DSI based
-  // scheme
 
   virtual void init_reply (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // start a Reply message
@@ -313,8 +321,12 @@ private:
   CORBA::Boolean response_expected_;
   // is it oneway or twoway
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   CORBA::NVList_ptr params_;
   // Incoming parameters.
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::Any_ptr retval_;
   // Return value.

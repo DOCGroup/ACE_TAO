@@ -37,6 +37,8 @@ TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
     this->state_ = TAO_POA_Manager::ACTIVE;
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 void
 TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
                                   CORBA::Environment &ACE_TRY_ENV)
@@ -153,6 +155,8 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // to deactivate will be the same as the similarly named parameter
   // of ORB::shutdown.
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 TAO_POA_Manager::Processing_State
 TAO_POA_Manager::state (CORBA::Environment &ACE_TRY_ENV)

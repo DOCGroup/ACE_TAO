@@ -17,74 +17,107 @@ PUB_HDRS = Pluggable MProfile IIOP_Profile IIOP_Transport IIOP_Connector \
 	   Default_Client Default_Server \
 	   Server_Strategy_Factory Client_Strategy_Factory ORB_Core
 
-ORBCORE_SRCS = \
-	Any \
-	CurrentC \
-	CurrentS \
-	Context \
-	DynAnyC \
-	DynAnyS \
-	DynAny_i \
-	DynArray_i \
-	DynEnum_i \
-	DynSequence_i \
-	DynStruct_i \
-	DynUnion_i \
-	Exception \
-	Environment \
-        Forwarding_Servant \
-	InconsistentTypeCodeC \
-	Managed_Types	\
-	NVList \
-	Object \
-	ORB \
-	POA \
-	POAC \
-	POAS \
-	POAManager \
-	PolicyC \
-	PolicyS \
-	Principal \
-	Request \
-	Sequence \
-	Server_Request \
-	Pluggable \
-	MProfile \
-	IIOP_Profile \
-	IIOP_Transport \
-	IIOP_Connector \
-	IIOP_Acceptor \
-	Stub \
-	Typecode \
-	Union \
-	CDR \
-	Client_Strategy_Factory \
-	Connect \
-	append \
-	debug \
-	decode \
-	deep_free \
-	default_client \
-	default_server \
-	Object_KeyC \
-	encode \
-	GIOP \
-	Invocation \
-	IIOP_ORB \
-	CDR_Interpreter \
-	Marshal \
-	Active_Object_Map \
-	Operation_Table \
-	ORB_Core \
-	params \
-	Server_Strategy_Factory \
-	Servant_Base \
-	skip \
-	TAO_Internal \
-	Typecode_Constants \
-	TAO
+ifndef minimum_corba
+minimum_corba = 0
+endif # minimum_corba
 
-FILES    = $(ORBCORE_SRCS)
+POA_FILES = \
+  POA \
+  POAC \
+  POAS \
+  POAManager \
+  Active_Object_Map \
+  Servant_Base
+
+PLUGGABLE_PROTOCOLS_FILES = \
+  Pluggable \
+  IIOP_Profile \
+  IIOP_Transport \
+  IIOP_Connector \
+  IIOP_Acceptor
+
+DEFAULT_RESOURCES_FILES = \
+  default_client \
+  default_server
+
+INTERPRETIVE_MARSHALING_FILES = \
+  append \
+  decode \
+  deep_free \
+  encode \
+  CDR_Interpreter \
+  Marshal \
+  skip
+
+IDL_COMPILER_FILES = \
+  Managed_Types	\
+  Union \
+  Operation_Table
+
+ORB_CORE_FILES = \
+  Any \
+  CurrentC \
+  CurrentS \
+  Context \
+  Exception \
+  Environment \
+  Object \
+  ORB \
+  PolicyC \
+  PolicyS \
+  Principal \
+  Sequence \
+  Server_Request \
+  MProfile \
+  Stub \
+  Typecode \
+  CDR \
+  Client_Strategy_Factory \
+  Connect \
+  debug \
+  Object_KeyC \
+  GIOP \
+  Invocation \
+  IIOP_ORB \
+  ORB_Core \
+  params \
+  Server_Strategy_Factory \
+  TAO_Internal \
+  Typecode_Constants \
+  TAO
+
+ifeq ($(minimum_corba),0)
+
+POA_FILES += \
+  Forwarding_Servant
+
+ORB_CORE_FILES += \
+  Request \
+  NVList
+
+DYNAMIC_ANY_FILES += \
+  DynAnyC \
+  DynAnyS \
+  DynAny_i \
+  DynArray_i \
+  DynEnum_i \
+  DynSequence_i \
+  DynStruct_i \
+  DynUnion_i \
+  InconsistentTypeCodeC
+
+CPP_FLAGS += -DTAO_HAS_MINIMUM_CORBA
+
+endif # minimum_corba
+
+FILES += \
+  $(POA_FILES) \
+  $(PLUGGABLE_PROTOCOLS_FILES) \
+  $(DEFAULT_RESOURCES_FILES) \
+  $(INTERPRETIVE_MARSHALING_FILES) \
+  $(IDL_COMPILER_FILES) \
+  $(ORB_CORE_FILES) \
+  $(DYNAMIC_ANY_FILES)
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
@@ -104,6 +137,52 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+####
+#### Build customization.
+####
+ifndef TAO_COMPONENTS
+  TAO_COMPONENTS = \
+    POA \
+    Pluggable_Protocols \
+    Default_Resources \
+    Interpretive_Marshaling \
+    IDL_Compiler \
+    ORB_Core \
+    Dynamic_Any
+endif # TAO_COMPONENTS
+
+####
+#### TAO_COMPONENTS support.
+####
+ifneq (,$(findstring POA,$(ACE_COMPONENTS)))
+  FILES += $(POA_FILES)
+endif # POA
+
+ifneq (,$(findstring Pluggable_Protocols,$(ACE_COMPONENTS)))
+  FILES += $(PLUGGABLE_PROTOCOLS_FILES)
+endif # Pluggable_Protocols
+
+ifneq (,$(findstring Default_Resources,$(ACE_COMPONENTS)))
+  FILES += $(DEFAULT_RESOURCES_FILES)
+endif # Default_Resources
+
+ifneq (,$(findstring Interpretive_Marshaling,$(ACE_COMPONENTS)))
+  FILES += $(INTERPRETIVE_MARSHALING_FILES)
+endif # Interpretive_Marshaling
+
+ifneq (,$(findstring IDL_Compiler,$(ACE_COMPONENTS)))
+  FILES += $(IDL_COMPILER_FILES)
+endif # IDL_Compiler
+
+ifneq (,$(findstring ORB_Core,$(ACE_COMPONENTS)))
+  FILES += $(ORB_CORE_FILES)
+endif # ORB_Core
+
+ifneq (,$(findstring Dynamic_Any,$(ACE_COMPONENTS)))
+  FILES += $(DYNAMIC_ANY_FILES)
+endif # Dynamic_Any
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU

@@ -11,6 +11,7 @@
 #include "tao/Principal.h"
 #include "tao/ORB_Core.h"
 #include "tao/Timeprobe.h"
+#include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Server_Request.i"
@@ -47,7 +48,13 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
     incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     params_ (0),
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
     retval_ (0),
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
@@ -179,7 +186,13 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
     incoming_ (0),
     outgoing_ (&output),
     response_expected_ (response_expected),
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     params_ (0),
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
     retval_ (0),
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
@@ -193,8 +206,14 @@ IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
 
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   if (this->params_)
     CORBA::release (this->params_);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
   delete this->retval_;
   delete this->exception_;
 }
@@ -210,6 +229,8 @@ IIOP_ServerRequest::oa (void)
 {
   return this->orb_core_->root_poa ();
 }
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
 // inout/out/return values later on.
@@ -344,6 +365,71 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
     }
   }
 }
+
+// this method will be utilized by the DSI servant to marshal outgoing
+// parameters
+
+void
+IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
+{
+  // NOTE: if "env" is set, it takes precedence over exceptions
+  // reported using the mechanism of the ServerRequest.  Only system
+  // exceptions are reported that way ...
+  //
+  // XXX Exception reporting is ambiguous; it can be cleaner than
+  // this.  With both language-mapped and dynamic/explicit reporting
+  // mechanisms, one of must be tested "first" ... so an exception
+  // reported using the other mechanism could be "lost".  Perhaps only
+  // the language mapped one should be used for system exceptions.
+
+
+  // only if there wasn't any exception, we proceed
+  if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION &&
+      CORBA::is_nil (this->forward_location_.in ()))
+    {
+      // ... then send any return value ...
+      if (this->retval_)
+        {
+          CORBA::TypeCode_var tc = this->retval_->type ();
+	        if (this->retval_->any_owns_data ())
+            {
+              (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, env);
+            }
+          else
+            {
+              TAO_InputCDR cdr (retval_->_tao_get_cdr ());
+              (void) this->outgoing_->append (tc.in (), &cdr, env);
+            }
+        }
+
+      // ... Followed by "inout" and "out" parameters, left to right
+      if (this->params_)
+        {
+          for (u_int i = 0;
+               i < this->params_->count ();
+               i++)
+            {
+              CORBA::NamedValue_ptr nv = this->params_->item (i, env);
+              if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
+                continue;
+
+              CORBA::Any_ptr any = nv->value ();
+              CORBA::TypeCode_var tc = any->type ();
+              if (any->any_owns_data ())
+                {
+                  (void) this->outgoing_->encode (tc.in (), any->value (), 0, env);
+                }
+              else
+                {
+                  TAO_InputCDR cdr (any->_tao_get_cdr ());
+                  (void) this->outgoing_->append (tc.in (), &cdr, env);
+                }
+            }
+        }
+    }
+}
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // Extension
 void
@@ -515,70 +601,6 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
     // First finish the GIOP header ...
     this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
 }
-
-// this method will be utilized by the DSI servant to marshal outgoing
-// parameters
-
-void
-IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
-{
-  // NOTE: if "env" is set, it takes precedence over exceptions
-  // reported using the mechanism of the ServerRequest.  Only system
-  // exceptions are reported that way ...
-  //
-  // XXX Exception reporting is ambiguous; it can be cleaner than
-  // this.  With both language-mapped and dynamic/explicit reporting
-  // mechanisms, one of must be tested "first" ... so an exception
-  // reported using the other mechanism could be "lost".  Perhaps only
-  // the language mapped one should be used for system exceptions.
-
-
-  // only if there wasn't any exception, we proceed
-  if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION &&
-      CORBA::is_nil (this->forward_location_.in ()))
-    {
-      // ... then send any return value ...
-      if (this->retval_)
-        {
-          CORBA::TypeCode_var tc = this->retval_->type ();
-	        if (this->retval_->any_owns_data ())
-            {
-              (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, env);
-            }
-          else
-            {
-              TAO_InputCDR cdr (retval_->_tao_get_cdr ());
-              (void) this->outgoing_->append (tc.in (), &cdr, env);
-            }
-        }
-
-      // ... Followed by "inout" and "out" parameters, left to right
-      if (this->params_)
-        {
-          for (u_int i = 0;
-               i < this->params_->count ();
-               i++)
-            {
-              CORBA::NamedValue_ptr nv = this->params_->item (i, env);
-              if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
-                continue;
-
-              CORBA::Any_ptr any = nv->value ();
-              CORBA::TypeCode_var tc = any->type ();
-              if (any->any_owns_data ())
-                {
-                  (void) this->outgoing_->encode (tc.in (), any->value (), 0, env);
-                }
-              else
-                {
-                  TAO_InputCDR cdr (any->_tao_get_cdr ());
-                  (void) this->outgoing_->append (tc.in (), &cdr, env);
-                }
-            }
-        }
-    }
-}
-
 
 CORBA::Object_ptr
 IIOP_ServerRequest::forward_location (void)

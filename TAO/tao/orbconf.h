@@ -255,4 +255,7 @@
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 
+// Minimum CORBA
+// #define TAO_HAS_MINIMUM_CORBA
+
 #endif  /* TAO_ORB_CONFIG_H */

@@ -228,6 +228,8 @@ public:
   // shuffling.  The stub and "do_static_call" parameters are all but the
   // same, except that their order is different.
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   void do_dynamic_call (const char *opname,
                                 CORBA::Boolean is_roundtrip,
                                 CORBA::NVList_ptr args,
@@ -252,6 +254,8 @@ public:
   //    - flags ... only one DII flag is legal
   //    - exceptions ... list of legal user-defined exceptions
   //    - TAO_IN_ENV ... used for exception reporting.
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
@@ -381,11 +385,15 @@ protected:
   // Helper method to factor out common code in static oneway
   // vs. twoway invocations.
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
                    CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 private:
   TAO_Profile *set_profile_in_use_i (TAO_Profile *pfile);

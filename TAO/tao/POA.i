@@ -2,6 +2,9 @@
 
 // Exception macros
 #include "tao/poa_macros.h"
+#include "tao/Environment.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA_Policies::thread (void) const
@@ -14,6 +17,8 @@ TAO_POA_Policies::thread (PortableServer::ThreadPolicyValue value)
 {
   this->thread_ = value;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::LifespanPolicyValue
 TAO_POA_Policies::lifespan (void) const
@@ -85,24 +90,6 @@ ACE_INLINE void
 TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyValue value)
 {
   this->request_processing_ = value;
-}
-
-// **************************************************
-//
-// TAO spcific POA locking policy (non-standard)
-//
-// **************************************************
-
-ACE_INLINE PortableServer::SynchronizationPolicyValue
-TAO_POA_Policies::synchronization (void) const
-{
-  return this->synchronization_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::synchronization (PortableServer::SynchronizationPolicyValue value)
-{
-  this->synchronization_ = value;
 }
 
 ACE_INLINE int
@@ -330,6 +317,8 @@ TAO_POA::active_object_map (void) const
   return *this->active_object_map_;
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 ACE_INLINE PortableServer::ServantManager_ptr
 TAO_POA::get_servant_manager (CORBA::Environment &env)
 {
@@ -369,6 +358,8 @@ TAO_POA::set_servant (PortableServer::Servant servant,
   this->set_servant_i (servant,
                        env);
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_POA::activate_object (PortableServer::Servant servant,
@@ -416,6 +407,19 @@ TAO_POA::create_reference (const char *intf,
                                    env);
 }
 
+ACE_INLINE CORBA::Object_ptr
+TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
+                                   const char *intf,
+                                   CORBA::Environment &env)
+{
+  // Lock access to the POA for the duration of this transaction
+  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil (), env);
+
+  return this->create_reference_with_id_i (id,
+                                           intf,
+                                           env);
+}
+
 ACE_INLINE PortableServer::ObjectId *
 TAO_POA::servant_to_id (PortableServer::Servant servant,
                         CORBA::Environment &env)
@@ -427,6 +431,17 @@ TAO_POA::servant_to_id (PortableServer::Servant servant,
 
   return this->servant_to_id_i (servant,
                                 env);
+}
+
+ACE_INLINE PortableServer::ObjectId *
+TAO_POA::servant_to_system_id (PortableServer::Servant servant,
+                               CORBA::Environment &env)
+{
+  // Lock access to the POA for the duration of this transaction
+  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+
+  return this->servant_to_system_id_i (servant,
+                                       env);
 }
 
 ACE_INLINE PortableServer::Servant
@@ -450,6 +465,8 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
   return this->id_to_reference_i (oid, env);
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 ACE_INLINE void
 TAO_POA::forward_object (const PortableServer::ObjectId &oid,
                          CORBA::Object_ptr forward_to,
@@ -462,6 +479,8 @@ TAO_POA::forward_object (const PortableServer::ObjectId &oid,
                           forward_to,
                           env);
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::POA_ptr
 TAO_POA::the_parent (CORBA::Environment &env)
@@ -477,6 +496,8 @@ TAO_POA::the_POAManager (CORBA::Environment &env)
 {
   return this->poa_manager_._this (env);
 }
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::AdapterActivator_ptr
 TAO_POA::the_activator (CORBA::Environment &env)
@@ -494,6 +515,8 @@ TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
 
   this->adapter_activator_ = PortableServer::AdapterActivator::_duplicate (adapter_activator);
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE const TAO_Creation_Time &
 TAO_POA::creation_time (void)
@@ -621,19 +644,6 @@ TAO_POA::rfind (const TAO_ObjectKey &key,
   return TAO_POA::String::npos;
 }
 
-ACE_INLINE PortableServer::ObjectId *
-TAO_POA::create_object_id (PortableServer::Servant servant,
-                           CORBA::Environment &env)
-{
-  return this->active_object_map ().create_object_id (servant, env);
-}
-
-ACE_INLINE CORBA::ULong
-TAO_POA::system_id_size (void) const
-{
-  return this->active_object_map ().system_id_size ();
-}
-
 ACE_INLINE void
 TAO_POA_Current::clear (void)
 {
@@ -641,7 +651,13 @@ TAO_POA_Current::clear (void)
   this->object_id_ = 0;
   this->servant_ = 0;
   this->object_key_ = 0;
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   this->cookie_ = 0;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 }
 
 ACE_INLINE int
@@ -708,6 +724,8 @@ TAO_POA_Current::in_upcall (void) const
   return (this->servant_ != 0);
 }
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 ACE_INLINE PortableServer::ServantLocator::Cookie
 TAO_POA_Current::locator_cookie (void) const
 {
@@ -719,3 +737,5 @@ TAO_POA_Current::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
 {
   this->cookie_ = cookie;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

@@ -56,6 +56,8 @@
 
 class TAO_POA;
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
 public:
@@ -72,13 +74,15 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::ThreadPolicyValue value_;
 
   PortableServer::POA_var poa_;
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 class TAO_Export TAO_Lifespan_Policy : public POA_PortableServer::LifespanPolicy
 {
@@ -96,7 +100,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::LifespanPolicyValue value_;
@@ -120,7 +124,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::IdUniquenessPolicyValue value_;
@@ -144,13 +148,15 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::IdAssignmentPolicyValue value_;
 
   PortableServer::POA_var poa_;
 };
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 class TAO_Export TAO_Implicit_Activation_Policy : public POA_PortableServer::ImplicitActivationPolicy
 {
@@ -168,7 +174,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::ImplicitActivationPolicyValue value_;
@@ -192,7 +198,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::ServantRetentionPolicyValue value_;
@@ -216,7 +222,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::RequestProcessingPolicyValue value_;
@@ -224,35 +230,7 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-// **************************************************
-//
-// TAO spcific POA locking policy (non-standard)
-//
-// **************************************************
-
-class TAO_Export TAO_Synchronization_Policy : public POA_PortableServer::SynchronizationPolicy
-{
-public:
-  TAO_Synchronization_Policy (PortableServer::SynchronizationPolicyValue value,
-                              PortableServer::POA_ptr poa);
-
-  TAO_Synchronization_Policy (const TAO_Synchronization_Policy &rhs);
-
-  virtual PortableServer::SynchronizationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
-  virtual void destroy (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
-  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
-protected:
-  PortableServer::SynchronizationPolicyValue value_;
-
-  PortableServer::POA_var poa_;
-};
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 class TAO_Export TAO_POA_Policies
 {
@@ -260,8 +238,12 @@ public:
 
   TAO_POA_Policies (void);
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual PortableServer::ThreadPolicyValue thread (void) const;
   virtual void thread (PortableServer::ThreadPolicyValue value);
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual PortableServer::LifespanPolicyValue lifespan (void) const;
   virtual void lifespan (PortableServer::LifespanPolicyValue value);
@@ -280,15 +262,6 @@ public:
 
   virtual PortableServer::RequestProcessingPolicyValue request_processing (void) const;
   virtual void request_processing (PortableServer::RequestProcessingPolicyValue value);
-
-  // **************************************************
-  //
-  // TAO spcific POA locking policy (non-standard)
-  //
-  // **************************************************
-
-  virtual PortableServer::SynchronizationPolicyValue synchronization (void) const;
-  virtual void synchronization (PortableServer::SynchronizationPolicyValue value);
 
   virtual void parse_policies (const CORBA::PolicyList &policies,
                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -313,14 +286,6 @@ protected:
   PortableServer::ServantRetentionPolicyValue servant_retention_;
 
   PortableServer::RequestProcessingPolicyValue request_processing_;
-
-  // **************************************************
-  //
-  // TAO spcific POA locking policy (non-standard)
-  //
-  // **************************************************
-
-  PortableServer::SynchronizationPolicyValue synchronization_;
 };
 
 class TAO_Temporary_Creation_Time;
@@ -399,8 +364,12 @@ public:
                         CORBA::Boolean wait_for_completion,
                         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual PortableServer::ThreadPolicy_ptr create_thread_policy (PortableServer::ThreadPolicyValue value,
                                                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual PortableServer::LifespanPolicy_ptr create_lifespan_policy (PortableServer::LifespanPolicyValue value,
                                                                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -411,6 +380,8 @@ public:
   virtual PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
                                                                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
                                                                                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -420,20 +391,15 @@ public:
   virtual PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
                                                                                         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // **************************************************
-  //
-  // TAO spcific POA locking policy (non-standard)
-  //
-  // **************************************************
-
-  virtual PortableServer::SynchronizationPolicy_ptr create_synchronization_policy (PortableServer::SynchronizationPolicyValue value,
-                                                                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual CORBA::String the_name (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
   virtual PortableServer::POA_ptr the_parent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
   virtual PortableServer::POAManager_ptr the_POAManager (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   virtual PortableServer::AdapterActivator_ptr the_activator (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -449,6 +415,8 @@ public:
 
   virtual void set_servant (PortableServer::Servant servant,
                             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant,
                                                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -484,9 +452,13 @@ public:
   virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
                                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual void forward_object (const PortableServer::ObjectId &oid,
                                CORBA::Object_ptr forward_to,
                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   // Utility functions for the other
   static void encode_sequence_to_string (CORBA::String &str,
@@ -567,6 +539,8 @@ protected:
                           CORBA::Boolean wait_for_completion,
                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual PortableServer::ServantManager_ptr get_servant_manager_i (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
   virtual void set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
@@ -576,6 +550,8 @@ protected:
 
   virtual void set_servant_i (PortableServer::Servant servant,
                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
                                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -590,8 +566,17 @@ protected:
   virtual CORBA::Object_ptr create_reference_i (const char *intf,
                                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+  virtual CORBA::Object_ptr create_reference_with_id_i (const PortableServer::ObjectId &oid,
+                                                        const char *intf,
+                                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   virtual PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant,
                                                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+  virtual PortableServer::ObjectId *servant_to_system_id (PortableServer::Servant p_servant,
+                                                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+  virtual PortableServer::ObjectId *servant_to_system_id_i (PortableServer::Servant p_servant,
+                                                            CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
   virtual PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid,
                                                    CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -599,9 +584,13 @@ protected:
   virtual CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
                                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual void forward_object_i (const PortableServer::ObjectId &oid,
                                  CORBA::Object_ptr forward_to,
                                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual ACE_Lock &lock (void);
 
@@ -627,12 +616,7 @@ protected:
                                TAO_POA::String &tail_poa_name,
                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
-                                                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-
   virtual TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
-
-  virtual CORBA::ULong system_id_size (void) const;
 
   virtual int is_poa_generated_id (const PortableServer::ObjectId &id);
 
@@ -732,6 +716,8 @@ protected:
 
   int delete_active_object_map_;
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   PortableServer::AdapterActivator_var adapter_activator_;
 
   PortableServer::ServantActivator_var servant_activator_;
@@ -739,6 +725,8 @@ protected:
   PortableServer::ServantLocator_var servant_locator_;
 
   PortableServer::Servant default_servant_;
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
           CHILDREN;
@@ -756,6 +744,8 @@ protected:
   TAO_Creation_Time creation_time_;
 };
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActivator
 {
 public:
@@ -764,6 +754,8 @@ public:
                                           const char *name,
                                           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 };
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 class TAO_Export TAO_POA_Current : public POA_PortableServer::Current
 {
@@ -837,11 +829,15 @@ public:
   virtual int in_upcall (void) const;
   // Get whether we're in an upcall (non-zero is yes).
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual PortableServer::ServantLocator::Cookie locator_cookie (void) const;
   // Get the Servant Locator's cookie
 
   virtual void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
   // Set the Servant Locator's cookie
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_POA_Current (void);
   // Constructor
@@ -865,8 +861,12 @@ protected:
   const TAO_ObjectKey *object_key_;
   // The object key of the current context.
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   PortableServer::ServantLocator::Cookie cookie_;
   // Servant Locator's cookie
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   PortableServer::Servant servant_;
   // The servant for the current upcall.

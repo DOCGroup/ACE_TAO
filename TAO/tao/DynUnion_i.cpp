@@ -14,6 +14,9 @@
 // ====================================================================
 
 #include "tao/DynAny_i.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/DynUnion_i.h"
 #include "tao/InconsistentTypeCodeC.h"
 
@@ -1448,3 +1451,5 @@ template class DU_Extractor<CORBA::ULongLong>;
 
 #pragma instantiate DU_Extractor<CORBA::ULongLong>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

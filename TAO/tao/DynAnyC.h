@@ -25,6 +25,10 @@
 #ifndef TAO_IDL_CORBA_DYNANYC_H_
 #define TAO_IDL_CORBA_DYNANYC_H_
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/corbafwd.h"
 #include "tao/Any.h"
 #include "tao/ORB.h"
@@ -1743,5 +1747,7 @@ extern  CORBA::TypeCode_ptr  _tc_CORBA_DynArray;
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* if !defined */

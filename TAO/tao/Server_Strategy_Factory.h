@@ -20,6 +20,7 @@
 #include "ace/Service_Object.h"
 #include "ace/Strategies_T.h"
 #include "tao/Connect.h"
+#include "tao/params.h"
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
@@ -32,6 +33,37 @@ class TAO_Server_Strategy_Factory : public ACE_Service_Object
   //    serves as an interface to a subclass that REALLY gets
   //    specified and loaded by the Service Configurator.
 public:
+
+  struct Active_Object_Map_Creation_Parameters
+  {
+    Active_Object_Map_Creation_Parameters (void);
+    // Constructor.
+
+    u_long active_object_map_size_;
+    // Default size of object lookup table.
+
+    TAO_Demux_Strategy object_lookup_strategy_for_user_id_policy_;
+    // The type of lookup/demultiplexing strategy being used for user
+    // id policy
+
+    TAO_Demux_Strategy object_lookup_strategy_for_system_id_policy_;
+    // The type of lookup/demultiplexing strategy being used for
+    // system id policy
+
+    TAO_Demux_Strategy reverse_object_lookup_strategy_for_unique_id_policy_;
+    // The type of reverse lookup/demultiplexing strategy being used
+    // for the UNIQUE_ID policy
+
+    int use_active_hint_in_ids_;
+    // Flag to indicate whether the active hint should be used with
+    // the IOR.
+
+    int allow_reactivation_of_system_ids_;
+    // Flag to indicate whether reactivations of servants was required
+    // (under the system id policy).  If not, certain resources may
+    // not be required.
+  };
+
   // = Initialization and termination methods.
   TAO_Server_Strategy_Factory (void);
   // Constructor.
@@ -69,16 +101,6 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual TAO_Active_Object_Map_Impl *create_active_object_map (int user_id_policy);
-  // Return a new id-->sevant table.  If <user_id_policy> is true, the
-  // request is being made for a POA with USER_ID policy. Otherwise,
-  // the SYSTEM_ID policy is being used.
-
-  virtual TAO_Reverse_Active_Object_Map_Impl *create_reverse_active_object_map (int unique_id_policy);
-  // Return a new servant-->id table.  If <unique_id_policy> is true,
-  // the request is being made for a POA with UNIQUE_ID
-  // policy. Otherwise, the MULTIPLE_ID policy is being used.
-
   virtual ACE_Lock *create_poa_lock (void);
   // Return a new lock for use in locking the POA.
 
@@ -97,8 +119,13 @@ public:
   virtual ACE_Lock *create_cached_connector_lock (void);
   // Create the lock to be used by the cached connector.
 
-  virtual u_long active_object_map_size (void) const;
-  // Return the object table size
+  virtual const Active_Object_Map_Creation_Parameters &active_object_map_creation_parameters (void) const;
+  // Return the active object map creation parameters.
+
+protected:
+
+  Active_Object_Map_Creation_Parameters active_object_map_creation_parameters_;
+  // Active object map creation parameters.
 };
 
 #endif /* TAO_SERVER_STRATEGY_FACTORY_H */

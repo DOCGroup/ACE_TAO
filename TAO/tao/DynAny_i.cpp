@@ -14,6 +14,9 @@
 // =================================================================
 
 #include "tao/DynAny_i.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/DynStruct_i.h"
 #include "tao/DynSequence_i.h"
 #include "tao/DynEnum_i.h"
@@ -752,3 +755,5 @@ TAO_DynAny_i::unalias (CORBA_TypeCode_ptr tc,
 
   return tck;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

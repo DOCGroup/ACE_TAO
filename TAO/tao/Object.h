@@ -51,9 +51,6 @@ public:
   // making such calls, but may be overridden when it appears
   // appropriate.
 
-  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-  // Interface repository related operation
-
   virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id,
                                 CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // determine if we are of the type specified by the "logical_type_id"
@@ -68,12 +65,17 @@ public:
   virtual CORBA::Boolean _is_collocated (void) const;
   // are we collocated with the servant?
 
+  virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual CORBA::ImplementationDef_ptr
       _get_implementation (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This method is deprecated in the CORBA 2.2 spec, we just return 0
   // every time.
 
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Interface repository related operation
 
   virtual void _create_request (CORBA::Context_ptr ctx,
                                 const CORBA::Char *operation,
@@ -95,6 +97,8 @@ public:
   virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
                                        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // DII operation to create a request.
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
                               CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());

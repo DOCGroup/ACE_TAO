@@ -30,6 +30,7 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/GIOP.h"
+#include "tao/Any.h"
 
 struct TAO_Exception_Data;
 class TAO_Profile;

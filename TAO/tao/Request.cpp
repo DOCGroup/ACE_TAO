@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/Request.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/Object.h"
 #include "tao/Stub.h"
 
@@ -106,3 +109,5 @@ CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
                          exceptions_,
                          ACE_TRY_ENV);
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
