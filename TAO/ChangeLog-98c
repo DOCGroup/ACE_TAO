@@ -52,6 +52,16 @@ Fri Dec 18 09:34:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Added missing template instantiations.
 	  Fixed warnings reported by g++ 2.7.2.3
 
+1998-12-17  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{cpp}:
+	My crazy attempt to save copying by passing around sequence
+	buffers backfired -- it worked on some platforms but not
+	others. So I've supplanted that approach with good, old 
+	fashioned copying. Thanks to Sunil Kumar <skumar@sutmyn.com>'s
+	example program for helping me to pinpoint the problem. 
+
 Thu Dec 17 16:11:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
