@@ -179,10 +179,10 @@ public:
    *       GenericFactory::create_object() method.
    */
   PortableGroup::ObjectGroup_ptr create_object_group (
-    PortableGroup::ObjectGroupId group_id,
     const char * type_id,
     const char * domain_id,
-    const PortableGroup::Criteria & the_criteria
+    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::ObjectGroupId & group_id
     ACE_ENV_ARG_DECL);
 
   /// Destroy the object group corresponding to the given ObjectGroupId.
@@ -218,7 +218,7 @@ public:
    *         group corresponding to the given ObjectId exists.
    */
   PortableGroup::ObjectGroup_ptr object_group (
-    const PortableServer::ObjectId & oid);
+      const PortableGroup::ObjectGroupId ogid);
 
   /// Return the number of members in the given object group.
   CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group
@@ -284,6 +284,16 @@ protected:
     CORBA::Object_ptr member
     ACE_ENV_ARG_DECL);
 
+  /**
+   * Allocate an ogid for a new object group
+   */
+  void allocate_ogid (PortableGroup::ObjectGroupId & ogid);
+
+  /**
+   * convert numeric OGID to Sequence<Octet> oid
+   */
+  PortableServer::ObjectId * convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid);
+
 private:
 
   /// The orb
@@ -309,6 +319,12 @@ private:
 
   /// Lock used to synchronize access to the underlying tables.
   TAO_SYNCH_MUTEX lock_;
+
+  /// Lock used to synchronize access to next_ogid_.
+  TAO_SYNCH_MUTEX lock_ogid_;
+
+  /// Next ogid to be allocated.
+  PortableGroup::ObjectGroupId next_ogid_;
 
 };
 

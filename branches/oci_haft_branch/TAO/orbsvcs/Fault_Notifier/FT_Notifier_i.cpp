@@ -48,6 +48,9 @@ TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
   , quit_on_idle_(0)
   , quitting_(0)
   , gone_(0)
+  , rm_register_(1)
+  , registered_(0)
+  , replication_manager_(0)
 {
 }
 
@@ -113,7 +116,7 @@ int TAO::FT_FaultNotifier_i::write_ior()
 
 int TAO::FT_FaultNotifier_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:vq");
+  ACE_Get_Opt get_opts (argc, argv, "o:rq");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -125,14 +128,14 @@ int TAO::FT_FaultNotifier_i::parse_args (int argc, char * argv[])
         this->ior_output_file_ = get_opts.opt_arg ();
         break;
       }
+      case 'r':
+      {
+        this->rm_register_ = ! this->rm_register_;
+        break;
+      }
       case 'q':
       {
         this->quit_on_idle_ = 1;
-        break;
-      }
-      case 'v':
-      {
-        this->verbose_ = 1;
         break;
       }
       case '?':
@@ -142,6 +145,8 @@ int TAO::FT_FaultNotifier_i::parse_args (int argc, char * argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -o <iorfile>"
+                           " -r disable registration with ReplicationManager"
+                           " -q(uit on idle)"
                            "\n",
                            argv [0]),
                           -1);
@@ -189,8 +194,28 @@ int TAO::FT_FaultNotifier_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     this->ns_name_ = 0;
   }
 
-  int TODO_unregister_with_ReplicationManager;
+  if (this->registered_)
+  {
+    ACE_TRY
+    {
+      this->replication_manager_->register_fault_notifier(::FT::FaultNotifier::_nil ());
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG,
+        "FaultNotifier unregistered from ReplicationManager.\n"
+        ));
+    }
+    ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        "FaultNotifier Can't unregistered from ReplicationManager.\n"
+        ));
+      // complain, but otherwise ignore this error
+      // RM may be down.
+    }
+    ACE_ENDTRY;
 
+    this->registered_ = 0;
+  }
   return 0;
 }
 
@@ -230,7 +255,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_TRY_CHECK;
-
 
   // Register with the POA.
 
@@ -344,6 +368,54 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
     result = -1;
   }
   // everything else happens when subscriber shows up
+
+  ///////////////////////////////
+  // Register with ReplicationManager
+  if (this->rm_register_)
+  {
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (replication_manager_))
+      {
+        // @@: should we check to see if there's already one registered?
+        FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (this_obj);
+        if (! CORBA::is_nil (notifier))
+        {
+          this->replication_manager_->register_fault_notifier(notifier.in ());
+          ACE_DEBUG ((LM_DEBUG,
+            "FaultNotifier registered with ReplicationManager.\n"
+            ));
+          this->registered_ = 1;
+        }
+        else
+        {
+          ACE_ERROR ((LM_ERROR,
+            "Error: Registration failed.  This is not a FaultNotifier (should not occur.)\n"
+            ));
+        }
+      }
+      else
+      {
+        ACE_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
+      }
+    }
+    ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.  Factory will not be registered.\n" );
+    }
+    ACE_ENDTRY;
+  }
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      "FaultNotifier: ReplicationManager registration disabled.\n"
+      ));
+  }
   ///////////////////////////////
   // Set up and ready for action
   // publish our IOR
@@ -355,12 +427,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
       this->identity_ = "file:";
       this->identity_ += this->ior_output_file_;
       result = write_ior();
-    }
-    else
-    {
-      // if no IOR file specified,
-      // then always try to register with name service
-      this->ns_name_ = "FT_FaultNotifier";
     }
   }
 
@@ -398,8 +464,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
       ACE_TRY_CHECK;
     }
   }
-
-  int TODO_register_with_ReplicationManager;
 
   return result;
 }
@@ -635,7 +699,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
   this->consumer_disconnects_ += 1;
   if (this->quit_on_idle_)
   {
-    if (! this->quitting_ 
+    if (! this->quitting_
       && this->consumer_connects_ == this->consumer_disconnects_)
     {
       ACE_ERROR((LM_ERROR,

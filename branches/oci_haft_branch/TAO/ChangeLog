@@ -1,3 +1,66 @@
+Fri Oct 24 14:42:39 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Fix logic error in shutdown that caused fini to be called twice.
+          Implement set_primary using IORManipulator (not working, yet)
+          add_member creates IOGR's (but not very well, so far)
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+          temporary patch for changed method name in RegistrationFactory
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          Get FaultNotifier from ReplicationManager
+          Register with ReplicationManager:FactoryRegistry
+
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+          Register with ReplicationManager
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+          fix spelling error s/criteron/criterion/
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+          Add a missing/needed CORBA::string_dup
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+          Fix race condition in managing factory creation ID.
+          After fix, ObjectGroupManager assigns object group ids
+          using full 64 bit PortableGroup::ObjectGroupId rather than
+          relying on GenericFactory to assign them. Factory
+          creation id is now a ObjectGroupId in an Any.
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.h:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+          Dump intermediate IOGRs as members are added.
+          split application main from ObjectGroupCreator object.
+
+        * orbsvcs/tests/FT_App/run_test_detector.pl:
+        * orbsvcs/tests/FT_App/run_test_fault_consumer.pl:
+        * orbsvcs/tests/FT_App/run_test_registry.pl:
+        * orbsvcs/tests/FT_App/run_test_replication_mgr.pl:
+        * orbsvcs/tests/FT_App/run_test_rmregistry.pl:
+          add message to indicate client vs infrastructure reinvocation
+          switch to corbaloc addressing of ReplicationManager initial reference.
+
+        * orbsvcs/tests/FT_App/run_test_rmnotifier.pl:
+          new test: test notifier registration with replication manager
+        * orbsvcs/tests/FT_App/run_test_iogr.pl:
+          new test.  ft_create makes IOGRs
+
+        These changes were made in the oci_haft branch.
+
 Wed Oct 22 00:11:36 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/tests/FT_App/run_test_replication_mgr.pl:

@@ -95,16 +95,16 @@ use PerlACE::Run_Test;
 #set defaults:
 my($verbose) = 0;         # 1: report perl actions before executing them
 my($debug_builds) = 0;    # 0: use exes from Release directories
-my($simulated) = 1;       # 1: use "client simulated" fault tolerance
+my($simulated) = 0;       # 1: use "client simulated" fault tolerance
 
 foreach $i (@ARGV) {
   if ($i eq "--debug_build")
   {
     $debug_builds = 1;
   }
-  elsif ($i eq "--no_simulate")  # reverse this once we have FT ORB support
+  elsif ($i eq "--simulate")
   {
-    $simulated = 0;
+    $simulated = ! $simulated0;
   }
   elsif ($i eq "-v")
   {
@@ -151,6 +151,7 @@ my($replica3_iogr) = PerlACE::LocalFile ("${role1}_2.iogr");
 my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
 #discard junk from previous tests
+if (10) {
 unlink $rm_ior;
 unlink $factory1_ior;
 unlink $factory2_ior;
@@ -165,7 +166,7 @@ unlink $replica1_iogr;
 unlink $replica2_iogr;
 
 unlink $client_data;
-
+}
 my($status) = 0;
 
 my($RM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $rm_ior");
@@ -173,18 +174,20 @@ my($RMC) = new PerlACE::Process (".$build_directory/replmgr_controller", "-k fil
 my($FAC1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -ORBInitRef ReplicationManager=file://$rm_ior -l $location1 -i $role1 -q");
 my($FAC2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -ORBInitRef ReplicationManager=file://$rm_ior -l $location2 -i $role1 -i $role2 -i $role3 -q -u");
 my($FAC3) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory3_ior -ORBInitRef ReplicationManager=file://$rm_ior -l $location3 -i $role2 -q -u");
-my($CTR) = new PerlACE::Process (".$build_directory/ft_create", "-ORBInitRef ReplicationManager=file://$rm_ior -r $role1 -r $role2 -r $role1 -u $role3");
+my($CTR);
 
 my($CL1);
 my($CL2);
 my($CL3);
 if ($simulated) {
   print "\nTEST: Preparing Client Mediated Fault Tolerance test.\n" if ($verbose);
+  $CTR = new PerlACE::Process (".$build_directory/ft_create", "-ORBInitRef ReplicationManager=file://$rm_ior -r $role1 -r $role2 -r $role1 -u $role3");
   $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
   $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica3_ior -f file://$replica4_ior -c testscript");
   $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica5_ior -f file://$replica6_ior -c testscript");
 }else{
   print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
+  $CTR = new PerlACE::Process (".$build_directory/ft_create", "-ORBInitRef ReplicationManager=file://$rm_ior -r $role1 -r $role2 -r $role1 -u $role3 -g -i");
   $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
   $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica2_iogr -c testscript");
   $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f $replica3_iogr -c testscript");
@@ -192,7 +195,7 @@ if ($simulated) {
 
 #######################
 # Start ReplicationManager
-
+if (10) {
 print "\nTEST: starting ReplicationManager " . $RM->CommandLine . "\n" if ($verbose);
 $RM->Spawn ();
 
@@ -202,7 +205,7 @@ if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
     $RM->Kill (); $RM->TimedWait (1);
     exit 1;
 }
-
+}
 #################
 # Start Factories
 
@@ -247,31 +250,41 @@ if (PerlACE::waitforfile_timed ($factory3_ior, 5) == -1) {
 
 print "\nTEST: starting object group creator " . $CTR->CommandLine . "\n" if ($verbose);
 $CTR->Spawn ();
-
-print "TEST: waiting for Replica IOR files from object group creator\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica1_ior>\n";
-    $status = 1;
-}
-elsif (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica2_ior> \n";
-    $status = 1;
-}
-elsif (PerlACE::waitforfile_timed ($replica3_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica3_ior> \n";
-    $status = 1;
-}
-elsif (PerlACE::waitforfile_timed ($replica4_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica4_ior> \n";
-    $status = 1;
-}
-elsif (PerlACE::waitforfile_timed ($replica5_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica5_ior> \n";
-    $status = 1;
-}
-elsif (PerlACE::waitforfile_timed ($replica6_ior, 5) == -1){
-    print STDERR "ERROR: cannot find file <$replica6_ior> \n";
-    $status = 1;
+if ($simulated){
+  print "TEST: waiting for Replica IOR files from object group creator\n" if ($verbose);
+  if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica1_ior>\n";
+      $status = 1;
+  }
+  elsif (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica2_ior> \n";
+      $status = 1;
+  }
+  elsif (PerlACE::waitforfile_timed ($replica3_ior, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica3_ior> \n";
+      $status = 1;
+  }
+  elsif (PerlACE::waitforfile_timed ($replica4_ior, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica4_ior> \n";
+      $status = 1;
+  }
+  elsif (PerlACE::waitforfile_timed ($replica5_ior, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica5_ior> \n";
+      $status = 1;
+  }
+  elsif (PerlACE::waitforfile_timed ($replica6_ior, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica6_ior> \n";
+      $status = 1;
+  }
+}else{
+  if (PerlACE::waitforfile_timed ($replica1_iogr, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica1_iogr>\n";
+      $status = 1;
+  }
+  elsif (PerlACE::waitforfile_timed ($replica2_iogr, 5) == -1){
+      print STDERR "ERROR: cannot find file <$replica2_iogr> \n";
+      $status = 1;
+  }
 }
 
 if($status != 0){
@@ -284,7 +297,7 @@ if($status != 0){
 }
 
 print "\nTEST: wait for object group creator.\n" if ($verbose);
-$config = $CTR->WaitKill (5);
+my($config) = $CTR->WaitKill (5);
 if ($config != 0) {
     print STDERR "ERROR: configuration manager returned $config\n";
     $FAC3->Kill (); $FAC3->TimedWait (1);
@@ -346,20 +359,21 @@ if ($factory3 != 0) {
     $status = 1;
 }
 
+#if (10) {
 print "\nTEST: shutting down the replication manager.\n" if ($verbose);
 $controller = $RMC->SpawnWaitKill (300);
 if ($controller != 0) {
     print STDERR "ERROR: replication manager controller returned $controller\n";
     $status = 1;
-}
 
 print "\nTEST: wait for ReplicationManager.\n" if ($verbose);
-#$RM->Kill ();
 $repmgr = $RM->WaitKill (30);
 if ($repmgr != 0) {
     print STDERR "ERROR: ReplicationManager returned $repmgr\n";
     $status = 1;
 }
+}
+
 
 print "\nTEST: releasing scratch files.\n" if ($verbose);
 unlink $rm_ior;

@@ -51,6 +51,7 @@ static const char * criterion_initial_value = "INITIAL_VALUE";
 FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   : ior_output_file_(0)
   , factory_registry_ior_(0)
+  , factory_registry_ (0)
   , registered_(0)
   , ns_name_(0)
   , location_("unknown")
@@ -267,67 +268,6 @@ int FT_ReplicaFactory_i::idle (int & result)
 }
 
 
-int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
-{
-  if (this->ior_output_file_ != 0)
-  {
-    ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = 0;
-  }
-  if (this->ns_name_ != 0)
-  {
-    this->naming_context_->unbind (this_name_
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    this->ns_name_ = 0;
-  }
-
-  if (registered_)
-  {
-    registered_ = 0;
-
-    if (this->unregister_by_location_)
-    {
-      ACE_ERROR (( LM_INFO,
-         "%s: unregistering all factories at %s\n",
-         identity(),
-         location_
-         ));
-
-      PortableGroup::Location location(1);
-      location.length(1);
-      location[0].id = CORBA::string_dup(location_);
-      this->factory_registry_->unregister_factory_by_location (
-              location
-        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-    }
-    else
-    {
-      size_t roleCount = roles_.size();
-      for (size_t nRole = 0; nRole < roleCount; ++nRole)
-      {
-        const char * roleName = this->roles_[nRole].c_str();
-        ACE_ERROR (( LM_INFO,
-           "Factory for: %s@%s unregistering from factory registry\n",
-           roleName,
-           location_
-           ));
-
-        PortableGroup::Location location(1);
-        location.length(1);
-        location[0].id = CORBA::string_dup(location_);
-        this->factory_registry_->unregister_factory (
-                roleName,
-                location
-          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-      }
-    }
-  }
-
-  return 0;
-}
 
 int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 {
@@ -412,7 +352,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
       ACE_TRY_CHECK;
       if (!CORBA::is_nil (replication_manager_))
       {
-        have_replication_manager_ = 1;
+        this->have_replication_manager_ = 1;
         // empty criteria
         ::PortableGroup::Criteria criteria;
         this->factory_registry_ = this->replication_manager_->get_factory_registry(criteria  ACE_ENV_ARG_PARAMETER);
@@ -447,44 +387,34 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   if ( ! CORBA::is_nil (this->factory_registry_))
   {
-    ::PortableGroup::GenericFactory_var this_var = ::PortableGroup::GenericFactory::_narrow(this_obj);
-    if (! CORBA::is_nil(this_var))
+    size_t roleCount = roles_.size();
+    for (size_t nRole = 0; nRole < roleCount; ++nRole)
     {
-      size_t roleCount = roles_.size();
-      for (size_t nRole = 0; nRole < roleCount; ++nRole)
-      {
-        const char * roleName = this->roles_[nRole].c_str();
+      const char * roleName = this->roles_[nRole].c_str();
 
-        PortableGroup::FactoryInfo info;
-        info.the_factory = this_var;
-        info.the_location.length(1);
-        info.the_location[0].id = CORBA::string_dup(location_);
-        info.the_criteria.length(1);
-        info.the_criteria[0].nam.length(1);
-        info.the_criteria[0].nam[0].id = CORBA::string_dup(PortableGroup::role_criteron);
-        info.the_criteria[0].val <<= CORBA::string_dup(roleName);
+      PortableGroup::FactoryInfo info;
+      info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj);
+      info.the_location.length(1);
+      info.the_location[0].id = CORBA::string_dup(this->location_);
+      info.the_criteria.length(1);
+      info.the_criteria[0].nam.length(1);
+      info.the_criteria[0].nam[0].id = CORBA::string_dup(PortableGroup::role_criterion);
+      info.the_criteria[0].val <<= CORBA::string_dup(roleName);
 
-        ACE_ERROR (( LM_INFO,
-           "Factory: %s@%s registering with factory registry\n",
-           roleName,
-           location_
-           ));
-
-        this->factory_registry_->register_factory(
-          roleName,
-          FT_TEST::_tc_TestReplica->id(),
-          info
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
-      this->registered_ = 1;
-    }
-    else
-    {
-      ACE_ERROR (( LM_ERROR,
-         "Unexpected error: object reference should be a ReplicaFactory?\n"
+      ACE_ERROR (( LM_INFO,
+         "Factory: %s@%s registering with factory registry\n",
+         roleName,
+         location_
          ));
+
+      this->factory_registry_->register_factory(
+        roleName,
+        FT_TEST::_tc_TestReplica->id(),
+        info
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
+    this->registered_ = 1;
   }
 
   int identified = 0; // bool
@@ -570,6 +500,69 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   return result;
 }
 
+int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->ior_output_file_ != 0)
+  {
+    ACE_OS::unlink (this->ior_output_file_);
+    this->ior_output_file_ = 0;
+  }
+  if (this->ns_name_ != 0)
+  {
+    this->naming_context_->unbind (this_name_
+                            ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    this->ns_name_ = 0;
+  }
+
+  if (registered_)
+  {
+    registered_ = 0;
+
+    if (this->unregister_by_location_)
+    {
+      ACE_ERROR (( LM_INFO,
+         "%s: unregistering all factories at %s\n",
+         identity(),
+         location_
+         ));
+
+      PortableGroup::Location location(1);
+      location.length(1);
+      location[0].id = CORBA::string_dup(location_);
+      this->factory_registry_->unregister_factory_by_location (
+              location
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+    }
+    else
+    {
+      size_t roleCount = roles_.size();
+      for (size_t nRole = 0; nRole < roleCount; ++nRole)
+      {
+        const char * roleName = this->roles_[nRole].c_str();
+        ACE_ERROR (( LM_INFO,
+           "Factory for: %s@%s unregistering from factory registry\n",
+           roleName,
+           location_
+           ));
+
+        PortableGroup::Location location(1);
+        location.length(1);
+        location[0].id = CORBA::string_dup(location_);
+        this->factory_registry_->unregister_factory (
+                roleName,
+                location
+          ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+      }
+    }
+  }
+
+  return 0;
+}
+
+
 void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * replica)
 {
   InternalGuard guard (this->internals_);
@@ -636,14 +629,14 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   }
 
   const char * role = "replica";
-  if (! ::TAO_PG::find (decoder, PortableGroup::role_criteron, role) )
+  if (! ::TAO_PG::find (decoder, PortableGroup::role_criterion, role) )
   {
     ACE_ERROR((LM_INFO,
-      "Property \"%s\" not found?\n", PortableGroup::role_criteron
+      "Property \"%s\" not found?\n", PortableGroup::role_criterion
       ));
     // not required.  Otherwise:
     // missingParameter = 1;
-    // missingParameterName = PortableGroup::role_criteron;
+    // missingParameterName = PortableGroup::role_criterion;
   }
 
   if (missingParameter)

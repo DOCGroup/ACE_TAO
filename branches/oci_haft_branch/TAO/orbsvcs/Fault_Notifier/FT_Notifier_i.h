@@ -35,6 +35,7 @@ namespace TAO
 
 
 #include <orbsvcs/FT_NotifierS.h>
+#include <orbsvcs/FT_ReplicationManagerC.h>
 #include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
 #include <ace/Vector_t.h>
 
@@ -171,7 +172,7 @@ namespace TAO
     typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
 
     /**
-     * The orb 
+     * The orb
      */
     CORBA::ORB_var orb_;
 
@@ -206,6 +207,22 @@ namespace TAO
     CosNaming::Name this_name_;
 
     /**
+     * bool: if true, register with ReplicationManager.
+     * default is true. -r turns it off.
+     */
+    int rm_register_;
+
+    /**
+     * the replication manager
+     */
+    ::FT::ReplicationManager_var replication_manager_;
+
+    /**
+     * bool: if true the registration with ReplicationManager was successful.
+     */
+    int registered_;
+
+    /**
      * A human-readable string to distinguish this from other Notifiers.
      */
     ACE_CString identity_;
@@ -236,11 +253,6 @@ namespace TAO
 
     ::CosNotifyChannelAdmin::StructuredProxyPushConsumer_var structured_proxy_push_consumer_;
     ::CosNotifyChannelAdmin::SequenceProxyPushConsumer_var sequence_proxy_push_consumer_;
-
-    /**
-      * boolean true means display debug messages (default is false)
-      */
-    int verbose_;
 
     /*
      * boolean quit when all consumers disconnect
