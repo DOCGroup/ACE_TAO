@@ -1,0 +1,65 @@
+#!build
+default:
+	library
+	:defines=DEBUG
+any.cpp
+	C++
+boa.cpp
+	C++
+	:cx_e_option=noremark
+cdr.cpp
+	C++
+connect.cpp
+	C++
+corbacom.cpp
+	C++
+debug.cpp
+	C++
+decode.cpp
+	C++
+deep_copy.cpp
+	C++
+encode.cpp
+	C++
+except.cpp
+	C++
+factories.cpp
+	C++
+giop.cpp
+	C++
+iiopobj.cpp
+	C++
+iioporb.cpp
+	C++
+interp.cpp
+	C++
+invoke.cpp
+	C++
+marshal.cpp
+	C++
+nvlist.cpp
+	C++
+object.cpp
+	C++
+objtable.cpp
+	C++
+optable.cpp
+	C++
+orbobj.cpp
+	C++
+params.cpp
+	C++
+principa.cpp
+	C++
+request.cpp
+	C++
+roa.cpp
+	C++
+svrrqst.cpp
+	C++
+tc_const.cpp
+	C++
+typecode.cpp
+	C++
+deep_free.cpp
+	C++

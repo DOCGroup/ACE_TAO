@@ -1,0 +1,19 @@
+#!build
+default:
+	nobuild
+	:debuglevel=multi
+	:target=vxwppc
+	:sourcedirs=/home/ace/ACE_wrappers.vxworks
+	:sourcedirs=../../proto/include
+	:sourcedirs=../..
+	:libraries=../../proto/lib/tao.a
+	:libraries=/home/ace/ACE_wrappers.vxworks/ace/libACE.a
+	:libraries=/appl/newgreen/vxppc603/indlib.o
+	:defines=DEBUG
+clnt.bld
+	program
+	:debuglevel=multi
+svr.bld
+	program
+	:debuglevel=multi
+	:defines=USE_ACE_EVENT_HANDLING

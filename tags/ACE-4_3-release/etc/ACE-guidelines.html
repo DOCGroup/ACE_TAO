@@ -1,0 +1,167 @@
+<!-- $Id$ -->
+
+<html>
+  <head>
+    <title>ACE Implementation Guidelines</title>
+    <link rev=made href="mailto:levine@cs.wustl.edu">
+  </head>
+
+<body>
+<center>
+  <h1>ACE Implementation Guidelines</h1>
+  <font size=-1>
+    Last modified <!--#echo var="LAST_MODIFIED" -->.<p>
+  </font>
+</center>
+<h2>&nbsp</h2>
+
+<h3>Coding Guidelines</h3>
+<ul>
+  <li><strong>General</strong><p>
+  <ul>
+    <li>Every text file must end with a newline.<p>
+
+    <li>Insert a CVS/RCS keyword string at the top of every source file,
+        Makefile, config file, <em>etc</em>.  For C++ files, it is:
+        <pre>
+        // $<!-- -->Id$
+        </pre>
+        It's not necessary to fill in the fields of the keyword string,
+        or modify them when you edit a file that already has one.  CVS
+        does that automatically when you checkout or update the file.<p>
+
+        To insert that string at the top of a file:
+        <pre>
+        perl -pi -e 'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
+        </pre><p>
+  </ul>
+
+  <li><strong>Preprocessor</strong><p>
+  <ul>
+    <li>Always follow a preprocessor <strong><code>#endif</code></strong>
+        with a <strong><code>/*  */</code></strong> C-style comment.  It
+        should correspond to the condition in the matching
+        <strong><code>#if</code></strong> directive.  For example,
+        <pre>
+        #if defined (ACE_HAS_THREADS)
+        # if defined (ACE_HAS_STHREADS)
+        #   include /**/ &lt;synch.h&gt;
+        #   include /**/ &lt;thread.h&gt;
+        #   define ACE_SCOPE_PROCESS P_PID
+        #   define ACE_SCOPE_LWP P_LWPID
+        #   define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
+        # else
+        #   define ACE_SCOPE_PROCESS 0
+        #   define ACE_SCOPE_LWP 1
+        #   define ACE_SCOPE_THREAD 2
+        # endif /* ACE_HAS_STHREADS */
+        #endif /* ACE_HAS_THREADS */
+        </pre><p>
+
+    <li>Always insert a <strong><code>/**/</code></strong> between an
+        <strong><code>#include</code></strong> and
+        <strong><code>filename</code></strong>, as shown in the above
+        example.  This avoids dependency problems with Visual C++.<p>
+  </ul>
+
+  <li><strong>C++ Syntax and Constructs</strong><p>
+  <ul>
+    <li><strong><code>for</code></strong> loops should look like:
+        <pre>
+        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); i++)
+          spawn ();
+        </pre>
+        (though I prefer to always wrap the body of the loop in braces,
+         to avoid surprises when other code or debugging statements are
+         added, and to maintain sanity when the body consists of a macro,
+         such as ACE_ASSERT:)
+        <pre>
+        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); i++)
+          {
+            ACE_ASSERT (spawn () == 0);
+          }
+        </pre>
+
+        Similarly, <strong><code>if</code></strong> statements should have
+        a space after the ``<strong>if</strong>'', and no spaces just after
+        the opening parenthesis and just before the closing parenthesis.<p>
+
+    <li>Put inline member functions in a <strong><code>.i</code></strong>
+        file.  That file is conditionally included by both the
+        <strong><code>.h</code></strong> file, for example:<p>
+
+            <pre>
+            class ACE_Export ACE_High_Res_Timer
+            [...]
+            };
+
+            #if defined (__ACE_INLINE__)
+            #include "ace/High_Res_Timer.i"
+            #endif /* __ACE_INLINE__ */
+            </pre><p>
+
+        and <strong><code>.cpp</code></strong> file:<p>
+
+            <pre>
+            #define ACE_BUILD_DLL
+            #include "ace/High_Res_Timer.h"
+
+            #if !defined (__ACE_INLINE__)
+            #include "ace/High_Res_Timer.i"
+            #endif /* __ACE_INLINE__ */
+
+            ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
+            </pre><p>
+
+    <li>Never use <strong><code>delete</code></strong> to deallocate
+        memory that was allocated with <strong><code>malloc</code></strong>.
+        Similarly, never associate <strong><code>free</code></strong> with
+        <strong><code>new</code></strong>.  Ideally,
+        <strong><code>ACE_NEW</code></strong> or
+        <strong><code>ACE_NEW_RETURN</code></strong> should be used to
+        allocate memory, and <strong><code>delete</code></strong> should
+        be used to deallocate it.  And be careful to use the correct form,
+        <strong><code>delete</code></strong> or
+        <strong><code>delete []</code></strong><p> depending on whether
+        an array was allocated.<p>
+
+    <li>Never compare or assign a pointer value with <strong>NULL</strong>;
+        use <strong>0</strong> instead.  The language allows any pointer to
+        be compared or assigned with <strong>0</strong>.  The definition
+        of <strong>NULL</strong> is implementation dependent, so it is
+        difficult to use portably without casting.
+  </ul>
+
+  <li><strong>I/O</strong><p>
+  <ul>
+     <li>Use <strong><code>ACE_DEBUG</code></strong> for printouts,
+         and <strong><code>ACE_OS::scanf/fprintf ()</code></strong> for
+         file I/O.  Avoid using iostreams because of implementation
+         differences across platforms.<p>
+  </ul>
+</ul><p>
+
+
+<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
+  Usage Guidelines</h3>
+<ul>
+  <li>Always use <strong><code>ACE_OS</code></strong> (static)
+      member functions instead of bare OS system calls.<p>
+
+  <li>Use the <strong><code>ACE_SYNCH_MUTEX</code></strong> macro,
+      instead of using one of the specific mutexes, such as
+      <strong><code>ACE_Thread_Mutex</code></strong>.  This provides
+      portability between threaded and non-threaded platforms.<p>
+</ul><p>
+
+
+<h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">CVS</a>
+  Usage Guidelines</h3>
+<ul>
+  <li>Always make sure that a change builds and executes correctly
+      before checking it into the CVS repository.<p>
+</ul><p>
+
+
+</body>
+</html>
