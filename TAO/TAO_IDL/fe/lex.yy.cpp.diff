@@ -1,5 +1,5 @@
---- lex.yy.cpp	Sat Jul  3 18:55:03 1999
-+++ lex.yy.cpp.new	Sat Jul  3 18:52:58 1999
+--- lex.yy.cpp	Tue Aug 10 21:36:26 1999
++++ lex.yy.cpp.new	Tue Aug 10 21:33:21 1999
 @@ -927,7 +927,7 @@
  
  /* Code executed at the end of each rule. */
@@ -81,7 +81,7 @@
  case 75:
  TAO_YY_RULE_SETUP
  #line 287 "fe/idl.ll"
-@@ -1477,7 +1477,7 @@
+@@ -1477,19 +1477,19 @@
  		    }
  	          }
  	        }
@@ -90,7 +90,12 @@
  case 76:
  TAO_YY_RULE_SETUP
  #line 301 "fe/idl.ll"
-@@ -1489,7 +1489,7 @@
+ ;
+-	TAO_YY_BREAK
++  break;
+ case 77:
+ TAO_YY_RULE_SETUP
+ #line 302 "fe/idl.ll"
  {
    		  idl_global->set_lineno(idl_global->lineno() + 1);
  		}
@@ -99,3 +104,12 @@
  case 78:
  TAO_YY_RULE_SETUP
  #line 305 "fe/idl.ll"
+@@ -1499,7 +1499,7 @@
+ TAO_YY_RULE_SETUP
+ #line 307 "fe/idl.ll"
+ TAO_YY_ECHO;
+-	TAO_YY_BREAK
++  break;
+ case TAO_YY_STATE_EOF(INITIAL):
+ 	tao_yyterminate();
+ 
