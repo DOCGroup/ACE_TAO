@@ -192,50 +192,60 @@ AST_PredefinedType *AST_Module::fe_add_predefined_type(AST_PredefinedType *t)
 /*
  * Add this AST_Module node (a module declaration) to this scope
  */
-AST_Module *AST_Module::fe_add_module(AST_Module *t)
+AST_Module *AST_Module::fe_add_module (AST_Module *t)
 {
   AST_Decl *d;
 
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
-    if (!can_be_redefined(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
-      return NULL;
-    }
-    // if our platform supports namespaces, we allow reopening
-    // modules. However, if namespace support is not available, this is flagged
-    // as an error
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+    {
+      if (!can_be_redefined (d)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      d);
+          return NULL;
+        }
+        // if our platform supports namespaces, we allow reopening
+        // modules. However, if namespace support is not available, this is flagged
+        // as an error
 
 #ifndef ACE_HAS_USING_KEYWORD
-    if (referenced(d, t->local_name ())
-        && !ACE_BIT_ENABLED (idl_global->compile_flags (), IDL_CF_NOWARNINGS))
-      {
-        UTL_String *s = t->file_name ();
-        long lineno = t->line ();
-        cerr << idl_global->prog_name ()
-             << ": warning: "
-             << (idl_global->read_from_stdin() ? "standard input" : s->get_string())
-             << ":" << lineno
-             << ": reopening module but platform does not\n"
-             << "      support namespaces, generated code may not compile\n";
-      }
+      if (referenced (d, t->local_name ())
+          && !d->imported ()
+          && !ACE_BIT_ENABLED (idl_global->compile_flags (), IDL_CF_NOWARNINGS))
+        {
+          UTL_String *s = t->file_name ();
+          long lineno = t->line ();
+          ACE_ERROR ((LM_ERROR,
+                      "%s:warning: %s:%d: %s%s",
+                      idl_global->prog_name (),
+                      (idl_global->read_from_stdin () ? "standard input" : s->get_string ()),
+                      lineno,
+                      "reopening module but platform does not\n",
+                      "      support namespaces, generated code may not compile\n"))
+        }
 #endif /* ACE_HAS_USING_KEYWORD */
 
-    if (t->has_ancestor(d)) {
-      idl_global->err()->redefinition_in_scope(t, d);
-      return NULL;
+      if (t->has_ancestor (d)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, d);
+          return NULL;
+        }
     }
-  }
   /*
    * Add it to scope
    */
-  add_to_scope(t);
+  add_to_scope (t);
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE, t->local_name ());
+  add_to_referenced (t, 
+                     I_FALSE, 
+                     t->local_name ());
 
   return t;
 }
