@@ -21,7 +21,7 @@ SUBDIRS = \
         SSL \
         TMCast
 
-## Makefile.ACE.am 
+## Makefile.ACE.am
 Other = \
   Local_Name_Space.cpp \
   NT_Service.cpp \
@@ -772,7 +772,6 @@ nobase_include_HEADERS = \
   UUID.h \
   Unbounded_Queue.h \
   Unbounded_Set.h \
-  Unbounded_Set_Ex.h \
   Vector_T.h \
   Version.h \
   WFMO_Reactor.h \
@@ -1148,7 +1147,6 @@ nobase_include_HEADERS = \
   UUID.inl \
   Unbounded_Queue.inl \
   Unbounded_Set.inl \
-  Unbounded_Set_Ex.inl \
   Vector_T.inl \
   WFMO_Reactor.inl \
   XTI_ATM_Mcast.inl \
@@ -1227,7 +1225,6 @@ nobase_include_HEADERS = \
   Typed_SV_Message_Queue.cpp \
   Unbounded_Queue.cpp \
   Unbounded_Set.cpp \
-  Unbounded_Set_Ex.cpp \
   Vector_T.cpp
 
 pkgconfigdata_DATA = ACE.pc

@@ -18,7 +18,7 @@ SUBDIRS = \
         SSL
 
 noinst_PROGRAMS =
-## Makefile.Test_Output.am 
+## Makefile.Test_Output.am
 
 dist_check_SCRIPTS = run_test.lst run_test.pl
 TESTS = $(noinst_PROGRAMS)
@@ -41,7 +41,7 @@ noinst_HEADERS = \
   Test_Output_Export.h \
   test_config.h
 
-## Makefile.ACE_Init_Test.am 
+## Makefile.ACE_Init_Test.am
 noinst_PROGRAMS += ACE_Init_Test
 
 ACE_Init_Test_CPPFLAGS = \
@@ -56,7 +56,7 @@ ACE_Init_Test_SOURCES = \
 ACE_Init_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.ACE_Test.am 
+## Makefile.ACE_Test.am
 noinst_PROGRAMS += ACE_Test
 
 ACE_Test_CPPFLAGS = \
@@ -70,7 +70,7 @@ ACE_Test_SOURCES = \
 ACE_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.ARGV_Test.am 
+## Makefile.ARGV_Test.am
 noinst_PROGRAMS += ARGV_Test
 
 ARGV_Test_CPPFLAGS = \
@@ -84,7 +84,7 @@ ARGV_Test_SOURCES = \
 ARGV_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Aio_Platform_Test.am 
+## Makefile.Aio_Platform_Test.am
 noinst_PROGRAMS += Aio_Platform_Test
 
 Aio_Platform_Test_CPPFLAGS = \
@@ -98,7 +98,7 @@ Aio_Platform_Test_SOURCES = \
 Aio_Platform_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Arg_Shifter_Test.am 
+## Makefile.Arg_Shifter_Test.am
 noinst_PROGRAMS += Arg_Shifter_Test
 
 Arg_Shifter_Test_CPPFLAGS = \
@@ -112,7 +112,7 @@ Arg_Shifter_Test_SOURCES = \
 Arg_Shifter_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Atomic_Op_Test.am 
+## Makefile.Atomic_Op_Test.am
 noinst_PROGRAMS += Atomic_Op_Test
 
 Atomic_Op_Test_CPPFLAGS = \
@@ -126,7 +126,7 @@ Atomic_Op_Test_SOURCES = \
 Atomic_Op_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Auto_IncDec_Test.am 
+## Makefile.Auto_IncDec_Test.am
 noinst_PROGRAMS += Auto_IncDec_Test
 
 Auto_IncDec_Test_CPPFLAGS = \
@@ -140,7 +140,7 @@ Auto_IncDec_Test_SOURCES = \
 Auto_IncDec_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Barrier_Test.am 
+## Makefile.Barrier_Test.am
 noinst_PROGRAMS += Barrier_Test
 
 Barrier_Test_CPPFLAGS = \
@@ -154,7 +154,7 @@ Barrier_Test_SOURCES = \
 Barrier_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Basic_Types_Test.am 
+## Makefile.Basic_Types_Test.am
 noinst_PROGRAMS += Basic_Types_Test
 
 Basic_Types_Test_CPPFLAGS = \
@@ -168,7 +168,7 @@ Basic_Types_Test_SOURCES = \
 Basic_Types_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Bound_Ptr_Test.am 
+## Makefile.Bound_Ptr_Test.am
 noinst_PROGRAMS += Bound_Ptr_Test
 
 Bound_Ptr_Test_CPPFLAGS = \
@@ -183,7 +183,7 @@ Bound_Ptr_Test_SOURCES = \
 Bound_Ptr_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Buffer_Stream_Test.am 
+## Makefile.Buffer_Stream_Test.am
 noinst_PROGRAMS += Buffer_Stream_Test
 
 Buffer_Stream_Test_CPPFLAGS = \
@@ -197,7 +197,7 @@ Buffer_Stream_Test_SOURCES = \
 Buffer_Stream_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Bug_1576_Regression_Test.am 
+## Makefile.Bug_1576_Regression_Test.am
 noinst_PROGRAMS += Bug_1576_Regression_Test
 
 Bug_1576_Regression_Test_CPPFLAGS = \
@@ -211,7 +211,7 @@ Bug_1576_Regression_Test_SOURCES = \
 Bug_1576_Regression_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.CDR_Array_Test.am 
+## Makefile.CDR_Array_Test.am
 noinst_PROGRAMS += CDR_Array_Test
 
 CDR_Array_Test_CPPFLAGS = \
@@ -225,7 +225,7 @@ CDR_Array_Test_SOURCES = \
 CDR_Array_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.CDR_File_Test.am 
+## Makefile.CDR_File_Test.am
 noinst_PROGRAMS += CDR_File_Test
 
 CDR_File_Test_CPPFLAGS = \
@@ -241,7 +241,7 @@ CDR_File_Test_SOURCES = \
 CDR_File_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.CDR_Test.am 
+## Makefile.CDR_Test.am
 noinst_PROGRAMS += CDR_Test
 
 CDR_Test_CPPFLAGS = \
@@ -255,7 +255,7 @@ CDR_Test_SOURCES = \
 CDR_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Cache_Map_Manager_Test.am 
+## Makefile.Cache_Map_Manager_Test.am
 noinst_PROGRAMS += Cache_Map_Manager_Test
 
 Cache_Map_Manager_Test_CPPFLAGS = \
@@ -270,7 +270,7 @@ Cache_Map_Manager_Test_SOURCES = \
 Cache_Map_Manager_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Cached_Accept_Conn_Test.am 
+## Makefile.Cached_Accept_Conn_Test.am
 noinst_PROGRAMS += Cached_Accept_Conn_Test
 
 Cached_Accept_Conn_Test_CPPFLAGS = \
@@ -285,7 +285,7 @@ Cached_Accept_Conn_Test_SOURCES = \
 Cached_Accept_Conn_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Cached_Allocator_Test.am 
+## Makefile.Cached_Allocator_Test.am
 noinst_PROGRAMS += Cached_Allocator_Test
 
 Cached_Allocator_Test_CPPFLAGS = \
@@ -299,7 +299,7 @@ Cached_Allocator_Test_SOURCES = \
 Cached_Allocator_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Cached_Conn_Test.am 
+## Makefile.Cached_Conn_Test.am
 noinst_PROGRAMS += Cached_Conn_Test
 
 Cached_Conn_Test_CPPFLAGS = \
@@ -314,7 +314,7 @@ Cached_Conn_Test_SOURCES = \
 Cached_Conn_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Capabilities_Test.am 
+## Makefile.Capabilities_Test.am
 noinst_PROGRAMS += Capabilities_Test
 
 Capabilities_Test_CPPFLAGS = \
@@ -328,7 +328,7 @@ Capabilities_Test_SOURCES = \
 Capabilities_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Codecs_Test.am 
+## Makefile.Codecs_Test.am
 
 if BUILD_ACE_CODECS
 noinst_PROGRAMS += Codecs_Test
@@ -346,7 +346,7 @@ Codecs_Test_LDADD = \
 
 endif BUILD_ACE_CODECS
 
-## Makefile.Collection_Test.am 
+## Makefile.Collection_Test.am
 noinst_PROGRAMS += Collection_Test
 
 Collection_Test_CPPFLAGS = \
@@ -361,7 +361,7 @@ Collection_Test_SOURCES = \
 Collection_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Config_Test.am 
+## Makefile.Config_Test.am
 noinst_PROGRAMS += Config_Test
 
 Config_Test_CPPFLAGS = \
@@ -376,7 +376,7 @@ Config_Test_SOURCES = \
 Config_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Conn_Test.am 
+## Makefile.Conn_Test.am
 noinst_PROGRAMS += Conn_Test
 
 Conn_Test_CPPFLAGS = \
@@ -391,7 +391,7 @@ Conn_Test_SOURCES = \
 Conn_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.DLL_Test.am 
+## Makefile.DLL_Test.am
 noinst_PROGRAMS += DLL_Test
 
 DLL_Test_CPPFLAGS = \
@@ -406,7 +406,7 @@ DLL_Test_SOURCES = \
 DLL_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.DLL_Test_Lib.am 
+## Makefile.DLL_Test_Lib.am
 noinst_LTLIBRARIES += libDLL_Test.la
 
 libDLL_Test_la_CPPFLAGS = \
@@ -424,7 +424,7 @@ noinst_HEADERS += \
   DLL_Test_Impl.h \
   test_config.h
 
-## Makefile.DLList_Test.am 
+## Makefile.DLList_Test.am
 noinst_PROGRAMS += DLList_Test
 
 DLList_Test_CPPFLAGS = \
@@ -438,7 +438,7 @@ DLList_Test_SOURCES = \
 DLList_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Date_Time_Test.am 
+## Makefile.Date_Time_Test.am
 noinst_PROGRAMS += Date_Time_Test
 
 Date_Time_Test_CPPFLAGS = \
@@ -452,7 +452,7 @@ Date_Time_Test_SOURCES = \
 Date_Time_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Dev_Poll_Reactor_Test.am 
+## Makefile.Dev_Poll_Reactor_Test.am
 noinst_PROGRAMS += Dev_Poll_Reactor_Test
 
 Dev_Poll_Reactor_Test_CPPFLAGS = \
@@ -466,7 +466,7 @@ Dev_Poll_Reactor_Test_SOURCES = \
 Dev_Poll_Reactor_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Dirent_Test.am 
+## Makefile.Dirent_Test.am
 noinst_PROGRAMS += Dirent_Test
 
 Dirent_Test_CPPFLAGS = \
@@ -480,7 +480,7 @@ Dirent_Test_SOURCES = \
 Dirent_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Dynamic_Priority_Test.am 
+## Makefile.Dynamic_Priority_Test.am
 noinst_PROGRAMS += Dynamic_Priority_Test
 
 Dynamic_Priority_Test_CPPFLAGS = \
@@ -494,7 +494,7 @@ Dynamic_Priority_Test_SOURCES = \
 Dynamic_Priority_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Enum_Interfaces_Test.am 
+## Makefile.Enum_Interfaces_Test.am
 noinst_PROGRAMS += Enum_Interfaces_Test
 
 Enum_Interfaces_Test_CPPFLAGS = \
@@ -508,7 +508,7 @@ Enum_Interfaces_Test_SOURCES = \
 Enum_Interfaces_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Env_Value_Test.am 
+## Makefile.Env_Value_Test.am
 noinst_PROGRAMS += Env_Value_Test
 
 Env_Value_Test_CPPFLAGS = \
@@ -522,7 +522,7 @@ Env_Value_Test_SOURCES = \
 Env_Value_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.FIFO_Test.am 
+## Makefile.FIFO_Test.am
 noinst_PROGRAMS += FIFO_Test
 
 FIFO_Test_CPPFLAGS = \
@@ -536,7 +536,7 @@ FIFO_Test_SOURCES = \
 FIFO_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.FlReactor_Test.am 
+## Makefile.FlReactor_Test.am
 
 if BUILD_ACE_OTHER
 noinst_PROGRAMS += FlReactor_Test
@@ -554,7 +554,7 @@ FlReactor_Test_LDADD = \
 
 endif BUILD_ACE_OTHER
 
-## Makefile.Framework_Component_DLL.am 
+## Makefile.Framework_Component_DLL.am
 noinst_LTLIBRARIES += libFramework_Component_DLL.la
 
 libFramework_Component_DLL_la_CPPFLAGS = \
@@ -572,7 +572,7 @@ noinst_HEADERS += \
   Framework_Component_DLL.h \
   Framework_Component_DLL_Export.h
 
-## Makefile.Framework_Component_Test.am 
+## Makefile.Framework_Component_Test.am
 noinst_PROGRAMS += Framework_Component_Test
 
 Framework_Component_Test_CPPFLAGS = \
@@ -587,7 +587,7 @@ Framework_Component_Test_SOURCES = \
 Framework_Component_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Future_Set_Test.am 
+## Makefile.Future_Set_Test.am
 noinst_PROGRAMS += Future_Set_Test
 
 Future_Set_Test_CPPFLAGS = \
@@ -601,7 +601,7 @@ Future_Set_Test_SOURCES = \
 Future_Set_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Future_Test.am 
+## Makefile.Future_Test.am
 noinst_PROGRAMS += Future_Test
 
 Future_Test_CPPFLAGS = \
@@ -615,7 +615,7 @@ Future_Test_SOURCES = \
 Future_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Get_Opt_Test.am 
+## Makefile.Get_Opt_Test.am
 noinst_PROGRAMS += Get_Opt_Test
 
 Get_Opt_Test_CPPFLAGS = \
@@ -629,7 +629,7 @@ Get_Opt_Test_SOURCES = \
 Get_Opt_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Handle_Set_Test.am 
+## Makefile.Handle_Set_Test.am
 noinst_PROGRAMS += Handle_Set_Test
 
 Handle_Set_Test_CPPFLAGS = \
@@ -643,7 +643,7 @@ Handle_Set_Test_SOURCES = \
 Handle_Set_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Hash_Map_Bucket_Iterator_Test.am 
+## Makefile.Hash_Map_Bucket_Iterator_Test.am
 noinst_PROGRAMS += Hash_Map_Bucket_Iterator_Test
 
 Hash_Map_Bucket_Iterator_Test_CPPFLAGS = \
@@ -657,7 +657,7 @@ Hash_Map_Bucket_Iterator_Test_SOURCES = \
 Hash_Map_Bucket_Iterator_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Hash_Map_Manager_Test.am 
+## Makefile.Hash_Map_Manager_Test.am
 noinst_PROGRAMS += Hash_Map_Manager_Test
 
 Hash_Map_Manager_Test_CPPFLAGS = \
@@ -671,7 +671,7 @@ Hash_Map_Manager_Test_SOURCES = \
 Hash_Map_Manager_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.High_Res_Timer_Test.am 
+## Makefile.High_Res_Timer_Test.am
 noinst_PROGRAMS += High_Res_Timer_Test
 
 High_Res_Timer_Test_CPPFLAGS = \
@@ -685,7 +685,7 @@ High_Res_Timer_Test_SOURCES = \
 High_Res_Timer_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.INET_Addr_Test.am 
+## Makefile.INET_Addr_Test.am
 noinst_PROGRAMS += INET_Addr_Test
 
 INET_Addr_Test_CPPFLAGS = \
@@ -699,7 +699,7 @@ INET_Addr_Test_SOURCES = \
 INET_Addr_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.INET_Addr_Test_IPV6.am 
+## Makefile.INET_Addr_Test_IPV6.am
 noinst_PROGRAMS += INET_Addr_Test_IPV6
 
 INET_Addr_Test_IPV6_CPPFLAGS = \
@@ -713,7 +713,7 @@ INET_Addr_Test_IPV6_SOURCES = \
 INET_Addr_Test_IPV6_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.IOStream_Test.am 
+## Makefile.IOStream_Test.am
 noinst_PROGRAMS += IOStream_Test
 
 IOStream_Test_CPPFLAGS = \
@@ -727,7 +727,7 @@ IOStream_Test_SOURCES = \
 IOStream_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Lazy_Map_Manager_Test.am 
+## Makefile.Lazy_Map_Manager_Test.am
 noinst_PROGRAMS += Lazy_Map_Manager_Test
 
 Lazy_Map_Manager_Test_CPPFLAGS = \
@@ -741,7 +741,7 @@ Lazy_Map_Manager_Test_SOURCES = \
 Lazy_Map_Manager_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Log_Msg_Test.am 
+## Makefile.Log_Msg_Test.am
 noinst_PROGRAMS += Log_Msg_Test
 
 Log_Msg_Test_CPPFLAGS = \
@@ -755,7 +755,7 @@ Log_Msg_Test_SOURCES = \
 Log_Msg_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Logging_Strategy_Test.am 
+## Makefile.Logging_Strategy_Test.am
 noinst_PROGRAMS += Logging_Strategy_Test
 
 Logging_Strategy_Test_CPPFLAGS = \
@@ -769,7 +769,7 @@ Logging_Strategy_Test_SOURCES = \
 Logging_Strategy_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.MEM_Stream_Test.am 
+## Makefile.MEM_Stream_Test.am
 noinst_PROGRAMS += MEM_Stream_Test
 
 MEM_Stream_Test_CPPFLAGS = \
@@ -784,7 +784,7 @@ MEM_Stream_Test_SOURCES = \
 MEM_Stream_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.MM_Shared_Memory_Test.am 
+## Makefile.MM_Shared_Memory_Test.am
 noinst_PROGRAMS += MM_Shared_Memory_Test
 
 MM_Shared_Memory_Test_CPPFLAGS = \
@@ -798,7 +798,7 @@ MM_Shared_Memory_Test_SOURCES = \
 MM_Shared_Memory_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.MT_Reactor_Timer_Test.am 
+## Makefile.MT_Reactor_Timer_Test.am
 noinst_PROGRAMS += MT_Reactor_Timer_Test
 
 MT_Reactor_Timer_Test_CPPFLAGS = \
@@ -813,7 +813,7 @@ MT_Reactor_Timer_Test_SOURCES = \
 MT_Reactor_Timer_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.MT_Reactor_Upcall_Test.am 
+## Makefile.MT_Reactor_Upcall_Test.am
 noinst_PROGRAMS += MT_Reactor_Upcall_Test
 
 MT_Reactor_Upcall_Test_CPPFLAGS = \
@@ -827,7 +827,7 @@ MT_Reactor_Upcall_Test_SOURCES = \
 MT_Reactor_Upcall_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.MT_Ref_Counted_Event_Handler_Test.am 
+## Makefile.MT_Ref_Counted_Event_Handler_Test.am
 noinst_PROGRAMS += MT_Reference_Counted_Event_Handler_Test
 
 MT_Reference_Counted_Event_Handler_Test_CPPFLAGS = \
@@ -841,7 +841,7 @@ MT_Reference_Counted_Event_Handler_Test_SOURCES = \
 MT_Reference_Counted_Event_Handler_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.MT_Reference_Counted_Notify_Test.am 
+## Makefile.MT_Reference_Counted_Notify_Test.am
 noinst_PROGRAMS += MT_Reference_Counted_Notify_Test
 
 MT_Reference_Counted_Notify_Test_CPPFLAGS = \
@@ -855,7 +855,7 @@ MT_Reference_Counted_Notify_Test_SOURCES = \
 MT_Reference_Counted_Notify_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.MT_SOCK_Test.am 
+## Makefile.MT_SOCK_Test.am
 noinst_PROGRAMS += MT_SOCK_Test
 
 MT_SOCK_Test_CPPFLAGS = \
@@ -869,7 +869,7 @@ MT_SOCK_Test_SOURCES = \
 MT_SOCK_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Malloc_Test.am 
+## Makefile.Malloc_Test.am
 noinst_PROGRAMS += Malloc_Test
 
 Malloc_Test_CPPFLAGS = \
@@ -884,7 +884,7 @@ Malloc_Test_SOURCES = \
 Malloc_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Map_Manager_Test.am 
+## Makefile.Map_Manager_Test.am
 noinst_PROGRAMS += Map_Manager_Test
 
 Map_Manager_Test_CPPFLAGS = \
@@ -898,7 +898,7 @@ Map_Manager_Test_SOURCES = \
 Map_Manager_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Map_Test.am 
+## Makefile.Map_Test.am
 noinst_PROGRAMS += Map_Test
 
 Map_Test_CPPFLAGS = \
@@ -913,7 +913,7 @@ Map_Test_SOURCES = \
 Map_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Max_Default_Port_Test.am 
+## Makefile.Max_Default_Port_Test.am
 noinst_PROGRAMS += Max_Default_Port_Test
 
 Max_Default_Port_Test_CPPFLAGS = \
@@ -928,7 +928,7 @@ Max_Default_Port_Test_SOURCES = \
 Max_Default_Port_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Max_Default_Port_Test_IPV6.am 
+## Makefile.Max_Default_Port_Test_IPV6.am
 noinst_PROGRAMS += Max_Default_Port_Test_IPV6
 
 Max_Default_Port_Test_IPV6_CPPFLAGS = \
@@ -942,7 +942,7 @@ Max_Default_Port_Test_IPV6_SOURCES = \
 Max_Default_Port_Test_IPV6_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Mem_Map_Test.am 
+## Makefile.Mem_Map_Test.am
 noinst_PROGRAMS += Mem_Map_Test
 
 Mem_Map_Test_CPPFLAGS = \
@@ -956,7 +956,7 @@ Mem_Map_Test_SOURCES = \
 Mem_Map_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Message_Block_Test.am 
+## Makefile.Message_Block_Test.am
 noinst_PROGRAMS += Message_Block_Test
 
 Message_Block_Test_CPPFLAGS = \
@@ -970,7 +970,7 @@ Message_Block_Test_SOURCES = \
 Message_Block_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Message_Queue_Notifications_Test.am 
+## Makefile.Message_Queue_Notifications_Test.am
 noinst_PROGRAMS += Message_Queue_Notifications_Test
 
 Message_Queue_Notifications_Test_CPPFLAGS = \
@@ -984,7 +984,7 @@ Message_Queue_Notifications_Test_SOURCES = \
 Message_Queue_Notifications_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Message_Queue_Test.am 
+## Makefile.Message_Queue_Test.am
 noinst_PROGRAMS += Message_Queue_Test
 
 Message_Queue_Test_CPPFLAGS = \
@@ -998,7 +998,7 @@ Message_Queue_Test_SOURCES = \
 Message_Queue_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Message_Queue_Test_Ex.am 
+## Makefile.Message_Queue_Test_Ex.am
 noinst_PROGRAMS += Message_Queue_Test_Ex
 
 Message_Queue_Test_Ex_CPPFLAGS = \
@@ -1013,7 +1013,7 @@ Message_Queue_Test_Ex_SOURCES = \
 Message_Queue_Test_Ex_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Multicast_Test.am 
+## Makefile.Multicast_Test.am
 noinst_PROGRAMS += Multicast_Test
 
 Multicast_Test_CPPFLAGS = \
@@ -1027,7 +1027,7 @@ Multicast_Test_SOURCES = \
 Multicast_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Multicast_Test_IPV6.am 
+## Makefile.Multicast_Test_IPV6.am
 noinst_PROGRAMS += Multicast_Test_IPV6
 
 Multicast_Test_IPV6_CPPFLAGS = \
@@ -1041,7 +1041,7 @@ Multicast_Test_IPV6_SOURCES = \
 Multicast_Test_IPV6_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Multihomed_INET_Addr_Test.am 
+## Makefile.Multihomed_INET_Addr_Test.am
 noinst_PROGRAMS += Multihomed_INET_Addr_Test
 
 Multihomed_INET_Addr_Test_CPPFLAGS = \
@@ -1055,7 +1055,7 @@ Multihomed_INET_Addr_Test_SOURCES = \
 Multihomed_INET_Addr_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Multihomed_INET_Addr_Test_IPV6.am 
+## Makefile.Multihomed_INET_Addr_Test_IPV6.am
 noinst_PROGRAMS += Multihomed_INET_Addr_Test_IPV6
 
 Multihomed_INET_Addr_Test_IPV6_CPPFLAGS = \
@@ -1069,7 +1069,7 @@ Multihomed_INET_Addr_Test_IPV6_SOURCES = \
 Multihomed_INET_Addr_Test_IPV6_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Naming_Test.am 
+## Makefile.Naming_Test.am
 
 if BUILD_ACE_OTHER
 noinst_PROGRAMS += Naming_Test
@@ -1087,7 +1087,7 @@ Naming_Test_LDADD = \
 
 endif BUILD_ACE_OTHER
 
-## Makefile.Network_Adapters_Test.am 
+## Makefile.Network_Adapters_Test.am
 noinst_PROGRAMS += Network_Adapters_Test
 
 Network_Adapters_Test_CPPFLAGS = \
@@ -1102,7 +1102,7 @@ Network_Adapters_Test_SOURCES = \
 Network_Adapters_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.New_Fail_Test.am 
+## Makefile.New_Fail_Test.am
 noinst_PROGRAMS += New_Fail_Test
 
 New_Fail_Test_CPPFLAGS = \
@@ -1116,7 +1116,7 @@ New_Fail_Test_SOURCES = \
 New_Fail_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.NonBlocking_Conn_Test.am 
+## Makefile.NonBlocking_Conn_Test.am
 noinst_PROGRAMS += NonBlocking_Conn_Test
 
 NonBlocking_Conn_Test_CPPFLAGS = \
@@ -1131,7 +1131,7 @@ NonBlocking_Conn_Test_SOURCES = \
 NonBlocking_Conn_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Notify_Performance_Test.am 
+## Makefile.Notify_Performance_Test.am
 noinst_PROGRAMS += Notify_Performance_Test
 
 Notify_Performance_Test_CPPFLAGS = \
@@ -1145,7 +1145,7 @@ Notify_Performance_Test_SOURCES = \
 Notify_Performance_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.OS_Test.am 
+## Makefile.OS_Test.am
 noinst_PROGRAMS += OS_Test
 
 OS_Test_CPPFLAGS = \
@@ -1159,7 +1159,7 @@ OS_Test_SOURCES = \
 OS_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Object_Manager_Test.am 
+## Makefile.Object_Manager_Test.am
 noinst_PROGRAMS += Object_Manager_Test
 
 Object_Manager_Test_CPPFLAGS = \
@@ -1173,7 +1173,7 @@ Object_Manager_Test_SOURCES = \
 Object_Manager_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Obstack_Test.am 
+## Makefile.Obstack_Test.am
 noinst_PROGRAMS += Obstack_Test
 
 Obstack_Test_CPPFLAGS = \
@@ -1187,7 +1187,7 @@ Obstack_Test_SOURCES = \
 Obstack_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.OrdMultiSet_Test.am 
+## Makefile.OrdMultiSet_Test.am
 noinst_PROGRAMS += OrdMultiSet_Test
 
 OrdMultiSet_Test_CPPFLAGS = \
@@ -1201,7 +1201,7 @@ OrdMultiSet_Test_SOURCES = \
 OrdMultiSet_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Pipe_Test.am 
+## Makefile.Pipe_Test.am
 noinst_PROGRAMS += Pipe_Test
 
 Pipe_Test_CPPFLAGS = \
@@ -1215,7 +1215,7 @@ Pipe_Test_SOURCES = \
 Pipe_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Priority_Buffer_Test.am 
+## Makefile.Priority_Buffer_Test.am
 noinst_PROGRAMS += Priority_Buffer_Test
 
 Priority_Buffer_Test_CPPFLAGS = \
@@ -1229,7 +1229,7 @@ Priority_Buffer_Test_SOURCES = \
 Priority_Buffer_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Priority_Reactor_Test.am 
+## Makefile.Priority_Reactor_Test.am
 noinst_PROGRAMS += Priority_Reactor_Test
 
 Priority_Reactor_Test_CPPFLAGS = \
@@ -1244,7 +1244,7 @@ Priority_Reactor_Test_SOURCES = \
 Priority_Reactor_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Priority_Task_Test.am 
+## Makefile.Priority_Task_Test.am
 noinst_PROGRAMS += Priority_Task_Test
 
 Priority_Task_Test_CPPFLAGS = \
@@ -1258,7 +1258,7 @@ Priority_Task_Test_SOURCES = \
 Priority_Task_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Proactor_Scatter_Gather_Test.am 
+## Makefile.Proactor_Scatter_Gather_Test.am
 noinst_PROGRAMS += Proactor_Scatter_Gather_Test
 
 Proactor_Scatter_Gather_Test_CPPFLAGS = \
@@ -1272,7 +1272,7 @@ Proactor_Scatter_Gather_Test_SOURCES = \
 Proactor_Scatter_Gather_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Proactor_Test.am 
+## Makefile.Proactor_Test.am
 noinst_PROGRAMS += Proactor_Test
 
 Proactor_Test_CPPFLAGS = \
@@ -1287,7 +1287,7 @@ Proactor_Test_SOURCES = \
 Proactor_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Proactor_Test_IPV6.am 
+## Makefile.Proactor_Test_IPV6.am
 noinst_PROGRAMS += Proactor_Test_IPV6
 
 Proactor_Test_IPV6_CPPFLAGS = \
@@ -1301,7 +1301,7 @@ Proactor_Test_IPV6_SOURCES = \
 Proactor_Test_IPV6_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Proactor_Timer_Test.am 
+## Makefile.Proactor_Timer_Test.am
 noinst_PROGRAMS += Proactor_Timer_Test
 
 Proactor_Timer_Test_CPPFLAGS = \
@@ -1315,7 +1315,7 @@ Proactor_Timer_Test_SOURCES = \
 Proactor_Timer_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Process_Manager_Test.am 
+## Makefile.Process_Manager_Test.am
 noinst_PROGRAMS += Process_Manager_Test
 
 Process_Manager_Test_CPPFLAGS = \
@@ -1329,7 +1329,7 @@ Process_Manager_Test_SOURCES = \
 Process_Manager_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Process_Mutex_Test.am 
+## Makefile.Process_Mutex_Test.am
 noinst_PROGRAMS += Process_Mutex_Test
 
 Process_Mutex_Test_CPPFLAGS = \
@@ -1343,7 +1343,7 @@ Process_Mutex_Test_SOURCES = \
 Process_Mutex_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Process_Strategy_Test.am 
+## Makefile.Process_Strategy_Test.am
 noinst_PROGRAMS += Process_Strategy_Test
 
 Process_Strategy_Test_CPPFLAGS = \
@@ -1358,7 +1358,7 @@ Process_Strategy_Test_SOURCES = \
 Process_Strategy_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.RB_Tree_Test.am 
+## Makefile.RB_Tree_Test.am
 noinst_PROGRAMS += RB_Tree_Test
 
 RB_Tree_Test_CPPFLAGS = \
@@ -1373,7 +1373,7 @@ RB_Tree_Test_SOURCES = \
 RB_Tree_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactor_Dispatch_Order_Test.am 
+## Makefile.Reactor_Dispatch_Order_Test.am
 noinst_PROGRAMS += Reactor_Dispatch_Order_Test
 
 Reactor_Dispatch_Order_Test_CPPFLAGS = \
@@ -1387,7 +1387,7 @@ Reactor_Dispatch_Order_Test_SOURCES = \
 Reactor_Dispatch_Order_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactor_Exceptions_Test.am 
+## Makefile.Reactor_Exceptions_Test.am
 noinst_PROGRAMS += Reactor_Exceptions_Test
 
 Reactor_Exceptions_Test_CPPFLAGS = \
@@ -1401,7 +1401,7 @@ Reactor_Exceptions_Test_SOURCES = \
 Reactor_Exceptions_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactor_Notification_Queue_Test.am 
+## Makefile.Reactor_Notification_Queue_Test.am
 noinst_PROGRAMS += Reactor_Notification_Queue_Test
 
 Reactor_Notification_Queue_Test_CPPFLAGS = \
@@ -1415,7 +1415,7 @@ Reactor_Notification_Queue_Test_SOURCES = \
 Reactor_Notification_Queue_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactor_Notify_Test.am 
+## Makefile.Reactor_Notify_Test.am
 noinst_PROGRAMS += Reactor_Notify_Test
 
 Reactor_Notify_Test_CPPFLAGS = \
@@ -1429,7 +1429,7 @@ Reactor_Notify_Test_SOURCES = \
 Reactor_Notify_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactor_Performance_Test.am 
+## Makefile.Reactor_Performance_Test.am
 noinst_PROGRAMS += Reactor_Performance_Test
 
 Reactor_Performance_Test_CPPFLAGS = \
@@ -1444,7 +1444,7 @@ Reactor_Performance_Test_SOURCES = \
 Reactor_Performance_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactor_Registration_Test.am 
+## Makefile.Reactor_Registration_Test.am
 noinst_PROGRAMS += Reactor_Registration_Test
 
 Reactor_Registration_Test_CPPFLAGS = \
@@ -1458,7 +1458,7 @@ Reactor_Registration_Test_SOURCES = \
 Reactor_Registration_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactor_Timer_Test.am 
+## Makefile.Reactor_Timer_Test.am
 noinst_PROGRAMS += Reactor_Timer_Test
 
 Reactor_Timer_Test_CPPFLAGS = \
@@ -1472,7 +1472,7 @@ Reactor_Timer_Test_SOURCES = \
 Reactor_Timer_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reactors_Test.am 
+## Makefile.Reactors_Test.am
 noinst_PROGRAMS += Reactors_Test
 
 Reactors_Test_CPPFLAGS = \
@@ -1486,7 +1486,7 @@ Reactors_Test_SOURCES = \
 Reactors_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reader_Writer_Test.am 
+## Makefile.Reader_Writer_Test.am
 noinst_PROGRAMS += Reader_Writer_Test
 
 Reader_Writer_Test_CPPFLAGS = \
@@ -1500,7 +1500,7 @@ Reader_Writer_Test_SOURCES = \
 Reader_Writer_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Recursive_Condition_Bug_Test.am 
+## Makefile.Recursive_Condition_Bug_Test.am
 noinst_PROGRAMS += Recursive_Condition_Bug_Test
 
 Recursive_Condition_Bug_Test_CPPFLAGS = \
@@ -1514,7 +1514,7 @@ Recursive_Condition_Bug_Test_SOURCES = \
 Recursive_Condition_Bug_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Recursive_Condition_Test.am 
+## Makefile.Recursive_Condition_Test.am
 noinst_PROGRAMS += Recursive_Condition_Test
 
 Recursive_Condition_Test_CPPFLAGS = \
@@ -1528,7 +1528,7 @@ Recursive_Condition_Test_SOURCES = \
 Recursive_Condition_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Recursive_Mutex_Test.am 
+## Makefile.Recursive_Mutex_Test.am
 noinst_PROGRAMS += Recursive_Mutex_Test
 
 Recursive_Mutex_Test_CPPFLAGS = \
@@ -1542,7 +1542,7 @@ Recursive_Mutex_Test_SOURCES = \
 Recursive_Mutex_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Refcounted_Auto_Ptr_Test.am 
+## Makefile.Refcounted_Auto_Ptr_Test.am
 noinst_PROGRAMS += Refcounted_Auto_Ptr_Test
 
 Refcounted_Auto_Ptr_Test_CPPFLAGS = \
@@ -1557,7 +1557,7 @@ Refcounted_Auto_Ptr_Test_SOURCES = \
 Refcounted_Auto_Ptr_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reference_Counted_Event_Handler_Test.am 
+## Makefile.Reference_Counted_Event_Handler_Test.am
 noinst_PROGRAMS += Reference_Counted_Event_Handler_Test
 
 Reference_Counted_Event_Handler_Test_CPPFLAGS = \
@@ -1571,7 +1571,7 @@ Reference_Counted_Event_Handler_Test_SOURCES = \
 Reference_Counted_Event_Handler_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Reverse_Lock_Test.am 
+## Makefile.Reverse_Lock_Test.am
 noinst_PROGRAMS += Reverse_Lock_Test
 
 Reverse_Lock_Test_CPPFLAGS = \
@@ -1585,7 +1585,7 @@ Reverse_Lock_Test_SOURCES = \
 Reverse_Lock_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_Connector_Test.am 
+## Makefile.SOCK_Connector_Test.am
 noinst_PROGRAMS += SOCK_Connector_Test
 
 SOCK_Connector_Test_CPPFLAGS = \
@@ -1599,7 +1599,7 @@ SOCK_Connector_Test_SOURCES = \
 SOCK_Connector_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_Dgram_Bcast_Test.am 
+## Makefile.SOCK_Dgram_Bcast_Test.am
 noinst_PROGRAMS += SOCK_Dgram_Bcast_Test
 
 SOCK_Dgram_Bcast_Test_CPPFLAGS = \
@@ -1613,7 +1613,7 @@ SOCK_Dgram_Bcast_Test_SOURCES = \
 SOCK_Dgram_Bcast_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_Dgram_Test.am 
+## Makefile.SOCK_Dgram_Test.am
 noinst_PROGRAMS += SOCK_Dgram_Test
 
 SOCK_Dgram_Test_CPPFLAGS = \
@@ -1627,7 +1627,7 @@ SOCK_Dgram_Test_SOURCES = \
 SOCK_Dgram_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_SEQPACK_SCTP_Test.am 
+## Makefile.SOCK_SEQPACK_SCTP_Test.am
 noinst_PROGRAMS += SOCK_SEQPACK_SCTP_Test
 
 SOCK_SEQPACK_SCTP_Test_CPPFLAGS = \
@@ -1641,7 +1641,7 @@ SOCK_SEQPACK_SCTP_Test_SOURCES = \
 SOCK_SEQPACK_SCTP_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_Send_Recv_Test.am 
+## Makefile.SOCK_Send_Recv_Test.am
 noinst_PROGRAMS += SOCK_Send_Recv_Test
 
 SOCK_Send_Recv_Test_CPPFLAGS = \
@@ -1655,7 +1655,7 @@ SOCK_Send_Recv_Test_SOURCES = \
 SOCK_Send_Recv_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_Send_Recv_Test_IPV6.am 
+## Makefile.SOCK_Send_Recv_Test_IPV6.am
 noinst_PROGRAMS += SOCK_Send_Recv_Test_IPV6
 
 SOCK_Send_Recv_Test_IPV6_CPPFLAGS = \
@@ -1669,7 +1669,7 @@ SOCK_Send_Recv_Test_IPV6_SOURCES = \
 SOCK_Send_Recv_Test_IPV6_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_Test.am 
+## Makefile.SOCK_Test.am
 noinst_PROGRAMS += SOCK_Test
 
 SOCK_Test_CPPFLAGS = \
@@ -1683,7 +1683,7 @@ SOCK_Test_SOURCES = \
 SOCK_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SOCK_Test_IPv6.am 
+## Makefile.SOCK_Test_IPv6.am
 noinst_PROGRAMS += SOCK_Test_IPv6
 
 SOCK_Test_IPv6_CPPFLAGS = \
@@ -1697,7 +1697,7 @@ SOCK_Test_IPv6_SOURCES = \
 SOCK_Test_IPv6_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SPIPE_Test.am 
+## Makefile.SPIPE_Test.am
 noinst_PROGRAMS += SPIPE_Test
 
 SPIPE_Test_CPPFLAGS = \
@@ -1711,7 +1711,7 @@ SPIPE_Test_SOURCES = \
 SPIPE_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SString_Test.am 
+## Makefile.SString_Test.am
 noinst_PROGRAMS += SString_Test
 
 SString_Test_CPPFLAGS = \
@@ -1725,7 +1725,7 @@ SString_Test_SOURCES = \
 SString_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.SV_Shared_Memory_Test.am 
+## Makefile.SV_Shared_Memory_Test.am
 noinst_PROGRAMS += SV_Shared_Memory_Test
 
 SV_Shared_Memory_Test_CPPFLAGS = \
@@ -1739,7 +1739,7 @@ SV_Shared_Memory_Test_SOURCES = \
 SV_Shared_Memory_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Semaphore_Test.am 
+## Makefile.Semaphore_Test.am
 noinst_PROGRAMS += Semaphore_Test
 
 Semaphore_Test_CPPFLAGS = \
@@ -1753,7 +1753,7 @@ Semaphore_Test_SOURCES = \
 Semaphore_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Service_Config_DLL.am 
+## Makefile.Service_Config_DLL.am
 noinst_LTLIBRARIES += libService_Config_DLL.la
 
 libService_Config_DLL_la_CPPFLAGS = \
@@ -1771,7 +1771,7 @@ noinst_HEADERS += \
   Service_Config_DLL.h \
   Service_Config_DLL_Export.h
 
-## Makefile.Service_Config_Test.am 
+## Makefile.Service_Config_Test.am
 noinst_PROGRAMS += Service_Config_Test
 
 Service_Config_Test_CPPFLAGS = \
@@ -1785,7 +1785,7 @@ Service_Config_Test_SOURCES = \
 Service_Config_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Signal_Test.am 
+## Makefile.Signal_Test.am
 noinst_PROGRAMS += Signal_Test
 
 Signal_Test_CPPFLAGS = \
@@ -1799,7 +1799,7 @@ Signal_Test_SOURCES = \
 Signal_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Sigset_Ops_Test.am 
+## Makefile.Sigset_Ops_Test.am
 noinst_PROGRAMS += Sigset_Ops_Test
 
 Sigset_Ops_Test_CPPFLAGS = \
@@ -1813,7 +1813,7 @@ Sigset_Ops_Test_SOURCES = \
 Sigset_Ops_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Simple_Message_Block_Test.am 
+## Makefile.Simple_Message_Block_Test.am
 noinst_PROGRAMS += Simple_Message_Block_Test
 
 Simple_Message_Block_Test_CPPFLAGS = \
@@ -1827,7 +1827,7 @@ Simple_Message_Block_Test_SOURCES = \
 Simple_Message_Block_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Svc_Handler_Test.am 
+## Makefile.Svc_Handler_Test.am
 noinst_PROGRAMS += Svc_Handler_Test
 
 Svc_Handler_Test_CPPFLAGS = \
@@ -1841,7 +1841,7 @@ Svc_Handler_Test_SOURCES = \
 Svc_Handler_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.TP_Reactor_Test.am 
+## Makefile.TP_Reactor_Test.am
 noinst_PROGRAMS += TP_Reactor_Test
 
 TP_Reactor_Test_CPPFLAGS = \
@@ -1856,7 +1856,7 @@ TP_Reactor_Test_SOURCES = \
 TP_Reactor_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.TSS_Static_Test.am 
+## Makefile.TSS_Static_Test.am
 noinst_PROGRAMS += TSS_Static_Test
 
 TSS_Static_Test_CPPFLAGS = \
@@ -1870,7 +1870,7 @@ TSS_Static_Test_SOURCES = \
 TSS_Static_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.TSS_Test.am 
+## Makefile.TSS_Test.am
 noinst_PROGRAMS += TSS_Test
 
 TSS_Test_CPPFLAGS = \
@@ -1884,7 +1884,7 @@ TSS_Test_SOURCES = \
 TSS_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Task_Ex_Test.am 
+## Makefile.Task_Ex_Test.am
 noinst_PROGRAMS += Task_Ex_Test
 
 Task_Ex_Test_CPPFLAGS = \
@@ -1899,7 +1899,7 @@ Task_Ex_Test_SOURCES = \
 Task_Ex_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Task_Test.am 
+## Makefile.Task_Test.am
 noinst_PROGRAMS += Task_Test
 
 Task_Test_CPPFLAGS = \
@@ -1913,7 +1913,7 @@ Task_Test_SOURCES = \
 Task_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Thread_Manager_Test.am 
+## Makefile.Thread_Manager_Test.am
 noinst_PROGRAMS += Thread_Manager_Test
 
 Thread_Manager_Test_CPPFLAGS = \
@@ -1927,7 +1927,7 @@ Thread_Manager_Test_SOURCES = \
 Thread_Manager_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Thread_Mutex_Test.am 
+## Makefile.Thread_Mutex_Test.am
 noinst_PROGRAMS += Thread_Mutex_Test
 
 Thread_Mutex_Test_CPPFLAGS = \
@@ -1941,7 +1941,7 @@ Thread_Mutex_Test_SOURCES = \
 Thread_Mutex_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Thread_Pool_Reactor_Resume_Test.am 
+## Makefile.Thread_Pool_Reactor_Resume_Test.am
 
 if BUILD_ACE_OTHER
 noinst_PROGRAMS += Thread_Pool_Reactor_Resume_Test
@@ -1960,7 +1960,7 @@ Thread_Pool_Reactor_Resume_Test_LDADD = \
 
 endif BUILD_ACE_OTHER
 
-## Makefile.Thread_Pool_Reactor_Test.am 
+## Makefile.Thread_Pool_Reactor_Test.am
 
 if BUILD_ACE_OTHER
 noinst_PROGRAMS += Thread_Pool_Reactor_Test
@@ -1979,7 +1979,7 @@ Thread_Pool_Reactor_Test_LDADD = \
 
 endif BUILD_ACE_OTHER
 
-## Makefile.Thread_Pool_Test.am 
+## Makefile.Thread_Pool_Test.am
 noinst_PROGRAMS += Thread_Pool_Test
 
 Thread_Pool_Test_CPPFLAGS = \
@@ -1993,7 +1993,7 @@ Thread_Pool_Test_SOURCES = \
 Thread_Pool_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Time_Service_Test.am 
+## Makefile.Time_Service_Test.am
 noinst_PROGRAMS += Time_Service_Test
 
 Time_Service_Test_CPPFLAGS = \
@@ -2007,7 +2007,7 @@ Time_Service_Test_SOURCES = \
 Time_Service_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Time_Value_Test.am 
+## Makefile.Time_Value_Test.am
 noinst_PROGRAMS += Time_Value_Test
 
 Time_Value_Test_CPPFLAGS = \
@@ -2021,7 +2021,7 @@ Time_Value_Test_SOURCES = \
 Time_Value_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Timeprobe_Test.am 
+## Makefile.Timeprobe_Test.am
 noinst_PROGRAMS += Timeprobe_Test
 
 Timeprobe_Test_CPPFLAGS = \
@@ -2035,7 +2035,7 @@ Timeprobe_Test_SOURCES = \
 Timeprobe_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Timer_Cancellation_Test.am 
+## Makefile.Timer_Cancellation_Test.am
 noinst_PROGRAMS += Timer_Cancellation_Test
 
 Timer_Cancellation_Test_CPPFLAGS = \
@@ -2049,7 +2049,7 @@ Timer_Cancellation_Test_SOURCES = \
 Timer_Cancellation_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Timer_Queue_Reference_Counting_Test.am 
+## Makefile.Timer_Queue_Reference_Counting_Test.am
 noinst_PROGRAMS += Timer_Queue_Reference_Counting_Test
 
 Timer_Queue_Reference_Counting_Test_CPPFLAGS = \
@@ -2063,7 +2063,7 @@ Timer_Queue_Reference_Counting_Test_SOURCES = \
 Timer_Queue_Reference_Counting_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Timer_Queue_Test.am 
+## Makefile.Timer_Queue_Test.am
 noinst_PROGRAMS += Timer_Queue_Test
 
 Timer_Queue_Test_CPPFLAGS = \
@@ -2077,7 +2077,7 @@ Timer_Queue_Test_SOURCES = \
 Timer_Queue_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.TkReactor_Test.am 
+## Makefile.TkReactor_Test.am
 
 if BUILD_ACE_OTHER
 noinst_PROGRAMS += TkReactor_Test
@@ -2095,7 +2095,7 @@ TkReactor_Test_LDADD = \
 
 endif BUILD_ACE_OTHER
 
-## Makefile.Token_Strategy_Test.am 
+## Makefile.Token_Strategy_Test.am
 noinst_PROGRAMS += Token_Strategy_Test
 
 Token_Strategy_Test_CPPFLAGS = \
@@ -2109,7 +2109,7 @@ Token_Strategy_Test_SOURCES = \
 Token_Strategy_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Tokens_Test.am 
+## Makefile.Tokens_Test.am
 
 if BUILD_ACE_TOKEN
 noinst_PROGRAMS += Tokens_Test
@@ -2127,7 +2127,7 @@ Tokens_Test_LDADD = \
 
 endif BUILD_ACE_TOKEN
 
-## Makefile.UPIPE_SAP_Test.am 
+## Makefile.UPIPE_SAP_Test.am
 noinst_PROGRAMS += UPIPE_SAP_Test
 
 UPIPE_SAP_Test_CPPFLAGS = \
@@ -2141,7 +2141,7 @@ UPIPE_SAP_Test_SOURCES = \
 UPIPE_SAP_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.UUIDTest.am 
+## Makefile.UUIDTest.am
 
 if BUILD_ACE_UUID
 noinst_PROGRAMS += UUIDTest
@@ -2159,22 +2159,7 @@ UUIDTest_LDADD = \
 
 endif BUILD_ACE_UUID
 
-## Makefile.Unbounded_Set_Test_Ex.am 
-noinst_PROGRAMS += Unbounded_Set_Test_Ex
-
-Unbounded_Set_Test_Ex_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR)
-
-Unbounded_Set_Test_Ex_SOURCES = \
-  $(ACE_ROOT)/tests/Main.cpp \
-  Unbounded_Set_Test_Ex.cpp \
-  Unbounded_Set_Test_Ex.h
-
-Unbounded_Set_Test_Ex_LDADD = \
- libTest_Output.la $(top_builddir)/ace/libACE.la
-
-## Makefile.Upgradable_RW_Test.am 
+## Makefile.Upgradable_RW_Test.am
 noinst_PROGRAMS += Upgradable_RW_Test
 
 Upgradable_RW_Test_CPPFLAGS = \
@@ -2189,7 +2174,7 @@ Upgradable_RW_Test_SOURCES = \
 Upgradable_RW_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.Vector_Test.am 
+## Makefile.Vector_Test.am
 noinst_PROGRAMS += Vector_Test
 
 Vector_Test_CPPFLAGS = \
@@ -2203,7 +2188,7 @@ Vector_Test_SOURCES = \
 Vector_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.WFMO_Reactor_Test.am 
+## Makefile.WFMO_Reactor_Test.am
 noinst_PROGRAMS += WFMO_Reactor_Test
 
 WFMO_Reactor_Test_CPPFLAGS = \
@@ -2217,7 +2202,7 @@ WFMO_Reactor_Test_SOURCES = \
 WFMO_Reactor_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
-## Makefile.XtReactor_Test.am 
+## Makefile.XtReactor_Test.am
 
 if BUILD_ACE_OTHER
 noinst_PROGRAMS += XtReactor_Test
