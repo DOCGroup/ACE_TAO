@@ -1,3 +1,16 @@
+Tue Oct 22 16:26:56 2002  Rich Seibel  <seibel_r@ociweb.com>
+
+        * ace/Basic_Types.h:
+          Added a test for _BYTE_ORDER, same as BYTE_ORDER and
+          __BYTE_ORDER.  VxWorks defines this.  Also note, compilers
+          that previously automatically looked for _BYTE_ORDER when
+          only BYTE_ORDER was specified will likely not do so in the
+          future.  This will proactively fix them also.
+
+        * ace/config-all.h:
+          Moved the use of FUNCPTR until after the include that defines
+          it.  Only affects VxWorks.
+
 Tue Oct 22 13:11:42 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (DllMain): Added code to invoke
