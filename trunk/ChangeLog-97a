@@ -7,6 +7,9 @@ Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
 	  reporting these.
 
+	* ace/OS.cpp (sched_param): with STHREADS, map ACE_SCOPE_THREAD
+	  to ACE_SCOPE_PROCESS'.
+
 	* ace/Svc_Conf_l.cpp: commented out YY_BREAK after ace_yyterminate ()
 	  to avoid GHS compiler warning about unreachable statement.
 	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
