@@ -1,3 +1,18 @@
+Thu Dec 12 03:48:26 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Naming_Context: Modified ACE_Naming such that on Win32, you
+ 	  can use ACE_Registry_Name_Space.
+	
+	* ace/Registry_Name_Space: ACE_Registry_Name_Space is a Name_Space
+ 	  which uses ACE_Registry as the persistence mechanism.  Win32
+ 	  clients of ACE_Naming can now start using (the more robust and
+ 	  reliable) Registry persistence without any major code changes.
+
+	* tests/Naming_Test.cpp: Added the use of Registry_Name_Space to
+ 	  the test if we are on Win32 and UNICODE is turned on.
+
+	* examples/Registry: Fixed UNICODE behavior of the tests
+
 Wed Dec 11 20:33:28 1996  Douglas C. Schmidt  <schmidt@lindy.cs.wustl.edu>
 
 	* ace/Synch_T.h: Added a warning that indicates why it isn't
