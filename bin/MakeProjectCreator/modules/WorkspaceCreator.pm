@@ -303,25 +303,18 @@ sub handle_scoped_unknown {
   my($flags) = shift;
   my($line)  = shift;
 
-  if (-e $line) {
-    if (-d $line) {
-      ## This would be too hard to track which files
-      ## got the scoped assignments, so we ignore these.
-      print "WARNING: Scoped directory " .
-            "assignments will be ignored: $line\n";
-    }
-    else {
-      ## Assignment store
-      $self->{'scoped_assign'}->{$line} = $flags;
+  if (-d $line) {
+    my(@files) = ();
+    $self->search_for_files([ $line ], \@files, $$flags{'implicit'});
+    foreach my $file (@files) {
+      $self->{'scoped_assign'}->{$file} = $flags;
+      push(@{$self->{'project_files'}}, $file);
     }
   }
   else {
-    ## We couldn't determine if it was an mpc file or
-    ## a directory, so we ignore these.
-    print "WARNING: Scoped file does not " .
-          "exist, so assignments will be ignored: $line\n";
+    $self->{'scoped_assign'}->{$line} = $flags;
+    push(@{$self->{'project_files'}}, $line);
   }
-  push(@{$self->{'project_files'}}, $line);
 
   return 1, '';
 }
@@ -330,23 +323,20 @@ sub handle_scoped_unknown {
 sub search_for_files {
   my($self)  = shift;
   my($files) = shift;
-  my($exts)  = shift;
   my($array) = shift;
-  my($impl)  = $self->get_assignment('implicit');
+  my($impl)  = shift;
 
   foreach my $file (@$files) {
     if (-d $file) {
       my(@f) = $self->generate_default_file_list($file);
-      $self->search_for_files(\@f, $exts, $array);
+      $self->search_for_files(\@f, $array, $impl);
       if ($impl) {
         unshift(@$array, $file);
       }
     }
     else {
-      foreach my $ext (@$exts) {
-        if ($file =~ /$ext$/) {
-          unshift(@$array, $file);
-        }
+      if ($file =~ /\.mpc$/) {
+        unshift(@$array, $file);
       }
     }
   }
@@ -375,9 +365,8 @@ sub remove_duplicate_projects {
 sub generate_default_components {
   my($self)  = shift;
   my($files) = shift;
+  my($impl)  = shift;
   my($pjf)   = $self->{'project_files'};
-  my(@exts)  = ('\\.mpc');
-  my($impl)  = $self->get_assignment('implicit');
 
   if (defined $$pjf[0]) {
     ## If we have files, then process directories
@@ -387,8 +376,11 @@ sub generate_default_components {
         if (-d $file) {
           my(@found) = ();
           my(@gen)   = $self->generate_default_file_list($file);
-          $self->search_for_files(\@gen, \@exts, \@found);
+          $self->search_for_files(\@gen, \@found, $impl);
           push(@built, @found);
+          if ($impl || $self->{'scoped_assign'}->{$file}->{'implicit'}) {
+            push(@built, $file);
+          }
         }
         else {
           push(@built, $file);
@@ -406,9 +398,9 @@ sub generate_default_components {
     $self->{'project_files'} = \@built;
   }
   else {
-    ## Add all of the mpc files in this directory
+    ## Add all of the wanted files in this directory
     ## and in the subdirectories.
-    $self->search_for_files($files, \@exts, $pjf);
+    $self->search_for_files($files, $pjf, $impl);
 
     ## If the workspace is set to implicit
     if ($impl) {
@@ -457,7 +449,8 @@ sub generate_defaults {
   my(@files) = $self->generate_default_file_list();
 
   ## Generate default components
-  $self->generate_default_components(\@files);
+  $self->generate_default_components(\@files,
+                                     $self->get_assignment('implicit'));
 }
 
 
