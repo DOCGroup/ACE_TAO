@@ -182,7 +182,7 @@ sub Spawn ()
             return -1;
         }
 
-        if (!-x $self->Executable ()) {
+        if (!$PerlACE::Process::chorus && !-x $self->Executable ()) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
                          "> not executable\n";
             return -1;

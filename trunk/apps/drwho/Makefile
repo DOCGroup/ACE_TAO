@@ -79,6 +79,13 @@ ifeq (1,$(VXWORKS))
 	@echo drwho will not build on vxworks
  
 else # VXWORKS
+  ifeq (1,$(CHORUS))
+     # since protocols/rwhod.h is not available under Chorus
+     # drwho will not build on chorus
+   all clean realclean:
+	@echo drwho will not build on chorus
+
+  else # CHORUS
 
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -95,7 +102,7 @@ drwho-client: $(addprefix $(VDIR),$(CLIENT-OBJ)) $(addprefix $(VDIR),$(SHARED-OB
 
 drwho-server: $(addprefix $(VDIR),$(SERVER-OBJ)) $(addprefix $(VDIR),$(SHARED-OBJ))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
-
+  endif #Chorus
 endif #VxWorks
  
 #----------------------------------------------------------------------------

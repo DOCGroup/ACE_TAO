@@ -22,6 +22,7 @@
 #
 
 CHORUS = 1
+CHORUS_4 = 1
 CROSS-COMPILE = 1
 
 ifeq (,$(debug))
