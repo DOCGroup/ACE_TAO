@@ -775,9 +775,9 @@ public:
  * direct assignment of one array to another. Also, the
  * Any and CDR operators use a special class derived from
  * the array. For these reasons, we use a special class for
- * sequences of arrays, parametrized on the array element type.
+ * sequences of arrays.
  */
-template<class T, class T_var>
+template<class T, class T_slice>
 class TAO_Unbounded_Array_Sequence : public TAO_Unbounded_Base_Sequence
 {
 public:
@@ -796,7 +796,9 @@ public:
                                 CORBA::Boolean release = 0);
 
   /// Copy ctor, deep copies.
-  TAO_Unbounded_Array_Sequence(const TAO_Unbounded_Array_Sequence<T,T_var> &);
+  TAO_Unbounded_Array_Sequence (
+      const TAO_Unbounded_Array_Sequence<T,T_slice> &
+    );
 
   /// dtor releases all the contained elements.
   ~TAO_Unbounded_Array_Sequence (void);
@@ -806,8 +808,8 @@ public:
    * members and frees all string members, and then performs a
    * deepcopy to create a new structure.
    */
-  TAO_Unbounded_Array_Sequence<T,T_var> & operator= (
-      const TAO_Unbounded_Array_Sequence <T,T_var> &
+  TAO_Unbounded_Array_Sequence<T,T_slice> & operator= (
+      const TAO_Unbounded_Array_Sequence <T,T_slice> &
     );
 
   // = Accessors.
@@ -884,7 +886,7 @@ public:
  *
  * Please see the documentation for the unbounded case.
  */
-template<class T, class T_var, size_t MAX>
+template<class T, class T_slice, size_t MAX>
 class TAO_Bounded_Array_Sequence : public TAO_Bounded_Base_Sequence
 {
 public:
@@ -899,13 +901,13 @@ public:
                               CORBA::Boolean release=0);
 
   /// Copy constructor.
-  TAO_Bounded_Array_Sequence (const TAO_Bounded_Array_Sequence<T, T_var, MAX> &);
+  TAO_Bounded_Array_Sequence (const TAO_Bounded_Array_Sequence<T, T_slice, MAX> &);
 
   /// destructor
   ~TAO_Bounded_Array_Sequence (void);
 
   /// Assignment from another Bounded sequence.
-  TAO_Bounded_Array_Sequence &operator= (const TAO_Bounded_Array_Sequence<T, T_var, MAX> &);
+  TAO_Bounded_Array_Sequence &operator= (const TAO_Bounded_Array_Sequence<T, T_slice, MAX> &);
 
   // = Accessors.
   /// operator []

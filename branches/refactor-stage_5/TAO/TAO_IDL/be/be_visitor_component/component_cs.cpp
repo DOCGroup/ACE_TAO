@@ -75,7 +75,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_duplicate (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -91,7 +91,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_release (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -106,7 +106,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_nil (" << be_idt << be_idt_nl
       << "void" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -122,7 +122,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       *os << parent->name () << "::";
     }
 
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << "TAO::Objref_Traits<" << node->name () << ">::"
       << "tao_marshal (" << be_idt << be_idt_nl
       << node->name () << "_ptr p," << be_nl
       << "TAO_OutputCDR &cdr" << be_uidt_nl

@@ -152,11 +152,12 @@ int be_visitor_array_ci::visit_array (be_array *node)
         }
     }
 
-  // Generate _life struct static member definitions.
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
+
+  // Generate the array traits specialization definitions.
 
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl

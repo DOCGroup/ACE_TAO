@@ -321,7 +321,7 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao_marshal ("
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
               << be_idt << be_idt_nl
               << "_tao_union." << f->local_name () << " ()," << be_nl
               << "strm" << be_uidt_nl

@@ -726,7 +726,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                   *os << parent->name () << "::";
                 }
 
-              *os << "tao_" << bt->local_name () << "_life::"
+              *os << "TAO::Objref_Traits<" << bt->name () << ">::"
                   << "tao_marshal (_tao_array";
               
               for (i = 0; i < ndims; ++i)

@@ -268,7 +268,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl
@@ -298,7 +298,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl
@@ -381,7 +381,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl
@@ -411,7 +411,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl

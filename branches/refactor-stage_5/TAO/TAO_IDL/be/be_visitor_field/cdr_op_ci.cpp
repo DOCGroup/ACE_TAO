@@ -296,7 +296,7 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao_marshal ("
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
               << be_idt << be_idt_nl
               << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
               << "strm" << be_uidt_nl
@@ -363,7 +363,7 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao_marshal ("
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
               << be_idt << be_idt_nl
               << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl
               << "strm" << be_uidt_nl
