@@ -371,65 +371,80 @@ Prime_Scheduler::work (u_long newparam,
 // Total number of loops.
 static int n_loops = 100;
 
+typedef ACE_Future_Rep<u_long> *u_long_key;
+typedef ACE_Future_Holder<u_long> *u_long_value;
+
+typedef ACE_Future_Rep<const ASYS_TCHAR *> *char_star_key;
+typedef ACE_Future_Holder<const ASYS_TCHAR *> *char_star_value;
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-
 template class ACE_Future_Holder<const ASYS_TCHAR *>;
-template class ACE_Future_Holder<int>;
 template class ACE_Future_Holder<u_long>;
-
 template class ACE_Future_Observer<const ASYS_TCHAR *>;
-template class ACE_Future_Observer<int>;
 template class ACE_Future_Observer<u_long>;
-
 template class ACE_Future<const ASYS_TCHAR *>;
-template class ACE_Future<int>;
 template class ACE_Future<u_long>;
-
 template class ACE_Future_Rep<ASYS_TCHAR const *>;
-template class ACE_Future_Rep<int>;
 template class ACE_Future_Rep<u_long>;
-
 template class ACE_Future_Set<const ASYS_TCHAR *>;
-template class ACE_Future_Set<int>;
 template class ACE_Future_Set<u_long>;
-
 template class auto_ptr<ACE_Method_Request>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
+template class ACE_Node<ACE_Future_Observer<const ASYS_TCHAR *> *>;
+template class ACE_Node<ACE_Future_Observer<u_long> *>;
+template class ACE_Unbounded_Set<ACE_Future_Observer<const ASYS_TCHAR *> *>;
+template class ACE_Unbounded_Set<ACE_Future_Observer<u_long> *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ASYS_TCHAR *> *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
+template class ACE_Pointer_Hash<u_long_key>;
+template class ACE_Equal_To<u_long_key>;
+template class ACE_Hash_Map_Entry<u_long_key, u_long_value>;
+template class ACE_Hash_Map_Manager_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>;
+template class ACE_Pointer_Hash<char_star_key>;
+template class ACE_Equal_To<char_star_key>;
+template class ACE_Hash_Map_Entry<char_star_key, char_star_value>;
+template class ACE_Hash_Map_Manager_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
-
-#pragma instantiate ACE_Future_Holder<const ASYS_TCHAR *>;
-#pragma instantiate ACE_Future_Holder<int>;
-#pragma instantiate ACE_Future_Holder<u_long>;
-
-#pragma instantiate ACE_Future_Observer<const ASYS_TCHAR *>;
-#pragma instantiate ACE_Future_Observer<int>;
-#pragma instantiate ACE_Future_Observer<u_long>;
-
-#pragma instantiate ACE_Future<const ASYS_TCHAR *>;
-#pragma instantiate ACE_Future<int>;
-#pragma instantiate ACE_Future<u_long>;
-
-#pragma instantiate ACE_Future_Rep<ASYS_TCHAR const *>;
-#pragma instantiate ACE_Future_Rep<int>;
-#pragma instantiate ACE_Future_Rep<u_long>;
-
-#pragma instantiate ACE_Future_Set<const ASYS_TCHAR *>;
-#pragma instantiate ACE_Future_Set<int>;
-#pragma instantiate ACE_Future_Set<u_long>;
-
+#pragma instantiate ACE_Future_Holder<const ASYS_TCHAR *>
+#pragma instantiate ACE_Future_Holder<u_long>
+#pragma instantiate ACE_Future_Observer<const ASYS_TCHAR *>
+#pragma instantiate ACE_Future_Observer<u_long>
 #pragma instantiate ACE_Future<const ASYS_TCHAR *>
-#pragma instantiate ACE_Future<int>
 #pragma instantiate ACE_Future<u_long>
-
 #pragma instantiate ACE_Future_Rep<ASYS_TCHAR const *>
-#pragma instantiate ACE_Future_Rep<int>
 #pragma instantiate ACE_Future_Rep<u_long>
-
+#pragma instantiate ACE_Future_Set<const ASYS_TCHAR *>
+#pragma instantiate ACE_Future_Set<u_long>
 #pragma instantiate auto_ptr<ACE_Method_Request>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
+#pragma instantiate ACE_Node<ACE_Future_Observer<const ASYS_TCHAR *> *>
+#pragma instantiate ACE_Node<ACE_Future_Observer<u_long> *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<const ASYS_TCHAR *> *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<u_long> *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ASYS_TCHAR *> *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>
+#pragma instantiate ACE_Pointer_Hash<u_long_key>
+#pragma instantiate ACE_Equal_To<u_long_key>
+#pragma instantiate ACE_Hash_Map_Entry<u_long_key, u_long_value>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<u_long_key, u_long_value, ACE_Pointer_Hash<u_long_key>, ACE_Equal_To<u_long_key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Pointer_Hash<char_star_key>
+#pragma instantiate ACE_Equal_To<char_star_key>
+#pragma instantiate ACE_Hash_Map_Entry<char_star_key, char_star_value>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<char_star_key, char_star_value, ACE_Pointer_Hash<char_star_key>, ACE_Equal_To<char_star_key>, ACE_Null_Mutex>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
@@ -463,19 +478,17 @@ main (int, ASYS_TCHAR *[])
                                    andres),
                   -1);
   ACE_ASSERT (matias->open () != -1);
-  
+
   ACE_Future<u_long> fresulta;
   ACE_Future<u_long> fresultb;
   ACE_Future<u_long> fresultc;
   ACE_Future<u_long> fresultd;
-  ACE_Future<u_long> fresulte;
   ACE_Future<const ASYS_TCHAR *> fname;
-  
+
   ACE_Future_Set<u_long> fseta;
   ACE_Future_Set<u_long> fsetb;
   ACE_Future_Set<u_long> fsetc;
   ACE_Future_Set<u_long> fsetd;
-  ACE_Future_Set<u_long> fsete;
   ACE_Future_Set<const ASYS_TCHAR *> fsetname;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -485,27 +498,36 @@ main (int, ASYS_TCHAR *[])
     {
       // Spawn off the methods, which run in a separate thread as
       // active object invocations.
-      fseta.insert (andres->work (9013));
-      fsetb.insert (peter->work (9013));
-      fsetc.insert (helmut->work (9013));
-      fsetd.insert (matias->work (9013));
-      fsetname.insert (andres->name ());
+      ACE_Future<u_long> andres_work = andres->work (9013);
+      fseta.insert (andres_work);
+
+      ACE_Future<u_long> peter_work = peter->work (9013);
+      fsetb.insert (peter_work);
+
+      ACE_Future<u_long> helmut_work = helmut->work (9013);
+      fsetc.insert (helmut_work);
+
+      ACE_Future<u_long> matias_work = matias->work (9013);
+      fsetd.insert (matias_work);
+
+      ACE_Future<const ASYS_TCHAR*> andres_name = andres->name ();
+      fsetname.insert (andres_name);
     }
-  
+
   // See if the result is available...
-  
+
   if (! fseta.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set a is not empty.....\n")));
-  
+
   if (! fsetb.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set b is not empty.....\n")));
-  
+
   if (! fsetc.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set c is not empty.....\n")));
-  
+
   if (! fsetd.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set d is not empty.....\n")));
@@ -549,7 +571,7 @@ main (int, ASYS_TCHAR *[])
                   count,
                   (u_int) resultb));
     }
-  
+
   for (count = 0;
        fsetc.next_readable (fresultc);
        )
@@ -561,7 +583,7 @@ main (int, ASYS_TCHAR *[])
                   count,
                   (u_int) resultc));
     }
-  
+
   for (count = 0;
        fsetd.next_readable (fresultd);
        )
@@ -573,7 +595,7 @@ main (int, ASYS_TCHAR *[])
                   count,
                   (u_int) resultd));
     }
-  
+
   const ASYS_TCHAR *name;
 
   for (count = 0;
@@ -591,15 +613,15 @@ main (int, ASYS_TCHAR *[])
   if (fseta.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set a is empty.....\n")));
-  
+
   if (fsetb.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set b is empty.....\n")));
-  
+
   if (fsetc.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set c is empty.....\n")));
-  
+
   if (fsetd.is_empty ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT (" (%t) wow.. set d is empty.....\n")));

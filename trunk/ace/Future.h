@@ -21,7 +21,6 @@
 #define ACE_FUTURE_H
 
 #include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
 #include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

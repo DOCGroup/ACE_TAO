@@ -16,7 +16,7 @@ ACE_RCSID(ace, Future_Set, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-  template <class T>
+template <class T>
 ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
   : delete_queue_ (0)
 {
@@ -28,11 +28,6 @@ ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
                ACE_Message_Queue<ACE_SYNCH>);
       this->delete_queue_ = 1;
     }
-}
-
-template <class T>
-ACE_Future_Set<T>::ACE_Future_Set (const ACE_Future_Set<T> &r)
-{
 }
 
 template <class T>

@@ -28,9 +28,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-// Forward decl.
-template <class T> class ACE_Future_Set;
-
 template <class T>
 class ACE_Future_Set : public ACE_Future_Observer<T>
 {
@@ -77,9 +74,9 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Future_Set (const ACE_Future_Set &r);
-  // Copy constructor binds <this> and <r> to the same
-  // <ACE_Future_Set>. An <ACE_Future_Set> is created if necessary.
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Future_Set<T> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Future_Set (const ACE_Future_Set<T> &))
 
   typedef ACE_Future<T> FUTURE;
 
