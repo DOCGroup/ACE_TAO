@@ -1,3 +1,8 @@
+Thu Nov  6 16:51:36 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* tests/SOCK_Connector_Test.cpp (find_another_host): Added
+	ACE_NETBSD to the #if define around gethostent.
+
 Thu Nov 06 10:07:26 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Reactor.h: Added #include "ace/Handle_Set.h" - AIX needs the
