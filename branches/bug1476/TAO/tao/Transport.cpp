@@ -2128,10 +2128,10 @@ TAO_Transport::set_connected (size_t id)
     if (!this->queue_is_empty_i ())
       {
 // do something here, we now get into problems because the schedule_output_i has a nill reactor
-
-        TAO_Flushing_Strategy *flushing_strategy =
-          this->orb_core ()->flushing_strategy ();
-        (void) flushing_strategy->schedule_output (this);
+//
+        //TAO_Flushing_Strategy *flushing_strategy =
+//          this->orb_core ()->flushing_strategy ();
+  //      (void) flushing_strategy->schedule_output (this);
       }
   }
 

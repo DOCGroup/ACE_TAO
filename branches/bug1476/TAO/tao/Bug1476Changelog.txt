@@ -1,3 +1,19 @@
+Thu Jul 29 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp (set_connected):
+          Commented out schedule_output, this doesn't work, have to think
+          about something else
+
+        * tao/Transport_Connector.cpp (connect):
+          When we get a connected transport out of the transport cache it can
+          happen that another thread drove the reactor and set the transport
+          to connected, but then it is not registered with the reactor, so add
+          a check here that when we get a connected transport and it is not
+          registered it yet, register it.
+
+          In case we get a setup where the connection_handler::open() could
+          safely register it, we could remove the checks above.
+
 Thu Jul 29 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp (connect):

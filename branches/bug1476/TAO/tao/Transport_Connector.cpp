@@ -250,7 +250,20 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // return that, in case it is not connected we have to do several extra
   // things
   if (base_transport->is_connected())
-    return base_transport;
+    {
+      if (base_transport->wait_strategy ()->is_registered() == 0)
+        {
+          // We have a transport that is not registered yet, so register it
+          // now
+          int retval = this->register_transport (base_transport);
+
+          if (retval != 0)
+            {
+              return 0;
+            }
+        }
+      return base_transport;
+    }
 
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
