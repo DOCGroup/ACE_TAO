@@ -48,6 +48,7 @@ TAO::TypeCode::Case<STRING_TYPE>::marshal (
 // conversions.
 // -----------------------------------------------------------------
 
+template<>
 ACE_INLINE char const *
 TAO::TypeCode::Case<CORBA::String_var>::name (void) const
 {
