@@ -74,21 +74,21 @@ public:
 
   enum SystemType  // open for future extention
   {
-    OS_UNDEFINED= 0x0000,
-    OS_WIN      = 0x0100,          // for future
-    OS_WIN_NT   = OS_WIN | 0x0001,
-    OS_WIN_2000 = OS_WIN | 0x0002,
-    OS_SUN      = 0x0200,          // Sun Solaris family
-    OS_SUN_55   = OS_SUN | 0x0001,
-    OS_SUN_56   = OS_SUN | 0x0002,
-    OS_SUN_57   = OS_SUN | 0x0004,
-    OS_SUN_58   = OS_SUN | 0x0008,
-    OS_HPUX     = 0x0400,          // HPUX family
-    OS_HPUX_11  = OS_HPUX | 0x0001,
-    OS_LINUX    = 0x0800,          // Linux family
-    OS_FREEBSD  = 0x1000,          // FreeBSD family
-    OS_IRIX     = 0x2000,          // SGI IRIX family
-    OS_OPENBSD  = 0x4000           // OpenBSD familty
+    ACE_OS_UNDEFINED= 0x0000,
+    ACE_OS_WIN      = 0x0100,          // for future
+    ACE_OS_WIN_NT   = ACE_OS_WIN | 0x0001,
+    ACE_OS_WIN_2000 = ACE_OS_WIN | 0x0002,
+    ACE_OS_SUN      = 0x0200,          // Sun Solaris family
+    ACE_OS_SUN_55   = ACE_OS_SUN | 0x0001,
+    ACE_OS_SUN_56   = ACE_OS_SUN | 0x0002,
+    ACE_OS_SUN_57   = ACE_OS_SUN | 0x0004,
+    ACE_OS_SUN_58   = ACE_OS_SUN | 0x0008,
+    ACE_OS_HPUX     = 0x0400,          // HPUX family
+    ACE_OS_HPUX_11  = ACE_OS_HPUX | 0x0001,
+    ACE_OS_LINUX    = 0x0800,          // Linux family
+    ACE_OS_FREEBSD  = 0x1000,          // FreeBSD family
+    ACE_OS_IRIX     = 0x2000,          // SGI IRIX family
+    ACE_OS_OPENBSD  = 0x4000           // OpenBSD familty
   };
 
   enum Opcode {
