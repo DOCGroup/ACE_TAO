@@ -1,3 +1,8 @@
+Sat Dec 20 09:42:06 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: changed ACE_SEH_FINALLY to be if (1) on Unix, not
+         just pSOS.
+
 Fri Dec 19 23:20:42 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* tests/IOStream_Test.cpp (client): Removed an extra read.
