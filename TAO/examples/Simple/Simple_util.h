@@ -130,6 +130,7 @@ public:
   int obtain_initial_references (ACE_ENV_SINGLE_ARG_DECL);
   // Initialize naming service
 
+  CORBA::ORB_ptr orb (void) {return this->orb_.in ();}
 protected:
   CORBA::ORB_var orb_;
   // Remember our orb.
