@@ -376,7 +376,7 @@ namespace ACE_OS
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/OS.i"
+#   include "ace/OS.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_LEGACY_MODE)

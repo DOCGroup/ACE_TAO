@@ -6,7 +6,7 @@
 #include "ace/OS_NS_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FIFO_Recv.i"
+#include "ace/FIFO_Recv.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FIFO_Recv, "$Id$")

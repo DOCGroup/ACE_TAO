@@ -114,7 +114,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK.i"
+#include "ace/SOCK.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -3,7 +3,7 @@
 #include "ace/Service_Types.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Types.i"
+#include "ace/Service_Types.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Stream_Modules.h"

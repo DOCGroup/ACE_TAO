@@ -381,9 +381,9 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
   }
 
   Inline_Files {
-    Bound_Ptr.i
-    Handle_Gobbler.i
-    Refcounted_Auto_Ptr.i
+    Bound_Ptr.inl
+    Handle_Gobbler.inl
+    Refcounted_Auto_Ptr.inl
     ace_wchar.inl
   }
 

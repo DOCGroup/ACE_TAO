@@ -294,7 +294,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Vector_T.i"
+#include "ace/Vector_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

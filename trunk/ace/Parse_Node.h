@@ -367,7 +367,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Parse_Node.i"
+#include "ace/Parse_Node.inl"
 #endif /* __ACE_INLINE__ */
 
 /// Global variable used to communicate between the parser and the main

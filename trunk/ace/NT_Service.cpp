@@ -7,7 +7,7 @@
 #include "ace/NT_Service.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/NT_Service.i"
+#include "ace/NT_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

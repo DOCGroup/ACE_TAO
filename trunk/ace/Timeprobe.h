@@ -112,7 +112,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Timeprobe.i"
+#include "ace/Timeprobe.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Synch_Traits.h"

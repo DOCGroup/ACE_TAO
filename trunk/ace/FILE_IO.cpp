@@ -8,7 +8,7 @@
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FILE_IO.i"
+#include "ace/FILE_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FILE_IO, "$Id$")

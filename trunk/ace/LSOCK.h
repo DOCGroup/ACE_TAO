@@ -71,7 +71,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/LSOCK.i"
+#include "ace/LSOCK.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -66,7 +66,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/LSOCK_CODgram.i"
+#include "ace/LSOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

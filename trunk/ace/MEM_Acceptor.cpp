@@ -10,7 +10,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MEM_Acceptor.i"
+#include "ace/MEM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, MEM_Acceptor, "$Id$")

@@ -5,7 +5,7 @@
 #include "ace/INET_Addr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/INET_Addr.i"
+#include "ace/INET_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

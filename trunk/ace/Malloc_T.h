@@ -72,9 +72,9 @@ private:
  * this to work properly.
  *
  * This class can be configured flexibly with different types of
- * ACE_LOCK strategies that support the @a ACE_Thread_Mutex, 
- * @a ACE_Thread_Semaphore, @a ACE_Process_Mutex, and @a 
- * ACE_Process_Semaphore constructor API.   
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex,
+ * @a ACE_Thread_Semaphore, @a ACE_Process_Mutex, and @a
+ * ACE_Process_Semaphore constructor API.
  *
  * @sa ACE_Dynamic_Cached_Allocator
  */
@@ -135,8 +135,8 @@ private:
  * this to work properly.
  *
  * This class can be configured flexibly with different types of
- * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
- * ACE_Process_Mutex constructor API.   
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a
+ * ACE_Process_Mutex constructor API.
  *
  * @sa ACE_Cached_Allocator
  */
@@ -410,7 +410,7 @@ class ACE_Malloc_FIFO_Iterator_T;
  * This class can be configured flexibly with different
  * MEMORY_POOL strategies and different types of ACE_LOCK
  * strategies that support the @a ACE_Thread_Mutex and @a
- * ACE_Process_Mutex constructor API.   
+ * ACE_Process_Mutex constructor API.
  */
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 class ACE_Malloc_T
@@ -664,7 +664,7 @@ private:
  * specialization to create a version that matches the lock strategy's ctor
  * signature.  See ACE_Process_Semaphore and ACE_Thread_Semaphore for
  * examples.
- * 
+ *
  */
 template <class ACE_LOCK>
 class ACE_Malloc_Lock_Adapter_T
@@ -681,8 +681,8 @@ public:
  * @brief LIFO iterator for names stored in Malloc'd memory.
  *
  * This class can be configured flexibly with different types of
- * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
- * ACE_Process_Mutex constructor API.   
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a
+ * ACE_Process_Mutex constructor API.
  *
  * Does not support deletions while iteration is occurring.
  */
@@ -749,8 +749,8 @@ private:
  * @brief FIFO iterator for names stored in Malloc'd memory.
  *
  * This class can be configured flexibly with different types of
- * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
- * ACE_Process_Mutex constructor API.   
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a
+ * ACE_Process_Mutex constructor API.
  *
  * Does not support deletions while iteration is occurring.
  */
@@ -876,7 +876,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Malloc_T.i"
+#include "ace/Malloc_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

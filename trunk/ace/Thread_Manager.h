@@ -1100,7 +1100,7 @@ typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SI
 #endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Thread_Manager.i"
+#include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

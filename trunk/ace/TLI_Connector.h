@@ -118,7 +118,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI_Connector.i"
+#include "ace/TLI_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */

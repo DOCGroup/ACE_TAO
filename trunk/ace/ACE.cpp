@@ -24,7 +24,7 @@
 #include "ace/OS_TLI.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ACE.i"
+#include "ace/ACE.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)

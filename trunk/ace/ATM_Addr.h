@@ -178,7 +178,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Addr.i"
+#include "ace/ATM_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */

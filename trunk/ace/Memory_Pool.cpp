@@ -4,7 +4,7 @@
 #include "ace/Memory_Pool.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Memory_Pool.i"
+#include "ace/Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

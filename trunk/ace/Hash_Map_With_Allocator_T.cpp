@@ -11,7 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Hash_Map_With_Allocator_T.i"
+#include "ace/Hash_Map_With_Allocator_T.inl"
 #endif /* __ACE_INLINE__ */
 
 template <class EXT_ID, class INT_ID>

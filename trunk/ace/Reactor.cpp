@@ -31,7 +31,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Reactor.i"
+#include "ace/Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Reactor, "$Id$")

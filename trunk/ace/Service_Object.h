@@ -168,7 +168,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Object.i"
+#include "ace/Service_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -7,7 +7,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Association.i"
+#include "ace/SOCK_SEQPACK_Association.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_SEQPACK_Association, "$Id$")

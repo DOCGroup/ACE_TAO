@@ -3,7 +3,7 @@
 #include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Object.i"
+#include "ace/Service_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Service_Types.h"

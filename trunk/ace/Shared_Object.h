@@ -47,7 +47,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Shared_Object.i"
+#include "ace/Shared_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -8,7 +8,7 @@
 #include "ace/OS_NS_time.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Log_Record.i"
+# include "ace/Log_Record.inl"
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)

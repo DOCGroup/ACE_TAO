@@ -147,7 +147,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Managed_Object.i"
+#include "ace/Managed_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

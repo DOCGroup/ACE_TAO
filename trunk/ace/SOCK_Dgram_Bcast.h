@@ -128,7 +128,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram_Bcast.i"
+#include "ace/SOCK_Dgram_Bcast.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

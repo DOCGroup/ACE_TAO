@@ -18,7 +18,7 @@
 #include "ace/Atomic_Op.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Object_Manager.i"
+# include "ace/Object_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"

@@ -3,7 +3,7 @@
 #include "ace/Read_Buffer.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Read_Buffer.i"
+#include "ace/Read_Buffer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

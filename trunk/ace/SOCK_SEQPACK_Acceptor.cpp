@@ -9,7 +9,7 @@
 #include "ace/os_include/os_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Acceptor.i"
+#include "ace/SOCK_SEQPACK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_SEQPACK_Acceptor, "SOCK_SEQPACK_Acceptor.cpp,v 4.30 2002/03/08 23:18:09 spark Exp")

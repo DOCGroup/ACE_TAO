@@ -3,7 +3,7 @@
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Config.i"
+#include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Svc_Conf.h"

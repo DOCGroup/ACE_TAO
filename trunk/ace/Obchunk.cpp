@@ -3,7 +3,7 @@
 #include "ace/Obchunk.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Obchunk.i"
+#include "ace/Obchunk.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Obchunk, "$Id$")

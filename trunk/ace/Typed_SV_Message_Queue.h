@@ -73,7 +73,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Typed_SV_Message_Queue.i"
+#include "ace/Typed_SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -87,7 +87,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Typed_SV_Message.i"
+#include "ace/Typed_SV_Message.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

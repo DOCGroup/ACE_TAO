@@ -109,7 +109,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_MM.i"
+#include "ace/Shared_Memory_MM.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -176,7 +176,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ARGV.i"
+#include "ace/ARGV.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

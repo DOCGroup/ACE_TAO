@@ -128,7 +128,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/UPIPE_Stream.i"
+#include "ace/UPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */

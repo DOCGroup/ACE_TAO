@@ -205,7 +205,7 @@ is_line (const ACE_TCHAR *line)
 #endif /* ACE_IS_SPLITTING */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Capabilities.i"
+#include "ace/Capabilities.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

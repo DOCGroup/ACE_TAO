@@ -26,7 +26,7 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #endif /* ACE_HAS_AIO_CALLS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
+#include "ace/Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Event.h"

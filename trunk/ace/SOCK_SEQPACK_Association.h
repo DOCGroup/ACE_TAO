@@ -185,7 +185,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Association.i"
+#include "ace/SOCK_SEQPACK_Association.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

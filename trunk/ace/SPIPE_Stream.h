@@ -160,7 +160,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SPIPE_Stream.i"
+#include "ace/SPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -12,7 +12,7 @@
 ACE_RCSID(ace, Token, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token.i"
+#include "ace/Token.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_THREADS)

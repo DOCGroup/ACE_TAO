@@ -65,7 +65,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Obchunk.i"
+#include "ace/Obchunk.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

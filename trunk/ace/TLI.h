@@ -102,7 +102,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI.i"
+#include "ace/TLI.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */

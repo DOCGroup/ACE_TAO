@@ -155,7 +155,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Activation_Queue.i"
+#include "ace/Activation_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

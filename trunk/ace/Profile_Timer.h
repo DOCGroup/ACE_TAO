@@ -131,7 +131,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "ace/Profile_Timer.i"
+# include "ace/Profile_Timer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

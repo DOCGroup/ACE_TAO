@@ -377,7 +377,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Event_Handler.i"
+#include "ace/Event_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -381,7 +381,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Malloc.i"
+#include "ace/Malloc.inl"
 #endif /* __ACE_INLINE__ */
 
 // Include the ACE_Malloc templates and ACE_Memory_Pool classes at this point.

@@ -6,7 +6,7 @@
 #include "ace/OS_NS_stdlib.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FILE_Connector.i"
+#include "ace/FILE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FILE_Connector, "$Id$")

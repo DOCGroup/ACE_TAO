@@ -119,7 +119,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SUN_Proactor.i"
+#include "ace/SUN_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS && sun */

@@ -13,7 +13,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/RB_Tree.i"
+#include "ace/RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"

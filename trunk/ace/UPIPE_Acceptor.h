@@ -85,7 +85,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/UPIPE_Acceptor.i"
+#include "ace/UPIPE_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */

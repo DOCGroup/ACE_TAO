@@ -542,7 +542,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_Base.i"
+#include "ace/Select_Reactor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -295,7 +295,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_IO.i"
+#include "ace/MEM_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

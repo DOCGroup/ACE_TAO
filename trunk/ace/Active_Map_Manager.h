@@ -102,7 +102,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Active_Map_Manager.i"
+#include "ace/Active_Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 // Include the templates here.

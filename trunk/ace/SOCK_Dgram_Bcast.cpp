@@ -10,7 +10,7 @@
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram_Bcast.i"
+#include "ace/SOCK_Dgram_Bcast.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
@@ -223,7 +223,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                          (char *) &flags) == -1)
         {
           ACE_ERROR ((LM_ERROR, "%p [%s]\n",
-						 "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)", 
+						 "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)",
 						 flags.ifr_name));
           continue;
         }
@@ -265,7 +265,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           if (host_name != 0)
             ACE_ERROR ((LM_ERROR, "%p [%s]\n",
-                        "ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface.", 
+                        "ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface.",
                         flags.ifr_name));
         }
     }

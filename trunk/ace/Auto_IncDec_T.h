@@ -63,7 +63,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Auto_IncDec_T.i"
+#include "ace/Auto_IncDec_T.inl"
 // On non-Win32 platforms, this code will be inlined
 #endif /* __ACE_INLINE__ */
 

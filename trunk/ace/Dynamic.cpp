@@ -8,7 +8,7 @@
 #include "ace/Null_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dynamic.i"
+#include "ace/Dynamic.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Dynamic, "$Id$")

@@ -3,7 +3,7 @@
 #include "ace/Process.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Process.i"
+#include "ace/Process.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/ARGV.h"

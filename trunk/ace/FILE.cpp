@@ -10,7 +10,7 @@
 #include "ace/OS_NS_sys_stat.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FILE.i"
+#include "ace/FILE.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FILE, "$Id$")

@@ -58,7 +58,7 @@ private:
   HANDLE_SET handle_set_;
 };
 
-#include "ace/Handle_Gobbler.i"
+#include "ace/Handle_Gobbler.inl"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HANDLE_GOBBLER_H */

@@ -14,7 +14,7 @@
 #include "ace/Null_Condition.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Task_Ex_T.i"
+#include "ace/Task_Ex_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Task_Ex_T, "$Id$")
@@ -83,7 +83,7 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::sibling (void)
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::sibling");
   /// @todo FIXME Need to impl ACE_Moudle to support ACE_Task as well.
   /// Now always return 0 for sibling
-  return 0;  
+  return 0;
 /*
   if (this->mod_ == 0)
     return 0;

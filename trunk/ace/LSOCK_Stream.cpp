@@ -10,7 +10,7 @@
 ACE_RCSID(ace, LSOCK_Stream, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/LSOCK_Stream.i"
+#include "ace/LSOCK_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Stream)

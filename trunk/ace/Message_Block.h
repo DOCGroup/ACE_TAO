@@ -1031,7 +1031,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Block.i"
+#include "ace/Message_Block.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Message_Block_T.h"

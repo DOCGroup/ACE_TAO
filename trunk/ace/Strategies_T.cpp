@@ -17,7 +17,7 @@
 #include "ace/OS_Errno.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Strategies_T.i"
+#include "ace/Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

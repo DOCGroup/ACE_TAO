@@ -427,7 +427,7 @@ template < class CHAR > ACE_INLINE
                                        const ACE_String_Base < CHAR > &t);
 
 #if defined (__ACE_INLINE__)
-#include "ace/String_Base.i"
+#include "ace/String_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

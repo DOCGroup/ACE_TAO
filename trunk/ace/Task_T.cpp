@@ -14,7 +14,7 @@
 #include "ace/Null_Condition.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Task_T.i"
+#include "ace/Task_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Task_T, "$Id$")

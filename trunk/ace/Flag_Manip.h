@@ -43,7 +43,7 @@ class ACE_Export ACE_Flag_Manip
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Flag_Manip.i"
+#include "ace/Flag_Manip.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

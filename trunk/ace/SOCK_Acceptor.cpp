@@ -9,7 +9,7 @@
 #include "ace/os_include/os_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Acceptor.i"
+#include "ace/SOCK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_HAS_WINCE)

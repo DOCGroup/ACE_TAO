@@ -155,7 +155,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Atomic_Op.i"
+#include "ace/Atomic_Op.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
