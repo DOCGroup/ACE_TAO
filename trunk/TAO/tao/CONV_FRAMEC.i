@@ -43,8 +43,8 @@ CONV_FRAME::CodeSetComponent_var::operator= (const CONV_FRAME::CodeSetComponent_
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CONV_FRAME::CodeSetComponent (*p.ptr_), 
+    ACE_NEW_RETURN (this->ptr_,
+                    CONV_FRAME::CodeSetComponent (*p.ptr_),
 		    *this);
   }
   return *this;
@@ -290,6 +290,7 @@ CONV_FRAME::CodeSetComponent_out::operator-> (void)
       {
         result = CONV_FRAME::CodeSetComponent::_TAO_Unbounded_Sequence_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId::allocbuf (this->length_);
         this->buffer_ = result;
+        this->release_ = 1;
       }
       else
       {
@@ -386,8 +387,8 @@ CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId_var::operator= (const CONV_FRAM
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId (*p.ptr_), 
+    ACE_NEW_RETURN (this->ptr_,
+                    CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId (*p.ptr_),
 		    *this);
   }
   return *this;
@@ -572,8 +573,8 @@ CONV_FRAME::CodeSetComponentInfo_var::operator= (const CONV_FRAME::CodeSetCompon
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CONV_FRAME::CodeSetComponentInfo (*p.ptr_), 
+    ACE_NEW_RETURN (this->ptr_,
+                    CONV_FRAME::CodeSetComponentInfo (*p.ptr_),
 		    *this);
   }
   return *this;
@@ -743,8 +744,8 @@ CONV_FRAME::CodeSetContext_var::operator= (const CONV_FRAME::CodeSetContext_var 
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CONV_FRAME::CodeSetContext (*p.ptr_), 
+    ACE_NEW_RETURN (this->ptr_,
+                    CONV_FRAME::CodeSetContext (*p.ptr_),
 		    *this);
   }
   return *this;
