@@ -1,3 +1,11 @@
+Tue May 11 01:47:27 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * DnC/Config_Handlers/XercesString.cpp (Config_Handler): When
+          changing the function used to compare strings from
+          XMLString::equals() to XMLString::compareIString(), a check on
+          the return value equal to zero is needed to ensure similar
+          semantics.
+
 Tue May 11 00:18:58 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * DnC/Config_Handlers/XercesString.cpp (Config_Handler): Changed
