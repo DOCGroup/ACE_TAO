@@ -161,6 +161,7 @@ ORB_CORE_FILES = \
   ORB \
   Policy_ForwardC \
   PolicyC \
+  PolicyA \
   Policy_Validator \
   Encodable \
   Abstract_Servant_Base \
@@ -197,6 +198,7 @@ ORB_CORE_FILES = \
   ClientRequestInterceptor_Adapter \
   PI_ForwardC \
   PortableInterceptorC \
+  PortableInterceptorA \
   PICurrent \
   PICurrent_ORBInitializer \
   DynamicC \
@@ -245,7 +247,9 @@ ORB_CORE_FILES = \
   Synch_Refcountable \
   Asynch_Reply_Dispatcher_Base \
   IOP_IORC \
+  IOP_IORA \
   IOP_CodecC \
+  IOP_CodecA \
   IOPC \
   PollableC \
   CONV_FRAMEC \
