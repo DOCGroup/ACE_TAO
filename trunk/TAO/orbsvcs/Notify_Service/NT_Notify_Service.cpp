@@ -1,21 +1,19 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
-
-#include /**/ "NT_Naming_Service.h"
 
 #if defined (ACE_WIN32)
 
-#include /**/ "Naming_Service.h"
+#include /**/ "Notify_Service.h"
+#include /**/ "NT_Notify_Service.h"
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
 #define TAO_REGISTRY_SUBKEY "SOFTWARE\\ACE\\TAO"
-#define TAO_NAMING_SERVICE_OPTS_NAME "TaoNamingServiceOptions"
+#define TAO_NOTIFY_SERVICE_OPTS_NAME "TaoNotifyServiceOptions"
 #define TAO_SERVICE_PARAM_COUNT "TaoServiceParameterCount"
 
-TAO_NT_Naming_Service::TAO_NT_Naming_Service (void)
+TAO_NT_Notify_Service::TAO_NT_Notify_Service (void)
   : argc_ (0),
     argc_save_ (0),
     argv_ (0),
@@ -23,7 +21,7 @@ TAO_NT_Naming_Service::TAO_NT_Naming_Service (void)
 {
 }
 
-TAO_NT_Naming_Service::~TAO_NT_Naming_Service (void)
+TAO_NT_Notify_Service::~TAO_NT_Notify_Service (void)
 {
   if (argv_save_)
     {
@@ -35,7 +33,7 @@ TAO_NT_Naming_Service::~TAO_NT_Naming_Service (void)
 }
 
 void
-TAO_NT_Naming_Service::handle_control (DWORD control_code)
+TAO_NT_Notify_Service::handle_control (DWORD control_code)
 {
   if (control_code == SERVICE_CONTROL_SHUTDOWN
       || control_code == SERVICE_CONTROL_STOP)
@@ -50,13 +48,13 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
 }
 
 int
-TAO_NT_Naming_Service::handle_exception (ACE_HANDLE)
+TAO_NT_Notify_Service::handle_exception (ACE_HANDLE)
 {
   return 0;
 }
 
 int
-TAO_NT_Naming_Service::init (int argc,
+TAO_NT_Notify_Service::init (int argc,
                              ACE_TCHAR *argv[])
 {
   HKEY hkey = 0;
@@ -66,10 +64,10 @@ TAO_NT_Naming_Service::init (int argc,
 
   // This solution is very kludgy.  It looks in the NT Registry under
   // \\HKEY_LOCAL_MACHINE\SOFTWARE\ACE\TAO for the value of
-  // "TaoNamingServiceOptions" for any Naming Service options such as
+  // "TaoNotifyServiceOptions" for any Notify Service options such as
   // "-ORBEndpoint".
 
-  // Get Naming Service options from the NT Registry.
+  // Get Notify Service options from the NT Registry.
 
   ACE_TEXT_RegOpenKeyEx (REGISTRY_KEY_ROOT,
                          TAO_REGISTRY_SUBKEY,
@@ -81,7 +79,7 @@ TAO_NT_Naming_Service::init (int argc,
   DWORD bufSize = sizeof (buf);
 
   ACE_TEXT_RegQueryValueEx (hkey,
-                            TAO_NAMING_SERVICE_OPTS_NAME,
+                            TAO_NOTIFY_SERVICE_OPTS_NAME,
                             NULL,
                             &type,
                             buf,
@@ -125,11 +123,11 @@ TAO_NT_Naming_Service::init (int argc,
 }
 
 int
-TAO_NT_Naming_Service::svc (void)
+TAO_NT_Notify_Service::svc (void)
 {
-  TAO_Naming_Service naming_service;
+  TAO_Notify_Service notify_service;
 
-  if (naming_service.init (argc_,
+  if (notify_service.init (argc_,
                            argv_) == -1)
     return -1;
 
@@ -137,13 +135,13 @@ TAO_NT_Naming_Service::svc (void)
   ACE_TRY
     {
       report_status (SERVICE_RUNNING);
-      naming_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      notify_service.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO NT Naming Service");
+                           "TAO NT Notify Service");
       return -1;
     }
   ACE_ENDTRY;

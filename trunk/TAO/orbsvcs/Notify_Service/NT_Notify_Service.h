@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -8,20 +7,21 @@
 //    ace
 //
 // = FILENAME
-//    NT_Naming_Service.h
+//    NT_Notify_Service.h
 //
 //
 // = DESCRIPTION
-//    Run the TAO Naming Service as a Windows NT Service.
+//    Run the TAO Notify Service as a Windows NT Service.
 //
 // = AUTHORS
-//    John Tucker <jtucker@infoglide.com> and
-//    Mike Vitalo <mvitalo@infoglide.com>
+//    John Tucker <jtucker@infoglide.com>,
+//    Mike Vitalo <mvitalo@infoglide.com>,
+//    David Robison <drrobison@openroadsconsulting.com> 
 //
 // ============================================================================
 
-#ifndef TAO_NT_NAMING_SERVICE_H
-#define TAO_NT_NAMING_SERVICE_H
+#ifndef TAO_NT_NOTIFY_SERVICE_H
+#define TAO_NT_NOTIFY_SERVICE_H
 
 #include /**/ "ace/OS.h"
 
@@ -32,16 +32,16 @@
 #include /**/ "ace/Synch.h"
 #include /**/ "tao/orbconf.h"
 
-class TAO_NT_Naming_Service : public ACE_NT_Service
+class TAO_NT_Notify_Service : public ACE_NT_Service
 {
   // = TITLE
-  //    Run the TAO Naming Service as a Windows NT Service.
+  //    Run the TAO Notify Service as a Windows NT Service.
 public:
   typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
 
   // = Initialization and termination hooks.
-  TAO_NT_Naming_Service (void);
-  virtual ~TAO_NT_Naming_Service (void);
+  TAO_NT_Notify_Service (void);
+  virtual ~TAO_NT_Notify_Service (void);
 
   virtual void handle_control (DWORD control_code);
   // We override <handle_control> because it handles stop requests
@@ -53,7 +53,7 @@ public:
 
   virtual int svc (void);
   // This is a virtual method inherited from ACE_NT_Service.
-
+        
   virtual int init (int argc,
                     ACE_TCHAR *argv[]);
   // Initialize the objects argc_ and argv_ attributes values.
@@ -65,13 +65,15 @@ private:
   // Argument count.
 
   char **argv_;
-  char **argv_save_;
+  char **argv_save_; 
   // Argument list.
 
-  friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
+  friend class ACE_Singleton<TAO_NT_Notify_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<TAO_NT_Naming_Service, ACE_Mutex> SERVICE;
+typedef ACE_Singleton<TAO_NT_Notify_Service, ACE_Mutex> SERVICE;
 
 #endif /* ACE_WIN32 */
-#endif /* TAO_NT_NAMING_SERVER_H */
+#endif /* TAO_NT_NOTIFY_SERVER_H */
+
+

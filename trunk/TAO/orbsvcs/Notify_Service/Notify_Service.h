@@ -48,7 +48,7 @@ private:
   // The orb
 };
 
-class Notify_Service
+class TAO_Notify_Service
 {
   // = TITLE
   //   Notify_Service
@@ -58,10 +58,10 @@ class Notify_Service
 
  public:
   // = Initialization and termination methods.
-  Notify_Service (void);
+  TAO_Notify_Service (void);
   // Constructor.
 
-  virtual ~Notify_Service (void);
+  virtual ~TAO_Notify_Service (void);
   // Destructor.
 
   int init (int argc, char *argv[]
