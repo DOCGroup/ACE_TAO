@@ -391,20 +391,15 @@ DRV_stripped_name (char *fn)
     return n;
 }
 
-// File names
-static char     tmp_file[128];
-static char     tmp_ifile[128];
-
 // Pass input through preprocessor
 void
 DRV_pre_proc (const char *myfile)
 {
-  long  readfromstdin = I_FALSE;
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (readfromstdin);
-
   const char* tmpdir = idl_global->temp_dir ();
+
+  // Temporary file names
+  char tmp_file[MAXPATHLEN];
+  char tmp_ifile[MAXPATHLEN];
 
   ACE_OS::strcpy (tmp_file, tmpdir);
   ACE_OS::strcpy (tmp_ifile, tmpdir);
@@ -412,8 +407,30 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcat (tmp_file, "idlf_XXXXXX");
   ACE_OS::strcat (tmp_ifile, "idli_XXXXXX");
 
-  (void) ACE_OS::mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
-  (void) ACE_OS::mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
+#ifdef ACE_LACKS_MKSTEMP
+  (void) ACE_OS::mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cpp");
+  (void) ACE_OS::mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cpp");
+
+  ACE_HANDLE fd = ACE_OS::open (tmp_file,
+                                O_WRONLY | O_CREAT | O_TRUNC | O_EXCL,
+                                ACE_DEFAULT_FILE_PERMS);
+#else
+
+  ACE_HANDLE fd = ACE_OS::mkstemp (tmp_file);
+
+#endif
+
+  if (fd == ACE_INVALID_HANDLE)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (idl_global->prog_name ()),
+                  ACE_TEXT (": cannot open temp file "),
+                  ACE_TEXT (tmp_file),
+                  ACE_TEXT (" for writing\n")));
+
+      return;
+    }
+
 
   UTL_String *tmp = 0;
 
@@ -443,11 +460,11 @@ DRV_pre_proc (const char *myfile)
     }
   else
     {
-      FILE *fd = fopen (myfile, "r");
-      DRV_copy_input (fd,
+      FILE *fs = fopen (myfile, "r");
+      DRV_copy_input (fs,
                       tmp_ifile,
                       myfile);
-      fclose (fd);
+      fclose (fs);
 
       idl_global->set_read_from_stdin (I_FALSE);
 
@@ -482,21 +499,6 @@ DRV_pre_proc (const char *myfile)
   DRV_cpp_putarg (0); // Null terminate the arglist.
 
   cpp_options.command_line (arglist);
-
-  ACE_HANDLE fd = ACE_OS::open (tmp_file,
-                                O_WRONLY | O_CREAT | O_TRUNC,
-                                ACE_DEFAULT_FILE_PERMS);
-
-  if (fd == ACE_INVALID_HANDLE)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT (idl_global->prog_name ()),
-                  ACE_TEXT (": cannot open temp file "),
-                  ACE_TEXT (tmp_file),
-                  ACE_TEXT (" for writing\n")));
-
-      return;
-    }
 
   cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
 
@@ -768,7 +770,7 @@ DRV_check_for_include (const char* buf)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Env_Value<char*>;
+template class ACE_Env_Value<char*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate  ACE_Env_Value<char*>
 #endif

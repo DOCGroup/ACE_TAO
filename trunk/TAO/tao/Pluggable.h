@@ -43,6 +43,7 @@ class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
+class TAO_GIOP_Invocation;
 class TAO_Pluggable_Messaging_Interface;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
@@ -179,9 +180,8 @@ public:
    * method so it can be called from the GIOP code independant of the
    * actual transport protocol in use.
    */
-  virtual int connect (TAO_Transport_Descriptor_Interface *desc,
-                       TAO_Transport *&,
-                       ACE_Time_Value *max_wait_time,
+  virtual int connect (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc,
                        CORBA::Environment &ACE_TRY_ENV) = 0;
 
   /// Initial set of connections to be established.

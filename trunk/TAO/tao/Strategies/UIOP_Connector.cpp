@@ -14,8 +14,11 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Invocation.h"
 
-ACE_RCSID(Strategies, UIOP_Connector, "$Id$")
+ACE_RCSID(Strategies,
+          UIOP_Connector,
+          "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -116,9 +119,8 @@ TAO_UIOP_Connector::close (void)
 
 
 int
-TAO_UIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
-                             TAO_Transport *& transport,
-                             ACE_Time_Value *max_wait_time,
+TAO_UIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
+                             TAO_Transport_Descriptor_Interface *desc,
                              CORBA::Environment &)
 {
   if (TAO_debug_level > 0)
@@ -126,6 +128,8 @@ TAO_UIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for UIOP connection.\n")));
 
+  TAO_Transport *&transport = invocation->transport ();
+  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)

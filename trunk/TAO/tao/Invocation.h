@@ -171,6 +171,10 @@ public:
   /// Accessor for the stub associated with this invocation.
   TAO_Stub * stub(void);
 
+  /// Return the TAO_Transport in use for the current Invocation
+  /// object.
+  TAO_Transport *&transport (void);
+
   /// Accessor for the stub associated with this invocation.
   CORBA::PolicyList_var& inconsistent_policies();
 
@@ -187,6 +191,9 @@ public:
 
   /// ORB_Core Accessor
   TAO_ORB_Core *orb_core (void);
+
+  /// Return the current timeout value for the current invocation.
+  ACE_Time_Value *max_wait_time (void);
 
   CORBA::ULong& profile_index (void);
 

@@ -12,6 +12,7 @@
 #include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Invocation.h"
 
 #include "DIOP_Profile.h"
 
@@ -95,11 +96,12 @@ TAO_DIOP_Connector::close (void)
 }
 
 int
-TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
-                             TAO_Transport *&transport,
-                             ACE_Time_Value * /*max_wait_time*/,
+TAO_DIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
+                             TAO_Transport_Descriptor_Interface *desc,
                              CORBA::Environment &)
 {
+  TAO_Transport *&transport = invocation->transport ();
+  // ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_UDP_PROFILE)

@@ -9,8 +9,8 @@ ACE_RCSID (TAO_Security,
 
 #include "tao/ORBInitInfo.h"
 
-//#include "Security_PolicyFactory.h"
 #include "Security_Current.h"
+#include "Security_PolicyFactory.h"
 
 
 void
@@ -73,63 +73,70 @@ TAO_Security_ORBInitializer::pre_init (
 
 void
 TAO_Security_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr info
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @todo:  Secure invocation policy support should hopefully be
-  //         ready for TAO 1.2.
-#if 0
+  TAO_ENV_ARG_DEFN;
+
   this->register_policy_factories (info,
                                    ACE_TRY_ENV);
   ACE_CHECK;
-#endif  /* 0 */
 }
 
-// @todo:  Secure invocation policy support should hopefully be
-//         ready for TAO 1.2.
-#if 0
 void
 TAO_Security_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info,
   CORBA::Environment &ACE_TRY_ENV)
 {
-  /// Register the Security policy factories.
-  PortableInterceptor::PolicyFactory_ptr temp_factory =
-    PortableInterceptor::PolicyFactory::_nil ();
-  PortableInterceptor::PolicyFactory_var policy_factory;
+  // Register the security policy factories.
 
-  // ----------------------------------------------------------------
-  // This policy factory is used for all SecureInvocation related
-  // policies.
-  ACE_NEW_THROW_EX (temp_factory,
-                    TAO_SecureInvocationPolicyFactory,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                         TAO_DEFAULT_MINOR_CODE,
-                         ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
+  // The security policy factory is stateless and reentrant, so share a
+  // single instance between all ORBs.
+  PortableInterceptor::PolicyFactory_ptr policy_factory =
+    &(this->policy_factory_);
 
-  policy_factory = temp_factory;
-
-  // Bind the same policy factory to all SecureInvocation related
-  // policy types since a single policy factory is used to create each
-  // of the different types of SecureInvocation policies.
+  // Bind the same policy factory to all security related policy
+  // types since a single policy factory is used to create each of
+  // the different types of security policies.
 
   CORBA::PolicyType type;
-
-  type = Security::SecClientSecureInvocation;
+  
+  type = Security::SecQOPPolicy;
   info->register_policy_factory (type,
-                                 policy_factory.in (),
+                                 policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
 
-  type = Security::SecTargetSecureInvocation;
+  type = Security::SecMechanismsPolicy;
   info->register_policy_factory (type,
-                                 policy_factory.in (),
+                                 policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
+
+  type = Security::SecInvocationCredentialsPolicy;
+  info->register_policy_factory (type,
+                                 policy_factory,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  type = Security::SecFeaturePolicy;   // Deprecated
+  info->register_policy_factory (type,
+                                 policy_factory,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  type = Security::SecDelegationDirectivePolicy;
+  info->register_policy_factory (type,
+                                 policy_factory,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  type = Security::SecEstablishTrustPolicy;
+  info->register_policy_factory (type,
+                                 policy_factory,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
   // ----------------------------------------------------------------
 }
-#endif  /* 0 */

@@ -818,7 +818,7 @@ CORBA_SystemException::_tao_get_omg_exception_description (
   ACE_UNUSED_ARG (minor_code);
 #endif  /* !ACE_NDEBUG */
 
-  return "*unknown description";
+  return "*unknown description*";
 }
 
 // Note that "buffer" holds the (unscoped) name originally, and is

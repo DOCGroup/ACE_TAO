@@ -9,7 +9,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
+#include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Invocation.h"
+
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (TAO_SSLIOP,
@@ -112,9 +115,8 @@ TAO_SSLIOP_Connector::close (void)
 }
 
 int
-TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
-                               TAO_Transport *&transport,
-                               ACE_Time_Value *max_wait_time,
+TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
+                               TAO_Transport_Descriptor_Interface *desc,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   if (TAO_debug_level > 0)
@@ -122,6 +124,8 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for SSLIOP connection.\n")));
 
+  TAO_Transport *&transport = invocation->transport ();
+  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
@@ -136,8 +140,32 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
 
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
-  // @@ Use the policies to decide if SSL is the right protocol...
-  if (this->no_protection_)
+  // Check if the user overrode the default Quality-of-Protection for
+  // the current object.
+  CORBA::Policy_var policy =
+    invocation->stub ()->get_policy (Security::SecQOPPolicy,
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  SecurityLevel2::QOPPolicy_var qop_policy =
+    SecurityLevel2::QOPPolicy::_narrow (policy.in (),
+                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // Temporary variable used to avoid overwriting the default value
+  // set when the ORB was initialized.
+  int no_protection = this->no_protection_;
+
+  if (!CORBA::is_nil (qop_policy.in ()))
+    {
+      Security::QOP qop = qop_policy->qop (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      if (qop == Security::SecQOPNoProtection)
+        no_protection = 1;
+    }
+
+  if (no_protection)
     {
       // Only allow connection to the insecure IIOP port if the
       // endpoint explicitly allows it, i.e. if the
@@ -161,11 +189,18 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                             CORBA::COMPLETED_NO),
                           -1);
 
-      return this->TAO_IIOP_SSL_Connector::connect (
-                     desc,
-                     transport,
-                     max_wait_time,
-                     ACE_TRY_ENV);
+      TAO_IIOP_Endpoint *iiop_endpoint = ssl_endpoint->iiop_endpoint ();
+
+      // An IIOP-only transport descriptor must be used instead of the
+      // one passed to this method since the latter is used for SSLIOP
+      // connections.  Doing so prevents an IIOP-only cached transport
+      // from being associated with an SSLIOP connection.
+      TAO_Base_Transport_Property iiop_desc (iiop_endpoint);
+
+      // Note that the IIOP-only transport descriptor is used!
+      return this->TAO_IIOP_SSL_Connector::connect (invocation,
+                                                    &iiop_desc,
+                                                    ACE_TRY_ENV);
     }
 
   // @@ The following check for "required insecurity" seems odd, but
@@ -214,7 +249,7 @@ TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
 
   // Check the Cache first for connections
   if (this->orb_core ()->transport_cache ()->find_transport (desc,
-                                                              base_transport) == 0)
+                                                             base_transport) == 0)
     {
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
