@@ -1,3 +1,8 @@
+Thu Aug 05 15:13:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: added note on why we don't #define
+          ACE_HAS_POSIX_SEM for LynxOS. [Bug 164]
+
 Thu Aug 05 14:53:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: added support for the Diab
