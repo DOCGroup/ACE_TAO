@@ -152,6 +152,10 @@ SOURCE=.\ast\ast_module.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_native.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_operation.cpp
 # End Source File
 # Begin Source File
@@ -280,6 +284,10 @@ SOURCE=.\be\be_module.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_native.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_operation.cpp
 # End Source File
 # Begin Source File
@@ -392,10 +400,6 @@ SOURCE=.\driver\drv_link.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\driver\drv_main.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\driver\drv_preproc.cpp
 # End Source File
 # Begin Source File
@@ -429,6 +433,10 @@ SOURCE=.\fe\lex.yy.cpp
 # Begin Source File
 
 SOURCE=.\narrow\narrow.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\tao_idl.cpp
 # End Source File
 # Begin Source File
 
@@ -568,6 +576,10 @@ SOURCE=.\include\ast_module.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_native.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_operation.h
 # End Source File
 # Begin Source File
@@ -685,6 +697,10 @@ SOURCE=.\be_include\be_interface_fwd.h
 # Begin Source File
 
 SOURCE=.\be_include\be_module.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_native.h
 # End Source File
 # Begin Source File
 
