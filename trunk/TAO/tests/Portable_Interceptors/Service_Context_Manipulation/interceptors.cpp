@@ -1,7 +1,7 @@
 // $Id$
 
 #include "interceptors.h"
-
+#include "tao/OctetSeqC.h"
 
 ACE_RCSID (Service_Context_Manipulation,
            interceptors,
@@ -94,11 +94,7 @@ Echo_Client_Request_Interceptor::send_request (
   sc.context_id = request_ctx_id;
 
   CORBA::ULong string_len = ACE_OS::strlen (request_msg) + 1;
-  CORBA::Octet *buf = 0;
-  ACE_NEW_THROW_EX (buf,
-                    CORBA::Octet [string_len],
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
+  CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
   ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), request_msg);
 
   sc.context_data.replace (string_len, string_len, buf, 1);
@@ -269,11 +265,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   scc.context_id = reply_ctx_id;
 
   CORBA::ULong string_len = ACE_OS::strlen (reply_msg) + 1;
-  CORBA::Octet *buff = 0;
-  ACE_NEW_THROW_EX (buff,
-                    CORBA::Octet [string_len],
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
+  CORBA::Octet *buff = CORBA::OctetSeq::allocbuf (string_len);
 
   ACE_OS::strcpy (ACE_reinterpret_cast (char *, buff), reply_msg);
 
