@@ -253,5 +253,5 @@ if (!$Build_Debug && !$Build_Release) {
 print "MPC version of msvc_mpc_auto_compile: Begin\n";
 Build_All if ($build_all && !$use_custom_dir);
 Build_Custom if $use_custom_dir;
-print "msvc_auto_compile: End\n";
+print "msvc_mpc_auto_compile: End\n";
 print STDERR "End\n" if ($print_status == 1);
