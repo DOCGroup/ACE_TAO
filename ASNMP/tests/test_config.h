@@ -15,6 +15,8 @@
 #define ACE_TEST_CONFIG_H
 
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
+
 #include <iostream.h>
 #include <fstream.h>
 
