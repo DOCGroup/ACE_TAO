@@ -1,3 +1,11 @@
+Sun Apr 25 16:59:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/fe/lex.yy.cpp: Added ACE_NOTREACHED to two redundant
+	  break statements.
+
+	* TAO_IDL/ast/ast_expression.cpp (coerce_value): Removed a
+	  redundant return statement.
+
 Sun Apr 25 16:05:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Factory.h:
@@ -15,7 +23,7 @@ Sun Apr 25 16:05:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
 	  The EC_Factories create a Supplier_Filter_Builder now. This
 	  simplifies some of the memory managment in the system: now the
-	  EC must handle the builder and the builder handles the object it 
+	  EC must handle the builder and the builder handles the object it
 	  creates.  I was able to lift a restriction of the factories
 	  implemented so far: they can be used from multile ECs now.
 
@@ -27,7 +35,7 @@ Sun Apr 25 16:05:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
 	  The EC_Factory creates a factory object for the supplier-side
 	  filters. Analogous to the consumer-side filter builder.
-	  The ProxyPushConsumer uses this object to create its filter, but 
+	  The ProxyPushConsumer uses this object to create its filter, but
 	  the creation is deferred until the user connects to the
 	  ProxyConsumer (as it is done in the consumer side).
 
