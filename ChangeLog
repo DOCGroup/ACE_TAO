@@ -1,3 +1,10 @@
+Wed Jan  7 12:57:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/UDP/UDP.mpc:
+          When usign gnuace generate LDLIBS += $(MATHLIB) at the place of
+          the local marker. This test uses sqrt and some Unix versions
+          then need to link their mathlib.
+
 Wed Jan  7 06:24:54 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
