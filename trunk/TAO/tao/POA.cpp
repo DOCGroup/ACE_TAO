@@ -363,8 +363,9 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
           result = -1;
         }
     }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#else
+  ACE_UNUSED_ARG (activate_it);
+#endif /* !TAO_HAS_MINIMUM_CORBA */
 
   if (result == 0)
     {
@@ -1981,8 +1982,9 @@ TAO_POA::locate_servant_i (const char *operation,
           return servant;
         }
     }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#else
+  ACE_UNUSED_ARG (operation);
+#endif /* !TAO_HAS_MINIMUM_CORBA */
 
   // Failure
   ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
