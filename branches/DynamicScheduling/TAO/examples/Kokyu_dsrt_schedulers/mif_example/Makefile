@@ -373,23 +373,37 @@ realclean: clean
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i testC.h testC.i \
   MIF_Scheduler.h MIF_SchedulingC.h MIF_SchedulingC.i \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  $(ACE_ROOT)/Kokyu/Kokyu.h \
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.h \
   $(ACE_ROOT)/Kokyu/kokyu_export.h \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.h \
   $(ACE_ROOT)/ace/Array.h \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.i \
-  $(ACE_ROOT)/Kokyu/Kokyu.i \
-  $(ACE_ROOT)/Kokyu/Dispatcher_Impl.h \
-  $(ACE_ROOT)/Kokyu/Dispatcher_Impl.i \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl.h \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl.i
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.i \
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.cpp \
+  $(ACE_ROOT)/ace/Dynamic_Service.h \
+  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+  $(ACE_ROOT)/ace/Dynamic_Service.i \
+  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.h \
+  $(ACE_ROOT)/ace/Bound_Ptr.h \
+  $(ACE_ROOT)/ace/Bound_Ptr.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.cpp \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.cpp
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp test_i.h testS.h testC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -715,18 +729,37 @@ realclean: clean
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i MIF_Scheduler.h \
   MIF_SchedulingC.h MIF_SchedulingC.i \
-  $(ACE_ROOT)/Kokyu/Kokyu.h \
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.h \
   $(ACE_ROOT)/Kokyu/kokyu_export.h \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.h \
   $(ACE_ROOT)/ace/Array.h \
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.i \
-  $(ACE_ROOT)/Kokyu/Kokyu.i \
-  $(ACE_ROOT)/Kokyu/Dispatcher_Impl.h \
-  $(ACE_ROOT)/Kokyu/Dispatcher_Impl.i \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl.h \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl.i
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.i \
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.cpp \
+  $(ACE_ROOT)/ace/Dynamic_Service.h \
+  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+  $(ACE_ROOT)/ace/Dynamic_Service.i \
+  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.h \
+  $(ACE_ROOT)/ace/Bound_Ptr.h \
+  $(ACE_ROOT)/ace/Bound_Ptr.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.cpp \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.cpp
 
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h testC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -1142,20 +1175,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/RTScheduling/RTSchedulerC.i \
   MIF_SchedulingC.h MIF_SchedulingC.i \
-  $(ACE_ROOT)/ace/Message_Queue.h \
-  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.i \
-  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
-  $(ACE_ROOT)/ace/Notification_Strategy.h \
-  $(ACE_ROOT)/ace/Notification_Strategy.inl \
-  $(ACE_ROOT)/ace/Message_Queue.i \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  $(ACE_ROOT)/Kokyu/Kokyu.h \
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.h \
   $(ACE_ROOT)/Kokyu/kokyu_export.h \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.h \
   $(ACE_ROOT)/ace/Array.h \
@@ -1170,12 +1190,95 @@ realclean: clean
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.i \
-  $(ACE_ROOT)/Kokyu/Kokyu.i \
-  $(ACE_ROOT)/Kokyu/Dispatcher_Impl.h \
-  $(ACE_ROOT)/Kokyu/Dispatcher_Impl.i \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl.h \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl.i \
-  ../Kokyu_qosC.h ../Kokyu_qosC.i
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.i \
+  $(ACE_ROOT)/Kokyu/Kokyu_dsrt.cpp \
+  $(ACE_ROOT)/ace/Dynamic_Service.h \
+  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+  $(ACE_ROOT)/ace/Dynamic_Service.i \
+  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.h \
+  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
+  $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Message_Queue.h \
+  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+  $(ACE_ROOT)/ace/Message_Queue_T.h \
+  $(ACE_ROOT)/ace/Message_Queue_T.i \
+  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Notification_Strategy.h \
+  $(ACE_ROOT)/ace/Notification_Strategy.inl \
+  $(ACE_ROOT)/ace/Message_Queue.i \
+  $(ACE_ROOT)/ace/Task_T.i \
+  $(ACE_ROOT)/ace/Task_T.cpp \
+  $(ACE_ROOT)/ace/Module.h \
+  $(ACE_ROOT)/ace/Module.i \
+  $(ACE_ROOT)/ace/Module.cpp \
+  $(ACE_ROOT)/ace/Stream_Modules.h \
+  $(ACE_ROOT)/ace/Stream_Modules.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.h \
+  $(ACE_ROOT)/ace/Bound_Ptr.h \
+  $(ACE_ROOT)/ace/Bound_Ptr.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.cpp \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Service_Types.h \
+  $(ACE_ROOT)/ace/Service_Types.i \
+  $(ACE_ROOT)/ace/XML_Svc_Conf.h \
+  $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i Kokyu_qosC.h \
+  Kokyu_qosC.i
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -2309,6 +2412,11 @@ realclean: clean
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  $(TAO_ROOT)/tao/RTScheduling/RTSchedulerC.h \
+  $(TAO_ROOT)/tao/RTScheduling/rtscheduler_export.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
+  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
   $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2324,11 +2432,6 @@ realclean: clean
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
   $(TAO_ROOT)/tao/TimeBaseC.i \
-  $(TAO_ROOT)/tao/RTScheduling/RTSchedulerC.h \
-  $(TAO_ROOT)/tao/RTScheduling/rtscheduler_export.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
-  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
