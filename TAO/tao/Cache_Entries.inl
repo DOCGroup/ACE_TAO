@@ -112,6 +112,9 @@ TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
   // Do a deep copy
   this->connection_property_ =
     rhs.connection_property_->duplicate ();
+
+  if (this->connection_property_ == 0)
+    return;
   this->is_delete_ = 1;
   this->index_ = rhs.index_;
 }
@@ -147,6 +150,8 @@ TAO_Cache_ExtId::duplicate (void)
   // Make a deep copy
   prop = this->connection_property_->duplicate ();
 
+  if (prop == 0)
+    return;
 
   // Release memory if there was some allocated in the first place
  if (this->is_delete_)
