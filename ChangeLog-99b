@@ -1,3 +1,7 @@
+Thu Nov 25 01:41:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h: Removed the alignment change for now.
+
 Wed Nov 24 14:41:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.i (wait): Changed to use the process handle to wait
