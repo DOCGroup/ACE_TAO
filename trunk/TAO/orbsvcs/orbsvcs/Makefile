@@ -153,6 +153,7 @@ IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
 $(foreach ext, $(IDL_EXT), RtecUDPAdmin(ext)): RtecEventComm.idl
 $(foreach ext, $(IDL_EXT), RtecScheduler$(ext)): CosTimeBase.idl
 $(foreach ext, $(IDL_EXT), RtecEventComm$(ext)): CosTimeBase.idl
+$(foreach ext, $(IDL_EXT), TimeService$(ext)): CosTimeBase.idl
 $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): CosTimeBase.idl
 $(foreach ext, $(IDL_EXT), RtecEventChannelAdmin$(ext)): RtecEventComm.idl
 $(foreach ext, $(IDL_EXT), LifeCycleService$(ext)): CosLifeCycle.idl
