@@ -79,11 +79,10 @@ int
 main (int argc, char *argv[])
 {
   int iterations = 5;
-  int result = 0;
   int rt_orb = 0;
   int destroy = 0;
 
-  result =
+  int result =
     test_multiple_orbs ("non-RT ORBs, disable destroy",
                         argc,
                         argv,
@@ -128,5 +127,5 @@ main (int argc, char *argv[])
                         destroy);
   ACE_ASSERT (result == 0);
 
-  return 0;
+  return result;
 }

@@ -1,3 +1,8 @@
+Thu Aug  9 16:15:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/ORB_init/ORB_init.cpp: Fixed a warning in KCC
+	  builds on Linux.
+
 Thu Aug  9 11:10:59 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/default_resource.cpp:
