@@ -24,7 +24,9 @@ FileImpl::System::open (const char *file_name,
                         CORBA::Long flags,
                         CORBA::Environment &env)
 {
-  ACE_HANDLE file_descriptor = ACE_OS::open (file_name, flags);
+  ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
+                                             flags);
+
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
       CORBA::Exception *exception = new File::IOError (errno);
@@ -33,16 +35,23 @@ FileImpl::System::open (const char *file_name,
     }
 
   char file_descriptor_buffer[BUFSIZ];
-  ACE_OS::sprintf (file_descriptor_buffer, "%ld", (CORBA::Long) file_descriptor);
+  ACE_OS::sprintf (file_descriptor_buffer,
+                   "%ld",
+                   (CORBA::Long) file_descriptor);
 
-  PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId (file_descriptor_buffer);
-  CORBA::Object_var obj = this->poa_->create_reference_with_id (oid.in (), 
-                                                                this->_interface_repository_id (),
-                                                                env);
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (file_descriptor_buffer);
+
+  CORBA::Object_var obj =
+    this->poa_->create_reference_with_id (oid.in (), 
+                                          this->_interface_repository_id (),
+                                          env);
   if (env.exception () != 0)
     return File::Descriptor::_nil ();
 
-  File::Descriptor_var fd = File::Descriptor::_narrow (obj.in (), env);
+  File::Descriptor_var fd =
+    File::Descriptor::_narrow (obj.in (), env);
+
   if (env.exception () != 0)
     return File::Descriptor::_nil ();
 
@@ -68,14 +77,19 @@ ACE_HANDLE
 FileImpl::Descriptor::fd (CORBA::Environment &env)
 {
   File::Descriptor_var me = this->_this (env);
+
   if (env.exception () != 0)
     return ACE_INVALID_HANDLE;
 
-  PortableServer::ObjectId_var oid = this->poa_->reference_to_id (me.in (), env);
+  PortableServer::ObjectId_var oid =
+    this->poa_->reference_to_id (me.in (), env);
+
   if (env.exception () != 0)
     return ACE_INVALID_HANDLE;
 
-  CORBA::String_var s = PortableServer::ObjectId_to_string (oid.in ());
+  CORBA::String_var s =
+    PortableServer::ObjectId_to_string (oid.in ());
+
   return (ACE_HANDLE) ::atol (s.in ());
 }
 
@@ -84,16 +98,17 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
                              CORBA::Environment &env)
 {
   ACE_HANDLE file_descriptor = this->fd (env);
+
   if (env.exception () != 0)
     return 0;
   
   const CORBA::Octet *data = &buffer[0];
-  int len = ACE_OS::write (file_descriptor, data, buffer.length ());
 
+  ssize_t len = ACE_OS::write (file_descriptor,
+                               data,
+                               buffer.length ());
   if (len > 0)
-    {
-      return len;
-    }      
+    return len;
   else
     {
       CORBA::Exception *exception = new File::IOError (errno);
@@ -107,6 +122,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes,
                             CORBA::Environment &env)
 {
   ACE_HANDLE file_descriptor = this->fd (env);
+
   if (env.exception () != 0)
     return 0;
   
@@ -114,9 +130,10 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes,
   int length = ACE_OS::read (file_descriptor, buffer, num_bytes);
 
   if (length > 0)
-    {
-      return new File::Descriptor::DataBuffer (length, length, buffer, CORBA::B_TRUE);
-    }      
+    return new File::Descriptor::DataBuffer (length,
+                                             length,
+                                             buffer,
+                                             CORBA::B_TRUE);
   else
     {
       File::Descriptor::DataBuffer::freebuf (buffer);
@@ -132,10 +149,13 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
                              CORBA::Environment &env)
 {
   ACE_HANDLE file_descriptor = this->fd (env);
+
   if (env.exception () != 0)
     return 0;
   
-  CORBA::ULong result = ACE_OS::lseek (file_descriptor, offset, whence);
+  CORBA::ULong result = ACE_OS::lseek (file_descriptor,
+                                       offset,
+                                       whence);
   if (result == -1)
     {
       CORBA::Exception *exception = new File::IOError (errno);
@@ -150,10 +170,12 @@ void
 FileImpl::Descriptor::destroy (CORBA::Environment &env)
 {
   ACE_HANDLE file_descriptor = this->fd (env);
+
   if (env.exception () != 0)
     return;
 
   int result = ACE_OS::close (file_descriptor);
+
   if (result != 0)
     {
       CORBA::Exception *exception = new File::IOError (errno);

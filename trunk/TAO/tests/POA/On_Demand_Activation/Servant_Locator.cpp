@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //================================================================================
 //
 // = LIBRARY
@@ -9,14 +9,13 @@
 //     Servant_Locator.cpp
 //
 // = DESCRIPTION
-//     Implementation of MyFooServantLocator class , used with a POA having
-//     a NON_RETAIN policy
+//     Implementation of MyFooServantLocator class , used with a POA
+//     having a NON_RETAIN policy.
 //
 // = AUTHOR
 //     Irfan Pyarali
 //
 //==================================================================================
-
 
 #include "Servant_Locator.h"
 #include "MyFooServant.h"
@@ -34,17 +33,18 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::ServantLocator::Cookie &cookie,
                                 CORBA::Environment &env)
 {
-  // Convert ObjectID to String
+  // Convert ObjectID to String.
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
-  // If ObjectID string has a Foo Substring create and return a MyFooServant.
+  // If ObjectID string has a Foo Substring create and return a
+  // MyFooServant.
 
   if (ACE_OS::strstr (s.in (), "Foo") != 0)
     {
       PortableServer::Servant servant = new MyFooServant (poa, ++this->counter_);
 
-      // Return the servant as the cookie , used as a check when postinvoke
-      // is called on this MyFooServantLocator
+      // Return the servant as the cookie , used as a check when
+      // postinvoke is called on this MyFooServantLocator.
 
       cookie = servant;
       return servant;
@@ -65,7 +65,7 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
                                  PortableServer::Servant servant,
                                  CORBA::Environment &env)
 {
-  // Check the passed servant with the cookie
+  // Check the passed servant with the cookie.
 
   PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
   ACE_ASSERT (servant == my_servant);

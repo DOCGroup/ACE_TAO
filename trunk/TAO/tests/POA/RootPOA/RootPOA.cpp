@@ -1,4 +1,5 @@
 // $Id$
+
 //==================================================================================
 //
 // = LIBRARY
@@ -9,14 +10,13 @@
 //     RootPOA.cpp
 //
 // = DESCRIPTION
-//     This program gets the name of the  Root POA and prints it out on
+//     This program gets the name of the Root POA and prints it out on
 //     the standard output.
 //
 // = AUTHOR
 //     Irfan Pyarali
 //
 //==================================================================================
-
 
 #include "ace/streams.h"
 #include "tao/corba.h"
@@ -34,21 +34,23 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Resolve the initial references for the name RootPOA
-  // thus getting an object of type CORBA::Object
+  // Resolve the initial references for the name RootPOA thus getting
+  // an object of type CORBA::Object.
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  // apply _narrow on the object of type CORBA::Object,
-  // to make it a POA class Object
+  // apply _narrow on the object of type CORBA::Object, to make it a
+  // POA class Object.
   PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (), env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
 
-  // Get the name of the root POA
+  // Get the name of the root POA.
   CORBA::String_var poa_name = root_poa->the_name (env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
@@ -57,9 +59,9 @@ main (int argc, char **argv)
 
   cout << "The RootPOA is : " << poa_name.in () << endl;
 
-  //destroy the POA object,also destroys the child POAs if any.
- root_poa->destroy (CORBA::B_TRUE,
-                    CORBA::B_TRUE,
+  // destroy the POA object,also destroys the child POAs if any.
+  root_poa->destroy (CORBA::B_TRUE,
+                     CORBA::B_TRUE,
                      env);
   if (env.exception () != 0)
     {
