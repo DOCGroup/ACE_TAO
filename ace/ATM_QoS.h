@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
- 
 // ============================================================================
 //
 // = LIBRARY
@@ -28,7 +27,7 @@
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
 // just map to WS2 GQOS struct
-typedef QOS ATM_QoS;
+typedef ACE_QoS ATM_QoS;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
 // typedef enum {
 //   BEST_EFFORT,
@@ -80,23 +79,29 @@ public:
 
   // = Initializattion and termination methods.
   ACE_ATM_QoS ();
-  // Default constructor
+  // Default constructor.
+
+  ACE_ATM_QoS( int );
+  // Constructor with a CBR rate.
 
   ~ACE_ATM_QoS ();
 
   void set_rate (ACE_HANDLE,
                  int,
                  int);
-  // set the rate
+  // Set the rate.
 
   void set_cbr_rate (int);
-  // set CBR rate
+  // Set CBR rate.
 
   ATM_QoS get_qos (void);
-  // get ATM_QoS struct
+  // Get ATM_QoS struct.
 
-  void dump (void) const;
-  // Dump the state of an object.
+  ACE_QoS_Params get_option_params( void );
+  // Get ACE QoS option parameters.
+
+	void dump (void) const;
+	// Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -106,7 +111,7 @@ protected:
                           int,
                           int,
                           long*);
-  // Construct QoS options
+  // Construct QoS options.
 
 private:
   ATM_QoS qos_;
@@ -118,3 +123,4 @@ private:
 
 #endif /* ACE_HAS_ATM */
 #endif /* ACE_ATM_QoS_H */
+

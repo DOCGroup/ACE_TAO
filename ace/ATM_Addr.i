@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ATM_Addr.i
@@ -37,9 +36,10 @@ ACE_ATM_Addr::set_selector (unsigned char selector)
   ACE_TRACE ("ACE_ATM_Addr::set_selector");
 #if defined (ACE_HAS_FORE_ATM_XTI)
   atm_addr_.sap.t_atm_sap_addr.address[ATMNSAP_ADDR_LEN - 1] = selector;
-#elif defined (ACE_FORE_ATM_WS2)
+#elif defined (ACE_HAS_FORE_ATM_WS2)
   atm_addr_.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] = selector;
 #else
   ACE_UNUSED_ARG (selector);
 #endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
+

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ATM_Params.i
@@ -12,10 +11,16 @@ ACE_ATM_Params::ACE_ATM_Params (int rw_flag,
                                 int protocol_family,
                                 int protocol,
                                 int type,
+                                ACE_Protocol_Info *protocol_info,
+                                ACE_SOCK_GROUP g,
+                                u_long flags,
                                 int reuse_addr)
   : protocol_family_(protocol_family),
     protocol_(protocol),
     type_(type),
+    protocol_info_(protocol_info),
+    group_(g),
+    flags_(flags),
     reuse_addr_(reuse_addr),
     device_(device),
     info_(info),
@@ -79,6 +84,54 @@ ACE_ATM_Params::set_type (int type)
 {
   ACE_TRACE ("ACE_ATM_Params::set_type");
   type_ = type;
+}
+
+ACE_INLINE
+ACE_Protocol_Info* 
+ACE_ATM_Params::get_protocol_info( void )
+{
+  ACE_TRACE ("ACE_ATM_Params::get_protocol_info");
+  return protocol_info_;
+}
+
+ACE_INLINE
+void 
+ACE_ATM_Params::set_protocol_info( ACE_Protocol_Info *protocol_info )
+{
+  ACE_TRACE ("ACE_ATM_Params::set_protocol_info");
+  protocol_info_ = protocol_info;
+}
+
+ACE_INLINE
+ACE_SOCK_GROUP 
+ACE_ATM_Params::get_sock_group( void )
+{
+  ACE_TRACE ("ACE_ATM_Params::get_sock_group");
+  return group_;
+}
+
+ACE_INLINE
+void 
+ACE_ATM_Params::set_sock_group( ACE_SOCK_GROUP g )
+{
+  ACE_TRACE ("ACE_ATM_Params::set_sock_group");
+  group_ = g;
+}
+
+ACE_INLINE
+u_long 
+ACE_ATM_Params::get_flags( void )
+{
+  ACE_TRACE ("ACE_ATM_Params::get_flags");
+  return flags_;
+}
+
+ACE_INLINE
+void 
+ACE_ATM_Params::set_flags( u_long flags)
+{
+  ACE_TRACE ("ACE_ATM_Params::set_flags");
+  flags_ = flags;
 }
 
 ACE_INLINE
@@ -168,3 +221,4 @@ ACE_ATM_Params::set_oflag (int oflag)
   ACE_TRACE ("ACE_ATM_Params::set_oflag");
   oflag_ = oflag;
 }
+
