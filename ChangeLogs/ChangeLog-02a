@@ -1,34 +1,44 @@
+Wed May  9 11:40:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.i:
+          Don't use OpenFileMapping for WindowsCE.
+
+        * ace/OS.i:
+        * ace/config-win32-mingw.h:
+          Use the /**/ trick for #includes with angle brackets, otherwise
+          the Embedded C++ compiler gets angry.
+
 Wed May 09 10:02:10 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.15 released.
 
 Mon May  7 07:14:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Commented out OctetSeq test from running
-	  in static configurations. 
+        * bin/auto_run_tests.lst: Commented out OctetSeq test from running
+          in static configurations. 
 
 Mon May  7 06:40:44 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Shared_Memory/test_SV.cpp: Cast SHM_KEY to (key_t) to
-	  make BCB happy.  Thanks to Johnny Willemsen for this.
+        * examples/Shared_Memory/test_SV.cpp: Cast SHM_KEY to (key_t) to
+          make BCB happy.  Thanks to Johnny Willemsen for this.
 
 Sat May  5 15:30:40 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* THANKS: Just added the 1,200th contributor to the ACE+TAO.
-	  Thanks to Alexandre Cervieri <alexandre.cervieri@terra.com.br>
- 	  for helping us hit a new milestone!
+        * THANKS: Just added the 1,200th contributor to the ACE+TAO.
+          Thanks to Alexandre Cervieri <alexandre.cervieri@terra.com.br>
+          for helping us hit a new milestone!
 
 Sat May  5 08:51:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Just commented the HP_UX
-	  builds. OCI seems to be having problems with their HP
-	  machine. We will get it online once the builds start running. 
+        * bin/nightlybuilds/builds.lst: Just commented the HP_UX
+          builds. OCI seems to be having problems with their HP
+          machine. We will get it online once the builds start running. 
 
 Sat May  5 08:01:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/Thread_Mutex_Test.cpp: Added a series of tests that exercise
-	  the new functionality of the ACE_Guard.  Thanks to Christopher
- 	  Kohlhoff <chris@kohlhoff.com> for providing the enhancements.
+        * tests/Thread_Mutex_Test.cpp: Added a series of tests that exercise
+          the new functionality of the ACE_Guard.  Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for providing the enhancements.
 
 Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -38,109 +48,109 @@ Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
-	  match those in standard POSIX.  Thanks to Gonzalo Diethelm
- 	  <Gonzalo.Diethelm@sonda.com> for reporting this.
+        * ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
+          match those in standard POSIX.  Thanks to Gonzalo Diethelm
+          <Gonzalo.Diethelm@sonda.com> for reporting this.
   
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
-	  users to control whether wide character strings use the "L"
- 	  prefix via their config.h files.  Thanks to Albert Wijnja for
- 	  this fix.
+        * ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
+          users to control whether wide character strings use the "L"
+          prefix via their config.h files.  Thanks to Albert Wijnja for
+          this fix.
 
-	* examples/Misc/test_read_buffer.cpp (main): Changed <int> to
-	  <ACE_HANDLE> so this will work properly on Win32 platforms.
-	  Thanks to Johnny Willemsen for reporting the problem.
+        * examples/Misc/test_read_buffer.cpp (main): Changed <int> to
+          <ACE_HANDLE> so this will work properly on Win32 platforms.
+          Thanks to Johnny Willemsen for reporting the problem.
 
-	* examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
-	  Thanks to Johnny Willemsen for reporting the problem.  
+        * examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
+          Thanks to Johnny Willemsen for reporting the problem.  
 
 Thu May  3 17:33:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.h: Fixed a mistake in the setsockopt() comment.  Thanks
-	  to Craig Rodrigues for reporting this.
+        * ace/OS.h: Fixed a mistake in the setsockopt() comment.  Thanks
+          to Craig Rodrigues for reporting this.
 
 Thu May  3 17:43:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Acceptor.cpp (ACE_Acceptor): Fixed a warning in g++ builds. 
+        * ace/Acceptor.cpp (ACE_Acceptor): Fixed a warning in g++ builds. 
 
 Thu May  3 16:00:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h:
-	* ace/PI_Malloc.h: Fixed the [PI_]Control_Block size estimation
-	  macros.  I added a new member to control block.
+        * ace/Malloc.h:
+        * ace/PI_Malloc.h: Fixed the [PI_]Control_Block size estimation
+          macros.  I added a new member to control block.
 
 Thu May  3 14:52:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR):
-	* ace/CDR_Stream.cpp: Removed the method steal_data () as it did
-	  not serve the purpose.  Added a new method exchange_data_blocks
-	  (). This method exchanges data_blocks between two CDR
-	  streams. The write and read pointers are also exchanged. This
-	  method performs no allocation and no releases and is lock free.
+        * ace/CDR_Stream.h (ACE_InputCDR):
+        * ace/CDR_Stream.cpp: Removed the method steal_data () as it did
+          not serve the purpose.  Added a new method exchange_data_blocks
+          (). This method exchanges data_blocks between two CDR
+          streams. The write and read pointers are also exchanged. This
+          method performs no allocation and no releases and is lock free.
 
 Thu May  3 06:58:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Acceptor.{h,cpp},
-	* ace/SOCK_Acceptor.{h,cpp}:  When the number of clients
-	  connecting to a server exceeds the process handle limit the
- 	  server would busy loop.  The Acceptor accept_svc_handler()
- 	  method is called which (1) constructs a handler and (2) attempts
- 	  to accept the connection, which fails (because there is no
- 	  available handle).  The handler is destructed, but the connect
- 	  request is still queued and so the acceptor gets called back
- 	  again.... and so on until one of the client which is already
- 	  connected disconnects and frees up a descriptor.  Changed the
- 	  Acceptor the close and reopen the connection when accept()
- 	  fails.  A check is done to make sure address reuse is set. So
- 	  this fix will only work in case where it is set.  Thanks to
- 	  Dominic Hughes <dominic@aersoft.ie> for this fix.
+        * ace/Acceptor.{h,cpp},
+        * ace/SOCK_Acceptor.{h,cpp}:  When the number of clients
+          connecting to a server exceeds the process handle limit the
+          server would busy loop.  The Acceptor accept_svc_handler()
+          method is called which (1) constructs a handler and (2) attempts
+          to accept the connection, which fails (because there is no
+          available handle).  The handler is destructed, but the connect
+          request is still queued and so the acceptor gets called back
+          again.... and so on until one of the client which is already
+          connected disconnects and frees up a descriptor.  Changed the
+          Acceptor the close and reopen the connection when accept()
+          fails.  A check is done to make sure address reuse is set. So
+          this fix will only work in case where it is set.  Thanks to
+          Dominic Hughes <dominic@aersoft.ie> for this fix.
 
-	* ace/Unbounded_Queue.h: The comment was incorrect for
-	  ~ACE_Unbounded_Queue.  Thanks to Johnny Willemsen for
-	  reporting this.
+        * ace/Unbounded_Queue.h: The comment was incorrect for
+          ~ACE_Unbounded_Queue.  Thanks to Johnny Willemsen for
+          reporting this.
 
 Thu May  3 08:00:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Event_Server/Options.cpp:
-	* examples/ASX/UPIPE_Event_Server/Options.cpp: Warning fixes that
-	  missed my earlier fix. This warning will appear only in the
-	  evening SUNOS EGCS build result. Just a proactive fix. :)
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp: Warning fixes that
+          missed my earlier fix. This warning will appear only in the
+          evening SUNOS EGCS build result. Just a proactive fix. :)
 
 Thu May  3 07:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/IPC_SAP/FILE_SAP/client.cpp: Fixed a warning with Linux
-	  builds.
+        * examples/IPC_SAP/FILE_SAP/client.cpp: Fixed a warning with Linux
+          builds.
 
 Wed May  2 22:55:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Event_Server/Options.cpp:
-	* examples/ASX/UPIPE_Event_Server/Options.cpp:
-	* examples/IPC_SAP/FILE_SAP/client.cpp:
-	* examples/Naming/test_open.cpp:
-	* examples/Naming/test_writers.cpp: Fixed warnings in g++ builds.
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/Naming/test_open.cpp:
+        * examples/Naming/test_writers.cpp: Fixed warnings in g++ builds.
 
 Wed May  2 18:36:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/README: Clarified that the shared memory tests now
-	  work fine on Win9x!  Thanks to Cristian Ferritti for reminding
- 	  me to do this.
+        * tests/README: Clarified that the shared memory tests now
+          work fine on Win9x!  Thanks to Cristian Ferritti for reminding
+          me to do this.
 
 Wed May  2 15:10:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR):
-	* ace/CDR_Stream.cpp: Added a new constructor for ACE_inputCDR
-	  class. This constructor would take the data block with a
-	  pre-determined read and write pointer positions. This is helpful
-	  when an application would like to create a CDR stream with a
-	  smei-processed data block.
+        * ace/CDR_Stream.h (ACE_InputCDR):
+        * ace/CDR_Stream.cpp: Added a new constructor for ACE_inputCDR
+          class. This constructor would take the data block with a
+          pre-determined read and write pointer positions. This is helpful
+          when an application would like to create a CDR stream with a
+          smei-processed data block.
 
 Wed May  2 11:10:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added a colon to seperate the
-	  run_test.pl specification from "!" that is used to indicate
-	  where the scripts shouldn't be run.
+        * bin/auto_run_tests.lst: Added a colon to seperate the
+          run_test.pl specification from "!" that is used to indicate
+          where the scripts shouldn't be run.
 
 Wed May 02 05:40:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -149,21 +159,21 @@ Wed May 02 05:40:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed May  2 06:31:46 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Makefile: Make it possible to set where the QTDIR is located.
-	  Thanks to Thomas Groth <groth.th@nord-com.net> for this
- 	  enhancement.
+        * ace/Makefile: Make it possible to set where the QTDIR is located.
+          Thanks to Thomas Groth <groth.th@nord-com.net> for this
+          enhancement.
 
-	* ace/Process.cpp (spawn): When an application running with user
-	  ID=0 (i.e. root) spawns a new process using
- 	  ACE_Process_Manager::spawn(), which in turn calls
- 	  ACE_Process::spawn() and tries to set a user ID and a group ID
- 	  for the new process different from root/other, the call to
- 	  setreuid() succeedes but the call to setregid() made thereafter
- 	  fails, because the process has no longer UID=0 and thus it
- 	  cannot change to a different group.  To fix this, it was
- 	  necessary to swap the order of the calls to setreuid() and
- 	  setregid().  Thanks to Ramiro Penataro <penataro@ll.iac.es> for
- 	  reporting this.
+        * ace/Process.cpp (spawn): When an application running with user
+          ID=0 (i.e. root) spawns a new process using
+          ACE_Process_Manager::spawn(), which in turn calls
+          ACE_Process::spawn() and tries to set a user ID and a group ID
+          for the new process different from root/other, the call to
+          setreuid() succeedes but the call to setregid() made thereafter
+          fails, because the process has no longer UID=0 and thus it
+          cannot change to a different group.  To fix this, it was
+          necessary to swap the order of the calls to setreuid() and
+          setregid().  Thanks to Ramiro Penataro <penataro@ll.iac.es> for
+          reporting this.
 
 Tue May  1 11:05:48 2001  Ossama Othman  <ossama@uci.edu>
 

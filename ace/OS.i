@@ -2,7 +2,7 @@
 // $Id$
 
 #if defined (__CYGWIN32__)
-#  include <getopt.h>
+#  include /**/ <getopt.h>
 #endif
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
@@ -3269,7 +3269,7 @@ ACE_OS::mmap (void *addr,
   // Only create a new handle if we didn't have a valid one passed in.
   if (*file_mapping == ACE_INVALID_HANDLE)
     {
-#if !defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)
+#if !defined(ACE_HAS_WINCE) && (!defined (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
       int try_create = 1;
       if (file_mapping_name != 0)
 	{
@@ -3280,13 +3280,13 @@ ACE_OS::mmap (void *addr,
 	  *file_mapping = ACE_TEXT_OpenFileMapping (nt_flags,
                                                     0,
                                                     file_mapping_name);
-          if (*file_mapping != 0 
+          if (*file_mapping != 0
               || ::GetLastError () != ERROR_INVALID_NAME)
             try_create = 0;
 	}
 
       if (try_create)
-#endif /* (ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0) */
+#endif /* !ACE_HAS_WINCE && (ACE_HAS_WINNT4 || ACE_HAS_WINNT4 == 0) */
 	{
 	  const LPSECURITY_ATTRIBUTES attr =
 	    ACE_OS::default_win32_security_attributes (sa);
