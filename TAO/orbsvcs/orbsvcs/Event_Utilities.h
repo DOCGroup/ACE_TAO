@@ -20,7 +20,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-class ACE_ConsumerQOS_Factory
+class TAO_ORBSVCS_Export ACE_ConsumerQOS_Factory
 // = TITLE 
 //    Consumer QOS Factory
 //
@@ -185,7 +185,7 @@ private:
 
 // ************************************************************
 
-class ACE_SupplierQOS_Factory
+class TAO_ORBSVCS_Export ACE_SupplierQOS_Factory
 {
 public:
   ACE_SupplierQOS_Factory (void);
