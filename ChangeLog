@@ -1,3 +1,11 @@
+Sun Feb 29 14:45:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/gnu.mpd:
+	  When building a static build, add always the staticflags flags
+	  to the CPPFLAGS. Previously we did this only when building the
+	  libraries, but then the executables get link errors. This fixes
+	  compile problems when using Cygwin or MinGW in a static build.
+
 Sun Feb 29 14:04:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Framework_Component_DLL_Export.h:
