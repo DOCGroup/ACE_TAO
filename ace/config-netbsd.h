@@ -1386,7 +1386,7 @@
 /* #undef ACE_NO_INLINE */
 
 /* Turns off the tracing feature. */
-#define ACE_NTRACE 1
+/* #define ACE_NTRACE 1 */
 
 /* Defines the page size of the system (not used on Win32 or with
    ACE_HAS_GETPAGESIZE). */
@@ -1639,24 +1639,6 @@
 /* Configure for use on Irix 6 */
 /* #undef IRIX6 */
 
-/* Name of package */
-#define PACKAGE "ace"
-
-/* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "ace-bugs@cs.wustl.edu"
-
-/* Define to the full name of this package. */
-#define PACKAGE_NAME "ACE"
-
-/* Define to the full name and version of this package. */
-#define PACKAGE_STRING "ACE 5.4.2"
-
-/* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "ace"
-
-/* Define to the version of this package. */
-#define PACKAGE_VERSION "5.4.2"
-
 /* Maximum thread priority */
 /* #undef PTHREAD_MAX_PRIORITY */
 
@@ -1724,9 +1706,6 @@
 
 /* */
 /* #undef UNIXWARE_7_1 */
-
-/* Version number of package */
-#define VERSION "5.4.2"
 
 /* Configure for use on VxWorks */
 /* #undef VXWORKS */

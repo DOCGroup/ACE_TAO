@@ -1,3 +1,17 @@
+Mon Aug 23 16:33:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Remove PACKAGE, PACKAGE_*, and VERSION definitions.  The latter
+	  conflicts with some of the test/example programs.  I'll get rid
+	  of the others just to be safe.
+
+	  Comment out ACE_NTRACE, as the constant definition conflicts
+	  with Misc_test_trace.  We probably need an option to control
+	  whether tracing and debugging features are enabled when ACE/
+	  TAO is compiled that is separate from the one used after it
+	  has been built.
+
 Mon Aug 23 16:06:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
