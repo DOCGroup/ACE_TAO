@@ -199,6 +199,7 @@ my $date = "${gnu}date";
 my $egrep = "${gnu}egrep";
 my $find = "${gnu}find";
 my $gzip = "${gnu}gzip";
+my $bzip2 = "${gnu}bzip2";
 my $make = "${gnu}make -s";
 my $mv = '/bin/mv -f';
 my $rm = "${gnu}rm -f";
@@ -675,22 +676,28 @@ sub create_kit () {
           "zip ACE-lib.zip -qlg9@ &&" .
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE.tar.gz && " .
+        "$find $release_files $release_filter | $cpio -o -H tar | " .
+          "$bzip2 > ACE.tar.bz2 && " .
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
+        "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
+          "$bzip2 > ACE-lib.tar.bz2 && " .
 	"$find ACE_wrappers/html $release_filter | $cpio -o -H tar | " .
 	  "$gzip -9 > ACE-html.tar.gz && ".
+	"$find ACE_wrappers/html $release_filter | $cpio -o -H tar | " .
+	  "$bzip2 -9 > ACE-html.tar.bz2 && ".
 	"$find ACE_wrappers/html $release_filter | $egrep $bin_files | " .
 	  "zip ACE-html.zip -q9@ &&" .
 	"$find ACE_wrappers/html $release_filter | $egrep -v $bin_files | " .
 	  "zip ACE-html.zip -qlg9@ &&" .
-        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ".
+        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
 	  "ACE.zip ACE-lib.zip ACE-html.zip && " .
-        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ".
+        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
 	  "ACE.zip ACE-lib.zip ACE-html.zip && " .
         "$dispose ACE.zip ACE-lib.zip ACE-html.zip $dest && " .
-        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz $dest; ";
+        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 $dest; ";
       $archives = " ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ".
-	          "ACE.zip ACE-lib.zip ACE-html.zip";
+	          "ACE.zip ACE-lib.zip ACE-html.zip ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 ";
     } else {
       $build_command =
         "$find $release_files $release_filter | $cpio -o -H tar | " .
@@ -718,18 +725,25 @@ sub create_kit () {
           "zip ACE+TAO.zip -qlg9@ &&" .
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
-        "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip && " .
-        "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip && " .
-        "$dispose ACE+TAO.tar.gz ACE+TAO.zip $dest";
-      $archives .= " ACE+TAO.tar.gz ACE+TAO.zip ";
+        "$find $release_files $release_filter | $cpio -o -H tar | " .
+          "$bzip2 > ACE+TAO.tar.bz2 && " .
+        "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
+        "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
+        "$dispose ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 $dest";
+      $archives .= " ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 ";
     } else {
       $build_command .=
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
+        "$find $release_files $release_filter | $cpio -o -H tar | " .
+          "$bzip2 > ACE+TAO.tar.bz2 && " .
         "$chmod 664 ACE+TAO.tar.gz && " .
+        "$chmod 664 ACE+TAO.tar.bz2 && " .
         "$chgrp doc ACE+TAO.tar.gz && " .
+        "$chgrp doc ACE+TAO.tar.bz2 && " .
         "$dispose ACE+TAO.tar.gz $dest";
-      $archives .= " ACE+TAO.tar.gz ";
+        "$dispose ACE+TAO.tar.bz2 $dest";
+      $archives .= " ACE+TAO.tar.gz ACE+TAO.tar.bz2 ";
     }
   }
 
