@@ -1,3 +1,11 @@
+Tue Nov 25 20:01:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+
+	  Lots of libraries depend on CosNaming. CosNaming depends on
+	  corba_messaging. This means that most of the orbsvcs cannot be
+	  built without corba_messaging. 
+
 Tue Nov 25 18:17:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Simulator/Event_Supplier/Makefile:
