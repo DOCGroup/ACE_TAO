@@ -1261,7 +1261,8 @@ CORBA::ORB_init (int &argc,
           // @@ Does the BAD_INV_ORDER exception apply here?
           //       -Ossama
 
-          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (4, CORBA::COMPLETED_NO),
+          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 4,
+                                                  CORBA::COMPLETED_NO),
                             CORBA::ORB::_nil ());
         }
 
