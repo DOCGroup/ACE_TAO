@@ -1,3 +1,13 @@
+Fri Oct  5 14:31:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h: Added a forward
+	  declaration for  class ACE_Command_Base. 
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp: Included the header
+	  file ace/Functor.h. These were part of the patches that Russ
+	  Noseworthy <j.russell.noseworthy@objectsciences.com>
+	  provided. He had to to use this patch to get it compiling in his
+	  environment. 
+
 Fri Oct 05 05:58:58 2001  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.2 released.
