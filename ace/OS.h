@@ -357,12 +357,17 @@ typedef int key_t;
 #endif /* ACE_LACKS_KEY_T */
 
 #if defined (VXWORKS)
-  // GreenHills 1.8.8 needs the stdarg.h #include before #include of vxWorks.h.
-  // Also, be sure that these #includes come _after_ the key_t typedef, and
-  // before the #include of time.h.
-  #include /**/ <stdarg.h>
+  #if defined (ghs)
+    // GreenHills 1.8.8 needs the stdarg.h #include before the #include of
+    // vxWorks.h.
+    // Also, be sure that these #includes come _after_ the key_t typedef, and
+    // before the #include of time.h.
+    #include /**/ <stdarg.h>
+  #endif /* ghs */
+
   #include /**/ <vxWorks.h>
 
+#if 0 /* This no longer seems to be necessary? */
   #if defined (__GNUC__)
     // This horrible hack works around a problem with the <string.h> that
     // is distributed with Tornado 1.0.1/VxWorks 5.3.1.  Some of the prototypes
@@ -375,7 +380,19 @@ typedef int key_t;
     // At this point, size_t reverts to its original:
     // typedef unsigned int size_t;
   #endif /* __GNUC__ */
+#endif /* 0 */
 #endif /* VXWORKS */
+
+
+///////////////////////////////////////////
+//                                       //
+// NOTE: Please do not add any #includes //
+//       before this point.  On VxWorks, //
+//       vxWorks.h must be #included     //
+//       first!                          //
+//                                       //
+///////////////////////////////////////////
+
 
 #if defined (ACE_HAS_RENAMED_MAIN)
 // Rename "main ()" to "ace_main ()".
