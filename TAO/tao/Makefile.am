@@ -395,7 +395,6 @@ nobase_include_HEADERS = \
   Connector_Impl.h \
   Connector_Registry.h \
   CurrentC.h \
-  DLL_ORB.h \
   DLL_Parser.h \
   Default_Collocation_Resolver.h \
   Default_Endpoint_Selector_Factory.h \
@@ -699,7 +698,6 @@ nobase_include_HEADERS = \
   Connector_Impl.inl \
   Connector_Registry.i \
   CurrentC.i \
-  DLL_ORB.inl \
   DLL_Parser.i \
   Default_Collocation_Resolver.i \
   Default_Protocols_Hooks.i \

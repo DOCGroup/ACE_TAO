@@ -1,3 +1,12 @@
+Sat Sep 11 19:43:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
+	* orbsvcs/tests/FT_App/Makefile.am:
+	* tao/Makefile.am:
+
+	  Updated.
+
 Sat Sep 11 12:41:22 2004  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
@@ -27,7 +36,6 @@ Sat Sep 11 12:25:07 2004  Steve Totten  <totten_s@ociweb.com>
         * utils/nslist/run_test.pl:
           Also modified various test scripts that invoke these
           utilities to get them from $ACE_ROOT/bin.
-
 
 Sat Sep 11 08:47:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
