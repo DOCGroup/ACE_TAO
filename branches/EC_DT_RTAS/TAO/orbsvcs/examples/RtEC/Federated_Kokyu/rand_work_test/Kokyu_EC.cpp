@@ -652,8 +652,8 @@ Kokyu_EC::init_gateway(CORBA::ORB_ptr orb,
   if (this->gateways.find(consumer_ec_ior) == 0)
     {
       //Already a gateway for that EC
-      ACE_ERROR((LM_ERROR,"Node1_EC (%P|%t) init_gateway(): Tried to create already-existing gateway for %s\n",
-                 consumer_ec_ior));
+      ACE_OS::fprintf(stderr,"Node1_EC init_gateway(): Tried to create already-existing gateway for %s\n",
+                      consumer_ec_ior);
       return;
     }
 
@@ -677,7 +677,7 @@ Kokyu_EC::init_gateway(CORBA::ORB_ptr orb,
 
   if (CORBA::is_nil(obj.in()))
     {
-      ACE_ERROR((LM_ERROR,"Unable to read IOR file for remote EC; Object_var is nil.\n"));
+      ACE_OS::fprintf(stderr,"Unable to read IOR file for remote EC; Object_var is nil.\n");
       return;
     }
 
@@ -797,7 +797,7 @@ Reactor_Task::initialize(void)
   int err = reactor->open(ACE_Select_Reactor_Impl::DEFAULT_SIZE);
   if (err < 0)
     {
-      ACE_ERROR((LM_ERROR,"Reactor_Task could not open ACE_Reactor\n"));
+      ACE_OS::fprintf(stderr,"Reactor_Task could not open ACE_Reactor\n");
       return -1;
     }
   ACE_Reactor::instance(reactor);
@@ -834,7 +834,7 @@ Reactor_Task::svc (void)
   int err = this->react_->run_reactor_event_loop();
   if (err < 0)
     {
-      ACE_ERROR((LM_ERROR,"Reactor_Task (%t) error running Reactor event loop\n"));
+      ACE_OS::fprintf(stderr,"Reactor_Task error running Reactor event loop\n");
     }
 
   ACE_DEBUG((LM_DEBUG,"Reactor_Task (%P|%t) svc(): LEAVE\n"));
@@ -879,6 +879,8 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+
+      ACE_OS::printf("Gateway_Initializer: initialized all gateways\n");
 
       RtecScheduler::Scheduler_var scheduler = this->ec_->scheduler(ACE_ENV_SINGLE_ARG_PARAMETER);
       RtecEventChannelAdmin::EventChannel_var event_channel = this->ec_->event_channel(ACE_ENV_SINGLE_ARG_DECL);
@@ -957,7 +959,6 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
       //NOTE: memory leak; we lose track of dynamically allocated general_impl!
       //DONE connecting dummy supplier
 
-      //TODO: How ensure all gateways TO us are connected?
       ACE_Time_Value sleeptime(0,500000);
       for (size_t remote_gateways_connected = 0;
            remote_gateways_connected < this->ec_->remote_ecs()->size();
@@ -967,6 +968,8 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
           ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): waiting for remote gateway connections (%d left)\n",(this->ec_->remote_ecs()->size()-remote_gateways_connected)));
           ACE_OS::sleep(sleeptime);
         }
+
+      ACE_OS::printf("Gateway_Initializer: all remote gateways connected\n");
 
       if (this->ec_->time_master())
         {
@@ -987,7 +990,7 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
       //now wait for start time
       sleeptime.set(0,5); //we'll be within 5usec of start time when we call ec_->start()
       ACE_Time_Value now(ACE_OS::gettimeofday());
-      ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): waiting for start time to be set or to pass; now is %isec %iusec, start time is %isec %iusec\n",now.sec(),now.usec(),this->ec_->start_time().sec(),this->ec_->start_time().usec()));
+      ACE_OS::printf("Gateway_Initializer: waiting for start time to be set or to pass; now is %isec %iusec, start time is %isec %iusec\n",now.sec(),now.usec(),this->ec_->start_time().sec(),this->ec_->start_time().usec());
       while (this->ec_->start_time() == ACE_Time_Value::zero
              || now < this->ec_->start_time())
         {
@@ -997,7 +1000,7 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
           now = ACE_OS::gettimeofday();
         }
 
-      ACE_DEBUG((LM_DEBUG,"Gateway_Initializer (%P|%t): Reached start time at %isec %iusec\n",now.sec(),now.usec()));
+      ACE_OS::printf("Gateway_Initializer: Reached start time at %isec %iusec\n",now.sec(),now.usec());
 
       //start self once we know that all the gateways are connected
       this->ec_->start(ACE_ENV_SINGLE_ARG_PARAMETER);
