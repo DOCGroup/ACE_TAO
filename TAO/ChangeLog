@@ -1,14 +1,15 @@
 Mon Nov 18 20:45:12 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Blocking/notify.conf:
-	  As per Bala's suggestion, applied "-ORBClientConnectionHandler RW" hoping to make the
-	  blocking work.Alas, the buffering design needs a facelift.
+	  As per Bala's suggestion, applied "-ORBClientConnectionHandler
+	  RW" hoping to make the blocking work.  Alas, the buffering
+	  design needs a facelift. 
 	
  	* orbsvcs/tests/Notify/Ordering/run_test.pl
 	  - Increased allowable period for consumers to run so that test
-	  doesn't timeout before hand.
+	    doesn't timeout before hand.
 	  - Commented out priority policy temporarily till the sequences
-	  implementation of priority ordering is completed.
+	    implementation of priority ordering is completed.
 	
  	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
 	  Removed the MaxEventsPerConsumer policy applied to the
