@@ -20,6 +20,8 @@
 
 #include "ace/Asynch_IO.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Event_Handler.h"
+
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_List.h"
 #include "ace/Timer_Heap.h"
@@ -71,7 +73,7 @@ protected:
   // Handle to the proactor. This is needed for the completion port.
 };
 
-class ACE_Export ACE_Proactor
+class ACE_Export ACE_Proactor : public ACE_Event_Handler
   //     
   // = TITLE
   //
@@ -86,7 +88,7 @@ class ACE_Export ACE_Proactor
   // Access needed to: thr_mgr_
 
   friend class ACE_Proactor_Handle_Timeout_Upcall;  
-  // Access needed to: Asynch_Timer
+  // Access needed to: Asynch_Timer, and completion_port_
 
 public:
 
@@ -107,7 +109,8 @@ public:
   typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Wheel_Iterator;
 
   ACE_Proactor (size_t number_of_threads = 0, 
-		Timer_Queue *tq = 0);
+		Timer_Queue *tq = 0,
+		int used_with_reactorEx_event_loop = 0);
   // A do nothing constructor.
   
   virtual ~ACE_Proactor (void);
@@ -197,9 +200,20 @@ public:
   Timer_Queue *timer_queue (void) const;
   void timer_queue (Timer_Queue *);
   // Get/Set timer queue
+
+  virtual ACE_HANDLE get_handle (void) const;
+  // Get the event handle.
   
 protected:
   
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  // Called when object is signaled by OS (either via UNIX signals or
+  // when a Win32 object becomes signaled).
+
+  virtual int handle_close (ACE_HANDLE handle,
+			    ACE_Reactor_Mask close_mask);
+  // Called when object is removed from the ACE_Reactor
+
   void application_specific_code (ACE_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
 				  int success,
@@ -228,7 +242,8 @@ protected:
     public:
       Asynch_Timer (ACE_Handler &handler,
 		    const void *act,
-		    const ACE_Time_Value &tv);
+		    const ACE_Time_Value &tv, 
+		    ACE_HANDLE event);
       
     protected:
       virtual void complete (u_long bytes_transferred,
@@ -258,6 +273,14 @@ protected:
 
   ACE_Thread_Manager thr_mgr_;
   // This will manage the thread in the Timer_Handler
+
+  ACE_Auto_Event event_;
+  // This event is used in conjunction with ReactorEx when we try to
+  // integrate the event loops of ReactorEx and the Proactor.
+
+  int used_with_reactorEx_event_loop_;
+  // Flag that indicates whether we are used in conjunction with
+  // ReactorEx
 };
 
 #if defined (__ACE_INLINE__)

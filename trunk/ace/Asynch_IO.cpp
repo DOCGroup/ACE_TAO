@@ -17,7 +17,7 @@
 
 ACE_Asynch_Result::ACE_Asynch_Result (ACE_Handler &handler,
 				      const void* act,
-				      HANDLE event,
+				      ACE_HANDLE event,
 				      u_long offset,
 				      u_long offset_high)
   : handler_ (handler),
@@ -98,8 +98,10 @@ ACE_Asynch_Operation::ACE_Asynch_Operation (void)
 int 
 ACE_Asynch_Operation::open (ACE_Handler &handler,
 			    ACE_HANDLE handle,
-			    const void *completion_key)
+			    const void *completion_key,
+			    ACE_Proactor *proactor)
 {
+  this->proactor_ = proactor;
   this->handler_ = &handler;
   this->handle_ = handle;
 
@@ -109,14 +111,18 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
   if (this->handle_ == ACE_INVALID_HANDLE)  
     return -1;
   
-  // Grab the proactor from the <Service_Config> if
-  // <handler->proactor> is zero
-  ACE_Proactor *proactor = this->handler_->proactor ();
-  if (proactor == 0)
-    proactor = ACE_Service_Config::proactor ();
+  // If no proactor was passed
+  if (this->proactor_ == 0)
+    {
+      // Grab the proactor from the <Service_Config> if
+      // <handler->proactor> is zero
+      this->proactor_ = this->handler_->proactor ();
+      if (this->proactor_ == 0)
+	this->proactor_ = ACE_Service_Config::proactor ();
+    }
 
   // Register with the <proactor>
-  return proactor->register_handle (this->handle_, completion_key);
+  return this->proactor_->register_handle (this->handle_, completion_key);
 }
 
 int
@@ -146,7 +152,8 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 			  this->handle_,
 			  message_block,
 			  bytes_to_read,
-			  act), 
+			  act,
+			  this->proactor_->get_handle ()), 
 		  -1);
 
   return this->shared_read (result,
@@ -199,8 +206,9 @@ ACE_Asynch_Read_Stream::Result::Result (ACE_Handler &handler,
 					ACE_HANDLE handle,
 					ACE_Message_Block &message_block,
 					u_long bytes_to_read,
-					const void* act)
-  : ACE_Asynch_Result (handler, act),
+					const void* act,
+					ACE_HANDLE event)
+  : ACE_Asynch_Result (handler, act, event),
     handle_ (handle),
     message_block_ (message_block),
     bytes_to_read_ (bytes_to_read)
@@ -261,9 +269,10 @@ ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 			  this->handle_,
 			  message_block,
 			  bytes_to_write,
-			  act), 
+			  act,
+			  this->proactor_->get_handle ()), 
 		  -1);
- 
+  
   return this->shared_write (result,
 			     message_block,
 			     bytes_to_write,
@@ -314,8 +323,9 @@ ACE_Asynch_Write_Stream::Result::Result (ACE_Handler &handler,
 					 ACE_HANDLE handle,
 					 ACE_Message_Block &message_block,
 					 u_long bytes_to_write,
-					 const void* act)
-  : ACE_Asynch_Result (handler, act),
+					 const void* act,
+					 ACE_HANDLE event)
+  : ACE_Asynch_Result (handler, act, event),
     handle_ (handle),
     message_block_ (message_block),
     bytes_to_write_ (bytes_to_write)
@@ -376,7 +386,8 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 			  bytes_to_read,
 			  act,
 			  offset,
-			  offset_high), 
+			  offset_high,
+			  this->proactor_->get_handle ()), 
 		  -1);
   
   return this->shared_read (result,
@@ -393,8 +404,9 @@ ACE_Asynch_Read_File::Result::Result (ACE_Handler &handler,
 				      u_long bytes_to_read,
 				      const void* act,
 				      u_long offset,
-				      u_long offset_high)
-  : ACE_Asynch_Read_Stream::Result (handler, handle, message_block, bytes_to_read, act)
+				      u_long offset_high,
+				      ACE_HANDLE event)
+  : ACE_Asynch_Read_Stream::Result (handler, handle, message_block, bytes_to_read, act, event)
 {
   this->Offset = offset;
   this->OffsetHigh = offset_high;
@@ -436,7 +448,8 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 			  bytes_to_write,
 			  act,
 			  offset,
-			  offset_high), 
+			  offset_high,
+			  this->proactor_->get_handle ()), 
 		  -1);
   
   return this->shared_write (result,
@@ -453,8 +466,9 @@ ACE_Asynch_Write_File::Result::Result (ACE_Handler &handler,
 				       u_long bytes_to_write,
 				       const void* act,
 				       u_long offset,
-				       u_long offset_high)
-  : ACE_Asynch_Write_Stream::Result (handler, handle, message_block, bytes_to_write, act)
+				       u_long offset_high,
+				       ACE_HANDLE event)
+  : ACE_Asynch_Write_Stream::Result (handler, handle, message_block, bytes_to_write, act, event)
 {
   this->Offset = offset;
   this->OffsetHigh = offset_high;
@@ -522,7 +536,8 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 			  accept_handle,
 			  message_block,
 			  bytes_to_read,
-			  act), 
+			  act,
+			  this->proactor_->get_handle ()), 
 		  -1);
   
   u_long bytes_read;
@@ -598,8 +613,9 @@ ACE_Asynch_Accept::Result::Result (ACE_Handler &handler,
 				   ACE_HANDLE accept_handle,
 				   ACE_Message_Block &message_block,
 				   u_long bytes_to_read,
-				   const void* act)
-  : ACE_Asynch_Result (handler, act),
+				   const void* act,
+				   ACE_HANDLE event)
+  : ACE_Asynch_Result (handler, act, event),
     listen_handle_ (listen_handle),
     accept_handle_ (accept_handle),
     message_block_ (message_block),
@@ -654,7 +670,8 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 			  offset_high,
 			  bytes_per_send,
 			  flags,
-			  act),
+			  act,
+			  this->proactor_->get_handle ()),
 		  -1);
   
   LPTRANSMIT_FILE_BUFFERS transmit_buffers = 0;
@@ -743,8 +760,9 @@ ACE_Asynch_Transmit_File::Result::Result (ACE_Handler &handler,
 					  u_long offset_high,
 					  u_long bytes_per_send,
 					  u_long flags,
-					  const void *act)
-  : ACE_Asynch_Result (handler, act, 0, offset, offset_high),
+					  const void *act,
+					  ACE_HANDLE event)
+  : ACE_Asynch_Result (handler, act, event, offset, offset_high),
     socket_ (socket),
     file_ (file),
     header_and_trailer_ (header_and_trailer),
@@ -952,8 +970,8 @@ ACE_Handler::handle_notify (const ACE_Asynch_Notify::Result &result)
 */
 
 void
-ACE_Handler::handle_timeout (const ACE_Time_Value &tv,
-			     const void *act)
+ACE_Handler::handle_time_out (const ACE_Time_Value &tv,
+			      const void *act)
 {
 }
 
