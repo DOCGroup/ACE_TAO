@@ -1,6 +1,5 @@
-
-// -*- C++ -*-
-// $Id$
+/* -*- C++ -*- $Id$ */
+// log_export.h,v 1.2 2000/10/10 22:16:02 nanbor Exp
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl
 // ------------------------------

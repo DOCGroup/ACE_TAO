@@ -12,7 +12,9 @@
 //   Implementation of the DsLogAdmin::BasicLog interface.
 //
 // = AUTHOR
-//    Matthew Braun (mjb2@cs.wustl.edu) and Pradeep Gore <pradeep@cs.wustl.edu>
+//   Matthew Braun <mjb2@cs.wustl.edu>
+//   Pradeep Gore <pradeep@cs.wustl.edu>
+//   D A Hanvey <d.hanvey@qub.ac.uk>
 //
 // ============================================================================
 
@@ -20,7 +22,7 @@
 #define TLS_BASICLOG_I_H
 #include "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/DsLogAdminS.h"                                                                                                                                                                                                                                                                                                                       
 #include "orbsvcs/Log/Log_i.h"
 #include "log_export.h"
 
@@ -56,13 +58,23 @@ public:
   BasicLog_i (LogMgr_i &logmgr_i,
               DsLogAdmin::LogMgr_ptr factory,
               DsLogAdmin::LogId id,
-              DsLogAdmin::LogFullAction log_full_action = DsLogAdmin::wrap,
+              DsLogAdmin::LogFullActionType log_full_action = DsLogAdmin::wrap,
               CORBA::ULongLong max_size = 0,
               ACE_Reactor *reactor = ACE_Reactor::instance ());
   // Constructor
 
   ~BasicLog_i ();
   // Destructor.
+
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id 
+                                    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Duplicate the log.
+
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id 
+                                            ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Duplicate the log specifying an id.
 
   void
   destroy (ACE_ENV_SINGLE_ARG_DECL)

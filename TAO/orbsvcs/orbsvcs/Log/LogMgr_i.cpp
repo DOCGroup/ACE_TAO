@@ -1,4 +1,4 @@
-// $Id$
+/* -*- C++ -*- $Id$ */
 
 #include "LogMgr_i.h"
 
@@ -41,9 +41,8 @@ LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
     {
       iter.next (hash_entry);
       iter.advance ();
-
       (*list)[i] =
-        DsLogAdmin::BasicLog::_duplicate (hash_entry->int_id_.in ());
+        DsLogAdmin::Log::_duplicate (hash_entry->int_id_.in ());
     }
 
   return list;
@@ -56,12 +55,12 @@ LogMgr_i::find_log (DsLogAdmin::LogId id
                    CORBA::SystemException
                    ))
 {
-  DsLogAdmin::BasicLog_var v_return;
+  DsLogAdmin::Log_var v_return;
 
   if (hash_map_.find (id,
                       v_return) == -1)
     {
-      return DsLogAdmin::BasicLog::_nil ();
+      return DsLogAdmin::Log::_nil ();
     }
   else
     {
@@ -72,10 +71,8 @@ LogMgr_i::find_log (DsLogAdmin::LogId id
       // of scope, it too will release the object ref.we don't want this.
       // we want the ref. count to remain what it was.
       // So we increment the ref. count here.
-
-      DsLogAdmin::BasicLog::_duplicate (v_return.in ());
-
-      return DsLogAdmin::BasicLog::_duplicate (v_return.in ());
+      DsLogAdmin::Log::_duplicate (v_return.in ());
+      return DsLogAdmin::Log::_duplicate (v_return.in ());
       // This duplicate is to obey rules of returning obj. refs.
       // don't get confused!
     }
@@ -87,8 +84,13 @@ LogMgr_i::list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-  //@@ Later: We need to maintain a sorted list of logids to do this efficiently.
+  DsLogAdmin::LogIdList* ret_val;
+  ACE_NEW_THROW_EX (ret_val,
+    DsLogAdmin::LogIdList (this->logid_list_),
+                     CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  return ret_val;
 }
 
 int
@@ -99,24 +101,24 @@ LogMgr_i::remove (DsLogAdmin::LogId id)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Entry<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var>;
-template class ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry<DsLogAdmin::LogId,DsLogAdmin::Log_var>;
+template class ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Entry<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var>
-#pragma instantiate ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::BasicLog_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<DsLogAdmin::LogId,DsLogAdmin::Log_var>
+#pragma instantiate ACE_Hash_Map_Manager<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::LogId,DsLogAdmin::Log_var,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::LogId, DsLogAdmin::Log_var, ACE_Hash<DsLogAdmin::LogId>, ACE_Equal_To<DsLogAdmin::LogId>, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

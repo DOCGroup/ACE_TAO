@@ -4,17 +4,19 @@
 // ============================================================================
 //
 // = LIBRARY
-//    orbsvcs
+//   orbsvcs
 //
 // = FILENAME
-//    LogRecordStore.h
+//   LogRecordStore.h
 //
 // = DESCRIPTION
-//     This file declares the tools used to provide the store of
-//     DsLogAdmin::LogRecords for the Telecom Logging_Service
+//   This file declares the tools used to provide the store of
+//   DsLogAdmin::LogRecords for the Telecom Logging_Service
 //
 // = AUTHORS
-//    Matthew Braun (mjb2@cs.wustl.edu) and Pradeep Gore <pradeep@cs.wustl.edu>
+//   Matthew Braun <mjb2@cs.wustl.edu>
+//   Pradeep Gore <pradeep@cs.wustl.edu>
+//   D A Hanvey <d.hanvey@qub.ac.uk>
 //
 // ============================================================================
 
@@ -49,6 +51,7 @@ class TAO_Log_Export LogRecordStore
   // = Initialization and termination methods
 
   LogRecordStore (CORBA::ULongLong max_size = 0,
+                  DsLogAdmin::LogId logid = 0,
                   CORBA::ULong max_rec_list_len
                   = LOG_DEFAULT_MAX_REC_LIST_LEN);
   // Constructor
@@ -114,9 +117,6 @@ class TAO_Log_Export LogRecordStore
   // @@ return a const ref? we don't want anyone to modify the storage.
  protected:
 
-  LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
-  // The hash of LogRecord ids to LogRecord 's
-
   DsLogAdmin::RecordId maxid_;
   // Assigned to a new RecordId and then incremented
   // @@ Should I have a list of reclaimed id's for when records are
@@ -124,6 +124,9 @@ class TAO_Log_Export LogRecordStore
 
   CORBA::ULongLong max_size_;
   // The maximum size of the log.
+
+  DsLogAdmin::LogId logid_;
+  // The log id to which this LogRecordStore relates.
 
   CORBA::ULongLong current_size_;
   // The current size (in bytes) of the log
@@ -133,6 +136,10 @@ class TAO_Log_Export LogRecordStore
 
   CORBA::ULong max_rec_list_len_;
   // The max size of the record list returned in a query.
+
+  LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
+  // The hash of LogRecord ids to LogRecord 's
+
 };
 
 #include "ace/post.h"

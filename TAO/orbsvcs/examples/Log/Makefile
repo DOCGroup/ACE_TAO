@@ -8,8 +8,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	Client \
-	test
+DIRS  =	Basic \
+	Event \
+	Notify \
+	RTEvent 
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -1,4 +1,4 @@
-// $Id$
+/* -*- C++ -*- $Id$ */
 
 #include "Iterator_i.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
@@ -52,7 +52,7 @@ Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 DsLogAdmin::RecordList*
 Iterator_i::get (CORBA::ULong position,
-                 CORBA::ULong how_many
+                 CORBA::ULong how_many//,
                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
@@ -75,7 +75,7 @@ Iterator_i::get (CORBA::ULong position,
   TAO_Log_Constraint_Interpreter interpreter (constraint_
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
+  
   // Sequentially iterate over all the records and pick the ones that
   // meet the constraints.
 
@@ -106,10 +106,10 @@ Iterator_i::get (CORBA::ULong position,
         }
 
       // Use an evaluator.
-      TAO_Log_Constraint_Evaluator evaluator (hash_entry->int_id_);
+      TAO_Log_Constraint_Visitor visitor (hash_entry->int_id_);
 
       // Does it match the constraint?
-      if (interpreter.evaluate (evaluator) == 1)
+      if (interpreter.evaluate (visitor) == 1)
       {
         (*rec_list)[count] = hash_entry->int_id_;
         // copy the log record.
