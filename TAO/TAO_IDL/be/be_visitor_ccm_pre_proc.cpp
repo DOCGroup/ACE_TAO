@@ -1629,69 +1629,28 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
 
-  if (node->n_inherits () == 0
-      || node->inherits ()[0]->node_type () == AST_Decl::NT_valuetype)
-    {
-      Identifier parent_id ("EventConsumerBase");
-      UTL_ScopedName parent_local_name (&parent_id,
-                                        0);
-      UTL_ScopedName parent_full_name (&this->module_id_,
-                                       &parent_local_name);
-      UTL_NameList parent_list (&parent_full_name,
-                                0);
-      FE_InterfaceHeader header (consumer_name,
-                                 &parent_list,
-                                 I_FALSE,
-                                 I_FALSE,
-                                 I_TRUE);
-      ACE_NEW_RETURN (event_consumer,
-                      be_interface (header.name (),
-                                    header.inherits (),
-                                    header.n_inherits (),
-                                    header.inherits_flat (),
-                                    header.n_inherits_flat (),
-                                    I_FALSE,
-                                    I_FALSE),
-                      -1);
-      parent_id.destroy ();
-    }
-  else
-    {
-      const char *tmp = node->inherits ()[0]->local_name ()->get_string ();
-      ACE_CString parent_name_base (tmp,
-                                    0,
+  Identifier parent_id ("EventConsumerBase");
+  UTL_ScopedName parent_local_name (&parent_id,
                                     0);
-      parent_name_base += "Consumer";
-      Identifier *parent_id = 0;
-      ACE_NEW_RETURN (parent_id,
-                      Identifier (parent_name_base.fast_rep ()),
-                      -1);
-      UTL_ScopedName *parent_local_name = 0;
-      ACE_NEW_RETURN (parent_local_name,
-                      UTL_ScopedName (parent_id,
-                                      0),
-                      -1);
-      UTL_ScopedName *parent_full_name =
-        (UTL_ScopedName *)m->name ()->copy ();
-      parent_full_name->nconc (parent_local_name);
-      UTL_NameList parent_list (parent_full_name,
-                                0);
-      FE_InterfaceHeader header (consumer_name,
-                                 &parent_list,
-                                 I_FALSE,
-                                 I_FALSE,
-                                 I_TRUE);
-      ACE_NEW_RETURN (event_consumer,
-                      be_interface (header.name (),
-                                    header.inherits (),
-                                    header.n_inherits (),
-                                    header.inherits_flat (),
-                                    header.n_inherits_flat (),
-                                    I_FALSE,
-                                    I_FALSE),
-                      -1);
-      parent_full_name->destroy ();
-    }
+  UTL_ScopedName parent_full_name (&this->module_id_,
+                                    &parent_local_name);
+  UTL_NameList parent_list (&parent_full_name,
+                            0);
+  FE_InterfaceHeader header (consumer_name,
+                              &parent_list,
+                              I_FALSE,
+                              I_FALSE,
+                              I_TRUE);
+  ACE_NEW_RETURN (event_consumer,
+                  be_interface (header.name (),
+                                header.inherits (),
+                                header.n_inherits (),
+                                header.inherits_flat (),
+                                header.n_inherits_flat (),
+                                I_FALSE,
+                                I_FALSE),
+                  -1);
+  parent_id.destroy ();
 
   // Back to reality.
   idl_global->scopes ().pop ();
