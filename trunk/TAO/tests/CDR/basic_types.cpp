@@ -1,5 +1,20 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/CDR
+//
+// = FILENAME
+//    basic_types.cpp
+//
+// = DESCRIPTION
+//
+// = AUTHORS
+//    Carlos O'Ryan
+//
+// ============================================================================
+
 #include "tao/corba.h"
 
 static const int n = 4096;

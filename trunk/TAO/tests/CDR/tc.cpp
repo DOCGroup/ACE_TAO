@@ -1,5 +1,20 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/CDR
+//
+// = FILENAME
+//    tc.cpp
+//
+// = DESCRIPTION
+//
+// = AUTHORS
+//    Carlos O'Ryan
+//
+// ============================================================================
+
 #include "tao/corba.h"
 
 // In this version of TAO typecodes are based on CDR, we have to
