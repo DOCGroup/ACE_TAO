@@ -8,7 +8,7 @@
 #include "ace/Connector.h"
 
 // Shorthand names.
-#define SH SVC_HANDLER 
+#define SH SVC_HANDLER
 #define PR_CO_1 ACE_PEER_CONNECTOR_1
 #define PR_CO_2 ACE_PEER_CONNECTOR_2
 #define PR_AD ACE_PEER_CONNECTOR_ADDR
@@ -105,7 +105,7 @@ ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r, int flags)
   return 0;
 }
 
-template <class SH, PR_CO_1> 
+template <class SH, PR_CO_1>
 ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r, int flags)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
@@ -113,11 +113,11 @@ ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r, int flags)
 }
 
 template <class SH>
-ACE_Svc_Tuple<SH>::ACE_Svc_Tuple (SVC_HANDLER *sh, 
+ACE_Svc_Tuple<SH>::ACE_Svc_Tuple (SVC_HANDLER *sh,
 				  ACE_HANDLE handle,
 				  const void *arg,
 				  long id)
-  : svc_handler_ (sh), 
+  : svc_handler_ (sh),
     handle_ (handle),
     arg_ (arg),
     cancellation_id_ (id)
@@ -127,49 +127,49 @@ ACE_Svc_Tuple<SH>::ACE_Svc_Tuple (SVC_HANDLER *sh,
 
 template <class SH> SVC_HANDLER *
 ACE_Svc_Tuple<SH>::svc_handler (void)
-{ 
+{
   ACE_TRACE ("ACE_Svc_Tuple<SH>::svc_handler");
-  return this->svc_handler_; 
+  return this->svc_handler_;
 }
 
 template <class SH> const void *
 ACE_Svc_Tuple<SH>::arg (void)
-{ 
+{
   ACE_TRACE ("ACE_Svc_Tuple<SH>::arg");
   return this->arg_;
 }
 
 template <class SH> void
 ACE_Svc_Tuple<SH>::arg (const void *v)
-{ 
+{
   ACE_TRACE ("ACE_Svc_Tuple<SH>::arg");
   this->arg_ = v;
 }
 
 template <class SH> ACE_HANDLE
 ACE_Svc_Tuple<SH>::handle (void)
-{ 
+{
   ACE_TRACE ("ACE_Svc_Tuple<SH>::handle");
   return this->handle_;
 }
 
 template <class SH> void
 ACE_Svc_Tuple<SH>::handle (ACE_HANDLE h)
-{ 
+{
   ACE_TRACE ("ACE_Svc_Tuple<SH>::handle");
   this->handle_ = h;
 }
 
 template <class SH> long
 ACE_Svc_Tuple<SH>::cancellation_id (void)
-{ 
+{
   ACE_TRACE ("ACE_Svc_Tuple<SH>::cancellation_id");
   return this->cancellation_id_;
 }
 
 template <class SH> void
 ACE_Svc_Tuple<SH>::cancellation_id (long id)
-{ 
+{
   ACE_TRACE ("ACE_Svc_Tuple<SH>::cancellation_id");
   this->cancellation_id_ = id;
 }
@@ -191,7 +191,7 @@ ACE_Svc_Tuple<SH>::dump (void) const
 // descriptor from the ACE_Connector's table.
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::handle_timeout (const ACE_Time_Value &tv, 
+ACE_Connector<SH, PR_CO_2>::handle_timeout (const ACE_Time_Value &tv,
 					    const void *arg)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_timeout");
@@ -200,7 +200,7 @@ ACE_Connector<SH, PR_CO_2>::handle_timeout (const ACE_Time_Value &tv,
   if (this->cleanup_AST (((AST *) arg)->handle (),
 			 ast) == -1)
     return -1;
-  else 
+  else
     {
       ACE_ASSERT (((AST *) arg) == ast);
 
@@ -221,7 +221,7 @@ ACE_Connector<SH, PR_CO_2>::handle_timeout (const ACE_Time_Value &tv,
 }
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle, 
+ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
 					 ACE_Svc_Tuple<SH> *&ast)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::cleanup_AST");
@@ -232,7 +232,7 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
     {
       // Error, entry not found in map.
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR, "%p %d not found in map\n", 
+      ACE_ERROR_RETURN ((LM_ERROR, "%p %d not found in map\n",
 			"find", handle), -1);
     }
 
@@ -241,7 +241,7 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
   this->reactor ()->cancel_timer (ast->cancellation_id ());
 
   // Remove ACE_HANDLE from ACE_Reactor.
-  this->reactor ()->remove_handler 
+  this->reactor ()->remove_handler
     (handle, ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL);
 
   // Remove ACE_HANDLE from the map.
@@ -257,7 +257,7 @@ ACE_Connector<SH, PR_CO_2>::handle_input (ACE_HANDLE h)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_input");
   AST *ast = 0;
-  
+
   if (this->cleanup_AST (h, ast) != -1)
     {
       ast->svc_handler ()->close (0);
@@ -321,7 +321,7 @@ ACE_Connector<SH, PR_CO_2>::handle_exception (ACE_HANDLE h)
   return this->handle_output (h);
 }
 
-// Initiate connection to peer.  
+// Initiate connection to peer.
 
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
@@ -345,7 +345,7 @@ ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
 
   if (use_reactor)
     timeout = (ACE_Time_Value *) &ACE_Time_Value::zero;
-  else 
+  else
     timeout = (ACE_Time_Value *) synch_options.time_value ();
 
   // Delegate to connection strategy.
@@ -382,12 +382,12 @@ ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
 	}
       return -1;
     }
-  else 
+  else
     // Activate immediately if we are connected.
     return this->activate_svc_handler (sh);
 }
 
-// Initiate connection to peer.  
+// Initiate connection to peer.
 
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
@@ -397,7 +397,7 @@ ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
 				       const ACE_Synch_Options &synch_options)
 {
   size_t i;
-  
+
   for (i = 0; i < n; i++)
     {
       if (this->connect (sh[i], remote_addrs[i], synch_options) == -1
@@ -412,7 +412,7 @@ ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
           // Mark this entry as having succeeded.
           failed_svc_handlers[i] = 0;
     }
-  
+
   return 0;
 }
 
@@ -424,7 +424,7 @@ ACE_Connector<SH, PR_CO_2>::cancel (SH *sh)
   MAP_ITERATOR mi (this->handler_map_);
 
   for (MAP_ENTRY *me = 0;
-       mi.next (me) != 0; 
+       mi.next (me) != 0;
        mi.advance ())
     if (me->int_id_->svc_handler () == sh)
       {
@@ -435,7 +435,7 @@ ACE_Connector<SH, PR_CO_2>::cancel (SH *sh)
 	return 0;
       }
 
-  return -1;    
+  return -1;
 }
 
 // Register the pending SVC_HANDLER with the map so that it can be
@@ -450,7 +450,7 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   AST *ast;
 
   ACE_NEW_RETURN (ast,
-		  AST (sh, 
+		  AST (sh,
 		       sh->get_handle (),
 		       synch_options.arg (), -1),
 		  -1);
@@ -473,7 +473,7 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
       if (tv != 0)
 	{
 	  int cancellation_id =
-	    this->reactor ()->schedule_timer 
+	    this->reactor ()->schedule_timer
 	      (this, (const void *) ast, *tv);
 	  if (cancellation_id == -1)
 	    goto fail3;
@@ -496,7 +496,7 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   // Undo previous actions using the ol' "goto label and fallthru"
   // trick...
 fail3:
-  this->reactor ()->remove_handler (this, 
+  this->reactor ()->remove_handler (this,
 				    mask | ACE_Event_Handler::DONT_CALL);
   /* FALLTHRU */
 fail2:
@@ -545,10 +545,10 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
       // Iterate through the map and shut down all the pending handlers.
 
       for (MAP_ENTRY *me = 0;
-	   mi.next (me) != 0; 
+	   mi.next (me) != 0;
 	   mi.advance ())
 	{
-	  this->reactor ()->remove_handler (me->ext_id_, 
+	  this->reactor ()->remove_handler (me->ext_id_,
 					    mask | ACE_Event_Handler::DONT_CALL);
 
 	  AST *ast = 0;
@@ -572,7 +572,7 @@ ACE_Connector<SH, PR_CO_2>::fini (void)
   return ACE_Connector<SH, PR_CO_2>::handle_close ();
 }
 
-// Hook called by the explicit dynamic linking facility. 
+// Hook called by the explicit dynamic linking facility.
 
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::init (int, char *[])
@@ -648,36 +648,44 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
   // Initialize the creation strategy.
 
   if (this->creation_strategy_ != 0 &&
-      this->delete_creation_strategy_ != 0)
+      this->delete_creation_strategy_ != 0 &&
+      cre_s != 0)
     {
       delete this->creation_strategy_;
       this->creation_strategy_ = 0;
       this->delete_creation_strategy_ = 0;
     }
 
-  if (cre_s == 0 && this->creation_strategy_ == 0)
-    {
-      ACE_NEW_RETURN (cre_s, CREATION_STRATEGY, -1);
-      this->delete_creation_strategy_ = 1;
-    }
-  this->creation_strategy_ = cre_s;
+  if (this->creation_strategy_ == 0)
+    if (cre_s == 0)
+      {
+        ACE_NEW_RETURN (this->creation_strategy_,
+                        CREATION_STRATEGY, -1);
+        this->delete_creation_strategy_ = 1;
+      }
+    else
+      this->creation_strategy_ = cre_s;
 
   // Initialize the accept strategy.
 
   if (this->connect_strategy_ != 0 &&
-      this->delete_connect_strategy_ != 0)
+      this->delete_connect_strategy_ != 0 &&
+      conn_s != 0)
     {
       delete this->connect_strategy_;
       this->connect_strategy_ = 0;
       this->delete_connect_strategy_ = 0;
     }
 
-  if (conn_s == 0 && this->connect_strategy_ == 0)
-    {
-      ACE_NEW_RETURN (conn_s, CONNECT_STRATEGY, -1);
-      this->delete_connect_strategy_ = 1;
-    }
-  this->connect_strategy_ = conn_s;
+  if (this->connect_strategy_ == 0)
+    if (conn_s == 0)
+      {
+        ACE_NEW_RETURN (this->connect_strategy_,
+                        CONNECT_STRATEGY, -1);
+        this->delete_connect_strategy_ = 1;
+      }
+    else
+      this->connect_strategy_ = conn_s;
 
   // Initialize the concurrency strategy.
 
@@ -690,22 +698,24 @@ ACE_Strategy_Connector<SH, PR_CO_2>::open
       this->delete_concurrency_strategy_ = 0;
     }
 
-  if (con_s == 0 && this->concurrency_strategy_ == 0)
-    {
-      ACE_NEW_RETURN (con_s, CONCURRENCY_STRATEGY, -1);
-      this->delete_concurrency_strategy_ = 1;
-    }
-  this->concurrency_strategy_ = con_s;
+  if (this->concurrency_strategy_ == 0)
+    if (con_s == 0)
+      {
+        ACE_NEW_RETURN (con_s, CONCURRENCY_STRATEGY, -1);
+        this->delete_concurrency_strategy_ = 1;
+      }
+    else
+      this->concurrency_strategy_ = con_s;
 
   return 0;
 }
 
-template <class SH, PR_CO_1> 
-ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector 
+template <class SH, PR_CO_1>
+ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
   (ACE_Reactor *reactor,
    ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *conn_s,
-   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s, 
+   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    int flags)
     : creation_strategy_ (0),
       delete_creation_strategy_ (0),
@@ -720,7 +730,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Strategy_Connector::ACE_Strategy_Connector"));
 }
 
-template <class SH, PR_CO_1> 
+template <class SH, PR_CO_1>
 ACE_Strategy_Connector<SH, PR_CO_2>::~ACE_Strategy_Connector (void)
 {
   ACE_TRACE ("ACE_Strategy_Connector<SH, PR_CO_2>::~ACE_Strategy_Connector");
@@ -747,8 +757,8 @@ ACE_Strategy_Connector<SH, PR_CO_2>::make_svc_handler (SVC_HANDLER *&sh)
   return this->creation_strategy_->make_svc_handler (sh);
 }
 
-template <class SH, PR_CO_1> int 
-ACE_Strategy_Connector<SH, PR_CO_2>::connect_svc_handler 
+template <class SH, PR_CO_1> int
+ACE_Strategy_Connector<SH, PR_CO_2>::connect_svc_handler
   (SVC_HANDLER *&sh,
    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
    ACE_Time_Value *timeout,
@@ -758,7 +768,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::connect_svc_handler
    int perms)
 {
   return this->connect_strategy_->connect_svc_handler (sh,
-						       remote_addr, 
+						       remote_addr,
 						       timeout,
 						       local_addr,
 						       reuse_addr,
