@@ -210,19 +210,26 @@ ACKNOWLEDGEMENTS
 ACE has been deeply influenced and improved by the following members
 of my research group at Washington University:
 
+Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Darrell Brunsch <brunsch@cs.wustl.edu>
-Chris Cleeland <chris@milo.st-louis.mo.us>
+Chris Cleeland <chris@cs.wustl.edu>
+Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+Chris Gill <cdgill@cs.wustl.edu>
 Aniruddha Gokhale <gokhale@cs.wustl.edu>
 Tim Harrison <harrison@cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
+Michael Kircher <mk1@cs.wustl.edu>
 David Levine <levine@cs.wustl.edu>
-Carlos O'Ryan <coryan@mat.puc.cl>
+Carlos O'Ryan <coryan@cs.wustl.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
-Nanbor Wang <nw1@cs.wustl.edu>
+Marina Spivak <marina@cs.wustl.edu>
+Nagarajan Surendran <naga@cs.wustl.edu>
+Nanbor Wang <nanbor@cs.wustl.edu>
+Seth Widoff <sbw1@cs.wustl.edu>
 
 I would also like to thank all the following people who have also
-contributed to ACE over the years:
+contributed to ACE and TAO over the years:
 
 Paul Stephenson <pstephenson@objectspace.com>
 Olaf Kruger <okruger@cssc-melb.tansu.com.au>
@@ -537,6 +544,7 @@ James Garrison <jhg@austx.tandem.com>
 Brad Walton <brad.walton@transnexus.com>
 Paul Motuzenko <p_motuzenko@hotmail.com>
 Kurt Sussman <kls@best.com>
+Rob Thornton <ret1@cec.wustl.edu> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
