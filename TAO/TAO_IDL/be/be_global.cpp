@@ -898,44 +898,62 @@ BE_GlobalData::lookup_strategy (void) const
 void
 BE_GlobalData::destroy (void)
 {
-  delete this->client_hdr_ending_;
+  ACE_OS::free (this->pch_include_);
+  this->pch_include_ = 0;
+
+  ACE_OS::free (this->pre_include_);
+  this->pre_include_ = 0;
+
+  ACE_OS::free (this->post_include_);
+  this->post_include_ = 0;
+
+  delete [] this->client_hdr_ending_;
   this->client_hdr_ending_ = 0;
 
-  delete this->client_stub_ending_;
+  delete [] this->client_stub_ending_;
   this->client_stub_ending_ = 0;
 
-  delete this->client_inline_ending_;
+  delete [] this->client_inline_ending_;
   this->client_inline_ending_ = 0;
 
-  delete this->server_hdr_ending_;
+  delete [] this->server_hdr_ending_;
   this->server_hdr_ending_ = 0;
 
-  delete this->implementation_hdr_ending_;
+  delete [] this->implementation_hdr_ending_;
   this->implementation_hdr_ending_ = 0;
 
-  delete this->implementation_skel_ending_;
+  delete [] this->implementation_skel_ending_;
   this->implementation_skel_ending_ = 0;
 
-  delete this->impl_class_prefix_;
+  delete [] this->impl_class_prefix_;
   this->impl_class_prefix_ = 0;
 
-  delete this->impl_class_suffix_;
+  delete [] this->impl_class_suffix_;
   this->impl_class_suffix_ = 0;
 
-  delete this->server_template_hdr_ending_;
+  delete [] this->server_template_hdr_ending_;
   this->server_template_hdr_ending_ = 0;
 
-  delete this->server_skeleton_ending_;
+  delete [] this->server_skeleton_ending_;
   this->server_skeleton_ending_ = 0;
 
-  delete this->server_template_skeleton_ending_;
+  delete [] this->server_template_skeleton_ending_;
   this->server_template_skeleton_ending_ = 0;
 
-  delete this->server_inline_ending_;
+  delete [] this->server_inline_ending_;
   this->server_inline_ending_ = 0;
 
-  delete this->server_template_inline_ending_;
+  delete [] this->server_template_inline_ending_;
   this->server_template_inline_ending_ = 0;
+
+  delete [] this->anyop_hdr_ending_;
+  this->anyop_hdr_ending_ = 0;
+
+  delete [] this->anyop_src_ending_;
+  this->anyop_src_ending_ = 0;
+
+  delete [] this->output_dir_;
+  this->output_dir_ = 0;
 }
 
 AST_PredefinedType *
@@ -1832,7 +1850,6 @@ BE_GlobalData::generator_init (void)
   ACE_NEW_RETURN (gen,
                   be_generator,
                   0);
-                 
+
   return gen;
 }
-
