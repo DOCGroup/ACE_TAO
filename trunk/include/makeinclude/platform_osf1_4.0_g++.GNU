@@ -1,11 +1,13 @@
 # This platform macros file is intended to work with Digital UNIX 4.0
 # (OSF/1 4.0) and GCC in version 2.7.2.1 (or newer).
 
-CC		= gcc -g -D_REENTRANT
-CXX		= g++ -g -D_REENTRANT -fno-strict-prototypes 
+CC		= gcc
+CXX		= g++
+CFLAGS          += -D_REENTRANT
+CCFLAGS         += $(CFLAGS) -fno-strict-prototypes
 LD		= $(CXX)
 DLD		= $(CXX)
-LIBS		+= -lpthread -lmach -lexc -ltli -lstdc++
+LIBS		+= -lpthread -lmach -lexc -ltli -lrt
 PIC		= -fpic
 ARFLAGS		= ruvZ
 # When libraries are archived, a hash index is automatically created so there
