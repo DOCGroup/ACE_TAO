@@ -32,6 +32,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/RtecEventChannelAdminS.h"
+
+class TAO_EC_Dispatching;
+class TAO_EC_Filter_Builder;
+class TAO_EC_ConsumerAdmin;
+class TAO_EC_SupplierAdmin;
+class TAO_EC_Timer_Module;
+
+class TAO_EC_Factory;
+
 class TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
 {
 public:
@@ -79,6 +89,8 @@ public:
   //    this->supplier_admin ()->_this (env);
 
   virtual void destroy (CORBA::Environment &env);
+  // Commit suicide.
+
   RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
 		       CORBA::Environment &env);
@@ -93,16 +105,19 @@ private:
   // Mediator among them.
 
   TAO_EC_Dispatching *dispatching_;
-  // The dispatching "module"...
+  // The dispatching "module"
+
+  TAO_EC_Filter_Builder *filter_builder_;
+  // The filter builder
 
   TAO_EC_ConsumerAdmin *consumer_admin_;
-  // The ConsumerAdmin implementation....
+  // The ConsumerAdmin implementation
 
   TAO_EC_SupplierAdmin *supplier_admin_;
-  // The SupplierAdmin implementation....
+  // The SupplierAdmin implementation
 
   TAO_EC_TimerModule *timer_module_;
-  // The TimerModule...
+  // The timer module
 };
 
 #if defined (__ACE_INLINE__)

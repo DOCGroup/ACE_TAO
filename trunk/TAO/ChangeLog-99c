@@ -1,3 +1,12 @@
+Mon Jan 18 17:37:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Channel_Clients.h: 
+	* orbsvcs/orbsvcs/Event/Channel_Clients.i: 
+	* orbsvcs/orbsvcs/Event/Channel_Clients_T.i: 
+	  There was an horrible confusion with this files. I removed some
+	  obsolote versions and fixed an include.  Thanks to Jeff
+	  Olszewski <jolszewski@std.saic.com> for pointing this out.
+
 Mon Jan 18 16:51:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	The bank example was throwing an exception if run multiple times.
