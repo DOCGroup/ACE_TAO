@@ -1,8 +1,19 @@
+Tue Dec 21 21:27:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-cxx-common.h: enable ACE_LACKS_ACE_IOSTREAM
+          on Linux.  cxx 6.3 generates unresolved streambuf symbols,
+          otherwise.
+
+        * include/makeinclude/platform_linux_cxx.GNU: added.
+
+        * include/makeinclude/platform_osf1_4.0.GNU: changed comment
+          now that cxx code is int ace/config-cxx-common.h.
+
 Tue Dec 21 08:02:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Log_Msg.h (ACE_Log_Msg): Clarified that the ACE_Log_Msg_Callbacks
-	  are not inherited when a new thread is spawned.  Thanks to Airat
- 	  A. Sadreev <airat@hq.tatenergo.ru> for reporting this.
+        * ace/Log_Msg.h (ACE_Log_Msg): Clarified that the ACE_Log_Msg_Callbacks
+          are not inherited when a new thread is spawned.  Thanks to Airat
+          A. Sadreev <airat@hq.tatenergo.ru> for reporting this.
 
 Tue Dec 21 11:31:18 1999  bala  <bala@cs.wustl.edu>
 
@@ -10,123 +21,123 @@ Tue Dec 21 11:31:18 1999  bala  <bala@cs.wustl.edu>
 
 Tue Dec 21 01:04:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ACE-configuration.txt:
+        * ACE-configuration.txt:
 
-	  Updated information about using ACE+autoconf.
+          Updated information about using ACE+autoconf.
 
-	* configure.in:
+        * configure.in:
 
-	  Moved AC_{EXE,OBJ}EXT tests before C++ linker flags since these
-	  tests require C linker flags.
+          Moved AC_{EXE,OBJ}EXT tests before C++ linker flags since these
+          tests require C linker flags.
 
-	* Makefile (release, releaseall):
+        * Makefile (release, releaseall):
 
-	  ACE-INSTALL should be a dependency of these targets in order for
-	  it to be generated.  This fixes a "no such file or directory"
-	  error that occurs when making an ACE beta/release.  Note that
-	  this fix is unrelated to the ACE+autoconf bootstrapping support
-	  that was recently added.
+          ACE-INSTALL should be a dependency of these targets in order for
+          it to be generated.  This fixes a "no such file or directory"
+          error that occurs when making an ACE beta/release.  Note that
+          this fix is unrelated to the ACE+autoconf bootstrapping support
+          that was recently added.
 
-	* bin/bootstrap:
+        * bin/bootstrap:
 
-	  Output message that lets the user know that bootstrapping is
-	  done.
+          Output message that lets the user know that bootstrapping is
+          done.
 
 Mon Dec 20 23:55:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile (release, releaseall):
+        * Makefile (release, releaseall):
 
-	  Removed ACE+autoconf bootstrapping commands.  Bootstrapping must
-	  be done later in the process (i.e. in bin/make_release).
+          Removed ACE+autoconf bootstrapping commands.  Bootstrapping must
+          be done later in the process (i.e. in bin/make_release).
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Fixed MD5 checksum generation.
+          Fixed MD5 checksum generation.
 
-	  Added temporary hacks to bootstrap ACE+autoconf support into the
-	  release.
+          Added temporary hacks to bootstrap ACE+autoconf support into the
+          release.
 
 Mon Dec 20 22:15:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile:
+        * Makefile:
 
-	  Added ACE-configuration.txt, ltcf-c.sh, ltcf-cxx.sh and
-	  Makefile.in to the list of CONTROLLED_FILES.
+          Added ACE-configuration.txt, ltcf-c.sh, ltcf-cxx.sh and
+          Makefile.in to the list of CONTROLLED_FILES.
 
-	  Added ACE+autoconf bootstrapping commands the release and
-	  releaseall targets.  This allows a bootstrapped ACE+autoconf
-	  setup to be shipped with ACE, thus allowing the configure script
-	  to work "out of the box."
+          Added ACE+autoconf bootstrapping commands the release and
+          releaseall targets.  This allows a bootstrapped ACE+autoconf
+          setup to be shipped with ACE, thus allowing the configure script
+          to work "out of the box."
 
-	* bin/bootstrap:
+        * bin/bootstrap:
 
-	  Added bootstrapping options that enable or disable certain types
-	  of workspaces.  By default, automatic dependency tracking is
-	  disabled by default.
+          Added bootstrapping options that enable or disable certain types
+          of workspaces.  By default, automatic dependency tracking is
+          disabled by default.
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  If path to additional GNU tools is broken, default to existing
-	  PATH and hope for the best.
+          If path to additional GNU tools is broken, default to existing
+          PATH and hope for the best.
 
-	  Fixed MD5 checksum generation.
+          Fixed MD5 checksum generation.
 
 Mon Dec 20 21:14:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Disabled maintainer mode check that prevented users from running
-	  the configure script.
+          Disabled maintainer mode check that prevented users from running
+          the configure script.
 
-	  Added experimental libtool C++ support.
+          Added experimental libtool C++ support.
 
-	  Replaced CVS directory check with top-level source directory
-	  check to prevent stock ACE makefiles from being overwritten
-	  during configuration.
+          Replaced CVS directory check with top-level source directory
+          check to prevent stock ACE makefiles from being overwritten
+          during configuration.
 
-	* ltcf-c.sh:
-	* ltcf-cxx.sh:
+        * ltcf-c.sh:
+        * ltcf-cxx.sh:
 
-	  Adding these files to the CVS repository.  They will soon be
-	  merged into the upstream libtool package.  Local copies will no
-	  longer be necessary.
+          Adding these files to the CVS repository.  They will soon be
+          merged into the upstream libtool package.  Local copies will no
+          longer be necessary.
 
-	* m4/acinclude.m4:
+        * m4/acinclude.m4:
 
-	  Alot of M4 quoting fixes/improvements.
+          Alot of M4 quoting fixes/improvements.
 
-	  Reduced size ACE_CONVERT_WARNINGS_TO_ERRORS Autoconf macro.  It
-	  still needs to be refined a bit (e.g. AC_REQUIREing compiler
-	  flag setups).
+          Reduced size ACE_CONVERT_WARNINGS_TO_ERRORS Autoconf macro.  It
+          still needs to be refined a bit (e.g. AC_REQUIREing compiler
+          flag setups).
 
-	  (ACE_CHECK_SETRLIMIT_ENUM, ACE_CHECK_GETRUSAGE_ENUM):
+          (ACE_CHECK_SETRLIMIT_ENUM, ACE_CHECK_GETRUSAGE_ENUM):
 
-	  Added regex for one or more spaces before function name to
-	  prevent functions such as "__getrusage" from matching the
-	  regex.  This fixes a problem on platforms that have both
-	  "getrusage," and "__getrusage," for example.
+          Added regex for one or more spaces before function name to
+          prevent functions such as "__getrusage" from matching the
+          regex.  This fixes a problem on platforms that have both
+          "getrusage," and "__getrusage," for example.
 
-	  (ACE_CHECK_TOP_SRCDIR):
+          (ACE_CHECK_TOP_SRCDIR):
 
-	  Added this autoconf macro.  It prevents ACE from being
-	  configured in the top-level source directory.  Configuring ACE
-	  in the top-level source directory would cause the stock ACE
-	  makefiles to be overwritten.  Since autoconf support in ACE is
-	  still in the testing stages, we need to make sure that users can
-	  fall back on the stock ACE build procedure.  This "feature" can
-	  be overridden by using the "--enable-maintainer-mode" configure
-	  script option.
+          Added this autoconf macro.  It prevents ACE from being
+          configured in the top-level source directory.  Configuring ACE
+          in the top-level source directory would cause the stock ACE
+          makefiles to be overwritten.  Since autoconf support in ACE is
+          still in the testing stages, we need to make sure that users can
+          fall back on the stock ACE build procedure.  This "feature" can
+          be overridden by using the "--enable-maintainer-mode" configure
+          script option.
 
-	* m4/compiler.m4:
+        * m4/compiler.m4:
 
-	  Set variable "WERROR" that contains the compiler flags to
-	  convert warnings to errors.  Eventually, this support should be
-	  moved to its own macro that is AC_REQUIREd by
-	  ACE_CONVERT_WARNINGS_TO_ERRORS.
+          Set variable "WERROR" that contains the compiler flags to
+          convert warnings to errors.  Eventually, this support should be
+          moved to its own macro that is AC_REQUIREd by
+          ACE_CONVERT_WARNINGS_TO_ERRORS.
 
-	* m4/features.m4 (ACE_CHECK_ASYNCH_IO):
+        * m4/features.m4 (ACE_CHECK_ASYNCH_IO):
 
-	  Minor M4 quoting fixes/improvements.
+          Minor M4 quoting fixes/improvements.
 
 Sun Dec 19 09:34:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
