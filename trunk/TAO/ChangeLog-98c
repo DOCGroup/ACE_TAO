@@ -1,3 +1,7 @@
+Thu Feb 12 20:55:48 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* tests/AVStreams/client,server: Updated to use the new StreamCtrl, MMDevice etc..
+
 Thu Feb 12 11:06:48 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
         * tao/poaC.i (PortableServer): Moved POA::_nil() definition above
