@@ -1,5 +1,31 @@
 Fri Jan 30 01:55:59 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
+	* tests/Cubit/COOL/IDL_Cubit/README: 
+	* tests/Cubit/COOL/IDL_Cubit/Makefile:
+	* tests/Cubit/COOL/IDL_Cubit/client.cpp:
+	* tests/Cubit/COOL/IDL_Cubit/client.h:
+	* tests/Cubit/COOL/IDL_Cubit/cubit.idl:
+	* tests/Cubit/COOL/IDL_Cubit/cubit_i.cpp:
+	* tests/Cubit/COOL/IDL_Cubit/cubit_i.h:
+	* tests/Cubit/COOL/IDL_Cubit/server.cpp:	
+	* tests/Cubit/COOL/IDL_Cubit/tmplinst.cpp: Added test code for
+ 	Chorus COOL ORB, for the IDL Cubit example.
+
+	* tests/Thruput/COOL/README: 
+	* tests/Thruput/COOL/Makefile:
+	* tests/Thruput/COOL/client.cpp:
+	* tests/Thruput/COOL/server.cpp:
+	* tests/Thruput/COOL/ttcp.idl:
+	* tests/Thruput/COOL/ttcp_decl.h:
+	* tests/Thruput/COOL/ttcp_i.cpp:
+	* tests/Thruput/COOL/ttcp_i.h:	
+	* tests/Thruput/COOL/utils.cpp: Added test code for Chorus COOL
+ 	ORB, for the Thruput example.
+
+	* tests/Thruput/TAO/ttcp_decl.h: Make declarations of variables
+ 	consistent with definition.  Changed srcDataSize from CORBA::ULong
+ 	to unsigned long.
+
 	* tests/Thruput/TAO/Makefile: Updated to use rules.tao.GNU.  and
  	taoconfig.mk.  This was suggested by a change Carlos O'Ryan did to
  	the long lost Thruput_test directory.
