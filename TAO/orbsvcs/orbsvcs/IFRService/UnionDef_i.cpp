@@ -432,10 +432,9 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
       cdr.write_ulong (ACE_static_cast (CORBA::ULong, value));
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW (impl,
-               TAO::Unknown_IDL_Type (tc._retn (),
+               TAO::Unknown_IDL_Type (tc.in (),
                                       cdr.begin (),
-                                      TAO_ENCAP_BYTE_ORDER,
-                                      1));
+                                      TAO_ENCAP_BYTE_ORDER));
       member.label.replace (impl);
       break;
     }
