@@ -63,6 +63,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "LifeCycle_Service"=.\LifeCycle_Service\LifeCycle_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Naming_Service"=.\Naming_Service\Naming_Service.dsp - Package Owner=<4>
 
 Package=<5>

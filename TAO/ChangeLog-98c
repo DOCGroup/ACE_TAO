@@ -1,3 +1,10 @@
+Thu Jun 11 11:25:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp: Added
+	  proper multithreaded support.
+
+	* orbsvcs/orbsvcs.dsw: Added the LifeCycle_Service
+
 Thu Jun 11 09:39:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Event_Channel.cpp: removed
