@@ -1,3 +1,26 @@
+Mon Feb 08 15:20:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corba.h: 
+	* tao/corbafwd.h: 
+	  On NT we need to define DEBUG when _DEBUG is defined, but this
+	  definition was left on corba.h by mistake, now it is in
+	  corbafwd.h
+
+	* tao/Invocation.h: 
+	  MSVC++ doesn't know that a class and a struct are the same
+	  thing, and it complains when a structure is forward declared as
+	  a class; silly
+
+	* orbsvcs/orbsvcs/Trader/Trader.cpp: 
+	  MSVC++ gets confused by typedefs inside classes again.
+
+	* tao/ORB_Strategies_T.cpp: 
+	  Added missing #include.
+
+	* tao/debug.cpp: 
+	* tao/debug.h: 
+	  Fixed some #include problems.
+
 Mon Feb  8 15:25:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/echo/Makefile
@@ -8,6 +31,7 @@ Mon Feb  8 15:25:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Simple/echo/Echo_Client_i.cpp
 	* examples/Simple/echo/Echo_Client_i.h
 	New files after removing Server_i.* and Client_i.*
+
 Mon Feb  8 14:26:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DynAnyC.cpp: 

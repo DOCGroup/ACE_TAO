@@ -34,12 +34,6 @@
 
 #include "tao/corbafwd.h"
 
-#if     defined (_MSC_VER)
-#       ifdef   _DEBUG                  // convert from VC++ convention ...
-#               define  DEBUG           // ... to normal convention
-#       endif
-#endif /* _MSC_VER */
-
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/Exception.h"

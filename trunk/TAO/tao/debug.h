@@ -21,6 +21,8 @@
 #ifndef TAO_DEBUG_H
 #define TAO_DEBUG_H
 
+#include "tao/corbafwd.h"
+
 // These are global to simplify is use by other code, very much in
 // particular by getopt and related argument-parsing code
 //
