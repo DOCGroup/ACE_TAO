@@ -1,3 +1,16 @@
+Fri Jul 31 21:33:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ARGV.cpp: Enhanced the implemenation of string_to_array() so
+ 	  that it should always work correctly even if there are a large
+ 	  number of bytes in the original buf string.
+
+	* ace/ARGV.cpp: Renamed string_to_array() to string_to_argv(),
+ 	  which is more intuitive.
+
+	* ace/OS.h: Added a new macro called ACE_DEFAULT_ARGV_BUFSIZ,
+ 	  which is used as the default size of all the "argv" contents in
+ 	  ACE_ARGV.  This defaults to 4 kbytes.
+
 Fri Jul 31 19:55:10 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* netsvcs/clients/Logger/direct_logging.cpp: 

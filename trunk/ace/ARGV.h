@@ -97,7 +97,7 @@ private:
   int create_buf_from_queue (void);
   // Creates buf_ from the queue, deletes previous buf_.
 
-  void string_to_array (void);
+  int string_to_argv (void);
   // Converts buf_ into the ASYS_TCHAR *argv[] format.
 
   int substitute_env_args_;

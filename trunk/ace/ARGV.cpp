@@ -35,16 +35,16 @@ ACE_ARGV::dump (void) const
 // style constructor and for creating this->argv_ when in iterative
 // mode.
 
-void
-ACE_ARGV::string_to_array (void)
+int
+ACE_ARGV::string_to_argv (void)
 {
-  ACE_TRACE ("ACE_ARGV::string_to_array");
+  ACE_TRACE ("ACE_ARGV::string_to_argv");
 
   // Reset the number of arguments
   this->argc_ = 0;
   
   if (this->buf_ == 0)
-    return;
+    return -1;
 
  ASYS_TCHAR *cp = this->buf_;
 
@@ -86,11 +86,21 @@ ACE_ARGV::string_to_array (void)
 	 cp++;
    }
  
- // Second pass: copy arguments..
- ASYS_TCHAR arg[BUFSIZ];
+ // Second pass: copy arguments.
+ ASYS_TCHAR arg[ACE_DEFAULT_ARGV_BUFSIZ];
+ ASYS_TCHAR *argp = arg;
  
+ // Make sure that the buffer we're copying into is always large
+ // enough.
+ if (cp - this->buf_ >= ACE_DEFAULT_ARGV_BUFSIZ)
+   ACE_NEW (argp,
+            ASYS_TCHAR[cp - this->buf_ + 1],
+            -1);
+
  // Make a new argv vector of argc + 1 elements.
- ACE_NEW (this->argv_, ASYS_TCHAR *[this->argc_ + 1]);
+ ACE_NEW_RETURN (this->argv_,
+                 ASYS_TCHAR *[this->argc_ + 1],
+                 -1);
  
  ASYS_TCHAR *ptr = this->buf_;
 
@@ -105,11 +115,15 @@ ACE_ARGV::string_to_array (void)
        {
 	 ASYS_TCHAR quote = *ptr++;
 	 
-	 for (cp = arg; 
+	 for (cp = argp;
 	      *ptr != '\0' && *ptr != quote; 
 	      ptr++, cp++)
-	   if (unsigned (cp - arg) < sizeof arg)
+           {
+             // @@ We can probably remove this since we ensure it's
+             // big enough earlier!
+             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFIZ);
 	     *cp = *ptr;
+           }
 	 
 	 *cp = '\0';
 	 if (*ptr == quote)
@@ -120,8 +134,13 @@ ACE_ARGV::string_to_array (void)
 	 for (cp = arg; 
 	      *ptr && !ACE_OS::ace_isspace (*ptr); 
 	      ptr++, cp++)
-	   if (unsigned (cp - arg) < sizeof arg)
+           {
+             // @@ We can probably remove this since we ensure it's
+             // big enough earlier!
+             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFIZ);
 	     *cp = *ptr;
+           }
+
 	 *cp = '\0';
        }
      
@@ -129,15 +148,22 @@ ACE_ARGV::string_to_array (void)
 #if !defined (ACE_HAS_WINCE)
      // WinCE doesn't have environment variables so we just skip it.
      if (this->substitute_env_args_)
-       ACE_ALLOCATOR (this->argv_[i],
-                      ACE::strenvdup (arg));
+       ACE_ALLOCATOR_RETURN (this->argv_[i],
+                             ACE::strenvdup (arg),
+                             -1);
      else
 #endif /* !ACE_HAS_WINCE */
-       ACE_ALLOCATOR (this->argv_[i], 
-                      ACE_OS::strdup (arg));
+       ACE_ALLOCATOR_RETURN (this->argv_[i], 
+                             ACE_OS::strdup (arg),
+                             -1);
    }
  
+ if (argp != arg)
+   delete [] argp;
+
  this->argv_[this->argc_] = 0;
+
+ return 0;
 }
 
 
@@ -155,12 +181,16 @@ ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],
   if (buf == 0 || buf[0] == 0)
     return;
 
-  // Make an internal copy of the string
-  ACE_NEW (this->buf_, ASYS_TCHAR[ACE_OS::strlen (buf) + 1]);
+  // Make an internal copy of the string.
+  ACE_NEW (this->buf_,
+           ASYS_TCHAR[ACE_OS::strlen (buf) + 1]);
   ACE_OS::strcpy (this->buf_, buf);
 
-  // Create this->argv_ 
-  this->string_to_array ();
+  // Create this->argv_.
+  if (this->string_to_argv () == -1)
+    ACE_ERROR ((LM_ERROR, 
+                "%p\n",
+                "string_to_argv"));
 }
 
 ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
@@ -249,9 +279,11 @@ ACE_ARGV::add (const ASYS_TCHAR *next_arg)
   if (this->state_ != ITERATIVE)
     return -1;
 
-  // Put the new argument at the end of the queue
+  // Put the new argument at the end of the queue.
   if (this->queue_.enqueue_tail ((ASYS_TCHAR *) next_arg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Can't add more to ARGV queue")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("Can't add more to ARGV queue")),
+                      -1);
 
   this->length_ += ACE_OS::strlen (next_arg);
 
@@ -302,7 +334,9 @@ ACE_ARGV::create_buf_from_queue (void)
 
   delete [] this->buf_;
 
-  ACE_NEW_RETURN (this->buf_, ASYS_TCHAR[this->length_ + this->argc_], -1);
+  ACE_NEW_RETURN (this->buf_,
+                  ASYS_TCHAR[this->length_ + this->argc_],
+                  -1);
 
   // Get an iterator over the queue
   ACE_Unbounded_Queue_Iterator<ASYS_TCHAR *> iter (this->queue_);
@@ -314,7 +348,7 @@ ACE_ARGV::create_buf_from_queue (void)
 
   while (!iter.done ()) 
     {
-      // Get next argument from the queue
+      // Get next argument from the queue.
       iter.next (arg);
 
       more = iter.advance ();
@@ -322,18 +356,19 @@ ACE_ARGV::create_buf_from_queue (void)
       len = ACE_OS::strlen (*arg);
 
       // Copy the argument into buf_
-      ACE_OS::memcpy ((void *) ptr, (const void *) (*arg), len);
-
-      // Move the pointer down
+      ACE_OS::memcpy ((void *) ptr,
+                      (const void *) (*arg),
+                      len);
+      // Move the pointer down.
       ptr += len;
 
-      // Put in an argument separating space
+      // Put in an argument separating space.
       if (more != 0) 
 	*ptr++ = ' ';
     }
 
-  // Put in the null terminator
-  *ptr = 0;
+  // Put in the NUL terminator
+  *ptr = '\0';
 
   return 0;
 }
