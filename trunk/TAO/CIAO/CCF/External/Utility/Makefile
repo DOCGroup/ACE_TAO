@@ -4,6 +4,7 @@
 # copyright : Copyright (c) 2002-2003 Boris Kolpackov
 # license   : http://kolpackov.net/license.html
 
+
 root := .
 
 include $(root)/Config/Recursion.pre.rules
