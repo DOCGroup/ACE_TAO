@@ -2,7 +2,9 @@ Mon Jun 09 15:46:41 1997    <irfan@TWOSTEP>
 
 	* OS.i (mutex_lock): When WaitForSingleObject returns
  	  WAIT_ABANDONED, the lock is held by the calling thread.
-  	  Therefore we must return 0 from the method.  Thanks to Dieter
+  	  Therefore we must return 0 from the method.  I have added a new
+ 	  mutex_lock() method that takes an extra "abandoned" parameter.
+  	  This is set wehen the mutex is abandoned.  Thanks to Dieter
  	  Quehl <dietrich.quehl@med.siemens.de> for pointing this out.
 
 Mon Jun  9 02:31:36 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>

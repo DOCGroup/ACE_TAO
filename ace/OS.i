@@ -1142,10 +1142,9 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
       switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
 	{
 	case WAIT_OBJECT_0:
-	  return 0;
 	case WAIT_ABANDONED:
-	  errno = WAIT_ABANDONED;
-	  return 0;  // something goofed, but we hold the lock ... 
+	  // We will ignore abandonments in this method 
+	  return 0;  
 	default:
 	  // This is a hack, we need to find an appropriate mapping...
 	  errno = ::GetLastError ();
@@ -1161,6 +1160,43 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 #elif defined (VXWORKS)
   return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */		     
+}
+
+ACE_INLINE int 
+ACE_OS::mutex_lock (ACE_mutex_t *m, int &abandoned)
+{
+  // ACE_TRACE ("ACE_OS::mutex_lock");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_WTHREADS)
+  abandoned = 0;
+  switch (m->type_)
+    {
+    case USYNC_PROCESS: 
+      // Timeout can't occur, so don't bother checking...
+      
+      switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
+	{
+	case WAIT_OBJECT_0:
+	  return 0;
+	case WAIT_ABANDONED:
+	  abandoned = 1;	  
+	  return 0;  // something goofed, but we hold the lock ... 
+	default:
+	  // This is a hack, we need to find an appropriate mapping...
+	  errno = ::GetLastError ();
+	  return -1;
+	}
+    case USYNC_THREAD:
+      return ACE_OS::thread_mutex_lock (&m->thr_mutex_);
+    default:
+      errno = EINVAL;
+      return -1;
+    }
+  /* NOTREACHED */
 #else
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
