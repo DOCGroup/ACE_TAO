@@ -1,8 +1,14 @@
+Sun Aug 08 21:19:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf1-4.0.h: removed unreferenced_function_param
+          warning suppression.  It's no longer needed with the fixes
+          to avoid unreferenced function parameters. [Bug 217]
+
 Fri Aug 06 15:20:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ACE-INSTALL.html: added information about compilation on
-	  SunOS5.6 using egcs1.1.2.
-	
+        * ACE-INSTALL.html: added information about compilation on
+          SunOS5.6 using egcs1.1.2.
+
 Fri Aug 06 13:47:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added note about disabling optimization

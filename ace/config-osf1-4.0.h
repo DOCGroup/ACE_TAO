@@ -69,7 +69,6 @@
 //  193: zero used for undefined preprocessing identifier (undpreid)
 //  236: controlling expression is constant (boolexprconst)
 //  401: base_class_with_nonvirtual_dtor (basclsnondto)
-//  835: unreferenced_function_param (unrfunprm)
 // 1016: expected type is incompatible with declared type of int (incint)
 // 1136: conversion to smaller size integer could lose data (intconlosbit)
 
@@ -87,10 +86,6 @@
       // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
 #     pragma message disable declbutnotref
 #   endif /* DIGITAL_UNIX >= 4.0f */
-
-#   if defined (ACE_HAS_EXCEPTIONS)
-#     pragma message disable unrfunprm
-#   endif /* ACE_HAS_EXCEPTIONS */
 
 # else  /* __DECCXX_VER < 60090010 */
 #   define ACE_LACKS_PRAGMA_ONCE
