@@ -61,7 +61,7 @@ TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory (void)
 int
 TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 {
-  ACE_TRACE ("TAO_Advanced_Resource_Factory::parse_args");
+  ACE_TRACE ("TAO_Advanced_Resource_Factory::init");
 
   int curarg = 0;
 
