@@ -33,7 +33,7 @@ enum DEBUGGING_RANGE
 
 typedef ACE_Message_Queue<ACE_MT_SYNCH> Message_Queue;
 
-
+/**************************************************************/
 /**
  * @class Synchronisers
  *
@@ -76,20 +76,20 @@ private:
 };
 
 
-
+/**************************************************************/
 /**
- * @class IO_Task
+ * @class Input_Task
  *
- * @brief Class that does the IO work ie. puts the events into the
+ * @brief Class that does the Input work ie. puts the events into the
  *  message queue
  */
 
-class IO_Task : public ACE_Task<ACE_MT_SYNCH>
+class Input_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   /// Ctor
-  IO_Task (Message_Queue *mq,
-           Synchronisers &synch);
+  Input_Task (Message_Queue *mq,
+              Synchronisers &synch);
 
   /// The thread runs inside this method..
   int svc (void);
@@ -100,8 +100,35 @@ private:
   Synchronisers &synch_;
 };
 
+/**************************************************************/
+/**
+ * @class Output_Task
+ *
+ * @brief Class that does the Output work ie. getsx the events into the
+ *  message queue
+ */
+
+class Output_Task : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  /// Ctor
+  Output_Task (Message_Queue *mq,
+              Synchronisers &synch);
+
+  /// The thread runs inside this method..
+  int svc (void);
+
+  /// Need to overload this method to do anything useful..
+  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+
+private:
+
+  /// Our referance to Synchronisers
+  Synchronisers &synch_;
+};
 
 
+/**************************************************************/
 /**
  * @class Synchronisers
  *

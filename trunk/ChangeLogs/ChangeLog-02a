@@ -1,3 +1,12 @@
+Tue Dec  4 20:57:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h: 
+
+	  Added a outgoing queue to the test. This should more or less
+	  represent a simple CORBA invocation. Reduced a call to new to by
+	  using a shared data block with a lock. 
+	
 Tue Dec  4 19:10:22 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.6.h: Removed the setting of _POSIX_C_SOURCE to
