@@ -157,7 +157,7 @@
 #define TAO_NAMESPACE_DEFINE(TYPE,NAME,RHS) NAME = RHS;
 #endif /* ACE_HAS_USING_KEYWORD */
 
-// Instead of replacing this with the ACE macro 
+// Instead of replacing this with the ACE macro
 // in 20+ files, define it conditionally.
 // The TAO_OutputCDR class uses the ACE macro, which
 // is defined by default.

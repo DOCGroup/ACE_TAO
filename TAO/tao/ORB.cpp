@@ -837,7 +837,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   // to create Profiles!
   // We do not use ACE_NEW cause we want to return an exception if this
   // fails.
-  TAO_IIOP_Profile *pfile = 
+  TAO_IIOP_Profile *pfile =
       new TAO_IIOP_Profile (orb_core->orb_params ()->host (),
                             orb_core->orb_params ()->addr ().get_port_number (),
                             key,
@@ -852,11 +852,11 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
     }
   else
     {
-      // We do not use ACE_NEW_RETURN or ACE_NEW since we need 
+      // We do not use ACE_NEW_RETURN or ACE_NEW since we need
       // to dealicate pfile
       // Plus we want to return an exception.
       data = new STUB_Object (id, pfile);
-    
+
       if (data == 0)
         env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
@@ -864,7 +864,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   pfile->_decr_refcnt ();
   // STUB_Object will increment the reference count.
-    
+
   return data;
 }
 

@@ -104,7 +104,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
         // @@ This should be some sort of default prefix, not
         // hardcoded to IIOP!! FRED
 
-      CORBA::String buf = 
+      CORBA::String buf =
         obj->_stubobj ()->profile_in_use ()->to_string (env);
       return buf;
     }
@@ -197,9 +197,9 @@ iiop_string_to_object (const char *string,
 
   // Now make the STUB_Object ...
   STUB_Object *data;
-  ACE_NEW_RETURN (data, 
+  ACE_NEW_RETURN (data,
                   STUB_Object ((char *) 0,
-                               pfile), 
+                               pfile),
                   CORBA::Object::_nil ());
   // pfile refcount == 2
 
@@ -296,7 +296,7 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
           return 0;
         }
 
-      // Check if the object requested is a collocated object. 
+      // Check if the object requested is a collocated object.
       // @@ FRED - can we make this more generic!!
       TAO_POA *poa = 0;
       if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
@@ -304,7 +304,7 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
           ACE_INET_Addr &addr =
             ACE_dynamic_cast (ACE_INET_Addr &,
                               pfile->object_addr());
-    
+
           poa = TAO_ORB_Core_instance ()->get_collocated_poa (addr);
         }
       else
