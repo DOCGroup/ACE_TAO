@@ -48,7 +48,7 @@ template<typename T> CORBA::Boolean
 TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                              _tao_destructor destructor,
                              CORBA::TypeCode_ptr tc,
-                             const T *& _tao_elem)
+                             T *& _tao_elem)
 {
   _tao_elem = 0;
 
@@ -71,7 +71,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 
       if (narrow_impl != 0)
         {
-          _tao_elem = (const T *&) narrow_impl->value_;
+          _tao_elem = (T *) narrow_impl->value_;
           return 1;
         }
 
@@ -91,7 +91,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 
       if (result == 1)
         {
-          _tao_elem = ACE_const_cast (const T *&, replacement->value_);
+          _tao_elem = ACE_const_cast (T *, replacement->value_);
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
           return result;
@@ -145,8 +145,11 @@ TAO::Any_Impl_T<T>::widen (const CORBA::Any & any,
           if (mb == 0)
             {
               _tao_elem = 
-                ACE_const_cast (T *, 
-                                ACE_reinterpret_cast (const T *, impl->value ()));
+                ACE_const_cast (
+                    T *, 
+                    ACE_reinterpret_cast (const T *, 
+                                          impl->value ())
+                  );
               return 1;
             }
         }
@@ -171,7 +174,7 @@ TAO::Any_Impl_T<T>::widen (const CORBA::Any & any,
 
       if (result == 1)
         {
-          _tao_elem = ACE_reinterpret_cast (T *&, replacement->value_);
+          _tao_elem = replacement->value_;
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
           return result;

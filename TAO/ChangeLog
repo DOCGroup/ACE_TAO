@@ -1,3 +1,16 @@
+Thu Dec 12 23:45:14 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any_T.cpp:
+        * tao/Any_T.h:
+
+	  More changes related to the 'const' qualifier, to get more
+	  compilers happy with the template code.
+
+        * tao/TypeCodeFactory/TypeCodeFactory.dsp:
+
+	  Turned on RTTI in this project.
+
 Thu Dec 12 17:24:41 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.h:

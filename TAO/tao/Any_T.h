@@ -49,7 +49,7 @@ namespace TAO
     static CORBA::Boolean extract (const CORBA::Any &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T *&);
+                                   T *&);
     static CORBA::Boolean widen (const CORBA::Any &,
                                  _tao_destructor,
                                  CORBA::TCKind,

@@ -894,7 +894,7 @@ operator>>= (const CORBA::Any &any, const char *&s)
       any,
       TAO::Any_Impl::_tao_any_string_destructor,
       CORBA::_tc_string,
-      s
+      ACE_const_cast (char *&, s)
     );
 }
 
@@ -905,7 +905,7 @@ operator>>= (const CORBA::Any &any, const CORBA::WChar *&ws)
       any,
       TAO::Any_Impl::_tao_any_wstring_destructor,
       CORBA::_tc_wstring,
-      ws
+      ACE_const_cast (CORBA::WChar *&, ws)
     );
 }
 
