@@ -142,7 +142,6 @@ write_iors_to_file (CORBA::Object_ptr object,
 
 void
 create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
-                                               RTCORBA::RTORB_ptr rt_orb,
                                                PortableServer::POA_ptr root_poa,
                                                PortableServer::POAManager_ptr poa_manager,
                                                CORBA::Environment &ACE_TRY_ENV)
@@ -373,7 +372,6 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       create_poa_and_servant_with_persistent_policy (orb.in (),
-                                                     rt_orb.in (),
                                                      root_poa.in  (),
                                                      poa_manager.in (),
                                                      ACE_TRY_ENV);

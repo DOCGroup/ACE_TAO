@@ -56,7 +56,7 @@ create_threadpool (RTCORBA::RTORB_ptr rt_orb,
                                max_buffered_requests,
                                max_request_buffer_size,
                                ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   return id;
 }
@@ -84,7 +84,7 @@ create_threadpool_with_lanes (RTCORBA::RTORB_ptr rt_orb,
                                           max_buffered_requests,
                                           max_request_buffer_size,
                                           ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   return id;
 }
