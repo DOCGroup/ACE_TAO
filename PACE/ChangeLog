@@ -1,3 +1,16 @@
+Thu Jan 04 13:59:00 2001  Luther Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pace.dsw
+
+	  Changed MS libraries to link to. Now consistent with ACE.
+	  (ie, Always 'Multithreaded DLL' with Debug version using
+	  the DEBUG DLL and Release using the standard DLL).
+
+	* pace/pace/win32/stdlib.h
+
+	  Updated. Implements the posix C functions that were added
+	  to PACE last year.
+
 Wed Jan  3 10:01:02 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/man/Makefile:
@@ -17,9 +30,9 @@ Fri Dec 22 12:09:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 Fri Dec 22 10:54:13 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* socket.h
-	* sys/socket.h
-	* Makefile
+	* pace/socket.h
+	* pace/sys/socket.h
+	* pace/Makefile
 
 	  Moved socket.h to sys/socket.h.
 
