@@ -654,6 +654,31 @@ build_config_object (ACE_Configuration& cfg)
                             data,
                             80))
     return -15;
+  
+  ACE_TString string((ACE_TCHAR*) 0);// = '0';
+  // Try to set the unnamed, default value.
+  if (cfg.set_string_value (LoggerSection,
+                            0,//string.c_str (),//0, //ACE_TEXT ("x"),
+                            ACE_TString (ACE_TEXT ("some string"))))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT ("could not set value with null name\n")), 
+                      -16);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("here\n")));
+  //return 0;
+  //ACE_TString string;
+  ACE_TString name ((ACE_TCHAR*)0);
+  if (cfg.get_string_value (LoggerSection,
+                            name.c_str (), //0, //ACE_TEXT ("x"),
+                            string))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT ("error using ACE_TString::c_str() == %d, len == %d\n"),
+                       name.c_str(), name.length ()), 
+                      -17);
+
+  ACE_DEBUG ((LM_DEBUG, 
+              ACE_TEXT ("the value for the unnamed var=(%s)\n"),
+              string.c_str ()));
 
   return 0;
 }
@@ -682,8 +707,11 @@ Config_Test::testEquality ()
     }
 
   // populate them equally
-  build_config_object (heap1);
-  build_config_object (heap2);
+  if (build_config_object (heap1) != 0 || 
+      build_config_object (heap2) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_TEXT ("could not build config object\n")), 
+                      -1);
 
   // test equality
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The objects should equal...\n")));
@@ -1045,6 +1073,7 @@ Config_Test::testIniFormat ()
           return rc;
         }
     }
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing INI Format Import/Export\n")));
   ACE_Configuration_Heap  fromFile;
 
@@ -1062,7 +1091,6 @@ Config_Test::testIniFormat ()
                            ACE_TEXT ("object (%d)\n"),
                            rc),
                           -1);
-
       //  3. Export
       ACE_Ini_ImpExp importExport (original);
 
@@ -1400,21 +1428,21 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Config_Test"));
-
+  int errors = 0;
   Config_Test manager;
 
-  if (manager.testEquality () != 0)
+  if ((errors += manager.testEquality ()) != 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the equality Test\n")));
 
-  if (manager.testRegFormat () != 0)
+  if ((errors += manager.testRegFormat ()) != 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the REG Format Test\n")));
 
-  if (manager.testIniFormat () != 0)
+  if ((errors += manager.testIniFormat ()) != 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed the INI Format Test\n")));
 
-  if (run_tests () != 0)
+  if ((errors += run_tests ()) != 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed in run_tests\n")));
 
   ACE_END_TEST;
-  return 0;
+  return errors == 0 ? 0 : 1;
 }

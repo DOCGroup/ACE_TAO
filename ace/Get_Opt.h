@@ -169,7 +169,7 @@ public:
    */
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring,
+               const ACE_TCHAR *optstring = ACE_LIB_TEXT (""),
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
@@ -287,6 +287,12 @@ public:
   /// Accessor for the internal @c argv_ pointer.
   ACE_TCHAR **argv (void) const;
 
+  /// Accessor for the @c last_option that was processed.  This allows
+  /// applications to know if the found option was a short or long 
+  /// option, and is especially useful in cases where it was invalid
+  /// and the caller wants to print out the invalid value.
+  const ACE_TCHAR *last_option (void) const;
+
   /// Dump the state of an object.
   void dump (void) const;
 
@@ -398,6 +404,9 @@ private:
   /// Handles reordering <argv>-elements.
   int permute (void);
 
+  /// Set last_option.
+  void last_option (const ACE_TString &s);
+
   /// Holds the option string.
   ACE_TString optstring_;
 
@@ -408,6 +417,10 @@ private:
   /// This is used to determine the return value when required
   /// arguments are missing.
   int has_colon_;
+
+  /// This is the last option, short or long, that was processed.  This
+  /// is handy to have in cases where the option passed was invalid.
+  ACE_TString last_option_;
 
   /**
    * The next char to be scanned in the option-element in which the
