@@ -1976,6 +1976,8 @@ ACE_Thread_Adapter::invoke (void)
       ACE_LOG_MSG->seh_except_handler ()(0);
     }
 #endif /* ACE_WIN32 */
+  // Not reached.  
+  return status;
 }
 
 #if defined (ACE_WIN32)
