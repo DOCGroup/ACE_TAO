@@ -1,3 +1,9 @@
+Sun Aug 22 16:26:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* performance-tests/Protocols/Receiver/Receiver.mpc:
+
+	  Fixed a compile error in our daily builds.
+
 Fri Aug 20 16:01:55 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
