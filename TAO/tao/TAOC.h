@@ -7,8 +7,8 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_TMP_TAOC_H_
-#define _TAO_IDL_TMP_TAOC_H_
+#ifndef _TAO_IDL_ORIG_TAOC_H_
+#define _TAO_IDL_ORIG_TAOC_H_
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -417,6 +417,8 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
   typedef CORBA::Short SyncScope;
   typedef CORBA::Short_out SyncScope_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SyncScope;
@@ -432,8 +434,6 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_EAGER_BUFFERING;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_DELAYED_BUFFERING;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 }
 TAO_NAMESPACE_CLOSE // module TAO
