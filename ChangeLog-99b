@@ -1,3 +1,10 @@
+Mon Apr 12 10:04:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/rules.local.GNU: 
+	  The default rule to compile .idl files is only enabled if
+	  TAO_ROOT is not defined, otherwise we should use the rule in
+	  $TAO_ROOT/rules.tao.GNU
+
 Mon Apr 12 00:18:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.36 released.
