@@ -1,3 +1,14 @@
+Wed Jun  2 16:38:48 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CompImplDesc_Handler.cpp:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/IAD_Handler.cpp:
+        * DnC/Config_Handlers/MID_Handler.cpp:
+        * DnC/Config_Handlers/NIA_Handler.cpp:
+        * DnC/Config_Handlers/PC_Handler.cpp:
+
+          Made changes to fix testing errors.
+
 Wed Jun  2 15:50:12 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager.mpc
@@ -6,7 +17,7 @@ Wed Jun  2 15:50:12 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/ExecutionManager/ExecutionManager.mpc
 
-          Added ciao_deployment_stub and CIAO_Server libraries to fix 
+          Added ciao_deployment_stub and CIAO_Server libraries to fix
           linking probelm in Windows.
 
         * DnC/RepositoryManager/RepositoryManager.mpc

@@ -40,7 +40,6 @@ namespace Deployment
       return indent_.c_str();
     }
 
-    // TODO: function returning the description
     template <typename DESC>
     static const DESC& desc(const char* caption)
     {
@@ -56,6 +55,7 @@ namespace Deployment
   };
 
   std::string Dump_Obj::indent_ = "-";
+  std::map<const char*, CORBA::Any> Dump_Obj::desc_map;
 
   // Dumps a string sequence
   void DnC_Dump::dump (const char* caption, const ::CORBA::StringSeq &str_seq)
