@@ -1,3 +1,12 @@
+Thu Jun 25 16:31:00 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* tao/GIOP.cpp:
+	In method TAO_GIOP_Invocation::invoke, when the method being
+	invoked threw an exception, invoke would iterate over the list of
+	possible thrown exceptions, the TAO_Exception_Data for the method, 
+	but wasn't breaking when it matched exception names. Added a break
+	statement. 
+
 Thu Jun 25 12:54:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Sequence.h: 
