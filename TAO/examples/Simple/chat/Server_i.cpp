@@ -60,7 +60,7 @@ Server_i::parse_args (int argc, char *argv[])
 int
 Server_i::init (int argc,
 		char *argv[],
-		CORBA::Environment &env)
+		CORBA::Environment &ACE_TRY_ENV)
 {
   // Parse the command line options.
   if (this-> parse_args(argc, argv) == -1)
@@ -68,32 +68,34 @@ Server_i::init (int argc,
 
   if (this->orb_manager_.init (argc,
 			       argv,
-			       env) == -1)
+			       ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "orb manager init failed\n"),
 		      -1);
-  TAO_CHECK_ENV_RETURN (env,
-			-1);
+  ACE_CHECK_RETURN (-1);
+
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Activate the servant.
   CORBA::String_var str =
     this->orb_manager_.activate (&this->broadcaster_i_,
-				 env);
+				 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   // Write the IOR to a file.
   this->write_IOR (str.in ());
   return 0;
 }
 
 int
-Server_i::run (CORBA::Environment &env)
+Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Running chat server...\n"));
 
   // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (env) == -1)
+  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Server_i::run"),
 		      -1);
