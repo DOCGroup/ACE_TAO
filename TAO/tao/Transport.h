@@ -631,9 +631,9 @@ public:
    *             block, used in the implementation of timeouts.
    */
   virtual int send_message_shared (TAO_Stub *stub,
-                                                       int message_semantics,
-                                                               const ACE_Message_Block *message_block,
-                                                                   ACE_Time_Value *max_wait_time);
+                                   int message_semantics,
+                                   const ACE_Message_Block *message_block,
+                                   ACE_Time_Value *max_wait_time);
 
 
 protected:

@@ -1,3 +1,15 @@
+Wed Feb 12 14:58:46 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp: Methods tear_listen_point_list () and
+	  get_listen_point () accessed the connection_handler without any
+	  protection and violated the protocol that was set in pre-1.2
+	  timeframe. 
+	  
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Same changes as
+	  above. This code needs refactoring.
+
+	* tao/Transport.h: Cosmetic fix.
+	
 Wed Feb 12 12:32:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/Client_Protocol/svc.conf:
@@ -9,7 +21,6 @@ Wed Feb 12 12:32:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  scheduling policy information to the above configuration
 	  files. This should fix the problems that shows up in our daily
 	  builds.
-
 
 Wed Feb 12 12:14:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
