@@ -7,6 +7,8 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 TAO_NS_FlatFileStream::TAO_NS_FlatFileStream (const ACE_CString & file,
                                               const char * mode)
