@@ -281,7 +281,7 @@ Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
 
   output->length (input.length ());
 
-#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
+#if defined (ACE_HAS_MEMORY_PROFILER)
   for (CORBA::ULong i = 0; i < input.length (); ++i)
     {
       CORBA::Long x = input[i];
@@ -291,7 +291,7 @@ Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
   CORBA::ULong i = 0;
   CORBA::Long x = input[0];
   output[i] = x * x * x;
-#endif /* ACE_HAS_PURIFY == 1 */
+#endif /* ACE_HAS_MEMORY_PROFILER */
 }
 
 // Cube an octet sequence
@@ -316,7 +316,7 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
 
   output->length (input.length ());
 
-#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   // For Purify, initialize every output since we're looking for
   // accesses to uninitialized memory addresses.  Performance
   // is secondary when compiling for purify.
@@ -333,7 +333,7 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
   CORBA::ULong i = 0;
   CORBA::Octet x = input[0];
   output[i] = x * x * x;
-#endif /* ACE_HAS_PURIFY == 1 */
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 }
 
 void

@@ -386,8 +386,6 @@ ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
                                         collection.
 ACE_HAS_MEMCHR                          Use native implementation of memchr.
-ACE_HAS_MEMORY_PROFILER                 We are using a memory profiler like
-                                        purify or valgrind
 ACE_HAS_MINIMAL_ACE_OS                  Disables some #includes in ace/OS.*.
 ACE_HAS_MFC                             Platform supports Microsoft
                                         Foundation Classes
@@ -668,7 +666,7 @@ ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         tracking down origin of
                                         ACE_NOTSUP.
 ACE_HAS_VOIDPTR_GETTIMEOFDAY            Platform/compiler supports
-					void * as second parameter 
+					void * as second parameter
 					to gettimeofday
 ACE_HAS_VOIDPTR_MMAP                    Platform requires void * for
                                         mmap().
@@ -689,6 +687,9 @@ ACE_HAS_XTI                             Platform has XTI
                                         of TLI).  Implies ACE_HAS_TLI
                                         but uses a different header
                                         file.
+ACE_INITIALIZE_MEMORY_BEFORE_USE        Memory is explicitly initialized before
+                                        use. Useful when using a profiler like
+                                        purify or valgrind
 ACE_LACKS_ACCESS                        Platform lacks access() (e.g.,
                                         VxWorks and Chorus)
 ACE_LACKS_ACE_IOSTREAM                  Platform can not build

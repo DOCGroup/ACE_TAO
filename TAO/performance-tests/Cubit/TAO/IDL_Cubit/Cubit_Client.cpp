@@ -739,10 +739,10 @@ Cubit_Client::cube_long_sequence (int,
       // gets in the way.
       input[0] = 4;
 
-#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
+#if defined (ACE_HAS_MEMORY_PROFILER)
       for (int i = 1; i < l; i++)
         input[i]=11;
-#endif /* ACE_HAS_PURIFY == 1 */
+#endif /* ACE_HAS_MEMORY_PROFILER */
 
       Cubit::long_seq_var output;
       Cubit::long_seq_out vout (output);
@@ -813,10 +813,10 @@ Cubit_Client::cube_octet_sequence (int,
       // gets in the way.
       input[0] = 4;
 
-#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
       for (int i = 1 ; i < l; i++)
         input[i]=10;
-#endif /* ACE_HAS_PURIFY == 1 */
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       Cubit::octet_seq_var output;
       Cubit::octet_seq_out vout (output);

@@ -517,11 +517,11 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
   // A buffer that we will use to initialise the CDR stream
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 
-#if defined(ACE_HAS_MEMORY_PROFILER)
+#if defined(ACE_INITIALIZE_MEMORY_BEFORE_USE)
   (void) ACE_OS::memset (repbuf,
                          '\0',
                          sizeof repbuf);
-#endif /* ACE_HAS_MEMORY_PROFILER */
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // Initialze an output CDR on the stack
   TAO_OutputCDR output (repbuf,

@@ -75,11 +75,11 @@
 # endif /* ACE_MT_SAFE */
 
 # if defined (ACE_HAS_PURIFY)
-#   define ACE_HAS_MEMORY_PROFILER
+#   define ACE_INITIALIZE_MEMORY_BEFORE_USE
 # endif /* ACE_HAS_PURIFY */
 
 # if defined (ACE_HAS_VALGRIND)
-#   define ACE_HAS_MEMORY_PROFILER
+#   define ACE_INITIALIZE_MEMORY_BEFORE_USE
 # endif /* ACE_HAS_VALGRIND */
 
 # if defined (ACE_HAS_USING_KEYWORD)
