@@ -24,13 +24,12 @@
 
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
 
 template <class TYPE, class ACE_LOCK>
 class TAO_Singleton : public ACE_Cleanup
