@@ -9,7 +9,7 @@
 //     Servant_Locator.h
 //
 // = DESCRIPTION
-//     Defines a MyFooServantLocator class , used with a POA having
+//     Defines a ServantLocator_i class , used with a POA having
 //     a NON_RETAIN policy. 
 //
 // = AUTHOR
@@ -17,22 +17,29 @@
 //
 //==================================================================================
 
+#ifndef SERVANT_LOCATOR_H
+#define SERVANT_LOCATOR_H
+
 #include "tao/corba.h"
 #include "ace/DLL.h"
+#include "Servant_Manager.h"
 
-class MyFooServantLocator : public POA_PortableServer::ServantLocator
+// @@ *done*Kirthia, can you please add two new files called
+// Servant_Manager.h and Servant_Manager.cpp that will factor out the
+// common code into a "ServantManager_i" class.  Also, please change
+// the name from "ServantLocator_i" to just "ServantLocator_i",
+// i.e., you'll have ServantLocator_i, ServantActivator_i, and
+// ServantManager_i.
+
+class ServantLocator_i : public POA_PortableServer::ServantLocator
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and
   //   NON_RETAIN policy.
 public:
-
-  typedef PortableServer::Servant (*Servant_Creator_Prototype) (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa, CORBA::Long value);
-  // This typedef is used to typecast the void* obtained on finding a 
-  // symbol in the library.
-
-  MyFooServantLocator (CORBA::ORB_ptr orb);
-  // constructor
+ 
+  ServantLocator_i (CORBA::ORB_ptr orb);
+  // Constructor
 
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr adapter,
@@ -51,34 +58,18 @@ public:
   // This method is invoked whenever a MyFooServant completes a
   // request.
 
-  PortableServer::ObjectId_var create_objectId (const char *libname, const char *factory_method);
-  // Returns an ObjectId when given an library name and the factory method to be invoked in the library.
-
+  PortableServer::ObjectId_var create_dll_object_id (const char *dllname, 
+                                                     const char *factory_function);
+  // Returns an ObjectId when given an dll name and the factory method
+  // to be invoked in the dll.
 private:
-
-  PortableServer::Servant invoke_servant (const char *str,
-                                          PortableServer::POA_ptr poa,
-                                          long value);
-  // Gets the servant on the preinvoke call by loading the appropriate library
-  // and getting the servant object.
-
-  void parse_string (const char* s);
-  // Parse the string to obtain the library name and the symbol which
-  // will get us the servant pointer.
+  
+  ServantManager_i servant_manager_;
+  // The ServantManager_i object which provide some utility methods.
 
   int counter_;
   // Counter for number of invocations of this.
 
-  CORBA::ORB_var orb_;
- // A reference to the ORB.
-
-  CORBA::String_var dllname_;
-  // The name of the library containing the servant.
-
-  CORBA::String_var create_symbol_;
-  // The symbol which on getting invoked will give us the servant
-  // pointer.
-
-  ACE_DLL dll_;
-  // The library object.
 };
+
+#endif /* SERVANT_LOCATOR_H */
