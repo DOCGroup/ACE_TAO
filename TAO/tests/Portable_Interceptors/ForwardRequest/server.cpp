@@ -170,8 +170,7 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
                            "IOR: %s",
-                           
-                           ior1),
+                           ior1.in ()),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior1.in ());
       ACE_OS::fclose (output_file);
@@ -181,7 +180,7 @@ main (int argc, char *argv[])
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior2),
+                           ior2.in ()),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior2.in ());
       ACE_OS::fclose (output_file);
