@@ -1,3 +1,9 @@
+Thu Jun 17 12:59:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	  Added accessors for the codeset translators.
+
 Thu Jun 17 00:33:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_freebsd.GNU (VERSION): Applied

@@ -480,6 +480,18 @@ ACE_OutputCDR::align_write_ptr (size_t alignment)
   return this->grow_and_adjust (0, alignment, buf);
 }
 
+ACE_INLINE ACE_Char_Codeset_Translator *
+ACE_OutputCDR::char_translator (void) const
+{
+  return this->char_translator_;
+}
+
+ACE_INLINE ACE_WChar_Codeset_Translator *
+ACE_OutputCDR::wchar_translator (void) const
+{
+  return this->wchar_translator_;
+}
+
 // ****************************************************************
 
 ACE_INLINE
@@ -1228,6 +1240,18 @@ ACE_InputCDR::align_read_ptr (size_t alignment)
 
   this->good_bit_ = 0;
   return -1;
+}
+
+ACE_INLINE ACE_Char_Codeset_Translator *
+ACE_InputCDR::char_translator (void) const
+{
+  return this->char_translator_;
+}
+
+ACE_INLINE ACE_WChar_Codeset_Translator *
+ACE_InputCDR::wchar_translator (void) const
+{
+  return this->wchar_translator_;
 }
 
 // ****************************************************************
