@@ -134,7 +134,7 @@ TAO_PSDL_Specification::accept (TAO_PSDL_Node_Visitor *visitor)
 
   ps_sh->nl ();
 
-  *ps_sh << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)"; ps_sh->nl ();
+  *ps_sh << "#if defined(_MSC_VER)"; ps_sh->nl ();
   *ps_sh << "#pragma warning(pop)"; ps_sh->nl ();
   *ps_sh << "#endif /* _MSC_VER */"; ps_sh->nl ();
 
