@@ -254,10 +254,10 @@ private:
   // One of the consumers has completed its work.
 
 private:
-  char* lcl_name_;
+  const char* lcl_name_;
   // The name of the "local" EC.
 
-  char* rmt_name_;
+  const char* rmt_name_;
   // The name of the "remote" EC.
 
   TAO_EC_Gateway_IIOP ecg_;

@@ -1,3 +1,16 @@
+Fri Jun 18 16:22:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/InterOp-Naming/INS_i.cpp:
+	  Fixed warning (and semantic error) in INS_i.cpp, strings
+	  returned from a servant should be duplicated.
+
+	* TAO/orbsvcs/Time_Service/IR_Helper.cpp:
+	* TAO/orbsvcs/Time_Service/IR_Helper.h:
+	* TAO/orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+	* TAO/tests/CDR/octet_sequence.cpp:
+	  More char* to const char* conversions, but this time they were
+	  harmless.
+
 Fri Jun 18 15:35:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_cs.cpp (visit_array): Moved
