@@ -71,7 +71,7 @@ public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
 
-  static TYPE *instance (TYPE*);
+  static TYPE *instance (TYPE *);
   // Set the Singleton instance.
 
   static void dump (void);

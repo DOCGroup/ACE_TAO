@@ -114,7 +114,8 @@ public:
   // Wait for upto <timeout> amount of time for the operation to
   // complete (or block forever if <timeout> == 0).
 
-  int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, void *args);
+  int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
+	       void *args);
   // Send control message down the stream.
 
   int wait (void);		
