@@ -40,6 +40,12 @@ class ACE_Svc_Export TAO_ORB_Parameters
 // = TITLE
 //    Parameters that are specific to the ORB.  These parameters can be
 //    for the client, the server, or for both.
+
+// NOTE: some of the functions have inline definitions in the class
+// header below.  Please do not move them back to the .i file.
+// cygnus-2.7.2-960126, distributed with Tornado 1.0.1, can't deal
+// with returing a const reference here.  It raises an internal
+// compiler error at ace/Svc_Handler.cpp:46, of all places.
 {
 public:
   TAO_LOCAL_INLINE TAO_ORB_Parameters (void);
@@ -51,19 +57,31 @@ public:
   TAO_LOCAL_INLINE void addr (const ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
-  TAO_LOCAL_INLINE const ACE_INET_Addr &addr (void);
+  TAO_LOCAL_INLINE const ACE_INET_Addr &addr (void)
+  {
+    return this->addr_;
+  }
   // Get the address on which we're listening.
 
   TAO_LOCAL_INLINE void name_service_ior (CORBA::String ns);
   // Set the IOR of our name service.
 
-  TAO_LOCAL_INLINE CORBA::String name_service_ior (void);
+  TAO_LOCAL_INLINE CORBA::String name_service_ior (void)
+  {
+    return this->name_service_ior_;
+  }
   // Get the IOR of our name service.
 
-  TAO_LOCAL_INLINE void name_service_port (CORBA::UShort port);
+  TAO_LOCAL_INLINE void name_service_port (CORBA::UShort port)
+  {
+    this->name_service_port_ = port;
+  }
   // Set the port of our name service.
 
-  TAO_LOCAL_INLINE CORBA::UShort name_service_port (void);
+  TAO_LOCAL_INLINE CORBA::UShort name_service_port (void)
+  {
+    return this->name_service_port_;
+  }
   // Get the port of our name service.
 
 private:
