@@ -1,3 +1,15 @@
+Mon Sep 27 17:12:51 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.i: 
+	* ace/OS.h:
+	  Added an overloaded ioctl () that is used when the io control
+	  code is one of SIO_SET_QOS or SIO_GET_QOS.
+
+	* ACE_wrappers/examples/QOS/server.cpp:
+	* ACE_wrappers/examples/QOS/client.cpp:
+	  Made changes to the usage of ioctl () in the above files to
+	  reflect the corresponding changes in ACE.
+	
 Mon Sep 27 13:11:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: Wrap the define statement in a
