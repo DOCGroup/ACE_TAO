@@ -116,7 +116,7 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
   if (qos_.ProviderSpecific.buf == 0) {
     ACE_ERROR((LM_ERROR,
-               ASYS_TEXT("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+               ACE_TEXT("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
                size));
     return;
   }
@@ -296,7 +296,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
   if (qos_.ProviderSpecific.buf == 0) {
     ACE_ERROR((LM_ERROR,
-               ASYS_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+               ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
                size));
     return;
   }

@@ -123,7 +123,7 @@ ACE_ATM_Stream::get_peer_name (void) const
   if ((total_len = atm2text(buffer,sizeof buffer,
                             (struct sockaddr *)&(name.sockaddratmsvc), 
                             A2T_PRETTY|A2T_NAME)) < 0) {
-    ACE_DEBUG((LM_DEBUG,ASYS_TEXT("ACE_ATM_Stream(get_peer_name):%d"),errno));
+    ACE_DEBUG((LM_DEBUG,ACE_TEXT("ACE_ATM_Stream(get_peer_name):%d"),errno));
     return 0;
   }
 
@@ -253,7 +253,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
                          ACE_reinterpret_cast(char*,&mypvcaddr),
                          &addrpvclen) < 0) {
     ACE_DEBUG(LM_DEBUG,
-              ASYS_TEXT("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
+              ACE_TEXT("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
               errno);
     return -1;
   }
@@ -269,7 +269,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
                          ACE_reinterpret_cast(char*,&mypvcid),
                          &pvcidlen) < 0) {
     ACE_DEBUG(LM_DEBUG,
-              ASYS_TEXT("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
+              ACE_TEXT("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
               errno);
     return -1;
   }
@@ -279,7 +279,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   return 0;
 #else
   ACE_DEBUG(LM_DEBUG,
-            ASYS_TEXT("ACE_ATM_Stream::get_vpi_vci: Not implemented in this ATM version. Update to >= 0.62\n Or patch 0.59"));
+            ACE_TEXT("ACE_ATM_Stream::get_vpi_vci: Not implemented in this ATM version. Update to >= 0.62\n Or patch 0.59"));
   ACE_UNUSED_ARG (vci);
   ACE_UNUSED_ARG (vpi);
 
