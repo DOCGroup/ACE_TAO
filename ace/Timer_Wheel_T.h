@@ -168,6 +168,9 @@ public:
   virtual void dump (void) const;
   // Dump the state of an object.
 
+  virtual ACE_Timer_Node_T<TYPE> *get_first (void);
+  // Reads the earliest node from the queue and returns it.
+
 private:
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
   // Reschedule an "interval" node

@@ -1,3 +1,13 @@
+Sun Jan 18 15:54:16 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Wheel_T.h:
+	  ace/Timer_Hash_T.h:
+	  ace/Timer_Queue_T.h:
+	  ace/Timer_Wheel_T.cpp:
+	  ace/Timer_Hash_T.cpp:  Added pure virtual get_first() method to 
+	  Timer_Queue_T.  Added implementations to Timer_Wheel and Timer_Hash.
+	  Timer_Heap and Timer_List already had implementations.
+
 Sat Jan 17 23:40:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/VCAUTO.MAK:
