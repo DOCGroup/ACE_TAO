@@ -17,16 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class Home : public virtual SemanticAction::Home,
-                     public virtual ScopeBase<SemanticGraph::Home>
+        struct Home : SemanticAction::Home, ScopeBase<SemanticGraph::Home>
         {
-        public:
-          virtual
-          ~Home () throw ();
-
           Home (Context& c);
 
           virtual void

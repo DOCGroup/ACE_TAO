@@ -5,7 +5,7 @@
 #ifndef CCF_IDL3_SEMANTIC_ACTION_IMPL_HOME_FACTORY_HPP
 #define CCF_IDL3_SEMANTIC_ACTION_IMPL_HOME_FACTORY_HPP
 
-#include "CCF/IDL2/SemanticGraph/Operation.hpp"
+#include "CCF/IDL3/SemanticGraph/Home.hpp"
 #include "CCF/IDL3/SemanticAction/HomeFactory.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Elements.hpp"
 
@@ -17,16 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class HomeFactory : public virtual SemanticAction::HomeFactory,
-                            public Base
+        struct HomeFactory : SemanticAction::HomeFactory, Base
         {
-        public:
-          virtual
-          ~HomeFactory () throw ();
-
           HomeFactory (Context& c);
 
           virtual void

@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Publishes : public virtual SemanticAction::Publishes,
-                          public Base
+        struct Publishes : SemanticAction::Publishes, Base
         {
-        public:
-          virtual
-          ~Publishes () throw ();
-
           Publishes (Context& c);
 
           virtual void

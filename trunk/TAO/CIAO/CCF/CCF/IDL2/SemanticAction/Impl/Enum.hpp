@@ -17,15 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        //@@ use struct in these classes.
-        //
-
-        struct Enum : virtual SemanticAction::Enum, Base
+        struct Enum : SemanticAction::Enum, Base
         {
-        public:
-          virtual
-          ~Enum () throw ();
-
           Enum (Context& c);
 
           virtual void

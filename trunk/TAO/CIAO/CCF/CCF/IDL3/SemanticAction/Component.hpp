@@ -13,12 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Component : public virtual Scope
+      struct Component : Scope
       {
-      public:
         virtual void
         begin_def (SimpleIdentifierPtr const& id) = 0;
 

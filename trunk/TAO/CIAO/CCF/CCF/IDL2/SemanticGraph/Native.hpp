@@ -27,7 +27,7 @@ namespace CCF
 
       protected:
         friend class Graph<Node, Edge>;
-        
+
         Native ()
         {
           type_info (static_type_info ());

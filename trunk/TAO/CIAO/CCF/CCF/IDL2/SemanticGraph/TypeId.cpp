@@ -4,15 +4,15 @@
 
 #include "CCF/IDL2/SemanticGraph/TypeId.hpp"
 
-using Introspection::TypeInfo;
-using Introspection::Access;
-
 namespace CCF
 {
   namespace IDL2
   {
     namespace SemanticGraph
     {
+      using Introspection::TypeInfo;
+      using Introspection::Access;
+
       // TypeId
       //
       //

@@ -12,10 +12,6 @@ namespace CCF
     {
       namespace Impl
       {
-
-        Factory::
-        ~Factory () throw () {}
-
         Factory::
         Factory (CompilerElements::Context& context,
                  Diagnostic::Stream& dout,

@@ -20,9 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         ValueType::
-        ~ValueType () throw () {}
-
-        ValueType::
         ValueType (Context& c)
             : ScopeBase<SemanticGraph::ValueType> (c)
         {

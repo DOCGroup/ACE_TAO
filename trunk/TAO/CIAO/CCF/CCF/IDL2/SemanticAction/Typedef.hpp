@@ -13,15 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Typedef
+      struct Typedef
       {
-      public:
-        virtual
-        ~Typedef () throw () {}
-
         virtual void
         begin (IdentifierPtr const& id) = 0;
 

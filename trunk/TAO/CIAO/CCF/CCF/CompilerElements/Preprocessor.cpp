@@ -240,7 +240,7 @@ namespace CCF
 
                 // Add new line if it's missing at the end of line.
                 //
-                if (line_.empty () || line_.back () != '\n')
+                if (!line_.empty () && line_.back () != '\n')
                 {
                   //@@ should issue a warning here
                   //

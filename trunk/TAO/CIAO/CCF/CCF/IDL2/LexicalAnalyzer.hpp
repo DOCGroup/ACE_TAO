@@ -5,8 +5,6 @@
 #ifndef CCF_IDL2_LEXICAL_ANALYZER_HPP
 #define CCF_IDL2_LEXICAL_ANALYZER_HPP
 
-//@@ I wonder what I actually use from this list.
-//
 #include <set>
 #include <map>
 #include <deque>

@@ -20,9 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Interface::
-        ~Interface () throw () {}
-
-        Interface::
         Interface (Context& c)
             : ScopeBase<SemanticGraph::Interface> (c)
         {
@@ -165,7 +162,7 @@ namespace CCF
             try
             {
               SemanticGraph::Interface& i (
-                resolve<SemanticGraph::Interface> (from, name, defined));
+                resolve<SemanticGraph::Interface> (from, name, Flags::defined));
 
               switch (qualifier_)
               {

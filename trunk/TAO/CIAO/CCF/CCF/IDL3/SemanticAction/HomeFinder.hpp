@@ -13,13 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class HomeFinder
+      struct HomeFinder
       {
-      public:
-
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
 

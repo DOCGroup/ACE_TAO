@@ -17,16 +17,9 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class EventType : public virtual SemanticAction::EventType,
-                          public virtual ScopeBase<SemanticGraph::EventType>
+        struct EventType : SemanticAction::EventType,
+                           ScopeBase<SemanticGraph::EventType>
         {
-        public:
-          virtual
-          ~EventType () throw ();
-
           EventType (Context& c);
 
           virtual void

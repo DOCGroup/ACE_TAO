@@ -13,9 +13,6 @@ namespace CCF
       using Introspection::TypeInfo;
       using Introspection::Access;
       
-      // Native
-      //
-      //
       namespace
       {
         TypeInfo

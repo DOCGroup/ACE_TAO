@@ -529,17 +529,16 @@ namespace CCF
       NoArgAction<SemanticAction::Include>
       act_include_end;
 
-
       // Interface
       //
       //
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Interface>
-        act_abstract_interface_begin_def,
-        act_abstract_interface_begin_fwd,
-        act_local_interface_begin_def,
-        act_local_interface_begin_fwd,
-        act_unconstrained_interface_begin_def,
-        act_unconstrained_interface_begin_fwd;
+        act_interface_begin_abstract_def,
+        act_interface_begin_abstract_fwd,
+        act_interface_begin_local_def,
+        act_interface_begin_local_fwd,
+        act_interface_begin_unconstrained_def,
+        act_interface_begin_unconstrained_fwd;
 
       OneArgAction<IdentifierPtr, SemanticAction::Interface>
       act_interface_inherits;
@@ -700,10 +699,10 @@ namespace CCF
       //
       //
       OneArgAction<SimpleIdentifierPtr, SemanticAction::ValueType>
-        act_abstract_value_type_begin_def,
-        act_abstract_value_type_begin_fwd,
-        act_concrete_value_type_begin_def,
-        act_concrete_value_type_begin_fwd;
+        act_value_type_begin_abstract_def,
+        act_value_type_begin_abstract_fwd,
+        act_value_type_begin_concrete_def,
+        act_value_type_begin_concrete_fwd;
 
       OneArgAction<IdentifierPtr, SemanticAction::ValueType>
       act_value_type_inherits, act_value_type_supports;

@@ -21,11 +21,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Consumes::
-        ~Consumes () throw ()
-        {
-        }
-
-        Consumes::
         Consumes (Context& c)
             : Base (c)
         {

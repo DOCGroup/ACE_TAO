@@ -13,12 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class EventType : public virtual Scope
+      struct EventType : Scope
       {
-      public:
         virtual void
         begin_abstract_def (SimpleIdentifierPtr const& id) = 0;
 

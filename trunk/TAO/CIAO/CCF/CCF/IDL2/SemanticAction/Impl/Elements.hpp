@@ -42,6 +42,7 @@ namespace CCF
     {
       namespace Impl
       {
+
         //
         //
         //
@@ -103,11 +104,16 @@ namespace CCF
         };
 
 
+        //
+        //
+        //
         class Base
         {
         protected:
           virtual
-          ~Base () throw () {}
+          ~Base ()
+          {
+          }
 
           Base (Context& c)
               : ctx (c)
@@ -151,18 +157,21 @@ namespace CCF
           class NotComplete_ {};
           typedef ExceptionTemplate<NotComplete_> NotComplete;
 
-          enum Flags
+          struct Flags
           {
-            none = 0x00,
-            complete = 0x01,
-            defined = 0x02
+            enum Value
+            {
+              none = 0x00,
+              complete = 0x01,
+              defined = 0x02
+            };
           };
 
           template <typename T>
           T&
           resolve (SemanticGraph::ScopedName const& from,
                    SemanticGraph::Name const& name,
-                   Flags flags = none)
+                   Flags::Value flags = Flags::none)
             throw (NotFound, NotUnique, WrongType, NotDefined, NotComplete);
 
 
@@ -186,17 +195,14 @@ namespace CCF
           Context& ctx;
         };
 
+
         //
         //
         //
         template <typename T>
-        class ScopeBase : public virtual SemanticAction::Scope,
-                          public Base
+        class ScopeBase : public Base
         {
         protected:
-          virtual
-          ~ScopeBase () throw () {}
-
           ScopeBase (Context& c)
               : Base (c)
           {
@@ -238,10 +244,10 @@ namespace CCF
           std::stack<SemanticGraph::Scope*> stack_;
         };
 
-        //
-        //
-        //
 
+        //
+        //
+        //
         class NotFound {};
         class NotUnique {};
 

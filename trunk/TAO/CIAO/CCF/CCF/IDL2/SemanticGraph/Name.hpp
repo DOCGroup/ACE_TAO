@@ -15,7 +15,7 @@ namespace CCF
   {
     namespace SemanticGraph
     {
-      //@@ better names for names: SimpleName, ScopedName, FullName
+      //@@ better names for names: maybe SimpleName, ScopedName, FullName?
       //
       //
 

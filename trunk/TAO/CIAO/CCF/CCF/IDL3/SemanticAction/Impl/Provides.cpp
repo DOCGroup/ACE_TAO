@@ -21,11 +21,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Provides::
-        ~Provides () throw ()
-        {
-        }
-
-        Provides::
         Provides (Context& c)
             : Base (c)
         {

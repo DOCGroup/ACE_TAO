@@ -12,11 +12,12 @@
 
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 
-//@@ tmp
+/*
 #include <iostream>
 
 using std::cerr;
 using std::endl;
+*/
 
 namespace CCF
 {
@@ -24,10 +25,6 @@ namespace CCF
   {
     namespace Traversal
     {
-      //@@ revise with the knowledge that derivation is not
-      //   access controlled.
-      //
-
       //
       //
       //
@@ -75,8 +72,6 @@ namespace CCF
         std::map<Introspection::TypeId, Traversers>
         TraversalMap;
 
-        //@@ This stuff is not used.
-        //
         typedef
         typename TraversalMap::const_iterator
         Iterator;
@@ -202,6 +197,8 @@ namespace CCF
       class EdgeDispatcher : public virtual EdgeDispatcherBase
       {
       public:
+        //@@ this should be done in Dispatcher in merge() function?
+        //
         void
         node_traverser (NodeDispatcherBase& d)
         {

@@ -208,11 +208,15 @@ namespace CCF
           return name ();
         }
 
+        /*
+
+	Let me know if you need this function.
+
         ScopedName
         eponym () const
         {
-          return ScopedName ("@@");
         }
+	*/
 
       public:
         static Introspection::TypeInfo const&
@@ -332,10 +336,10 @@ namespace CCF
         }
 
         Nameables
-        lookup (Name const& name);
+        lookup (Name const& name) const;
 
         void
-        lookup (Name const& name, Nameables& result);
+        lookup (Name const& name, Nameables& result) const;
 
       public:
         static Introspection::TypeInfo const&
@@ -431,7 +435,7 @@ namespace CCF
       {
       public:
         Belongs&
-        belongs ()
+        belongs () const
         {
           return *belongs_;
         }
@@ -462,13 +466,13 @@ namespace CCF
       {
       public:
         Instance&
-        instance ()
+        instance () const
         {
           return *instance_;
         }
 
         Type&
-        type ()
+        type () const
         {
           return *type_;
         }
@@ -541,13 +545,11 @@ namespace CCF
       {
       public:
         TypeTemplateSpecialization&
-        specialization ()
+        specialization () const
         {
           return *specialization_;
         }
-
-        //@@ add const everywhere.
-        //
+        
         Type&
         type () const
         {
@@ -590,13 +592,13 @@ namespace CCF
       {
       public:
         virtual Type&
-        subject ()
+        subject () const
         {
           return *subject_;
         }
 
         virtual Type&
-        object ()
+        object () const
         {
           return *object_;
         }
@@ -637,13 +639,13 @@ namespace CCF
       {
       public:
         virtual Type&
-        inheritor ()
+        inheritor () const
         {
           return subject ();
         }
 
         virtual Type&
-        inheritee ()
+        inheritee () const
         {
           return object ();
         }
@@ -671,7 +673,7 @@ namespace CCF
       {
       public:
         Node&
-        element ()
+        element () const
         {
           return *element_;
         }

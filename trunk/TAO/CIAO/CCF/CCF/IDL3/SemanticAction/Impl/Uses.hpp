@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Uses : public virtual SemanticAction::Uses,
-                     public Base
+        struct Uses : SemanticAction::Uses, Base
         {
-        public:
-          virtual
-          ~Uses () throw ();
-
           Uses (Context& c);
 
           virtual void

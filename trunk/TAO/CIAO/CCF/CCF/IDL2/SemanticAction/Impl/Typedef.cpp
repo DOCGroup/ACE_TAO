@@ -27,11 +27,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Typedef::
-        ~Typedef () throw ()
-        {
-        }
-
-        Typedef::
         Typedef (Context& c)
             : Base (c)
         {
@@ -42,6 +37,7 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << "typedef " << id << endl;
 
+          define_ = false;
           type_ = 0;
 
           Name name (id->lexeme ());
@@ -78,6 +74,7 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << "typedef sequence<" << id << ">" << endl;
 
+          define_ = true;
           type_ = 0;
 
           Name name (id->lexeme ());
@@ -128,9 +125,16 @@ namespace CCF
             {
               if (type_ != 0)
               {
-                ctx.tu ().new_edge<Aliases> (ctx.scope (), *type_, name);
+                if (define_)
+                {
+                  ctx.tu ().new_edge<Defines> (ctx.scope (), *type_, name);
+                  define_ = false;
+                }
+                else
+                {
+                  ctx.tu ().new_edge<Aliases> (ctx.scope (), *type_, name);
+                }
               }
-
               return;
             }
           }

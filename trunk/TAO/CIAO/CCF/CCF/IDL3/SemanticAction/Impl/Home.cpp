@@ -21,11 +21,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Home::
-        ~Home () throw ()
-        {
-        }
-
-        Home::
         Home (Context& c)
             : ScopeBase<SemanticGraph::Home> (c)
         {
@@ -65,7 +60,7 @@ namespace CCF
             {
               ctx.tu ().new_edge<Inherits> (
                 now (),
-                resolve<SemanticGraph::Home> (from, name, defined));
+                resolve<SemanticGraph::Home> (from, name, Flags::defined));
             }
             catch (Resolve const&)
             {
@@ -105,7 +100,7 @@ namespace CCF
             try
             {
               SemanticGraph::Interface& i (
-                resolve<SemanticGraph::Interface> (from, name, defined));
+                resolve<SemanticGraph::Interface> (from, name, Flags::defined));
 
               check_support (now ().supports_begin (),
                              now ().supports_end (),
@@ -157,7 +152,7 @@ namespace CCF
             {
               ctx.tu ().new_edge<Manages> (
                 now (),
-                resolve<SemanticGraph::Component> (from, name, defined));
+                resolve<SemanticGraph::Component> (from, name, Flags::defined));
             }
             catch (Resolve const&)
             {

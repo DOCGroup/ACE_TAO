@@ -29,21 +29,13 @@ namespace CCF
     {
       namespace Impl
       {
-        class Factory : public virtual IDL3::SemanticAction::Factory,
-                        public virtual IDL2::SemanticAction::Impl::Factory
+        struct Factory : virtual IDL3::SemanticAction::Factory,
+                         virtual IDL2::SemanticAction::Impl::Factory
         {
-        public:
-          virtual
-          ~Factory () throw ();
-
-          //@@ there is no more separate tracing options
-          //
-
           Factory (CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
                    SemanticGraph::TranslationUnit& tu);
 
-        public:
           virtual SemanticAction::Consumes&
           consumes ()
           {

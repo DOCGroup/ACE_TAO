@@ -4,6 +4,8 @@
 
 #include "CCF/IDL2/SemanticAction/Impl/Member.hpp"
 
+#include "CCF/IDL2/SemanticGraph/Member.hpp"
+
 #include <iostream>
 
 using std::cerr;
@@ -18,11 +20,6 @@ namespace CCF
       namespace Impl
       {
         using namespace SemanticGraph;
-
-        Member::
-        ~Member () throw ()
-        {
-        }
 
         Member::
         Member (Context& c)
@@ -44,7 +41,7 @@ namespace CCF
           {
             try
             {
-              type_ = &resolve<Type> (from, name, complete);
+              type_ = &resolve<Type> (from, name, Flags::complete);
             }
             catch (Resolve const&)
             {

@@ -13,15 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Attribute
+      struct Attribute
       {
-      public:
-        virtual
-        ~Attribute () throw () {}
-
         virtual void
         begin_ro () = 0;
 

@@ -21,11 +21,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Emits::
-        ~Emits () throw ()
-        {
-        }
-
-        Emits::
         Emits (Context& c)
             : Base (c)
         {
@@ -76,7 +71,7 @@ namespace CCF
           if (type_)
           {
             Emitter& e (ctx.tu ().new_node<Emitter> ());
-            
+
             ctx.tu ().new_edge<Belongs> (e, *type_);
             ctx.tu ().new_edge<Defines> (ctx.scope (), e, id->lexeme ());
           }

@@ -8,9 +8,6 @@ namespace CCF
   {
     namespace Traversal
     {
-      // @@ Use Type& shortcut consistently.
-      //
-
       template <typename T>
       void InterfaceTemplate<T>::
       traverse (T& i)

@@ -17,13 +17,9 @@ namespace CCF
     {
       namespace Impl
       {
-        class Module : public virtual SemanticAction::Module,
-                       public virtual ScopeBase<SemanticGraph::Module>
+        struct Module : SemanticAction::Module,
+                        ScopeBase<SemanticGraph::Module>
         {
-        public:
-          virtual
-          ~Module () throw ();
-
           Module (Context& c);
 
           virtual void

@@ -2,7 +2,6 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#include "CCF/IDL3/SemanticGraph/Home.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp"
 
 #include <iostream>
@@ -20,11 +19,6 @@ namespace CCF
       namespace Impl
       {
         using namespace SemanticGraph;
-
-        HomeFinder::
-        ~HomeFinder () throw ()
-        {
-        }
 
         HomeFinder::
         HomeFinder (Context& c)
@@ -70,7 +64,7 @@ namespace CCF
           {
             try
             {
-              Type& t (resolve<Type> (from, name, complete));
+              Type& t (resolve<Type> (from, name, Flags::complete));
 
               Parameter& p (
                 ctx.tu ().new_node<InParameter> (name_id->lexeme ()));

@@ -14,7 +14,7 @@ namespace CCF
         T& Base::
         resolve (SemanticGraph::ScopedName const& from,
                  SemanticGraph::Name const& name,
-                 Flags flags)
+                 Flags::Value flags)
           throw (NotFound, NotUnique, WrongType, NotDefined, NotComplete)
         {
           using namespace SemanticGraph;
@@ -33,12 +33,12 @@ namespace CCF
             {
               T& t (dynamic_cast<T&> (node));
 
-              if (flags & defined)
+              if (flags & Flags::defined)
               {
                 if (!t.defined ()) throw NotDefined (node.scoped_name ());
               }
 
-              if (flags & complete)
+              if (flags & Flags::complete)
               {
                 SemanticGraph::Type& type (
                   dynamic_cast<SemanticGraph::Type&> (t));

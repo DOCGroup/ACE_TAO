@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Enum::
-        ~Enum () throw ()
-        {
-        }
-
-        Enum::
         Enum (Context& c)
             : Base (c)
         {
