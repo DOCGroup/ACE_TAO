@@ -1,5 +1,38 @@
-
 #include "server.h"
+
+Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *r)
+  : ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> (0, 0, r)
+{
+
+}
+
+int
+Mpeg_Svc_Handler::open (void *)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::open called\n"));
+  return 0;
+}
+
+int
+Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
+{
+  return 0;
+}
+
+int
+Mpeg_Svc_Handler::close (u_long)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::close called \n"));
+  return 0;
+}
+
+int
+Mpeg_Svc_Handler::handle_timeout (const ACE_Time_Value &,
+                                  const void *arg)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::handle_timeout called \n"));
+  return 0;
+}
 
 // Default Constructor
 Mpeg_Server::Mpeg_Server ()
@@ -153,7 +186,7 @@ Mpeg_Server::init (int argc,
       Mpeg_Global::live_video = 2;
   }
 
-  ComInitServer(VCR_TCP_PORT, VCR_UNIX_PORT, VCR_ATM_PORT);
+  /*  ComInitServer(VCR_TCP_PORT, VCR_UNIX_PORT, VCR_ATM_PORT); */
   
   /*
   setpgrp();
@@ -172,7 +205,19 @@ Mpeg_Server::init (int argc,
 int
 Mpeg_Server::run ()
 {
+  this->server_addr_.set (VCR_TCP_PORT);
 
+  this->server_addr_.dump ();
+  // "listen" on the socket
+  if (this->acceptor_.open (this->server_addr_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+
+  // enter the reactor event loop
+  ACE_Reactor::run_event_loop ();
+}
+
+#if 0
+{
   for (;;)
   {
     int val;
@@ -244,6 +289,7 @@ Mpeg_Server::run ()
   }
   return 0;
 }
+#endif
 
 Mpeg_Server::~Mpeg_Server (void)
 {
