@@ -487,7 +487,8 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
   if (!this->is_local ())
     {
       *os << "ACE_INLINE" << be_nl;
-      *os << this->name () << "::" << this->local_name () << " (" 
+      *os << this->name () << "::" 
+          << this->local_name () << " (" 
           << be_idt << be_idt_nl 
           << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl 
@@ -533,13 +534,15 @@ be_interface::gen_var_defn (char *interface_name)
 
   ch->indent (); // start with whatever was our current indent level
   *ch << "class " << be_global->stub_export_macro ()
-      << " " << namebuf << " : public TAO_Base_var" << be_nl;
+      << " " << namebuf 
+      << " : public TAO_Base_var" << be_nl;
   *ch << "{" << be_nl;
   *ch << "public:" << be_idt_nl;
 
   // Default constructor.
   *ch << namebuf << " (void); // default constructor" << be_nl;
-  *ch << namebuf << " (" << interface_name << "_ptr p)"
+  *ch << namebuf << " (" << interface_name 
+      << "_ptr p)"
       << " : ptr_ (p) {} " << be_nl;
 
   // Copy constructor.
@@ -547,23 +550,27 @@ be_interface::gen_var_defn (char *interface_name)
       << " &); // copy constructor" << be_nl;
 
   // Destructor.
-  *ch << "~" << namebuf << " (void); // destructor" << be_nl;
+  *ch << "~" << namebuf 
+      << " (void); // destructor" << be_nl;
   *ch << be_nl;
 
   // Assignment operator from a pointer.
-  *ch << namebuf << " &operator= (" << interface_name << "_ptr);" << be_nl;
+  *ch << namebuf << " &operator= (" << interface_name 
+      << "_ptr);" << be_nl;
 
   // Assignment from _var.
-  *ch << namebuf << " &operator= (const " << namebuf <<
-    " &);" << be_nl;
+  *ch << namebuf << " &operator= (const " << namebuf 
+      << " &);" << be_nl;
 
   // Arrow operator
   *ch << interface_name << "_ptr operator-> (void) const;" << be_nl;
   *ch << be_nl;
 
   // Other extra types (cast operators, [] operator, and others).
-  *ch << "operator const " << interface_name << "_ptr &() const;" << be_nl;
-  *ch << "operator " << interface_name << "_ptr &();" << be_nl;
+  *ch << "operator const " << interface_name 
+      << "_ptr &() const;" << be_nl;
+  *ch << "operator " << interface_name 
+      << "_ptr &();" << be_nl;
 
   *ch << "// in, inout, out, _retn " << be_nl;
   // The return types of in, out, inout, and _retn are based on the parameter
@@ -581,12 +588,15 @@ be_interface::gen_var_defn (char *interface_name)
   *ch << "// Hooks used by template sequence and object manager classes"
       << be_nl
       << "// for non-defined forward declared interfaces." << be_nl
-      << "static " << interface_name << "_ptr duplicate ("
+      << "static " << interface_name 
+      << "_ptr duplicate ("
       << interface_name << "_ptr);" << be_nl
       << "static void release (" << interface_name
       << "_ptr);" << be_nl
-      << "static " << interface_name << "_ptr nil (void);" << be_nl
-      << "static " << interface_name << "_ptr narrow (CORBA::Object *, "
+      << "static " << interface_name 
+      << "_ptr nil (void);" << be_nl
+      << "static " << interface_name 
+      << "_ptr narrow (CORBA::Object *, "
       << "CORBA::Environment &);" << be_nl
       << "static CORBA::Object * upcast (void *);" << be_uidt_nl << be_nl;
 
@@ -654,30 +664,34 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   // Default constructor.
   *cs << fname << "::" << lname
-      << " (void) // default constructor" << be_nl;
-  *cs << "  " << ": ptr_ (" << interface_local_name
-      << "::_nil ())" << be_nl;
+      << " (void) // default constructor" << be_idt_nl;
+  *cs << ": ptr_ (" << interface_local_name
+      << "::_nil ())" << be_uidt_nl;
   *cs << "{}" << be_nl << be_nl;
 
   // The additional ptr () member function. This member function must be
   // defined before the remaining member functions including the copy
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
-  *cs << "::" << interface_full_name << "_ptr" << be_nl;
+  *cs << "::" << interface_full_name 
+      << "_ptr" << be_nl;
   *cs << fname << "::ptr (void) const" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
   // Copy constructor.
-  *cs << fname << "::" << lname << " (const " << "::" << interface_full_name
+  *cs << fname << "::" << lname 
+      << " (const ::" << interface_full_name
       << "_var &p) // copy constructor" << be_nl;
   *cs << "  : TAO_Base_var ()," << be_nl;
-  *cs << "    ptr_ (" << interface_local_name << "::_duplicate (p.ptr ()))" << be_nl;
+  *cs << "    ptr_ (" << interface_local_name 
+      << "::_duplicate (p.ptr ()))" << be_nl;
   *cs << "{}" << be_nl << be_nl;
 
   // Destructor.
-  *cs << fname << "::~" << lname << " (void) // destructor" << be_nl;
+  *cs << fname << "::~" << lname 
+      << " (void) // destructor" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "CORBA::release (this->ptr_);" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
@@ -695,80 +709,90 @@ be_interface::gen_var_impl (char *interface_local_name,
   // Assignment operator from _var.
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (const "
-      << "::" << interface_full_name << "_var &p)" << be_nl;
+      << "::" << interface_full_name 
+      << "_var &p)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "if (this != &p)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "CORBA::release (this->ptr_);" << be_nl;
-  *cs << "this->ptr_ = " << "::" << interface_full_name
+  *cs << "this->ptr_ = ::" << interface_full_name
       << "::_duplicate (p.ptr ());" << be_uidt_nl;
   *cs << "}" << be_nl;
   *cs << "return *this;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
   // Other extra methods - cast operator ().
-  *cs << fname << "::operator const " << "::" << interface_full_name
+  *cs << fname << "::operator const ::" << interface_full_name
       << "_ptr &() const // cast" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  *cs << fname << "::operator " << "::" << interface_full_name
+  *cs << fname << "::operator ::" << interface_full_name
       << "_ptr &() // cast " << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
   // operator->
-  *cs << "::" << interface_full_name << "_ptr" << be_nl;
+  *cs << "::" << interface_full_name 
+      << "_ptr" << be_nl;
   *cs << fname << "::operator-> (void) const" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
   // in, inout, out, and _retn
-  *cs << "::" << interface_full_name << "_ptr" << be_nl;
+  *cs << "::" << interface_full_name 
+      << "_ptr" << be_nl;
   *cs << fname << "::in (void) const" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  *cs << "::" << interface_full_name << "_ptr &" << be_nl;
+  *cs << "::" << interface_full_name 
+      << "_ptr &" << be_nl;
   *cs << fname << "::inout (void)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  *cs << "::" << interface_full_name << "_ptr &" << be_nl;
+  *cs << "::" << interface_full_name 
+      << "_ptr &" << be_nl;
   *cs << fname << "::out (void)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "CORBA::release (this->ptr_);" << be_nl;
-  *cs << "this->ptr_ = " << "::" << interface_full_name
+  *cs << "this->ptr_ = ::" << interface_full_name
       << "::_nil ();" << be_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  *cs << "::" << interface_full_name << "_ptr" << be_nl;
+  *cs << "::" << interface_full_name 
+      << "_ptr" << be_nl;
   *cs << fname << "::_retn (void)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "// yield ownership of managed obj reference" << be_nl;
-  *cs << "::" << interface_full_name << "_ptr val = this->ptr_;" << be_nl;
-  *cs << "this->ptr_ = " << "::" << interface_full_name
+  *cs << "::" << interface_full_name 
+      << "_ptr val = this->ptr_;" << be_nl;
+  *cs << "this->ptr_ = ::" << interface_full_name
       << "::_nil ();" << be_nl;
   *cs << "return val;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
   // Hooks for the global static functions used by non-defined interfaces.
-  *cs << "::" << interface_full_name << "_ptr" << be_nl
+  *cs << "::" << interface_full_name 
+      << "_ptr" << be_nl
       << fname << "::duplicate ("
       << interface_local_name << "_ptr p)" << be_nl
       << "{" << be_idt_nl
-      << "return ::" << interface_full_name << "::_duplicate (p);"
+      << "return ::" << interface_full_name 
+      << "::_duplicate (p);"
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *cs << "void" << be_nl
-      << fname << "::release (" << interface_local_name << "_ptr p)" << be_nl
+      << fname << "::release (" << interface_local_name 
+      << "_ptr p)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::release (p);" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -776,7 +800,8 @@ be_interface::gen_var_impl (char *interface_local_name,
   *cs << "::" << interface_full_name << "_ptr" << be_nl
       << fname << "::nil (void)" << be_nl
       << "{" << be_idt_nl
-      << "return ::" << interface_full_name << "::_nil ();" << be_uidt_nl
+      << "return ::" << interface_full_name 
+      << "::_nil ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *cs << "::" << interface_full_name << "_ptr" << be_nl
@@ -785,7 +810,8 @@ be_interface::gen_var_impl (char *interface_local_name,
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return ::" << interface_full_name << "::_narrow (p, ACE_TRY_ENV);"
+      << "return ::" << interface_full_name 
+      << "::_narrow (p, ACE_TRY_ENV);"
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -793,7 +819,8 @@ be_interface::gen_var_impl (char *interface_local_name,
       << fname << "::upcast (void *src)" << be_nl
       << "{" << be_idt_nl
       << interface_local_name << " **tmp =" << be_idt_nl
-      << "ACE_static_cast (" << interface_local_name << " **, src);" 
+      << "ACE_static_cast (" << interface_local_name 
+      << " **, src);" 
       << be_uidt_nl
       << "return *tmp;" << be_uidt_nl
       << "}\n\n";
@@ -833,26 +860,32 @@ be_interface::gen_out_defn (char *interface_name)
   // No default constructor.
 
   // Constructor from a pointer.
-  *ch << namebuf << " (" << interface_name << "_ptr &);" << be_nl;
+  *ch << namebuf << " (" << interface_name 
+      << "_ptr &);" << be_nl;
 
   // Constructor from a _var &.
-  *ch << namebuf << " (" << interface_name << "_var &);" << be_nl;
+  *ch << namebuf << " (" << interface_name 
+      << "_var &);" << be_nl;
 
   // Constructor from a _out &.
-  *ch << namebuf << " (const " << namebuf << " &);" << be_nl;
+  *ch << namebuf << " (const " << namebuf 
+      << " &);" << be_nl;
 
   // Assignment operator from a _out &
-  *ch << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
+  *ch << namebuf << " &operator= (const " << namebuf 
+      << " &);" << be_nl;
 
   // Assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators.
   // Only interface allows assignment from var &.
   *ch << namebuf << " &operator= (const " << interface_name 
       << "_var &);" << be_nl;
-  *ch << namebuf << " &operator= (" << interface_name << "_ptr);" << be_nl;
+  *ch << namebuf << " &operator= (" << interface_name 
+      << "_ptr);" << be_nl;
 
   // Cast.
-  *ch << "operator " << interface_name << "_ptr &();" << be_nl;
+  *ch << "operator " << interface_name 
+      << "_ptr &();" << be_nl;
 
   // ptr fn
   *ch << interface_name << "_ptr &ptr (void);" << be_nl;
@@ -904,39 +937,43 @@ be_interface::gen_out_impl (char *interface_local_name,
 
   *ci << "// *************************************************************"
       << be_nl;
-  *ci << "// Inline operations for class " << fname << be_nl;
+  *ci << "// Operations for class " << fname << be_nl;
   *ci << "// *************************************************************"
       << be_nl << be_nl;
 
       // Constructor from a _ptr.
-  *ci << fname << "::" << lname << " ("  << interface_local_name
+  *ci << fname << "::" << lname 
+      << " ("  << interface_local_name
       << "_ptr &p)" << be_nl;
   *ci << "  : ptr_ (p)" << be_nl;
   *ci << "{" << be_idt_nl;
-  *ci << "this->ptr_ = " << "::" << interface_full_name
+  *ci << "this->ptr_ = ::" << interface_full_name
       << "::_nil ();" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // Constructor from _var &.
-  *ci << fname << "::" << lname << " (" << interface_local_name
+  *ci << fname << "::" << lname 
+      << " (" << interface_local_name
       << "_var &p) // constructor from _var" << be_nl;
   *ci << "  : ptr_ (p.out ())" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "CORBA::release (this->ptr_);" << be_nl;
-  *ci << "this->ptr_ = " << "::" << interface_full_name
+  *ci << "this->ptr_ = ::" << interface_full_name
       << "::_nil ();" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // Copy constructor.
-  *ci << fname << "::" << lname << " (const " << "::" << interface_full_name
+  *ci << fname << "::" << lname 
+      << " (const ::" << interface_full_name
       << "_out &p) // copy constructor" << be_nl;
   *ci << "  : ptr_ (ACE_const_cast (" << interface_local_name
       << "_out &, p).ptr_)" << be_nl;
   *ci << "{}" << be_nl << be_nl;
 
   // Assignment operator from _out &.
-  *ci << "::" << fname << " &" << be_nl;
-  *ci << fname << "::operator= (const " << "::" << interface_full_name
+  *ci << "::" << fname 
+      << " &" << be_nl;
+  *ci << fname << "::operator= (const ::" << interface_full_name
       << "_out &p)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "this->ptr_ = ACE_const_cast (" << interface_local_name
@@ -946,10 +983,10 @@ be_interface::gen_out_impl (char *interface_local_name,
 
   // Assignment operator from _var.
   *ci << fname << " &" << be_nl;
-  *ci << fname << "::operator= (const " << "::" << interface_full_name
+  *ci << fname << "::operator= (const ::" << interface_full_name
       << "_var &p)" << be_nl;
   *ci << "{" << be_idt_nl;
-  *ci << "this->ptr_ = " << "::" << interface_full_name
+  *ci << "this->ptr_ = ::" << interface_full_name
       << "::_duplicate (p.ptr ());" << be_nl;
   *ci << "return *this;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
@@ -964,21 +1001,23 @@ be_interface::gen_out_impl (char *interface_local_name,
   *ci << "}" << be_nl << be_nl;
 
   // Other extra methods - cast operator ().
-  *ci << fname << "::operator " << "::" << interface_full_name
+  *ci << fname << "::operator ::" << interface_full_name
       << "_ptr &() // cast" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // ptr function.
-  *ci << "::" << interface_full_name << "_ptr &" << be_nl;
+  *ci << "::" << interface_full_name 
+      << "_ptr &" << be_nl;
   *ci << fname << "::ptr (void) // ptr" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // operator->
-  *ci << "::" << interface_full_name << "_ptr" << be_nl;
+  *ci << "::" << interface_full_name 
+      << "_ptr" << be_nl;
   *ci << fname << "::operator-> (void)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;

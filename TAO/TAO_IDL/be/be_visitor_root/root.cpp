@@ -108,33 +108,34 @@ int be_visitor_root::visit_root (be_root *node)
 
           *os << be_global->stub_export_macro () << be_nl
               << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name () << "_duplicate (" 
+              << "tao_" << ifwd->flat_name () 
+              << "_duplicate (" 
               << be_idt << be_idt_nl
               << ifwd->full_name  () << "_ptr" << be_uidt_nl
               << ");" << be_uidt_nl
-              << "extern " << be_global->stub_export_macro () << be_nl
+              << be_global->stub_export_macro () << be_nl
               << "void" << be_nl
-              << "tao_" << ifwd->flat_name () << "_release ("
-              << be_idt << be_idt_nl
+              << "tao_" << ifwd->flat_name () 
+              << "_release (" << be_idt << be_idt_nl
               << ifwd->full_name () << "_ptr" << be_uidt_nl
               << ");" << be_uidt_nl
-              << "extern " << be_global->stub_export_macro () << be_nl
+              << be_global->stub_export_macro () << be_nl
               << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name () << "_nil (" 
-              << be_idt << be_idt_nl
+              << "tao_" << ifwd->flat_name () 
+              << "_nil (" << be_idt << be_idt_nl
               << "void" << be_uidt_nl
               << ");" << be_uidt_nl
-              << "extern " << be_global->stub_export_macro () << be_nl
+              << be_global->stub_export_macro () << be_nl
               << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name () << "_narrow (" 
-              << be_idt << be_idt_nl
+              << "tao_" << ifwd->flat_name () 
+              << "_narrow (" << be_idt << be_idt_nl
               << "CORBA::Object *," << be_nl
               << "CORBA::Environment &" << be_uidt_nl
               << ");" << be_uidt_nl
-              << "extern " << be_global->stub_export_macro () << be_nl
+              << be_global->stub_export_macro () << be_nl
               << "CORBA::Object *" << be_nl
-              << "tao_" << ifwd->flat_name () << "_upcast (" 
-              << be_idt << be_idt_nl
+              << "tao_" << ifwd->flat_name () 
+              << "_upcast (" << be_idt << be_idt_nl
               << "void *" << be_uidt_nl
               << ");" << be_uidt_nl << be_nl;
         }
