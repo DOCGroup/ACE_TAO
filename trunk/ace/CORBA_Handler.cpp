@@ -8,6 +8,8 @@
 # include "ace/Object_Manager.h"
 #endif /* ACE_MT_SAFE */
 
+#include "ace/Thread_Manager.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/CORBA_Handler.i"
 #endif /* __ACE_INLINE__ */

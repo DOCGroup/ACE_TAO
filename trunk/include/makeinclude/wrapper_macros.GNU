@@ -89,7 +89,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 IDL             = idl
-IDLFLAGS        = -s S.cpp -c C.cpp
+IDLFLAGS        = -A -B -s S.cpp -c C.cpp
 INCLDIRS        += -I. -I$(ACE_ROOT)
 INSBIN          = $(ACE_ROOT)/bin
 INSINC          = $(ACE_ROOT)/ace

@@ -1,3 +1,27 @@
+Sat Sep 27 20:03:29 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU: 
+	  Activated exceptions by default too, since they are used by
+	  Orbix anyway.
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU: 
+	  Some libraries were missing and the locations were not
+	  completely accurate.
+
+	* ace/config-sunos5.5-sunc++-4.x-orbix.h: 
+	  I let the MT Orbix as the default, since that is the
+	  configuration here and that was implicit in the platform*.GNU
+	  files.
+
+	* include/makeinclude/wrapper_macros.GNU: 
+	  Added flags to the IDL compiler to emit support for both
+	  CORBA::Any (-A) and the BOAImpl (-B) approach for the server
+	  side implementations.
+
+	* ace/CORBA_Handler.cpp: 
+	  The full definition for Thread_Manager was missing, I added an
+	  include for it.
+
 Sat Sep 27 07:59:18 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU,
