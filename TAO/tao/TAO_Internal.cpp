@@ -85,8 +85,9 @@ TAO_Internal::close_services (void)
   if (service_open_count_ == 0)
     return -1;
 
-//  if (--service_open_count_ == 0)
-//    return ACE_Service_Config::close ();
+  // @@ Should this be removed?
+  //  if (--service_open_count_ == 0)
+  //    return ACE_Service_Config::close ();
 
   return 0;
 }
