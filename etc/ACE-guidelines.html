@@ -85,7 +85,8 @@ to Graham for providing the OSE tools!<p>
 
         To insert that string at the top of a file:
         <pre>
-        perl -pi -e 'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
+        perl -pi -e \
+          'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
         </pre><p>
 
     <li>Comments, especially in header files, must follow the
@@ -268,13 +269,15 @@ to Graham for providing the OSE tools!<p>
         ssize_t n_bytes;
 
         // Send multicast of one byte, enough to wake up server.
-        if ((n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)) == -1)
+        if ((n_bytes = multicast.send ((char *) &reply_port,
+          sizeof reply_port)) == -1)
         </pre>
 
         Write it like this:
 
         <pre>
-        ssize_t n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)
+        ssize_t n_bytes = multicast.send ((char *) &reply_port,
+          sizeof reply_port)
 
         // Send multicast of one byte, enough to wake up server.
         if (n_bytes == -1)
@@ -363,6 +366,8 @@ to Graham for providing the OSE tools!<p>
          and <strong><code>ACE_OS::scanf/fprintf ()</code></strong> for
          file I/O.  Avoid using iostreams because of implementation
          differences across platforms.<p>
+     <li>After attempting to open an existing file, always check for success.
+         Take appropriate action if the open failed.<p>
   </ul>
 
   <li><strong>UNICODE conformity</strong><p>
@@ -474,6 +479,18 @@ to Graham for providing the OSE tools!<p>
 
 
 <hr>
+<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">Other
+  ACE</a> and
+  <a href="http://www.cs.wustl.edu/~schmidt/TAO-overview.html">TAO</a>
+  Guidelines</h3>
+<ul>
+  <li>Never add copyrighted, confidential, or otherwise restricted
+      code to the ACE or TAO distributions without written permission
+      from the owner.<p>
+</ul>
+
+
+<hr>
 <h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">CVS</a>
   Usage Guidelines</h3>
 <ul>
@@ -511,9 +528,10 @@ to Graham for providing the OSE tools!<p>
 <h3><a href="http://www.cs.wustl.edu/~schmidt/rules.html">ACE
   Design Rules</a></h3>
 
+
 <hr>
 <!-- hhmts start -->
-Last modified: Mon Aug 17 14:51:25 CDT 1998
+Last modified: Wed Aug 19 10:05:15 CDT 1998
 <!-- hhmts end -->
 
 </body>
