@@ -278,11 +278,14 @@ TAO_Metrics_Logger::log_aggregate_QoS (const Metrics::QoSParameter_Set & qos_par
                                        Metrics::Time interval,
                                        CORBA::Environment &ACE_TRY_ENV)
 {
-// This is a temporary patch to eliminate this data from the log.  It was done to bypass a long rebuild 
-// that would have been required otherwise.  Remove this patch later.  Brian Mendel
+// This is a temporary patch to eliminate this data from the log.  It was
+// done to bypass a long rebuild that would have been required otherwise.
+// Remove this patch later.  Brian Mendel
+
   //Added to remove Linux warning (Boeing Extension)
   ACE_UNUSED_ARG(ACE_TRY_ENV);
-
+  ACE_UNUSED_ARG(qos_params);
+  ACE_UNUSED_ARG(interval);
   // Package up the data and put it on the task queue.
 #if 0
   TAO_Metrics_Logger_Data *data;
