@@ -1031,7 +1031,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
       threads = 3;            // size of Proactor thread pool
       senders = 20;           // number of senders
-      loglevel = 0;           // log level : 0 full/ 1 only errors
+      loglevel = 1;           // log level : 0 full/ 1 only errors
       seconds = 20;           // time to run in seconds
       return 0;
     }
