@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,6 +13,7 @@
 
 #ifndef TAO_IOR_TABLE_IMPL_H
 #define TAO_IOR_TABLE_IMPL_H
+
 #include "ace/pre.h"
 
 #include "IORTable.h"
@@ -31,7 +32,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IORTable_Export TAO_IOR_Table_Impl : public virtual IORTable::Table, public virtual TAO_Local_RefCounted_Object
+class TAO_IORTable_Export TAO_IOR_Table_Impl :
+  public virtual IORTable::Table,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor
@@ -91,7 +94,7 @@ public:
     //@}
 
 private:
-  typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> Map;
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex> Map;
 
   /// The map
   Map map_;
@@ -108,4 +111,5 @@ private:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
+
 #endif /* TAO_IOR_TABLE_IMPL */
