@@ -259,42 +259,51 @@ lookup strategy to be used with the system id policy. The
 option defaults to use the <CODE>active</CODE> strategy. </TD></TR>
 <TR>
 
+<TD><CODE>-ORBuniqueidpolicyreversedemuxstrategy</CODE> <EM>unique id
+policy based reverse demultiplexing strategy</EM></TD> <TD>Specify the
+reverse demultiplexing lookup strategy to be used with the unique id
+policy. The <EM>reverse demultiplexing strategy</EM> can be one of
+<CODE>dynamic</CODE> or <CODE>user</CODE>. This option defaults to use
+the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
+
 <TD><CODE>-ORBthreadflags</CODE> <EM>thread flags</EM></TD>
-<TD>Specify the flags used for thread creation. Flags can be any logical-OR
-combination of <CODE>THR_DETACHED</CODE>, <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
-<CODE>THE_SUSPENDED</CODE>.</TD></TR>
-<TR>
-<TD><CODE>-ORBpoalock</CODE> <EM>lock type</EM></TD>
-<TD><a name="-ORBpoalock"></a>Specify the type of lock to be used for
-POA accesses.  Possible values for <em>lock type</em> are
+<TD>Specify the flags used for thread creation. Flags can be any
+logical-OR combination of <CODE>THR_DETACHED</CODE>,
+<CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,
+<CODE>THE_SUSPENDED</CODE>.</TD></TR> <TR>
+
+<TD><CODE>-ORBpoalock</CODE> <EM>lock type</EM></TD> <TD><a
+name="-ORBpoalock"></a>Specify the type of lock to be used for POA
+accesses.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
-<code>thread</code>.</TD></TR>
-<TR>
-<TD><CODE>-ORBcoltbllock</CODE> <EM>lock type</EM></TD>
-<TD><a name="-ORBcoltbllock"></a>Specify the type of lock to be used for
-the global collocation table.  Possible values for <em>lock type</em> are
+<code>thread</code>.</TD></TR> <TR>
+
+<TD><CODE>-ORBcoltbllock</CODE> <EM>lock type</EM></TD> <TD><a
+name="-ORBcoltbllock"></a>Specify the type of lock to be used for the
+global collocation table.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
-<code>thread</code>.</TD></TR>
-<TR>
+<code>thread</code>.</TD></TR> <TR>
+
 <TD><CODE>-ORBconnectorlock</CODE> <EM>lock type</EM></TD> <TD><a
 name="-ORBconnectorlock"></a>Specify the type of lock to be used by
 the connector.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
-<code>thread</code>.</TD></TR>
-<TR>
-<TD><CODE>-ORBpoamgrlock</CODE> <EM>lock type</EM></TD>
-<TD><a name="-ORBpoamgrlock"></a>Specify the type of lock to be used for
-POA Manager accesses.  Possible values for <em>lock type</em> are
+<code>thread</code>.</TD></TR> <TR>
+
+<TD><CODE>-ORBpoamgrlock</CODE> <EM>lock type</EM></TD> <TD><a
+name="-ORBpoamgrlock"></a>Specify the type of lock to be used for POA
+Manager accesses.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
 <code>null</code>.</TD></TR>
+
 </TABLE>
 </P>
 </blockquote>
