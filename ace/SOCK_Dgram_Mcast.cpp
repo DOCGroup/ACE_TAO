@@ -112,6 +112,8 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
             ++nr_subscribed;
         }
       else
+        // Iterate through all the interfaces, figure out which ones
+        // offer multicast service, and subscribe to them.
         while (if_cnt > 0)
           {
             --if_cnt;    
@@ -134,7 +136,8 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
           errno = ENODEV;
           return -1;
         }
-      return 0;
+      else
+        return 1;
     }
   // else do it like everyone else...
 #endif /* ACE_WIN32 */
@@ -154,13 +157,19 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                  int protocol_family,
                                  int protocol)
 {
-  if (this->subscribe_i (mcast_addr,
-			 reuse_addr,
-			 net_if,
-			 protocol_family,
-			 protocol) == -1)
+  int result = this->subscribe_i (mcast_addr,
+                                  reuse_addr,
+                                  net_if,
+                                  protocol_family,
+                                  protocol);
+  // Check for the error case.
+  if (result == -1)
     return -1;
-  
+#if defined (ACE_WIN32)
+  // Check for the "short-circuit" return value (for NT).
+  else if (result == 1)
+    return 0;
+#endif /* ACE_WIN32 */
   // Tell network device driver to read datagrams with a
   // multicast_address IP interface.
   else if (this->ACE_SOCK::set_option (IPPROTO_IP,
@@ -180,13 +189,22 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                  int protocol_family,
                                  int protocol)
 {
-  if (this->subscribe_i (mcast_addr,
-			 reuse_addr,
-			 net_if,
-			 protocol_family,
-			 protocol) == -1)
+  int result = this->subscribe_i (mcast_addr,
+                                  reuse_addr,
+                                  net_if,
+                                  protocol_family,
+                                  protocol);
+  // Check for the error case.
+  if (result == -1)
     return ACE_INVALID_HANDLE;
-  
+#if defined (ACE_WIN32)
+  // @@ Note that this code is currently broken since <subscribe_i>
+  // calls the wrong version of subscribe recursively!
+
+  // Check for the "short-circuit" return value (for NT).
+  else if (result == 1)
+    return 0;
+#endif /* ACE_WIN32 */
   // Tell network device driver to read datagrams with a
   // <mcast_request_if_> IP interface.
   else
@@ -264,7 +282,8 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
           errno = ENODEV;
           return -1;
         }
-      return 0;
+
+      return 1;
     }
   // else do it like everyone else...
 #endif /* ACE_WIN32 */
@@ -289,11 +308,19 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
                                    int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe");
-  if (this->unsubscribe_i (mcast_addr,
-			   net_if,
-			   protocol_family,
-			   protocol) == -1)
+  int result = this->unsubscribe_i (mcast_addr,
+                                    net_if,
+                                    protocol_family,
+                                    protocol);
+
+  // Check for error return and bail out.
+  if (result == -1)
     return -1;
+#if defined (ACE_WIN32)
+  // Check for the "short-circuit" return value (for NT).
+  else if (result == 1)
+    return 0;
+#endif /* ACE_WIN32 */
   // Tell network device driver to read datagrams with a
   // multicast_address address.
   else if (ACE_SOCK::set_option (IPPROTO_IP,
