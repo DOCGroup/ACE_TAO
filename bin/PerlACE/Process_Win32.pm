@@ -325,6 +325,7 @@ sub TerminateWaitKill ($)
     my $timeout = shift;
 
     if ($self->{RUNNING}) {
+        print STDERR "INFO: $self->{EXECUTABLE} being killed.\n";
         Win32::Process::Kill ($self->{PROCESS}, 0);
     }
 
@@ -342,7 +343,7 @@ sub Wait ($)
     if (!defined $timeout || $timeout < 0) {
       $timeout = INFINITE;
     } else {
-      $timeout = $timeout * 1000 * $PerlACE::Process::WAIT_DELAY_FACTOR; 
+      $timeout = $timeout * 1000 * $PerlACE::Process::WAIT_DELAY_FACTOR;
     }
 
     my $result = 0;
@@ -353,8 +354,8 @@ sub Wait ($)
         return -1;
       }
     }
-    Win32::Process::GetExitCode ($self->{PROCESS}, $result);    
-    return $result;    
+    Win32::Process::GetExitCode ($self->{PROCESS}, $result);
+    return $result;
 }
 
 
