@@ -1,3 +1,9 @@
+Fri Jan 23 11:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Added ACE_HAS_3_PARAM_WCSTOK for the new CBuilderX Preview
+          compiler
+
 Fri Jan 23 10:47:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
