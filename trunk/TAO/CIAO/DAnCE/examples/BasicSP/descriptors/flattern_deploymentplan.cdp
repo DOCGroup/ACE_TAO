@@ -73,7 +73,7 @@
       <exclusiveProvider>false</exclusiveProvider>
       <exclusiveUser>false</exclusiveUser>
       <optional>false</optional>
-      <kind>EventPublisher</kind>
+      <kind>Facet</kind>
     </port>
     
     <port>
@@ -232,7 +232,7 @@
     <name>datain_data_read</name>
     <internalEndpoint>
       <portName>data_read</portName>
-      <kind>EventPublisher</kind>
+      <kind>Facet</kind>
       <instance>BasicSP-BMDevice-idd</instance>
     </internalEndpoint>
     <internalEndpoint>
