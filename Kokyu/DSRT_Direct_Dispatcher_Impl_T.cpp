@@ -192,7 +192,7 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 {
-  DSUI_EVENT_LOG (DSTRM_DIRECT_DISPATCH_FAM, SCHEDULE_ENTER, 0,0,NULL);
+  DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, SCHEDULE_ENTER, 0,0,NULL);
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -250,7 +250,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):schedule_i exit\n"));
 #endif
-  DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH, SCHEDULE_EXIT, 0,0,NULL);
+  DSUI_EVENT_LOG (DSRT_DIRECT_DISPATCH_FAM, SCHEDULE_EXIT, 0,0,NULL);
   return 0;
 }
 
