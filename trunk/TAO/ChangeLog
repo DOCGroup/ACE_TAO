@@ -1,3 +1,10 @@
+Wed May  5 23:42:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Invocation.h:
+
+	  Updated to use ACE_Utils::Auto_Functor<> instead of the
+	  deprecated TAO::Utils::Auto_Functor<> class.
+
 Wed May  6 00:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation:
