@@ -38,7 +38,7 @@ do
 
   if grep "ACE_\(static\|dynamic\|const\|reinterpret\)_cast" $arg > /dev/null 2>&1; then
     echo "  $arg"
-   sed -e :a -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*\([^ \t].*\)/\1_cast<\2> (\3/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*(/ba' $arg > ${arg}.new
+   sed -e :a -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*\([^ \t].*\)/\1_cast<\2> (\3/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*(/ba' $arg > ${arg}.new
     mv ${arg}.new $arg
   fi
 done
