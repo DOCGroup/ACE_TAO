@@ -126,14 +126,16 @@ DRV_cpp_init()
       cpp_loc = cpp_path;
   else
       cpp_loc = idl_global->cpp_location();
-  DRV_cpp_putarg(cpp_loc);
+  DRV_cpp_putarg (cpp_loc);
 #if defined (ACE_WIN32)
-  DRV_cpp_putarg("-nologo");
+  DRV_cpp_putarg ("-nologo");
 #endif /* ACE_WIN32 */
-  DRV_cpp_putarg("-E");
+  DRV_cpp_putarg ("-E");
   DRV_cpp_putarg("-DIDL");
-  DRV_cpp_putarg("-I.");
-//  DRV_cpp_putarg("-I$(TAO_ROOT)/tao");
+  DRV_cpp_putarg ("-I.");
+  DRV_cpp_putarg (ACE_OS::strcat (ACE_OS::strcat ("-I",
+                                                  ACE_OS::getenv ("TAO_ROOT")),
+                                  "/tao"));
 }
 
 /*
