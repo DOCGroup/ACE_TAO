@@ -89,8 +89,10 @@
 
 #include "ace/Log_Record.h"
 
-// In case iostream.h is not #included before this header . . .
-class ostream;
+// In case ace/stdcpp.h is not #included before this header . . .
+#if !defined(ACE_STDCPP_H)
+  class ostream;
+#endif
 
 #define ACE_LOG_MSG ACE_Log_Msg::instance ()
 

@@ -23,9 +23,21 @@
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
 
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
+			(ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+#include <vector>
+#include <string>
+#else
 #include "vector.h"
 #include "bstring.h"
+#endif
 // You must configure the STL components in order to use this wrapper.
+
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+  using std::vector;
+  using std::basic_string;
+#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
 class ACE_Export ACE_Registry
   // = TITLE
@@ -41,7 +53,7 @@ class ACE_Export ACE_Registry
 {
 public:
   
-  typedef std::basic_string<TCHAR> Istring;
+  typedef basic_string<TCHAR> Istring;
   // International string
 
   struct ACE_Export Name_Component 
@@ -52,7 +64,7 @@ public:
   // The <id_> field is used,
   // but the <kind_> field is currently ignored
 
-  typedef std::vector<Name_Component> Name;
+  typedef vector<Name_Component> Name;
   // A Name is an ordered collections of components (ids)
 
   static LPCTSTR STRING_SEPARATOR;
@@ -100,7 +112,7 @@ public:
     // A binding has a name and a type
   };
   
-  typedef std::vector<Binding> Binding_List;
+  typedef vector<Binding> Binding_List;
   // A list of bindings
 
   class Binding_Iterator;
@@ -503,6 +515,13 @@ private:
   // Check if <machine_name> is the local host
 
 };
+
+#if (_MSC_VER) && (_MSC_VER > 1020) && \
+    (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+  typedef ACE_Registry::Name_Component Name_Component;
+  typedef ACE_Registry::Binding Binding;
+  const int NPOS = ACE_Registry::Istring::npos;
+#endif
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_REGISTRY_H */

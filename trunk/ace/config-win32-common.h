@@ -67,8 +67,6 @@
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
 
-//#define ACE_HAS_STANDARD_CPP_LIBRARY
-
 // Platform supports the rusage struct.
 #define ACE_HAS_GETRUSAGE
 
@@ -127,12 +125,6 @@
 // Platform support linebuffered streaming is broken
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
-// iostream header lacks ipfx (), isfx (), etc., declarations
-// only for MSVC 4.2 and below
-#if (_MSC_VER < 1100)
-#define ACE_LACKS_IOSTREAM_FX
-#endif /* _MSC_VER < 1100 */
-
 // Template specialization is supported
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
@@ -144,10 +136,65 @@
 
 // ----------------- "derived" defines and includes -----------
 
-// It seems that this works only with MSVC 4.1 and 4.2 
-#if (1010 <= _MSC_VER) && (_MSC_VER <= 1020) 
-	#define ACE_HAS_TEMPLATE_TYPEDEFS
+#if (ACE_HAS_STANDARD_CPP_LIBRARY != 0) 
+	#if defined (_MSC_VER) 
+                #if (_MSC_VER > 1020)
+			// Platform has its Standard C++ library in the namespace std
+                        #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+                                    #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB	1
+                        #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+                #else /* (_MSC_VER > 1020) */
+                        #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+                                #undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+                        #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+                        #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
+                #endif /* (_MSC_VER > 1020) */
+	#endif /* _MSC_VER */
+
+	// ace/iostream.h does not work with the standard cpp library (yet).
+	#define ACE_LACKS_ACE_IOSTREAM
+#else
+	// iostream header lacks ipfx (), isfx (), etc., declarations
+	#define ACE_LACKS_IOSTREAM_FX
 #endif
+
+#if defined (_MSC_VER)
+        // While digging the MSVC 4.0 include files, I found how to disable
+        // MSVC warnings: --Amos Shapira
+
+	// "C4355: 'this' : used in base member initializer list"
+	#pragma warning(disable:4355) /* disable C4514 warning */
+	//	#pragma warning(default:4355)   // use this to reenable, if desired
+
+	#pragma warning(disable:4201)  /* winnt.h uses nameless structs */
+
+	// It seems that this works with MSVC 4.[1,2]
+	#if (1010 <= _MSC_VER) && (_MSC_VER <= 1020)
+		#define ACE_HAS_TEMPLATE_TYPEDEFS
+	#endif
+
+	// MSVC 5.0 ?
+	#if (_MSC_VER > 1020) 
+		// Compiler/platform supports typename keyword
+		#define ACE_HAS_TYPENAME_KEYWORD
+
+		// Compiler/platform defines the sig_atomic_t typedef
+		#define ACE_HAS_SIG_ATOMIC_T
+	#endif
+
+	// MSVC 4.0 or greater
+	#if (_MSC_VER >= 1000)
+		// Compiler/Platform supports the "using" keyword.
+		#define ACE_HAS_USING_KEYWORD
+	#endif
+
+	// MSVC 2.2 or lower
+	#if (_MSC_VER < 1000)
+		// This needs to be here since MSVC++ 2.0 seems to have forgotten to
+		// include it. Does anybody know which MSC_VER MSVC 2.0 has ?
+		inline void *operator new (unsigned int, void *p) { return p; }
+	#endif
+#endif /* _MSC_VER */
 
 // MFC itself defines STRICT.
 #if defined( ACE_HAS_MFC ) && (ACE_HAS_MFC != 0) 
@@ -183,11 +230,6 @@
 	#if !defined(_MT)
 		#define _MT
 	#endif
-
-	// use DLLs instead of static libs
-//	#if !defined(_DLL)
-//		#define _DLL
-//	#endif
 #endif
 
 // We are using STL's min and max (in algobase.h).  Therefore the
@@ -195,17 +237,6 @@
 #if !defined (NOMINMAX)
 	#define NOMINMAX
 #endif /* NOMINMAX */
-
-// While digging the MSVC 4.0 include files, I found how to disable
-// MSVC warnings: --Amos Shapira
-
-#if defined (_MSC_VER)
-	// "C4355: 'this' : used in base member initializer list"
-	#pragma warning(disable:4355) /* disable C4514 warning */
-	//	#pragma warning(default:4355)   // use this to reenable, if desired
-
-	#pragma warning(disable:4201)  /* winnt.h uses nameless structs */
-#endif /* _MSC_VER */
 
 #if defined (_UNICODE)
         #if !defined (UNICODE)
@@ -224,7 +255,11 @@
 #else
 	#if ! defined (__ACE_INLINE__)
 		#define __ACE_INLINE__
-	#endif /* ! __ACE_INLINE__ */
+	#else /* __ACE_INLINE__ */
+		#if (__ACE_INLINE__ == 0)
+			#undef __ACE_INLINE__
+		#endif
+	#endif /* __ACE_INLINE__ */
 #endif
 
 // We are build ACE and want to use MFC (multithreaded)
@@ -281,7 +316,7 @@
         #endif /* UNICODE */
 
 
-#endif /* !defined (_INC_INWDOWS) */
+#endif /* !defined (_INC_WINDOWS) */
 
 // Always use WS2 when available
 #if (ACE_HAS_WINNT4 != 0)
@@ -327,17 +362,6 @@
 	// If CancelIO is undefined get the updated sp2-sdk 
 	// from MS
 	#define ACE_HAS_CANCEL_IO
-#endif
-
-#if (_MSC_VER >= 1000)
-	// Compiler/Platform supports the "using" keyword.
-	#define ACE_HAS_USING_KEYWORD
-#endif
-
-#if (_MSC_VER < 1000)
-	// This needs to be here since MSVC++ 2.0 seems to have forgotten to
-	// include it. Does anybody know which MSC_VER MSVC 2.0 has ?
-	inline void *operator new (unsigned int, void *p) { return p; }
 #endif
 
 #endif /* ACE_WIN32_COMMON_H */

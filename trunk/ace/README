@@ -264,6 +264,7 @@ ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA   Compiler's template instantiation mechan
 ACE_REQUIRES_FUNC_DEFINITIONS           Compiler requires a definition for a "hidden" function, e.g., a private, unimplemented copy constructor or assignment operator.  The SGI C++ compiler needs this, in template classes, with ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA.
 ACE_USE_POLL				Use the poll() event demultiplexor rather than select().
 ACE_USES_ASM_SYMBOL_IN_DLSYM		Platform uses assembly symbols instead of C symbols in dlsym()
+ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB	Platform has its standard c++ library in the namespace std.
 ACE_WSOCK_VERSION 			A parameter list indicating the version of WinSock (e.g., "1, 1" is version 1.1).
 ----------------------------------------
 
