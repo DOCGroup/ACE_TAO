@@ -12,7 +12,7 @@
 #----------------------------------------------------------------------------
 <%marker(top)%>
 MAKEFILE         = <%project_file%>
-DEPENDENCY_FILE  = .depend.<%project_file%>
+DEPENDENCY_FILE  = .depend.<%project_name%>
 <%if(exename)%>
 BIN_UNCHECKED    = <%exename%>
 <%endif%>
