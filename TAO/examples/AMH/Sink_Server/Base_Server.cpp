@@ -29,7 +29,8 @@ Base_Server::~Base_Server ()
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught while destroying Base_Server \n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught while destroying Base_Server \n");
     }
   ACE_ENDTRY;
 
@@ -113,7 +114,8 @@ Base_Server::start_orb_and_poa (void)
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA"
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -121,8 +123,8 @@ Base_Server::start_orb_and_poa (void)
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      this->root_poa_ = PortableServer::POA::_narrow ( poa_object.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
@@ -132,14 +134,16 @@ Base_Server::start_orb_and_poa (void)
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      return 0;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception raised initialising ORB or POA");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception raised initialising ORB or POA");
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 void
@@ -152,14 +156,16 @@ Base_Server::register_servant (AMH_Servant *servant)
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (roundtrip.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (roundtrip.in ()
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       (void) this->write_ior_to_file (ior);
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception raised while registering servant");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception raised while registering servant");
     }
   ACE_ENDTRY;
 }
@@ -173,8 +179,8 @@ Base_Server::run_event_loop ()
       ACE_Time_Value period (0, 11000);
       while (1)
         {
-              this->orb_->perform_work (&period);
-              ACE_TRY_CHECK;
+          this->orb_->perform_work (&period);
+          ACE_TRY_CHECK;
         }
       ACE_TRY_CHECK;
     }
@@ -185,7 +191,9 @@ int
 Base_Server::write_ior_to_file (CORBA::String_var ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file= ACE_OS::fopen (this->ior_output_file_, "w");
+  FILE *output_file =
+    ACE_OS::fopen (this->ior_output_file_, "w");
+
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
