@@ -141,11 +141,12 @@ Object_Group_Factory_i::list_groups (int random,
 
   // Create an iterator for group structure to populate the list.
   Object_Group_Factory_i::HASH_MAP::ITERATOR *group_iter;
-
+  Object_Group_Factory_i::HASH_MAP::ITERATOR random_iter (random_groups_);
+  Object_Group_Factory_i::HASH_MAP::ITERATOR rr_iter (rr_groups_);
   if (random)
-    (*group_iter) = Object_Group_Factory_i::HASH_MAP::ITERATOR (random_groups_);
+    group_iter = &random_iter;
   else
-    (*group_iter) = Object_Group_Factory_i::HASH_MAP::ITERATOR (rr_groups_);
+    group_iter = &rr_iter;
 
   // Iterate over groups and populate the list.
   Object_Group_Factory_i::HASH_MAP::ENTRY *hash_entry;
@@ -195,6 +196,7 @@ char *
 Object_Group_i::id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA::string_dup (id_.c_str ());
 }
 
@@ -417,3 +419,53 @@ RR_Object_Group::unbind (const char *id,
   else if (position == next_)
     next_ = next_ % (members_.current_size ());
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>;
+template class ACE_Hash<ACE_CString>;
+template class ACE_Equal_To<ACE_CString>;
+template class ACE_Hash_Map_Entry<ACE_CString, Load_Balancer::Object_Group_var>;
+
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, CORBA::Object_var, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, CORBA::Object_var, ACE_Null_Mutex>;
+template class ACE_Hash<ACE_CString>;
+template class ACE_Equal_To<ACE_CString>;
+template class ACE_Hash_Map_Entry<ACE_CString, CORBA::Object_var>;
+
+template class ACE_DLList<ACE_CString>;
+template class ACE_DLList_Iterator<ACE_CString>;
+
+template class ACE_Auto_Basic_Ptr<Object_Group_i>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate  ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Iterator<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Iterator_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Manager_Ex<ACE_CString, Load_Balancer::Object_Group_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Manager<ACE_CString, Load_Balancer::Object_Group_var, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash<ACE_CString>
+#pragma instantiate  ACE_Equal_To<ACE_CString>
+#pragma instantiate  ACE_Hash_Map_Entry<ACE_CString, Load_Balancer::Object_Group_var>
+
+#pragma instantiate  ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Iterator<ACE_CString, CORBA::Object_var, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Iterator_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA::Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash_Map_Manager<ACE_CString, CORBA::Object_var, ACE_Null_Mutex>
+#pragma instantiate  ACE_Hash<ACE_CString>
+#pragma instantiate  ACE_Equal_To<ACE_CString>
+#pragma instantiate  ACE_Hash_Map_Entry<ACE_CString, CORBA::Object_var>
+
+#pragma instantiate  ACE_DLList<ACE_CString>
+#pragma instantiate  ACE_DLList_Iterator<ACE_CString>
+
+#pragma instantiate  ACE_Auto_Basic_Ptr<Object_Group_i>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

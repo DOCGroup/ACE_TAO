@@ -101,7 +101,7 @@ Identity_Server::init (int argc,
                            "problems using the factory ior\n"),
                           -1);
 
-      Object_Group_var random_group =
+      Load_Balancer::Object_Group_var random_group =
         factory->make_random ("Random group",
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
