@@ -68,11 +68,11 @@ test_i::method (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      TAO_POA_Current &tao_poa_current =
-        ACE_dynamic_cast (TAO_POA_Current &,
-                          *(this->poa_current_.in ()));
+      TAO::Portable_Server::POA_Current &tao_poa_current =
+        dynamic_cast <TAO::Portable_Server::POA__Current &>
+                          (*(this->poa_current_.in ()));
 
-      TAO_POA_Current_Impl &tao_poa_current_implementation =
+      TAO::Portable_Server::POA_Current &tao_poa_current_implementation =
         *tao_poa_current.implementation ();
 
       const char *upcall = 0;
