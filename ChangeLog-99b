@@ -1,25 +1,31 @@
+Sat Sep 04 12:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (shm_open,close,filesize,ftruncate,mmap): moved
+          these functions up in the file so that they're defined before
+          being used by ACE_OS::sema_init.
+
 Fri Sep  3 11:57:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h,
-	* ace/config-win32-common.h: Added a #ifndef for __IBMCPP__ to
-	  make things work for Visual Age C++.  Thanks to Boris Kaminer
- 	  <kaminer.boris@cherus.msk.ru> for reporting this.
+        * ace/OS.h,
+        * ace/config-win32-common.h: Added a #ifndef for __IBMCPP__ to
+          make things work for Visual Age C++.  Thanks to Boris Kaminer
+          <kaminer.boris@cherus.msk.ru> for reporting this.
 
-	* ace/{ACE,OS}: Added ACE_HAS_UNICODE to conditionally compile the
- 	  strnew() definition.  Thanks to Boris Kaminer
- 	  <kaminer.boris@cherus.msk.ru> for reporting this.
+        * ace/{ACE,OS}: Added ACE_HAS_UNICODE to conditionally compile the
+          strnew() definition.  Thanks to Boris Kaminer
+          <kaminer.boris@cherus.msk.ru> for reporting this.
 
-	* ace: Added a new optimized ace-dll.icc file so that ACE will
-	  build better with IBM's Visual Age C++.  Thanks to Boris Kaminer
- 	  <kaminer.boris@cherus.msk.ru> for contributing this.
+        * ace: Added a new optimized ace-dll.icc file so that ACE will
+          build better with IBM's Visual Age C++.  Thanks to Boris Kaminer
+          <kaminer.boris@cherus.msk.ru> for contributing this.
 
 1999-09-03  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/OS.i:
-	* ace/OS.h: Added a new overloaded ACE_OS::ioctl () function that
-	  takes in ACE_QoS as one of the parameters, constructs a windows
- 	  QOS from it and passes it to WSAIoctl (). This function can be
- 	  used when the I/O control code is SIO_SET_QOS.
+        * ace/OS.i:
+        * ace/OS.h: Added a new overloaded ACE_OS::ioctl () function that
+          takes in ACE_QoS as one of the parameters, constructs a windows
+          QOS from it and passes it to WSAIoctl (). This function can be
+          used when the I/O control code is SIO_SET_QOS.
 
 Fri Sep  3 14:58:51 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -29,119 +35,119 @@ Fri Sep  3 14:58:51 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * config-mvs.h:
         * config-win32-borland.h:
         * config-win32.h:
-          Moved many of the preprocessor information for various 
-          platforms from TAO_IDL to here (in ACE_CC_PREPROCESSOR and 
+          Moved many of the preprocessor information for various
+          platforms from TAO_IDL to here (in ACE_CC_PREPROCESSOR and
           ACE_CC_PREPROCESSOR_ARGS).
 
 Fri Sep  3 13:52:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  Fixed the implementation of the -dont_run option.
+        * bin/auto_compile:
+          Fixed the implementation of the -dont_run option.
 
 Fri Sep  3 09:05:20 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Containers_T.cpp (delete_nodes): Removed the redundant check
-	  which was verifying that <cur_size_> was always > 0. But
-	  <cur_size_> itself is unsigned so thsi check was redundant
-	  causing warnings with egcs.
+        * ace/Containers_T.cpp (delete_nodes): Removed the redundant check
+          which was verifying that <cur_size_> was always > 0. But
+          <cur_size_> itself is unsigned so thsi check was redundant
+          causing warnings with egcs.
 
 Thu Sep  2 23:54:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Containers_T.h (class ACE_Double_Linked_List): Added more
-	  comments to stress that this is not a general purpose container
-	  class.  Thanks to Rusty Conover <rconover@zootweb.com> for
-	  suggesting this.
+        * ace/Containers_T.h (class ACE_Double_Linked_List): Added more
+          comments to stress that this is not a general purpose container
+          class.  Thanks to Rusty Conover <rconover@zootweb.com> for
+          suggesting this.
 
 Thu Sep  2 18:39:23 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp (handle_close): Did a better job of
-	  fixing the use of ACE_UNUSED_ARG to make EGCS happy.
+        * ace/Process_Manager.cpp (handle_close): Did a better job of
+          fixing the use of ACE_UNUSED_ARG to make EGCS happy.
 
 Thu Sep  2 12:21:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Select_Reactor_Base: Renamed the notify_set_, alloc_set_,
-	  and free_set_ to *_queue_ since that's what they really are!
+        * ace/Select_Reactor_Base: Renamed the notify_set_, alloc_set_,
+          and free_set_ to *_queue_ since that's what they really are!
 
 Thu Sep  2 17:42:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Malloc_T.cpp:
-	  Eliminated UMR problem with the position independent malloc
-	  support. Thanks to Doug for figuring this stuff out.
+        * ace/Malloc_T.cpp:
+          Eliminated UMR problem with the position independent malloc
+          support. Thanks to Doug for figuring this stuff out.
 
 Thu Sep  2 12:21:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Log_Msg_Test.cpp (test_log_msg_features): Changed the
-	  use of %p to prevent an error message from being printed that'll
- 	  confuse the run_tests script.
+        * tests/Log_Msg_Test.cpp (test_log_msg_features): Changed the
+          use of %p to prevent an error message from being printed that'll
+          confuse the run_tests script.
 
-	* Just added the 700th non-DOC group individual who has contributed
-	  to ACE+TAO over the years.  In the last year, we've gone from
- 	  400 to 700 contributors, which is great!
+        * Just added the 700th non-DOC group individual who has contributed
+          to ACE+TAO over the years.  In the last year, we've gone from
+          400 to 700 contributors, which is great!
 
-	* tests/CDR_File_Test.cpp (main): Fixed a signed/unsigned warning
-	  and removed the unreferenced argc/argv parameters.
+        * tests/CDR_File_Test.cpp (main): Fixed a signed/unsigned warning
+          and removed the unreferenced argc/argv parameters.
 
-	* tests{run_tests.lst,Makefile}: Added the new ACE_Log_Msg.cpp
-	  test.
+        * tests{run_tests.lst,Makefile}: Added the new ACE_Log_Msg.cpp
+          test.
 
-	* tests: Added a new test called Log_Msg_Test.cpp.  This exercises
-	  the many features of the ACE_Log_Msg class.
+        * tests: Added a new test called Log_Msg_Test.cpp.  This exercises
+          the many features of the ACE_Log_Msg class.
 
-	* tests/Object_Manager_Test.cpp (main): Just reformatted some
-	  stuff.
+        * tests/Object_Manager_Test.cpp (main): Just reformatted some
+          stuff.
 
 Thu Sep  2 14:42:31 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cached_Accept_Conn_Test.cpp: Repositioned
-	  ACE_HAS_BROKEN_EXTENDED_TEMPLATES macro before the inclusion of
- 	  the header since thats where the typedefs had been shifted.
-  	  Also, to keep both gcc2.7.3 and sunCC5.0 w.o debugging symbols
- 	  happy it was necessary to move the definitions of
- 	  <Accept_Startegy> methods before the instantiations.
+        * tests/Cached_Accept_Conn_Test.cpp: Repositioned
+          ACE_HAS_BROKEN_EXTENDED_TEMPLATES macro before the inclusion of
+          the header since thats where the typedefs had been shifted.
+          Also, to keep both gcc2.7.3 and sunCC5.0 w.o debugging symbols
+          happy it was necessary to move the definitions of
+          <Accept_Startegy> methods before the instantiations.
 
 Thu Sep  2 12:21:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Added an ACE_static_cast in the ACE_FACTORY_DEFINE macro
-	  to let the compiler catch "bad casts," i.e., when X isn't allow
- 	  to be cast from an ACE_Service_Object.  Thanks to Jody Hagins
- 	  for suggesting this.
+        * ace/OS.h: Added an ACE_static_cast in the ACE_FACTORY_DEFINE macro
+          to let the compiler catch "bad casts," i.e., when X isn't allow
+          to be cast from an ACE_Service_Object.  Thanks to Jody Hagins
+          for suggesting this.
 
-	* ace/config-win32-common.h: Deleted
-  
+        * ace/config-win32-common.h: Deleted
+
           #define ACE_LACKS_STRPTIME
 
-	  and added
-  
+          and added
+
           #define ACE_HAS_STRPTIME
-	  #define ACE_LACKS_NATIVE_STRPTIME
-  
+          #define ACE_LACKS_NATIVE_STRPTIME
+
           In addition, I removed the wday and yday stuff in
- 	  ACE_OS::strptime().  Thanks to Kevin Lyda
- 	  <kevin.lyda@trintech.com> for suggesting this.
+          ACE_OS::strptime().  Thanks to Kevin Lyda
+          <kevin.lyda@trintech.com> for suggesting this.
 
-	* ace/OS.h: Make sure to add a cast to ACE_Service_Object * in the
-	  ACE_FACTORY_DEFINE macro so that the offset will be corrected
- 	  automagically.  Thanks to Eric C. Newton <ecn@smart.net> for
- 	  reporting this and suggesting a fix.
+        * ace/OS.h: Make sure to add a cast to ACE_Service_Object * in the
+          ACE_FACTORY_DEFINE macro so that the offset will be corrected
+          automagically.  Thanks to Eric C. Newton <ecn@smart.net> for
+          reporting this and suggesting a fix.
 
-	* ace/Log_Msg: Modified the msg_callback(ACE_Log_Msg_Callback *)
-	  method to return the existing ACE_Log_Msg_Callback * so we can
- 	  support "chaining".
-	
-	* ace/Log_Msg.cpp: Added explicit template instantiations for
-	  ACE_Reverse_Lock.
+        * ace/Log_Msg: Modified the msg_callback(ACE_Log_Msg_Callback *)
+          method to return the existing ACE_Log_Msg_Callback * so we can
+          support "chaining".
 
-	* ace/Log_Msg.cpp: Changed the implementation described below to
-	  use an ACE_Reverse_Lock, which is cool ;-).  Thanks to Carlos
- 	  for explaining how this worked.
-	
-	* ace/Log_Msg.cpp: Don't hold the lock during a msg_callback() to
-	  avoid deadlock.  Thanks to Matthew Davis
- 	  <matthew.davis@solers.com> for reporting this.
+        * ace/Log_Msg.cpp: Added explicit template instantiations for
+          ACE_Reverse_Lock.
 
-	* tests/Cached_Accept_Conn_Test.cpp: Removed a "static" from
-	  int debug so that the friggin' SunC++ compiler will link...
-  
+        * ace/Log_Msg.cpp: Changed the implementation described below to
+          use an ACE_Reverse_Lock, which is cool ;-).  Thanks to Carlos
+          for explaining how this worked.
+
+        * ace/Log_Msg.cpp: Don't hold the lock during a msg_callback() to
+          avoid deadlock.  Thanks to Matthew Davis
+          <matthew.davis@solers.com> for reporting this.
+
+        * tests/Cached_Accept_Conn_Test.cpp: Removed a "static" from
+          int debug so that the friggin' SunC++ compiler will link...
+
 Thu Sep 02 11:04:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: added /dev/null to egrep invocation

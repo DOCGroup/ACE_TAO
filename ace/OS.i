@@ -1132,6 +1132,23 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
 # endif /* VXWORKS */
 }
 
+ACE_INLINE ACE_HANDLE
+ACE_OS::shm_open (const char *filename,
+                  int mode,
+                  int perms,
+                  LPSECURITY_ATTRIBUTES sa)
+{
+  ACE_TRACE ("ACE_OS::shm_open");
+# if defined (ACE_HAS_SHM_OPEN)
+  ACE_UNUSED_ARG (sa);
+  ACE_OSCALL_RETURN (::shm_open (filename, mode, perms), ACE_HANDLE, -1);
+# else  /* ! ACE_HAS_SHM_OPEN */
+  // Just used ::open.
+  return ACE_OS::open (filename, mode, perms,
+                       sa);
+# endif /* ! ACE_HAS_SHM_OPEN */
+}
+
 ACE_INLINE int
 ACE_OS::shm_unlink (const char *path)
 {
@@ -2914,6 +2931,217 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_POSIX_SEM */
 }
+
+// NOTE: The following four function definitions must appear before
+// ACE_OS::sema_init ().
+
+ACE_INLINE int
+ACE_OS::close (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_OS::close");
+#if defined (ACE_WIN32)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (handle), ace_result_), int, -1);
+#elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
+  unsigned long result;
+  result = ::close_f (handle);
+  if (result != 0)
+    {
+      errno = result;
+      return ACE_static_cast (int, -1);
+    }
+  return ACE_static_cast (int, 0);
+#else
+  ACE_OSCALL_RETURN (::close (handle), int, -1);
+#endif /* ACE_WIN32 */
+}
+
+// This function returns the number of bytes in the file referenced by
+// FD.
+
+ACE_INLINE long
+ACE_OS::filesize (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_OS::filesize");
+#if defined (ACE_WIN32)
+  ACE_WIN32CALL_RETURN (::GetFileSize (handle, NULL), long, -1);
+#else /* !ACE_WIN32 */
+  struct stat sb;
+
+  return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
+{
+  ACE_TRACE ("ACE_OS::ftruncate");
+#if defined (ACE_WIN32)
+  if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != (unsigned) -1)
+    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+  else
+    ACE_FAIL_RETURN (-1);
+  /* NOTREACHED */
+#elif defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (offset);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_PSOS)
+  ACE_OSCALL_RETURN (::ftruncate_f (handle, offset), int, -1);
+#else
+  ACE_OSCALL_RETURN (::ftruncate (handle, offset), int, -1);
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE void *
+ACE_OS::mmap (void *addr,
+              size_t len,
+              int prot,
+              int flags,
+              ACE_HANDLE file_handle,
+              off_t off,
+              ACE_HANDLE *file_mapping,
+              LPSECURITY_ATTRIBUTES sa)
+{
+  ACE_TRACE ("ACE_OS::mmap");
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+  int nt_flags = 0;
+  ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
+
+  // Ensure that file_mapping is non-zero.
+  if (file_mapping == 0)
+    file_mapping = &local_handle;
+
+  if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
+    {
+      prot = PAGE_WRITECOPY;
+      nt_flags = FILE_MAP_COPY;
+    }
+  else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
+    {
+      if (ACE_BIT_ENABLED (prot, PAGE_READONLY))
+        nt_flags = FILE_MAP_READ;
+      if (ACE_BIT_ENABLED (prot, PAGE_READWRITE))
+        nt_flags = FILE_MAP_WRITE;
+    }
+
+  // Only create a new handle if we didn't have a valid one passed in.
+  if (*file_mapping == ACE_INVALID_HANDLE)
+    *file_mapping = ::CreateFileMapping (file_handle,
+                                         ACE_OS::default_win32_security_attributes (sa),
+                                         prot,
+                                         0,
+                                         0,
+                                         0);
+  if (*file_mapping == 0)
+    ACE_FAIL_RETURN (MAP_FAILED);
+
+# if defined (ACE_OS_EXTRA_MMAP_FLAGS)
+  nt_flags |= ACE_OS_EXTRA_MMAP_FLAGS;
+# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
+
+# if !defined (ACE_HAS_WINCE)
+  void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
+                                          nt_flags,
+                                          0,
+                                          off,
+                                          len,
+                                          addr);
+# else
+  ACE_UNUSED_ARG (addr);        // WinCE doesn't allow specifying <addr>.
+  void *addr_mapping = ::MapViewOfFile (*file_mapping,
+                                        nt_flags,
+                                        0,
+                                        off,
+                                        len);
+# endif /* ! ACE_HAS_WINCE */
+
+  // Only close this down if we used the temporary.
+  if (file_mapping == &local_handle)
+    ::CloseHandle (*file_mapping);
+
+  if (addr_mapping == 0)
+    ACE_FAIL_RETURN (MAP_FAILED);
+
+  else if (ACE_BIT_ENABLED (flags, MAP_FIXED)
+           && addr_mapping != addr)
+    {
+      errno = EINVAL;
+      return MAP_FAILED;
+    }
+  else
+    return addr_mapping;
+#elif defined (__Lynx__)
+  // The LynxOS 2.5.0 mmap doesn't allow operations on plain
+  // file descriptors.  So, create a shm object and use that.
+  ACE_UNUSED_ARG (sa);
+
+  char name [128];
+  sprintf (name, "%d", file_handle);
+
+  // Assumes that this was called by ACE_Mem_Map, so &file_mapping != 0.
+  // Otherwise, we don't support the incomplete LynxOS mmap implementation.
+  // We do support it by creating a hidden shared memory object, and using
+  // that for the mapping.
+  if (!file_mapping  ||
+      (*file_mapping = ::shm_open (name,
+                                   O_RDWR | O_CREAT | O_TRUNC,
+                                   ACE_DEFAULT_FILE_PERMS)) == -1)
+    return MAP_FAILED;
+  else
+    {
+      // The size of the shared memory object must be explicitly set on LynxOS.
+      const off_t filesize = ACE_OS::filesize (file_handle);
+      if (::ftruncate (*file_mapping, filesize) == -1)
+        return MAP_FAILED;
+      else
+        {
+# if defined (ACE_OS_EXTRA_MMAP_FLAGS)
+          flags |= ACE_OS_EXTRA_MMAP_FLAGS;
+# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
+          char *map = (char *) ::mmap ((ACE_MMAP_TYPE) addr,
+                                       len,
+                                       prot,
+                                       flags,
+                                       *file_mapping,
+                                       off);
+          if (map == MAP_FAILED)
+            return MAP_FAILED;
+          else
+            // Finally, copy the file contents to the shared memory object.
+            return ::read (file_handle, map, (int) filesize) == filesize
+              ? map
+              : MAP_FAILED;
+        }
+    }
+#elif !defined (ACE_LACKS_MMAP)
+  ACE_UNUSED_ARG (sa);
+
+# if defined (ACE_OS_EXTRA_MMAP_FLAGS)
+  flags |= ACE_OS_EXTRA_MMAP_FLAGS;
+# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
+  ACE_UNUSED_ARG (file_mapping);
+  ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
+                                      len,
+                                      prot,
+                                      flags,
+                                      file_handle,
+                                      off),
+                     void *, MAP_FAILED);
+#else
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (prot);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (file_handle);
+  ACE_UNUSED_ARG (off);
+  ACE_UNUSED_ARG (file_mapping);
+  ACE_UNUSED_ARG (sa);
+  ACE_NOTSUP_RETURN (MAP_FAILED);
+#endif /*ACE_WIN32 */
+}
+
+// NOTE: The previous four function definitions must appear before
+// ACE_OS::sema_init ().
 
 ACE_INLINE int
 ACE_OS::sema_init (ACE_sema_t *s,
@@ -4878,13 +5106,13 @@ ACE_OS::enum_protocols (int *protocols,
                         u_long *buffer_length)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  
+
   ACE_SOCKCALL_RETURN (::WSAEnumProtocols (protocols,
                                            protocol_buffer,
                                            buffer_length),
                        int,
                        SOCKET_ERROR);
-  
+
 #else
   ACE_UNUSED_ARG (protocols);
   ACE_UNUSED_ARG (protocol_buffer);
@@ -4900,10 +5128,10 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
                    const ACE_QoS_Params &qos_params)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  
+
   QOS qos;
   // Construct the WinSock2 QOS structure.
-  
+
   qos.SendingFlowspec = qos_params.socket_qos ()->sending_flowspec ();
   qos.ReceivingFlowspec = qos_params.socket_qos ()->receiving_flowspec ();
   qos.ProviderSpecific = (WSABUF) qos_params.socket_qos ()->provider_specific ();
@@ -4971,18 +5199,18 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                u_long *bytes_returned)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  
+
   QOS qos;
   DWORD qos_len;
-  
+
   // Construct the WinSock2 QOS structure.
-  
+
   qos.SendingFlowspec = ace_qos->sending_flowspec ();
   qos.ReceivingFlowspec = ace_qos->receiving_flowspec ();
   qos.ProviderSpecific = (WSABUF) ace_qos->provider_specific ();
-  
+
   qos_len = sizeof (QOS) + ace_qos->provider_specific ().iov_len;
-  
+
   ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                    SIO_SET_QOS,
                                    &qos,
@@ -7326,22 +7554,6 @@ ACE_OS::rewind (FILE *fp)
 #endif /* ! ACE_HAS_WINCE */
 }
 
-// This function returns the number of bytes in the file referenced by
-// FD.
-
-ACE_INLINE long
-ACE_OS::filesize (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_OS::filesize");
-#if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (::GetFileSize (handle, NULL), long, -1);
-#else /* !ACE_WIN32 */
-  struct stat sb;
-
-  return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
-#endif /* ACE_WIN32 */
-}
-
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle,
                iovec *iov,
@@ -7866,26 +8078,6 @@ ACE_OS::compile (const char *instring, char *expbuf, char *endbuf)
 
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_REGEX */
-}
-
-ACE_INLINE int
-ACE_OS::close (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_OS::close");
-#if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (handle), ace_result_), int, -1);
-#elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
-  unsigned long result;
-  result = ::close_f (handle);
-  if (result != 0)
-    {
-      errno = result;
-      return ACE_static_cast (int, -1);
-    }
-  return ACE_static_cast (int, 0);
-#else
-  ACE_OSCALL_RETURN (::close (handle), int, -1);
-#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE long
@@ -8608,154 +8800,6 @@ ACE_OS::isastream (ACE_HANDLE handle)
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-ACE_INLINE void *
-ACE_OS::mmap (void *addr,
-              size_t len,
-              int prot,
-              int flags,
-              ACE_HANDLE file_handle,
-              off_t off,
-              ACE_HANDLE *file_mapping,
-              LPSECURITY_ATTRIBUTES sa)
-{
-  ACE_TRACE ("ACE_OS::mmap");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
-  int nt_flags = 0;
-  ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
-
-  // Ensure that file_mapping is non-zero.
-  if (file_mapping == 0)
-    file_mapping = &local_handle;
-
-  if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
-    {
-      prot = PAGE_WRITECOPY;
-      nt_flags = FILE_MAP_COPY;
-    }
-  else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
-    {
-      if (ACE_BIT_ENABLED (prot, PAGE_READONLY))
-        nt_flags = FILE_MAP_READ;
-      if (ACE_BIT_ENABLED (prot, PAGE_READWRITE))
-        nt_flags = FILE_MAP_WRITE;
-    }
-
-  // Only create a new handle if we didn't have a valid one passed in.
-  if (*file_mapping == ACE_INVALID_HANDLE)
-    *file_mapping = ::CreateFileMapping (file_handle,
-                                         ACE_OS::default_win32_security_attributes (sa),
-                                         prot,
-                                         0,
-                                         0,
-                                         0);
-  if (*file_mapping == 0)
-    ACE_FAIL_RETURN (MAP_FAILED);
-
-# if defined (ACE_OS_EXTRA_MMAP_FLAGS)
-  nt_flags |= ACE_OS_EXTRA_MMAP_FLAGS;
-# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
-
-# if !defined (ACE_HAS_WINCE)
-  void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
-                                          nt_flags,
-                                          0,
-                                          off,
-                                          len,
-                                          addr);
-# else
-  ACE_UNUSED_ARG (addr);        // WinCE doesn't allow specifying <addr>.
-  void *addr_mapping = ::MapViewOfFile (*file_mapping,
-                                        nt_flags,
-                                        0,
-                                        off,
-                                        len);
-# endif /* ! ACE_HAS_WINCE */
-
-  // Only close this down if we used the temporary.
-  if (file_mapping == &local_handle)
-    ::CloseHandle (*file_mapping);
-
-  if (addr_mapping == 0)
-    ACE_FAIL_RETURN (MAP_FAILED);
-
-  else if (ACE_BIT_ENABLED (flags, MAP_FIXED)
-           && addr_mapping != addr)
-    {
-      errno = EINVAL;
-      return MAP_FAILED;
-    }
-  else
-    return addr_mapping;
-#elif defined (__Lynx__)
-  // The LynxOS 2.5.0 mmap doesn't allow operations on plain
-  // file descriptors.  So, create a shm object and use that.
-  ACE_UNUSED_ARG (sa);
-
-  char name [128];
-  sprintf (name, "%d", file_handle);
-
-  // Assumes that this was called by ACE_Mem_Map, so &file_mapping != 0.
-  // Otherwise, we don't support the incomplete LynxOS mmap implementation.
-  // We do support it by creating a hidden shared memory object, and using
-  // that for the mapping.
-  if (!file_mapping  ||
-      (*file_mapping = ::shm_open (name,
-                                   O_RDWR | O_CREAT | O_TRUNC,
-                                   ACE_DEFAULT_FILE_PERMS)) == -1)
-    return MAP_FAILED;
-  else
-    {
-      // The size of the shared memory object must be explicitly set on LynxOS.
-      const off_t filesize = ACE_OS::filesize (file_handle);
-      if (::ftruncate (*file_mapping, filesize) == -1)
-        return MAP_FAILED;
-      else
-        {
-# if defined (ACE_OS_EXTRA_MMAP_FLAGS)
-          flags |= ACE_OS_EXTRA_MMAP_FLAGS;
-# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
-          char *map = (char *) ::mmap ((ACE_MMAP_TYPE) addr,
-                                       len,
-                                       prot,
-                                       flags,
-                                       *file_mapping,
-                                       off);
-          if (map == MAP_FAILED)
-            return MAP_FAILED;
-          else
-            // Finally, copy the file contents to the shared memory object.
-            return ::read (file_handle, map, (int) filesize) == filesize
-              ? map
-              : MAP_FAILED;
-        }
-    }
-#elif !defined (ACE_LACKS_MMAP)
-  ACE_UNUSED_ARG (sa);
-
-# if defined (ACE_OS_EXTRA_MMAP_FLAGS)
-  flags |= ACE_OS_EXTRA_MMAP_FLAGS;
-# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
-  ACE_UNUSED_ARG (file_mapping);
-  ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
-                                      len,
-                                      prot,
-                                      flags,
-                                      file_handle,
-                                      off),
-                     void *, MAP_FAILED);
-#else
-  ACE_UNUSED_ARG (addr);
-  ACE_UNUSED_ARG (len);
-  ACE_UNUSED_ARG (prot);
-  ACE_UNUSED_ARG (flags);
-  ACE_UNUSED_ARG (file_handle);
-  ACE_UNUSED_ARG (off);
-  ACE_UNUSED_ARG (file_mapping);
-  ACE_UNUSED_ARG (sa);
-  ACE_NOTSUP_RETURN (MAP_FAILED);
-#endif /*ACE_WIN32 */
-}
-
 // Implements simple read/write control for pages.  Affects a page if
 // part of the page is referenced.  Currently PROT_READ, PROT_WRITE,
 // and PROT_RDWR has been mapped in OS.h.  This needn't have anything
@@ -9001,25 +9045,6 @@ ACE_OS::shmget (key_t key, int size, int flags)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SYSV_IPC */
 }
-
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-ACE_INLINE ACE_HANDLE
-ACE_OS::shm_open (const char *filename,
-                  int mode,
-                  int perms,
-                  LPSECURITY_ATTRIBUTES sa)
-{
-  ACE_TRACE ("ACE_OS::shm_open");
-# if defined (ACE_HAS_SHM_OPEN)
-  ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (::shm_open (filename, mode, perms), ACE_HANDLE, -1);
-# else  /* ! ACE_HAS_SHM_OPEN */
-  // Just used ::open.
-  return ACE_OS::open (filename, mode, perms,
-                       sa);
-# endif /* ! ACE_HAS_SHM_OPEN */
-}
-#endif /* ! ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE void
 ACE_OS::tzset (void)
@@ -9773,27 +9798,6 @@ ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 # endif /* ACE_WIN32 */
 }
 #endif /* ! ACE_HAS_WINCE */
-
-ACE_INLINE int
-ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
-{
-  ACE_TRACE ("ACE_OS::ftruncate");
-#if defined (ACE_WIN32)
-  if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != (unsigned) -1)
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
-  else
-    ACE_FAIL_RETURN (-1);
-  /* NOTREACHED */
-#elif defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::ftruncate_f (handle, offset), int, -1);
-#else
-  ACE_OSCALL_RETURN (::ftruncate (handle, offset), int, -1);
-#endif /* ACE_WIN32 */
-}
 
 ACE_INLINE int
 ACE_OS::getrlimit (int resource, struct rlimit *rl)
