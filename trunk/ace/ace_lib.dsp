@@ -389,6 +389,10 @@ SOURCE=.\Pipe.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Reactor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Proactor.cpp
 # End Source File
 # Begin Source File
@@ -1017,6 +1021,10 @@ SOURCE=.\Pipe.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Reactor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Proactor.h
 # End Source File
 # Begin Source File
@@ -1610,6 +1618,10 @@ SOURCE=.\Parse_Node.i
 # Begin Source File
 
 SOURCE=.\Pipe.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Reactor.i
 # End Source File
 # Begin Source File
 
