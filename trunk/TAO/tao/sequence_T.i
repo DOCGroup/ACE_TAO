@@ -29,7 +29,28 @@ TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (void)
 template <class T> ACE_INLINE T *
 TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
 {
-  // @@ This is broken...
+  if (orphan == CORBA::B_FALSE)
+    {
+      // We retain ownership.
+
+      if (this->buffer_ == 0)
+        this->buffer_ = (void *) new T[this->length_];
+    }
+  else // if (orphan == CORBA::B_TRUE)
+    {
+      if (this->release_ == CORBA::B_FALSE)
+        // Oops, it's not our buffer to relinquish...
+        return 0;
+      else
+        {
+          // We set the state back to default and relinquish
+          // ownership.
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = CORBA::B_FALSE;
+        }
+    }
   return (T *) this->buffer_;
 }
 
@@ -88,7 +109,7 @@ TAO_Unbounded_Sequence<T>::allocbuf (CORBA::ULong size)
 template <class T> ACE_INLINE void
 TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 {
-  delete[] buffer;
+  delete [] buffer;
 }
 
 // ***************************************************
@@ -98,7 +119,28 @@ TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 template <class T, CORBA::ULong MAX> ACE_INLINE T *
 TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
 {
-  // @@ This is broken...
+  if (orphan == CORBA::B_FALSE)
+    {
+      // We retain ownership.
+
+      if (this->buffer_ == 0)
+        this->buffer_ = (void *) new T[this->maximum_];
+    }
+  else // if (orphan == CORBA::B_TRUE)
+    {
+      if (this->release_ == CORBA::B_FALSE)
+        // Oops, it's not our buffer to relinquish...
+        return 0;
+      else
+        {
+          // We set the state back to default and relinquish
+          // ownership.
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = CORBA::B_FALSE;
+        }
+    }
   return (T *) this->buffer_;
 }
 
@@ -154,7 +196,7 @@ TAO_Bounded_Sequence<T, MAX>::allocbuf (CORBA::ULong)
 template <class T, CORBA::ULong MAX> ACE_INLINE void
 TAO_Bounded_Sequence<T, MAX>::freebuf (T *buffer)
 {
-  delete[] buffer;
+  delete [] buffer;
 }
 
 // *************************************************************
