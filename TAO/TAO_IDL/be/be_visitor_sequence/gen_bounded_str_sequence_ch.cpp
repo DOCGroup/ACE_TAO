@@ -83,7 +83,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
                          -1);
     }
 
-  *os << "class " << class_name << be_idt_nl
+  *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
       << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl

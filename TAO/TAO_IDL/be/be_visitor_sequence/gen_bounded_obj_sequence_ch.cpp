@@ -71,7 +71,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 
   os->gen_ifdef_macro (class_name);
 
-  *os << "class " << class_name
+  *os << "class TAO_EXPORT_MACRO " << class_name
       << " : public TAO_Bounded_Base_Sequence" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
