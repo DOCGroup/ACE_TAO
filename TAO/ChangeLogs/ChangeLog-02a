@@ -1,3 +1,15 @@
+Fri Jul 27 21:48:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Removed all
+	  the references to the GIOP lite protocol from this script.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: We dont
+	  seem to be having any sort of tests that are run for GIOP
+	  lite. Now we will run this in our nightly builds. This test uses
+	  IIOP__Lite & UIOP_Lite to run teh IDL_Cubit test. Having a
+	  protocol that we are not sure whether it works may be a bad
+	  idea. 
+
 Fri Jul 27 21:38:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp: Added a TAO_debug_level guard around
