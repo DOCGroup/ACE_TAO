@@ -1,118 +1,122 @@
+Thu Sep 09 14:55:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO-INSTALL.html: we now support QNX Neutrino 2.0.
+
 Thu Sep  9 14:49:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
-	* orbsvcs/tests/EC_Multiple/run_test.pl:
-	* orbsvcs/tests/EC_Throughput/run_test.pl:
-	* orbsvcs/tests/Event_Latency/run_test.pl:
-	  Don't use -ORBNameServiceIOR anymore, replace with -ORBInitRef.
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+          Don't use -ORBNameServiceIOR anymore, replace with -ORBInitRef.
 
 Wed Sep  9 10:35:12 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/Makefile,
+        * tests/AMI/Makefile,
           tests/AMI/simple_client.cpp,
-	  tests/AMI/ami_test_i.cpp: Introduced ACE_UNUSED_ARG
-	  to make compilers happy about unused arguments.
+          tests/AMI/ami_test_i.cpp: Introduced ACE_UNUSED_ARG
+          to make compilers happy about unused arguments.
 
-	* tests/AMI/client.muxed.conf
-	  tests/AMI/simple_client_exclusive.conf
-	  tests/AMI/simple_client_muxed.conf: Removed these files 
-	  because they got replaced by new ones.
+        * tests/AMI/client.muxed.conf
+          tests/AMI/simple_client_exclusive.conf
+          tests/AMI/simple_client_muxed.conf: Removed these files
+          because they got replaced by new ones.
 
 Wed Sep  8 14:58:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
 
-	  Changed format type to long instead of int.  This change should
-	  fix a warning on Digital Unix.
+          Changed format type to long instead of int.  This change should
+          fix a warning on Digital Unix.
 
 Wed Sep  8 14:30:00 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
-	
-	* orbsvcs/tests/Time/run_test.pl:
 
-	  Changed -ORBImplRepoServiceIOR file://foo.bar to 
-	  -ORBInitRef ImplRepoService=file://foo.bar.
+        * orbsvcs/tests/Time/run_test.pl:
+
+          Changed -ORBImplRepoServiceIOR file://foo.bar to
+          -ORBInitRef ImplRepoService=file://foo.bar.
 
 Wed Sep  8 14:08:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
-	Fixed warnings on HP_UX
-	* orbsvcs/orbsvcs/AV/RTCP.h: 
-	Added the declaration for the fmod method.	
-	* orbsvcs/orbsvcs/AV/RTCP.cpp: 
-	Replaced all the implicit reinterpret casts with
-	ACE_reinterpret_casts. Thanks to Bala to point this out.
-	
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        Fixed warnings on HP_UX
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        Added the declaration for the fmod method.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        Replaced all the implicit reinterpret casts with
+        ACE_reinterpret_casts. Thanks to Bala to point this out.
+
 
 Wed Sep  8 14:03:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Latency/TestImpl.java:
-	  The shutdown() method is not implemented in some Java ORBs, we
-	  are not using that until we can figure out a more portable way
-	  to stop the ORB.
+        * performance-tests/Latency/TestImpl.java:
+          The shutdown() method is not implemented in some Java ORBs, we
+          are not using that until we can figure out a more portable way
+          to stop the ORB.
 
-	* performance-tests/Latency/scalability.pl:
-	  Fine tuned the number of clients and the execution time of
-	  them.
+        * performance-tests/Latency/scalability.pl:
+          Fine tuned the number of clients and the execution time of
+          them.
 
 Wed Sep  8 14:00:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: (ORB_init) changed to allow correct parsing.
-	  Problem: comparing and matching longer arguments with shorter
- 	  flags. I moved the else if { } blocks for (-ORBDebug and
- 	  -ORBCOllocation) as both these flags were too early in the
- 	  parsing loop and were eating their longer counterparts (ie:
- 	  -ORBDebugLevel) was never reached.  Thanks to Michael Kircher
- 	  for reporting this problem.
+        * tao/ORB_Core.cpp: (ORB_init) changed to allow correct parsing.
+          Problem: comparing and matching longer arguments with shorter
+          flags. I moved the else if { } blocks for (-ORBDebug and
+          -ORBCOllocation) as both these flags were too early in the
+          parsing loop and were eating their longer counterparts (ie:
+          -ORBDebugLevel) was never reached.  Thanks to Michael Kircher
+          for reporting this problem.
 
 Wed Sep  8 13:54:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_union_branch.cpp:
-	  Fixed label value generation for the case where the the
-	  label is a declared constant value of a typedef'd integer.
-	  We must generate the underlying integer value, not the
-	  constant's name, and make sure that a default case is
-	  included in the CDR operator generation, since more of
-	  these typedef'd constants may be declared in another
-	  IDL file or in non-generated code. Also, if the typedef
-	  is not in global scope, this will enable us to keep the
-	  CDR operator code inlined (the TAO_NAMESPACE_* code
-	  generation takes place in the *C.cpp file). Thanks to
-	  Lars Immisch <lars@ibp.de> for pointing out this use
-	  case and sending in an example file.
+        * TAO_IDL/be/be_union_branch.cpp:
+          Fixed label value generation for the case where the the
+          label is a declared constant value of a typedef'd integer.
+          We must generate the underlying integer value, not the
+          constant's name, and make sure that a default case is
+          included in the CDR operator generation, since more of
+          these typedef'd constants may be declared in another
+          IDL file or in non-generated code. Also, if the typedef
+          is not in global scope, this will enable us to keep the
+          CDR operator code inlined (the TAO_NAMESPACE_* code
+          generation takes place in the *C.cpp file). Thanks to
+          Lars Immisch <lars@ibp.de> for pointing out this use
+          case and sending in an example file.
 
 Wed Sep  8 13:49:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* orbsvcs/tests/start_services:
+        * orbsvcs/tests/start_services:
 
-	  Updated the now deprecated -ORBNameServiceIOR usage to use
-	  -ORBInitRef instead.
+          Updated the now deprecated -ORBNameServiceIOR usage to use
+          -ORBInitRef instead.
 
 Wed Sep 08 13:15:01 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
-	  Put ACE_UNUSED_ARG in place to stop the complains of g++.
+        * TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
+          Put ACE_UNUSED_ARG in place to stop the complains of g++.
 
 Wed Sep  8 11:45:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_field.cpp (dump):
-	  Replaced an ACE_ASSERT with ACE_ERROR.
+        * TAO_IDL/ast/ast_field.cpp (dump):
+          Replaced an ACE_ASSERT with ACE_ERROR.
 
 Wed Sep  8 10:37:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
-	  Removed some unused args reported by SunOS EGCS.
+        * TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
+          Removed some unused args reported by SunOS EGCS.
 
 Wed Sep 08 01:42:01 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_factory.cpp,
-	  TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp,
- 	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp,
- 	  TAO_IDL/be/be_visitor_operation/argument.cpp,
- 	  TAO_IDL/be_include/be_codegen.h: The upcall for strings as out
- 	  parameter did not work properly due to an superfluous in (). I
- 	  also fixed other data types having the same problems.  Thanks to
- 	  Martin Botzler <martin.botzler@mchp.siemens.de> for reporting
- 	  this.
+        * TAO_IDL/be/be_visitor_factory.cpp,
+          TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp,
+          TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp,
+          TAO_IDL/be/be_visitor_operation/argument.cpp,
+          TAO_IDL/be_include/be_codegen.h: The upcall for strings as out
+          parameter did not work properly due to an superfluous in (). I
+          also fixed other data types having the same problems.  Thanks to
+          Martin Botzler <martin.botzler@mchp.siemens.de> for reporting
+          this.
 
 Tue Sep 07 22:25:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
