@@ -304,6 +304,11 @@ ifdef exceptions
       #### Enable exception handling with g++ < 2.8.0.  Not recommended,
       #### but provided here for completeness.
       CCFLAGS += -fhandle-exceptions
+    else
+      #### Disable this warning on g++ >= 2.8.0 if exceptions are
+      #### enabled, it gets confused and reports too many bogus
+      #### warnings.
+      CFLAGS += -Wno-uninitialized
     endif # ACE_HAS_GNUG_PRE_2_8
   endif # g++
 else  # ! exceptions
