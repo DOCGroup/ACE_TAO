@@ -1,3 +1,10 @@
+Mon Apr  2 13:25:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/MT_Timeout/MT_Timeout.dsw:
+	* tests/MT_Timeout/MT_Timeout_Client.dsp:
+	* tests/MT_Timeout/MT_Timeout_Client.dsp:
+	  Added MS VC++ workspace and project files.	
+
 Mon Apr  2 13:12:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/RTCORBA:
