@@ -4,7 +4,8 @@ Mon Mar 26 14:01:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Changed case labels for the union with a wchar discriminator
           to values which map to some displayable char value. This
-          was causing a problem on some platforms.
+          was causing a problem on QNX. Thanks to
+          Mayur Deshpande <mayur@balar.ece.uci.edu> for reporting this.
 
 Mon Mar 26 11:05:40 2001  Balachandran  <bala@cs.wustl.edu>
 
