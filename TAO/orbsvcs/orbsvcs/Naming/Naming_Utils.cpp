@@ -5,7 +5,7 @@
 #include "Naming_Utils.h"
 #include "ace/Arg_Shifter.h"
 #include "Hash_Naming_Context.h"
-#include "Persistent_Context_Index.h"
+#include "Persistent_Context_Index_T.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
