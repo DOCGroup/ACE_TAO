@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,62 +6,70 @@
  *
  *  $Id$
  *
- *   Header file for Win32 interface to CORBA's base "Object" type.
- *
  *   A "Object" is an entity that can be the target of an invocation
  *   using an ORB.  All CORBA objects provide this functionality.
- *   See the CORBA 2.0 specification for details.
- *
+ *   See the CORBA 2.6 specification for details.
  *
  *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
- *  @author  Portions Copyright 1997 by Washington University
+ *  @author  Portions Copyright 1997-2002 by Washington University
  */
 //=============================================================================
 
 
 #ifndef TAO_CORBA_OBJECT_H
 #define TAO_CORBA_OBJECT_H
+
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
-#include "tao/Object_Proxy_Broker.h"
-#include "tao/Policy_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Policy_ForwardC.h"
+
 class TAO_Stub;
-
 class TAO_Abstract_ServantBase;
+class TAO_Object_Proxy_Broker;
 
+/**
+ * @class CORBA::Object
+ *
+ * @brief Implementation of a CORBA object reference.
+ *
+ * All CORBA objects, both unconstrained and locality-constrained,
+ * inherit from this class.  The interface is defined in the CORBA
+ * specification and the C++ mapping.
+ */
 class TAO_Export CORBA_Object
 {
 public:
+
   /// Destructor.
   virtual ~CORBA_Object (void);
 
-  /// Address of this variable used in <_unchecked_narrow>.
+  /// Address of this variable used in _unchecked_narrow().
   static int _tao_class_id;
 
   /// Increment the ref count.
-  static CORBA_Object_ptr _duplicate (CORBA_Object_ptr obj);
+  static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
 
   /// Return a NULL object.
-  static CORBA_Object_ptr _nil (void);
+  static CORBA::Object_ptr _nil (void);
 
   /// No-op it is just here to simplify some templates.
   ACE_INLINE_FOR_GNUC
-  static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  static CORBA_Object_ptr _unchecked_narrow (CORBA_Object_ptr obj
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Object_ptr _narrow (CORBA_Object_ptr obj
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Object_ptr _unchecked_narrow (CORBA_Object_ptr obj
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Used in the implementation of CORBA::Any
   static void _tao_any_destructor (void*);
 
   /// Uninlined part of the now-inlined CORBA::is_nil().
-  static CORBA::Boolean is_nil_i (CORBA_Object_ptr obj);
+  static CORBA::Boolean is_nil_i (CORBA::Object_ptr obj);
 
   // These calls correspond to over-the-wire operations, or at least
   // do so in many common cases.  The normal implementation assumes a
@@ -171,7 +179,7 @@ public:
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
-   * Try to determine if this object is the same as <other_obj>.  This
+   * Try to determine if this object is the same as other_obj.  This
    * method relies on the representation of the object reference's
    * private state.  Since that changes easily (when different ORB
    * protocols are in use) there is no default implementation.
@@ -225,15 +233,17 @@ public:
   virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
 
 protected:
+
   /// Initializing a local object.
   CORBA_Object (int dummy);
 
-  // = Internal Reference count managment.
-  /// Increment the reference count.
-  CORBA::ULong _incr_refcnt (void);
+private:
 
-  /// Decrement the reference count.
-  CORBA::ULong _decr_refcnt (void);
+  // = Unimplemented methods
+  CORBA_Object (const CORBA_Object &);
+  CORBA_Object &operator = (const CORBA_Object &);
+
+protected:
 
   /// Flag to indicate collocation.  It is 0 except for collocated
   /// objects.
@@ -253,6 +263,7 @@ protected:
   TAO_Object_Proxy_Broker *proxy_broker_;
 
 private:
+
   /**
    * Pointer to the protocol-specific "object" containing important
    * profiling information regarding this proxy.
@@ -261,16 +272,6 @@ private:
    */
   TAO_Stub *protocol_proxy_;
 
-  /// Number of outstanding references to this object.
-  CORBA::ULong refcount_;
-
-  /// Protect the reference count, this is OK because we do no
-  /// duplicates or releases on the critical path.
-  TAO_SYNCH_MUTEX refcount_lock_;
-
-  // = Unimplemented methods
-  CORBA_Object (const CORBA_Object &);
-  CORBA_Object &operator = (const CORBA_Object &);
 };
 
 class TAO_Export CORBA_Object_var
@@ -322,18 +323,19 @@ private:
 };
 
 
-extern TAO_Export  TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
+/// This function pointer is set only when the Portable server library
+/// is present.
+extern TAO_Export TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-// This function pointer is set only when the Portable server library is
-// present.
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA_Object*);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA_Object*&);
+
 
 #if defined (__ACE_INLINE__)
 # include "tao/Object.i"
