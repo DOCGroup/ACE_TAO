@@ -1,3 +1,11 @@
+Sat Jul 13 15:14:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Nested_Upcall_Crash/client.dsp:
+	* tests/Nested_Upcall_Crash/server.dsp:
+	* tests/Nested_Upcall_Crash/scavenger.dsp: Fixed the dsp files to
+	  include the right files. This should prevent link errors in the
+	  Win32 builds. 
+
 Sat Jul 13 14:57:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.dsp:

@@ -97,7 +97,15 @@ SOURCE=.\Client_Peer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Clock_Ticks.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TestC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TestS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -106,6 +114,14 @@ SOURCE=.\TestC.cpp
 # Begin Source File
 
 SOURCE=.\Client_Peer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Clock_Ticks.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TestS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
