@@ -25,7 +25,7 @@ Condition::~Condition(void)
    to clients of the class.  It also allows us to use a private method 
    for getting a reference to the value when we need to modify it.
  */
-Condition::operator value_t (void)
+Condition::operator Condition::value_t (void)
 {
      // Place a guard around the variable so that it won't change as
      // we're copying it back to the client.
