@@ -306,7 +306,6 @@ be_visitor_module::visit_interface (be_interface *node)
       else
         ctx.state (TAO_CodeGen::TAO_LOCAL_INTERFACE_S);
       break;
-      break;
     case TAO_CodeGen::TAO_MODULE_SH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SH);
       break;
