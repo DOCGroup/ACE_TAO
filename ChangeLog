@@ -1,3 +1,9 @@
+Mon Mar 15 13:42:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/CDR_Stream.cpp:
+	  
+	  Fixed a typo. Thanks to Andreas Koehler for pointing this out. 
+
 Mon Mar 15 17:21:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:

@@ -1537,7 +1537,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
 
   // If the size of the data that needs to be copied are higher than
   // what is available, then do a reallocation.
-  if (wr_bytes > (this->start_.size () + ACE_CDR::MAX_ALIGNMENT))
+  if (wr_bytes > (this->start_.size () - ACE_CDR::MAX_ALIGNMENT))
     {
       // @@NOTE: We need to probably add another method to the message
       // block interface to simplify this
