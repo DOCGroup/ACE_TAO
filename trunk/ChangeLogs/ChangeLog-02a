@@ -1,3 +1,13 @@
+Mon Jan 28 17:44:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process_Manager.cpp (wait): When waiting for a non-specific
+          process, specify -1 pid for waitpid(). This is necessary because
+          of Fri Jan 25 19:58:41 2002  Steve Huston  <shuston@riverace.com>
+          change to not alter the process group ID when ACE_Process_Manager
+          spawns a process.
+          Timed waits for a process still don't work on non-Win32, but
+          this fix corrects the failed wait with errno == ECHILD.
+
 Mon Jan 28 12:16:28 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/auto_run_tests.lst:

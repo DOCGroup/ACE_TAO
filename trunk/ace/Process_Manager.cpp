@@ -797,20 +797,18 @@ ACE_Process_Manager::wait (pid_t pid,
       delete [] handles;
 #else /* !defined(ACE_WIN32) */
       if (timeout == ACE_Time_Value::max_time)
-        pid = ACE_OS::waitpid (-(ACE_OS::getpid ()),
-                               status,
-                               0);
+        {
+          pid = ACE_OS::waitpid (-1, status, 0);
+        }
       else if (timeout == ACE_Time_Value::zero)
-        pid = ACE_OS::waitpid (-(ACE_OS::getpid ()),
-                               status,
-                               WNOHANG);
+        {
+          pid = ACE_OS::waitpid (-1, status, WNOHANG);
+        }
       else
         {
           for (;;)
             {
-              pid = ACE_OS::waitpid (-(ACE_OS::getpid()),
-                                     status,
-                                     WNOHANG);
+              pid = ACE_OS::waitpid (-1, status, WNOHANG);
               if (pid > 0)
                 break;          // Got one - all done
               if (pid == -1)
