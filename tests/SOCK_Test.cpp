@@ -111,7 +111,9 @@ server (void *arg)
   ACE_SOCK_Stream new_stream;                                   
   ACE_INET_Addr cli_addr;
   ACE_Handle_Set handle_set;
-  ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
+  const ACE_Time_Value def_timeout(ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value tv (def_timeout);
+
   // Performs the iterative server activities.
 
   for (;;) 
@@ -125,6 +127,8 @@ server (void *arg)
       int result = ACE_OS::select (int (peer_acceptor->get_handle ()) + 1,
 				   handle_set,
 				   0, 0, &tv);
+      ACE_ASSERT (tv == def_timeout);
+
       if (result == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "select"), 0);
       else if (result == 0)
