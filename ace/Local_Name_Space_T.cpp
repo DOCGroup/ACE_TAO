@@ -350,12 +350,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager (void)
 
   ACE_DEBUG ((LM_DEBUG, "contextfile is %s\n", 
 	      this->context_file_));
-#if defined (ACE_HAS_NESTED_TRAITS)
-  ALLOCATOR::ALLOCATOR::MEMORY_POOL::Options options (this->name_options_->base_address ());
+
+  ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
   ACE_NEW_RETURN (this->allocator_, ALLOCATOR (options, this->context_file_), -1);  
-#else
-  ACE_NEW_RETURN (this->allocator_, ALLOCATOR (this->context_file_), -1);
-#endif /* ACE_HAS_NESTED_TRAITS */
 
   if (ACE_LOG_MSG->errnum ())
     ACE_ERROR_RETURN ((LM_ERROR, "Allocator::Allocator\n"), -1);    

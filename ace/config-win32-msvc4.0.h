@@ -78,9 +78,6 @@
 #define ACE_LACKS_MODE_MASKS
 #define ACE_LACKS_STRRECVFD
 
-// Compiler supports nested traits
-#define ACE_HAS_NESTED_TRAITS
-
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 

@@ -589,10 +589,6 @@ public:
 #define ACE_MT_SYNCH ACE_Thread_Mutex,ACE_Condition_Thread_Mutex
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-#if defined (__osf__) && ! defined (__GNUG__)
-#pragma define_template ACE_Condition <ACE_Mutex>
-#endif   
-
 #define ACE_SYNCH ACE_MT_SYNCH
 #else
 #define ACE_SYNCH ACE_NULL_SYNCH
