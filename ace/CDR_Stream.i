@@ -1227,6 +1227,15 @@ ACE_InputCDR::do_byte_swap (void) const
 }
 
 ACE_INLINE int
+ACE_InputCDR::byte_order (void) const
+{
+  if (this->do_byte_swap ())
+    return ~ACE_CDR_BYTE_ORDER;
+  else
+    return ACE_CDR_BYTE_ORDER;
+}
+
+ACE_INLINE int
 ACE_InputCDR::align_read_ptr (size_t alignment)
 {
   char *buf = ptr_align_binary (this->rd_ptr (),
