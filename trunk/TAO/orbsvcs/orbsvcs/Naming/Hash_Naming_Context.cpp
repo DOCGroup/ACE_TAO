@@ -446,6 +446,10 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   TAO_Hash_Naming_Context *c_impl = 0;
+
+  // To keep compilers warnings away.
+  ACE_UNUSED_ARG (c_impl);
+
   TAO_Naming_Context *c = 0;
   CosNaming::NamingContext_var result;
   char poa_id[BUFSIZ];
