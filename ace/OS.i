@@ -939,14 +939,23 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
 {
   // ACE_TRACE ("ACE_OS::cuserid");
 #if defined (VXWORKS)
-  ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
-  ACE_NOTSUP_RETURN (0);
+  if (user == 0)
+    {
+      // Require that the user field be non-null, i.e., don't
+      // allocate or use static storage.
+      ACE_NOTSUP_RETURN (0);
+    }
+  else
+    {
+      ::remCurIdGet (user, 0);
+      return user;
+    }
 #elif defined (ACE_WIN32)
   // Hackish because of missing buffer size!
   return ::GetUserName (user, (unsigned long *) &maxlen) ? user : 0;
 #else
-  maxlen = maxlen;
+  ACE_UNUSED_ARG (maxlen);
   ACE_OSCALL_RETURN (::cuserid (user), char *, 0);
 #endif /* VXWORKS */
 }
@@ -5106,7 +5115,7 @@ ACE_OS::uname (struct utsname *name)
 ACE_INLINE int 
 ACE_OS::hostname (char name[], size_t maxnamelen)
 {
-  // ACE_TRACE ("ACE_OS::uname");
+  // ACE_TRACE ("ACE_OS::hostname");
 #if defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)), 
 				       ace_result_), int, -1);
@@ -6879,7 +6888,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 ACE_INLINE int 
 ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
 {
-  // ACE_TRACE ("ACE_OS::uname");
+  // ACE_TRACE ("ACE_OS::hostname");
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)), 
 				       ace_result_), int, -1);
 }
