@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : rtevent, rtsched, rgkokyu {
+  after   += RTRGKokyuEvent
+  libs    += TAO_RTRGKokyuEvent
+}
