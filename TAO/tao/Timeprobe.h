@@ -1,28 +1,30 @@
 // $Id$
 
-#ifndef ACE_TIMEPROBE_H
+#if defined (ACE_TIMEPROBE_H)
 #define ACE_TIMEPROBE_H
 
 #include "ace/Synch.h"
 
 class ACE_Timeprobe
 {
+  // @@ Please comment me.
 public:
-  static ACE_Timeprobe &instance ();
+  static ACE_Timeprobe &instance (void);
 
   void timeprobe (const char *id);
 
-  void print_times () const;
+  void print_times (void) const;
 
-  void reset();
+  void reset (void);
 
-  void destroy ();
+  void destroy (void);
 
 private:
-  ACE_Timeprobe ();
-  ~ACE_Timeprobe ();
+  ACE_Timeprobe (void);
+  ~ACE_Timeprobe (void);
 
-  ACE_Timeprobe (const ACE_Timeprobe &); // not implemented
+  ACE_Timeprobe (const ACE_Timeprobe &); 
+  // Not implemented.
 
 private:
   static ACE_Timeprobe *instance_;
@@ -33,13 +35,16 @@ private:
 
   u_int current_slot_;
 
-  typedef struct timeprobe_info {
+  struct timeprobe_t;
+  {
     const char *id_;
     ACE_hrtime_t time_;
     ACE_thread_t thread_;
-  } timeprobe_t;
+  };
+
   timeprobe_t timeprobes [SLOTS];
 
+  // @@ Don't we have a macro that does this?
   friend class null_friend_to_avoid_compiler_warning_about_no_friends;
 };
 
