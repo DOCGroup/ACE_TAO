@@ -46,6 +46,19 @@ main (int argc, char **argv)
       return -1;
     }
 
+  for (CORBA::ULong i = 0;
+       i < policies.length () && env.exception () == 0;
+       ++i)
+    {
+      PortableServer::Policy_ptr policy = policies[i];
+      policy->destroy (env);
+    }  
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_POA");
+      return -1;
+    }
+
   MyFooServant first_foo_impl (root_poa, 27);
   MyFooServant second_foo_impl (first_poa, 28);
 
