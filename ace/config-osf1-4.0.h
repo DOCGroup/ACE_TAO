@@ -57,12 +57,12 @@
 #elif defined (RATIONAL)
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_HAS_ONEARG_SIGWAIT
+# define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 # define ACE_HAS_ANSI_CASTS
 # define ACE_HAS_EXCEPTIONS
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
-// # define ACE_HAS_TEMPLATE_TYPEDEFS
 # define ACE_HAS_TYPENAME_KEYWORD
 #else  /* ! __GNUG__ && ! __DECCXX && ! RATIONAL */
 # error unsupported compiler on Digital Unix
