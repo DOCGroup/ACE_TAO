@@ -351,11 +351,11 @@ else
   override split_target =
 endif # split
 
-ifeq ($(debug),0)
-  override debug =
-endif # debug
+#ifeq ($(debug),1)
+#  override debug =
+#endif # debug
 
-ifeq ($(debug),)
+ifeq ($(debug),0)
   CPPFLAGS += -DACE_NDEBUG
 # Disable the RCSID for release/non-debug builds.
   ifeq (,$(findstring ACE_USE_RCSID,$(CPPFLAGS)))
