@@ -110,11 +110,8 @@ TAO_Queued_Message::push_back (TAO_Queued_Message *&head,
       return;
     }
 
+  tail->next_ = this;
   this->prev_ = tail;
   this->next_ = 0;
-  if (tail->prev_ != 0)
-    {
-      tail->prev_->next_ = this;
-    }
   tail = this;
 }

@@ -48,9 +48,6 @@ static void del_message (TAO_Queued_Message *&head,
                          TAO_Queued_Message *&tail,
                          ACE_RANDR_TYPE &seed)
 {
-  if (head == 0)
-    return;
-
   // ACE_DEBUG ((LM_DEBUG, "Removing message\n"));
   TAO_Queued_Message *current = head;
   current->remove_from_list (head, tail);
@@ -98,15 +95,23 @@ main (int, ACE_TCHAR *[])
   TAO_Queued_Message *head = 0;
   TAO_Queued_Message *tail = 0;
 
+  int add_count = 0;
+  int del_count = 0;
+
   const int iterations = 100;
   int i;
   for (i = 0; i != iterations; ++i)
     {
       add_message (head, tail, seed);
+      add_count++;
       if (ACE_OS::rand_r(seed) % 100 > 90)
         {
           // every so often remove a message also.
-          del_message (head, tail, seed);
+          if (head != 0)
+            {
+              del_message (head, tail, seed);
+              del_count++;
+            }
         }
     }
 
@@ -115,15 +120,20 @@ main (int, ACE_TCHAR *[])
     {
       if (ACE_OS::rand_r(seed) % 100 > 90)
         {
-          add_message (head, tail, seed);
+          add_message (head, tail, seed); add_count++;
         }
-      del_message (head, tail, seed);
+      if (head != 0)
+        {
+          del_message (head, tail, seed);
+          del_count++;
+        }
     }
 
   // Go through a phase where all messages are removed.
   while (head != 0)
     {
       del_message (head, tail, seed);
+      del_count++;
     }
 
   if (tail != 0)
@@ -132,6 +142,15 @@ main (int, ACE_TCHAR *[])
                          "ERROR: inconsistent state in message queue\n"),
                         1);
     }
+
+  if (add_count != del_count)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: mismatched (%d != %d) add and del counts\n",
+                         add_count, del_count),
+                        1);
+    }
+    
 
   return 0;
 }
