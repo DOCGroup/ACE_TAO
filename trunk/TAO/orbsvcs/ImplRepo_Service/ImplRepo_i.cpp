@@ -58,7 +58,7 @@ ImplRepo_i::Endpoint::Endpoint (ImplRepo_i::Endpoint &ep)
 }
 
 void
-ImplRepo_i::Endpoint::operator= (ImplRepo_i::Endpoint &ep)
+ImplRepo_i::Endpoint::operator= (const ImplRepo_i::Endpoint &ep)
 {
   this->host = ep.host;
   this->port = ep.port;
@@ -173,7 +173,7 @@ ImplRepo_i::activate_server_i (const char *server,
   if (start == 1)
     {
       // Make sure the activation allows us to start it up.
-      if (activation == ImplementationRepository::MANUAL && check_startup)
+      if (activation == Server_Info::MANUAL && check_startup)
         ACE_THROW (CORBA::TRANSIENT (
           CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION,
           0),
@@ -256,7 +256,7 @@ ImplRepo_i::activate_server_i (const char *server,
                   server));
     }
 
-  if (activation == ImplementationRepository::PER_CLIENT && check_startup)
+  if (activation == Server_Info::PER_CLIENT && check_startup)
   {
     if (this->repository_.update (server, "", 0, "") != 0)
       {
