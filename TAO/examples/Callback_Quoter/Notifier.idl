@@ -25,8 +25,7 @@ interface Notifier
   // Remove the handler.
 
   void market_status (in string stock_name,
-                      in long stock_value)
-    raises (Callback_Quoter::Invalid_Stock);
+                      in long stock_value);
   // Get market status.
 
    void shutdown ();

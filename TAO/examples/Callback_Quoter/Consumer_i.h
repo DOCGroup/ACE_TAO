@@ -50,11 +50,9 @@ public:
   // Set the ORB pointer.
 
 private:
-  // @@ Please see if you can remove this.
-  int done_;
-  // Denotes whether the information about the stock has been
-  // received.
-
+    int quit_;
+  // If 1 denotes that the consumer is dead else alive.
+ 
   CORBA::ORB_var orb_;
   // ORB pointer.
 
