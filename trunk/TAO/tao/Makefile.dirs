@@ -22,7 +22,12 @@ DIRS = \
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(corba_messaging),1)
 

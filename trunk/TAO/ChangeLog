@@ -1,3 +1,8 @@
+Sat Aug 31 23:58:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/Makefile.dirs: Add include of rules.tao.GNU, in order to
+	  get default values for make variables like corba_messaging.
+
 Sat Aug 31 23:16:35 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Makefile: Re-order targets to that if make -k is specified,
