@@ -65,6 +65,10 @@ template class ACE_Node<Identifier *>;
 template class ACE_Unbounded_Queue<Identifier *>;
 template class ACE_Unbounded_Queue_Iterator<Identifier *>;
 
+template class ACE_Node<AST_Operation *>;
+template class ACE_Unbounded_Queue<AST_Operation *>;
+template class ACE_Unbounded_Queue_Iterator<AST_Operation *>;
+
 template class ACE_Unbounded_Stack<char *>;
 template class ACE_Unbounded_Stack_Iterator<char *>;
 
@@ -102,21 +106,25 @@ template class ACE_Unbounded_Stack_Iterator<char *>;
 #pragma instantiate ACE_Unbounded_Set<AST_Decl *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<AST_Decl *>
 
-#pragma instantiate ACE_Node<AST_Field *>;
-#pragma instantiate ACE_Unbounded_Queue<AST_Field *>;
-#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Field *>;
+#pragma instantiate ACE_Node<AST_Field *>
+#pragma instantiate ACE_Unbounded_Queue<AST_Field *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Field *>
 
-#pragma instantiate ACE_Node<AST_Component::uses_description>;
-#pragma instantiate ACE_Unbounded_Queue<AST_Component::uses_description>;
-#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Component::uses_description>;
+#pragma instantiate ACE_Node<AST_Component::uses_description>
+#pragma instantiate ACE_Unbounded_Queue<AST_Component::uses_description>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Component::uses_description>
 
-#pragma instantiate ACE_Node<AST_Component::port_description>;
-#pragma instantiate ACE_Unbounded_Queue<AST_Component::port_description>;
-#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Component::port_description>;
+#pragma instantiate ACE_Node<AST_Component::port_description>
+#pragma instantiate ACE_Unbounded_Queue<AST_Component::port_description>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Component::port_description>
 
-#pragma instantiate ACE_Node<Identifier *>;
-#pragma instantiate ACE_Unbounded_Queue<Identifier *>;
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Identifier *>;
+#pragma instantiate ACE_Node<Identifier *>
+#pragma instantiate ACE_Unbounded_Queue<Identifier *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<Identifier *>
+
+#pragma instantiate ACE_Node<AST_Operation *>
+#pragma instantiate ACE_Unbounded_Queue<AST_Operation *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Operation *>
 
 #pragma instantiate ACE_Unbounded_Stack<char *>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<char *>
