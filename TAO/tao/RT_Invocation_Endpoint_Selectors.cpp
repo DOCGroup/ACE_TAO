@@ -58,21 +58,16 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
       // Profiles contains more than one endpoint.  Find one with the
       // right priority.
 
-      // Right now it is assumed that the priority bands are adjacent, and
-      // that for each priority band the ORB has an endpoint at a priority
-      // that is set to the maximum of the associated band.
       TAO_Endpoint *endpoint = 0;
-      TAO_Endpoint *prev_endpoint = invocation->profile_->endpoint ();
       for (TAO_Endpoint *endp = invocation->profile_->endpoint ();
            endp != 0;
            endp = endp->next ())
         {
-          if (endp->priority () > invocation->endpoint_selection_state_.client_priority_)
+          if (endp->priority () == invocation->endpoint_selection_state_.client_priority_)
             {
-              endpoint = prev_endpoint;
+              endpoint = endp;
               break;
             }
-          prev_endpoint = endp;
         }
 
       if (endpoint != 0)
