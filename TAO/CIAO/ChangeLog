@@ -1,3 +1,16 @@
+Sat Aug 28 09:22:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/examples/BasicSP/BasicSP.mpc:
+	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED.mpc:
+	* DAnCE/examples/BasicSP/BMDevice/BMDevice.mpc:
+	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc:
+	* DAnCE/examples/BasicSP/EC/EC.mpc:
+
+	  Fixed the project names and shared librray names so that they
+	  don't collide with the regual BasicSP test. Ideally there
+	  shouldn't be any duplicate code. I waill talk to Gan about
+	  this. 
+
 Thu Aug 26 16:45:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/Lookup/README:
