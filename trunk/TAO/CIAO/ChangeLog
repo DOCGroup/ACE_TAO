@@ -1,3 +1,14 @@
+Fri Jun  4 15:02:15 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager.mpc:
+        * DnC/RepositoryManager/RepositoryManager.mpc:
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/RepositoryManager_Impl.h:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Made changes so that RepositoryManager can dump out the
+          PackageConfiguration elements.
+
 Fri Jun  4 11:42:18 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
@@ -12,12 +23,12 @@ Fri Jun  4 11:37:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Fixed a bug in code generation for the port table population
           method check in with
-          
+
           Thu Jun  3 12:35:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
- 
+
           and changed code generation of facet servant classes to be
           a template class with a dummy argument. Immediately below
           the declaration, we generate a typedef to the actual
@@ -31,12 +42,12 @@ Fri Jun  4 11:37:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           aliased to the same type. Finally, added checks to ensure
           that the facet servant class is generated only once in
           each translation unit, by allowing the underlying interface
-          AST node to be traversed by the facet class code emitter 
+          AST node to be traversed by the facet class code emitter
           only once.
 
 Fri Jun  4 11:40:18 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.cpp: 
+	* DnC/Config_Handlers/DnC_Dump.cpp:
 
 	Clean-up of the unused, commented out code sections.
 

@@ -15,6 +15,42 @@
 #define REPOSITORYMANAGER_IMPL_H
 
 #include "RepositoryManagerS.h"
+#include "ace/Get_Opt.h"
+#include "RepositoryManager_Impl.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_main.h"
+#include "tao/Exception.h"
+#include "CIAO/DnC/Config_Handlers/XercesString.h"
+#include <xercesc/util/XMLUniDefs.hpp>
+#include "CIAO/DnC/Config_Handlers/Config_Handler_export.h"
+#include "CIAO/DnC/Config_Handlers/Domain_Handler.h"
+#include "CIAO/DnC/Config_Handlers/PC_Handler.h"
+#include "CIAO/DnC/Config_Handlers/Plan_Handler.h"
+#include "CIAO/DnC/Config_Handlers/CompImplDesc_Handler.h"
+#include "CIAO/DnC/Config_Handlers/DnC_Dump.h"
+#include "CIAO/DnC/Config_Handlers/Utils.h"
+#include "CIAO/DnC/Config_Handlers/Config_Error_Handler.h"
+
+using Config_Handler::XStr;
+using xercesc::XMLUni;
+using xercesc::XMLString;
+using xercesc::XMLException;
+using xercesc::DOMException;
+using xercesc::DOMBuilder;
+using xercesc::DOMImplementationRegistry;
+using xercesc::DOMImplementationLS;
+using xercesc::DOMImplementation;
+using xercesc::DOMAttr;
+using xercesc::DOMNamedNodeMap;
+using xercesc::DOMLocator;
+using xercesc::DOMError;
+using xercesc::DOMNodeList;
+using xercesc::DOMDocument;
+using xercesc::DOMDocumentTraversal;
+using xercesc::DOMNodeIterator;
+using xercesc::DOMNode;
+using xercesc::DOMNodeFilter;
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -106,6 +142,9 @@ namespace CIAO
 
       // Cached POA pointer
       PortableServer::POA_var poa_;
+
+      // Package Configuration element
+      Deployment::PackageConfiguration pc_;
     };
 };
 
