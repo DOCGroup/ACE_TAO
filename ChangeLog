@@ -1,3 +1,14 @@
+Thu Jun  3 18:49:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Dirent_Selector.cpp (close): Need to call
+	
+	  ACE_OS::free (this->namelist_[n_].d_name);
+	  
+	  in close() since ACE_OS::scandir() allocates a dirent structure
+ 	  array that includes a dynamically allocated ACE_TCHAR *.  Thanks
+ 	  to Benjamin Bronk <benjamin.j.bronk@lmco.com> for reporting this
+ 	  and providing the fix.  This fixes bugid 1833.
+
 Thu Jun  3 17:36:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
