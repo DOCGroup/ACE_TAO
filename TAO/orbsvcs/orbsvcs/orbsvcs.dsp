@@ -2719,6 +2719,25 @@ SOURCE=.\Notify\Notify_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\Notify_Event_Manager.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notify\Notify_EventChannel_i.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -2890,7 +2909,64 @@ SOURCE=.\Notify\Notify_ProxySupplier_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\Notify_PushConsumer.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_PushSupplier.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notify\Notify_QoSAdmin_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Resource_Manager.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
@@ -2986,6 +3062,25 @@ SOURCE=.\Notify\Notify_StructuredPushSupplier.cpp
 # Begin Source File
 
 SOURCE=.\Notify\Notify_SupplierAdmin_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Types.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
@@ -4426,6 +4521,10 @@ SOURCE=.\Notify\Notify_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\Notify_Event_Manager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notify\Notify_EventChannel_i.h
 # End Source File
 # Begin Source File
@@ -4446,7 +4545,19 @@ SOURCE=.\Notify\Notify_FilterFactory_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\Notify_ID_Pool_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Listeners.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notify\Notify_ProxyConsumer_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyConsumer_T.h
 # End Source File
 # Begin Source File
 
@@ -4462,7 +4573,23 @@ SOURCE=.\Notify\Notify_ProxySupplier_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\Notify_ProxySupplier_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_PushConsumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_PushSupplier.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notify\Notify_QoSAdmin_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Resource_Manager.h
 # End Source File
 # Begin Source File
 
@@ -4483,6 +4610,10 @@ SOURCE=.\Notify\Notify_StructuredPushSupplier.h
 # Begin Source File
 
 SOURCE=.\Notify\Notify_SupplierAdmin_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Types.h
 # End Source File
 # Begin Source File
 
@@ -5079,6 +5210,10 @@ SOURCE=.\LifeCycleServiceS.i
 # Begin Source File
 
 SOURCE=.\Event\Memory_Pools.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ID_Pool_T.i
 # End Source File
 # Begin Source File
 
@@ -9573,6 +9708,21 @@ SOURCE=.\ImplRepoS_T.cpp
 
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ID_Pool_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyConsumer_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxySupplier_T.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 

@@ -25,6 +25,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Notify_Resource_Manager;
 
 class TAO_ORBSVCS_Export TAO_Notify_EventChannelFactory_i : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public virtual PortableServer::RefCountServantBase
@@ -106,5 +113,9 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
    CosNotifyChannelAdmin::ChannelIDSeq> ec_ids_;
  // Id generator for event channels
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* NOTIFY_EVENTCHANNELFACTORY_I_H */
