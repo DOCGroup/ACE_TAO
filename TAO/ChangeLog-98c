@@ -1,3 +1,8 @@
+Wed Nov 19 22:59:18 1997  Sergio Flores  <sergio@cs.wustl.edu>
+
+	* tao/orbobj.cpp (resolve_name_service): Minor change to output
+ 	debug statement.
+
 Wed Nov 19 23:01:46 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_state_operation.cpp: Fixed the problem with
