@@ -24,6 +24,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_NEEDS_IPC_1C_H)
+   // LynxOS 3.1.0 and later need this
+#  include /**/ <ipc_1c.h>
+#endif /* ACE_NEEDS_IPC_1C_H */
+
 #if !defined (ACE_LACKS_NET_IF_H)
    // This part if to avoid STL name conflict with the map structure
    // in net/if.h.
