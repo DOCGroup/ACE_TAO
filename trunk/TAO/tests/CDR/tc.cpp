@@ -1,13 +1,12 @@
-//
 // $Id$
-//
 
 #include "tao/corba.h"
 
 // In this version of TAO typecodes are based on CDR, we have to
 // verify that CDR offers the services needed for Typecode...
 
-static CORBA::TypeCode_ptr tcs[]= {
+static CORBA::TypeCode_ptr tcs[]= 
+{
   CORBA::_tc_null,
   CORBA::_tc_void,
   CORBA::_tc_short,
@@ -65,6 +64,7 @@ static CORBA::TypeCode_ptr tcs[]= {
   CORBA::_tc_Bounds,
   CORBA::_tc_BadKind
 };
+
 static int n = sizeof (tcs) / sizeof (tcs[0]);
 
 int
@@ -72,11 +72,15 @@ main (int argc, char *argv[])
 {
   TAO_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "",
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            0,
 					    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      for (CORBA::TypeCode_ptr* i = tcs; i != tcs + n; ++i)
+      for (CORBA::TypeCode_ptr *i = tcs;
+           i != tcs + n;
+           ++i)
 	{
 	  CORBA::TypeCode_ptr tc = *i;
 	  
@@ -92,13 +96,14 @@ main (int argc, char *argv[])
 	    case CORBA::tk_alias:
 	    case CORBA::tk_except:
 	      {
-		const char* id = tc->id (TAO_TRY_ENV);
+		const char *id = tc->id (TAO_TRY_ENV);
 		TAO_CHECK_ENV;
 
-		const char* name = tc->name (TAO_TRY_ENV);
+		const char *name = tc->name (TAO_TRY_ENV);
 		TAO_CHECK_ENV;
 		
-		CORBA::ULong length = 0; // tc->length (TAO_TRY_ENV);
+		CORBA::ULong length = 0; 
+                // tc->length (TAO_TRY_ENV);
 		TAO_CHECK_ENV;
 
 		ACE_DEBUG ((LM_DEBUG,
@@ -107,14 +112,17 @@ main (int argc, char *argv[])
 			    " KIND = %d%$"
 			    " LENGTH = %d"
 			    "%}%}\n",
-			    id, name, k, length));
+			    id,
+                            name,
+                            k,
+                            length));
+                break;
 	      }
-	      break;
 	    default:
-	      {
-		ACE_DEBUG ((LM_DEBUG, "basic type: %d\n", k));
-	      }
-	      break;
+              ACE_DEBUG ((LM_DEBUG,
+                          "basic type: %d\n",
+                          k));
+              break;
 	    }
 	}
     }
