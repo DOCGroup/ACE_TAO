@@ -104,7 +104,7 @@ Tue Sep 28 14:50:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Sep 28 13:44:00 1999  Martin Botzler  <martin.botzler@mchp.siemens.de>
 
 	* examples/mfc/*:
-          Added a tao-mfc example.
+          Added a TAO-MFC example.
 
 Tue Sep 28 13:26:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
