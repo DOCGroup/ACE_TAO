@@ -14,6 +14,7 @@
 
 #include "DeploymentC.h"
 #include "Config_Handler_export.h"
+#include "Basic_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -43,67 +44,43 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-namespace CIAO 
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/**
+ * @class PC_Handler
+ *
+ * @brief Handler class for <PackageConfiguration> type 
+ *
+ * This class is within the Component Data Model subpackage of the
+ * Deployment & Configuration package.
+ *
+ * This class defines handler methods to parse the aforementioned type
+ * in the description files. The corresponding CORBA IDL type for this
+ * element is returned.
+ */
+
+class PC_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-  {
+public:
 
-    /**
-     * @class PC_Handler
-     *
-     * @brief Handler class for <PackageConfiguration> type 
-     *
-     * This class is within the Component Data Model subpackage of the
-     * Deployment & Configuration package.
-     *
-     * This class defines handler methods to parse the aforementioned type
-     * in the description files. The corresponding CORBA IDL type for this
-     * element is returned.
-     */
+  /// constructor
+  PC_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-    class PC_Handler
-    {
-    public:
+  /// constructor
+  PC_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-      /// constructor
-      PC_Handler (DOMDocument* doc, unsigned long filter_);
+  /// Process the package configuration
+  void process_PackageConfiguration (::Deployment::PackageConfiguration &pc);
 
-      /// constructor
-      PC_Handler (DOMNodeIterator* iter, bool release = false);
+  /// Process the specializedConfig attribute
+  void process_specializedConfig
+  (const XMLCh* specializedConfig, ::Deployment::PackageConfiguration &pc);
 
-      /// destructor
-      ~PC_Handler();
+};
 
-      /// Process the package configuration
-      void process_PackageConfiguration (::Deployment::PackageConfiguration &pc);
-
-      /// Process the label attribute
-      void process_label (const XMLCh* label, ::Deployment::PackageConfiguration &pc);
-
-      /// Process the UUID attribute
-      void process_UUID (const XMLCh* UUID, ::Deployment::PackageConfiguration &pc);
-
-      /// Process the specializedConfig attribute
-      void process_specializedConfig
-        (const XMLCh* specializedConfig, ::Deployment::PackageConfiguration &pc);
-
-    private:
-
-      DOMDocument* doc_;
-
-      DOMNode* root_;
-
-      unsigned long filter_;
-
-      DOMNodeIterator* iter_;
-
-      bool release_;
-
-    };
-
-  }
-
-}
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 

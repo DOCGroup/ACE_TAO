@@ -12,6 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
+#include "Basic_Handler.h"
 #include "Config_Handler_export.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
@@ -55,220 +56,191 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
-namespace CIAO
+BEGIN_DEPLOYMENT_NAMESPACE
+
+/**
+ * @class Plan_Handler
+ *
+ * @brief Handler class for <DeploymentPlan> type
+ *
+ */
+
+class Config_Handler_Export Plan_Handler: public Basic_Handler
 {
-  namespace Config_Handler
-    {
-      /**
-       * @class Plan_Handler
-       *
-       * @brief Handler class for <DeploymentPlan> type
-       *
-       */
+public:
 
-      class Config_Handler_Export Plan_Handler
-        {
-        public:
+  /// constructor
+  Plan_Handler (DOMDocument* doc, unsigned long filter_)
+    : Basic_Handler (doc, filter_) { }
 
-          /// constructor
-          Plan_Handler (DOMDocument* doc, unsigned long filter_);
+  /// constructor
+  Plan_Handler (DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (iter, release) { }
 
-          /// constructor
-          Plan_Handler (DOMNodeIterator* iter, bool release = false);
+  /// Process the plan type
+  void process_plan (Deployment::DeploymentPlan& plan);
 
-          /// destructor
-          ~Plan_Handler(void);
+  /// process cid
+  void process_ccd (DOMNodeIterator* iter,
+                    Deployment::ComponentInterfaceDescription& cid);
 
-          /// Process the plan type
-          void process_plan (Deployment::DeploymentPlan& plan);
+  /// process pspr
+  void process_pspr (DOMNodeIterator* iter,
+                     Deployment::PlanSubcomponentPropertyReference& pspr);
 
-          /// Process the CCMComponentPortKind enum
-          void process_CPK (DOMNodeIterator* iter,
-                            Deployment::CCMComponentPortKind& kind);
+  /// process pspe
+  void process_pspe (DOMNodeIterator* iter,
+                     Deployment::PlanSubcomponentPortEndpoint& pspe);
 
-          /// process cid
-          void process_ccd (DOMNodeIterator* iter,
-                            Deployment::ComponentInterfaceDescription& cid);
+  /// process add
+  void process_add (DOMNodeIterator* iter,
+                    Deployment::ArtifactDeploymentDescription& add);
 
-          /// process pspr
-          void process_pspr (DOMNodeIterator* iter,
-                             Deployment::PlanSubcomponentPropertyReference& pspr);
+  /// process con
+  void process_pcd (DOMNodeIterator* iter,
+                    Deployment::PlanConnectionDescription& con);
 
-          /// process pspe
-          void process_pspe (DOMNodeIterator* iter,
-                             Deployment::PlanSubcomponentPortEndpoint& pspe);
+  /// process external property
+  void process_ppm (DOMNodeIterator* iter,
+                    Deployment::PlanPropertyMapping& ppm);
 
-          /// process add
-          void process_add (DOMNodeIterator* iter,
-                            Deployment::ArtifactDeploymentDescription& add);
+  /// process idd
+  void process_idd (DOMNodeIterator* iter,
+                    Deployment::InstanceDeploymentDescription& idd);
 
-          /// process con
-          void process_pcd (DOMNodeIterator* iter,
-                            Deployment::PlanConnectionDescription& con);
+  /// process mdd
+  void process_mdd (DOMNodeIterator* iter,
+                    Deployment::MonolithicDeploymentDescription& mdd);
 
-          /// process external property
-          void process_ppm (DOMNodeIterator* iter,
-                            Deployment::PlanPropertyMapping& ppm);
+  /// process rdd
+  void process_rdd (DOMNodeIterator* iter,
+                    Deployment::ResourceDeploymentDescription& rdd);
 
-          /// process idd
-          void process_idd (DOMNodeIterator* iter,
-                            Deployment::InstanceDeploymentDescription& idd);
+  /// process crdd
+  void process_crdd (DOMNodeIterator* iter,
+                     Deployment::ConnectionResourceDeploymentDescription& crdd);
+  /// process irdd
+  void process_irdd (DOMNodeIterator* iter,
+                     Deployment::InstanceResourceDeploymentDescription &irdd);
 
-          /// process mdd
-          void process_mdd (DOMNodeIterator* iter,
-                            Deployment::MonolithicDeploymentDescription& mdd);
+  /// process the add name
+  void process_add_name (const XMLCh* name,
+                         Deployment::ArtifactDeploymentDescription& add);
 
-          /// process rdd
-          void process_rdd (DOMNodeIterator* iter,
-                            Deployment::ResourceDeploymentDescription& rdd);
+  /// process the pspr property name
+  void process_pspr_prop_name (const XMLCh* name,
+                               Deployment::PlanSubcomponentPropertyReference& pspr);
 
-          /// process crdd
-          void process_crdd (DOMNodeIterator* iter,
-                             Deployment::ConnectionResourceDeploymentDescription& crdd);
-          /// process irdd
-          void process_irdd (DOMNodeIterator* iter,
-                             Deployment::InstanceResourceDeploymentDescription &irdd);
+  /// process the pspe port name
+  void process_pspe_port_name (const XMLCh* name,
+                               Deployment::PlanSubcomponentPortEndpoint& pspe);
 
-          /// process the add name
-          void process_add_name (const XMLCh* name,
-                                 Deployment::ArtifactDeploymentDescription& add);
+  /// process the pspe provider
+  void process_pspe_provider (const XMLCh* value,
+                              Deployment::PlanSubcomponentPortEndpoint& pspe);
 
-          /// process the pspr property name
-          void process_pspr_prop_name (const XMLCh* name,
-                                       Deployment::PlanSubcomponentPropertyReference& pspr);
+  /// process the idd name
+  void process_idd_name (const XMLCh* name,
+                         Deployment::InstanceDeploymentDescription& idd);
 
-          /// process the pspe port name
-          void process_pspe_port_name (const XMLCh* name,
-                                       Deployment::PlanSubcomponentPortEndpoint& pspe);
+  /// process the ppm  name
+  void process_ppm_name (const XMLCh* name,
+                         Deployment::PlanPropertyMapping& ppm);
 
-          /// process the pspe provider
-          void process_pspe_provider (const XMLCh* value,
-                                      Deployment::PlanSubcomponentPortEndpoint& pspe);
+  /// process the ppm external name
+  void process_ppm_ext_name (const XMLCh* name,
+                             Deployment::PlanPropertyMapping& ppm);
 
-          /// process the idd name
-          void process_idd_name (const XMLCh* name,
-                                 Deployment::InstanceDeploymentDescription& idd);
+  /// process the idd node
+  void process_idd_node (const XMLCh* node,
+                         Deployment::InstanceDeploymentDescription& idd);
 
-          /// process the ppm  name
-          void process_ppm_name (const XMLCh* name,
-                                 Deployment::PlanPropertyMapping& ppm);
+  /// process the idd source
+  void process_idd_source (const XMLCh* source,
+                           Deployment::InstanceDeploymentDescription& idd);
 
-          /// process the ppm external name
-          void process_ppm_ext_name (const XMLCh* name,
-                                     Deployment::PlanPropertyMapping& ppm);
+  /// process the add location
+  void process_add_location (const XMLCh* location,
+                             Deployment::ArtifactDeploymentDescription& add);
 
-          /// process the idd node
-          void process_idd_node (const XMLCh* node,
-                                 Deployment::InstanceDeploymentDescription& idd);
+  /// process the add source
+  void process_add_source (const XMLCh* source,
+                           Deployment::ArtifactDeploymentDescription& add);
 
-          /// process the idd source
-          void process_idd_source (const XMLCh* source,
-                                   Deployment::InstanceDeploymentDescription& idd);
+  /// process the add node
+  void process_add_node (const XMLCh* node,
+                         Deployment::ArtifactDeploymentDescription& add);
 
-          /// process the add location
-          void process_add_location (const XMLCh* location,
-                                     Deployment::ArtifactDeploymentDescription& add);
+  /// process the mdd source
+  void process_mdd_source (const XMLCh* source,
+                           Deployment::MonolithicDeploymentDescription& mdd);
 
-          /// process the add source
-          void process_add_source (const XMLCh* source,
-                                   Deployment::ArtifactDeploymentDescription& add);
+  /// process the ppm source
+  void process_ppm_source (const XMLCh* source,
+                           Deployment::PlanPropertyMapping& ppm);
 
-          /// process the add node
-          void process_add_node (const XMLCh* node,
-                                 Deployment::ArtifactDeploymentDescription& add);
+  /// process the pcd source
+  void process_pcd_source (const XMLCh* source,
+                           Deployment::PlanConnectionDescription& pcd);
 
-          /// process the mdd source
-          void process_mdd_source (const XMLCh* source,
-                                   Deployment::MonolithicDeploymentDescription& mdd);
+  /// process the pcd name
+  void process_pcd_name (const XMLCh* name,
+                         Deployment::PlanConnectionDescription& pcd);
 
-          /// process the ppm source
-          void process_ppm_source (const XMLCh* source,
-                                   Deployment::PlanPropertyMapping& ppm);
+  /// process the add node
+  void process_mdd_name (const XMLCh* name,
+                         Deployment::MonolithicDeploymentDescription& mdd);
 
-          /// process the pcd source
-          void process_pcd_source (const XMLCh* source,
-                                   Deployment::PlanConnectionDescription& pcd);
+  /// process the rdd req name
+  void process_rdd_req_name (const XMLCh* name,
+                             Deployment::ResourceDeploymentDescription& rdd);
 
-          /// process the pcd name
-          void process_pcd_name (const XMLCh* name,
-                                 Deployment::PlanConnectionDescription& pcd);
+  /// process the rdd res name
+  void process_rdd_res_name (const XMLCh* name,
+                             Deployment::ResourceDeploymentDescription& rdd);
 
-          /// process the add node
-          void process_mdd_name (const XMLCh* name,
-                                 Deployment::MonolithicDeploymentDescription& mdd);
+  /// process the irdd res name
+  void process_irdd_res_name (const XMLCh* name,
+                              Deployment::InstanceResourceDeploymentDescription &irdd);
 
-          /// process the rdd req name
-          void process_rdd_req_name (const XMLCh* name,
-                                     Deployment::ResourceDeploymentDescription& rdd);
+  /// process the crdd res name
+  void process_crdd_res_name (const XMLCh* name,
+                              Deployment::ConnectionResourceDeploymentDescription& crdd);
 
-          /// process the rdd res name
-          void process_rdd_res_name (const XMLCh* name,
-                                     Deployment::ResourceDeploymentDescription& rdd);
+  /// process the crdd req name
+  void process_crdd_req_name (const XMLCh* name,
+                              Deployment::ConnectionResourceDeploymentDescription& crdd);
 
-          /// process the irdd res name
-          void process_irdd_res_name (const XMLCh* name,
-                                      Deployment::InstanceResourceDeploymentDescription &irdd);
+  /// process the crdd target name
+  void process_crdd_target_name (const XMLCh* name,
+                                 Deployment::ConnectionResourceDeploymentDescription& crdd);
 
-          /// process the crdd res name
-          void process_crdd_res_name (const XMLCh* name,
-                                      Deployment::ConnectionResourceDeploymentDescription& crdd);
+  /// process the irdd req name
+  void process_irdd_req_name (const XMLCh* name,
+                              Deployment::InstanceResourceDeploymentDescription &irdd);
 
-          /// process the crdd req name
-          void process_crdd_req_name (const XMLCh* name,
-                                      Deployment::ConnectionResourceDeploymentDescription& crdd);
+  /// process the irdd res usage
+  void process_irdd_res_usage (const XMLCh* name,
+                               Deployment::InstanceResourceDeploymentDescription &irdd);
 
-          /// process the crdd target name
-          void process_crdd_target_name (const XMLCh* name,
-                                         Deployment::ConnectionResourceDeploymentDescription& crdd);
+  /// process references
+  void process_refs (DOMNamedNodeMap* named_node_map);
 
-          /// process the irdd req name
-          void process_irdd_req_name (const XMLCh* name,
-                                      Deployment::InstanceResourceDeploymentDescription &irdd);
+  /// update mdd refs
+  void update_mdd_refs (Deployment::DeploymentPlan& plan);
 
-          /// process the irdd res usage
-          void process_irdd_res_usage (const XMLCh* name,
-                                       Deployment::InstanceResourceDeploymentDescription &irdd);
+  /// update idd refs
+  void update_idd_refs (Deployment::DeploymentPlan& plan);
 
-          /// process references
-          void process_refs (DOMNamedNodeMap* named_node_map);
+  /// update pspe refs
+  void update_pspe_refs (Deployment::DeploymentPlan& plan);
 
-          /// update mdd refs
-          void update_mdd_refs (Deployment::DeploymentPlan& plan);
+  /// update pspr refs
+  void update_pspr_refs (Deployment::DeploymentPlan& plan);
 
-          /// update idd refs
-          void update_idd_refs (Deployment::DeploymentPlan& plan);
-
-          /// update pspe refs
-          void update_pspe_refs (Deployment::DeploymentPlan& plan);
-
-          /// update pspr refs
-          void update_pspr_refs (Deployment::DeploymentPlan& plan);
-
-        private:
-
-          typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
-          typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
-          typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
-
-          DOMDocumentTraversal* traverse_;
-
-          DOMDocument* doc_;
-
-          DOMNode* root_;
-
-          unsigned long filter_;
-
-          DOMNodeIterator* iter_;
-
-          bool release_;
-          int index_;
-
-          REF_MAP id_map_;
-          IDREF_MAP idref_map_;
-
-        };
-    };
 };
+
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 
