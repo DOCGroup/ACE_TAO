@@ -14,14 +14,16 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDLFILES = ami_testC ami_testS
+IDL_FILES	=	ami_test	
+
+IDL_SRCS	= 	$(addsuffix C, $(IDL_FILES)) \
+	  		$(addsuffix S, $(IDL_FILES))
+
 BIN =  server simple_client client
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
-
-CLIENT_OBJS = client.o $(addsuffix .o, $(IDLFILES))
-SIMPLE_CLIENT_OBJS = simple_client.o $(addsuffix .o, $(IDLFILES))
-SERVER_OBJS = server.o ami_test_i.o $(addsuffix .o, $(IDLFILES))
+CLIENT_OBJS = $(addsuffix .o, $(IDL_SRCS)) client.o
+SIMPLE_CLIENT_OBJS = $(addsuffix .o, $(IDL_SRCS)) simple_client.o
+SERVER_OBJS = $(addsuffix .o, $(IDL_SRCS)) server.o ami_test_i.o
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -43,6 +45,8 @@ override TAO_IDLFLAGS += -GC
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
+all: server client simple_client
+
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
@@ -53,7 +57,7 @@ simple_client: $(addprefix $(VDIR),$(SIMPLE_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), ami_test$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
