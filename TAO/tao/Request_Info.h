@@ -160,6 +160,12 @@ class TAO_Export TAO_ClientRequest_Info
      ACE_THROW_SPEC ((CORBA::SystemException));    
 
  protected:
+   void exception (CORBA::Exception *exception);
+   // Change the exception status.
+
+   void request_id (CORBA::ULong request_id);
+   // Update the request id.
+
    CORBA::ULong request_id_;
    const char * operation_;
    Dynamic::ParameterList parameter_list_;
@@ -172,7 +178,8 @@ class TAO_Export TAO_ClientRequest_Info
    CORBA::Any result_val_;
    CORBA::Object_var target_;
    CORBA::Object_var effective_target_;
-   
+   CORBA::Any any_exception_;   
+   CORBA::Exception *caught_exception_;
 };
 
 //****************************************************************               
@@ -306,6 +313,12 @@ class TAO_Export TAO_ServerRequest_Info
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  protected:
+  void exception (CORBA::Exception *exception);
+  // Change the exception status.
+
+  void request_id (CORBA::ULong request_id);
+  // Update the request id.
+
   CORBA::ULong request_id_;
   const char * operation_;
   Dynamic::ParameterList parameter_list_;
@@ -318,6 +331,8 @@ class TAO_Export TAO_ServerRequest_Info
   CORBA::Any result_val_;
   PortableInterceptor::OctetSeq_var object_id_;
   PortableInterceptor::OctetSeq_var adapter_id_; 
+  CORBA::Any any_exception_;   
+  CORBA::Exception *caught_exception_;
 };
 
 
