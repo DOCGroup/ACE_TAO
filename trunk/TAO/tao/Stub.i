@@ -247,11 +247,10 @@ TAO_Stub::forward_profiles (void) const
   return this->forward_profiles_;
 }
 
-
 ACE_INLINE TAO_ORB_Core*
 TAO_Stub::orb_core (void) const
 {
-  return this->orb_core_;
+  return this->orb_core_.get ();
 }
 
 ACE_INLINE CORBA::ORB_var &
