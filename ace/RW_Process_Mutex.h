@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_RW_PROCESS_MUTEX_H
 #define ACE_RW_PROCESS_MUTEX_H
@@ -36,7 +35,7 @@ class ACE_Export ACE_RW_Process_Mutex
 {
 public:
   /// Create a readers/writer <Process_Mutex>, passing in the optional
-  /// <name>.
+  /// <name>.  If not specified, a name is generated.
   ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
                         int flags = O_CREAT|O_RDWR);
 
@@ -96,6 +95,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+  /// If the user does not provide a name we generate a unique name in
+  /// this buffer.
+  ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
+
+  /// Create and return the unique name.
+  const ACE_TCHAR *unique_name (void);
+
   /// We need this to get the readers/writer semantics...
   ACE_File_Lock lock_;
 };

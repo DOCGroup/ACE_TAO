@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef CACHING_UTILITY_H
 #define CACHING_UTILITY_H
 #include "ace/pre.h"

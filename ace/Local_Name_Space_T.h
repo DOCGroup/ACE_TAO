@@ -6,12 +6,11 @@
  *
  *  $Id$
  *
- *  @author Prashant Jain (pjain@cs.wustl.edu)
- *  @author Irfan Pyarali (irfan@wuerl.wustl.edu)
- *  @author and Douglas C. Schmidt (schmidt@cs.wustl.edu).
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Irfan Pyarali <irfan@wuerl.wustl.edu> and
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_LOCAL_NAME_SPACE_T_H
 #define ACE_LOCAL_NAME_SPACE_T_H

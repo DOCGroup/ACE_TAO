@@ -18,7 +18,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::key ()
   return k_;
 }
 
-
 // Item accessor.
 
 template <class EXT_ID, class INT_ID>
@@ -28,7 +27,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::item ()
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>:item");
   return t_;
 }
-
 
 // Set color of the node.
 
@@ -40,7 +38,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::color (ACE_RB_Tree_Node_Base::RB_Tree_Node_Col
   color_ = c;
 }
 
-
 // Get color of the node.
 
 template <class EXT_ID, class INT_ID>
@@ -50,7 +47,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::color ()
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>::color accessor");
   return color_;
 }
-
 
 // Accessor for node's parent pointer.
 
@@ -62,7 +58,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::parent ()
   return parent_;
 }
 
-
 // Mutator for node's parent pointer.
 
 template <class EXT_ID, class INT_ID>
@@ -72,8 +67,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::parent (ACE_RB_Tree_Node<EXT_ID, INT_ID> * p)
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>::parent mutator");
   parent_ = p;
 }
-
-
 
 // Accessor for node's left child pointer.
 
@@ -85,7 +78,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::left ()
   return left_;
 }
 
-
 // Mutator for node's left child pointer.
 
 template <class EXT_ID, class INT_ID>
@@ -95,7 +87,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::left (ACE_RB_Tree_Node<EXT_ID, INT_ID> * l)
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>::left mutator");
   left_ = l;
 }
-
 
 // Accessor for node's right child pointer.
 
@@ -107,7 +98,6 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::right ()
   return right_;
 }
 
-
 // Mutator for node's right child pointer.
 
 template <class EXT_ID, class INT_ID>
@@ -118,12 +108,29 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * r)
   right_ = r;
 }
 
+template <class EXT_ID, class INT_ID>
+ACE_INLINE void *
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator new (size_t size, ACE_Allocator *allocator)
+{
+  return allocator->malloc (size);
+}
 
+template <class EXT_ID, class INT_ID>
+ACE_INLINE void
+ACE_RB_Tree_Node<EXT_ID, INT_ID>::operator delete(void *p, ACE_Allocator *allocator)
+{
+  if (p && allocator)
+  {
+    ACE_RB_Tree_Node<EXT_ID, INT_ID>* self = (ACE_RB_Tree_Node<EXT_ID, INT_ID>*)p;
+    operator delete (self->left_, allocator) ;
+    operator delete (self->right_, allocator) ;
+    allocator->free (p);
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////
 // template class ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> //
 ////////////////////////////////////////////////////////////////////////
-
 
 // Initialize an RB Tree.
 
@@ -162,11 +169,10 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::close (void)
   return this->close_i ();
 }
 
-
 // Associate <ext_id> with <int_id>.  If <ext_id> is already in the
 // tree then the <ACE_RB_Tree_Node> is not changed.  Returns 0 if a
-// new entry is bound successfully, returns 1 if an attempt is made
-// to bind an existing entry, and returns -1 if failures occur.
+// new entry is bound successfully, returns 1 if an attempt is made to
+// bind an existing entry, and returns -1 if failures occur.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
@@ -180,9 +186,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &ext_id,
   return this->insert_i (ext_id, int_id, entry);
 }
 
-
-// Same as a normal bind, except the tree entry is also passed back
-// to the caller.  The entry in this case will either be the newly
+// Same as a normal bind, except the tree entry is also passed back to
+// the caller.  The entry in this case will either be the newly
 // created entry, or the existing one.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
@@ -198,12 +203,11 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &ext_id,
   return this->insert_i (ext_id, int_id, entry);
 }
 
-
-// Associate <ext_id> with <int_id> if and only if <ext_id> is not
-// in the tree.  If <ext_id> is already in the tree then the <int_id>
-// parameter is assigned the existing value in the tree.  Returns 0
-// if a new entry is bound successfully, returns 1 if an attempt is
-// made to bind an existing entry, and returns -1 if failures occur.
+// Associate <ext_id> with <int_id> if and only if <ext_id> is not in
+// the tree.  If <ext_id> is already in the tree then the <int_id>
+// parameter is assigned the existing value in the tree.  Returns 0 if
+// a new entry is bound successfully, returns 1 if an attempt is made
+// to bind an existing entry, and returns -1 if failures occur.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
@@ -223,7 +227,6 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::trybind (const EXT_ID &ext_
 
   return result;
 }
-
 
 // Same as a normal trybind, except the tree entry is also passed
 // back to the caller.  The entry in this case will either be the
