@@ -76,8 +76,12 @@
 // So we just define them on a platform basis.
 # if defined (ACE_HAS_WCHAR)
 #   if !defined (ACE_SIZEOF_WCHAR)
+#     if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#       define ACE_SIZEOF_WCHAR sizeof (wchar_t)
+#     else
 // 0 so the Basic_Types test will catch this.
-#     define ACE_SIZEOF_WCHAR 0
+#       define ACE_SIZEOF_WCHAR 0
+#     endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #   endif /* !ACE_SIZEOF_WCHAR */
 # endif /* ACE_HAS_WCHAR */
 
