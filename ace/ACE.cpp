@@ -518,15 +518,16 @@ u_long ACE::crc_table_[] =
 // Compute a POSIX 1003.2 checksum.  The routine takes an string and
 // computes the CRC for it (it stops on the first '\0' character).
 
-u_long
-ACE::crc32 (const char *string)
-{
 // UNICOS UINT32's are 64-bit on the Cray PVP architecture
 #if !defined(_UNICOS)
 #  define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
 #else /* ! _UNICOS */
 #  define COMPUTE(var, ch) (var) = ( 0x00000000ffffffff & ((var) << 8)) ^ ACE::crc_table_[((var) >> 24) ^ (ch)]
 #endif /* ! _UNICOS */
+
+u_long
+ACE::crc32 (const char *string)
+{
   register ACE_UINT32 crc = 0;
 
   u_long len = 0;
@@ -546,6 +547,28 @@ ACE::crc32 (const char *string)
 
   return ~crc;
 }
+
+u_long
+ACE::crc32 (const char *buffer, ACE_UINT32 len)
+{
+  register ACE_UINT32 crc = 0;
+
+  for (const char *p = buffer;
+       p != buffer + len;
+       ++p)
+    {
+      COMPUTE (crc, *p);
+    }
+
+  // Include the length of the string.
+
+  for (; len != 0; len >>= 8)
+    COMPUTE (crc, len & 0xff);
+
+  return ~crc;
+}
+
+#undef COMPUTE
 
 size_t
 ACE::strrepl (char *s, char search, char replace)
