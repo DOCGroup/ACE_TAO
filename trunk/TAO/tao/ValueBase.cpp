@@ -28,6 +28,22 @@ ACE_RCSID (tao,
            ValueBase,
            "$Id$")
 
+void
+CORBA::tao_ValueBase_life::tao_add_ref (
+    ValueBase * p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+CORBA::tao_ValueBase_life::tao_remove_ref (
+    ValueBase * p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
 CORBA::ValueBase::~ValueBase (void)
 {
 }

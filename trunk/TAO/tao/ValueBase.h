@@ -39,6 +39,12 @@ namespace CORBA
   typedef TAO_Pseudo_Value_Var_T<ValueBase> ValueBase_var;
   typedef TAO_Pseudo_Value_Out_T<ValueBase, ValueBase_var> ValueBase_out;
 
+  struct  tao_ValueBase_life
+  {
+    static void tao_add_ref (ValueBase *);
+    static void tao_remove_ref (ValueBase *);
+  };
+
   /**
    * @class ValueBase
    *
