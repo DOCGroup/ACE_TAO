@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -14,49 +14,54 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lorbsvcs -lTAO
 PROG_SRCS = Consumer_Handler.cpp \
-	    Consumer_Input_Handler.cpp \
-	    Event_Comm_i.cpp \
+            Consumer_Input_Handler.cpp \
+            Event_Comm_i.cpp \
             Notifier_Handler.cpp \
-	    Supplier_Input_Handler.cpp \
-	    consumer.cpp \
+            Supplier_Input_Handler.cpp \
+            consumer.cpp \
             notifier.cpp \
-	    supplier.cpp \
-	    Notifier_Server.cpp
+            supplier.cpp \
+            Notifier_Server.cpp
 
-IDL_SRC	= Event_CommS.cpp Event_CommC.cpp
+IDL_SRC = Event_CommS.cpp Event_CommC.cpp
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
 CONSUMER_OBJS = Event_CommC.o \
                 Event_CommS.o \
-		Consumer_Handler.o \
-	      	Consumer_Input_Handler.o \
-	        Event_Comm_i.o \
-		consumer.o
+                Consumer_Handler.o \
+                Consumer_Input_Handler.o \
+                Event_Comm_i.o \
+                consumer.o
 
 SUPPLIER_OBJS = Event_CommC.o \
-		Event_CommS.o \
-		Supplier_Input_Handler.o \
-	        Event_Comm_i.o \
-		Notifier_Handler.o \
-		supplier.o
+                Event_CommS.o \
+                Supplier_Input_Handler.o \
+                Event_Comm_i.o \
+                Notifier_Handler.o \
+                supplier.o
 
 NOTIFIER_OBJS = Event_CommC.o \
-		Event_CommS.o \
-		Notifier_Server.o \
-		Event_Comm_i.o \
-		notifier.o
+                Event_CommS.o \
+                Notifier_Server.o \
+                Event_Comm_i.o \
+                notifier.o
 
-BIN = supplier \
-      notifier \
-      consumer
-
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
+
+BIN2 = supplier \
+       notifier \
+       consumer
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Naming
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -78,7 +83,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
@@ -96,9 +101,13 @@ notifier: $(addprefix $(VDIR),$(NOTIFIER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf Event_CommS.* Event_CommC.* Event_CommS_T.*
+	-$(RM) Event_CommS.* Event_CommC.* Event_CommS_T.*
 
 endif # ! ACE_HAS_GNUG_PRE_2_8
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
