@@ -45,12 +45,10 @@ public:
   virtual const char *prefix (void) const;
   // Returns the prefix used by the protocol.
 
-  // Factory methods
+  // = Check Protocol_Factory.h for a description of these methods.
   virtual TAO_Acceptor  *make_acceptor (void);
-  // Create an acceptor
-
   virtual TAO_Connector *make_connector  (void);
-  // Create a connector
+  virtual int requires_explicit_endpoint (void) const;
 
 private:
   int major_;

@@ -67,6 +67,12 @@ TAO_UIOP_Protocol_Factory::make_connector (void)
   return connector;
 }
 
+int
+TAO_UIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+{
+  return 1;
+}
+
 ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
                        ASYS_TEXT ("UIOP_Factory"),
                        ACE_SVC_OBJ_T,
