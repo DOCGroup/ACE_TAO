@@ -755,7 +755,7 @@ sub split_name_value {
     }
   }
 
-  return $name, $val;
+  return lc($name), $val;
 }
 
 

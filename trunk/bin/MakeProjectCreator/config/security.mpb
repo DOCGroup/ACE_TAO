@@ -1,4 +1,6 @@
 project : portableserver {
-  after   += Security
-  libs    += TAO_Security
+  after    += Security
+  libs     += TAO_Security
+  comps    += Security
+  requires += Security
 }
