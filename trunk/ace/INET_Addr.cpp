@@ -12,6 +12,19 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)
 
+// Transform the current address into string format.
+
+int
+ACE_INET_Addr::addr_to_string (char s[], size_t) const
+{
+  ACE_TRACE ("ACE_INET_Addr::addr_to_string");
+  // This should check to make sure len is long enough...
+  ACE_OS::sprintf (s, "%s:%d",
+		   this->get_host_addr (), 
+		   this->get_port_number ()); 
+  return 0;
+}
+
 void
 ACE_INET_Addr::dump (void) const
 {
@@ -68,7 +81,7 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 
 // Transform the string into the current addressing format.
 
-ACE_INLINE int
+int
 ACE_INET_Addr::string_to_addr (const char s[])
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");

@@ -37,6 +37,7 @@
 #define ACE_HEX_DUMP(X) 
 #define ACE_RETURN(ERROR, Y) do { errno = ERROR, return (Y); } while (0)
 #define ACE_ERROR_RETURN(X, Y) return (Y)
+#define ACE_ERROR_BREAK(X) { break; }
 #define ACE_ERROR(X) 
 #define ACE_DEBUG(X) 
 #define ACE_ERROR_INIT(VALUE, FLAGS)
@@ -77,6 +78,7 @@
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->set_flags (FLAGS); ace___->op_status (VALUE); \
   } while (0)
+#define ACE_ERROR_BREAK(X) { ACE_ERROR (X); break; }
 #endif /* ACE_NLOGGING */
 
 #include "ace/Log_Record.h"

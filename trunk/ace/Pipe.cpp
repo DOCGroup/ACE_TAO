@@ -30,8 +30,9 @@ ACE_Pipe::open (void)
   ACE_SOCK_Stream writer;
   int result = 0;
 
-  // Bind listener to any port.
-  if (acceptor.open (ACE_Addr::sap_any) == -1)
+  // Bind listener to any port, make sure to enable the "reuse addr"
+  // flag.
+  if (acceptor.open (ACE_Addr::sap_any, 1) == -1)
     result = -1;
   else if (acceptor.get_local_addr (my_addr) == -1)
     result = -1;
@@ -39,8 +40,9 @@ ACE_Pipe::open (void)
     {
       ACE_INET_Addr sv_addr (my_addr.get_port_number (), "localhost");
       
-      // Establish a connection within the same process!
-      if (connector.connect (writer, sv_addr) == -1)
+      // Establish a connection within the same process, make sure to
+      // enable the "reuse addr" flag.
+      if (connector.connect (writer, sv_addr, 0, ACE_Addr::sap_any, 1) == -1)
 	result = -1;
       else if (acceptor.accept (reader) == -1)
 	{
@@ -49,6 +51,14 @@ ACE_Pipe::open (void)
 	}
     }
       
+  int one = 1;
+  // Make sure that the TCP stack doesn't try to buffer small writes.
+  if (this->ACE_SOCK::set_option (IPPROTO_TCP,
+				  TCP_NODELAY,
+				  &one,
+				  sizeof one) == -1)
+    return -1;
+
   // Close down the acceptor endpoint since we don't need it anymore.
   acceptor.close ();
   if (result == -1)

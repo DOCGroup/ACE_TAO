@@ -6,7 +6,7 @@
 #include "ace/System_Time.h"
 
 ACE_System_Time::ACE_System_Time (const char *poolname)
-: delta_time_ (0)
+  : delta_time_ (0)
 { 
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");
   ACE_NEW (this->shmem_, ALLOCATOR (poolname));
@@ -24,9 +24,15 @@ int
 ACE_System_Time::get_local_system_time (ACE_UINT32 &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
-  time_t t = ACE_OS::time (0);
-  time_out = t;
+  time_out = ACE_OS::time (0);
   return 0;
+}
+
+int 
+ACE_System_Time::get_local_system_time (ACE_Time_Value &time_out)
+{
+  ACE_TRACE ("ACE_System_Time::get_local_system_time");
+  time_out.sec (ACE_OS::time (0));
 }
 
 // Get the system time of the central time server.
@@ -35,6 +41,7 @@ int
 ACE_System_Time::get_master_system_time (ACE_UINT32 &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_master_system_time");
+
   if (this->delta_time_ == 0)
     {
       // Try to find it
@@ -46,11 +53,10 @@ ACE_System_Time::get_master_system_time (ACE_UINT32 &time_out)
 	  return this->get_local_system_time (time_out);
 	}
       else
-	{
-	  // Extract the delta time
-	  this->delta_time_ = (long *) temp;
-	}
+	// Extract the delta time.
+	this->delta_time_ = (long *) temp;
     }
+
   ACE_UINT32 local_time;
 
   // If delta_time is positive, it means that the system clock is
@@ -70,6 +76,17 @@ ACE_System_Time::get_master_system_time (ACE_UINT32 &time_out)
   return 0;
 }
 
+int 
+ACE_System_Time::get_master_system_time (ACE_Time_Value &time_out)
+{
+  ACE_TRACE ("ACE_System_Time::get_master_system_time");
+  ACE_UINT32 to;
+  if (this->get_master_system_time (to) == -1)
+    return -1;
+  time_out.sec (to);
+  return 0;
+}
+
 // Synchronize local system time with the central time server using
 // specified mode (currently unimplemented).
 
@@ -77,7 +94,7 @@ int
 ACE_System_Time::sync_local_system_time (ACE_System_Time::Sync_Mode)
 {
   ACE_TRACE ("ACE_System_Time::sync_local_system_time");
-  return 0;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)

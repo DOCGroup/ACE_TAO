@@ -276,6 +276,45 @@ ACE_Thread_Manager::spawn_n (int n,
   return grp_id;
 }
 
+// Create N new threads running FUNC.
+
+int 
+ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
+			     size_t n, 
+			     ACE_THR_FUNC func, 
+			     void *args,
+			     long flags, 
+			     u_int priority,
+			     int grp_id,
+			     void *stack[],
+			     size_t stack_size[],
+			     ACE_hthread_t thread_handles[])
+{
+  ACE_TRACE ("ACE_Thread_Manager::spawn_n");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  if (grp_id == -1)
+    grp_id = this->grp_id_++; // Increment the group id.
+
+  for (int i = 0; i < n; i++)
+    {
+      // @@ What should happen if this fails?! e.g., should we try to
+      // cancel the other threads that we've already spawned or what?
+      if (this->spawn_i (func, 
+			 args, 
+			 flags, 
+			 &thread_ids[i], 
+			 thread_handles == 0 ? 0 : &thread_handles[i], 
+			 priority, 
+			 grp_id, 
+			 stack == 0 ? 0 : stack[i], 
+			 stack_size == 0 ? 0 : stack_size[i]) == -1)
+	return -1;
+    }
+
+  return grp_id;
+}
+
 // Append a thread into the pool (does not check for duplicates).
 // Must be called with locks held.
 

@@ -453,6 +453,29 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find (const char *name, void *&pointer)
     }
 }
 
+template <ACE_MEM_POOL_1, class LOCK> size_t
+ACE_Malloc<ACE_MEM_POOL_2, LOCK>::avail_chunks (const size_t size) const
+{
+  ACE_Read_Guard<LOCK> mon (this->lock_);
+
+  static const size_t mal_size = sizeof (ACE_Malloc_Header);
+  size_t count = 0;
+  const size_t sizeof_oversize_ = mal_size / size;
+    
+  for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->s_.next_block_; 
+       ; currp = currp->s_.next_block_)
+    {
+      if (currp->s_.size_ * sizeof (ACE_Malloc_Header) >= size_)
+	count += currp->s_.size_ * sizeof_oversize_;
+      // How many will fit in this block.
+            
+      if (currp == this->cb_ptr_->freep_)
+	break;
+    }
+
+  return count;
+}
+
 template <ACE_MEM_POOL_1, class LOCK> int
 ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find (const char *name)
 {
