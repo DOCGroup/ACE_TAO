@@ -82,20 +82,20 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   enum {
+    /// The operation was successfully dispatched, an exception may
+    /// have been raised, but that is a correct execution too.
     DS_OK,
-    // The operation was successfully dispatched, an exception may
-    // have been raised, but that is a correct execution too.
 
+    /// There was a problem in dispatching the operation.
     DS_FAILED,
-    // There was a problem in dispatching the operation.
 
+    /// The key is not in the right format for this Adapter, try the
+    /// next one.
     DS_MISMATCHED_KEY,
-    // The key is not in the right format for this Adapter, try the
-    // next one.
 
+    /// Forward the request to another object reference, this decouples
+    /// the ORB from the PortableServer::ForwardRequest exception
     DS_FORWARD
-    // Forward the request to another object reference, this decouples
-    // the ORB from the PortableServer::ForwardRequest exception
   };
 
   /// Return the name, i.e. the object id used to resolve it in the
@@ -173,7 +173,7 @@ public:
   CORBA::Long initialize_collocated_object (TAO_Stub *,
                                             CORBA::Object_ptr o);
 
-  /// Fetch the adapter named <name>
+  /// Fetch the adapter named @a name
   TAO_Adapter *find_adapter (const char *name) const;
 
 private:
