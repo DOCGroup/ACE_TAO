@@ -55,12 +55,10 @@ int be_visitor_args_request_info_ch::visit_argument (be_argument *node)
                         -1);
     }
 
-  os->indent (); // start with current indentation level
-
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
 
-    if (bt->accept (this) == -1)
+  if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_args_request_info_ch::"
@@ -68,8 +66,10 @@ int be_visitor_args_request_info_ch::visit_argument (be_argument *node)
                          "cannot accept visitor\n"),
                         -1);
     }
+
   // As we visit each type we print out the &.
-  *os << " "<<node->local_name () << "_;\n";
+  *os << " " << node->local_name () << "_;\n";
+
   return 0;
 }
 
@@ -349,10 +349,10 @@ int be_visitor_args_request_info_ch::visit_string (be_string *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const char *&";
+          *os << "const char *";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "char *&";
+          *os << "char *";
           break;
         case AST_Argument::dir_OUT:
           *os << "CORBA::String_out ";
@@ -364,10 +364,10 @@ int be_visitor_args_request_info_ch::visit_string (be_string *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const CORBA::WChar *&";
+          *os << "const CORBA::WChar *";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "CORBA::WChar *&";
+          *os << "CORBA::WChar *";
           break;
         case AST_Argument::dir_OUT:
           *os << "CORBA::WString_out ";

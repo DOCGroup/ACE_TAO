@@ -45,32 +45,31 @@ be_visitor_interface_interceptors_ss::~be_visitor_interface_interceptors_ss (voi
 int be_visitor_interface_interceptors_ss::visit_interface (be_interface *node)
 {
   if (node->is_local ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate code for the interface definition by traversing thru the
+  // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)\n";
 
-  os->indent ();
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  os->reset ();
 
-   // generate code for the interface definition by traversing thru the
-      // elements of its scope. We depend on the front-end to have made sure
-      // that only legal syntactic elements appear in our scope.
-
-      os->indent ();
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "codegen for scope failed\n"), -1);
-        }
+  // Generate code for the interface definition by traversing thru the
+  // elements of its scope. We depend on the front-end to have made sure
+  // that only legal syntactic elements appear in our scope.
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_ch::"
+                         "visit_interface - "
+                         "codegen for scope failed\n"), -1);
+    }
 
   *os  << "#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   return 0;
-
 }

@@ -55,11 +55,8 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  os->indent (); // start with current indentation level
-
   // Different types have different mappings when used as in/out or
-  // inout parameters. Let this visitor deal with the type
-
+  // inout parameters. Let this visitor deal with the type.
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

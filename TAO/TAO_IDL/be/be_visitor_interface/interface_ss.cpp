@@ -306,9 +306,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
       << ")" << be_uidt_nl
-      << "{\n" << be_idt;
+      << "{" << be_idt_nl;
 
-  if (node->traverse_inheritance_graph (be_interface::downcast_helper, os) == -1)
+  if (node->traverse_inheritance_graph (be_interface::downcast_helper,
+                                        os)
+       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"
@@ -317,7 +319,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  os->indent ();
   *os << "if (ACE_OS::strcmp (logical_type_id, "
       << "\"IDL:omg.org/CORBA/Object:1.0\") == 0)" << be_idt_nl
       << "return ACE_static_cast(PortableServer::Servant, this);"
