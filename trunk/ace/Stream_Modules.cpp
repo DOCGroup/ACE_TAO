@@ -365,5 +365,4 @@ ACE_Thru_Task<ACE_SYNCH_2>::fini (void)
   return 0;
 }
 
-#endif /* !defined (ACE_LACKS_STREAM_MODULES) */
 #endif /* ACE_STREAM_MODULES_C */

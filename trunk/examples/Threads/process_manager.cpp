@@ -95,14 +95,14 @@ static int child = 0;
 static void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:i:cu");
+  ACE_Get_Opt get_opt (argc, argv, "p:i:cu");
 
   int c; 
 
   while ((c = get_opt ()) != -1)
     switch (c)
     {
-    case 't':
+    case 'p':
       n_processes = ACE_OS::atoi (get_opt.optarg);
       break;
     case 'i':
@@ -114,7 +114,7 @@ parse_args (int argc, char *argv[])
     case 'u':
     default:
       ACE_DEBUG ((LM_DEBUG, "usage:\n"
-		  "-t <threads/processes>\n"
+		  "-p <processes>\n"
 		  "-i <iterations>\n"));
       break;
   }
@@ -127,9 +127,11 @@ main (int argc, char *argv[])
 
   daemon.open (argv[0]);
 
-  ::atexit (exithook);
+  ACE_UNUSED_ARG (n_processes);
 
-  ::parse_args (argc, argv);
+  atexit (exithook);
+
+  parse_args (argc, argv);
 
   ACE_Sig_Set sigset (1); // Block all signals.
 
@@ -140,7 +142,7 @@ main (int argc, char *argv[])
 
   if (child)
     {
-      ::worker (n_iterations);
+      worker (n_iterations);
       return 0;
     }
 
