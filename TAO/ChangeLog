@@ -1,3 +1,9 @@
+Sun Nov  9 19:19:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/tao.mpc:
+
+	  Added the new generated files into the list of source files. 
+
 Sun Nov  9 19:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IOP_CodecA.cpp
@@ -10,7 +16,7 @@ Sun Nov  9 19:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableInterceptorA.h:
 
 	  New files that were created using the new IDL compiler
-	  options which puts the Any operators in a seperate file.  This
+	  option, that puts the Any operators in a seperate file.  This
 	  is just a test. If this gives good wins, we can go ahead fix all
 	  the generated code in $TAO_ROOT/tao to maintain the Any's in a
 	  seperate file. This can be used by the application by just
