@@ -35,6 +35,7 @@ Life_Cycle_Service_i::~Life_Cycle_Service_i (void)
 CORBA::Boolean
 Life_Cycle_Service_i::supports (const CosLifeCycle::Key &factory_key,
                                        CORBA::Environment &TAO_IN_ENV_there)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (factory_key);
   ACE_UNUSED_ARG (TAO_IN_ENV_there);
@@ -45,6 +46,10 @@ CORBA::Object_ptr
 Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
                                             const CosLifeCycle::Criteria &the_criteria,
                                             CORBA::Environment &TAO_IN_ENV_there)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria))
 {
   ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
   // Exceptions are forwarded, not handled !!
@@ -139,6 +144,7 @@ Life_Cycle_Service_i::register_factory (const char * name,
 					   const char * description,
 					   CORBA::Object_ptr object,
 					   CORBA::Environment &TAO_IN_ENV_there)
+      ACE_THROW_SPEC (( CORBA::SystemException))
 {
   if (factory_trader_ptr_ == 0)
     {

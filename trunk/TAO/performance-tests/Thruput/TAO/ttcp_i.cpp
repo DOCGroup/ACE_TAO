@@ -44,7 +44,9 @@ ttcp_sequence_i::stop_timer (CORBA::Environment &IT_env)
 }
 
 void
-ttcp_sequence_i::sendShortSeq(const ttcp_sequence::ShortSeq& ttcp_seq, CORBA::Environment &IT_env)
+ttcp_sequence_i::sendShortSeq(const ttcp_sequence::ShortSeq& ttcp_seq,
+                              CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -52,7 +54,9 @@ ttcp_sequence_i::sendShortSeq(const ttcp_sequence::ShortSeq& ttcp_seq, CORBA::En
 }
 
 void
-ttcp_sequence_i::sendLongSeq(const ttcp_sequence::LongSeq& ttcp_seq, CORBA::Environment &IT_env)
+ttcp_sequence_i::sendLongSeq(const ttcp_sequence::LongSeq& ttcp_seq,
+                             CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -60,7 +64,9 @@ ttcp_sequence_i::sendLongSeq(const ttcp_sequence::LongSeq& ttcp_seq, CORBA::Envi
 }
 
 void
-ttcp_sequence_i::sendOctetSeq(const ttcp_sequence::OctetSeq& ttcp_seq, CORBA::Environment &IT_env)
+ttcp_sequence_i::sendOctetSeq(const ttcp_sequence::OctetSeq& ttcp_seq,
+                              CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -68,7 +74,9 @@ ttcp_sequence_i::sendOctetSeq(const ttcp_sequence::OctetSeq& ttcp_seq, CORBA::En
 }
 
 void
-ttcp_sequence_i::sendDoubleSeq(const ttcp_sequence::DoubleSeq& ttcp_seq, CORBA::Environment &IT_env)
+ttcp_sequence_i::sendDoubleSeq(const ttcp_sequence::DoubleSeq&
+                               ttcp_seq, CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -76,7 +84,9 @@ ttcp_sequence_i::sendDoubleSeq(const ttcp_sequence::DoubleSeq& ttcp_seq, CORBA::
 }
 
 void
-ttcp_sequence_i::sendCharSeq(const ttcp_sequence::CharSeq& ttcp_seq, CORBA::Environment &IT_env)
+ttcp_sequence_i::sendCharSeq(const ttcp_sequence::CharSeq& ttcp_seq,
+                             CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -84,7 +94,9 @@ ttcp_sequence_i::sendCharSeq(const ttcp_sequence::CharSeq& ttcp_seq, CORBA::Envi
 }
 
 void
-ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq, CORBA::Environment &IT_env)
+ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq,
+                               CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;

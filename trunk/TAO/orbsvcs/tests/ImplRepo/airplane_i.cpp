@@ -29,6 +29,7 @@ Airplane_i::~Airplane_i (void)
 
 char *
 Airplane_i::get_plane (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 

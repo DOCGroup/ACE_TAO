@@ -44,22 +44,37 @@ public:
   // Destructor
 
   virtual CORBA::Long get_quote (const char *stock_name,
-                                 CORBA::Environment &ACE_TRY_ENV);
+                                 CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Stock::Invalid_Stock,
+                       Stock::Invalid_Quoter));
   // Returns the current quote for the stock <stock_name>
 
   // = Lifecycle methods
 
   virtual CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
                                                   const CosLifeCycle::Criteria &the_criteria,
-                                                  CORBA::Environment &_tao_environment);
+                                                  CORBA::Environment &_tao_environment)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::NotCopyable,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria));
   // Make a copy of this object
 
   virtual void move (CosLifeCycle::FactoryFinder_ptr there,
                      const CosLifeCycle::Criteria &the_criteria,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::NotMovable,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria));
   // Move this object using <there>
 
-  virtual void remove (CORBA::Environment &ACE_TRY_ENV);
+  virtual void remove (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NotRemovable));
   // Removes the object.
 
 private:
@@ -94,7 +109,9 @@ public:
   // Initialize everything in the factory
 
   virtual Stock::Quoter_ptr create_quoter (const char *name,
-                                           CORBA::Environment &ACE_TRY_ENV);
+                                           CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Stock::Invalid_Quoter));
   // Return the quoter by the id <name>.
 
 private:

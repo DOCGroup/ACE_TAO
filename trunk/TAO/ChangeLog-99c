@@ -1,3 +1,37 @@
+Thu Jun 17 15:31:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_i.cpp:
+	* examples/Callback_Quoter/Consumer_i.h:
+	* examples/Callback_Quoter/Notifier_i.cpp:
+	* examples/Callback_Quoter/Notifier_i.h:
+	* examples/OBV/Typed_Events/Server_i.cpp:
+	* examples/OBV/Typed_Events/Server_i.h:
+	* examples/Quoter/Factory_Finder_i.cpp:
+	* examples/Quoter/Factory_Finder_i.h:
+	* examples/Quoter/Generic_Factory_i.cpp:
+	* examples/Quoter/Generic_Factory_i.h:
+	* examples/Quoter/Quoter_i.cpp:
+	* examples/Quoter/Quoter_i.h:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+	* orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
+	* orbsvcs/LifeCycle_Service/LifeCycle_Service_i.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+	* orbsvcs/tests/ImplRepo/airplane_i.cpp:
+	* orbsvcs/tests/ImplRepo/airplane_i.h:
+	* orbsvcs/tests/ImplRepo/nestea_i.cpp:
+	* orbsvcs/tests/ImplRepo/nestea_i.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* performance-tests/Thruput/TAO/ttcp_i.cpp:
+	* performance-tests/Thruput/TAO/ttcp_i.h:
+	  More throw spec stuff.
+	  Also added several fixes to compile on single threaded
+	  environments.
+
 Thu Jun 17 14:21:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp

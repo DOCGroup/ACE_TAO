@@ -221,7 +221,7 @@ Task_State::parse_args (int argc,char *argv[])
                     ACE_Barrier (thread_count_),
                     -1);
   ACE_NEW_RETURN (this->semaphore_,
-                  ACE_Thread_Semaphore (0),
+                  ACE_SYNCH_SEMAPHORE (0),
                   -1);
   ACE_NEW_RETURN (this->latency_,
                   ACE_timer_t [thread_count_],
@@ -599,7 +599,7 @@ Client::init_orb (void)
       ACE_DEBUG ((LM_DEBUG,
                   "(%t)Arguments parsed successfully\n"));
 
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_, 1));
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_, 1);
       this->ts_->ready_ = 1;
       this->ts_->ready_cnd_.broadcast ();
       ready_mon.release ();

@@ -42,6 +42,8 @@ Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
                                Callback_Quoter::Consumer_ptr consumer_handler,
                                CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Callback_Quoter::Invalid_Stock))
 {
   // Store the client information.
   Consumer_Data consumer_data;
@@ -115,6 +117,8 @@ Notifier_i::orb (CORBA::ORB_ptr orb)
 void
 Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
                                  CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Callback_Quoter::Invalid_Handle))
 {
   // The consumer_map consists of a map of stocknames with consumers
   // and their threshold values attached to it. To unregister a
@@ -163,6 +167,7 @@ void
 Notifier_i::market_status (const char *stock_name,
                            CORBA::Long stock_value,
                            CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Notifier_i:: The stockname is %s with price %d\n",
@@ -217,6 +222,7 @@ Notifier_i::market_status (const char *stock_name,
 
 void
 Notifier_i::shutdown (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ( this->consumer_map_.close () > 0)
     ACE_ERROR ((LM_ERROR,
