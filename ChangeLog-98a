@@ -42,6 +42,11 @@ Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
           with ACE_INLINE disabled, and missing specializations without
           ACE_HAS_TEMPLATES_REQUIRE_SOURCE and inlining enabled.
 
+        * tests/TSS_Test.cpp: weakened to work with LynxOS.  It has a very
+          limited number of keys, maybe 16, and can't free them.  And, the
+          test always core dumps if we try to request more keys than it has
+          available.
+
 Thu Feb 19 10:41:05 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK.cpp (open): It appears that we don't need to do
