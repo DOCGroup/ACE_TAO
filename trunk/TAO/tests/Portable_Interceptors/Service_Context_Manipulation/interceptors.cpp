@@ -5,15 +5,15 @@
 
 ACE_RCSID(Interceptors, interceptors, "$Id$")
 
-#if (TAO_HAS_INTERCEPTORS == 1)
 const CORBA::ULong request_ctx_id = 0xdead;
 const CORBA::ULong reply_ctx_id = 0xbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Request_Interceptor reply message";
 
-Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (CORBA::ORB_ptr orb)
+Echo_Client_Request_Interceptor::
+     Echo_Client_Request_Interceptor (const char *id)
   : myname_ ("Echo_Client_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_id_ (CORBA::string_dup (id))
 {
 }
 
@@ -36,32 +36,51 @@ Echo_Client_Request_Interceptor::_remove_ref (void)
 }
 
 char *
-Echo_Client_Request_Interceptor::name (CORBA::Environment &)
+Echo_Client_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
-void 
+void
 Echo_Client_Request_Interceptor::send_poll (
-            PortableInterceptor::ClientRequestInfo_ptr,
-            CORBA::Environment &)
+            PortableInterceptor::ClientRequestInfo_ptr
+            TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
 }
 
 void
-Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                               CORBA::Environment &)
+Echo_Client_Request_Interceptor::send_request (
+     PortableInterceptor::ClientRequestInfo_ptr ri
+     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
+  if (CORBA::is_nil (this->orb_.in ()))
+    {
+      int argc = 0;
+      this->orb_ = CORBA::ORB_init (argc, 0,
+                                    this->orb_id_.in (),
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::String_var ior =
+    this->orb_->object_to_string (ri->target (), ACE_TRY_ENV);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::send_request from \"%s\" on object: %s\n",
-              ri->operation (),
-              this->orb_->object_to_string (ri->target ())));
+              "Echo_Client_Request_Interceptor::send_request "
+              "from \"%s\" on object: %s\n",
+              operation.in (),
+              ior.in ()));
 
   // Populate target member of the ClientRequestInfo.
 
@@ -82,16 +101,32 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
 }
 
 void
-Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                CORBA::Environment &ACE_TRY_ENV)
+Echo_Client_Request_Interceptor::receive_reply (
+     PortableInterceptor::ClientRequestInfo_ptr ri
+     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_ENV_ARG_DEFN;
+
+  if (CORBA::is_nil (this->orb_.in ()))
+    {
+      int argc = 0;
+      this->orb_ = CORBA::ORB_init (argc, 0,
+                                    this->orb_id_.in (),
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::String_var ior =
+    this->orb_->object_to_string (ri->target (), ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply from \"%s\" on object: %s\n",
-              ri->operation (ACE_TRY_ENV),
-              this->orb_->object_to_string (ri->target ())));
-
-  // ACE_CHECK;
+              operation.in (), ior.in ()));
 
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext * sc = ri->get_reply_service_context (id);
@@ -105,10 +140,10 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
               buf));
 }
 
-void 
+void
 Echo_Client_Request_Interceptor::receive_other (
-            PortableInterceptor::ClientRequestInfo_ptr,
-            CORBA::Environment &)
+     PortableInterceptor::ClientRequestInfo_ptr
+     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -116,24 +151,39 @@ Echo_Client_Request_Interceptor::receive_other (
 }
 
 void
-Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                                    CORBA::Environment &ACE_TRY_ENV)
+Echo_Client_Request_Interceptor::receive_exception (
+     PortableInterceptor::ClientRequestInfo_ptr ri
+     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::received_exception from \"%s\" on object: %s\n",
-              ri->operation (ACE_TRY_ENV),
-              this->orb_->object_to_string (ri->target ())));
+  if (CORBA::is_nil (this->orb_.in ()))
+    {
+      int argc = 0;
+      this->orb_ = CORBA::ORB_init (argc, 0,
+                                    this->orb_id_.in (),
+                                    ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::String_var ior =
+    this->orb_->object_to_string (ri->target (), ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Echo_Client_Request_Interceptor::received_exception "
+              "from \"%s\" on object: %s\n",
+              operation.in (), ior.in ()));
+  ACE_CHECK;
 }
 
-
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (CORBA::ORB_ptr orb)
-  : myname_ ("Echo_Server_Interceptor"),
-    orb_ (CORBA::ORB::_duplicate (orb))
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
+  : myname_ ("Echo_Server_Interceptor")
 {
 }
 
@@ -156,18 +206,21 @@ Echo_Server_Request_Interceptor::_remove_ref (void)
 }
 
 char *
-Echo_Server_Request_Interceptor::name (CORBA::Environment &)
+Echo_Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+Echo_Server_Request_Interceptor::receive_request (
+     PortableInterceptor::ServerRequestInfo_ptr ri
+     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
               ri->operation ()));
@@ -202,10 +255,10 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
 
 }
 
-void 
+void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment &)
+     PortableInterceptor::ServerRequestInfo_ptr
+     TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
@@ -213,10 +266,13 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 }
 
 void
-Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                             CORBA::Environment &ACE_TRY_ENV)
+Echo_Server_Request_Interceptor::send_reply (
+     PortableInterceptor::ServerRequestInfo_ptr ri
+     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_ENV_ARG_DEFN;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
@@ -235,8 +291,9 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
 }
 
 void
-Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                 CORBA::Environment &)
+Echo_Server_Request_Interceptor::send_exception (
+     PortableInterceptor::ServerRequestInfo_ptr ri
+     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -245,13 +302,12 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
               ri->operation ()));
 }
 
-void 
+void
 Echo_Server_Request_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr,
-             CORBA::Environment & )
+             PortableInterceptor::ServerRequestInfo_ptr
+             TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
-#endif /* (TAO_HAS_INTERCEPTORS == 1) */

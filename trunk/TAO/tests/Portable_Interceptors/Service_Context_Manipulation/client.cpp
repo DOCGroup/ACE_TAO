@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "interceptors.h"
+#include "Client_ORBInitializer.h"
 
 ACE_RCSID(Interceptors, client, "$Id$")
 
@@ -77,22 +78,27 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      PortableInterceptor::ORBInitializer_ptr temp_initializer;
+
+      ACE_NEW_RETURN (temp_initializer,
+                      Client_ORBInitializer,
+                      -1);  // No exceptions yet!
+      PortableInterceptor::ORBInitializer_var initializer =
+        temp_initializer;
+
+      PortableInterceptor::register_orb_initializer (initializer.in (),
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Transfer ownership to the ORB.
+      (void) initializer._retn ();
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
-
-      // Installing the Echo interceptor
-      ACE_NEW_RETURN (interceptor,
-                      Echo_Client_Request_Interceptor (orb.in ()),
-                      -1);
-      orb->_register_client_interceptor (interceptor);
-#endif /* (TAO_HAS_INTERCEPTORS == 1) */
 
       CORBA::Object_var object =
         orb->string_to_object (ior, ACE_TRY_ENV);
