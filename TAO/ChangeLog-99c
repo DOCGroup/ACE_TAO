@@ -12,7 +12,11 @@ Fri Jul 30 18:47:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           requests (in this case oneways) after the server dies.  The test
           can also be used to check that the client can reconnect to a
           persistet service, but this is not checked in the run_test.pl
-          script because.
+          script because. Many thanks to Andreas Geisler
+	  <Andreas.Geisler@erls.siemens.de> and to Andy Gokhale
+	  <gokhale@sahyadri.research.bell-labs.com> for reporting the
+	  problem and providing a test case (Andreas) and good debugging
+	  info (Andy)
 
         * tao/IIOP_Connector.cpp:
         * tao/UIOP_Connector.cpp:
