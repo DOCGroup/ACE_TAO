@@ -1,3 +1,13 @@
+Mon Mar 27 09:03:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	  Only one client is rejected under high load conditions.
+	  Otherwise we get herds of clients moving from server to server,
+	  i.e. the load balancing system is unstable.
+
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+	  Adjust the high load threshold.
+
 Sun Mar 26 20:15:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.LoadBalancing:
