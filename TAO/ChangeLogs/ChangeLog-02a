@@ -1,3 +1,40 @@
+Sat Apr 01 02:04:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/LocalObject.cpp:
+	* tao/LocalObject.h:
+	* tao/LocalObject.i:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Added LocalObject.*
+
+	* tao/Object.cpp:
+	* tao/Object.h:
+	* tao/Object.i: Changed _incr_refcnt and _decr_refcnt to
+	  protected method.  Added two new virtual function _add_ref and
+	  _remove_ref which call _incr_refcnt and _decr_refcnt to manage
+	  the reference counting of objects.  The CCM specifies these
+	  functions for LocalObject.  So we need to change to use them in
+	  Object also.
+
+	* be/be_visitor_interface/interface_cs.cpp:
+	* tao/CurrentC.cpp:
+	* tao/DomainC.cpp:
+	* tao/DynAnyC.cpp:
+	* tao/IORC.cpp:
+	* tao/ImplRepoC.cpp:
+	* tao/InterceptorC.cpp:
+	* tao/InterfaceC.cpp:
+	* tao/MessagingC.i:
+	* tao/Object.cpp:
+	* tao/Object.i:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.i:
+	* tao/PollableC.i:
+	* tao/RT_Current.cpp:
+	* tao/TAOC.cpp: Changed to use _incr_refcnt and _decr_refcnt for
+	  Object derived interfaces.
+
 Wed Mar 29 12:57:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/Notify/Filter/Makefile:
