@@ -874,6 +874,9 @@ main (int argc, char *argv [])
         root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      poa_manager->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))

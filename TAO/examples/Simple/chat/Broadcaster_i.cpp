@@ -124,12 +124,12 @@ Broadcaster_i::remove (Receiver_ptr receiver,
 void
 Broadcaster_i::say (Receiver_ptr receiver,
                     const char *text,
-                    CORBA::Environment &T)
+                    CORBA::Environment &ACE_TRY_ENV)
  ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  TAO_TRY
+  ACE_TRY
     {
       ACE_CString sender_nickname ("Sender Unknown");
 
@@ -151,14 +151,15 @@ Broadcaster_i::say (Receiver_ptr receiver,
       ACE_CString broadcast_string ("[" + sender_nickname + "] " + text);
 
       this->broadcast (broadcast_string.fast_rep (),
-                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Broadcaster_i::say\t\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Broadcaster_i::say\t\n");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 void
