@@ -3,15 +3,22 @@
 # $Id$
 #
 #	Makefile for all the ACE binaries
+#
+# This Makefile can build clone and envinfo, but not both at the same time.
+# clone must not use any ACE pieces, since it's building a clone of the source
+# tree and it can't have done a build yet.  envinfo, on the other hand,
+# requires a built ACE to build correctly.
+# This Makefile is distributed so as to be able to build clone without
+# changes.  To build envinfo, first build ACE, then come back and do a
+# make envinfo=1
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN = \
-	clone \
-	envinfo \
+ifdef envinfo
+BIN = envinfo
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
@@ -35,6 +42,35 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ifdef TEMPINCDIR
 COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
 endif
+
+else   # Not building envinfo
+
+include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
+CFILES		= clone.cpp 
+OFILES		= clone.o
+DFLAGS		= -b elf
+CCFLAGS		+= -I$(ACE_ROOT) 
+
+#############################################################################
+# C++ directives
+
+.SUFFIXES: .cpp
+.cpp.o:
+	$(CXX) $(CCFLAGS) -c $<
+#############################################################################
+
+clone: $(OFILES)
+	$(CXX) $(CCFLAGS) -o $@ $(OFILES)
+
+clean:
+	-/bin/rm -f *.o *.out *~ core
+
+realclean: clean 
+	-/bin/rm -fr clone
+
+endif  # envinfo
+
 
 #----------------------------------------------------------------------------
 #	Local targets
