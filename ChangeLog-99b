@@ -2,7 +2,8 @@ Mon Jun 28 17:30:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (recvv): We must not passed a null pointer to <flags>
 	  but a pointer pointing to a real flag.  This fixed the
-	  SOCK_Send_Recv_Test failing on NT problem.
+ 	  SOCK_Send_Recv_Test failing on NT problem.  Thanks to Jody
+ 	  Hagins <jody@atdesk.com> for reporting this.
 
 Mon Jun 28 15:10:50 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -33,11 +34,15 @@ Mon Jun 28 09:32:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  various batch files.  Thanks to John Tucker
  	  <jtucker@infoglide.com> for this test.
 
+	* ace/Map_Manager.i: Added an ACE_const_cast to the lock_ used
+	  in the newly const total_size() and current_size() methods.
+	
 	* ace/Map_T,
 	* ace/Map_Manager,
 	* ace/Cache_Map_Manager_T,
+	* ace/Active_Map_Manager_T,
 	* ace/Hash_Map_Manager_T: The current_size() and total_size() methods
-	  should be const...
+	  must be const.
 
 	* ace/OS.i: Fixed a type inconsistency where wchar_t should have been
 	  char and added a missing ';'.
