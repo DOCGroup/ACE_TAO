@@ -75,6 +75,13 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 		ACE_wrappers/performance-tests \
 		ACE_wrappers/tests
 
+RELEASE_LIB_FILES = \
+	        ACE_wrappers/ChangeLog \
+		ACE_wrappers/STL \
+		ACE_wrappers/VERSION \
+		ACE_wrappers/ace \
+		ACE_wrappers/include \
+
 ifeq ($(PWD),)
   PWD := $(shell pwd)
 endif
@@ -96,3 +103,5 @@ cleanrelease:
 
 release:
 	($(TIMESTAMP)cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
+	(cd ..; /bin/rm -f ACE-lib.tar.gz; tar cvf ACE-lib.tar $(RELEASE_LIB_FILES); gzip -9 ACE-lib.tar; chmod a+r ACE-lib.tar.gz)
+

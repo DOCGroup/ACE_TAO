@@ -231,4 +231,7 @@ private:
 #pragma implementation ("Local_Name_Space_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+// Put this here to avoid circular include problems.
+#include "Local_Name_Space.h"
+
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */
