@@ -1,3 +1,9 @@
+Tue Jun 02 08:09:41 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix-4.1.x.h: Removed ACE_HAS_THREAD_SELF.  It was
+	  causing compile failure.  Thanks to Lee Nash <rnash@gulfaero.com>
+	  for helping to work this out.
+
 Mon Jun 01 16:19:52 1998  Steve Huston  <shuston@riverace.com>
 
 	* examples/Reactor/Dgram/Dgram.mdp, Dgram.mak:  Added these files
