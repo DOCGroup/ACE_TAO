@@ -1,3 +1,13 @@
+Mon Jul 24 14:02:54 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32:
+
+	  Updated pace.dsw. Re-arranged files and folders.
+
+	* pace/win32/TODO:
+
+	  Updated.
+
 Sun Jul 23 20:36:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/TODO:
