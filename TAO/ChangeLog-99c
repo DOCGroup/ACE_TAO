@@ -1,5 +1,10 @@
 Tue Jun 22 22:11:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/default_resource.cpp:
+	  Removed the warning about -ORBresources, the current behavior is 
+	  acceptable and we decided not to remove the option in the
+	  future.
+
 	* orbsvcs/tests/Makefile:
 	* orbsvcs/tests/AVStreams/Makefile:
 	* orbsvcs/tests/AVStreams/benchmark/Makefile:
