@@ -1,137 +1,120 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN"><p>
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <!-- $Id$ -->
-<html> <head>
-<title>Status of DAnCE</title>
-<style type="text/css">
-<!--
-.style3 {
-	font-size: 16px;
-	font-weight: bold;
-}
--->
-</style>
-</head>
+<html>
+  <head>
+    <title>Deployment And Configuration Engine (DAnCE) Release Notes</title>
+  </head>
 
-<body>
-<h1>Information for the Status of DAnCE</h1>
+  <body>
+    <h1 align="center"> Deployment And Configuration Engine (DAnCE)
+    <br/>Release Notes
+    </h1>
 
-The purpose of this page is to illustrate what features in the
-<a href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-02">OMG's DnC Spec</a>
-are implemented/supported and what are not.
+    <b>D</b>eployment <b>An</b>d <b>C</b>onfiguration <b>E</b>ngine
+    <b>(DAnCE)</b> is an implementation of the run-time infrastructure as
+    mandated by the recently adopted OMG <a
+    href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-02">Deployment &amp;
+    Configuration (D&amp;C)</a> specification, which deals with the
+    configuration and deployment of component-based applications. Currently
+    DAnCE only supports the deployment &amp; configuration of CORBA
+    Component Model (CCM) based applications. DAnCE needs XML descriptors
+    which drive the deployment to be provided to it, to actually perform
+    the deployment. One way to generate these descriptors is using the
+    <b>Co</b>mponent <b>S</b>ynthesis using <b>M</b>odel-<b>I</b>ntegrated
+    <b>C</b>omputing (<a
+    href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a>) tool-suite.
+    DAnCE uses <b>C</b>omponent <b>I</b>ntegrated <b>A</b>CE <b>O</b>RB (<a
+    href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a>) is used as the
+    underlying CCM implementation in the current release.
 
-<h3>Things we have supported and things we have NOT supported yet:</h3>
-<ol>
-  <li class="style3">XML Handler </li>
-</ol>
-<ul>
-  <li> XML handlers are capable of parsing all elements
-    that are defined in the XML schema. To be more precise, given a XML 
-    descriptor confirming to the XML schema specified by the D&amp;C 
-    specification, DAnCE XML handlers can parse all of those elements and 
-    store the information in the IDL data structure also specified by the 
-    D&amp;C specification.  </li> 
-	  <p>
-  <li>The only restriction is in the elements of the type <CODE>Deployment::Property</CODE>. These elements are complex types and can have sub 
-    elements. The corresponding IDL data structure, which will capture the 
-    values stored in the XML descriptors, are of the type &quot;Any&quot;. DAnCE XML 
-    handlers, right now, have the capability to store only the basic data 
-  types in these &quot;Any&quot;s.</li>
-  <p>
+    <h2>D&amp;C XML Schema Handling</h2>
 
-  <li> DAnCE run-time 
-    currently reads the information stored in the &quot;DeploymentPlan&quot; data 
-    structure to perform the deployment of components. This capability is 
-    currently restricted to reading only the following tags (See the descriptors contained in $CIAO_ROOT/DAnCE/tests/Config_Handlers/HUDisplay directory for details):
-    <p>(1) <CODE>MonolithicDeploymentDescription</CODE>: Specifies the monolithic 
-      implementation description of a component (interface), which is part of 
-    an assembly, which in turn is part of a package.</p>
+    <p> The XML handlers shipped with DAnCE are capable of handling almost
+    all elements that are defined in the schema. Handling here refers to
+    reading the XML tags and converting them to the equivalent in-memory
+    IDL based data structures defined by the specifications. Some of the
+    elements are however not handled. The list of XML elements that are not
+    supported at this time are listed below:
     <ul>
-      <li>User cannot specify the deployRequirement for this monolith. This 
-              attribute specifies the target or collocation requirements that this 
-        implementation could have. Presently, DAnCE doesn't handle this.<br>
+      <li>
+        <b><code>Deployment:Any</code></b> &mdash; This is a complex
+        element which is composed of many sub-elements. Currently, DAnCE only
+        parses a subset of the sub-elements of <code>Deployment:Any</code>.
+        Specifically, DAnCE supports all the basic data types defined as part
+        of <code>Deployment:Any</code>, and doesn't understand any of the
+        complex types.
       </li>
-      <li>User cannot specify any Property (execParameter) for the monolith. 
-        This attribute specifies the run-time attributes of this component. 
-        Currently, DAnCE run-time doesn't handle the attributes for the components.</li>
+      <li>
+        <b><code>xmi:Extension</code></b> &mdash; This element is designed to
+        allow augmenting the standard D&amp;C schema with user-defined
+        elements. Currently DAnCE doesn't support user-defined extensions to
+        the schema.
+      </li>
+      <li>
+        <b><code>Deployment:Requirement</code></b> &mdash; This element is
+        designed to allow description of requirements of component-based
+        applications. Since handling this requires interaction with the
+        <code>TargetManager</code> interface(which is unsupported at this
+        time), support for handling it is not present.
+      </li>
+      <li>
+        <b><code>Deployment:ComponentPropertyDescription</code></b> &mdash;
+        This element is used to specify default values for attributes of
+        component. DAnCE doesn't support setting the values for attributes
+        of components using this tag.
+      </li>
+      <li>
+        <b><code>Deployment:ComponentExternalPortEndpoint,
+        Deployment:ExternalReferenceEndpoint</code></b> &mdash; These
+        elements are used specify connections between ports of components
+        in one assembly with ports of components in a different assembly,
+        or connections between component ports and external connection
+        endpoints. These features are needed for supporting assemblies of
+        components. DAnCE doesn't support hierarchical assemblies i.e.,
+        creation of assemblies which can themselves contain sub-assemblies.
+      </li>
+      <li>
+        <b><code>Deployment:PlanPropertyMapping</code></b> &mdash; This
+        element is used to delegate property mapping between a component's
+        external properties to properties of subcomponents that actually
+        implement the behavior of the larger component. Since DAnCE
+        doesn't support hierarchical assemblies, this tag is not supported
+        currently.
+      </li>
     </ul>
-    <p>(2) <CODE>ArtifactDeploymentDescription</CODE>: Specifies the artifacts used by the 
-      monolithic implementation of a component(interface). Common examples are 
-  entryPoints of a component and common libraries like ACE+TAO+CIAO 
-  which are used by the components.</p>
-    <ul>
-      <li>User cannot specify the deployRequirement, deployedResource and 
-        execParameter for this artifact presently. To be precise, an user cannot specify 
-        the target resource on which this artifact will run, cannot specify the 
-        target resources on which this artifact will depend on and cannot 
-        specify the run-time attributes this artifact will depend on.</li>
-    </ul>
-    <p>(3) <CODE>InstanceDeploymentDescription</CODE>: Specifies which instance of a 
-      component runs on which node, which is defined in the DomainDescriptor.</p>
-    <ul>
-      <li>DAnCE presently has the capability only to specify the instance 
-        name and the node on which the instance will run.</li>
-    </ul>
-    <p>(4) <CODE>PlanConnectionDescription</CODE>: Specifies the connection between the 
-      components, which are part of the application.</p>
-    <ul>
-      <li>DAnCE currently supports connections between 
-        internalEndpoints only. ComponentExternalPortEndpoint and 
-        ExternalReferenceEndpoints are not supported.</li>
-    </ul>
-    <p>(5) <CODE>PlanPropertyMapping</CODE>: Maps the application's to-be-exposed properties 
-      onto the properties of the components, part of the application.</p>
-    <ul>
-      <li>DAnCE does not support this.</li>
-    </ul>
-    <p>(6) <CODE>ImplementationDependencies</CODE>: Implementations of certain components 
-      need to be run on the target environments, before the application 
-      deployment, specified by this deployment plan, can be made.</p>
-    <ul>
-      <li>DAnCE does not support this.</li>
-    </ul>
-    <p>(7) <CODE>Property</CODE>: DeploymentPlan specific properties.</p>
-    <ul>
-      <li>DAnCE does not support this.</li>
-    </ul>
-    <p>(8) All the &quot;elements&quot; defined in the XML schema can have attributes. 
-      However, our XML handlers can handle the following attributes only: 
-      <CODE>xmi:idref</CODE> and <CODE>xmi:id</CODE>. We also don't support the <CODE>xmi:Extension</CODE> elements.</p>
-  </li> 
-  
-</ul>
+    </p>
 
-<ol start="2">
-  <li class="style3">
-    <p>Deployment Tools and Interfaces </p>
-  </li>
-</ol>
-<ul>
-  <li> RepositoryManager interface: Only &quot;installPackage&quot; and &quot;findPackageByName&quot; 
-  operations are implemented. This interface is implemented as an executable. </li>
-</ul>
-<ul>
-  <li>TargetManager interface: Has not been implemented yet. Implementation of this feature
-is a work in progress. </li>
-  </ul>
-<ul>
-  <li> ExecutionManager is implemented completely as an executable.
-    <p>
-        
-  </li>
-  <li>DomainApplicationManager and DomainApplication interfaces are combined together and is called &quot;DomainApplicationManager&quot;. As a result, all the methods, except getApplications (),  in the 
-  DomainApplicationManager are implemented. Currently, the DomainApplicationManager is implemented as a library and used by ExecutionManager executable. </li>
-</ul>
-<ul>
-  <li> NodeManager is implemented completely as an executable. </li>
-</ul>
-<ul>
-  <li> NodeApplicationManager is implemented completely as a library and used by NodeManager executable. </li>
-</ul>
-<ul>
-  <li>NodeApplication is implemented completely as an executable. </li>
-</ul>
-<ul>
-  <li>Executor <em>Actor</em> defined in the <a href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-02">OMG's DnC Spec</a> is implemented as part of the RepositoryManager executable.<br>
-  </li>
-</ul>
-</body> </html>
+    <h2>D&amp;C Management Interfaces</h2> <p> D&amp;C specification
+    defines a set of standard CORBA interfaces which are used to carry out
+    the deployment of component-based applications. These interfaces depend
+    on the in-memory IDL data structures that are built by the XML
+    handlers. The following lists the interfaces defined by the
+    specification and the level of support for each interface in DAnCE:
+    <ul>
+      <li>
+        <b><code>RepositoryManager</code></b> &mdash; Only the
+        <code>installPackage()</code> and <code>findPackageByName()</code>
+        operations of this interface are implemented.
+      </li>
+      <li>
+        <b><code>TargetManager</code></b> &mdash; This interface has not
+        been implemented at all. Implementation of this interface is a
+        planned activity for the future.
+      </li>
+      <li>
+        <b><code>ExecutionManager</code></b> &mdash; All operations defined
+        in this interface are implemented.
+      </li>
+      <li>
+        <b><code>DomainApplicationManager, DomainApplication</code></b>
+        &mdash; All operations except <code>getApplications()</code>
+        operation of DomainApplicationManager are implemented.
+      </li>
+      <li>
+        <b><code>NodeManager, NodeApplicationManager,
+        NodeApplication</code></b> &mdash; All operations defined in these
+        interfaces are implemented.
+      </li>
+    </ul>
+  </body>
+</html>
