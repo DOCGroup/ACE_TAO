@@ -289,6 +289,7 @@ ACE_OS::stat (const char *file, ACE_stat *stp)
     }
   else
     {
+      stp->st_mode = fdata.dwFileAttributes;
       stp->st_size = fdata.nFileSizeLow;
       stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
       stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
@@ -332,6 +333,7 @@ ACE_OS::stat (const wchar_t *file, ACE_stat *stp)
     }
   else
     {
+      stp->st_mode = fdata.dwFileAttributes;
       stp->st_size = fdata.nFileSizeLow;
       stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
       stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);

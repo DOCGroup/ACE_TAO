@@ -154,11 +154,14 @@ dirent_count (const ACE_TCHAR *dir_path,
               int &file_count,
               int recursion_level)
 {
+#if !defined (ACE_LACKS_CHDIR)
   if (ACE_OS::chdir (dir_path) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("chdir: %p\n"),
                        dir_path),
                       -1);
+#endif /* !ACE_LACKS_CHDIR */
+
   ACE_Dirent dir (ACE_TEXT ("."));
 
   // Since the dir struct d_name type changes depending on the setting
@@ -234,12 +237,14 @@ dirent_count (const ACE_TCHAR *dir_path,
                   local_dir_count));
               dir_count++;
 
+#if !defined (ACE_LACKS_CHDIR)
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("chdir: %p\n"),
                                    dir_path),
                                   -1);
+#endif /* !ACE_LACKS_CHDIR */
             }
           break;
         }
