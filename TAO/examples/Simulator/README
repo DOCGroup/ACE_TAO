@@ -1,6 +1,6 @@
 $Id$
 
-Documentation for the Simulator
+Documentation for the Simulator/DOVE demo
 
 Purpose: To show how the event service can be used to as a media to 
          transport monitoring events including data. 
@@ -8,7 +8,8 @@ Purpose: To show how the event service can be used to as a media to
 Application: The events contain C++ structs with avionics information.
              They are supllied by sensors of an avionic and are
              consumed by an JAVA applet running on a different machine and/or
-             location.
+             location. The collected metrics are displayed in
+	     JAVA Beans.
 
 Implementation: A C++ Supplier pushes events containing a
             navigation or weapons struct to the Event Service.
@@ -16,6 +17,11 @@ Implementation: A C++ Supplier pushes events containing a
             Consumers which are implemented in JAVA. The JAVA
             consumer extracts the data of the structs and dispatches
             it to various display components.
+
+
+For more informations refer to:
+	$TAO_ROOT/docs/releasenotes/index.html
+
 
 Requirements: 
            C++ compiler, TAO environment, Visibroker 3.2 for JAVA
@@ -33,7 +39,7 @@ Files:
         NavWeap.idl - IDL definition of the Weapons and Navigation struct
         README - this readme file
 
-     Supplier:
+     Supplier: (in directory  $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier/)
         Event_Sup.cpp - Event Supplier
         Event_Sup.h   - Event Supplier class definition
         Makefile      - Event Supplier Makefile
@@ -41,22 +47,24 @@ Files:
 	svc.conf - helper file
 
 
-     Consumer, Simulator:
-        Display.java  - Simulation core class 
-        Display_Client.java - Main Entry point of the Simulation
-        Display_Consumer.java - Event Consumer Administrator
-	Display_Push_Consumer.java - Actual Event Consumer
-        Display_Object.java - Interface for an Display_Object
-        Display_Weapons.java - Implementation of an Display_Object
-        Display_Art_Horizon.java - Implementation of an Display_Object
-        Display_Object_Factory.java - Factory Object for Display_Objects
-        Graph.java - Simulation
-        Graph_Panel.java - Simulation
-        NS_Resolve.java - Resolving the inital reference to the Naming Service
-        Queue.java - Simulation
-        Sim_Panel.java - Simulation
-        Border_Panel.java - Simulation
-
+     Consumer, DOVEBrowswer: (in directory  $TAO_ROOT/orbsvcs/tests/Simulator/DOVEBrowser/)
+	AnswerEvent.java  - Having my own Events
+	AnswerListener.java - Listener for these Events
+	DataHandler.java  - Base class for all Data Handlers
+	DemoCore.java - Core of the Demo to connect Observables with Observers
+	DemoObservable.java - Base class for Observables
+	DoubleVisComp.java  - Visualization Component (will be a JavaBean) for Doubles
+	DOVEBrowser.java - Wrapper around DemoCore
+	NS_Resolve.java  - Resolving the inital reference to the Naming Service
+	NavWeapDataHandler.java  - Specialized Data Handler for Navigation and Weapon data
+	NavigationVisComp.java - Visualization Component (... JavaBean) for Navigation data
+	ObservablesDialog.java - Dialog window for connecting Observables with OBservers
+	Properties.java	- constant definitons
+	PushConsumer.java - Event Service Push Consumer
+	PushConsumerFactory.java - Factory for the Consumer
+	Queue.java - Queue for the DoubleVisComp 
+	VisComp.java - Base class for the Visualization Components
+	WeaponsVisComp.java - Visualization Component for Weapons
 
 
 Compiling:
@@ -80,23 +88,24 @@ Compiling:
 
        make
 
-    DOVE Browser: in directory $TAO/orbsvcs/tests/Simulator/Sim_Display/.)
+
+
+    DOVE Browser: in directory $TAO/orbsvcs/tests/Simulator/DOVEBrowser/.)
        cp ../NavWeap.idl .
        cp $TAO_ROOT/orbsvcs/orbsvcs/CosNaming.idl .
        cp $TAO_ROOT/orbsvcs/orbsvcs/CosTimeBase.idl . 
        cp $TAO_ROOT/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl . 
        cp $TAO_ROOT/orbsvcs/orbsvcs/RtecEventComm.idl . 
        cp $TAO_ROOT/orbsvcs/orbsvcs/RtecScheduler.idl .
-       idl2java NavWeap.idl
-       idl2java CosNaming.idl
-       idl2java CosTimeBase.idl
-       idl2java RtecEventChannelAdmin.idl
-       idl2java RtecEventComm.idl
-       idl2java RtecScheduler.idl
+       idl2java *.idl
 
        vbjc *.java
        
 Starting:
+     Start in the following order:
+	Naming Service
+	Scheduling Service
+	Event Service
 
      Supplier:
        Event_Sup -ORBport 10040 -f MLF.dat -m 1000
@@ -104,4 +113,4 @@ Starting:
 		// -f MLF.dat to read scheduling data from this file as input 
 
      DOVE Browser:
-       vbj Display_Client 
+       vbj DOVEBrowser
