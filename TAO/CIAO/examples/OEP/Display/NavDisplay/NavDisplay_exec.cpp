@@ -60,6 +60,13 @@ MyImpl::NavDisplay_exec_impl::set_session_context (Components::SessionContext_pt
 }
 
 void
+MyImpl::NavDisplay_exec_impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
 MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -85,6 +92,13 @@ MyImpl::NavDisplay_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
 
   CIAO_REGISTER_VALUE_FACTORY (orb.in(), HUDisplay::tick_init,
                                HUDisplay::tick);
+}
+
+void
+MyImpl::NavDisplay_exec_impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
 }
 
 void

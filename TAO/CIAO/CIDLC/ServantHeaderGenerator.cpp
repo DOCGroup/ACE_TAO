@@ -652,10 +652,10 @@ namespace
       // This can be moved later to ServantEmitter::pre() or out on its own.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (component_inherits);
@@ -756,24 +756,24 @@ namespace
 
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (component_inherits);
-        
+
         PortsEmitterPublic ports_emitter (ctx);
         defines.node_traverser (ports_emitter);
 
         component_emitter.traverse (t);
       }
-      
+
       os << "// CIAO-specific." << endl << endl
          << "::CIAO::Session_Container *" << endl
          << "_ciao_the_Container (void) const;" << endl;
-         
+
       os << "static " << t.name () << "_Context *" << endl
          << "_narrow (" << endl
          << "::Components::SessionContext_ptr p" << endl
@@ -785,10 +785,10 @@ namespace
 
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (component_inherits);
@@ -803,10 +803,10 @@ namespace
 
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (component_inherits);
@@ -1126,12 +1126,12 @@ namespace
       os << "// Supported operations." << endl << endl;
 
       // Generate operations for all supported interfaces.
-      { 
+      {
         Traversal::Component component_emitter;
-        
-        Traversal::Inherits component_inherits;                
+
+        Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Supports supports_;
         component_emitter.edge_traverser (component_inherits);
         component_emitter.edge_traverser (supports_);
@@ -1192,14 +1192,14 @@ namespace
       // event consumers.
       {
         Traversal::Component component_emitter;
-        
-        Traversal::Inherits component_inherits;                
+
+        Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (component_inherits);
         component_emitter.edge_traverser (defines);
-        
+
         PortsEmitterPublic ports_emitter (ctx);
         defines.node_traverser (ports_emitter);
 
@@ -1211,10 +1211,10 @@ namespace
 
       {
         Traversal::Component component_emitter;
-        
-        Traversal::Inherits component_inherits;                
+
+        Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (component_inherits);
@@ -1440,9 +1440,21 @@ namespace
       os << "// CIAO-specific operations." << endl << endl;
 
       os << "void" << endl
-          << "_ciao_activate (" << endl
+          << "ciao_preactivate (" << endl
           << STRS[ENV_SNGL_HDR] << ")" << endl
           << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+      os << "void" << endl
+          << "ciao_activate (" << endl
+          << STRS[ENV_SNGL_HDR] << ")" << endl
+          << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+      os << "void" << endl
+         << "ciao_postactivate (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+      os << "/// @@NOTE: The busted operation " << endl;
 
       os << "void" << endl
           << "_ciao_passivate (" << endl
@@ -1463,10 +1475,10 @@ namespace
       // Generate protected operations for facets and event sinks.
       {
         Traversal::Component component_emitter;
-        
-        Traversal::Inherits component_inherits;                
+
+        Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (component_inherits);
@@ -1535,7 +1547,7 @@ namespace
         os << c.scoped_name ().scope_name ();
       }
     };
-    
+
     // HomeFactory and HomeFinder are tied to Operation in
     // the front end. Since we want to treat them differently
     // than regular operations in a home (we don't want to
@@ -1679,14 +1691,14 @@ namespace
 
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits home_inherits;
         home_inherits.node_traverser (home_emitter);
-        
+
         Traversal::Defines defines;
         home_emitter.edge_traverser (defines);
         home_emitter.edge_traverser (home_inherits);
-        
+
         HomeOperationEmitter home_operation_emitter (ctx);
         defines.node_traverser (home_operation_emitter);
 
@@ -1731,14 +1743,14 @@ namespace
 
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits inherits;
         home_emitter.edge_traverser (inherits);
         inherits.node_traverser (home_emitter);
-        
+
         Traversal::Defines defines;
         home_emitter.edge_traverser (defines);
-        
+
         FactoryOperationEmitter factory_operation_emitter (ctx, t);
         defines.node_traverser (factory_operation_emitter);
 
@@ -1775,20 +1787,20 @@ namespace
 
         home_emitter.traverse (t);
       }
-      
+
      // Generate operations for home attributes.
       os << "// Attribute operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits home_inherits;
         home_inherits.node_traverser (home_emitter);
-        
+
         Traversal::Defines defines;
         home_emitter.edge_traverser (defines);
         home_emitter.edge_traverser (home_inherits);
-        
+
         AttributeEmitter attribute_emitter (ctx);
         ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
         defines.node_traverser (attribute_emitter);
@@ -1851,14 +1863,14 @@ namespace
       // Generate operations for all supported interfaces.
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits home_inherits;
         home_inherits.node_traverser (home_emitter);
-        
+
         Traversal::Supports supports_;
         home_emitter.edge_traverser (supports_);
         home_emitter.edge_traverser (home_inherits);
-        
+
         InterfaceEmitter interface_emitter (ctx);
         supports_.node_traverser (interface_emitter);
 
@@ -2016,7 +2028,7 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << endl 
+      os << endl
          << "namespace " << t.name () << "{";
     }
 
@@ -2026,7 +2038,7 @@ namespace
       os << "}";
     }
   };
-  
+
   struct IncludesEmitter : Traversal::QuoteIncludes,
                            Traversal::BracketIncludes,
                            EmitterBase
@@ -2053,7 +2065,7 @@ namespace
          << regex::perl_s (bi.file ().string (),
                            "/(\\.(idl|cidl))?$/S.h/")
          << "\""
-         << endl;  
+         << endl;
     }
   };
 }
@@ -2203,7 +2215,7 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   //
   Traversal::Defines composition_defines;
   composition.edge_traverser (composition_defines);
-  
+
   module.edge_traverser (defines);
 
   //--

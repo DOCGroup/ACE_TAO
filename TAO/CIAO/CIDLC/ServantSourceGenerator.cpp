@@ -89,7 +89,7 @@ namespace
     {
       os << endl << STRS[ENV_ARG] << ");";
     }
-    
+
     /// If we don't do this, the comma() method just below
     /// gets used not only with the arguments, but also
     /// in raises(). Even though we are not generating the
@@ -100,7 +100,7 @@ namespace
     raises (Type&)
     {
     }
-    
+
     virtual void
     comma (Type&)
     {
@@ -852,10 +852,10 @@ namespace
       // This can be moved later to ServantEmitter::pre() or out on its own.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -1003,10 +1003,10 @@ namespace
       // Generate Context class operations for receptacles and event sources.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -1016,7 +1016,7 @@ namespace
 
         component_emitter.traverse (t);
       }
-      
+
       os << "// CIAO-specific." << endl << endl
          << "::CIAO::Session_Container *" << endl
          << t.name () << "_Context::"
@@ -1024,7 +1024,7 @@ namespace
          << "{"
          << "return this->container_;" << endl
          << "}" << endl;
-         
+
       os << t.name () << "_Context *" << endl
          << t.name () << "_Context::_narrow (" << endl
          << "::Components::SessionContext_ptr p" << endl
@@ -1458,9 +1458,9 @@ namespace
            << "if (::CORBA::is_nil (this->provide_"
            << p.name () << "_.in ()))" << endl
            << "{";
-           
+
         Traversal::ProviderData::belongs (p, enclosing_belongs_);
-           
+
         os << "::CCM_";
 
         Traversal::ProviderData::belongs (p, simple_belongs_);
@@ -1815,10 +1815,10 @@ namespace
       // Generate provides_<facet> operation.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -1849,10 +1849,10 @@ namespace
       // Generate an IF block for each facet inside provide_facet().
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -1932,10 +1932,10 @@ namespace
       // Generate subscribe_* and unsubscribe_* operations.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -1949,10 +1949,10 @@ namespace
       // Generate operations for nested Consumer classes.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -1986,10 +1986,10 @@ namespace
       // Generate IF block in connect operation for each receptacle.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -2025,10 +2025,10 @@ namespace
       // Generate IF block in disconnect operation for each receptacle.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -2080,10 +2080,10 @@ namespace
       // Generate generic operations for receptacles.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -2112,10 +2112,10 @@ namespace
       // Generate an IF block in for each consumer in get_consumer().
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -2191,8 +2191,8 @@ namespace
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_ECL] << "))" << endl
          << "{"
-	 << "// Just in case there are no if blocks" << endl
-	 << "ACE_UNUSED_ARG (subscribe);" << endl
+         << "// Just in case there are no if blocks" << endl
+         << "ACE_UNUSED_ARG (subscribe);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
@@ -2202,10 +2202,10 @@ namespace
       // Generate an IF block in for each publisher in subscribe().
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -2230,8 +2230,8 @@ namespace
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
          << "{"
-	 << "// Just in case there are no if blocks" << endl
-	 << "ACE_UNUSED_ARG (ck);" << endl
+         << "// Just in case there are no if blocks" << endl
+         << "ACE_UNUSED_ARG (ck);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << endl
@@ -2242,10 +2242,10 @@ namespace
       // Generate an IF block in for each publisher in unsubscribe().
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -2288,10 +2288,10 @@ namespace
       // Generate connect() and disconnect() for each emits declaration.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
@@ -2419,7 +2419,23 @@ namespace
       os << "// CIAO-specific operations." << endl << endl;
 
       os << "void" << endl
-         << t.name () << "_Servant::_ciao_activate (" << endl
+         << t.name () << "_Servant::ciao_preactivate (" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[EXCP_SNGL] << endl
+         << "{"
+         << "::Components::SessionComponent_var temp =" << endl
+         << "::Components::SessionComponent::_narrow (" << endl
+         << "this->executor_.in ()" << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
+         << "if (! ::CORBA::is_nil (temp.in ()))" << endl
+         << "{"
+         << "temp->ciao_preactivate (" << STRS[ENV_SNGL_ARG] << ");" << endl
+         << "}" << endl
+         << "}" << endl;
+
+      os << "void" << endl
+         << t.name () << "_Servant::ciao_activate (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
@@ -2431,6 +2447,22 @@ namespace
          << "if (! ::CORBA::is_nil (temp.in ()))" << endl
          << "{"
          << "temp->ccm_activate (" << STRS[ENV_SNGL_ARG] << ");" << endl
+         << "}" << endl
+         << "}" << endl;
+
+      os << "void" << endl
+         << t.name () << "_Servant::ciao_postactivate (" << endl
+         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[EXCP_SNGL] << endl
+         << "{"
+         << "::Components::SessionComponent_var temp =" << endl
+         << "::Components::SessionComponent::_narrow (" << endl
+         << "this->executor_.in ()" << endl
+         << STRS[ENV_ARG] << ");"
+         << "ACE_CHECK;" << endl
+         << "if (! ::CORBA::is_nil (temp.in ()))" << endl
+         << "{"
+         << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl
          << "}" << endl;
 
@@ -2455,10 +2487,10 @@ namespace
       // Generate operations for all supported interfaces.
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits component_inherits;
         component_inherits.node_traverser (component_emitter);
-        
+
         Traversal::Supports supports_;
         component_emitter.edge_traverser (supports_);
         component_emitter.edge_traverser (component_inherits);
@@ -2521,11 +2553,11 @@ namespace
 
       {
         Traversal::Component component_emitter;
-        
+
         Traversal::Inherits inherits;
         component_emitter.edge_traverser (inherits);
         inherits.node_traverser (component_emitter);
-        
+
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
 
@@ -2570,7 +2602,7 @@ namespace
     private:
       std::ostream& os;
     };
-    
+
     // HomeFactory and HomeFinder are tied to Operation in
     // the front end. Since we want to treat them differently
     // than regular operations in a home (we don't want to
@@ -2605,7 +2637,7 @@ namespace
         : EmitterBase (c),
           scope_ (home)
       {}
-      
+
       virtual void
       returns (SemanticGraph::HomeFactory& hf)
       {
@@ -2799,11 +2831,11 @@ namespace
 
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits inherits;
         home_emitter.edge_traverser (inherits);
         inherits.node_traverser (home_emitter);
-        
+
         Traversal::Defines defines;
         home_emitter.edge_traverser (defines);
 
@@ -2848,11 +2880,11 @@ namespace
 
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits home_inherits;
         home_inherits.node_traverser (home_emitter);
         home_emitter.edge_traverser (home_inherits);
-        
+
         Traversal::Supports supports_;
         home_emitter.edge_traverser (supports_);
 
@@ -2908,19 +2940,19 @@ namespace
 
         home_emitter.traverse (t);
       }
-      
+
       os << "// Home factory operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits inherits;
         home_emitter.edge_traverser (inherits);
         inherits.node_traverser (home_emitter);
-        
+
         Traversal::Defines defines;
         home_emitter.edge_traverser (defines);
-        
+
         FactoryOperationEmitter factory_operation_emitter (ctx, t);
         defines.node_traverser (factory_operation_emitter);
 
@@ -2963,14 +2995,14 @@ namespace
 
       {
         Traversal::Home home_emitter;
-        
+
         Traversal::Inherits inherits;
         home_emitter.edge_traverser (inherits);
         inherits.node_traverser (home_emitter);
-        
+
         Traversal::Defines defines;
         home_emitter.edge_traverser (defines);
-        
+
         AttributeEmitter<SemanticGraph::Home> attribute_emitter (ctx, t);
         ReadOnlyAttributeEmitter<SemanticGraph::Home> read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
@@ -3269,19 +3301,6 @@ namespace
       }
 
       os << "::_nil ());"
-         << endl
-         << "svt->_ciao_activate (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (";
-
-      {
-        TypeNameEmitter name_emitter (os);
-        Traversal::Manages manages_;
-        manages_.node_traverser (name_emitter);
-
-        manages (t, manages_);
-      }
-
-      os << "::_nil ());"
          << endl;
 
       {
@@ -3516,7 +3535,7 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   Traversal::HomeExecutor home_executor;
   composition_defines.node_traverser (component_executor);
   composition_defines.node_traverser (home_executor);
-  
+
   module.edge_traverser (defines);
 
   // Layer 5
