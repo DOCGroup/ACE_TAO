@@ -1,3 +1,8 @@
+Tue Sep  4 09:19:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.av: Updated dependencies again to fix a
+	  compilation error.
+
 Tue Sep  4 07:53:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* */Makefile: Updated dependencies. We wantde this done before
