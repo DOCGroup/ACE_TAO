@@ -1,3 +1,11 @@
+Sat Apr  5 11:23:11 2003  John Michael Zorko <j.zorko@att.net>
+
+	* include/makeinclude/platform_macosx.GNU (CXX): Mac OSX currently 
+	  uses 64 bits for long doubles, and Apple's gcc3.1 compiler
+	  outputs a warning if long doubles are used (since they might 
+	  change to 96 or 128 bits in the future).  In the meantime, the
+	  following patch (also attached) turns off the warning.
+	
 Fri Apr  4 10:49:29 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/StringProcessor.pm:
