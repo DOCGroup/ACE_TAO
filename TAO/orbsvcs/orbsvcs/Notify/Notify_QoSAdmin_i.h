@@ -86,7 +86,7 @@ protected:
 
   */
 
-  TimeBase::UtcT timeout_;
+  TimeBase::TimeT timeout_;
   // Expiry time
 
   CORBA::Boolean start_time_supported_;

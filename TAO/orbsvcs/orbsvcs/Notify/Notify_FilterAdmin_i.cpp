@@ -63,10 +63,7 @@ TAO_Notify_FilterAdmin_i::add_filter (
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       0);
   else
-    {
-      this->filter_ids_.next ();
-      return new_id;
-    }
+    return new_id;
 }
 
 void TAO_Notify_FilterAdmin_i::remove_filter (

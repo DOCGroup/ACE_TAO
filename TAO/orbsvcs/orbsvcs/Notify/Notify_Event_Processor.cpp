@@ -3,29 +3,26 @@
 #include "Notify_Event_Processor.h"
 #include "Notify_Worker_Task.h"
 #include "Notify_Source_Filter_Eval_Command.h"
-#include "Notify_Factory.h"
+#include "Notify_Listener_Filter_Eval_Command.h"
 #include "Notify_Event_Manager_Objects_Factory.h"
+#include "Notify_Lookup_Command.h"
+#include "Notify_Event_Dispatch_Command.h"
+#include "Notify_Factory.h"
+#include "Notify_Listeners.h"
+#include "Notify_Event_Manager.h"
 
 ACE_RCSID(Notify, Notify_Event_Processor, "$Id$")
 
-#define NOTIFY_EVENT_PROCESSING_STAGES 4
-
-#define NOTIFY_SOURCE_FILTER_EVAL_STAGE   0
-#define NOTIFY_LOOKUP_STAGE               1
-#define NOTIFY_LISTENER_FILTER_EVAL_STAGE 2
-#define NOTIFY_DISPATCHING_STAGE          3
-
 TAO_Notify_Event_Processor::TAO_Notify_Event_Processor (TAO_Notify_Event_Manager* event_manager)
   :event_manager_ (event_manager),
-   first_task_ (0),
-   listener_filter_eval_task_ (0),
-   dispatching_task_ (0),
+   lookup_task_ (0),
    emo_factory_ (0)
 {
 }
 
 TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
 {
+  delete this->lookup_task_;
 }
 
 void
@@ -34,92 +31,57 @@ TAO_Notify_Event_Processor::init (CORBA::Environment& ACE_TRY_ENV)
   this->emo_factory_ =
     TAO_Notify_Factory::get_event_manager_objects_factory ();
 
-  // = Create the tasks.
-  TAO_Notify_Worker_Task* tasks[NOTIFY_EVENT_PROCESSING_STAGES];
-
-  tasks[NOTIFY_SOURCE_FILTER_EVAL_STAGE] =
-    this->emo_factory_->create_source_eval_task (this->event_manager_,
-                                                 ACE_TRY_ENV);
+  this->lookup_task_ = this->emo_factory_->create_lookup_task (ACE_TRY_ENV);
   ACE_CHECK;
 
-  tasks[NOTIFY_LOOKUP_STAGE] =
-    this->emo_factory_->create_lookup_task (this->event_manager_,
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-  tasks[NOTIFY_LISTENER_FILTER_EVAL_STAGE] =
-    this->emo_factory_->create_listener_eval_task (this->event_manager_,
-                                                        ACE_TRY_ENV);
-  ACE_CHECK;
-
-  tasks[NOTIFY_DISPATCHING_STAGE] =
-    this->emo_factory_->create_dispatching_task (this->event_manager_,
-                                                      ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // = Create the Modules.
-  TAO_Notify_Module* modules[NOTIFY_EVENT_PROCESSING_STAGES];
-
-  ACE_NEW_THROW_EX (modules[NOTIFY_SOURCE_FILTER_EVAL_STAGE],
-                    TAO_Notify_Module ("1",
-                                       tasks[NOTIFY_SOURCE_FILTER_EVAL_STAGE]),
-                    CORBA::NO_MEMORY ());
-
-  ACE_NEW_THROW_EX (modules[NOTIFY_LOOKUP_STAGE],
-                    TAO_Notify_Module ("2",
-                                       tasks[NOTIFY_LOOKUP_STAGE]),
-                    CORBA::NO_MEMORY ());
-
-  ACE_NEW_THROW_EX (modules[NOTIFY_LISTENER_FILTER_EVAL_STAGE],
-                    TAO_Notify_Module ("3",
-                                       tasks[NOTIFY_LISTENER_FILTER_EVAL_STAGE]),
-                    CORBA::NO_MEMORY ());
-
-  ACE_NEW_THROW_EX (modules[NOTIFY_DISPATCHING_STAGE],
-                    TAO_Notify_Module ("4",
-                                       tasks[NOTIFY_DISPATCHING_STAGE]),
-                    CORBA::NO_MEMORY ());
-
-  for (int index = NOTIFY_EVENT_PROCESSING_STAGES -1;
-       index > -1; --index)
-    // push modules backworks
-    {
-      if (this->processing_stream_.push (modules[index]) == -1)
-        ACE_THROW (CORBA::INTERNAL ());
-    }
-
-  // set the first stream
-  this->first_task_ = tasks[NOTIFY_SOURCE_FILTER_EVAL_STAGE];
-  this->listener_filter_eval_task_ = tasks [NOTIFY_LISTENER_FILTER_EVAL_STAGE];
-  this->dispatching_task_ = tasks [NOTIFY_DISPATCHING_STAGE];
-}
-
-TAO_Notify_Worker_Task*
-TAO_Notify_Event_Processor::get_listener_filter_eval_task (void)
-{
-  return this->listener_filter_eval_task_;
-}
-
-TAO_Notify_Worker_Task*
-TAO_Notify_Event_Processor::get_dispatching_task (void)
-{
-  return this->dispatching_task_;
+  this->lookup_task_->open (0);
 }
 
 void
-TAO_Notify_Event_Processor::shutdown (CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Event_Processor::shutdown (CORBA::Environment & ACE_TRY_ENV)
 {
-  this->processing_stream_.close ();
-  // this->first_task_->shutdown (ACE_TRY_ENV);
-  // This will post a "shutdown" message to all linked tasks.
+  this->lookup_task_->shutdown (ACE_TRY_ENV);
 }
 
 void
-TAO_Notify_Event_Processor::process_event (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Event_Processor::evaluate_source_filter (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment& ACE_TRY_ENV)
 {
   // TODO: use cache allocator here.
   TAO_Notify_Source_Filter_Eval_Command* mb =
-    new TAO_Notify_Source_Filter_Eval_Command (event, event_source);
+    new TAO_Notify_Source_Filter_Eval_Command (this, event, event_source);
 
-  this->first_task_->process_event (mb, ACE_TRY_ENV);
+  event_source->filter_eval_task ()->process_event (mb, ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_Event_Processor::lookup_subscriptions (TAO_Notify_Event* event, TAO_Notify_EventSource* /*event_source*/, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Notify_Lookup_Command* lookup =
+    new TAO_Notify_Lookup_Command (this, event, this->event_manager_->event_map ());
+
+  this->lookup_task_->process_event (lookup, ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_Event_Processor::evaluate_listener_filter (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Boolean eval_parent, CORBA::Environment &ACE_TRY_ENV)
+{
+  // @@ Pradeep: you should use ACE_NEW here....
+  // @@ Pradeep: do you really need to allocate this guy from the
+  // heap? Maybe you can just allocate it from the stack and only if
+  // somebody really wants to keep it around you make a copy?  The
+  // idea is to save allocations in the good case.
+
+  TAO_Notify_Listener_Filter_Eval_Command* mb =
+    new TAO_Notify_Listener_Filter_Eval_Command (this, event, event_listener, eval_parent);
+
+  event_listener->filter_eval_task ()->process_event (mb, ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_Event_Processor::dispatch_event (TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Notify_Event_Dispatch_Command* dispatch =
+    new TAO_Notify_Event_Dispatch_Command (this, event, event_listener);
+
+  event_listener->event_dispatch_task ()->process_event (dispatch, ACE_TRY_ENV);
 }

@@ -52,7 +52,14 @@ public:
 
   // = Notify_Event_Listener methods
   virtual void dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
+
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent, CORBA::Environment &ACE_TRY_ENV);
+
+  virtual TAO_Notify_Worker_Task* event_dispatch_task (void);
+  // The Worker task associated with the event listener for event dispatching
+
+  virtual TAO_Notify_Worker_Task* filter_eval_task (void);
+  // The Worker task associated with the event listener for filter evaluation.
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
@@ -152,6 +159,12 @@ public:
   typedef ACE_Unbounded_Queue<TAO_Notify_Event*> TAO_Notify_Event_List;
   TAO_Notify_Event_List event_list_;
   // A list of events populated when we're suspended.
+
+  TAO_Notify_Worker_Task* dispatching_task_;
+  // The dispatching task to send events to a listener group affiliated with this listener.
+
+  TAO_Notify_Worker_Task* filter_eval_task_;
+  // The filter evaluation task for this listener.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -43,9 +43,10 @@ class TAO_Notify_Export TAO_Notify_Update_Dispatch_Command : public TAO_Notify_C
  public:
   // = Initialization and termination code
   TAO_Notify_Update_Dispatch_Command (TAO_Notify_UpdateListener* listener, TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed);
+
   ~TAO_Notify_Update_Dispatch_Command ();
 
-  virtual int execute (TAO_Notify_Worker_Task* parent_task, CORBA::Environment& ACE_TRY_ENV);
+  virtual int execute (CORBA::Environment& ACE_TRY_ENV);
   // Command callback
 
 protected:

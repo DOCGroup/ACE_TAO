@@ -88,10 +88,6 @@ TAO_Notify_Filter_i::add_constraints_i (
 
           for (u_int i = 0; i < index; i++) // those from previous iterations.
             {
-              // Put the id back to the pool.
-              constraint_expr_ids_.
-                put (constraint_info_seq[index].constraint_id);
-
               // Unbind from the Hash Table
               if (constraint_expr_list_.unbind
                   (constraint_info_seq[index].constraint_id,
@@ -139,8 +135,6 @@ TAO_Notify_Filter_i::add_constraints (
 
       // Get an id.
       (*infoseq)[pop_index].constraint_id = constraint_expr_ids_.get ();
-      // <add_constraints_i> will put the ids back to the id pool if things
-      // go wrong.
     }
 
   this->add_constraints_i (*infoseq,

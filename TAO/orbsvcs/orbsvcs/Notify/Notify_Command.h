@@ -30,7 +30,8 @@
 #include "tao/corba.h"
 #include "notify_export.h"
 
-class TAO_Notify_Worker_Task;
+class TAO_Notify_Event_Processor;
+class TAO_Notify_Event;
 
 class TAO_Notify_Export TAO_Notify_Command : public ACE_Message_Block
 {
@@ -38,12 +39,30 @@ class TAO_Notify_Export TAO_Notify_Command : public ACE_Message_Block
   //   TAO_Notify_Command
   //
   // = DESCRIPTION
-  //
+  //   Base class for Command Objects.
+  //   Command objects are executed by the Notify_Worker_Task.
   //
  public:
-  virtual int execute (TAO_Notify_Worker_Task* parent_task, CORBA::Environment&) = 0;
+  TAO_Notify_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event);
+  ~TAO_Notify_Command ();
+
+  virtual int execute (CORBA::Environment& ACE_TRY_ENV) = 0;
   // Command callback
+
+protected:
+  // = Data Members
+  TAO_Notify_Event_Processor* event_processor_;
+  // The command objects should notify the event processor once they have successfully
+  // executed commands.
+
+  TAO_Notify_Event* event_;
+  // The event that we "execute" this command on.
 };
+
+
+#if defined (__ACE_INLINE__)
+#include "Notify_Command.i"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 

@@ -38,6 +38,7 @@ class TAO_Notify_POA_Factory;
 class TAO_Notify_EMO_Factory;
 class TAO_Notify_Collection_Factory;
 class TAO_Notify_Worker_Task;
+class TAO_Notify_Event_Processor;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -81,7 +82,13 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventList
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV);
   // Ask the listener to relinqish any bindings and prepare to be disposed.
 
+  virtual TAO_Notify_Worker_Task* event_dispatch_task (void);
+  // The Worker task associated with the event listener for event dispatching
+
+  virtual TAO_Notify_Worker_Task* filter_eval_task (void);
+  // The Worker task associated with the event listener for filter evaluation.
   //= Admin Methods.
+
   void init (CosNotifyChannelAdmin::AdminID myID,
              CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
              PortableServer::POA_ptr my_POA,
@@ -359,24 +366,24 @@ protected:
  TAO_Notify_EventType_List subscription_list_;
  // The list of event types that all our proxys are interested in receiving.
 
- TAO_Notify_EventListener_List* event_listener_list_;
+  TAO_Notify_EventListener_List* event_listener_list_;
  // The list of event listeners that have registered with us
 
- TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
+  TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
    CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushsupplier_ids_;
- // Id generator for proxy push suppliers.
+  // Id generator for proxy push suppliers.
 
- TAO_Notify_QoSAdmin_i qos_admin_;
- // Handle QoS admin methods.
+  TAO_Notify_QoSAdmin_i qos_admin_;
+  // Handle QoS admin methods.
 
   TAO_Notify_FilterAdmin_i filter_admin_;
   // Handles the Filter Admin methods.
 
-  TAO_Notify_Worker_Task* filter_eval_task_;
-  // The task to forward filter evaluation commands to.
-
   TAO_Notify_Worker_Task* dispatching_task_;
-  // The task to forward event dispatching commands to.
+  // The dispatching task to send events to a listener group affiliated with this admin.
+
+  TAO_Notify_Worker_Task* filter_eval_task_;
+  // The filter evaluation task for this admin.
 };
 
 /****************************************************************************************************/
@@ -390,14 +397,14 @@ class TAO_Notify_Export TAO_Notify_Filter_Command_Worker : public TAO_ESF_Worker
   //   Enqueue each listener for the filter evaluation command.
   //
 public:
-  TAO_Notify_Filter_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Worker_Task* task, CORBA::Boolean eval_parent);
+  TAO_Notify_Filter_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Event_Processor* event_processor, CORBA::Boolean eval_parent);
 
   // = TAO_ESF_Worker method
   void work (TAO_Notify_EventListener* listener, CORBA::Environment &ACE_TRY_ENV);
 
 protected:
   TAO_Notify_Event* event_;
-  TAO_Notify_Worker_Task* task_;
+  TAO_Notify_Event_Processor* event_processor_;
   CORBA::Boolean eval_parent_;
 };
 
@@ -412,7 +419,7 @@ class TAO_Notify_Export TAO_Notify_Dispatch_Command_Worker : public TAO_ESF_Work
   //   Worker to invoke the dispatch command for each member of the collection.
   //
 public:
-  TAO_Notify_Dispatch_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Worker_Task* task);
+  TAO_Notify_Dispatch_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Event_Processor* event_processor);
   ~TAO_Notify_Dispatch_Command_Worker ();
 
   // = TAO_ESF_Worker method
@@ -420,7 +427,7 @@ public:
 
 protected:
   TAO_Notify_Event* event_;
-  TAO_Notify_Worker_Task* task_;
+  TAO_Notify_Event_Processor* event_processor_;
 };
 
 /****************************************************************************************************/

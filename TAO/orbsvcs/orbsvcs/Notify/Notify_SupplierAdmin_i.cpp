@@ -39,11 +39,8 @@ TAO_Notify_SupplierAdmin_i::~TAO_Notify_SupplierAdmin_i ()
 }
 
 void
-TAO_Notify_SupplierAdmin_i::proxy_pushconsumer_destroyed (CosNotifyChannelAdmin::ProxyID proxyID)
+TAO_Notify_SupplierAdmin_i::proxy_pushconsumer_destroyed (CosNotifyChannelAdmin::ProxyID /*proxyID*/)
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-
-  this->proxy_pushconsumer_ids_.put (proxyID);
 }
 
 void
@@ -240,38 +237,37 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (CosNotifyChannelA
     ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
 
     proxy_id = this->proxy_pushconsumer_ids_.get ();
-
-    switch (ctype)
-      {
-      case CosNotifyChannelAdmin::ANY_EVENT:
-        {
-          obj = this->obtain_proxy_pushconsumer_i (proxy_id, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
-        }
-        break;
-      case CosNotifyChannelAdmin::STRUCTURED_EVENT:
-        {
-          obj = this->obtain_struct_proxy_pushconsumer_i (proxy_id,
-                                                          ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
-        }
-        break;
-
-      case CosNotifyChannelAdmin::SEQUENCE_EVENT:
-        {
-          obj = this->obtain_sequence_proxy_pushconsumer_i (proxy_id,
-                                                            ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
-        }
-        break;
-
-      default:
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                          CosNotifyChannelAdmin::ProxyConsumer::_nil ());
-      }
-
-    this->proxy_pushconsumer_ids_.next ();
   }
+
+  switch (ctype)
+    {
+    case CosNotifyChannelAdmin::ANY_EVENT:
+      {
+        obj = this->obtain_proxy_pushconsumer_i (proxy_id, ACE_TRY_ENV);
+        ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+      }
+      break;
+
+    case CosNotifyChannelAdmin::STRUCTURED_EVENT:
+      {
+        obj = this->obtain_struct_proxy_pushconsumer_i (proxy_id,
+                                                        ACE_TRY_ENV);
+        ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+      }
+      break;
+
+    case CosNotifyChannelAdmin::SEQUENCE_EVENT:
+      {
+        obj = this->obtain_sequence_proxy_pushconsumer_i (proxy_id,
+                                                          ACE_TRY_ENV);
+        ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+      }
+      break;
+
+    default:
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+    }
 
   return CosNotifyChannelAdmin::ProxyConsumer::_narrow (obj.in (),
                                                         ACE_TRY_ENV);
