@@ -58,7 +58,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   TAO_IIOP_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_IIOP_Profile (this->host_,
+                  TAO_IIOP_Profile (this->host_.c_str (),
                                     this->port_,
                                     object_key,
                                     addr),
