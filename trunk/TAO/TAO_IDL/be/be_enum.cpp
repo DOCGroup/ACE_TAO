@@ -253,8 +253,6 @@ be_enum::gen_encapsulation (void)
   cs = cg->outstream ();
   cs->indent (); // start from whatever indentation level we were at
 
-  // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO
   *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
@@ -300,11 +298,6 @@ be_enum::tc_encap_len (void)
 {
   if (this->encap_len_ == -1) // not computed yet
     {
-      long slen;
-
-      // Macro to avoid "warning: unused parameter" type warning.
-      ACE_UNUSED_ARG (slen);
-
       this->encap_len_ = 4;  // holds the byte order flag
 
       this->encap_len_ += this->repoID_encap_len (); // repoID storage

@@ -23,7 +23,20 @@ be_state_argument::be_state_argument (void)
 {
 }
 
-// generate code for return type of argument
+// generate code for the mapping of the argument.
+// The different cases below have the following meaning:
+// TAO_ARGUMENT_CH
+// TAO_ARGUMENT_CS
+// TAO_ARGUMENT_SH -- all three generate the arguments in the signature of the
+//                    method . The CH case uses the ACE_NESTED_CLASS macro to
+//                    keep the MSVC++ compiler happy
+// The rest of the enumerated constants are self-explanatory
+//
+// There are 3 levels of nested switch statements
+// Level (1): The "type" of each argument, e.g., predefined, structure, ...
+// Level (2): The direction - in, inout, out
+// Level (3): The current state we are in
+
 int
 be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
@@ -32,7 +45,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_argument *arg;  // argument node
   be_interface *bif; // interface inside which the operation that uses this
-  // argument was defined
+                     // argument was defined
 
   switch (cg->state ())
     {
@@ -40,6 +53,9 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       os = cg->client_header ();
       break;
     case TAO_CodeGen::TAO_ARGUMENT_CS:
+    case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
+    case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+    case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
       os = cg->client_stubs ();
       break;
     case TAO_CodeGen::TAO_ARGUMENT_SH:
@@ -47,21 +63,35 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       break;
     case TAO_CodeGen::TAO_ARGUMENT_SS:
     case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+    case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
     case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+    case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
       os = cg->server_skeletons ();
       break;
     }
 
+  // retrieve the argument node
   arg = be_argument::narrow_from_decl (d);
   if (!arg)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_argument.cpp - "
+                         "Bad argument\n"),
+                        -1);
+    }
 
   // get the scope of the arg which is the operation. Its scope is the
-  // interface node
+  // interface node. We need this interface node for generating the
+  // ACE_NESTED_CLASS macro
   bif = be_interface::narrow_from_scope (ScopeAsDecl (arg->defined_in
                                                       ())->defined_in ());
   if (!bif)
-    return -1;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_argument.cpp - "
+                         "Bad interface\n"),
+                        -1);
+    }
 
   if (!type) // not a recursive call
     type = bt;
@@ -71,7 +101,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
 
   // find the direction of the argument. Depending on the direction and the
   // type, generate the mapping
-  switch (type->node_type ())
+  switch (type->node_type ())  // LEVEL (1) switch on node type of the "type"
     {
     case AST_Decl::NT_interface: // type is an obj reference
     case AST_Decl::NT_interface_fwd: // type is an obj reference
@@ -82,24 +112,55 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             // what state are we in
             switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
+                {
+                  // assign to a CORBA::Object_ptr
+                  *os << "CORBA::Object_ptr _tao_base_" << arg->local_name ()
+                      << " = " << arg->local_name () << "; // cast it" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  // pass the cast value
+                  *os << ", &_tao_base_" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing for in parameters
+                }
+                break;
               case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                 {
-                  *os << bt->name () << "_ptr ";
                   // declare a variable
+                  *os << bt->name () << "_ptr ";
                   *os << arg->local_name () << ";" << nl;
+                  // we also declare a corresponding CORBA::Object_ptr to be
+                  // passed to the decoder
+                  *os << "CORBA::Object_ptr _tao_base_" << arg->local_name ()
+                      << ";" << nl;
                   // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
                   *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", &" << arg->local_name () <<
+                    bt->tc_name () << ", &_tao_base_" << arg->local_name () <<
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif, "_ptr") << " ";
+                  // convert from the CORBA::Object_ptr to the interface type
+                  // using a _narrow
+                  *os << arg->local_name () << " = " << bt->name () <<
+                    "::_narrow (_tao_base_" << arg->local_name () << ", " <<
+                    "_tao_environment);" << nl;
+                  *os << "if (_tao_environment.exception ()) return;" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing for an in parameter
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -107,46 +168,137 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_ptr") << " " <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << "_ptr " << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << "_ptr ";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // switch state
             break;
-          case AST_Argument::dir_INOUT:
+          case AST_Argument::dir_INOUT: // inout
             switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
+                {
+                  // assign to a CORBA::Object_ptr
+                  *os << "CORBA::Object_ptr _tao_base_" << arg->local_name ()
+                      << " = " << arg->local_name () << ";" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  *os << ", &_tao_base_" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // reassign to the inout parameter doing a _narrow
+                  *os << arg->local_name () << " = " << bt->name () <<
+                    "::_narrow (_tao_base_" << arg->local_name () << ", env);"
+                      << nl;
+                  *os << "CORBA::release (_tao_base_" << arg->local_name () <<
+                    ");" << nl;
+                }
+                break;
               case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                 {
-                  *os << bt->name () << "_ptr ";
                   // declare a variable
+                  *os << bt->name () << "_ptr ";
                   *os << arg->local_name () << ";" << nl;
+                  // we also declare a corresponding CORBA::Object_ptr to be
+                  // passed to the decoder
+                  *os << "CORBA::Object_ptr *_tao_base_" << arg->local_name ()
+                      << " = new CORBA::Object_ptr;" << nl;
                   // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
                   *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", &" << arg->local_name () <<
+                    bt->tc_name () << ", _tao_base_" << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // convert from the CORBA::Object_ptr to the interface type
+                  // using a _narrow
+                  *os << arg->local_name () << " = " << bt->name () <<
+                    "::_narrow (*_tao_base_" << arg->local_name () << ", " <<
+                    "_tao_environment);" << nl;
+                  *os << "if (_tao_environment.exception ()) return;" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // assign modified interface obj ref to object_ptr
+                  *os << "*_tao_base_" << arg->local_name () << " = " <<
+                    arg->local_name () << ";" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
                 {
                   // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif, "_ptr") << " &";
+                  *os << bt->nested_type_name (bif, "_ptr") << " &" <<
+                    arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << "_ptr &" << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << "_ptr &";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
             break;
           case AST_Argument::dir_OUT:
             switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
+                {
+                  // assign to a CORBA::Object_ptr
+                  *os << "CORBA::Object_ptr _tao_base_" << arg->local_name ()
+                      << ";" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  *os << ", &_tao_base_" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // reassign to the inout parameter doing a _narrow
+                  *os << arg->local_name () << " = " << bt->name () <<
+                    "::_narrow (_tao_base_" << arg->local_name () << ", env);"
+                      << nl;
+                  *os << "// free the Object_ptr" << nl;
+                  *os << "CORBA::release (_tao_base_" << arg->local_name () <<
+                    ");" << nl;
+                }
+                break;
               case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                 {
                   // declare a variable
@@ -154,19 +306,29 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ";" << nl;
                   *os << bt->name () << "_out " << arg->local_name () <<
                     "_out (" << arg->local_name () << ");" << nl;
+                  // we also declare a corresponding CORBA::Object_ptr to be
+                  // passed to the decoder
+                  *os << "CORBA::Object_ptr *_tao_base_" << arg->local_name ()
+                      << " = new CORBA::Object_ptr;" << nl;
                   // now define a NamedValue_ptr
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
                   *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                    bt->tc_name () << ", &" << arg->local_name () <<
+                    bt->tc_name () << ", _tao_base_" << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif, "_out") << " ";
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // out parameter is cast to Object_ptr
+                  *os << "*_tao_base_" << arg->local_name () << " = " <<
+                    arg->local_name () << "_out;" << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -174,10 +336,23 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << "_out, ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " " <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << "_out " << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << "_out ";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
             break;
@@ -210,9 +385,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                         "); // ORB does not own" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << "const " << bt->nested_type_name (bif) << " &";
+                      // XXXASG - TODO
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      // XXXASG - TODO
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // XXXASG - TODO
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -220,10 +405,34 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // XXXASG - TODO
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // XXXASG - TODO
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      // keep MSVC++ happy
+                      *os << "const " << bt->nested_type_name (bif) << " &" <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << "const " << bt->name () << " &" << arg->local_name
+                        () << ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << "const " << bt->name () << " &";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end switch state
                 break;
@@ -244,9 +453,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                         ", 1); // ORB owns" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << "const " << bt->nested_type_name (bif) << " &";
+                      // XXXASG - TODO very similar to ObjRef
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      // XXXASG - TODO very similar to ObjRef
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // XXXASG - TODO very similar to ObjRef
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -254,10 +473,32 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << "const " << bt->nested_type_name (bif) << " &" <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << " &" << arg->local_name () << ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name () << " &";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end switch state
                 break;
@@ -278,9 +519,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                         ", 1); // ORB owns" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << bt->nested_type_name (bif, "_out") << " ";
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // nothing
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -288,10 +539,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << bt->nested_type_name (bif, "_out") << " " <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << "_out " << arg->local_name () <<
+                        ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name () << "_out ";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end switch state
                 break;
@@ -318,9 +592,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                         "); // ORB does not own" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << bt->nested_type_name (bif, "_ptr") << " ";
+                      // just like objrefs
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // nothing
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -328,10 +612,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << bt->nested_type_name (bif, "_ptr") << " " <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << "_ptr " << arg->local_name () <<
+                        ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name () << "_ptr ";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end of switch state
                 break;
@@ -352,9 +659,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                         ", 1); // ORB owns" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << bt->nested_type_name (bif, "_ptr") << " &";
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // nothing
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -362,10 +679,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << bt->nested_type_name (bif, "_ptr") << " &" <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << "_ptr &" << arg->local_name () <<
+                        ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name () << "_ptr &";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                          "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end switch state
                 break;
@@ -389,9 +729,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                         ", 1); // ORB owns" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << bt->nested_type_name (bif, "_out") << " ";
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // nothing
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -399,16 +749,39 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << "_out, ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << bt->nested_type_name (bif, "_out") << " " <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << "_out " << arg->local_name () <<
+                        ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name () << "_out ";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end switch state
                 break;
               } // end switch direction
           } // end else if
-        else
+        else // simple predefined types
           {
             switch (arg->direction ())
               {
@@ -429,9 +802,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                         "); // ORB does not own" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << bt->nested_type_name (bif);
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      *os << ", &" << arg->local_name ();
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // nothing
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -439,10 +822,32 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << bt->nested_type_name (bif) << " " <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << " " << arg->local_name () << ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name ();
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end switch state
                 break;
@@ -452,31 +857,63 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                     {
                     // declare a variable
-                      *os << bt->name () << " " << arg->local_name () << ";" <<
-                        nl;
+                      *os << bt->name () << " *" << arg->local_name () <<
+                        " = new " << bt->name () << ";" << nl;
                     // now define a NamedValue_ptr
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
                       *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                        bt->tc_name () << ", &" << arg->local_name () <<
-                        "); // ORB does not own" << nl;
+                        bt->tc_name () << ", " << arg->local_name () <<
+                        "); // ORB owns " << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << bt->nested_type_name (bif) << " &";
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      *os << ", &" << arg->local_name ();
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // nothing
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
                     {
-                      *os << arg->local_name () << ", ";
+                      *os << "*" << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << bt->nested_type_name (bif) << " &" <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << " &" << arg->local_name () << ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name () << " &";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end switch state
                 break;
@@ -486,31 +923,64 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                     {
                     // declare a variable
-                      *os << bt->name () << " " << arg->local_name () << ";" <<
-                        nl;
+                      *os << bt->name () << " *" << arg->local_name () <<
+                        " = new " << bt->name () << ";" << nl;
                     // now define a NamedValue_ptr
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
                       *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                        bt->tc_name () << ", &" << arg->local_name () <<
+                        bt->tc_name () << ", " << arg->local_name () <<
                         ", 1); // ORB owns" << nl;
                     }
                     break;
-                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                     {
-                      *os << bt->nested_type_name (bif, "_out");
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                    {
+                      *os << ", &" << arg->local_name ();
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                    {
+                      // nothing
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
                     {
-                      *os << arg->local_name () << ", ";
+                      *os << "*" << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                    {
+                      // nothing
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                    {
+                      *os << bt->nested_type_name (bif, "_out") << " " <<
+                        arg->local_name () << ", ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CS:
                   case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->name () << "_out " << arg->local_name () <<
+                        ", ";
+                    }
+                    break;
                   default:
                     {
-                      *os << bt->name () << "_out";
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                          "(%N:%l) be_state_argument - unknown state\n"), -1);
                     }
                   } // end of switch
                 break;
@@ -539,14 +1009,47 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  *os << ", &" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
                 {
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
+                {
+                  *os << "const char *" << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << "const char *";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
             break;
@@ -567,14 +1070,47 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  *os << ", &" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
                 {
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
+                {
+                  *os << "char *&" << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << "char *&";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
             break;
@@ -595,9 +1131,23 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     ", 1); // ORB owns" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  *os << bt->nested_type_name (bif, "_out");
+                  // declare a string variable
+                  *os << "char *_tao_base_" << arg->local_name () << ";" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  *os << ", &_tao_base_" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // assign the _tao_base_<string> variable to the out
+                  // parameter
+                  *os << arg->local_name () << " = _tao_base_" <<
+                    arg->local_name () << ";" << nl;
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -605,10 +1155,32 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  *os << bt->nested_type_name (bif, "_out") << " " <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << "_out " << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << "_out";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
             break;
@@ -636,10 +1208,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << "const " << bt->nested_type_name (bif);
+                  // XXXASG TODO
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  // XXXASG TODO
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // XXXASG TODO
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -647,10 +1228,34 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << "const " << bt->nested_type_name (bif) << " " <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << "const " << bt->name () << " " << arg->local_name ()
+                      << ", ";
+                }
+                break;
               default:
                 {
-                  *os << "const " << bt->name ();
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           } // end case
@@ -677,17 +1282,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  if (bt->size_type () == be_decl::VARIABLE)
-                    {
-                      *os << bt->nested_type_name (bif, "_slice") << " *";
-                    }
-                  else
-                    {
-                      *os << bt->nested_type_name (bif);
-                    }
+                  // TODO XXXASG
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  // TODO XXXASG
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // TODO XXXASG
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -695,14 +1302,46 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << bt->nested_type_name (bif, "_slice") << " *" <<
+                        arg->local_name () << ", ";
+                    }
+                  else
+                    {
+                      *os << bt->nested_type_name (bif) << " " <<
+                        arg->local_name () << ", ";
+                    }
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
-              default:
                 {
                   *os << bt->name ();
                   if (bt->size_type () == be_decl::VARIABLE)
                     {
                       *os << "_slice *";
                     }
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           } // end case
@@ -725,10 +1364,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     ", 1); // ORB owns" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif, "_out") << " ";
+                  // TODO XXXASG
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  // TODO XXXASG
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // TODO XXXASG
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -736,10 +1384,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " " <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << "_out " << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << "_out";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           }
@@ -769,10 +1440,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << "const " << bt->nested_type_name (bif) << " &";
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  *os << ", &" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -780,10 +1460,34 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << "const " << bt->nested_type_name (bif) << " &" <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << "const " << bt->name () << " &" << arg->local_name ()
+                      << ", ";
+                }
+                break;
               default:
                 {
-                  *os << "const " << bt->name () << " &";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           }
@@ -806,10 +1510,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif) << " &";
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  *os << ", &" << arg->local_name ();
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -817,10 +1530,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif) << " &" << arg->local_name
+                    () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << " &" << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << " &";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           } // end case
@@ -861,10 +1597,38 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     } // end else
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif, "_out") << " ";
+                  // declare a variable. We need this only if we are variable
+                  // sized. If we are fixed sized, we already know our size and
+                  // hence we have already been allocated
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << bt->name () << " *_tao_base_" << arg->local_name
+                        () << " = new " << bt->name () << ";" << nl;
+                    }
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << ", _tao_base_" << arg->local_name ();
+                    }
+                  else
+                    {
+                      // simply pass our address
+                      *os << ", &" << arg->local_name ();
+                    }
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << arg->local_name () << " = _tao_base_" <<
+                        arg->local_name () << ";" << nl;
+                    }
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -875,11 +1639,34 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " " <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << "_out " << arg->local_name () << ", ";
+                  break;
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << "_out";
-                  break;
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           } // end case
@@ -907,10 +1694,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif);
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -918,10 +1714,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif) << " " << arg->local_name
+                    () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << " " << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name ();
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end of switch state
           } // end case
@@ -944,10 +1763,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif) << " &";
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -955,10 +1783,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif) << " &" << arg->local_name
+                    () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << " &" << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << " &";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           } // end case
@@ -981,10 +1832,19 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     "); // ORB does not own" << nl;
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
                 {
-                  // to keep the MSVC++ compiler happy
-                  *os << bt->nested_type_name (bif, "_out") << " ";
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
+                {
+                  // nothing
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -992,10 +1852,33 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
+                {
+                  // nothing
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " " <<
+                    arg->local_name () << ", ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CS:
               case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->name () << "_out " << arg->local_name () << ", ";
+                }
+                break;
               default:
                 {
-                  *os << bt->name () << "_out";
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                   "(%N:%l) be_state_argument - unknown state\n"), -1);
                 }
               } // end switch state
           } // end case

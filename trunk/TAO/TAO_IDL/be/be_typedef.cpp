@@ -227,6 +227,7 @@ be_typedef::gen_typecode (void)
     {
       return -1;
     }
+
   cs->decr_indent (0);
   return 0;
 }

@@ -91,7 +91,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
             {
-              *os << "return " << bt->name () << "::_nil ();" << nl;
+              *os << "return " << bt->name () << "::_nil ();\n";
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
@@ -108,7 +108,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
 
 	      // @@ Andy: this is the fix for the objref value...
               *os << "CORBA::Object_ptr *retval ="
-		" new CORBA::Object_ptr;" << nl;
+                " new CORBA::Object_ptr;" << nl;
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
@@ -187,20 +187,20 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
               if (bpd->pt () == AST_PredefinedType::PT_any)
                 {
                   // if it is an any, return a pointer to it
-                  *os << "return 0;" << nl;
+                  *os << "return 0;\n";
                 }
               else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
                 {
                   // pseudo object, return a pointer
-                  *os << "return 0;" << nl;
+                  *os << "return 0;\n";
                 }
               else if (bpd->pt () == AST_PredefinedType::PT_void)
                 {
-                  *os << "return;" << nl;
+                  *os << "return;\n";
                 }
               else
                 {
-                  *os << "return retval;" << nl;
+                  *os << "return retval;\n";
                 }
             }
           break;
@@ -303,7 +303,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
             {
-              *os << "return 0;" << nl;
+              *os << "return 0;\n";
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
@@ -365,7 +365,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
             {
-              *os << "return 0;" << nl;
+              *os << "return 0;\n";
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
@@ -414,7 +414,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
             {
-              *os << "return 0;" << nl;
+              *os << "return 0;\n";
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
@@ -461,7 +461,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
             {
-              *os << "return retval;" << nl;
+              *os << "return retval;\n";
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
@@ -523,11 +523,11 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               if (bt->size_type () == be_decl::VARIABLE)
                 {
-                  *os << "return 0;" << nl;
+                  *os << "return 0;\n";
                 }
               else
                 {
-                  *os << "return retval;" << nl;
+                  *os << "return retval;\n";
                 }
             }
           break;
