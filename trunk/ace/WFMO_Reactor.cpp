@@ -1840,7 +1840,15 @@ ACE_WFMO_Reactor::simple_dispatch_handler (int slot,
   // This dispatch is used for non-I/O entires
 
   // Assign the ``signaled'' HANDLE so that callers can get it.
+#if defined (ACE_HAS_PACE)
+  // siginfo_t is typedef'd to a pace_siginfo_t where there
+  // exists no constructor.
+  siginfo_t sig;
+  sig.si_handle_ = event_handle;
+#else
+  // siginfo_t is an ACE - specific fabrication. Constructor exists.
   siginfo_t sig (event_handle);
+#endif // ACE_HAS_PACE
 
   ACE_Event_Handler *eh =
     this->handler_rep_.current_info ()[slot].event_handler_;
