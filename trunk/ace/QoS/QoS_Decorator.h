@@ -23,7 +23,8 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/Event_Handler.h"
-#include "ace/SOCK_Dgram_Mcast_QoS.h"
+#include "SOCK_Dgram_Mcast_QoS.h"
+#include "ACE_QoS_Export.h"
 
 ACE_RCSID(QOS_Decorator, QOS_Decorator, "$Id$")
 
@@ -39,7 +40,7 @@ ACE_RCSID(QOS_Decorator, QOS_Decorator, "$Id$")
  * this class to access the basic event handler functionality and
  * decorate that by their own implementation.
  */
-class ACE_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
+class ACE_QoS_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
 {
 
 public:
@@ -80,7 +81,7 @@ private:
  * receiving QoS events on a different socket so the application
  * doesnt have to be designed differently for RAPI and GQoS.
  */
-class ACE_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
+class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
 {
 
   /// Destructor.
@@ -123,7 +124,7 @@ private:
  * events uniformly for different QoS mechanisms like RAPI and
  * GQoS.
  */
-class ACE_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
+class ACE_QoS_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
 {
 
 public:

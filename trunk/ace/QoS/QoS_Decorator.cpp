@@ -1,7 +1,7 @@
 // QoS_Decorator.cpp
 // $Id$
 
-#include "ace/QoS_Decorator.h"
+#include "QoS_Decorator.h"
 
 ACE_RCSID(ace, QoS_Decorator, "$Id $")
 
@@ -12,12 +12,12 @@ ACE_QoS_Decorator_Base::ACE_QoS_Decorator_Base (void)
 {}
 
 // Constructor.
-ACE_QoS_Decorator_Base::ACE_QoS_Decorator_Base (ACE_Event_Handler 
+ACE_QoS_Decorator_Base::ACE_QoS_Decorator_Base (ACE_Event_Handler
                                                 *event_handler)
   : event_handler_ (event_handler)
 {
 }
-  
+
 // Destructor.
 ACE_QoS_Decorator_Base::~ACE_QoS_Decorator_Base (void)
 {
@@ -52,7 +52,7 @@ ACE_QoS_Decorator::ACE_QoS_Decorator (void)
 ACE_QoS_Decorator::ACE_QoS_Decorator (ACE_Event_Handler *event_handler,
                                       ACE_QoS_Session *qos_session,
                                       ACE_Reactor *reactor)
-  : qos_session_ (qos_session), 
+  : qos_session_ (qos_session),
     reactor_ (reactor)
 {
   ACE_NEW (this->decorator_base_,
@@ -121,12 +121,12 @@ ACE_QoS_Event_Handler::ACE_QoS_Event_Handler (void)
 }
 
 // Constructor.
-ACE_QoS_Event_Handler::ACE_QoS_Event_Handler (ACE_QoS_Decorator_Base 
+ACE_QoS_Event_Handler::ACE_QoS_Event_Handler (ACE_QoS_Decorator_Base
                                               *decorator_base)
   : decorator_base_ (decorator_base)
 {
 }
-  
+
 // Destructor.
 ACE_QoS_Event_Handler::~ACE_QoS_Event_Handler (void)
 {
@@ -159,9 +159,3 @@ ACE_QoS_Event_Handler::handle_input (ACE_HANDLE fd)
 {
   return this->decorator_base_->handle_qos (fd);
 }
-
-
-
-
-
-

@@ -16,7 +16,7 @@ ACE_SOCK_Dgram_Mcast_QoS::send (const iovec buffers[],
                                 ACE_OVERLAPPED_COMPLETION_FUNC func) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::send");
-  
+
   return ACE_SOCK_Dgram::send (buffers,
                                buffer_count,
                                number_of_bytes_sent,
@@ -28,15 +28,15 @@ ACE_SOCK_Dgram_Mcast_QoS::send (const iovec buffers[],
 }
 
 ASYS_INLINE ssize_t
-ACE_SOCK_Dgram_Mcast_QoS::send (const void *buf, 
-                                size_t n, 
-                                const ACE_Addr &addr, 
+ACE_SOCK_Dgram_Mcast_QoS::send (const void *buf,
+                                size_t n,
+                                const ACE_Addr &addr,
                                 int flags,
                                 ACE_OVERLAPPED *overlapped,
                                 ACE_OVERLAPPED_COMPLETION_FUNC func) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::send");
-  
+
   return ACE_SOCK_Dgram::send (buf,
                                n,
                                addr,
