@@ -34,7 +34,7 @@ LDFLAGS += -L$(STL_ROOT)/lib
 
 # end of the trading service stuff
 
-BIN = client server Factory_Finder Generic_Factory Life_Cycle_Service
+BIN = client server Factory_Finder Generic_Factory #Life_Cycle_Service
 
 BUILD = $(BIN)
 
