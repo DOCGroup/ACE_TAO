@@ -1,3 +1,44 @@
+The Makefile, Project and Workspace Creator.
+Designed by Justin Michel (michel_j@ociweb.com) and Chad Elliott.
+Implemented by Chad Elliott (elliott_c@ociweb.com).
+
+
+A single tool (mpc.pl) can be used to generate tool specific input (i.e.
+Makefile, dsp, vcproj, etc).  The generator takes platform and building
+tool generic files (mpc files) as input which describe basic information
+needed to generate a "project" file for various build tools.  These tools
+include GNU Make, NMake, Visual C++ 6, Visual C++ 7, etc.
+
+One of the many unique and useful features of the Makefile, Project and
+Workspace Creator is that the project definition files can employ the idea
+of inheritance.  This feature allows a user to set up a basic base project
+(mpb file) that can contain information that is applicable to all
+sub-projects.  Things such as include paths, library paths and inter-project
+dependencies could be described in this base project and any project that
+inherits from it would contain this information as well.
+
+Another set of files, known as template input files (mpd files), provides
+the generator with the necessary information to fill platform and build
+tool specific information for dynamic and static library and binary
+executable projects.
+
+Together, the generic input files and the template input files are applied
+toward a platform and build specific template (mpt file) to create the final
+product (a build tool specific input file).  These templates contain
+"variables" that are filled in by the project creator with information
+gathered through the mpc and mpd files and possibly by default values set
+within the template itself.
+
+Workspaces are defined by providing a list of mpc files in a single (mwc)
+file.  For each mpc file specified, the workspace creator (mwc.pl) calls
+upon the project creator to generate the project.  After all of the projects
+are successfully generated, the tool specific workspace is generated
+containing the projects and any defined inter-project dependency information
+(if supported by the build tool).  If no workspace files are provided to the
+workspace creator, then the current directory is traversed and any mpc files
+located will be part of the workspace that is generated.
+
+
 Workspace Declarations
 ----------------------
 

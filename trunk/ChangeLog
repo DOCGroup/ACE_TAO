@@ -1,3 +1,10 @@
+Thu Aug  1 07:03:05 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+
+          Added a bit of background on the tool before plunging into the
+          details.
+
 Thu Aug 01 07:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_Acceptor.h:
