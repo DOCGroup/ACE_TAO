@@ -23,6 +23,14 @@
 
 #include "ace/Addr.h"
 
+#if defined (ACE_HAS_IPV6)
+#define ACE_INADDR_ANY in6addr_any
+#define ACE_AF_INET AF_INET6
+#else
+#define ACE_INADDR_ANY INADDR_ANY
+#define ACE_AF_INET AF_INET
+#endif
+
 /**
  * @class ACE_INET_Addr
  *
@@ -32,6 +40,14 @@
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
+#if defined (ACE_HAS_IPV6)
+  typedef sockaddr_in6 ace_sockaddr_in_t;
+  typedef in6_addr ace_in_addr_t;
+#else
+  typedef sockaddr_in ace_sockaddr_in_t;
+  typedef ACE_UINT32 ace_in_addr_t;
+#endif
+
   // = Initialization methods.
   /// Default constructor.
   ACE_INET_Addr (void);
@@ -39,7 +55,7 @@ public:
   /// Copy constructor.
   ACE_INET_Addr (const ACE_INET_Addr &);
 
-  /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
+  /// Creates an <ACE_INET_Addr> from a ace_sockaddr_in structure.
   ACE_INET_Addr (const sockaddr_in *, int len);
 
   /// Creates an <ACE_INET_Addr> from a <port_number> and the remote
@@ -52,7 +68,7 @@ public:
    * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
    * "128.252.166.57:1234").  If there is no ':' in the <address> it
    * is assumed to be a port number, with the IP address being
-   * INADDR_ANY.
+   * ACE_INADDR_ANY.
    */
   ACE_EXPLICIT ACE_INET_Addr (const char address[]);
 
@@ -62,7 +78,7 @@ public:
    * are in host byte order.
    */
   ACE_INET_Addr (u_short port_number,
-		 ACE_UINT32 ip_addr = INADDR_ANY);
+		 ace_in_addr_t ip_addr = ACE_INADDR_ANY);
 
   /// Uses <getservbyname> to create an <ACE_INET_Addr> from a
   /// <port_name>, the remote <host_name>, and the <protocol>.
@@ -70,14 +86,16 @@ public:
 		 const char host_name[],
                  const char protocol[] = "tcp");
 
+#if !defined (ACE_HAS_IPV6)
   /**
    * Uses <getservbyname> to create an <ACE_INET_Addr> from a
    * <port_name>, an Internet <ip_addr>, and the <protocol>.  This
    * method assumes that <ip_addr> is in host byte order.
    */
   ACE_INET_Addr (const char port_name[],
-		 ACE_UINT32 ip_addr,
+		 ace_in_addr_t ip_addr,
                  const char protocol[] = "tcp");
+#endif
 
 #if defined (ACE_HAS_WCHAR)
   ACE_INET_Addr (u_short port_number,
@@ -89,9 +107,11 @@ public:
 		 const wchar_t host_name[],
                  const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
+#if !defined (ACE_HAS_IPV6)
   ACE_INET_Addr (const wchar_t port_name[],
-		 ACE_UINT32 ip_addr,
+		 ace_in_addr_t ip_addr,
                  const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+#endif /* ! ACE_HAS_IPV6 */
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
@@ -114,13 +134,13 @@ public:
 	   const char host_name[],
            int encode = 1);
 
-  /**
-   * Initializes an <ACE_INET_Addr> from a <port_number> and an
-   * Internet <ip_addr>.  If <encode> is enabled then <port_number>
-   * and <ip_addr> are converted into network byte order, otherwise
-   * they are assumed to be in network byte order already and are
-   * passed straight through.
-   */
+  // Initializes an <ACE_INET_Addr> from a <port_number> and the
+  // remote <host_name>.  If <encode> is enabled then <port_number> is
+  // converted into network byte order, otherwise it is assumed to be
+  // in network byte order already and are passed straight through.
+  // Note: if ACE_HAS_IPV6 is defined, this will create a IPv4 address
+  // inside the IPv6 structure.  This interface is likely to be depreciated
+  // very soon.
   int set (u_short port_number,
            ACE_UINT32 ip_addr = INADDR_ANY,
            int encode = 1);
@@ -132,26 +152,13 @@ public:
            const char protocol[] = "tcp");
 
   /**
-   * Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
-   * <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
-   * <ip_addr> is already in network byte order.
-   */
-  int set (const char port_name[],
-	   ACE_UINT32 ip_addr,
-           const char protocol[] = "tcp");
-
-  /**
    * Initializes an <ACE_INET_Addr> from the <addr>, which can be
    * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
    * "128.252.166.57:1234").  If there is no ':' in the <address> it
    * is assumed to be a port number, with the IP address being
-   * INADDR_ANY.
+   * ACE_INADDR_ANY.
    */
   int set (const char addr[]);
-
-  /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
-  int set (const sockaddr_in *,
-	   int len);
 
 #if defined (ACE_HAS_WCHAR)
   int set (u_short port_number,
@@ -162,11 +169,13 @@ public:
 	   const wchar_t host_name[],
            const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
+#if !defined (ACE_HAS_IPV6)
   int set (const wchar_t port_name[],
-	   ACE_UINT32 ip_addr,
+	   ace_in_addr_t ip_addr,
            const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
   int set (const wchar_t addr[]);
+#endif /* ! ACE_HAS_IPV6 */
 #endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
@@ -194,7 +203,7 @@ public:
    * "ip-number:port-number" (e.g., "128.252.166.57:1234"), or
    * "ip-number:port-name" (e.g., "128.252.166.57:telnet").  If there
    * is no ':' in the <address> it is assumed to be a port number,
-   * with the IP address being INADDR_ANY.
+   * with the IP address being ACE_INADDR_ANY.
    */
   virtual int string_to_addr (const char address[]);
 
@@ -240,8 +249,13 @@ public:
   /// Return the "dotted decimal" Internet address.
   const char *get_host_addr (void) const;
 
+  /// Return the "dotted decimal" Internet address into the string provided.
+  const char *get_host_addr (char *dst, int size) const;
+
   /// Return the 4-byte IP address, converting it into host byte
   /// order.
+  // XXXXXXXXXXX This needs to have something done with it for IPv6 addressing
+  // Multicast depends on this.  We need to figure out what to do with this.
   ACE_UINT32 get_ip_address (void) const;
 
   /**
@@ -268,9 +282,39 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+ protected:
+
+  /**
+   * Initializes an <ACE_INET_Addr> from a <port_number> and an
+   * Internet <ip_addr>.  If <encode> is enabled then <port_number>
+   * and <ip_addr> are converted into network byte order, otherwise
+   * they are assumed to be in network byte order already and are
+   * passed straight through.
+   */
+#if defined (ACE_HAS_IPV6)
+  // We need this method for IPv6.  It is defined up above in the public
+  // section for IPv4.
+  int set (u_short port_number,
+           ace_in_addr_t ip_addr,
+           int encode = 1);
+#endif
+
+  /**
+   * Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
+   * <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
+   * <ip_addr> is already in network byte order.
+   */
+  int set (const char port_name[],
+	   ace_in_addr_t ip_addr,
+           const char protocol[] = "tcp");
+
+  /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
+  int set (const ace_sockaddr_in_t *,
+	   int len);
+
 private:
   /// Underlying representation.
-  sockaddr_in inet_addr_;
+  ace_sockaddr_in_t inet_addr_;
 };
 
 #if defined (__ACE_INLINE__)
