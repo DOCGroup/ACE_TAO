@@ -522,16 +522,15 @@ ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
 {
   ACE_OS_TRACE ("ACE_OS::rand_r");
 
-  long k;
-  long s = (long)(seed);
-  if (s == 0)
-    s = 0x12345987;
-  k = s / 127773;
-  s = 16807 * (s - k * 127773) - 2836 * k;
-  if (s < 0)
-    s += 2147483647;
-  (seed) = (unsigned int)s;
-  return (int)(s & RAND_MAX);
+  long new_seed = (long)(seed);
+  if (new_seed == 0)
+    new_seed = 0x12345987;
+  long temp = new_seed / 127773;
+  new_seed = 16807 * (new_seed - temp * 127773) - 2836 * temp;
+  if (new_seed < 0)
+    new_seed += 2147483647;
+  (seed) = (unsigned int)new_seed;
+  return (int)(new_seed & RAND_MAX);
 }
 
 ACE_INLINE pid_t
