@@ -79,7 +79,7 @@ Cubit_i::Cubit_cube_union (Cubit_oneof &values,
       values.cm.o = (CORBA::Octet) (values.cm.o * values.cm.o * values.cm.o);
       values.cm.s = (CORBA::Short) (values.cm.s * values.cm.s * values.cm.s);
       values.cm.l = values.cm.l * values.cm.l * values.cm.l;
-      ACE_DEBUG ((LM_DEBUG, "e_3rd = %d, %d, %d\n", 
+      ACE_DEBUG ((LM_DEBUG, "default = %d, %d, %d\n", 
 		  values.cm.o,
 		  values.cm.s,
 		  values.cm.l));
