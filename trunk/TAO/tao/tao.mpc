@@ -137,6 +137,8 @@ project : acelib, taoversion, core {
       LF_Event.cpp
       LF_Event_Binder.cpp
       LF_Event_Loop_Thread_Helper.cpp
+      LF_Invocation_Event.cpp
+      LF_CH_Event.cpp
       LF_Strategy.cpp
       LF_Strategy_Complete.cpp
       params.cpp
