@@ -77,6 +77,7 @@ TAO_NAMESPACE  GIOP
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ReferenceAddr;
 
+
   struct IORAddressingInfo;
   class IORAddressingInfo_var;
 
@@ -142,7 +143,7 @@ TAO_NAMESPACE  GIOP
 
   class TargetAddress;
   class TargetAddress_var;
-  
+
   class TAO_Export TargetAddress
   {
   public:
@@ -237,6 +238,14 @@ private:
   void operator= (const TargetAddress_var &);
 };
 
+// We dont have the _var _out for this struct. If need arises we can
+// add them later. For the present the Version struct alone should be
+// sufficient
+struct TAO_Export Version
+{
+  CORBA::Octet major;
+  CORBA::Octet minor;
+};
 
 }
 TAO_NAMESPACE_CLOSE // module GIOP

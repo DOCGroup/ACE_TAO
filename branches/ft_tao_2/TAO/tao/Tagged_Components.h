@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CONV_FRAMEC.h"
+#include "tao/FT_CORBAC.h"
 
 class TAO_Export TAO_Tagged_Components
 {
@@ -108,9 +109,9 @@ public:
 
 # if (TAO_HAS_FT_CORBA == 1)
 
-  CORBA::Boolean is_primary (void);
+  CORBA::Boolean is_primary (void) const;
   // Does the profile represent an endpoint of a primary
-  
+
   struct TAO_FT_Group_Tagged_Component
   {
     // = TITLE
@@ -119,21 +120,21 @@ public:
     // = DESCRIPTION
     //     Tagged components in the profile containing TAG_FT_GROUP
 
-    IOP::FTDomainID  ft_domain_id_;
+    FT::FTDomainId  ft_domain_id_;
     // Identifier of the FT domain
-    
-    IOP::ObjectGroupID object_group_id_;
+
+    FT::ObjectGroupId object_group_id_;
     // The idetifier of the Object Group
-    
-    IOP::ObjectGroupRefVersion object_group_ref_version_;
+
+    FT::ObjectGroupRefVersion object_group_ref_version_;
     // The version number of the Object Group Reference
   };
-  
+
   TAO_Tagged_Components::TAO_FT_Group_Tagged_Component &
       ft_group_tagged_component (void);
-  
+
   const TAO_Tagged_Components::TAO_FT_Group_Tagged_Component &
-      ft_group_tagged_component (void);
+      ft_group_tagged_component (void) const;
 #endif /*TAO_HAS_FT_CORBA */
 
 private:
@@ -178,7 +179,7 @@ private:
   CORBA::Boolean ft_tag_primary_;
   // Flag that indicates whether the profile is from a PRIMARY
 
-  TAO_FT_Tagged_Component ft_tagged_component_;
+  TAO_FT_Group_Tagged_Component ft_tagged_component_;
   // Tagged components in TAG_FT_GROUP
 
 #endif /*TAO_HAS_FT_CORBA */

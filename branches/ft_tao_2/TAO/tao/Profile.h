@@ -70,7 +70,7 @@ public:
 
 #if (TAO_HAS_FT_CORBA == 1)
 
-  CORBA::Boolean is_primary (void);
+  CORBA::Boolean is_primary (void) const;
   // Is this profile a primary?
 #endif /*TAO_HAS_FT_CORBA */
 
@@ -158,15 +158,15 @@ protected:
 
   TAO_Stub *stub_;
   // Pointer to the TAO_Stub to which this profile is related.
-  
+
   CORBA::PolicyList *policy_list_;
   // Client exposed policies of this profile.
-  
-  // NOTE: In this implementation it is assumed that the <policy_list> 
+
+  // NOTE: In this implementation it is assumed that the <policy_list>
   // is exactly the same for each profile.
   // So to save memory, each TAO_Profile has a pointer to the same
   // PolicyList object. The life cycle of this object is managed
-  // by the TAO_MProfile class. 
+  // by the TAO_MProfile class.
 
 
 private:
