@@ -4,10 +4,6 @@
 
 ACE_RCSID(Trader, Offer_Iterators, "$Id$")
 
-  // *************************************************************
-  // TAO_Offer_Iterator
-  // *************************************************************
-
 TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
   : pfilter_ (pfilter)
 {
@@ -22,27 +18,17 @@ TAO_Offer_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
-  //
-  // Note that there is no real error checking here as we can't do
-  // much about errors here anyway
 
-  ACE_TRY
-    {
-      PortableServer::POA_var poa =
-        this->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+ 
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+ 
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 TAO_Query_Only_Offer_Iterator::
@@ -154,12 +140,14 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
       ACE_TRY
         {
+          // @@ Irfan, can you please check this for exception design?
+
           // Retrieve the set of offers.
           any_left =
             iter->next_n (offers_left,
                           CosTrading::OfferSeq_out (out_offers.out ()),
                           ACE_TRY_ENV);
-          ACE_TRY_CHECK_RETURN (0);
+          ACE_TRY_CHECK;
 
           // If we've exhausted this iterator, destroy it.
           if (any_left == 0)
@@ -207,24 +195,17 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& ACE_TRY_ENV)
     }
 
   // Remove self from POA
-  //
-  // Note that there is no real error checking here as we can't do
-  // much about errors here anyway
 
-  ACE_TRY
-    {
-      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 CORBA::ULong
@@ -268,26 +249,18 @@ TAO_Offer_Id_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
-  //
-  // Note that there is no real error checking here as we can't do
-  // much about errors here anyway
-  //
 
-  ACE_TRY
-    {
-      PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
 
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 CORBA::Boolean

@@ -17,92 +17,82 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
     this->ifs_[i] = 0;
 
-  ACE_TRY
+  if (ACE_BIT_ENABLED (components, LOOKUP))
     {
-      if (ACE_BIT_ENABLED (components, LOOKUP))
-        {
-          TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup;
+      TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup;
       
-          ACE_NEW (lookup,
-                   (TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
+      ACE_NEW (lookup,
+               (TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
 
-          this->trading_components ().lookup_if (lookup->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK;
-          lookup->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+      this->trading_components ().lookup_if (lookup->_this (ACE_TRY_ENV));
+      ACE_CHECK;
+      lookup->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
 
-          this->ifs_[LOOKUP_IF] = lookup;
-        }
-      if (ACE_BIT_ENABLED (components, REGISTER))
-        {
-          TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg;
-      
-          ACE_NEW (reg,
-                   (TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
-
-          this->trading_components ().register_if (reg->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK;
-          reg->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->ifs_[REGISTER_IF] = reg;
-        }
-      if (ACE_BIT_ENABLED (components, ADMIN))
-        {
-          TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin;
-      
-          ACE_NEW (admin,
-                   (TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
-
-          this->trading_components ().admin_if (admin->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK;
-          admin->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->ifs_[ADMIN_IF] = admin;
-        }
-      if (ACE_BIT_ENABLED (components, PROXY))
-        {
-          TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy;
-      
-          ACE_NEW (proxy,
-                   (TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
-
-          this->trading_components ().proxy_if (proxy->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK;
-          proxy->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->ifs_[PROXY_IF] = proxy;
-        }
-      if (ACE_BIT_ENABLED (components, LINK))
-        {
-          TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link;
-
-          ACE_NEW (link,
-                   (TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
-
-          this->trading_components ().link_if (link->_this (ACE_TRY_ENV));
-          ACE_TRY_CHECK;
-          link->_remove_ref (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->ifs_[LINK_IF] = link;
-        }
+      this->ifs_[LOOKUP_IF] = lookup;
     }
-  ACE_CATCHANY
+  if (ACE_BIT_ENABLED (components, REGISTER))
     {
+      TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg;
+      
+      ACE_NEW (reg,
+               (TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
+
+      this->trading_components ().register_if (reg->_this (ACE_TRY_ENV));
+      ACE_CHECK;
+      reg->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->ifs_[REGISTER_IF] = reg;
     }
-  ACE_ENDTRY;
+  if (ACE_BIT_ENABLED (components, ADMIN))
+    {
+      TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin;
+      
+      ACE_NEW (admin,
+               (TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
+
+      this->trading_components ().admin_if (admin->_this (ACE_TRY_ENV));
+      ACE_CHECK;
+      admin->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->ifs_[ADMIN_IF] = admin;
+    }
+  if (ACE_BIT_ENABLED (components, PROXY))
+    {
+      TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy;
+      
+      ACE_NEW (proxy,
+               (TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
+
+      this->trading_components ().proxy_if (proxy->_this (ACE_TRY_ENV));
+      ACE_CHECK;
+      proxy->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->ifs_[PROXY_IF] = proxy;
+    }
+  if (ACE_BIT_ENABLED (components, LINK))
+    {
+      TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link;
+
+      ACE_NEW (link,
+               (TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
+
+      this->trading_components ().link_if (link->_this (ACE_TRY_ENV));
+      ACE_CHECK;
+      link->_remove_ref (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      this->ifs_[LINK_IF] = link;
+    }
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 {
   // Remove Trading Components from POA
-  //
-  // Note that there is no real error checking here as we can't do
-  // much about errors here anyway
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -125,6 +115,8 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
             }
           ACE_CATCHANY
             {
+              // Don't let exceptions propagate out of this call since
+              // it's the destructor!
             }
           ACE_ENDTRY;
         }
@@ -143,10 +135,6 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock (void)
 {
   return this->lock_;
 }
-
-  // *************************************************************
-  // Template Attribute Classes
-  // *************************************************************
 
 template <class IF>
 TAO_Trader_Components<IF>::
@@ -331,6 +319,7 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
 
   ACE_TRY_NEW_ENV
     {
+      // @@ Irfan, can you please check the exception design here.
       CORBA::ULong length = dyn_seq.length (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

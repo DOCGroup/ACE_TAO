@@ -69,19 +69,24 @@ insert_offer (const char* type, CosTrading::Offer* offer)
         {
           // Add the new entry; upgrade lock.
           ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
-          this->offer_db_.bind (service_type, new_offer_map_entry, database_entry);
+          this->offer_db_.bind (service_type,
+                                new_offer_map_entry,
+                                database_entry);
         }
 
       if (this->db_lock_.acquire_read () == -1)
         return 0;
     }
 
-  Offer_Map_Entry* offer_map_entry = database_entry->int_id_;
+  Offer_Map_Entry* offer_map_entry =
+    database_entry->int_id_;
   ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon2, offer_map_entry->lock_, 0);
 
   // Add the offer to the service offer table for this service type.
-  offer_map_entry->offer_map_->bind (offer_map_entry->counter_, offer);
-  return_value = this->generate_offer_id (type, offer_map_entry->counter_);
+  offer_map_entry->offer_map_->bind (offer_map_entry->counter_,
+                                     offer);
+  return_value = this->generate_offer_id (type,
+                                          offer_map_entry->counter_);
   offer_map_entry->counter_++;
 
   return return_value;
@@ -151,10 +156,14 @@ remove_offer (const CosTrading::OfferId offer_id,
   char* stype = 0;
   CORBA::ULong index;
 
-  this->parse_offer_id (offer_id, stype, index, ACE_TRY_ENV);
+  this->parse_offer_id (offer_id,
+                        stype,
+                        index,
+                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (this->remove_offer (stype, index) == -1)
+  if (this->remove_offer (stype,
+                          index) == -1)
     TAO_THROW_RETURN (CosTrading::UnknownOfferId (offer_id),
                       -1);
 
@@ -205,8 +214,7 @@ template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (const char* type, CORBA::ULong id)
 {
-  ACE_READ_GUARD_THROW_EX (LOCK_TYPE, ace_mon, this->db_lock_, CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
   CosTrading::Offer* return_value = 0;
   ACE_TYPENAME Offer_Database::ENTRY* db_entry = 0;
@@ -215,8 +223,7 @@ lookup_offer (const char* type, CORBA::ULong id)
   if (this->offer_db_.find (service_type, db_entry) == 0)
     {
       Offer_Map_Entry* offer_map_entry = db_entry->int_id_;
-      ACE_READ_GUARD_THROW_EX (LOCK_TYPE, ace_mon, offer_map_entry->lock_, CORBA::INTERNAL ());
-      ACE_CHECK_RETURN (0);
+      ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, 0);
 
       TAO_Offer_Map::ENTRY* offer_entry_ptr = 0;
       offer_map_entry->offer_map_->find (id, offer_entry_ptr);
@@ -234,9 +241,11 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
   // exported to the TAO_Offer_Database. Iterates through the entire
   // map, cramming offer_id strings into a newly constructed
   // TAO_Offer_Id_Iterator.
-  TAO_Offer_Id_Iterator* id_iterator = new TAO_Offer_Id_Iterator ();
-  ACE_READ_GUARD_THROW_EX (LOCK_TYPE, ace_mon, this->db_lock_, CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
+  TAO_Offer_Id_Iterator* id_iterator;
+  ACE_NEW_RETURN (id_iterator,
+                  TAO_Offer_Id_Iterator (),
+                  0);
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
   for (ACE_TYPENAME Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
@@ -245,8 +254,7 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
       const char* type_name = (*type_iter).ext_id_;
       Offer_Map_Entry* offer_map_entry = (*type_iter).int_id_;
 
-      ACE_READ_GUARD_THROW_EX (LOCK_TYPE, ace_mon, offer_map_entry->lock_, CORBA::INTERNAL ());
-      ACE_CHECK_RETURN (0);
+      ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, 0);
 
       for (TAO_Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
            ! offer_iter.done ();
@@ -271,6 +279,7 @@ parse_offer_id (const CosTrading::OfferId offer_id,
                 CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((CosTrading::IllegalOfferId))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   // Get service type: it is everything from 17th character to the end.
   service_type = (char *) offer_id + 16;
 
