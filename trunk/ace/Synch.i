@@ -554,3 +554,121 @@ ACE_Recursive_Thread_Mutex::tryacquire_write (void)
 
 #endif /* ACE_HAS_THREADS */
 
+// Explicitly destroy the mutex.
+ACE_INLINE int
+ACE_Process_Mutex::remove (void)
+{
+  return this->lock_->remove ();
+}
+
+// Acquire lock ownership (wait on priority queue if necessary).
+ACE_INLINE int
+ACE_Process_Mutex::acquire (void)
+{
+  return this->lock_->acquire ();
+}
+
+// Conditionally acquire lock (i.e., don't wait on queue).
+ACE_INLINE int
+ACE_Process_Mutex::tryacquire (void)
+{
+  return this->lock_->tryacquire ();
+}
+
+// Release lock and unblock a thread at head of priority queue.
+ACE_INLINE int
+ACE_Process_Mutex::release (void)
+{
+  return this->lock_->release ();
+}
+
+// Acquire lock ownership (wait on priority queue if necessary).
+ACE_INLINE int
+ACE_Process_Mutex::acquire_read (void)
+{
+  return this->lock_->acquire_read ();
+}
+
+// Acquire lock ownership (wait on priority queue if necessary).
+ACE_INLINE int 
+ACE_Process_Mutex::acquire_write (void)
+{
+  return this->lock_->acquire_write ();
+}
+
+// Conditionally acquire a lock (i.e., won't block).
+ACE_INLINE int
+ACE_Process_Mutex::tryacquire_read (void)
+{
+  return this->lock_->tryacquire_read ();
+}
+
+// Conditionally acquire a lock (i.e., won't block).
+ACE_INLINE int
+ACE_Process_Mutex::tryacquire_write (void)
+{
+  return this->lock_->tryacquire_write ();
+}
+
+// Explicitly destroy the mutex.
+ACE_INLINE int
+ACE_RW_Process_Mutex::remove (void)
+{
+  return this->lock_.remove ();
+}
+
+// Acquire lock ownership (wait on priority queue if necessary).
+ACE_INLINE int
+ACE_RW_Process_Mutex::acquire (void)
+{
+  return this->lock_.acquire ();
+}
+
+// Conditionally acquire lock (i.e., don't wait on queue).
+ACE_INLINE int
+ACE_RW_Process_Mutex::tryacquire (void)
+{
+  return this->lock_.tryacquire ();
+}
+
+// Release lock and unblock a thread at head of priority queue.
+ACE_INLINE int
+ACE_RW_Process_Mutex::release (void)
+{
+  return this->lock_.release ();
+}
+
+// Acquire lock ownership (wait on priority queue if necessary).
+ACE_INLINE int
+ACE_RW_Process_Mutex::acquire_read (void)
+{
+  return this->lock_.acquire_read ();
+}
+
+// Acquire lock ownership (wait on priority queue if necessary).
+ACE_INLINE int 
+ACE_RW_Process_Mutex::acquire_write (void)
+{
+  return this->lock_.acquire_write ();
+}
+
+// Conditionally acquire a lock (i.e., won't block).
+ACE_INLINE int
+ACE_RW_Process_Mutex::tryacquire_read (void)
+{
+  return this->lock_.tryacquire_read ();
+}
+
+// Conditionally acquire a lock (i.e., won't block).
+ACE_INLINE int
+ACE_RW_Process_Mutex::tryacquire_write (void)
+{
+  return this->lock_.tryacquire_write ();
+}
+
+ACE_INLINE const ACE_File_Lock &
+ACE_RW_Process_Mutex::lock (void) const
+{
+// ACE_TRACE ("ACE_RW_Process_Mutex::lock");
+  return this->lock_;
+}
