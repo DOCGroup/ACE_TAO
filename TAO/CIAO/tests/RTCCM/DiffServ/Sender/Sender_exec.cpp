@@ -14,74 +14,95 @@ SenderImpl::SenderExec_i::SenderExec_i (void)
   int argc = 0;
   char **argv = 0;
 
-  this->orb_ =
-    CORBA::ORB_init (argc,
-                     argv,
-                     "");
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-  CORBA::Object_var object =
-    this->orb_->resolve_initial_references ("RTORB");
+  ACE_TRY
+    {
+      this->orb_ =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  RTCORBA::RTORB_var rt_orb =
-    RTCORBA::RTORB::_narrow (object.in ());
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("RTORB"
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  RTCORBA::TCPProtocolProperties_var normal_tcp_protocol_properties =
-    rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                                            ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                                            1,
-                                            0,
-                                            1,
-                                            0);
+      RTCORBA::RTORB_var rt_orb =
+        RTCORBA::RTORB::_narrow (object.in ()
+                                 ACE_ENV_ARG_PARAMETER);
 
-  RTCORBA::TCPProtocolProperties_var diffserv_tcp_protocol_properties =
-    rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                                            ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                                            1,
-                                            0,
-                                            1,
-                                            1);
+      ACE_TRY_CHECK;
 
-  RTCORBA::ProtocolList protocols;
-  protocols.length (1);
-  protocols[0].protocol_type = 0;
-  protocols[0].transport_protocol_properties =
-    RTCORBA::ProtocolProperties::_duplicate (normal_tcp_protocol_properties.in ());
-  protocols[0].orb_protocol_properties =
-    RTCORBA::ProtocolProperties::_nil ();
+      RTCORBA::TCPProtocolProperties_var normal_tcp_protocol_properties =
+        rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
+                                                ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
+                                                1,
+                                                0,
+                                                1,
+                                                0);
 
-  this->normal_policy_list_.length (1);
-  this->normal_policy_list_[0] =
-    rt_orb->create_client_protocol_policy (protocols);
+      RTCORBA::TCPProtocolProperties_var diffserv_tcp_protocol_properties =
+        rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
+                                                ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
+                                                1,
+                                                0,
+                                                1,
+                                                1);
 
-  protocols[0].transport_protocol_properties =
-    RTCORBA::ProtocolProperties::_duplicate (diffserv_tcp_protocol_properties.in ());
+      RTCORBA::ProtocolList protocols;
+      protocols.length (1);
+      protocols[0].protocol_type = 0;
+      protocols[0].transport_protocol_properties =
+        RTCORBA::ProtocolProperties::_duplicate (normal_tcp_protocol_properties.in ());
+      protocols[0].orb_protocol_properties =
+        RTCORBA::ProtocolProperties::_nil ();
 
-  this->diffserv_policy_list_.length (1);
-  this->diffserv_policy_list_[0] =
-    rt_orb->create_client_protocol_policy (protocols);
+      this->normal_policy_list_.length (1);
+      this->normal_policy_list_[0] =
+        rt_orb->create_client_protocol_policy (protocols);
 
-  object =
-    this->orb_->resolve_initial_references ("ORBPolicyManager");
+      protocols[0].transport_protocol_properties =
+        RTCORBA::ProtocolProperties::_duplicate (diffserv_tcp_protocol_properties.in ());
 
-  this->policy_manager_ =
-    CORBA::PolicyManager::_narrow (object.in ());
+      this->diffserv_policy_list_.length (1);
+      this->diffserv_policy_list_[0] =
+        rt_orb->create_client_protocol_policy (protocols);
 
-  object =
-    this->orb_->resolve_initial_references ("PolicyCurrent");
+      object =
+        this->orb_->resolve_initial_references ("ORBPolicyManager"
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  this->policy_current_ =
-    CORBA::PolicyCurrent::_narrow (object.in ());
+      this->policy_manager_ =
+        CORBA::PolicyManager::_narrow (object.in ());
 
-  object =
+      object =
+        this->orb_->resolve_initial_references ("PolicyCurrent");
+
+      this->policy_current_ =
+        CORBA::PolicyCurrent::_narrow (object.in ());
+
+      object =
     this->orb_->resolve_initial_references ("NetworkPriorityMappingManager");
 
-  RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
-    RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
+      RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
+        RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
 
-  this->custom_network_priority_mapping_ =
-    new Custom_Network_Priority_Mapping;
+      this->custom_network_priority_mapping_ =
+        new Custom_Network_Priority_Mapping;
 
-  mapping_manager->mapping (this->custom_network_priority_mapping_);
+      mapping_manager->mapping (this->custom_network_priority_mapping_);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "(%P|%t) Caught exception in SenderExec_i \n");
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 void
