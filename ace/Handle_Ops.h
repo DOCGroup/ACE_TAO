@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   Handle_Ops.h
@@ -32,7 +31,8 @@ public:
   static ACE_HANDLE handle_timed_open (ACE_Time_Value *timeout,
                                        const ACE_TCHAR *name,
                                        int flags,
-                                       int perms);
+                                       int perms,
+                                       LPSECURITY_ATTRIBUTES sa = 0);
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -56,7 +57,8 @@ public:
                        const ACE_Addr &local_sap = ACE_Addr::sap_any,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
-                       int perms = 0);
+                       int perms = 0,
+                       LPSECURITY_ATTRIBUTES sa = 0);
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
@@ -81,7 +83,8 @@ public:
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
-               int perms = 0);
+               int perms = 0,
+               LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Resets any event associations on this handle
   int reset_new_handle (ACE_HANDLE handle);

@@ -20,11 +20,12 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
 					  const ACE_Addr & local_sap,
 					  int reuse_addr,
 					  int flags,
-					  int perms)
+					  int perms,
+                                          LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_SPIPE_Connector::ACE_SPIPE_Connector");
   if (this->connect (new_io, remote_sap, timeout, local_sap,
-		     reuse_addr, flags, perms) == -1
+		     reuse_addr, flags, perms, sa) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("address %s, %p\n"),
 	       remote_sap.get_path_name (), ACE_LIB_TEXT ("ACE_SPIPE_Connector")));
@@ -43,12 +44,13 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (void)
 
 int
 ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
-			      const ACE_SPIPE_Addr &remote_sap,
-			      ACE_Time_Value *timeout,
-			      const ACE_Addr & /* local_sap */,
-			      int /* reuse_addr */,
-			      int flags,
-			      int perms)
+                              const ACE_SPIPE_Addr &remote_sap,
+                              ACE_Time_Value *timeout,
+                              const ACE_Addr & /* local_sap */,
+                              int /* reuse_addr */,
+                              int flags,
+                              int perms,
+                              LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_SPIPE_Connector::connect");
 
@@ -58,7 +60,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
 # endif /* !ACE_PSOS_DIAB_MIPS */
   ACE_HANDLE handle = ACE_Handle_Ops::handle_timed_open (timeout,
                                                          remote_sap.get_path_name (),
-                                                         flags, perms);
+                                                         flags, perms, sa);
   new_io.set_handle (handle);
   new_io.remote_addr_ = remote_sap; // class copy.
 
@@ -68,9 +70,9 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
   // Set named pipe mode and buffering characteristics.
   if (handle != ACE_INVALID_HANDLE)
     return ::SetNamedPipeHandleState (handle,
-				      &pipe_mode,
-				      NULL,
-				      NULL);
+                                      &pipe_mode,
+                                      NULL,
+                                      NULL);
 #endif
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
