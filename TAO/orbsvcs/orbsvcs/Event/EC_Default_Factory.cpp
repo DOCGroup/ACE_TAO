@@ -685,17 +685,24 @@ TAO_EC_Default_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*
   delete x;
 }
 
+// These typedefs workaround a SunCC 4.2 bug
+typedef
+    TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>::Iterator
+    TAO_EC_Consumer_List_Iterator;
+typedef
+    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>::Iterator
+    TAO_EC_Consumer_RB_Tree_Iterator;
+typedef
+    TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>::Iterator
+    TAO_EC_Supplier_List_Iterator;
+typedef
+    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>::Iterator
+    TAO_EC_Supplier_RB_Tree_Iterator;
+
+
 TAO_EC_ProxyPushConsumer_Collection*
 TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel *)
 {
-  // These typedefs workaround a SunCC 4.2 bug
-  typedef
-    TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>::Iterator
-    TAO_EC_Consumer_List_Iterator;
-  typedef
-    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>::Iterator
-    TAO_EC_Consumer_RB_Tree_Iterator;
-
   if (this->consumer_collection_ == 0x000)
     return new TAO_EC_Immediate_Changes<TAO_EC_ProxyPushConsumer,
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
@@ -797,14 +804,6 @@ TAO_EC_Default_Factory::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPush
 TAO_EC_ProxyPushSupplier_Collection*
 TAO_EC_Default_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel *)
 {
-  // These typedefs workaround a SunCC 4.2 bug
-  typedef
-    TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>::Iterator
-    TAO_EC_Supplier_List_Iterator;
-  typedef
-    TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>::Iterator
-    TAO_EC_Supplier_RB_Tree_Iterator;
-
   if (this->supplier_collection_ == 0x000)
     return new TAO_EC_Immediate_Changes<TAO_EC_ProxyPushSupplier,
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
