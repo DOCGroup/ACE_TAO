@@ -1,7 +1,13 @@
+Tue May  6 07:35:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples\Content_Server\AMI_Observer\Makefile:
+        * examples\Content_Server\AMI_Iterator\Makefile: Updated
+	  dependecies. 
+
 Tue May 06 11:46:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-        * examples\Content_Server\AMI_Observer\Makefile:
-        * examples\Content_Server\AMI_Iterator\Makefile:
+        * examples/Content_Server/AMI_Observer/Makefile:
+        * examples/Content_Server/AMI_Iterator/Makefile:
 
           Fixed build errors.
 
