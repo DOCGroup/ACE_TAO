@@ -11,7 +11,7 @@ ACE_RCSID (TAO_SSLIOP, SSLIOP_Current, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 TAO_SSLIOP_Current::TAO_SSLIOP_Current (size_t tss_slot,
-                                        const char *orb_id) 
+                                        const char *orb_id)
   : tss_slot_ (tss_slot),
     orb_id_ (orb_id),
     orb_core_ (0),
@@ -26,7 +26,7 @@ TAO_SSLIOP_Current::~TAO_SSLIOP_Current (void)
 
 SSLIOP::ASN_1_Cert *
 TAO_SSLIOP_Current::get_peer_certificate (
-    CORBA::Environment &ACE_TRY_ENV) 
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    SSLIOP::Current::NoContext))
 {
