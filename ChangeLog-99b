@@ -1,5 +1,8 @@
 Fri Jul  9 20:39:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* tests/Cached_Conn_Test.cpp: Added an Svc_Handler class which
+  	  helped in verifying the course of the program execution.
+
 	* ace/Caching_Utility_T.cpp (minimum): Cleaned up code by removing
 	  redundant else if statement.
 
