@@ -348,9 +348,11 @@ Test_ECG::run (int argc, char* argv[])
           break;
         }
 
-      // Register Event_Service with Naming Service.
-      ACE_EventChannel ec_impl;
+      // Create the EventService implementation, but don't start its
+      // internal threads.
+      ACE_EventChannel ec_impl (CORBA::B_FALSE);
 
+      // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
         ec_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -483,7 +485,12 @@ Test_ECG::run (int argc, char* argv[])
       ready_mon.release ();
       this->ready_cnd_.broadcast ();
 
-      ACE_DEBUG ((LM_DEBUG, "running EC test\n"));
+      ACE_DEBUG ((LM_DEBUG, "activate the  EC\n"));
+
+      // Create the EC internal threads
+      ec_impl.activate ();
+      
+      ACE_DEBUG ((LM_DEBUG, "running the test\n"));
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 

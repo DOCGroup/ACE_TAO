@@ -91,10 +91,24 @@ ACE_ES_Dispatch_Request::operator delete (void *mem)
 
 // ************************************************************
 
+void
+ACE_ES_Dispatching_Base::activate (void)
+{
+}
+
+void
+ACE_ES_Dispatching_Base::shutdown (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+	      "EC (%t) ACE_ES_Dispatching_Base module shutting down.\n"));
+}
+
+// ************************************************************
+
 ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *channel,
                                                           int threads_per_queue)
   : ACE_ES_Dispatching_Base (channel),
-    notification_strategy_ (this),
+    notification_strategy_ (this, channel->task_manager ()),
     highest_priority_ (0),
     shutdown_ (0),
     threads_per_queue_ (threads_per_queue)
@@ -110,8 +124,6 @@ ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *chan
       queues_[x] = 0;
       delete_me_queues_[x] = 0;
     }
-
-  this->initialize_queues ();
 }
 
 ACE_ES_Priority_Dispatching::~ACE_ES_Priority_Dispatching (void)
@@ -125,7 +137,7 @@ ACE_ES_Priority_Dispatching::~ACE_ES_Priority_Dispatching (void)
 void
 ACE_ES_Priority_Dispatching::initialize_queues (void)
 {
-  for (int x=0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
+  for (int x = 0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
     {
       // Convert ACE_Scheduler_Rate (it's really a period, not a rate!)
       // to a form we can easily work with.
@@ -135,18 +147,20 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
       RtecScheduler::Period period = period_tv.sec () * 10000000 +
                                      period_tv.usec () * 10;
 
-      queues_[x] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_);
-      if (queues_[x] == 0 ||
-          queues_[x]->open_queue (period,
-                                  threads_per_queue_) == -1)
+      ACE_NEW (this->queues_[x], 
+	       ACE_ES_Dispatch_Queue (this, &notification_strategy_));
+      this->queues_[x]->thr_mgr (&this->thr_mgr_);
+
+      if ( this->queues_[x]->open_queue (period,
+					 threads_per_queue_) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Priority_Dispatching::initialize_queues"));
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+		      "ACE_ES_Priority_Dispatching::initialize_queues"));
           return;
         }
 
-      queue_count_[x] = 1;
+      this->queue_count_[x] = 1;
     }
-
   highest_priority_ = ACE_Scheduler_MAX_PRIORITIES - 1;
 }
 
@@ -361,6 +375,12 @@ ACE_ES_Priority_Dispatching::handle_input (ACE_HANDLE)
   return this->handle_signal (0, 0, 0);
 }
 
+void
+ACE_ES_Priority_Dispatching::activate (void)
+{
+  this->initialize_queues ();
+}
+
 // Shutdown each queue.  When each queue exits, they will call back
 // this->dispatch_queue_closed which allows us to free up resources.
 // When the last queue has closed, we'll delete ourselves.
@@ -387,6 +407,10 @@ ACE_ES_Priority_Dispatching::shutdown (void)
         ACE_DEBUG ((LM_DEBUG, "shutting down dispatch queue %d.\n", x));
         queues_[x]->shutdown_task ();
       }
+
+  if (this->thr_mgr_.wait () == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n",
+		"Priority_Dispatching::shutdown - waiting"));
 }
 
 // This gets called every time a Dispatch Queue closes down.  We

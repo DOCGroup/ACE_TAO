@@ -86,6 +86,10 @@ public:
   virtual void dispatch_queue_closed (ACE_ES_Dispatch_Queue *q);
   // Called when all the threads of a <q> have exited.
 
+  virtual void activate (void);
+  // This is called by the Event Channel. It will create all the
+  // threads and only return once they are all up and running.
+
   virtual void shutdown (void);
   // This is called by the Event Channel.  This will attempt to shut
   // down all of its threads gracefully.  Wish it luck.
@@ -242,7 +246,8 @@ class TAO_ORBSVCS_Export ACE_ES_ReactorEx_NS : public ACE_Notification_Strategy
 //     the ReactorEx::notify mechanism.
 {
 public:
-  ACE_ES_ReactorEx_NS (ACE_Event_Handler *eh);
+  ACE_ES_ReactorEx_NS (ACE_Event_Handler *eh,
+		       ACE_Task_Manager *tm);
   // Stores away <eh> for when this->open is called.
 
   int open (void);
@@ -264,6 +269,9 @@ public:
 private:
   ACE_Auto_Event event_;
   // Registered with the ReactorEx.
+
+  ACE_Task_Manager *task_manager_;
+  // To gain access into the Reactor tasks.
 };
 
 typedef ACE_ES_ReactorEx_NS ACE_ES_Notification_Strategy;
@@ -279,7 +287,8 @@ class TAO_ORBSVCS_Export ACE_ES_Reactor_NS : public ACE_Reactor_Notification_Str
 //     version is for non WIN32 platforms.
 {
 public:
-  ACE_ES_Reactor_NS (ACE_Event_Handler *eh);
+  ACE_ES_Reactor_NS (ACE_Event_Handler *eh,
+		     ACE_Task_Manager *tm);
   // Calls ACE_Reactor_Notification_Strategy with the ORB's reactor
   // and signal mask.
 
@@ -387,6 +396,9 @@ public:
 		     CORBA::Environment &);
   // Enqueues the request on the appropriate Dispatch Queue.
 
+  virtual void activate (void);
+  // Open all queues.
+
   virtual void shutdown (void);
   // Closes all queues "asynchronously."  When all queues are closed,
   // deletes them all and then deletes itself.
@@ -431,6 +443,9 @@ protected:
 
   int threads_per_queue_;
   // The number of threads to spawn for each dispatch queue.
+
+  ACE_RT_Thread_Manager thr_mgr_;
+  // The thread manager for the threads of this object.
 };
 
 // ************************************************************
