@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -171,6 +170,11 @@ private:
 #else
 class ACE_Export ACE_Token
 {
+public:
+  int acquire (ACE_Time_Value *timeout = 0) { ACE_NOTSUP_RETURN (-1); }
+  int tryacquire (void) { ACE_NOTSUP_RETURN (-1); }
+  int remove (void) { ACE_NOTSUP_RETURN (-1); }
+  int release (void) { ACE_NOTSUP_RETURN (-1); }
 };
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_TOKEN_H */
