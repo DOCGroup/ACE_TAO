@@ -3,6 +3,7 @@
 #include "tao_imr_i.h"
 
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 
 #include "tao/Stub.h"
 #include "tao/Profile.h"
