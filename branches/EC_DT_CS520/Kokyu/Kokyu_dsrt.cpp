@@ -76,6 +76,7 @@ DSRT_Dispatcher_Factory<DSRT_Scheduler_Traits>::
 create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
 {
   ACE_UNUSED_ARG ((config_info));
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_START, 0, 0, NULL);
 
   DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>* tmp;
   DSRT_Dispatcher<DSRT_Scheduler_Traits>* disp;
@@ -113,6 +114,9 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   DSRT_Dispatcher_Auto_Ptr disp_auto_ptr(disp);
   disp->implementation (tmp);
   tmp->init (config_info);
+
+  DSUI_EVENT_LOG (DSRT_DISPATCH_FAM, CREATE_DSRT_DISPATCH_SCHED_END, 0, 0, NULL);
+
   return disp_auto_ptr;
 }
 

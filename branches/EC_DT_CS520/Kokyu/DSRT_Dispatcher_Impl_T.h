@@ -11,6 +11,10 @@
 #include /**/ "ace/pre.h"
 #include "Kokyu_dsrt.h"
 
+#include "kokyu_config.h"
+#include "kokyu_dsui_families.h"
+#include <dsui.h>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

@@ -34,6 +34,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
+CPPFLAGS += -DKOKYU_DSRT_LOGGING
+
 CPPFLAGS     += -I.. -I$(DATASTREAM_ROOT)/include
 LDFLAGS      += -L../ace -L$(DATASTREAM_ROOT)/lib
 
