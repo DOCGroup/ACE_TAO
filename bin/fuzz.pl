@@ -1136,6 +1136,8 @@ sub check_for_include ()
 
 # This test verifies that all equality, relational and logical
 # operators return bool, as is the norm for modern C++.
+#
+# NOTE:  This test isn't fool proof yet.
 sub check_for_non_bool_operators ()
 {
     print "Running non-bool equality, relational and logical operator check\n";
