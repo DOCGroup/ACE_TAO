@@ -1,3 +1,11 @@
+Sun Mar  6 20:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process_Manager.cpp:
+          Added include of OS_NS_sys_time.h to get ACE_OS::gettimeofday
+
+        * ace/Process_Manager.h:
+          Include Time_Value.h instead of Countdown_Time.h
+
 Sun Mar  6 19:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Countdown_Time.{h,cpp}:
