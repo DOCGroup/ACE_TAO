@@ -1,3 +1,14 @@
+Mon May  5 17:45:36 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/default_resource.cpp (TAO_Default_Resource_Factory):
+
+	  Initialize the "corba_object_lock_type_" member with
+	  "TAO_THREAD_LOCK" in the base member initializer list.  Fixes a
+	  problem where the create_corba_object_lock() method had
+	  undefined behavior for the default case, i.e. when the user did
+	  not explicitly use the "-ORBCorbaObjectLock" resource factory
+	  option.
+
 Mon May  5 17:25:50 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/CDR_Encaps_Codec.cpp (encode_value):
