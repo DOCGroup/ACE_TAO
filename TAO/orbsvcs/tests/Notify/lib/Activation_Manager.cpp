@@ -163,7 +163,7 @@ TAO_NS_Activation_Manager::activate_suppliers (void)
         {
           supplier = entry->int_id_;
 
-          if (supplier->activate (this->barrier_) != 0)
+          if (supplier->activate_task (this->barrier_) != 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Supplier list activation failed\n"));
               return -1;

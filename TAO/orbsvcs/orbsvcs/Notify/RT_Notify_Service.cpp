@@ -22,6 +22,12 @@ TAO_RT_Notify_Service::~TAO_RT_Notify_Service ()
 {
 }
 
+int
+TAO_RT_Notify_Service::init (int argc, char *argv[])
+{
+  return TAO_CosNotify_Service::init (argc, argv);
+}
+
 void
 TAO_RT_Notify_Service::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
