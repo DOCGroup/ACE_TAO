@@ -1,3 +1,8 @@
+Fri Apr  6 06:42:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed stupid
+	  compile errors. My bad :(
+
 Fri Apr  6 04:15:27 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/IORTable/IOR_Table_Impl.cpp:
