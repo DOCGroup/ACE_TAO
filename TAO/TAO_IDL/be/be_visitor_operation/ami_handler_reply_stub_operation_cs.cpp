@@ -249,7 +249,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "cdr->length ()," << be_nl
       << "(unsigned char*) cdr->rd_ptr ()," << be_nl
       << "0" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << ");" << be_uidt_nl
       << "exception_holder_var->marshaled_exception (_tao_marshaled_exception);"
       << be_nl << be_nl;
 

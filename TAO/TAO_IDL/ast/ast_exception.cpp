@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_exception, 
@@ -143,6 +144,12 @@ AST_Exception::in_recursion (AST_Type *node)
             }
 
           AST_Type *type = field->field_type ();
+
+          if (type->node_type () == AST_Decl::NT_typedef)
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              type = td->primitive_base_type ();
+            }
 
           if (type == 0)
             {

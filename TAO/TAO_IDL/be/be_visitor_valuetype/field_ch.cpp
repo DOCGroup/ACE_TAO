@@ -481,6 +481,9 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Not a typedef and bt is defined here.
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))

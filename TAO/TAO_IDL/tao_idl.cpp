@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_extern.h"
 #include "ace/Process.h"
 #include "../tao/Version.h"
+#include "ace/streams.h"
 
 ACE_RCSID (TAO_IDL,
            tao_idl,

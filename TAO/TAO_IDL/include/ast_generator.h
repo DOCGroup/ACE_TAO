@@ -283,7 +283,8 @@ public:
   virtual AST_Expression *create_expr (long v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr (unsigned long v);
+  virtual AST_Expression *create_expr (ACE_UINT64 v,
+                                       AST_Expression::ExprType t);
 
   virtual AST_Expression *create_expr (UTL_String *s);
 

@@ -183,7 +183,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "return result;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "void " << node->name () << "::_raise (void)" << be_nl
+  *os << "void " << node->name () << "::_raise (void) const" << be_nl
       << "{" << be_idt_nl
       << "TAO_RAISE (*this);" << be_uidt_nl
       << "}" << be_nl << be_nl;

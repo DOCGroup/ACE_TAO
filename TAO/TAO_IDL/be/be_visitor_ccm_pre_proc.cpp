@@ -1534,14 +1534,22 @@ be_visitor_ccm_pre_proc::create_uses_multiple_sequence (
     AST_Component::port_description *pd
   )
 {
-  unsigned long bound = 0;
-  ACE_NEW_RETURN (this->connections_,
-                  be_sequence (idl_global->gen ()->create_expr (bound),
-                               this->connection_,
-                               0,
-                               0,
-                               0),
-                  -1);
+  ACE_UINT64 bound = 0;
+  ACE_NEW_RETURN (
+      this->connections_,
+      be_sequence (
+          idl_global->gen ()->create_expr (
+                                  bound,
+                                  AST_Expression::EV_ulong
+                                ),
+          this->connection_,
+          0,
+          0,
+          0
+        ),
+      -1
+    );
+
   ACE_CString base_name (pd->id->get_string (),
                          0,
                          0);

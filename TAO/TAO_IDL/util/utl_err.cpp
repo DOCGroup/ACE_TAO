@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union.h"
 #include "ast_union_label.h"
 #include "idl_defines.h"
+#include "ace/streams.h"
 
 ACE_RCSID (util, 
            utl_err, 
