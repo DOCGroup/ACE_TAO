@@ -71,17 +71,17 @@ inline ssize_t
 ACE_TLI_Stream::recv_n (void *buf, size_t n, int *flags) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");
-  int  b_read = 0;
-  int  b_recv = 0;
-  int  f      = 0;
+  ssize_t b_read = 0;
+  ssize_t b_recv = 0;
+  int f = 0;
 
   if (flags == 0)
     flags = &f;
 
   for (b_read = 0; b_read < n; b_read += b_recv)
     if ((b_recv = ACE_OS::t_rcv (this->get_handle (), 
-			   (char *) buf + b_read, 
-			   n - b_read, flags)) == -1)
+				 (char *) buf + b_read, 
+				 n - b_read, flags)) == -1)
       return -1;
     else if (b_recv == 0)
       break;

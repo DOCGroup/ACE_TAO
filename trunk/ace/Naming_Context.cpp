@@ -549,9 +549,11 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
-template class ACE_Local_Name_Space <ACE_Lite_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
+template class ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
+template class ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
+template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> >;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> >;
-ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >;
-ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >;
+template class ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >;
+template class ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

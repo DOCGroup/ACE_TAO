@@ -311,6 +311,12 @@ private:
   int trace_depth_;
   // Depth of the nesting for printing traces.
 
+  ACE_hthread_t *thr_handle_;
+  // If we're running in the context of an <ACE_Thread_Manager> this
+  // will point to the <thr_handle_> field in the
+  // <ACE_Thread_Descriptor>.  Threads can use this to rapidly
+  // determine their real ACE_hthread_t.
+
   int trace_active_;
   // Are we already within an ACE_Trace constructor call?
 
@@ -322,12 +328,6 @@ private:
   // will point to the <thr_state_> field in the
   // <ACE_Thread_Descriptor>.  Threads can use this to rapidly
   // determine if they've got a cancellation pending.
-
-  ACE_hthread_t *thr_handle_;
-  // If we're running in the context of an <ACE_Thread_Manager> this
-  // will point to the <thr_handle_> field in the
-  // <ACE_Thread_Descriptor>.  Threads can use this to rapidly
-  // determine their real ACE_hthread_t.
 
   u_long priority_mask_;
   // Keeps track of all the <ACE_Log_Priority> values that are

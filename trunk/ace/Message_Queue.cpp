@@ -39,8 +39,8 @@ ACE_Message_Queue<ACE_SYNCH_2>::dump (void) const
 template <ACE_SYNCH_1>
 ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue (size_t hwm, 
 						   size_t lwm)
-  : notfull_cond_ (this->lock_),
-    notempty_cond_ (this->lock_)
+  : notempty_cond_ (this->lock_),
+    notfull_cond_ (this->lock_)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue");
   if (this->open (hwm, lwm) == -1)

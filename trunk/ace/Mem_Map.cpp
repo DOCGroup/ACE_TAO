@@ -152,8 +152,8 @@ ACE_Mem_Map::map (const char file_name[],
 }
 
 ACE_Mem_Map::ACE_Mem_Map (void)
-  : length_ (0),
-    base_addr_ (0), 
+  : base_addr_ (0), 
+    length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
     close_handle_ (0)
@@ -173,8 +173,8 @@ ACE_Mem_Map::ACE_Mem_Map (const char file_name[],
 			  void *addr, 
 			  off_t pos)
   : base_addr_ (0),
-    close_handle_ (0),
-    file_mapping_ (ACE_INVALID_HANDLE)
+    file_mapping_ (ACE_INVALID_HANDLE),
+    close_handle_ (0)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
   if (this->map (file_name, len, flags, mode, prot, share, addr, pos) < 0)
@@ -190,8 +190,8 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 			  int share, 
 			  void *addr, 
 			  off_t pos)
-  : close_handle_ (0),
-    file_mapping_ (ACE_INVALID_HANDLE)
+  : file_mapping_ (ACE_INVALID_HANDLE),
+    close_handle_ (0)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 

@@ -555,7 +555,7 @@ ACE_Service_Config::open (const char program_name[])
 
   // Only use STDERR if the users hasn't yet set the flags.
   if (ACE_LOG_MSG->open (program_name, 
-			 ACE_LOG_MSG->flags() ? ACE_LOG_MSG->flags() : ACE_Log_Msg::STDERR,
+			 ACE_LOG_MSG->flags() ? ACE_LOG_MSG->flags() : (u_long) ACE_Log_Msg::STDERR,
 			 ACE_Service_Config::logger_key_) == -1)
     return -1;
   ACE_DEBUG ((LM_STARTUP, "starting up daemon %n\n"));
@@ -916,8 +916,8 @@ ACE_Service_Config::reconfig_occurred (sig_atomic_t config_occurred)
 template class ACE_Set_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
-template class ACE_Malloc<ACE_Local_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_Local_MEMORY_POOL, ACE_Null_Mutex> >;
+template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class auto_ptr<ACE_Obstack>;
 #if !defined (ACE_HAS_THREADS)
 template class ACE_Guard<ACE_Null_Mutex>;

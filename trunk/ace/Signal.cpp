@@ -238,27 +238,27 @@ ACE_Sig_Handler::dispatch (int signum,
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Action &sa, int sigkey)
-  : sa_ (sa),
+  : sigkey_ (sigkey),
     type_ (SIG_ACTION),
-    sigkey_ (sigkey)
+    sa_ (sa)
 {
   ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh,
 				  int sigkey)
-  : eh_ (eh),
+  : sigkey_ (sigkey),
     type_ (ACE_HANDLER),
-    sigkey_ (sigkey)
+    eh_ (eh)
 {
   ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func,
 				  int sigkey)
-  : sig_func_ (sig_func),
+  : sigkey_ (sigkey),
     type_ (C_FUNCTION),
-    sigkey_ (sigkey)
+    sig_func_ (sig_func)
 {
   ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }

@@ -45,10 +45,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::dump (void) const
 template <class EXT_ID, class INT_ID, class LOCK>
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (size_t size,
                                                         ACE_Allocator *allocator)
-  : allocator_ (0),
+  : search_structure_ (0),
+    allocator_ (0),
     max_size_ (0),
-    cur_size_ (0),
-    search_structure_ (0)
+    cur_size_ (0)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
 
@@ -58,10 +58,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (size_t size,
 
 template <class EXT_ID, class INT_ID, class LOCK> 
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (ACE_Allocator *allocator)
-  : allocator_ (0),
+  : search_structure_ (0),
+    allocator_ (0),
     max_size_ (0),
-    cur_size_ (0),
-    search_structure_ (0)
+    cur_size_ (0)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
   if (this->open (DEFAULT_SIZE, allocator) == -1)

@@ -276,9 +276,9 @@ public:
       use_fixed_addr_ (use_fixed_addr),
       write_each_page_ (write_each_page) {}
 
+  char *base_addr_;
   int use_fixed_addr_;
   int write_each_page_;
-  char *base_addr_;
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler

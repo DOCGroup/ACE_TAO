@@ -11,6 +11,24 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Get_Opt)
 
+ACE_Get_Opt::ACE_Get_Opt (int argc, 
+		  char **argv,
+		  char *optstring, 
+		  int skip, 
+		  int report_errors)
+  : optarg (0), 
+    optind (skip),
+    opterr (report_errors), 
+    nargc (argc), 
+    nargv (argv),
+    noptstring (optstring), 
+    nextchar (0), 
+    first_nonopt (skip), 
+    last_nonopt (skip)
+{
+  ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
+}
+
 void
 ACE_Get_Opt::dump (void) const
 {
@@ -27,10 +45,10 @@ ACE_Get_Opt::operator () (void)
   ACE_TRACE ("ACE_Get_Opt::operator");
   if (this->nextchar == 0 || *this->nextchar == 0)
     {
-      /* Special ARGV-element `--' means premature end of options.
-         Skip it like a null option,
-         then exchange with previous non-options as if it were an option,
-         then skip everything else like a non-option.  */
+      // Special ARGV-element `--' means premature end of options.
+      // Skip it like a null option, then exchange with previous
+      // non-options as if it were an option, then skip everything
+      // else like a non-option.
 
       if (this->optind != this->nargc && !::strcmp (this->nargv[this->optind], "--"))
         {
@@ -43,37 +61,38 @@ ACE_Get_Opt::operator () (void)
           this->optind = this->nargc;
         }
 
-      /* If we have done all the ARGV-elements, stop the scan
-         and back over any non-options that we skipped and permuted.  */
+      // If we have done all the ARGV-elements, stop the scan and back
+      // over any non-options that we skipped and permuted.
 
       if (this->optind == this->nargc)
         {
-          /* Set the next-arg-index to point at the non-options
-             that we previously skipped, so the caller will digest them.  */
+          // Set the next-arg-index to point at the non-options
+	  // that we previously skipped, so the caller will digest them. 
           if (this->first_nonopt != this->last_nonopt)
             this->optind = this->first_nonopt;
           return EOF;
         }
 	 
-      /* If we have come to a non-option and did not permute it,
-         either stop the scan or describe it to the caller and pass it by.  */
+      // If we have come to a non-option and did not permute it,
+      // either stop the scan or describe it to the caller and pass it
+      // by.
 
       if (this->nargv[this->optind][0] != '-' || this->nargv[this->optind][1] == 0)
 	return EOF;
 
-      /* We have found another option-ARGV-element.
-         Start decoding its characters.  */
+      // We have found another option-ARGV-element.  Start decoding
+      // its characters.
 
       this->nextchar = this->nargv[this->optind] + 1;
     }
 
-  /* Look at and handle the next option-character.  */
+  // Look at and handle the next option-character. 
 
   {
     char c = *this->nextchar++;
     char *temp = (char *) strchr (this->noptstring, c);
 
-    /* Increment `optind' when we start to process its last character.  */
+    // Increment `optind' when we start to process its last character.
     if (*this->nextchar == 0)
       this->optind++;
 
@@ -94,7 +113,7 @@ ACE_Get_Opt::operator () (void)
       {
         if (temp[2] == ':')
           {
-            /* This is an option that accepts an argument optionally.  */
+            // This is an option that accepts an argument optionally.
             if (*this->nextchar != 0)
               {
                 this->optarg = this->nextchar;
@@ -106,12 +125,12 @@ ACE_Get_Opt::operator () (void)
           }
         else
           {
-            /* This is an option that requires an argument.  */
+            // This is an option that requires an argument.
             if (*this->nextchar != 0)
               {
                 this->optarg = this->nextchar;
-                /* If we end this ARGV-element by taking the rest as an arg,
-                   we must advance to the next element now.  */
+                // If we end this ARGV-element by taking the rest as
+                // an arg, we must advance to the next element now.
                 this->optind++;
               }
             else if (this->optind == this->nargc)
@@ -122,8 +141,8 @@ ACE_Get_Opt::operator () (void)
                 c = '?';
               }
             else
-              /* We already incremented `optind' once;
-                 increment it again when taking next ARGV-elt as argument.  */
+              // We already incremented `optind' once; increment it
+              // again when taking next ARGV-elt as argument.
               this->optarg = this->nargv[this->optind++];
             this->nextchar = 0;
           }

@@ -59,7 +59,10 @@ class ACE_Export ACE_Get_Opt
 
 {
 public:
-  ACE_Get_Opt (int argc, char **argv, char *optstring, int skip_argv0 = 1, int report_errors = 0);
+  ACE_Get_Opt (int argc, char **argv, 
+	       char *optstring, 
+	       int skip_argv0 = 1, 
+	       int report_errors = 0);
   // Initialize the internal data when the first call is made.  Start
   // processing options with ARGV-element 0 + <skip_argv0>; the
   // sequence of previously skipped non-option ARGV-elements is empty.

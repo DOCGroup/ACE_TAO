@@ -32,7 +32,7 @@ class ACE_Allocator_Adapter : public ACE_Allocator
 public:
   // Trait.
   typedef MALLOC ALLOCATOR;
-  typedef ALLOCATOR::MEMORY_POOL_OPTIONS MEMORY_POOL_OPTIONS;
+  typedef MALLOC::MEMORY_POOL_OPTIONS MEMORY_POOL_OPTIONS;
 
   // = Initialization.
   ACE_Allocator_Adapter (const char *pool_name = 0);
@@ -42,11 +42,21 @@ public:
   // Constructor.
   ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
 			 const char *pool_name,
-			 const char *lock_name);
-  // Constructor.
+			 const char *lock_name)
+    : allocator_ (options, pool_name, lock_name)
+    { 
+      ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
+    }
+
+  // Constructor (must be here to avoid template bugs).
 
   ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
-			 const char *pool_name = 0);
+			 const char *pool_name = 0)
+    : allocator_ (options, pool_name)
+    { 
+      ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
+    }
+
   // Constructor.
 
   // = Memory Management

@@ -67,7 +67,7 @@ ACE_SOCK_IO::recv (iovec iov[], size_t n) const
 
 inline ssize_t
 ACE_SOCK_IO::send (const void *buf, size_t n,
-		       ACE_OVERLAPPED *overlapped) const
+		   ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return ACE_OS::write (this->get_handle (), 
@@ -77,9 +77,25 @@ ACE_SOCK_IO::send (const void *buf, size_t n,
 
 inline ssize_t
 ACE_SOCK_IO::recv (void *buf, size_t n,
-		       ACE_OVERLAPPED *overlapped) const
+		   ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return ACE_OS::read (this->get_handle (), (char *) buf, n,
 		       overlapped);
+}
+
+inline ssize_t 
+ACE_SOCK_IO::send (const void *buf, size_t len, int flags,
+		   const ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_SOCK_IO::send");
+  return ACE::send (this->get_handle (), buf, len, flags, timeout);
+}
+
+inline ssize_t 
+ACE_SOCK_IO::recv (void *buf, size_t len, int flags,
+		   const ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_SOCK_IO::recv");
+  return ACE::recv (this->get_handle (), buf, len, flags, timeout);
 }

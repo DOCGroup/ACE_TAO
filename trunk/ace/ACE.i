@@ -13,10 +13,8 @@ ACE::send (ACE_HANDLE handle, const void *buf, size_t len)
   
 #if defined (ACE_WIN32)
   return ACE_OS::send (handle, (const char *) buf, len);
-#elif defined (VXWORKS)
-  return ::write (handle, (char *) buf, len);
 #else
-  return ::write (handle, (const char *) buf, len);
+  return ACE_OS::write (handle, (const char *) buf, len);
 #endif /* ACE_WIN32 */
 }
 
@@ -57,5 +55,15 @@ ACE::strecpy (char *s, const char *t)
     continue;
 
   return dscan - 1;
+}
+
+// Return flags currently associated with handle.
+
+inline int
+ACE::get_flags (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE::get_flags");
+
+  return ACE_OS::fcntl (handle, F_GETFL, 0);
 }
 

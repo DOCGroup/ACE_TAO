@@ -301,9 +301,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::open (ACE_Naming_Context::Context_Sc
 
 template <ACE_MEM_POOL_1, class LOCK> 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::ACE_Local_Name_Space (void)
-  : name_space_map_ (0),
-    name_options_ (0),
-    allocator_ (0)
+  : allocator_ (0),
+    name_space_map_ (0),
+    name_options_ (0)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
 }

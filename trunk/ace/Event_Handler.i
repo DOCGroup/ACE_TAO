@@ -111,16 +111,14 @@ ACE_Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 }
 
 ACE_INLINE int
-ACE_Event_Handler::handle_input_complete (ACE_Message_Block *message, 
-					  long bytes_transfered)
+ACE_Event_Handler::handle_input_complete (ACE_Message_Block *, long)
 {
   ACE_TRACE ("ACE_Event_Handler::handle_input_complete");
   return -1;
 }
 
 ACE_INLINE int
-ACE_Event_Handler::handle_output_complete (ACE_Message_Block *message,
-					   long bytes_transfered)
+ACE_Event_Handler::handle_output_complete (ACE_Message_Block *, long)
 {
   ACE_TRACE ("ACE_Event_Handler::handle_input_complete");
   return -1;

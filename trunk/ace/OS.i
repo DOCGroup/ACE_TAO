@@ -2066,7 +2066,7 @@ ACE_OS::gethostbyname (const char *name)
 ACE_INLINE int 
 ACE_OS::select (int width, 
 		fd_set *rfds, fd_set *wfds, fd_set *efds, 
-		ACE_Time_Value *timeout)
+		const ACE_Time_Value *timeout)
 {
 // ACE_TRACE ("ACE_OS::select");
   ACE_SOCKCALL_RETURN (::select (width, 
@@ -5204,9 +5204,9 @@ ACE_OS::getenv (const char *symbol)
 
 ACE_INLINE
 ACE_Str_Buf::ACE_Str_Buf (void *b, int l, int max)
-  : buf (b), 
+  : maxlen (max),
     len (l), 
-    maxlen (max) 
+    buf (b)
 { 
 }
 

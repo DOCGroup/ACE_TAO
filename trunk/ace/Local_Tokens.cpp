@@ -26,8 +26,8 @@ ACE_Tokens::dump (void) const
 }
 
 ACE_Tokens::ACE_Tokens (void)
-  : reference_count_ (0),
-    visited_ (0)
+  : visited_ (0),
+    reference_count_ (0)
 {
   ACE_TRACE ("ACE_Tokens::ACE_Tokens");
 }
@@ -69,11 +69,11 @@ ACE_TPQ_Entry::dump (void) const
 ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy, 
 			      const char *client_id)
   : cond_var_ (lock_),
+    next_ (0),
     // This const typecast is safe.
     proxy_ ((ACE_Token_Proxy *) new_proxy),
     nesting_level_ (0),
-    sleep_hook_ (0),
-    next_ (0)
+    sleep_hook_ (0)
 {
   ACE_TRACE ("ACE_TPQ_Entry::ACE_TPQ_Entry");
 
@@ -1405,4 +1405,5 @@ ACE_Token_Name::dump (void) const
 template class ACE_TSS <ACE_TPQ_Entry>;
 #endif /* ACE_NO_TSS_TOKENS */
 template class ACE_Unbounded_Stack <ACE_TPQ_Entry *>;
+template class ACE_Stack_Node <ACE_TPQ_Entry *>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

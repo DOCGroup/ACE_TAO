@@ -43,6 +43,20 @@ public:
   ssize_t recv (iovec iov[], size_t n) const;
   // Recv a vector of n byte messages to the connected socket. 
 
+  ssize_t send (const void *buf, size_t len, int flags,
+		const ACE_Time_Value *timeout);
+  // Wait to to <timeout> amount of time to send up to <len> bytes
+  // into <buf> from <handle> (uses the <send> call).  If <send> times
+  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
+  // number of bytes sent is returned.
+
+  ssize_t recv (void *buf, size_t len, int flags, 
+		const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to receive up to <len> bytes
+  // into <buf> from <handle> (uses the <recv> call).  If <recv> times
+  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
+  // number of bytes received is returned.
+
   ssize_t send (size_t n, ...) const;
   // Send varargs messages to the connected socket. 
 
