@@ -244,7 +244,7 @@ be_visitor_field_ch::visit_interface (be_interface *node)
     }
   else
     {
-      *os << bt->name () << "_var>";
+      *os << bt->name () << "_var";
     }
 
   return 0;
