@@ -138,7 +138,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->has_mixed_parentage ())
     {
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "void" << be_nl
           << "CORBA::release (" << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl
@@ -226,8 +226,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_local ())
     {
-      *os << be_nl << be_nl 
-          << node->name () << "::" << node->local_name () 
+      *os << be_nl << be_nl
+          << node->name () << "::" << node->local_name ()
           << " (void)" << be_nl
           << "{}";
     }
@@ -235,7 +235,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (! node->is_abstract () && ! node->is_local ())
     {
        // Generate the destructor and default constructor.
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << node->name () << "::" << node->local_name ()
           << " (int collocated)" << be_nl
           << "{" << be_idt_nl
@@ -244,7 +244,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_uidt << "}";
 
       // Collocation setup method.
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "void" << be_nl
           << node->name () << "::" << node->flat_name ()
           << "_setup_collocation (int collocated)" << be_nl
@@ -316,7 +316,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "void" << be_nl
           << node->name () << "::_add_ref (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->Object::_add_ref ();" << be_uidt_nl
+          << "this->ACE_NESTED_CLASS (CORBA, Object)::_add_ref ();"
+          << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -496,7 +497,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
                              "visit_interface - "
-                             "_is_a method codegen failed\n"), 
+                             "_is_a method codegen failed\n"),
                             -1);
         }
 
@@ -538,7 +539,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "return this->Object::_is_a (" << be_idt << be_idt_nl
+          *os << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
+              << be_idt << be_idt_nl
               << "value" << be_nl
               << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
