@@ -34,6 +34,7 @@
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
 #include "ace/Pipe.h"
+#include "ace/Lock_Adapter_T.h"
 
 // Forward declarations
 class ACE_Sig_Handler;

@@ -5,6 +5,7 @@
 #define ACE_DUMP_T_C
 
 #include "ace/Dump_T.h"
+#include "Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
