@@ -1,6 +1,27 @@
+Tue Oct 22 15:11:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV.dsp:
+	* orbsvcs/orbsvcs/CosConcurrency.dsp:
+	* orbsvcs/orbsvcs/CosEvent.dsp:
+	* orbsvcs/orbsvcs/CosLifeCycle.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/CosNaming.dsp:
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosTime.dsp:
+	* orbsvcs/orbsvcs/CosTrading.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+	* orbsvcs/orbsvcs/FT_ORB.dsp:
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	* orbsvcs/orbsvcs/Svc_Utils.dsp: Went over all project files in
+	  TAOACE.dsw and fixed the Custom Build settings for all IDL
+	  files.  Some of the settings were missing for some reason.
+	  Thanks to John Morey <jmorey@mmintl.com> for reporting the
+	  problem.
+
 Tue Oct 22 10:15:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Connection_Handler.cpp: Fixed a unused variable warning. 
+	* tao/Connection_Handler.cpp: Fixed a unused variable warning.
 
 Mon Oct 21 23:17:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -11,7 +32,7 @@ Mon Oct 21 22:45:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	Bug fix for [BUGID 1269]. Thanks to Carlos O'Ryan for donating
 	this patch.
-	
+
 	* tao/Connection_Handler.cpp:
 	* tao/Connection_Handler.h:
 	* tao/Connection_Handler.inl:
@@ -29,23 +50,23 @@ Mon Oct 21 22:45:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/IIOP_Transport.h:
 	* tao/Transport.cpp:
 	* tao/Transport.h: Changes to the ORB Core. The details are as
-	  follows 
+	  follows
 
 	  - It eliminates the two refcounts in the connection handler and
 	    combines as one refcount.
 
 	  - The transport_ field in the Connection_Handler class is
- 	    atomically modified. 
-	  
-	  - Closing connections are also atomic. 
-	  
+ 	    atomically modified.
+
+	  - Closing connections are also atomic.
+
 	  - When the connection is closed all the activations in the
-	    reactor are removed. 
+	    reactor are removed.
 
 	  For all the other gory details like the motivation for these
 	  changes, it is advised you refer to BUGID's 1202, 1269 and
 	  1270.
-	
+
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
 	* tao/Strategies/DIOP_Connection_Handler.h:
 	* tao/Strategies/DIOP_Transport.cpp:
@@ -65,7 +86,7 @@ Mon Oct 21 22:45:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
 
 	  Changes to the pluggable protocols to reflect the changes in the
 	  ORB Core.
@@ -135,7 +156,7 @@ Mon Oct 21 14:29:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  to switch between conventional svc.conf files and XML-based
 	  svc.conf files.  The default file extension is ".conf".  To use
 	  XML-based format, you need to define an environment variable
-	  ACE_RUNTEST_SVCCONF_EXT as ".conf.xml".  
+	  ACE_RUNTEST_SVCCONF_EXT as ".conf.xml".
 
 Mon Oct 21 14:27:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -148,7 +169,7 @@ Mon Oct 21 14:27:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Mon Oct 21 06:38:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Fixed link errors in Win32
-	  builds. 
+	  builds.
 
 Mon Oct 21 11:03:06 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
@@ -161,17 +182,17 @@ Sun Oct 20 08:18:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Sun Oct 20 00:23:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp: 
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
 	  Renamed the variables loc1 and loc2 as location1 and
 	  location2. The variables loc1 and loc2 is a legacy left over in
 	  UNIX, which denotes pointers to characters matched by regular
 	  expressions. This should fix compile errors in SunCC builds.
-	
+
 Sun Oct 20 00:10:14 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/Makefile: Fixed the problems with this
 	  change "Fri Oct 18 15:52:11 2002 Priyanka Gontla
-	  <pgontla@ociweb.com>". 
+	  <pgontla@ociweb.com>".
 
 Sat Oct 19 09:47:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -208,8 +229,8 @@ Fri Oct 18 22:23:53 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
         * TAO_IDL/fe/lex.yy.cpp:
 
           Fixed a problem with the SunCC preprocessor. When processing a
-          non-quoted scoped name, as may occur in #pragma version, typeid, 
-          or typeprefix, this preprocessor regards the double colons as 
+          non-quoted scoped name, as may occur in #pragma version, typeid,
+          or typeprefix, this preprocessor regards the double colons as
           separate tokens and bookends them with spaces. Had to add code to
           check for this and strip out the spaces.
 
@@ -224,31 +245,31 @@ Fri Oct 18 16:11:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (Log_i): Patch to prevent compile
 	  errors on OpenBSD. Thanks to Frank Hunleth <frank@hunleth.com>
-	  for the patch. The problem is because of a type conversion from  
+	  for the patch. The problem is because of a type conversion from
 	  unsigned long to time_t. Looks like time_t is an int on
-	  OpenBSD. 
-	  
+	  OpenBSD.
+
 	* orbsvcs/orbsvcs/Log/Log_i.h: Some cosmetic fixes.
 
 Fri Oct 18 16:09:37 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/README.txt: 
-	* orbsvcs/ImplRepo_Service/README: 
+	* orbsvcs/ImplRepo_Service/README.txt:
+	* orbsvcs/ImplRepo_Service/README:
 	  Removed README and added README.txt instead as doxygen
 	  is looking for only txt files besides the normal implementation,
 	  header and inline files.
 
 	  Thanks to Bala for pointing the reason why the index.html is not
 	  getting generated via doxygen.
-	
+
 Fri Oct 18 15:52:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/tests/ImplRepo/Makefile: 
-	* orbsvcs/tests/ImplRepo/NameService/Makefile: 
-	* orbsvcs/ImplRepo_Service/Makefile: 
+	* orbsvcs/tests/ImplRepo/Makefile:
+	* orbsvcs/tests/ImplRepo/NameService/Makefile:
+	* orbsvcs/ImplRepo_Service/Makefile:
 	* orbsvcs/orbsvcs/Makefile:
 	  Applied the patches provided by Craig Rodrigues so that
-	  Implementation Repostory and related tests will be compiled 
+	  Implementation Repostory and related tests will be compiled
 	  only when ImplRepo is added to the list of TAO_ORBSVCS
 	  in platform_macros.
 
@@ -257,22 +278,22 @@ Fri Oct 18 15:52:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 Fri Oct 18 15:59:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* examples/AMH/Sink_Server/mt_server.cpp: 
+	* examples/AMH/Sink_Server/mt_server.cpp:
 	* examples/AMH/Sink_Server/st_server.cpp: Removed strange inl file
 	  inclusions in the above files.
 
 Fri Oct 18 15:56:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/Base_Server.h: Included the inline
-	  file in the header file. 
+	  file in the header file.
 
 Fri Oct 18 15:46:29 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing: Removed the check for
 	  'ami' and 'interceptors' from this file. Most of the Makefiles
 	  in the orbsvcs adds the check in the top level Makefile, with a
-	  reason. 
-	
+	  reason.
+
 	* orbsvcs/orbsvcs/Makefile: Moved the check here. The main reason
 	  for having the check here is that, once the list of Makefiles
 	  that needs to be run is built, it writes out the
@@ -280,18 +301,18 @@ Fri Oct 18 15:46:29 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  said service is not executed. This creates problems for the
 	  tests and examples that depends on the contents within the
 	  ORBSVCS_COMPONENTS.list file.
-	
+
 Fri Oct 18 15:40:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/ImR_Activator.bor: 
-	  Corrected the NAME of the executable. 
+	* orbsvcs/ImplRepo_Service/ImR_Activator.bor:
+	  Corrected the NAME of the executable.
 	  Thanks to Christian Barheine <cbarheine@sympatec.com>
 	  for finding the problem and also for the patch.
-	
+
 Fri Oct 18 10:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/Base_Server.cpp: Fixed a warning in
-	  g++ builds. 
+	  g++ builds.
 
 Thu Oct 17 18:35:29 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
@@ -349,8 +370,8 @@ Thu Oct 17 21:04:49 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Thu Oct 17 12:19:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile: 
-	  
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
+
 	  Added the Messaging and Naming library to the link line.
 
 Thu Oct 17 11:58:49 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
@@ -368,7 +389,7 @@ Thu Oct 17 11:58:49 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	  Fixed a mistake in the changes made in
 
 	  Wed Oct 16 17:16:38 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
- 
+
 	  and made the same changes to code generation for abstract
 	  interfaces.
 
@@ -386,8 +407,8 @@ Thu Oct 17 10:47:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
 
 	  Check whether the CosLoadBalancing library was built. This
-	  check was there already but at the wrong place. 
-	
+	  check was there already but at the wrong place.
+
 Wed Oct 16 17:16:38 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
@@ -395,13 +416,13 @@ Wed Oct 16 17:16:38 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
           Fixed a problem with MSVC not being able to invoke fully
           qualified member methods (except in the initializer), which
-          appeared when the _tao_obv_narrow() method calls the 
+          appeared when the _tao_obv_narrow() method calls the
           corresponding method of a base class. If the base class has
           the same local name, the ACE_NESTED_CLASS macro breaks and
           the call goes into an endless loop. For MSVC, identical
           methods using the flat name are generated for each class,
           and called by derived classes. Thanks to Don Hinton
-          <dhinton@ieee.org> for reporting the bug and Jon Franklin 
+          <dhinton@ieee.org> for reporting the bug and Jon Franklin
 	  <jfranklin@dctd.saic.com> for providing a patch.
 
 Wed Oct 16 12:37:07 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
@@ -415,7 +436,7 @@ Wed Oct 16 12:23:29 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu
 	* orbsvcs/tests/LoadBalancing/GenericFactory:
 	  Added a new directory "Application_Controlled".
 	  This directory contains all the files required for testing
-	  the object group creation and deletion with 
+	  the object group creation and deletion with
 	  application-controlled membership.
 
 Wed Oct 16 11:49:21 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
