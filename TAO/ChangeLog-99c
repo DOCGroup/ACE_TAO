@@ -1,6 +1,13 @@
+Tue Apr 06 16:29:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (ORB_init): Some how, calling to init_orb_globals()
+	  got moved before ORB Core initialization.  This must come AFTER
+	  the initialization of ORB Core.  Otherwise, all hell breaks
+	  loss.
+
 Tue Apr  6 16:29:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/echo/Echo_i.cpp (echo_string): 
+	* examples/Simple/echo/Echo_i.cpp (echo_string):
 	* examples/Simple/echo/Echo_Client_i.cpp
 	* examples/Simple/echo/server.cpp
 	Made some changes to the ACE_TRY macros
@@ -8,13 +15,13 @@ Tue Apr  6 16:29:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Apr  6 15:44:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	  Changed the Names of the following files:
-	
-	* orbsvcs/Time_Service/server.cpp -> Time_Service_Server.cpp: 
-	* orbsvcs/Time_Service/clerk.cpp  -> Time_Service_Clerk.cpp: 
+
+	* orbsvcs/Time_Service/server.cpp -> Time_Service_Server.cpp:
+	* orbsvcs/Time_Service/clerk.cpp  -> Time_Service_Clerk.cpp:
 
 	* orbsvcs/Time_Service/Makefile: Changed the Makefile to reflect
 	  the above changes.
-	
+
 Tue Apr 06 15:33:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * all orbscvs/tests/AVStreams Makefiles:
