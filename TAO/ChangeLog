@@ -1,3 +1,12 @@
+Fri Sep 24 11:13:30 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Sequence_Unit_Tests/allocation_traits.hpp:
+        
+          Changed line with reinterpret_cast<> in
+          unbounded_reference_allocation_traits::allocbuf() to be
+          more palatable for MSVC 7.1. Thanks to Carlos O'Ryan
+          <coryan@atdesk.com> for the replacement line.
+
 Fri Sep 24 10:08:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV/RTP.cpp:
