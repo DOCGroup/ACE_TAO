@@ -1,3 +1,27 @@
+Mon Sep 27 19:45:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Remove calling Context_Impl_Base () and Servant_Impl_Base ()
+	  directly. 
+
+	* DAnCE/ciao/Context_Impl_Base.cpp:
+	* DAnCE/ciao/Context_Impl_Base.h:
+	* DAnCE/ciao/Servant_Impl_Base.cpp:
+	* DAnCE/ciao/Servant_Impl_Base.h:
+	* ciao/Context_Impl_Base.cpp:
+	* ciao/Context_Impl_Base.h:
+	* ciao/Servant_Impl_Base.cpp:
+	* ciao/Servant_Impl_Base.h:
+
+	  Added a explicit default constructor so that they are not called
+	  implicitly when derived classes are instantiated.
+
+	* DAnCE/DomainApplicationManager/Deployment_Configuration.h:	
+
+	  Checking in the change mentioned before just now, since it
+	  fell trhough the cracks. 
+	
 Mon Sep 27 15:41:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/DomainApplicationManager/Deployment_Configuration.h:

@@ -45,6 +45,8 @@ namespace CIAO
     : public virtual POA_Components::CCMObject
   {
   public:
+    explicit Servant_Impl_Base (void);
+
     Servant_Impl_Base (Session_Container * c);
 
     virtual ~Servant_Impl_Base (void);
@@ -85,7 +87,7 @@ namespace CIAO
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
-                       
+
     virtual ::Components::FacetDescriptions *
     get_named_facets (const ::Components::NameList & names
                         ACE_ENV_ARG_DECL)
@@ -95,11 +97,11 @@ namespace CIAO
     virtual ::Components::FacetDescriptions *
     get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
     virtual ::Components::ConsumerDescriptions *
     get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -170,22 +172,22 @@ namespace CIAO
                     CORBA::Object_ptr port_ref);
 
     CORBA::Object_ptr lookup_facet (const char *port_name);
-    
+
     ::Components::FacetDescription *lookup_facet_description (
         const char *port_name
       );
 
     void add_consumer (const char *port_name,
                        ::Components::EventConsumerBase_ptr port_ref);
-                       
+
     ::Components::EventConsumerBase_ptr lookup_consumer (
         const char *port_name
       );
-      
+
     ::Components::ConsumerDescription *lookup_consumer_description (
         const char *port_name
       );
-                       
+
   protected:
     typedef ACE_Hash_Map_Manager_Ex<const char *,
                                     ::Components::FacetDescription_var,
