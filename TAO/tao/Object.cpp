@@ -686,10 +686,19 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
       return (CORBA::Boolean) cdr.good_bit ();
     }
 
-  TAO_Stub *stubobj = x->_stubobj ();
+  if (!x->is_evaluated ())
+    {
+      // @@ This is too inefficient. Need to speed this up if this is
+      // a bottle neck.
+      cdr << ACE_const_cast (IOP::IOR &,
+                             x->ior ());
+      return cdr.good_bit ();
+    }
 
-  if (stubobj == 0)
-    return 0;
+   TAO_Stub *stubobj = x->_stubobj ();
+
+   if (stubobj == 0)
+     return 0;
 
   // STRING, a type ID hint
   if ((cdr << stubobj->type_id.in ()) == 0)
