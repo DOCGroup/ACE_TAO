@@ -564,9 +564,12 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
 
   TAO_OutputCDR cdr;
 
-  // To be updated later with the actual offset value.
-  cdr << (long) 12345;
+  // Negative offset value, updated later with the actual value.
+  cdr << 0xffffffff;
 
+  // In an embedded recursive typecode, the indirection
+  // value -1 goes where the TCKind would go for any
+  // other embedded typecode.
   CORBA::TCKind rec_kind = (CORBA::TCKind) 0xffffffff;
 
   return this->assemble_tc (cdr,
