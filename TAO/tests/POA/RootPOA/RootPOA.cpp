@@ -1,3 +1,4 @@
+// $Id$
 //==================================================================================
 //
 // = LIBRARY
@@ -6,13 +7,13 @@
 //
 // = FILENAME
 //     RootPOA.cpp
-// 
+//
 // = DESCRIPTION
-//     This program gets the name of the  Root POA and prints it out on 
-//     the standard output. 
-// 
+//     This program gets the name of the  Root POA and prints it out on
+//     the standard output.
+//
 // = AUTHOR
-//     Irfan Pyarali 
+//     Irfan Pyarali
 //
 //==================================================================================
 
@@ -20,7 +21,7 @@
 #include "ace/streams.h"
 #include "tao/corba.h"
 
-int 
+int
 main (int argc, char **argv)
 {
   CORBA::Environment env;
@@ -32,12 +33,12 @@ main (int argc, char **argv)
       env.print_exception ("CORBA::ORB_init");
       return -1;
     }
-  
+
   // Resolve the initial references for the name RootPOA
   // thus getting an object of type CORBA::Object
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  //apply _narrow on the object of type CORBA::Object, 
+  //apply _narrow on the object of type CORBA::Object,
   // to make it a POA class Object
   PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in(), env);
   if (env.exception () != 0)
@@ -45,7 +46,7 @@ main (int argc, char **argv)
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
-  
+
   // Get the name of the RootPOA
   CORBA::String_var poa_name = root_poa->the_name (env);
   if (env.exception () != 0)
@@ -53,12 +54,12 @@ main (int argc, char **argv)
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
-  
+
   cout << "The RootPOA is : " << poa_name.in () << endl;
 
   //destroy the POA object. Also destroys the child POAs if any.
- root_poa->destroy (CORBA::B_TRUE, 
-                     CORBA::B_TRUE, 
+ root_poa->destroy (CORBA::B_TRUE,
+                     CORBA::B_TRUE,
                      env);
   if (env.exception () != 0)
     {
