@@ -353,7 +353,7 @@ typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 // Forward declarations for INTERFACE REPO..Bala
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
-// To avoid cyclic dependencies, this is defined here and 
+// To avoid cyclic dependencies, this is defined here and
 // typedef'd to DefinitionKind inside the IR namespace.
 enum TAO_Export IR_DefinitionKind
   {
@@ -586,6 +586,10 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Object_var Object_var;
   typedef CORBA_Object_out Object_out;
 
+  class LocalObject;
+  class LocalObject_var;
+  class LocalObject_out;
+
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
   typedef CORBA_Principal_var Principal_var;
@@ -759,7 +763,7 @@ TAO_NAMESPACE CORBA
     tk_value_box          = 30,
     tk_native             = 31,
     tk_abstract_interface = 32,
-    tk_component          = 33, 
+    tk_component          = 33,
     tk_home               = 34,
 
     // This symbol is not defined by CORBA 2.0.  It's used to speed up
