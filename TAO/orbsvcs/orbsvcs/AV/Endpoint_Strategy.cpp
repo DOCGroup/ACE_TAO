@@ -215,10 +215,10 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev (CORBA::Environment &ACE_TRY_ENV)
     {
       char vdev_name [BUFSIZ];
       ACE_OS::sprintf (vdev_name,
-                       "%s:%s:%d",
+                       "%s:%s:%ld",
                        "VDev",
                        this->host_,
-                       this->pid_);
+                       (long) this->pid_);
 
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
 
@@ -297,10 +297,10 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &ACE
     {
       char stream_endpoint_name[BUFSIZ];
       ACE_OS::sprintf (stream_endpoint_name,
-                       "%s:%s:%d",
+                       "%s:%s:%ld",
                        "Stream_Endpoint_A",
                        this->host_,
-                       this->pid_);
+                       (long) this->pid_);
 
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
@@ -391,10 +391,10 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (CORBA::Environment &ACE
     {
       char stream_endpoint_name[BUFSIZ];
       ACE_OS::sprintf (stream_endpoint_name,
-                       "%s:%s:%d",
+                       "%s:%s:%ld",
                        "Stream_Endpoint_B",
                        this->host_,
-                       this->pid_);
+                       (long) this->pid_);
 
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
