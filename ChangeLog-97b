@@ -1,3 +1,11 @@
+Mon Oct 20 08:48:28 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.h, config-hpux-10.x.h:  Added a new definition,
+	  ACE_HAS_TIUSER_H_BROKEN_EXTERN_C - HP-UX's tiuser.h has
+	  def for t_errno/_terrno() outside of an extern "C" block,
+	  so in this case, wrap #include <tiuser.h> in our own
+	  extern "C" block.  HP support call W3711856.
+
 Mon Oct 20 07:49:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Makefile (TIMESTAMP): moved chmod after cvs commit.
