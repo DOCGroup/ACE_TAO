@@ -19,8 +19,8 @@ ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
   SHLIB = $(SHLIB2)
 endif # Notify
 
-ACE_SHLIBS = -lTAO_ETCL -lTAO_CosNotification -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
-LDLIBS  = -lTAO_ETCL -lTAO_CosNotification -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
+LDLIBS  = -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
 
 SRCS =  Notify_PushConsumer \
         Notify_PushSupplier \

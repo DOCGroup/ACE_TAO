@@ -24,7 +24,7 @@ SUPPLIER_OBJS = Structured_Supplier.o controlS.o controlC.o
 CONSUMER_OBJS = Structured_Consumer.o Notify_Push_Consumer.o controlC.o controlS.o
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I../lib
-LDLIBS = -lNotifyTests -lTAO_ETCL -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lNotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
