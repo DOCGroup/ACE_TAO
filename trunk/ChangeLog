@@ -1,3 +1,13 @@
+Sat Oct 19 16:57:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_*.doxygen:
+          Disabled the doxygen warnings. The warnings about not documented
+          members are still on. The warnings are not disabled in the ace
+          libraries because we could fix them there, but we can't fix them
+          in TAO because of the environment macro's that cause the method
+          definition arguments to be different than the implementation
+          arguments.
+
 Sat Oct 19 16:47:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_wchar.h:
