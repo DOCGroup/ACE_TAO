@@ -207,9 +207,9 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
             / sizeof (ACE_Malloc_Header);
 #endif /* (__hpux) && defined (__LP64__) */
 
-          AMS (++this->cb_ptr_->malloc_stats_.nchunks_);
-          AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
-          AMS (++this->cb_ptr_->malloc_stats_.ninuse_);
+          ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nchunks_);
+          ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
+          ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.ninuse_);
 
           // Insert the newly allocated chunk of memory into the free
           // list.  Add "1" to skip over the <ACE_Malloc_Header> when
@@ -324,7 +324,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
     {
       if (currp->size_ >= nunits) // Big enough
         {
-          AMS (++this->cb_ptr_->malloc_stats_.ninuse_);
+          ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.ninuse_);
           if (currp->size_ == nunits)
             // Exact size, just update the pointers.
             prevp->next_block_ = currp->next_block_;
@@ -332,7 +332,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
             {
               // Remaining chunk is larger than requested block, so
               // allocate at tail end.
-              AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
+              ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
               currp->size_ -= nunits;
               currp += currp->size_;
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
@@ -358,9 +358,9 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
                                         chunk_bytes);
           if (currp != 0)
             {
-              AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
-              AMS (++this->cb_ptr_->malloc_stats_.nchunks_);
-              AMS (++this->cb_ptr_->malloc_stats_.ninuse_);
+              ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
+              ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nchunks_);
+              ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.ninuse_);
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
               new ((void *) &currp->next_block_) ACE_MALLOC_HEADER_PTR;
@@ -444,7 +444,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_free (void *ap)
   // Join to upper neighbor.
   if ((blockp + blockp->size_) == currp->next_block_)
     {
-      AMS (--this->cb_ptr_->malloc_stats_.nblocks_);
+      ACE_MALLOC_STATS (--this->cb_ptr_->malloc_stats_.nblocks_);
       blockp->size_ += currp->next_block_->size_;
       blockp->next_block_ = currp->next_block_->next_block_;
     }
@@ -454,14 +454,14 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_free (void *ap)
   // Join to lower neighbor.
   if ((currp + currp->size_) == blockp)
     {
-      AMS (--this->cb_ptr_->malloc_stats_.nblocks_);
+      ACE_MALLOC_STATS (--this->cb_ptr_->malloc_stats_.nblocks_);
       currp->size_ += blockp->size_;
       currp->next_block_ = blockp->next_block_;
     }
   else
     currp->next_block_ = blockp;
 
-  AMS (--this->cb_ptr_->malloc_stats_.ninuse_);
+  ACE_MALLOC_STATS (--this->cb_ptr_->malloc_stats_.ninuse_);
   this->cb_ptr_->freep_ = currp;
 }
 
