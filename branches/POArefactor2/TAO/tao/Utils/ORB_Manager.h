@@ -14,6 +14,7 @@
 #define TAO_ORB_MANAGER_H
 #include /**/ "ace/pre.h"
 
+#include "utils_export.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -32,7 +33,7 @@
  * CORBA applications.  It's just a wrapper and doesn't do
  * anything special within the ORB itself.
  */
-class TAO_PortableServer_Export TAO_ORB_Manager
+class TAO_UTILS_Export TAO_ORB_Manager
 {
 public:
   // = Initialization and termination methods.
