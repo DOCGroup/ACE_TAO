@@ -15,7 +15,7 @@
 		<Configuration
 			Name="<%configuration%>|<%platform%>"
 			OutputDirectory=".\<%if(type_is_dynamic)%><%libout%><%else%><%output_dir%><%endif%>"
-			IntermediateDirectory=".\<%intermediate_dir%>"
+			IntermediateDirectory=".\<%intermediate_dir%>\<%noextension(project_file)%>"
 			ConfigurationType="<%configuration_type("2")%>"
 			UseOfMFC="<%use_mfc("0")%>"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
@@ -39,11 +39,11 @@
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="<%pch_header%>"
 <%if(pch_source)%>
-				PrecompiledHeaderFile=".\<%intermediate_dir%>\<%noextension(pch_source)%>.pch"
+				PrecompiledHeaderFile=".\<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_source)%>.pch"
 <%endif%>
 <%endif%>
-				AssemblerListingLocation=".\<%intermediate_dir%>"
-				ObjectFile=".\<%intermediate_dir%>\"
+				AssemblerListingLocation=".\<%intermediate_dir%>\<%noextension(project_file)%>"
+				ObjectFile=".\<%intermediate_dir%>\<%noextension(project_file)%>\"
 <%if(pdb)%>
 <%if(sharedname)%>
 				ProgramDataBaseFileName="<%dllout%>"

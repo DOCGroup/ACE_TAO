@@ -38,11 +38,7 @@ NULL=nul
 
 <%if(exename)%>
 OUTDIR=<%output_dir(".")%>
-<%if(install)%>
-INSTALLDIR=<%install%>
-<%else%>
-INSTALLDIR=$(OUTDIR)
-<%endif%>
+INSTALLDIR=<%if(install)%><%install%>\<%endif%><%output_dir%>
 <%endif%>
 <%if(type_is_static)%>
 OUTDIR=<%output_dir(".")%>
@@ -50,9 +46,9 @@ OUTDIR=<%output_dir(".")%>
 <%if(type_is_dynamic)%>
 OUTDIR=<%libout%>
 <%endif%>
-INTDIR=<%intermediate_dir(".")%>
+INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 
-ALL : "<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
+ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
 
 
 CLEAN :
@@ -76,12 +72,17 @@ CLEAN :
 <%endif%>
 	-@erase "<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
 
-<%if(type_is_dynamic)%>
+<%if(install)%>
+"$(INSTALLDIR)" :
+    if not exist "<%install%>/$(NULL)" mkdir "<%install%>"
+    if not exist "<%install%>/<%output_dir%>/$(NULL)" mkdir "<%install%>/<%output_dir%>"
+
+<%endif%>
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-<%endif%>
 "$(INTDIR)" :
+    if not exist "<%intermediate_dir%>/$(NULL)" mkdir "<%intermediate_dir%>"
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
