@@ -42,6 +42,7 @@ use Getopt::Std;
 @files_makefile = ();
 @files_mpc = ();
 @files_bor = ();
+@files_noncvs = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -117,6 +118,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.bor$/i) {
         push @files_bor, ($name);
+    }
+    elsif ($name =~ /\.(ncp|opt)$/i) {
+        push @files_noncvs, ($name);
     }
 }
 
@@ -223,6 +227,15 @@ sub check_for_newline ()
     }
 }
 
+
+# This test checks for files that are not allowed to be in cvs
+sub check_for_noncvs_files ()
+{
+    print "Running non cvs files check\n";
+    foreach $file (@files_noncvs) {
+        print_error ("File $file should not be in cvs!");
+    }
+}
 
 
 # This test checks for the use of "inline" instead of ACE_INLINE
@@ -1108,6 +1121,7 @@ else {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_noncvs_files () if ($opt_l >= 1);
 check_for_synch_include () if ($opt_l >= 1);
 check_for_OS_h_include () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 1);
