@@ -1,3 +1,17 @@
+Thu Mar 10 11:20:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        
+          Added preprocessor checks around IDL compiler code that
+          generates inline constants. For VC6, which is broken in
+          its handling of inline constants, inline constant
+          generation is toggled off unless the constant is declared
+          in a module or at global scope. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out the problem
+          caused by recent changes to the IDL compiler's generation
+          of constants.
+
 Thu Mar 10 09:37:25 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

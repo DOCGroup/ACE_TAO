@@ -125,17 +125,17 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       *os << " " << node->local_name ();
     }
 
-  // (JP) I'm turning on inline constants by default for all scopes.
-  // The only problem I remember having with them is with 
-  // pre-compiled headers, in which case folks can use -Guc to
-  // explicitly uninline constants. If this change turns up
-  // problems in our nightly builds, I'll revert it, otherwise it
-  // should stay.
-
-//  if (!node->is_nested ()
-//      || (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
-//          && be_global->gen_inline_constants ()))
+  // (JP) Workaround for VC6's broken handling of inline constants
+  // until the day comes when we no longer support it. This won't
+  // work for cross-compiling - hopefully the whole issue will soon
+  // be moot.
+#if defined (_MSC_VER) && (_MSC_VER < 1300)
+  if (!node->is_nested ()
+      || (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
+          && be_global->gen_inline_constants ()))
+#else
   if (!node->is_nested () || be_global->gen_inline_constants ())
+#endif
     {
       *os << " = " << node->constant_value ();
     }
