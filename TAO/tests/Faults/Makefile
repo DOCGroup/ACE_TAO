@@ -66,7 +66,7 @@ pong: $(addprefix $(VDIR),$(PONG_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
+	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext) ping$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
