@@ -1,3 +1,11 @@
+Wed Sep  1 07:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Synch_Options.cpp:
+        * ace/Shared_Object.cpp:
+        * ace/Read_Buffer.cpp:
+        * ace/SV_Message.inl:
+          Added include of config-all.h to get ACE_TRACE
+
 Tue Aug 31 12:18:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:
