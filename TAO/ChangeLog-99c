@@ -20,6 +20,9 @@ Sat Aug 21 17:18:07 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* TAO/examples/Makefile:
 	  Added a new example to TAO: Load Balancing Service.
 
+	* TAO/examples/Makefile:
+	  Generated the dependencies.
+
 Sat Aug 21 14:16:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO version 1.0.2 released.
