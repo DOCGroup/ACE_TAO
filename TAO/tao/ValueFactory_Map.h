@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ValueFactory_Map.h
-//
-// = AUTHOR
-//     Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     ValueFactory_Map.h
+ *
+ *  $Id$
+ *
+ *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ */
+//=============================================================================
+
 
 #ifndef TAO_VALUEFACTORY_MAP_H
 #define TAO_VALUEFACTORY_MAP_H
@@ -37,26 +34,31 @@ public:
   ~TAO_ValueFactory_Map ();
 
 
+  /**
+   * Associate the factory (int_id) with the repo_id (ext_id).
+   * Invokes _add_ref () on the factory.
+   * If previous factory had been bind with this repo_id, this one is
+   * returned in factory (and the caller holds a reference).
+   * Returns -1 on failure, 0 on success and 1 if a previous factory
+   * is found (and returned in factory).
+   */
   int rebind (const char *repo_id, CORBA_ValueFactory_ptr &factory);
-  // Associate the factory (int_id) with the repo_id (ext_id).
-  // Invokes _add_ref () on the factory.
-  // If previous factory had been bind with this repo_id, this one is
-  // returned in factory (and the caller holds a reference).
-  // Returns -1 on failure, 0 on success and 1 if a previous factory
-  // is found (and returned in factory).
 
+  /// Removes entry for repo_id from the map and sets factory to
+  /// the tied one.
   int unbind (const char *repo_id, CORBA_ValueFactory_ptr &factory);
-  // Removes entry for repo_id from the map and sets factory to
-  // the tied one.
 
+  /**
+   * Lookup a matching factory for repo_id.
+   * Invokes _add_ref () on the factory if found.
+   * Returns -1 on failure and 0 on success.
+   */
   int find (const char *repo_id, CORBA_ValueFactory_ptr &factory);
-  // Lookup a matching factory for repo_id.
-  // Invokes _add_ref () on the factory if found.
-  // Returns -1 on failure and 0 on success.
 
   void dump (void);
 private:
 
+  /// The hash table data structure.
   typedef ACE_Hash_Map_Manager_Ex<const char *,
                                   CORBA_ValueFactory_ptr,
                                   ACE_Hash<const char *>,
@@ -64,7 +66,6 @@ private:
                                   ACE_SYNCH_RW_MUTEX>
           FACTORY_MAP_MANAGER;
   FACTORY_MAP_MANAGER map_;
-  // The hash table data structure.
 }; /* TAO_ValueFactory_Map */
 
 

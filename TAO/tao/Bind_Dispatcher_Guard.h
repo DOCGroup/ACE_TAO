@@ -1,16 +1,16 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ===========================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@uci.edu>,
-//     Chad Elliott <elliott_c@ociweb.com>
-//
-// ===========================================================================
+//=============================================================================
+/**
+ *  @file     Bind_Dispatcher_Guard.h
+ *
+ *  $Id$
+ *
+ *  @author  Carlos O'Ryan <coryan@uci.edu>
+ *  @author  Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef TAO_BIND_DISPATCHER_GUARD_H
 #define TAO_BIND_DISPATCHER_GUARD_H

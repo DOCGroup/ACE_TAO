@@ -1,22 +1,18 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     DLL_ORB.h
-//
-// = DESCRIPTION
-//     Header file for the TAO_DLL_ORB helper class.
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     DLL_ORB.h
+ *
+ *  $Id$
+ *
+ *   Header file for the TAO_DLL_ORB helper class.
+ *
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DLL_ORB_H
 #define TAO_DLL_ORB_H
@@ -31,48 +27,49 @@
 
 #include "tao/ORB.h"
 
+/**
+ * @class TAO_DLL_ORB
+ *
+ * @brief Manager for TAO library services and singleton cleanup.
+ *
+ * The <TAO_Singleton_Manager> is basically simplified version of
+ * the ACE_Object_Manager.  It is designed specifically to
+ * manage singletons created by TAO.  For example, Singleton
+ * instances created by TAO will be automatically registered
+ * with the Singleton instance of this Singleton Manager.
+ * This class is necessary to ensure that TAO-specific
+ * Singletons are centrally isolated.  The idea is that
+ * destruction of the instance of the <TAO_Singleton_Manager>
+ * triggers destruction of all objects/services registered with
+ * it.
+ */
 class TAO_Export TAO_DLL_ORB : public ACE_Task_Base
 {
-  // = TITLE
-  //     Manager for TAO library services and singleton cleanup.
-  //
-  // = DESCRIPTION
-  //     The <TAO_Singleton_Manager> is basically simplified version of
-  //     the ACE_Object_Manager.  It is designed specifically to
-  //     manage singletons created by TAO.  For example, Singleton
-  //     instances created by TAO will be automatically registered
-  //     with the Singleton instance of this Singleton Manager.
-  //
-  //     This class is necessary to ensure that TAO-specific
-  //     Singletons are centrally isolated.  The idea is that
-  //     destruction of the instance of the <TAO_Singleton_Manager>
-  //     triggers destruction of all objects/services registered with
-  //     it.
 
 public:
 
+  /// Constructor
   TAO_DLL_ORB (void);
-  // Constructor
 
+  /// Destructor
   ~TAO_DLL_ORB (void);
-  // Destructor
 
+  /// Initializes ORB when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Initializes ORB when dynamic linking occurs.
 
+  /// Terminates ORB when dynamic unlinking occurs.
   virtual int fini (void);
-  // Terminates ORB when dynamic unlinking occurs.
 
+  /// Run by a daemon thread to handle deferred processing.
   virtual int svc (void);
-  // Run by a daemon thread to handle deferred processing.
 
+  /// Returns a duplicate reference to the ORB.
   CORBA::ORB_ptr orb (void);
-  // Returns a duplicate reference to the ORB.
 
 private:
 
+  /// Reference to the ORB.
   CORBA::ORB_var orb_;
-  // Reference to the ORB.
 
 };
 

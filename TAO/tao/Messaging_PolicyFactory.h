@@ -1,20 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Messaging_PolicyFactory.h
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@uci.edu>
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Messaging_PolicyFactory.h
+ *
+ *  $Id$
+ *
+ *  @author  Carlos O'Ryan <coryan@uci.edu>  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_MESSAGING_POLICY_FACTORY_H
 #define TAO_MESSAGING_POLICY_FACTORY_H

@@ -649,8 +649,8 @@ public:
   /// Give each registered IOR interceptor the opportunity to add
   /// tagged components to profiles of each created servant.
   void establish_components (TAO_MProfile &mp,
-			     CORBA::PolicyList *policy_list,
-			     CORBA::Environment &ACE_TRY_ENV);
+                             CORBA::PolicyList *policy_list,
+                             CORBA::Environment &ACE_TRY_ENV);
 
   /// Create a new object, use the adapter registry to create a
   /// collocated object, if not possible then create a regular
@@ -966,9 +966,9 @@ protected:
   // to be "Advanced_Resource_Factory".
   static const char *resource_factory_name_;
 
-  // Name of the service object for DII request creation that needs 
-  // to be instantiated. The default value is "Dynamic_Adaper". If 
-  // TAO_DynamicInterface is linked, dynamic_adapter_name() will be 
+  // Name of the service object for DII request creation that needs
+  // to be instantiated. The default value is "Dynamic_Adaper". If
+  // TAO_DynamicInterface is linked, dynamic_adapter_name() will be
   // called to set the value to "Concrete_Dynamic_Adapter".
   static const char *dynamic_adapter_name_;
 

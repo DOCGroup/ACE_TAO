@@ -173,7 +173,7 @@ public:
   static TAO_ORBInitInfo * _narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
- 
+
   static TAO_ORBInitInfo * _unchecked_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());

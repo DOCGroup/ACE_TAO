@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Adapter.h
-//
-// = AUTHOR
-//    Carlos O'Ryan (coryan@uci.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Adapter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@uci.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_ADAPTER_H
 #define TAO_ADAPTER_H
@@ -43,31 +40,33 @@ class TAO_Export TAO_Adapter
 public:
   virtual ~TAO_Adapter (void);
 
+  /// Initialize the Adapter
   virtual void open (CORBA::Environment &) = 0;
-  // Initialize the Adapter
 
+  /// The ORB is shutting down, destroy any resources attached to this
+  /// adapter.
   virtual void close (int wait_for_completion,
                       CORBA::Environment &) = 0;
-  // The ORB is shutting down, destroy any resources attached to this
-  // adapter.
 
+  /// Check if the adapter can be closed in the current context, raise
+  /// an exception if not.
   virtual void check_close (int wait_for_completion,
                             CORBA::Environment &) = 0;
-  // Check if the adapter can be closed in the current context, raise
-  // an exception if not.
 
+  /**
+   * Return the priority assigned to this adapter.
+   * Adapters at higher priority are used first, the first adapter
+   * that matches a key is used to dispatch a request.
+   */
   virtual int priority (void) const = 0;
-  // Return the priority assigned to this adapter.
-  // Adapters at higher priority are used first, the first adapter
-  // that matches a key is used to dispatch a request.
 
+  /// Return the status....
   virtual int dispatch (TAO_ObjectKey &key,
                         TAO_ServerRequest &request,
                         void *context, /* unused? */
                         CORBA::Object_out forward_to,
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  // Return the status....
   enum {
     DS_OK,
     // The operation was successfully dispatched, an exception may
@@ -85,18 +84,20 @@ public:
     // the ORB from the PortableServer::ForwardRequest exception
   };
 
+  /// Return the name, i.e. the object id used to resolve it in the
+  /// ORB.
   virtual const char *name (void) const = 0;
-  // Return the name, i.e. the object id used to resolve it in the
-  // ORB.
 
+  /**
+   * Rerturn the root of the Object Adapter.
+   * Each adapter defines its own IDL interface accessed through the
+   * method above.
+   */
   virtual CORBA::Object_ptr root (void) = 0;
-  // Rerturn the root of the Object Adapter.
-  // Each adapter defines its own IDL interface accessed through the
-  // method above.
 
+  /// Create a collocated object using the given profile and stub.
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &) = 0;
-  // Create a collocated object using the given profile and stub.
 };
 
 // ****************************************************************
@@ -108,51 +109,57 @@ class TAO_Export TAO_Adapter_Registry
 public:
   TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
 
+  /// Close the
   ~TAO_Adapter_Registry (void);
-  // Close the
 
+  /**
+   * Close each of of the Adapters and then cleanup the Registry.
+   * It is possible that an Adapter will reject a close() call if it
+   * is invoked in an innapropriate context (think shutting down the
+   * POA while performing an upcall).
+   */
   void close (int wait_for_completion,
               CORBA::Environment &ACE_TRY_ENV);
-  // Close each of of the Adapters and then cleanup the Registry.
-  // It is possible that an Adapter will reject a close() call if it
-  // is invoked in an innapropriate context (think shutting down the
-  // POA while performing an upcall).
 
+  /**
+   * Verify if the close() call can be invoked in the current
+   * context for *all* adapters.
+   * Raise the right exception if not.
+   */
   void check_close (int wait_for_completion,
                     CORBA::Environment &ACE_TRY_ENV);
-  // Verify if the close() call can be invoked in the current
-  // context for *all* adapters.
-  // Raise the right exception if not.
 
+  /// Insert a new adapter into the registry.
   void insert (TAO_Adapter *adapter,
                CORBA::Environment &ACE_TRY_ENV);
-  // Insert a new adapter into the registry.
 
+  /**
+   * Dispatch the request to all the adapters.
+   * It tries the adapters ordered by priority, stopping when the
+   * adapter returns a status different from DS_MISMATCHED_KEY
+   */
   void dispatch (TAO_ObjectKey &key,
                  TAO_ServerRequest &request,
                  void *context, /* unused? */
                  CORBA::Object_out forward_to,
                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Dispatch the request to all the adapters.
-  // It tries the adapters ordered by priority, stopping when the
-  // adapter returns a status different from DS_MISMATCHED_KEY
 
+  /// Create a collocated object using the given profile and stub.
   CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                               const TAO_MProfile &);
-  // Create a collocated object using the given profile and stub.
 
+  /// Fetch the adapter named <name>
   TAO_Adapter *find_adapter (const char *name) const;
-  // Fetch the adapter named <name>
 
 private:
+  /// The ORB Core
   TAO_ORB_Core *orb_core_;
-  // The ORB Core
 
+  /// A simple array of adapters.
   size_t adapters_capacity_;
   size_t adapters_count_;
   TAO_Adapter **adapters_;
-  // A simple array of adapters.
 };
 
 // ****************************************************************
@@ -160,11 +167,11 @@ private:
 class TAO_Export TAO_Adapter_Factory : public ACE_Service_Object
 {
 public:
+  /// Destructor
   virtual ~TAO_Adapter_Factory (void);
-  // Destructor
 
+  /// Create a new adapter
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core) = 0;
-  // Create a new adapter
 };
 
 #if defined (__ACE_INLINE__)

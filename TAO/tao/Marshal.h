@@ -1,21 +1,18 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Marshal.h
-//
-// = DESCRIPTION
-//     Classes that marshal various IDL data types.
-//
-// = AUTHOR
-//     Aniruddha S. Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Marshal.h
+ *
+ *  $Id$
+ *
+ *   Classes that marshal various IDL data types.
+ *
+ *
+ *  @author  Aniruddha S. Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_MARSHAL_H
 #define TAO_MARSHAL_H
@@ -51,334 +48,374 @@ class TAO_Marshal_Alias;
 class TAO_Marshal_Except;
 class TAO_Marshal_WString;
 
+/**
+ * @class TAO_Marshal_Object
+ *
+ * @brief TAO_Marshal_Object
+ *
+ * The Marshaling object that provides a common interface to the
+ * CDR object for marshaling different IDL data types
+ * Provides a set of virtual methods for appending and skipping
+ * data over a CDR stream.
+ */
 class TAO_Export TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Object
-  //
-  // = DESCRIPTION
-  //    The Marshaling object that provides a common interface to the
-  //    CDR object for marshaling different IDL data types
-  //
-  //    Provides a set of virtual methods for appending and skipping
-  //    data over a CDR stream.
 public:
+  /// constructor
   TAO_Marshal_Object (void);
-  // constructor
 
+  /// destructor
   virtual ~TAO_Marshal_Object (void);
-  // destructor
 
+  /// skip entry point, it allocates the right kind of Marshal_Object
+  /// and invokes skip on it.
   static CORBA::TypeCode::traverse_status
     perform_skip (CORBA::TypeCode_ptr tc,
                   TAO_InputCDR *context,
                   CORBA_Environment &ACE_TRY_ENV);
-  // skip entry point, it allocates the right kind of Marshal_Object
-  // and invokes skip on it.
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV) = 0;
-  // skip operation
 
+  /// append entry point, it allocates the right kind of Marshal_Object
+  /// and invokes skip on it.
   static CORBA::TypeCode::traverse_status
     perform_append (CORBA::TypeCode_ptr tc,
                     TAO_InputCDR *src,
                     TAO_OutputCDR *dest,
                     CORBA_Environment &ACE_TRY_ENV);
-  // append entry point, it allocates the right kind of Marshal_Object
-  // and invokes skip on it.
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV) = 0;
-  // append operation
 };
 
+/**
+ * @class TAO_Marshal_Primitive:
+ *
+ * @brief TAO_Marshal_Primitive
+ *
+ * marshaling primitives
+ */
 class TAO_Export TAO_Marshal_Primitive: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Primitive
-  // = DESCRIPTION
-  //   marshaling primitives
 public:
   TAO_Marshal_Primitive (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Any:
+ *
+ * @brief TAO_Marshal_Any
+ *
+ * Marshal an Any
+ */
 class TAO_Export TAO_Marshal_Any: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Any
-  // = DESCRIPTION
-  //   Marshal an Any
 public:
   TAO_Marshal_Any (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_TypeCode:
+ *
+ * @brief TAO_Marshal_TypeCode
+ *
+ * marshal a typecode
+ */
 class TAO_Export TAO_Marshal_TypeCode: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_TypeCode
-  // = DESCRIPTION
-  //   marshal a typecode
 public:
   TAO_Marshal_TypeCode (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Principal:
+ *
+ * @brief TAO_Marshal_Principal
+ *
+ * marshal a principal
+ */
 class TAO_Export TAO_Marshal_Principal: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Principal
-  // = DESCRIPTION
-  //   marshal a principal
 public:
   TAO_Marshal_Principal (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_ObjRef:
+ *
+ * @brief TAO_Marshal_ObjRef
+ *
+ * marshal an object reference
+ */
 class TAO_Export TAO_Marshal_ObjRef: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_ObjRef
-  // = DESCRIPTION
-  //   marshal an object reference
 public:
   TAO_Marshal_ObjRef (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Struct:
+ *
+ * @brief TAO_Marshal_Struct
+ *
+ * marshal a struct
+ */
 class TAO_Export TAO_Marshal_Struct: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Struct
-  // = DESCRIPTION
-  //   marshal a struct
 public:
   TAO_Marshal_Struct (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Union:
+ *
+ * @brief TAO_Marshal_Union
+ *
+ * marshal a union
+ */
 class TAO_Export TAO_Marshal_Union: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Union
-  // = DESCRIPTION
-  //   marshal a union
 public:
   TAO_Marshal_Union (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_String:
+ *
+ * @brief TAO_Marshal_String
+ *
+ * marshal a string
+ */
 class TAO_Export TAO_Marshal_String: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_String
-  // = DESCRIPTION
-  //   marshal a string
 public:
   TAO_Marshal_String (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Sequence:
+ *
+ * @brief TAO_Marshal_Sequence
+ *
+ * marshal a sequence
+ */
 class TAO_Export TAO_Marshal_Sequence: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Sequence
-  // = DESCRIPTION
-  //   marshal a sequence
 public:
   TAO_Marshal_Sequence (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Array:
+ *
+ * @brief TAO_Marshal_Array
+ *
+ * marshal an array
+ */
 class TAO_Export TAO_Marshal_Array: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Array
-  // = DESCRIPTION
-  //   marshal an array
 public:
   TAO_Marshal_Array (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Alias:
+ *
+ * @brief TAO_Marshal_Alias
+ *
+ * marshal an alias
+ */
 class TAO_Export TAO_Marshal_Alias: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Alias
-  // = DESCRIPTION
-  //   marshal an alias
 public:
   TAO_Marshal_Alias (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_Except:
+ *
+ * @brief TAO_Marshal_Except
+ *
+ * marshal an exception
+ */
 class TAO_Export TAO_Marshal_Except: public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_Except
-  // = DESCRIPTION
-  //   marshal an exception
 public:
   TAO_Marshal_Except (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 
+/**
+ * @class TAO_Marshal_WString
+ *
+ * @brief TAO_Marshal_WString
+ *
+ * marshal a wide string
+ */
 class TAO_Export TAO_Marshal_WString : public TAO_Marshal_Object
 {
-  // = TITLE
-  //   TAO_Marshal_WString
-  // = DESCRIPTION
-  //   marshal a wide string
 public:
   TAO_Marshal_WString (void);
 
+  /// skip operation
   virtual CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                                  TAO_InputCDR *context,
                                                  CORBA_Environment &ACE_TRY_ENV);
-  // skip operation
 
+  /// append operation
   virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
                                                    TAO_InputCDR *src,
                                                    TAO_OutputCDR *dest,
                                                    CORBA_Environment &ACE_TRY_ENV);
-  // append operation
 
 };
 

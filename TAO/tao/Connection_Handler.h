@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tao
-//
-// = FILENAME
-//   Connection_Handler.h
-//
-// = AUTHOR
-//    Bala Natarajan  <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Connection_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Bala Natarajan  <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONNECTION_HANDLER_H
 #define TAO_CONNECTION_HANDLER_H
@@ -38,21 +35,23 @@ class TAO_ORB_Core_TSS_Resources;
 class ACE_Reactor;
 class ACE_Event_Handler;
 
+/**
+ * @class TAO_Connection_Handler
+ *
+ * @brief TAO_Connection_Handler
+ *
+ * This class is an abstraction for the connection handlers. The
+ * connections handler in every protocol can derive from this
+ * class as well as the ACE_Svc_Handler specialised for the
+ * right protocol. This way, most of the common code for the
+ * different protocls would be in this implementation. Further,
+ * this class wold be of immense use in storing the handlers in
+ * the Cache for TAO. This would help in purging entries which
+ * is generally accompanied by closing the open handles and
+ * deleting memory associated with the handlers.
+ */
 class TAO_Export TAO_Connection_Handler
 {
-  // = TITLE
-  //     TAO_Connection_Handler
-  //
-  // = DESCRIPTION
-  //     This class is an abstraction for the connection handlers. The
-  //     connections handler in every protocol can derive from this
-  //     class as well as the ACE_Svc_Handler specialised for the
-  //     right protocol. This way, most of the common code for the
-  //     different protocls would be in this implementation. Further,
-  //     this class wold be of immense use in storing the handlers in
-  //     the Cache for TAO. This would help in purging entries which
-  //     is generally accompanied by closing the open handles and
-  //     deleting memory associated with the handlers.
 
   //     Note: This class has NOT abstracted the GIOP specific
   //     details. It is just to be safe so that, we can reuse this
@@ -62,79 +61,79 @@ class TAO_Export TAO_Connection_Handler
 
 public:
 
+  /// Constructor
   TAO_Connection_Handler (void);
-  // Constructor
 
+  /// Constructor
   TAO_Connection_Handler (TAO_ORB_Core *orb_core);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Connection_Handler (void);
-  // Destructor
 
   void cache_map_entry (
       TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *entry);
 
+  /// Set/Get the Cache Map entry
   TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
-  // Set/Get the Cache Map entry
 
+  /// Make ourselves ready for use
   int make_idle (void);
-  // Make ourselves ready for use
 
+  /// Increment the reference count
   void incr_ref_count (void);
-  // Increment the reference count
 
+  /// Decrement the reference count
   void decr_ref_count (void);
-  // Decrement the reference count
 
+  /// Get and set method for the flag that indicates whether the
+  /// handler has been registered with the reactor or not.
   CORBA::Boolean is_registered (void);
   void is_registered (CORBA::Boolean);
-  // Get and set method for the flag that indicates whether the
-  // handler has been registered with the reactor or not.
 
+  /// Get the underlying handle
   virtual ACE_HANDLE fetch_handle (void) = 0;
-  // Get the underlying handle
 
+  /// Purge our entry from the Connection Cache
   int purge_entry (void);
-  // Purge our entry from the Connection Cache
 
 protected:
 
+  /// Return our TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
-  // Return our TAO_ORB_Core pointer
 
+  /// Return our TSS Resources pointer
   TAO_ORB_Core_TSS_Resources* tss_resources (void);
-  // Return our TSS Resources pointer
 
+  /// Set options on the socket
   int set_socket_option (ACE_SOCK &sock,
                          int snd_size,
                          int rcv_size);
-  // Set options on the socket
 
+  /// This method is invoked from the svc () method of the Svc_Handler
+  /// Object.
   int svc_i (void);
-  // This method is invoked from the svc () method of the Svc_Handler
-  // Object.
 
+  /// Need to be implemented by the underlying protocol objects
   virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
                               ACE_Time_Value *max_wait_time = 0) = 0;
-  // Need to be implemented by the underlying protocol objects
 
 private:
 
+  /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core *orb_core_;
-  // Pointer to the TAO_ORB_Core
 
+  /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;
-  // Cached tss resources of the ORB that activated this object.
 
+  /// Reference count to the number of external references -- ie. the
+  /// count of the number of places our references are being held.
   u_long ref_count_;
-  // Reference count to the number of external references -- ie. the
-  // count of the number of places our references are being held.
 
+  /// The cache map entry -- where we are in the Connection Cache
   TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
-  // The cache map entry -- where we are in the Connection Cache
 
+  /// Are we registered with the reactor?
   CORBA::Boolean is_registered_;
-  // Are we registered with the reactor?
 };
 
 #if defined (__ACE_INLINE__)

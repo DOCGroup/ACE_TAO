@@ -1,22 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     GIOP_Message.h
-//
-// = DESCRIPTION
-//     GIOP utility definitions
-//
-// = AUTHOR
-//     Chris Cleeland <cleeland@cs.wustl.edu>
-//     Carlos O' Ryan <coryan@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     GIOP_Utils.h
+ *
+ *  $Id$
+ *
+ *   GIOP utility definitions
+ *
+ *
+ *  @author  Chris Cleeland <cleeland@cs.wustl.edu>  Carlos O' Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 #ifndef TAO_GIOP_UTILS_H
 #define TAO_GIOP_UTILS_H
 #include "ace/pre.h"
@@ -60,25 +56,26 @@ typedef enum GIOP_LocateStatusType
   TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE //GIOP 1.2
 }TAO_GIOP_Locate_Status_Type;
 
+/**
+ * @class TAO_GIOP_Locate_Status_Msg
+ =TITLE
+ * Hold the relevant information for every type of Locate mesg.
+ * =DESCRIPTION
+ * This class is there to hold the relevant info for different
+ * types of locate status messages. As on date we dont know much
+ * about other mesg types other than OBJECT_FORWARD. This clss can
+ * be clearly defined as time progresses.
+ */
 class TAO_Export TAO_GIOP_Locate_Status_Msg
 {
-  // =TITLE
-  //  Hold the relevant information for every type of Locate mesg.
-  //
-  // =DESCRIPTION
-  //  This class is there to hold the relevant info for different
-  //  types of locate status messages. As on date we dont know much
-  //  about other mesg types other than OBJECT_FORWARD. This clss can
-  //  be clearly defined as time progresses.
-  //
 public:
+  /// The value will need to be used when the Message type is
+  /// TAO_GIOP_OBJECT_FORWARD
   CORBA::Object_var forward_location_var;
-  // The value will need to be used when the Message type is
-  // TAO_GIOP_OBJECT_FORWARD
 
+  /// Stype of Locate status message
+  ///@@ Other mesg types.
   TAO_GIOP_Locate_Status_Type status;
-  // Stype of Locate status message
-  //@@ Other mesg types.
 };
 
 
@@ -105,27 +102,33 @@ typedef enum GIOP_ReplyStatusType
 } TAO_GIOP_Reply_Status_Type;
 
 
+/**
+ * @class TAO_GIOP_ReplyHeader
+ *
+ * @brief This class embodies the header of a GIOP reply.
+ * @@Not used. Could be used in future
+ */
 class TAO_Export TAO_GIOP_ReplyHeader
 {
-  // = TITLE
-  //   This class embodies the header of a GIOP reply.
-  // @@Not used. Could be used in future
 public:
+  /// Information
   IOP::ServiceContextList service_info;
-  // Information
 
+  /// Unique identifier of the request for which this is a reply.
   CORBA::ULong request_id;
-  // Unique identifier of the request for which this is a reply.
 
+  /// Status of the reply (see above enum).
   TAO_GIOP_Reply_Status_Type reply_status;
-  // Status of the reply (see above enum).
 };
 
+/**
+ * @class TAO_GIOP_Utils
+ *
+ * @brief Utility class that has some commonly used methods for both GIOP
+ * Base  & GIOP lite
+ */
 class TAO_Export TAO_GIOP_Utils
 {
-  // = TITLE
-  //   Utility class that has some commonly used methods for both GIOP
-  //   Base  & GIOP lite
 
   // = DESCRIPTION
 public:

@@ -39,7 +39,7 @@ public:
 
   /// Constructor
   TAO_Interceptor_List (void);
-  
+
   /// Destructor
   virtual ~TAO_Interceptor_List (void);
 

@@ -1,22 +1,19 @@
-// $Id$
 
 // This may look like C, but it's really -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    debug.h
-//
-// = DESCRIPTION
-//     debug/trace support.
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    debug.h
+ *
+ *  $Id$
+ *
+ *   debug/trace support.
+ *
+ *
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ */
+//=============================================================================
+
 
 #ifndef TAO_DEBUG_H
 #define TAO_DEBUG_H

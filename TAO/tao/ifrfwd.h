@@ -1,25 +1,22 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    ifrfwd.h
-//
-// = DESCRIPTION
-//    Forward declare the basic types used in the IR
-//    implementation. This file should be included in
-//    ORB file headers that use one or more IR namespace
-//    types. The corresponding source files will include
-//    InterfaceC.h.
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ifrfwd.h
+ *
+ *  $Id$
+ *
+ *  Forward declare the basic types used in the IR
+ *  implementation. This file should be included in
+ *  ORB file headers that use one or more IR namespace
+ *  types. The corresponding source files will include
+ *  InterfaceC.h.
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef TAO_IFRFWD_H
 #define TAO_IFRFWD_H

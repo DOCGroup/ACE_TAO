@@ -1,18 +1,16 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   qt_resource.h
-//
-// = AUTHOR
-//    Hamish Friedlander <ullexco@wave.co.nz>
-//    integrated in to TAO by Balachandran Natarajan <bala@cs.wustl.edu>
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   qt_resource.h
+ *
+ *  $Id$
+ *
+ *  @author Hamish Friedlander <ullexco@wave.co.nz>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 #ifndef _TAO_QTRESOURCE_H
 #define _TAO_QTRESOURCE_H
 #include "ace/pre.h"
@@ -26,26 +24,28 @@
 #include "ace/QtReactor.h"
 
 
+/**
+ * @class TAO_QtResource_Factory
+ *
+ * @brief TAO's default resource factory
+ *
+ * Using a <{resource source specifier}> as a discriminator, the
+ * factory can return resource instances which are, e.g., global,
+ * stored in thread-specific storage, stored in shared memory,
+ * etc.
+ */
 class TAO_Export TAO_QtResource_Factory : public TAO_Default_Resource_Factory
 {
-  // = TITLE
-  //   TAO's default resource factory
-  //
-  // = DESCRIPTION
-  //   Using a <{resource source specifier}> as a discriminator, the
-  //   factory can return resource instances which are, e.g., global,
-  //   stored in thread-specific storage, stored in shared memory,
-  //   etc.
 
 public:
   TAO_QtResource_Factory (void);
 
+  /// Set the context used to create the QtReactor
   static void set_context (QApplication *qapp) ;
-  // Set the context used to create the QtReactor
 
 protected:
+  /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
-  // Obtain the reactor implementation
 
 private:
   static QApplication *qapp_ ;

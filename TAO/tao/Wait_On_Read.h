@@ -1,15 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Wait_On_Read.h
+ *
+ *  $Id$
+ *
+ *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_WAIT_ON_READ_H
 #define TAO_WAIT_ON_READ_H
@@ -21,20 +21,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_Wait_On_Read
+ *
+ *
+ * Simply block on read() to wait for the reply.
+ */
 class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
 {
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //   Simply block on read() to wait for the reply.
-  //
 
 public:
+  /// Constructor.
   TAO_Wait_On_Read (TAO_Transport *transport);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Wait_On_Read (void);
-  // Destructor.
 
   // = Documented in TAO_Wait_Strategy.
 

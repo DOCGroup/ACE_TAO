@@ -1,22 +1,20 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    ORB.h
-//
-// = DESCRIPTION
-//     Header file for CORBA's <ORB> type and type.
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc. and Douglas C. Schmidt.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ORB.h
+ *
+ *  $Id$
+ *
+ *   Header file for CORBA's <ORB> type and type.
+ *
+ *
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ *  @author Douglas C. Schmidt <schmidt@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ORB_H
 #define TAO_ORB_H
@@ -60,20 +58,20 @@ class TAO_ValueFactory_Map;
 
 // ****************************************************************
 
+/**
+ * @class CORBA_ORB
+ *
+ * @brief ORB pseudo-objref.
+ *
+ * The "ORB" pseudo-object is used in bootstrapping, such as to
+ * create object references from strings.  This class is intended
+ * to be inherited by others, which will provide some more of the
+ * CORBA support.  Implementations of this "CORBA::ORB" class must
+ * know how to create stringify/destringify their objrefs, as well
+ * as how to marshal and unmarshal them.
+ */
 class TAO_Export CORBA_ORB
 {
-  // = TITLE
-  //   ORB pseudo-objref.
-  //
-  // = DESCRIPTION
-  //
-  //   The "ORB" pseudo-object is used in bootstrapping, such as to
-  //   create object references from strings.  This class is intended
-  //   to be inherited by others, which will provide some more of the
-  //   CORBA support.  Implementations of this "CORBA::ORB" class must
-  //   know how to create stringify/destringify their objrefs, as well
-  //   as how to marshal and unmarshal them.
-  //
 public:
 
   // ORB_Core has special privileges
@@ -95,8 +93,8 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
+    /// = TAO extension
     static InvalidName* _downcast (CORBA_Exception *ex);
-    // = TAO extension
     static CORBA::Exception *_alloc (void);
   };
   static CORBA::TypeCode_ptr _tc_InvalidName;
@@ -112,29 +110,33 @@ public:
   typedef CORBA_ORB_ObjectIdList *ObjectIdList_ptr;
   static CORBA::TypeCode_ptr _tc_ObjectIdList;
 
+  /// Return a duplicate of <{orb}>.  When work with this duplicate is
+  /// complete, it should be freed up using <CORBA::release()>.
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
-  // Return a duplicate of <{orb}>.  When work with this duplicate is
-  // complete, it should be freed up using <CORBA::release()>.
 
+  /// Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
+  /// can be used for initialization or in comparisons.
   static CORBA::ORB_ptr _nil (void);
-  // Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
-  // can be used for initialization or in comparisons.
 
+  /**
+   * Turn a string-ified object reference back into an object pointer.
+   * Typically these strings are created using <object_to_string()>,
+   * but not necessarily locally.
+   */
   CORBA::Object_ptr string_to_object (const char *str,
                                       CORBA_Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
-  // Turn a string-ified object reference back into an object pointer.
-  // Typically these strings are created using <object_to_string()>,
-  // but not necessarily locally.
 
+  /**
+   * Turn an object reference into a string.  Each type of ORB,
+   * e.g. an IIOP ORB, must implement this.  This can be used by
+   * servers to publish their whereabouts to clients.  The output of
+   * this is typically eventually given to <string_to_object()> as an
+   * argument.
+   */
   char * object_to_string (CORBA::Object_ptr obj,
                            CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
-  // Turn an object reference into a string.  Each type of ORB,
-  // e.g. an IIOP ORB, must implement this.  This can be used by
-  // servers to publish their whereabouts to clients.  The output of
-  // this is typically eventually given to <string_to_object()> as an
-  // argument.
 
 
 #ifdef TAO_HAS_VALUETYPE
@@ -214,39 +216,51 @@ public:
 
   // = ORB event loop methods.
 
+  /**
+   * Instructs the ORB to initialize itself and run its event loop in
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or a run-time this
+   * method will return -1.
+   */
   int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Instructs the ORB to initialize itself and run its event loop in
-  // the current thread, not returning until the ORB has shut down.
-  // If an error occurs during initialization or a run-time this
-  // method will return -1.
 
+  /**
+   * Instructs the ORB to initialize itself and run its event loop in
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or a run-time this
+   * method will return -1.  If no requests arrive at this thread
+   * before the <tv> "relative" timeout elapses we return to the
+   * caller with a value of 0 (this allows timeouts).  Otherwise, if
+   * we've returned since we've been asked to shut down the value of 1
+   * is returned.
+   */
   int run (ACE_Time_Value &tv,
            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Instructs the ORB to initialize itself and run its event loop in
-  // the current thread, not returning until the ORB has shut down.
-  // If an error occurs during initialization or a run-time this
-  // method will return -1.  If no requests arrive at this thread
-  // before the <tv> "relative" timeout elapses we return to the
-  // caller with a value of 0 (this allows timeouts).  Otherwise, if
-  // we've returned since we've been asked to shut down the value of 1
-  // is returned.
 
+  /**
+   * Instructs the ORB to initialize itself and run its event loop in
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or a run-time this
+   * method will return -1.  If <tv> is non-NULL, then if no requests
+   * arrive at this thread before the "relative" timeout elapses we
+   * return to the caller with a value of 0 (this allows timeouts).
+   * Otherwise, if we've returned since we've been asked to shut down
+   * the value of 1 is returned.
+   */
   int run (ACE_Time_Value *tv,
            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Instructs the ORB to initialize itself and run its event loop in
-  // the current thread, not returning until the ORB has shut down.
-  // If an error occurs during initialization or a run-time this
-  // method will return -1.  If <tv> is non-NULL, then if no requests
-  // arrive at this thread before the "relative" timeout elapses we
-  // return to the caller with a value of 0 (this allows timeouts).
-  // Otherwise, if we've returned since we've been asked to shut down
-  // the value of 1 is returned.
 
+  /// Returns an indication of whether the ORB needs to perform some
+  /// work.
   CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
-  // Returns an indication of whether the ORB needs to perform some
-  // work.
 
+  /**
+   * This operation performs an implementation-defined unit of
+   * work. Note that the default behavior is not to block; this
+   * behavior can be modified by passing an appropriate
+   * <ACE_Time_Value>.
+   */
   int perform_work (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ());
   int perform_work (ACE_Time_Value &,
@@ -255,52 +269,54 @@ public:
   int perform_work (ACE_Time_Value *,
                     CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ());
-  // This operation performs an implementation-defined unit of
-  // work. Note that the default behavior is not to block; this
-  // behavior can be modified by passing an appropriate
-  // <ACE_Time_Value>.
 
+  /**
+   * This operation instructs the ORB to shut down. Shutting down the
+   * ORB causes all Object Adapters to be shut down. If
+   * <wait_for_completion> parameter is TRUE, this operation blocks
+   * until all ORB processing (including request processing and object
+   * deactivation or other operations associated with object adapters)
+   * has completed.
+   */
   void shutdown (CORBA::Boolean wait_for_completion = 0,
                  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // This operation instructs the ORB to shut down. Shutting down the
-  // ORB causes all Object Adapters to be shut down. If
-  // <wait_for_completion> parameter is TRUE, this operation blocks
-  // until all ORB processing (including request processing and object
-  // deactivation or other operations associated with object adapters)
-  // has completed.
 
+  /**
+   * Destroy the ORB, releasing any resources.  Notice that TAO *cannot*
+   * release the resources even if you have destroyed all the
+   * references to a particular ORB.  CORBA::ORB_init() is required to
+   * return the same pointer if called with the same ORBid, only after
+   * ORB::destroy() is called it may return a new one.
+   */
   void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Destroy the ORB, releasing any resources.  Notice that TAO *cannot*
-  // release the resources even if you have destroyed all the
-  // references to a particular ORB.  CORBA::ORB_init() is required to
-  // return the same pointer if called with the same ORBid, only after
-  // ORB::destroy() is called it may return a new one.
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                CORBA_Environment &ACE_TRY_ENV =
                                                TAO_default_environment ());
 
+  /**
+   * This method acts as a mini-bootstrapping Naming Service, which is
+   * provided by the ORB for certain well-known object references.  TAO
+   * supports the "NameService", "TradingService", "RootPOA", "ImplRepo",
+   * and "POACurrent" via this method.  The <timeout> value bounds the
+   * amount of time the ORB blocks waiting to resolve the service.
+   * This is most useful for bootstrapping remote services, such as
+   * the "NameService" or "TradingService", that are commonly resolved
+   * via multicast.  By default, the value is 0, which means "use the
+   * <TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT> timeout period".  Note
+   * that by using a default value for the <timeout> parameter, TAO
+   * will remains compliant with the CORBA
+   * <resolve_initial_references> specification.
+   */
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                ACE_Time_Value *timeout,
                                                CORBA_Environment &ACE_TRY_ENV =
                                                TAO_default_environment ());
-  // This method acts as a mini-bootstrapping Naming Service, which is
-  // provided by the ORB for certain well-known object references.  TAO
-  // supports the "NameService", "TradingService", "RootPOA", "ImplRepo",
-  // and "POACurrent" via this method.  The <timeout> value bounds the
-  // amount of time the ORB blocks waiting to resolve the service.
-  // This is most useful for bootstrapping remote services, such as
-  // the "NameService" or "TradingService", that are commonly resolved
-  // via multicast.  By default, the value is 0, which means "use the
-  // <TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT> timeout period".  Note
-  // that by using a default value for the <timeout> parameter, TAO
-  // will remains compliant with the CORBA
-  // <resolve_initial_references> specification.
 
+  /// Returns a sequence of ObjectIds that lists which objects have
+  /// references available via the initial references mechanism.
   CORBA_ORB_ObjectIdList_ptr list_initial_services (
               CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Returns a sequence of ObjectIds that lists which objects have
-  // references available via the initial references mechanism.
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
@@ -311,20 +327,20 @@ public:
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
+  /// Resolve the POA.
   CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the POA.
 
+  /// Delegates on the ORB_Core to create a TAO_Stub.
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *acceptor_filter,
                                 CORBA_Environment &ACE_TRY_ENV);
-  // Delegates on the ORB_Core to create a TAO_Stub.
 
+  /// Initialize the ORB globals correctly, i.e., only when they
+  /// haven't been initialized yet.
   static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV =
                                     TAO_default_environment ());
-  // Initialize the ORB globals correctly, i.e., only when they
-  // haven't been initialized yet.
 
   // The function used by tao to handle the "unexpected" exceptions,
   // It raises CORBA::UNKNOWN.
@@ -334,25 +350,27 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
+  /// Set the IOR flag.
+  /// Get the IOR flag.
   void _use_omg_ior_format (CORBA::Boolean ior);
-  // Set the IOR flag.
   CORBA::Boolean _use_omg_ior_format (void);
-  // Get the IOR flag.
 
+  /// Set collocation optimization status.
+  /// Get collocation optimization status.
   void _optimize_collocation_objects (CORBA::Boolean opt);
-  // Set collocation optimization status.
   CORBA::Boolean _optimize_collocation_objects (void) const;
-  // Get collocation optimization status.
 
+  /// Get the ORB core.
   TAO_ORB_Core *orb_core (void) const;
-  // Get the ORB core.
 
+  /**
+   * TAO specific extension to get and set the client ID. The client
+   * id can be set by the application which would be used by the FT
+   * service. As there are no specific interfaces defined in the spec,
+   * we have this prorpietary extensions
+   */
   const ACE_CString &_tao_ft_client_id (void);
   void _tao_ft_client_id (const char *id);
-  // TAO specific extension to get and set the client ID. The client
-  // id can be set by the application which would be used by the FT
-  // service. As there are no specific interfaces defined in the spec,
-  // we have this prorpietary extensions
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_ORB_ptr _ptr_type;
@@ -365,31 +383,31 @@ protected:
   CORBA_ORB (TAO_ORB_Core *orb_core);
   ~CORBA_ORB (void);
 
+  /// Resolve the POA current.
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the POA current.
 
+  /// Resolve the Policy Manager for this ORB.
+  /// Resolve the Policy Current for this thread.
   CORBA_Object_ptr resolve_policy_manager (CORBA::Environment&);
-  // Resolve the Policy Manager for this ORB.
   CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
-  // Resolve the Policy Current for this thread.
 
 
 
+  /// Resolve the RTORB.
   CORBA_Object_ptr resolve_rt_orb (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the RTORB.
 
+  /// Resolve the RT Current.
   CORBA_Object_ptr resolve_rt_current (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the RT Current.
 
+  /// Resolve the Priority_Mapping_Manager.
   CORBA_Object_ptr resolve_priority_mapping_manager (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the Priority_Mapping_Manager.
 
 private:
 
+  /// Resolve the given service based on the service ID.
   CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id,
                                     ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the given service based on the service ID.
 
   int multicast_query (char* &buf,
                        const char *service_name,
@@ -399,45 +417,45 @@ private:
   // returns and IOR string, the client is responsible for freeing
   // memory!
 
+  /// Resolve the reference of a service of type <name>.
   CORBA_Object_ptr multicast_to_service (const char *service_name,
                                          u_short port,
                                          ACE_Time_Value *timeout,
                                          CORBA::Environment& ACE_TRY_ENV);
-  // Resolve the reference of a service of type <name>.
 
+  /// Convert an OMG IOR into an object reference.
   CORBA::Object_ptr ior_string_to_object (const char* ior,
                                           CORBA::Environment &ACE_TRY_ENV);
-  // Convert an OMG IOR into an object reference.
 
+  /// Convert an URL style IOR into an object reference.
   CORBA::Object_ptr url_ior_string_to_object (const char* ior,
                                               CORBA::Environment &ACE_TRY_ENV);
-  // Convert an URL style IOR into an object reference.
 
+  /// Check if ORB has shutdown.  If it has, throw an exception.
   void check_shutdown (CORBA::Environment &ACE_TRY_ENV);
-  // Check if ORB has shutdown.  If it has, throw an exception.
 
 private:
+  /// lock required for mutual exclusion between multiple threads.
   ACE_SYNCH_MUTEX lock_;
-  // lock required for mutual exclusion between multiple threads.
 
+  /// Maintains a reference count of number of instantiations of the
+  /// ORB.
   u_int refcount_;
-  // Maintains a reference count of number of instantiations of the
-  // ORB.
 
+  /// Count of the number of times that <ORB_init> has been called.
   static int orb_init_count_;
-  // Count of the number of times that <ORB_init> has been called.
   // This must be protected by <ACE_Static_Object_Lock>.
 
+  /// The ORB_Core that created us....
   TAO_ORB_Core *orb_core_;
-  // The ORB_Core that created us....
 
 #if defined (TAO_HAS_VALUETYPE)
+  /// If non-0 then this is the Factory for OBV unmarshaling
   TAO_ValueFactory_Map *valuetype_factory_map_;
-  // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
 
+  /// Decides whether to use the URL notation or to use IOR notation.
   CORBA::Boolean use_omg_ior_format_;
-  // Decides whether to use the URL notation or to use IOR notation.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
@@ -456,9 +474,9 @@ public:
   CORBA_ORB_var &operator= (const CORBA_ORB_var &);
   CORBA::ORB_ptr operator-> (void) const;
 
+  /// in, inout, out, _retn
   operator const CORBA::ORB_ptr &() const;
   operator CORBA::ORB_ptr &();
-  // in, inout, out, _retn
   CORBA::ORB_ptr in (void) const;
   CORBA::ORB_ptr &inout (void);
   CORBA::ORB_ptr &out (void);

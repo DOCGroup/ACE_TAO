@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     GIOP_Message.h
-//
-// = DESCRIPTION
-//     GIOP utility definitions
-//
-// = AUTHOR
-//     Chris Cleeland <cleeland@cs.wustl.edu>
-//     Carlos O' Ryan <coryan@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     GIOP_Message_State.h
+ *
+ *  $Id$
+ *
+ *   GIOP utility definitions
+ *
+ *
+ *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
+ *  @author  Carlos O' Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_GIOP_MESSAGE_STATE_H
 #define TAO_GIOP_MESSAGE_STATE_H
@@ -33,121 +30,132 @@
 
 class TAO_ORB_Core;
 
+/**
+ * @class TAO_GIOP_Version
+ *
+ * @brief Major and Minor version number of the Inter-ORB Protocol.
+ */
 class TAO_Export TAO_GIOP_Version
 {
-  // = TITLE
-  //   Major and Minor version number of the Inter-ORB Protocol.
 public:
+  /// Major version number
   CORBA::Octet major;
-  // Major version number
 
+  /// Minor version number
   CORBA::Octet minor;
-  // Minor version number
 
+  /// Copy constructor
   TAO_GIOP_Version (const TAO_GIOP_Version &src);
-  // Copy constructor
 
+  /// Default constructor.
   TAO_GIOP_Version (CORBA::Octet maj = TAO_DEF_GIOP_MAJOR,
                     CORBA::Octet min = TAO_DEF_GIOP_MINOR);
-  // Default constructor.
 
+  /// Destructor.
   ~TAO_GIOP_Version (void);
-  // Destructor.
 
+  /// Explicitly set the major and minor version.
   void set_version (CORBA::Octet maj, CORBA::Octet min);
-  // Explicitly set the major and minor version.
 
+  /// Copy operator.
   TAO_GIOP_Version &operator= (const TAO_GIOP_Version &src);
-  // Copy operator.
 
+  /// Equality operator
   int operator== (const TAO_GIOP_Version &src);
   int operator!= (const TAO_GIOP_Version &src);
-  // Equality operator
 };
 
 
+/**
+ * @class TAO_GIOP_Message_State
+ *
+ * @brief Generic definitions for Message States.
+ *
+ * This  represents the state of the incoming GIOP message
+ * As the ORB processes incoming messages it needs to keep track of
+ * how much of the message has been read, if there are any
+ * fragments following this message etc.
+ */
 class TAO_Export TAO_GIOP_Message_State
 {
-  // = TITLE
-  //   Generic definitions for Message States.
-  //
-  // = DESCRIPTION
-  //   This  represents the state of the incoming GIOP message
-  //   As the ORB processes incoming messages it needs to keep track of
-  //   how much of the message has been read, if there are any
-  //   fragments following this message etc.
 
 public:
+  /// Ctor
   TAO_GIOP_Message_State (TAO_ORB_Core *orb_core);
-  // Ctor
 
+  /// Dtor
   ~TAO_GIOP_Message_State (void);
-  // Dtor
 
+  ///Reset the message header state and prepare it to receive the next
+  /// event.
   void reset (int reset_contents = 1);
-  //Reset the message header state and prepare it to receive the next
-  // event.
 
+  /// Has the header been received?
   CORBA::Boolean  header_received (void) const;
-  // Has the header been received?
 
+  /// Check if the current message is complete, adjusting the fragments
+  /// if required...
   int is_complete (void);
-  // Check if the current message is complete, adjusting the fragments
-  // if required...
 
+  /// Version info
   TAO_GIOP_Version giop_version;
-  // Version info
 
+  /// 0 = big, 1 = little
   CORBA::Octet byte_order;
-  // 0 = big, 1 = little
 
+  /// (Requests and Replys)
   CORBA::Octet more_fragments;
-  // (Requests and Replys)
 
+  /// MsgType above
   CORBA::Octet message_type;
-  // MsgType above
 
+  /// in byte_order!
   CORBA::ULong message_size;
-  // in byte_order!
 
+  /// How much of the payload has been received
   CORBA::ULong current_offset;
-  // How much of the payload has been received
 
+  /// This is the InputCDR that will be used to decode the message.
   TAO_InputCDR cdr;
-  // This is the InputCDR that will be used to decode the message.
 
+  /**
+   * The fragments are collected in a chain of message blocks (using
+   * the cont() field).  When the complete message is received the
+   * chain is reassembled into <cdr>
+   */
   ACE_Message_Block* fragments_begin;
   ACE_Message_Block* fragments_end;
-  // The fragments are collected in a chain of message blocks (using
-  // the cont() field).  When the complete message is received the
-  // chain is reassembled into <cdr>
 
+  /**
+   * The byte order for the the first fragment
+   * @@ The current implementation cannot handle fragments with
+   *    different byte orders, this should not be a major problem
+   *    because:
+   *    1) It is unlikely that we are going to receive fragments.
+   *    2) The spec *seems* to allow different byte_orders, but it is
+   *       unlikely that any ORB will do that.
+   *    3) Even if we allowed that at this layer the CDR classes are
+   *       not prepared to handle that.
+   */
   CORBA::Octet first_fragment_byte_order;
-  // The byte order for the the first fragment
-  // @@ The current implementation cannot handle fragments with
-  //    different byte orders, this should not be a major problem
-  //    because:
-  //    1) It is unlikely that we are going to receive fragments.
-  //    2) The spec *seems* to allow different byte_orders, but it is
-  //       unlikely that any ORB will do that.
-  //    3) Even if we allowed that at this layer the CDR classes are
-  //       not prepared to handle that.
 
+  /// The GIOP version for the first fragment
+  /// @@ Same as above, all GIOP versions must match.
   TAO_GIOP_Version first_fragment_giop_version;
-  // The GIOP version for the first fragment
-  // @@ Same as above, all GIOP versions must match.
 
+  /**
+   * If the messages are chained this represents the message type for
+   * the *complete* message (remember that the last message will be
+   * fragment and the upper level needs to know if it is a request,
+   * locate request or what).
+   */
   CORBA::Octet first_fragment_message_type;
-  // If the messages are chained this represents the message type for
-  // the *complete* message (remember that the last message will be
-  // fragment and the upper level needs to know if it is a request,
-  // locate request or what).
 
 
 private:
+  /// Append <current> to the list of fragments
+  /// Also resets the state, because the current message was consumed.
   int append_fragment (ACE_Message_Block* current);
-  // Append <current> to the list of fragments
-  // Also resets the state, because the current message was consumed.
 
 };
 

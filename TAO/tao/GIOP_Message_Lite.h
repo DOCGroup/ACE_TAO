@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author Initially by Carlos <coryan@uci.edu>
- *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 // ===================================================================
 #ifndef TAO_GIOP_MESSAGE_LITE_H

@@ -1,21 +1,18 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Endpoint.h
-//
-// = DESCRIPTION
-//   Endpoint interface, part of TAO pluggable protocol framework.
-//
-// = AUTHOR
-//   Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Endpoint.h
+ *
+ *  $Id$
+ *
+ * Endpoint interface, part of TAO pluggable protocol framework.
+ *
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ENDPOINT_H
 #define TAO_ENDPOINT_H
@@ -27,79 +24,84 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_Endpoint
+ *
+ * @brief Defines the Endpoint interface in the Pluggable Protocol
+ * framework.
+ *
+ * Lightweight encapsulation of addressing information for a
+ * single acceptor endpoint.  In other words, Endpoint represents
+ * a single point of contact for the server, and is the smallest
+ * unit of addressing information necessary for a client to connect
+ * to a server.
+ * A Profile contains one or more Endpoints, i.e., knows of
+ * one or more ways to contact server(s).
+ */
 class TAO_Export TAO_Endpoint
 {
-  // = TITLE
-  //   Defines the Endpoint interface in the Pluggable Protocol
-  //   framework.
-  //
-  // = DESCRIPTION
-  //   Lightweight encapsulation of addressing information for a
-  //   single acceptor endpoint.  In other words, Endpoint represents
-  //   a single point of contact for the server, and is the smallest
-  //   unit of addressing information necessary for a client to connect
-  //   to a server.
-  //   A Profile contains one or more Endpoints, i.e., knows of
-  //   one or more ways to contact server(s).
-  //
 public:
+  /// Constructor.
   TAO_Endpoint (CORBA::ULong tag,
                 CORBA::Short priority = -1);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Endpoint (void);
-  // Destructor.
 
+  /// IOP protocol tag accessor.
   CORBA::ULong tag (void) const;
-  // IOP protocol tag accessor.
 
+  /// <priority_> attribute setter.
   void priority (CORBA::Short priority);
-  // <priority_> attribute setter.
 
+  /// <priority_> attribute getter.
   CORBA::Short priority (void) const;
-  // <priority_> attribute getter.
 
   // = Abstract methods to be implemented by concrete subclasses.
 
+  /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  /// endpoints are equivalent iff their port and host are the same.
   virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) = 0;
-  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
-  // endpoints are equivalent iff their port and host are the same.
 
+  /// Endpoints can be stringed in a list.  Return the next endpoint in
+  /// the list, if any.
   virtual TAO_Endpoint *next (void) = 0;
-  // Endpoints can be stringed in a list.  Return the next endpoint in
-  // the list, if any.
 
+  /**
+   * Return a string representation for the address.  Returns
+   * -1 if buffer is too small.  The purpose of this method is to
+   * provide a general interface to the underlying address object's
+   * addr_to_string method.  This allows the protocol implementor to
+   * select the appropriate string format.
+   */
   virtual int addr_to_string (char *buffer, size_t length) = 0;
-  // Return a string representation for the address.  Returns
-  // -1 if buffer is too small.  The purpose of this method is to
-  // provide a general interface to the underlying address object's
-  // addr_to_string method.  This allows the protocol implementor to
-  // select the appropriate string format.
 
+  /// This method is used when a connection has been reset, requiring
+  /// the hint to be cleaned up and reset to NULL.
   virtual void reset_hint (void) = 0;
-  // This method is used when a connection has been reset, requiring
-  // the hint to be cleaned up and reset to NULL.
 
+  /// This method returns a copy of the corresponding endpoints by
+  /// allocation memory
   virtual TAO_Endpoint *duplicate (void) = 0;
-  // This method returns a copy of the corresponding endpoints by
-  // allocation memory
 
+  /// Return a hash value for this object.
   virtual CORBA::ULong hash (void) = 0;
-  // Return a hash value for this object.
 private:
 
   // Endpoints should not be copied.
   ACE_UNIMPLEMENTED_FUNC (TAO_Endpoint (const TAO_Endpoint&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Endpoint&))
 
+  /// IOP tag, identifying the protocol for which this endpoint
+  /// contains addressing info.
   CORBA::ULong tag_;
-  // IOP tag, identifying the protocol for which this endpoint
-  // contains addressing info.
 
+  /**
+   * CORBA priority of the acceptor this Endpoint is representing.
+   * This is part of TAO 'prioritized endpoints' architecture, and is
+   * currently used for RTCORBA only.
+   */
   CORBA::Short priority_;
-  // CORBA priority of the acceptor this Endpoint is representing.
-  // This is part of TAO 'prioritized endpoints' architecture, and is
-  // currently used for RTCORBA only.
 };
 
 #if defined (__ACE_INLINE__)

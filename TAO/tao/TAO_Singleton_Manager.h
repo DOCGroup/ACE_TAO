@@ -1,24 +1,20 @@
 // -*- C++ -*-
-//
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    TAO_Singleton_Manager.h
-//
-// = DESCRIPTION
-//     Header file for the TAO-specific Singleton Manager.  Based
-//     entirely on ace/Object_Manager.{h,i,cpp}.
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TAO_Singleton_Manager.h
+ *
+ *  $Id$
+ *
+ *   Header file for the TAO-specific Singleton Manager.  Based
+ *   entirely on ace/Object_Manager.{h,i,cpp}.
+ *
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_OBJECT_MANAGER_H
 #define TAO_OBJECT_MANAGER_H
@@ -42,46 +38,51 @@ extern "C"
 void
 TAO_Singleton_Manager_cleanup_destroyer (void *, void *);
 
+/**
+ * @class TAO_Singleton_Manager
+ *
+ * @brief Manager for TAO library services and singleton cleanup.
+ *
+ * The <TAO_Singleton_Manager> is basically simplified version of
+ * the ACE_Object_Manager.  It is designed specifically to
+ * manage singletons created by TAO.  For example, Singleton
+ * instances created by TAO will be automatically registered
+ * with the Singleton instance of this Singleton Manager.
+ * This class is necessary to ensure that TAO-specific
+ * Singletons are centrally isolated.  The idea is that
+ * destruction of the instance of the <TAO_Singleton_Manager>
+ * triggers destruction of all objects/services registered with
+ * it.
+ */
 class TAO_Export TAO_Singleton_Manager : public ACE_Object_Manager_Base
 {
-  // = TITLE
-  //     Manager for TAO library services and singleton cleanup.
-  //
-  // = DESCRIPTION
-  //     The <TAO_Singleton_Manager> is basically simplified version of
-  //     the ACE_Object_Manager.  It is designed specifically to
-  //     manage singletons created by TAO.  For example, Singleton
-  //     instances created by TAO will be automatically registered
-  //     with the Singleton instance of this Singleton Manager.
-  //
-  //     This class is necessary to ensure that TAO-specific
-  //     Singletons are centrally isolated.  The idea is that
-  //     destruction of the instance of the <TAO_Singleton_Manager>
-  //     triggers destruction of all objects/services registered with
-  //     it.
 
   friend void TAO_Singleton_Manager_cleanup_destroyer (void *, void *);
 
 public:
+  /// Explicitly initialize.
   virtual int init (void);
-  // Explicitly initialize.
 
+  /**
+   * Explicitly initialize the TAO_Singleton_Manager, in addition to
+   * explicitly registering (or not registering) with the
+   * ACE_Object_Manager.
+   */
   int init (int register_with_object_manager);
-  // Explicitly initialize the TAO_Singleton_Manager, in addition to
-  // explicitly registering (or not registering) with the
-  // ACE_Object_Manager.
 
+  /// Explicitly destroy.
   virtual int fini (void);
-  // Explicitly destroy.
 
+  /**
+   * Returns 1 before the <TAO_Singleton_Manager> has been
+   * constructed.  See <ACE_Object_Manager::starting_up> for more
+   * information.
+   */
   static int starting_up (void);
-  // Returns 1 before the <TAO_Singleton_Manager> has been
-  // constructed.  See <ACE_Object_Manager::starting_up> for more
-  // information.
 
+  /// Returns 1 after the <TAO_Singleton_Manager> has been destroyed.
+  /// See <ACE_Object_Manager::shutting_down> for more information.
   static int shutting_down (void);
-  // Returns 1 after the <TAO_Singleton_Manager> has been destroyed.
-  // See <ACE_Object_Manager::shutting_down> for more information.
 
   enum Preallocated_Object
     {
@@ -100,44 +101,48 @@ public:
     };
   // Unique identifiers for preallocated objects.
 
+  /// Accesses a default signal set used, for example, in
+  /// <ACE_Sig_Guard> methods.
   static sigset_t *default_mask (void);
-  // Accesses a default signal set used, for example, in
-  // <ACE_Sig_Guard> methods.
 
+  /// Returns the current thread hook for the process.
   static ACE_Thread_Hook *thread_hook (void);
-  // Returns the current thread hook for the process.
 
+  /// Returns the existing thread hook and assign a <new_thread_hook>.
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
-  // Returns the existing thread hook and assign a <new_thread_hook>.
 
+  /// Accessor to singleton instance.
   static TAO_Singleton_Manager *instance (void);
-  // Accessor to singleton instance.
 
+  /**
+   * Register an ACE_Cleanup object for cleanup at process
+   * termination.  The object is deleted via the
+   * <ace_cleanup_destroyer>.  If you need more flexiblity, see the
+   * <other at_exit> method below.  For OS's that do not have
+   * processes, cleanup takes place at the end of <main>.  Returns 0
+   * on success.  On failure, returns -1 and sets errno to: EAGAIN if
+   * shutting down, ENOMEM if insufficient virtual memory, or EEXIST
+   * if the object (or array) had already been registered.
+   */
   static int at_exit (ACE_Cleanup *object, void *param = 0);
-  // Register an ACE_Cleanup object for cleanup at process
-  // termination.  The object is deleted via the
-  // <ace_cleanup_destroyer>.  If you need more flexiblity, see the
-  // <other at_exit> method below.  For OS's that do not have
-  // processes, cleanup takes place at the end of <main>.  Returns 0
-  // on success.  On failure, returns -1 and sets errno to: EAGAIN if
-  // shutting down, ENOMEM if insufficient virtual memory, or EEXIST
-  // if the object (or array) had already been registered.
 
+  /**
+   * Register an object (or array) for cleanup at process termination.
+   * "cleanup_hook" points to a (global, or static member) function
+   * that is called for the object or array when it to be destroyed.
+   * It may perform any necessary cleanup specific for that object or
+   * its class.  "param" is passed as the second parameter to the
+   * "cleanup_hook" function; the first parameter is the object (or
+   * array) to be destroyed.  "cleanup_hook", for example, may delete
+   * the object (or array).  For OS's that do not have processes, this
+   * function is the same as <at_thread_exit>.  Returns 0 on success.
+   * On failure, returns -1 and sets errno to: EAGAIN if shutting
+   * down, ENOMEM if insufficient virtual memory, or EEXIST if the
+   * object (or array) had already been registered.
+   */
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
-  // Register an object (or array) for cleanup at process termination.
-  // "cleanup_hook" points to a (global, or static member) function
-  // that is called for the object or array when it to be destroyed.
-  // It may perform any necessary cleanup specific for that object or
-  // its class.  "param" is passed as the second parameter to the
-  // "cleanup_hook" function; the first parameter is the object (or
-  // array) to be destroyed.  "cleanup_hook", for example, may delete
-  // the object (or array).  For OS's that do not have processes, this
-  // function is the same as <at_thread_exit>.  Returns 0 on success.
-  // On failure, returns -1 and sets errno to: EAGAIN if shutting
-  // down, ENOMEM if insufficient virtual memory, or EEXIST if the
-  // object (or array) had already been registered.
 
 private:
   // Force allocation on the heap.
@@ -148,34 +153,34 @@ private:
   TAO_Singleton_Manager (const TAO_Singleton_Manager &);
   TAO_Singleton_Manager &operator= (const TAO_Singleton_Manager &);
 
+  /// Register an object or array for deletion at program termination.
+  /// See description of static version above for return values.
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
-  // Register an object or array for deletion at program termination.
-  // See description of static version above for return values.
 
 private:
 
+  /// Singleton instance pointer.
   static TAO_Singleton_Manager *instance_;
-  // Singleton instance pointer.
 
+  /// Table of preallocated objects.
   static void *preallocated_object[TAO_PREALLOCATED_OBJECTS];
-  // Table of preallocated objects.
 
+  /// Default signal set used, for example, in ACE_Sig_Guard.
   sigset_t *default_mask_;
-  // Default signal set used, for example, in ACE_Sig_Guard.
 
+  /// Thread hook that's used by this process.
   ACE_Thread_Hook *thread_hook_;
-  // Thread hook that's used by this process.
 
+  /// For at_exit support.
   ACE_OS_Exit_Info exit_info_;
-  // For at_exit support.
 
+  /// Indicates if TAO_Singleton_Manager is registered with the
+  /// ACE_Object_Manager.
   int registered_with_object_manager_;
-  // Indicates if TAO_Singleton_Manager is registered with the
-  // ACE_Object_Manager.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  /// Lock that is used to guard internal structures.
   ACE_Recursive_Thread_Mutex *internal_lock_;
-  // Lock that is used to guard internal structures.
 #endif /* ACE_MT_SAFE */
 };
 

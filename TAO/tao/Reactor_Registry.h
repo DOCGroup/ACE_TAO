@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Reactor_Registry.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Reactor_Registry.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_REACTOR_REGISTRY_H
 #define TAO_REACTOR_REGISTRY_H
@@ -28,54 +25,56 @@ class TAO_Leader_Follower;
 class TAO_Acceptor;
 class ACE_Reactor;
 
+/**
+ * @class TAO_Reactor_Registry
+ *
+ * @brief The interface for the concurrency strategy.
+ *
+ * The ORB concurrency strategy is responsible for assigning
+ * reactors to threads, keeping the relationship between threads
+ * and their leader-follower groups and activating (if required)
+ * the server-side Svc_Handlers.
+ */
 class TAO_Export TAO_Reactor_Registry
 {
-  //
-  // = TITLE
-  //   The interface for the concurrency strategy.
-  //
-  // = DESCRIPTION
-  //   The ORB concurrency strategy is responsible for assigning
-  //   reactors to threads, keeping the relationship between threads
-  //   and their leader-follower groups and activating (if required)
-  //   the server-side Svc_Handlers.
-  //
 public:
+  /// Default constructor
   TAO_Reactor_Registry (void);
-  // Default constructor
 
+  /// The destructor
   virtual ~TAO_Reactor_Registry (void);
-  // The destructor
 
+  /// The ORB core for this concurrency strategy.
   TAO_ORB_Core *orb_core (void) const;
-  // The ORB core for this concurrency strategy.
 
+  /// Initialize the Reactor Registry
   virtual void open (TAO_ORB_Core *orb_core);
-  // Initialize the Reactor Registry
 
+  /// Return the reactor for the current thread
   virtual ACE_Reactor *reactor (void) = 0;
-  // Return the reactor for the current thread
 
+  /// Return the reactor for a given acceptor
   virtual ACE_Reactor *reactor (TAO_Acceptor *acceptor) = 0;
-  // Return the reactor for a given acceptor
 
+  /// Return the Leader-Follower group for the current thread
   virtual TAO_Leader_Follower &leader_follower (void) = 0;
-  // Return the Leader-Follower group for the current thread
 
+  /// Return the Leader-Follower group for a given acceptor
   virtual TAO_Leader_Follower &leader_follower (TAO_Acceptor *acceptor) = 0;
-  // Return the Leader-Follower group for a given acceptor
 
+  /**
+   * The strategy is allowed to store TSS resources using a
+   * place-holder in the ORB_Core class. The ORB_Core the calls back
+   * to do the final cleanup.
+   */
   virtual void destroy_tss_cookie (void* cookie) = 0;
-  // The strategy is allowed to store TSS resources using a
-  // place-holder in the ORB_Core class. The ORB_Core the calls back
-  // to do the final cleanup.
 
+  /// Wakeup all the reactors
   virtual int shutdown_all (void) = 0;
-  // Wakeup all the reactors
 
 private:
+  /// The orb_core
   TAO_ORB_Core *orb_core_;
-  // The orb_core
 };
 
 #if defined (__ACE_INLINE__)

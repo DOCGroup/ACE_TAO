@@ -1,21 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = DESCRIPTION
-//   Implementation class for TAO-specific Buffering Constraint Policy.
-//
-// = FILENAME
-//   Buffering_Constraint_Policy.h
-//
-// = AUTHOR
-//   Irfan Pyarali (irfan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Buffering_Constraint_Policy.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali (irfan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_BUFFERING_CONSTRAINT_POLICY_H
 #define TAO_BUFFERING_CONSTRAINT_POLICY_H
@@ -52,18 +45,18 @@ class TAO_Export TAO_Buffering_Constraint_Policy
   //     the ORB.
   //
 public:
+  /// Constructor.
   TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
-  // Copy constructor.
 
+  /// Helper method for the implementation of CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Helper method for the implementation of CORBA::ORB::create_policy.
 
+  /// Returns a copy of <this>.
   virtual TAO_Buffering_Constraint_Policy *clone (void) const;
-  // Returns a copy of <this>.
 
   // = The TAO::Buffering_Constraint_Policy methods
 
@@ -81,8 +74,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
+  /// The attribute
   TAO::BufferingConstraint buffering_constraint_;
-  // The attribute
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

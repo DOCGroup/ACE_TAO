@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ValueFactory.h
-//
-// = AUTHOR
-//     Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     ValueFactory.h
+ *
+ *  $Id$
+ *
+ *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+ */
+//=============================================================================
+
 
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
@@ -46,9 +43,9 @@ public:
   void _remove_ref (void);
 
   // private: %!
+  /// In a derived class T use return type TAO_OBV_CREATE_RETURN_TYPE (T)
+  /// (see at definition below)
   virtual CORBA_ValueBase* create_for_unmarshal (void) = 0;
-  // In a derived class T use return type TAO_OBV_CREATE_RETURN_TYPE (T)
-  // (see at definition below)
 
 private:
   CORBA::ULong _tao_reference_count_;

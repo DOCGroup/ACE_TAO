@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Object_Proxy_Broker.h
-//
-// = DESCRIPTION
-//    This files contains the abstract class for the CORBA Object
-//    proxy brokers. Interface specific proxy broker are generated
-//    by the IDL compiler.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_Proxy_Broker.h
+ *
+ *  $Id$
+ *
+ *  This files contains the abstract class for the CORBA Object
+ *  proxy brokers. Interface specific proxy broker are generated
+ *  by the IDL compiler.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_OBJECT_PROXY_BROKER_H_
 #define TAO_OBJECT_PROXY_BROKER_H_
@@ -28,7 +25,7 @@
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
-#endif // ACE_LACKS_PRAGMA_ONCE
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Export TAO_Object_Proxy_Broker
 {
@@ -48,4 +45,4 @@ protected:
 
 #include "ace/post.h"
 
-#endif // TAO_OBJECT_PROXY_BROKER_H_
+#endif /* TAO_OBJECT_PROXY_BROKER_H_ */

@@ -1,18 +1,15 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Dynamic_Adapter.h
-//
-// = AUTHOR
-//     Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dynamic_Adapter.h
+ *
+ *  $Id$
+ *
+ *  @author  Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNAMIC_ADAPTER_H
 #define TAO_DYNAMIC_ADAPTER_H
@@ -28,17 +25,18 @@
 
 class TAO_GIOP_Twoway_Invocation;
 
+/**
+ * @class TAO_Dynamic_Adapter
+ *
+ * @brief TAO_Dynamic_Adapter.
+ *
+ * Class that adapts various functions in the CORBA namespace
+ * related to DII/DSI, which is no longer found in the TAO library.
+ * This is a base for the actual implementation in the DynamicInterface
+ * library.
+ */
 class TAO_Export TAO_Dynamic_Adapter : public ACE_Service_Object
 {
-  // = TITLE
-  //    TAO_Dynamic_Adapter.
-  //
-  // = DESCRIPTION
-  //    Class that adapts various functions in the CORBA namespace
-  //    related to DII/DSI, which is no longer found in the TAO library. 
-  //    This is a base for the actual implementation in the DynamicInterface 
-  //    library.
-  //
 public:
   virtual ~TAO_Dynamic_Adapter (void);
 

@@ -1,23 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = DESCRIPTION
-//   Implementation class for TAO-specific Client Priority Policy.
-//
-// = FILENAME
-//   Client_Priority_Policy.h
-//
-// = AUTHOR
-//   Marina Spivak (marina@cs.wustl.edu)
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//   Ossama Othman (othman@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Client_Priority_Policy.h
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak (marina@cs.wustl.edu)
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *  @author Ossama Othman (othman@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CLIENT_PRIORITY_POLICY_H
 #define TAO_CLIENT_PRIORITY_POLICY_H
@@ -52,21 +45,21 @@ class TAO_Export TAO_Client_Priority_Policy
   //
   //
 public:
+  /// Constructor.
   TAO_Client_Priority_Policy (const TAO::PrioritySpecification &priority_spec);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs);
-  // Copy constructor.
 
+  /// Helper method for the implementation of CORBA::ORB::create_policy
   static CORBA::Policy_ptr create (
       const CORBA::Any& val,
       CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
     );
-  // Helper method for the implementation of CORBA::ORB::create_policy
 
+  /// Returns a copy of <this>.
   virtual TAO_Client_Priority_Policy *clone (void) const;
-  // Returns a copy of <this>.
 
   // = The TAO::Client_Priority_Policy methods
   virtual TAO::PrioritySpecification priority_specification (
@@ -88,8 +81,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
+  /// The attribute
   TAO::PrioritySpecification priority_spec_;
-  // The attribute
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   FILE_Parser.h
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   FILE_Parser.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_FILE_PARSER_H
 #define TAO_FILE_PARSER_H
@@ -24,23 +21,24 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_FILE_Parser
+ *
+ * @brief Implements the <file:> IOR format
+ *
+ * This class implements the <file:> IOR format.
+ * It is dynamically loaded by the ORB and used to open a file,
+ * read its contents and then interepret the file as an IOR (that
+ * can be in any valid format).
+ */
 class TAO_Export TAO_FILE_Parser : public TAO_IOR_Parser
 {
-  // = TITLE
-  //   Implements the <file:> IOR format
-  //
-  // = DESCRIPTION
-  //   This class implements the <file:> IOR format.
-  //   It is dynamically loaded by the ORB and used to open a file,
-  //   read its contents and then interepret the file as an IOR (that
-  //   can be in any valid format).
-  //
 public:
+  /// Constructor
   TAO_FILE_Parser (void);
-  // Constructor
 
+  /// The destructor
   virtual ~TAO_FILE_Parser (void);
-  // The destructor
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h

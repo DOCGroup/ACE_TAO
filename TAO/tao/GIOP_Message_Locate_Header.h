@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     GIOP_Message_Headers.h
-//
-// = DESCRIPTION
-//     Some assorted GIOP structure mappings
-//
-// = AUTHOR
-//     Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     GIOP_Message_Locate_Header.h
+ *
+ *  $Id$
+ *
+ *   Some assorted GIOP structure mappings
+ *
+ *
+ *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_GIOP_MESSAGE_LOCATE_HEADER_H
 #define TAO_GIOP_MESSAGE_LOCATE_HEADER_H
@@ -29,46 +26,49 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+/**
+ * @class TAO_GIOP_Locate_Request_Header
+ *
+ * @brief Location service support
+ */
 class TAO_Export TAO_GIOP_Locate_Request_Header
 {
-  // = TITLE
-  //   Location service support
 public:
 
+  /// Constructor
   TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg,
                                   TAO_ORB_Core *core);
-  // Constructor
 
+  /// Set the id
   void request_id (CORBA::ULong id);
-  // Set the id
 
+  /// Get the request id
   CORBA::ULong request_id (void);
-  // Get the request id
 
+  /// Get the object_key in read mode..
   const TAO_ObjectKey &object_key (void) const;
-  // Get the object_key in read mode..
 
+  /// Get the object_key in read/write mode..
   TAO_ObjectKey &object_key (void);
-  // Get the object_key in read/write mode..
 
+  /// Get the reference to the underlying profile
   TAO_Tagged_Profile &profile (void);
-  // Get the reference to the underlying profile
 
+  /// Get the CDR stream for read/write
   TAO_InputCDR &incoming_stream (void);
-  // Get the CDR stream for read/write
 
 private:
+  /// Request id
   CORBA::ULong request_id_;
-  // Request id
 
+  /// Profile info.
   TAO_Tagged_Profile profile_;
-  // Profile info.
 
+  /// Object Key
   TAO_ObjectKey object_key_;
-  // Object Key
 
+  /// Incoming CDR stream
   TAO_InputCDR *incoming_;
-  // Incoming CDR stream
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//   Cache_Entries.h
-//
-// = AUTHOR
-//    Bala Natarajan  <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Cache_Entries.h
+ *
+ *  $Id$
+ *
+ *  @author Bala Natarajan  <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CACHE_ENTRIES_H
 #define TAO_CACHE_ENTRIES_H
@@ -35,131 +32,136 @@ class TAO_Connection_Handler;
 class Tao_Base_Connection_Property;
 
 
+/**
+ * @class TAO_Cache_IntId
+ *
+ * @brief Helper class for TAO_Connection_Cache_Manager
+ *
+ * Helper class that wraps the <value> part of the Map or
+ * table holding the Connection state.: unifies data items, so
+ * they can be stored together as a <value> for a <key> in a
+ * table holding the state of the Connection Cache.
+ */
 class TAO_Export TAO_Cache_IntId
 {
-  // = TITLE
-  //     Helper class for TAO_Connection_Cache_Manager
-  //
-  // = DESCRIPTION
-  //     Helper class that wraps the <value> part of the Map or
-  //     table holding the Connection state.: unifies data items, so
-  //     they can be stored together as a <value> for a <key> in a
-  //     table holding the state of the Connection Cache.
 
 public:
 
   // = Initialization and termination methods.
 
+  /// Constructor.
   TAO_Cache_IntId (void);
-  // Constructor.
 
+  /// Constructor.
   TAO_Cache_IntId (TAO_Connection_Handler *handler);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_Cache_IntId (const TAO_Cache_IntId & rhs);
-  // Copy constructor.
 
+  /// Destructor.
   ~TAO_Cache_IntId (void);
-  // Destructor.
 
+  /// Assignment operator (does copy memory).
   void operator= (const TAO_Cache_IntId &rhs);
-  // Assignment operator (does copy memory).
 
+  /// Equality comparison operator (must match both id_ and kind_).
   int operator== (const TAO_Cache_IntId &rhs) const;
-  // Equality comparison operator (must match both id_ and kind_).
 
+  /// Inequality comparison operator.
   int operator!= (const TAO_Cache_IntId &rhs) const;
-  // Inequality comparison operator.
 
+  /// Return the underlying handler
   TAO_Connection_Handler *handler (void);
-  // Return the underlying handler
 
+  /// Return the underlying handler
   const TAO_Connection_Handler *handler (void) const;
-  // Return the underlying handler
 
   void recycle_state (ACE_Recyclable_State new_state);
 
+  /// Get/Set <recycle_state>.
   ACE_Recyclable_State recycle_state (void);
-  // Get/Set <recycle_state>.
 
 private:
 
+  /// The connection handler that needs to be cached.
   TAO_Connection_Handler *handler_;
-  // The connection handler that needs to be cached.
 
+  /// The state of the handle
   ACE_Recyclable_State recycle_state_;
-  // The state of the handle
 };
 
 
+/**
+ * @class TAO_Cache_ExtId
+ *
+ * @brief Helper class for TAO_Connection_Cache_Manager: unifies
+ * several  data items, so they can be stored together as a
+ * <value> for a <key> in a hash table holding the state of the
+ * Connection Cache.
+ *
+ */
 class TAO_Export TAO_Cache_ExtId
 {
-  // = TITLE
-  //     Helper class for TAO_Connection_Cache_Manager: unifies
-  //     several  data items, so they can be stored together as a
-  //     <value> for a <key> in a hash table holding the state of the
-  //     Connection Cache.
-  //
-  // = DESCRIPTION
-  //
 public:
   // = Initialization and termination methods.
 
+  /// Constructor.
   TAO_Cache_ExtId (void);
-  // Constructor.
 
+  /// Constructor.
   TAO_Cache_ExtId (TAO_Connection_Descriptor_Interface *prop);
-  // Constructor.
 
+  /// Copy constructor.
   TAO_Cache_ExtId (const TAO_Cache_ExtId & rhs);
-  // Copy constructor.
 
+  /// Destructor.
   ~TAO_Cache_ExtId (void);
-  // Destructor.
 
   // = Assignment and comparison operators.
+  /// Assignment operator (does copy memory).
   void operator= (const TAO_Cache_ExtId &rhs);
-  // Assignment operator (does copy memory).
 
+  /// Equality comparison operator (must match both id_ and kind_).
   int operator== (const TAO_Cache_ExtId &rhs) const;
-  // Equality comparison operator (must match both id_ and kind_).
 
+  /// Inequality comparison operator.
   int operator!= (const TAO_Cache_ExtId &rhs) const;
-  // Inequality comparison operator.
 
+  /// <hash> function is required in order for this class to be usable by
+  /// ACE_Hash_Map_Manager.
   u_long hash (void) const;
-  // <hash> function is required in order for this class to be usable by
-  // ACE_Hash_Map_Manager.
 
+  /// Make a deep copy of the underlying pointer
   void duplicate (void);
-  // Make a deep copy of the underlying pointer
 
+  /// Return the index value
   CORBA::ULong index (void);
   CORBA::ULong index (void) const;
-  // Return the index value
 
+  /// Set the index value. This calls should not be used by any users
+  /// but for the TAO_Connection_Cache_Manager class.
   void index (CORBA::ULong index);
-  // Set the index value. This calls should not be used by any users
-  // but for the TAO_Connection_Cache_Manager class.
 
   // = Accessors
+  /// Get the underlying the property pointer
   TAO_Connection_Descriptor_Interface *property (void) const;
-  // Get the underlying the property pointer
 
 private:
   // = Data members.
 
+  /// A property object that we represent.
   TAO_Connection_Descriptor_Interface *connection_property_;
-  // A property object that we represent.
 
+  /// Do we need to delete connection_propert_?
   CORBA::Boolean is_delete_;
-  // Do we need to delete connection_propert_?
 
+  /**
+   * This is a supplementary index. Would be set to zero by
+   * default. Would be altered by the Connection_Cache of TAO. Please
+   * see the documentation of TAO_Connection_Cache_Manager for
+   * details.
+   */
   CORBA::ULong index_;
-  // This is a supplementary index. Would be set to zero by
-  // default. Would be altered by the Connection_Cache of TAO. Please
-  // see the documentation of TAO_Connection_Cache_Manager for
-  // details.
 };
 
 

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Priority_Mapping.h
-//
-// = DESCRIPTION
-//   Declares the Priority_Mapping interface, as defined in the
-//   RT-CORBA spec.
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Priority_Mapping.h
+ *
+ *  $Id$
+ *
+ * Declares the Priority_Mapping interface, as defined in the
+ * RT-CORBA spec.
+ *
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_PRIORITY_MAPPING_H
 #define TAO_PRIORITY_MAPPING_H
@@ -31,21 +28,21 @@
 
 #include "tao/RTCORBAC.h"
 
+/**
+ * @class TAO_Priority_Mapping
+ *
+ * @brief The interface for priority mapping.
+ *
+ * Check the RT-CORBA spec (orbos/99-02-12) secions 4.5.2
+ */
 class TAO_Export TAO_Priority_Mapping
 {
-  //
-  // = TITLE
-  //   The interface for priority mapping.
-  //
-  // = DESCRIPTION
-  //   Check the RT-CORBA spec (orbos/99-02-12) secions 4.5.2
-  //
 public:
+  /// Default constructor
   TAO_Priority_Mapping (void);
-  // Default constructor
 
+  /// The destructor
   virtual ~TAO_Priority_Mapping (void);
-  // The destructor
 
   virtual CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,

@@ -1744,16 +1744,16 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
                       this->private_state_->tc_member_name_list_ [i]
                       ))
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), (char *)0);
-        
+
         this->private_state_->tc_member_name_list_known_ = 1;
-        
+
         if (slot < mcount)
           return this->private_state_->tc_member_name_list_[slot];
         else
           ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
       }
       ACE_NOTREACHED (break;)
-        
+
     case CORBA::tk_except:
     case CORBA::tk_struct:              // index from 0
       {
@@ -1775,12 +1775,12 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
           }
 
         this->private_state_->tc_member_name_list_known_ = 1;
-        
+
         if (slot < mcount)
           return this->private_state_->tc_member_name_list_[slot];
         else
           ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), (char *)0);
-        
+
       }
       ACE_NOTREACHED (break;)
 
@@ -1824,7 +1824,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
               }
 
             this->private_state_->tc_member_name_list_known_ = 1;
-            
+
             if (slot < mcount)
               return this->private_state_->tc_member_name_list_[slot];
             else

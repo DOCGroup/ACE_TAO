@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-//
-// $Id$
-//
-// ================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   TimeBaseS.h
-//
-// = DESCRIPTION
-//   Generated from TimeBase.pidl
-//   The file is almost empty and only present to keep other IDL files
-//   that include TimeBase.pidl happy.
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file   TimeBaseS.h
+ *
+ *  $Id$
+ *
+ * Generated from TimeBase.pidl
+ * The file is almost empty and only present to keep other IDL files
+ * that include TimeBase.pidl happy.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef TAO_IDL_TIMEBASES_H
 #define TAO_IDL_TIMEBASES_H
