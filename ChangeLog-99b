@@ -6,6 +6,8 @@ Sun May 16 20:08:41 1999  David L. Levine  <levine@cs.wustl.edu>
           handlers must never do anything that could cause
           a lock to be acquired.
 
+        * tests/Conn_Test.cpp (handler): removed ACE_DEBUG.
+
 Sun May 16 20:04:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: moved #include of ace/Trace.h to before #include of
