@@ -1,15 +1,25 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
-## Makefile.IFR_Service.am 
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+
+lib_LTLIBRARIES =
+bin_PROGRAMS =
+noinst_HEADERS =
+
+## Makefile.IFR_Service.am
 
 if !BUILD_MINIMUM_CORBA
 
-bin_PROGRAMS = IFR_Service
+bin_PROGRAMS += IFR_Service
 
 IFR_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -36,11 +46,11 @@ IFR_Service_LDADD = \
 
 endif !BUILD_MINIMUM_CORBA
 
-## Makefile.TAO_IFR_BE.am 
+## Makefile.TAO_IFR_BE.am
 
 if !BUILD_MINIMUM_CORBA
 
-lib_LTLIBRARIES = libTAO_IFR_BE.la
+lib_LTLIBRARIES += libTAO_IFR_BE.la
 
 libTAO_IFR_BE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -72,7 +82,7 @@ libTAO_IFR_BE_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
+noinst_HEADERS += \
   be_extern.h \
   be_global.h \
   ifr_adding_visitor.h \
@@ -85,7 +95,7 @@ noinst_HEADERS = \
 
 endif !BUILD_MINIMUM_CORBA
 
-## Makefile.TAO_IFR_EXE.am 
+## Makefile.TAO_IFR_EXE.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -101,9 +111,9 @@ tao_ifr_CPPFLAGS = \
   -I$(TAO_ROOT)/TAO_IDL/fe
 
 tao_ifr_SOURCES = \
-  $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp \
-  $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp \
-  $(TAO_ROOT)/TAO_IDL/tao_idl.cpp \
+  drv_args.cpp \
+  drv_preproc.cpp \
+  tao_idl.cpp \
   $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
 
 tao_ifr_LDADD = \
@@ -117,6 +127,8 @@ endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

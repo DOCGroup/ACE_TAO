@@ -1,13 +1,20 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
-## Makefile.Time_Service_Clerk.am 
+bin_PROGRAMS =
 
-bin_PROGRAMS = Time_Service_Clerk
+## Makefile.Time_Service_Clerk.am
+
+if BUILD_CORBA_MESSAGING
+
+bin_PROGRAMS += Time_Service_Clerk
 
 Time_Service_Clerk_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,6 +30,7 @@ Time_Service_Clerk_SOURCES = \
   Clerk_i.h
 
 Time_Service_Clerk_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -35,7 +43,11 @@ Time_Service_Clerk_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Time_Service_Server.am 
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.Time_Service_Server.am
+
+if BUILD_CORBA_MESSAGING
 
 bin_PROGRAMS += Time_Service_Server
 
@@ -53,6 +65,7 @@ Time_Service_Server_SOURCES = \
   Server_i.h
 
 Time_Service_Server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -65,8 +78,12 @@ Time_Service_Server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_CORBA_MESSAGING
+
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB
