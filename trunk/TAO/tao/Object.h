@@ -34,7 +34,7 @@ class TAO_Abstract_ServantBase;
 class TAO_Object_Proxy_Broker;
 
 /**
- * @class CORBA::Object
+ * @class CORBA_Object
  *
  * @brief Implementation of a CORBA object reference.
  *
