@@ -1,0 +1,91 @@
+// $Id$
+
+        This directory contains the files that implement the TAO
+Naming Service.  The TAO Naming Service uses IP Multicast to process
+client "resolve_initial_references()" requests.
+
+To Run:
+======
+
+% Naming_Service [-ORBport port] 
+                 [-ORBobjrefstyle url]
+                 [-ORBnameserviceport nsport]
+                 [-s context_size] 
+                 [-t time]
+
+Arguments:
+==========
+        port
+                 The ORB port.
+
+        nsport 
+                Multicast port.
+
+        context_size
+                 Size of the hash table allocated upon the creation of
+                 the root Naming Context (if one is created).  All
+                 contexts created under the root will use the same
+                 size for their hash tables.  The default is 1024.
+
+        time
+                How long the server should listen for requests before
+                exiting.
+
+Environment Variables:
+=====================
+
+        NameServicePort - Multicast port.
+
+Sample Run:
+==========
+
+% Naming_Service -ORBport 20000 -ORBobjrefstyle url -ORBnameserviceport 19999
+starting up daemon <unknown>
+opening dynamic service Resource_Factory
+did dynamic on Resource_Factory, error = 0
+opening dynamic service Client_Strategy_Factory
+did dynamic on Client_Strategy_Factory, error = 0
+opening dynamic service Server_Strategy_Factory
+did dynamic on Server_Strategy_Factory, error = 0
+listening as object <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+The multicast server setup is done.
+
+NameService Client:
+==================
+
+A client of the TAO Naming Service will use the ORB
+resolve_initial_references() method to resolve the "NamingService"
+object service.  By default, this resolution is performed using
+Multicast.  This behavior can be overridden in the following ways:
+
+        1. Pass the argument -ORBnameserviceior ior.
+           This ior is got from the output of the Naming_Service from
+           line 'listening as object <iiop:..>'.
+
+           For example, If a client wants to use the Naming_Service
+           from the sample run it could use:
+
+           % client -ORBnameserviceior <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+
+        2. Set the environment variable `NameServiceIOR' (minus the
+           quotes), as follows in csh or tcsh:
+
+           % setenv NameServiceIOR <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
+
+           and then run the client,
+
+           % client <.. client's arguments>
+
+These two techniques may be needed in an environment where
+
+        1. There is more than one NamingService, to avoid the
+           confusion of a server registering its object with one
+           NamingService and the client getting the reply from some
+           other NamingService. 
+
+        2. The OS platform doesn't support multicast.
+
+        3. The client or server isn't written using TAO, and therefore
+           doesn't use TAO's multicast NameService resolution protocol.
+
+

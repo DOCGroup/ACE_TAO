@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>ORB Core Status</title>
+<!-- $Id$ -->
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+
+<!-- *********************************** -->
+<a name="toc"><h2>Table of Contents</h2></a>
+<ul>
+  <li><a href="#current">Current Status</a>
+  <li><a href="#issues">Known Issues</a>
+  <li><a href="#ongoing">Ongoing work</a>
+  <li><a href="#rework">Rework Notes</a>
+  <li><a href="#future">Future Work</a>
+  <li><a href="#completed">Completed Work</a>
+</ul>
+<!-- *********************************** -->
+
+<hr>
+<center>
+<h1> <a name="orb"></a>ORB &amp; ORB Core</h1>
+
+Point of contact: <a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a>
+
+<p>Last Update: $Date$</p>
+</center>
+
+<!-- ============================================================ -->
+<a name="current"><h3>Current status:</h3></a>
+
+<ul>
+  <li><p>Trying to figure out a better <em>resource</em> management
+      scheme.  <em>Resouces</em> here include ORB, POA, connections,
+      profiles.... that provide services for CORBA invocations.</p>
+  </li>
+</ul>
+
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="issues"><h3>Known issues:</h3></a>
+
+<ul>
+  <li><p>Since collocated objects run in the client thread's context,
+      calling <code>CORBA::ORB::shutdown()</code> does <em>not</em>
+      actually close down the target ORB but instead on the client
+      side ORB.  This issue will be addressed in the new ORB Core
+      architecture.</p>
+
+      <p>Also, since the collocated invocations circumvent POA
+      completely, POA Current won't get set up, LOCATION_FORWARD will
+      not work, race condition may occur when several threads invoke
+      operations on an objects registered with POAs with SINGLE_THREAD
+      policy, operation invocations will still get thru even the POA
+      is in holding state, or invoking operations on a servant that
+      has already been deactivated.</p>
+  </li>
+
+  <li><p>When using the thread-per-connection concurrency model, if
+      some client leave the socket connection open without sending any
+      request, the server will crash on NT.  This is because we are
+      doing a blocking recv when a server connection handler acts as
+      an active object, and the recv won't break out until the process
+      gets kill by the OS.  This is especially a problem on NT becuase
+      on shutdown, NT close down the socket service, which cause the
+      blocking recv to unblock at which point, these threads try to
+      access the already destroyed ORB resources.  A temporary
+      workaround is to close the sockets when the ORB is shutting
+      down.  But this is not portable and only works on NT.</p>
+  </li>
+
+  <li><p>Some CORBA objects need to have access to the ORB. We tend to
+      use <code>TAO_ORB_Core_instance()->orb()</code> to fetch the
+      right ORB the object is using. This is most often true when
+      implementing the shutdown method which allow other process to
+      shutdown a remote ORB. Althought this may be the "right" thing
+      to do in TAO, it is not CORBA compliant and hurts the
+      portability of object implementation.  A common way of getting
+      around this problem is to cache the ORB pointer in the object
+      when it is created and simply use the cached ORB when needed.
+      However, remember that there could be multiple ORBs in a process
+      and a POA may be shared by several ORBs. That means, we may not
+      handling the object with the same ORB it was
+      created. Collocation optimization further complicated the
+      problem.</p>
+
+      <p> At the moment, using
+      <code>TAO_ORB_Core_instance()->orb()</code> is the only sane way
+      to get arond the problem. Though there may be a better way.</p>
+  </li>
+
+  <li><p>Object references for objects dynamically created within a
+      server may not have proper host. When an object is dynamically
+      created and its object reference returned, it simply has to
+      "guess" at the host information that is returned in the IIOP
+      Profile.  Currently, it guesses using the host name, which is a
+      reasonable guess in most cases.  However, if there are multiple
+      interfaces on a machine <em>and</em> they have different host
+      names, it is possible that the desired effect will not be
+      realized, i.e., the connection to that new object may use a
+      different interface from the original object. Currently the only
+      way to change this is to use the <A
+      HREF="../Options.html#-ORBhost"><b>-ORBhost</b> option</a> to
+      manually specify that dynamically-created objects bind to a
+      specific interface so that their IIOP Profile has the desired
+      hostname. A more desirable fix is being investigated.</p>
+  </li>
+</ul>
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="ongoing"><h3>Ongoing Work:</h3></a>
+
+<ul>
+  <li><p>ORB Core overhaul.</p>
+  </li>
+
+  <li><p>Identify/fix the problems in multithreaded client with TSS
+      resources. This could be done using the leader-follower model
+      (thread-pool.)</p>
+  </li>
+
+  <li><p>Support new concurrency models, e.g., Thread-per-Request,
+      thread pool, etc..</p>
+  </li>
+</ul>
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="rework"><h3>Rework Notes:</h3></a>
+
+Here are some thoughts/points of concern that we have regarding the
+new ORB Core structure.
+
+<ul>
+  <li>
+</ul>
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="future"><h3>Future work:</h3></a>
+
+<ul>
+  <li>Performance optimizations, such as:</li>
+      <ol>
+        <li><p>Replace all uses of <code>new</code> and <code>delete</code>
+            with allocators that can be put into TSS. The main
+            motivation for this is to eliminate lock contention when
+            multiple threads need to allocate/deallocate memory,
+            however it might also be possible to substitute an
+            allocator better-tuned to an application's specific
+            usage.</p>
+        </li>
+      </ol>
+
+  <li>Robustness improvements:</li>
+      <ol>
+        <li><p>Improve connection cache so that it won't crash when
+            there are no more slots or sockets.
+        </li>
+
+        <li><p>Add an option to the ORB core, e.g.,
+            <b>-ORBnameservicetimeout</b>, to allow specification of
+            an upper bound on the itime-to-wait for a response from
+            the ORB's multicast "search" for a running name server.<p>
+        </li>
+      </ol>
+
+  <li>New features:</li>
+      <ol>
+        <li><p>Implement <code>ORB::perform_work</code> and
+            <code>ORB::work_pending</code> so that <code>ORB::run</code>
+            <em>could</em> be implemented in terms of them.</p>
+        </li>
+
+        <li><p>Implement <code>RT-CORBA</code> spec. once it passes
+            OMG member vote.</p>
+        </li>
+
+        <li><p>Added support for CORBA Messaging Spec.</p>
+        </li>
+
+        <li><p>According to tentative CORBA 2.3a spec, once
+            ORB::shutdown has been called, operation invocations on
+            object references obtained from this ORB must throw an
+            <code>BAD_INV_ORDER</code> exception.</p>
+        </li>
+      </ol>
+
+  <li>Internal restructuring:</li>
+      <ol>
+        <li><p>Create some sort of internal "request" object which
+            carries enough context to suport deferred method
+            invocation such as one might find in the thread-pool
+            approach or wherever queuing might occur.</p>
+        </li>
+      </ol>
+
+  <li>Documentation:</li>
+        <li><p>Writing up ORB restructuring notes.</p>
+        </li>
+      </ol>
+
+  <li>Potential Optimizations:</li>
+
+      <ol>
+        <li><p>There is a certain amount of overhead introduced by the
+            use of TSS Singletons. TSS singletons are very convenient
+            as the variable does not have to be passed from function
+            to function. Even though sort of access is generally
+            acceptable, the overhead of this approach maybe too high
+            when used in code which is executed frequently (e.g.,
+            during an upcall). This critical code may have to be
+            restructured not to use TSS Singletons because of the high
+            overhead associated with it.</p>
+        </li>
+      </ol>
+</ul>
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="completed"><h3>Completed Work:</h3></a>
+
+<!-- ************************************************************ -->
+<!-- Please make sure you append new items at the end of the list -->
+<!-- ************************************************************ -->
+<ul>
+  <li><p>Provides dynamically linked wholesale assignment of ORB
+      strategies for communication, concurrency, demultiplexing,
+      scheduling, and dispatching using the ACE Service Configurator
+      framework.</p>
+  </li>
+
+  <li><p>Supports several concurrency models out of the box: Reactive,
+      Thread-per-Connection, and ORB-per-thread. The ORB-per-thread
+      design is optimized for real-time I/O subsystems. (See: <A
+      HREF="../configurations.html">Configuration Guide</a>.)</p>
+  </li>
+
+  <li><p>Supports <code>resolve_initial_references("&lt;CORBA
+      Service>")</code> using ACE support for multicast. <em>(TAO
+      proprietary.)</em></p>
+  </li>
+
+  <li><p>Support both native C++ exceptions and
+      <code>CORBA::Environment</code> based exceptions handling.</p>
+
+  <li><p>Support for TAO proprietary <code>-ORBgioplite</code>
+      command-line option.  When this option is enabled the ORB
+      removes a few fields of the GIOP messages that are normally not
+      used, such as the version numbers, the magic 'GIOP' string, the
+      service context, the Principal object, etc. This option give us
+      a slight performance improvement but it is important for
+      extremely low-latency systems (such as avionics), that
+      fortunately have tightly controlled environments so this kind of
+      optimization is safe to use.</p>
+  </li>
+
+  <li><p>The buffers for outgoing CDR streams are allocated from TSS
+      memory pools, reducing locking on the critical path.</p>
+  </li>
+
+  <li><p>Several optimizations on the critical path have been
+      implemented, carefully removing excesive locking, memory
+      allocations and data copying. In some cases special demarshaling
+      and marshaling functions where written for the request
+      headers.</p>
+  </li>
+
+  <li><p>Adding a new option into TAO_Resource_Factory to control the
+      internal lock used by ORB's reacotr. With "<code>-ORBreactorlock
+      null</code>" added into <code>svc.conf</code>, you can eliminate
+      the token inside the Select_Reactor inside the ORB even on
+      multi-threaded platforms. This eliminate some overheads caused
+      by synchronizing access to the Select_Reactor. Usually, if you
+      have TSS ORB and are using reactive concurrency startegy, the
+      ORB are not accessed by multiple threads, then, you can safely
+      turn the lock off.</p>
+  </li>
+
+  <li><p>Strategized the connection management scheme so that we don't
+      always have to pay the price of a look up in the connection
+      cache. Basically, we "hold" a service handler for a string of
+      requests.</p>
+  </li>
+
+  <li><p>There is no need to call ORB::open if the port is 0. It will
+      automagically be called when the first stub is created.</p>
+  </li>
+
+  <li><p>The ORB now handles nested upcalls correctly. See <a
+      href="../leader_follower.html">this </a>for details on the
+      design of the solution.</p>
+  </li>
+
+  <li><p>Added optimization for collocated objects. This optimization
+      enables TAO to bypass communication layers and talks to
+      collocated objects directly.</p>
+  </li>
+
+  <li><p>Making the collocation table configurable. We can either use
+      a global collocation table to share objects among ORBs, or use
+      the per-ORB collocation table.</p>
+  </li>
+
+  <li><p>Implement the inheritance mechanism in
+      Default_Server_Connection_Handler to access the parent's
+      POA. This is necessary when we are using thread-per-connection
+      concurrency model.</p>
+  </li>
+
+  <li><p>It is often desireable for a server to start up and not have
+      to specify the TCP port number on which the ORB will listen,
+      i.e., let the OS decide.  While this works properly (by
+      providing an argument <code>-ORBport 0</code>), the actual port
+      number used by the server won't be available after the server
+      starts listening. TAO now tries to bind the address when
+      <code>-ORBport 0</code> is issued so it can get the actual
+      address to publish the IOR for clients' use.</p>
+  </li>
+
+  <li><p>Broke the tight coupling between <code>CORBA_Object</code>
+      and <code>IIOP_Object</code> so that multiple
+      <code>CORBA_Object</code>s can share a single
+      <code>IIOP_Object</code>. This has a big win in
+      <code>_narrow</code> operations.</p>
+  </li>
+
+  <li><p>The ORBs manipulation of object keys and object ids is now
+      consistent. Canonically, everything is managed as an opaque
+      sequence of octets. Conversion to/from strings is permitted,
+      with non-printables turning into a trigraph <b>\hl</b> where
+      <b>h</b> is the high nibble digit in hex, and <b>l</b> is the
+      low nibble in hex.</p>
+  </li>
+
+  <li><p><code>CORBA_ORB::run()</code> should be able to be called
+      multiply in the same execution path now.</p>
+  </li>
+
+  <li><p>Fixed the <b>LOCATION_FORWARD</b> capabilities to work as
+      described in the CORBA 2.1 and the POA specification.</p>
+  </li>
+
+  <li><p>Support for <b><a
+      href="../Options.html#-ORBsndsock">-ORBsndsock</a></b> and <b><a
+      href="../Options.html#-ORBrcvsock">-ORBrcvsock</a></b> ORB
+      options. See <a href="../Options.html">options documentation</a>
+      for details.</p>
+  </li>
+
+  <li><p>Support for connections pre-establishment using the <b><a
+      href="../Options.html#-ORBpreconnect">-ORBpreconnect</a></b>
+      option. This allows connections to be esablished before any
+      CORBA requests are made. See <a href="../Options.html">options
+      documentation</a> for details.</p>
+  </li>
+
+  <li><p>Placed an optimization in IIOP::Profile that should speed up
+      invocations on the client side rather substantially. This was
+      done by caching an instance of <code>ACE_INET_Addr</code> in the
+      private portion of <code>Profile</code> because the cost of
+      constructing one for every invocation (in
+      <code>TAO_GIOP_Invocation::start</code>) was simply
+      enormous--the construction was something like 100 cycles on
+      Solaris. This is all because deep down this ends up calling
+      <code>gethostbyname()</code>, which can be very costly. Of
+      course, this is platform-dependent, so the improvements may not
+      be as great on a different platform.</p>
+  </li>
+
+  <li><p>Eliminated need for <code>CORBA::Object</code> to keep a
+      pointer to its orb sitting around anywhere.</p>
+  </li>
+
+  <li><p>Tested <code>CORBA_ORB::shutdown()</code> as a manner in
+      which a thread of control can request that
+      <code>CORBA_ORB::run()</code> should return and no longer
+      service requests. It only honors a <em>wait_for_completion</em>
+      argument of <b>FALSE</b> right now because we haven't fully
+      explored the issues which surround doing all the completion.</p>
+  </li>
+
+  <li><p>Implemented <code>CORBA_ORB::shutdown()</code> as a manner in
+      which a thread of control can request that
+      <code>CORBA_ORB::run()</code> should return and no longer
+      service requests.</p>
+  </li>
+
+  <li><p>Support for the -ORBInitRef option. This allows run-time
+      specification of an ObjectId:IOR mapping. It is used by
+      resolve_initial_references () and overrides the orb-install-time
+      defaults.</p>
+  </li>
+
+  <li><p>minimal support for CORBA Contexts. This is an inherently
+      un-typesafe feature, and many believe it will disappear from
+      CORBA eventually, but in order to make _create_request()
+      compliant, we have added a CORBA_Context class. The only
+      permissible value for a Context pointer passed as an argument to
+      _create_request is 0. If a non-zero pointer is passed, a
+      NO_IMPLEMENT exception is raised.</p>
+  </li>
+
+  <li><p>Support configuring TAO's component as both static and
+      dynamic services.   Improve robustness of setting default
+      svc.conf entries.  See <a
+      href="../configurations.html#programming">Configuration
+      Document</a> for details.</p>
+  </li>
+
+  <li><p>TAO now understands <a
+      href="index.html#nservices">Interoperable Naming Service</a>'s
+      <code>iioploc://</code> and <code>iiopname://</code>
+      formats.</p>
+  </li>
+</ul>
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+</BODY>
+</HTML>
