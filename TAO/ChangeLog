@@ -1,3 +1,9 @@
+Wed Dec  3 09:14:41 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Test_i.cpp:
+          Fixed exception macro usage
+
 Wed Dec  3 09:06:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1627_Regression/Test_i.cpp:
