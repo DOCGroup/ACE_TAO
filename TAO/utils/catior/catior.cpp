@@ -143,6 +143,12 @@ static CORBA::Boolean
 cat_shmiop_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
+cat_nskpw_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
+cat_nskfs_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
 cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream);
 
@@ -302,6 +308,18 @@ catior (char* str
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+          }
+        else if (tag == TAO_TAG_NSKPW_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+            continue_decoding = cat_nskpw_profile (stream);
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+          }
+        else if (tag == TAO_TAG_NSKFS_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+            continue_decoding = cat_nskfs_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else
@@ -1250,3 +1268,95 @@ cat_sciop_profile (TAO_InputCDR& stream)
   return 1;
 }
 #endif /*if 0*/
+
+
+static CORBA::Boolean
+cat_nsk_profile_helper (TAO_InputCDR& stream,
+                        const char *protocol)
+{
+  // OK, we've got an NSK profile.  It's going to be
+  // encapsulated ProfileData.  Create a new decoding stream and
+  // context for it, and tell the "parent" stream that this data
+  // isn't part of it any more.
+
+  CORBA::ULong encap_len;
+  if (stream.read_ulong (encap_len) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "cannot read encap length\n"));
+      return 0;
+    }
+
+  // Create the decoding stream from the encapsulation in the
+  // buffer, and skip the encapsulation.
+  TAO_InputCDR str (stream, encap_len);
+
+  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+    return 0;
+
+  // Read and verify major, minor versions, ignoring NSK
+  // profiles whose versions we don't understand.
+  //
+  // XXX this doesn't actually go back and skip the whole
+  // encapsulation...
+  CORBA::Octet iiop_version_major, iiop_version_minor;
+  if (! (str.read_octet (iiop_version_major)
+         && iiop_version_major == 1
+         && str.read_octet (iiop_version_minor)
+         && iiop_version_minor <= 2))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I detected new v%d.%d %s profile that catior cannot decode",
+                  iiop_version_major,
+                  iiop_version_minor,
+                  protocol));
+      return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%s Version:\t%d.%d\n",
+              protocol,
+              iiop_version_major,
+              iiop_version_minor));
+
+  // Get address
+  char* fsaddress;
+  if ((str >> fsaddress) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I problem decoding file system address\n"));
+      return 1;
+    }
+
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I FS Address:\t%s\n",
+              fsaddress));
+  CORBA::string_free (fsaddress);
+
+  if (cat_object_key (str) == 0)
+    return 0;
+
+  // Version 1.0 does not have tagged_components.
+  if (!(iiop_version_major == 1 && iiop_version_minor == 0))
+    {
+      if (cat_tagged_components (str) == 0)
+        return 0;
+
+      return 1;
+    }
+  else
+    return 0;
+}
+
+static CORBA::Boolean
+cat_nskpw_profile (TAO_InputCDR& stream)
+{
+  return cat_nsk_profile_helper (stream, "NSKPW");
+}
+
+static CORBA::Boolean
+cat_nskfs_profile (TAO_InputCDR& stream)
+{
+  return cat_nsk_profile_helper (stream, "NSKFS");
+}
