@@ -30,17 +30,11 @@ public:
             char **argv, 
             CORBA_Environment &env);
   // Initialize the ORB/POA, using the supplied command line
-  // arguments.  The <poa_name> is a user-supplied string that is used
-  // @@ Sumedh, where is <poa_name> actually used here?  Is this an obsolete comment?
-  // to name the POA created.
+  // arguments. 
       
   CORBA::String activate (PortableServer::Servant servant,
                           CORBA_Environment &env);
-  // Activate <servant> with the supplied <object_name>.
-  // @@ Sumedh, where is <object_name>?  Is this comment obsolete too?
-  // @@ Sumedh, can you please explain what is meant by "activate?"  Is
-  // @@ this what is meant by the activate() method on the POA?  If so,
-  // @@ please make sure you point this out!
+  // Activate <servant>, using the POA activate_object () call
   // Users can call this method multiple times to activate multiple
   // objects.
       
