@@ -28,10 +28,10 @@ class TAO_ORBSVCS_Export TAO_Persistent_Context_Index
   //
 public:
 
-typedef ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
-  TAO_Persistent_Index_IntId> INDEX;
-typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
-  TAO_Persistent_IntId> CONTEXT;
+  typedef ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
+    TAO_Persistent_Index_IntId> INDEX;
+  typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
+    TAO_Persistent_IntId> CONTEXT;
 
   // = Initialization and termination methods.
   TAO_Persistent_Context_Index (CORBA::ORB_ptr orb,
@@ -50,18 +50,18 @@ typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
   // destructor, do some cleanup :TBD: last dtor should "compress"
   // file
 
-  virtual int bind (const char *poa_id,
+  int bind (const char *poa_id,
                     ACE_UINT32 *&counter,
                     CONTEXT *hash_map);
   // Create an entry - new context is created.
 
-  virtual int unbind (const char * poa_id);
+  int unbind (const char * poa_id);
   // Unbind an entry - a context is destroyed.
 
-  virtual ACE_Allocator *allocator (void);
+  ACE_Allocator *allocator (void);
   // accessor.
 
-  virtual CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb (void);
   //
 
   char * root_ior (void);
