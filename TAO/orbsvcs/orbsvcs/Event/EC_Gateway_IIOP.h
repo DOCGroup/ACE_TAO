@@ -116,6 +116,12 @@ public:
   /// ec again, just set the object to nil
   int cleanup_supplier_ec (void);
 
+  /// Suspend the connection to the supplier ec
+  void suspend_supplier_ec (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Resume the connection to the supplier ec
+  void resume_supplier_ec (ACE_ENV_SINGLE_ARG_DECL);
+
 private:
   void close_i (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -167,6 +173,17 @@ protected:
    */
   int update_posted_;
   RtecEventChannelAdmin::ConsumerQOS c_qos_;
+
+  /**
+   * We have a cleanup outstanding and must wait doing cleanup until all pushes
+   * are ready.
+   */
+  int cleanup_posted_;
+
+  /**
+   * Is the supplier ec suspended?
+   */
+  int supplier_ec_suspended_;
 
   /// The event channel acting as supplier for this gateway so we can reconnect
   /// when the list changes.
