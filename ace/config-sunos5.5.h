@@ -79,7 +79,6 @@
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
-# define ACE_MALLOC_ALIGN 8
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
@@ -307,6 +306,8 @@
 #define ACE_HAS_STL_MAP_CONFLICT
 #define ACE_HAS_STL_QUEUE_CONFLICT
 #define ACE_HAS_IDTYPE_T
+
+  // #define ACE_HAS_POSITION_INDEPENDENT_MALLOC
 
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT

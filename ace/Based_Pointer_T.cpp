@@ -3,8 +3,22 @@
 #ifndef ACE_BASED_POINTER_T_CPP
 #define ACE_BASED_POINTER_T_CPP
 
-#include "ace/Based_Pointer_Repository.h"
+#define ACE_BUILD_DLL
 #include "ace/Based_Pointer_T.h"
+#include "ace/Based_Pointer_Repository.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Based_Pointer_T.i"
+#endif /* __ACE_INLINE__ */
+
+template <class CONCRETE> ACE_Based_Pointer<CONCRETE> 
+operator+ (const ACE_Based_Pointer<CONCRETE> &lhs, long increment)
+{
+  // Perform pointer arithmetic.
+  CONCRETE *ptr = ((CONCRETE *) ACE_COMPUTE_BASED_POINTER (&lhs)) + increment;
+  ACE_Based_Pointer<CONCRETE> tmp (ptr);
+  return tmp;
+}
 
 template <class CONCRETE>
 ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
@@ -21,34 +35,19 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
   this->base_offset_ = (char *) this - (char *) base_addr;
 }
 
-template <class CONCRETE> CONCRETE * 
-ACE_Based_Pointer<CONCRETE>::operator->(void)
+template <class CONCRETE>
+ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (CONCRETE *addr)
+  : target_ (0),
+    base_offset_ (0)
 {
-  char *base_addr = (char *) this - this->base_offset_;
+  void *base_addr = 0;
 
-  return (CONCRETE *)(base_addr + (long) this->target_);
-}
-
-template <class CONCRETE> CONCRETE *
-ACE_Based_Pointer<CONCRETE>::operator =(CONCRETE *from)
-{
-  char *base_addr = (char *) this - this->base_offset_;
-  this->target_ = (CONCRETE *)((char *) from - (char *) base_addr);
-  return from;
-}
-
-template <class CONCRETE> CONCRETE 
-ACE_Based_Pointer<CONCRETE>::operator *(void)
-{
-  char *base_addr = (char *) this - this->base_offset_;
-  return *(CONCRETE *)(base_addr + (long) this->target_);
-}
-
-template <class CONCRETE> CONCRETE 
-ACE_Based_Pointer<CONCRETE>::operator [] (int index)
-{
-  char *base_addr = (char *) this - this->base_offset_;
-  return *((CONCRETE *)(base_addr + (long) this->target_) + index);
+  // Find the base address associated with the <addr> pointer.  Note
+  // that it's ok for <find> to return 0, which simply indicates that
+  // the address is not in memory-mapped virtual address space.
+  ACE_BASED_POINTER_REPOSITORY::instance ()->find (addr,
+                                                   base_addr);
+  this->base_offset_ = (char *) addr - (char *) base_addr;
 }
 
 #endif/* ACE_BASED_POINTER_T_CPP */

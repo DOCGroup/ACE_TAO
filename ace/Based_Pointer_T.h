@@ -58,24 +58,66 @@ public:
   //    based-pointer uses its address as an offset to it's base
   //    address 0.
 
+  ACE_Based_Pointer (CONCRETE *initial);
+  // Initialize this object with the <initial> pointer.
+
+  ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &rhs);
+  // Copy constructor.
+
   CONCRETE *operator->(void);
   // The C++ "delegation operator".
 
   CONCRETE *operator =(CONCRETE *from);
   // Pseudo-assignment operator.
 
-  CONCRETE operator *(void);
+  CONCRETE operator *(void) const;
   // Dereference operator.
 
-  CONCRETE operator [](int index);
+  int operator < (const ACE_Based_Pointer<CONCRETE> &) const;
+  // Less than operator.
+
+  int operator <= (const ACE_Based_Pointer<CONCRETE> &) const;
+  // Less than or equal operator.
+
+  int operator > (const ACE_Based_Pointer<CONCRETE> &) const;
+  // Greater than operator.
+
+  int operator >= (const ACE_Based_Pointer<CONCRETE> &) const;
+  // Greater than or equal operator.
+
+  int operator == (const ACE_Based_Pointer<CONCRETE> &) const;
+  // Equality operator.
+
+  int operator != (const ACE_Based_Pointer<CONCRETE> &) const;
+  // Inequality operator.
+
+  CONCRETE operator [](long index) const;
   // Subscript operator.
 
-private:
+  void operator+= (long index);
+  // Increment operator.
+
+  operator void *() const;
+  // Returns the underlying memory address of the smart pointer.
+
+  // The following should be private, but that causes problems due to
+  // broken C++ compilers that don't like friends for methods
+  // in templates.
+// private:
   CONCRETE *target_;
 
   long base_offset_;
   // Keep track of our offset from the base pointer.
 };
+
+ACE_Export template <class CONCRETE> 
+ACE_Based_Pointer<CONCRETE> operator+ (const ACE_Based_Pointer<CONCRETE> &lhs,
+                                       long increment);
+// Emulate "pointer arithmetic" by adding <increment> to <lhs>.
+
+#if defined (__ACE_INLINE__)
+#include "ace/Based_Pointer_T.i"
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Based_Pointer_T.cpp"

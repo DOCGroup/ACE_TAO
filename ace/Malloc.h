@@ -25,6 +25,10 @@
 
 #include "ace/Malloc_Base.h"
 
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#include "ace/Based_Pointer_T.h"
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+
 #if defined (ACE_HAS_MALLOC_STATS)
 #include "ace/Synch_T.h"
 #if defined (ACE_HAS_THREADS)
@@ -33,10 +37,6 @@
 #include "ace/SV_Semaphore_Simple.h"
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
-
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-#include "ace/Based_Pointer_T.h"
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
@@ -61,50 +61,58 @@ struct ACE_Export ACE_Malloc_Stats
 #define AMS(X)
 #endif /* ACE_HAS_MALLOC_STATS */
 
-#if !defined (ACE_MALLOC_ALIGN)
-// ACE_MALLOC_ALIGN allows you to insure that allocated regions are at
-// least <ACE_MALLOC_ALIGN> bytes long.  It is especially useful when
-// you want areas to be at least a page long, or 32K long, or
+#if !defined (ACE_MALLOC_PADDING)
+// ACE_MALLOC_PADDING allows you to insure that allocated regions are
+// at least <ACE_MALLOC_PADDING> bytes long.  It is especially useful
+// when you want areas to be at least a page long, or 32K long, or
 // something like that.  It doesn't guarantee alignment to an address
 // multiple, like 8-byte data alignment, etc.  The allocated area's
 // padding to your selected size is done with an added array of long[]
 // and your compiler will decide how to align things in memory.
 //
-// The default ACE_MALLOC_ALIGN is 'long', which will probably add a
-// long of padding - it doesn't have any real affect.  If you want to
-// use this feature, define ACE_MALLOC_ALIGN in your config.h file and
-// use a signed integer number of bytes you want.  For example:
-// #define ACE_MALLOC_ALIGN ((int)4096)
+// If you want to use this feature, define ACE_MALLOC_PADDING in your
+// config.h file and use a signed integer number of bytes you want, e.g.:
+//
+// #define ACE_MALLOC_PADDING ((int) 4096)
 
-#define ACE_MALLOC_ALIGN ((int)(sizeof (long)))
+#define ACE_MALLOC_PADDING 1
+#endif /* ACE_MALLOC_PADDING */
+
+// The following is only for backwards compatibility.
+#if defined (ACE_MALLOC_ALIGN)
+#undef ACE_MALLOC_PADDING
+#define ACE_MALLOC_PADDING ACE_MALLOC_ALIGN
 #endif /* ACE_MALLOC_ALIGN */
 
-union ACE_Export ACE_Malloc_Header
+class ACE_Export ACE_Malloc_Header
 {
   // = TITLE
-  //   We use a union to force alignment to the most restrictive type.
+  //    This is the control block header.  It's used by <ACE_Malloc>
+  //    to keep track of each chunk of data when it's in the free
+  //    list or in use.
+
+public:
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+  typedef ACE_Based_Pointer<ACE_Malloc_Header> HEADER_PTR;
+#else 
+  typedef ACE_Malloc_Header *HEADER_PTR;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   class ACE_Malloc_Control_Block
   {
-    // = TITLE
-    //    This is the control block header.  It's used by <ACE_Malloc>
-    //    to keep track of each chunk of data when it's in the free
-    //    list or in use.
   public:
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-    ACE_Based_Pointer<ACE_Malloc_Header> next_block_;
+    HEADER_PTR next_block_;
     // Points to next block if on free list.
-#else 
-    ACE_Malloc_Header *next_block_;
-    // Points to next block if on free list.
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
     size_t size_;
     // Size of this block.
   } s_;
 
-  long align_[ACE_MALLOC_ALIGN/sizeof (long)];
-  // Force alignment.
+#if (ACE_MALLOC_PADDING > 1)
+#define ACE_MALLOC_PADDING_SIZE ((ACE_MALLOC_PADDING - \
+                                  (sizeof (ACE_Malloc_Control_Block)) / sizeof (long)))
+  long padding_[ACE_MALLOC_PADDING_SIZE < 1 : ACE_MALLOC_PADDING_SIZE];
+#endif /* ACE_MALLOC_PADDING > 0 */
 };
 
 class ACE_Export ACE_Name_Node
@@ -137,13 +145,13 @@ class ACE_Export ACE_Control_Block
   //    This information is stored in memory allocated by the MEMORY_POOL.
   //
   // = DESCRIPTION
-  //    This class should be local to class ACE_Malloc, but cfront and
-  //    G++ don't like nested classes in templates...
+  //    This class should be local to class ACE_Malloc, but some older
+  //    C++ compilers don't like nested classes in templates...
 public:
   ACE_Name_Node *name_head_;
   // Head of the linked list of Name Nodes.
 
-  ACE_Malloc_Header *freep_;
+  ACE_Malloc_Header::HEADER_PTR freep_;
   // Current head of the freelist.
 
   char lock_name_[MAXNAMELEN];
@@ -157,18 +165,19 @@ public:
                                       + MAXNAMELEN  \
                                       + sizeof (ACE_Malloc_Stats)))
 #else
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof(ACE_Name_Node *) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
                                       + sizeof (ACE_Malloc_Header *) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
 // Notice the casting to int for sizeof() otherwise unsigned int
 // arithmetic is used and some awful things may happen.
-#define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
-                                        ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE) \
-                                        : ACE_MALLOC_ALIGN) / int(sizeof(long)))
+#define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_PADDING != 0 \
+                                        ? ACE_MALLOC_PADDING - (ACE_CONTROL_BLOCK_SIZE) \
+                                        : ACE_MALLOC_PADDING) / int (sizeof (long)))
 
   long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
+  // Force alignment.
 
   ACE_Malloc_Header base_;
   // Dummy node used to anchor the freelist.
@@ -188,9 +197,9 @@ class ACE_Export ACE_New_Allocator : public ACE_Allocator
   //     up memory.  Please note that the only methods that are
   //     supported are malloc and free. All other methods are no-ops.
   //     If you require this functionality, please use:
-  //     ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, MUTEX>>
-  //     This will allow you to use the added functionality of
-  //     bind/find/etc. while using the new/delete operators.
+  //     ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
+  //     MUTEX> > This will allow you to use the added functionality
+  //     of bind/find/etc. while using the new/delete operators.
 public:
   virtual void *malloc (size_t nbytes);
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
