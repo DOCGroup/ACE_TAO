@@ -140,28 +140,6 @@ CORBA::SystemException::_is_a (const char* interface_id) const
           || this->Exception::_is_a (interface_id));
 }
 
-CORBA::SystemException*
-CORBA::SystemException::_downcast (CORBA::Exception* exception)
-{
-  if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
-    {
-      return dynamic_cast<CORBA::SystemException *> (exception);
-    }
-
-  return 0;
-}
-
-const CORBA::SystemException*
-CORBA::SystemException::_downcast (const CORBA::Exception *exception)
-{
-  if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
-    {
-      return dynamic_cast<const CORBA::SystemException *> (exception);
-    }
-
-  return 0;
-}
-
 void
 CORBA::SystemException::_tao_encode (TAO_OutputCDR &cdr
                                      ACE_ENV_ARG_DECL) const
@@ -1123,18 +1101,6 @@ TAO_Exceptions::fini (void)
   delete TAO_Exceptions::global_allocator_;
   TAO_Exceptions::global_allocator_ = 0;
 }
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::name * \
-CORBA::name ::_downcast (CORBA::Exception* exception) \
-{ \
-  if (exception->_is_a ("IDL:omg.org/CORBA/" #name ":1.0")) \
-    return dynamic_cast<CORBA::name *> (exception); \
-  return 0; \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \

@@ -107,26 +107,21 @@ namespace CORBA
   {
   public:
 
-    /// Copy constructor.
-    Exception (const Exception &src);
-
-    /// Assignment operator.
-    Exception &operator = (const Exception &src);
-
     /// Destructor.
     virtual ~Exception (void);
 
     // = To throw the exception (when using the standard mapping).
     virtual void _raise (void) const = 0;
 
-    // = The static narrow operation.
-    static Exception *_downcast (Exception *x);
+    // = The static narrow operations.
+    static Exception * _downcast (Exception * x);
+    static Exception const * _downcast (Exception const * x);
 
     /// Return the repository ID of the Exception.
-    virtual const char *_rep_id (void) const;
+    virtual const char * _rep_id (void) const;
 
     /// Return the name of the Exception.
-    virtual const char *_name (void) const;
+    virtual const char * _name (void) const;
 
     // = These are TAO-specific extensions.
 
@@ -135,10 +130,6 @@ namespace CORBA
 
     // = To implement the narrow method.
     virtual int _is_a (const char* repository_id) const;
-
-    /// Construct from a respository id.
-    Exception (const char *repository_id,
-               const char *local_name);
 
     /// Print the exception to output determined by @a f.
     /**
@@ -188,6 +179,16 @@ namespace CORBA
 
     /// Default constructor.
     Exception (void);
+
+    /// Copy constructor.
+    Exception (const Exception &src);
+
+    /// Assignment operator.
+    Exception & operator = (const Exception & src);
+
+    /// Construct from a respository id.
+    Exception (const char *repository_id,
+               const char *local_name);
 
   private:
 
