@@ -1,7 +1,15 @@
+Fri Dec 10 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ParameterModeS.h:
+          Added this file
+
+        * tao/Makefile.am:
+          Added ParameterModeS.h
+
 Thu Dec  9 12:37:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/IFR_Client/IFR_Components.pidl:
-        
+
           Moved the "omg.org" typeprefix directive from the ComponentIR
  	  module to the enclosing CORBA module.  This move does not affect
  	  any of the C++ generated code, but it eliminates an error when
