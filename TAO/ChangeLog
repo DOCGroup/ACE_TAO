@@ -34,7 +34,7 @@ Sun Sep  5 01:13:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Removed code that set the TAO unexpected exception handler.  It
 	  is no longer needed since the C++ mapping no longer requires
 	  unknown C++ exceptions to be converted to the CORBA::UNKNOWN
-	  system exception.  It was anyway considered "bad form" to
+	  system exception.  It is anyway considered "bad form" to
 	  potentially override an application defined unexpected exception
 	  handler.
 
