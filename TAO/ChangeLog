@@ -1,3 +1,11 @@
+Wed Mar 12 10:09:57 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+
+	  "ObjectIDList.*" -> "ObjectIdListC.*".  The former set of files
+	  have been replaced with the latter set of files.
+
 Wed Mar 12 10:02:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corba.h:
