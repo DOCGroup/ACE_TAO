@@ -35,6 +35,7 @@ client (void *arg)
 {
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
+  ACE_INET_Addr client_addr;
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT); 
@@ -47,12 +48,17 @@ client (void *arg)
 		   server_addr,
 		   &timeout) == -1)
     {
-      if (errno != EWOULDBLOCK)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%P|%t) %p\n",
-			   "connection failed"),
-			   0);
+      ACE_ERROR_RETURN ((LM_ERROR,
+			 "(%P|%t) %p\n",
+			 "connection failed"),
+			0);
     }
+  
+  if (cli_stream.get_local_addr (client_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "get_local_addr"), 0);
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected client at %d\n",
+	      client_addr.get_port_number ()));
   
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "disable"));    
@@ -62,6 +68,8 @@ client (void *arg)
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send_n (c, 1) == -1) 
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing writer\n"));
 
   // Explicitly close the writer-side of the connection.
   if (cli_stream.close_writer () == -1)
@@ -142,6 +150,7 @@ server (void *arg)
 	  
 	  for (ssize_t r_bytes; ;)
 	    {
+	      ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting in select\n"));
 	      if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
 				  handle_set,
 				  0, 0, 0) == -1)
@@ -156,15 +165,16 @@ server (void *arg)
 	      if (r_bytes == 0)
 		{
 		  // Handshake back with client.
+		  ACE_DEBUG ((LM_DEBUG, 
+			      "(%P|%t) reached end of input, connection closed by client\n"));
+
 		  if (new_stream.send_n ("", 1) != 1)
 		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
 
 		  // Close endpoint.
-		  if (new_stream.close () == -1) 
-		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+// 		  if (new_stream.close () == -1) 
+// 		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 
-		  ACE_DEBUG ((LM_DEBUG, 
-			      "(%P|%t) reached end of input, connection closed by client\n"));
 		  break;
 		}
 	      else if (r_bytes == -1)
