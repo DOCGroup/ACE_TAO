@@ -471,19 +471,25 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       *(CORBA::Object_ptr *) data = CORBA::Object::_nil ();
       CORBA::string_free (type_hint);
       type_hint = 0;
+      return CORBA_TypeCode::TRAVERSE_CONTINUE;
     }
   else
-    while (profiles-- != 0 && continue_decoding)
+    while (profiles-- != 0 && objdata == 0)
       {
+	// We keep decoding until we find a valid IIOP profile.
         CORBA::ULong tag;
 
         // get the profile ID tag
         if ( (continue_decoding = stream->read_ulong (tag)) == CORBA::B_FALSE)
-	  continue;
+	  {
+            ACE_DEBUG ((LM_DEBUG, "cannot read profile tag\n"));
+	    continue;
+	  }
 
         if (tag != TAO_IOP_TAG_INTERNET_IOP || objdata != 0)
           {
             continue_decoding = stream->skip_string ();
+            ACE_DEBUG ((LM_DEBUG, "unknown tag %d skipping\n", tag));
             continue;
           }
 
@@ -495,11 +501,14 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 	CORBA::ULong encap_len;
         // ProfileData is encoded as a sequence of octet. So first get
         // the length of the sequence.
+	if ( (continue_decoding = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
+	  {
+            ACE_DEBUG ((LM_DEBUG, "cannot read encap length\n"));
+	    continue;
+	  }
+
         // Create the decoding stream from the encapsulation in the
         // buffer, and skip the encapsulation.
-	if ( (continue_decoding = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
-	  continue;
-
         TAO_InputCDR str (*stream, encap_len);
 
 	continue_decoding =
@@ -507,7 +516,12 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 	  && stream->skip_bytes(encap_len);
 
 	if (!continue_decoding)
-	  continue;
+	  {
+            ACE_DEBUG ((LM_DEBUG,
+			"problem decoding encapsulated stream, "
+			"len = %d\n", encap_len));
+	    continue;
+	  }
 
         // Ownership of type_hint is given to IIOP_Object
         ACE_NEW_RETURN (objdata,
@@ -543,7 +557,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
             || !str.read_ushort (profile->port))
           {
             env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-            dmsg ("error decoding IIOP host/port");
+            ACE_DEBUG ((LM_DEBUG, "error decoding IIOP host/port"));
             objdata->Release ();
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
@@ -571,8 +585,9 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   if (objdata == 0)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg2 ("no IIOP v%d.%d (or earlier) profile in IOR!",
-             IIOP::MY_MAJOR, IIOP::MY_MINOR);
+      ACE_DEBUG ((LM_DEBUG, "objdata is 0, maybe because "
+		  "no IIOP v%d.%d (or earlier) profile in IOR!\n",
+		  IIOP::MY_MAJOR, IIOP::MY_MINOR ));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
   else
