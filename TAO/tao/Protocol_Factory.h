@@ -50,6 +50,12 @@ public:
   virtual TAO_Connector *make_connector  (void);
   // Create a connector
 
+  virtual int requires_explicit_endpoint (void) const = 0;
+  // Some protocols should not create a default endpoint unless the
+  // user specifies a -ORBendpoint option. For example, local IPC
+  // (aka UNIX domain sockets) is unable to remove the rendesvouz
+  // point if the server crashes.  For those protocols is better to
+  // create the endpoint only if the user requests one.
 };
 
 #endif /* TAO_PROTOCOL_FACTORY_H */
