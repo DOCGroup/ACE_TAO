@@ -1,3 +1,69 @@
+Tue Dec 23 16:43:14 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/README: Added descriptions for ACE_HAS_PTHREADS_1003_DOT_1C (this
+	  was in use previously but not documented), ACE_HAS_XTI (new; XTI is
+	  the POSIX superset of TLI - this implies ACE_HAS_TLI),
+	  ACE_NEW_THROWS_EXCEPTIONS (new; the compiler throws bad_alloc if
+	  a 'new' memory allocation fails).
+
+	* ace/Hash_Map_Manager.cpp - Workaround for an aC++ bug in the HP-UX 11
+	  version of the compiler.
+
+	* ace/INET_Addr.cpp: Note the failing host name in the error message
+	  from ACE_INET_Addr::ACE_INET_Addr(u_short, const char []).
+
+	* ace/OS.h: Changes made while porting to HP-UX 11:
+	    - If ACE_HAS_PTHREADS_1003_DOT_1C (POSIX.1C), it implies (by
+	      way of POSIX.1C) that these also be set:
+	        ACE_HAS_PTHREAD_SIGMASK
+	        ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+	      This is intended to make the process of configuring a new
+	      new platform easier.
+	    - If the new config macro ACE_NEW_THROWS_EXCEPTIONS is set, include
+	      the file <new>.  The "proper" thing to do is to include
+	      <stdexcept>; however, at least on HP-UX 11, this will cause
+	      other things to get brought in, like <memory>, which will
+	      screw up auto_ptr.  The day that all this standard library and
+	      STL stuff is finally straight, there will be dancing in the
+	      streets...
+	    - Support including the proper header file for XTI when it's
+	      supposed to use <xti.h> rather than <tiuser.h> (POSIX specifies
+	      XTI, a superset of TLI, to have <xti.h>)
+	    - If ACE_NEW_THROWS_EXCEPTIONS is set, the ACE_NEW and
+	      ACE_NEW_RETURN macros handle the exception.
+
+	* ace/OS.i: Fixed check for failure in ACE_OS::sema_init.
+
+	* ace/config-hpux11.h:
+	* ace/config-hpux11-hpc++.h: New configs for HP-UX 11.00
+
+	* include/makeinclude/platform_hpux11_aCC.GNU: Platform macros for
+	  HP-UX 11.  It is set up for 32-bit build with comments for how to
+	  do a 64-bit build.
+
+	* examples/Makefile: Added Naming to the directory list to build.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp: Changed test from
+	  ACE_HAS_SVR4_POLL to ACE_HAS_POLL.
+
+	* examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp: Fixed a char * being
+	  initialized by a string literal.
+
+	* examples/Map_Manager/test_hash_map_manager.cpp: Added #include
+	  "ace/SString.h"
+
+	* examples/Mem_Map/IO-tests/test_io.cpp: Fixed a char * being
+	  initialized by a string literal.  Fixed diagnostic statements.
+
+	* examples/Naming/test_multiple_contexts.cpp:
+	* examples/Naming/test_non_existent.cpp:
+	* examples/Naming/test_writers.cpp:  Added Id line for CVS.
+
+	* tests/Time_Value_Test.cpp: Added #include "test_config.h"
+
 Tue Dec 23 16:12:28 1997    <nw1@DINGO>
 
 	* ace/OS.i: Must use ACE_OS::sema_wait instead of waiting on the
