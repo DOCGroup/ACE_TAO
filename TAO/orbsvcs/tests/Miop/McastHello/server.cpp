@@ -73,7 +73,7 @@ main (int argc, char *argv[])
       // Get the group IOR.
       CORBA::String_var ior = CORBA::string_dup (group_ior);
       CORBA::Object_var group1 =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Output the Group IOR to the <ior_output_file>
@@ -95,7 +95,7 @@ main (int argc, char *argv[])
       CORBA::Boolean servant0_status = 0;
       McastHello server_impl (orb.in (), 0, servant0_status);
 
-      root_poa->activate_object_with_id (id,
+      root_poa->activate_object_with_id (id.in (),
                                          &server_impl
                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
