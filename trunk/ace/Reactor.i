@@ -15,6 +15,17 @@ ACE_Reactor::open (size_t size,
                                         signal_handler,
                                         timer_queue);
 }
+ACE_INLINE int
+ACE_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
+{
+  return this->implementation ()->set_sig_handler (signal_handler);
+}
+
+ACE_INLINE int
+ACE_Reactor::set_timer_queue (ACE_Timer_Queue *timer_queue)
+{
+  return this->implementation ()->set_timer_queue (timer_queue);
+}
 
 ACE_INLINE int 
 ACE_Reactor::close (void)

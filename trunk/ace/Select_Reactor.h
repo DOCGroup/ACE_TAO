@@ -331,6 +331,12 @@ public:
                     ACE_Timer_Queue * = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
+  virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
+  // Use a user specified signal handler instead.
+
+  virtual int set_timer_queue (ACE_Timer_Queue *timer_queue);
+  // Use a user specified timer queue instead.
+
   virtual int close (void);
   // Close down the select_reactor and release all of its resources.
 

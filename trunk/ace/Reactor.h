@@ -92,7 +92,15 @@ public:
 		    int restart = 0, 
 		    ACE_Sig_Handler *signal_handler = 0,
 		    ACE_Timer_Queue *timer_queue = 0);
-  // Initialization.  
+  // Initialization.
+
+  virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
+  // Use a user specified signal handler instead.
+
+  virtual int set_timer_queue (ACE_Timer_Queue *timer_queue);
+  // Use a user specified timer queue instead.
+  // Notice that I don't think you should mess with timer queue
+  // once the Reactor is up and running.
 
   virtual int close (void);
   // Close down and release all resources.
