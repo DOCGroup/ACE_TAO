@@ -299,7 +299,7 @@ Test_ECG::run (int argc, char* argv[])
               ACE_Scheduler_Factory::use_runtime (
                 sizeof (runtime_configs_2)/sizeof (runtime_configs_2[0]),
                 runtime_configs_2,
-                                sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
+                sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
                 runtime_infos_2);
 
               scheduler_impl =
@@ -319,7 +319,7 @@ Test_ECG::run (int argc, char* argv[])
               ACE_Scheduler_Factory::use_runtime (
                 sizeof (runtime_configs_3)/sizeof (runtime_configs_3[0]),
                 runtime_configs_3,
-                                sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
+                sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
                 runtime_infos_3);
 
               scheduler_impl =

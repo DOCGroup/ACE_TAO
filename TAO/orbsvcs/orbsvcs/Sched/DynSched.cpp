@@ -109,6 +109,8 @@ ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
       return "INSUFFICIENT_THREAD_PRIORITY_LEVELS";
     case ST_CYCLE_IN_DEPENDENCIES :
       return "CYCLE_IN_DEPENDENCIES";
+    case ST_UNRESOLVED_REMOTE_DEPENDENCIES :
+      return "ST_UNRESOLVED_REMOTE_DEPENDENCIES";
     case ST_INVALID_PRIORITY_ORDERING :
       return "INVALID_PRIORITY_ORDERING";
     case UNABLE_TO_OPEN_SCHEDULE_FILE :
@@ -243,7 +245,7 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 
 ACE_DynScheduler::status_t
 ACE_DynScheduler::get_rt_info (Object_Name name,
-                            RT_Info* &rtinfo)
+                               RT_Info* &rtinfo)
 {
   handle_t handle;
 
@@ -650,59 +652,79 @@ ACE_DynScheduler::schedule (void)
     status_ = identify_threads ();
   }
 
-  if (status_ == SUCCEEDED)
+  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
   {
     // invokes the internal thread scheduling method of the strategy
-    status_ = schedule_threads ();
+    temp_status = schedule_threads ();
+    if (temp_status != SUCCEEDED)
+      {
+        status_ == temp_status;
+      }
   }
 
-  if (status_ == SUCCEEDED)
+  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
   {
     // propagate the dispatch information from the
     // threads throughout the call graph
-    status_ = propagate_dispatches ();
+    temp_status = propagate_dispatches ();
+    if (temp_status != SUCCEEDED)
+      {
+        status_ == temp_status;
+      }
   }
 
-  if (status_ == SUCCEEDED)
+  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
   {
     // invokes the internal dispatch scheduling method of the strategy
-    status_ = schedule_dispatches ();
+    temp_status = schedule_dispatches ();
+    if (temp_status != SUCCEEDED)
+      {
+        status_ == temp_status;
+      }
   }
 
   // calculate utilization, total frame size, critical set
-  if (status_ == SUCCEEDED)
+  if ((status_ == SUCCEEDED) || (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
   {
-    status_ = calculate_utilization_params ();
+    temp_status = calculate_utilization_params ();
+    if (temp_status != SUCCEEDED)
+      {
+        status_ == temp_status;
+      }
   }
 
   // calculate utilization, total frame size, critical set
-  if ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED))
+  if ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED) || 
+      (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
   {
-    status_ = store_assigned_info ();
+    temp_status = store_assigned_info ();
+    if (temp_status != SUCCEEDED)
+      {
+        status_ == temp_status;
+      }
   }
 
   // generate the scheduling timeline over the total frame size
-  if ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED))
+  if ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED) || 
+      (status_ == ST_UNRESOLVED_REMOTE_DEPENDENCIES))
   {
     temp_status = create_timeline ();
-  }
-
-  if (temp_status != SUCCEEDED)
-  {
-    status_ = temp_status;
+    if (temp_status != SUCCEEDED)
+      {
+        status_ = temp_status;
+      }
   }
 
   // store the timeline to a file if one was given
   if ((timeline_filename_ != 0)  &&
       ((status_ == SUCCEEDED) || (status_ == ST_UTILIZATION_BOUND_EXCEEDED)))
-  {
-    temp_status = output_timeline (timeline_filename_, 0);
-  }
-
-  if (temp_status != SUCCEEDED)
-  {
-    status_ = temp_status;
-  }
+    {
+      temp_status = output_timeline (timeline_filename_, 0);
+      if (temp_status != SUCCEEDED)
+        {
+          status_ = temp_status;
+        }
+    }
 
   // if a valid schedule was not generated, clean up from the attempt
   switch (status_)
@@ -710,6 +732,7 @@ ACE_DynScheduler::schedule (void)
     // these are statuses that indicate a reasonable schedule was generated
     case SUCCEEDED:
     case ST_UTILIZATION_BOUND_EXCEEDED:
+    case ST_UNRESOLVED_REMOTE_DEPENDENCIES:
 
         // if we made it here, the schedule is done
         up_to_date_ = 1;
@@ -810,9 +833,12 @@ ACE_DynScheduler::calculate_utilization_params (void)
       minimum_priority_queue_ = ordered_dispatch_entries_ [i]->priority ();
     }
 
-    // only consider computation times of dispatches on OPERATION descriptors
-    if ((ordered_dispatch_entries_ [i]->task_entry ().info_type () ==
-          RtecScheduler::OPERATION) &&
+    // Only consider computation times of dispatches of 
+    // OPERATION and REMOTE_DEPENDANT descriptors.
+    if (((ordered_dispatch_entries_ [i]->task_entry ().info_type () ==
+           RtecScheduler::OPERATION) || 
+         (ordered_dispatch_entries_ [i]->task_entry ().info_type () == 
+           RtecScheduler::REMOTE_DEPENDANT)) &&
         (ordered_dispatch_entries_ [i]->task_entry ().effective_period () > 0))
     {
       utilization_ +=
@@ -1018,6 +1044,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::identify_threads (void)
 {
   u_int i, j;
+  ACE_DynScheduler::status_t result = SUCCEEDED;
 
   // walk array of task entries, picking out thread delineators
   for (i = 0; i < tasks_; i++)
@@ -1062,21 +1089,30 @@ ACE_DynScheduler::identify_threads (void)
           ++ threads_;
         }
       }
+      else if (task_entries_ [i].rt_info ()->info_type == RtecScheduler::REMOTE_DEPENDANT)
+        {
+          // Warn about unresolved remote dependencies
+		  result = ST_UNRESOLVED_REMOTE_DEPENDENCIES;
+          ACE_DEBUG (
+             (LM_DEBUG,
+              "An operation identified by \"%s\" has unresolved remote dependencies\n.",
+              (const char*) task_entries_ [i].rt_info ()->entry_point));
+        }
       else
-      {
-        // node that no one calls and has neither rate nor threads is suspect
-        ACE_ERROR_RETURN (
-           (LM_ERROR,
-            "An operation identified by \"%s\" does not specify a period or\n"
-            "visible threads, and is not called by any other operation.  "
-            "Are there backwards dependencies?\n",
-            (const char*) task_entries_ [i].rt_info ()->entry_point),
-            ST_BAD_DEPENDENCIES_ON_TASK);
-      }
+        {
+          // Local node that no one calls and has neither rate nor threads is suspect
+          ACE_ERROR_RETURN (
+             (LM_ERROR,
+              "An operation identified by \"%s\" does not specify a period or\n"
+              "visible threads, and is not called by any other operation.  "
+              "Are there backwards dependencies?\n",
+              (const char*) task_entries_ [i].rt_info ()->entry_point),
+              ST_BAD_DEPENDENCIES_ON_TASK);
+        }
     }
   }
 
-  return SUCCEEDED;
+  return result;
 }
 
 ACE_DynScheduler::status_t
@@ -1305,9 +1341,11 @@ ACE_DynScheduler::create_timeline ()
       max_dispatch_id_ = ordered_dispatch_entries_[i]->dispatch_id ();
     }
 
-    // only put OPERATION dispatches into the timeline.
-    if (ordered_dispatch_entries_[i]->task_entry().info_type () !=
-                RtecScheduler::OPERATION)
+    // only put OPERATION and REMOTE_DEPENDANT dispatches into the timeline.
+    if ((ordered_dispatch_entries_[i]->task_entry().info_type () !=
+                RtecScheduler::OPERATION) &&
+        (ordered_dispatch_entries_[i]->task_entry().info_type () !=
+                RtecScheduler::REMOTE_DEPENDANT))
     {
       continue;
     }
