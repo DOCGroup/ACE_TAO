@@ -1,3 +1,10 @@
+Thu Aug 29 06:12:56 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Future.cpp (set): Fixed the loop code so it's possible for
+	  the observer object to be deleted or detached in its update()
+ 	  operation.  Thanks to Tomer Amiaz <Tomer@bandwiz.com> for this
+ 	  fix.
+
 Thu Aug 29 09:40:20 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/Transcode.h:

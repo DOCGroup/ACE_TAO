@@ -184,9 +184,9 @@ ACE_Future_Rep<T>::set (const T &r,
 
           for (;
                iterator != end;
-               ++iterator)
+               iterator)
             {
-              OBSERVER *observer = *iterator;
+              OBSERVER *observer = *iterator++;
               observer->update (caller);
             }
 
