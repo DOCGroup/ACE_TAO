@@ -1,3 +1,14 @@
+Wed May 31 18:08:12 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* examples/QoS/QosEvent.h:
+	* examples/QoS/server.cpp:
+	* examples/QoS/client.cpp:
+	* examples/QoS/Receiver_QOS_Event_Handler.{cpp,h}:
+	* examples/QoS/Sender_QOS_Event_Handler.{cpp,h}:
+
+	  Fixed the calls to subsribe() and qos () methods that
+	  broke because of changes to ACE QoS API.
+
 Wed May 31 12:29:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/JAWS2/JAWS/jaws.dsp:
