@@ -1,3 +1,18 @@
+Sat Jul 26 10:02:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i:
+
+          Again changed the order of base class constructor calls in the
+          copy constructor for implementations of 3 FT policy interfaces,
+          to eliminate warnings from gcc 3.3. The order now is not
+          depth-first left-to-right, but perhaps the fact that the
+          implementation classes don't use virtual inheritance has an
+          effect on the rule gcc applies.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+
+          Cosmetic changes.
+
 Fri Jul 25 22:17:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
