@@ -1,4 +1,22 @@
 Tue Jul  6 09:55:42 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* client.muxed.conf: Added this file. This enables MT wait
+	  strategy and MUXED TMS. 
+  
+	* tests/AMI/client.cpp: Addes sendc method.
+  	
+  	
+  
+	* tests/AMI/Makefile
+	* tests/AMI/run_test.pl
+	* tests/AMI/simple-client.conf
+	* tests/AMI/simple-client.cpp
+	* tests/AMI/test-handC.cpp
+	* tests/AMI/test_i.cpp
+	* tests/AMI/test_i.h
+	* tests/AMI/test_i.i:  
+	  Cosmetic changes to print usefull debug messages with thread id
+	  etc.         	  
 
 	* tao/Transport_Mux_Strategy.cpp
 	* tao/Transport_Mux_Strategy.h
