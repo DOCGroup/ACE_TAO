@@ -30,6 +30,7 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client {
   }
   idl_files {
     ObjectReferenceFactory.idl
+    sum_server.idl
   }
 }
 
@@ -41,7 +42,6 @@ project(*Client) : orbsvcsexe, event {
     sum_serverC.cpp
   }
   idl_files {
-    sum_server.idl
   }
 }
 
