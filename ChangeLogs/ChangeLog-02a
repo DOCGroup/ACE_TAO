@@ -1,3 +1,15 @@
+Tue Jan 29 08:39:24 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ace/CORBA_macros.h:
+	  Added ACE_ENV_ARG macros to replace the TAO_ENV_ARG macros
+	  defined in TAO/tao/orbconf.h. All exception related macros
+	  are now defined in ace/CORBA_macros.h, and the TAO_ENV_ARG
+	  macros will soon be deprecated.
+
+        * include/makeinclude/wrapper_macros.GNU:
+	  Added the include_env switch for compatibility with the
+	  exception handling use before TAO 1.2.2.
+
 Tue Jan 29 08:17:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/ace_flags.bor:
