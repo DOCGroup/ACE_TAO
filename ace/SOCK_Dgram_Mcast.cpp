@@ -13,11 +13,11 @@
 
 // Instantiate SOCK_Dgram_Mcast_Ex internal templates, if necessary.
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_SOCK_Dgram_Mcast_Ex<ACE_MT_SYNCH>;
+template class ACE_SOCK_Dgram_Mcast_Ex<ACE_SYNCH_MUTEX>;
 template class ACE_DLList_Iterator<ip_mreq>;
 template class ACE_DLList<ip_mreq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_SOCK_Dgram_Mcast_Ex<ACE_MT_SYNCH>;
+#pragma instantiate ACE_SOCK_Dgram_Mcast_Ex<ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_DLList_Iterator<ip_mreq>
 #pragma instantiate ACE_DLList<ip_mreq>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
