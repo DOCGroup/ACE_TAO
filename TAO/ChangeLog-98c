@@ -1,3 +1,15 @@
+Wed Jun 17 16:58:26 1998 Michael Kircher <mk1@cs.wustl.edu>
+
+        * orbsvcs/tests/start_services: Moved this file form 
+	  orbsvcs/tests/Simulator/ to this location. David
+	  made it more generic in order to allow it to work
+	  on more Unix platforms.
+
+	* orbsvcs/tests/Simulator/ss: See comment above.
+
+	* orbsvcs/tests/Simulator/README: Added some comments about
+	  the above mentioned.
+
 Wed Jun 17 16:14:26 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Makefile: minor fix for Chorus.
