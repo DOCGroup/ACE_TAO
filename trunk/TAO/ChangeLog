@@ -1,3 +1,11 @@
+Thu May 13 20:26:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl
+	  (operator):
+
+	  Added missing ACE_TRY_CHECK.  Fixes a warning about an unused
+	  label in emulated exception builds.
+
 Thu May 13 13:32:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Muxed_GIOP_Versions/run_test.pl:
