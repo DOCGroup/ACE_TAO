@@ -1,3 +1,20 @@
+Tue Apr 22 20:15:52 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* performance-tests\RTCorba\Thread_Pool\server.cpp: 
+
+	  - Run the orb in a RT thread rather than in the main thread.
+	  Otherwise, the value returned from the_priority() can be
+	  potentially incorrect.
+
+	  - Call to fudge_priorities() no longer necessary.
+
+	  - Added call to check_supported_priorities().
+
+	* $ACE_ROOT/bin/tao_orb_tests.lst: 
+
+	  tests/RTCORBA/Persistent_IOR creates multiple threads - don't
+	  run in single-threaded configurations.
+
 Tue Apr 22 17:20:39 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/TAO.dsp: Fixed warnings that creeped up.
