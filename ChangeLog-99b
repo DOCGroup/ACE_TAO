@@ -1,3 +1,8 @@
+Mon Jan 18 23:55:03 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ACE-INSTALL.html: Added more info on Alpha configuration
+          problems and fixes.
+
 Mon Jan 18 23:07:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (open): Files opened with CreateFileA (on Win32 of
