@@ -153,7 +153,7 @@ Leader_Follower_Task::svc (void)
             {
               // Eat a little CPU
               /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-              u_long n = 1279UL;
+              u_long n = 3UL;
               ACE::is_prime (n, 2, n / 2);
             }
 

@@ -124,7 +124,7 @@ Worker_Task::svc (void)
         {
           // Eat a little CPU
           /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-          u_long n = 1279UL;
+          u_long n = 11UL;
           ACE::is_prime (n, 2, n / 2);
         }
 
@@ -395,4 +395,3 @@ template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
