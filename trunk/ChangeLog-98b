@@ -1,37 +1,43 @@
+Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.{5,6}.h: removed #define/#undef of
+          ACE_THR_PRI_FIFO_DEF.  They're no longer needed with the
+          hard-coded ACE_THR_PRI_* values for Solaris in ace/OS.h.
+
 Fri Sep 25 12:15:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace: The following ACE_TRACE calls being made during the
- 	  creation of the ACE_Log_Msg instance.  The ACE_TRACE calls then
- 	  try to create the ACE_Log_Msg instance which then ends up
- 	  executing the ACE_TRACE's.  Etc, etc, etc...
+        * ace: The following ACE_TRACE calls being made during the
+          creation of the ACE_Log_Msg instance.  The ACE_TRACE calls then
+          try to create the ACE_Log_Msg instance which then ends up
+          executing the ACE_TRACE's.  Etc, etc, etc...
 
-	  Here are the methods with the ACE_TRACEs that I commented out to
- 	  get ACE to run:
-	
-	  ACE_IPC_SAP::~ACE_IPC_SAP
-	  ACE_SOCK::ACE_SOCK
-	  ACE_SOCK::~ACE_SOCK
-	  ACE_SOCK_IO::ACE_SOCK_IO
-	  ACE_SOCK_IO::~ACE_SOCK_IO
-	  ACE_SOCK_Stream::ACE_SOCK_Stream
-	  ACE_SOCK_Stream::~ACE_SOCK_Stream
-	  ACE_Thread::keycreate
-	  ACE_Thread::setspecific
-	  ACE_Thread::getspecific
+          Here are the methods with the ACE_TRACEs that I commented out to
+          get ACE to run:
 
-	  Thanks to "Patrick J. McNerthney" <pat@cartia.com> for this bug
- 	  report.
+          ACE_IPC_SAP::~ACE_IPC_SAP
+          ACE_SOCK::ACE_SOCK
+          ACE_SOCK::~ACE_SOCK
+          ACE_SOCK_IO::ACE_SOCK_IO
+          ACE_SOCK_IO::~ACE_SOCK_IO
+          ACE_SOCK_Stream::ACE_SOCK_Stream
+          ACE_SOCK_Stream::~ACE_SOCK_Stream
+          ACE_Thread::keycreate
+          ACE_Thread::setspecific
+          ACE_Thread::getspecific
+
+          Thanks to "Patrick J. McNerthney" <pat@cartia.com> for this bug
+          report.
 
 Fri Sep 25 10:10:12 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i (cond_timedwait): Add EINTR to the list of errno values
-	  that get changed to ETIME on wait timeout. EINTR is from LynxOS.
-	  Thanks to David Levine for this fix.
+        * ace/OS.i (cond_timedwait): Add EINTR to the list of errno values
+          that get changed to ETIME on wait timeout. EINTR is from LynxOS.
+          Thanks to David Levine for this fix.
 
-	* tests/Semaphore_Test.cpp: Remove the assertion that a timed out
-	  semaphore will return EINTR for ACE_HAS_PTHREADS_DRAFT4.  All
-	  platforms expect ETIME, which is normalized in
-	  ACE_OS::cond_timedwait.
+        * tests/Semaphore_Test.cpp: Remove the assertion that a timed out
+          semaphore will return EINTR for ACE_HAS_PTHREADS_DRAFT4.  All
+          platforms expect ETIME, which is normalized in
+          ACE_OS::cond_timedwait.
 
 Thu Sep 24 22:31:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
