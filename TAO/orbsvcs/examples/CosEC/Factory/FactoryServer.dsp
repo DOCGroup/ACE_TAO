@@ -143,7 +143,7 @@ InputPath=.\CosEventChannelFactory.idl
 InputName=CosEventChannelFactory
 
 BuildCmds= \
-	tao_idl -I..\..\.. $(InputName).idl
+	tao_idl -Ge 1 -I..\..\.. $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
