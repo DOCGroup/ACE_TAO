@@ -1,7 +1,55 @@
 // $Id$
 #include "tao/corba.h"
 
+// Timeprobes class
+#include "tao/Timeprobe.h"
+
 ACE_RCSID(tao, Operation_Table, "$Id$")
+
+#if defined (ACE_ENABLE_TIMEPROBES)
+
+static const char *TAO_Operation_Table_Timeprobe_Description[] =
+{
+  "TAO_Dynamic_Hash_OpTable::find - start",
+  "TAO_Dynamic_Hash_OpTable::find - end",
+  
+  "TAO_Linear_Search_OpTable::find - start",
+  "TAO_Linear_Search_OpTable::find - end",
+  
+  "TAO_Active_Demux_OpTable::find - start",
+  "TAO_Active_Demux_OpTable::find - end",
+  
+  "TAO_Perfect_Hash_OpTable::find - start",
+  "TAO_Perfect_Hash_OpTable::find - end",
+  
+  "TAO_Binary_Search_OpTable::find - start",
+  "TAO_Binary_Search_OpTable::find - end"
+};
+
+enum
+{
+  // Timeprobe description table start key
+  TAO_DYNAMIC_HASH_OPTABLE_FIND_START = 600,
+  TAO_DYNAMIC_HASH_OPTABLE_FIND_END,
+  
+  TAO_LINEAR_SEARCH_OPTABLE_FIND_START,
+  TAO_LINEAR_SEARCH_OPTABLE_FIND_END,
+  
+  TAO_ACTIVE_DEMUX_OPTABLE_FIND_START,
+  TAO_ACTIVE_DEMUX_OPTABLE_FIND_END,
+  
+  TAO_PERFECT_HASH_OPTABLE_FIND_START,
+  TAO_PERFECT_HASH_OPTABLE_FIND_END,
+  
+  TAO_BINARY_SEARCH_OPTABLE_FIND_START,
+  TAO_BINARY_SEARCH_OPTABLE_FIND_END
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
+                                  TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // destructor
 TAO_Operation_Table::~TAO_Operation_Table (void)
@@ -75,6 +123,8 @@ int
 TAO_Dynamic_Hash_OpTable::find (const char *opname,
                                 TAO_Skeleton& skel_ptr)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
+
   return this->hash_.find ((const char *)opname, skel_ptr);
 }
 
@@ -101,6 +151,8 @@ int
 TAO_Linear_Search_OpTable::find (const char *opname,
                                  TAO_Skeleton& skelfunc)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
+
   const TAO_operation_db_entry *entry = lookup (opname);
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -161,6 +213,8 @@ int
 TAO_Active_Demux_OpTable::find (const char *opname,
                                 TAO_Skeleton& skel_ptr)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_ACTIVE_DEMUX_OPTABLE_FIND_START);
+
   CORBA::ULong i = ACE_OS::atoi (opname);
 
   ACE_ASSERT (i < this->tablesize_);
@@ -196,6 +250,8 @@ int
 TAO_Perfect_Hash_OpTable::find (const char *opname,
                                 TAO_Skeleton &skelfunc)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
+
   const TAO_operation_db_entry *entry = lookup (opname,
                                                 ACE_OS::strlen (opname));
   if (entry == 0)
@@ -236,6 +292,8 @@ int
 TAO_Binary_Search_OpTable::find (const char *opname,
                                  TAO_Skeleton &skelfunc)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
+
   const TAO_operation_db_entry *entry = lookup (opname);
 
   if (entry == 0)
