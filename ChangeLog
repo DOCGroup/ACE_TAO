@@ -1,3 +1,8 @@
+Fri Mar 30 08:15:26 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/QoS/QoS_Session.h:
+	  Add #include for ACE_QoS_Export
+
 Fri Mar 30 07:31:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/QoS/QoS_Session.h:
