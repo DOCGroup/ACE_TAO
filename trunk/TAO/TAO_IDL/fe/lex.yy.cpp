@@ -2630,8 +2630,8 @@ idl_parse_line_and_file (char *buf)
       h[i] = '\0';
       ACE_NEW (tmp,
                UTL_String (h));
-      idl_global->set_filename (tmp);
       idl_global->update_prefix (tmp->get_string ());
+      idl_global->set_filename (tmp);
     }
 
   UTL_String *fname = idl_global->filename ();
