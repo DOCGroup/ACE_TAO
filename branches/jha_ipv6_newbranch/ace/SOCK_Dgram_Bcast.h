@@ -57,7 +57,7 @@ public:
   ACE_SOCK_Dgram_Bcast (void);
 
   ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
-                        int protocol_family = PF_INET,
+                        int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                         int protocol = 0,
                         int reuse_addr = 0,
                         const ACE_TCHAR *host_name = 0);
@@ -69,7 +69,7 @@ public:
 
   /// Initiate a connectionless datagram broadcast endpoint.
   int open (const ACE_Addr &local,
-            int protocol_family = PF_INET,
+            int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0,
             const ACE_TCHAR *host_name = 0);
