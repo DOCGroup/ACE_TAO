@@ -201,8 +201,8 @@ ACE_Token::acquire (ACE_Time_Value *timeout)
 
 int
 ACE_Token::acquire (void (*sleep_hook_func)(void *),
-		void *arg,
-		ACE_Time_Value *timeout)
+                    void *arg,
+                    ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Token::acquire");
   return this->shared_acquire (sleep_hook_func, arg, timeout);

@@ -1,5 +1,9 @@
 Fri Apr  3 21:18:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.cpp (cleanup): Moved ACE_Cleanup::cleanup() back into the
+ 	  *.cpp file so that we have at least one non-inline virtual
+ 	  function.
+
 	* ace/OS (cleanup): Created a dummy ACE_Cleanup constructor since
 	  the lack of this may be causing a bug with CC and the linker for
 	  TAO's IDL compiler.  Also moved the constructor and destructor of
