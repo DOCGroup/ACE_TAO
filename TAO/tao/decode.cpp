@@ -326,7 +326,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         *tcp = new CORBA::TypeCode (ACE_static_cast(CORBA::TCKind, kind),
                                                     8,
                                                     ACE_reinterpret_cast(char*,_oc_bounded_string),
-                                                    0, 0);
+                                                    0, sizeof
+                                                    (CORBA::String_var), 0);
 #elif 0
                         // This one fails because we are passing the
                         // parent but the buffer (_oc_bounded_string) is
@@ -339,7 +340,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         _oc_bounded_string [1] = (CORBA::Long) bound;
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                     bound, (char *) &_oc_bounded_string,
-                                                    0, parent);
+                                                    0, sizeof
+                                                    (CORBA::String_var), parent);
 #else
                         // This depends on the fact that <stream> is
                         // actually pointing to the parent CDR stream,
@@ -347,7 +349,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                     8,
                                                     stream->rd_ptr () - 8,
-                                                    0, parent);
+                                                    0, 0, parent);
 #endif
                       }
                   }
@@ -423,6 +425,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                                                 indir_len,
                                                 indir_stream.rd_ptr(),
                                                 0,
+                                                0,
                                                 parent);
                   }
               }
@@ -453,6 +456,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                             len,
                                             stream->rd_ptr (),
+                                            0,
                                             0,
                                             parent);
                 // skip length number of bytes in the stream, else we may

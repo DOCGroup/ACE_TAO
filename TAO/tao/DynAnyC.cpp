@@ -136,7 +136,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_Invalid (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_Invalid),
     (char *) &_oc_CORBA_DynAny_Invalid,
-    0
+    0,
+    sizeof (CORBA_DynAny::Invalid)
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_Invalid =
@@ -219,7 +220,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_InvalidValue (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_InvalidValue),
     (char *) &_oc_CORBA_DynAny_InvalidValue,
-    0
+    0,
+    sizeof (CORBA_DynAny::InvalidValue)
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_InvalidValue =
@@ -301,7 +303,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_TypeMismatch (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_TypeMismatch),
     (char *) &_oc_CORBA_DynAny_TypeMismatch,
-    0
+    0,
+    sizeof (CORBA_DynAny::TypeMismatch)
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_TypeMismatch =
@@ -382,7 +385,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_InvalidSeq (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_InvalidSeq),
     (char *) &_oc_CORBA_DynAny_InvalidSeq,
-    0
+    0,
+    sizeof (CORBA_DynAny::InvalidSeq)
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_InvalidSeq =
@@ -678,7 +682,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynAny),
     (char *) &_oc_CORBA_DynAny,
-    0
+    0,
+    sizeof (CORBA_DynAny)
   );
 
 CORBA::TypeCode_ptr _tc_CORBA_DynAny = &_tc__tc_CORBA_DynAny;
@@ -782,7 +787,8 @@ static const CORBA::Long _oc_CORBA_DynEnum[] =
 static CORBA::TypeCode _tc__tc_CORBA_DynEnum (CORBA::tk_objref,
                                               sizeof (_oc_CORBA_DynEnum),
                                               (char *) &_oc_CORBA_DynEnum,
-                                              0);
+                                              0,
+                                              sizeof (CORBA_DynEnum));
 
 CORBA::TypeCode_ptr _tc_CORBA_DynEnum = &_tc__tc_CORBA_DynEnum;
 
@@ -805,7 +811,8 @@ static const CORBA::Long _oc_FieldName[] =
 static CORBA::TypeCode _tc__tc_FieldName (CORBA::tk_alias,
                                           sizeof (_oc_FieldName),
                                           (char *) &_oc_FieldName,
-                                          0);
+                                          0,
+                                          sizeof (FieldName));
 
 CORBA::TypeCode_ptr _tc_FieldName = &_tc__tc_FieldName;
 
@@ -851,7 +858,8 @@ static const CORBA::Long _oc_NameValuePair[] =
 static CORBA::TypeCode _tc__tc_NameValuePair (CORBA::tk_struct,
                                               sizeof (_oc_NameValuePair),
                                               (char *) &_oc_NameValuePair,
-                                              0);
+                                              0,
+                                              sizeof (NameValuePair));
 
 CORBA::TypeCode_ptr _tc_NameValuePair = &_tc__tc_NameValuePair;
 
@@ -970,8 +978,8 @@ static CORBA::TypeCode _tc__tc_NameValuePairSeq (
     CORBA::tk_alias,
     sizeof (_oc_NameValuePairSeq),
     (char *) &_oc_NameValuePairSeq,
-    0
-  );
+    0,
+    sizeof (NameValuePairSeq));
 
 CORBA::TypeCode_ptr _tc_NameValuePairSeq = &_tc__tc_NameValuePairSeq;
 
@@ -1078,8 +1086,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynStruct (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynStruct),
     (char *) &_oc_CORBA_DynStruct,
-    0
-  );
+    0,
+    sizeof (CORBA_DynStruct));
 
 CORBA::TypeCode_ptr _tc_CORBA_DynStruct = &_tc__tc_CORBA_DynStruct;
 
@@ -1211,8 +1219,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynUnion (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynUnion),
     (char *) &_oc_CORBA_DynUnion,
-    0
-  );
+    0,
+    sizeof (CORBA_DynUnion));
 
 CORBA::TypeCode_ptr _tc_CORBA_DynUnion = &_tc__tc_CORBA_DynUnion;
 
@@ -1286,7 +1294,8 @@ static const CORBA::Long _oc_AnySeq[] =
 static CORBA::TypeCode _tc__tc_AnySeq (CORBA::tk_alias,
                                        sizeof (_oc_AnySeq),
                                        (char *) &_oc_AnySeq,
-                                       0);
+                                       0,
+                                       sizeof (AnySeq));
 
 CORBA::TypeCode_ptr _tc_AnySeq = &_tc__tc_AnySeq;
 
@@ -1395,8 +1404,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynSequence (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynSequence),
     (char *) &_oc_CORBA_DynSequence,
-    0
-  );
+    0,
+    sizeof (CORBA_DynSequence));
 
 CORBA::TypeCode_ptr _tc_CORBA_DynSequence =
   &_tc__tc_CORBA_DynSequence;
@@ -1491,8 +1500,8 @@ static CORBA::TypeCode _tc__tc_CORBA_DynArray (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynArray),
     (char *) &_oc_CORBA_DynArray,
-    0
-  );
+    0,
+    sizeof (CORBA_DynArray));
 
 CORBA::TypeCode_ptr _tc_CORBA_DynArray =
     &_tc__tc_CORBA_DynArray;

@@ -135,7 +135,8 @@ TAO_TypeCodes::init (void)
   CORBA::_tc_string = new CORBA::TypeCode (CORBA::tk_string,
                                            sizeof _oc_string,
                                            (char*)&_oc_string,
-                                           1);
+                                           1,
+                                           sizeof (CORBA::String_var));
 
   static const CORBA::Long _oc_wstring [] =
   {
@@ -146,7 +147,8 @@ TAO_TypeCodes::init (void)
   CORBA::_tc_wstring = new CORBA::TypeCode (CORBA::tk_wstring,
                                             sizeof _oc_wstring,
                                             (char *) &_oc_wstring,
-                                            1);
+                                            1,
+                                            sizeof (CORBA::WString));
 
   //
   // Various things that can be passed as "general" parameters:
@@ -182,7 +184,8 @@ TAO_TypeCodes::init (void)
   CORBA::_tc_Object = new CORBA::TypeCode (CORBA::tk_objref,
                                            sizeof oc_objref,
                                            (char *) &oc_objref,
-                                           1);
+                                           1,
+                                           sizeof (CORBA::Object));
 
   // Static initialization of the two user-defined exceptions that
   // are part of the ORB.
@@ -207,7 +210,8 @@ TAO_TypeCodes::init (void)
   CORBA::TypeCode::_tc_Bounds = new CORBA::TypeCode (CORBA::tk_except,
                                                      sizeof tc_buf_Bounds,
                                                      tc_buf_Bounds,
-                                                     1);
+                                                     1,
+                                                     sizeof (CORBA::TypeCode::Bounds));
 
   static char tc_buf_BadKind [] =
   {
@@ -229,7 +233,8 @@ TAO_TypeCodes::init (void)
   CORBA::TypeCode::_tc_BadKind = new CORBA::TypeCode (CORBA::tk_except,
                                                       sizeof tc_buf_BadKind,
                                                       tc_buf_BadKind,
-                                                      1);
+                                                      1,
+                                                      sizeof (CORBA::TypeCode::BadKind));
 
   static const CORBA::Long _oc_CORBA_Identifier[] =
   {
@@ -243,7 +248,8 @@ TAO_TypeCodes::init (void)
   CORBA::_tc_Identifier = new CORBA::TypeCode (CORBA::tk_alias,
                                                sizeof (_oc_CORBA_Identifier),
                                                (char *) &_oc_CORBA_Identifier,
-                                               1);
+                                               1,
+                                               sizeof (CORBA::Identifier));
 
   static const CORBA::Long _oc_CORBA_RepositoryId[] =
   {
@@ -258,7 +264,8 @@ TAO_TypeCodes::init (void)
                                                  (_oc_CORBA_RepositoryId),
                                                  (char *)
                                                  &_oc_CORBA_RepositoryId,
-                                                 1);
+                                                 1,
+                                                 sizeof (CORBA::RepositoryId));
 
 
   static const CORBA::Long _oc_CORBA_PolicyType[] =
@@ -272,7 +279,8 @@ TAO_TypeCodes::init (void)
                                                (_oc_CORBA_PolicyType),
                                                (char *)
                                                &_oc_CORBA_PolicyType,
-                                               1);
+                                               1,
+                                               sizeof (CORBA::PolicyType));
 
   static const CORBA::Long _oc_CORBA_Policy[] =
   {
@@ -283,7 +291,8 @@ TAO_TypeCodes::init (void)
   CORBA::_tc_Policy = new CORBA::TypeCode (CORBA::tk_objref,
                                            sizeof (_oc_CORBA_Policy),
                                            (char *) &_oc_CORBA_Policy,
-                                           1);
+                                           1,
+                                           sizeof (CORBA::Policy));
 
  static const CORBA::Long _oc_CORBA_PolicyList[] =
  {
@@ -303,7 +312,8 @@ TAO_TypeCodes::init (void)
  CORBA::_tc_PolicyList = new CORBA::TypeCode (CORBA::tk_alias,
                                               sizeof (_oc_CORBA_PolicyList),
                                               (char *) &_oc_CORBA_PolicyList,
-                                              1);
+                                              1,
+                                              sizeof (CORBA::PolicyList));
 
  static const CORBA::Long _oc_CORBA_Current[] =
  {
@@ -314,7 +324,8 @@ TAO_TypeCodes::init (void)
  CORBA::_tc_Current = new CORBA::TypeCode (CORBA::tk_objref,
                                            sizeof (_oc_CORBA_Current),
                                            (char *) &_oc_CORBA_Current,
-                                           1);
+                                           1,
+                                           sizeof (CORBA::Current));
 
  // The following are internal to the TAO ORB
 
@@ -340,7 +351,8 @@ TAO_TypeCodes::init (void)
   TC_opaque = new CORBA::TypeCode (CORBA::tk_sequence,
                                    sizeof _oc_opaque,
                                    (char *) &_oc_opaque,
-                                   1);
+                                   1,
+                                   sizeof (TAO_opaque));
 
   // Octet codes for the parameters of the ServiceContextList TypeCode
   // ...  this is a CDR encapsulation holding two parameters (like all
@@ -405,7 +417,9 @@ TAO_TypeCodes::init (void)
   TC_ServiceContextList = new CORBA::TypeCode (CORBA::tk_sequence,
                                                sizeof _oc_svc_ctx_list,
                                                (char *) &_oc_svc_ctx_list,
-                                               1);
+                                               1,
+                                               sizeof (TAO_GIOP_ServiceContextList));
+
   static const CORBA::ULong oc_completion_status [] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order flag, tricky
@@ -420,7 +434,8 @@ TAO_TypeCodes::init (void)
     new CORBA::TypeCode (CORBA::tk_enum,
                          sizeof oc_completion_status,
                          (char *) &oc_completion_status,
-                         1);
+                         1,
+                         sizeof (CompletionStatus));
 }
 
 // destroy all the typecodes owned by the ORB
