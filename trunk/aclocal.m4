@@ -2163,6 +2163,7 @@ AC_DEFUN(ACE_CHECK_ASYNCH_IO, dnl
  AC_REQUIRE([AC_PROG_CXX])
  AC_REQUIRE([AC_PROG_CXXCPP])
  AC_REQUIRE([AC_LANG_CPLUSPLUS])
+ AC_REQUIRE([ACE_CHECK_THREADS])
 
  dnl In case a library with the asynchronous libraries is found but
  dnl the asynchronous IO support is not functional then save a copy
@@ -2176,7 +2177,7 @@ AC_DEFUN(ACE_CHECK_ASYNCH_IO, dnl
  dnl In some cases, the thread library must be linked to in addition to the
  dnl real-time support library.  As such, make sure these checks are done
  dnl after the thread library checks.
- ACE_SEARCH_LIBS(aio_read, aio posix4 rt, dnl
+ ACE_SEARCH_LIBS(aio_read, aio rt posix4, dnl
     ace_has_aio_funcs=yes, ace_has_aio_funcs=no)
 
 if test "$ace_has_aio_funcs" = yes; then
@@ -2233,7 +2234,8 @@ private:
 };
 
 Test_Aio::Test_Aio (void)
-  : aiocb_write_ (new struct aiocb),
+  : out_fd_ (0),
+    aiocb_write_ (new struct aiocb),
     aiocb_read_ (new struct aiocb),
     buffer_write_ (0),
     buffer_read_ (0)
@@ -2242,10 +2244,13 @@ Test_Aio::Test_Aio (void)
 
 Test_Aio::~Test_Aio (void)
 {
+  if (close (this->out_fd_) != 0)
+    perror ("close");
+
   delete aiocb_write_;
   delete aiocb_read_;
-  delete buffer_write_;
-  delete buffer_read_;
+  delete [] buffer_write_;
+  delete [] buffer_read_;
 }
 
 // Init the output file and init the buffer.
@@ -2253,17 +2258,22 @@ int
 Test_Aio::init (void)
 {
   // Open the output file.
-  this->out_fd_ = open ("test_aio.log", O_RDWR | O_CREAT | O_TRUNC, 0666);
-  if (this->out_fd_ == 0)
+  this->out_fd_ = open ("test_aio.log", O_RDWR | O_CREAT | O_TRUNC, 0600);
+  if (this->out_fd_ == -1)
     {
-      //cout << "Error : Opening file" << endl;
+      perror ("open");
       return -1;
     }
 
+  unlink ("test_aio.log"); // Unlink now so we don't have to do so later.
+
+  const char message[] = "Welcome to the world of AIO... AIO Rules !!!";
+
   // Init the buffers.
-  this->buffer_write_ = strdup ("Welcome to the world of AIO... AIO Rules !!!");
+  this->buffer_write_ = new char [sizeof (message) + 1];
+  strcpy (this->buffer_write_, message);
   // cout << "The buffer : " << this->buffer_write_ << endl;
-  this->buffer_read_ = new char [strlen (this->buffer_write_)];
+  this->buffer_read_ = new char [sizeof (message) + 1];
 
   return 0;
 }
@@ -2320,16 +2330,16 @@ Test_Aio::do_aio (void)
 
   // Do suspend till all the aiocbs in the list are done.
   int done = 0;
-  int return_val = 0;
   while (!done)
     {
-      return_val = aio_suspend (list_aiocb,
-                                2,
-                                0);
-      cerr << "Return value :" << return_val << endl;
+      if (aio_suspend (list_aiocb, 2, 0) != 0)
+        {
+          perror ("aio_suspend");
+          return -1;
+        }
 
       // Analyze return and error values.
-      if (aio_error (list_aiocb [0]) != EINPROGRESS)
+      if (list_aiocb [0] != 0 && aio_error (list_aiocb [0]) != EINPROGRESS)
         {
           if (aio_return (list_aiocb [0]) == -1)
             {
@@ -2340,14 +2350,14 @@ Test_Aio::do_aio (void)
             {
               // Successful. Store the pointer somewhere and make the
               // entry NULL in the list.
-              this->aiocb_write_ = list_aiocb [0];
+              // @@ no need ----> this->aiocb_write_ = list_aiocb [0];
               list_aiocb [0] = 0;
             }
         }
-      else
-        //cout << "AIO in progress" << endl;
+//      else
+//        cout << "AIO in progress" << endl;
 
-      if (aio_error (list_aiocb [1]) != EINPROGRESS)
+      if (list_aiocb [1] != 0 && aio_error (list_aiocb [1]) != EINPROGRESS)
         {
           if (aio_return (list_aiocb [1]) == -1)
             {
@@ -2358,12 +2368,12 @@ Test_Aio::do_aio (void)
             {
               // Successful. Store the pointer somewhere and make the
               // entry NULL in the list.
-              this->aiocb_read_ = list_aiocb [1];
+              // @@ no need ----> this->aiocb_read_ = list_aiocb [1];
               list_aiocb [1] = 0;
             }
         }
-      else
-        //cout << "AIO in progress" << endl;
+//      else
+//        cout << "AIO in progress" << endl;
 
       // Is it done?
       if ((list_aiocb [0] == 0) && (list_aiocb [1] == 0))
@@ -2401,6 +2411,16 @@ main (int argc, char **argv)
        ],
        [
         dnl Now try another test
+
+        dnl Create a file for the test program to read.
+        cat > test_aiosig.txt <<EOF
+
+*******************************************************
+FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR
+*******************************************************
+EOF
+
+
         AC_TRY_RUN(
           [
 #ifndef ACE_LACKS_UNISTD_H
@@ -2411,6 +2431,7 @@ main (int argc, char **argv)
 # include <sys/types.h>
 #endif
 #include <sys/stat.h>
+#include <pthread.h>
 #include <signal.h>
 #include <string.h>
 #include <errno.h>
@@ -2420,6 +2441,12 @@ main (int argc, char **argv)
 
 #include <aio.h>
 
+#ifdef __cplusplus
+extern "C"
+#endif
+void null_handler (int /* signal_number */,
+                   siginfo_t * /* info */,
+                   void *      /* context */);
 
 int file_handle = -1;
 char mb1 [BUFSIZ + 1];
@@ -2441,20 +2468,20 @@ setup_signal_delivery (void)
   // Make the sigset_t consisting of the completion signal.
   if (sigemptyset (&completion_signal) == -1)
     {
-      perror ("Error:Couldnt init the RT completion signal set\n");
+      perror ("Error:Couldn't init the RT completion signal set\n");
       return -1;
     }
   
   if (sigaddset (&completion_signal, SIGRTMIN) == -1)
     {
-      perror ("Error:Couldnt init the RT completion signal set\n");
+      perror ("Error:Couldn't init the RT completion signal set\n");
       return -1;
     }
   
   // Mask them.
   if (pthread_sigmask (SIG_BLOCK, &completion_signal, 0) == -1)
     {
-      perror ("Error:Couldnt maks the RT completion signals\n");
+      perror ("Error:Couldn't make the RT completion signals\n");
       return -1;
     }
   
@@ -2506,10 +2533,10 @@ int
 query_aio_completions (void)
 {
   int result = 0;
-  size_t number_of_compleions = 0;
-  for (number_of_compleions = 0;
-       number_of_compleions < 2;
-       number_of_compleions ++)
+  size_t number_of_completions = 0;
+  for (number_of_completions = 0;
+       number_of_completions < 2;
+       number_of_completions++)
     {
       // Wait for <milli_seconds> amount of time.
       // @@ Assigning <milli_seconds> to tv_sec.
@@ -2594,16 +2621,16 @@ query_aio_completions (void)
       int nbytes = aio_return (aiocb_ptr);
       if (nbytes == -1)
         {
-          perror ("Error:Invalid control block was send to <aio_return>\n");
+          perror ("Error:Invalid control block was sent to <aio_return>\n");
           return -1;
         }
       
-      if (number_of_compleions == 0)
+      //if (number_of_completions == 0)
         // Print the buffer.
         //printf ("Number of bytes transferred : %d\n The buffer : %s \n",
         //        nbytes,
         //        mb1);
-      else
+      //else
         // Print the buffer.
         //printf ("Number of bytes transferred : %d\n The buffer : %s \n",
         //        nbytes,
@@ -2617,14 +2644,16 @@ test_aio_calls (void)
 {
   // Set up the input file.
   // Open file (in SEQUENTIAL_SCAN mode)
-  file_handle = open ("test_aiosig.cpp", O_RDONLY);
+  file_handle = open ("test_aiosig.txt", O_RDONLY);
   
   if (file_handle == -1)
     {
-      perror ("Error:Opening the inputfile");
+      perror ("open");
       return -1;
     }
-  
+ 
+  unlink ("test_aiosig.txt"); // Unlink now so we don't have to do so later.
+
   if (setup_signal_delivery () < 0)
     return -1;
   
@@ -2633,7 +2662,13 @@ test_aio_calls (void)
   
   if (query_aio_completions () < 0)
     return -1;
-  
+
+  if (close (file_handle) != 0)
+    {
+      perror ("close");
+      return -1;
+    }
+
   return 0;
 }
 
@@ -2654,7 +2689,7 @@ setup_signal_handler (int signal_number)
                                     0);
   if (sigaction_return == -1)
     {
-      perror ("Error:Proactor couldnt do sigaction for the RT SIGNAL");
+      perror ("Error:Proactor couldn't do sigaction for the RT SIGNAL");
       return -1;
     }
   
@@ -2672,12 +2707,17 @@ int
 main (int, char *[])
 {
   if (test_aio_calls () == 0)
+    {
     //printf ("RT SIG test successful:\n"
     //        "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+      return 0;
+    }
   else
+    {
     //printf ("RT SIG test failed:\n"
     //        "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
-  return 0;
+  return -1;
+    }
 }
          ],
          [
@@ -2717,7 +2757,6 @@ main (int, char *[])
           ])
        ])
     ], AC_DEFINE(ACE_HAS_AIO_CALLS), LIBS="$ace_save_LIBS")
-  rm -f test_aio.log
 fi dnl test "$ace_has_aio_funcs" = yes
 ])
 
