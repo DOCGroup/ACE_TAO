@@ -1,3 +1,14 @@
+Thu Sep 13 20:38:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h (ACE_Thread_Manager): Changed the default
+	  argument <prealloc> for the constructor from 0 to
+	  ACE_DEFAULT_THREAD_MANAGER_PREALLOC.  Thanks to Doug for
+	  pointing this out.
+
+	  Added better documentation to explain the purpose of each
+	  argument in ACE_Thread_Manager's constructor.  Thanks to Nick
+	  Pratt <npratt@microstrategy.com> for motivating the change.
+
 Thu Sep 13 13:38:41 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.cpp (elapsed_time (ACE_hrtime_t&nanoseconds),
@@ -53,8 +64,8 @@ Tue Sep 11 06:41:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Sep 10 18:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* apps/Gateway/Peer/Peer.cpp (nonblk_put): 
-	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (nonblk_put): 
+	* apps/Gateway/Peer/Peer.cpp (nonblk_put):
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (nonblk_put):
 	  Reverted Bala's changes below since the original code was
  	  correct.  Also, added comments to clarify things to prevent
  	  confusion in the future.
@@ -76,7 +87,7 @@ Mon Sep 10 12:36:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  that checks for EWOULDBLOCK after a send. It was erroneously
 	  written. Thanks to Nick Pratt <npratt@microstrategy.com> for
 	  pointing this out.
-	
+
 Mon Sep 10 08:17:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Will not run the File_IO test in the
