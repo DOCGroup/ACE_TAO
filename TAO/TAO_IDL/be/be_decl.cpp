@@ -421,33 +421,22 @@ be_decl::prefix (void)
 int
 be_decl::tc_name2long (const char *name, ACE_UINT32 *&larr, long &arrlen)
 {
-  static ACE_UINT32 buf [NAMEBUFSIZE / sizeof (long)];
+  const int bytes_per_word = sizeof(ACE_UINT32);
+  static ACE_UINT32 buf [NAMEBUFSIZE];
   long slen;
   long i;
 
   slen = ACE_OS::strlen (name) + 1; // 1 for NULL terminating
 
-  // compute the number of bytes necessary to hold the name rounded to the next
-  // multiple of 4 (i.e., size of long)
-  arrlen = slen/4 + (slen%4 ? 1:0);
+  // compute the number of bytes necessary to hold the name rounded to
+  // the next multiple of 4 (i.e., size of long)
+  arrlen = slen / bytes_per_word + (slen % bytes_per_word ? 1:0);
 
-  ACE_OS::memset (buf, '\0', arrlen*4);
+  ACE_OS::memset (buf, 0, sizeof(buf));
   larr = buf;
-  ACE_OS::memcpy (buf, name, arrlen*4);
+  ACE_OS::memcpy (buf, name, slen);
   for (i = 0; i < arrlen; i++)
     larr [i] = ACE_HTONL (larr [i]);
-
-#if 0
-  for (i=0; i < ACE_OS::strlen (name); i++)
-    {
-      long shift; // num bytes to shift left
-
-      shift = 3 - (i%4);
-      // store the computed shifted quantity in the appropriate byte of the
-      // array to be returned
-      larr [i/4] |= ((name[i] & 0xff) << (shift*8));
-    }
-#endif
   return 0;
 }
 
