@@ -1,3 +1,10 @@
+Sun Jun 24 10:09:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Oneways_Invoking_Twoways/client.dsp:
+	* tests/Oneways_Invoking_Twoways/server.dsp:
+	* tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.dsw:
+	  Files for Win32 builds.
+
 Sun Jun 24 08:59:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Makefile: Added Oneways_Invoking_Twoways to the builds.
