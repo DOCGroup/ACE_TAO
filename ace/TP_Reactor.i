@@ -5,6 +5,19 @@
 // Methods for ACE_EH_Dispatch_Info
 /************************************************************************/
 
+ACE_INLINE void
+ACE_EH_Dispatch_Info::reset (void)
+{
+  this->dispatch_ = 0;
+
+  this->handle_ = ACE_INVALID_HANDLE;
+  this->event_handler_ = 0;
+  this->mask_ = ACE_Event_Handler::NULL_MASK;
+  this->callback_ = 0;
+}
+
+ACE_INLINE int
+
 ACE_INLINE
 ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void)
 {
@@ -25,18 +38,6 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
   this->callback_ = callback;
 }
 
-ACE_INLINE void
-ACE_EH_Dispatch_Info::reset (void)
-{
-  this->dispatch_ = 0;
-
-  this->handle_ = ACE_INVALID_HANDLE;
-  this->event_handler_ = 0;
-  this->mask_ = ACE_Event_Handler::NULL_MASK;
-  this->callback_ = 0;
-}
-
-ACE_INLINE int
 ACE_EH_Dispatch_Info::dispatch (void) const
 {
   return this->dispatch_;
