@@ -41,7 +41,7 @@ client (void * = 0)
   ACE_OS::sleep (ACE_DEFAULT_TIMEOUT);
   char *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_client;
-  
+
   if (shm_client.open (shm_key) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P|%t) %p\n%a"),
@@ -102,7 +102,7 @@ server (void * = 0)
     ACE_OS::sleep (1);
 
   if (shm_server.remove () == -1)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P|%t) %p\n"),
                 ASYS_TEXT ("remove")));
 
@@ -130,7 +130,7 @@ spawn (void)
       break;
     }
 #elif defined (ACE_HAS_THREADS)
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (client),
        (void *) 0,
        THR_NEW_LWP | THR_DETACHED) == -1)
@@ -139,14 +139,14 @@ spawn (void)
                 ASYS_TEXT ("thread create failed"),
                 1));
 
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (server),
        (void *) 0,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P|%t) %p\n%a"),
-                ASYS_TEXT ("thread create failed")),
-               1);
+                ASYS_TEXT ("thread create failed"),
+               1));
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR,
@@ -159,8 +159,8 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("MM_Shared_Memory_Test"));
 
-  if (ACE_OS::mktemp (shm_key) == 0 
-      || (ACE_OS::unlink (shm_key) == -1 
+  if (ACE_OS::mktemp (shm_key) == 0
+      || (ACE_OS::unlink (shm_key) == -1
           && errno == EPERM))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("(%P|%t) %p\n"),
