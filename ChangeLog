@@ -1,3 +1,11 @@
+Thu Nov 23 21:17:16 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/Reactor_Notify_Test.cpp (main): added
+          auto_ptr<ACE_Reactor> so that the global Reactor instance
+          will be destroyed at the termination of main ().  The cleans
+          up memory leaks that we introduced in this change to the test:
+          Tue Oct 24 12:30:47 2000  Steve Huston  <shuston@riverace.com>
+
 Thu Nov 23 18:38:54 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * Makefile:

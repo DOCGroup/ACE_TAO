@@ -392,7 +392,7 @@ run_notify_purge_test (void)
                   status));
     // <ap> destructor should cause n2's notify to be cancelled.
   }
-  
+
   ACE_Time_Value t (1);
   status = r->handle_events (t);  // Should be nothing to do, and time out
   return status < 0 ? 1 : 0;     // Return 0 for all ok, else error
@@ -403,6 +403,10 @@ int
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Notify_Test"));
+
+  // To automatically delete the ACE_Reactor instance at program
+  // termination:
+  auto_ptr<ACE_Reactor> r (ACE_Reactor::instance ());
 
   int test_result = 0;       // Innocent until proven guilty
 
