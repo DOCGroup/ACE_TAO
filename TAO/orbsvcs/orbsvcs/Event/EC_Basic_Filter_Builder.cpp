@@ -67,9 +67,8 @@ TAO_EC_Basic_Filter_Builder::
                     CORBA::ULong pos) const
 {
   CORBA::ULong l = qos.dependencies.length ();
-  for (CORBA::ULong i = pos;
-       i != l;
-       ++i)
+  CORBA::ULong i;
+  for (i = pos; i != l; ++i)
     {
       const RtecEventComm::Event& e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR

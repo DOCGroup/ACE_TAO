@@ -108,10 +108,10 @@ private:
   ACE_SYNCH_CONDITION_T busy_cond_;
   // A condition variable to wait while the object is too busy.
 
-  int busy_count_;
+  CORBA::ULong busy_count_;
   // Keep track of the number of threads using the set
 
-  int write_delay_;
+  CORBA::ULong write_delay_;
   // Keep track of the number of threads that have used the set since
   // the last change was posted.
 
