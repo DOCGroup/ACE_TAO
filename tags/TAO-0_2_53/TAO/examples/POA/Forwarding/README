@@ -1,0 +1,55 @@
+$Id$
+
+This document describes the location forwarding example.  For detailed
+explanation on TAO's location forwarding feature, see
+
+$TAO_ROOT/docs/forwarding.html
+
+The test sets up two servers, the first writes its servant's object
+reference (OR) to a file.  The second server reads the OR, recognizes
+it as forwarding location, and writes its own to a file too.  This OR
+is then read by the client, which then issues a number of requests.
+Where every third request is a forwarding request to the object.
+
+Here's an example for 5 requests:
+
+first call (request no 1)  
+second call (request no 2)
+forwarding call (request no 3)
+thrid call (request no 4)
+fourth call (request no 5)
+(no six would be a forwarding call again) 
+
+Two types of location forwardings are implemented: (1) the POA
+approach and (2) the servant locator approach.  Both are mentioned in
+the above documentation about location forwarding.
+
+To run the test for the POA approach do the following:
+
+% server -o server2 -ORBport 10040 -ORBobjrefstyle url
+% server -f server2 -o server1 -ORBport 10041 -ORBobjrefstyle url
+% client -f server1 -i 5
+
+A similar invocation for the servant locator approach can be done as
+follows (basically just the switches are different):
+
+% server -p server2 -ORBport 10040 -ORBobjrefstyle url
+% server -g server2 -p server1 -ORBport 10041 -ORBobjrefstyle url
+% client -g server1 -i 5
+
+For additional features try using the first server with the POA
+apporach and the second with the servant locator approach:
+
+% server -o server3 -ORBport 10040 -ORBobjrefstyle url  
+% server -g server3 -p server2 -ORBport 10041 -ORBobjrefstyle url
+% server -f server2 -o server1 -ORBport 10043 -ORBobjrefstyle url
+% client -f server1 -i 8
+
+The first two calls will be called on server1, then the location
+forwarding is called on this one and the next two calls are going to
+be called on the second one.  Location forwarding is then called on
+the second one and the last two calls are then done on the thrid
+server.
+
+
+

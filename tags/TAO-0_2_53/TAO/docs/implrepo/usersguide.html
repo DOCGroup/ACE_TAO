@@ -1,0 +1,101 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Implementation Repository User's Guide</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<hr>
+
+<h3>User's Guide</h3>
+
+<p>The Implementation Repository is still kind of in a state of
+flux and will probably change quite a bit this semester. Right
+now it works, although it is still a bit inflexible. Most of this
+document will change, so make sure to get the version of this
+document that is paired with the version of the IR that you are
+using.</p>
+
+<hr>
+
+<h4>What does the server need to do.</h4>
+
+<p>The IR needs information about the server to be able to direct
+to the right place. The current scheme uses a regular persistent
+IOR and replaces the host and port with that of the IR. Then when
+the call comes into the IR, it sends back a LOCATION_FORWARD to
+the client and directs it to the correct server (after starting
+it if necessary).</p>
+
+<p>So the server needs to know the IOR of the IR in order to
+change the host and port in it to that of the IR. The information
+the IR needs to receive from the server is its poa name (which it
+uses as an identifier) and commands used to restart the server.</p>
+
+<hr>
+
+<h4>The IR_Helper class</h4>
+
+<p>Most of the work on the server is done in the IR_Helper class.
+The first thing it expects is to have the implrepo.ior file in
+the current directory. This file contains the IOR of the IR.
+IR_Helper then uses this to register itself. </p>
+
+<p>Here is the small checklist I went through when I used the
+IR_Helper class in Airplane Test. The Cubit-style references are
+just refering to any server that has used the structure of the
+IDL_Cubit test (a lot of TAO's examples are like this).</p>
+
+<dir>
+    <li>Make yourself an IR_Helper object.&nbsp; (If you follow
+        the Cubit-style architecture, this will be a pointer in
+        the Server_i class). </li>
+    <li>After you create the POA, construct the IR_Helper and
+        pass it the relevant information. (Cubit-style: assign a
+        new object within Server_i::init) </li>
+    <li>If you need to register, call register_server ()
+        (Cubit-style: add another option &quot;-r&quot; and have
+        it set a flag.&nbsp; Within Server_i::init call
+        register_server ()) </li>
+    <li>After you create and register your objects, call
+        change_object to redo the references. &nbsp; Then you can
+        output the new IOR.&nbsp; (Cubit-style: still within
+        Server_i::init) </li>
+    <li>Right before ORB::run call notify_startup and afterwards,
+        call notify shutdown (Cubit-style: within Server_i::run) </li>
+</dir>
+
+<hr>
+
+<h4>To use, or not to use the IR</h4>
+
+<p>If you look at the tests, they use -r and -i flags to
+determine how to use the IR. The -i flag turns on the use of the
+Implementation Repository (so the server can be tested without
+the IR). The -r flag is used to register the entry in the IR for
+the server. Note that -r will not work in the example without -i.
+This does require some more work on the server side, so if you
+choose you can just use the IR all the time and only worry about
+-r.</p>
+
+<hr>
+
+<h4>The implrepo.conf file</h4>
+
+<p>Because with the way it is set up, and the current
+over-restrictiveness of the POA locks, the IR requires a special
+configuration file, implrepo.conf, which you need to pass to the
+IR via <font face="Times New Roman"><code>-ORBsvcconf
+implrepo.conf</code></font> flag</p>
+
+<hr>
+
+<p>Last update to this document: $Date$</p>
+
+<p>Back to <a href="index.html">Implementation Repository</a></p>
+</body>
+</html>

@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+if [ -z "$NameServicePort" ]; then
+  NameServicePort=0
+  export NameServicePort
+fi
+
+# The number of messages to send.
+MSG_COUNT=100
+
+# The number of high-priority consumers.
+HP_CONSUMERS="1"
+
+# The number of high-priority suppliers
+HP_SUPPLIERS="1"
+
+# The number of low-priority consumers
+# LP_CONSUMERS="1 5 10 20"
+LP_CONSUMERS="1 10 100 200 300 500 1000"
+
+HP_INTERVAL=250000
+LP_INTERVAL=250000
+
+########
+######## Enable signal handler.
+########
+done=0
+trap 'done=1; \
+      if [ "$NameServicePID" ]; then \
+        kill -1 $NameServicePID; NameServicePID=; \
+      fi; \
+      /bin/rm -f NameService.ior' 0 1 2 3 15
+
+
+for s in $HP_SUPPLIERS; do
+  for c in $LP_CONSUMERS; do
+    ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+        -ORBobjrefstyle url -o NameService.ior >/dev/null 2>&1 &
+    NameServicePID=$!
+    sleep 2
+    while [ ! -f NameService.ior  -a  $done -eq 0 ]; do
+      echo waiting for NameService.ior; sleep 2
+    done
+    NameService=`cat NameService.ior`
+    export NameService
+
+    echo Consumers = $c Suppliers = $s
+#    ./EC_Multiple -ORBport 0 -l ECM3 -s local -d sched \
+#      -h ${s},${s},0,${HP_INTERVAL},${MSG_COUNT},1,2,1,2 \
+#      -w 1,${c},0,${LP_INTERVAL},${MSG_COUNT},3,4,3,4 > \
+#        DYN.LCL.S${s}.C${c}.log 2>&1
+    ./EC_Multiple -ORBport 0 -l ECM3 -s runtime \
+      -h ${s},${s},0,${HP_INTERVAL},${MSG_COUNT},1,2,1,2 \
+      -w 1,${c},0,${LP_INTERVAL},${MSG_COUNT},3,4,3,4 > \
+        DYN.LCL.S${s}.C${c}.log 2>&1
+
+    if [ $done -eq 1 ]; then exit 1; fi
+
+    kill -1 $NameServicePID; NameServicePID=
+  done
+done

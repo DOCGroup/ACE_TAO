@@ -1,0 +1,298 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    params.idl
+//
+// = DESCRIPTION
+//    This IDL description is used to test all the parameter passing modes (in,
+//    inout, out, a0nd return) for a number of IDL data types. The goal is to
+//    verify the correctness of the generated stubs and skeletons, and the
+//    the marshaling engine of TAO.
+//
+// = AUTHORS
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+interface Coffee
+{
+  struct Desc
+  {
+    string name;
+  };
+
+  attribute Desc description; // provides us the coffee object type
+};
+
+//typedef sequence<Coffee> ObjSeq;
+
+interface Param_Test
+{
+  // Add exceptions to each
+
+  // primitive types
+  short test_short (in short s1,
+                    inout short s2,
+                    out short s3);
+
+  // NOTE:  use unsigned long long instead of long long, because
+  // unsigned long long has much better support on platforms that
+  // do not have a native 64 bit int type.
+  unsigned long long test_ulonglong (in unsigned long long s1,
+                                     inout unsigned long long s2,
+                                     out unsigned long long s3);
+
+  // strings unbounded
+  string test_unbounded_string (in string s1,
+                                inout string s2,
+                                out string s3);
+
+  typedef string<128> short_string;
+  short_string test_bounded_string (in short_string s1,
+                                    inout short_string s2,
+                                    out short_string s3);
+
+  // structures (fixed size)
+  struct Fixed_Struct
+  {
+    long l;
+    char c;
+    short s;
+    octet o;
+    float f;
+    boolean b;
+    double d;
+  };
+
+  Fixed_Struct test_fixed_struct (in Fixed_Struct s1,
+                                  inout Fixed_Struct s2,
+                                  out Fixed_Struct s3);
+
+  // = Sequences of long, strings, Var_Struct and Object
+  // references...
+  
+  
+  struct NameComponent
+  {
+    string id;
+    string kind;
+  };
+  
+  struct Step 
+  {
+    NameComponent name;
+    boolean process;
+  };
+
+  typedef sequence<Step> PathSpec;
+
+  PathSpec test_unbounded_struct_sequence (in PathSpec s1,
+					   inout PathSpec s2,
+					   out PathSpec s3);
+  typedef sequence<short> Short_Seq;
+  
+  Short_Seq test_short_sequence (in Short_Seq s1,
+                                 inout Short_Seq s2,
+                                 out Short_Seq s3);
+
+  typedef sequence<short,32> Bounded_Short_Seq;
+  Bounded_Short_Seq test_bounded_short_sequence (in Bounded_Short_Seq s1,
+                                                 inout Bounded_Short_Seq s2,
+                                                 out Bounded_Short_Seq s3);
+
+  typedef sequence<long> Long_Seq;
+  Long_Seq test_long_sequence (in Long_Seq s1,
+                               inout Long_Seq s2,
+                               out Long_Seq s3);
+
+  typedef sequence<long,32> Bounded_Long_Seq;
+  Bounded_Long_Seq test_bounded_long_sequence (in Bounded_Long_Seq s1,
+                                               inout Bounded_Long_Seq s2,
+                                               out Bounded_Long_Seq s3);
+
+  typedef sequence<string> StrSeq;
+  StrSeq test_strseq (in StrSeq s1,
+                      inout StrSeq s2,
+                      out StrSeq s3);
+
+  typedef sequence<string,32> Bounded_StrSeq;
+  Bounded_StrSeq test_bounded_strseq (in Bounded_StrSeq s1,
+                                      inout Bounded_StrSeq s2,
+                                      out Bounded_StrSeq s3);
+
+  typedef sequence<Fixed_Struct> StructSeq;
+  StructSeq test_struct_sequence (in StructSeq s1,
+                                  inout StructSeq s2,
+                                  out StructSeq s3);
+
+  typedef sequence<Fixed_Struct,32> Bounded_StructSeq;
+  Bounded_StructSeq test_bounded_struct_sequence (in Bounded_StructSeq s1,
+                                                  inout Bounded_StructSeq s2,
+                                                  out Bounded_StructSeq s3);
+
+  typedef sequence<Coffee> Coffee_Mix;
+  Coffee_Mix test_coffe_mix (in Coffee_Mix s1,
+                             inout Coffee_Mix s2,
+                             out Coffee_Mix s3);
+
+  typedef sequence<Coffee,32> Bounded_Coffee_Mix;
+  Bounded_Coffee_Mix test_bounded_coffe_mix (in Bounded_Coffee_Mix s1,
+                                             inout Bounded_Coffee_Mix s2,
+                                             out Bounded_Coffee_Mix s3);
+
+  typedef sequence<any> AnySeq;
+  AnySeq test_anyseq (in AnySeq s1,
+                                      inout AnySeq s2,
+                                          out AnySeq s3);
+
+/*  typedef sequence<any, 32> Bounded_AnySeq;
+  Bounded_AnySeq test_bounded_anyseq (in Bounded_AnySeq s1,
+  inout Bounded_AnySeq s2,
+  out Bounded_AnySeq s3);
+*/
+
+  typedef string DUMMY;
+  // variable structures
+  struct Var_Struct
+  {
+    DUMMY dummy1;
+    DUMMY dummy2;
+    StrSeq seq;
+  };
+
+  Var_Struct test_var_struct (in Var_Struct s1,
+                              inout Var_Struct s2,
+                              out Var_Struct s3);
+
+  // nested structs (We reuse the var_struct defn above to make a very
+  // complicated nested structure)
+  struct Nested_Struct
+  {
+    Var_Struct vs;
+  };
+
+  Nested_Struct test_nested_struct (in Nested_Struct s1,
+                                    inout Nested_Struct s2,
+                                    out Nested_Struct s3);
+
+  // object references
+  Coffee make_coffee (); // make a Coffee object
+
+  // test the parameter passing conventions for ObjRefs
+  Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);
+
+  // test typecodes
+  TypeCode test_typecode (in TypeCode t1, inout TypeCode t2, out TypeCode t3);
+
+  // Anys. We try to pump in all kinds of data types thru these Anys
+  any test_any (in any a1, inout any a2, out any a3);
+
+  struct Objref_Struct
+  {
+    long x;
+    Coffee y;
+  };
+  Objref_Struct test_objref_struct (in Objref_Struct t1,
+                                    inout Objref_Struct t2,
+                                    out Objref_Struct t3);
+  // test structures that contain object references.
+
+  // arrays (fixed)
+  const unsigned long DIM1 = 10;
+  typedef long Fixed_Array [DIM1];
+
+  Fixed_Array test_fixed_array (in Fixed_Array l1,
+                                inout Fixed_Array l2,
+                                out Fixed_Array l3);
+
+  // arrays (variable)
+  const unsigned long DIM2 = 5;
+  typedef string Var_Array [DIM2];
+
+  Var_Array test_var_array (in Var_Array v1,
+                            inout Var_Array v2,
+                            out Var_Array v3);
+
+
+  // Just to test report a problem
+  exception Ooops {
+    string reason;
+    unsigned long input;
+  };
+  // To test what happens when an unexpected exception is thrown.
+  exception BadBoy {
+  };
+  unsigned long test_exception (in unsigned long s1,
+				inout unsigned long s2,
+				out unsigned long s3)
+    raises (Ooops);
+
+#if 0
+  // multidimensional arrays (fixed). The following will give rise to a 3
+  // dimensional array. The following will define a 3-dimensional array of size
+  // DIM1 X DIM2 X DIM3
+  const unsigned long DIM3 = 3;
+  typedef Fixed_Array Multdim_Array [DIM2][DIM3];
+
+  Multdim_Array test_multdim_array (in Multdim_Array m1,
+                                    inout Multdim_Array m2,
+                                    out Multdim_Array m3);
+#endif
+
+  // sequence of typecodes
+  //  typedef sequence<TypeCode> TypeCodeSeq;
+  //  TypeCodeSeq test_tcseq (in TypeCodeSeq t1,  inout TypeCodeSeq t2, out TypeCodeSeq t3);
+
+  void shutdown ();
+  // Shutdown the server: this is useful to check for memory leaks,
+  // performance results and in general to verify that orderly
+  // shutdown is possible.
+
+  // test simple objects
+  //  Object test_object (in Object o1, inout Object o2, out Object o3);
+
+  /*
+  long test_long (in long l1,
+                  inout long l2,
+                  out long l3);
+  char test_char (in char c1,
+                  inout char c2,
+                  out char c3);
+  octet test_octet (in octet o1,
+                    inout octet o2,
+                    out octet o3);
+
+  double test_double (in double d1,
+                      inout double d2,
+                      out double d3);
+
+  // strings bounded
+  const unsigned long STRLEN = 10;
+  string<STRLEN> test_bstring (in string<STRLEN> s1,
+                               inout string<STRLEN> s2,
+                               out string<STRLEN> s3);
+
+  // typedefed string
+  typedef string MYSTRING;
+  MYSTRING test_tstring (in MYSTRING s1,
+                         inout MYSTRING s2,
+                         out MYSTRING s3);
+
+
+  // more combinations to follow
+  union U switch (long)
+    {
+    case 0: sequence<char> cseq;
+    case 1: sequence<octet> oseq;
+    case 2: StrSeq sseq;
+    };
+
+  // complex (but meaningless) to test the naming scheme
+  typedef sequence <sequence <sequence <long>, 5>, 10> complex;
+  */
+};
