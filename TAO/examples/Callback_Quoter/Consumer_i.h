@@ -50,12 +50,12 @@ public:
   // Set the ORB pointer.
 
 private:
-    int quit_;
-  // If 1 denotes that the consumer is dead else alive.
- 
   CORBA::ORB_var orb_;
   // ORB pointer.
 
+  int quit_;
+  // If 1 denotes that the consumer is dead else alive.
+ 
   // @@ Please rename to Notifier.
   Notifier_var server_;
   // Smart pointer to the Notifier object.
