@@ -10,7 +10,7 @@
 ACE_RCSID(Latency, client, "$Id$")
 
 const char *ior = "file://test.ior";
-int nthreads = 1;
+
 int niterations = 5;
 
 int sleep_flag = 0;
@@ -81,7 +81,7 @@ public:
   ~Handler (void) {};
 };
 
-class Client : public ACE_Task_Base
+class Client
 {
   // = TITLE
   //     Run the client thread.
@@ -199,41 +199,29 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Create <nthreads> number of ACE_Task objects.
-      Client *clients;
-      ACE_NEW_RETURN (clients, Client[nthreads], 1);
-      for (int i = 0; i != nthreads; ++i)
-        {
-          // Init the client objects.
-          clients[i].set (server.in (), 
-                         niterations, 
-                         orb,
-                         reply_handler.in ());
+      Client client;
 
-          // Activate the Tasks.
-          if (clients[i].activate (THR_NEW_LWP | THR_JOINABLE) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot activate client threads\n"),
-                              1);
-        }
+      // Init the client object.
+      client.set (server.in (), 
+                  niterations, 
+                  orb,
+                  reply_handler.in ());
       
-      ACE_Thread_Manager::instance ()->wait ();
-
-      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-
+      // Start the test.
+      client.svc ();
+      
       ACE_Throughput_Stats throughput;
       char buf[64];
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      for (int j = 0; j != nthreads; ++j)
-        {
-          clients[j].accumulate_into (throughput);
 
-          ACE_OS::sprintf (buf, "Thread[%d]", j);
-          clients[j].dump_stats (buf, gsf);
-        }
+      client.accumulate_into (throughput);
+      
+      ACE_OS::sprintf (buf, "Single Threaded:AMI");
+      client.dump_stats (buf, gsf);
+      
       throughput.dump_results ("Aggregated", gsf);
-
+      
       // server->shutdown (ACE_TRY_ENV);
       // ACE_TRY_CHECK;
     }

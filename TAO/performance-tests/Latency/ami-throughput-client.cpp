@@ -8,7 +8,7 @@
 #include "testS.h"
 
 ACE_RCSID(Latency, client, "$Id$")
-  
+
 const char *ior = "file://test.ior";
 
 size_t niterations = 5;
@@ -17,7 +17,7 @@ int sleep_flag = 0;
 
 int done = 0;
 
-ACE_hrtime_t latency_base;
+ACE_hrtime_t *latency_base_array;
 
 ACE_hrtime_t throughput_base;
 
@@ -69,15 +69,15 @@ public:
     : nreplies_received_ (0),
       orb_ (orb)
     {};
-  
+
   void test_method (CORBA::Environment &)
     {
       // Get the currect time.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
-      
+
       // Take the sample.
       throughput_stats.sample (now - throughput_base,
-                               now - latency_base);
+                               now - latency_base_array [this->nreplies_received_]);
 
       // Inc count.
       this->nreplies_received_++;
@@ -90,7 +90,7 @@ public:
             orb_->shutdown ();
         }
     };
-  
+
   ~Handler (void) {};
 
 private:
@@ -114,9 +114,9 @@ class Reply_Handler_Task : public ACE_Task_Base
 public:
   Reply_Handler_Task (void);
   // Constructor.
-  
+
   void set (Test_ptr server,
-            int niterations, 
+            int niterations,
             CORBA::ORB_ptr orb,
             AMI_Test_Handler_ptr reply_handler);
   // Set the test attributes.
@@ -136,7 +136,7 @@ private:
 
   int niterations_;
   // The number of iterations on each client thread.
-  
+
   CORBA::ORB_ptr orb_;
   // Cache the ORB pointer.
 
@@ -181,7 +181,7 @@ main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       CORBA::Object_var object =
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -202,16 +202,16 @@ main (int argc, char *argv[])
       Handler handler (orb);
       AMI_Test_Handler_var reply_handler = handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Activate POA to handle the call back.
-      
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
-      
+
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -222,11 +222,11 @@ main (int argc, char *argv[])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Initiate the Handler task to receive replies.
-      
+
       Reply_Handler_Task reply_handler_task;
-      
+
       // Init the Reply Handler task.
       reply_handler_task.set (server.in (),
                               niterations,
@@ -243,6 +243,11 @@ main (int argc, char *argv[])
                            "Cannot activate client threads"),
                           1);
 
+      // Allocate memory for latency base array.
+      ACE_NEW_RETURN (latency_base_array,
+                      ACE_hrtime_t [niterations],
+                      1);
+
       // Init global throughput base.
       throughput_base = ACE_OS::gethrtime ();
 
@@ -250,8 +255,8 @@ main (int argc, char *argv[])
       for (size_t i = 0; i < niterations; ++i)
         {
           // Get timestamp.
-          latency_base = ACE_OS::gethrtime ();
-          
+          latency_base_array [i] = ACE_OS::gethrtime ();
+
           // Invoke asynchronous operation.
           server->sendc_test_method (reply_handler.in (),
                                      ACE_TRY_ENV);
@@ -263,22 +268,22 @@ main (int argc, char *argv[])
 
       // Wait for the Reply Handler task.
       ACE_Thread_Manager::instance ()->wait ();
-      
+
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-      
+
       // Output statistics.
-      
+
       ACE_Throughput_Stats throughput;
       char buf[64];
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      
+
       reply_handler_task.accumulate_into (throughput);
 
       ACE_OS::sprintf (buf, "Reply Handler Thread");
       reply_handler_task.dump_stats (buf, gsf);
 
       throughput.dump_results ("Aggregated", gsf);
-      
+
       // server->shutdown (ACE_TRY_ENV);
       // ACE_TRY_CHECK;
     }
@@ -303,8 +308,8 @@ Reply_Handler_Task::Reply_Handler_Task (void)
 }
 
 void
-Reply_Handler_Task::set (Test_ptr server, 
-                         int niterations, 
+Reply_Handler_Task::set (Test_ptr server,
+                         int niterations,
                          CORBA::ORB_ptr orb,
                          AMI_Test_Handler_ptr reply_handler)
 {
