@@ -731,7 +731,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
-  TAO_ObjectReferenceTemplate_Array array_obj_ref_template;
+  TAO::ObjectReferenceTemplate_Array array_obj_ref_template;
 
   CORBA::ULong i = 0;
 
@@ -750,10 +750,16 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       // will be destroyed.
       array_obj_ref_template.size (i + 1);
 
+
+
       array_obj_ref_template[i] = child_at;
 
       child_poa->adapter_state_ = PortableInterceptor::INACTIVE;
 
+      // @@ Johnny, this looks cranky to me. Why would anyone
+      // call adapter_state_changed over and over again. Shouldn't
+      // this be outside the loop? I know this looks busted in the
+      // main trunk too. Grr..
       child_poa->adapter_state_changed (array_obj_ref_template,
                                         child_poa->adapter_state_
                                         ACE_ENV_ARG_PARAMETER);
@@ -4063,54 +4069,58 @@ TAO_ObjectReferenceTemplate_Adapter_Factory *
 TAO_POA::object_reference_template_adapter_factory (void)
 {
   return ACE_Dynamic_Service<TAO_ObjectReferenceTemplate_Adapter_Factory>::instance (
-           TAO_POA::objectreferencetemplate_adapter_factory_name());
+           TAO_POA::ort_adapter_factory_name ());
 }
 
-TAO_ObjectReferenceTemplate_Adapter *
+TAO::ObjectReferenceTemplate_Adapter *
 TAO_POA::object_reference_template_adapter (void)
 {
-  if (this->ort_adapter_ == 0)
-    {
-      // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (0);
+  if (this->ort_adapter_ != 0)
+    return this->ort_adapter_;
 
-      if (this->ort_adapter_ == 0)
-        {
-          ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY
-            {
-              TAO_ObjectReferenceTemplate_Adapter_Factory * ort_ap_factory =
-                this->object_reference_template_adapter_factory();
+  {
+    // Lock access for the duration of this transaction.
+    TAO_POA_GUARD_RETURN (0);
 
-              if (ort_ap_factory)
-                {
-                  this->ort_adapter_ =
-                    ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+    // DCL ..
+    if (this->ort_adapter_ != 0)
+      return this->ort_adapter_;
 
-                  if (ort_adapter_)
-                    {
-                      // Get the full adapter name of this POA
-                      PortableInterceptor::AdapterName *adapter_name =
-                        this->adapter_name_i(ACE_ENV_SINGLE_ARG_PARAMETER)
-                      ACE_TRY_CHECK;
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
+      {
+        TAO_ObjectReferenceTemplate_Adapter_Factory * ort_ap_factory =
+          this->object_reference_template_adapter_factory();
 
-                      ort_adapter_->activate (this->orb_core_.server_id (),
-                                              this->orb_core_.orbid (),
-                                              adapter_name,
-                                              this);
-                    }
-                }
-            }
-          ACE_CATCHANY
-            {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "(%P|%t) Cannot initialize the "
-                                   "object_reference_template_adapter\n");
-            }
-          ACE_ENDTRY;
-        }
-    }
+        if (!ort_ap_factory)
+          return 0;
+
+        this->ort_adapter_ =
+          ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        if (!ort_adapter_)
+          return 0;
+
+        // Get the full adapter name of this POA
+        PortableInterceptor::AdapterName *adapter_name =
+          this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER)
+          ACE_TRY_CHECK;
+
+        this->ort_adapter_->activate (this->orb_core_.server_id (),
+                                      this->orb_core_.orbid (),
+                                      adapter_name,
+                                      this);
+      }
+    ACE_CATCHANY
+      {
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "(%P|%t) Cannot initialize the "
+                             "object_reference_template_adapter\n");
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+  }
 
   return this->ort_adapter_;
 }
@@ -4251,15 +4261,16 @@ TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
 }
 
 void
-TAO_POA::objectreferencetemplate_adapter_factory_name (const char *name)
+TAO_POA::ort_adapter_factory_name (const char *name)
 {
-  TAO_POA_Static_Resources::instance ()->objectreferencetemplate_adapter_factory_name_ = name;
+  TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_ =
+    name;
 }
 
 const char *
-TAO_POA::objectreferencetemplate_adapter_factory_name (void)
+TAO_POA::ort_adapter_factory_name (void)
 {
-  return TAO_POA_Static_Resources::instance ()->objectreferencetemplate_adapter_factory_name_.c_str();
+  return TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_.c_str();
 }
 
 // Initialize instance_ to 0, since this is what we test for in the call
@@ -4292,7 +4303,7 @@ TAO_POA_Static_Resources::instance (void)
 }
 
 TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
-  : objectreferencetemplate_adapter_factory_name_ ("ObjectReferenceTemplate_Adapter_Factory")
+  : ort_adapter_factory_name_ ("ObjectReferenceTemplate_Adapter_Factory")
 {
 }
 

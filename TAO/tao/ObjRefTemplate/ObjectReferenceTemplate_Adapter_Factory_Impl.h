@@ -25,6 +25,8 @@
 #include "ort_export.h"
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
 
+// @@ Johnny, can you please put this in TAO namespace?
+//
 /**
  * @class TAO_ObjectReferenceTemplate_Adapter_Factory_Impl
  *
@@ -41,14 +43,14 @@ public:
   virtual ~TAO_ObjectReferenceTemplate_Adapter_Factory_Impl (void);
 
   /// Create an adapter
-  virtual TAO_ObjectReferenceTemplate_Adapter * create (
+  virtual TAO::ObjectReferenceTemplate_Adapter * create (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy an adapter that is created by this factory
   virtual void destroy (
-      TAO_ObjectReferenceTemplate_Adapter * adapter
+      TAO::ObjectReferenceTemplate_Adapter * adapter
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
