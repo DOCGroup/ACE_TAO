@@ -1,3 +1,14 @@
+Wed Mar  1 16:29:55 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in (ACE_HAS_ALT_CUSERID):
+
+	  Wrapped the test for this macro with
+	  ACE_CONVERT_WARNINGS_TO_ERRORS to for implicit prototype
+	  declaration warnings to be converted to errors when using
+	  gcc < 2.95.2 (including egcs <= 1.1.x).  This fixes a warning on
+	  Red Hat 6.1 systems.  Thanks to Rich Seibel
+	  <seibel_r@ociweb.com> for providing a fix.
+
 Tue Feb 29 23:36:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/README:
