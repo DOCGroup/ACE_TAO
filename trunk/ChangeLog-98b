@@ -1,25 +1,31 @@
+Wed Jun 17 07:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/IOStream_Test.cpp (server): fixed sign of constant
+          used to check for valid double.  Thanks to Mark Kettner
+          <m.kettner@elsevier.nl> for reporting this.
+
 Tue Jun 16 20:29:32 1998  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Added some comments concerning MSVC 5.0 and SP3.
-	  Thanks to Bill Fulton for the excellent detective work.
+        * ACE-INSTALL.html: Added some comments concerning MSVC 5.0 and SP3.
+          Thanks to Bill Fulton for the excellent detective work.
 
 Tue Jun 16 16:08:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe_T.h (class ACE_Timeprobe): Fixed copy constructor
- 	  signature. Thanks to Chuck R. Gehr
- 	  (GehrCR@LOUISVILLE.STORTEK.COM) for pointing this out.
+        * ace/Timeprobe_T.h (class ACE_Timeprobe): Fixed copy constructor
+          signature. Thanks to Chuck R. Gehr
+          (GehrCR@LOUISVILLE.STORTEK.COM) for pointing this out.
 
 Tue Jun 16 16:18:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/FILE_Addr.cpp (operator=): Check to make sure we
- 	  NUL-terminate the memcpy'd filename correctly.  Thanks to Istvan
- 	  Buki <ibuki@fedex.com> for reporting this.
+        * ace/FILE_Addr.cpp (operator=): Check to make sure we
+          NUL-terminate the memcpy'd filename correctly.  Thanks to Istvan
+          Buki <ibuki@fedex.com> for reporting this.
 
 Tue Jun 16 15:43:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Changed to instruct users to #include
- 	  "ace/config-win32.h" instead of "config-win32.h" directly.
-  	  Thanks to Gonzo <gonzo@ing.puc.cl> for noticing this.
+        * ACE-INSTALL.html: Changed to instruct users to #include
+          "ace/config-win32.h" instead of "config-win32.h" directly.
+          Thanks to Gonzo <gonzo@ing.puc.cl> for noticing this.
 
 Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -32,7 +38,7 @@ Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
           and ACE_U_LongLong need an explicit narrowing to 32 bits.  This
           macro provides a consistent way to do that on all platforms.
 
-	* ace/Asynch_IO.*: added trailing $ to CVS keyword string.
+        * ace/Asynch_IO.*: added trailing $ to CVS keyword string.
 
         * ace/Asynch_IO.cpp: fixed so that it will compile with Sun CC
           on Solaris 2.6.  Thanks to Frederic ANDRES <andres@rd.nacsis.ac.jp>
