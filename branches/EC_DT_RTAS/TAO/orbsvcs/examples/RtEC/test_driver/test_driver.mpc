@@ -1,4 +1,4 @@
-project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, kokyu, acexml {
+project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, rgkokyu, acexml {
   sharedname    = Test_Driver
 
   Source_Files {
@@ -18,11 +18,12 @@ project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, kokyu, ace
   }
 }
 
-project(test_driver_app): orbsvcsexe, rtevent, rtsched, rtschedevent, kokyu, acexml {
+project(test_driver_app): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyuevent, rgkokyu, acexml {
   exename = Test
   after += test_driver_lib
   libs += wrappers Test_Driver
   libpaths += .
+  includes += $(TAO_ROOT)/orbsvcs
 
   Source_Files {
     Test.cpp
