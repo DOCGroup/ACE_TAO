@@ -142,6 +142,15 @@ ACE_U_LongLong::operator% (const ACE_UINT32 n) const
   return ((0xffffffff - n + 1)  % n * hi_  +  lo_ % n) % n;
 }
 
+ACE_INLINE double
+ACE_U_LongLong::operator/ (const double n) const
+{
+  // See the derivation above in operator/ (const ACE_UINT32).
+
+  return ((double) 0xffffffffu - n + 1.0) / n * hi_  +
+         (double) hi_  +  (double) lo_ / n;
+}
+
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator+= (const ACE_U_LongLong &n)
 {
