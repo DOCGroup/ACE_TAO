@@ -31,12 +31,12 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Synch.h"
 
-class Acceptor_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
+class Request_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
   // = TITLE
   //   This class is the Svc_Handler used by <Acceptor>.
 public:
-  Acceptor_Handler (ACE_Thread_Manager *tm = 0);
+  Request_Handler (ACE_Thread_Manager *tm = 0);
   // The default constructor makes sure the right reactor is used.
 
 protected:
