@@ -32,12 +32,6 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* VME_DRIVER */
 
-// Size of the string for holding the stringified object reference.
-// @@ Sumedh, what is the rationale for a string of size 30?  Can you use
-// a more general parameter instead?  Perhaps this needs to go into
-// TAO somewhere?
-const u_int OBJECT_STRING_SIZE = 30;
-
 #if !defined (ACE_HAS_THREADS)
 class NOOP_ACE_Barrier
 {
