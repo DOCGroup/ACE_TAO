@@ -1385,6 +1385,19 @@ ACE_OS::strcpy (char *s, const char *t)
   return ::strcpy (s, t);
 }
 
+ACE_INLINE char *
+ACE_OS::strecpy (char *s, const char *t)
+{
+  //  ACE_TRACE ("ACE_OS::strecpy");
+  register char *dscan = s;
+  register const char *sscan = t;
+
+  while ((*dscan++ = *sscan++) != '\0')
+    continue;
+
+  return dscan;
+}
+
 ACE_INLINE int
 ACE_OS::to_lower (int c)
 {
@@ -9368,6 +9381,19 @@ ACE_INLINE int
 ACE_OS::atoi (const wchar_t *s)
 {
   return ::_wtoi (s);
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
+{
+  // ACE_TRACE ("ACE_OS::strecpy");
+  register wchar_t *dscan = s;
+  register const wchar_t *sscan = t;
+
+  while ((*dscan++ = *sscan++) != '\0')
+    continue;
+
+  return dscan;
 }
 
 ACE_INLINE wchar_t *
