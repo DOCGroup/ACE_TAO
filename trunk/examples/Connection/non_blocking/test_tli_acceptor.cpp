@@ -23,6 +23,11 @@ main (int argc, char *argv[])
 
   return peer_acceptor.svc ();
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class IPC_Server<SVC_HANDLER, ACE_TLI_ACCEPTOR>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #else
 int
 main (void)
@@ -30,4 +35,3 @@ main (void)
   ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support TLI\n"), 1);
 }
 #endif /* ACE_HAS_TLI */
-
