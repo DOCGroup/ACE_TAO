@@ -29,24 +29,24 @@ public:
   // = Public Interfaces
   //
 
-  JXH_List() : current_(0), count_(0), size_(256)
+  JXH_List() : count_(0), current_(0), size_(256)
   { theList_ = new JXH_ListItem *[size_]; }
 
   //  JXH_List(long size) : current_(0), count_(0), size_(size)
   //  { theList_ = new JXH_ListItem *[size_]; }
 
-  JXH_List(unsigned long size) : current_(0), count_(0), size_(size)
+  JXH_List(unsigned long size) : count_(0), current_(0), size_(size)
   { theList_ = new JXH_ListItem *[size_]; }
 
   ~JXH_List()
-  { for (int i = 0; i < count_; i++) delete theList_[i];
+  { for (unsigned long i = 0; i < count_; i++) delete theList_[i];
     delete [] theList_; }
 
   int Insert(const ItemType & item)
   { if (IsFull()) {
       JXH_ListItem ** alist = new JXH_ListItem *[2*size_];
       if (alist == 0) return 0;
-      for (int i = 0; i < count_; i++) alist[i] = theList_[i];
+      for (unsigned long i = 0; i < count_; i++) alist[i] = theList_[i];
       delete [] theList_;
       theList_ = alist;
       size_ = 2*size_;
@@ -104,7 +104,7 @@ protected:
   //
 
   void Dump()
-  { for (int i = 0; i < count_; i++)
+  { for (unsigned long i = 0; i < count_; i++)
       cerr << "[" << i << "] "
            << theList_[i]->item_ << endl; }
 
