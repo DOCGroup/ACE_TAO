@@ -17,7 +17,7 @@ LDFLAGS += -L$(ACE_ROOT)/bin -L$(TAO_ROOT)/tao
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
 BIN = client server
-DIRS=On_Demand
+DIRS=On_Demand Collocation Policy
 FILES = Smart_Proxy_Impl
 
 SRC = $(addsuffix .cpp, $(BIN) $(FILES)) $(IDL_SRC)
