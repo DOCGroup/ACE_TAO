@@ -647,7 +647,6 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
                                    sender);
             if (n != sizeof (credit))
               ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input - Credit\n"),0);
-            this->credit_num_ += credit.cred_num;
             break;
           }
         case flowProtocol::start:
