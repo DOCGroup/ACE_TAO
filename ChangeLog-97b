@@ -1,3 +1,10 @@
+Thu Oct 23 15:30:17 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Timer_Hash_T.h, Timer_Hash.cpp, Timer_Heap_T.h, Timer_Heap.cpp,
+	  Timer_List_T.h, Timer_List.cpp, Timer_Queue_T.h, Timer_Queue.cpp,
+	  Timer_Wheel_T.h, Timer_Wheel.cpp: Replaced all occurences of
+	  ACE_HPUX_BROKEN_TEMPLATES with ACE_HAS_BROKEN_HPUX_TEMPLATES.
+
 Thu Oct 23 11:20:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/ACE.cpp (max_handles): If FD_SETSIZE is enabled return
