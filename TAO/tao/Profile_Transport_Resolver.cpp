@@ -11,6 +11,7 @@
 #include "Connector_Registry.h"
 #include "Transport_Connector.h"
 #include "Endpoint.h"
+#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Profile_Transport_Resolver.inl"
@@ -97,7 +98,7 @@ namespace TAO
       {
         ACE_THROW (CORBA::INTERNAL (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            0,
                             EINVAL),
                           CORBA::COMPLETED_NO));
       }
@@ -127,7 +128,7 @@ namespace TAO
       {
         ACE_THROW_RETURN (CORBA::INTERNAL (
                             CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
+                              0,
                               EINVAL),
                             CORBA::COMPLETED_NO),
                           false);
@@ -207,7 +208,7 @@ namespace TAO
                       CORBA::PolicyList (0),
                       CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   }

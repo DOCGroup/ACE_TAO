@@ -46,7 +46,7 @@ template<typename S_ptr, typename S_traits>
 CORBA::Boolean
 TAO::Inout_Object_Argument_T<S_ptr,S_traits>::demarshal (TAO_InputCDR & cdr)
 {
-  S_traits::tao_release (this->x_);
+  S_traits::release (this->x_);
   return cdr >> this->x_;
 }
 

@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

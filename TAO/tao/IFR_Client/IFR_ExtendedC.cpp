@@ -518,7 +518,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::FixedDef_ptr
-TAO::Objref_Traits<CORBA::FixedDef>::tao_duplicate (
+TAO::Objref_Traits<CORBA::FixedDef>::duplicate (
     CORBA::FixedDef_ptr p
   )
 {
@@ -527,7 +527,7 @@ TAO::Objref_Traits<CORBA::FixedDef>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::FixedDef>::tao_release (
+TAO::Objref_Traits<CORBA::FixedDef>::release (
     CORBA::FixedDef_ptr p
   )
 {
@@ -536,14 +536,14 @@ TAO::Objref_Traits<CORBA::FixedDef>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::FixedDef_ptr
-TAO::Objref_Traits<CORBA::FixedDef>::tao_nil (void)
+TAO::Objref_Traits<CORBA::FixedDef>::nil (void)
 {
   return CORBA::FixedDef::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::FixedDef>::tao_marshal (
+TAO::Objref_Traits<CORBA::FixedDef>::marshal (
     CORBA::FixedDef_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -917,7 +917,7 @@ void CORBA::ValueMemberSeq::_tao_any_destructor (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ValueMemberDef_ptr
-TAO::Objref_Traits<CORBA::ValueMemberDef>::tao_duplicate (
+TAO::Objref_Traits<CORBA::ValueMemberDef>::duplicate (
     CORBA::ValueMemberDef_ptr p
   )
 {
@@ -926,7 +926,7 @@ TAO::Objref_Traits<CORBA::ValueMemberDef>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::ValueMemberDef>::tao_release (
+TAO::Objref_Traits<CORBA::ValueMemberDef>::release (
     CORBA::ValueMemberDef_ptr p
   )
 {
@@ -935,14 +935,14 @@ TAO::Objref_Traits<CORBA::ValueMemberDef>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ValueMemberDef_ptr
-TAO::Objref_Traits<CORBA::ValueMemberDef>::tao_nil (void)
+TAO::Objref_Traits<CORBA::ValueMemberDef>::nil (void)
 {
   return CORBA::ValueMemberDef::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::ValueMemberDef>::tao_marshal (
+TAO::Objref_Traits<CORBA::ValueMemberDef>::marshal (
     CORBA::ValueMemberDef_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1292,7 +1292,7 @@ CORBA::ValueMemberDef::marshal (TAO_OutputCDR &cdr)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ValueDef_ptr
-TAO::Objref_Traits<CORBA::ValueDef>::tao_duplicate (
+TAO::Objref_Traits<CORBA::ValueDef>::duplicate (
     CORBA::ValueDef_ptr p
   )
 {
@@ -1301,7 +1301,7 @@ TAO::Objref_Traits<CORBA::ValueDef>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::ValueDef>::tao_release (
+TAO::Objref_Traits<CORBA::ValueDef>::release (
     CORBA::ValueDef_ptr p
   )
 {
@@ -1310,14 +1310,14 @@ TAO::Objref_Traits<CORBA::ValueDef>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ValueDef_ptr
-TAO::Objref_Traits<CORBA::ValueDef>::tao_nil (void)
+TAO::Objref_Traits<CORBA::ValueDef>::nil (void)
 {
   return CORBA::ValueDef::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::ValueDef>::tao_marshal (
+TAO::Objref_Traits<CORBA::ValueDef>::marshal (
     CORBA::ValueDef_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2353,7 +2353,7 @@ CORBA::ValueDescription::_tao_any_destructor (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ExtValueDef_ptr
-TAO::Objref_Traits<CORBA::ExtValueDef>::tao_duplicate (
+TAO::Objref_Traits<CORBA::ExtValueDef>::duplicate (
     CORBA::ExtValueDef_ptr p
   )
 {
@@ -2362,7 +2362,7 @@ TAO::Objref_Traits<CORBA::ExtValueDef>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::ExtValueDef>::tao_release (
+TAO::Objref_Traits<CORBA::ExtValueDef>::release (
     CORBA::ExtValueDef_ptr p
   )
 {
@@ -2371,14 +2371,14 @@ TAO::Objref_Traits<CORBA::ExtValueDef>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ExtValueDef_ptr
-TAO::Objref_Traits<CORBA::ExtValueDef>::tao_nil (void)
+TAO::Objref_Traits<CORBA::ExtValueDef>::nil (void)
 {
   return CORBA::ExtValueDef::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::ExtValueDef>::tao_marshal (
+TAO::Objref_Traits<CORBA::ExtValueDef>::marshal (
     CORBA::ExtValueDef_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2731,7 +2731,7 @@ CORBA::ExtValueDef::marshal (TAO_OutputCDR &cdr)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ValueBoxDef_ptr
-TAO::Objref_Traits<CORBA::ValueBoxDef>::tao_duplicate (
+TAO::Objref_Traits<CORBA::ValueBoxDef>::duplicate (
     CORBA::ValueBoxDef_ptr p
   )
 {
@@ -2740,7 +2740,7 @@ TAO::Objref_Traits<CORBA::ValueBoxDef>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::ValueBoxDef>::tao_release (
+TAO::Objref_Traits<CORBA::ValueBoxDef>::release (
     CORBA::ValueBoxDef_ptr p
   )
 {
@@ -2749,14 +2749,14 @@ TAO::Objref_Traits<CORBA::ValueBoxDef>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ValueBoxDef_ptr
-TAO::Objref_Traits<CORBA::ValueBoxDef>::tao_nil (void)
+TAO::Objref_Traits<CORBA::ValueBoxDef>::nil (void)
 {
   return CORBA::ValueBoxDef::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::ValueBoxDef>::tao_marshal (
+TAO::Objref_Traits<CORBA::ValueBoxDef>::marshal (
     CORBA::ValueBoxDef_ptr p,
     TAO_OutputCDR & cdr
   )

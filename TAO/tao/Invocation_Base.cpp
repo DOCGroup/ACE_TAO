@@ -4,6 +4,7 @@
 #include "ORB_Core.h"
 #include "Typecode.h"
 #include "DynamicC.h"
+#include "SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "RequestInfo_Util.h"

@@ -6,6 +6,7 @@ ACE_RCSID (DynamicInterface,
 
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ExceptionList.inl"

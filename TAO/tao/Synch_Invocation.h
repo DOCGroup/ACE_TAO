@@ -20,18 +20,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 
 class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;
 class TAO_InputCDR;
 class ACE_Time_Value;
 class TAO_Bind_Dispatcher_Guard;
-
-namespace CORBA
-{
-  class SystemException;
-}
 
 namespace TAO
 {

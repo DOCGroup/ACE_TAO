@@ -79,7 +79,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ThreadAction_ptr
-TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_duplicate (
+TAO::Objref_Traits<RTScheduling::ThreadAction>::duplicate (
     RTScheduling::ThreadAction_ptr p
   )
 {
@@ -88,7 +88,7 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_release (
+TAO::Objref_Traits<RTScheduling::ThreadAction>::release (
     RTScheduling::ThreadAction_ptr p
   )
 {
@@ -97,14 +97,14 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ThreadAction_ptr
-TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_nil (void)
+TAO::Objref_Traits<RTScheduling::ThreadAction>::nil (void)
 {
   return RTScheduling::ThreadAction::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_marshal (
+TAO::Objref_Traits<RTScheduling::ThreadAction>::marshal (
     RTScheduling::ThreadAction_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -253,7 +253,7 @@ namespace RTScheduling
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::DistributableThread_ptr
-TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_duplicate (
+TAO::Objref_Traits<RTScheduling::DistributableThread>::duplicate (
     RTScheduling::DistributableThread_ptr p
   )
 {
@@ -262,7 +262,7 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_release (
+TAO::Objref_Traits<RTScheduling::DistributableThread>::release (
     RTScheduling::DistributableThread_ptr p
   )
 {
@@ -271,14 +271,14 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::DistributableThread_ptr
-TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_nil (void)
+TAO::Objref_Traits<RTScheduling::DistributableThread>::nil (void)
 {
   return RTScheduling::DistributableThread::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_marshal (
+TAO::Objref_Traits<RTScheduling::DistributableThread>::marshal (
     RTScheduling::DistributableThread_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -475,7 +475,7 @@ namespace RTScheduling
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Current_ptr
-TAO::Objref_Traits<RTScheduling::Current>::tao_duplicate (
+TAO::Objref_Traits<RTScheduling::Current>::duplicate (
     RTScheduling::Current_ptr p
   )
 {
@@ -484,7 +484,7 @@ TAO::Objref_Traits<RTScheduling::Current>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTScheduling::Current>::tao_release (
+TAO::Objref_Traits<RTScheduling::Current>::release (
     RTScheduling::Current_ptr p
   )
 {
@@ -493,14 +493,14 @@ TAO::Objref_Traits<RTScheduling::Current>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Current_ptr
-TAO::Objref_Traits<RTScheduling::Current>::tao_nil (void)
+TAO::Objref_Traits<RTScheduling::Current>::nil (void)
 {
   return RTScheduling::Current::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTScheduling::Current>::tao_marshal (
+TAO::Objref_Traits<RTScheduling::Current>::marshal (
     RTScheduling::Current_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -957,7 +957,7 @@ namespace RTScheduling
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ResourceManager_ptr
-TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_duplicate (
+TAO::Objref_Traits<RTScheduling::ResourceManager>::duplicate (
     RTScheduling::ResourceManager_ptr p
   )
 {
@@ -966,7 +966,7 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_release (
+TAO::Objref_Traits<RTScheduling::ResourceManager>::release (
     RTScheduling::ResourceManager_ptr p
   )
 {
@@ -975,14 +975,14 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ResourceManager_ptr
-TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_nil (void)
+TAO::Objref_Traits<RTScheduling::ResourceManager>::nil (void)
 {
   return RTScheduling::ResourceManager::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_marshal (
+TAO::Objref_Traits<RTScheduling::ResourceManager>::marshal (
     RTScheduling::ResourceManager_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1136,7 +1136,7 @@ namespace RTScheduling
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Scheduler_ptr
-TAO::Objref_Traits<RTScheduling::Scheduler>::tao_duplicate (
+TAO::Objref_Traits<RTScheduling::Scheduler>::duplicate (
     RTScheduling::Scheduler_ptr p
   )
 {
@@ -1145,7 +1145,7 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTScheduling::Scheduler>::tao_release (
+TAO::Objref_Traits<RTScheduling::Scheduler>::release (
     RTScheduling::Scheduler_ptr p
   )
 {
@@ -1154,14 +1154,14 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Scheduler_ptr
-TAO::Objref_Traits<RTScheduling::Scheduler>::tao_nil (void)
+TAO::Objref_Traits<RTScheduling::Scheduler>::nil (void)
 {
   return RTScheduling::Scheduler::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTScheduling::Scheduler>::tao_marshal (
+TAO::Objref_Traits<RTScheduling::Scheduler>::marshal (
     RTScheduling::Scheduler_ptr p,
     TAO_OutputCDR & cdr
   )

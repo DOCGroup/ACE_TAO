@@ -363,15 +363,15 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       if (bt_is_defined)
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << bt->name () << "::";
+              << bt->name () << "::_";
         }
       else
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+              << "TAO::Objref_Traits<" << node->name () << ">::";
         }
 
-  *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
+  *os << "duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -460,15 +460,15 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       if (bt_is_defined)
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << bt->name () << "::";
+              << bt->name () << "::_";
         }
       else
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+              << "TAO::Objref_Traits<" << node->name () << ">::";
         }
 
-  *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
+  *os << "duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -690,7 +690,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name () << " (";
-  
+
 
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
@@ -712,7 +712,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
           << bt->name ()
           << " &";
     }
-  else 
+  else
     {
       *os << bt->name ();
     }
@@ -762,7 +762,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         break;
       case AST_PredefinedType::PT_value:
         *os << "CORBA::add_ref (val);" << be_nl
-            << "this->u_." << ub->local_name () 
+            << "this->u_." << ub->local_name ()
             << "_ = val;" << be_uidt_nl;
 
         break;
@@ -900,7 +900,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 
   // (1) Set from a const.
   *os << "// Accessor to set the member." << be_nl
-      << "ACE_INLINE" << be_nl 
+      << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name ()
       << " (const " << bt->name () << " &val)" << be_nl

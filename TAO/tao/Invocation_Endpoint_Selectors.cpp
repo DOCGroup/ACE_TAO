@@ -6,6 +6,7 @@
 #include "Base_Transport_Property.h"
 #include "Profile_Transport_Resolver.h"
 #include "ORB_Constants.h"
+#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Invocation_Endpoint_Selectors.i"

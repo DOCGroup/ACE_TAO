@@ -11,14 +11,17 @@
 #include "LF_Strategy.h"
 #include "Request_Dispatcher.h"
 #include "Codeset_Manager.h"
+#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            GIOP_Message_Base,
            "$Id$")
+
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
@@ -903,7 +906,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       // Throw an exception if the
       if (parse_error != 0)
-        ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_TRY_THROW (CORBA::MARSHAL (0,
                                        CORBA::COMPLETED_NO));
       request_id = request.request_id ();
 
@@ -1094,7 +1097,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+          ACE_TRY_THROW (CORBA::MARSHAL (0,
                                          CORBA::COMPLETED_NO));
         }
 
@@ -1123,7 +1126,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+          ACE_TRY_THROW (CORBA::MARSHAL (0,
                                          CORBA::COMPLETED_NO));
         }
 

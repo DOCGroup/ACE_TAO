@@ -224,12 +224,12 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Valuetype_Export Value_Traits<CORBA::ValueBase>
   {
-    static void tao_add_ref (CORBA::ValueBase *);
-    static void tao_remove_ref (CORBA::ValueBase *);
+    static void add_ref (CORBA::ValueBase *);
+    static void remove_ref (CORBA::ValueBase *);
 
     // For INOUT value type arguments, so they can use the same set
     // of arg classes as interfaces.
-    static void tao_release (CORBA::ValueBase *);
+    static void release (CORBA::ValueBase *);
   };
 }
 

@@ -6,6 +6,7 @@
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
@@ -312,7 +313,7 @@ TAO_MProfile::create_policy_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->policy_list_,
                     CORBA::PolicyList,
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (0,
                                       CORBA::COMPLETED_NO)
                     );
 }
@@ -352,7 +353,7 @@ TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::PolicyList *ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     CORBA::PolicyList (*this->policy_list_),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                    CORBA::NO_MEMORY (0,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 

@@ -5,13 +5,14 @@
 
 #include "NVList.h"
 
+#include "tao/SystemException.h"
 #include "tao/BoundsC.h"
-#include "tao/debug.h"
 #include "tao/Typecode.h"
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Any_Impl.h"
 #include "tao/CDR.h"
+#include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -243,7 +244,7 @@ CORBA::NVList::add_element (CORBA::Flags flags
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
                         CORBA::NamedValue::_nil ());
     }
 

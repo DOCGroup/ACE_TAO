@@ -15,6 +15,7 @@
 #include "Sync_Strategies.h"
 #include "debug.h"
 #include "Policy_Manager.h"
+#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Stub.i"

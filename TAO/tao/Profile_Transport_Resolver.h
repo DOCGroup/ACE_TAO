@@ -23,7 +23,7 @@
 
 #include "ace/CORBA_macros.h"
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 
 class TAO_Stub;
 class TAO_Profile;
@@ -34,7 +34,6 @@ class TAO_Transport_Descriptor_Interface;
 
 namespace CORBA
 {
-  class SystemException;
   class Environment;
   class Object;
   class PolicyList;

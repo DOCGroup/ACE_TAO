@@ -1048,14 +1048,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::ServerObject>
   {
-    static ImplementationRepository::ServerObject_ptr tao_duplicate (
+    static ImplementationRepository::ServerObject_ptr duplicate (
         ImplementationRepository::ServerObject_ptr
       );
-    static void tao_release (
+    static void release (
         ImplementationRepository::ServerObject_ptr
       );
-    static ImplementationRepository::ServerObject_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static ImplementationRepository::ServerObject_ptr nil (void);
+    static CORBA::Boolean marshal (
         ImplementationRepository::ServerObject_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1069,14 +1069,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::ServerInformationIterator>
   {
-    static ImplementationRepository::ServerInformationIterator_ptr tao_duplicate (
+    static ImplementationRepository::ServerInformationIterator_ptr duplicate (
         ImplementationRepository::ServerInformationIterator_ptr
       );
-    static void tao_release (
+    static void release (
         ImplementationRepository::ServerInformationIterator_ptr
       );
-    static ImplementationRepository::ServerInformationIterator_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static ImplementationRepository::ServerInformationIterator_ptr nil (void);
+    static CORBA::Boolean marshal (
         ImplementationRepository::ServerInformationIterator_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1090,14 +1090,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits<ImplementationRepository::Administration>
   {
-    static ImplementationRepository::Administration_ptr tao_duplicate (
+    static ImplementationRepository::Administration_ptr duplicate (
         ImplementationRepository::Administration_ptr
       );
-    static void tao_release (
+    static void release (
         ImplementationRepository::Administration_ptr
       );
-    static ImplementationRepository::Administration_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static ImplementationRepository::Administration_ptr nil (void);
+    static CORBA::Boolean marshal (
         ImplementationRepository::Administration_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1309,4 +1309,3 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, Implementat
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

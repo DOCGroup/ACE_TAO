@@ -8,6 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -592,7 +593,7 @@ TAO_Profile::verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL)
       //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
-                      TAO_DEFAULT_MINOR_CODE,
+                      0,
                       EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -623,7 +624,7 @@ TAO_Profile::verify_profile_version (ACE_ENV_SINGLE_ARG_DECL)
       //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     0,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -658,7 +659,7 @@ TAO_Profile::addressing_mode (CORBA::Short addr
     default:
       ACE_THROW (CORBA::BAD_PARAM (
              CORBA::SystemException::_tao_minor_code (
-               TAO_DEFAULT_MINOR_CODE,
+               0,
                EINVAL),
              CORBA::COMPLETED_NO));
     }
@@ -672,7 +673,7 @@ TAO_Profile::parse_string (const char *ior
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     0,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }
@@ -704,7 +705,7 @@ TAO_Profile::parse_string (const char *ior
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
+                     0,
                      EINVAL),
                    CORBA::COMPLETED_NO));
     }

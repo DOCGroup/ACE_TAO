@@ -60,65 +60,65 @@ static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f4578), 
-  ACE_NTOHL (0x63657074), 
-  ACE_NTOHL (0x696f6e48), 
-  ACE_NTOHL (0x6f6c6465), 
-  ACE_NTOHL (0x723a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f4578),
+  ACE_NTOHL (0x63657074),
+  ACE_NTOHL (0x696f6e48),
+  ACE_NTOHL (0x6f6c6465),
+  ACE_NTOHL (0x723a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/ExceptionHolder:1.0
     16,
-  ACE_NTOHL (0x45786365), 
-  ACE_NTOHL (0x7074696f), 
-  ACE_NTOHL (0x6e486f6c), 
+  ACE_NTOHL (0x45786365),
+  ACE_NTOHL (0x7074696f),
+  ACE_NTOHL (0x6e486f6c),
   ACE_NTOHL (0x64657200),  // name = ExceptionHolder
     0, // value modifier
   CORBA::tk_null, // no stateful base valuetype
 
 3, // member count
     20,
-  ACE_NTOHL (0x69735f73), 
-  ACE_NTOHL (0x79737465), 
-  ACE_NTOHL (0x6d5f6578), 
-  ACE_NTOHL (0x63657074), 
+  ACE_NTOHL (0x69735f73),
+  ACE_NTOHL (0x79737465),
+  ACE_NTOHL (0x6d5f6578),
+  ACE_NTOHL (0x63657074),
   ACE_NTOHL (0x696f6e00),  // name = is_system_exception
     CORBA::tk_boolean,
 
   1, // data member visibility marker
 
   11,
-  ACE_NTOHL (0x62797465), 
-  ACE_NTOHL (0x5f6f7264), 
+  ACE_NTOHL (0x62797465),
+  ACE_NTOHL (0x5f6f7264),
   ACE_NTOHL (0x65720000),  // name = byte_order
     CORBA::tk_boolean,
 
   1, // data member visibility marker
 
   20,
-  ACE_NTOHL (0x6d617273), 
-  ACE_NTOHL (0x68616c65), 
-  ACE_NTOHL (0x645f6578), 
-  ACE_NTOHL (0x63657074), 
+  ACE_NTOHL (0x6d617273),
+  ACE_NTOHL (0x68616c65),
+  ACE_NTOHL (0x645f6578),
+  ACE_NTOHL (0x63657074),
   ACE_NTOHL (0x696f6e00),  // name = marshaled_exception
     CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f63), 
-    ACE_NTOHL (0x74657453), 
-    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f63),
+    ACE_NTOHL (0x74657453),
+    ACE_NTOHL (0x65713a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
         9,
-    ACE_NTOHL (0x4f637465), 
-    ACE_NTOHL (0x74536571), 
+    ACE_NTOHL (0x4f637465),
+    ACE_NTOHL (0x74536571),
     ACE_NTOHL (0x0),  // name = OctetSeq
         CORBA::tk_sequence, // typecode kind
     12, // encapsulation length
@@ -149,7 +149,7 @@ namespace Messaging
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Value_Traits<Messaging::ExceptionHolder>::tao_add_ref (
     Messaging::ExceptionHolder * p
@@ -158,7 +158,7 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::tao_add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Value_Traits<Messaging::ExceptionHolder>::tao_remove_ref (
     Messaging::ExceptionHolder * p
@@ -167,9 +167,9 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::tao_remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Value_Traits<Messaging::ExceptionHolder>::tao_release (
+TAO::Value_Traits<Messaging::ExceptionHolder>::release (
     Messaging::ExceptionHolder * p
   )
 {
@@ -183,7 +183,7 @@ Messaging::ExceptionHolder::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-  
+
   return dynamic_cast< ::Messaging::ExceptionHolder * > (v);
 }
 
@@ -228,29 +228,29 @@ CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
         base,
         ExceptionHolder::_tao_obv_static_repository_id ()
       );
-  
+
   if (retval == 0)
     {
       return 0;
     }
-  
+
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-      
+
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-      
+
       retval = base->_tao_unmarshal_v (strm);
-      
+
       if (retval == 0)
         {
           return 0;
         }
     }
-  
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ExceptionHolder::_downcast (base);
@@ -268,7 +268,7 @@ Messaging::ExceptionHolder_init::~ExceptionHolder_init (void)
 {
 }
 
-const char* 
+const char*
 Messaging::ExceptionHolder_init::tao_repository_id (void)
 {
   return ::Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
@@ -293,7 +293,7 @@ Messaging::ExceptionHolder_init::create_for_unmarshal (void)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyHandler_ptr
-TAO::Objref_Traits<Messaging::ReplyHandler>::tao_duplicate (
+TAO::Objref_Traits<Messaging::ReplyHandler>::duplicate (
     Messaging::ReplyHandler_ptr p
   )
 {
@@ -302,7 +302,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<Messaging::ReplyHandler>::tao_release (
+TAO::Objref_Traits<Messaging::ReplyHandler>::release (
     Messaging::ReplyHandler_ptr p
   )
 {
@@ -311,14 +311,14 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyHandler_ptr
-TAO::Objref_Traits<Messaging::ReplyHandler>::tao_nil (void)
+TAO::Objref_Traits<Messaging::ReplyHandler>::nil (void)
 {
   return Messaging::ReplyHandler::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<Messaging::ReplyHandler>::tao_marshal (
+TAO::Objref_Traits<Messaging::ReplyHandler>::marshal (
     Messaging::ReplyHandler_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -327,7 +327,7 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -351,7 +351,7 @@ Messaging::ReplyHandler::Messaging_ReplyHandler_setup_collocation ()
 Messaging::ReplyHandler::~ReplyHandler (void)
 {}
 
-void 
+void
 Messaging::ReplyHandler::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyHandler *_tao_tmp_pointer =
@@ -396,7 +396,7 @@ Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -446,20 +446,20 @@ static const CORBA::Long _oc_Messaging_ReplyHandler[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x706c7948), 
-  ACE_NTOHL (0x616e646c), 
-  ACE_NTOHL (0x65723a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x706c7948),
+  ACE_NTOHL (0x616e646c),
+  ACE_NTOHL (0x65723a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/Messaging/ReplyHandler:1.0
     13,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x7948616e), 
-  ACE_NTOHL (0x646c6572), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x7948616e),
+  ACE_NTOHL (0x646c6572),
   ACE_NTOHL (0x0),  // name = ReplyHandler
   };
 
@@ -762,21 +762,21 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-  
+
   if ((strm >> obj.inout ()) == 0)
     {
       return 0;
     }
-  
+
   typedef ::Messaging::ReplyHandler RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 
@@ -793,13 +793,13 @@ CORBA::Boolean operator>> (
   template class
     TAO_Value_Var_T<
         Messaging::ExceptionHolder
-        
+
       >;
-  
+
   template class
     TAO_Value_Out_T<
         Messaging::ExceptionHolder
-        
+
       >;
 
   template class
@@ -816,7 +816,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         Messaging::ReplyHandler
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyHandler
@@ -842,13 +842,13 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         Messaging::ExceptionHolder \
-        
+
       >
-  
+
 # pragma instantiate \
     TAO_Value_Out_T< \
         Messaging::ExceptionHolder \
-        
+
       >
 
 # pragma instantiate \
@@ -865,7 +865,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         Messaging::ReplyHandler
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyHandler
@@ -881,5 +881,4 @@ CORBA::Boolean operator>> (
         Messaging::ReplyHandler \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

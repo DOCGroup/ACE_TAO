@@ -20,14 +20,14 @@ TAO_Array_Var_Base_T<T,T_slice,TAG>::TAO_Array_Var_Base_T (
     const TAO_Array_Var_Base_T & p
   )
 {
-  this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::tao_dup (p.in ());
+  this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::dup (p.in ());
 }
 
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Var_Base_T<T,T_slice,TAG>::~TAO_Array_Var_Base_T (void)
 {
-  TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
+  TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
 }
 
 template<typename T, typename T_slice, typename TAG>
@@ -74,7 +74,7 @@ ACE_INLINE
 T_slice *&
 TAO_Array_Var_Base_T<T,T_slice,TAG>::out (void)
 {
-  TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
+  TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
   this->ptr_ = 0;
   return this->ptr_;
 }
@@ -161,7 +161,7 @@ ACE_INLINE
 TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (T_var & p)
   : ptr_ (p.out ())
 {
-  TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
+  TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
   this->ptr_ = 0;
 }
 
@@ -386,5 +386,5 @@ ACE_INLINE
 T_slice *
 TAO_Array_Forany_T<T,T_slice,TAG>::tao_alloc (void)
 {
-  return TAO::Array_Traits<T,T_slice,TAG>::tao_alloc ();
+  return TAO::Array_Traits<T,T_slice,TAG>::alloc ();
 }

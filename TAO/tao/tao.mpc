@@ -77,6 +77,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       CurrentC.cpp
       CurrentA.cpp
       Exception.cpp
+      SystemException.cpp
+      UserException.cpp
       WrongTransactionC.cpp
       WrongTransactionA.cpp
       Environment.cpp

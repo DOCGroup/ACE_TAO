@@ -9,15 +9,15 @@
 #include "Sequence_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Valuetype, 
-           Sequence_T, 
+ACE_RCSID (Valuetype,
+           Sequence_T,
            "$Id$")
 
 // *************************************************************
 // class TAO_Valuetype_Manager
 // *************************************************************
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 TAO_Valuetype_Manager<T,T_var> &
 TAO_Valuetype_Manager<T,T_var>::operator= (
     const TAO_Valuetype_Manager<T,T_var> & rhs
@@ -30,9 +30,9 @@ TAO_Valuetype_Manager<T,T_var>::operator= (
 
   if (this->release_)
     {
-      TAO::Value_Traits<T>::tao_remove_ref (*this->ptr_);
+      TAO::Value_Traits<T>::remove_ref (*this->ptr_);
       *this->ptr_ = *rhs.ptr_;
-      TAO::Value_Traits<T>::tao_add_ref (*this->ptr_);
+      TAO::Value_Traits<T>::add_ref (*this->ptr_);
     }
   else
     {
@@ -42,7 +42,7 @@ TAO_Valuetype_Manager<T,T_var>::operator= (
   return *this;
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 TAO_Valuetype_Manager<T,T_var> &
 TAO_Valuetype_Manager<T,T_var>::operator= (T * p)
 {
@@ -52,7 +52,7 @@ TAO_Valuetype_Manager<T,T_var>::operator= (T * p)
       // that of a var variable.  Therefore we will not duplicate the
       // user provided pointer before assigning it to the internal
       // variable.
-      TAO::Value_Traits<T>::tao_remove_ref (*this->ptr_);
+      TAO::Value_Traits<T>::remove_ref (*this->ptr_);
       *this->ptr_ = p;
     }
   else
@@ -63,7 +63,7 @@ TAO_Valuetype_Manager<T,T_var>::operator= (T * p)
   return *this;
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 TAO_Valuetype_Manager<T,T_var> &
 TAO_Valuetype_Manager<T,T_var>::operator= (const T_var & p)
 {
@@ -78,9 +78,9 @@ TAO_Valuetype_Manager<T,T_var>::operator= (const T_var & p)
           (*this->ptr_)->_remove_ref ();
         }
 
-      TAO::Value_Traits<T>::tao_remove_ref (*this->ptr_);
+      TAO::Value_Traits<T>::remove_ref (*this->ptr_);
       *this->ptr_ = p.in ();
-      TAO::Value_Traits<T>::tao_add_ref (*this->ptr_);
+      TAO::Value_Traits<T>::add_ref (*this->ptr_);
     }
   else
     {
@@ -94,7 +94,7 @@ TAO_Valuetype_Manager<T,T_var>::operator= (const T_var & p)
 // Operations for class TAO_Unbounded_Valuetype_Sequence
 // *************************************************************
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::TAO_Unbounded_Valuetype_Sequence (
     CORBA::ULong maximum
   )
@@ -105,7 +105,7 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::TAO_Unbounded_Valuetype_Sequence (
 {
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::TAO_Unbounded_Valuetype_Sequence (
     const TAO_Unbounded_Valuetype_Sequence<T,T_var> & rhs
   )
@@ -118,12 +118,11 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::TAO_Unbounded_Valuetype_Sequence (
             this->maximum_
           );
       T ** const tmp2 =
-        ACE_reinterpret_cast (T ** ACE_CAST_CONST, 
-                              rhs.buffer_);
+        reinterpret_cast<T ** ACE_CAST_CONST> (rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
-          TAO::Value_Traits<T>::tao_add_ref (tmp2[i]);
+          TAO::Value_Traits<T>::add_ref (tmp2[i]);
           tmp1[i] = tmp2[i];
         }
 
@@ -135,7 +134,7 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::TAO_Unbounded_Valuetype_Sequence (
     }
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::~TAO_Unbounded_Valuetype_Sequence (
     void
   )
@@ -143,7 +142,7 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::~TAO_Unbounded_Valuetype_Sequence (
   this->_deallocate_buffer ();
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 TAO_Unbounded_Valuetype_Sequence<T,T_var> &
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::operator= (
     const TAO_Unbounded_Valuetype_Sequence<T,T_var> & rhs
@@ -156,12 +155,11 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::operator= (
 
   if (this->release_)
     {
-      T ** tmp = ACE_reinterpret_cast (T **,
-                                       this->buffer_);
+      T ** tmp = reinterpret_cast<T **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
-          TAO::Value_Traits<T>::tao_remove_ref (tmp[i]);
+          TAO::Value_Traits<T>::remove_ref (tmp[i]);
           tmp[i] = 0;
         }
 
@@ -189,27 +187,25 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::operator= (
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  T ** tmp1 = ACE_reinterpret_cast (T **, 
-                                    this->buffer_);
-  T ** const tmp2 = ACE_reinterpret_cast (T ** ACE_CAST_CONST, 
-                                          rhs.buffer_);
+  T ** tmp1 = reinterpret_cast<T **> (this->buffer_);
+  T ** const tmp2 = reinterpret_cast<T **ACE_CAST_CONST> (rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      TAO::Value_Traits<T>::tao_add_ref (tmp2[i]);
+      TAO::Value_Traits<T>::add_ref (tmp2[i]);
       tmp1[i] = tmp2[i];
     }
 
   return *this;
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 T **
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::allocbuf (CORBA::ULong nelems)
 {
   T ** buf = 0;
-  ACE_NEW_RETURN (buf, 
-                  T * [nelems], 
+  ACE_NEW_RETURN (buf,
+                  T * [nelems],
                   0);
 
   for (CORBA::ULong i = 0; i < nelems; ++i)
@@ -220,7 +216,7 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::allocbuf (CORBA::ULong nelems)
   return buf;
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 void
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::freebuf (T ** buffer)
 {
@@ -244,19 +240,18 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::freebuf (T ** buffer)
   delete [] buffer;
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 void
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::_allocate_buffer (
     CORBA::ULong length
   )
 {
-  T ** tmp = 
+  T ** tmp =
     TAO_Unbounded_Valuetype_Sequence<T,T_var>::allocbuf (length);
 
   if (this->buffer_ != 0)
     {
-      T ** old = ACE_reinterpret_cast (T **, 
-                                       this->buffer_);
+      T ** old = reinterpret_cast<T **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         // Only call duplicate when we did not own the previous
@@ -266,7 +261,7 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::_allocate_buffer (
         // the old instances.
         if (!this->release_)
           {
-            TAO::Value_Traits<T>::tao_add_ref (tmp[i]);
+            TAO::Value_Traits<T>::add_ref (tmp[i]);
             tmp[i] = old[i];
           }
         else
@@ -283,7 +278,7 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::_allocate_buffer (
   this->buffer_ = tmp;
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 void
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::_deallocate_buffer (void)
 {
@@ -292,12 +287,11 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::_deallocate_buffer (void)
       return;
     }
 
-  T ** tmp = ACE_reinterpret_cast (T **, 
-                                   this->buffer_);
+  T ** tmp = reinterpret_cast<T **> (this->buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      TAO::Value_Traits<T>::tao_remove_ref (tmp[i]);
+      TAO::Value_Traits<T>::remove_ref (tmp[i]);
       tmp[i] = 0;
     }
 
@@ -305,19 +299,18 @@ TAO_Unbounded_Valuetype_Sequence<T,T_var>::_deallocate_buffer (void)
   this->buffer_ = 0;
 }
 
-template <typename T, typename T_var> 
+template <typename T, typename T_var>
 void
 TAO_Unbounded_Valuetype_Sequence<T,T_var>::_shrink_buffer (
     CORBA::ULong nl,
     CORBA::ULong ol
   )
 {
-  T ** tmp = ACE_static_cast (T **, 
-                              this->buffer_);
+  T ** tmp = static_cast<T **> (this->buffer_);
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
-      TAO::Value_Traits<T>::tao_remove_ref (tmp[i]);
+      TAO::Value_Traits<T>::remove_ref (tmp[i]);
       tmp[i] = 0;
     }
 }
@@ -349,11 +342,11 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::TAO_Bounded_Valuetype_Sequence (
         TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::allocbuf (MAX);
 
       T ** const tmp2 =
-        ACE_reinterpret_cast (T ** ACE_CAST_CONST, rhs.buffer_);
+        reinterpret_cast<T ** ACE_CAST_CONST> (rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
-          TAO::Value_Traits<T>::tao_add_ref (tmp2[i]);
+          TAO::Value_Traits<T>::add_ref (tmp2[i]);
           tmp1[i] = tmp2[i];
         }
 
@@ -378,12 +371,11 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::operator= (
 
   if (this->release_)
     {
-      T ** tmp = ACE_reinterpret_cast (T **, 
-                                       this->buffer_);
+      T ** tmp = reinterpret_cast<T **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
-          TAO::Value_Traits<T>::tao_remove_ref (tmp[i]);
+          TAO::Value_Traits<T>::remove_ref (tmp[i]);
           tmp[i] = 0;
         }
       // No need to reallocate the buffer since it is always of size
@@ -406,14 +398,12 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::operator= (
 
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
-  T ** tmp1 = ACE_reinterpret_cast (T **, 
-                                    this->buffer_);
-  T ** const tmp2 = ACE_reinterpret_cast (T ** ACE_CAST_CONST, 
-                                          rhs.buffer_);
+  T ** tmp1 = reinterpret_cast<T **> (this->buffer_);
+  T ** const tmp2 = reinterpret_cast<T ** ACE_CAST_CONST> (rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      TAO::Value_Traits<T>::tao_add_ref (tmp2[i]);
+      TAO::Value_Traits<T>::add_ref (tmp2[i]);
       tmp1[i] = tmp2[i];
     }
 
@@ -425,8 +415,8 @@ T **
 TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::allocbuf (CORBA::ULong)
 {
   T ** buf = 0;
-  ACE_NEW_RETURN (buf, 
-                  T * [MAX], 
+  ACE_NEW_RETURN (buf,
+                  T * [MAX],
                   0);
 
   for (CORBA::ULong i = 0; i < MAX; ++i)
@@ -448,7 +438,7 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::freebuf (T ** buffer)
     {
       if (buffer[i] != 0)
         {
-          TAO::Value_Traits<T>::tao_remove_ref (buffer[i]);
+          TAO::Value_Traits<T>::remove_ref (buffer[i]);
           buffer[i] = 0;
         }
     }
@@ -477,8 +467,7 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::_deallocate_buffer (void)
       return;
     }
 
-  T ** tmp = ACE_reinterpret_cast (T **, 
-                                   this->buffer_);
+  T ** tmp = reinterpret_cast<T **> (this->buffer_);
   TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::freebuf (tmp);
   this->buffer_ = 0;
 }
@@ -490,12 +479,11 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::_shrink_buffer (
     CORBA::ULong ol
   )
 {
-  T ** tmp = ACE_reinterpret_cast (T **, 
-                                   this->buffer_);
+  T ** tmp = reinterpret_cast<T **> (this->buffer_);
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
-      TAO::Value_Traits<T>::tao_remove_ref (tmp[i]);
+      TAO::Value_Traits<T>::remove_ref (tmp[i]);
       tmp[i] = 0;
     }
 }

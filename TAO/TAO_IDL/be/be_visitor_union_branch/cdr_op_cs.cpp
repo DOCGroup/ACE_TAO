@@ -145,7 +145,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << fname << " _tao_union_tmp;" << be_nl
-          << fname << "_forany _tao_union_helper (" 
+          << fname << "_forany _tao_union_helper ("
           << be_idt << be_idt_nl
           << "_tao_union_tmp" << be_uidt_nl
           << ");" << be_uidt_nl
@@ -301,7 +301,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
         {
           if (f->is_abstract ())
             {
-              *os << "(strm << _tao_union." 
+              *os << "(strm << _tao_union."
                   << f->local_name () << " ());";
             }
           else
@@ -315,7 +315,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
       else
         {
           *os << "result =" << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
+              << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
               << be_idt << be_idt_nl
               << "_tao_union." << f->local_name () << " ()," << be_nl
               << "strm" << be_uidt_nl
@@ -698,7 +698,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
                             -1);
         }
     }
-    
+
   // Now generate the CDR stream operators for the sequence as a
   // union branch.
 
@@ -849,7 +849,7 @@ be_visitor_union_branch_cdr_op_cs::visit_structure (be_structure *node)
                             -1);
         }
     }
-    
+
   // How generate the CDR stream operators for the structure as
   // a union branch.
 
@@ -945,7 +945,7 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
                             -1);
         }
     }
-    
+
   // Now generate the CDR stream operators for the union as
   // a union branch.
 
@@ -1040,4 +1040,3 @@ be_visitor_union_branch_cdr_op_cs::explicit_default (void)
 
   return 0;
 }
-

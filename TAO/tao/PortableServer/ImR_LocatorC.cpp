@@ -194,7 +194,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Locator_ptr
-TAO::Objref_Traits<ImplementationRepository::Locator>::tao_duplicate (
+TAO::Objref_Traits<ImplementationRepository::Locator>::duplicate (
     ImplementationRepository::Locator_ptr p
   )
 {
@@ -203,7 +203,7 @@ TAO::Objref_Traits<ImplementationRepository::Locator>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<ImplementationRepository::Locator>::tao_release (
+TAO::Objref_Traits<ImplementationRepository::Locator>::release (
     ImplementationRepository::Locator_ptr p
   )
 {
@@ -212,14 +212,14 @@ TAO::Objref_Traits<ImplementationRepository::Locator>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Locator_ptr
-TAO::Objref_Traits<ImplementationRepository::Locator>::tao_nil (void)
+TAO::Objref_Traits<ImplementationRepository::Locator>::nil (void)
 {
   return ImplementationRepository::Locator::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<ImplementationRepository::Locator>::tao_marshal (
+TAO::Objref_Traits<ImplementationRepository::Locator>::marshal (
     ImplementationRepository::Locator_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1545,4 +1545,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

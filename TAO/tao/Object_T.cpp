@@ -2,8 +2,9 @@
 #ifndef TAO_OBJECT_T_C
 #define TAO_OBJECT_T_C
 
-#include "Object_T.h"
-#include "Stub.h"
+#include "tao/Object_T.h"
+#include "tao/Stub.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Object_T,

@@ -21,7 +21,7 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
   if (this->ptr_ != p)
     {
       // Delete our stuff and assume ownership of p.
-      TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
+      TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
       this->ptr_ = p;
     }
 
@@ -36,10 +36,10 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (
 {
   if (this != &p)
     {
-      TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
+      TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
 
       // Deep copy.
-      this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::tao_dup (p.in ());
+      this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::dup (p.in ());
     }
 
   return *this;
@@ -55,7 +55,7 @@ TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
   if (this->ptr_ != p)
     {
       // Delete our stuff and assume ownership of p.
-      TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
+      TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
       this->ptr_ = p;
     }
 
@@ -70,10 +70,10 @@ TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (
 {
   if (this != &p)
     {
-      TAO::Array_Traits<T,T_slice,TAG>::tao_free (this->ptr_);
+      TAO::Array_Traits<T,T_slice,TAG>::free (this->ptr_);
 
       // Deep copy.
-      this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::tao_dup (p.in ());
+      this->ptr_ = TAO::Array_Traits<T,T_slice,TAG>::dup (p.in ());
     }
 
   return *this;
@@ -88,7 +88,7 @@ TAO_Array_Forany_T<T,T_slice,TAG>::_tao_any_destructor (
   )
 {
   T_slice * tmp = static_cast<T_slice *> (_tao_void_pointer);
-  TAO::Array_Traits<T,T_slice,TAG>::tao_free (tmp);
+  TAO::Array_Traits<T,T_slice,TAG>::free (tmp);
 }
 
 #endif /* TAO_ARRAY_VAROUT_T_C */

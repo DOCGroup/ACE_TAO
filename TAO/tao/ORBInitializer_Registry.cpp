@@ -4,6 +4,7 @@
 #include "TAO_Singleton.h"
 #include "ORB_Constants.h"
 #include "TAO_Singleton_Manager.h"
+#include "SystemException.h"
 
 #include "ace/Static_Object_Lock.h"
 
@@ -73,7 +74,7 @@ TAO_ORBInitializer_Registry::register_orb_initializer (
   else
     ACE_THROW (CORBA::INV_OBJREF (
                  CORBA::SystemException::_tao_minor_code (
-                   TAO_DEFAULT_MINOR_CODE,
+                   0,
                    EINVAL),
                  CORBA::COMPLETED_NO));
 }

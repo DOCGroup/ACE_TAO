@@ -12,6 +12,7 @@
 #include "tao/Acceptor_Filter.h"
 #include "tao/Endpoint.h"
 #include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"

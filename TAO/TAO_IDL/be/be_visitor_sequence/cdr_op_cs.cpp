@@ -838,7 +838,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
           else
             {
-              *os << "TAO::Objref_Traits<" << bt->name () << ">::tao_marshal ("
+              *os << "TAO::Objref_Traits<" << bt->name () << ">::marshal ("
                   << be_idt << be_idt_nl
                   << "_tao_sequence[i].in (), strm" << be_uidt_nl
                   << ");" << be_uidt << be_uidt;

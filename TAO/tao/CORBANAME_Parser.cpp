@@ -3,6 +3,7 @@
 #include "CORBANAME_Parser.h"
 #include "ORB.h"
 #include "Object.h"
+#include "SystemException.h"
 #include "UB_String_Arguments.h"
 #include "Invocation_Adapter.h"
 #include "debug.h"

@@ -9,6 +9,7 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
 
