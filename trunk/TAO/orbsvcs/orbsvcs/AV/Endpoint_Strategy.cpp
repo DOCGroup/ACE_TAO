@@ -386,7 +386,7 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager)
-  : TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev,
+  : TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev,
     T_MediaCtrl> (orb_manager)
 {
 }
@@ -428,7 +428,7 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *orb_manager)
-  : TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev,
+  : TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev,
     T_MediaCtrl> (orb_manager)
 {
 }

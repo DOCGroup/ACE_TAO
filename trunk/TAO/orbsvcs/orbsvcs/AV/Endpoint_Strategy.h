@@ -180,7 +180,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
  public:
   TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager);
 
-  virtual int activate_stream_endpoint (void);
+  virtual int activate_stream_endpoint (CORBA::Environment &env);
 
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
@@ -200,7 +200,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
  public:
   TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *);
 
-  virtual int activate_stream_endpoint (void);
+  virtual int activate_stream_endpoint (CORBA::Environment &env);
 
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
