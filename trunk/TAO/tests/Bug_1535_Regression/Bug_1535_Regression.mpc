@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project(bug_1535_regression) : taoexe, utils, portableserver {
+  Source_Files {
+    bug_1535_regression.cpp
+  }
+}
