@@ -1,5 +1,8 @@
 Fri Aug 21 11:57:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src/gperf.cpp: Modified the main() program so that it doesn't
+ 	  print the starting time until AFTER we've parsed the arguments.
+
 	* src/Version.cpp: Updated the version to 2.7 to reflect the
 	  new changes.
 
