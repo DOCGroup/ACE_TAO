@@ -19,27 +19,27 @@ ACE_Read_Buffer::dump (void) const
 
 ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 				  int close_on_delete,
-				  ACE_Allocator *allocator)
+				  ACE_Allocator *alloc)
   : stream_ (fp), 
     close_on_delete_ (close_on_delete),
-    allocator_ (allocator)
+    allocator_ (alloc)
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (int handle,
 				  int close_on_delete,
-				  ACE_Allocator *allocator)
+				  ACE_Allocator *alloc)
   : stream_ (::fdopen (handle, "r")),
     close_on_delete_ (close_on_delete),
-    allocator_ (allocator)
+    allocator_ (alloc)
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Service_Config::allocator ();
+    this->allocator_ = ACE_Service_Config::alloc ();
 }
 
 ACE_Read_Buffer::~ACE_Read_Buffer (void)

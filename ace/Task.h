@@ -20,7 +20,7 @@
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
 
-class ACE_Task_Flags
+class ACE_Export ACE_Task_Flags
   // = TITLE
   //    These flags are used within the ACE_Task.
   // 
@@ -42,7 +42,7 @@ public:
   };
 };
 
-class ACE_Task_Base : public ACE_Service_Object
+class ACE_Export ACE_Task_Base : public ACE_Service_Object
   // = TITLE
   //    Direct base class for the ACE_Task template.
   //
@@ -147,7 +147,7 @@ public:
 #endif /* ACE_MT_SAFE */
 };
 
-class ACE_Task_Exit
+class ACE_Export ACE_Task_Exit
   // = TITLE
   //    Keep exit information for a Task in thread specific storage so
   //    that the Task::close() method will get called no matter how

@@ -44,7 +44,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::dump (void) const
 
 template <class EXT_ID, class INT_ID, class LOCK>
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (size_t size,
-                                                        ACE_Allocator *allocator)
+                                                        ACE_Allocator *alloc)
   : search_structure_ (0),
     allocator_ (0),
     max_size_ (0),
@@ -52,19 +52,19 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (size_t size,
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
 
-  if (this->open (size, allocator) == -1)
+  if (this->open (size, alloc) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Map_Manager\n"));
 }
 
 template <class EXT_ID, class INT_ID, class LOCK> 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (ACE_Allocator *allocator)
+ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (ACE_Allocator *alloc)
   : search_structure_ (0),
     allocator_ (0),
     max_size_ (0),
     cur_size_ (0)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
-  if (this->open (DEFAULT_SIZE, allocator) == -1)
+  if (this->open (DEFAULT_SIZE, alloc) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Map_Manager\n"));
 }
 
@@ -101,15 +101,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::~ACE_Map_Manager (void)
 
 template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
-					     ACE_Allocator *allocator)
+					     ACE_Allocator *alloc)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open");
   ACE_Write_Guard<LOCK> m (this->lock_);
 
-  if (allocator == 0)
-    allocator = ACE_Service_Config::allocator ();
+  if (alloc == 0)
+    alloc = ACE_Service_Config::alloc ();
 
-  this->allocator_ = allocator;
+  this->allocator_ = alloc;
 
   // If we need to grow buffer, then remove the existing buffer.
   if (this->max_size_ < size)
