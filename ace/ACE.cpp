@@ -1561,7 +1561,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
   const int MAX_IF = 10; // probably hard to put this many ifs in a unix box..
   int num_ifs = MAX_IF; // HACK - set to an unreasonable number
   struct ifconf ifcfg;
-  struct ifreq *p_ifs = 0;
+  struct ifreq *p_ifs = NULL;
   size_t ifreq_size = 0;
   ACE_UINT32 addr;
   struct in_addr if_addr, if_test; 
@@ -1586,8 +1586,6 @@ ACE::count_interfaces (ACE_HANDLE handle,
       ACE_ERROR_RETURN ((LM_ERROR, "count_interfaces:ioctl - SIOCGIFCONF failed"), -1);
     } 
 
-  ACE_OS::close (handle);
-
   int if_count = 0, i ;
 
   // get if address out of ifreq buffers.
@@ -1597,16 +1595,14 @@ ACE::count_interfaces (ACE_HANDLE handle,
 		      (char *) &p_ifs->ifr_addr.sa_data + 2,
 		      sizeof (addr)); 
 
-      if (addr == 0) 
-	{		// no more addr's found
-	  ACE_OS::free (ifcfg.ifc_req);
-	  return if_count;
-	}
+      if (addr == 0) 	// no more addrs found
+	  break;
       if_count++;
     }
 
   free(ifcfg.ifc_req);
-  return if_count;
+  how_many = if_count;
+  return 0;
 #else
    ACE_NOTSUP_RETURN (-1);; // no implmentation
 #endif /* __SVR4 */
