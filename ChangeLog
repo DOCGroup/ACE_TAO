@@ -1,6 +1,11 @@
+Tue Apr 29 05:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor:
+          Fixed typo.
+
 Mon Apr 28 21:20:48 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/POSIX_Proactor.cpp (handle_events_i): There was an incorrect 
+	* ace/POSIX_Proactor.cpp (handle_events_i): There was an incorrect
 	  conversion from milliseconds to nanoseconds, which is now fixed.
   	  Thanks to Ray Limpus <ray.limpus@boeing.com> for reporting this.
 
