@@ -1,3 +1,12 @@
+Tue Nov 20 12:02:16 2001  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in:
+
+	  Removed this file from the distribution.  Some folks insist on
+	  attempting to build ACE/TAO with the configure script and
+	  reporting problems despite the fact we've explicitly disabled
+	  it.
+
 Tue Nov 20 13:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Strategies.h:
