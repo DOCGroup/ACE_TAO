@@ -654,8 +654,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-main (int argc,
-      ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
   int result = parse_args (argc, argv);
@@ -718,8 +717,7 @@ main (int argc,
 #else   /* Do this for C Set++ 3.1 */
 
 int
-main (int argc,
-      ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
