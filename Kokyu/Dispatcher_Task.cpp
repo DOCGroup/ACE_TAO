@@ -12,7 +12,7 @@ namespace Kokyu
 {
 
 int
-Dispatcher_Task::init ()
+Dispatcher_Task::initialize ()
 {
   switch(curr_config_info_.dispatching_type_)
     {
