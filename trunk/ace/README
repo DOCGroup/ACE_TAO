@@ -63,7 +63,6 @@ ACE_HAS_BROKEN_SENDMSG                  OS/compiler omits the const from the sen
 ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const from the rlimit parameter in the setrlimit() prototype.
 ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct timespec members as ts_sec and ts_nsec instead of tv_sec and tv_nsec.  This is highly non-portable.  Currently only FreeBSD 2.1.x uses it.
 ACE_HAS_BROKEN_WRITEV                   OS/compiler omits the const from the iovec parameter in the writev() prototype.
-ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS   GNUC 2.7.3 mistakenly takes the template definition as the place where an inline function of an argument class is first used.
 ACE_HAS_BSTRING                         Platform has <bstring.h> (which contains bzero() prototype)
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32 CancelIO() function (WinNT 4.0 and beyond).
@@ -80,7 +79,9 @@ ACE_HAS_EXCEPTIONS                      Compiler supports C++ exception handling
 ACE_HAS_GETPAGESIZE                     Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be defined, except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the getrusage() system call.
 ACE_HAS_GETRUSAGE_PROTO                 Platform has a getrusage () prototype in sys/resource.h that differs from the one in ace/OS.i.
+ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS   GNUC 2.7.3 mistakenly takes the template definition as the place where an inline function of an argument class is first used.
 ACE_HAS_GNU_CSTRING_H                   Denotes that GNU has cstring.h as standard which redefines memchr()
+ACE_HAS_GPERF                           The GPERF utility is compiled for this platform
 ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT Optimize ACE_Handle_Set::count_bits for select() operations (common case)
 ACE_HAS_HI_RES_TIMER                    Compiler/platform supports SunOS high resolution timers
 ACE_HAS_IDTYPE_T                        Compiler/platform supports idtype_t.
