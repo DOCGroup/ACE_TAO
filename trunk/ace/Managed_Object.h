@@ -93,17 +93,43 @@ class ACE_Managed_Object
   //     the ACE library.
 {
 public:
-  static ACE_INLINE TYPE *
-  get_preallocated_object (ACE_Object_Manager::Preallocated_Object id);
+  static TYPE *
+  get_preallocated_object (ACE_Object_Manager::Preallocated_Object id)
+  {
+    // The preallocated objects are in a separate, "read-only" array so
+    // that this function doesn't need a lock.  Also, because it is
+    // intended _only_ for use with hard-code values, it performs no
+    // range checking on "id".
+
+    // Cast the return type of the the object pointer based
+    // on the type of the function template parameter.
+    return &((ACE_Cleanup_Adapter<TYPE> *)
+             ACE_Object_Manager::preallocated_object[id])->object ();
+  }
   // Get the preallocated object identified by "id".  Returns a
   // pointer to the object.  Beware: no error indication is provided,
   // because it can _only_ be used for accessing preallocated objects.
+  // Note: the function definition is inlined here so that it compiles
+  // on AIX 4.1 w/xlC v. 3.01.
 
-  static ACE_INLINE TYPE *
-  get_preallocated_array (ACE_Object_Manager::Preallocated_Array id);
+  static TYPE *
+  get_preallocated_array (ACE_Object_Manager::Preallocated_Array id)
+  {
+    // The preallocated array are in a separate, "read-only" array so
+    // that this function doesn't need a lock.  Also, because it is
+    // intended _only_ for use with hard-code values, it performs no
+    // range checking on "id".
+
+    // Cast the return type of the the object pointer based
+    // on the type of the function template parameter.
+    return &((ACE_Cleanup_Adapter<TYPE> *)
+             ACE_Object_Manager::preallocated_array[id])->object ();
+  }
   // Get the preallocated array identified by "id".  Returns a
   // pointer to the array.  Beware: no error indication is provided,
   // because it can _only_ be used for accessing preallocated arrays.
+  // Note: the function definition is inlined here so that it compiles
+  // on AIX 4.1 w/xlC v. 3.01.
 
 private:
   // Disallow instantiation of this class.
