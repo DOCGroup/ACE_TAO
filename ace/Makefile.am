@@ -141,6 +141,7 @@ libACE_OS_la_SOURCES = \
   Thread_Hook.cpp \
   Base_Thread_Adapter.cpp \
   OS_Thread_Adapter.cpp \
+  OS_Log_Msg.cpp \
   Thread_Exit.cpp \
   Thread_Control.cpp \
   Sched_Params.cpp
@@ -190,6 +191,9 @@ libACE_Logging_la_SOURCES = \
   Dump.cpp \
   Log_Msg.cpp \
   Log_Record.cpp \
+  Log_Msg_Callback.cpp \
+  Log_Msg_Backend.cpp \
+  Log_Msg_IPC.cpp \
   Trace.cpp
 
 libACE_Threads_la_SOURCES = \

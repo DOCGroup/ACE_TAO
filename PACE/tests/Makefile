@@ -82,3 +82,55 @@ endif
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+.obj/Stdio_Test.o .obj/Stdio_Test.so .shobj/Stdio_Test.o .shobj/Stdio_Test.so: Stdio_Test.c \
+ $(ACE_ROOT)/PACE/pace/stdio.h \
+ $(ACE_ROOT)/PACE/pace/config/defines.h \
+ $(ACE_ROOT)/PACE/pace/config/platform.h \
+ $(ACE_ROOT)/PACE/pace/config/config.h \
+ $(ACE_ROOT)/PACE/pace/config/compiler.h \
+ $(ACE_ROOT)/PACE/pace/config/constants.h \
+ $(ACE_ROOT)/PACE/pace/sys/types.h \
+ $(ACE_ROOT)/PACE/pace/config/defaults.h \
+ $(ACE_ROOT)/PACE/pace/config/utility.h \
+ $(ACE_ROOT)/PACE/pace/errno.h \
+ $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/unistd.h
+
+.obj/Posix_SP_Test.o .obj/Posix_SP_Test.so .shobj/Posix_SP_Test.o .shobj/Posix_SP_Test.so: Posix_SP_Test.c \
+ $(ACE_ROOT)/PACE/pace/stdio.h \
+ $(ACE_ROOT)/PACE/pace/config/defines.h \
+ $(ACE_ROOT)/PACE/pace/config/platform.h \
+ $(ACE_ROOT)/PACE/pace/config/config.h \
+ $(ACE_ROOT)/PACE/pace/config/compiler.h \
+ $(ACE_ROOT)/PACE/pace/config/constants.h \
+ $(ACE_ROOT)/PACE/pace/sys/types.h \
+ $(ACE_ROOT)/PACE/pace/config/defaults.h \
+ $(ACE_ROOT)/PACE/pace/config/utility.h \
+ $(ACE_ROOT)/PACE/pace/errno.h \
+ $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/unistd.h \
+ $(ACE_ROOT)/PACE/pace/time.h \
+ $(ACE_ROOT)/PACE/pace/sys/utsname.h
+
+.obj/mqueue_test.o .obj/mqueue_test.so .shobj/mqueue_test.o .shobj/mqueue_test.so: mqueue_test.c \
+ $(ACE_ROOT)/PACE/pace/stdio.h \
+ $(ACE_ROOT)/PACE/pace/config/defines.h \
+ $(ACE_ROOT)/PACE/pace/config/platform.h \
+ $(ACE_ROOT)/PACE/pace/config/config.h \
+ $(ACE_ROOT)/PACE/pace/config/compiler.h \
+ $(ACE_ROOT)/PACE/pace/config/constants.h \
+ $(ACE_ROOT)/PACE/pace/sys/types.h \
+ $(ACE_ROOT)/PACE/pace/config/defaults.h \
+ $(ACE_ROOT)/PACE/pace/config/utility.h \
+ $(ACE_ROOT)/PACE/pace/errno.h \
+ $(ACE_ROOT)/PACE/pace/config/features.h \
+ $(ACE_ROOT)/PACE/pace/fcntl.h \
+ $(ACE_ROOT)/PACE/pace/mqueue.h \
+ $(ACE_ROOT)/PACE/pace/signal.h \
+ $(ACE_ROOT)/PACE/pace/stdlib.h \
+ $(ACE_ROOT)/PACE/pace/unistd.h \
+ $(ACE_ROOT)/PACE/pace/string.h
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

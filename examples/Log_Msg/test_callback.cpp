@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples/Log_Msg
-// 
+//
 // = FILENAME
 //    test_callback.cpp
 //
@@ -15,11 +15,12 @@
 //
 // = AUTHOR
 //    Irfan Pyarali <irfan@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #include "ace/OS.h"
 #include "ace/Log_Msg.h"
+#include "ace/Log_Msg_Callback.h"
 
 ACE_RCSID(Log_Msg, test_callback, "$Id$")
 
@@ -67,24 +68,24 @@ Logger::log (ACE_Log_Record &log_record)
   if (!this->verbose_logging_)
     {
       if (use_log_msg)
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "Logger::log->%s\n",
                     log_record.msg_data ()));
       else
-        ACE_OS::printf ("Recursive Logger callback = %s\n",  
+        ACE_OS::printf ("Recursive Logger callback = %s\n",
                         log_record.msg_data ());
     }
   else
     {
       char verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
-      int result = log_record.format_msg (ACE_LOG_MSG->local_host (), 
-                                          ACE_LOG_MSG->flags (), 
+      int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
+                                          ACE_LOG_MSG->flags (),
                                           verbose_msg);
       if (result == 0)
         {
           if (use_log_msg)
-            ACE_DEBUG ((LM_DEBUG, 
-                        "Logger::log->%s\n",  
+            ACE_DEBUG ((LM_DEBUG,
+                        "Logger::log->%s\n",
                         verbose_msg));
           else
             ACE_OS::printf ("Recursive Logger callback = %s\n",
@@ -127,21 +128,21 @@ main (int, char *[])
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
               "(%t) forth message\n"));
-  
+
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   // This message should show up via the Logger callback (somewhat
   // verbosely).
   ACE_DEBUG ((LM_DEBUG,
               "(%t) fifth message\n"));
-  
+
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE);
 
   // This message should show up via the Logger callback (really
   // verbosely).
   ACE_DEBUG ((LM_DEBUG,
               "(%t) sixth message\n"));
-  
+
   logger.verbose (0);
 
   // This message should show up via the Logger callback (not
