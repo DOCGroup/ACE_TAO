@@ -163,10 +163,6 @@ public:
   AST_Expression(long           l);
   AST_Expression(long           l, ExprType t);
   AST_Expression(unsigned long  ul);
-#if ! defined (ACE_LACKS_LONGLONG_T)
-  AST_Expression (ACE_CDR::LongLong ll);
-  AST_Expression (ACE_CDR::ULongLong ull);
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   AST_Expression(float          f);
   AST_Expression(double         d);
   AST_Expression(char           c);
