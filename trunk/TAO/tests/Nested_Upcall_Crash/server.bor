@@ -12,6 +12,7 @@ OBJFILES = \
 	$(OBJDIR)\TestC.obj \
 	$(OBJDIR)\TestS.obj \
 	$(OBJDIR)\Server_Peer.obj \
+        $(OBJDIR)\Clock_Ticks.obj \
 	$(OBJDIR)\server.obj
 
 CFLAGS = \
