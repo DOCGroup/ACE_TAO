@@ -47,10 +47,14 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time)
     this->transport_->orb_core ()->reactor ();
 
   // Do the event loop, till we fully receive a reply.
-  
-  int result = 1; // So the first iteration works...
+
+  int result = 1; // Optimize the first iteration [no access to errno]
   this->reply_received_ = 0;
-  while (this->reply_received_ == 0 && result > 0)
+  while (this->reply_received_ == 0
+         && (result > 0
+             || (result == 0
+                 && max_wait_time != 0
+                 && *max_wait_time != ACE_Time_Value::zero)))
     {
       result = reactor->handle_events (max_wait_time);
     }
@@ -149,7 +153,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 
   // Register the handler.
   this->transport_->register_handler ();
-  
+
   // Send the request.
   int result =
     this->TAO_Wait_Strategy::sending_request (orb_core,
@@ -260,7 +264,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       if (this->reply_received_ == 1)
         {
           // But first reset our state in case we are invoked
-          // again... 
+          // again...
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -270,7 +274,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       else if (this->reply_received_ == -1)
         {
           // But first reset our state in case we are invoked
-          // again... 
+          // again...
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -294,7 +298,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
   // This might increase the refcount of the leader.
   leader_follower.set_leader_thread ();
 
-  int result = 1;
+  int result = 1; // Optmize the first iteration [no access to errno]
 
   {
     ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
@@ -309,7 +313,11 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
     //this->transport_));
 
-    while (result > 0 && this->reply_received_ == 0)
+    while (this->reply_received_ == 0
+           && (result > 0
+               || (result == 0
+                   && max_wait_time != 0
+                   && *max_wait_time != ACE_Time_Value::zero)))
       result = orb_core->reactor ()->handle_events (max_wait_time);
 
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
@@ -374,7 +382,7 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower ().lock (), 
+                    orb_core->leader_follower ().lock (),
                     -1);
 
   //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
@@ -479,7 +487,7 @@ TAO_Wait_On_Leader_Follower::wake_up (void)
 
   // We *must* remove it when we signal it so the same condition is
   // not signalled for both wake up as a follower and as the next
-  // leader. 
+  // leader.
   // The follower may not be there if the reply is received while the
   // consumer is not yet waiting for it (i.e. it send the request but
   // has not blocked to receive the reply yet)

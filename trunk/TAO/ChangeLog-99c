@@ -1,3 +1,14 @@
+Thu Jul 22 15:05:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp:
+	  Fixed timeout computation it was off by a factor of 10 (thanks
+	  to the OMG 1/10 of a microsecond units!)
+
+	* tao/Wait_Strategy.cpp:
+	  Improved loop conditions to cope with reactors that return 0
+	  even when there is no timeout. Thanks to Irfan for pointing this 
+	  out.
+
 Thu Jul 22 14:10:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/benchmark/client.cpp:
