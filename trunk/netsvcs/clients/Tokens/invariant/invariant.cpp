@@ -30,7 +30,7 @@ static char * rwname = "reader/writer";
 static char * mutexname = "mutex";
 
 static void *
-run_reader_writer (void *vp)
+run_reader_writer (void *)
 {
   for (int x = 0; x < 50; x++)
     {
@@ -76,7 +76,7 @@ run_reader_writer (void *vp)
 }
 
 static void *
-run_mutex (void *vp)
+run_mutex (void *)
 {
   for (int x = 0; x < 50; x++)
     {
