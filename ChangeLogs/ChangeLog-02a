@@ -1,3 +1,9 @@
+Fri Mar 17 23:28:20 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/OS/Process/process.cpp (tokenize): Fixed a typo in the
+	  code.  Thanks to Byron Harris <harris_b@ociweb.com> for noticing
+ 	  this.
+
 Fri Mar 17 20:43:20 2000  Sangwoo Jin <swjinjin@sei.co.kr>
 
         * ace/Makefile,Reactor.cpp,Object_Manager.{h,cpp}:
