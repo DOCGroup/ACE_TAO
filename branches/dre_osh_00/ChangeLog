@@ -1,3 +1,48 @@
+Sat May 10 16:18:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented and moved more code, as listed below.
+
+        * ace/SV_Semaphore_Simple.h:
+          Moved ACE_DEFAULT_SEM_KEY define here.
+
+        * ace/os_include/fcntl.h:
+          Moved O_NDELAY, ACE_NONBLOCK, and O_* defines for __BORLANDC__
+          here.
+
+        * ace/os_include/signal.h:
+          Moved SIG* and ACE_SIG* defines here.
+
+        * ace/os_include/stddef.h:
+          Moved size_t for ACE_PSOS_DIAB_MIPS here.
+
+        * ace/os_include/stdio.h:
+          Moved ACE_MAX_USERID, BUFSIZ, ACE_STRBUF_SIZE, and ACE_STD*
+          defines here.
+
+        * ace/os_include/string.h:
+          Moved str[n]imp for __BORLANDC__ and ACE_SPRINTF_ADAPTER 
+          defines here.
+
+        * ace/os_include/unistd.h:
+          Moved _SC_AIO_MAX, chdir, access, getcwd, and isatty defines
+          for __BORLANDC__ here.
+
+        * ace/os_include/sys/mman.h:
+          Moved PROT_RDWR define here.
+
+        * ace/os_include/sys/socket.h:
+          Moved CMSG_DATA define here.
+
+        * ace/os_include/sys/stat.h:
+          Moved stat, umask, and fstat defines for __BORLANDC__ here.
+
+        * ace/os_include/sys/timeb.h:
+          Moved ftime and timeb defines for __BORLANDC__ here.
+
+        * ace/os_include/sys/types.h:
+          Moved longlong_t, key_t, and pid_t here.
+
 Sat May 10 19:19:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:

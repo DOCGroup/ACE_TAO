@@ -38,9 +38,9 @@
 
 class ACE_Timeout_Manager;
 
-#if !defined (_SC_AIO_MAX)
-#define _SC_AIO_MAX 1
-#endif /* _SC_AIO_MAX */
+//#if !defined (_SC_AIO_MAX)
+//#define _SC_AIO_MAX 1
+//#endif /* _SC_AIO_MAX */
 
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
@@ -54,27 +54,27 @@ class ACE_Timeout_Manager;
 #define ACE_STANDARD_CHARACTER_SET_SIZE 128
 #endif /* 'a' < 'A' */
 
-# if defined (ACE_PSOS_TM)
-typedef long long longlong_t;
-typedef long      id_t;
-# endif /* ACE_PSOS_TM */
+//# if defined (ACE_PSOS_TM)
+//typedef long long longlong_t;
+//typedef long      id_t;
+//# endif /* ACE_PSOS_TM */
 
 // Here are all ACE-specific default constants, needed throughout ACE
 // and its applications.  The values can be over written by user
 // specific values in config.h files.
 #include "ace/Default_Constants.h"
 
-# if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-    // Control message size to pass a file descriptor.
-#   define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
-#   if defined (ACE_LACKS_CMSG_DATA_MACRO)
-#     if defined (ACE_LACKS_CMSG_DATA_MEMBER)
-#       define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
-#     else
-#       define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
-#     endif /* ACE_LACKS_CMSG_DATA_MEMBER */
-#   endif /* ACE_LACKS_CMSG_DATA_MACRO */
-# endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+//# if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+//    // Control message size to pass a file descriptor.
+//#   define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
+//#   if defined (ACE_LACKS_CMSG_DATA_MACRO)
+//#     if defined (ACE_LACKS_CMSG_DATA_MEMBER)
+//#       define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
+//#     else
+//#       define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
+//#     endif /* ACE_LACKS_CMSG_DATA_MEMBER */
+//#   endif /* ACE_LACKS_CMSG_DATA_MACRO */
+//# endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
 
 // Default size of the ACE Reactor.
@@ -93,9 +93,9 @@ int const ACE_FD_SETSIZE = FD_SETSIZE;
 // ACE.
 #include "ace/Global_Macros.h"
 
-#if !defined (ACE_WIN32) && !defined (INTEGRITY)
-#define ACE_MAX_USERID L_cuserid
-#endif /*!ACE_WIN32*/
+//#if !defined (ACE_WIN32) && !defined (INTEGRITY)
+//#define ACE_MAX_USERID L_cuserid
+//#endif /*!ACE_WIN32*/
 
 // include the ACE min()/max() functions.
 # include "ace/Min_Max.h"
@@ -104,15 +104,15 @@ int const ACE_FD_SETSIZE = FD_SETSIZE;
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
 
-# if defined (ACE_LACKS_KEY_T)
-#   if defined (ACE_WIN32)
-   // Win32 doesn't use numeric values to name its semaphores, it uses
-   // strings!
-typedef char *key_t;
-#   else
-typedef int key_t;
-#   endif /* ACE_WIN32 */
-# endif /* ACE_LACKS_KEY_T */
+//# if defined (ACE_LACKS_KEY_T)
+//#   if defined (ACE_WIN32)
+//   // Win32 doesn't use numeric values to name its semaphores, it uses
+//   // strings!
+//typedef char *key_t;
+//#   else
+//typedef int key_t;
+//#   endif /* ACE_WIN32 */
+//# endif /* ACE_LACKS_KEY_T */
 
 ///////////////////////////////////////////
 //                                       //
@@ -365,13 +365,13 @@ typedef struct
 #     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
-#   if !defined (ACE_DEFAULT_SEM_KEY)
-#     define ACE_DEFAULT_SEM_KEY 1234
-#   endif /* ACE_DEFAULT_SEM_KEY */
+//#   if !defined (ACE_DEFAULT_SEM_KEY)
+//#     define ACE_DEFAULT_SEM_KEY 1234
+//#   endif /* ACE_DEFAULT_SEM_KEY */
 
-#   define ACE_STDIN 0
-#   define ACE_STDOUT 1
-#   define ACE_STDERR 2
+//#   define ACE_STDIN 0
+//#   define ACE_STDOUT 1
+//#   define ACE_STDERR 2
 
 #   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
@@ -560,13 +560,13 @@ private:
 } ;
 #endif /* ACE_PSOS_HAS_TIME */
 
-# endif /* defined (ACE_PSOS) */
+# endif /* defined (ACE_PSOS) **********************************************/
 
-# if defined (ACE_HAS_CHARPTR_SPRINTF)
-#   define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
-# else
-#   define ACE_SPRINTF_ADAPTER(X) X
-# endif /* ACE_HAS_CHARPTR_SPRINTF */
+//# if defined (ACE_HAS_CHARPTR_SPRINTF)
+//#   define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
+//# else
+//#   define ACE_SPRINTF_ADAPTER(X) X
+//# endif /* ACE_HAS_CHARPTR_SPRINTF */
 
 // Default address for shared memory mapped files and SYSV shared memory
 // (defaults to 64 M).
@@ -911,7 +911,7 @@ private:
 # define ACE_SYNCH_1 ACE_SYNCH_DECL
 # define ACE_SYNCH_2 ACE_SYNCH_USE
 
-// For Win32 compatibility...
+// For Win32 compatibility... todo: should go in cpp
 # if !defined (ACE_WSOCK_VERSION)
 #   define ACE_WSOCK_VERSION 0, 0
 # endif /* ACE_WSOCK_VERSION */
@@ -1227,7 +1227,7 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   endif /* _REENTRANT */
 # else
 #   define ACE_MT(X)
-# endif /* ACE_MT_SAFE */
+# endif /* ACE_MT_SAFE  todo: this needs to go in a header higher up...*/
 
 # if !defined (ACE_DEFAULT_THREAD_PRIORITY)
 #   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
@@ -2288,7 +2288,7 @@ typedef u_int ACE_thread_key_t;
 #     define ACE_THR_PRI_OTHER_DEF 0
 #   endif /* ! ACE_THR_PRI_OTHER_DEF */
 
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_THREADS ***********************************************/
 
 # if defined (ACE_PSOS)
 
@@ -2323,20 +2323,20 @@ protected:
 # if !defined (ACE_HAS_WINCE)
 #   include "ace/os_include/assert.h"
 #   include "ace/os_include/stdio.h"
-// this is a nasty hack to get around problems with the
-// pSOS definition of BUFSIZ as the config table entry
-// (which is valued using the LC_BUFSIZ value anyway)
-#   if defined (ACE_PSOS)
-#     if defined (BUFSIZ)
-#       undef BUFSIZ
-#     endif /* defined (BUFSIZ) */
-#     define BUFSIZ LC_BUFSIZ
-#   endif /* defined (ACE_PSOS) */
+//// this is a nasty hack to get around problems with the
+//// pSOS definition of BUFSIZ as the config table entry
+//// (which is valued using the LC_BUFSIZ value anyway)
+//#   if defined (ACE_PSOS)
+//#     if defined (BUFSIZ)
+//#       undef BUFSIZ
+//#     endif /* defined (BUFSIZ) */
+//#     define BUFSIZ LC_BUFSIZ
+//#   endif /* defined (ACE_PSOS) */
 
-#if defined (ACE_PSOS_DIAB_MIPS)
-#undef size_t
-typedef unsigned int size_t;
-#endif
+//#if defined (ACE_PSOS_DIAB_MIPS)
+//#undef size_t
+//typedef unsigned int size_t;
+//#endif
 
 #   if !defined (ACE_LACKS_NEW_H)
 #     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
@@ -2632,11 +2632,11 @@ typedef void (*ACE_SignalHandler)(int);
 typedef void (*ACE_SignalHandlerV)(...);
 # endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
-# if defined (BUFSIZ)
-#   define ACE_STREAMBUF_SIZE BUFSIZ
-# else
-#   define ACE_STREAMBUF_SIZE 1024
-# endif /* BUFSIZ */
+//# if defined (BUFSIZ)
+//#   define ACE_STREAMBUF_SIZE BUFSIZ
+//# else
+//#   define ACE_STREAMBUF_SIZE 1024
+//# endif /* BUFSIZ */
 
 # if defined (ACE_WIN32)
 // Turn off warnings for /W4
@@ -2695,22 +2695,22 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
-// The following are #defines and #includes that are specific to
-// WIN32.
-#   if defined (ACE_HAS_WINCE)
-#     define ACE_STDIN  _fileno (stdin)
-#     define ACE_STDOUT _fileno (stdout)
-#     define ACE_STDERR _fileno (stderr)
-#   else
-#   define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
-#   define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
-#   define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
-#   endif  // ACE_HAS_WINCE
+//// The following are #defines and #includes that are specific to
+//// WIN32.
+//#   if defined (ACE_HAS_WINCE)
+//#     define ACE_STDIN  _fileno (stdin)
+//#     define ACE_STDOUT _fileno (stdout)
+//#     define ACE_STDERR _fileno (stderr)
+//#   else
+//#   define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
+//#   define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
+//#   define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
+//#   endif  // ACE_HAS_WINCE
 
-// Default semaphore key and mutex name
-#   if !defined (ACE_DEFAULT_SEM_KEY)
-#     define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
-#   endif /* ACE_DEFAULT_SEM_KEY */
+//// Default semaphore key and mutex name
+//#   if !defined (ACE_DEFAULT_SEM_KEY)
+//#     define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
+//#   endif /* ACE_DEFAULT_SEM_KEY */
 
 #   define ACE_INVALID_SEM_KEY 0
 
@@ -2844,43 +2844,43 @@ PAGE_NOCACHE  */
 //#     include /**/ <io.h>
 #   endif /* ACE_HAS_WINCE */
 
-#   if defined (__BORLANDC__)
+//#   if defined (__BORLANDC__)
 #     include "ace/os_include/fcntl.h"
-#     define _chdir chdir
-#     define _ftime ftime
-#     undef _access
-#     define _access access
-#     if (__BORLANDC__ <= 0x540)
-#       define _getcwd getcwd
-#       define _stat stat
-#     endif
-#     define _isatty isatty
-#     define _umask umask
-#     define _fstat fstat
-#     define _stricmp stricmp
-#     define _strnicmp strnicmp
+//#     define _chdir chdir
+//#     define _ftime ftime
+//#     undef _access
+//#     define _access access
+//#     if (__BORLANDC__ <= 0x540)
+//#       define _getcwd getcwd
+//#       define _stat stat
+//#     endif
+//#     define _isatty isatty
+//#     define _umask umask
+//#     define _fstat fstat
+//#     define _stricmp stricmp
+//#     define _strnicmp strnicmp
 
-#     define _timeb timeb
+//#     define _timeb timeb
 
-#     define _O_CREAT O_CREAT
-#     define _O_EXCL  O_EXCL
-#     define _O_TRUNC O_TRUNC
-      // 0x0800 is used for O_APPEND.  0x08 looks free.
-#     define _O_TEMPORARY 0x08 /* see fcntl.h */
-#     define _O_RDWR   O_RDWR
-#     define _O_WRONLY O_WRONLY
-#     define _O_RDONLY O_RDONLY
-#     define _O_APPEND O_APPEND
-#     define _O_BINARY O_BINARY
-#     define _O_TEXT   O_TEXT
-#   endif /* __BORLANDC__ */
+//#     define _O_CREAT O_CREAT
+//#     define _O_EXCL  O_EXCL
+//#     define _O_TRUNC O_TRUNC
+//      // 0x0800 is used for O_APPEND.  0x08 looks free.
+//#     define _O_TEMPORARY 0x08 /* see fcntl.h */
+//#     define _O_RDWR   O_RDWR
+//#     define _O_WRONLY O_WRONLY
+//#     define _O_RDONLY O_RDONLY
+//#     define _O_APPEND O_APPEND
+//#     define _O_BINARY O_BINARY
+//#     define _O_TEXT   O_TEXT
+//#   endif /* __BORLANDC__ */
 
 typedef OVERLAPPED ACE_OVERLAPPED;
 
 typedef DWORD ACE_thread_t;
-#   if !defined(__MINGW32__)
-typedef long pid_t;
-#   endif /* __MINGW32__ */
+//#   if !defined(__MINGW32__)
+//typedef long pid_t;
+//#   endif /* __MINGW32__ */
 typedef HANDLE ACE_hthread_t;
 
 #define ACE_INVALID_PID ((pid_t) -1)
@@ -2937,7 +2937,7 @@ typedef DWORD ACE_exitcode;
 
 // Reliance on CRT - I don't really like this.
 
-#   define O_NDELAY    1
+//#   define O_NDELAY    1
 #   if !defined (MAXPATHLEN)
 #     define MAXPATHLEN  _MAX_PATH
 #   endif /* !MAXPATHLEN */
@@ -3006,10 +3006,10 @@ typedef ACE_UINT64 ACE_hrtime_t;
 // Default port is MAX_SHORT.
 #   define ACE_MAX_DEFAULT_PORT 65535
 
-// Default semaphore key
-#   if !defined (ACE_DEFAULT_SEM_KEY)
-#     define ACE_DEFAULT_SEM_KEY 1234
-#   endif /* ACE_DEFAULT_SEM_KEY */
+//// Default semaphore key
+//#   if !defined (ACE_DEFAULT_SEM_KEY)
+//#     define ACE_DEFAULT_SEM_KEY 1234
+//#   endif /* ACE_DEFAULT_SEM_KEY */
 
 #   define ACE_INVALID_SEM_KEY -1
 
@@ -3044,11 +3044,11 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
-// The following are #defines and #includes that are specific to UNIX.
-
-#   define ACE_STDIN 0
-#   define ACE_STDOUT 1
-#   define ACE_STDERR 2
+//// The following are #defines and #includes that are specific to UNIX.
+//
+//#   define ACE_STDIN 0
+//#   define ACE_STDOUT 1
+//#   define ACE_STDERR 2
 
 // Be consistent with Winsock naming
 typedef int ACE_exitcode;
@@ -3754,73 +3754,73 @@ struct sigaction
 };
 # endif /* ACE_LACKS_SIGACTION */
 
-# if !defined (SIGHUP)
-#   define SIGHUP 0
-# endif /* SIGHUP */
-
-# if !defined (SIGINT)
-#   define SIGINT 0
-# endif /* SIGINT */
-
-# if !defined (SIGSEGV)
-#   define SIGSEGV 0
-# endif /* SIGSEGV */
-
-# if !defined (SIGIO)
-#   define SIGIO 0
-# endif /* SIGSEGV */
-
-# if !defined (SIGUSR1)
-#   define SIGUSR1 0
-# endif /* SIGUSR1 */
-
-# if !defined (SIGUSR2)
-#   define SIGUSR2 0
-# endif /* SIGUSR2 */
-
-# if !defined (SIGCHLD)
-#   define SIGCHLD 0
-# endif /* SIGCHLD */
-
-# if !defined (SIGCLD)
-#   define SIGCLD SIGCHLD
-# endif /* SIGCLD */
-
-# if !defined (SIGQUIT)
-#   define SIGQUIT 0
-# endif /* SIGQUIT */
-
-# if !defined (SIGPIPE)
-#   define SIGPIPE 0
-# endif /* SIGPIPE */
-
-# if !defined (SIGALRM)
-#   define SIGALRM 0
-# endif /* SIGALRM */
-
-# if !defined (SIG_DFL)
-#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#     define SIG_DFL ((void *) 0)
-#   else
-#     define SIG_DFL ((__sighandler_t) 0)
-#   endif
-# endif /* SIG_DFL */
-
-# if !defined (SIG_IGN)
-#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#     define SIG_IGN ((void *) 1)     /* ignore signal */
-#   else
-#     define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
-#   endif
-# endif /* SIG_IGN */
-
-# if !defined (SIG_ERR)
-#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#     define SIG_ERR ((void *) -1)    /* error return from signal */
-#   else
-#     define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
-#   endif
-# endif /* SIG_ERR */
+//# if !defined (SIGHUP)
+//#   define SIGHUP 0
+//# endif /* SIGHUP */
+//
+//# if !defined (SIGINT)
+//#   define SIGINT 0
+//# endif /* SIGINT */
+//
+//# if !defined (SIGSEGV)
+//#   define SIGSEGV 0
+//# endif /* SIGSEGV */
+//
+//# if !defined (SIGIO)
+//#   define SIGIO 0
+//# endif /* SIGSEGV */
+//
+//# if !defined (SIGUSR1)
+//#   define SIGUSR1 0
+//# endif /* SIGUSR1 */
+//
+//# if !defined (SIGUSR2)
+//#   define SIGUSR2 0
+//# endif /* SIGUSR2 */
+//
+//# if !defined (SIGCHLD)
+//#   define SIGCHLD 0
+//# endif /* SIGCHLD */
+//
+//# if !defined (SIGCLD)
+//#   define SIGCLD SIGCHLD
+//# endif /* SIGCLD */
+//
+//# if !defined (SIGQUIT)
+//#   define SIGQUIT 0
+//# endif /* SIGQUIT */
+//
+//# if !defined (SIGPIPE)
+//#   define SIGPIPE 0
+//# endif /* SIGPIPE */
+//
+//# if !defined (SIGALRM)
+//#   define SIGALRM 0
+//# endif /* SIGALRM */
+//
+//# if !defined (SIG_DFL)
+//#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
+//#     define SIG_DFL ((void *) 0)
+//#   else
+//#     define SIG_DFL ((__sighandler_t) 0)
+//#   endif
+//# endif /* SIG_DFL */
+//
+//# if !defined (SIG_IGN)
+//#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
+//#     define SIG_IGN ((void *) 1)     /* ignore signal */
+//#   else
+//#     define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
+//#   endif
+//# endif /* SIG_IGN */
+//
+//# if !defined (SIG_ERR)
+//#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
+//#     define SIG_ERR ((void *) -1)    /* error return from signal */
+//#   else
+//#     define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
+//#   endif
+//# endif /* SIG_ERR */
 
 # if !defined (O_NONBLOCK)
 #   define O_NONBLOCK  1
@@ -3987,24 +3987,24 @@ struct sigaction
 #   define PIPE_BUF 5120
 # endif /* PIPE_BUF */
 
-# if !defined (PROT_RDWR)
-#   define PROT_RDWR (PROT_READ|PROT_WRITE)
-# endif /* PROT_RDWR */
+//# if !defined (PROT_RDWR)
+//#   define PROT_RDWR (PROT_READ|PROT_WRITE)
+//# endif /* PROT_RDWR */
 
-# if defined (ACE_HAS_POSIX_NONBLOCK)
-#   define ACE_NONBLOCK O_NONBLOCK
-# else
-#   define ACE_NONBLOCK O_NDELAY
-# endif /* ACE_HAS_POSIX_NONBLOCK */
+//# if defined (ACE_HAS_POSIX_NONBLOCK)
+//#   define ACE_NONBLOCK O_NONBLOCK
+//# else
+//#   define ACE_NONBLOCK O_NDELAY
+//# endif /* ACE_HAS_POSIX_NONBLOCK */
 
-// These are used by the <ACE_IPC_SAP::enable> and
-// <ACE_IPC_SAP::disable> methods.  They must be unique and cannot
-// conflict with the value of <ACE_NONBLOCK>.  We make the numbers
-// negative here so they won't conflict with other values like SIGIO,
-// etc.
-# define ACE_SIGIO -1
-# define ACE_SIGURG -2
-# define ACE_CLOEXEC -3
+//// These are used by the <ACE_IPC_SAP::enable> and
+//// <ACE_IPC_SAP::disable> methods.  They must be unique and cannot
+//// conflict with the value of <ACE_NONBLOCK>.  We make the numbers
+//// negative here so they won't conflict with other values like SIGIO,
+//// etc.
+//# define ACE_SIGIO -1
+//# define ACE_SIGURG -2
+//# define ACE_CLOEXEC -3
 
 # define LOCALNAME 0
 # define REMOTENAME 1
