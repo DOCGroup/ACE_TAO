@@ -33,9 +33,7 @@
 #endif
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -160,14 +158,14 @@ public:
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException ));
 
-  RTCORBA::UnixDomainProtocolProperties_ptr 
+  RTCORBA::UnixDomainProtocolProperties_ptr
   create_unix_domain_protocol_properties (
                                           CORBA::Long send_buffer_size,
                                           CORBA::Long recv_buffer_size
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
-  RTCORBA::SharedMemoryProtocolProperties_ptr 
+
+  RTCORBA::SharedMemoryProtocolProperties_ptr
   create_shared_memory_protocol_properties (
                                             CORBA::Long send_buffer_size,
                                             CORBA::Long recv_buffer_size,
@@ -179,14 +177,14 @@ public:
                                             const char *mmap_lockname
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
-  RTCORBA::UserDatagramProtocolProperties_ptr 
+
+  RTCORBA::UserDatagramProtocolProperties_ptr
   create_user_datagram_protocol_properties (
                                             CORBA::Boolean enable_network_priority
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
-  RTCORBA::StreamControlProtocolProperties_ptr 
+
+  RTCORBA::StreamControlProtocolProperties_ptr
   create_stream_control_protocol_properties (
                                              CORBA::Long send_buffer_size,
                                              CORBA::Long recv_buffer_size,
@@ -196,7 +194,7 @@ public:
                                              CORBA::Boolean enable_network_priority
                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
   virtual RTCORBA::ThreadpoolId
   create_threadpool (CORBA::ULong stacksize,
@@ -322,7 +320,7 @@ protected:
 #include "RT_ORB.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
