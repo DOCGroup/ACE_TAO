@@ -5,6 +5,10 @@
 #include "ace/Thread.h"
 #include "ace/Token.h"
 
+#if defined (DEBUGGING)
+#include "ace/streams.h"
+#endif /* DEBUGGING */
+
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
@@ -13,6 +17,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Token)
+
 
 void
 ACE_Token::dump (void) const
@@ -92,6 +97,8 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   cerr << '(' << ACE_Thread::self () << ')'
        << " acquire: owner_ = " << this->owner_
        << ", owner_ addr = " << &this->owner_
+       << ", waiters_ = " << this->waiters_
+       << ", in_use_ = " << this->in_use_
        << ", nesting level = " << this->nesting_level_ << endl;
 #endif /* DEBUGGING */
 
@@ -220,6 +227,8 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
   cerr << '(' << ACE_Thread::self () << ')'
        << " renew: owner_ thr = " << this->owner_
        << ", owner_ addr = " << &this->owner_
+       << ", waiters_ = " << this->waiters_
+       << ", in_use_ = " << this->in_use_
        << ", nesting level = " << this->nesting_level_ << endl;
 #endif /* DEBUGGING */
   ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
@@ -313,6 +322,8 @@ ACE_Token::release (void)
   cerr << '(' << ACE_Thread::self () << ')'
        << " release: owner_ thr = " << this->owner_
        << ", owner_ addr = " << &this->owner_
+       << ", waiters_ = " << this->waiters_
+       << ", in_use_ = " << this->in_use_
        << ", nesting level = " << this->nesting_level_ << endl;
 #endif /* DEBUGGING */
 
