@@ -177,8 +177,12 @@ else  # ! CROSS-COMPILE
     CCFLAGS += -Wno-switch
   endif # g++
 
-  CPPFLAGS += -Iinclude -Ibe_include -Ife \
-              -DCPP_LOCATION=\"$(strip $(CXX))\"
+  CPPFLAGS += -Iinclude -Ibe_include -Ife
+  ifeq ($(CPP_LOCATION),)
+    CPPFLAGS += -DCPP_LOCATION=\"$(strip $(CXX))\"
+  else
+    CPPFLAGS += -DCPP_LOCATION=\"$(CPP_LOCATION)\"
+  endif # !def CPP_LOCATION
 
   realclean:
 	rm -f tao_idl TAGS
