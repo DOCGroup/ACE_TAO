@@ -140,12 +140,6 @@ public:
   TAO_ObjectKey *_key (CORBA::Environment &env);
   //  Return a pointer to the Object Key.
 
-  virtual void forward_to (TAO_MProfile *mprofiles);
-  // Client object will assume ownership for this object!!
-
-  virtual TAO_MProfile *forward_to (void);
-  // copy of MProfile, user must delete.
-
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
                                 CORBA::Environment &env);
   // Return true if this profile is equivalent to other_profile.  Two
@@ -207,11 +201,6 @@ private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
 
-  virtual TAO_MProfile *forward_to_i (void);
-  // reference to the TAO_MProfile which the current profile was
-  // forwarded to.  This object keeps ownership.  Note that this
-  // method is NOT thread-safe, so it must be called with locks held.
-
   void create_body (void);
   // Does the work for <add_profile>.
 
@@ -248,9 +237,6 @@ private:
 
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
-
-  TAO_MProfile *forward_to_;
-  // list of profiles which we should try forwarding on.
 };
 
 #if defined (__ACE_INLINE__)

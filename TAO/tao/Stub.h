@@ -43,6 +43,10 @@ class TAO_Policy_Manager_Impl;
 
 enum TAO_Param_Type
 {
+  // @@ Is there any use for this enum? I would assume that the
+  //    similar ones on corbfwd.h are enough!
+  // @@ Jeff: can you check into that?
+
   // = TITLE
   //   TAO_Param_Type
   // =DESCRIPTION
@@ -305,13 +309,7 @@ public:
   // Our Constructors ...
 
   TAO_Stub (char *repository_id,
-            TAO_MProfile *profiles,
-            TAO_ORB_Core *orb_core);
-  // Construct from a repository ID and a pointer to list of
-  // profiles. Assumes ownership of the profiles.
-
-  TAO_Stub (char *repository_id,
-            TAO_MProfile &profiles,
+            const TAO_MProfile &profiles,
             TAO_ORB_Core *orb_core);
   // Construct from a repository ID and a list of profiles.
 
@@ -368,11 +366,11 @@ public:
    // returns TRUE if a connection was successful with at least
    // one profile.
 
-   TAO_Profile *set_base_profiles (TAO_MProfile *mprofiles);
+   TAO_Profile *set_base_profiles (const TAO_MProfile& mprofiles);
    // Initialize the base_profiles_ and set profile_in_use_ to
    // reference the first profile.
 
-  void add_forward_profiles (TAO_MProfile *mprofiles);
+  void add_forward_profiles (const TAO_MProfile &mprofiles);
   // THREAD SAFE.
   // set the forward_profiles.  This object will assume ownership of
   // this TAO_MProfile object!!
@@ -432,10 +430,6 @@ private:
   // NON-THREAD-SAFE.  utility method for next_profile.
 
 private:
-    // @@ For now, we keep track of transport specific profiles here,
-  //    but in the next iteration this will go away ... only transport
-  //    neutral info is kept here => TAO_Stub should also go away!
-  //    fredk
   TAO_MProfile     base_profiles_;
   // ordered list of profiles for this object.
   TAO_MProfile     *forward_profiles_;

@@ -61,7 +61,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_TAO_Stub_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_Stub::TAO_Stub (char *repository_id,
-                    TAO_MProfile &profiles,
+                    const TAO_MProfile &profiles,
                     TAO_ORB_Core* orb_core)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
@@ -92,85 +92,8 @@ TAO_Stub::TAO_Stub (char *repository_id,
   this->profile_lock_ptr_ =
     this->orb_core_->client_factory ()->create_iiop_profile_lock ();
 
-  this->set_base_profiles (&profiles);
-}
-
-TAO_Stub::TAO_Stub (char *repository_id,
-                    TAO_MProfile *profiles,
-                    TAO_ORB_Core* orb_core)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    forward_profiles_ (0),
-    profile_in_use_ (0),
-    profile_lock_ptr_ (0),
-    profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0),
-    orb_core_ (orb_core)
-{
-  if (this->orb_core_ == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO: (%P|%t) TAO_Stub created with default "
-                      "ORB core\n"));
-        }
-      this->orb_core_ = TAO_ORB_Core_instance ();
-    }
-
-  // @@ does this need to be freed?
-  this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
-
   this->set_base_profiles (profiles);
 }
-
-#if 0
-TAO_Stub::TAO_Stub (char *repository_id,
-                    TAO_Profile *profile)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    forward_profiles_ (0),
-    profile_in_use_ (0),
-    profile_lock_ptr_ (0),
-    profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0)
-{
-  // @@ XXX need to verify type and deal with wrong types
-
-  this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
-
-  base_profiles_.set (1);
-
-  base_profiles_.give_profile (profile);
-
-  reset_base ();
-
-}
-
-TAO_Stub::TAO_Stub (char *repository_id)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    forward_profiles_ (0),
-    profile_in_use_ (0),
-    profile_lock_ptr_ (0),
-    profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0)
-{
-  this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
-}
-#endif /* 0 */
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -181,7 +104,7 @@ TAO_Stub::TAO_Stub (char *repository_id)
 //    can get different values, depending on the profile_in_use!!
 CORBA::ULong
 TAO_Stub::hash (CORBA::ULong max,
-                   CORBA::Environment &env)
+                CORBA::Environment &env)
 {
   // we rely on the profile object to has it's address info
   if (profile_in_use_)
@@ -198,7 +121,7 @@ TAO_Stub::hash (CORBA::ULong max,
 // @@ Two object references are the same if any two profiles are the same!
 CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj,
-                            CORBA::Environment &env)
+                         CORBA::Environment &env)
 {
   if (CORBA::is_nil (other_obj) == 1)
     return 0;
@@ -914,7 +837,7 @@ TAO_Stub::set_policy_overrides (
 
   TAO_Stub* stub;
   ACE_NEW_RETURN (stub, TAO_Stub (CORBA::string_dup (this->type_id.in ()),
-                                  this->get_profiles (),
+                                  this->base_profiles_,
                                   this->orb_core_),
                   0);
   stub->policies_ = policy_manager.release ();
@@ -941,6 +864,33 @@ TAO_Stub::validate_connection (
   inconsistent_policies = 0;
   return 0;
 }
+
+void
+TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
+{
+  // we assume that the profile_in_use_ is being
+  // forwarded!  Grab the lock so things don't change.
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->profile_lock_ptr_));
+
+  TAO_MProfile *now_pfiles = this->forward_profiles_;
+  if (now_pfiles == 0)
+    now_pfiles = &this->base_profiles_;
+
+  ACE_NEW (this->forward_profiles_,
+           TAO_MProfile (mprofiles));
+
+  // forwarded profile points to the new IOR (profiles)
+  this->profile_in_use_->forward_to (this->forward_profiles_);
+
+  // new profile list points back to the list which was forwarded.
+  this->forward_profiles_->forward_from (now_pfiles);
+
+  // make sure we start at the beginning of mprofiles
+  this->forward_profiles_->rewind ();
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -978,11 +978,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   // @@ Fred, please change this code to use auto_ptr<> and
   //    automatically deallocate the temporary objects. Alternatively
   //    consider about using references ;-)
-  TAO_MProfile *mp;
-  ACE_NEW_THROW_EX (mp,
-                    TAO_MProfile (1),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-  ACE_CHECK_RETURN (stub);
+  TAO_MProfile mp (1);
 
   TAO_ORB_Parameters *orb_params =
     this->orb_core_->orb_params ();
@@ -996,7 +992,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
 
-  mp->give_profile (pfile);
+  mp.give_profile (pfile);
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
@@ -1486,10 +1482,7 @@ CORBA_ORB::iiop_string_to_object (const char *string,
   // _narrow will be required to make an expensive remote "is_a" call.
 
   // Allocate a Multiple Profile with the given no. of profiles.
-  TAO_MProfile *mp;
-  ACE_NEW_RETURN (mp,
-                  TAO_MProfile (1),
-                  obj);
+  TAO_MProfile mp (1);
 
   TAO_Profile* pfile;
   ACE_NEW_RETURN (pfile,
@@ -1498,7 +1491,7 @@ CORBA_ORB::iiop_string_to_object (const char *string,
   ACE_CHECK_RETURN (obj);
   // pfile refcount == 1
 
-  mp->give_profile (pfile);
+  mp.give_profile (pfile);
 
   // Now make the TAO_Stub ...
   TAO_Stub *data;
@@ -1583,7 +1576,7 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
   // Now make the TAO_Stub ...
   TAO_Stub *data;
   ACE_NEW_RETURN (data,
-                  TAO_Stub ((char *) 0, &mp, this->orb_core_),
+                  TAO_Stub ((char *) 0, mp, this->orb_core_),
                   CORBA::Object::_nil ());
 
   // Create the CORBA level proxy.
