@@ -1,3 +1,9 @@
+Tue Nov 28 13:31:47 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/run_test.pl: prefix exec of run_tests.sh with
+          $EXEPREFIX, so that it works without . in the user's
+          PATH.  Thanks to Carlos for pointing this out.
+
 Tue Nov 28 08:09:35 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/run_test.pl: added some more diagnostics to try
