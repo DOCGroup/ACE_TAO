@@ -1,3 +1,13 @@
+Sun Jan 28 22:19:35 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	  
+	  Added iterations to start the flow handlers for the reverse flow
+	  spec set in the TAO_StreamEndpoint::start method. This was
+	  required to enable the AVStream clients and servers to run on
+	  different hosts. Thanks to David Karr <dkarr@bbn.com> for
+	  reporting the bug.
+
 Sun Jan 28 08:28:52 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB_Core.cpp:
