@@ -88,12 +88,20 @@ namespace TAO
       CORBA::Short server_priority_;
     };
 
+    class Thread_Strategy;
+
     /**
      * This class stores the active policy strategies used for a certain POA.
      */
     class TAO_PortableServer_Export Active_Policy_Strategies
     {
-      public:
+    public:
+      void update (Cached_Policies &policies
+                   ACE_ENV_ARG_DECL);
+
+      Thread_Strategy* thread_strategy (void) const;
+    private:
+      Thread_Strategy* thread_strategy_;
     };
   }
 }
