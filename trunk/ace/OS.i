@@ -7676,6 +7676,26 @@ ACE_OS::shm_open (const char *filename,
 }
 #endif /* ! ACE_HAS_MOSTLY_UNICODE_APIS */
 
+ACE_INLINE void
+ACE_OS::tzset (void)
+{
+# if defined (ACE_WIN32)
+  ::_tzset ();  // For Win32.
+# else
+  ::tzset ();   // For UNIX platforms. 
+# endif
+}
+
+ACE_INLINE long
+ACE_OS::timezone (void)
+{
+#if defined (ACE_WIN32)
+  return ::_timezone;  // For Win32.
+# else
+  return ::timezone;   // For UNIX platforms.
+#endif
+}
+
 #if !defined (ACE_LACKS_DIFFTIME)
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
