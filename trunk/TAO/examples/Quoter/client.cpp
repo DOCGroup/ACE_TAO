@@ -390,7 +390,7 @@ main (int argc, char **argv)
 
 
   for (i = 0; i < threads; i++)
-    clients[i]->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0
+    clients[i]->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
                           ACE_DEFAULT_THREAD_PRIORITY);
 
   int result = ACE_Thread_Manager::instance ()->wait ();
