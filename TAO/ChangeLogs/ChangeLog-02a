@@ -1,3 +1,11 @@
+Mon Jan 28 10:39:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/Application_Test/ifr_dii_client.cpp:
+
+          Changed the name of a local variable to avoid a warning,
+          on SunOS Forte, of a possible hiding of a class member 
+          variable.
+
 Mon Jan 28 08:39:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * performance-tests/Makefile.bor:
