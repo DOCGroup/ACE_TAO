@@ -150,7 +150,7 @@ ACE_Token_Handler::acquire (ACE_Token_Proxy *proxy)
       return 0;
     }
   else // success
-    return this->send_reply (ACE_Token_Reply::SUCCESS);
+    return this->send_reply (0);
 }
 
 // Try to acquire the token.  Never block.
@@ -167,7 +167,7 @@ ACE_Token_Handler::try_acquire (ACE_Token_Proxy *proxy)
   if (proxy->tryacquire () == -1)
     return this->send_reply (errno);
   else
-    return this->send_reply (ACE_Token_Reply::SUCCESS);
+    return this->send_reply (0);
 }
 
 // Release the token and allow the next client that is waiting to
@@ -192,7 +192,7 @@ ACE_Token_Handler::release (ACE_Token_Proxy *proxy)
       this->timeout_id_ = 0;
     }
 
-  return this->send_reply (ACE_Token_Reply::SUCCESS);
+  return this->send_reply (0);
 }
 
 // Yield the token if any clients are waiting, otherwise keep the
@@ -231,7 +231,7 @@ ACE_Token_Handler::renew (ACE_Token_Proxy *proxy)
     }
   else
     // Success, we still hold the token.
-    return this->send_reply (ACE_Token_Reply::SUCCESS);
+    return this->send_reply (0);
 }
 
 /* VIRTUAL */ int
@@ -477,7 +477,7 @@ ACE_Token_Handler::token_acquired (ACE_TPQ_Entry *)
       this->timeout_id_ = 0;
     }
 
-  this->send_reply (ACE_Token_Reply::SUCCESS);
+  this->send_reply (0);
 }
 
 int

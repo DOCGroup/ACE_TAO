@@ -1,5 +1,8 @@
 Wed Sep  2 11:10:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* Replaced the use of ACE_SUCCESS and ACE_FAILURE to be 0 and -1
+ 	  respectively.  This should fix a bunch of niggling problems...
+
 	* netsvcs/lib/TS_Server_Handler.cpp (abandon): changed the use of
  	  FAILURE to -1 to be consistent with the following change.
 

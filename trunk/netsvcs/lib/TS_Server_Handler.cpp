@@ -52,9 +52,11 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
                   0, 0, 0,
                   &this->scheduling_strategy_,
                   "Time Server", "ACE time service") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n",
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%n: %p on port %d\n",
                        "acceptor::open failed",
-                       this->service_addr_.get_port_number ()), -1);
+                       this->service_addr_.get_port_number ()),
+                      -1);
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
@@ -65,7 +67,10 @@ ACE_TS_Server_Acceptor::init (int argc, char *argv[])
 
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "get_local_addr"),
+                      -1);
 
   ACE_DEBUG ((LM_DEBUG,
               "starting up Time Server at port %d on handle %d\n",
@@ -98,14 +103,22 @@ ACE_TS_Server_Handler::open (void *)
 
   // Determine the address of the client and display it.
   if (this->peer ().get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_remote_addr"), -1);
-
-  ACE_DEBUG ((LM_DEBUG, "(%t) accepted connection from host %s on fd %d\n",
-              client_addr.get_host_name (), this->peer ().get_handle ()));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "get_remote_addr"),
+                      -1);
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) accepted connection from host %s on fd %d\n",
+              client_addr.get_host_name (),
+              this->peer ().get_handle ()));
 
   // Call down to our parent to register ourselves with the Reactor.
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
+                      -1);
   return 0;
 }
 
@@ -113,17 +126,22 @@ ACE_TS_Server_Handler::open (void *)
 ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::send_request");
-  void    *buffer;
+  void *buffer;
   ssize_t length = request.encode (buffer);
 
   if (length == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "encode failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "encode failed"),
+                      -1);
 
   // Transmit request via a blocking send.
 
   if (this->peer ().send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_n failed"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "send_n failed"),
+                      -1);
   return 0;
 }
 
@@ -137,7 +155,7 @@ ACE_TS_Server_Handler::abandon (void)
 
   // Note we are using the time field to report the errno in case of
   // failure.
-  ACE_Time_Request rq (ACE_Time_Request::FAILURE, errno);
+  ACE_Time_Request rq (-1, errno);
   return this->send_request (rq);
 }
 
@@ -190,11 +208,15 @@ ACE_TS_Server_Handler::recv_request (void)
           /* FALLTHROUGH */
           ACE_DEBUG ((LM_DEBUG, "****************** recv_request returned -1\n"));
         default:
-          ACE_ERROR ((LM_ERROR, "%p got %d bytes, expected %d bytes\n",
-                      "recv failed", n, bytes_expected));
+          ACE_ERROR ((LM_ERROR,
+                      "%p got %d bytes, expected %d bytes\n",
+                      "recv failed",
+                      n,
+                      bytes_expected));
           /* FALLTHROUGH */
         case 0:
-          // We've shutdown unexpectedly, let's abandon the connection.
+          // We've shutdown unexpectedly, let's abandon the
+          // connection.
           this->abandon ();
           return -1;
           /* NOTREACHED */
@@ -229,7 +251,8 @@ ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
 ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
-  ACE_DEBUG ((LM_DEBUG, "closing down Handle  %d\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "closing down Handle %d\n",
               this->get_handle ()));
 }
 
