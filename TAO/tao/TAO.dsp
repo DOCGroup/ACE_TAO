@@ -627,6 +627,10 @@ SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectReferenceTemplateC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.cpp
 # End Source File
 # Begin Source File
@@ -1415,6 +1419,10 @@ SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectReferenceTemplateC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
@@ -1483,15 +1491,15 @@ SOURCE=.\Policy_Set.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Policy_Validator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PolicyC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\PolicyFactory_Registry.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Policy_Validator.h
 # End Source File
 # Begin Source File
 
@@ -2076,6 +2084,10 @@ SOURCE=.\Object_Loader.i
 # Begin Source File
 
 SOURCE=.\ObjectIDList.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectReferenceTemplateC.i
 # End Source File
 # Begin Source File
 
