@@ -1,3 +1,9 @@
+Sun Mar  6 18:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+          Readded removed include of os_time.h to fix compile errors with
+          Borland
+
 Sun Mar  6 15:01:00 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* include/makeinclude/wrapper_macros.GNU (Message):
