@@ -1,3 +1,31 @@
+Fri Jan 25 11:24:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_array.cpp:
+
+          Added base class constructor calls to class be_array
+          constructor.
+
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+
+          Cosmetic changes to source code.
+
+        * TAO_IDL/fe/fe_declarator.cpp:
+
+          Removed addition of arrays to AST at global scope. This seems to
+          be legacy code that there is no good reason for, and it was
+          causing problems when an array is declared, typedef'd, and
+          used as the element of another array at global scope. Anonymous
+          arrays and the corresponding typdef (if any) are still
+          added to the scope where they are declared. Thanks to Boris
+          Kolpackov <boris@upsa.kent.orc.ru> for reporting this bug.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+
+          Made change for sequences similar to change for arrays
+          above.
+
 Fri Jan 25 12:14:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * TAO/performance-tests/AMH_Single_Threaded_Latency/*.bor:
