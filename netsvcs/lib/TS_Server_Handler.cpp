@@ -29,7 +29,6 @@ ACE_TS_Server_Acceptor::parse_args (int argc, char *argv[])
 	  ACE_ERROR_RETURN ((LM_ERROR, 
 			    "%n:\n[-p server-port]\n%a", 1),
 			   -1);
-	  break;
 	}
     }
   this->service_addr_.set (this->service_port_);
