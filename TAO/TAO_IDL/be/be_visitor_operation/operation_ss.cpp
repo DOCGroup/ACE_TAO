@@ -835,7 +835,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
   // first initialize a reply message
   os->indent ();
   *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK;\n";
+      << "ACE_CHECK;" << be_nl;
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type
@@ -845,10 +845,6 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
     {
       return 0;
     }
-
-  // grab the incoming stream
-  os->indent ();
-  *os << "ACE_CHECK;" << be_nl;
 
   // Create temporary variables for the out and return parameters..
   if (!this->void_return_type (bt))
