@@ -348,7 +348,9 @@ test_concurrent (const ACE_TCHAR *prog,
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
 
-  acceptor.acceptor ().malloc_options ().minimum_bytes_ = 1024 * 1024;
+  // Make sure the MEM_Stream created by the underlying MEM_Acceptor
+  // is capable of passing messages of 1MB.
+  acceptor.acceptor ().init_buffer_size (1024 * 1024);
   acceptor.acceptor ().mmap_prefix (ACE_TEXT ("MEM_Acceptor_"));
   acceptor.acceptor ().preferred_strategy (ACE_MEM_IO::MT);
 

@@ -20,5 +20,8 @@ ACE_MEM_Connector::preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy)
 ASYS_INLINE ACE_MEM_SAP::MALLOC_OPTIONS &
 ACE_MEM_Connector::malloc_options (void)
 {
+  // @@ This function has been deprecated and will be removed in the
+  // future.
+
   return this->malloc_options_;
 }

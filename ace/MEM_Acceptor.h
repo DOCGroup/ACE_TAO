@@ -100,6 +100,12 @@ public:
   const ACE_TCHAR *mmap_prefix (void) const;
   void mmap_prefix (const ACE_TCHAR *prefix);
 
+  /**
+   * Change the initial MMAP buffer size (in bytes) of the MEM_Stream
+   * this MEM_Acceptor creates.
+   */
+  void init_buffer_size (off_t bytes);
+
   /// Get the preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;
 
@@ -111,6 +117,7 @@ public:
   int get_local_addr (ACE_MEM_Addr &) const;
 
   /// Accessor to the mmap options.
+  /// This method has been deprecated.
   ACE_MEM_SAP::MALLOC_OPTIONS& malloc_options (void);
 
   // = Meta-type info
