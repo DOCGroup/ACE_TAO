@@ -1,3 +1,8 @@
+Sun Jan 03 21:48:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.cpp (open): Changed C-style cast to use the
+ 	  new ACE_sap_any_cast macro from Dr. Schmidt.
+
 Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SString: The set(const char *, size_t, int = 1) and
