@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "simple_client"=.\simple_client.dsp - Package Owner=<4>
+Project: "MT_Client Simple Client"=.\simple_client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -62,4 +62,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-
