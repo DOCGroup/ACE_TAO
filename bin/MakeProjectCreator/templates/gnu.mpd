@@ -87,6 +87,22 @@ TAO_IDL = <%tao_idl%>
 TAO_IDLFLAGS = <%tao_idlflags%>
 <%endif%>
 
+<%if(exename)%>
+INSBIN ?= <%if(install)%><%install%><%else%>.<%endif%>
+OUTPUT_DIRECTORY = $(INSBIN)
+<%else%>
+<%if(dllout || libout)%>
+INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+<%endif%>
+ifeq ($(INSLIB),.)
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
+  INSLIB = $(PWD)
+endif
+OUTPUT_DIRECTORY = $(INSLIB)
+<%endif%>
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -105,19 +121,6 @@ all: $(TEMPINCDIR)
 
 endif
 
-<%if(exename)%>
-INSBIN ?= <%if(install)%><%install%><%else%>.<%endif%>
-OUTPUT_DIRECTORY = $(INSBIN)
-<%else%>
-INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
-ifeq ($(INSLIB),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
-  endif
-  INSLIB = $(PWD)
-endif
-OUTPUT_DIRECTORY = $(INSLIB)
-<%endif%>
 all: $(OUTPUT_DIRECTORY)
 
 $(OUTPUT_DIRECTORY):
