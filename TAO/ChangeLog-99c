@@ -1,3 +1,24 @@
+Tue Aug 17 12:10:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/Options.html:
+	* tao/default_resource.h:
+	* tao/default_resource.cpp:
+	  Added option to control the new signal masking features in the
+	  ACE_Select_Reactor
+
+	* performance-tests/Latency/st_server.conf:
+	  Eliminate the signal masking overhead in the Reactor.
+
+	* tao/ORB_Core.cpp:
+	  Removed template instantiations that were not needed anymore.
+
+	* performance-tests/Latency/client.cpp:
+	* performance-tests/Latency/st_client.cpp:
+	  Use _non_existent() to force a connection before running the
+	  test, in the future we should use validate_connection() and in
+	  the real world we should use -ORBpreconnect but this keeps the
+	  test simple.
+
 Tue Aug 17 11:28:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Servant_Base.i:

@@ -31,7 +31,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
     protocol_factories_ (),
     connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
-    purge_percentage_ (TAO_PURGE_PERCENT)
+    purge_percentage_ (TAO_PURGE_PERCENT),
+    reactor_mask_signals_ (1)
 {
 }
 
@@ -70,6 +71,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->use_tss_resources_ = 1;
           }
       }
+
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBReactorLock") == 0)
       {
@@ -85,6 +87,21 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               reactor_type_ = TAO_REACTOR_SELECT_ST;
             else if (ACE_OS::strcasecmp (name, "token") == 0)
               reactor_type_= TAO_REACTOR_SELECT_MT;
+          }
+      }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBReactorMaskSignals") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name, "0") == 0)
+              this->reactor_mask_signals_ = 0;
+            else if (ACE_OS::strcasecmp (name, "1") == 0)
+              this->reactor_mask_signals_= 1;
           }
       }
 
@@ -376,11 +393,23 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
     {
     default:
     case TAO_REACTOR_SELECT_MT:
-      ACE_NEW_RETURN (impl, TAO_REACTOR, 0);
+      ACE_NEW_RETURN (impl,
+                      TAO_REACTOR ((ACE_Sig_Handler*)0,
+                                   (ACE_Timer_Queue*)0,
+                                   0,
+                                   (ACE_Reactor_Notify*)0,
+                                   this->reactor_mask_signals_),
+                      0);
       break;
 
     case TAO_REACTOR_SELECT_ST:
-      ACE_NEW_RETURN (impl, TAO_NULL_LOCK_REACTOR, 0);
+      ACE_NEW_RETURN (impl,
+                      TAO_NULL_LOCK_REACTOR ((ACE_Sig_Handler*)0,
+                                             (ACE_Timer_Queue*)0,
+                                             0,
+                                             (ACE_Reactor_Notify*)0,
+                                             this->reactor_mask_signals_),
+                      0);
       break;
 
     case TAO_REACTOR_FL:
