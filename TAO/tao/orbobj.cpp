@@ -455,8 +455,6 @@ CORBA_ORB::resolve_name_service (void)
 
       // Return ior.
       return this->name_service_;
-
-      ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
     }
 }
 
