@@ -40,6 +40,12 @@ struct helper<char>
   static char const * sample1() {
     return "World";
   }
+  static char * dup_sample0() {
+    return string_traits<char,true>::duplicate(sample0());
+  }
+  static char * dup_sample1() {
+    return string_traits<char,true>::duplicate(sample1());
+  }
   static bool equal(char const * lhs, char const * rhs) {
     return ACE_OS::strcmp(lhs, rhs) == 0;
   }
@@ -57,6 +63,12 @@ struct helper<CORBA::WChar>
   static CORBA::WChar const * sample1() {
     return L"World";
   }
+  static CORBA::WChar * dup_sample0() {
+    return string_traits<CORBA::WChar,true>::duplicate(sample0());
+  }
+  static CORBA::WChar * dup_sample1() {
+    return string_traits<CORBA::WChar,true>::duplicate(sample1());
+  }
   static bool equal(CORBA::WChar const * lhs, CORBA::WChar const * rhs) {
     return ACE_OS::strcmp(lhs, rhs) == 0;
   }
@@ -68,6 +80,7 @@ struct Tester
   typedef string_traits<charT,true> tested_element_traits;
   typedef string_sequence_element<tested_element_traits> tested_element;
   typedef charT * string_type;
+  typedef charT const * const_string_type;
   typedef typename tested_element_traits::string_var string_var;
   typedef typename tested_element_traits::string_mgr string_mgr;
 
@@ -77,17 +90,21 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
 
     {
-      string_type xe = 0;
+      string_type xe = helper<charT>::dup_sample0();
+      const_string_type y = helper<charT>::sample1();
+      d.reset(); r.reset();
+
       tested_element x(xe, true);
       BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(0), r);
-      x = helper<charT>::sample0();
 
-      BOOST_CHECK_MESSAGE(d.expect(1), d);
+      x = y;
+
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
       BOOST_CHECK_MESSAGE(
-          helper<charT>::equal(helper<charT>::sample0(), xe),
+          helper<charT>::equal(helper<charT>::sample1(), xe),
           "Mismatch after assignment from const. expected="
           << helper<charT>::sample0()
           << ", got=" << x);
@@ -103,28 +120,24 @@ struct Tester
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      string_type xe = 0;
-
+      string_type xe = helper<charT>::dup_sample0();
       tested_element x(xe, true);
-      x = helper<charT>::sample0();
 
-      string_type ye = 0;
-
-      tested_element y(xe, true);
-      y = helper<charT>::sample1();
+      string_type ye = helper<charT>::dup_sample1();
+      tested_element y(ye, true);
 
       d.reset(); r.reset();
 
       x = y;
 
-      BOOST_CHECK_MESSAGE(d.expect(1), d);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
       BOOST_CHECK_MESSAGE(
-          helper<charT>::equal(helper<charT>::sample1(), x),
+          helper<charT>::equal(helper<charT>::sample1(), xe),
           "Mismatch after assignment from element. expected="
           << helper<charT>::sample1()
-          << ", got=" << x);
+          << ", got=" << xe);
 
       tested_element_traits::release(xe);
       tested_element_traits::release(ye);
@@ -139,23 +152,22 @@ struct Tester
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      string_type xe = 0;
+      string_type xe = helper<charT>::dup_sample0();
 
       tested_element x(xe, true);
-      x = helper<charT>::sample0();
 
       d.reset(); r.reset();
 
       x = x;
 
-      BOOST_CHECK_MESSAGE(d.expect(1), d);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
       BOOST_CHECK_MESSAGE(
-          helper<charT>::equal(helper<charT>::sample0(), x),
+          helper<charT>::equal(helper<charT>::sample0(), xe),
           "Mismatch after self assignment. expected="
-          << helper<charT>::sample1()
-          << ", got=" << x);
+          << helper<charT>::sample0()
+          << ", got=" << xe);
 
       tested_element_traits::release(xe);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
@@ -229,22 +241,16 @@ struct Tester
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
-
     {
-      string_type xe =
-        tested_element_traits::duplicate(helper<charT>::sample0());
+      string_type xe = helper<charT>::dup_sample0();
       tested_element x(xe, true);
 
       d.reset(); r.reset();
 
       tested_element y(x);
 
-      BOOST_CHECK_MESSAGE(d.expect(0), d);
-      BOOST_CHECK_MESSAGE(r.expect(0), r);
-
       x = y;
 
-      BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
       BOOST_CHECK_MESSAGE(
@@ -272,8 +278,9 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
 
     {
-      string_type xe = 0;
+      string_type xe = helper<charT>::dup_sample1();
       tested_element x(xe, true);
+      BOOST_CHECK_MESSAGE(d.expect(1), d);
 
       string_var y(helper<charT>::sample0());
 
@@ -282,7 +289,6 @@ struct Tester
 
       x = y;
 
-      BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
       BOOST_CHECK_MESSAGE(
@@ -304,8 +310,9 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
 
     {
-      string_type xe = 0;
+      string_type xe = helper<charT>::dup_sample1();
       tested_element x(xe, true);
+      BOOST_CHECK_MESSAGE(d.expect(1), d);
 
       string_mgr y;
       y = helper<charT>::sample0();
@@ -315,7 +322,6 @@ struct Tester
 
       x = y;
 
-      BOOST_CHECK_MESSAGE(d.expect(1), d);
       BOOST_CHECK_MESSAGE(r.expect(1), r);
 
       BOOST_CHECK_MESSAGE(
