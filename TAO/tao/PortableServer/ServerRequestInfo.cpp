@@ -7,6 +7,7 @@
 #include "POA_Policy_Set.h"
 
 #include "tao/TAO_Server_Request.h"
+#include "tao/ORB_Core.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Core.h"
 
@@ -307,6 +308,72 @@ TAO_ServerRequestInfo::_sending_exception (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->caught_exception_;
+}
+
+char *
+TAO_ServerRequestInfo::server_id (TAO_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (this->servant_upcall_ != 0)
+    {
+      // Fill in later
+      char *server_id =
+        ACE_const_cast (char *,
+                        this->server_request_.orb_core ()->server_id ());
+
+      return server_id;
+    }
+
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                          CORBA::COMPLETED_NO),
+                    0);
+}
+
+char *
+TAO_ServerRequestInfo::orb_id (TAO_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (this->servant_upcall_ != 0)
+    {
+      // Fill in later
+      char *orbid =
+        ACE_const_cast (char *,
+                        this->server_request_.orb_core ()->orbid ());
+
+      return orbid;
+    }
+
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                          CORBA::COMPLETED_NO),
+                    0);
+}
+
+PortableInterceptor::AdapterName *
+TAO_ServerRequestInfo::adapter_name (TAO_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Fill in later
+
+  /*
+    The adapter_name attribute defines a name for the object adapter
+    that services requests for the invoked object. In the case of the
+    POA, the adapter_name is the sequence of names from the root POA
+    to the POA that services the request. The root POA is not named in
+    this sequence.
+  */
+  if (this->servant_upcall_ != 0)
+    {
+      CORBA::StringSeq *adapter_name = 0;
+      adapter_name =
+        this->servant_upcall_->poa ().adapter_name (TAO_ENV_SINGLE_ARG_DECL);
+      ACE_CHECK_RETURN (0);
+
+      return adapter_name;
+    }
+
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                          CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::OctetSeq *

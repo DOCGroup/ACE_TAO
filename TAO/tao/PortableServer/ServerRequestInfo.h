@@ -177,6 +177,21 @@ public:
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the server_id of the server. The value is passed to
+  /// the ORB via -ORBServerId parameter.
+  virtual char * server_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Return the ORBId value that is passed to the ORB::Init call.
+  virtual char * orb_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Return the name of the object adapter that services requests for
+  /// the invoked object.
+  virtual PortableInterceptor::AdapterName * adapter_name (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
   /// Return the most derived interface of the target object.
   virtual char * target_most_derived_interface (
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)

@@ -121,6 +121,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     message_block_dblock_allocator_ (0),
     message_block_buffer_allocator_ (0),
     message_block_msgblock_allocator_ (0),
+    server_id_ (0),
     client_factory_ (0),
     server_factory_ (0),
     opt_for_collocation_ (1),
@@ -402,22 +403,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
           //
           // All preconnect or endpoint strings should be of the above form(s).
 
-          ACE_CString endpts (current_arg);
-
-          if (this->orb_params ()->endpoints (endpts) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t)\n")
-                          ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
-                          endpts.c_str ()));
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    EINVAL),
-                                  CORBA::COMPLETED_NO),
-                                -1);
-            }
-
+          set_endpoint_helper (current_arg
+                               TAO_ENV_ARG_PARAMETER);
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -769,7 +756,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
-
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBid")))
         {
@@ -789,7 +775,39 @@ TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBServerId")))
+        {
+          // The this->server_id_ is to uniquely identify a server to
+          // an IMR.
+          // Fill in later.
+          this->server_id_ = current_arg;
 
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBListenEndpoints")))
+        {
+          // This option is similar to the -ORBEndPoint option. May be
+          // ORBEndpoint option will be deprecated in future. But, for
+          // now, I (Priyanka) am leaving so that both options can be
+          // used.
+
+          set_endpoint_helper (current_arg
+                               TAO_ENV_ARG_PARAMETER);
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBNoProprietaryActivation")))
+        {
+          // This option can be used to set to not use any proprietary
+          // activation framework. The only TAO proprietary activation
+          // framework is IMR. So, by setting this option in TAO, the
+          // IMR shouldnt be used .. even if the ORBUseIMR option is
+          // set.
+          // Fill in later
+          // @@ To do later: Priyanka.
+        }
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
@@ -1265,7 +1283,6 @@ TAO_ORB_Core::set_poa_factory (const char *poa_factory_name,
   TAO_ORB_Core::poa_factory_directive_ = poa_factory_directive;
 }
 
-
 void
 TAO_ORB_Core::set_endpoint_selector_factory (const char *endpoint_selector_factory_name)
 {
@@ -1553,107 +1570,14 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   CORBA::PolicyList *policy_list
                                   TAO_ENV_ARG_DECL)
 {
-  // Add the Polices contained in "policy_list" to each profile so
-  // that those policies will be exposed to the client in the IOR.  In
-  // particular each CORBA::Policy has to be converted in to
-  // Messaging::PolicyValue, and then all the Messaging::PolicyValue
-  // should be embedded inside a Messaging::PolicyValueSeq which
-  // became in turns the "body" of the IOP::TaggedComponent. This
-  // conversion is a responsability of the CORBA::Profile class.  (See
-  // orbos\98-05-05.pdf Section 5.4)
-  if (policy_list->length () != 0)
-    {
-      TAO_Profile * profile;
-
-      for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
-        {
-          // Get the ith profile
-          profile = mprofile.get_profile (i);
-          profile->policies (policy_list TAO_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-        }
-    }
-
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  this->establish_components (mprofile, policy_list TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // Done creating profiles.  Initialize a TAO_Stub object with them.
-  TAO_Stub *stub = this->create_stub (type_id, mprofile TAO_ENV_ARG_PARAMETER);
+  /// Initialize a TAO_Stub object with the mprofile thats passed.
+  TAO_Stub *stub =
+    this->create_stub (type_id, mprofile TAO_ENV_ARG_DECL);
   ACE_CHECK_RETURN (stub);
 
   stub->base_profiles ().policy_list (policy_list);
 
   return stub;
-}
-
-void
-TAO_ORB_Core::establish_components (TAO_MProfile &mp,
-                                    CORBA::PolicyList *policy_list
-                                    TAO_ENV_ARG_DECL)
-{
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  TAO_IORInterceptor_List::TYPE &interceptors =
-    this->ior_interceptors ();
-
-  size_t interceptor_count = interceptors.size ();
-  if (interceptor_count == 0)
-    return;
-
-  PortableInterceptor::IORInfo_ptr info_temp;
-  ACE_NEW_THROW_EX (info_temp,
-                    TAO_IORInfo (this, mp, policy_list),
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_MPROFILE_CREATION_ERROR,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  PortableInterceptor::IORInfo_var info = info_temp;
-
-  for (size_t i = 0; i < interceptor_count; ++i)
-    {
-      ACE_TRY
-        {
-          interceptors[i]->establish_components (
-            info.in ()
-            TAO_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // According to the Portable Interceptors specification,
-          // IORInterceptor::establish_components() must not throw an
-          // exception.  If it does, then the ORB is supposed to
-          // ignore it and continue processing the remaining
-          // IORInterceptors.
-          if (TAO_debug_level > 1)
-            {
-              CORBA::String_var name = interceptors[i]->name (
-                TAO_ENV_SINGLE_ARG_PARAMETER);
-              // @@ What do we do if we get an exception here?
-
-              if (name.in () != 0)
-                {
-                  ACE_DEBUG ((LM_WARNING,
-                              "(%P|%t) Exception thrown while processing "
-                              "IORInterceptor \"%s\">\n",
-                              name.in ()));
-                }
-
-              ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "Ignoring exception in "
-                                       "IORInterceptor::establish_components");
-            }
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-    }
 }
 
 CORBA::Object_ptr
@@ -1754,11 +1678,19 @@ TAO_ORB_Core::lf_strategy (void)
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int perform_work
-                   TAO_ENV_ARG_DECL_NOT_USED)
+                   TAO_ENV_ARG_DECL)
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
+
+  // This method should only be called by servers, so now we set up
+  // for listening!
+  int ret = this->open (TAO_ENV_ARG_DECL);
+  ACE_CHECK_RETURN (-1);
+
+  if (ret == -1)
+    return -1;
 
   // Fetch the Reactor
   ACE_Reactor *r = this->reactor ();
@@ -1958,6 +1890,33 @@ TAO_ORB_Core::destroy_interceptors (TAO_ENV_SINGLE_ARG_DECL)
     }
 }
 
+// Set up listening endpoints.
+int
+TAO_ORB_Core::open (TAO_ENV_SINGLE_ARG_DECL)
+{
+  // Double check pattern
+  if (this->open_called_ == 1)
+    return 1;
+
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
+
+  if (this->open_called_ == 1)
+    return 1;
+
+  /// Open the Acceptor Registry.
+  int ret=
+    this->lane_resources ().open_acceptor_registry (0
+                                                    TAO_ENV_ARG_DECL);
+  ACE_CHECK_RETURN (-1);
+
+  if (ret == -1)
+    return -1;
+
+  this->open_called_ = 1;
+
+  return 0;
+}
+
 TAO_Thread_Lane_Resources &
 TAO_ORB_Core::lane_resources (void)
 {
@@ -2043,6 +2002,29 @@ TAO_ORB_Core::resolve_ior_table_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   this->ior_table_ = iortable_adapter->root ();
+}
+
+int
+TAO_ORB_Core::set_endpoint_helper (const char *current_arg
+                                   TAO_ENV_ARG_PARAMETER)
+{
+  ACE_CString endpts (current_arg);
+
+  if (this->orb_params ()->endpoints (endpts) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t)\n")
+                  ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
+                  endpts.c_str ()));
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                           CORBA::SystemException::_tao_minor_code (
+                              TAO_ORB_CORE_INIT_LOCATION_CODE,
+                              EINVAL),
+                           CORBA::COMPLETED_NO),
+                        -1);
+    }
+
+  return 0;
 }
 
 CORBA::Object_ptr

@@ -193,7 +193,6 @@ class TAO_Export TAO_ORB_Core
                                          char *argv[],
                                          const char *,
                                          CORBA_Environment &);
-  
 public:
 
   /// Constructor.
@@ -657,13 +656,6 @@ public:
                          const TAO_MProfile &profiles
                          TAO_ENV_ARG_DECL);
 
-
-  /// Give each registered IOR interceptor the opportunity to add
-  /// tagged components to profiles of each created servant.
-  void establish_components (TAO_MProfile &mp,
-                             CORBA::PolicyList *policy_list
-                             TAO_ENV_ARG_DECL);
-
   /// Create a new object, use the adapter registry to create a
   /// collocated object, if not possible then create a regular
   /// object.
@@ -699,6 +691,9 @@ public:
   CORBA::Object_ptr resolve_rt_orb (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Resolve the RT Current flyweight for this ORB.
+  /// Return server_id string.
+  const char *server_id (void) const;
+
   CORBA::Object_ptr resolve_rt_current (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Set/Get the current PortableGroup POA hooks.
@@ -845,6 +840,14 @@ public:
   TAO_IORInterceptor_List::TYPE & ior_interceptors (void);
   //@}
 
+  /// Set up the ORB Core's acceptor to listen on the
+  /// previously-specified port for requests.  Returns -1 on failure,
+  /// otherwise 0.
+  int open (TAO_ENV_ARG_DECL);
+
+  /// Return the underlying transport cache
+  TAO_Transport_Cache_Manager *transport_cache (void);
+
   /// Call the bidir_giop library to parse the policy.
   int parse_bidir_policy (CORBA::Policy_ptr policy
                           TAO_ENV_ARG_DECL);
@@ -967,6 +970,11 @@ protected:
   TAO_Stub_Factory *stub_factory_;
 
   /// Pointer to the list of protocol loaded into this ORB instance.
+  /// Helper method to hold the common code part for -ORBEndpoint and
+  /// -ORBListenEndpoint options.
+  int set_endpoint_helper (const char *current_arg
+                           TAO_ENV_ARG_PARAMETER);
+
   TAO_ProtocolFactorySet *protocol_factories_;
 
   /// The cached IOR for the Implementation Repository.
@@ -1051,6 +1059,9 @@ protected:
   // "RT_Thread_Lane_Resources_Manager_Factory".
   static const char *thread_lane_resources_manager_factory_name_;
 
+
+  /// The server_id_ that was passed via -ORBServerId option
+  const char *server_id_;
   // Name of the collocation resolver that needs to be instantiated.
   // The default value is "Default_Collocation_Resolver". If
   // TAO_RTCORBA is linked, the set_collocation_resolver will be
@@ -1194,6 +1205,12 @@ protected:
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
   //@}
+
+  /// Mutual exclusion for calling open.
+  TAO_SYNCH_MUTEX open_lock_;
+
+  /// Flag which denotes that the open method was called.
+  int open_called_;
 
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
 

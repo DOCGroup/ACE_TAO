@@ -139,6 +139,8 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
+  friend class TAO_ObjectReferenceFactory;
+  friend class TAO_ObjectReferenceTemplate;
 
   typedef ACE_CString String;
 
@@ -215,6 +217,54 @@ public:
   PortableServer::POAManager_ptr the_POAManager (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  PortableInterceptor::AdapterManagerId get_manager_id (TAO_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// This method returns the adapter_name as a sequence of strings of
+  /// length one or more or just a fixed name depending on the Object
+  /// Adapter. Added wrt to ORT Spec.
+  CORBA::StringSeq *adapter_name (TAO_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// {@ Accessor methods to ObjectReferenceTemplate
+  PortableInterceptor::ObjectReferenceTemplate * get_adapter_template ();
+
+  void set_adapter_template (PortableInterceptor::ObjectReferenceTemplate *
+                             object_ref_template,
+                             CORBA::Environment &ACE_TRY_ENV);
+  /// @}
+
+  /// {@ Accessor methods to PortableInterceptor::ObjectReferenceFactory
+  PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory ();
+
+  void set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory *
+                            current_factory
+                            TAO_ENV_ARG_DECL);
+  /// @}
+
+  /// Call the establish components.
+  void tao_establish_components (TAO_ENV_SINGLE_ARG_PARAMETER);
+  
+  /// Give each registered IOR interceptor the opportunity to add
+  /// tagged components to profiles of each created servant.
+  void establish_components (PortableInterceptor::IORInfo *info
+                             TAO_ENV_ARG_DECL);
+  
+  /// TAO_IORInfo requests these members.
+  CORBA::PolicyList *get_policy_list ();
+  
+  TAO_MProfile *get_mprofile ();
+
+  void
+  save_ior_component (const IOP::TaggedComponent &component
+                      TAO_ENV_ARG_DECL);
+
+  void 
+  save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
+                                     IOP::ProfileId profile_id
+                                     TAO_ENV_ARG_DECL);
+
+  
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::AdapterActivator_ptr the_activator (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -434,6 +484,16 @@ public:
   /// Accessor for the current thread policy of this POA.
   PortableServer::ThreadPolicyValue thread_policy (void) const;
 
+  /// {@ Accesor methods to POA state. The POA can be in one of
+  /// HOLDING, ACTIVE, DISCARDING, INACTIVE and NON_EXISTENT states.
+  PortableInterceptor::AdapterState
+  get_adapter_state (TAO_ENV_SINGLE_ARG_DECL);
+
+  void set_adapter_state (PortableInterceptor::AdapterState
+                          adapter_state,
+                          CORBA::Environment &ACE_TRY_ENV);
+  /// @}
+
   virtual void *thread_pool (void) const;
 
 protected:
@@ -483,6 +543,35 @@ protected:
   PortableServer::POAList *the_children_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// This method returns the adapter_name as a sequence of strings of
+  /// length one or more or just a fixed name depending on the Object
+  /// Adapter. Added wrt to ORT Spec.
+  CORBA::StringSeq *adapter_name_i (TAO_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Method to notify the IOR Interceptors when there is a state
+  /// changed not related to POAManager.
+  void adapter_state_changed (
+   const PortableInterceptor::ObjectReferenceTemplateSeq *seq_obj_ref_template,
+   PortableInterceptor::AdapterState state);
+  
+  void set_policy_list (CORBA::PolicyList *policy_list);
+  void set_mprofile (TAO_MProfile *mp);
+
+  /// Add the given tagged component to all profiles.
+  void tao_add_ior_component (
+      const IOP::TaggedComponent & component
+      TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Add the given tagged component to all profiles matching the given
+  /// ProfileId.
+  void tao_add_ior_component_to_profile (
+      const IOP::TaggedComponent & component,
+      IOP::ProfileId profile_id
+      TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ServantManager_ptr get_servant_manager_i (TAO_ENV_SINGLE_ARG_DECL)
@@ -516,6 +605,12 @@ protected:
 
   void imr_notify_shutdown (void);
   // ImplRepo helper method, notify the ImplRepo on shutdown
+
+  CORBA::Object_ptr invoke_key_to_object (const char *intf,
+                                          PortableServer::ObjectId
+                                          &user_id
+                                          TAO_ENV_ARG_DECL);
+
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -591,15 +686,13 @@ protected:
   void deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
                              TAO_ENV_ARG_DECL);
 
-  CORBA::Object_ptr create_reference_i (const char *intf,
-                                        CORBA::Short priority
+  CORBA::Object_ptr create_reference_i (const char *intf
                                         TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
 
   CORBA::Object_ptr create_reference_with_id_i (const PortableServer::ObjectId &oid,
-                                                const char *intf,
-                                                CORBA::Short priority
+                                                const char *intf
                                                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
@@ -718,21 +811,38 @@ protected:
 
   String name_;
 
+  TAO_POA_Manager &poa_manager_;
+
+  CORBA::PolicyList *policy_list_;
+
+  TAO_MProfile *mprofile_;
+  
+  IOP::TaggedComponent tagged_component_;
+  
+  IOP::ProfileId profile_id_;
+
+  CORBA::Boolean add_component_support_;
+
+  TAO_POA_Policy_Set policies_;
+
+  TAO_POA *parent_;
+
+  TAO_Active_Object_Map *active_object_map_;
+
   TAO_Object_Adapter::poa_name folded_name_;
 
   TAO_Object_Adapter::poa_name_var system_name_;
 
   CORBA::OctetSeq id_;
 
-  TAO_POA_Manager &poa_manager_;
+  PortableInterceptor::ObjectReferenceTemplate *ort_template_;
 
-  TAO_POA_Policy_Set policies_;
+  PortableInterceptor::ObjectReferenceFactory *obj_ref_factory_;
+
+  /// Adapter can be accepting, rejecting etc.
+  PortableInterceptor::AdapterState adapter_state_;
 
   TAO_POA_Cached_Policies cached_policies_;
-
-  TAO_POA *parent_;
-
-  TAO_Active_Object_Map *active_object_map_;
 
   int delete_active_object_map_;
 
@@ -769,8 +879,8 @@ protected:
 
   TAO_ORB_Core &orb_core_;
 
-  TAO_Object_Adapter *object_adapter_;
   // The object adapter we belong to
+  TAO_Object_Adapter *object_adapter_;
 
   CORBA::Boolean cleanup_in_progress_;
 
@@ -781,7 +891,7 @@ protected:
   TAO_SYNCH_CONDITION outstanding_requests_condition_;
 
   CORBA::Boolean wait_for_completion_pending_;
-
+  
   CORBA::Boolean waiting_destruction_;
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
@@ -789,6 +899,10 @@ protected:
   CORBA::ULong waiting_servant_deactivation_;
 
   TAO_SYNCH_RECURSIVE_MUTEX *single_threaded_lock_;
+
+  CORBA::ULong caller_key_to_object_;
+  
+  PortableServer::Servant servant_for_key_to_object_;
 };
 
 
