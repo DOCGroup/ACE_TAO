@@ -1,3 +1,16 @@
+Wed Jun 16 15:59:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/client.dsp:
+	* TAO/tests/Param_Test/Makefile:
+	* TAO/performance-tests/Pluggable/client.dsp:
+	* TAO/performance-tests/Pluggable/Makefile:
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+	  Modified files to reflect the new independence of
+	  client code from generated *S.* files.
+
 Wed Jun 16 13:41:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Incorporated the changes in the second phase for the
@@ -8,7 +21,7 @@ Wed Jun 16 13:41:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Wed Jun 16 15:31:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/dsicriminant_ci.cpp:
+	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
 	  Fixed code that was adding the scope twice when setting the
           discriminant to a default (unused) enum value.
 
