@@ -1,3 +1,27 @@
+Wed Jul 12 01:25:44 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/emulation/time.c:
+	  Removed since it is currently empty.
+
+	* pace/emulation/time.h:
+	  Minor changes to how this file is included in:
+
+	* pace/posix/time.h:
+	  Changed how emulation/time.h is included on Linux
+
+	* pace/config/compiler.h
+	* pace/posix/string.inl
+	* pace/posix/unistd.inl
+	  Changed to quell odd compiler warnings from gcc. Added
+	  PACE_BROKEN_INLINE.
+
+	* pace/emulation/mqueue.*
+	  Improved and updated code, but it is still not complete.
+
+	* pace/tests/mqueue_test.c
+	* pace/tests/Makefile
+	  Added a very simple test to verify mqueue works.
+
 Tue Jul 11 21:05:58 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * pace/unistd.h,pace/posix/unistd.inl:
