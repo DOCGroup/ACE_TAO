@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 // Listing 1 code/ch11
 #include "ace/Signal.h"

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
 // Listing 1 code/ch10
@@ -11,7 +12,7 @@ public:
     ACE_TRACE (ACE_TEXT ("Manager::Manager"));
     ACE_OS::strcpy (programName_, program_name);
   }
-  
+
   int doWork (void)
   {
     ACE_TRACE (ACE_TEXT ("Manager::doWork"));
@@ -33,7 +34,7 @@ public:
     return 0;
   }
 // Listing 1
-  
+
 private:
   // Listing 3 code/ch10
   int dumpRun (void)
@@ -43,19 +44,19 @@ private:
     if (ACE_OS::lseek (this->outputfd_, 0, SEEK_SET) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                          ACE_TEXT ("lseek")), -1);
-    
+
     char buf[1024];
     int length = 0;
 
-    // Read the contents of the error stream written 
+    // Read the contents of the error stream written
     // by the child and print it out.
-    while ((length = ACE_OS::read (this->outputfd_, 
+    while ((length = ACE_OS::read (this->outputfd_,
                                    buf, sizeof(buf)-1)) > 0)
       {
         buf[length] = 0;
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), buf));
       }
-    
+
     ACE_OS::close (this->outputfd_);
     return 0;
   }
@@ -66,7 +67,7 @@ private:
   int prepare (ACE_Process_Options &options)
   {
     ACE_TRACE (ACE_TEXT ("Manager::prepare"));
-    
+
     options.command_line ("%s 1", this->programName_);
     if (this->setStdHandles (options) == -1 ||
         this->setEnvVariable (options) == -1)
@@ -94,7 +95,7 @@ private:
     ACE_TRACE (ACE_TEXT ("Manager::setEnvVariables"));
     return options.setenv ("PRIVATE_VAR=/that/seems/to/be/it");
   }
- // Listing 2 
+ // Listing 2
 
 #if !defined (ACE_WIN32)
  // Listing 10 code/ch10
@@ -107,35 +108,35 @@ private:
     options.seteuid (pw->pw_uid);
     return 0;
   }
- // Listing 10 
+ // Listing 10
 #endif /* ACE_WIN32 */
-  
+
 private:
-  ACE_HANDLE outputfd_; 	
+  ACE_HANDLE outputfd_;
   ACE_TCHAR programName_[256];
 };
 
 // Listing 4 code/ch10
-class Slave 
+class Slave
 {
 public:
   Slave ()
   {
     ACE_TRACE (ACE_TEXT ("Slave::Slave"));
   }
-  
+
   int doWork (void)
   {
     ACE_TRACE (ACE_TEXT ("Slave::doWork"));
-    
-    ACE_DEBUG ((LM_INFO, 
-                ACE_TEXT ("(%P) started at %T, parent is %d\n"), 
+
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("(%P) started at %T, parent is %d\n"),
                 ACE_OS::getppid ()));
     this->showWho ();
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) the private environment is %s\n"),
                 ACE_OS::getenv ("PRIVATE_VAR")));
-    
+
     ACE_TCHAR str[128];
     ACE_OS::sprintf (str, ACE_TEXT ("(%d) Enter your command\n"),
                      ACE_OS::getpid ());
@@ -145,7 +146,7 @@ public:
                 str));
     return 0;
   }
-// Listing 4 
+// Listing 4
 
   void showWho (void)
   {

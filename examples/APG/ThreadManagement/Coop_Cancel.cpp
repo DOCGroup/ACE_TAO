@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 

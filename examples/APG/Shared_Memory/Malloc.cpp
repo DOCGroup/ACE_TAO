@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_stdio.h"
 // Listing 1 code/ch17
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
@@ -101,7 +102,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
     {
       addRecords ();
     }
-  
+
   g_allocator->sync ();
   delete g_allocator;
   return 0;
