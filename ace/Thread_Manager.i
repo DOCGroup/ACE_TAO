@@ -5,7 +5,7 @@
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 ACE_INLINE
-ACE_At_Thread_Exit::ACE_At_Thread_Exit()
+ACE_At_Thread_Exit::ACE_At_Thread_Exit (void)
   : next_ (0),
     td_ (0),
     was_applied_ (0),
@@ -21,72 +21,60 @@ ACE_At_Thread_Exit::was_applied() const
 }
 
 ACE_INLINE int
-ACE_At_Thread_Exit::was_applied(int applied)
-
+ACE_At_Thread_Exit::was_applied (int applied)
 {
-   was_applied_ = applied;
-   if (was_applied_)
+  was_applied_ = applied;
+  if (was_applied_)
     td_ = 0;
-   return was_applied_;
+  return was_applied_;
 }
 
 ACE_INLINE int
 ACE_At_Thread_Exit::is_owner() const
-
 {
-   return is_owner_;
+  return is_owner_;
 }
 
 ACE_INLINE int
-ACE_At_Thread_Exit::is_owner(int owner)
-
+ACE_At_Thread_Exit::is_owner (int owner)
 {
-   is_owner_ = owner;
-   return is_owner_;
+  is_owner_ = owner;
+  return is_owner_;
 }
 
 ACE_INLINE void
-ACE_At_Thread_Exit::do_apply()
-
+ACE_At_Thread_Exit::do_apply (void)
 {
-   if (!this->was_applied_ && this->is_owner_)
-    {
-      td_->at_pop();
-    }
+  if (!this->was_applied_ && this->is_owner_)
+    td_->at_pop();
 }
 
 ACE_INLINE
-ACE_At_Thread_Exit::~ACE_At_Thread_Exit()
-
+ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
 {
-   this->do_apply();
+  this->do_apply ();
 }
 
 ACE_INLINE
-ACE_At_Thread_Exit_Func::ACE_At_Thread_Exit_Func (
-  void* object,
-  ACE_CLEANUP_FUNC func,
-  void* param
-)
+ACE_At_Thread_Exit_Func::ACE_At_Thread_Exit_Func (void *object,
+                                                  ACE_CLEANUP_FUNC func,
+                                                  void *param)
   : object_(object),
     func_(func),
     param_(param)
-
 {
 }
 
 ACE_INLINE
-ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func()
-
+ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func (void)
 {
-   this->do_apply();
+  this->do_apply ();
 }
 
 ACE_INLINE void
-ACE_At_Thread_Exit_Func::apply()
-
+ACE_At_Thread_Exit_Func::apply ()
 {
-   func_(object_, param_);
+  func_ (object_, param_);
 }
 #endif /* ! ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
@@ -177,7 +165,7 @@ ACE_Thread_Descriptor::self (ACE_hthread_t &handle)
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 ACE_INLINE void
-ACE_Thread_Descriptor::log_msg_cleanup(ACE_Log_Msg* log_msg)
+ACE_Thread_Descriptor::log_msg_cleanup (ACE_Log_Msg* log_msg)
 
 {
   log_msg_ = log_msg;
@@ -197,7 +185,9 @@ ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next (void) const
 {
   ACE_TRACE ("ACE_Thread_Descriptor::get_next");
-  return ACE_static_cast (ACE_Thread_Descriptor *, this->next_);
+  return ACE_const_cast (ACE_Thread_Desriptor *,
+                         ACE_static_cast (ACE_Thread_Descriptor *,
+                                          this->next_));
 }
 
 // Reset this thread descriptor
