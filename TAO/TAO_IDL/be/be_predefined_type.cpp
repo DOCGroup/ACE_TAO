@@ -37,7 +37,8 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
                         p),
     AST_Decl (AST_Decl::NT_pre_defined, 
               n, 
-              p)
+              p,
+              I_TRUE)
 {
   // Generate a new Scoped Name for us such that we belong to the CORBA
   // namespace.

@@ -122,13 +122,15 @@ AST_Decl::AST_Decl (void)
     pd_pragmas (0),
     pd_added (I_FALSE),
     full_name_ (0),
-    prefix_ (0)
+    prefix_ (0),
+    anonymous_ (I_FALSE)
 {
 }
 
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
-                    UTL_StrList *p)
+                    UTL_StrList *p,
+                    idl_bool anonymous)
   : repoID_ (0),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -143,7 +145,8 @@ AST_Decl::AST_Decl (NodeType nt,
     pd_pragmas (p),
     pd_added (I_FALSE),
     full_name_ (0),
-    prefix_ (0)
+    prefix_ (0),
+    anonymous_ (anonymous)
 {
   compute_full_name (n);
 
@@ -623,6 +626,12 @@ AST_Decl::prefix (void)
     }
 
   return this->prefix_;
+}
+
+idl_bool
+AST_Decl::anonymous (void) const
+{
+  return this->anonymous_;
 }
 
 // Data accessors.
