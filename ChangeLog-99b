@@ -1,3 +1,18 @@
+Fri Jun  4 23:50:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
+	  Added support for codeset translators.
+	  Many thanks to Jim Rogers <jrogers@viasoft.com> for providing
+	  this fixes.
+
+	* ace/Makefile:
+	* ace/Codeset_IBM1047.h:
+	* ace/Codeset_IBM1047.cpp:
+	  A pair of codeset translators between IBM1047 (aka EBCDIC) and
+	  ISO8859-1 (aka ISO-Latin-1)
+
 Fri Jun  4 15:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.{h,i,cpp}: Removed common code by
