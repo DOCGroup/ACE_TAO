@@ -32,6 +32,7 @@ int errno;
 # define PACE_HAS_CPLUSPLUS
 # else  /* ! __cplusplus */
 # define PACE_INLINE static
+# define PACE_HAS_INLINE
 # endif /* ! __cplusplus */
 
 # define PACE_RETURN_NO_SUPPORT(X) \
