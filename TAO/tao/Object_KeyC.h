@@ -42,7 +42,7 @@ public:
   TAO_ObjectKey& operator= (const TAO_ObjectKey &);
 };
 
-class TAO_ObjectKey_var
+class TAO_Export TAO_ObjectKey_var
 {
 public:
   TAO_ObjectKey_var (void); // default constructor
@@ -70,7 +70,7 @@ private:
   TAO_ObjectKey *ptr_;
 };
 
-class TAO_ObjectKey_out
+class TAO_Export TAO_ObjectKey_out
 {
 public:
   TAO_ObjectKey_out (TAO_ObjectKey *&);
