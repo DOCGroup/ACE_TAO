@@ -1,3 +1,36 @@
+Wed Dec 19 15:36:14 2001 Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/Job.idl:
+	* examples/RTCORBA/Activity/examples/RTCORBA.cpp:
+	* examples/RTCORBA/Activity/examples/RTCORBA.h :
+	* examples/RTCORBA/Activity/Builder.cpp:
+	* examples/RTCORBA/Activity/Builder.h:
+	* examples/RTCORBA/Activity/Job_i.cpp:
+	* examples/RTCORBA/Activity/Job_i.h:
+	* examples/RTCORBA/Activity/POA_Holder.cpp:
+	* examples/RTCORBA/Activity/POA_Holder.h:
+	* examples/RTCORBA/Activity/Periodic_Task.cpp:
+	* examples/RTCORBA/Activity/Periodic_Task.h:
+	* examples/RTCORBA/Activity/Thread_Task.cpp:
+	* examples/RTCORBA/Activity/Thread_Task.h:
+	* examples/RTCORBA/Activity/gen_graphs.sh:
+	* examples/RTCORBA/Activity/svc.conf.client:
+	* examples/RTCORBA/Activity/svc.conf.server:
+	* examples/RTCORBA/Activity/Makefile:
+	* examples/RTCORBA/Activity/README:
+
+	 An example to showcase RTCORBA priority preservation feature.
+	This example reads conf. files and generates a data file containing 
+	latency numbers. As the data output is in a 2 column format, 
+	gnuplot can be used to plot nice invocation graphs. See the README 
+	for further details.
+
+	* orbsvcs/tests/Notify/performance-tests/Throughput.{h,cpp}:
+	* orbsvcs/tests/Notify/performance-tests/README:
+
+	Added new commandline parameters - payload_size, expected_count 
+	  and channel name. 
+
 Tue Dec 18 17:03:45 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/examples/Log/Client/TLS_Client.cpp: 
