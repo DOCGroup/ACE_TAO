@@ -111,17 +111,17 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/fe_private.h \
+ ../include/fe_interface_header.h ../include/fe_declarator.h
 .obj/fe_private.o .shobj/fe_private.so: fe_private.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -155,17 +155,17 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/fe_private.h \
+ ../include/fe_interface_header.h ../include/fe_declarator.h
 .obj/fe_init.o .shobj/fe_init.so: fe_init.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -199,17 +199,17 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/fe_private.h \
+ ../include/fe_interface_header.h ../include/fe_declarator.h
 .obj/fe_extern.o .shobj/fe_extern.so: fe_extern.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -243,17 +243,17 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/fe_private.h \
+ ../include/fe_interface_header.h ../include/fe_declarator.h
 .obj/fe_interface_header.o .shobj/fe_interface_header.so: fe_interface_header.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -287,17 +287,17 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/fe_private.h \
+ ../include/fe_interface_header.h ../include/fe_declarator.h
 .obj/y.tab.o .shobj/y.tab.so: y.tab.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -331,17 +331,17 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/fe_private.h \
+ ../include/fe_interface_header.h ../include/fe_declarator.h
 .obj/lex.yy.o .shobj/lex.yy.so: lex.yy.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -375,16 +375,16 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h y.tab.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/fe_private.h \
+ ../include/fe_interface_header.h ../include/fe_declarator.h y.tab.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -77,6 +77,8 @@ class CORBA_ORB;
 //typedef class CORBA_ORB *CORBA_ORB_ptr;
 
 class CORBA_Object;
+class CORBA_Object_var;
+class CORBA_Object_out;
 //typedef class CORBA_Object *CORBA_Object_ptr;
 
 class CORBA_ServerRequest;

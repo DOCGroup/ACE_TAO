@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -396,4 +396,14 @@ AST_Typedef *
 be_generator::create_typedef(AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p)
 {
   return (AST_Typedef *) new be_typedef(bt, n, p);
+}
+
+/*
+ * Construct an AST_Native node
+ */
+AST_Native *
+be_generator::create_native (UTL_ScopedName *n,
+                             UTL_StrList *p)
+{
+  return (AST_Native *) new be_native (n, p);
 }

@@ -96,16 +96,17 @@ $(LOBJS): $(LHDRS)
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/drv_private.h ../include/drv_link.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/drv_private.h \
+ ../include/drv_link.h
 .obj/drv_private.o .shobj/drv_private.so: drv_private.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -139,16 +140,16 @@ $(LOBJS): $(LHDRS)
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/drv_private.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/drv_private.h
 .obj/drv_main.o .shobj/drv_main.so: drv_main.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -182,16 +183,17 @@ $(LOBJS): $(LHDRS)
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/drv_private.h ../include/drv_link.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/drv_private.h \
+ ../include/drv_link.h
 .obj/drv_args.o .shobj/drv_args.so: drv_args.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -225,16 +227,17 @@ $(LOBJS): $(LHDRS)
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/drv_private.h ../include/drv_link.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/drv_private.h \
+ ../include/drv_link.h
 .obj/drv_fork.o .shobj/drv_fork.so: drv_fork.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -268,16 +271,16 @@ $(LOBJS): $(LHDRS)
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/drv_private.h \
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/drv_private.h \
  $(ACE_ROOT)/ace/Process_Manager.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -328,16 +331,17 @@ $(LOBJS): $(LHDRS)
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/drv_private.h ../include/drv_link.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/drv_private.h \
+ ../include/drv_link.h
 .obj/drv_preproc.o .shobj/drv_preproc.so: drv_preproc.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -371,16 +375,17 @@ $(LOBJS): $(LHDRS)
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h \
- ../include/drv_private.h ../include/drv_link.h \
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h ../include/drv_private.h \
+ ../include/drv_link.h \
  $(ACE_ROOT)/ace/Process_Manager.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \

@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -138,6 +138,7 @@ private:
   virtual AST_Enum		*fe_add_enum(AST_Enum		*e);
   virtual AST_EnumVal		*fe_add_enum_val(AST_EnumVal	*v);
   virtual AST_Typedef		*fe_add_typedef(AST_Typedef	*t);
+  virtual AST_Native            *fe_add_native (AST_Native      *n);
 
 };
 

@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -86,7 +86,7 @@ public:
     , PS_InterfaceDeclSeen	// Seen complete interface declaration
     , PS_ModuleDeclSeen		// Seen complete module declaration
     , PS_AttrDeclSeen		// Seen complete attribute declaration
-    , PS_OpDeclSeen		// Seen complete operation declaration	
+    , PS_OpDeclSeen		// Seen complete operation declaration
     , PS_ModuleSeen		// Seen a MODULE keyword
     , PS_ModuleIDSeen		// Seen the module ID
     , PS_ModuleSqSeen		// '{' seen for module
@@ -192,6 +192,7 @@ public:
     , PS_OpContextCommaSeen	// Seen ',' for CONTEXT
     , PS_DeclsCommaSeen		// Seen ',' in declarators list
     , PS_DeclsDeclSeen		// Seen complete decl in decls list
+      , PS_NativeSeen             // Seen a native declaration
   };
 
   // Constructor
@@ -230,7 +231,7 @@ public:
 							// file name?
   virtual void			set_real_filename(String *);
 			                                // Set it
-  
+
   virtual String		*stripped_filename();	// Stripped filename
   virtual void			set_stripped_filename(String *);
 							// Set it
@@ -301,7 +302,7 @@ public:
   static const char  *be_get_server_inline_fname ();
 
   // Helper functions: obtain the names of each generated file given
-  // the IDL file name. 
+  // the IDL file name.
   static const char *be_get_client_hdr (String *idl_file_name);
   static const char *be_get_client_stub (String *idl_file_name);
   static const char *be_get_client_inline (String *idl_file_name);
