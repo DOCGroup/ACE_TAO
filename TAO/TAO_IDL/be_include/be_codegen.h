@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_codegen.h
 //
@@ -12,7 +12,7 @@
 //
 // = AUTHOR
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_BE_CODEGEN_H)
@@ -90,7 +90,7 @@ public:
     TAO_UNION_DISCTYPEDEFN_SH,
     TAO_UNION_DISCTYPEDEFN_SI,
     TAO_UNION_DISCTYPEDEFN_SS,
- 
+
     // emitting code for the public members of the union
     TAO_UNION_PUBLIC_CH,
     TAO_UNION_PUBLIC_CI,
@@ -98,7 +98,7 @@ public:
     TAO_UNION_PUBLIC_SH,
     TAO_UNION_PUBLIC_SI,
     TAO_UNION_PUBLIC_SS,
-  
+
     // emitting code for private members of the union
     TAO_UNION_PRIVATE_CH,
     TAO_UNION_PRIVATE_CI,
@@ -162,6 +162,8 @@ public:
     TAO_OPERATION_SH,
     TAO_OPERATION_SI,
     TAO_OPERATION_SS,
+    TAO_OPERATION_RETVAL_DECL_SS,
+    TAO_OPERATION_RETVAL_ASSIGN_SS,
     TAO_OPERATION_RESULT_SS,
 
     // emitting code for arguments of an operation. No distinction between
@@ -313,4 +315,3 @@ typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_MUTEX> TAO_CODEGEN;
 
 
 #endif // if !defined
-
