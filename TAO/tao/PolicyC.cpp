@@ -176,43 +176,17 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
   if (is_a == 0)
     return CORBA_Policy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Policy:1.0");
-  if (servant == 0)
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Policy::_nil ());
 #else
+  stub->_incr_refcnt ();
+  if (servant == 0)
     return new CORBA_Policy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-  return new POA_CORBA::_tao_collocated_Policy(
-      ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
-      stub
-    );
-}
-
-CORBA_Policy_ptr CORBA_Policy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  if (CORBA::is_nil (obj))
-    return CORBA_Policy::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = 0;
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/Policy:1.0");
-  if (servant == 0)
-    {
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-      ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::Policy::_nil ());
-#else
-      ACE_UNUSED_ARG (ACE_TRY_ENV);
-      return new CORBA_Policy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-    }
   return new POA_CORBA::_tao_collocated_Policy(
       ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
       stub
@@ -435,36 +409,13 @@ CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
   ACE_CHECK_RETURN (CORBA_PolicyManager::_nil ());
   if (is_a == 0)
     return CORBA_PolicyManager::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyManager:1.0");
-  if (servant == 0)
-    return new CORBA_PolicyManager(stub);
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyManager:1.0")) == 0)
+    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_PolicyManager::_nil ());
   return new POA_CORBA::_tao_collocated_PolicyManager(
       ACE_reinterpret_cast(POA_CORBA::PolicyManager_ptr, servant),
-      stub
-    );
-}
-
-CORBA_PolicyManager_ptr CORBA_PolicyManager::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
-  )
-{
-  if (CORBA::is_nil (obj))
-    return CORBA_PolicyManager::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = 0;
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyManager:1.0");
-  if (servant == 0)
-    return new CORBA_PolicyManager(stub);
-  return new POA_CORBA::_tao_collocated_PolicyManager(
-      ACE_reinterpret_cast(POA_CORBA::PolicyManager_ptr, servant),
-      stub
+      0
     );
 }
 
@@ -520,36 +471,13 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
   ACE_CHECK_RETURN (CORBA_PolicyCurrent::_nil ());
   if (is_a == 0)
     return CORBA_PolicyCurrent::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyCurrent:1.0");
-  if (servant == 0)
-    return new CORBA_PolicyCurrent(stub);
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyCurrent:1.0")) == 0)
+    ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA_PolicyCurrent::_nil ());
   return new POA_CORBA::_tao_collocated_PolicyCurrent(
       ACE_reinterpret_cast(POA_CORBA::PolicyCurrent_ptr, servant),
-      stub
-    );
-}
-
-CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
-  )
-{
-  if (CORBA::is_nil (obj))
-    return CORBA_PolicyCurrent::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = 0;
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/PolicyCurrent:1.0");
-  if (servant == 0)
-    return new CORBA_PolicyCurrent(stub);
-  return new POA_CORBA::_tao_collocated_PolicyCurrent(
-      ACE_reinterpret_cast(POA_CORBA::PolicyCurrent_ptr, servant),
-      stub
+      0
     );
 }
 

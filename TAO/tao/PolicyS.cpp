@@ -229,6 +229,19 @@ void POA_CORBA::Policy::_non_existent_skel (
     &_tao_retval
   );
 }
+
+void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Skeleton skel; // pointer to skeleton for operation
+  const char *opname = req.operation (); // retrieve operation name
+  // find the skeleton corresponding to this opname
+  if (this->_find (opname, skel) == -1)
+    {
+      ACE_THROW (CORBA_BAD_OPERATION ());
+    }
+  else
+    skel (req, this, context, ACE_TRY_ENV);
+}
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean POA_CORBA::Policy::_is_a (
@@ -253,30 +266,6 @@ void* POA_CORBA::Policy::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
-}
-
-void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
-{
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-    {
-      ACE_THROW (CORBA_BAD_OPERATION ());
-    }
-  else
-    skel (req, this, context, ACE_TRY_ENV);
-
-#else /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-  ACE_UNUSED_ARG (req);
-  ACE_UNUSED_ARG (context);
-
-  ACE_THROW (CORBA::BAD_OPERATION ());
-
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
 const char* POA_CORBA::Policy::_interface_repository_id (void) const
