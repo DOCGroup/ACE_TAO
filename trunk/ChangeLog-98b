@@ -27,7 +27,9 @@ Wed Oct 28 09:13:10 1998  David L. Levine  <levine@cs.wustl.edu>
           filename if ACE_Process::spawn () fails.
 
         * tests/run_tests.sh: only run Time_Service_Test if
-          ../netsvcs/server/main exists.
+          ../netsvcs/server/main exists.  Also, exit if a command
+          line argument is provided to run_tests.sh, and the argument
+          is not a Chorus hostname.
 
 Tue Oct 27 22:14:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
