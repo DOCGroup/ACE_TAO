@@ -389,18 +389,18 @@ ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
 }
 
 template <class CHAR> ACE_INLINE ssize_t
-ACE_String_Base<CHAR>::rfind (CHAR c, size_t pos) const
+ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
 {
-  if (pos > this->len_)
+  if (pos > ACE_static_cast (ssize_t, this->len_))
   {
-    pos = this->len_;
+    pos = ACE_static_cast (ssize_t, this->len_);
   }
 
-  for (size_t i = pos - 1; i >= 0; i--)
+  for (ssize_t i = pos - 1; i >= 0; i--)
   {
     if (this->rep_[i] == c)
     {
-      return ACE_static_cast (ssize_t, i);
+      return i;
     }
   }
 
