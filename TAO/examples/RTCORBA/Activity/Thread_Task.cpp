@@ -12,9 +12,18 @@ Thread_Task::Thread_Task (void)
 }
 
 int
-Thread_Task::activate_task (ACE_Barrier* barrier)
+Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping)
 {
   barrier_ = barrier;
+
+  // Convert the priority specified to this class to its native number.
+  RTCORBA::NativePriority native_priority;
+
+  if (priority_mapping->to_native (this->task_priority_, native_priority) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot convert CORBA priority %d to native priority\n",
+                       this->task_priority_),
+                      -1);
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
 
@@ -26,7 +35,7 @@ Thread_Task::activate_task (ACE_Barrier* barrier)
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
                                             1,
                                             0,
-                                            this->task_priority_) == -1)
+                                            native_priority) == -1)
        {
          if (ACE_OS::last_error () == EPERM)
            ACE_ERROR_RETURN ((LM_ERROR,
@@ -36,7 +45,7 @@ Thread_Task::activate_task (ACE_Barrier* barrier)
            ACE_DEBUG ((LM_ERROR,
                        ACE_TEXT ("(%t) task activation at priority %d failed, ")
                         ACE_TEXT ("exiting!\n%a"),
-                       this->task_priority_,
+                       native_priority,
                        -1));
        }
   return 0;
@@ -49,6 +58,7 @@ Thread_Task::svc (void)
   if (TAO_debug_level > 0)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
+
       // Get the priority of the current thread.
       RTCORBA::Priority prio =
         ACTIVITY::instance()->current ()->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
