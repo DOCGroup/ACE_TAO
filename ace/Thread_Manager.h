@@ -476,7 +476,7 @@ public:
   // check thru its thread list for threads with THR_DETACHED or
   // THR_DAEMON flags set and remove these threads.
 
-  int join (ACE_thread_t tid);
+  int join (ACE_thread_t tid, void **status = 0);
   // Join a thread specified by <tid>.
 
   int wait_grp (int grp_id);
