@@ -1669,7 +1669,7 @@ ACE::timestamp (ASYS_TCHAR date_and_time[], int date_and_timelen)
                    timebuf,
                    date_and_timelen);
   ACE_OS::sprintf (&date_and_time[19],
-                   ".%06d",
+                   ".%06ld",
                    cur_time.usec ());
 #endif /* WIN32 */
   date_and_time[26] = '\0';

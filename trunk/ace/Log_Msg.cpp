@@ -730,8 +730,8 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   type = SKIP_SPRINTF;
                   abort_prog = 1;
                   exit_value = va_arg (argp, int);
-                  ACE_OS::sprintf (bp, ASYS_TEXT ("")); // Make sure to
-                                                        // NUL-terminate this...
+                  ACE_OS::sprintf (bp, ASYS_TEXT ("Aborting..."));
+                  // Make sure to NULL terminate this...
                   break;
                 case 'l':
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%d"), this->linenum ());
