@@ -1939,13 +1939,6 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
 AST_Expression::AST_ExprValue *
 AST_Expression::coerce (AST_Expression::ExprType t)
 {
-  // Is it already of the right type?
-  if (this->pd_ev != 0 && this->pd_ev->et == t)
-    {
-      return this->pd_ev;
-    }
-
-  // OK, must coerce.
   // First, evaluate it, then try to coerce result type.
   // If already evaluated, return the result.
   switch (t)
@@ -2048,8 +2041,15 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       break;
   }
 
-  return coerce_value (copy, 
-                       t);
+  if (this->pd_ev->et == t)
+    {
+      return copy;
+    }
+  else 
+    {
+      return coerce_value (copy, 
+                           t);
+    }
 }
 
 // Eval used internally.

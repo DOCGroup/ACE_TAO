@@ -98,8 +98,8 @@ AST_Array::AST_Array (UTL_ScopedName *n,
     pd_n_dims (nd), 
     pd_base_type (0)
 {
-  this->pd_dims = compute_dims (ds, 
-                                nd);
+  this->pd_dims = this->compute_dims (ds, 
+                                      nd);
 }
 
 AST_Array::~AST_Array (void)
@@ -124,19 +124,15 @@ AST_Array::compute_dims (UTL_ExprList *ds,
                   AST_Expression *[nds],
                   0);
 
-  UTL_ExprlistActiveIterator *iter;
-  ACE_NEW_RETURN (iter,
-                  UTL_ExprlistActiveIterator (ds),
-                  0);
+  UTL_ExprlistActiveIterator iter (ds);
 
   for (unsigned long i = 0; 
-       !iter->is_done() && i < nds; 
-       iter->next(), i++)
+       !iter.is_done () && i < nds; 
+       iter.next (), i++)
     {
-      result[i] = iter->item ();
+      result[i] = iter.item ();
     }
 
-  delete iter;
   return result;
 }
 
