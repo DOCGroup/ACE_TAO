@@ -114,7 +114,7 @@ CIAO_GLUE_BasicSP::BMDevice_Context::~BMDevice_Context ()
 // Operations for emits interfaces.
 
 // Operations for ::Components::CCMContext
-ACE_INLINE ::Components::Principal_ptr
+::Components::Principal_ptr
 CIAO_GLUE_BasicSP::BMDevice_Context::get_caller_principal (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -122,14 +122,14 @@ CIAO_GLUE_BasicSP::BMDevice_Context::get_caller_principal (ACE_ENV_SINGLE_ARG_DE
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-ACE_INLINE ::Components::CCMHome_ptr
+::Components::CCMHome_ptr
 CIAO_GLUE_BasicSP::BMDevice_Context::get_CCM_home (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Components::CCMHome::_duplicate (this->home_.in ());
 }
 
-ACE_INLINE CORBA::Boolean
+CORBA::Boolean
 CIAO_GLUE_BasicSP::BMDevice_Context::get_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
@@ -138,7 +138,7 @@ CIAO_GLUE_BasicSP::BMDevice_Context::get_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-ACE_INLINE ::Components::Transaction::UserTransaction_ptr
+::Components::Transaction::UserTransaction_ptr
 CIAO_GLUE_BasicSP::BMDevice_Context::get_user_transaction (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
@@ -147,7 +147,7 @@ CIAO_GLUE_BasicSP::BMDevice_Context::get_user_transaction (ACE_ENV_SINGLE_ARG_DE
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-ACE_INLINE CORBA::Boolean
+CORBA::Boolean
 CIAO_GLUE_BasicSP::BMDevice_Context::is_caller_in_role (const char * role
                                                             ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
@@ -158,7 +158,7 @@ CIAO_GLUE_BasicSP::BMDevice_Context::is_caller_in_role (const char * role
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-ACE_INLINE void
+void
 CIAO_GLUE_BasicSP::BMDevice_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))

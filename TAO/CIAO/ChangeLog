@@ -1,3 +1,10 @@
+Fri May 23 22:17:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDEI.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp:Fixed
+	  fuzz errors.
+
 Sat May 17 16:29:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/descriptors/test.dat
