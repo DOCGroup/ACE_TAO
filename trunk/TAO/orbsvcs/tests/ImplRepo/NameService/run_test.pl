@@ -20,6 +20,12 @@ $ACTIVATOR = new PerlACE::Process("../../../ImplRepo_Service/ImR_Activator");
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service");
 $TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
 
+# We want the tao_imr executable to be found exactly in the path
+# given, without being modified by the value of -ExeSubDir.
+# So, we tell its Process object to ignore the setting of -ExeSubDir.
+
+$TAO_IMR->IgnoreExeSubDir (1);
+
 $TEST = new PerlACE::Process ("test");
 
 $imr_init_ref = "-ORBInitRef ImplRepoService=file://$imr_ior";

@@ -1,3 +1,18 @@
+Fri Sep 17 08:44:44 2004  Steve Totten  <totten_s@ociweb.com>
+
+        * tao/PortableServer/POA.cpp:
+          Fixed a typo in a debug message.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * utils/nslist/run_test.pl:
+          Added a call to PerlACE::Process::IgnoreExeSubDir() so
+          these scripts can find the tao_imr, tao_ifr, nslist,
+          etc. utilities in the $ACE_ROOT/bin directory (instead of
+          looking in, for example, $ACE_ROOT/bin/Release).
+
 Fri Sep 17 08:21:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Typecode.cpp:
