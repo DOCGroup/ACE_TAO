@@ -15,13 +15,12 @@ PROG_SRCS =  main.cpp
 
 LSRC = $(PROG_SRCS)
 
-#AVStreams_SERVER_OBJS = server.o
-#AVStreams_CLIENT_OBJS = client.o
+AVStreams_SERVER_OBJS = server.o
+AVStreams_CLIENT_OBJS = client.o
 
 COSPROPERTY_OBJS = main.o
 
-#BIN = server client
-BIN = main
+BIN = server client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -44,15 +43,11 @@ DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-#server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
-#$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
+	$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-#client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
-#$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-main: $(addprefix $(VDIR), $(COSPROPERTY_OBJS))	
-	$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS)  $(POSTLINK)
-
+client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-/bin/rm -rf 
@@ -64,3 +59,9 @@ realclean: clean
 
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
+
+
+
+
+
+
