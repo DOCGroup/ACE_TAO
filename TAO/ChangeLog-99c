@@ -1,3 +1,9 @@
+Wed Jun 30 11:09:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+	  Fixed more exception handling problems.
+
 Wed Jun 30 10:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
