@@ -396,7 +396,7 @@ spawn (void)
   // Wait for the client and server thread to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
-#elif !defined (ACE_LACKS_EXEC)
+#elif !defined (ACE_LACKS_FORK)
 
   switch (ACE_OS::fork ("child"))
     {
@@ -405,14 +405,14 @@ spawn (void)
       ACE_OS::_exit (-1);
     case 0: // In child
       {
-        ACE_APPEND_LOG ("Process_Mutex_Test-children");      
+        ACE_APPEND_LOG ("Process_Mutex_Test-children");
         ACE_INET_Addr server_addr;
 
         if (acceptor.get_local_addr (server_addr) == -1)
           ACE_ERROR ((LM_ERROR, "%p\n", "get_local_addr"));
         else
           client ((void *) &server_addr);
-        ACE_END_LOG;      
+        ACE_END_LOG;
         break;
       }
     default: // In parent
