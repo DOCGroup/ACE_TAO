@@ -4,10 +4,10 @@
 
 #include "testS.h"
 
-#include <tao/IORTable/IORTable.h>
+#include "tao/IORTable/IORTable.h"
 
-#include <ace/streams.h>
-#include <ace/ARGV.h>
+#include "ace/streams.h"
+#include "ace/ARGV.h"
 
 using namespace CORBA;
 using namespace PortableServer;

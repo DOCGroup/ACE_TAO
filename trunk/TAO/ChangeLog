@@ -1,3 +1,28 @@
+Wed Sep 29 21:17:51 MST 2004  Trevor Fields <fields_t@ociweb.com>
+
+        * tao/PortableServer/ImplRepo.pidl:
+          Fixed documentation error.
+
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+          Added missing Id tags.
+
+        * orbsvcs/orbsvcs/IOR_Multicast.h:
+          Added missing /**/ comments for pre.h and post.h includes.
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+          Changed TCHAR to ACE_TCHAR.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Changed error statement to avoid fuzz error.
+
+        * orbsvcs/examples/ImR/Combined_Service/dynserver.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/test_server.cpp:
+          Fixed fuzz errors.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+          Removed unnecessary template instantiation.
+
 Wed Sep 29 18:27:32 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests\Protocols\altq.conf: 

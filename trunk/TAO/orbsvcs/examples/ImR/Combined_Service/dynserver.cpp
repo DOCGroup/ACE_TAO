@@ -1,10 +1,10 @@
 // $Id$
 #include "dynserver.h"
 
-#include <tao/IORTable/IORTable.h>
+#include "tao/IORTable/IORTable.h"
 
-#include <ace/Dynamic_Service.h>
-#include <ace/Task.h>
+#include "ace/Dynamic_Service.h"
+#include "ace/Task.h"
 
 using namespace CORBA;
 using namespace PortableServer;
