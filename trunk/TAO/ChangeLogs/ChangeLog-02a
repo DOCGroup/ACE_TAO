@@ -2,8 +2,10 @@ Fri Mar  3 13:41:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Profile.cpp:
 	* tao/SHMIOP_Profile.cpp:
-	* tao/UIOP_Profile.cpp: Added error checking. This is for bug #474
-	  reported by Chris Cleeland <cleeland_c@ociweb.com>.
+	* tao/UIOP_Profile.cpp: Added error checking. The error checking
+	  was needed for the ACE_Inet_Addr::set () method that was getting
+	  called. This is for bug #474 reported by Chris Cleeland
+	  <cleeland_c@ociweb.com>. 
 
 Fri Mar  3 11:15:06 2000  Ossama Othman  <ossama@uci.edu>
 
