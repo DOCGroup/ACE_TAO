@@ -142,25 +142,25 @@ public:
 
   struct ACE_Export from_boolean
   {
-    from_boolean (ACE_CDR::Boolean b);
+    ACE_EXPLICIT from_boolean (ACE_CDR::Boolean b);
     ACE_CDR::Boolean val_;
   };
 
   struct ACE_Export from_octet
   {
-    from_octet (ACE_CDR::Octet o);
+    ACE_EXPLICIT from_octet (ACE_CDR::Octet o);
     ACE_CDR::Octet val_;
   };
 
   struct ACE_Export from_char
   {
-    from_char (ACE_CDR::Char c);
+    ACE_EXPLICIT from_char (ACE_CDR::Char c);
     ACE_CDR::Char val_;
   };
 
   struct ACE_Export from_wchar
   {
-    from_wchar (ACE_CDR::WChar wc);
+    ACE_EXPLICIT from_wchar (ACE_CDR::WChar wc);
     ACE_CDR::WChar val_;
   };
 
@@ -275,9 +275,11 @@ public:
   ACE_CDR::Boolean append_string (ACE_InputCDR &);
   //@}
 
-  /// Returns 0 if an error has ocurred, the only expected error is to
-  /// run out of memory.
-  int good_bit (void) const;
+  /// Returns @c false if an error has ocurred.
+  /**
+   * @note The only expected error is to run out of memory.
+   */
+  bool good_bit (void) const;
 
   /// Reuse the CDR stream to write on the old buffer.
   void reset (void);
@@ -360,7 +362,7 @@ public:
 
   /// If non-zero then this stream is writing in non-native byte order,
   /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
-  int do_byte_swap (void) const;
+  bool do_byte_swap (void) const;
 
   /// For use by a gateway, which creates the output stream for the
   /// reply to the client in its native byte order, but which must
@@ -426,14 +428,6 @@ private:
   ACE_Message_Block *current_;
 
   /**
-   * Is the current block writable.  When we steal a buffer from the
-   * user and just chain it into the message block we are not supposed
-   * to write on it, even if it is past the start and end of the
-   * buffer.
-   */
-  int current_is_writable_;
-
-  /**
    * The current alignment as measured from the start of the buffer.
    * Usually this coincides with the alignment of the buffer in
    * memory, but, when we chain another buffer this "quasi invariant"
@@ -444,6 +438,14 @@ private:
   size_t current_alignment_;
 
   /**
+   * Is the current block writable.  When we steal a buffer from the
+   * user and just chain it into the message block we are not supposed
+   * to write on it, even if it is past the start and end of the
+   * buffer.
+   */
+  bool current_is_writable_;
+
+  /**
    * If not zero swap bytes at writing so the created CDR stream byte
    * order does *not* match the machine byte order.  The motivation
    * for such a beast is that in some setting a few (fast) machines
@@ -452,10 +454,10 @@ private:
    * responsability in the writers.  THIS IS NOT A STANDARD IN CORBA,
    * USE AT YOUR OWN RISK
    */
-  int do_byte_swap_;
+  bool do_byte_swap_;
 
   /// Set to 0 when an error ocurrs.
-  int good_bit_;
+  bool good_bit_;
 
   /// Break-even point for copying.
   size_t memcpy_tradeoff_;
@@ -617,25 +619,25 @@ public:
 
   struct ACE_Export to_boolean
   {
-    to_boolean (ACE_CDR::Boolean &b);
+    ACE_EXPLICIT to_boolean (ACE_CDR::Boolean &b);
     ACE_CDR::Boolean &ref_;
   };
 
   struct ACE_Export to_char
   {
-    to_char (ACE_CDR::Char &c);
+    ACE_EXPLICIT to_char (ACE_CDR::Char &c);
     ACE_CDR::Char &ref_;
   };
 
   struct ACE_Export to_wchar
   {
-    to_wchar (ACE_CDR::WChar &wc);
+    ACE_EXPLICIT to_wchar (ACE_CDR::WChar &wc);
     ACE_CDR::WChar &ref_;
   };
 
   struct ACE_Export to_octet
   {
-    to_octet (ACE_CDR::Octet &o);
+    ACE_EXPLICIT to_octet (ACE_CDR::Octet &o);
     ACE_CDR::Octet &ref_;
   };
 
@@ -667,7 +669,7 @@ public:
   //@}
 
   /**
-   * Return 0 on failure and 1 on success.
+   * Return @c false on failure and @c true on success.
    */
   //@{ @name Read basic IDL types
   ACE_CDR::Boolean read_boolean (ACE_CDR::Boolean& x);
@@ -690,9 +692,9 @@ public:
   //@}
 
   /**
-   * The buffer <x> must be large enough to contain <length>
+   * The buffer @a x must be large enough to contain @a length
    * elements.
-   * Return 0 on failure and 1 on success.
+   * Return @c false on failure and @c true on success.
    */
   //@{ @name Read basic IDL types arrays
   ACE_CDR::Boolean read_boolean_array (ACE_CDR::Boolean* x,
@@ -724,7 +726,7 @@ public:
   //@}
 
   /**
-   * Return 0 on failure and 1 on success.
+   * Return @c false on failure and @c true on success.
    */
   //@{ @name Skip elements
   ACE_CDR::Boolean skip_boolean (void);
@@ -745,22 +747,26 @@ public:
   /**
    * The next field must be a string, this method skips it. It is
    * useful in parsing a TypeCode.
-   * Return 0 on failure and 1 on success.
+   * @return @c false on failure and @c true on success.
    */
   ACE_CDR::Boolean skip_wstring (void);
   ACE_CDR::Boolean skip_string (void);
 
-  /// Skip <n> bytes in the CDR stream.
-  /// Return 0 on failure and 1 on success.
+  /// Skip @a n bytes in the CDR stream.
+  /**
+   * @return @c false on failure and @c true on success.
+   */
   ACE_CDR::Boolean skip_bytes (size_t n);
 
-  /// returns zero if a problem has been detected.
-  int good_bit (void) const;
+  /// returns @c false if a problem has been detected.
+  bool good_bit (void) const;
 
   /**
-   * Return the start of the message block chain for this CDR stream.
-   * NOTE: In the current implementation the chain has length 1, but
-   * we are planning to change that.
+   * @return The start of the message block chain for this CDR
+   *         stream.
+   *
+   * @note In the current implementation the chain has length 1, but
+   *       we are planning to change that.
    */
   const ACE_Message_Block* start (void) const;
 
@@ -768,50 +774,55 @@ public:
   //   CDR stream from a socket or file.
 
   /**
-   * Grow the internal buffer, reset <rd_ptr> to the first byte in the
-   * new buffer that is properly aligned, and set <wr_ptr> to <rd_ptr>
-   * + newsize
+   * Grow the internal buffer, reset @c rd_ptr to the first byte in
+   * the new buffer that is properly aligned, and set @c wr_ptr to @c
+   * rd_ptr @c + @c newsize
    */
   int grow (size_t newsize);
 
   /**
    * After reading and partially parsing the contents the user can
-   * detect a change in the byte order, this method will let him
+   * detect a change in the byte order, this method will let him/her
    * change it.
    */
   void reset_byte_order (int byte_order);
 
   /// Re-initialize the CDR stream, copying the contents of the chain
-  /// of message_blocks starting from <data>.
+  /// of message_blocks starting from @a data.
   void reset (const ACE_Message_Block *data,
               int byte_order);
 
   /// Steal the contents from the current CDR.
   ACE_Message_Block *steal_contents (void);
 
-  /// Steal the contents of <cdr> and make a shallow copy into this
+  /// Steal the contents of @a cdr and make a shallow copy into this
   /// stream.
   void steal_from (ACE_InputCDR &cdr);
 
   /// Exchange data blocks with the caller of this method. The read
   /// and write pointers are also exchanged.
-  /// Note: We now do only with the start_ message block.
+  /**
+   * @note We now do only with the start_ message block.
+   */
   void exchange_data_blocks (ACE_InputCDR &cdr);
 
-  /// Copy the data portion from the <cdr> to this cdr and return the
+  /// Copy the data portion from the @c cdr to this cdr and return the
   /// data content (ie. the ACE_Data_Block) from this CDR to the
-  /// caller. The caller is responsible for managing the memory of the
-  /// returned ACE_Data_Block.
+  /// caller.
+  /**
+   * @note The caller is responsible for managing the memory of the
+   *       returned ACE_Data_Block.
+   */
   ACE_Data_Block* clone_from (ACE_InputCDR &cdr);
 
   /// Re-initialize the CDR stream, forgetting about the old contents
   /// of the stream and allocating a new buffer (from the allocators).
   void reset_contents (void);
 
-  /// Returns the current position for the rd_ptr....
+  /// Returns the current position for the @c rd_ptr.
   char* rd_ptr (void);
 
-  /// Returns the current position for the wr_ptr....
+  /// Returns the current position for the @c wr_ptr.
   char* wr_ptr (void);
 
   /// Return how many bytes are left in the stream.
@@ -819,18 +830,19 @@ public:
 
   /**
    * Utility function to allow the user more flexibility.
-   * Skips up to the nearest <alignment>-byte boundary.
+   * Skips up to the nearest @a alignment-byte boundary.
    * Argument MUST be a power of 2.
-   * Returns 0 on success and -1 on failure.
+   *
+   * @return 0 on success and -1 on failure.
    */
   int align_read_ptr (size_t alignment);
 
-  /// If non-zero then this stream is writing in non-native byte order,
-  /// this is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
-  int do_byte_swap (void) const;
+  /// If @c true then this stream is writing in non-native byte order.
+  /// This is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
+  bool do_byte_swap (void) const;
 
-  /// If <do_byte_swap> returns 0, this returns ACE_CDR_BYTE_ORDER else
-  /// it returns !ACE_CDR_BYTE_ORDER.
+  /// If @c do_byte_swap() returns @c false, this returns
+  /// ACE_CDR_BYTE_ORDER else it returns !ACE_CDR_BYTE_ORDER.
   int byte_order (void) const;
 
   /// Access the codeset translators. They can be nil!
@@ -842,10 +854,10 @@ public:
   void wchar_translator (ACE_WChar_Codeset_Translator *);
 
   /**
-   * Returns (in <buf>) the next position in the buffer aligned to
-   * <size>, it advances the Message_Block rd_ptr past the data
-   * (i.e., <buf> + <size>).  Sets the good_bit to 0 and returns a -1
-   * on failure.
+   * Returns (in @a buf) the next position in the buffer aligned to
+   * @a size.  It advances the Message_Block @c rd_ptr past the data
+   * (i.e., @c buf @c + @c size).  Sets the good_bit to @c false and
+   * returns a -1 on failure.
    */
   int adjust (size_t size,
               char *&buf);
@@ -863,17 +875,19 @@ public:
   /// Set the underlying GIOP version..
   int get_version (ACE_CDR::Octet &major,
                    ACE_CDR::Octet &minor);
+
 protected:
+
   /// The start of the chain of message blocks, even though in the
   /// current version the chain always has length 1.
   ACE_Message_Block start_;
 
   /// The CDR stream byte order does not match the one on the machine,
   /// swapping is needed while reading.
-  int do_byte_swap_;
+  bool do_byte_swap_;
 
-  /// set to 0 when an error occurs.
-  int good_bit_;
+  /// set to @c false when an error occurs.
+  bool good_bit_;
 
   /// The GIOP versions for this stream
   ACE_CDR::Octet major_version_;
@@ -884,6 +898,7 @@ protected:
   ACE_WChar_Codeset_Translator *wchar_translator_;
 
 private:
+
   ACE_CDR::Boolean read_1 (ACE_CDR::Octet *x);
   ACE_CDR::Boolean read_2 (ACE_CDR::UShort *x);
   ACE_CDR::Boolean read_4 (ACE_CDR::ULong *x);
@@ -1027,7 +1042,7 @@ protected:
               char *&buf);
 
   /// Used by derived classes to set errors in the CDR stream.
-  void good_bit (ACE_OutputCDR& out, int bit);
+  void good_bit (ACE_OutputCDR& out, bool bit);
 
   /// Obtain the CDR Stream's major & minor version values.
   ACE_CDR::Octet major_version (ACE_InputCDR& input);
@@ -1120,7 +1135,7 @@ protected:
               char *&buf);
 
   /// Used by derived classes to set errors in the CDR stream.
-  void good_bit (ACE_OutputCDR& out, int bit);
+  void good_bit (ACE_OutputCDR& out, bool bit);
 
   /// Obtain the CDR Stream's major & minor version values.
   ACE_CDR::Octet major_version (ACE_InputCDR& input);

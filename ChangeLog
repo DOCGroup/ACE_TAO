@@ -1,8 +1,51 @@
+Mon Apr 26 02:09:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h (ACE_CDR::Boolean):
+
+	  This type is now a true C++ "bool".  On a related note, the
+	  OMG IDL-to-C++ mapping allows this type to be "bool" for ANSI
+	  compliant compilers.  All compilers currently supported by ACE
+	  support the C++ "bool" type, so we're in luck.
+
+	* ace/CDR_Stream.h:
+
+	  Made all single argument "{from,to}_*" constructors explicit (if
+	  supported by the compiler), as required by the OMG IDL-to-C++
+	  mapping.  Addresses potential implicit conversion issues.
+
+	  Fixed some broken Doxygen documentation.
+
+  	  (good_bit_, do_byte_swap_, current_is_writable_):
+
+	  Converted these flags and their corresponding accessors from
+	  "int" to "bool", and changed the declaration order to optimize
+	  size of ACE_{Output,Input}CDR classes by avoiding unnecessary
+	  static alignment padding.  Both classes are now 8
+	  bytes smaller, at least on platforms with 4 byte alignment.
+
+	* ace/CDR_Stream.i:
+
+	  Updated good_bit_, do_byte_swap_ and current_is_writable_
+	  assignments to use C++ "bool" values.
+
+	* ace/CDR_Stream.cpp:
+
+	  Updated base member initializer lists to match new member
+	  declaration order.
+
+	  Updated good_bit_, do_byte_swap_ and current_is_writable_
+	  assignments to use C++ "bool" values.
+
+	  Use "const" where applicable.
+
+	  Use prefix increment operator instead of postfix increment
+	  operator where applicable.  The former is more efficient.
+
 Mon Apr 26 15:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue.cpp:
           In ACE_Message_Queue_NT::open() use ACTIVATED instead of
-          WAS_ACTIVE because the last is deprecated
+          WAS_ACTIVE because the last is deprecated.
 
 Mon Apr 26 10:04:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -30,7 +73,7 @@ Mon Apr 26 07:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           A tests on our linux system demonstrated that when we removed
           the non win32 version of ACE_APPEND_LOG things works again
           on Linux. This non win32 version did close the file stream
-          and this seems not logically. Thanks to Martin Corino
+          and this seems not logical. Thanks to Martin Corino
           <mcorino@remedy.nl> for reporting this.
 
 Sun Apr 25 23:17:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
