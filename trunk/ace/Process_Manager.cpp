@@ -373,7 +373,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 
   if (i == -1)
     {
-      errno = ECHILD;
+      errno = EINVAL;
       return -1;
     }
 
