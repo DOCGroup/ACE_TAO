@@ -327,12 +327,14 @@ path_copy (LPCTSTR begin,
       switch (c)
         {
         case '/':
-          if (*(src + 1) == '.'
-              && (*src + 2) == '.'
-              && (*src + 3) == '/')
+          if (src[1] == '.' && src[2] == '.' && url[3] == '/')
             {
               while (target != begin && *(--target) != '/');
               src += 3;
+            }
+          else if (src[1] == '.' && src[2] == '/')
+            {
+              src += 2;
             }
           else
             {
@@ -396,10 +398,20 @@ ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
           // Go back to the last / to remove the basename.
           while (target != buf && *(--target) != '/');
           // Go back if we begin with '../'
-          while (url[0] == '.' && url[1] == '.' && url[2] == '/')
+          while ((url[0] == '.' && url[1] == '.' && url[2] == '/')
+                 || (url[0] == '.' && url[1] == '/'))
             {
-              while (target != buf && *(--target) != '/');
-              url += 3;
+              if (url[1] == '.')
+                {
+                  // A ../ go back
+                  while (target != buf && *(--target) != '/');
+                  url += 3;
+                }
+              else
+                {
+                  // A ./ remove
+                  url += 2;
+                }
             }
 
           *target = '/'; ++target;

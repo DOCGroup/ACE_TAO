@@ -7,6 +7,7 @@ Thu Feb  4 23:11:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* websvcs/lib/URL_Addr.cpp: 
 	  Fixed minor memory allocation problem for invalid HTTP
 	  addresses.
+	  It removes './' when creating relative addresses.
 
 Wed Feb 03 21:50:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
