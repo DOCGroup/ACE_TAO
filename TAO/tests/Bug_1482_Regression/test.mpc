@@ -2,7 +2,6 @@
 // $Id$
 
 project(Bug_1482_Server): taoserver, amh, ami, iortable, portableserver {
-  exename = server
   Source_Files {
     Hello.cpp
     Server_Task.cpp
