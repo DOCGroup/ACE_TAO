@@ -23,6 +23,14 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+#if !defined (ENOSYS)
+# define ENOSYS EFAULT   /* Operation not supported or unknown error. */
+#endif /* !ENOSYS */
+
+#if !defined (ENOTSUP)
+# define ENOTSUP ENOSYS  /* Operation not supported. */
+#endif /* !ENOTSUP */
+
 #define PACE_E2BIG E2BIG
 #define PACE_EACCES EACCES
 #define PACE_EAGAIN EAGAIN
@@ -74,7 +82,3 @@ extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_ERRNO_H_WIN32 */
-
-
-
-

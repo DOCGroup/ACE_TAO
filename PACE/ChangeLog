@@ -1,3 +1,14 @@
+Fri Jul 14 20:18:46 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h:
+	* pace/win32/errno.h:
+
+	  Moved win32 error definitions to pace/win32/errno.h.
+
+	* pace/config/utility.h:
+
+	  Changed #include <errno.h> to #include "pace/errno.h".
+
 Fri Jul 14 20:05:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/pace_dll.dsp:
