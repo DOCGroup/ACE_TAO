@@ -885,6 +885,54 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DynEnum (CORBA::tk_objref,
 
 CORBA::TypeCode_ptr _tc_CORBA_DynEnum = &_tc_TAO_tc_CORBA_DynEnum;
 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CS_)
+#define __TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CS_
+
+  void
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::_allocate_buffer (CORBA::ULong length)
+  {
+    CORBA::NameValuePair* tmp = 0;
+    tmp = _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (length);
+    
+    if (this->buffer_ != 0)
+    {
+      CORBA::NameValuePair *old = ACE_reinterpret_cast (CORBA::NameValuePair *,this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp[i] = old[i];
+      
+      if (this->release_)
+        _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::freebuf (old);
+      
+    }
+    this->buffer_ = tmp;
+  }
+  
+  void
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::_deallocate_buffer (void)
+  {
+    if (this->buffer_ == 0 || this->release_ == 0)
+      return;
+    
+    CORBA::NameValuePair *tmp = ACE_reinterpret_cast (CORBA::NameValuePair *,this->buffer_);
+    
+    _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::freebuf (tmp);
+    this->buffer_ = 0;
+  } 
+  
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::~_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void) // Dtor.
+  {
+    this->_deallocate_buffer ();
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
 #if !defined (_CORBA_NAME_VALUE_PAIR_SEQ_CS_)
 #define _CORBA_NAME_VALUE_PAIR_SEQ_CS_
 

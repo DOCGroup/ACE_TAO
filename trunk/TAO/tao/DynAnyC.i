@@ -583,6 +583,178 @@ CORBA_NameValuePair_out::operator-> (void)
   return this->ptr_;
 }
 
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+    
+  // = Static operations.
+  ACE_INLINE CORBA::NameValuePair *
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    CORBA_NameValuePair *retval = 0;
+    ACE_NEW_RETURN (retval, CORBA_NameValuePair[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::freebuf (CORBA_NameValuePair *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    CORBA_NameValuePair *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (const _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      CORBA_NameValuePair *tmp1 = _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (this->maximum_);
+      CORBA_NameValuePair * const tmp2 = ACE_reinterpret_cast (CORBA_NameValuePair * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        CORBA_NameValuePair *tmp = ACE_reinterpret_cast (CORBA_NameValuePair *, this->buffer_);
+        _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    CORBA_NameValuePair *tmp1 = ACE_reinterpret_cast (CORBA_NameValuePair *, this->buffer_);
+    CORBA_NameValuePair * const tmp2 = ACE_reinterpret_cast (CORBA_NameValuePair * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE CORBA_NameValuePair &
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    CORBA_NameValuePair* tmp = ACE_reinterpret_cast(CORBA_NameValuePair*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const CORBA_NameValuePair &
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    CORBA_NameValuePair * const tmp = ACE_reinterpret_cast (CORBA_NameValuePair* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE CORBA_NameValuePair *
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    CORBA_NameValuePair *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (CORBA_NameValuePair*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(CORBA_NameValuePair*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const CORBA_NameValuePair *
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const CORBA_NameValuePair * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  CORBA_NameValuePair *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      CORBA_NameValuePair *tmp = ACE_reinterpret_cast(CORBA_NameValuePair*,this->buffer_);
+      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+  
+#if !defined (_CORBA_NAMEVALUEPAIRSEQ_CI_)
+#define _CORBA_NAMEVALUEPAIRSEQ_CI_
+
 // *************************************************************
 // Inline operations for class CORBA_NameValuePairSeq_var
 // *************************************************************
@@ -765,6 +937,8 @@ CORBA_NameValuePairSeq_out::operator[] (CORBA::ULong slot)
 {
   return this->ptr_->operator[] (slot);
 }
+
+#endif /* end #if !defined */
 
 ACE_INLINE
 CORBA_DynStruct::CORBA_DynStruct (void) // default constructor
