@@ -127,6 +127,18 @@ TAO_ORB_Parameters::addr (void) const
 }
 
 ACE_INLINE void
+TAO_ORB_Parameters::init_ref (const ACE_CString &init_ref)
+{
+  this->init_ref_ = init_ref;
+}
+
+ACE_INLINE const char *
+TAO_ORB_Parameters::init_ref (void) const
+{
+  return this->init_ref_.c_str ();
+}
+
+ACE_INLINE void
 TAO_ORB_Parameters::name_service_ior (const ACE_CString &ns)
 {
   this->name_service_ior_ = ns;
