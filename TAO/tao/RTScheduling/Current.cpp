@@ -15,7 +15,7 @@ ACE_RCSID (RTScheduling,
            "$Id$")
 
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
+ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> TAO_RTScheduler_Current::guid_counter;
 
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const
@@ -354,7 +354,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
   if (this->guid_.length () == 0)
     {
       //Generate GUID
-      long temp = ++guid_counter;
+      long temp = ++TAO_RTScheduler_Current::guid_counter;
       this->guid_.length (sizeof(long));
       ACE_OS::memcpy (this->guid_.get_buffer (),
                       &temp,

@@ -1,3 +1,13 @@
+Mon Sep 22 17:04:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/RTScheduling/Current.cpp:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Request_Interceptor.cpp: 
+
+	  Changed guid_counter from a global variable to a public class
+	  member scoped within TAO_RTScheduling_Current.   This should get
+	  rid of compiler errors on statically-linked platforms.
+
 Mon Sep 22 15:02:39 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* TAO_IDL/be/be_interface.cpp (gen_operation_table):

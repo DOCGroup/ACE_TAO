@@ -28,8 +28,6 @@ class TAO_TSS_Resources;
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
 
-extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
-
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {
 public:
@@ -67,6 +65,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
     public TAO_Local_RefCounted_Object
 {
  public:
+  static ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
   
   TAO_RTScheduler_Current (void);
 
