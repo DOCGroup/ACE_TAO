@@ -193,6 +193,47 @@ CORBA::TypeCode_ptr PortableServer::POAManager::AdapterInactive::_type (void) co
   return ::PortableServer::POAManager::_tc_AdapterInactive;
 }
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableServer_POAManager_AdapterInactive[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  58,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f50), 
+  ACE_NTOHL (0x4f414d61), 
+  ACE_NTOHL (0x6e616765), 
+  ACE_NTOHL (0x722f4164), 
+  ACE_NTOHL (0x61707465), 
+  ACE_NTOHL (0x72496e61), 
+  ACE_NTOHL (0x63746976), 
+  ACE_NTOHL (0x653a322e), 
+  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/POAManager/AdapterInactive:2.3
+    16,
+  ACE_NTOHL (0x41646170), 
+  ACE_NTOHL (0x74657249), 
+  ACE_NTOHL (0x6e616374), 
+  ACE_NTOHL (0x69766500),  // name = AdapterInactive
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_AdapterInactive (
+    CORBA::tk_except,
+    sizeof (_oc_PortableServer_POAManager_AdapterInactive),
+    (char *) &_oc_PortableServer_POAManager_AdapterInactive,
+    0,
+    sizeof (PortableServer::POAManager::AdapterInactive)
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive =
+  &_tc_TAO_tc_PortableServer_POAManager_AdapterInactive;
+
 PortableServer::POAManager::POAManager (void)
 {}
 

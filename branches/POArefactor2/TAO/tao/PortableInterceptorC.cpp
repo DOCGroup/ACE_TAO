@@ -93,7 +93,7 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_Interceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -104,7 +104,7 @@ PortableInterceptor::Interceptor::Interceptor (void)
 PortableInterceptor::Interceptor::~Interceptor (void)
 {}
 
-void
+void 
 PortableInterceptor::Interceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   Interceptor *_tao_tmp_pointer =
@@ -122,10 +122,10 @@ PortableInterceptor::Interceptor::_narrow (
     {
       return Interceptor::_nil ();
     }
-
+  
   Interceptor_ptr proxy =
     dynamic_cast<Interceptor_ptr> (_tao_objref);
-
+  
   return Interceptor::_duplicate (proxy);
 }
 
@@ -139,10 +139,10 @@ PortableInterceptor::Interceptor::_unchecked_narrow (
     {
       return Interceptor::_nil ();
     }
-
+  
   Interceptor_ptr proxy =
     dynamic_cast<Interceptor_ptr> (_tao_objref);
-
+  
   return Interceptor::_duplicate (proxy);
 }
 
@@ -153,7 +153,7 @@ PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -197,75 +197,7 @@ PortableInterceptor::Interceptor::marshal (TAO_OutputCDR &)
   return 0;
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_PortableInterceptor_ForwardRequest[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  51,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x496e7465),
-  ACE_NTOHL (0x72636570),
-  ACE_NTOHL (0x746f722f),
-  ACE_NTOHL (0x466f7277),
-  ACE_NTOHL (0x61726452),
-  ACE_NTOHL (0x65717565),
-  ACE_NTOHL (0x73743a31),
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableInterceptor/ForwardRequest:1.0
-    15,
-  ACE_NTOHL (0x466f7277),
-  ACE_NTOHL (0x61726452),
-  ACE_NTOHL (0x65717565),
-  ACE_NTOHL (0x73740000),  // name = ForwardRequest
-  2, // member count
-    8,
-  ACE_NTOHL (0x666f7277),
-  ACE_NTOHL (0x61726400),  // name = forward
-    CORBA::tk_objref,
-  52, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f62),
-    ACE_NTOHL (0x6a656374),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
-        7,
-    ACE_NTOHL (0x4f626a65),
-    ACE_NTOHL (0x63740000),  // name = Object
-
-  10,
-  ACE_NTOHL (0x7065726d),
-  ACE_NTOHL (0x616e656e),
-  ACE_NTOHL (0x74000000),  // name = permanent
-    CORBA::tk_boolean,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ForwardRequest (
-    CORBA::tk_except,
-    sizeof (_oc_PortableInterceptor_ForwardRequest),
-    (char *) &_oc_PortableInterceptor_ForwardRequest,
-    0,
-    sizeof (PortableInterceptor::ForwardRequest)
-  );
-
-namespace PortableInterceptor
-{
-  ::CORBA::TypeCode_ptr _tc_ForwardRequest =
-    &_tc_TAO_tc_PortableInterceptor_ForwardRequest;
-}
-
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ForwardRequest::ForwardRequest (void)
@@ -352,7 +284,7 @@ void PortableInterceptor::ForwardRequest::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -365,7 +297,7 @@ void PortableInterceptor::ForwardRequest::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -394,47 +326,73 @@ CORBA::TypeCode_ptr PortableInterceptor::ForwardRequest::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
-static const CORBA::Long _oc_PortableInterceptor_InvalidSlot[] =
+static const CORBA::Long _oc_PortableInterceptor_ForwardRequest[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  48,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x496e7465),
-  ACE_NTOHL (0x72636570),
-  ACE_NTOHL (0x746f722f),
-  ACE_NTOHL (0x496e7661),
-  ACE_NTOHL (0x6c696453),
-  ACE_NTOHL (0x6c6f743a),
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/InvalidSlot:1.0
-    12,
-  ACE_NTOHL (0x496e7661),
-  ACE_NTOHL (0x6c696453),
-  ACE_NTOHL (0x6c6f7400),  // name = InvalidSlot
-  0, // member count
-  };
+  51,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x496e7465), 
+  ACE_NTOHL (0x72636570), 
+  ACE_NTOHL (0x746f722f), 
+  ACE_NTOHL (0x466f7277), 
+  ACE_NTOHL (0x61726452), 
+  ACE_NTOHL (0x65717565), 
+  ACE_NTOHL (0x73743a31), 
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableInterceptor/ForwardRequest:1.0
+    15,
+  ACE_NTOHL (0x466f7277), 
+  ACE_NTOHL (0x61726452), 
+  ACE_NTOHL (0x65717565), 
+  ACE_NTOHL (0x73740000),  // name = ForwardRequest
+  2, // member count
+    8,
+  ACE_NTOHL (0x666f7277), 
+  ACE_NTOHL (0x61726400),  // name = forward
+    CORBA::tk_objref,
+  52, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    29,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f4f62), 
+    ACE_NTOHL (0x6a656374), 
+    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
+        7,
+    ACE_NTOHL (0x4f626a65), 
+    ACE_NTOHL (0x63740000),  // name = Object
+    
+  10,
+  ACE_NTOHL (0x7065726d), 
+  ACE_NTOHL (0x616e656e), 
+  ACE_NTOHL (0x74000000),  // name = permanent
+    CORBA::tk_boolean,
 
-static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_InvalidSlot (
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ForwardRequest (
     CORBA::tk_except,
-    sizeof (_oc_PortableInterceptor_InvalidSlot),
-    (char *) &_oc_PortableInterceptor_InvalidSlot,
+    sizeof (_oc_PortableInterceptor_ForwardRequest),
+    (char *) &_oc_PortableInterceptor_ForwardRequest,
     0,
-    sizeof (PortableInterceptor::InvalidSlot)
+    sizeof (PortableInterceptor::ForwardRequest)
   );
 
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr _tc_InvalidSlot =
-    &_tc_TAO_tc_PortableInterceptor_InvalidSlot;
+  ::CORBA::TypeCode_ptr _tc_ForwardRequest =
+    &_tc_TAO_tc_PortableInterceptor_ForwardRequest;
 }
 
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::InvalidSlot::InvalidSlot (void)
@@ -517,7 +475,7 @@ void PortableInterceptor::InvalidSlot::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -530,7 +488,7 @@ void PortableInterceptor::InvalidSlot::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -538,6 +496,46 @@ void PortableInterceptor::InvalidSlot::_tao_decode (
 CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_type (void) const
 {
   return ::PortableInterceptor::_tc_InvalidSlot;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableInterceptor_InvalidSlot[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x496e7465), 
+  ACE_NTOHL (0x72636570), 
+  ACE_NTOHL (0x746f722f), 
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c696453), 
+  ACE_NTOHL (0x6c6f743a), 
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/InvalidSlot:1.0
+    12,
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c696453), 
+  ACE_NTOHL (0x6c6f7400),  // name = InvalidSlot
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_InvalidSlot (
+    CORBA::tk_except,
+    sizeof (_oc_PortableInterceptor_InvalidSlot),
+    (char *) &_oc_PortableInterceptor_InvalidSlot,
+    0,
+    sizeof (PortableInterceptor::InvalidSlot)
+  );
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_InvalidSlot =
+    &_tc_TAO_tc_PortableInterceptor_InvalidSlot;
 }
 
 // TAO_IDL - Generated from
@@ -581,7 +579,7 @@ TAO::Objref_Traits<PortableInterceptor::Current>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -592,7 +590,7 @@ PortableInterceptor::Current::Current (void)
 PortableInterceptor::Current::~Current (void)
 {}
 
-void
+void 
 PortableInterceptor::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -610,10 +608,10 @@ PortableInterceptor::Current::_narrow (
     {
       return Current::_nil ();
     }
-
+  
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-
+  
   return Current::_duplicate (proxy);
 }
 
@@ -627,10 +625,10 @@ PortableInterceptor::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-
+  
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-
+  
   return Current::_duplicate (proxy);
 }
 
@@ -641,7 +639,7 @@ PortableInterceptor::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -730,7 +728,7 @@ TAO::Objref_Traits<PortableInterceptor::RequestInfo>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_RequestInfo_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -741,7 +739,7 @@ PortableInterceptor::RequestInfo::RequestInfo (void)
 PortableInterceptor::RequestInfo::~RequestInfo (void)
 {}
 
-void
+void 
 PortableInterceptor::RequestInfo::_tao_any_destructor (void *_tao_void_pointer)
 {
   RequestInfo *_tao_tmp_pointer =
@@ -759,10 +757,10 @@ PortableInterceptor::RequestInfo::_narrow (
     {
       return RequestInfo::_nil ();
     }
-
+  
   RequestInfo_ptr proxy =
     dynamic_cast<RequestInfo_ptr> (_tao_objref);
-
+  
   return RequestInfo::_duplicate (proxy);
 }
 
@@ -776,10 +774,10 @@ PortableInterceptor::RequestInfo::_unchecked_narrow (
     {
       return RequestInfo::_nil ();
     }
-
+  
   RequestInfo_ptr proxy =
     dynamic_cast<RequestInfo_ptr> (_tao_objref);
-
+  
   return RequestInfo::_duplicate (proxy);
 }
 
@@ -790,7 +788,7 @@ PortableInterceptor::RequestInfo::_duplicate (RequestInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -875,7 +873,7 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_ClientRequestInfo_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -886,7 +884,7 @@ PortableInterceptor::ClientRequestInfo::ClientRequestInfo (void)
 PortableInterceptor::ClientRequestInfo::~ClientRequestInfo (void)
 {}
 
-void
+void 
 PortableInterceptor::ClientRequestInfo::_tao_any_destructor (void *_tao_void_pointer)
 {
   ClientRequestInfo *_tao_tmp_pointer =
@@ -904,10 +902,10 @@ PortableInterceptor::ClientRequestInfo::_narrow (
     {
       return ClientRequestInfo::_nil ();
     }
-
+  
   ClientRequestInfo_ptr proxy =
     dynamic_cast<ClientRequestInfo_ptr> (_tao_objref);
-
+  
   return ClientRequestInfo::_duplicate (proxy);
 }
 
@@ -921,10 +919,10 @@ PortableInterceptor::ClientRequestInfo::_unchecked_narrow (
     {
       return ClientRequestInfo::_nil ();
     }
-
+  
   ClientRequestInfo_ptr proxy =
     dynamic_cast<ClientRequestInfo_ptr> (_tao_objref);
-
+  
   return ClientRequestInfo::_duplicate (proxy);
 }
 
@@ -935,7 +933,7 @@ PortableInterceptor::ClientRequestInfo::_duplicate (ClientRequestInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1024,7 +1022,7 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_ServerRequestInfo_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1035,7 +1033,7 @@ PortableInterceptor::ServerRequestInfo::ServerRequestInfo (void)
 PortableInterceptor::ServerRequestInfo::~ServerRequestInfo (void)
 {}
 
-void
+void 
 PortableInterceptor::ServerRequestInfo::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServerRequestInfo *_tao_tmp_pointer =
@@ -1053,10 +1051,10 @@ PortableInterceptor::ServerRequestInfo::_narrow (
     {
       return ServerRequestInfo::_nil ();
     }
-
+  
   ServerRequestInfo_ptr proxy =
     dynamic_cast<ServerRequestInfo_ptr> (_tao_objref);
-
+  
   return ServerRequestInfo::_duplicate (proxy);
 }
 
@@ -1070,10 +1068,10 @@ PortableInterceptor::ServerRequestInfo::_unchecked_narrow (
     {
       return ServerRequestInfo::_nil ();
     }
-
+  
   ServerRequestInfo_ptr proxy =
     dynamic_cast<ServerRequestInfo_ptr> (_tao_objref);
-
+  
   return ServerRequestInfo::_duplicate (proxy);
 }
 
@@ -1084,7 +1082,7 @@ PortableInterceptor::ServerRequestInfo::_duplicate (ServerRequestInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1173,7 +1171,7 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_ClientRequestInterceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1184,7 +1182,7 @@ PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (void)
 PortableInterceptor::ClientRequestInterceptor::~ClientRequestInterceptor (void)
 {}
 
-void
+void 
 PortableInterceptor::ClientRequestInterceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   ClientRequestInterceptor *_tao_tmp_pointer =
@@ -1202,10 +1200,10 @@ PortableInterceptor::ClientRequestInterceptor::_narrow (
     {
       return ClientRequestInterceptor::_nil ();
     }
-
+  
   ClientRequestInterceptor_ptr proxy =
     dynamic_cast<ClientRequestInterceptor_ptr> (_tao_objref);
-
+  
   return ClientRequestInterceptor::_duplicate (proxy);
 }
 
@@ -1219,10 +1217,10 @@ PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
     {
       return ClientRequestInterceptor::_nil ();
     }
-
+  
   ClientRequestInterceptor_ptr proxy =
     dynamic_cast<ClientRequestInterceptor_ptr> (_tao_objref);
-
+  
   return ClientRequestInterceptor::_duplicate (proxy);
 }
 
@@ -1233,7 +1231,7 @@ PortableInterceptor::ClientRequestInterceptor::_duplicate (ClientRequestIntercep
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1322,7 +1320,7 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_ServerRequestInterceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1333,7 +1331,7 @@ PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (void)
 PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor (void)
 {}
 
-void
+void 
 PortableInterceptor::ServerRequestInterceptor::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServerRequestInterceptor *_tao_tmp_pointer =
@@ -1351,10 +1349,10 @@ PortableInterceptor::ServerRequestInterceptor::_narrow (
     {
       return ServerRequestInterceptor::_nil ();
     }
-
+  
   ServerRequestInterceptor_ptr proxy =
     dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref);
-
+  
   return ServerRequestInterceptor::_duplicate (proxy);
 }
 
@@ -1368,10 +1366,10 @@ PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
     {
       return ServerRequestInterceptor::_nil ();
     }
-
+  
   ServerRequestInterceptor_ptr proxy =
     dynamic_cast<ServerRequestInterceptor_ptr> (_tao_objref);
-
+  
   return ServerRequestInterceptor::_duplicate (proxy);
 }
 
@@ -1382,7 +1380,7 @@ PortableInterceptor::ServerRequestInterceptor::_duplicate (ServerRequestIntercep
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1471,7 +1469,7 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_PolicyFactory_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1482,7 +1480,7 @@ PortableInterceptor::PolicyFactory::PolicyFactory (void)
 PortableInterceptor::PolicyFactory::~PolicyFactory (void)
 {}
 
-void
+void 
 PortableInterceptor::PolicyFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyFactory *_tao_tmp_pointer =
@@ -1500,10 +1498,10 @@ PortableInterceptor::PolicyFactory::_narrow (
     {
       return PolicyFactory::_nil ();
     }
-
+  
   PolicyFactory_ptr proxy =
     dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-
+  
   return PolicyFactory::_duplicate (proxy);
 }
 
@@ -1517,10 +1515,10 @@ PortableInterceptor::PolicyFactory::_unchecked_narrow (
     {
       return PolicyFactory::_nil ();
     }
-
+  
   PolicyFactory_ptr proxy =
     dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-
+  
   return PolicyFactory::_duplicate (proxy);
 }
 
@@ -1531,7 +1529,7 @@ PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1616,60 +1614,12 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_ORBInitInfo_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_DuplicateName[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  62,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x496e7465),
-  ACE_NTOHL (0x72636570),
-  ACE_NTOHL (0x746f722f),
-  ACE_NTOHL (0x4f524249),
-  ACE_NTOHL (0x6e697449),
-  ACE_NTOHL (0x6e666f2f),
-  ACE_NTOHL (0x4475706c),
-  ACE_NTOHL (0x69636174),
-  ACE_NTOHL (0x654e616d),
-  ACE_NTOHL (0x653a312e),
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo/DuplicateName:1.0
-    14,
-  ACE_NTOHL (0x4475706c),
-  ACE_NTOHL (0x69636174),
-  ACE_NTOHL (0x654e616d),
-  ACE_NTOHL (0x65000000),  // name = DuplicateName
-  1, // member count
-    5,
-  ACE_NTOHL (0x6e616d65),
-  ACE_NTOHL (0x0),  // name = name
-    CORBA::tk_string,
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName (
-    CORBA::tk_except,
-    sizeof (_oc_PortableInterceptor_ORBInitInfo_DuplicateName),
-    (char *) &_oc_PortableInterceptor_ORBInitInfo_DuplicateName,
-    0,
-    sizeof (PortableInterceptor::ORBInitInfo::DuplicateName)
-  );
-
-::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_DuplicateName =
-  &_tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName;
-
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (void)
@@ -1784,47 +1734,53 @@ CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::DuplicateName::_type (void
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
-static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_InvalidName[] =
+static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_DuplicateName[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  60,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x496e7465),
-  ACE_NTOHL (0x72636570),
-  ACE_NTOHL (0x746f722f),
-  ACE_NTOHL (0x4f524249),
-  ACE_NTOHL (0x6e697449),
-  ACE_NTOHL (0x6e666f2f),
-  ACE_NTOHL (0x496e7661),
-  ACE_NTOHL (0x6c69644e),
-  ACE_NTOHL (0x616d653a),
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo/InvalidName:1.0
-    12,
-  ACE_NTOHL (0x496e7661),
-  ACE_NTOHL (0x6c69644e),
-  ACE_NTOHL (0x616d6500),  // name = InvalidName
-  0, // member count
-  };
+  62,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x496e7465), 
+  ACE_NTOHL (0x72636570), 
+  ACE_NTOHL (0x746f722f), 
+  ACE_NTOHL (0x4f524249), 
+  ACE_NTOHL (0x6e697449), 
+  ACE_NTOHL (0x6e666f2f), 
+  ACE_NTOHL (0x4475706c), 
+  ACE_NTOHL (0x69636174), 
+  ACE_NTOHL (0x654e616d), 
+  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo/DuplicateName:1.0
+    14,
+  ACE_NTOHL (0x4475706c), 
+  ACE_NTOHL (0x69636174), 
+  ACE_NTOHL (0x654e616d), 
+  ACE_NTOHL (0x65000000),  // name = DuplicateName
+  1, // member count
+    5,
+  ACE_NTOHL (0x6e616d65), 
+  ACE_NTOHL (0x0),  // name = name
+    CORBA::tk_string, 
+  0U, // string length
+};
 
-static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_InvalidName (
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName (
     CORBA::tk_except,
-    sizeof (_oc_PortableInterceptor_ORBInitInfo_InvalidName),
-    (char *) &_oc_PortableInterceptor_ORBInitInfo_InvalidName,
+    sizeof (_oc_PortableInterceptor_ORBInitInfo_DuplicateName),
+    (char *) &_oc_PortableInterceptor_ORBInitInfo_DuplicateName,
     0,
-    sizeof (PortableInterceptor::ORBInitInfo::InvalidName)
+    sizeof (PortableInterceptor::ORBInitInfo::DuplicateName)
   );
 
-::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_InvalidName =
-  &_tc_TAO_tc_PortableInterceptor_ORBInitInfo_InvalidName;
+::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_DuplicateName =
+  &_tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName;
 
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (void)
@@ -1920,13 +1876,53 @@ CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::InvalidName::_type (void) 
   return ::PortableInterceptor::ORBInitInfo::_tc_InvalidName;
 }
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:295
+
+static const CORBA::Long _oc_PortableInterceptor_ORBInitInfo_InvalidName[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  60,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x496e7465), 
+  ACE_NTOHL (0x72636570), 
+  ACE_NTOHL (0x746f722f), 
+  ACE_NTOHL (0x4f524249), 
+  ACE_NTOHL (0x6e697449), 
+  ACE_NTOHL (0x6e666f2f), 
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c69644e), 
+  ACE_NTOHL (0x616d653a), 
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableInterceptor/ORBInitInfo/InvalidName:1.0
+    12,
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c69644e), 
+  ACE_NTOHL (0x616d6500),  // name = InvalidName
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_InvalidName (
+    CORBA::tk_except,
+    sizeof (_oc_PortableInterceptor_ORBInitInfo_InvalidName),
+    (char *) &_oc_PortableInterceptor_ORBInitInfo_InvalidName,
+    0,
+    sizeof (PortableInterceptor::ORBInitInfo::InvalidName)
+  );
+
+::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_InvalidName =
+  &_tc_TAO_tc_PortableInterceptor_ORBInitInfo_InvalidName;
+
 PortableInterceptor::ORBInitInfo::ORBInitInfo (void)
 {}
 
 PortableInterceptor::ORBInitInfo::~ORBInitInfo (void)
 {}
 
-void
+void 
 PortableInterceptor::ORBInitInfo::_tao_any_destructor (void *_tao_void_pointer)
 {
   ORBInitInfo *_tao_tmp_pointer =
@@ -1944,10 +1940,10 @@ PortableInterceptor::ORBInitInfo::_narrow (
     {
       return ORBInitInfo::_nil ();
     }
-
+  
   ORBInitInfo_ptr proxy =
     dynamic_cast<ORBInitInfo_ptr> (_tao_objref);
-
+  
   return ORBInitInfo::_duplicate (proxy);
 }
 
@@ -1961,10 +1957,10 @@ PortableInterceptor::ORBInitInfo::_unchecked_narrow (
     {
       return ORBInitInfo::_nil ();
     }
-
+  
   ORBInitInfo_ptr proxy =
     dynamic_cast<ORBInitInfo_ptr> (_tao_objref);
-
+  
   return ORBInitInfo::_duplicate (proxy);
 }
 
@@ -1975,7 +1971,7 @@ PortableInterceptor::ORBInitInfo::_duplicate (ORBInitInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -2072,7 +2068,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_ORBInitializer_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -2083,7 +2079,7 @@ PortableInterceptor::ORBInitializer::ORBInitializer (void)
 PortableInterceptor::ORBInitializer::~ORBInitializer (void)
 {}
 
-void
+void 
 PortableInterceptor::ORBInitializer::_tao_any_destructor (void *_tao_void_pointer)
 {
   ORBInitializer *_tao_tmp_pointer =
@@ -2101,10 +2097,10 @@ PortableInterceptor::ORBInitializer::_narrow (
     {
       return ORBInitializer::_nil ();
     }
-
+  
   ORBInitializer_ptr proxy =
     dynamic_cast<ORBInitializer_ptr> (_tao_objref);
-
+  
   return ORBInitializer::_duplicate (proxy);
 }
 
@@ -2118,10 +2114,10 @@ PortableInterceptor::ORBInitializer::_unchecked_narrow (
     {
       return ORBInitializer::_nil ();
     }
-
+  
   ORBInitializer_ptr proxy =
     dynamic_cast<ORBInitializer_ptr> (_tao_objref);
-
+  
   return ORBInitializer::_duplicate (proxy);
 }
 
@@ -2132,7 +2128,7 @@ PortableInterceptor::ORBInitializer::_duplicate (ORBInitializer_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -2266,7 +2262,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::Interceptor
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::Interceptor
@@ -2281,7 +2277,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::Current
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::Current
@@ -2296,7 +2292,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::RequestInfo
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::RequestInfo
@@ -2311,7 +2307,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::ClientRequestInfo
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::ClientRequestInfo
@@ -2326,7 +2322,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::ServerRequestInfo
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::ServerRequestInfo
@@ -2341,7 +2337,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::ClientRequestInterceptor
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::ClientRequestInterceptor
@@ -2356,7 +2352,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::ServerRequestInterceptor
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::ServerRequestInterceptor
@@ -2371,7 +2367,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::PolicyFactory
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::PolicyFactory
@@ -2386,7 +2382,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::ORBInitInfo
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::ORBInitInfo
@@ -2401,7 +2397,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         PortableInterceptor::ORBInitializer
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::ORBInitializer
@@ -2418,7 +2414,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::Interceptor
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::Interceptor
@@ -2433,7 +2429,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::Current
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::Current
@@ -2448,7 +2444,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::RequestInfo
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::RequestInfo
@@ -2463,7 +2459,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::ClientRequestInfo
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::ClientRequestInfo
@@ -2478,7 +2474,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::ServerRequestInfo
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::ServerRequestInfo
@@ -2493,7 +2489,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::ClientRequestInterceptor
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::ClientRequestInterceptor
@@ -2508,7 +2504,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::ServerRequestInterceptor
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::ServerRequestInterceptor
@@ -2523,7 +2519,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         PortableInterceptor::PolicyFactory
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::PolicyFactory

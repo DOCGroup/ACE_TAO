@@ -3681,7 +3681,7 @@ namespace TAO
 // ****************************************************************
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
+operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode_ptr x)
 {
   if (x == 0)
     {
@@ -3779,7 +3779,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
+operator>> (TAO_InputCDR& cdr, CORBA::TypeCode_ptr &x)
 {
   ACE_TRY_NEW_ENV
     {
@@ -3795,27 +3795,6 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
     }
   ACE_ENDTRY;
   return 1;
-}
-
-CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, const CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean
-operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (CORBA::TCKind, _tao_temp);
-    }
-
-  return _tao_result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

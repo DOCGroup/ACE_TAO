@@ -9,7 +9,7 @@
  * Policy-related types.
  *
  * This file is used to generate the code in
- * Policy_ForwardC.{h,i,cpp}.
+ * Policy_ForwardC.{h,inl,cpp}.
  *
  *   The steps to regenerate the code are as follows:
  *

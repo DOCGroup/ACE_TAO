@@ -32,7 +32,7 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
 {
@@ -72,135 +72,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_ImplementationRepository_AlreadyRegistered[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  51,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x496d706c), 
-  ACE_NTOHL (0x656d656e), 
-  ACE_NTOHL (0x74617469), 
-  ACE_NTOHL (0x6f6e5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x2f416c72), 
-  ACE_NTOHL (0x65616479), 
-  ACE_NTOHL (0x52656769), 
-  ACE_NTOHL (0x73746572), 
-  ACE_NTOHL (0x65643a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:ImplementationRepository/AlreadyRegistered:1.0
-    18,
-  ACE_NTOHL (0x416c7265), 
-  ACE_NTOHL (0x61647952), 
-  ACE_NTOHL (0x65676973), 
-  ACE_NTOHL (0x74657265), 
-  ACE_NTOHL (0x64000000),  // name = AlreadyRegistered
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_AlreadyRegistered (
-    CORBA::tk_except,
-    sizeof (_oc_ImplementationRepository_AlreadyRegistered),
-    (char *) &_oc_ImplementationRepository_AlreadyRegistered,
-    0,
-    sizeof (ImplementationRepository::AlreadyRegistered)
-  );
-
-namespace ImplementationRepository
-{
-  ::CORBA::TypeCode_ptr _tc_AlreadyRegistered =
-    &_tc_TAO_tc_ImplementationRepository_AlreadyRegistered;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_ImplementationRepository_CannotActivate[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x496d706c), 
-  ACE_NTOHL (0x656d656e), 
-  ACE_NTOHL (0x74617469), 
-  ACE_NTOHL (0x6f6e5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x2f43616e), 
-  ACE_NTOHL (0x6e6f7441), 
-  ACE_NTOHL (0x63746976), 
-  ACE_NTOHL (0x6174653a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:ImplementationRepository/CannotActivate:1.0
-    15,
-  ACE_NTOHL (0x43616e6e), 
-  ACE_NTOHL (0x6f744163), 
-  ACE_NTOHL (0x74697661), 
-  ACE_NTOHL (0x74650000),  // name = CannotActivate
-  1, // member count
-    7,
-  ACE_NTOHL (0x72656173), 
-  ACE_NTOHL (0x6f6e0000),  // name = reason
-    CORBA::tk_string, 
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_CannotActivate (
-    CORBA::tk_except,
-    sizeof (_oc_ImplementationRepository_CannotActivate),
-    (char *) &_oc_ImplementationRepository_CannotActivate,
-    0,
-    sizeof (ImplementationRepository::CannotActivate)
-  );
-
-namespace ImplementationRepository
-{
-  ::CORBA::TypeCode_ptr _tc_CannotActivate =
-    &_tc_TAO_tc_ImplementationRepository_CannotActivate;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-
-static const CORBA::Long _oc_ImplementationRepository_NotFound[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x496d706c), 
-  ACE_NTOHL (0x656d656e), 
-  ACE_NTOHL (0x74617469), 
-  ACE_NTOHL (0x6f6e5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x2f4e6f74), 
-  ACE_NTOHL (0x466f756e), 
-  ACE_NTOHL (0x643a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:ImplementationRepository/NotFound:1.0
-    9,
-  ACE_NTOHL (0x4e6f7446), 
-  ACE_NTOHL (0x6f756e64), 
-  ACE_NTOHL (0x0),  // name = NotFound
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_NotFound (
-    CORBA::tk_except,
-    sizeof (_oc_ImplementationRepository_NotFound),
-    (char *) &_oc_ImplementationRepository_NotFound,
-    0,
-    sizeof (ImplementationRepository::NotFound)
-  );
-
-namespace ImplementationRepository
-{
-  ::CORBA::TypeCode_ptr _tc_NotFound =
-    &_tc_TAO_tc_ImplementationRepository_NotFound;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentVariable[] =
 {
@@ -254,7 +126,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentList[] =
 {
@@ -336,7 +208,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_ActivationMode[] =
 {
@@ -391,7 +263,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
 {
@@ -568,7 +440,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
 {
@@ -784,7 +656,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
 {
@@ -1031,7 +903,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[] =
 {
@@ -1077,7 +949,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_ImplementationRepository_Administration[] =
 {

@@ -26,3 +26,38 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+// TAO_IDL - Generated from
+// be\be_visitor_interface/interface_ci.cpp:70
+
+#if !defined (_CORBA_POLICY___CI_)
+#define _CORBA_POLICY___CI_
+
+ACE_INLINE
+CORBA::Policy::Policy (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant,
+    TAO_ORB_Core *oc
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (
+        objref,
+        _tao_collocated,
+        servant,
+        oc
+      ),
+    the_TAO_Policy_Proxy_Broker_ (0)
+{
+  this->CORBA_Policy_setup_collocation ();
+}
+
+ACE_INLINE
+CORBA::Policy::Policy (
+    IOP::IOR *ior,
+    TAO_ORB_Core *oc
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+    the_TAO_Policy_Proxy_Broker_ (0)
+{
+}
+
+#endif /* end #if !defined */

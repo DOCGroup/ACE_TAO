@@ -31,7 +31,7 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -39,36 +39,36 @@ static const CORBA::Long _oc_PortableServer_ServantRetentionPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   59,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f53),
-  ACE_NTOHL (0x65727661),
-  ACE_NTOHL (0x6e745265),
-  ACE_NTOHL (0x74656e74),
-  ACE_NTOHL (0x696f6e50),
-  ACE_NTOHL (0x6f6c6963),
-  ACE_NTOHL (0x7956616c),
-  ACE_NTOHL (0x75653a32),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f53), 
+  ACE_NTOHL (0x65727661), 
+  ACE_NTOHL (0x6e745265), 
+  ACE_NTOHL (0x74656e74), 
+  ACE_NTOHL (0x696f6e50), 
+  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x7956616c), 
+  ACE_NTOHL (0x75653a32), 
   ACE_NTOHL (0x2e330000),  // repository ID = IDL:omg.org/PortableServer/ServantRetentionPolicyValue:2.3
   28,
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x616e7452),
-  ACE_NTOHL (0x6574656e),
-  ACE_NTOHL (0x74696f6e),
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63795661),
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x616e7452), 
+  ACE_NTOHL (0x6574656e), 
+  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63795661), 
   ACE_NTOHL (0x6c756500),  // name = ServantRetentionPolicyValue
   2, // member count
   7,
-  ACE_NTOHL (0x52455441),
+  ACE_NTOHL (0x52455441), 
   ACE_NTOHL (0x494e0000),  // name = RETAIN
   11,
-  ACE_NTOHL (0x4e4f4e5f),
-  ACE_NTOHL (0x52455441),
+  ACE_NTOHL (0x4e4f4e5f), 
+  ACE_NTOHL (0x52455441), 
   ACE_NTOHL (0x494e0000),  // name = NON_RETAIN
   };
 
@@ -87,32 +87,32 @@ namespace PortableServer
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_PortableServer_ServantRetentionPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   54,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x506f7274),
-  ACE_NTOHL (0x61626c65),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65722f53),
-  ACE_NTOHL (0x65727661),
-  ACE_NTOHL (0x6e745265),
-  ACE_NTOHL (0x74656e74),
-  ACE_NTOHL (0x696f6e50),
-  ACE_NTOHL (0x6f6c6963),
-  ACE_NTOHL (0x793a322e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f53), 
+  ACE_NTOHL (0x65727661), 
+  ACE_NTOHL (0x6e745265), 
+  ACE_NTOHL (0x74656e74), 
+  ACE_NTOHL (0x696f6e50), 
+  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x793a322e), 
   ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/ServantRetentionPolicy:2.3
     23,
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x616e7452),
-  ACE_NTOHL (0x6574656e),
-  ACE_NTOHL (0x74696f6e),
-  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x616e7452), 
+  ACE_NTOHL (0x6574656e), 
+  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x506f6c69), 
   ACE_NTOHL (0x63790000),  // name = ServantRetentionPolicy
   };
 
@@ -154,7 +154,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ServantRetentionPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ServantRetentionPolicyValue,
-        _tao_elem
+        _tao_elem 
       );
 }
 
@@ -251,6 +251,6 @@ operator>>= (
         PortableServer::ServantRetentionPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

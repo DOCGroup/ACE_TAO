@@ -49,7 +49,6 @@ class TAO_PortableServer_Export TAO_POA_Manager :
 
 public:
 
-
   void activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));

@@ -31,26 +31,26 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyErrorCode[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x4572726f),
-  ACE_NTOHL (0x72436f64),
-  ACE_NTOHL (0x653a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x4572726f), 
+  ACE_NTOHL (0x72436f64), 
+  ACE_NTOHL (0x653a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/PolicyErrorCode:1.0
     16,
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63794572),
-  ACE_NTOHL (0x726f7243),
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63794572), 
+  ACE_NTOHL (0x726f7243), 
   ACE_NTOHL (0x6f646500),  // name = PolicyErrorCode
     CORBA::tk_short,
 
@@ -70,25 +70,23 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_PolicyErrorCode;
 }
 
-
-
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_Policy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   29,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Policy:1.0
     7,
-  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x506f6c69), 
   ACE_NTOHL (0x63790000),  // name = Policy
   };
 
@@ -107,25 +105,25 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyManager[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x4d616e61),
-  ACE_NTOHL (0x6765723a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x4d616e61), 
+  ACE_NTOHL (0x6765723a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/PolicyManager:1.0
     14,
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63794d61),
-  ACE_NTOHL (0x6e616765),
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63794d61), 
+  ACE_NTOHL (0x6e616765), 
   ACE_NTOHL (0x72000000),  // name = PolicyManager
   };
 
@@ -144,25 +142,25 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyCurrent[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x43757272),
-  ACE_NTOHL (0x656e743a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x43757272), 
+  ACE_NTOHL (0x656e743a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/PolicyCurrent:1.0
     14,
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63794375),
-  ACE_NTOHL (0x7272656e),
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63794375), 
+  ACE_NTOHL (0x7272656e), 
   ACE_NTOHL (0x74000000),  // name = PolicyCurrent
   };
 
@@ -180,7 +178,7 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_PolicyCurrent;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -190,12 +188,12 @@ TAO::Any_Dual_Impl_T<CORBA::PolicyError>::demarshal_value (
   )
 {
   CORBA::String_var id;
-
+  
   if ((cdr >> id.out ()) == 0)
     {
       return 0;
     }
-
+  
   ACE_TRY_NEW_ENV
     {
       this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -206,7 +204,7 @@ TAO::Any_Dual_Impl_T<CORBA::PolicyError>::demarshal_value (
       return 0;
     }
   ACE_ENDTRY;
-
+  
   return 1;
 }
 
@@ -244,8 +242,8 @@ CORBA::Boolean operator>>= (
     CORBA::PolicyError *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::PolicyError *&,
+  return _tao_any >>= const_cast<
+      const CORBA::PolicyError *&> (
       _tao_elem
     );
 }
@@ -265,7 +263,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -275,12 +273,12 @@ TAO::Any_Dual_Impl_T<CORBA::InvalidPolicies>::demarshal_value (
   )
 {
   CORBA::String_var id;
-
+  
   if ((cdr >> id.out ()) == 0)
     {
       return 0;
     }
-
+  
   ACE_TRY_NEW_ENV
     {
       this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -291,7 +289,7 @@ TAO::Any_Dual_Impl_T<CORBA::InvalidPolicies>::demarshal_value (
       return 0;
     }
   ACE_ENDTRY;
-
+  
   return 1;
 }
 
@@ -329,8 +327,8 @@ CORBA::Boolean operator>>= (
     CORBA::InvalidPolicies *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::InvalidPolicies *&,
+  return _tao_any >>= const_cast<
+      const CORBA::InvalidPolicies *&> (
       _tao_elem
     );
 }
@@ -543,13 +541,16 @@ operator>>= (
       );
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
     TAO::Any_Impl_T<
         CORBA::Policy
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        CORBA::PolicyCurrent
       >;
 
   template class
@@ -567,16 +568,16 @@ operator>>= (
         CORBA::PolicyManager
       >;
 
-  template class
-    TAO::Any_Impl_T<
-        CORBA::PolicyCurrent
-      >;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         CORBA::Policy \
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        CORBA::PolicyCurrent \
       >
 
 # pragma instantiate \
@@ -594,9 +595,4 @@ operator>>= (
         CORBA::PolicyManager \
       >
 
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        CORBA::PolicyCurrent \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

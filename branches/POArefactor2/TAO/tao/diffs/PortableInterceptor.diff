@@ -1,8 +1,8 @@
---- orig/PortableInterceptorC.h	2004-11-12 09:20:16.175987200 +0100
-+++ PortableInterceptorC.h	2004-11-12 09:23:25.498219200 +0100
-@@ -47,6 +47,12 @@
- #include "tao/Any.h"
- #include "tao/Objref_VarOut_T.h"
+--- orig/PortableInterceptorC.h	2004-11-15 10:52:20.574179200 +0100
++++ PortableInterceptorC.h	2004-11-15 10:52:27.544201600 +0100
+@@ -50,6 +50,12 @@
+ 
+ #include "tao/CurrentC.h"
  
 +#include "PI_ForwardC.h"
 +#include "tao/Messaging_SyncScopeC.h"
@@ -13,7 +13,7 @@
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
  #endif
-@@ -68,6 +74,15 @@
+@@ -71,6 +77,15 @@
  #pragma option push -w-rvl -w-rch -w-ccc -w-inl
  #endif /* __BORLANDC__ */
  
@@ -29,7 +29,7 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_root/root_ch.cpp:63
  
-@@ -1312,17 +1327,19 @@
+@@ -1315,17 +1330,19 @@
      
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
@@ -52,7 +52,7 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
      
-@@ -1469,6 +1486,16 @@
+@@ -1472,6 +1489,16 @@
      
      static void _tao_any_destructor (void *);
      
@@ -69,9 +69,9 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
      
---- orig/PortableInterceptorC.cpp	2004-11-12 09:20:16.175987200 +0100
-+++ PortableInterceptorC.cpp	2004-11-12 09:20:16.726779200 +0100
-@@ -1821,6 +1821,18 @@
+--- orig/PortableInterceptorC.cpp	2004-11-15 10:52:20.574179200 +0100
++++ PortableInterceptorC.cpp	2004-11-15 10:52:27.634331200 +0100
+@@ -2015,6 +2015,18 @@
    return 0;
  }
  

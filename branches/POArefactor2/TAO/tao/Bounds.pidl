@@ -19,11 +19,7 @@
  *
  * and then:
  *
- * cp orig/BoundsC.{h,i,cpp} .
- *
- * Move the typecodes for exceptions in BoundsA.cpp to BoundsC.cpp.
- *
- * The code left in BoundsC.{h,i,cpp} is ready for use.
+ * cp orig/BoundsC.{h,inl,cpp} .
  *
  */
 #ifndef TAO_CORBA_BOUNDS_PIDL

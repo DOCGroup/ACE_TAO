@@ -40,12 +40,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Any.h"
 #include "tao/Objref_VarOut_T.h"
+
+#include "tao/CurrentC.h"
 
 #include "PI_ForwardC.h"
 #include "tao/Messaging_SyncScopeC.h"

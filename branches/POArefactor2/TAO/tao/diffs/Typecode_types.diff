@@ -1,0 +1,30 @@
+--- orig/Typecode_typesC.h	2004-11-15 10:52:24.229435200 +0100
++++ Typecode_typesC.h	2004-11-15 10:52:55.364204800 +0100
+@@ -137,6 +137,11 @@
+     tk_component,
+     tk_home,
+     tk_event
++
++    // This symbol is not defined by CORBA 3.0.  It's used to speed up
++    // dispatch based on TCKind values, and lets many important ones
++    // just be table lookups.  It must always be the last enum value!!
++    , TC_KIND_COUNT
+   };
+   
+   typedef TCKind &TCKind_out;
+@@ -175,6 +180,15 @@
+ #endif /* end #if !defined */
+ }
+ 
++// Workaround for a Visual Studio .NET bug where this class is not
++// properly imported by an application if typedef'd or subclassed,
++// resulting in 'multiply defined' link errors. The export macro
++// here forces an explicit import by the application. Please see
++// http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
++#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
++  template class TAO_Export TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>;
++#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
++
+ // TAO_IDL - Generated from
+ // be\be_visitor_interface_fwd/cdr_op_ch.cpp:66
+ 
