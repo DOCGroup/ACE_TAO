@@ -1,9 +1,7 @@
 Wed Sep  1 14:36:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IORS.h:
-	* tao/IORManipulation.h: Added TAO_Export to all classes.  Thanks
-	  to Dmitry Goldshtain <Goldshtain@bank.gov.ua> for reporting
-	  this.
+	* tao/IORS.h: Added TAO_Export to all classes.  Thanks to Dmitry
+	  Goldshtain <Goldshtain@bank.gov.ua> for reporting this.
 
 Wed Sep  1 13:14:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
