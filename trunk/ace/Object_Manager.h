@@ -37,7 +37,6 @@ class ACE_Sig_Set;
 
 template <class T> class ACE_Unbounded_Queue;
 template <class T> class ACE_Cleanup_Adapter;
-template <class T> class ACE_Array;
 
 
 // Configuration parameters.
@@ -313,20 +312,17 @@ public:
   static int get_singleton_lock (ACE_Null_Mutex *&);
   // Accesses an <ACE_Null_Mutex> to be used for construction of
   // <ACE_Singletons>.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.  The argument is ignored -- it is
-  // only used for overload resolution.
+  // success; returns -1 on failure.
 
   static int get_singleton_lock (ACE_Thread_Mutex *&);
   // Accesses a non-recursive <ACE_Thread_Mutex> to be used for
   // construction of <ACE_Singletons>.  Returns 0, and the lock in the
-  // argument, on success; returns -1 on failure.  The argument is
-  // ignored -- it is only used for overload resolution.
+  // argument, on success; returns -1 on failure.
 
   static int get_singleton_lock (ACE_Mutex *&);
   // Accesses a non-recursive <ACE_Mutex> to be used for construction
   // of <ACE_Singletons>.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.  The argument is ignored -- it is
-  // only used for overload resolution.
+  // success; returns -1 on failure.
 
   static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
   // Accesses a recursive <ACE_Recursive_Thread_Mutex> to be used for
@@ -372,17 +368,9 @@ private:
   ACE_Cleanup_Adapter<ACE_Null_Mutex> *singleton_null_lock_;
   // Null lock for guarding singleton creation.
 
-  ACE_Array<ACE_Thread_Mutex *> *singleton_thread_locks_;
-  // Array of locks for guarding singleton creation.
-
-  ACE_Array<ACE_Mutex *> *singleton_mutex_locks_;
-  // Array of locks for guarding singleton creation.
-
   ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *singleton_recursive_lock_;
-  // Lock for guarding singleton creation.
-
-  ACE_Array<ACE_RW_Thread_Mutex *> *singleton_rw_locks_;
-  // Array of locks for guarding singleton creation.
+  // Lock for guarding singleton creation, when Object_Manager
+  // hasn't been started up, or has already been shut down.
 #endif /* ACE_MT_SAFE */
 
 #if defined (ACE_HAS_TSS_EMULATION)
