@@ -34,52 +34,52 @@ public:
   // Default constructor.
 
   ACE_Mem_Map (ACE_HANDLE handle,
-	       int length = -1,
-	       int prot = PROT_RDWR,
-	       int share = MAP_PRIVATE,
-	       void *addr = 0,
-	       off_t pos = 0,
+               int length = -1,
+               int prot = PROT_RDWR,
+               int share = ACE_MAP_PRIVATE,
+               void *addr = 0,
+               off_t pos = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
 
   ACE_Mem_Map (LPCTSTR filename,
-	       int len = -1,
-	       int flags = O_RDWR | O_CREAT,
-	       int mode = ACE_DEFAULT_FILE_PERMS,
-	       int prot = PROT_RDWR,
-	       int share = MAP_PRIVATE,
-	       void *addr = 0,
-	       off_t pos = 0,
+               int len = -1,
+               int flags = O_RDWR | O_CREAT,
+               int mode = ACE_DEFAULT_FILE_PERMS,
+               int prot = PROT_RDWR,
+               int share = ACE_MAP_PRIVATE,
+               void *addr = 0,
+               off_t pos = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <file_name>.
 
   int map (ACE_HANDLE handle,
-	   int length = -1,
-	   int prot = PROT_RDWR,
-	   int share = MAP_PRIVATE,
-	   void *addr = 0,
-	   off_t pos = 0,
+           int length = -1,
+           int prot = PROT_RDWR,
+           int share = ACE_MAP_PRIVATE,
+           void *addr = 0,
+           off_t pos = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
 
   int map (int length = -1,
-	   int prot = PROT_RDWR,
-	   int share = MAP_PRIVATE,
-	   void *addr = 0,
-	   off_t pos = 0,
+           int prot = PROT_RDWR,
+           int share = ACE_MAP_PRIVATE,
+           void *addr = 0,
+           off_t pos = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Remap the file associated with <handle_>.
 
   int map (LPCTSTR filename,
-	   int len = -1,
-	   int flags = O_RDWR | O_CREAT,
-	   int mode = ACE_DEFAULT_FILE_PERMS,
-	   int prot = PROT_RDWR,
-	   int share = MAP_PRIVATE,
-	   void *addr = 0,
-	   off_t pos = 0,
+           int len = -1,
+           int flags = O_RDWR | O_CREAT,
+           int mode = ACE_DEFAULT_FILE_PERMS,
+           int prot = PROT_RDWR,
+           int share = ACE_MAP_PRIVATE,
+           void *addr = 0,
+           off_t pos = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <filename>.
 
@@ -87,8 +87,8 @@ public:
   // Destructor.
 
   int open (LPCTSTR filename,
-	    int flags = O_RDWR | O_CREAT,
-	    int mode = ACE_DEFAULT_FILE_PERMS,
+            int flags = O_RDWR | O_CREAT,
+            int mode = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
   // Open the file without mapping it.
 
@@ -101,7 +101,7 @@ public:
   int close_filemapping_handle (void);
   // Close down the internal <file_mapping_> if necessary.  This is
   // mostly necessary on Win32, that has a different handle for
-  // file-mapping kernal object.
+  // file-mapping kernel object.
 
   int operator () (void *&addr);
   // This operator passes back the starting address of the mapped
@@ -177,11 +177,11 @@ private:
   // if we opened the file.
 
   int map_it (ACE_HANDLE handle,
-	      int len = -1,
-	      int prot = PROT_RDWR,
-	      int share = MAP_SHARED,
-	      void *addr = 0,
-	      off_t pos = 0,
+              int len = -1,
+              int prot = PROT_RDWR,
+              int share = MAP_SHARED,
+              void *addr = 0,
+              off_t pos = 0,
               LPSECURITY_ATTRIBUTES sa = 0);
   // This method does the dirty work of actually calling ::mmap to map
   // the file into memory.
