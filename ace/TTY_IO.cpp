@@ -226,9 +226,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
     case SETPARAMS:
       DCB dcb;
       dcb.DCBlength = sizeof dcb;
-      // SadreevAA ::GetCommState (this->get_handle (), &dcb);
-      if (!::GetCommState (this->get_handle (), &dcb)) //  SadreevAA
-        return -1; 
+      if (!::GetCommState (this->get_handle (), &dcb)) 
+        {
+          ACE_OS::set_errno_to_last_error ();
+          return -1; 
+        }
 /*SadreevAA
       switch (arg->baudrate)
         {
@@ -347,29 +349,33 @@ ACE_TTY_IO::control (Control_Mode cmd,
         dcb.XoffLim  = arg->xofflim;
 
       dcb.fDtrControl = DTR_CONTROL_ENABLE;
-      dcb.fAbortOnError = FALSE; // Added by SadreevAA
-      dcb.fErrorChar = FALSE; // Added by SadreevAA
-      dcb.fNull = FALSE; // Added by SadreevAA
+      dcb.fAbortOnError = FALSE;
+      dcb.fErrorChar = FALSE; 
+      dcb.fNull = FALSE; 
       dcb.fBinary = TRUE;
-//SadreevAA      ::SetCommState (this->get_handle (), &dcb);
       if (!::SetCommState (this->get_handle (), &dcb))
-        return -1; //  SadreevAA
+        {
+          ACE_OS::set_errno_to_last_error ();
+          return -1; 
+        }
 
       // 2/13/97 BWF added drop out timer
       // modified time out to operate correctly with when delay
       // is requested or no delay is requestes
       COMMTIMEOUTS timeouts;
-      // SadreevAA ::GetCommTimeouts (this->get_handle(), &timeouts) ;
       if (!::GetCommTimeouts (this->get_handle(), &timeouts))
-        return -1; //  SadreevAA
+        {
+          ACE_OS::set_errno_to_last_error ();
+          return -1; 
+        }
 
-      if(arg->readtimeoutmsec == 0)
-      {
-        // return immediately if no data in the input buffer
-        timeouts.ReadIntervalTimeout = 0; // MAXDWORD; SadreevAA
-        timeouts.ReadTotalTimeoutMultiplier = 0;
-        timeouts.ReadTotalTimeoutConstant   = 0 ;
-      }
+      if (arg->readtimeoutmsec == 0)
+        {
+          // return immediately if no data in the input buffer
+          timeouts.ReadIntervalTimeout = MAXDWORD; 
+          timeouts.ReadTotalTimeoutMultiplier = 0;
+          timeouts.ReadTotalTimeoutConstant   = 0;
+        }
       else
         {
           // Wait for specified  time-out for char to arrive
@@ -380,16 +386,34 @@ ACE_TTY_IO::control (Control_Mode cmd,
           // ensure specified timeout is below MAXDWORD
 
           // We don't test arg->readtimeoutmsec against MAXDWORD
-          // directly to avoid a warning in the case DWORD is unsigned.
+          // directly to avoid a warning in the case DWORD is
+          // unsigned.  Ensure specified timeout is below MAXDWORD use
+          // MAXDWORD as indicator for infinite timeout.
           DWORD dw = arg->readtimeoutmsec;
           if (dw < MAXDWORD)
-            timeouts.ReadTotalTimeoutConstant   = dw;
+            {
+              // Wait for specified time-out for char to arrive before
+              // returning.
+              timeouts.ReadIntervalTimeout = MAXDWORD;
+              timeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
+              timeouts.ReadTotalTimeoutConstant = dw;
+            }
           else
-            timeouts.ReadTotalTimeoutConstant   = MAXDWORD;
-        }
-
-      //return ::SetCommTimeouts (this->get_handle (), &timeouts) ;
-      return ::SetCommTimeouts (this->get_handle (), &timeouts) ? 0 : -1; // SadreevAA
+            {
+              // settings for infinite timeout
+              timeouts.ReadIntervalTimeout = 0;
+              timeouts.ReadTotalTimeoutMultiplier = 0;
+              timeouts.ReadTotalTimeoutConstant = 0;
+            }
+          }
+  
+       if (!::SetCommTimeouts (this->get_handle (), &timeouts))
+         {
+           ACE_OS::set_errno_to_last_error ();
+           return -1; 
+         }
+ 
+       return 0;
 
     case GETPARAMS:
       ACE_NOTSUP_RETURN (-1); // Not yet implemented.

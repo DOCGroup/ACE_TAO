@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SERVICE_REPOSITORY_H
 #define ACE_SERVICE_REPOSITORY_H
@@ -159,7 +158,7 @@ class ACE_Export ACE_Service_Repository_Iterator
 {
 public:
   // = Initialization and termination methods.
-  /// Constructor.
+  /// Constructor initializes the iterator.
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr,
                                    int ignored_suspended = 1);
 
@@ -168,14 +167,14 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the set.
+  /// Pass back the <next_item> that hasn't been seen in the repository.
   /// Returns 0 when all items have been seen, else 1.
   int next (const ACE_Service_Type *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Move forward by one element in the set.  Returns 0 when all the
+  /// Move forward by one element in the repository.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance (void);
 

@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SIGNAL_HANDLER_H
 #define ACE_SIGNAL_HANDLER_H
@@ -138,7 +137,6 @@ public:
   // not change the argument name as "signals". This causes the
   // following problem as reported by
   // <James.Briggs@dsto.defence.gov.au>.
-
 
   // In the file Signal.h two of the functions have and argument name
   // of signals. signals is a Qt macro (to do with their meta object
