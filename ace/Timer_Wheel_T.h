@@ -179,8 +179,8 @@ private:
   // Pointer to the freelist of <ACE_Timer_Node_T<TYPE, FUNCTOR>>.
 
   // = Don't allow these operations for now.
-  ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T &);
-  void operator= (const ACE_Timer_Wheel_T &);
+  ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
+  void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
