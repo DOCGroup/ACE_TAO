@@ -117,7 +117,7 @@ TAO_EC_Gateway_IIOP::update_consumer (
     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (c_qos.dependencies.length () == 0)
+  if (c_qos.dependencies.length () <= 1)
     return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
