@@ -22,4 +22,3 @@ INCLUDES = \
 LIBFILES = $(TAO_VALUETYPE_LIB) $(TAO_LIB) $(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
