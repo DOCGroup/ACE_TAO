@@ -32,10 +32,13 @@ sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
   my($value) = undef;
+  my(%names) = ('cppdir' => 'source_files',
+                'rcdir'  => 'resource_files',
+               );
 
-  if ($name eq 'cppdir') {
+  if (defined $names{$name}) {
     my(%dirnames) = ();
-    foreach my $file ($self->get_component_list('source_files', 1)) {
+    foreach my $file ($self->get_component_list($names{$name}, 1)) {
       my($dirname) = dirname($file);
       if ($dirname eq '') {
         $dirname = '.';
