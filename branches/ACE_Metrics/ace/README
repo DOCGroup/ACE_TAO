@@ -207,6 +207,10 @@ ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
                                         properly with datagrams,
                                         i.e. it fails when the iovec
                                         size is IOV_MAX.
+ACE_HAS_BROKEN_DES_ARRAY_FREE           There is a compiler bug for VxWORKS
+                                        (gcc version 2.96-PentiumIII-99112
+                                        Tornado 2) which cannot handle the
+                                        cast for timeprobes_addr()
 ACE_HAS_BROKEN_ENUMS                    Compiler can't handle large
                                         enums (e.g., HP/UX C++)
 ACE_HAS_BROKEN_HPUX_TEMPLATES           Earlier versions of HP/UX C++

@@ -17,7 +17,7 @@ ACE_RCSID(ace, Timeprobe_T, "$Id$")
 #include "ace/High_Res_Timer.h"
 
 template <class ACE_LOCK, class ALLOCATOR>
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe (u_long size)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
   : timeprobes_ (0),
     lock_ (),
     max_size_ (size),
@@ -36,8 +36,8 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe (u_long size)
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::
-ACE_Timeprobe (ALLOCATOR *allocator,
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::
+ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                u_long size)
   : timeprobes_ (0),
     lock_ (),
@@ -57,7 +57,7 @@ ACE_Timeprobe (ALLOCATOR *allocator,
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &)
 {
   //
   // Stupid MSVC is forcing me to define this; please don't use it.
@@ -69,9 +69,9 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK>
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::~ACE_Timeprobe (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::~ACE_Timeprobe_Ex (void)
 {
-#if defined (VXWORKS)
+#if defined (ACE_HAS_BROKEN_DES_ARRAY_FREE)
   ACE_DES_ARRAY_FREE ( (this->timeprobes_),
                       this->max_size_,
                       this->allocator ()->free,
@@ -85,7 +85,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::~ACE_Timeprobe (void)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -112,7 +112,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -129,7 +129,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::reset (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::reset (void)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -138,7 +138,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::reset (void)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 {
    ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -163,7 +163,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
          // There is a compiler bug for VxWorks (gcc version 2.96-PentiumIII-991112 Tornado 2)
          // which cannot handle the cast for timeprobes_addr()
-#if defined (VXWORKS)
+#if defined (ACE_HAS_BROKEN_DES_ARRAY_FREE)
          ACE_DES_ARRAY_FREE (
                              (this->timeprobes_),
                              this->max_size_,
@@ -184,43 +184,43 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> ACE_Unbounded_Set<ACE_Event_Descriptions> &
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::event_descriptions (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::event_descriptions (void)
 {
   return this->event_descriptions_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> ACE_Unbounded_Set<ACE_Event_Descriptions> &
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::sorted_event_descriptions (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sorted_event_descriptions (void)
 {
   return this->sorted_event_descriptions_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> ACE_timeprobe_t *
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::timeprobes (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobes (void)
 {
   return this->timeprobes_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> ACE_LOCK &
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::lock (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::lock (void)
 {
   return this->lock_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> u_long
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::max_size (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::max_size (void)
 {
   return this->max_size_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> u_long
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::current_size (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::current_size (void)
 {
   return this->current_size_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> int
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::event_descriptions (const char **descriptions,
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::event_descriptions (const char **descriptions,
                                              u_long minimum_id)
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
@@ -235,7 +235,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::event_descriptions (const char **description
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::print_times (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -243,7 +243,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::print_times (void)
   this->sort_event_descriptions_i ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe; %d timestamps were recorded:\n",
+              "\nACE_Timeprobe_Ex; %d timestamps were recorded:\n",
               this->current_size_));
 
   if (this->current_size_ == 0)
@@ -261,7 +261,6 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::print_times (void)
               this->timeprobes_[0].thread_,
               "START"));
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   u_long i, j;
 
   if (report_buffer_full_ == 0) {
@@ -295,7 +294,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::print_times (void)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -303,7 +302,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
   this->sort_event_descriptions_i ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe; %d timestamps were recorded:\n",
+              "\nACE_Timeprobe_Ex; %d timestamps were recorded:\n",
               this->current_size_));
 
   if (this->current_size_ == 0 && this->report_buffer_full_ == 0) {
@@ -338,7 +337,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> const char *
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 {
   if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING) {
     return this->timeprobes_[i].event_.event_description_;
@@ -361,7 +360,7 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i (void)
 {
   size_t total_elements = this->event_descriptions_.size ();
 
@@ -384,9 +383,9 @@ ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i (void)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> ALLOCATOR *
-ACE_Timeprobe<ACE_LOCK, ALLOCATOR>::allocator (void)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::allocator (void)
 {
-  return allocator_ ? allocator_ : ACE_Singleton<ACE_LOCK, ALLOCATOR>::instance ();
+  return allocator_ ? allocator_ : ACE_Singleton<ALLOCATOR, ACE_LOCK>::instance ();
 }
 
 template <class Timeprobe>
