@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTOLDEvent) : orbsvcslib, core, rtevent, rtsched, naming, svc_utils, portableserver {
+project(RTOLDEvent) : orbsvcslib, core, rtevent, rtsched {
   sharedname   = TAO_RTOLDEvent
   dynamicflags = TAO_RTOLDEVENT_BUILD_DLL
   tagchecks   += RTOLDEvent
