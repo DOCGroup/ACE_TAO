@@ -2,7 +2,19 @@
 // $Id$
 
 #include "FactoryCosEventChannel_i.h"
+
+// @@ Pradeep: remember to use "" not <> in your includes.
 #include <ace/Auto_Ptr.h>
+
+// @@ Pradeep: if you are using the new TAO_EC_Event_Channel you
+//    *don't* need a scheduler.
+//    Ohh, and you don't need to create the TAO_EC_Basic_Factory, I
+//    have changed the EC to dynamically load the right factory,
+//    configurable through the svc.conf file! We can discuss later
+//    what is the right configuration for the real-time EC.
+//    In general the code here looks a bit bulky, I apologize that I
+//    cannot take a better look, please remind me to do so once I'm
+//    back to work.
 
 FactoryCosEventChannel_i::FactoryCosEventChannel_i (void)
   :poa_ (PortableServer::POA::_nil ()),
@@ -36,6 +48,9 @@ FactoryCosEventChannel_i::init (PortableServer::POA_ptr poa,
   auto_ptr<ACE_Config_Scheduler> auto_sched_servant_ (_sched_servant);
 
   // Create the RtEC servant.
+  // @@ Pradeep: Please make sure that the POA policies are similar to
+  //    the RootPOA, this is the POA used by the RTEC to activate its
+  //    internal objects.
   TAO_EC_Event_Channel* _ec_servant;
   ACE_NEW_RETURN (_ec_servant,
                   TAO_EC_Event_Channel (this->poa_.in (),
@@ -63,6 +78,11 @@ FactoryCosEventChannel_i::activate (ACE_CString& str_channel_id,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_ASSERT (this->poa_ != PortableServer::POA::_nil ());
+
+  // @@ Pradeep: don't use the same POA to activate the objects
+  //    created by the factory and your internal objects: what if the
+  //    user creates two event channels with names "foo" and
+  //    "foo_Sched"?
 
   // Start the scheduler.
     PortableServer::ObjectId_var oid_sched =
