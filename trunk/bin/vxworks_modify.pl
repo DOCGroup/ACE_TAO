@@ -104,7 +104,7 @@ sub modifyOrbRun {
     # I am relying on convention here
     if ($p2 !~ /\s/) {
       $line = "$p1" . "TAO_TestCombinedThreads::getTimeout() " .
-              "TAO_ENV_ARG_PARAMETER$p3\n";
+              "ACE_ENV_ARG_PARAMETER$p3\n";
     }
   }
   elsif ($line =~ /(.*->run\s*\()([^\)]*)(\).*)/) {
@@ -117,7 +117,7 @@ sub modifyOrbRun {
 
     # I am relying on convention here
     if ($p2 !~ /\s/ && $p2 =~ /env/i) {
-      $p3 = " TAO_ENV_ARG_PARAMETER$p3";
+      $p3 = " ACE_ENV_ARG_PARAMETER$p3";
       $p2 = "";
     }
 
@@ -136,7 +136,7 @@ sub modifyOrbRun {
     # I am relying on convention here
     if ($p2 !~ /\s/ && $p2 =~ /env/i) {
       $line = "$p1" . "TAO_TestCombinedThreads::getTimeout() ".
-              "TAO_ENV_ARG_PARAMETER$p3\n";
+              "ACE_ENV_ARG_PARAMETER$p3\n";
     }
   }
   return $line;
@@ -166,14 +166,14 @@ sub lookForOrbInit {
 sub replaceOrbName {
   my($line) = shift;
   if ($orbInitArg < 3) {
-    if ($line =~ /TAO_ENV_ARG_PARAMETER/) {
-      $line =~ s/TAO_ENV_ARG_PARAMETER/,TAO_ENV_ARG_PARAMETER/;
+    if ($line =~ /ACE_ENV_ARG_PARAMETER/) {
+      $line =~ s/ACE_ENV_ARG_PARAMETER/,ACE_ENV_ARG_PARAMETER/;
     }
     my($length)   = length($line);
     my($previous) = 0;
     for(my $i = 0; $i < $length; $i++) {
       my($ch) = substr($line, $i, 1);
-      ## Add the substr check because the TAO_ENV_ARG_PARAMETER doesn't
+      ## Add the substr check because the ACE_ENV_ARG_PARAMETER doesn't
       ## have a comma before it and the above search and replace doesn't
       ## work for multi-lined ORB_init's
       if ($ch eq "," || $ch eq ")" ||
@@ -200,8 +200,8 @@ sub replaceOrbName {
         $previous = $i + 1;
       }
     }
-    if ($line =~ /,TAO_ENV_ARG_PARAMETER/) {
-      $line =~ s/,TAO_ENV_ARG_PARAMETER/ TAO_ENV_ARG_PARAMETER/;
+    if ($line =~ /,ACE_ENV_ARG_PARAMETER/) {
+      $line =~ s/,ACE_ENV_ARG_PARAMETER/ ACE_ENV_ARG_PARAMETER/;
     }
   }
   return $line;
@@ -223,8 +223,8 @@ sub lookForInitChildPOA {
 sub replaceChildOrbName {
   my($line) = shift;
   if ($initChildPOAArg < 4) {
-    if ($line =~ /TAO_ENV_ARG_PARAMETER/) {
-      $line =~ s/TAO_ENV_ARG_PARAMETER/,TAO_ENV_ARG_PARAMETER/;
+    if ($line =~ /ACE_ENV_ARG_PARAMETER/) {
+      $line =~ s/ACE_ENV_ARG_PARAMETER/,ACE_ENV_ARG_PARAMETER/;
     }
     my($length)   = length($line);
     my($previous) = 0;
@@ -233,7 +233,7 @@ sub replaceChildOrbName {
 
     for(my $i = 0; $i < $length; $i++) {
       my($ch) = substr($line, $i, 1);
-      ## Add the substr check because the TAO_ENV_ARG_PARAMETER doesn't
+      ## Add the substr check because the ACE_ENV_ARG_PARAMETER doesn't
       ## have a comma before it and the above search and replace doesn't
       ## work for multi-lined ORB_init's
       if ($ch eq "," || $ch eq ")" ||
@@ -255,8 +255,8 @@ sub replaceChildOrbName {
         $previous = $i + 1;
       }
     }
-    if ($line =~ /,TAO_ENV_ARG_PARAMETER/) {
-      $line =~ s/,TAO_ENV_ARG_PARAMETER/ TAO_ENV_ARG_PARAMETER/;
+    if ($line =~ /,ACE_ENV_ARG_PARAMETER/) {
+      $line =~ s/,ACE_ENV_ARG_PARAMETER/ ACE_ENV_ARG_PARAMETER/;
     }
   }
   return $line;
