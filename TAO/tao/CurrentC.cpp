@@ -20,6 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/CurrentC.h"
+#include "tao/Sequence_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/CurrentC.i"

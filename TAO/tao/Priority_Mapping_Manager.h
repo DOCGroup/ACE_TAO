@@ -123,6 +123,14 @@ public:
   TAO_Priority_Mapping_Manager_ptr _retn (void);
   TAO_Priority_Mapping_Manager_ptr ptr (void) const;
 
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static TAO_Priority_Mapping_Manager_ptr duplicate (TAO_Priority_Mapping_Manager_ptr);
+  static void release (TAO_Priority_Mapping_Manager_ptr);
+  static TAO_Priority_Mapping_Manager_ptr nil (void);
+  static TAO_Priority_Mapping_Manager_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
+
 private:
   /// Unimplemented - prevents widening assignment.
   TAO_Priority_Mapping_Manager_ptr ptr_;
