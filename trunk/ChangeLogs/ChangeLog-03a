@@ -1,3 +1,12 @@
+Tue Jan 30 21:39:15 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+       * tests/Log_Msg_Test.cpp: In funtion test_ostream(), removed the 
+          if condition to check if ACE_OS::unlink() succeeds. Also set 
+          the ostream to NULL before calling ACE_ERROR_RETURN(). Thanks 
+          to Mike Curtis <mccurry@my-deja.com> for pointing out problem 
+          caused when ACE_OS::unlink() fails. Thanks to Doug in helping 
+          fix the problem.
+
 Tue Jan 30 18:04:08 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test): 
