@@ -1,3 +1,12 @@
+Fri Mar 18 10:36:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/EC_Custom_Marshal/svc.conf:
+	* orbsvcs/tests/EC_Throughput/ec.conf:
+
+	  These two tests require that the ORB not drop replies during
+	  shutdown.  Therefore added that strategy. If this strategy is
+	  not used EC would exit with a COMM_FAILURE exception. 
+
 Fri Mar 18 10:34:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Transport.cpp:
