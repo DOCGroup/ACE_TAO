@@ -1,3 +1,53 @@
+Mon Jul 09 23:43:29 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/params.i (default_init_ref):
+
+	  Use CORBA::string_dup() to return a duplicate string instead of
+	  relying on ACE_CString::rep().  This allows us to portably take
+	  advantage of CORBA::String_var in TAO_ORB_Core::resolve_rir().
+
+	* tao/ORB_Core.cpp (list_initial_references):
+
+	  Corrected long standing bug where the stringified object
+	  reference was placed in the ObjectIdList instead of the ObjectId
+	  that represents it.
+
+	  Include the ObjectIds stored in the underlying table for
+	  the ORB::register_initial_reference() mechanism in the returned
+	  ObjectIdList.  This was a bug.
+
+	  (TAO_ORB_Core, fini):
+
+	  The rt_priority_mapping_manager_ cached object reference member
+	  was unused.  Removed its initialization and finalization code.
+
+	  (resolve_rir):
+
+	  Improved exception-safety of this method by using a
+	  CORBA::String_var instead of relying solely on delete().
+
+	* tao/ORB_Core.h (rt_priority_mapping_manager_):
+
+	  Removed this unused attribute.
+
+	* tao/Object_Ref_Table.h (begin, end):
+
+	  Made iterator accessors public so that the ORB_Core can use
+	  them.
+
+	* tao/Object_Ref_Table.cpp:
+
+	  Removed three unnecessary Hash Map related template
+	  instantiations.
+
+	  (current_size):
+
+	  Return the current size of the underlying table.
+
+	* tests/InterOp-Naming/README:
+
+	  Corrected format for corbaloc IORs.
+
 Mon Jul  9 17:39:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/Security/Secure_Invocation/client.cpp:

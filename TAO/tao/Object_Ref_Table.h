@@ -73,12 +73,23 @@ public:
   /// Explicitly destroy the contents of the object reference table.
   void destroy (void);
 
-private:
-
-  /// The canonical ACE_Map methods.
+  /**
+   * @name Forward Iterators
+   */
   //@{
   Iterator begin (void);
   Iterator end (void);
+  //@}
+
+  /// Return the current size of the underlying table.
+  size_t current_size (void) const;
+
+private:
+
+  /**
+   * @name The canonical ACE_Map methods
+   */
+  //@{
   int bind (const char *orb_id, CORBA::Object_ptr obj);
   CORBA::Object_ptr find (const char *orb_id); // Returns a duplicate.
   int unbind (const char *orb_id);

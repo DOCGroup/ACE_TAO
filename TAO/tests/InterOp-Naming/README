@@ -18,7 +18,7 @@ resolve_initial_references on argv[1].
 
 TEST 1: Single Profile corbalocs using -ORBInitRef
 
-InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
+InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL  
 					// -i Adds the ins:IOR mapping to
 					// the ORB table.
 					// -n Use the Naming Service.
@@ -36,21 +36,21 @@ InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 					// -n Use the Naming Service.
 
 InterOp-Naming> INS_test_client arbit_service \
-		-ORBInitRef "arbit_service=corbaloc://1.0@<host-name>:<port>/ins,
+		-ORBInitRef "arbit_service=corbaloc:1.0@<host-name>:<port>/ins,
 					   1.0@<host-name2>:<port2>/key,
 					   ...
 					   1.0@<host-namen>:<portN>/key"
 
 TEST 3: Single Profile corbaloc using -ORBDefautlInitRef
 
-InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
+InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL  
 
 					// -i Adds the ins:IOR mapping to
 					// the ORB table.
 					// -n Use the Naming Service.
 
 InterOp-Naming> INS_test_client ins \
-		-ORBDefaultInitRef "corbaloc:://1.0@<host-name>:<port>"
+		-ORBDefaultInitRef "corbaloc::1.0@<host-name>:<port>"
 
 TEST 4: Multiple Profile corbaloc using -ORBDefaultInitRef
 
@@ -61,7 +61,7 @@ InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 					// -n Use the Naming Service.
 
 InterOp-Naming> INS_test_client \
-		-ORBDefaultInitRef "corbaloc:://1.0@<host-name>:<port>,
+		-ORBDefaultInitRef "corbaloc::1.0@<host-name>:<port>,
 					    1.0@<host-name2>:<port2>,
 					    ...
 					    1.0@<host-namen>:<portN>"
