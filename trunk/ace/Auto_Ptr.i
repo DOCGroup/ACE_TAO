@@ -153,7 +153,7 @@ auto_basic_array_ptr<X>::operator= (auto_basic_array_ptr<X> &rhs)
 
 template<class X> ACE_INLINE
 auto_array_ptr<X>::auto_array_ptr (X *p) 
-  : auto_basic_array_ptr<T> (p) 
+  : auto_basic_array_ptr<X> (p) 
 {
   ACE_TRACE ("auto_basic_array_ptr<X>::auto_basic_array_ptr");
 }
