@@ -48,7 +48,7 @@ public:
   enum
   {
     M_DELETE = 3
-    // Indicates that close() deletes the Tasks.  Don't change this
+    // Indicates that <close> deletes the Tasks.  Don't change this
     // value without updating the same enum in class ACE_Module...
   };
 
@@ -61,73 +61,74 @@ public:
   // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
   // <arg> is the value past in to the open() methods of the tasks.
 
-  int open (void *arg,
-            ACE_Module<ACE_SYNCH_USE> *head = 0,
-            ACE_Module<ACE_SYNCH_USE> *tail = 0);
+  virtual int open (void *arg,
+                    ACE_Module<ACE_SYNCH_USE> *head = 0,
+                    ACE_Module<ACE_SYNCH_USE> *tail = 0);
   // Create a Stream consisting of <head> and <tail> as the Stream
   // head and Stream tail, respectively.  If these are 0 then the
   // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
   // <arg> is the value past in to the open() methods of the tasks.
 
-  int close (int flags = M_DELETE);
+  virtual int close (int flags = M_DELETE);
   // Close down the stream and release all the resources.
 
-  ~ACE_Stream (void);
+  virtual ~ACE_Stream (void);
   // Close down the stream and release all the resources.
 
   // = ACE_Stream plumbing operations
 
-  int push (ACE_Module<ACE_SYNCH_USE> *mod);
+  virtual int push (ACE_Module<ACE_SYNCH_USE> *mod);
   // Add a new module <mod> right below the Stream head.
 
-  int pop (int flags = M_DELETE);
+  virtual int pop (int flags = M_DELETE);
   // Remove the <mod> right below the Stream head and close it down.
 
-  int top (ACE_Module<ACE_SYNCH_USE> *&mod);
+  virtual int top (ACE_Module<ACE_SYNCH_USE> *&mod);
   // Return the top module on the stream (right below the stream
   // head).
 
-  int remove (const ASYS_TCHAR *mod, int flags = M_DELETE);
+  virtual int remove (const ASYS_TCHAR *mod,
+                      int flags = M_DELETE);
   // Remove the named module <mod> from the stream.  This bypasses the
   // strict LIFO ordering of push() and pop().
 
-  ACE_Module<ACE_SYNCH_USE> *head (void);
+  virtual ACE_Module<ACE_SYNCH_USE> *head (void);
   // Return current stream head.
 
-  ACE_Module<ACE_SYNCH_USE> *tail (void);
+  virtual ACE_Module<ACE_SYNCH_USE> *tail (void);
   // Return current stream tail.
 
-  ACE_Module<ACE_SYNCH_USE> *find (const ASYS_TCHAR *mod);
+  virtual ACE_Module<ACE_SYNCH_USE> *find (const ASYS_TCHAR *mod);
   // Find a particular ACE_Module.
 
-  int link (ACE_Stream<ACE_SYNCH_USE> &);
+  virtual int link (ACE_Stream<ACE_SYNCH_USE> &);
   // Create a pipe between two Streams.
 
-  int unlink (void);
+  virtual int unlink (void);
   // Remove a pipe formed between two Streams.
 
   // = Blocking data transfer operations
-  int put (ACE_Message_Block *mb,
-           ACE_Time_Value *timeout = 0);
+  virtual int put (ACE_Message_Block *mb,
+                   ACE_Time_Value *timeout = 0);
   // Send the message <mb> down the stream, starting at the Module
   // below the Stream head.  Wait for upto <timeout> amount of time
   // for the operation to complete (or block forever if <timeout> ==
   // 0).
 
-  int get (ACE_Message_Block *&mb,
-           ACE_Time_Value *timeout = 0);
+  vritual int get (ACE_Message_Block *&mb,
+                   ACE_Time_Value *timeout = 0);
   // Read the message <mb> that is stored in the the stream head.
   // Wait for upto <timeout> amount of time for the operation to
   // complete (or block forever if <timeout> == 0).
 
-  int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
-               void *args);
+  virutal int control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
+                       void *args);
   // Send control message down the stream.
 
-  int wait (void);
+  virtual int wait (void);
   // Synchronize with the final close of the stream.
 
-  void dump (void) const;
+  virtual void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;

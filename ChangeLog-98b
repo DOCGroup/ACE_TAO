@@ -1,3 +1,9 @@
+Wed Nov  4 23:28:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Stream.h: Made all the methods of ACE_Stream virtual to
+ 	  enable subclasses.  Thanks to Bob McWhirter's for this
+ 	  suggestion.
+
 Tue Nov  3 16:06:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Logger/simple-server: Fixed the server so that it shuts
