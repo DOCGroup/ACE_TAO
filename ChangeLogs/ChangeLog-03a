@@ -1,3 +1,9 @@
+Tue Jun 27 08:55:21 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * ace/OS_Dirent.cpp: Fixed the algorithm of reading a directory
+		  in the readdir_emulation () method. Thanks to Zoran Ivanovic
+		  <Zoran_Ivanovic@i2.com> for pointing this out.
+
 Tue Jun 27 08:30:21 2000  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/servers/main.cpp: Add "ace/" to #include Logging_Strategy.h
