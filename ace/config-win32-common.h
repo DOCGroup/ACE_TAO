@@ -401,6 +401,13 @@ typedef unsigned __int64 ACE_UINT64;
 /* Borland C++ Builder definitions. */
 #if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
 
+#if 0
+#ifdef ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#endif
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
+#endif
+
 #ifdef ACE_HAS_STANDARD_CPP_LIBRARY
 #undef ACE_HAS_STANDARD_CPP_LIBRARY
 #endif
