@@ -5380,10 +5380,14 @@ private:
    do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
 #define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
      POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS ()
+#if defined (__Lynx__)
+#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
+#else
 #define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
    do { POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
         DEALLOCATOR (POINTER); \
       } while (0)
+#endif
 
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
