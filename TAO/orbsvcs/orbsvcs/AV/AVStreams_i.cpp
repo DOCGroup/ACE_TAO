@@ -18,6 +18,7 @@
 #include "AVStreams_i.h"
 #include "Transport.h"
 #include "sfp.h"
+#include "MCast.h"
 #include "orbsvcs/Trader/Trader.h"
 
 
@@ -1115,10 +1116,10 @@ TAO_Base_StreamEndPoint::make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&sh)
 }
 
 int
-TAO_Base_StreamEndPoint::make_dgram_mcast_flow_handler (TAO_AV_Dgram_Mcast_Flow_Handler *&sh)
+TAO_Base_StreamEndPoint::make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&sh)
 {
   ACE_NEW_RETURN (sh,
-                  TAO_AV_Dgram_Mcast_Flow_Handler,
+                  TAO_AV_UDP_MCast_Flow_Handler,
                   -1);
 }
 
@@ -1421,98 +1422,6 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
       for (i = 0; i < flow_spec.length (); i++)
         ACE_DEBUG ((LM_DEBUG,flow_spec [i]));
 
-//       // connect to the flows that are being listened on the other side.
-//       for (u_int i=0; i< flow_spec.length (); i++)
-//         {
-//           TAO_Forward_FlowSpec_Entry *entry;
-//           ACE_NEW_RETURN (entry,
-//                           TAO_Forward_FlowSpec_Entry,
-//                           0);
-//           result = entry->parse (flow_spec[i].in ());
-//           if (result < 0)
-//             ACE_DEBUG ((LM_DEBUG,"invalid flowspec string:%s\n",flow_spec[i].in ()));
-//           else
-//             {
-//               TAO_FlowSpec_Entry::Protocol protocol;
-//               protocol = entry->carrier_protocol ();
-//               switch (protocol)
-//                 {
-//                 case TAO_FlowSpec_Entry::TAO_AV_NOPROTOCOL:
-//                   // No protocol is specified.
-//                      break;
-//                 case TAO_FlowSpec_Entry::TAO_AV_TCP:
-//                   {
-//                     ACE_Addr *address = entry->address ();
-//                     if (address != 0)
-//                       {
-//                         // listen to the transport address.
-//                         ACE_Addr *address = entry->address ();
-//                         ACE_INET_Addr *peer_addr;
-//                         peer_addr = ACE_dynamic_cast (ACE_INET_Addr*,address);
-//                         // connect to this transport address.
-//                         TAO_AV_Connector *connector;
-//                         TAO_AV_TCP_Flow_Handler *flow_handler;
-
-//                         TAO_String_Hash_Key connector_key (entry->flowname ());
-//                         ACE_NEW_RETURN (connector,
-//                                         TAO_AV_Connector (this),
-//                                         0);
-//                         result = this->connector_map_.bind (connector_key,
-//                                                             connector);
-//                         if (result < 0)
-//                           ACE_ERROR_RETURN ((LM_ERROR,"TAO_StreamEndPoint::request_connection::connector_map_.bind failed\n"),0);
-//                         result = connector->open (TAO_ORB_Core_instance ()->reactor ());
-//                         if (result < 0)
-//                           ACE_ERROR_RETURN ((LM_ERROR,"TAO_StreamEndPoint::request_connection connector open failed\n"),0);
-//                         result = connector->connect (flow_handler,*peer_addr);
-//                         if (result < 0)
-//                           ACE_ERROR_RETURN ((LM_ERROR,"TAO_StreamEndPoint::request_connection: connect failed\n"),0);
-//                       }
-//                   }
-//                   break;
-//                 case TAO_FlowSpec_Entry::TAO_AV_UDP:
-//                   {
-//                     // listen to the transport address.
-//                     ACE_Addr *address = entry->address ();
-//                     if (address != 0)
-//                       {
-//                         ACE_INET_Addr *peer_addr;
-//                         peer_addr = ACE_dynamic_cast (ACE_INET_Addr*,address);
-//                         TAO_AV_Dgram_Flow_Handler *dgram_handler;
-//                         this->make_dgram_flow_handler (dgram_handler);
-//                         result = dgram_handler->open (*peer_addr);
-//                         if (result < 0)
-//                           ACE_ERROR_RETURN ((LM_ERROR,"TAO_StreamEndPoint::request_connection: dgram_handler open failed\n"),0);
-//                         ACE_INET_Addr local_addr;
-//                         result = dgram_handler->get_local_addr (local_addr);
-//                         if (result < 0)
-//                           ACE_ERROR_RETURN ((LM_ERROR,"TAO_StreamEndPoint::request_connection: get_local_addr failed\n"),0);
-//                         const char *flowname = entry->flowname ();
-//                         TAO_Reverse_FlowSpec_Entry reverse_entry (flowname,
-//                                                                   entry->direction_str (),
-//                                                                   entry->format (),
-//                                                                   entry->flow_protocol_str (),
-//                                                                   entry->carrier_protocol_str (),
-//                                                                   entry->address ());
-//                         char *entry_string = reverse_entry.entry_to_string ();
-//                         if (entry_string != 0)
-//                           flow_spec [i] = entry_string;
-//                       }
-//                   }
-//                   break;
-//                 case TAO_FlowSpec_Entry::TAO_AV_AAL5:
-//                 case TAO_FlowSpec_Entry::TAO_AV_AAL3_4:
-//                 case TAO_FlowSpec_Entry::TAO_AV_AAL1:
-//                 case TAO_FlowSpec_Entry::TAO_AV_RTP_AAL5:
-//                 case TAO_FlowSpec_Entry::TAO_AV_IPX:
-//                   ACE_DEBUG ((LM_DEBUG,"Illegal protocol for AF_INET family\n"));
-//                   break;
-//                 case TAO_FlowSpec_Entry::TAO_AV_RTP_UDP:
-//                 default:
-//                   ACE_DEBUG ((LM_DEBUG,"Protocol not supported yet"));
-//                 }
-//             }
-//         }
       for (i=0;i<flow_spec.length ();i++)
         {
           TAO_Forward_FlowSpec_Entry *entry = 0;
@@ -1873,7 +1782,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
           ACE_ENDTRY;
           ACE_CHECK_RETURN (0);
         }
-      TAO_AV_Dgram_Mcast_Flow_Handler *mcast_dgram = 0;
+      TAO_AV_UDP_MCast_Flow_Handler *mcast_dgram = 0;
       ACE_INET_Addr mcast_addr;
       result = this->dgram_mcast_handler_map_.find (mcast_key,mcast_dgram);
       if (result == 0)
@@ -1964,7 +1873,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &the_qos,
       TAO_Forward_FlowSpec_Entry forward_entry;
       forward_entry.parse (flow_spec[i]);
       TAO_String_Hash_Key mcast_key (forward_entry.flowname ());
-      TAO_AV_Dgram_Mcast_Flow_Handler *mcast_dgram = 0;
+      TAO_AV_UDP_MCast_Flow_Handler *mcast_dgram = 0;
       ACE_INET_Addr *mcast_addr;
       mcast_addr = ACE_dynamic_cast (ACE_INET_Addr *,forward_entry.address ());
       if (mcast_addr == 0)
@@ -3754,17 +3663,32 @@ TAO_FlowSpec_Entry::parse_address (char *address)
       char addr[BUFSIZ];
       // convert to the ACE_Addr format.
       ACE_OS::sprintf (addr,"%s:%s",address_tokenizer[0],address_tokenizer[1]);
-      if (ACE_OS::strncasecmp (this->carrier_protocol_,"AAL",3) == 0)
-        ACE_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
-      //      ACE_NEW_RETURN (this->address_,
-      //                      ACE_ATM_Addr (addr),
-      //                      -1);
-      else // we assume everything else is INET addr.
+      switch (this->protocol_)
         {
-          this->address_str_ = CORBA::string_dup (addr);
-          ACE_NEW_RETURN (this->address_,
-                          ACE_INET_Addr (addr),
-                          -1);
+        case TAO_AV_Core::TAO_AV_SFP_UDP:
+        case TAO_AV_Core::TAO_AV_RTP_UDP:
+        case TAO_AV_Core::TAO_AV_TCP:
+          {
+            this->address_str_ = CORBA::string_dup (addr);
+            ACE_NEW_RETURN (this->address_,
+                            ACE_INET_Addr (addr),
+                            -1);
+          }
+          break;
+        case TAO_AV_Core::TAO_AV_UDP:
+          {
+            this->address_str_ = CORBA::string_dup (addr);
+            ACE_INET_Addr *inet_addr;
+            ACE_NEW_RETURN (inet_addr,
+                            ACE_INET_Addr (addr),
+                            -1);
+            this->address_ = inet_addr;
+            if (IN_CLASSD (inet_addr->get_ip_address ()))
+              this->protocol_ = TAO_AV_Core::TAO_AV_UDP_MCAST;
+          }
+          break;
+        default:
+          ACE_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
         }
     }
   return 0;
@@ -4159,14 +4083,14 @@ template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Reverse_Fl
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::QoS>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>;
@@ -4291,14 +4215,14 @@ template class ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Item*>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_Reverse_FlowSpec_Entry*,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Reverse_FlowSpec_Entry*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_Dgram_Mcast_Flow_Handler*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Dgram_Mcast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_UDP_MCast_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_UDP_MCast_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::QoS>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>

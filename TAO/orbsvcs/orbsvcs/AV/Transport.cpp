@@ -3,6 +3,7 @@
 #include "AVStreams_i.h"
 #include "Transport.h"
 #include "sfp.h"
+#include "MCast.h"
 
 //------------------------------------------------------------
 // TAO_AV_Core
@@ -296,6 +297,17 @@ TAO_AV_Core::init_protocol_factories (void)
       sfp_item->factory (sfp_protocol_factory);
 
       this->protocol_factories_.insert (sfp_item);
+
+      TAO_AV_Protocol_Factory *udp_mcast_protocol_factory = 0;
+      TAO_AV_Protocol_Item *udp_mcast_item = 0;
+
+      ACE_NEW_RETURN (udp_mcast_protocol_factory,
+                      TAO_AV_UDP_MCast_Protocol_Factory,
+                      -1);
+      ACE_NEW_RETURN (udp_mcast_item, TAO_AV_Protocol_Item ("UPD_MCast_Factory"), -1);
+      udp_mcast_item->factory (udp_mcast_protocol_factory);
+
+      this->protocol_factories_.insert (udp_mcast_item);
 
       if (TAO_debug_level > 0)
         {
@@ -707,6 +719,11 @@ TAO_AV_Transport::~TAO_AV_Transport (void)
 }
 
 // TAO_AV_Flow_Handler
+TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (void)
+  :transport_ (0)
+{
+}
+
 int
 TAO_AV_Flow_Handler::set_remote_address (ACE_Addr */* address */)
 {
@@ -723,6 +740,12 @@ int
 TAO_AV_Flow_Handler::stop (void)
 {
   return -1;
+}
+
+TAO_AV_Transport*
+TAO_AV_Flow_Handler::transport (void)
+{
+  return this->transport_;
 }
 
 TAO_AV_Connector::TAO_AV_Connector (void)
@@ -785,6 +808,12 @@ int
 TAO_AV_UDP_Transport::close (void)
 {
   return 0;
+}
+
+int
+TAO_AV_UDP_Transport::mtu (void)
+{
+  return ACE_MAX_DGRAM_SIZE;
 }
 
 ssize_t
@@ -927,6 +956,12 @@ int
 TAO_AV_TCP_Transport::close (void)
 {
   return 0;
+}
+
+int
+TAO_AV_TCP_Transport::mtu (void)
+{
+  return -1;
 }
 
 ssize_t
@@ -1150,7 +1185,7 @@ TAO_AV_Dgram_Acceptor::open (TAO_AV_UDP_Acceptor *acceptor,
   result = handler->open (address);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SOCK_Dgram::open failed\n"),-1);
-    int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
+  int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   
   if (handler->set_option (SOL_SOCKET,

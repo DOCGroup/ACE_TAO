@@ -227,11 +227,6 @@ protected:
   CORBA::ULong credit_;
 };
 
-//Forward declarations
-
-class TAO_SFP_UDP_Receiver_Transport;
-class TAO_SFP_UDP_Sender_Transport;
-
 class TAO_SFP_UDP_Receiver_Handler
   :public TAO_AV_UDP_Flow_Handler
 {
@@ -240,9 +235,6 @@ public:
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  // Perform appropriate closing.
-  //  virtual TAO_AV_Transport *transport (void);
-  // Return the transport object.
   virtual int start (void);
   virtual int stop  (void);
 protected:
@@ -258,28 +250,12 @@ public:
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  // Perform appropriate closing.
-  //  virtual TAO_AV_Transport *transport (void);
-  // Return the transport object.
   virtual int start (void);
   virtual int stop  (void);
 protected:
   TAO_SFP_Object *sfp_object_;
 };
 
-// class TAO_SFP_UDP_Sender_Transport
-//   :public TAO_AV_UDP_Transport
-// {
-// public:
-//   TAO_SFP_UDP_Sender_Transport (TAO_SFP_UDP_Sender_Handler *);
-// };
-
-// class TAO_SFP_UDP_Receiver_Transport
-//   :public TAO_AV_UDP_Transport
-// {
-// public:
-//   TAO_SFP_UDP_Receiver_Transport (TAO_SFP_UDP_Receiver_Handler *);
-// };
 
 class TAO_ORBSVCS_Export TAO_SFP_UDP_Protocol_Factory
   :public TAO_AV_Protocol_Factory
@@ -304,14 +280,7 @@ class TAO_SFP_UDP_Acceptor
 public:
   TAO_SFP_UDP_Acceptor (void);
   ~TAO_SFP_UDP_Acceptor (void);
-//   int open (TAO_Base_StreamEndPoint *endpoint,
-//             TAO_AV_Core *av_core, 
-//             TAO_FlowSpec_Entry *entry);
-//   int open_default (TAO_Base_StreamEndPoint *endpoint,
-//                     TAO_AV_Core *av_core, 
-//                     TAO_FlowSpec_Entry *entry);
   int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
-  //  int close (void);
 };
 
 class TAO_SFP_UDP_Connector
@@ -320,13 +289,7 @@ class TAO_SFP_UDP_Connector
 public:
   TAO_SFP_UDP_Connector (void);
   ~TAO_SFP_UDP_Connector (void);
-//   virtual int open (TAO_Base_StreamEndPoint *endpoint,
-//                     TAO_AV_Core *av_core);
-
-//   virtual int connect (TAO_FlowSpec_Entry *entry,
-//                        TAO_AV_Transport *&transport);
   int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
-  //  virtual int close (void);
 };
 
 #endif /* !defined (TAO_SFP_H) */

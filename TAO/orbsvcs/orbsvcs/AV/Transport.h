@@ -39,7 +39,8 @@ public:
   virtual int open (ACE_Addr *address) = 0;
 
   virtual int close (void) = 0;
-  
+
+  virtual int mtu (void) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0) = 0;
   // Write the complete Message_Block chain to the connection.
@@ -93,6 +94,8 @@ public:
 
   virtual int close (void);
   
+  virtual int mtu (void);
+
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
   // Write the complete Message_Block chain to the connection.
@@ -146,6 +149,8 @@ public:
 
   virtual int close (void);
   
+  virtual int mtu (void);
+
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
   virtual ssize_t send (const ACE_Message_Block *mblk,
@@ -414,9 +419,10 @@ public:
 class TAO_AV_Flow_Handler
 {
 public:
+  TAO_AV_Flow_Handler (void);
   virtual int start (void);
   virtual int stop  (void);
-  virtual TAO_AV_Transport *transport (void) = 0;
+  virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
   //  virtual ACE_Event_Handler* event_handler (void) = 0;
 protected:
@@ -437,8 +443,8 @@ protected:
 
 class TAO_AV_UDP_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
-   public ACE_SOCK_Dgram,
-   public ACE_Event_Handler
+   public virtual ACE_SOCK_Dgram,
+   public virtual ACE_Event_Handler
 {
 public:
   TAO_AV_UDP_Flow_Handler (void);
