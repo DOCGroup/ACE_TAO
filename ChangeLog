@@ -1,3 +1,8 @@
+Wed Apr 24 23:39:00 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor: Updated file names to match
+	  executable names.
+
 Thu Apr 25 07:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.h:
