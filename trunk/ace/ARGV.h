@@ -48,9 +48,12 @@ public:
   // each $ENV encountered in the string.  The <buf> operation is not
   // allowed on an ACE_ARGV created this way.
 
-  ACE_ARGV (ASYS_TCHAR *first_argv[], ASYS_TCHAR *second_argv[], int substitute_env_args =1);
+  ACE_ARGV (ASYS_TCHAR *first_argv[],
+            ASYS_TCHAR *second_argv[],
+            int substitute_env_args =1);
   // Creates an ACE_ARGV which is the concatenation of the first_argv
-  // and the second argv. The argv arguments should be null pointer terminated.
+  // and the second argv. The argv arguments should be null pointer
+  // terminated.
 
   ACE_ARGV (int substitute_env_args = 1);
   // Entry point for creating an ASYS_TCHAR *[] command line

@@ -22,6 +22,7 @@
 #include "ace/Process.h"
 #include "ace/Signal.h"
 #include "ace/Get_Opt.h"
+#include "ace/ARGV.h"
 
 ACE_RCSID(tests, Signal_Test, "$Id$")
 
@@ -216,7 +217,8 @@ worker_child (void *)
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("(%P|%t) sending SIGHUP to parent process %d\n"),
                       parent_pid));
-          int result = ACE_OS::kill (parent_pid, SIGHUP);
+          int result = ACE_OS::kill (parent_pid,
+                                     SIGHUP);
           ACE_ASSERT (result != -1);
         }
     }
@@ -247,11 +249,9 @@ run_test (ACE_THR_FUNC worker)
     result = ACE_Thread_Manager::instance ()->spawn 
       (synchronous_signal_handler, 0, THR_DETACHED);
     ACE_ASSERT (result != -1);
-  }
-#else
+#endif /* 0 */
   }
   synchronous_signal_handler (0);
-#endif /* 0 */
 
   // Wait for the other thread to finish.
   result = ACE_Thread_Manager::instance ()->wait ();
@@ -269,15 +269,32 @@ worker_parent (void *)
 {
   ACE_Process_Options options;
 
+  ASYS_TCHAR *l_argv[3];
+  TCHAR pid_str[12];
+  // Store the parent's process id so we can pass it to the child
+  // portably.
+  ACE_OS::sprintf (pid_str, "%d", ACE_OS::getpid ());
+
   // We're going to create a new process that runs this program again,
   // so we need to indicate that it's the child.
-  options.command_line (ACE_TEXT (".")
-                        ACE_DIRECTORY_SEPARATOR_STR
-                        ACE_TEXT ("Signal_Test")
-                        ACE_PLATFORM_EXE_SUFFIX
-                        ACE_TEXT (" -c"));
+  l_argv[0] = ASYS_TEXT (".")
+              ACE_DIRECTORY_SEPARATOR_STR
+              ASYS_TEXT ("Signal_Test")
+              ACE_PLATFORM_EXE_SUFFIX
+              ASYS_TEXT (" -c -p");
+  l_argv[1] = pid_str;
+  l_argv[2] = 0;
+  
+  ACE_ARGV argv (l_argv);
+
+  // Generate a command-line!
+  options.command_line (argv.buf ());
   ACE_Process pm;
+
   child_pid = pm.spawn (options);
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) spawning child %d\n"),
+              child_pid));
 
   ACE_ASSERT (child_pid != -1);
 
@@ -308,7 +325,7 @@ worker_parent (void *)
 static void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:ch");
+  ACE_Get_Opt get_opt (argc, argv, "i:chp:");
 
   int c; 
 
@@ -323,6 +340,9 @@ parse_args (int argc, char *argv[])
         child = 1;
         break;
       }
+    case 'p':
+      parent_pid = ACE_OS::atoi (get_opt.optarg);
+      break;
     case 'h':
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -339,10 +359,6 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       ACE_APPEND_LOG (ASYS_TEXT ("Signal_Test-child"));
       parse_args (argc, argv);
-
-      // Obtain this information here because wierd things happen on
-      // Linux due to their threading model.
-      parent_pid = ACE_OS::getppid ();
 
       run_test (worker_child);
       ACE_END_LOG;
