@@ -6,8 +6,10 @@
 
 ACE_RCSID(Notify, Notify_ProxyPushSupplier_i, "$Id$")
 
-TAO_Notify_ProxyPushSupplier_i::TAO_Notify_ProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager)
-  :proxy_inherited (consumeradmin, resource_manager),
+typedef ACE_Reverse_Lock<ACE_Lock> TAO_Notify_Unlock;
+
+TAO_Notify_ProxyPushSupplier_i::TAO_Notify_ProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumer_admin)
+  :proxy_inherited (consumer_admin),
    notify_style_consumer_ (0)
 {
 }
@@ -15,15 +17,6 @@ TAO_Notify_ProxyPushSupplier_i::TAO_Notify_ProxyPushSupplier_i (TAO_Notify_Consu
 // Implementation skeleton destructor
 TAO_Notify_ProxyPushSupplier_i::~TAO_Notify_ProxyPushSupplier_i (void)
 {
-}
-
-void
-TAO_Notify_ProxyPushSupplier_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
-{
-  proxy_inherited::cleanup_i (ACE_TRY_ENV);
-
-  this->cosec_push_consumer_ = CosEventComm::PushConsumer::_nil ();
-  this->notify_push_consumer_ = CosNotifyComm::PushConsumer::_nil ();
 }
 
 void
@@ -36,6 +29,7 @@ TAO_Notify_ProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event, CORBA
     }
   ACE_CATCHALL
     {
+      ACE_DEBUG ((LM_DEBUG, "Exception dispatching any event\n"));
       // misbehaving client, ignore for now.
     }
   ACE_ENDTRY;
@@ -44,6 +38,12 @@ TAO_Notify_ProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event, CORBA
 void
 TAO_Notify_ProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV)
 {
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    if (this->notify_style_consumer_ == 0)
+      return; // Our consumer doesn't support offer_change.
+  }
+
   ACE_TRY
     {
       this->notify_push_consumer_->offer_change (added, removed, ACE_TRY_ENV);
@@ -64,6 +64,10 @@ TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushCon
                    CosEventChannelAdmin::TypeError
   ))
 {
+  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK;
+
   if (CORBA::is_nil (push_consumer))
     ACE_THROW (CosEventChannelAdmin::TypeError ());
   else if (this->is_connected_ == 1)
@@ -83,22 +87,43 @@ TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushCon
             _duplicate (this->notify_push_consumer_.in ());
           this->notify_style_consumer_ = 1;
         }
-    }
+
+      this->is_connected_ = 1;
+    } // else
 
   ACE_TRY
     {
-      this->on_connected (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      TAO_Notify_Unlock reverse_lock (*this->lock_);
 
-      this->is_connected_ = 1;
+      {
+        ACE_GUARD_THROW_EX (TAO_Notify_Unlock, ace_mon, reverse_lock,
+                            CORBA::INTERNAL ());
+        ACE_CHECK;
+
+        this->on_connected (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
     }
  ACE_CATCHALL
    {
      this->cosec_push_consumer_ = CosNotifyComm::PushConsumer::_nil ();
      this->notify_push_consumer_ = CosNotifyComm::PushConsumer::_nil ();
+
+     this->is_connected_ = 0;
      ACE_RE_THROW;
    }
  ACE_ENDTRY;
+}
+
+void
+TAO_Notify_ProxyPushSupplier_i::shutdown_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->on_disconnected (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // ask our parent to deactivate us.
+  this->consumer_admin_->
+    deactivate_proxy_pushsupplier (this, ACE_TRY_ENV);
 }
 
 void
@@ -107,19 +132,45 @@ TAO_Notify_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &AC
                    CORBA::SystemException
                    ))
 {
-  this->is_destroyed_ = 1;
+  // unregister with CA
+  this->consumer_admin_->unregister_listener (this, ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // ask our parent to deactivate us.
-  this->myadmin_->
-    deactivate_proxy_pushsupplier (this, ACE_TRY_ENV);
+  this->shutdown_i (ACE_TRY_ENV);
+}
 
-  this->cleanup_i (ACE_TRY_ENV);
+void
+TAO_Notify_ProxyPushSupplier_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Tell the consumer that we're going away ...
+  // @@ Later, lookup a "notify_on_disconnect" option.
+
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+
+    if (this->is_connected_ == 0)
+      return;
+  }
+
+  this->shutdown_i (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_TRY
+    {
+      this->cosec_push_consumer_->disconnect_push_consumer (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHALL
+    {
+      // ignore
+    }
+  ACE_ENDTRY;
 }
 
 // = TAO_Notify_CosEC_ProxyPushSupplier_i
 
-TAO_Notify_CosEC_ProxyPushSupplier_i::TAO_Notify_CosEC_ProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager)
-  :notify_proxy_ (consumeradmin, resource_manager)
+TAO_Notify_CosEC_ProxyPushSupplier_i::TAO_Notify_CosEC_ProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumer_admin)
+  :notify_proxy_ (consumer_admin)
 {
   // No-Op.
 }

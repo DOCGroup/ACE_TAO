@@ -18,13 +18,17 @@
 
 #ifndef TAO_NOTIFY_PROXYPUSHCONSUMER_I_H
 #define TAO_NOTIFY_PROXYPUSHCONSUMER_I_H
-#include "ace/pre.h"
 
+#include "ace/pre.h"
 #include "Notify_ProxyConsumer_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
 class TAO_Notify_SupplierAdmin_i;
-class TAO_Notify_Resource_Manager;
 class TAO_Notify_Event_Manager;
 
 #if defined(_MSC_VER)
@@ -34,7 +38,7 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_Export TAO_Notify_ProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::ProxyPushConsumer>, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_ProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::ProxyPushConsumer>
 {
   // = TITLE
   //   TAO_Notify_ProxyPushConsumer_i
@@ -44,8 +48,7 @@ class TAO_Notify_Export TAO_Notify_ProxyPushConsumer_i : public TAO_Notify_Proxy
   //
 
 public:
-  TAO_Notify_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin,
-                                  TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin);
   // Constructor
 
   virtual ~TAO_Notify_ProxyPushConsumer_i (void);
@@ -78,10 +81,7 @@ virtual void disconnect_push_consumer (
 // = Helper methods
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
 
- void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
- // Cleanup all resources used by this object.
-
-// = Data members
+ // = Data members
  CORBA::Boolean notify_style_supplier_;
  // True if the supplier supports the NotifySubscribe interface.
  // If it does, we use the <notify_push_supplier_> else we use
@@ -91,6 +91,7 @@ virtual void disconnect_push_consumer (
  CosNotifyComm::PushSupplier_var notify_push_supplier_;
  // The supplier connected to us.
 
+ private:
  typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::ProxyPushConsumer>
    proxy_inherited;
 };
@@ -106,7 +107,7 @@ class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushConsumer_i : public virtual PO
   //
 public:
   // = Initialization and termination methods.
-  TAO_Notify_CosEC_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin, TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_CosEC_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmi);
   // Constructor.
 
   virtual ~TAO_Notify_CosEC_ProxyPushConsumer_i (void);
@@ -130,6 +131,7 @@ public:
                        CosEventChannelAdmin::AlreadyConnected));
   // Connects a push supplier.
  protected:
+  // = Data Members
   TAO_Notify_ProxyPushConsumer_i notify_proxy_;
   // Proxy to delegate to.
 };

@@ -19,13 +19,18 @@
 
 #ifndef TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
 #define TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
-#include "ace/pre.h"
 
-#include "Notify_ProxyConsumer_T.h"
+#include "ace/pre.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "Notify_ProxyConsumer_T.h"
+#include "notify_export.h"
+
 class TAO_Notify_SupplierAdmin_i;
-class TAO_Notify_Resource_Manager;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -34,7 +39,7 @@ class TAO_Notify_Resource_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_Export TAO_Notify_StructuredProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_StructuredProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
 {
   // = TITLE
   //   TAO_Notify_StructuredProxyPushConsumer_i
@@ -44,7 +49,7 @@ class TAO_Notify_Export TAO_Notify_StructuredProxyPushConsumer_i : public TAO_No
   //
 
 public:
-  TAO_Notify_StructuredProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_StructuredProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin);
   // Constructor
 
   virtual ~TAO_Notify_StructuredProxyPushConsumer_i (void);
@@ -81,15 +86,13 @@ protected:
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
   // dispatch updates to the supplier.
 
-  void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Cleanup all resources used by this object.
-
   // = Data members
   CosNotifyComm::StructuredPushSupplier_var push_supplier_;
   // The supplier that we're connected to.
 
+private:
   typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
-  structured_proxy_inherited;
+  proxy_inherited;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

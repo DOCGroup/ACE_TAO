@@ -30,7 +30,8 @@
 #include "Notify_FilterAdmin_i.h"
 
 class TAO_Notify_EventChannel_i;
-class TAO_Notify_Resource_Manager;
+class TAO_Notify_CO_Factory;
+class TAO_Notify_POA_Factory;
 class TAO_Notify_Event_Manager;
 
 #if defined(_MSC_VER)
@@ -53,12 +54,11 @@ public:
   // @@ Pradeep: you may want to drop the _i suffix, it buys you
   // nothing..
 
-  TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i* myChannel,
-                              TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i* event_channel);
   // Constructor
-  // <myChannel> is this objects parent.
+  // <event_channel> is this objects parent.
 
-  virtual ~TAO_Notify_SupplierAdmin_i (void);
+  virtual ~TAO_Notify_SupplierAdmin_i ();
   // Destructor
 
   void init (CosNotifyChannelAdmin::AdminID myID,
@@ -251,13 +251,6 @@ virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer (
 
 protected:
   // = Helper methods
-  // @@ Pradeep: you don't need to provide default values for
-  // private, protected or implementation methods.  In fact it is a
-  // good idea *not* to provide the default value.  That way you make
-  // sure that you are passing it around.
- void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Cleanup all resources used by this object.
-
   CORBA::Object_ptr obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
   // Obtain a proxy pushconsumer object
 
@@ -267,17 +260,26 @@ protected:
   CORBA::Object_ptr obtain_sequence_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
   // Obtain a sequence pushconsumer object
 
- // = Data members
-  TAO_Notify_EventChannel_i* my_channel_;
+  // = Data members
+  TAO_Notify_EventChannel_i* event_channel_;
   // The channel to which we belong.
 
-  TAO_Notify_Resource_Manager* resource_manager_;
-  // The resource factory that we use.
+  TAO_Notify_CO_Factory* channel_objects_factory_;
+  // The factory for channel objects.
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator myOperator_;
+  TAO_Notify_POA_Factory* poa_factory_;
+  // The factory for POA based containers.
+
+  ACE_Lock* lock_;
+  // The locking strategy.
+
+  CORBA::Boolean destory_child_POAs_;
+  // Flag to tell if the child poa's should be destroyed.
+
+  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_;
   // The inter filter operator to use.
 
-  CosNotifyChannelAdmin::AdminID myID_;
+  CosNotifyChannelAdmin::AdminID my_id_;
   // My ID.
 
   PortableServer::POA_var my_POA_;
@@ -291,13 +293,6 @@ protected:
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
     CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushconsumer_ids_;
   // Id generator for proxy push consumers.
-
-  CORBA::Boolean is_destroyed_;
-  // Are we dead?
-  // @@ Pradeep: you may want to explain why such a flag is needed. I
-  // assume it is set when the a request to destroy the object
-  // arrives, but you must perform some cleanup, meanwhile any new
-  // requests are rejected, right?
 
   TAO_Notify_QoSAdmin_i qos_admin_;
   // Handle QoS admin methods.

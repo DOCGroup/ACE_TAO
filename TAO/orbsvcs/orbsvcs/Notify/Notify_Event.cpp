@@ -1,7 +1,7 @@
 // $Id$
-#include "Notify_Types.h"
+#include "Notify_Event.h"
 
-ACE_RCSID(Notify, Notify_Types, "$Id$")
+ACE_RCSID(Notify, Notify_Event, "$Id$")
 
 TAO_Notify_EventType
 TAO_Notify_EventType::special_event_type_ ("*", "%ALL");
@@ -107,19 +107,54 @@ TAO_Notify_EventType::get_native (void) const
 
 // ****************************************************************
 
+TAO_Notify_Event::TAO_Notify_Event (void)
+  :lock_ (0),
+   refcount_ (1)
+{
+  lock_ = new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+}
+
+TAO_Notify_Event::~TAO_Notify_Event ()
+{
+  delete this->lock_;
+  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Event\n"));
+}
+
+
+void
+TAO_Notify_Event::_incr_refcnt (void)
+{
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  this->refcount_++;
+  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event incr %d\n", refcount_));
+}
+
+void
+TAO_Notify_Event::_decr_refcnt (void)
+{
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    this->refcount_--;
+  }
+
+  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event decr %d\n", refcount_));
+  if (this->refcount_ == 0)
+    delete this;
+}
+
+// ****************************************************************
+
 // = Any Event Type.
 
-TAO_Notify_Any::TAO_Notify_Any (void)
-  :is_owner_(0)
+TAO_Notify_Any::TAO_Notify_Any (CORBA::Any * data)
+  :data_ (data),
+   is_owner_(1)
 {
 }
 
-TAO_Notify_Any::TAO_Notify_Any (const CORBA::Any & data)
-  :data_ ((CORBA::Any*)&data),
+TAO_Notify_Any::TAO_Notify_Any (const CORBA::Any * data)
+  :data_ ((CORBA::Any*)data),
    is_owner_(0)
-  // Note: This appears like we're casting away const correctness
-  //       but this class still respects it via the is_owner flag.
-  //
 {
 }
 
@@ -133,22 +168,22 @@ TAO_Notify_Event*
 TAO_Notify_Any::clone (void)
 {
   TAO_Notify_Any* clone;
-  ACE_NEW_RETURN (clone, TAO_Notify_Any (), 0);
 
   if (this->is_owner_)
     {
       // @@ Are you sure this is the right way to clone?  You are
       // stealing the data from the original class...
+      ACE_NEW_RETURN (clone, TAO_Notify_Any ((CORBA::Any const *)this->data_),
+                      0);
       this->is_owner_ = 0;
-      clone->data_ = this->data_;
-      clone->is_owner_ = 1;
     }
   else
     {
-      ACE_NEW_RETURN (clone->data_,
-                      CORBA::Any (*this->data_), 0);
-      // Later: cleanup *clone if this new fails.
-      clone->is_owner_ = 1;
+      CORBA::Any * data_copy;
+      ACE_NEW_RETURN (data_copy, CORBA::Any (*this->data_), 0);
+      ACE_NEW_RETURN (clone, TAO_Notify_Any (data_copy), 0);
+
+      // Later: cleanup data_copy if this new fails.
     }
 
   return clone;
@@ -213,14 +248,16 @@ TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer,
 // @@ Pradeep: many of the same comments that i made for
 // TAO_Notify_Any apply here too.
 
-TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (void)
-  :is_owner_ (0)
+TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (CosNotification::StructuredEvent * notification)
+  :data_ (notification),
+   event_type_ (notification->header.fixed_header.event_type),
+   is_owner_ (1)
 {
 }
 
-TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent & notification)
-  :data_ ((CosNotification::StructuredEvent*)&notification),
-   event_type_ (notification.header.fixed_header.event_type),
+TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent * notification)
+  :data_ ((CosNotification::StructuredEvent*)notification),
+   event_type_ (notification->header.fixed_header.event_type),
    is_owner_ (0)
 {
 }
@@ -235,19 +272,19 @@ TAO_Notify_Event*
 TAO_Notify_StructuredEvent::clone (void)
 {
   TAO_Notify_StructuredEvent* clone;
-  ACE_NEW_RETURN (clone, TAO_Notify_StructuredEvent (), 0);
 
   if (this->is_owner_)
     {
+      ACE_NEW_RETURN (clone, TAO_Notify_StructuredEvent ((CosNotification::StructuredEvent const *) this->data_), 0);
       this->is_owner_ = 0;
-      clone->data_ = this->data_;
-      clone->is_owner_ = 1;
     }
   else
     {
-      ACE_NEW_RETURN (clone->data_,
-                      CosNotification::StructuredEvent (*this->data_), 0);
-      // Later: cleanup *clone if this new fails.
+      CosNotification::StructuredEvent *data_copy;
+      ACE_NEW_RETURN (data_copy, CosNotification::StructuredEvent (*this->data_),
+                      0);
+      ACE_NEW_RETURN (clone, TAO_Notify_StructuredEvent (data_copy), 0);
+      // Later: cleanup *data_copy if this new fails.
       clone->is_owner_ = 1;
     }
 
@@ -304,74 +341,3 @@ TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr c
 {
   consumer->push_structured_event (*this->data_, ACE_TRY_ENV);
 }
-
-// ****************************************************************
-
-// = TAO_Notify_EventType_List
-void
-TAO_Notify_EventType_List::populate (CosNotification::EventTypeSeq& event_type_seq)
-{
-  event_type_seq.length (this->size ());
-
-  TAO_Notify_EventType_List::ITERATOR iter (*this);
-
-  TAO_Notify_EventType* event_type;
-
-  CORBA::ULong i = 0;
-  for (iter.first (); iter.next (event_type); iter.advance (), ++i)
-    event_type_seq[i] = event_type->get_native ();
-}
-
-void
-TAO_Notify_EventType_List::insert_seq (const CosNotification::EventTypeSeq& event_type_seq)
-{
-  TAO_Notify_EventType event_type;
-
-  for (CORBA::ULong i = 0; i < event_type_seq.length (); ++i)
-    {
-      event_type = event_type_seq[i];
-      inherited::insert (event_type);
-    }
-}
-
-void
-TAO_Notify_EventType_List::remove_seq (const CosNotification::EventTypeSeq& event_type_seq)
-{
-  TAO_Notify_EventType event_type;
-
-  for (CORBA::ULong i = 0; i < event_type_seq.length (); ++i)
-    {
-      event_type = event_type_seq[i];
-      inherited::remove (event_type);
-    }
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Set <TAO_Notify_EventType>;
-template class ACE_Unbounded_Set_Iterator<TAO_Notify_EventType>;
-template class ACE_Node<TAO_Notify_EventType>;
-
-template class ACE_Unbounded_Set<TAO_Notify_EventListener*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener*>;
-template class ACE_Node<TAO_Notify_EventListener*>;
-
-template class ACE_Unbounded_Set<TAO_Notify_UpdateListener*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener*>;
-template class ACE_Node<TAO_Notify_UpdateListener*>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Set<TAO_Notify_EventType>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_EventType>
-#pragma instantiate ACE_Node<TAO_Notify_EventType>
-
-#pragma instantiate ACE_Unbounded_Set<TAO_Notify_EventListener*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_EventListener*>
-#pragma instantiate ACE_Node<TAO_Notify_EventListener*>
-
-#pragma instantiate ACE_Unbounded_Set<TAO_Notify_UpdateListener*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Notify_UpdateListener*>
-#pragma instantiate ACE_Node<TAO_Notify_UpdateListener*>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -19,8 +19,12 @@
 #ifndef TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 #define TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 #include "ace/pre.h"
-
 #include "orbsvcs/Trader/Constraint_Nodes.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/Interpreter.h"
 #include "orbsvcs/CosNotifyFilterS.h"

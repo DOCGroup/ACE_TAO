@@ -6,9 +6,11 @@
 
 ACE_RCSID(Notify, Notify_ProxyPushConsumer_i, "$Id$")
 
+typedef ACE_Reverse_Lock<ACE_Lock> TAO_Notify_Unlock;
+
 // Implementation skeleton constructor
-TAO_Notify_ProxyPushConsumer_i::TAO_Notify_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin, TAO_Notify_Resource_Manager* resource_manager)
-  : proxy_inherited (supplieradmin, resource_manager),
+TAO_Notify_ProxyPushConsumer_i::TAO_Notify_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin)
+  : proxy_inherited (supplier_admin),
     notify_style_supplier_ (0)
 {
 }
@@ -19,20 +21,16 @@ TAO_Notify_ProxyPushConsumer_i::~TAO_Notify_ProxyPushConsumer_i (void)
 }
 
 void
-TAO_Notify_ProxyPushConsumer_i::cleanup_i (CORBA::Environment& ACE_TRY_ENV)
-{
-  proxy_inherited::cleanup_i (ACE_TRY_ENV);
-  this->cosec_push_supplier_ = CosEventComm::PushSupplier::_nil ();
-  this->notify_push_supplier_ = CosNotifyComm::PushSupplier::_nil ();
-}
-
-void
 TAO_Notify_ProxyPushConsumer_i::connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier, CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventChannelAdmin::AlreadyConnected
                    ))
 {
+  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK;
+
   if (this->is_connected_ == 1)
     ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
   else
@@ -50,16 +48,49 @@ TAO_Notify_ProxyPushConsumer_i::connect_any_push_supplier (CosEventComm::PushSup
           this->notify_style_supplier_ = 1;
         }
 
-      this->event_manager_->register_for_subscription_updates (this,
-                                                               ACE_TRY_ENV);
-
       this->is_connected_ = 1;
     }
+
+  ACE_TRY
+    {
+      TAO_Notify_Unlock reverse_lock (*this->lock_);
+
+      {
+        ACE_GUARD_THROW_EX (TAO_Notify_Unlock, ace_mon, reverse_lock,
+                            CORBA::INTERNAL ());
+        ACE_TRY_CHECK;
+
+        this->event_manager_->register_for_subscription_updates (this,
+                                                                 ACE_TRY_ENV);
+      }
+    }
+  ACE_CATCHALL
+    {
+      this->cosec_push_supplier_ =
+        CosEventComm::PushSupplier::_nil ();
+
+      this->notify_push_supplier_ =
+        CosNotifyComm::PushSupplier::_nil ();
+
+      this->is_connected_ = 0;
+
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
 }
 
 void
 TAO_Notify_ProxyPushConsumer_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV)
 {
+  {
+    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
+
+    if (this->notify_style_supplier_ == 0)
+      return; // Our supplier doesn't support subscription_change.
+  }
+
   ACE_TRY
     {
       this->notify_push_supplier_->subscription_change (added, removed,
@@ -80,16 +111,23 @@ TAO_Notify_ProxyPushConsumer_i::push (const CORBA::Any & data, CORBA::Environmen
                    CosEventComm::Disconnected
                    ))
 {
-  if (this->is_connected_ == 0)
-    ACE_THROW (CosEventComm::Disconnected ());
+  {
+    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
 
-  TAO_Notify_Any notify_event (data);
+    if (this->is_connected_ == 0)
+      ACE_THROW (CosEventComm::Disconnected ());
+  }
 
-  CORBA::Boolean bval = this->check_filters_i (notify_event, ACE_TRY_ENV);
-  ACE_CHECK;
+  CORBA::Any * data_copy;
+  ACE_NEW_THROW_EX (data_copy, CORBA::Any (data), CORBA::NO_MEMORY ());
 
-  if (bval == 1)
-    this->event_manager_->push (notify_event, ACE_TRY_ENV);
+  TAO_Notify_Any* notify_event = new TAO_Notify_Any(data_copy);
+
+  this->event_manager_->process_event (notify_event, this, ACE_TRY_ENV);
+
+  notify_event->_decr_refcnt ();
 }
 
 void TAO_Notify_ProxyPushConsumer_i::disconnect_push_consumer (
@@ -99,19 +137,15 @@ void TAO_Notify_ProxyPushConsumer_i::disconnect_push_consumer (
     CORBA::SystemException
   ))
 {
-  this->is_destroyed_ = 1;
-
   // ask our parent to deactivate us.
-  this->myadmin_->
+  this->supplier_admin_->
     deactivate_proxy_pushconsumer (this, ACE_TRY_ENV);
-
-  this->cleanup_i (ACE_TRY_ENV);
 }
 
 // = TAO_Notify_CosEC_ProxyPushConsumer_i
 
-TAO_Notify_CosEC_ProxyPushConsumer_i::TAO_Notify_CosEC_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin, TAO_Notify_Resource_Manager* resource_manager)
-  :notify_proxy_ (supplieradmin, resource_manager)
+TAO_Notify_CosEC_ProxyPushConsumer_i::TAO_Notify_CosEC_ProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin)
+  :notify_proxy_ (supplieradmin)
 {
   // No-Op.
 }

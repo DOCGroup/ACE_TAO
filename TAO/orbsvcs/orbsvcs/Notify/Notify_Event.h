@@ -1,32 +1,37 @@
+/* -*- C++ -*- */
 // $Id$
-// ==========================================================================
+//
+// ============================================================================
 //
 // = LIBRARY
-//   Orbsvcs
+//   ORBSVCS Notification
 //
 // = FILENAME
-//   Notify_Types.h
+//   Notify_Event.h
 //
 // = DESCRIPTION
-//   Internal types used by Notify
+//   Abstraction for Notify's event types.
 //
 // = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
+//   Pradeep Gore <pradeep@cs.wustl.edu>
 //
-// ==========================================================================
+// ============================================================================
 
-#ifndef TAO_NOTIFY_TYPES_H
-#define TAO_NOTIFY_TYPES_H
+#ifndef TAO_NOTIFY_EVENT_H
+#define TAO_NOTIFY_EVENT_H
+
 #include "ace/pre.h"
+#include "orbsvcs/CosNotificationC.h"
+#include "notify_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyFilterC.h"
-#include "orbsvcs/CosNotifyCommC.h"
-#include "ace/Containers_T.h"
+#include "orbsvcs/CosEventCommC.h"
 
-class TAO_Notify_EventListener;
-class TAO_Notify_UpdateListener;
-
-class TAO_Notify_EventType
+class TAO_Notify_Export TAO_Notify_EventType
 {
   // = TITLE
   //   TAO_Notify_EventType
@@ -83,7 +88,7 @@ protected:
 // like the one above.  Or better yet, do not put multiple classes in
 // the same file.
 
-class TAO_Notify_Event
+class TAO_Notify_Export TAO_Notify_Event
 {
   // = TITLE
   //   TAO_Notify_Event
@@ -95,6 +100,12 @@ class TAO_Notify_Event
   //   This the the "prototype" creational pattern.
   //
 public:
+  TAO_Notify_Event (void);
+  // The lock for its ref. count.
+  // Owns the lock.
+
+  virtual ~TAO_Notify_Event ();
+
   virtual CORBA::Boolean is_special_event_type (void) const = 0;
   // Is this the "special" event type.
 
@@ -114,11 +125,22 @@ public:
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   // Push self to <consumer>
+
+  // = Refcounted lifetime
+  void _incr_refcnt (void);
+  void _decr_refcnt (void);
+
+ protected:
+  ACE_Lock* lock_;
+  // The locking strategy.
+
+  CORBA::ULong refcount_;
+  // The reference count.
 };
 
 // ****************************************************************
 
-class TAO_Notify_Any : public TAO_Notify_Event
+class TAO_Notify_Export TAO_Notify_Any : public TAO_Notify_Event
 {
   // = TITLE
   //   TAO_Notify_Any
@@ -128,8 +150,12 @@ class TAO_Notify_Any : public TAO_Notify_Event
   //
 
 public:
-  TAO_Notify_Any (void);
-  TAO_Notify_Any (const CORBA::Any & data);
+  TAO_Notify_Any (CORBA::Any* data);
+  // Refers to the data. Owns it!
+
+  TAO_Notify_Any (const CORBA::Any* data);
+  // Does not own data.
+
   virtual ~TAO_Notify_Any ();
 
   virtual TAO_Notify_Event* clone (void);
@@ -152,7 +178,7 @@ protected:
 
 // ****************************************************************
 
-class TAO_Notify_StructuredEvent : public TAO_Notify_Event
+class TAO_Notify_Export TAO_Notify_StructuredEvent : public TAO_Notify_Event
 {
   // = TITLE
   //   TAO_Notify_StructuredEvent
@@ -161,8 +187,8 @@ class TAO_Notify_StructuredEvent : public TAO_Notify_Event
   //   This class is the concrete prototype for the Structured Event Type.
   //
 public:
-  TAO_Notify_StructuredEvent (void);
-  TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent & notification);
+  TAO_Notify_StructuredEvent (CosNotification::StructuredEvent * notification);
+  TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent * notification);
   virtual ~TAO_Notify_StructuredEvent ();
 
   virtual TAO_Notify_Event* clone (void);
@@ -185,38 +211,6 @@ protected:
   // Do we own the data.
 };
 
-// ****************************************************************
-
-class TAO_Notify_EventType_List : public ACE_Unbounded_Set <TAO_Notify_EventType>
-{
-  // = TITLE
-  //   TAO_Notify_EventType_List
-  //
-  // = DESCRIPTION
-  //   Allows operations using the CosNotification::EventTypeSeq type.
-  //
-
-  typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
-
-public:
-  void populate (CosNotification::EventTypeSeq& event_type_seq);
-  // Populate <event_type_seq> with the contents of this object.
-
-  void insert_seq (const CosNotification::EventTypeSeq& event_type_seq);
-  // insert the contents of <event_type_seq> into this object.
-
-  void remove_seq (const CosNotification::EventTypeSeq& event_type_seq);
-  // remove the contents of <event_type_seq> from this object.
-};
-
-// ****************************************************************
-
-// = typedefs
-typedef ACE_Unbounded_Set<TAO_Notify_EventListener*> TAO_Notify_EventListener_List;
-// A list of event listeners that are looking for the same event type.
-
-typedef ACE_Unbounded_Set<TAO_Notify_UpdateListener*> TAO_Notify_UpdateListener_List;
-// A list of update listeners who want to be notified about publish/subscribe changes.
-
 #include "ace/post.h"
-#endif /* TAO_NOTIFY_TYPES_H */
+
+#endif /* TAO_NOTIFY_EVENT_H */
