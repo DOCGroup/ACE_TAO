@@ -1,3 +1,13 @@
+Fri Jul 13 23:02:46 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Asynch_Stream.h:
+	* ace/SSL/SSL_Asynch_Stream.cpp:
+	* ace/SSL/SSL_Asynch_BIO.h:
+	* ace/SSL/SSL_Asynch_BIO.cpp:
+
+	  Only support asynchronous SSL streams when using OpenSSL >
+	  0.9.5a.  The BIO method signatures changed in OpenSSL 0.9.6.
+
 Fri Jul 13 22:48:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Asynch_BIO.cpp (methods_ACE):

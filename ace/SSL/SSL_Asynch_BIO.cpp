@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 #include "SSL_Asynch_BIO.h"
 #include "SSL_Asynch_Stream.h"
 
@@ -8,7 +7,7 @@ ACE_RCSID (ACE_SSL,
            SSL_Asynch_BIO,
            "$Id$")
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 
 #define BIO_TYPE_ACE  ( 21 | BIO_TYPE_SOURCE_SINK )
 
@@ -22,7 +21,8 @@ static BIO_METHOD methods_ACE =
     NULL, /* ACE_Asynch_BIO_gets, */
     ACE_Asynch_BIO_ctrl,
     ACE_Asynch_BIO_new,
-    ACE_Asynch_BIO_free
+    ACE_Asynch_BIO_free,
+    NULL
   };
 
 BIO_METHOD *
@@ -195,4 +195,5 @@ ACE_Asynch_BIO_puts (BIO *pBIO, const char *str)
   return ACE_Asynch_BIO_write (pBIO, str, n);
 }
 
-#endif  /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
+#endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
+           ACE_HAS_AIO_CALLS) */

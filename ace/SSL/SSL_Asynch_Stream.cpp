@@ -7,7 +7,7 @@ ACE_RCSID (ACE_SSL,
            "$Id$")
 
 // This only works on platforms with Asynchronous IO support.
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 
 
 #if defined (ACE_WIN32)
@@ -1110,4 +1110,5 @@ ACE_SSL_Asynch_Stream::pending_BIO_count (void)
   return ret;
 }
 
-#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
+#endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
+           ACE_HAS_AIO_CALLS) */
