@@ -9,7 +9,8 @@ STUB_Object::~STUB_Object (void)
 {
   assert (this->refcount_ == 0);
 
-  // Cleanup hint
+  if (forward_profiles_)
+    reset_profiles ();
 
   if (this->profile_in_use_ != 0) 
     {
@@ -18,16 +19,6 @@ STUB_Object::~STUB_Object (void)
       this->profile_in_use_->_decr_refcnt ();   
       this->profile_in_use_ = 0;
     }
-
-  if (this->fwd_profile_)
-    {
-      this->fwd_profile_->reset_hint ();
-      this->fwd_profile_->_decr_refcnt ();
-      this->fwd_profile_ = 0;
-    }
-
-  if (fwd_profiles_)
-    delete fwd_profiles_;
 
   if (this->profile_lock_ptr_)
     delete this->profile_lock_ptr_; 
@@ -58,98 +49,10 @@ STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
 }
 
 ACE_INLINE
-TAO_Profile * 
-STUB_Object::set_profiles (TAO_MProfile *mprofiles)
-{
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                            guard, 
-                            *this->profile_lock_ptr_, 
-                            0));
-
-  base_profiles_.set (mprofiles);
-
-  return this->set_profile_in_use_i (this->base_profiles_.get_next ());  
-
-}
-
-ACE_INLINE
 TAO_Profile *
 STUB_Object::profile_in_use (void)
 {
   return this->profile_in_use_;
-}
-
-ACE_INLINE
-TAO_Profile *
-STUB_Object::set_profile_in_use (TAO_Profile *pfile)
-{
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                            guard, 
-                            *this->profile_lock_ptr_, 
-                            0));
-
-  return set_profile_in_use_i (pfile);
-
-}
-
-
-ACE_INLINE
-TAO_Profile *
-STUB_Object::get_fwd_profile_i (void)
-{
-  return this->fwd_profile_;
-}
-
-ACE_INLINE
-TAO_Profile *
-STUB_Object::get_fwd_profile (void)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                            guard, 
-                            *this->profile_lock_ptr_, 
-                            0));
-
-  return this->get_fwd_profile_i ();
-}
-
-
-// set_fwd_profile is currently called with either an arg of NULL
-// or with a pointer to another STUB_Object's profile_in_use_.
-// Change in strategy from previous version:  Since we assume this 
-// forward profile comes from am MProfile list, we just increment the
-// reference count on the profile.  We do not copy it and we assume
-// the user will not modify!
-ACE_INLINE
-TAO_Profile *
-STUB_Object::set_fwd_profile (TAO_Profile *new_profile)
-{
- 
-  TAO_Profile *old = this->fwd_profile_;
-
-  // show that we are using this!
-  // @@ could be an inline => reduce code, common
-  if (new_profile && (new_profile->_incr_refcnt () == 0))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, 
-                         "(%P|%t) unable to increment profile ref!\n"), 
-                         0);
-    }
-
-  this->fwd_profile_ = new_profile;
-
-  if (old) 
-    old->_decr_refcnt ();
-
-  return this->fwd_profile_;
-}
-
-ACE_INLINE
-ACE_Lock &
-STUB_Object::get_profile_lock (void)
-{
-  return *this->profile_lock_ptr_;
 }
 
 ACE_INLINE
@@ -184,126 +87,156 @@ STUB_Object::get_profiles (void)
 }
 
 ACE_INLINE
-void
-STUB_Object::reset_fwd_profiles (void)
+TAO_Profile *
+STUB_Object::next_forward_profile (void)
 {
+  TAO_Profile *pfile_next = 0;
 
-  if (fwd_profiles_)
-    {
-      // @@ Assume on one level deep FRED
-      TAO_MProfile *old = fwd_profiles_;
-      TAO_MProfile *prev = old->fwded_mprofile ();
-      // this should be base_profiles_
-      if (prev->get_current_profile ())
-        prev->get_current_profile ()->fwd_profiles (0);
-        // it better be!  this should be profile_in_use_
-    }
-    
-  set_fwd_profile (0);
+  while (forward_profiles_ && (pfile_next = forward_profiles_->get_next ()) == 0)
+    // that was the last profile.  Now we clean up our forward profiles.
+    // since we own the forward MProfiles, we must delete them when done.
+    forward_back_one ();
+
+  return pfile_next;
 }
 
 ACE_INLINE
-TAO_Profile *
+void
+STUB_Object::forward_back_one (void)
+{
+  TAO_MProfile *from = forward_profiles_->forward_from ();
+
+  delete forward_profiles_;
+
+  // the current profile in this profile list is no
+  // longer being forwarded, so set the reference to zero.
+  if (from == &base_profiles_)
+    {
+      base_profiles_.get_current_profile ()->forward_to (0);
+      forward_profiles_ = 0;
+    }
+  else
+    {
+      from->get_current_profile ()->forward_to (0);
+      forward_profiles_ = from;
+    }
+
+}
+
+ACE_INLINE
+void
+STUB_Object::reset_base (void)
+{
+  this->base_profiles_.rewind ();
+  reset_first_locate_request ();
+  profile_success_ = 0;
+
+  set_profile_in_use_i (base_profiles_.get_next ());
+}
+
+ACE_INLINE
+void
+STUB_Object::reset_forward (void)
+{
+  while (forward_profiles_)
+    forward_back_one ();
+
+  forward_profiles_ = 0;
+}
+
+
+ACE_INLINE
+void
 STUB_Object::reset_profiles (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                            guard, 
-                            *this->profile_lock_ptr_, 
-                            0));
-
-  // first get rid of any forwarding profile list and fwd_profile
-  reset_fwd_profiles ();
-
-  // then rewind profile list, back to the beginning
-  this->base_profiles_.rewind ();
-
-  reset_first_locate_request ();
-  // resets the flag of the first call locate request to true
-  
-  return this->set_profile_in_use_i (this->base_profiles_.get_next ());
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->profile_lock_ptr_));
+  reset_forward ();
+  reset_base ();
 }
 
 ACE_INLINE
 TAO_Profile *
 STUB_Object::next_profile (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                            guard, 
-                            *this->profile_lock_ptr_, 
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_ptr_,
                             0));
 
-  return this->set_profile_in_use_i (this->base_profiles_.get_next ());
-}
+  TAO_Profile *pfile_in_use = profile_in_use_;
+  TAO_Profile *pfile_next = 0;
+  if (forward_profiles_)
+    {
+      pfile_next = next_forward_profile ();
+      if (pfile_next == 0)
+        pfile_next = base_profiles_.get_next ();
+    }
+  else
+    pfile_next = base_profiles_.get_next ();
 
-ACE_INLINE
-TAO_MProfile * 
-STUB_Object::get_fwd_profiles (void)
-{
-  if (fwd_profiles_)
-    return new TAO_MProfile (this->fwd_profiles_);
-  return 0;
+  if (pfile_next == 0)
+    reset_base ();
+  else
+    set_profile_in_use_i (pfile_next);
+
+  return pfile_next;
 }
 
 ACE_INLINE
 void
-STUB_Object::set_fwd_profiles (TAO_MProfile *mprofiles)
+STUB_Object::set_valid_profile (void)
 {
+  profile_success_ = 1;
+}
 
-  if (! profile_in_use_)
-    return ;
-
-  // profile_in_use_ will copy the object but delegate
-  // to this Stub_Obj responsibility for manipulating list!
-  TAO_MProfile *tmp = new TAO_MProfile (mprofiles);
-
-  // now add a pointer back the the profile list hat had been 
-  // forwarded.  Note, since the profile list is like
-  // a state machine, the current poitner refers to the
-  // actual profile that was forwarded!
-
-  {
-    ACE_MT (ACE_GUARD (ACE_Lock, 
-                       guard, 
-                       *this->profile_lock_ptr_));
-  
-    if (this->fwd_profiles_)
-      {
-        if (TAO_orbdebug)
-          ACE_DEBUG ((LM_DEBUG, "** Overwriting fwd profiles!\n"));
-        TAO_MProfile *old = this->fwd_profiles_;
-        TAO_MProfile *prev = old->fwded_mprofile ();
-        if (prev->get_current_profile ())
-          prev->get_current_profile ()->fwd_profiles (0);
-        // @@ FRED: UGLY but for now just one level!
-        delete this->fwd_profiles_;
-      }
-      
-    this->fwd_profiles_ = tmp;
-  
-    // @@ if (this->fwd_profiles_)
-    // @@ // add a link in the chain!
-    // @@ tmp->fwded_mprofile (this->fwd_profiles_);
-
-    this->fwd_profiles_->fwded_mprofile (&this->base_profiles_);
-    profile_in_use_->fwd_profiles (this->fwd_profiles_);
-
-    set_fwd_profile ( this->fwd_profiles_->get_next ());
-  }
- 
+ACE_INLINE
+CORBA::Boolean
+STUB_Object::valid_profile (void)
+{
+  return profile_success_;
 }
 
 ACE_INLINE
 TAO_Profile *
-STUB_Object::next_fwd_profile (void)
+STUB_Object::set_base_profiles (TAO_MProfile *mprofiles)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
-                            guard, 
-                            *this->profile_lock_ptr_, 
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_ptr_,
                             0));
 
-  if (fwd_profiles_)
-    return this->set_fwd_profile (this->fwd_profiles_->get_next ());
+  // first reset things so we start from scratch!
+  reset_forward ();
+  base_profiles_.set (mprofiles);
+  reset_base ();
+  return profile_in_use_;
 
-  return this->set_fwd_profile (0);
 }
 
+ACE_INLINE
+void
+STUB_Object::add_forward_profiles (TAO_MProfile *mprofiles)
+{
+  // we assume that the profile_in_use_ is being
+  // forwarded!  Grab the lock so things don't change.
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->profile_lock_ptr_));
+
+  // forwarded profile points to the new IOR (profiles)
+  profile_in_use_->forward_to (mprofiles);
+
+  TAO_MProfile *now_pfiles = forward_profiles_ ? forward_profiles_ : &base_profiles_;
+
+  // new profile list points back to the list which was forwarded.
+  mprofiles->forward_from (now_pfiles);
+
+  forward_profiles_ = mprofiles;
+
+  // make sure we start at the beginning of mprofiles
+  forward_profiles_->rewind ();
+
+}
