@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "ace/Signal.h"
-#include "ace/Timer_Queue.h"
+#include "ace/Timer_List.h"
 #include "test_config.h"
 
 class Timer_Handler : public ACE_Event_Handler
@@ -110,7 +110,7 @@ handler (int signum)
       {
 	ACE_DEBUG ((LM_DEBUG, "begin dumping timer queue\n"));
 
-	for (TIMER_LIST_ITERATOR iter (timer_queue);
+	for (TIMER_LIST_ITERATOR iter (timer_queue.timer_queue ());
 	     iter.item () != 0;
 	     iter.next ())
 	  iter.item ()->dump ();
