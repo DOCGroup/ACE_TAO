@@ -3225,6 +3225,7 @@ ACE_OS::thr_key_detach (ACE_thread_key_t key, void *inst)
     return -1;
 #else
   ACE_UNUSED_ARG (inst);
+  ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 }
