@@ -22,16 +22,7 @@
 ACE_RCSID(tests, Collection_Test, "$Id$")
 
 #include "ace/Containers.h"
-
-typedef void (*deletion_func)(void* p);
-struct UglyThing
-{
-  void *alloc_;
-  deletion_func dfunc_;
-
-  UglyThing (void* alloc = 0, deletion_func dfunc = 0);
-  int operator== (const UglyThing& r) const;
-};
+#include "Collection_Test.h"
 
 UglyThing::UglyThing (void* alloc, deletion_func dfunc)
   : alloc_ (alloc)
