@@ -1,3 +1,14 @@
+Thu Dec  5 20:30:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Event_Handler.cpp: Updated the implementation of ACE_Event_Handler::read_adapter()
+	  so that the code is consistent with the stated semantics.  Thanks to
+	  Ron Muck <rlm@sdiusa.com> for the fix.
+
+	* ace/OS_Dirent.inl (readdir_r): Enhanced the ACE_OS_Directn::readdir_r() 
+	  wrapper facade so that it returns 1 (i.e., "done") when an error
+ 	  occurs.  Thanks to Abhay Kulkarni <Abhay.Kulkarni@veritas.com>
+ 	  for reporting this.
+
 Sat Dec  7 19:54:12 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: For WinCE, define S_IFDIR and S_IFREG file mode masks.
@@ -56,6 +67,11 @@ Thu Dec  5 14:35:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* netsvcs/clients/Naming/Client/Makefile: Do not build in static
 	  builds.
+
+Thu Dec  5 09:45:25 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Synch/proc_sema.cpp: Fixed some typos.  Thanks to
+	  Andy King <andyking@vernon.com> for reporting this.
 
 Thu Dec  5 07:39:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 

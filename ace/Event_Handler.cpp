@@ -174,20 +174,14 @@ ACE_Event_Handler::reactor (void) const
 
 #if !defined (ACE_HAS_WINCE)
 
-// Used to read from non-socket ACE_HANDLEs in our own thread to work
-// around Win32 limitations that don't allow us to select() on
-// non-sockets (such as ACE_STDIN).  This is commonly used in
-// situations where the Reactor is used to demultiplex read events on
-// ACE_STDIN on UNIX.  Note that <event_handler> must be a subclass of
-// <ACE_Event_Handler>.  If the <get_handle> method of this event
-// handler returns <ACE_INVALID_HANDLE> we default to reading from
-// ACE_STDIN.
-
 ACE_THR_FUNC_RETURN
 ACE_Event_Handler::read_adapter (void *args)
 {
   ACE_Event_Handler *this_ptr = (ACE_Event_Handler *) args;
-  ACE_HANDLE handle = ACE_STDIN;
+
+  ACE_HANLDE handle = this_ptr->get_handle ();
+  if (handle == ACE_INVALID_HANDLE)
+    handle = ACE_STDIN;
 
   while (this_ptr->handle_input (handle) != -1)
     continue;

@@ -16,6 +16,6 @@ consumer process.  The available options are:
   You can use this test to see how process semaphores work.  For
 example, run the program as:
 
-   proc_sema -c -n 10
-   proc_sema -s -n 3
-   proc_sema -s -n 7
+   proc_sema -c -i 10
+   proc_sema -s -i 3
+   proc_sema -s -i 7

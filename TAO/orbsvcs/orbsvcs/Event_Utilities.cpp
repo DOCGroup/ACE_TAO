@@ -124,10 +124,10 @@ void event_debug (const char* p,
 {
   int l = ACE_OS::strlen (p);
   ACE_DEBUG ((LM_DEBUG,
-              "%*.*s - event.source: %d\n"
-              "%*.*s   event.type: %d\n",
-              l, l, p, event.header.source,
-              l, l, p, event.header.type));
+              "%*.*s - event.source: %d (0x%x)\n"
+              "%*.*s   event.type: %d (0x%x)\n",
+              l, l, p, event.header.source, event.header.source,
+              l, l, p, event.header.type, event.header.type));
 }
 
 void
