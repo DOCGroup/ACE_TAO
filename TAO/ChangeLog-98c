@@ -1,3 +1,19 @@
+Mon Nov 23 07:56:09 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/try_macros.h:
+
+	  Made enhancements to the macros added by anbor. In particular,
+	  we now have TAO_TRY_SYS_EX (LABEL) and TAO_CHECK_ENV_SYS_EX
+	  (LABEL) to overcome problems arising out of redefinition of
+	  labels. This was happening in IIOP_Object.cpp file
+
+	* tao/IIOP_Object.cpp:
+
+	  Use TAO_TRY_SYS_EX (LABEL) and TAO_CHECK_ENV_SYS_EX (LABEL)
+	  macros to eliminate the multiple label declaration error. Also,
+	  Nanbor had forgotten to use the TAO_CHECK_ENV macros to check if
+	  an exception was thrown or not.
+
 Mon Nov 23 01:20:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h: Changed
