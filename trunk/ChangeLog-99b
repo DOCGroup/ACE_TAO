@@ -1,3 +1,9 @@
+Mon Mar 08 11:58:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Task.cpp (activate): Made sure we don't mess with the passed
+	  in grp_id if the task was not previously actived.  Thanks to
+	  XuYifeng <wj@puclic.hz.zj.cn> for noticing this.
+
 Fri Mar 05 14:15:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_TSS_Cleanup (),free_all_keys_left ()):
