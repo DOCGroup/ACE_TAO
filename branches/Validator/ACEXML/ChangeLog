@@ -1,3 +1,18 @@
+Mon Nov 25 04:25:15 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.cpp (reset):
+        * parser/parser/Parser.h:
+
+          Fixed a bunch of compilation errors. Removed unnecessary
+          creation and destroyal of ACEXML_Strings which seems to speed up
+          the parser quite a bit.
+
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/main.cpp:
+
+          Don't report startPrefixMapping() and endPrefixMapping() as they
+          obstruct the pretty-printing of SAXPrint. They are bogus anyway.
+
 Wed Nov 20 22:58:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * parser/parser/Parser.cpp (parse_char_reference):

@@ -63,11 +63,9 @@ ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *prefix
                                            ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
-              prefix));
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
+//               prefix));
 }
 
 void
@@ -154,10 +152,10 @@ ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * prefix,
                                              const ACEXML_Char * uri ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
 
 }
 

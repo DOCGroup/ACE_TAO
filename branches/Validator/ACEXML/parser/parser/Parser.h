@@ -821,10 +821,10 @@ private:
    *
    */
   /// Set used to hold the general entity references that are active.
-  ACE_Unbounded_Stack<ACEXML_String> GE_reference_;
+  ACE_Unbounded_Stack<ACEXML_Char*> GE_reference_;
 
   /// Set used to hold the parameter entity references that are active.
-  ACE_Unbounded_Stack<ACEXML_String> PE_reference_;
+  ACE_Unbounded_Stack<ACEXML_Char*> PE_reference_;
 
   /// Obstack used by the parser to hold all the strings parsed
   ACE_Obstack_T<ACEXML_Char> obstack_;
