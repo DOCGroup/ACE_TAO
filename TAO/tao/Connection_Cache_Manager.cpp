@@ -1,6 +1,7 @@
 #include "tao/Connection_Cache_Manager.h"
 #include "tao/Connection_Handler.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -56,8 +57,6 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                                       entry);
   if (retval == 0)
     {
-      int_id.handler ()->test_index_ = ext_id.index ();
-
       // The entry has been added to cache succesfully
       // Add the cache_map_entry to the handler
       int_id.handler () ->cache_map_entry (entry);
@@ -121,21 +120,11 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
       // is idle it would be marked as busy.
       if (entry)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ")
-                      ACE_TEXT ("Point 1 <%d> \n"),
-                          entry->int_id_.handler ()->test_index_));
-
           CORBA::Boolean idle =
             this->is_entry_idle (entry);
 
           if (idle)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) ")
-                          ACE_TEXT ("Point 2 <%d> \n"),
-                          entry->int_id_.handler ()->test_index_));
-
               // We have a succesful entry
               value = entry->int_id_;
               return 0;
@@ -197,10 +186,6 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
                                       new_entry);
   if (retval == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) ")
-                  ACE_TEXT ("We are getting  idle <%d> \n"),
-                  entry->int_id_.handler ()->test_index_));
 
       new_entry->int_id_.
         recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
@@ -302,8 +287,6 @@ TAO_Connection_Cache_Manager::
         this->cache_map_.find (key);
     }
 
-  val.handler ()->test_index_ = ctr;
-
   // Now do a bind again with the new index
   return  this->cache_map_.bind (key,
                                  val,
@@ -318,11 +301,6 @@ TAO_Connection_Cache_Manager::
   if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
       entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) ")
-                  ACE_TEXT ("I got this Handler <%d> \n"),
-                  entry->int_id_.handler ()->test_index_));
-
       // Save that in the handler
       entry->int_id_.handler ()->cache_map_entry (entry);
 
@@ -334,6 +312,8 @@ TAO_Connection_Cache_Manager::
 
   return 0;
 }
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

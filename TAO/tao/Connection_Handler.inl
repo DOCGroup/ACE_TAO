@@ -4,7 +4,10 @@
 ACE_INLINE
 TAO_Connection_Handler::TAO_Connection_Handler (void)
   : orb_core_ (0),
-    tss_resources_ (0)
+    tss_resources_ (0),
+    ref_count_ (1),
+    cache_map_entry_ (0),
+    is_registered_ (0)
 {
 }
 
