@@ -7,7 +7,7 @@ ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
 {
 }
 
-ACE_Config_ImpExp_Base::~ACE_Config_ImpExp_Base ()
+ACE_Config_ImpExp_Base::~ACE_Config_ImpExp_Base (void)
 {
 }
 
@@ -16,18 +16,16 @@ ACE_Registry_ImpExp::ACE_Registry_ImpExp (ACE_Configuration& config)
 {
 }
 
-ACE_Registry_ImpExp::~ACE_Registry_ImpExp ()
+ACE_Registry_ImpExp::~ACE_Registry_ImpExp (void)
 {
 }
 
 // Imports the configuration database from filename.  
 // No existing data is removed.
-// Since the open method relies on this method, this method
-// acts as open if an open has not already occurred.
-
 int 
 ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 {
+  ACE_ASSERT (filename != NULL); // Cannot have a NULL filename
   FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
   if (!in)
     return -1;
@@ -140,15 +138,13 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   return 0;
 }
 
-// This method exports the entire configuration database to <filename>.  If
-// <filename> is NULL (the default), data is persisted to the <filename> 
-// provided to 'open'.  If the internal filename is empty this method 
-// returns -1. Once the file is opened this method calls 'export_section' 
-// passing the root section.
-
+// This method exports the entire configuration database to <filename>.  
+// Once the file is opened this method calls 'export_section' passing
+// the root section.
 int
 ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
 {
+  ACE_ASSERT (filename != NULL); // Cannot have a NULL filename
   int result = -1;
 
   FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
@@ -288,6 +284,7 @@ ACE_Ini_ImpExp::~ACE_Ini_ImpExp (void)
 int 
 ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
 {
+  ACE_ASSERT (fileName != NULL); // Cannot have a NULL filename
   FILE* in = ACE_OS::fopen (fileName, ACE_LIB_TEXT ("r"));
   if (!in)
     return -1;
@@ -372,15 +369,13 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
   return 0;
 }
 
-// This method exports the entire configuration database to
-// <filename>.  If <filename> is NULL (the default), data is persisted
-// to the <filename> provided to 'open'.  If the internal filename is
-// empty this method returns -1. Once the file is opened this method
-// calls 'export_section' passing the root section.
-
+// This method exports the entire configuration database to <filename>.  
+// Once the file is opened this method calls 'export_section' passing
+// the root section.
 int
 ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
 {
+  ACE_ASSERT (filename != NULL); // Cannot have a NULL filename
   int result = -1;
 
   FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));

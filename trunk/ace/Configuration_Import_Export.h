@@ -46,32 +46,28 @@ class ACE_Export ACE_Config_ImpExp_Base
 {
 public:
   /// ctor taking the ACE_Configuration to import/export to
-  ACE_Config_ImpExp_Base(ACE_Configuration& config);
+  ACE_Config_ImpExp_Base (ACE_Configuration& config);
     
   /**
    * Destructor
    */
-  virtual ~ACE_Config_ImpExp_Base();
+  virtual ~ACE_Config_ImpExp_Base (void);
 
-  /**
+   /**
    * Imports the configuration database from filename.  
    * No existing data is removed.
-   * Since the open method relies on this method, this method
-   * acts as open if an open has not already occurred.
    */
-  virtual int import_config(const ACE_TCHAR* filename) = 0;
+  virtual int import_config (const ACE_TCHAR* filename) = 0;
 
   /**
    * This method exports the entire configuration database to <filename>.
-   * If <filename> is NULL (the default), data is persisted to the
-   * <filename> provided to 'open'.  If the internal filename is empty
-   * this method returns -1. Once the file is opened this method calls
-   * 'export_section' passing the root section.
+   * Once the file is opened this method calls 'export_section' passing 
+   * the root section.
    */
   virtual int export_config (const ACE_TCHAR* filename) = 0;
 
 protected:
-  ACE_Configuration&      config_;
+  ACE_Configuration &config_;
 
 private:
   ACE_Config_ImpExp_Base (const ACE_Config_ImpExp_Base&);
@@ -97,25 +93,21 @@ class ACE_Export ACE_Registry_ImpExp : public ACE_Config_ImpExp_Base
 {
 public:   
   /// Construction
-  ACE_Registry_ImpExp(ACE_Configuration&);
+  ACE_Registry_ImpExp (ACE_Configuration&);
 
   /// Destruction.
-  virtual ~ACE_Registry_ImpExp(void);
+  virtual ~ACE_Registry_ImpExp (void);
 
   /**
    * Imports the configuration database from filename.  
    * No existing data is removed.
-   * Since the open method relies on this method, this method
-   * acts as open if an open has not already occurred.
    */
-  virtual int import_config(const ACE_TCHAR* filename);
+  virtual int import_config (const ACE_TCHAR* filename);
 
   /**
    * This method exports the entire configuration database to <filename>.
-   * If <filename> is NULL (the default), data is persisted to the
-   * <filename> provided to 'open'.  If the internal filename is empty
-   * this method returns -1. Once the file is opened this method calls
-   * 'export_section' passing the root section.
+   * Once the file is opened this method calls 'export_section' passing 
+   * the root section.
    */
   virtual int export_config (const ACE_TCHAR* filename);
 
@@ -124,8 +116,8 @@ private:
                       const ACE_TString& path,
                       FILE* out);
 
-  ACE_Registry_ImpExp( const ACE_Registry_ImpExp&);
-  ACE_Registry_ImpExp& operator=( const ACE_Registry_ImpExp&);
+  ACE_Registry_ImpExp ( const ACE_Registry_ImpExp&);
+  ACE_Registry_ImpExp& operator= ( const ACE_Registry_ImpExp&);
 };
 
 /**
@@ -145,7 +137,7 @@ private:
  *        Flags          =    FF34
  *        Heading        =    "ACE - Adaptive Communication Environment"
  *
- *        (note leading whitespace (tabs) in examples below)
+ * (note leading whitespace (tabs) in examples below)
  *
  *        SeekIndex  =  14
  *        TraceLevel = 6      # Can comment lines like this
@@ -173,22 +165,18 @@ public:
   /**
    * Destructor
    */
-  virtual ~ACE_Ini_ImpExp(void);
+  virtual ~ACE_Ini_ImpExp (void);
 
   /**
    * Imports the configuration database from filename.  
    * No existing data is removed.
-   * Since the open method relies on this method, this method
-   * acts as open if an open has not already occurred.
    */
   virtual int import_config (const ACE_TCHAR* filename);
 
   /**
    * This method exports the entire configuration database to <filename>.
-   * If <filename> is NULL (the default), data is persisted to the
-   * <filename> provided to 'open'.  If the internal filename is empty
-   * this method returns -1. Once the file is opened this method calls
-   * 'export_section' passing the root section.
+   * Once the file is opened this method calls 'export_section' passing 
+   * the root section.
    */
   virtual int export_config (const ACE_TCHAR* filename);
 
@@ -204,7 +192,7 @@ private:
 
   /** 
    * Method to skip whitespaces in a string.  Whitespace is defined as:
-   * spaces(' ')  and tabs('\t'). 
+   * spaces (' ')  and tabs ('\t'). 
    * Returns a pointer to the first non-whitespace character in the 
    * buffer provided.  It does return null ('\0') if it is reached
    */
@@ -212,7 +200,7 @@ private:
 
   /** 
    * Looks in provided string for whitespace.  Whitespace is defined as
-   * spaces(' ')  and tabs('\t'). 
+   * spaces (' ')  and tabs ('\t'). 
    * Returns true if found and false if not found
    */
   int string_has_white_space (const ACE_TCHAR *string_value);

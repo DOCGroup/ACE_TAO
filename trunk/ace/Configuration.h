@@ -633,6 +633,8 @@ protected:
  * representation of a configuraiton database. A persistent heap
  * may be used to store configurations persistently
  *
+ * Note: Before using this class you must call one of the open methods.
+ *
  * @todo
  *  - Need to investigate what happens if memory mapped file gets mapped to
  *    a location different than it was created with.
