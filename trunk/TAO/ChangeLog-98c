@@ -45,6 +45,10 @@ Tue Jul 28 10:17:18 1998  David L. Levine  <levine@cs.wustl.edu>
            scheduler_factory_setup.  It's the right thing to do, but
            with it, DEC cxx complains about an unused variable.
 
+         * orbsvcs/orbsvcs/Scheduler_Factory.cpp (footer): removed
+           "static" storage class qualifier so that it's not inserted
+           into generated code.
+
 Tue Jul 28 10:08:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/LifeCycle_service/Factory_Trader.cpp:
