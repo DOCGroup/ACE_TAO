@@ -1,3 +1,17 @@
+Sat Aug  5 01:13:01 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+
+          Added itoa, which takes in a value, string, and radix.  It then
+          populates the string with the representation of the value in that
+          radix.
+
+        * ace/config-win32-common.h:
+
+          Turned on ACE_HAS_ITOA.
+
 Fri Aug  4 15:53:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/TP_Reactor.h:
