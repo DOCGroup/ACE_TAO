@@ -4,7 +4,6 @@
 #include "ace/Read_Buffer.h"
 #include "Cubit_Client.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/streams.h"
 
 #include "tao/Timeprobe.h"
 #include "RTI_IO.h"
@@ -672,7 +671,7 @@ Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
   }
 
   ACE_DEBUG ((LM_DEBUG, "Output: \n"));
-  print_RtiPacket (*vout);
+  print_RtiPacket (*vout.ptr ());
 
   ACE_DEBUG ((LM_DEBUG,
 	      "need to check whether cubing happened\n"));
