@@ -19,7 +19,7 @@
 #define ACE_ENV_VALUE_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"             // Need to get ACE_static_cast definition
+#include "ace/OS/OS.h"             // Need to get ACE_static_cast definition
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -78,11 +78,11 @@ template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
 // Function to convert a string <s> into type <T>.
 
 #if defined (__ACE_INLINE__)
-#include "ace/Env_Value_T.i"
+#include "ace/Utils/Templates/Env_Value_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Env_Value_T.cpp"
+#include "ace/Utils/Templates/Env_Value_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 

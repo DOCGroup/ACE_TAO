@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/Token_Collection.h"
+#include "ace/Token/Token_Collection.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token_Collection.i"
+#include "ace/Token/Token_Collection.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

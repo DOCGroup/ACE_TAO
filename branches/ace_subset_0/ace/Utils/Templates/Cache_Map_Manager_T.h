@@ -15,13 +15,13 @@
 #define CACHE_MAP_MANAGER_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Pair_T.h"
+#include "ace/Utils/Templates/Pair_T.h"
 
 // Forward declaration.
 class ACE_Allocator;
@@ -410,11 +410,11 @@ protected:
 #undef ACE_T2
 
 #if defined (__ACE_INLINE__)
-#include "ace/Cache_Map_Manager_T.i"
+#include "ace/Utils/Templates/Cache_Map_Manager_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Cache_Map_Manager_T.cpp"
+#include "ace/Utils/Templates/Cache_Map_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

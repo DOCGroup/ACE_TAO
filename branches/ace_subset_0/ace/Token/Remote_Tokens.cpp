@@ -1,11 +1,11 @@
 // Remote_Tokens.cpp
 // $Id$
 
-#include "ace/Remote_Tokens.h"
-#include "ace/Singleton.h"
+#include "ace/Token/Remote_Tokens.h"
+#include "ace/Utils/Templates/Singleton.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Remote_Tokens.i"
+#include "ace/Token/Remote_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

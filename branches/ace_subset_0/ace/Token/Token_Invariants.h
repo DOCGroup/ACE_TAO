@@ -20,14 +20,14 @@
 #define ACE_TOKEN_INVARIANTS_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Map_Manager.h"
-#include "ace/Local_Tokens.h"
+#include "ace/Utils/Templates/Map_Manager.h"
+#include "ace/Token/Local_Tokens.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 

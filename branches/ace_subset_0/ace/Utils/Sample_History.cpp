@@ -17,7 +17,9 @@ ACE_Sample_History::ACE_Sample_History (size_t max_samples)
   : max_samples_ (max_samples)
   , sample_count_ (0)
 {
+#ifdef NOT_GCC3
   ACE_NEW(this->samples_, ACE_UINT64[this->max_samples_]);
+#endif
 }
 
 ACE_Sample_History::~ACE_Sample_History (void)

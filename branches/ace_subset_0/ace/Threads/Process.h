@@ -14,8 +14,8 @@
 #define ACE_PROCESS_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Handle_Set.h"
+#include "ace/OS/OS.h"
+#include "ace/OS/Handle_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -547,10 +547,10 @@ private:
   // Keep G++ happy...
 };
 
-#include "ace/SString.h"
+#include "ace/Utils/SString.h"
 
 #if defined (__ACE_INLINE__)
-#include "ace/Process.i"
+#include "ace/Threads/Process.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

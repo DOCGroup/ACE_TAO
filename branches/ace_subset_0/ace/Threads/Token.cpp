@@ -1,8 +1,11 @@
 // $Id$
 
-#include "ace/Thread.h"
-#include "ace/Token.h"
-#include "ace/Log_Msg.h"
+#include "ace/Threads/Thread.h"
+#include "ace/Threads/Token.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (DEBUGGING)
 #include "ace/streams.h"
@@ -13,13 +16,13 @@ ACE_RCSID(ace, Token, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Synch_T.h"
-#include "ace/Token.i"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Threads/Token.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Token)
 
-
+#ifdef ACE_SUBSET_0
 void
 ACE_Token::dump (void) const
 {
@@ -36,6 +39,7 @@ ACE_Token::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnesting level = %d"), this->nesting_level_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id)

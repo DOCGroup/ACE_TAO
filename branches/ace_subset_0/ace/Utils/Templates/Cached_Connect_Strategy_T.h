@@ -14,18 +14,18 @@
 #define CACHED_CONNECT_STRATEGY_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Strategies_T.h"
-#include "ace/Hash_Cache_Map_Manager_T.h"
-#include "ace/Caching_Strategies_T.h"
-#include "ace/Functor_T.h"
-#include "ace/Pair_T.h"
-#include "ace/Synch.h"
+#include "ace/Connection/Strategies_T.h"
+#include "ace/Utils/Templates/Hash_Cache_Map_Manager_T.h"
+#include "ace/Connection/Caching_Strategies_T.h"
+#include "ace/Utils/Functor_T.h"
+#include "ace/Utils/Templates/Pair_T.h"
+#include "ace/Threads/Synch.h"
 
 // For linkers which cant grok long names...
 #define ACE_Cached_Connect_Strategy_Ex ACCSE
@@ -248,7 +248,7 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1,
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Cached_Connect_Strategy_T.cpp"
+#include "ace/Utils/Templates/Cached_Connect_Strategy_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -20,13 +20,13 @@
 #define ACE_TOKEN_REQUEST_REPLY_H
 #include "ace/pre.h"
 
-#include "ace/Local_Tokens.h"
+#include "ace/Token/Local_Tokens.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
+#include "ace/Timer/Time_Value.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -240,7 +240,7 @@ private:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token_Request_Reply.i"
+#include "ace/Token/Token_Request_Reply.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

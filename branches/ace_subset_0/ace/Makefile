@@ -24,7 +24,7 @@ SUBDIRS= \
   Svcconf \
   Threads \
   Token \
-  Utils
+  Utils 
 
 all:
 	@for subdir in $(SUBDIRS) ; do \

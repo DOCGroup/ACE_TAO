@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/Thread_Exit.h"
-#include "ace/OS.h"
-#include "ace/Synch.h"
-#include "ace/Managed_Object.h"
+#include "ace/Threads/Thread_Exit.h"
+#include "ace/OS/OS.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Utils/Templates/Managed_Object.h"
 
 ACE_RCSID(ace, Thread_Exit, "$Id$")
 

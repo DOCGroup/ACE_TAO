@@ -3,14 +3,14 @@
 #ifndef ACE_HASH_CACHE_MAP_MANAGER_T_C
 #define ACE_HASH_CACHE_MAP_MANAGER_T_C
 
-#include "ace/Hash_Cache_Map_Manager_T.h"
+#include "ace/Utils/Templates/Hash_Cache_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Hash_Cache_Map_Manager_T.i"
+#include "ace/Utils/Templates/Hash_Cache_Map_Manager_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Hash_Cache_Map_Manager_T, "$Id$")

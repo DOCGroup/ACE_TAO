@@ -24,14 +24,14 @@
 #define ACE_TOKEN_COLLECTION_H
 #include "ace/pre.h"
 
-#include "ace/Map_Manager.h"
+#include "ace/Utils/Templates/Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Local_Tokens.h"
-#include "ace/SString.h"
+#include "ace/Token/Local_Tokens.h"
+#include "ace/Utils/SString.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -227,7 +227,7 @@ protected:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token_Collection.i"
+#include "ace/Token/Token_Collection.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
