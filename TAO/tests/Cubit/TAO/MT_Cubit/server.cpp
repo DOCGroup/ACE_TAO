@@ -361,12 +361,12 @@ Server::activate_low_servants (ACE_Thread_Manager *serv_thr_mgr)
                                                                    ACE_SCOPE_THREAD);
         }
     } /* end of for() */
+  return 0;
 }
 
 int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
 {
-  int i;
   ACE_NEW_RETURN (this->cubits_,
                   CORBA::String [GLOBALS::instance ()->num_of_objs],
                   -1);
