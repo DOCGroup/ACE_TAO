@@ -7,42 +7,42 @@ Tue Jul 13 22:09:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Jul 13 21:51:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* utils/Makefile (DIRS):
+        * utils/Makefile (DIRS):
 
-	  Removed `nslist' from the list of directories since there is no
-	  such directory.
+          Removed `nslist' from the list of directories since there is no
+          such directory.
 
 Tue Jul 13 21:43:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	* tao/Wait_Strategy.cpp:
-	  The follower must be removed immediately after it is
-	  signalled. Otherwise it may be signalled twice, once because it
-	  received its reply and another time to become the leader; in
-	  that case the second signal is lost and nobody becomes the
-	  leader.
+        * tao/ORB_Core.cpp:
+        * tao/Wait_Strategy.cpp:
+          The follower must be removed immediately after it is
+          signalled. Otherwise it may be signalled twice, once because it
+          received its reply and another time to become the leader; in
+          that case the second signal is lost and nobody becomes the
+          leader.
 
-	* orbsvcs/tests/Simple_Naming/client.cpp:
-	  Work around IRIX/MIPSPro bug.
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+          Work around IRIX/MIPSPro bug.
 
 Tue Jul 13 20:57:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/ast-decl.h:
-	* TAO_IDL/include/utl_scope.h:
-	  Added forward declarations of class Identifier to
-	  hopefully help out AIX w/IBM C++.
+        * TAO_IDL/include/ast-decl.h:
+        * TAO_IDL/include/utl_scope.h:
+          Added forward declarations of class Identifier to
+          hopefully help out AIX w/IBM C++.
 
 Tue Jul 13 18:41:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
-	  Modified CDR extraction operator to handle the rather unique
-	  case where a union member is a sequence typedef included from
-	  another file. The union's extraction operator creates a
-	  temporary, which means the visitor needs type info from the
-	  sequence node, which it now gets from the alias node in its
-	  context, if necessary. Thanks to
-	  Dwayne Burns <dburns@isrglobal.com> for sending in the
-	  example.
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+          Modified CDR extraction operator to handle the rather unique
+          case where a union member is a sequence typedef included from
+          another file. The union's extraction operator creates a
+          temporary, which means the visitor needs type info from the
+          sequence node, which it now gets from the alias node in its
+          context, if necessary. Thanks to
+          Dwayne Burns <dburns@isrglobal.com> for sending in the
+          example.
 
 Tue Jul 13 17:38:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -51,93 +51,93 @@ Tue Jul 13 17:38:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Jul 13 16:05:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.cpp:
-	* tao/Protocol_Factory.h:
-	* tao/IIOP_Factory.cpp:
-	* tao/IIOP_Factory.h:
-	* tao/UIOP_Factory.cpp:
-	* tao/UIOP_Factory.h:
-	  Some protocols (like UIOP) should not create endpoints unless
-	  the user requires one; the problem is that they tend to leave
-	  garbage on the filesystem (in the future we may have the same
-	  problem with shared memory segments or semaphores) if the server
-	  crashes.
-	  The current behavior is to automatically create an IIOP endpoint
-	  if the user does not specify any -ORBendpoint options, yet the
-	  UIOP protocol is loaded by default and uiop endpoints (including
-	  uiop://) can be specified in the command line.
-	  This fixes [BUGID:22]
+        * tao/Acceptor_Registry.cpp:
+        * tao/Protocol_Factory.h:
+        * tao/IIOP_Factory.cpp:
+        * tao/IIOP_Factory.h:
+        * tao/UIOP_Factory.cpp:
+        * tao/UIOP_Factory.h:
+          Some protocols (like UIOP) should not create endpoints unless
+          the user requires one; the problem is that they tend to leave
+          garbage on the filesystem (in the future we may have the same
+          problem with shared memory segments or semaphores) if the server
+          crashes.
+          The current behavior is to automatically create an IIOP endpoint
+          if the user does not specify any -ORBendpoint options, yet the
+          UIOP protocol is loaded by default and uiop endpoints (including
+          uiop://) can be specified in the command line.
+          This fixes [BUGID:22]
 
 Tue Jul 13 14:57:38 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
 
-	  Increased client and server timeout values for the UIOP run.
-	  Heavily loaded machines may need more time.
+          Increased client and server timeout values for the UIOP run.
+          Heavily loaded machines may need more time.
 
 Tue Jul 13 12:39:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/UIOP_Transport.cpp (send_request):
+        * tao/UIOP_Transport.cpp (send_request):
 
-	  Updated to match IIOP's send_request() method.
+          Updated to match IIOP's send_request() method.
 
 Tue Jul 13 12:22:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence_T.h:
-	* TAO_IDL/be_include/be_argument.h:
-	* TAO_IDL/be_include/be_array.h:
-	* TAO_IDL/be_include/be_attribute.h:
-	* TAO_IDL/be_include/be_constant.h:
-	* TAO_IDL/be_include/be_decl.h:
-	* TAO_IDL/be_include/be_enum.h:
-	* TAO_IDL/be_include/be_enum_val.h:
-	* TAO_IDL/be_include/be_exception.h:
-	* TAO_IDL/be_include/be_expression.h:
-	* TAO_IDL/be_include/be_field.h:
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be_include/be_interface_fwd.h:
-	* TAO_IDL/be_include/be_module.h:
-	* TAO_IDL/be_include/be_native.h:
-	* TAO_IDL/be_include/be_operation.h:
-	* TAO_IDL/be_include/be_predefined_type.h:
-	* TAO_IDL/be_include/be_root.h:
-	* TAO_IDL/be_include/be_scope.h:
-	* TAO_IDL/be_include/be_sequence.h:
-	* TAO_IDL/be_include/be_state.h:
-	* TAO_IDL/be_include/be_stream_factory.h:
-	* TAO_IDL/be_include/be_string.h:
-	* TAO_IDL/be_include/be_structure.h:
-	* TAO_IDL/be_include/be_sunsoft.h:
-	* TAO_IDL/be_include/be_type.h:
-	* TAO_IDL/be_include/be_typedef.h:
-	* TAO_IDL/be_include/be_union.h:
-	* TAO_IDL/be_include/be_union_branch.h:
-	* TAO_IDL/be_include/be_union_label.h:
-	* TAO_IDL/be_include/be_valuetype.h:
-	* TAO_IDL/be_include/be_valuetype_fwd.h:
-	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
-	  Added #includes required by AIX template instantiation
-	  mechanisms.
+        * tao/Sequence_T.h:
+        * TAO_IDL/be_include/be_argument.h:
+        * TAO_IDL/be_include/be_array.h:
+        * TAO_IDL/be_include/be_attribute.h:
+        * TAO_IDL/be_include/be_constant.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_enum.h:
+        * TAO_IDL/be_include/be_enum_val.h:
+        * TAO_IDL/be_include/be_exception.h:
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_field.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_module.h:
+        * TAO_IDL/be_include/be_native.h:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be_include/be_root.h:
+        * TAO_IDL/be_include/be_scope.h:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_state.h:
+        * TAO_IDL/be_include/be_stream_factory.h:
+        * TAO_IDL/be_include/be_string.h:
+        * TAO_IDL/be_include/be_structure.h:
+        * TAO_IDL/be_include/be_sunsoft.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_typedef.h:
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be_include/be_union_label.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_valuetype_fwd.h:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+          Added #includes required by AIX template instantiation
+          mechanisms.
 
 Tue Jul 13 11:03:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/OctetSeq/run_test.pl:
-	* examples/POA/On_Demand_Activation/run_test.pl:
-	* examples/POA/On_Demand_Loading/run_test.pl:
-	* examples/POA/Reference_Counted_Servant/run_test.pl:
-	  Fine tune the timeouts for slower (or loaded systems)
+        * tests/OctetSeq/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/Reference_Counted_Servant/run_test.pl:
+          Fine tune the timeouts for slower (or loaded systems)
 
 1999-07-13  Yamuna Krishnamurthy  <krishnam@ss135.rsch.comm.mot.com>
 
-	* TAO_IDL/be/be_visitor_operation/operation_is.cpp (visit_operation):
-	* TAO_IDL/be/be_visitor_operation/operation_ih.cpp (visit_operation):
-	Fixed the duplicate generation of the ACE_THROW_SPEC macro
-	Thanks to Rick H. Wesson <wessorh@ar.com> for informing the bug
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp (visit_operation):
+        Fixed the duplicate generation of the ACE_THROW_SPEC macro
+        Thanks to Rick H. Wesson <wessorh@ar.com> for informing the bug
 
-	* TAO_IDL/be/be_visitor_interface/interface_is.cpp (visit_interface):
-	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp (be_visitor_interface_ih):
-	Modified the code generated to avoid dominance problem with
-	multiple inheritance
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp (be_visitor_interface_ih):
+        Modified the code generated to avoid dominance problem with
+        multiple inheritance
 
 Tue Jul 13 09:53:57 1999  Fred Kuhns  <fredk@cs.wustl.edu>
 
