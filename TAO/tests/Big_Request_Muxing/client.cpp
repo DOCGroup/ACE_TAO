@@ -36,6 +36,8 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  ACE_DEBUG ((LM_DEBUG, "Starting client\n"));
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -81,7 +83,7 @@ main (int argc, char *argv[])
                          orb.in (),
                          Messaging::SYNC_NONE);
 
-      ACE_DEBUG ((LM_DEBUG, "(%P) Activating threads\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P) Activating threads in client\n"));
       if (task0.activate (THR_NEW_LWP | THR_JOINABLE, 2, 1) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
@@ -119,6 +121,8 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, "Ending client\n"));
 
   return 0;
 }
