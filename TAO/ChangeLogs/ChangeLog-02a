@@ -1,6 +1,17 @@
+Wed Mar 21 16:08:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+          The followings are contributions from Scott Snyder
+          <snyder@fnal.gov> to make ACE happy on Digital UNIX with KCC
+          3.4d.
+
+        * orbsvcs/tests/AVStreams/benchmark/Makefile:  Got a bunch of
+          errors when compiling on Digital UNIX.  This is because the
+          Makefile in this directory is making a bogus definition of
+          DCFLAGS.
+
 Wed Mar 21 15:17:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: 
+	* tao/Transport.cpp:
 	* tao/Transport.h:
 	* tao/Transport.inl:
 	* tao/Transport_Cache_Manager.h:
@@ -16,7 +27,7 @@ Wed Mar 21 13:48:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Added the missing default reactor type to the
 	  documentation of "-ORBReactorType". Thanks to Craig Rodrigues
-	  for poiting this out. 
+	  for poiting this out.
 
 Wed Mar 21 11:23:31 2001  Ossama Othman  <ossama@uci.edu>
 
