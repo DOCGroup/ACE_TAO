@@ -1,3 +1,26 @@
+Thu Aug 16 15:16:18 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_visitor_sequence/buffer_type.h:
+	* TAO_IDL/be_include/be_visitor_sequence/cdr_op_cs.h:
+	* TAO_IDL/be_include/be_visitor_sequence/elemtype.h:
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_base.h: Allowed
+	  using valuetypes in sequences.  This is required by the CCM IDL.
+
 Mon Aug 13 16:48:05 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Sequence_T.h:

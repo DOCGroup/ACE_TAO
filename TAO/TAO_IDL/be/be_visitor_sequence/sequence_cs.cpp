@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -82,6 +82,12 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
         *os << "TAO_Unbounded_Pseudo_Sequence<";
       else
         *os << "TAO_Bounded_Pseudo_Sequence<";
+      break;
+    case be_sequence::MNG_VALUE:
+      if (node->unbounded ())
+        *os << "TAO_Unbounded_Valuetype_Sequence<";
+      else
+        *os << "TAO_Bounded_Valuetype_Sequence<";
       break;
     case be_sequence::MNG_STRING:
       if (node->unbounded ())
@@ -341,6 +347,7 @@ be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
     {
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
+    case be_sequence::MNG_VALUE:
       if (node->unbounded ())
         this->gen_unbounded_obj_sequence (node);
       else
@@ -360,40 +367,40 @@ be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
       break;
     default: // not a managed type
       if (node->unbounded ())
-	      {
-	        // TAO provides extensions for octet sequences, first find out
-	        // if the base type is an octet (or an alias for octet)
-	        be_predefined_type *predef = 0;
-	        if (bt->base_node_type () == AST_Type::NT_pre_defined)
-	          {
-	            be_typedef* alias =
-		            be_typedef::narrow_from_decl (bt);
+              {
+                // TAO provides extensions for octet sequences, first find out
+                // if the base type is an octet (or an alias for octet)
+                be_predefined_type *predef = 0;
+                if (bt->base_node_type () == AST_Type::NT_pre_defined)
+                  {
+                    be_typedef* alias =
+                            be_typedef::narrow_from_decl (bt);
 
-	            if (alias == 0)
-		            {
-		              predef =
-		                be_predefined_type::narrow_from_decl (bt);
-		            }
-	            else
-		            {
-		              predef =
+                    if (alias == 0)
+                            {
+                              predef =
+                                be_predefined_type::narrow_from_decl (bt);
+                            }
+                    else
+                            {
+                              predef =
                     be_predefined_type::narrow_from_decl (
                         alias->primitive_base_type ()
                       );
-		            }
-	          }
-	        if (predef != 0)
-	          {
-	            if (predef->pt() != AST_PredefinedType::PT_octet)
+                            }
+                  }
+                if (predef != 0)
+                  {
+                    if (predef->pt() != AST_PredefinedType::PT_octet)
                 {
-		              this->gen_unbounded_sequence (node);
+                              this->gen_unbounded_sequence (node);
                 }
-	          }
-	        else
+                  }
+                else
             {
-	            this->gen_unbounded_sequence (node);
+                    this->gen_unbounded_sequence (node);
             }
-	      }
+              }
       else
         {
           this->gen_bounded_sequence (node);

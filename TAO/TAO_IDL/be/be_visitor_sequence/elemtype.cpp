@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -101,9 +101,9 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
       break;
     default:
       if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
-	      *os << bt->nested_type_name (this->ctx_->scope ()) << " &";
+              *os << bt->nested_type_name (this->ctx_->scope ()) << " &";
       else
-	      *os << bt->name () << " &";
+              *os << bt->name () << " &";
     }
   return 0;
 }
@@ -142,6 +142,33 @@ be_visitor_sequence_elemtype::visit_interface (be_interface *node)
 }
 
 int
+be_visitor_sequence_elemtype::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
+    {
+      *os << "TAO_Valuetype_Manager<";
+      *os << bt->nested_type_name (this->ctx_->scope ()) << ", ";
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
+    }
+  else
+    {
+      *os << "TAO_Valuetype_Manager<";
+      *os << bt->name () << ", ";
+      *os << bt->name () << "_var>";
+    }
+
+  return 0;
+}
+
+int
 be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -161,6 +188,33 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
   else
     {
       *os << "TAO_Object_Manager<";
+      *os << bt->name () << ",";
+      *os << bt->name () << "_var>";
+    }
+
+  return 0;
+}
+
+int
+be_visitor_sequence_elemtype::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
+    {
+      *os << "TAO_Valuetype_Manager<";
+      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
+    }
+  else
+    {
+      *os << "TAO_Valuetype_Manager<";
       *os << bt->name () << ",";
       *os << bt->name () << "_var>";
     }

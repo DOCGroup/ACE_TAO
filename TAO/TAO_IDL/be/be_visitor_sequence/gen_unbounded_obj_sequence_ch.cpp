@@ -21,7 +21,7 @@
 // ============================================================================
 
 
-#include	"be.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -118,6 +118,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
     && prim && prim->pt () == AST_PredefinedType::PT_pseudo
     && ACE_OS::strcmp (prim->local_name ()->get_string (),
                        "Object") != 0;
+  int is_valuetype = 0;
 
   if (is_pseudo_object)
     {
@@ -125,7 +126,12 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
     }
   else
     {
-      *os << "TAO_Object_Manager<";
+      be_interface *bf = be_interface::narrow_from_decl (pt);
+      is_valuetype = bf->is_valuetype ();
+      if (is_valuetype)
+        *os << "TAO_Valuetype_Manager<";
+      else
+        *os << "TAO_Object_Manager<";
     }
 
   *os << bt->name () << ","
@@ -176,16 +182,16 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       << "CORBA::ULong ol" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  if (!is_pseudo_object)
+  if (! (is_pseudo_object || is_valuetype))
     {
       // Pseudo objects do not require these methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
-	        << "void* target," << be_nl
-	        << "CORBA_Object *src," << be_nl
-	        << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
-	        << "TAO_default_environment ()"
-	        << be_uidt << be_uidt_nl
-	        << ");" << be_uidt_nl;
+                << "void* target," << be_nl
+                << "CORBA_Object *src," << be_nl
+                << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
+                << "TAO_default_environment ()"
+                << be_uidt << be_uidt_nl
+                << ");" << be_uidt_nl;
 
       *os << "virtual CORBA_Object* _upcast (void *src) const;";
     }

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -97,6 +97,18 @@ be_visitor_sequence_buffer_type::visit_interface_fwd (be_interface_fwd *node)
   else
     *os << node->name () << "_ptr";
   return 0;
+}
+
+int
+be_visitor_sequence_buffer_type::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_sequence_buffer_type::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_interface_fwd (node);
 }
 
 int
