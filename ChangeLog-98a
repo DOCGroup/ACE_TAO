@@ -1,4 +1,21 @@
-Thu Apr 23 11:21:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Thu Apr 23 17:52:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Parse_Node.cpp (open_handle),
+	  ace/Svc_Conf.l: The line for the service object for the service
+	  configurator contains the DLL specifications.  Previously, it
+	  was possible to specify either the absolute path name of the DLL
+	  or only the name of the DLL itself.  For the latter, the service
+	  configurator is searching for the DLL using the PATH environment
+	  variable.  If we used the absolute path name it was not
+	  possible to use environment variables in the string.  It is now
+	  possible to do this for Win32 using their %foo% notation.
+	  Thanks to Andreas Schuelke <Andreas.Schuelke@med.siemens.de> for
+	  providing these fixes.
+
+	* etc/Svc_Conf_y.cpp.diff,
+	  etc/Svc_Conf_l.cpp.diff,
+	  ace/Makefile: Change the YY* symbols to ACE_YY* symbols to
+	  avoid clashes if we link with other flex/yacc generated code.
 
 	* apps/Gateway/Gateway/gatewayd.cpp,
 	  apps/Gateway/Peer/peerd.cpp: Added a check to see if the

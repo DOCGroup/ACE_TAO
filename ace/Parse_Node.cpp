@@ -372,10 +372,19 @@ ACE_Location_Node::open_handle (void)
   ACE_TRACE ("ACE_Location_Node::open_handle");
 
   ASYS_TCHAR dl_pathname[MAXPATHLEN + 1];
+  ASYS_TCHAR *name = ASYS_WIDE_STRING (this->pathname ());
+
+#if defined (ACE_WIN32)
+  ASYS_TCHAR dl_exppathname[MAXPATHLEN];
+  if (::ExpandEnvironmentStringsA (name,
+                                   dl_exppathname,
+                                   MAXPATHLEN)) 
+    name = dl_exppathname;
+#endif /* ACE_WIN32 */
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  ACE::ldfind (ASYS_WIDE_STRING (this->pathname ()),
+  ACE::ldfind (name,
                dl_pathname,
                (sizeof dl_pathname / sizeof (ASYS_TCHAR)));
 
