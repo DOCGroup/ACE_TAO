@@ -216,7 +216,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_alias_tc (
     const char *id,
     const char *name,
-    const CORBA::TypeCode_ptr original_type,
+    CORBA::TypeCode_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -457,7 +457,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_value_tc (
     const char * /* id */,
     const char * /* name */,
-    CORBA::ValueModifier type_modifier,
+    CORBA::ValueModifier /* type_modifier */,
     CORBA::TypeCode_ptr /* concrete_base */,
     const IR::ValueMemberSeq & /* members */,
     CORBA::Environment & /* ACE_TRY_ENV */
