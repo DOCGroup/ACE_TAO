@@ -1,3 +1,9 @@
+Wed Jul 07 01:28:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Renamed Based_Pointer_Repository_T.{h,cpp} to
+	  Based_Pointer_T.{h,cpp}.
+
 Wed Jul  7 00:37:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Memory_Pool: Added a new feature to ACE_Shared_Memory_Pool
@@ -5,7 +11,7 @@ Wed Jul  7 00:37:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  tailor the size of System V shared memory segments without
  	  breaking any existing ACE code.  Thanks to Serge Kolgan
  	  <skolgan@cisco.com> for contributing this enhancement.
-	
+
 	* ace/Makefile.bor (OBJFILES): Updated this file to include
 	  the new Based_Pointer_Repository.obj entry.
 
@@ -13,9 +19,9 @@ Wed Jul  7 00:37:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Makefile: Added the Based_Pointer_Repository.{h,cpp} and
 	  Based_Pointer_T.{h,cpp} files to the Makefile.
-	
+
 	* ace/Malloc.h: Added the first support for the new "Based Pointer
- 	  Malloc" feature that's described below. 
+ 	  Malloc" feature that's described below.
 
         * ace: Added the Based_Pointer_Repository.{h,cpp} and
 	  Based_Pointer_T.{h,cpp} files to the release.  These classes
