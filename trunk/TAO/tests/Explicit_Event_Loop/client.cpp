@@ -32,22 +32,22 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY 
     {
+      // Initialize orb
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
       // Check arguments
       if  (argc != 2) 
         {
           cerr << "Usage: client IOR_string" << endl;
-          // throw 0;
+          return 1;
         }
-
-      // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Destringify argv[1]
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
       if  (CORBA::is_nil (obj.in ())) 
         {
           cerr << "Nil Time reference" << endl;
-          // throw 0;
+          return 1;
         }
 
       // Narrow
@@ -56,7 +56,7 @@ main (int argc, char *argv[])
       if  (CORBA::is_nil (tm.in ())) 
         {
           cerr << "Argument is not a Time reference" << endl;
-          // throw 0;
+          return 1;
         }
 
       // Get time
