@@ -337,8 +337,8 @@ public:
   void priority (Preemption_Priority p);
 
   // scheduler priority accessor and mutator
-  OS_Priority Dispatch_Entry::OS_priority () const;
-  void Dispatch_Entry::OS_priority (OS_Priority p);
+  OS_Priority OS_priority () const;
+  void OS_priority (OS_Priority p);
 
   // dynamic subpriority accessor and mutator
   Sub_Priority dynamic_subpriority () const;
