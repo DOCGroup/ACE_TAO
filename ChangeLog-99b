@@ -4,6 +4,9 @@ Wed Mar 17 03:12:43 1999  James C. Hu  <jxh@entera.com>
           something more useful than it was.  Thanks to Bill Rizzi
 	  (rizzi@softserv.com) for pointing out the problem.
 
+	* ace/Cache_*: Removed by popular decree.  Can be found in
+          JAWS/PROTOTYPE.
+
 Wed Mar 17 03:06:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Config.cpp (close): Re-enabled cleaning up the lex
