@@ -4,11 +4,6 @@
 #define TAO_ESF_COPY_ON_READ_CPP
 
 #include "ESF_Copy_On_Read.h"
-
-#if ! defined (__ACE_INLINE__)
-#include "ESF_Copy_On_Read.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ESF_Worker.h"
 
 ACE_RCSID(ESF, ESF_Copy_On_Read, "$Id$")

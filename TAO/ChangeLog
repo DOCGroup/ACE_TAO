@@ -1,3 +1,12 @@
+Wed Jan  5 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Key_Adapters.{h,cpp,i}:
+        * tao/PortableServer/POA_Policies.{h,cpp,i}:
+          Removed i file, update h/cpp
+
+        * tao/Makefile.am:
+          Updated for change above
+
 Wed Jan  5 19:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Runtime_Scheduler.{h,cpp,i}:

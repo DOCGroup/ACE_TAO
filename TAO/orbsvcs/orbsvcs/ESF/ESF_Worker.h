@@ -49,10 +49,6 @@ public:
                      ACE_ENV_ARG_DECL) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ESF_Worker.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ESF_Worker.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

@@ -6,12 +6,8 @@
 #include "ESF_Proxy_Collection.h"
 #include "ESF_Worker.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ESF_Proxy_Collection.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (ESF, 
-           ESF_Proxy_Collection, 
+ACE_RCSID (ESF,
+           ESF_Proxy_Collection,
            "$Id$")
 
 // ****************************************************************

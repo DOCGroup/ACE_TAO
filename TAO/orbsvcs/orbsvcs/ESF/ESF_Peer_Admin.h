@@ -92,10 +92,6 @@ public:
 
 // ****************************************************************
 
-#if defined (__ACE_INLINE__)
-#include "ESF_Peer_Admin.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ESF_Peer_Admin.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
