@@ -1,3 +1,14 @@
+Sat Oct  9 12:38:38 2004  Huang-Ming Huang <hh1@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp:
+          Fixed incorrect use of activate_object_with_id()
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FTRTEvent/Utils/activate_with_id.h:
+          Changed the second paramter of activate_object_with_id()
+          from POA_var to POA_ptr.
+
 Thu Oct  7 16:07:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.h:
