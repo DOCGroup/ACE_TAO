@@ -1,3 +1,34 @@
+Wed Jan  7 23:06:57 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * include/makeinclude/all_in_one.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.nested.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Use xxx ?= instead of ifndef xxx, for setting default values
+          since it is more concise and makes the files much smaller.
+
+        * include/makeinclude/all_in_one.GNU:
+          Always add the *_UNCHECKED to the regular targets if no
+          components are missing, since Makefiles can have both checked
+          and unchecked targets. 
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/rules.bin.GNU:
+          Moved the check for which ld version is used out of and above
+          the shared library section so that we could use the GNU_LD flag
+          to add "-static" to a new variable, STATIC_LINK_FLAG when using
+          the GNU version of ld.  Then add STATIC_LINK_FLAG to LDFLAGS if
+          static_libs_only=1.
+
+        * include/makeinclude/rules.lib.GNU:
+          Added CLEANUP_VLIB and use it to set CLEANUP_INSTALL since it
+          includes the VAR extention if one was set.  Also, make VLIBS
+          dependent on IDL_SRC.
+
 Wed Jan  7 17:34:26 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Proactor/HA_Proactive_Status.cpp: Added #include

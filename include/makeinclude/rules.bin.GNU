@@ -30,12 +30,12 @@ PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 
 CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
 
-ifndef CHORUSLINK
-  CHORUSLINK ?=
-endif # CHORUSLINK
-ifndef using_aix_vacpp
-  using_aix_vacpp ?=
-endif
+CHORUSLINK ?=
+using_aix_vacpp ?=
+
+ifeq ($(static_libs_only),1)
+  LDFLAGS += $(STATIC_LINK_FLAG)
+endif # static_libs_only=1
 
 ifeq ($(CHORUSLINK),true)
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)

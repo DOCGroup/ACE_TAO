@@ -257,36 +257,24 @@ ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/
 ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 
-ifndef PACE_ROOT
-  PACE_ROOT = $(ACE_ROOT)/PACE
-endif # PACE_ROOT
+PACE_ROOT ?= $(ACE_ROOT)/PACE
 
 # Define some variables to silence warnings
-ifndef SHR_FILTER
-  SHR_FILTER ?=
-endif # SHR_FILTER
+SHR_FILTER ?=
 
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
 # Define some variables to silence warnings
-ifndef GHS
-  GHS ?=
-endif
-ifndef CHORUS
-  CHORUS ?=
-endif
-ifndef AIX_TEMPLATE_HACK
-  AIX_TEMPLATE_HACK ?=
-endif
+GHS ?=
+CHORUS ?=
+AIX_TEMPLATE_HACK ?=
 
 # $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
 # platform dependent config-*.h file included in config.h, and can be set
 # in your platform_*.GNU file or platform_macros.GNU.
-ifndef ACE_PLATFORM_CONFIG
-  ACE_PLATFORM_CONFIG = config.h
-endif
+ACE_PLATFORM_CONFIG ?= config.h
 
 ifeq ($(threads),0)
   ifneq ($(findstring -DACE_MT_SAFE=0,$(CPPFLAGS)),-DACE_MT_SAFE=0)
@@ -298,95 +286,54 @@ endif # threads
 #### Defaults are exceptions off (0), fast off (0), rtti off (0), and
 #### versioned_so on (1).
 ####
-ifndef exceptions
-  exceptions = 0
-endif
+exceptions ?= 0
 
-ifndef fast
-  fast = 0
-endif
+fast ?= 0
 
 # @@@ Should this really be the default?  Or should we let the
 # compiler choose?
-ifndef rtti
-  rtti = 0
-endif
+rtti ?= 0
 
 ifeq (,$(versioned_so))
   versioned_so = 1
 endif
-ifndef SOVERSION
-  SOVERSION ?=
-endif # SOVERSION
-ifndef SONAME
-  SONAME ?=
-endif
+SOVERSION ?=
+SONAME ?=
 
 #----------------------------------------------------------------------------
 #      Platform-independent macro definitions
 #----------------------------------------------------------------------------
 
-ifndef INCLDIRS
-  INCLDIRS ?=
-endif
-ifndef DEFFLAGS
-  DEFFLAGS ?=
-endif
+INCLDIRS ?=
+DEFFLAGS ?=
 
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 
 # Define default extentions for IDL-generated files
-ifndef IDL_CLIENT_HDR_EXT
-IDL_CLIENT_HDR_EXT = C.h
-endif
-ifndef IDL_CLIENT_INL_EXT
-IDL_CLIENT_INL_EXT = C.i
-endif
-ifndef IDL_CLIENT_SRC_EXT
-IDL_CLIENT_SRC_EXT = C.cpp
-endif
-ifndef IDL_SERVER_HDR_EXT
-IDL_SERVER_HDR_EXT = S.h
-endif
-ifndef IDL_SERVER_INL_EXT
-IDL_SERVER_INL_EXT = S.i
-endif
-ifndef IDL_SERVER_SRC_EXT
-IDL_SERVER_SRC_EXT = S.cpp
-endif
-ifndef IDL_SERVER_THDR_EXT
-IDL_SERVER_THDR_EXT = S_T.h
-endif
-ifndef IDL_SERVER_TINL_EXT
-IDL_SERVER_TINL_EXT = S_T.i
-endif
-ifndef IDL_SERVER_TSRC_EXT
-IDL_SERVER_TSRC_EXT = S_T.cpp
-endif
+IDL_CLIENT_HDR_EXT ?= C.h
+IDL_CLIENT_INL_EXT ?= C.i
+IDL_CLIENT_SRC_EXT ?= C.cpp
+IDL_SERVER_HDR_EXT ?= S.h
+IDL_SERVER_INL_EXT ?= S.i
+IDL_SERVER_SRC_EXT ?= S.cpp
+IDL_SERVER_THDR_EXT ?= S_T.h
+IDL_SERVER_TINL_EXT ?= S_T.i
+IDL_SERVER_TSRC_EXT ?= S_T.cpp
 
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
-ifndef INSBIN
-  INSBIN          = $(ACE_ROOT)/bin
-endif
-ifndef INSINC
-  INSINC          = $(ACE_ROOT)/ace
-endif
-ifndef INSLIB
-  INSLIB          = $(ACE_ROOT)/ace
-endif
-ifndef INSMAN
-  INSMAN          = $(ACE_ROOT)/man
-endif
+INSBIN          ?= $(ACE_ROOT)/bin
+INSINC          ?= $(ACE_ROOT)/ace
+INSLIB          ?= $(ACE_ROOT)/ace
+INSMAN          ?= $(ACE_ROOT)/man
+
 ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
   LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 endif
-LEX             = flex
+LEX             ?= flex
 
-ifndef EXEEXT
-  EXEEXT ?=
-endif
+EXEEXT ?=
 
 ifndef COMSPEC
   ifdef ComSpec
@@ -409,20 +356,14 @@ PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
 VAR             =
 
 # Let users override the default VDIR directories
-ifndef VDIR
-VDIR            = .obj/
-endif # VDIR
-ifndef VSHDIR
-  VSHDIR        = .shobj/
-endif # VSHDIR
+VDIR          ?= .obj/
+VSHDIR        ?= .shobj/
 
-ifndef ACELIB
-  ACELIB = -lACE
-endif
+ACELIB ?= -lACE
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
-YACC            = bison
+YACC          ?= bison
 
 
 
@@ -439,29 +380,13 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # g++
 
-ifndef OBJEXT
-  OBJEXT=o
-endif
+OBJEXT ?= o
+SOEXT ?= so
+LIBEXT ?= a
 
-ifndef SOEXT
-  SOEXT=so
-endif
-
-ifndef LIBEXT
-  LIBEXT=a
-endif
-
-ifndef CC_OUTPUT_FLAG
-  CC_OUTPUT_FLAG = -o
-endif # CC_OUTPUT_FLAG
-
-ifndef SO_OUTPUT_FLAG
-  SO_OUTPUT_FLAG = -o
-endif # SO_OUTPUT_FLAG
-
-ifndef LINK_OUTPUT_FLAG
-  LINK_OUTPUT_FLAG = -o
-endif # LINK_OUTPUT_FLAG
+CC_OUTPUT_FLAG ?= -o
+SO_OUTPUT_FLAG ?= -o
+LINK_OUTPUT_FLAG ?= -o
 
 #----------------------------------------------------------------------------
 #      make flags
@@ -476,9 +401,7 @@ ifneq ($(optimize),)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
 
-ifndef split
-  split = 0
-endif
+split ?= 0
 ifeq ($(split),0)
   override split =
 endif # split
@@ -522,9 +445,7 @@ ifneq ($(xt_reactor),)
   ACE_MAKE_OPTIONS += xt_reactor
 endif # xt_reactor
 
-ifndef fl_reactor
-  fl_reactor ?=
-endif
+fl_reactor ?=
 ifeq ($(fl_reactor),0)
   override fl_reactor =
 endif # fl_reactor
@@ -538,9 +459,7 @@ ifneq ($(fl_reactor),)
   ACE_MAKE_OPTIONS += rl_reactor
 endif # fl_reactor
 
-ifndef tk_reactor
-  tk_reactor ?=
-endif
+tk_reactor ?=
 ifeq ($(tk_reactor),0)
   override tk_reactor =
 endif # tk_reactor
@@ -553,9 +472,7 @@ ifneq ($(tk_reactor),)
   ACE_MAKE_OPTIONS += tk_reactor
 endif # tk_reactor
 
-ifndef qt_reactor
-  qt_reactor ?=
-endif
+qt_reactor ?=
 ifeq ($(qt_reactor),0)
   override qt_reactor =
 endif # qt_reactor
@@ -568,18 +485,14 @@ ifneq ($(qt_reactor),)
   ACE_MAKE_OPTIONS += qt_reactor
 endif # qt_reactor
 
-ifndef QTDIR
-  QTDIR ?=
-endif
+QTDIR ?=
 ifneq ($(QTDIR),)
   MOC = ${QTDIR}/bin/moc
 else
   MOC = moc
 endif
 
-ifndef gtk_reactor
-  gtk_reactor ?=
-endif
+gtk_reactor ?=
 ifeq ($(gtk_reactor),0)
   override gtk_reactor =
 endif # gtk_reactor
@@ -592,9 +505,7 @@ ifneq ($(gtk_reactor),)
   ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
 
-ifndef rapi
-  rapi ?=
-endif
+rapi ?=
 ifeq ($(rapi),0)
      override rapi =
 endif #rapi
@@ -606,9 +517,7 @@ ifneq ($(rapi),)
   ACE_MAKE_OPTIONS += rapi
 endif # rapi
 
-ifdef sctp
-  sctp ?=
-endif
+sctp ?=
 ifeq ($(sctp),0)
      override sctp =
 endif #rapi
@@ -621,9 +530,7 @@ ifneq ($(sctp),)
   ACE_MAKE_OPTIONS += sctp
 endif
 
-ifndef ace_with_gl
-  ace_with_gl ?=
-endif
+ace_with_gl ?=
 ifeq ($(ace_with_gl),0)
   override ace_with_gl =
 endif # ace_with_gl
@@ -636,9 +543,7 @@ ifneq ($(ace_with_gl),)
   ACE_MAKE_OPTIONS += ace_with_gl
 endif # ace_with_gl
 
-ifndef ace_with_xll
-  ace_with_x11 ?=
-endif
+ace_with_x11 ?=
 ifeq ($(ace_with_x11),0)
   override ace_with_x11 =
 endif # ace_with_x11
@@ -650,9 +555,7 @@ ifneq ($(ace_with_x11),)
   ACE_MAKE_OPTIONS += ace_with_x11
 endif # ace_with_x11
 
-ifndef ssl
-  ssl ?=
-endif
+ssl ?=
 ifeq ($(ssl),0)
   override ssl =
 else
@@ -690,9 +593,7 @@ else  # exceptions
   ACE_MAKE_OPTIONS += exceptions
 endif # exceptions
 
-ifndef profile
-  profile ?=
-endif
+profile ?=
 ifeq ($(profile),0)
   override profile =
 endif # profile
@@ -718,16 +619,12 @@ ifeq ($(static_libs),0)
   override static_libs =
 endif # static_libs
 
-ifndef shared_libs_only
-  shared_libs_only ?=
-endif
+shared_libs_only ?=
 ifeq ($(shared_libs_only),0)
   override shared_libs_only =
 endif # shared_libs_only
 
-ifndef static_libs_only
-  static_libs_only ?=
-endif
+static_libs_only ?=
 ifeq ($(static_libs_only),0)
   override static_libs_only =
 endif # static_libs_only
@@ -755,9 +652,7 @@ ifdef static_libs
   ACE_MAKE_OPTIONS += static_libs
 endif
 
-ifndef ACE_SHLIBS
-  ACE_SHLIBS ?=
-endif # ACE_SHLIBS
+ACE_SHLIBS ?=
 
 ifdef shared_libs
   ifdef SHLIBA
@@ -784,9 +679,7 @@ endif # kylix
 
 VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
 
-ifndef probe
-  probe ?=
-endif
+probe ?=
 ifeq ($(probe),0)
   override probe =
 endif # probe
@@ -795,9 +688,7 @@ ifeq ($(probe),1)
     CPPFLAGS += -DACE_COMPILE_TIMEPROBES
 endif # probe
 
-ifndef purify
-  purify ?=
-endif
+purify ?=
 ifeq ($(purify),0)
   override purify =
 endif # purify
@@ -819,9 +710,7 @@ PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
   CPPFLAGS += -DACE_HAS_PURIFY -I$(ACE_PURIFY_DIR)
 endif # purify
 
-ifndef quantify
-  quantify ?=
-endif
+quantify ?=
 ifeq ($(quantify),0)
   override quantify =
 endif # quantify
@@ -843,9 +732,7 @@ ifdef quantify
   endif # sparc
 endif # quantify
 
-ifndef repo
-  repo ?=
-endif
+repo ?=
 ifeq ($(repo),0)
   override repo =
 endif # repo
@@ -859,9 +746,7 @@ ifdef repo
 endif # repo
 
 # If pipes is not set, we default to 0
-ifndef pipes
-  pipes = 0
-endif
+pipes ?= 0
 
 # If pipes is set to 1 then add the compiler flag -pipe. This uses pipe instead
 # of intermediate files. This can be disabled by setting pipes to 0 in the
@@ -871,18 +756,13 @@ ifeq ($(pipes),1)
 endif # pipes
 
 # RMCast is turned on by default
-ifndef rmcast
-  rmcast = 1
-endif
-
+rmcast ?= 1
 ifeq ($(rmcast),1)
   ACE_MAKE_OPTIONS += rmcast
 endif
 
 # If not explicitly is set that we don't have rwho, assume we have it.
-ifndef rwho
-  rwho = 1
-endif
+rwho ?= 1
 
 # If not explicitly is set that we have wfmo, assume we don't have it.
 ifndef wfmo
@@ -893,30 +773,17 @@ endif
 #      Conditional macro definitions
 #----------------------------------------------------------------------------
 
-ifndef PTDIRS
-  PTDIRS ?=
-endif # PTDIRS
-ifndef PRELINK
-  PRELINK ?=
-endif # PRELINK
-ifndef POSTLINK
-  POSTLINK ?=
-endif # POSTLINK
-ifndef PURELINK
-  PURELINK ?=
-endif # PURELINK
-ifndef TEMPLATES_FLAG
-  TEMPLATES_FLAG ?=
-endif # TEMPLATES_FLAG
-ifndef MVCMD
-  MVCMD ?=
-endif # MVCMD
+PTDIRS ?=
+PRELINK ?=
+POSTLINK ?=
+PURELINK ?=
+TEMPLATES_FLAG ?=
+MVCMD ?=
 
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
-ifndef RC
-  RC ?=
-endif
+RC ?=
+
 COMPILE.rc      = $(RC)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>
