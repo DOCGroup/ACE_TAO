@@ -1,3 +1,10 @@
+Thu Jun  5 11:07:04 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug where mwc.pl could go into an infinite loop depending
+          on the project dependencies and project ordering.
+
 Thu Jun  5 09:05:21 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
