@@ -1,3 +1,38 @@
+Sat Aug 28 15:15:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	  Replaced all code generation using 'new' with 'ACE_NEW'
+	  or 'ACE_NEW_RETURN'.
+
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Code generation for union copy constructor and
+	  assignment operator was using the same code block.
+	  Since, upon my replacement, one needs 'ACE_NEW'
+	  and the other needs 'ACE_NEW_RETURN', a new
+	  context sub-state enum value was created so we can
+	  branch at this point.
+
+	* TAO_IDL/be_include/ami_handler_ch.h:
+	* TAO_IDL/be_include/ami_handler_cs.h:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_cs.cpp:
+	  Files no longer used that have been removed from CVS.
+
 Sat Aug 28 12:32:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
