@@ -8,7 +8,7 @@ Sun Dec  7 20:23:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  permanent. This lead to our ACE tests being run thrice, TAO ORB
 	  tests twice and other tests once. That change was bogus. All
 	  that was required was to remove ":" in the optlist.  Finding
-	  this out only took 3 hours after getting mislead to serach
+	  this out only took 3 hours after getting mislead to search
 	  through all the perl scripts for autobuild :(!
 
 Sat Dec  6 19:36:19 2003  Steve Huston  <shuston@riverace.com>
