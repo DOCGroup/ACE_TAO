@@ -574,15 +574,17 @@ protected:
 
   int check_message_integrity (ACE_Message_Block &message_block);
 
-  int consolidate_message (ACE_Message_Block &incoming,
-                           size_t missing_data,
-                           ACE_HANDLE h,
-                           ACE_Time_Value *max_wait_time);
+  int consolidate_process_message (ACE_Message_Block &incoming,
+                                   ssize_t missing_data,
+                                   ACE_HANDLE h,
+                                   ACE_Time_Value *max_wait_time);
 
   int consolidate_message_queue (ACE_Message_Block &incoming,
-                                 size_t missing_data,
+                                 ssize_t missing_data,
                                  ACE_HANDLE h,
                                  ACE_Time_Value *max_wait_time);
+
+  void consolidate_extra_messages (ACE_Message_Block &incoming);
 
   /// @@ Bala: Documentation
   virtual int process_parsed_messages (ACE_Message_Block &message_block,

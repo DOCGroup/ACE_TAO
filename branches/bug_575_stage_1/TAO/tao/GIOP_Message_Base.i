@@ -4,41 +4,25 @@
 //
 // GIOP_Message_Base
 //
-# if 0
-ACE_INLINE const size_t
-TAO_GIOP_Message_Base::header_len (void)
+TAO_Queued_Data *
+GIOP_Message_Base::make_queued_data (size_t sz)
 {
-  return TAO_GIOP_MESSAGE_HEADER_LEN;
-}
+  qd = TAO_Incoming_Message_Queue::get_queued_data ();
 
-ACE_INLINE const size_t
-TAO_GIOP_Message_Base::message_size_offset (void)
-{
-  return TAO_GIOP_MESSAGE_SIZE_OFFSET;
-}
+  ACE_Data_Block *db =
+    this->orb_core_->data_block_for_message_block (sz);
 
-ACE_INLINE const size_t
-TAO_GIOP_Message_Base::major_version_offset (void)
-{
-  return TAO_GIOP_VERSION_MAJOR_OFFSET;
-}
+  ACE_Allocator *alloc =
+    this->orb_core_->message_block_msgblock_allocator ();
 
-ACE_INLINE const size_t
-TAO_GIOP_Message_Base::minor_version_offset (void)
-{
-  return TAO_GIOP_VERSION_MINOR_OFFSET;
-}
+  ACE_Message_Block mb (db,
+                        0,
+                        alloc);
 
-ACE_INLINE const size_t
-TAO_GIOP_Message_Base::flags_offset (void)
-{
-  return TAO_GIOP_MESSAGE_FLAGS_OFFSET;
-}
+  ACE_Message_Block *new_mb = mb.duplicate ();
 
-ACE_INLINE const size_t
-TAO_GIOP_Message_Base::message_type_offset (void)
-{
-  return TAO_GIOP_MESSAGE_TYPE_OFFSET;
-}
+  qd.msg_block_ = new_mb;
+  ACE_CDR::mb_align (new_mb);
 
-#endif /*if 0*/
+  return qd;
+}

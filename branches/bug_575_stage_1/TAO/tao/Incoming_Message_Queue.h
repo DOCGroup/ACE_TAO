@@ -66,7 +66,8 @@ public:
     /// The actual message queue
     ACE_Message_Block *msg_block_;
 
-    CORBA::ULong missing_data_;
+
+    CORBA::Long missing_data_;
 
     CORBA::Octet byte_order_;
 
@@ -77,6 +78,7 @@ public:
     TAO_Queued_Data *next_;
   };
 
+  static TAO_Queued_Data* get_queued_data (void);
 private:
 
   friend class TAO_Transport;
@@ -84,8 +86,9 @@ private:
   /// @@Bala:Docu
 
 
+  TAO_Queued_Data *get_node (void);
 
-  TAO_Queued_Data* get_node (void);
+
   int add_node (TAO_Queued_Data *nd);
 
 private:

@@ -83,9 +83,38 @@ TAO_IIOP_Transport::recv_i (char *buf,
                             size_t len,
                             const ACE_Time_Value *max_wait_time)
 {
-  return this->connection_handler_->peer ().recv (buf,
-                                                  len,
-                                                  max_wait_time);
+  ssize_t n = this->connection_handler_->peer ().recv (buf,
+                                                       len,
+                                                       max_wait_time);
+
+  // Most of the errors handling is common for
+  // Now the message has been read
+  if (n == -1 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO - read message failure \n")
+                  ACE_TEXT ("TAO - recv_i () \n")));
+    }
+
+  // Error handling
+  if (n == -1)
+    {
+      if (errno == EWOULDBLOCK)
+        return 0;
+
+      // Close the connection
+      this->tms_->connection_closed ();
+
+      return -1;
+    }
+  // @@ What are the other error handling here??
+  else if (n == 0)
+    {
+      return -1;
+    }
+
+  return n;
 }
 
 

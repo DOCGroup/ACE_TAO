@@ -1,3 +1,18 @@
+Mon Jun 25 19:21:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_State.inl:
+	* tao/IIOP_Transport.cpp:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/Pluggable_Messaging.h:
+	* tao/Transport.cpp:
+	* tao/Transport.h:  An inconsistent checkin only to transfer the
+	  files to the box at home.
+
 Mon Jun 25 12:10:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Incoming_Message_Queue.{h,cpp,inl}:

@@ -32,9 +32,8 @@ TAO_Incoming_Message_Queue::missing_data (void) const
 }
 
 
-
 ACE_INLINE TAO_Incoming_Message_Queue::TAO_Queued_Data *
-TAO_Incoming_Message_Queue::get_node (void)
+TAO_Incoming_Message_Queue::get_queued_data (void)
 {
   // @@TODO: Use the global pool for allocationg...
   TAO_Queued_Data *qd = 0;
@@ -43,6 +42,12 @@ TAO_Incoming_Message_Queue::get_node (void)
                   0);
 
   return qd;
+}
+
+ACE_INLINE TAO_Incoming_Message_Queue::TAO_Queued_Data *
+TAO_Incoming_Message_Queue::get_node (void)
+{
+  return TAO_Incoming_Message_Queue::get_queued_data ();
 }
 
 ACE_INLINE

@@ -108,7 +108,10 @@ public:
   virtual int is_message_complete (ACE_Message_Block &message_block);
 
   /// @@Bala:Documentation please..
-  virtual size_t missing_data (ACE_Message_Block &message_block);
+  virtual ssize_t missing_data (ACE_Message_Block &message_block);
+
+  virtual int extract_next_message (ACE_Message_Block &incoming,
+                                    TAO_Queued_Data *qd);
 
   virtual CORBA::Octet byte_order (void);
 
@@ -201,6 +204,8 @@ private:
   /// Are there any more messages that needs processing
   virtual int more_messages (void);
 
+  /// @@Bala:Docu??
+  TAO_Queued_Data *make_queued_data (size_t sz);
 private:
 
   /// Thr message handler object that does reading and parsing of the

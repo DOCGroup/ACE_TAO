@@ -23,7 +23,7 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 
 int
 TAO_Incoming_Message_Queue::add_message (ACE_Message_Block *incoming,
-                                         size_t missing_data,
+                                         ssize_t missing_data,
                                          CORBA::Octet byte_order)
 
 {
