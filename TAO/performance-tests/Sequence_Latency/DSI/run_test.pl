@@ -13,7 +13,7 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- octet sequence\n";
+print STDERR "================ DSI Sequence Latency Test -- octet sequence\n";
 
 unlink $iorfile;
 
@@ -40,7 +40,7 @@ unlink $iorfile;
 
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- long sequence\n";
+print STDERR "================ DSI Sequence Latency Test -- long sequence\n";
 
 unlink $iorfile;
 
@@ -65,7 +65,7 @@ $server = $SV->WaitKill (40);
 
 unlink $iorfile;
 
-print STDERR "================ Thread Pool Sequence Latency Test -- short sequence\n";
+print STDERR "================ DSI Sequence Latency Test -- short sequence\n";
 
 unlink $iorfile;
 
@@ -91,7 +91,7 @@ $server = $SV->WaitKill (40);
 unlink $iorfile;
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- char sequence\n";
+print STDERR "================ DSI Sequence Latency Test -- char sequence\n";
 
 unlink $iorfile;
 
@@ -118,7 +118,7 @@ unlink $iorfile;
 
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- longlong sequence\n";
+print STDERR "================ DSI Sequence Latency Test -- longlong sequence\n";
 
 unlink $iorfile;
 
@@ -146,7 +146,7 @@ unlink $iorfile;
 
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- double sequence\n";
+print STDERR "================ DSI Sequence Latency Test -- double sequence\n";
 
 unlink $iorfile;
 
