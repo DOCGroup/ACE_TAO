@@ -25,11 +25,6 @@
 # include "ace/os_include/sys/os_time.h"
 #endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
 
-// HP-UX 10.20 doesn't define timespec_t - it defined struct timespec.
-#if defined (HPUX_10)
-typedef struct timespec timespec_t;
-#endif /* HPUX_10 */
-
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
