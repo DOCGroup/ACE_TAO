@@ -1619,8 +1619,8 @@ TAO_Base_StreamEndPoint::get_control_callback (const char * /*flowname*/,
 }
 
 void
-TAO_Base_StreamEndPoint::set_flow_handler (const char */*flowname*/,
-                                           TAO_AV_Flow_Handler */*handler*/)
+TAO_Base_StreamEndPoint::set_flow_handler (const char * /*flowname*/,
+                                           TAO_AV_Flow_Handler * /*handler*/)
 {
 }
 
@@ -3889,8 +3889,8 @@ TAO_FlowEndPoint::TAO_FlowEndPoint (const char *flowname,
 }
 
 void
-TAO_FlowEndPoint::set_flow_handler (const char */*flowname*/,
-                               TAO_AV_Flow_Handler */*handler*/)
+TAO_FlowEndPoint::set_flow_handler (const char * /*flowname*/,
+                               TAO_AV_Flow_Handler * /*handler*/)
 {
 }
 
@@ -4403,8 +4403,8 @@ TAO_FlowEndPoint::connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
 }
 
 int
-TAO_FlowEndPoint::set_protocol_object (const char */*flowname*/,
-                                                     TAO_AV_Protocol_Object */*object*/)
+TAO_FlowEndPoint::set_protocol_object (const char * /*flowname*/,
+                                       TAO_AV_Protocol_Object * /*object*/)
 {
   return 0;
 }
@@ -4428,7 +4428,7 @@ TAO_FlowProducer::TAO_FlowProducer (const char *flowname,
 
 // gets the reverse channel for feedback.
 char *
-TAO_FlowProducer::get_rev_channel (const char */*pcol_name*/,
+TAO_FlowProducer::get_rev_channel (const char * /*pcol_name*/,
                                    CORBA::Environment &/* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
