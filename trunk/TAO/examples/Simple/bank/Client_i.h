@@ -110,4 +110,7 @@ private:
 
   CORBA::Float initial_balance_;
   // Filled up by a command line argument.
+
+  char *account_holder_name_;
+  // Name of the Account Holder.
 };
