@@ -1,11 +1,12 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
-TAO_BUILDDIR = $(top_builddir)
-TAO_ROOT = $(top_srcdir)
 
-## Makefile.TAO_IDL_FE.am 
+## Makefile.TAO_IDL_FE.am
 
 lib_LTLIBRARIES = libTAO_IDL_FE.la
 
@@ -85,8 +86,11 @@ libTAO_IDL_FE_la_SOURCES = \
   util/utl_string.cpp \
   util/utl_strlist.cpp
 
+libTAO_IDL_FE_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
 libTAO_IDL_FE_la_LIBADD = \
-  ${ACE_BUILDDIR}/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
   fe/y.tab.h \
@@ -159,7 +163,7 @@ noinst_HEADERS = \
   include/utl_string.h \
   include/utl_strlist.h
 
-## Makefile.TAO_IDL_BE.am 
+## Makefile.TAO_IDL_BE.am
 
 lib_LTLIBRARIES += libTAO_IDL_BE.la
 
@@ -256,9 +260,12 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_valuetype.cpp \
   be/be_visitor_valuetype_fwd.cpp
 
+libTAO_IDL_BE_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
 libTAO_IDL_BE_la_LIBADD = \
   libTAO_IDL_FE.la \
-  ${ACE_BUILDDIR}/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS += \
   be_include/TAO_IDL_BE_Export.h \
@@ -344,7 +351,8 @@ noinst_HEADERS += \
   be_include/be_visitor_valuetype.h \
   be_include/be_visitor_valuetype_fwd.h
 
-## Makefile.TAO_IDL_EXE.am 
+## Makefile.TAO_IDL_EXE.am
+
 bin_PROGRAMS = tao_idl
 
 tao_idl_CPPFLAGS = \
@@ -363,7 +371,7 @@ tao_idl_SOURCES = \
 tao_idl_LDADD = \
   libTAO_IDL_BE.la \
   libTAO_IDL_FE.la \
-  ${ACE_BUILDDIR}/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

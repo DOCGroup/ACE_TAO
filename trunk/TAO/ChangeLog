@@ -1,3 +1,16 @@
+Thu Feb 24 15:06:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	* orbsvcs/TAO_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
+	* tao/tao.mpc:
+
+	  Removed OBV_Constants.h from Header_Files section.
+
 Thu Feb 24 12:54:54 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Fixed_Size_SArgument_T.cpp:
