@@ -36,7 +36,7 @@ class TAO_MProfile;
 class TAO_Resource_Factory;
 
 class TAO_Reply_Dispatcher;
-class TAO_Request_Mux_Strategy;
+class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
 class TAO_Export TAO_Transport
@@ -139,10 +139,10 @@ public:
 
   // = Get and set methods for thr RMS object.
 
-  // void rms (TAO_Request_Mux_Strategy *rms);
+  // void rms (TAO_Transport_Mux_Strategy *rms);
   // Set the RMS object.
 
-  TAO_Request_Mux_Strategy * rms (void) const;
+  TAO_Transport_Mux_Strategy * rms (void) const;
   // Get the RMS used by this Transport object.
 
   TAO_Wait_Strategy *wait_strategy (void) const;
@@ -178,7 +178,7 @@ protected:
   TAO_ORB_Core *orb_core_;
   // Global orbcore resource.
 
-  TAO_Request_Mux_Strategy *rms_;
+  TAO_Transport_Mux_Strategy *tms_;
   // Strategy to decide whether multiple requests can be sent over the
   // same connection or the connection is exclusive for a request.
 

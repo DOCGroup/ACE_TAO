@@ -47,7 +47,7 @@ public:
   // the TAO_GIOP_Invocation::location_forward and the
   // TAO_GIOP_Invocation::start
 
-  TAO_Request_Mux_Strategy *create_request_mux_strategy (void);
+  TAO_Transport_Mux_Strategy *create_Transport_Mux_strategy (void);
   // Create the correct client request muxing strategy.
 
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
@@ -63,13 +63,13 @@ private:
   Lock_Type iiop_profile_lock_type_;
   // the lock type for forwarding IIOP Profile
 
-  enum Request_Mux_Strategy
+  enum Transport_Mux_Strategy
   {
-    TAO_MUXED_RMS,
-    TAO_EXCLUSIVE_RMS
+    TAO_MUXED_TMS,
+    TAO_EXCLUSIVE_TMS
   };
 
-  Request_Mux_Strategy request_mux_strategy_;
+  Transport_Mux_Strategy transport_mux_strategy_;
   // The client Request Mux Strategy.
 
   enum Wait_Strategy

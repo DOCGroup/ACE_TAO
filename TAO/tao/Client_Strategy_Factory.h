@@ -22,7 +22,7 @@
 #include "tao/corbafwd.h"
 
 class ACE_Lock;
-class TAO_Request_Mux_Strategy;
+class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Transport;
 
@@ -44,7 +44,7 @@ public:
   // the TAO_GIOP_Invocation::location_forward and the
   // TAO_GIOP_Invocation::start
 
-  virtual TAO_Request_Mux_Strategy *create_request_mux_strategy (void);
+  virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (void);
   // Create the correct client request muxing strategy.
 
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
