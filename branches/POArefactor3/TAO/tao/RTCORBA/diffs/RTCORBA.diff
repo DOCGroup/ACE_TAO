@@ -1,5 +1,5 @@
---- orig/RTCORBAC.h	2005-02-11 14:41:40.128160000 +0100
-+++ RTCORBAC.h	2005-02-11 14:42:16.921065600 +0100
+--- orig/RTCORBAC.h	2005-02-14 15:03:04.020758700 +0100
++++ RTCORBAC.h	2005-02-14 15:03:04.321190700 +0100
 @@ -36,12 +36,18 @@
  
  #include "ace/config-all.h"
@@ -48,8 +48,8 @@
    protected:
      // Abstract or local interface only.
      ProtocolProperties (void);
---- orig/RTCORBAC.cpp	2005-02-11 14:41:40.128160000 +0100
-+++ RTCORBAC.cpp	2005-02-11 14:41:40.478664000 +0100
+--- orig/RTCORBAC.cpp	2005-02-14 15:03:04.020758700 +0100
++++ RTCORBAC.cpp	2005-02-14 15:03:04.331205100 +0100
 @@ -29,7 +29,7 @@
  // be\be_codegen.cpp:302
  
@@ -58,8 +58,8 @@
 +#include "RTCORBA.h"
  #include "tao/CDR.h"
  #include "tao/Typecode.h"
- #include "tao/Any_Impl_T.h"
-@@ -56,6 +56,22 @@
+ #include "tao/Basic_Arguments.h"
+@@ -53,6 +53,22 @@
  {
  }
  
@@ -80,5 +80,16 @@
 +  return 1;
 +}
  
- // TAO_IDL - Generated from
- // be\be_visitor_typecode/typecode_defn.cpp:295
+ // TAO_IDL - Generated from 
+ // be\be_visitor_structure/structure_cs.cpp:66
+--- orig/RTCORBAA.cpp	2005-02-14 15:03:04.020758700 +0100
++++ RTCORBAA.cpp	2005-02-14 15:03:29.016701100 +0100
+@@ -25,7 +25,7 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#include "RTCORBAC.h"
++#include "RTCORBA.h"
+ #include "tao/Typecode.h"
+ #include "tao/CDR.h"
+ #include "tao/Any.h"
