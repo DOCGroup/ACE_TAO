@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_IROBJECT___CI_)
 #define _CORBA_IROBJECT___CI_
@@ -63,7 +63,7 @@ CORBA::IRObject::IRObject (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_CONTAINED___CI_)
 #define _CORBA_CONTAINED___CI_
@@ -99,7 +99,7 @@ CORBA::Contained::Contained (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_CONTAINER___CI_)
 #define _CORBA_CONTAINER___CI_
@@ -135,7 +135,7 @@ CORBA::Container::Container (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_IDLTYPE___CI_)
 #define _CORBA_IDLTYPE___CI_
@@ -171,7 +171,7 @@ CORBA::IDLType::IDLType (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_TYPEDEFDEF___CI_)
 #define _CORBA_TYPEDEFDEF___CI_
