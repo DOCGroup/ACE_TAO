@@ -126,7 +126,7 @@ Task_Handler::Task_Handler (size_t number_of_handles,
 {
   ACE_NEW (this->events_, ACE_Auto_Event [number_of_handles]);
 
-  for (size_t i = 1; i <= number_of_handles; i++)
+  for (size_t i = 0; i < number_of_handles; ++i)
     if (ACE_Reactor::instance ()->register_handler (this,
                                                     this->events_[i].handle ()) == -1)
       ACE_ERROR ((LM_ERROR,
@@ -153,6 +153,10 @@ Task_Handler::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 {
   // When signaled, print message, remove self, and add self
   // This will force Reactor to update its internal handle tables
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) calls handle_signal for handle %d\n",
+              siginfo->si_handle_));
 
   if (ACE_Reactor::instance ()->remove_handler (siginfo->si_handle_,
                                                 ACE_Event_Handler::DONT_CALL) == -1)

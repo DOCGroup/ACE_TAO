@@ -66,7 +66,11 @@ Event_Handler::handle_signal (int,
   --this->iterations_;
 
   if (this->iterations_ == 0)
-    ACE_Reactor::end_event_loop ();
+    {
+      ACE_Reactor::instance ()->remove_handler (this->handle_.handle (),
+                                                ACE_Event_Handler::DONT_CALL);
+      ACE_Reactor::end_event_loop ();
+    }
 
   return 0;
 }

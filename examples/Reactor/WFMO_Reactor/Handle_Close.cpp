@@ -211,7 +211,6 @@ ACE_Reactor *
 create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
-  int delete_implementation = 0;
 
   if (opt_wfmo_reactor)
     {
@@ -219,7 +218,6 @@ create_reactor (void)
       ACE_NEW_RETURN (impl,
                       ACE_WFMO_Reactor,
                       0);
-      delete_implementation = 1;
 #endif /* ACE_WIN32 */
     }
   else if (opt_select_reactor)
@@ -227,19 +225,19 @@ create_reactor (void)
       ACE_NEW_RETURN (impl,
                       ACE_Select_Reactor,
                       0);
-      delete_implementation = 1;
     }
   else
     {
-      impl =
-        ACE_Reactor::instance ()->implementation ();
-      delete_implementation = 0;
+      ACE_Reactor *singleton_reactor =
+        ACE_Reactor::instance ();
+      ACE_Reactor::instance (0);
+      return singleton_reactor;
     }
 
   ACE_Reactor *reactor = 0;
   ACE_NEW_RETURN (reactor,
                   ACE_Reactor (impl,
-                               delete_implementation),
+                               1),
                   0);
 
   return reactor;
@@ -315,7 +313,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Run for three seconds
   ACE_Time_Value time (3);
-  reactor->run_event_loop (time);
+  reactor->run_reactor_event_loop (time);
 
   ACE_DEBUG ((LM_DEBUG, "\nClosing down the application\n\n"));
 
