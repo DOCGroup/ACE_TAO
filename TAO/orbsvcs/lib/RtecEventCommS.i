@@ -15,13 +15,3 @@ ACE_INLINE
 POA_RtecEventComm::PushSupplier::~PushSupplier (void)
 {
 }
-// skeleton destructor
-ACE_INLINE
-POA_RtecEventComm::PullSupplier::~PullSupplier (void)
-{
-}
-// skeleton destructor
-ACE_INLINE
-POA_RtecEventComm::PullConsumer::~PullConsumer (void)
-{
-}
