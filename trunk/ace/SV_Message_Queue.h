@@ -40,7 +40,7 @@ public:
   };
 
   // = Initialization and termination methods.
-   /// Open a message queue using the <external_id>.
+  /// Open a message queue using the <external_id>.
   ACE_SV_Message_Queue (void);
   ACE_SV_Message_Queue (key_t external_id,
                         int create = ACE_SV_Message_Queue::ACE_OPEN,
@@ -58,7 +58,6 @@ public:
   /// Close down and remove the message queue from the system.
   int remove (void);
 
-
   // = Message transfer methods.
   int recv (ACE_SV_Message &mb,
             int length,
@@ -72,8 +71,10 @@ public:
   /// Access the underlying control operations.
   int control (int option, void *arg = 0);
 
-  // = Get/set the underly internal id.
+  /// Get the underly internal id.
   int get_id (void) const;
+
+  /// Set the underly internal id.
   void set_id (int);
 
   /// Dump the state of an object.

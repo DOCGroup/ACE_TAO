@@ -31,9 +31,11 @@
 class ACE_Export ACE_Bcast_Node
 {
 public:
-  /// Default dtor.
+  /// Default constructor.
   ACE_Bcast_Node (ACE_INET_Addr &,
                   ACE_Bcast_Node *);
+
+  /// Destructor.
   ~ACE_Bcast_Node (void);
 
   /// Broadcast address for the interface.

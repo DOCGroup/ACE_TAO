@@ -1,3 +1,10 @@
+Sun Apr 14 17:56:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram_Bcast.h:
+        * ace/SV_Message.h:
+        * ace/SV_Message_Queue.h:
+          Doxygen-ized some of the comments
+
 Sun Apr 14 11:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SPIPE_Addr.h:
