@@ -29,11 +29,13 @@
 // destructed.  Which means, once your system is stable, you rarely
 // need to pay the price of memory allocation.  On a deterministic
 // system, which means, the number of threads spawned can be
-// determined before hand, you can either redefined these macros of
-// constructed the Thread_Manager accordingly.  That way, you don't
-// pay the price of memory allocation when the system is really doing
-// its job.  OTOH, on system with resources constraint, you may want
-// to lower the to avoid unused memory hanging around.
+// determined before hand, you can either redefine the memory pool
+// size macros to suit your need or constructed the Thread_Manager
+// accordingly.  That way, you don't pay the price of memory
+// allocation when the system is really doing its job.  OTOH, on
+// system with resources constraint, you may want to lower the size of
+// ACE_DEFAULT_THREAD_MANAGER_HWM to avoid unused memory hanging
+// around.
 
 #if !defined (ACE_DEFAULT_THREAD_MANAGER_PREALLOC)
 # define ACE_DEFAULT_THREAD_MANAGER_PREALLOC 0
