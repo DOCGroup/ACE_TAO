@@ -1,3 +1,9 @@
+Thu May 29 14:55:15 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tao/tao.mpc:
+
+	  Removed entries for some moved files.
+
 Wed May 28 11:22:29 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Activation_Manager.cpp:
