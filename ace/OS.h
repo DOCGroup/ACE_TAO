@@ -1452,13 +1452,13 @@ extern "C" int sigwait (sigset_t *set);
 
 // There must be a better way to do this...
 #if !defined (RLIMIT_NOFILE)
-#if defined (Linux) || defined (AIX) || defined (SCO)
+#if defined (linux) || defined (AIX) || defined (SCO)
 #if defined (RLIMIT_OFILE)
 #define RLIMIT_NOFILE RLIMIT_OFILE
 #else
 #define RLIMIT_NOFILE 200
 #endif /* RLIMIT_OFILE */
-#endif /* defined (Linux) || defined (AIX) || defined (SCO) */
+#endif /* defined (linux) || defined (AIX) || defined (SCO) */
 #endif /* RLIMIT_NOFILE */
 
 #if !defined (ACE_HAS_TLI_PROTOTYPES)
