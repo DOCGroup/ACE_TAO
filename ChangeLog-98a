@@ -1,3 +1,10 @@
+Sun Jan 04 12:37:02 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Env_Value_Test.cpp: hacked to work with
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER.  With that, it uses ::putenv (),
+          which we should wrap in ACE_OS.  Also, expanded TEST_THIS to
+          provide a more helpful log message than just the ASSERT output.
+
 Sun Jan  4 10:11:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Event_Channel.cpp (put): Uncommented the
