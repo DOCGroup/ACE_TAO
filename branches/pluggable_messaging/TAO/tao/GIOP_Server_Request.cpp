@@ -43,40 +43,43 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (TAO_InputCDR &input,
+    TAO_GIOP_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
+                            TAO_InputCDR &input,
                             TAO_OutputCDR &output,
                             TAO_ORB_Core *orb_core,
                             const TAO_GIOP_Version &version)
-      : incoming_ (&input),
-    outgoing_ (&output),
-    response_expected_ (0),
-    lazy_evaluation_ (0),
-
+      :mesg_base_ (mesg_base), 
+       incoming_ (&input),
+       outgoing_ (&output),
+       response_expected_ (0),
+       lazy_evaluation_ (0),
+       
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-    params_ (0),
-
+      
+       params_ (0),
+       
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-    retval_ (0),
-    exception_ (0),
-    exception_type_ (TAO_GIOP_NO_EXCEPTION),
-    orb_core_ (orb_core),
-    version_ (version),
-    service_info_ (),
-    request_id_ (0),
-    object_key_ (),
-    requesting_principal_ (0)
+       
+       retval_ (0),
+       exception_ (0),
+       exception_type_ (TAO_GIOP_NO_EXCEPTION),
+       orb_core_ (orb_core),
+       version_ (version),
+       service_info_ (),
+       request_id_ (0),
+       object_key_ (),
+       requesting_principal_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
-
+  
   //  parse_error = this->parse_header ();
 }
 
 // This constructor is used, by the locate request code
 
 TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
+    TAO_GIOP_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
+                            CORBA::ULong &request_id,
                             CORBA::Boolean &response_expected,
                             TAO_ObjectKey &object_key,
                             const ACE_CString &operation,
@@ -84,27 +87,28 @@ TAO_GIOP_ServerRequest::
                             TAO_ORB_Core *orb_core,
                             const TAO_GIOP_Version &version,
                             int &parse_error)
-  : operation_ (operation),
-    incoming_ (0),
-    outgoing_ (&output),
-    response_expected_ (response_expected),
-    lazy_evaluation_ (0),
-
+      : mesg_base_ (mesg_base),
+        operation_ (operation),
+        incoming_ (0),
+        outgoing_ (&output),
+        response_expected_ (response_expected),
+        lazy_evaluation_ (0),
+        
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-    params_ (0),
-
+        
+        params_ (0),
+        
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-    retval_ (0),
-    exception_ (0),
-    exception_type_ (TAO_GIOP_NO_EXCEPTION),
-    orb_core_ (orb_core),
-    version_ (version),
-    service_info_ (),
-    request_id_ (request_id),
-    object_key_ (object_key),
-    requesting_principal_ (0)
+        
+        retval_ (0),
+        exception_ (0),
+        exception_type_ (TAO_GIOP_NO_EXCEPTION),
+        orb_core_ (orb_core),
+        version_ (version),
+        service_info_ (),
+        request_id_ (request_id),
+        object_key_ (object_key),
+        requesting_principal_ (0)
 {
   parse_error = 0;
 }
@@ -410,9 +414,8 @@ void
 TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 {
   // Construct a REPLY header.
-  TAO_GIOP_Utils::start_message (this->version_,
-                                 TAO_GIOP_REPLY,
-                                 *this->outgoing_);
+  this->mesg_base_->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
+                                           *this->outgoing_);
 
 #if defined (TAO_HAS_MINIMUM_CORBA)
   *this->outgoing_ << this->service_info_;
@@ -572,9 +575,8 @@ TAO_GIOP_ServerRequest::exception_type (void)
 void
 TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
 {
-  TAO_GIOP_Utils::start_message (this->version_,
-                                 TAO_GIOP_REPLY,
-                                 *this->outgoing_);
+  this->mesg_base_->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
+                                           *this->outgoing_);
 
   IOP::ServiceContextList resp_ctx;
   resp_ctx.length (0);
@@ -583,10 +585,9 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   this->outgoing_->write_ulong (this->request_id_);
   this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
 
-  int result = TAO_GIOP_Utils::send_message (transport,
-                                             *this->outgoing_,
-                                             this->header_len_,
-                                             this->message_size_offset_);
+  int result = this->mesg_base_->send_message (transport,
+                                               *this->outgoing_);
+
                                        
 
   if (result == -1)

@@ -22,7 +22,8 @@
 #define TAO_GIOP_SERVER_REQUEST_H
 
 #include "tao/corbafwd.h"
-#include "tao/GIOP_Utils.h"
+//#include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,13 +39,15 @@ class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
   //    Class representing an GIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_ServerRequest (TAO_InputCDR &input,
+  TAO_GIOP_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
+                          TAO_InputCDR &input,
                           TAO_OutputCDR &output,
                           TAO_ORB_Core *orb_core,
                           const TAO_GIOP_Version &version);
                           
   // Constructor
-  TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
+  TAO_GIOP_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
+                          CORBA::ULong &request_id,
                           CORBA::Boolean &response_expected,
                           TAO_ObjectKey &object_key,
                           const ACE_CString &operation,
@@ -187,6 +190,8 @@ public:
   void message_size_offset (size_t len);
 
 private:
+  TAO_GIOP_Message_Base *mesg_base_;
+  
   ACE_CString operation_;
   // Operation name.
 
@@ -245,12 +250,6 @@ private:
 
   CORBA::Principal_var requesting_principal_;
   // Identifies the requester
-
-  size_t header_len_;
-  // Header length of the GIOP request
-  
-  size_t message_size_offset_;
-  // The offset in the header which tells us the size of the message 
 };
 
 #if defined (__ACE_INLINE__)

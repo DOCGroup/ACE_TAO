@@ -12,12 +12,9 @@
 // Methods for the Pluugable Messaging stuff
 /////////////////////////////////////////////////////////////////////////
 
-TAO_Pluggable_Client_Message_Factory::~TAO_Pluggable_Client_Message_Factory (void)
+TAO_Pluggable_Messaging_Interface::~TAO_Pluggable_Messaging_Interface (void)
 {
-}
-
-TAO_Pluggable_Server_Message_Factory::~TAO_Pluggable_Server_Message_Factory (void)
-{
+  //no-op
 }
 
 TAO_Message_State_Factory::~TAO_Message_State_Factory (void)
