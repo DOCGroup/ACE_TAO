@@ -525,6 +525,27 @@ Default for this option is MT.
 
 </TD></TR>
 
+<TR>
+<TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE / MUXED</EM></TD>
+
+<TD><A name="-ORBTransportMuxStrategy"></a>
+
+EXCLUSIVE means that the Transport does not multiplex requests on a
+    connection. At a time, there can be only one request pending on a
+    connection.  <p>
+
+MUXED means that Transport multiplexes more than one request at the
+    same time on a connection. This is very important for getting the
+    Asynchronous Method Invocation model to work. This is not
+    implemented yet. <p>
+
+Default for this option is EXCLUSIVE.
+
+</TD></TR>
+
+
+
+
 </TABLE>
 </P>
 </BLOCKQUOTE>
