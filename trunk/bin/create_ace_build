@@ -38,7 +38,23 @@ $verbose = 0;
 $source='.';
 $absolute= 0;
 
-require Cwd;
+$perl_version = $] + 0;
+if ($perl_version >= 5) {
+  #### Use an eval so that this script will compile with perl4.
+  eval <<'PERL5_CWD'
+  require Cwd;
+  sub cwd {
+    Cwd::getcwd ();
+  }
+PERL5_CWD
+} else {
+  sub cwd {
+    local ($pwd);
+
+    chop ($pwd = `pwd`);
+    $pwd;
+  }
+}
 
 ####
 #### process command line args
@@ -54,8 +70,8 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ ) {
             die $usage;
         }
     } elsif ($ARGV[0] eq '-a' ) {
-	$source = Cwd::getcwd();
-	$absolute = 1;
+        $source = &cwd ();
+        $absolute = 1;
     } elsif ( $ARGV[0] eq '-?' ) {
         print "$usage";
         exit;
@@ -80,14 +96,14 @@ $build = "build/$build";
 ####
 #### Create build directories, if needed.
 ####
--d 'build'  ||  mkdir 'build', $directory_mode;
--d "$build"  ||  mkdir "$build", $directory_mode;
+-d 'build'  ||  mkdir ('build', $directory_mode);
+-d "$build"  ||  mkdir ("$build", $directory_mode);
 
 ####
 #### Get all ACE plain file and directory names.
 ####
 @files = ( `/usr/bin/find . -name CVS -prune \\\
-	-o -name build -prune -o \\\
+        -o -name build -prune -o \\\
     -name '.*obj' -prune -o -name Templates.DB -prune -o \\\
     \\( ! -type l ! -name core ! -name '*.state' ! -name '*.so' \\\
     ! -name '*.[oa]' ! -name '*~' ! -name '.' ! -name '.#*' \\\
@@ -104,23 +120,25 @@ foreach $file ( @files ) {
    if ( -d $file ) {
         unless ( -d "$build/$file" ) {
             print "mkdir $build/$file, $directory_mode\n" if $verbose;
-            mkdir "$build/$file", $directory_mode;
+            mkdir ("$build/$file", $directory_mode);
         }
     } else {
         unless ( -e "$build/$file" ) {
-	    if (!$absolute) {
-		$up = '../..';
-		while ( $file =~ m%/%g ) { $up .= '/..'; }
-		
-		print "symlink $up/$file $build/$file\n" if $verbose;
-		symlink "$up/$file", "$build/$file"  ||
-                die "$0 symlink to $build/$file failed\n";
-	    } else {
-		$path = $source . '/' . $file;
-		print "symlink $path $build/$file\n" if $verbose;
-		symlink "$path", "$build/$file"
-		    || die "$0 symlink to $build/$file failed\n";
-	    }
+            if (!$absolute) {
+                $up = '../..';
+                while ( $file =~ m%/%g ) {
+                  $up .= '/..';
+                }
+
+                print "symlink $up/$file $build/$file\n" if $verbose;
+                symlink ("$up/$file", "$build/$file")  ||
+                    die "$0 symlink to $build/$file failed\n";
+            } else {
+                $path = $source . '/' . $file;
+                print "symlink $path $build/$file\n" if $verbose;
+                symlink ("$path", "$build/$file")  ||
+                    die "$0 symlink to $build/$file failed\n";
+            }
         }
     }
 }
