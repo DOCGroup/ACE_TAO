@@ -1042,7 +1042,6 @@ typedef struct
 #     endif /* ACE_DEFAULT_GLOBALNAME_W */
 #   endif /* ACE_HAS_UNICODE */
 
-
 typedef int ACE_HANDLE;
 typedef ACE_HANDLE ACE_SOCKET;
 #   define ACE_INVALID_HANDLE -1
@@ -3767,8 +3766,8 @@ extern int t_errno;
 #     if defined  (__DECCXX_VER)
 #       undef sigwait
         // cxx on Digital Unix 4.0 needs this declaration.  With it,
-        // ::_Psigwait () works with cxx -pthread.  g++ does _not_
-        // need it.
+        // <::_Psigwait> works with cxx -pthread.  g++ does _not_ need
+        // it.
         extern "C" int _Psigwait __((const sigset_t *set, int *sig));
 #     endif /* __DECCXX_VER */
 #   elif !defined (ACE_HAS_SIGWAIT)
@@ -4269,7 +4268,7 @@ struct sigaction
 # endif /* ECOMM */
 
 # if !defined (WNOHANG)
-#   define WNOHANG 42
+#   define WNOHANG 0100
 # endif /* !WNOHANG */
 
 # if !defined (EDEADLK)
@@ -4605,7 +4604,7 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 // For use by <ACE_OS::exit>.
 extern "C"
 {
-  typedef void (*ACE_EXIT_HOOK) ();
+  typedef void (*ACE_EXIT_HOOK) (void);
 }
 
 # if defined (ACE_WIN32)
@@ -5474,6 +5473,7 @@ public:
                            off_t len = 0);
 
   // = A set of wrappers for low-level process operations.
+  static int atexit (ACE_EXIT_HOOK func);
   static int execl (const char *path,
                     const char *arg0, ...);
   static int execle (const char *path,
@@ -5501,14 +5501,25 @@ public:
   static gid_t getgid (void);
   static pid_t getpid (void);
   static pid_t getpgid (pid_t pid);
+  static pid_t getppid (void);
   static uid_t getuid (void);
   static int setuid (uid_t);
   static pid_t setsid (void);
   static int system (const char *s);
-  static pid_t wait (int * = 0);
   static pid_t waitpid (pid_t,
-                        int * = 0,
-                        int = 0);
+                        int *status = 0,
+                        int wait_options = 0);
+  // Calls <::waitpid> on UNIX/POSIX platforms and <::await> on
+  // Chorus.  Does not work on Win32, Vxworks, or pSoS.
+  static pid_t wait (pid_t pid,
+                     int *status,
+                     int wait_options = 0);
+  // Calls <::WaitForSingleObject> on Win32 and <ACE::waitpid>
+  // otherwise.  Returns the appropriate <pid_t> on success and -1 on
+  // failure.
+  static pid_t wait (int * = 0);
+  // Calls OS <::wait> function, so it's only portable to UNIX/POSIX
+  // platforms.
 
   // = A set of wrappers for timers and resource stats.
   static u_int alarm (u_int secs);
@@ -6618,17 +6629,18 @@ public:
 
   static int set_scheduling_params (const ACE_Sched_Params &,
                                     ACE_id_t id = ACE_SELF);
-  // Friendly interface to priocntl (2).
+  // Friendly interface to <priocntl>(2).
 
   // Can't call the following priocntl, because that's a macro on Solaris.
   static int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
-  // Low-level interface to priocntl (2).
+  // Low-level interface to <priocntl>(2).
 
 private:
   static ACE_EXIT_HOOK exit_hook_;
   // Function that is called by ACE_OS::exit (), if non-null.
 
-  static ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK exit_hook) {
+  static ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK exit_hook) 
+  {
     ACE_EXIT_HOOK old_hook = exit_hook_;
     exit_hook_ = exit_hook;
     return old_hook;

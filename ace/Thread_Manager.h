@@ -486,7 +486,7 @@ public:
   // -1 on failure (<errno> will explain...), otherwise returns the
   // group id of the threads.
 
-  void *exit (void *status,
+  void *exit (void *status = 0,
               int do_thread_exit = 1);
   // Called to clean up when a thread exits.  If <do_thread_exit> is
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in
@@ -729,7 +729,7 @@ public:
   // at_exit.
 
   void wait_on_exit (int dowait);
-  int  wait_on_exit (void);
+  int wait_on_exit (void);
   // Access function to determine whether the Thread_Manager will
   // wait for its thread to exit or not when being closing down.
 

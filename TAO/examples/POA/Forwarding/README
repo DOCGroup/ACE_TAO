@@ -1,15 +1,17 @@
 $Id$
 
-This document describes the location forwarding example.  For detailed
-explanation on TAO's location forwarding feature, see
+This document describes the standard CORBA location forwarding
+example.  For detailed explanation on how TAO's location forwarding
+feature is designed, see
 
 $TAO_ROOT/docs/forwarding.html
 
-The test sets up two servers, the first writes its servant's object
-reference (OR) to a file.  The second server reads the OR, recognizes
-it as forwarding location, and writes its own to a file too.  This OR
-is then read by the client, which then issues a number of requests.
-Where every third request is a forwarding request to the object.
+The test in this directory sets up two servers, the first writes its
+servant's object reference (OR) to a file.  The second server reads
+the OR, recognizes it as forwarding location, and writes its own to a
+file too.  This OR is then read by the client, which then issues a
+number of requests.  Where every third request is a forwarding request
+to the object.
 
 Here's an example for 5 requests:
 

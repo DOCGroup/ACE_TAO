@@ -49,9 +49,13 @@ Sig_Handler::Sig_Handler (void)
 
   // Register signal handler object.  Note that NULL_MASK is used to
   // keep the ACE_Reactor from calling us back on the "/dev/null"
-  // descriptor.
+  // descriptor.  NULL_MASK just reserves a "slot" in the Reactor's
+  // internal demuxing table, but doesn't cause it to dispatch the
+  // event handler directly.  Instead, we use the signal handler to do
+  // this.
   if (ACE_Reactor::instance ()->register_handler
-      (this, ACE_Event_Handler::NULL_MASK) == -1)
+      (this,
+       ACE_Event_Handler::NULL_MASK) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n%a",
                 "register_handler",

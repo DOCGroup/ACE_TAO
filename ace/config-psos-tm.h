@@ -194,7 +194,6 @@
 #define ACE_PSOS_CANT_USE_SYS_TYPES
 #define ACE_PSOS_HAS_TIME
 
-
 //#define ACE_PSOS_SNARFS_HEADER_INFO
 
 #if !defined (ACE_PSOS)

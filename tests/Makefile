@@ -50,6 +50,7 @@ BIN =   Aio_Platform_Test \
         Dynamic_Priority_Test \
         Priority_Task_Test \
         Priority_Reactor_Test \
+	Process_Manager_Test \
         Pipe_Test \
         RB_Tree_Test \
         Reactors_Test \
