@@ -52,6 +52,13 @@ class ResetPanel extends Panel
 
     // First create all the buttons
     this.reloadButton_ = new ReloadButton ("Reload Filters", "Reload all filters", this.parent_);
+
+    // **********************
+    // Disable this until it works
+    // **********************
+    this.reloadButton_.disable();
+
+
     this.resetButton_ = new ResetButton ("Reset", "Reset the image", this.parent_);
 
 
