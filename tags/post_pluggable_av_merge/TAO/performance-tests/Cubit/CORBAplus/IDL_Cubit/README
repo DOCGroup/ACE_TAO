@@ -1,0 +1,54 @@
+This is the cubit example that uses the CORBAplus IDL compiler to generate
+the stubs and skeletons. Additional features include presence of a
+factory to create Cubit objects.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+server:
+-------
+
+% svr [-d] [-n <number-of-cubit-objects>] [-pbtrace]
+
+The server cubit factory maintained num_of_cubit objects (default =
+1). They are assigned keys that look like "key0", "key1", ...
+
+When the server is started and you have used the -d flag, you should
+see a line of output that looks something like:
+XpsIiopServerProfileFactory::XpsIiopServerProfileFactory() : new tcp server listening at port 45372
+
+Using -d turns on debugging messages.  It is additive, i.e., the more
+-d options provided, the more debugging you can get.  At the moment,
+only 2 levels of debugging are implemented, and more than 2 -d options
+are ignored.
+
+NOTE:  
+
+0. $PBHOME is the directory where CORBAplus is installed.
+
+1. Set the appropriate environment variables for CORBAplus to work.  Look at the example script at
+$PBHOME/.cshrc_pb   You can append this script to your .cshrc.mine file assuming you run a csh shell.
+You can also execute it, like:
+
+	source $PBHOME/.cshrc_pb
+
+2.  Make sure the CORBAplus BOA server is running, before trying to run the server example.  
+
+	To run the BOA server execute:
+
+	$PBHOME/bin/pbboad -pbtrace
+
+client:
+-------
+
+% clnt [-d] [-k <cubit key>] [-n <iterations>] -pbinit Cubit_Factory iiop://<host>:<port>/cubit_factory
+
+  where 
+	<host> is the machine where the server is running.
+	<port> is the port number that was displayed when the server was run.  See example output above.
+
+<cubit_key> corresponds to "key0", "key1", ...
+
+<iterations> are the number of times you want to execute a call.
+
+-d : see same option for server above.
