@@ -6422,6 +6422,24 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 }
 
 #if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
+ACE_INLINE void
+ACE_U_LongLong::normalize ()
+{
+  while (lo_ > 999999999)
+    {
+      lo_ -= 1000000000;
+      ++hi_;
+    }
+}
+
+
+ACE_INLINE
+ACE_U_LongLong::ACE_U_LongLong (u_long lo, u_long hi)
+  : hi_ (hi), lo_ (lo)
+{
+  normalize ();
+}
+
 ACE_INLINE int
 ACE_U_LongLong::operator== (const ACE_U_LongLong &ll) const
 {
@@ -6471,8 +6489,7 @@ ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll) const
 {
   ACE_U_LongLong ret (lo_ + ll.lo_, hi_ + ll.hi_);
-
-  if (ret.lo_ < ll.lo_) ++ret.hi_; /* carry to ll.hi_ */
+  ret.normalize ();
 
   return ret;
 }
@@ -6480,9 +6497,14 @@ ACE_U_LongLong::operator+ (const ACE_U_LongLong &ll) const
 ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
 {
-  ACE_U_LongLong ret (lo_ - ll.lo_, hi_ - ll.hi_);
+  ACE_U_LongLong ret (lo_, hi_ - ll.hi_);
 
-  if (lo_ < ll.lo_) --ret.hi_; /* borrow from ll.hi_ */
+  if (lo_ < ll.lo_)
+    {
+      --ret.hi_; /* borrow from hi_ */
+      ret.lo_ += 1000000000;
+    }
+  ret.lo_ -= ll.lo_;
 
   return ret;
 }
@@ -6498,7 +6520,7 @@ ACE_U_LongLong::operator+= (const ACE_U_LongLong &ll)
 {
   hi_ += ll.hi_;
   lo_ += ll.lo_;
-  if (lo_ < ll.lo_) ++hi_; /* carry to hi_ */
+  normalize ();
 
   return *this;
 }
@@ -6507,7 +6529,11 @@ ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
 {
   hi_ -= ll.hi_;
-  if (lo_ < ll.lo_) --hi_; /* borrow from hi_ */
+  if (lo_ < ll.lo_)
+    {
+      --hi_; /* borrow from hi_ */
+      lo_ += 1000000000;
+    }
   lo_ -= ll.lo_;
 
   return *this;

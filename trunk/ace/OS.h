@@ -2378,7 +2378,8 @@ typedef short ACE_pri_t;
     class ACE_U_LongLong
     {
     public:
-      ACE_U_LongLong (u_long lo = 0, u_long hi = 0) : hi_ (hi), lo_ (lo) {}
+      ACE_U_LongLong () : hi_ (0), lo_ (0) {}
+      ACE_U_LongLong (u_long lo, u_long hi = 0);
       ACE_U_LongLong (const ACE_U_LongLong &);
       ACE_U_LongLong &operator= (const ACE_U_LongLong &);
       ~ACE_U_LongLong () {}
@@ -2409,6 +2410,10 @@ typedef short ACE_pri_t;
     private:
       u_long hi_;
       u_long lo_;
+
+      // Only store 0 thru 999999999 in lo_ word, to allow arithmetic
+      // operations to work correctly.
+      void normalize ();
     };
 
     typedef ACE_U_LongLong ACE_hrtime_t;
