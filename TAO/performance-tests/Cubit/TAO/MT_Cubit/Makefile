@@ -265,6 +265,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -299,11 +300,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -334,6 +337,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  cubitC.i cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
 .obj/cubitS.o .obj/cubitS.so .shobj/cubitS.o .shobj/cubitS.so: cubitS.cpp cubitS.h cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -496,6 +501,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -530,11 +536,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -565,6 +573,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -732,6 +742,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -766,11 +777,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -801,6 +814,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -985,6 +1000,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -1019,11 +1035,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1054,6 +1072,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  cubit_i.h cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i \
  cubitS_T.cpp cubitS.i Task_Client.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
@@ -1251,6 +1271,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -1285,11 +1306,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1320,6 +1343,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -1505,6 +1530,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -1539,11 +1565,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1574,6 +1602,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -1767,6 +1797,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -1801,11 +1832,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1836,6 +1869,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -2014,6 +2049,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -2048,11 +2084,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2083,6 +2121,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  cubitC.i
 .obj/Cubit_Task.o .obj/Cubit_Task.so .shobj/Cubit_Task.o .shobj/Cubit_Task.so: Cubit_Task.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
@@ -2250,6 +2290,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -2284,11 +2325,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2319,6 +2362,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -2550,6 +2595,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -2584,11 +2630,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2619,6 +2667,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \

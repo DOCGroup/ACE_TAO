@@ -221,6 +221,7 @@ clean:
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -255,11 +256,13 @@ clean:
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -289,7 +292,9 @@ clean:
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h
 .obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -451,6 +456,7 @@ clean:
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -485,11 +491,13 @@ clean:
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -519,7 +527,9 @@ clean:
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h
 .obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -683,6 +693,7 @@ clean:
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -717,11 +728,13 @@ clean:
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Object_Table.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -751,6 +764,8 @@ clean:
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Server_Request.h \
- $(TAO_ROOT)/tao/Server_Request.i
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
+ $(TAO_ROOT)/tao/DynAny_i.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
