@@ -1,3 +1,28 @@
+Wed Jan  3 17:43:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          In the generated function _tao_setup_collocation(),
+          the  function of the same name is called in each of
+          the interface's parents. In the case where a base
+          class local name is the same as that of the child,
+          and the parent is in a different namespace (IDL
+          module), there was a problem with MSVC. Using the 
+          ACE_NESTED_CLASS macro caused this function call to
+          self-recurse, leading to a stack overflow. Using
+          the full name would cause a bogus compile error. Until
+          Microsoft fixes this compiler bug, a workaround
+          has been found. In the header file, the clashing
+          parent's scoped name is typedef'd to the child class's
+          flat name (double colons replaced by single underscores)
+          concatenated with a self-explanatory extension string. This
+          typedef is then used in the function body to make the
+          call to the base class function. Thanks to Steve Olson
+          <Steve_Olson@illinova.com> for reporting this bug, and
+          to Carlos and Darrell for their help in finding a fix,
+          and in researching Microsoft's documentation of this bug.
+
 Wed Jan  3 12:20:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Makefile.BE:
