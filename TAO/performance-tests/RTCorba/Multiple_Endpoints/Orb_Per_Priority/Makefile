@@ -247,8 +247,14 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ../Common/rtcorba_common_export.h ../Common/testC.i \
- $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
+ $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Task.h \
@@ -532,8 +538,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  ../Common/testS_T.h ../Common/testS_T.i ../Common/testS_T.cpp \
  ../Common/testS.i ../Common/test_i.i \
- $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
+ $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Task.h \

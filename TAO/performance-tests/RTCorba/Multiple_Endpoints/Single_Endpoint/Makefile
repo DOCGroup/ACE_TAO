@@ -12,6 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+TAO_IDLFLAGS+=-Ge 1
+
 LDLIBS = -lRTCORBA_Common -lTAO_PortableServer -lTAO -lTAO_RTCORBA -lTAO_RTPortableServer
 
 BIN_UNCHECKED = server client
@@ -52,7 +54,6 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-realclean: clean
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
@@ -245,8 +246,10 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  ../Common/rtcorba_common_export.h ../Common/testC.i \
- $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
+ $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Task.h \
@@ -328,7 +331,11 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Common/test_i.h ../Common/testS.h \
  ../Common/testC.h $(TAO_ROOT)/tao/corba.h \

@@ -3,7 +3,6 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
-#include "tao/RTCORBA/RTCORBA.h"  // link in the RTCORBA libraries.
 
 const char *ior_output_file = "test.ior";
 

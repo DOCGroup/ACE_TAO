@@ -1,12 +1,13 @@
 // $Id$
 
-#include "testC.h"
+#include "../Common/testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 ACE_RCSID(Latency, client, "$Id$")
 
