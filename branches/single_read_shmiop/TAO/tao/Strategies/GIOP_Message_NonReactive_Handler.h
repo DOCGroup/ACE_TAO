@@ -73,6 +73,10 @@ private:
                     ACE_Time_Value *max_wait_time);
 
 private:
+
+  /// Our Message base
+  TAO_GIOP_Message_NonReactive_Base *mesg_base_;
+
   /// The input cdr stream in which the incoming data is stored.
   TAO_InputCDR input_cdr_;
 };

@@ -40,6 +40,9 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Strategies_Export TAO_GIOP_Message_NonReactive_Base :public TAO_GIOP_Message_Base
 {
 public:
+
+  friend class TAO_GIOP_Message_NonReactive_Handler;
+
   /// Constructor
   TAO_GIOP_Message_NonReactive_Base (TAO_ORB_Core *orb_core,
                                      size_t cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
@@ -53,6 +56,14 @@ public:
                             int block = 0,
                             ACE_Time_Value *max_wait_time = 0);
 
+
+  /// Get the message type. The return value would be one of the
+  /// following:
+  /// TAO_PLUGGABLE_MESSAGE_REQUEST,
+  /// TAO_PLUGGABLE_MESSAGE_REPLY,
+  /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
+  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
+  virtual TAO_Pluggable_Message_Type message_type (void);
 
   /// Process the request message that we have received on the
   /// connection

@@ -18,6 +18,7 @@ TAO_GIOP_Message_NonReactive_Handler::TAO_GIOP_Message_NonReactive_Handler (TAO_
   : TAO_GIOP_Message_Reactive_Handler (orb_core,
                                        mesg_base,
                                        cdr_size),
+    mesg_base_ (mesg_base),
     input_cdr_ (orb_core->data_block_for_message_block (cdr_size))
 {
 }
@@ -91,10 +92,12 @@ TAO_GIOP_Message_NonReactive_Handler::read_parse_message(TAO_Transport *transpor
       return -1;
     }
 
+  buf = this->input_cdr_.rd_ptr ();
+
   // Read the rest of the message
   if (this->read_message (transport,
                           buf,
-                          msg_size,
+                          msg_size - TAO_GIOP_MESSAGE_HEADER_LEN,
                           max_wait_time) == -1)
     {
       if (TAO_debug_level > 1)
