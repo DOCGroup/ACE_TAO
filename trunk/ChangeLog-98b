@@ -1,3 +1,8 @@
+Wed May 13 18:46:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp: Added profile timing
+	  to the server so we can compute socket performance metrics.
+
 Wed May 13 19:20:27 1998  James C Hu  <jxh@cs.wustl.edu>
 
 	* ace/OS.h:
@@ -10,7 +15,6 @@ Wed May 13 19:20:27 1998  James C Hu  <jxh@cs.wustl.edu>
 	* ace/config-g++-common.h: Changed the g++ common file so that
 	  2.8.1 acts like EGCS does.  This worked on Solaris 2.5.1.  We'll
 	  see how other's fare.
-
 
 Wed May 13 18:13:12 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
