@@ -1,3 +1,10 @@
+Tue Nov 10 19:27:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/OS.[i,cpp]:
+          Added checks for ACE_HAS_WINNT4 != 0 when checking for
+          ACE_HAS_WINNT4 like we do elsewhere.  Thanks to Valery
+          Arkhangorodsky <avalery@balisoft.com> for pointing this out.
+
 Tue Nov 10 14:56:38 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/index.html
