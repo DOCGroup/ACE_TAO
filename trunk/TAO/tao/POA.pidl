@@ -16,15 +16,14 @@
 // These changes (except removal of "...") are marked with beginning and
 //   ending comment lines containing "****change****".
 
+#include <orb.idl>
+
 // IDL
 #pragma prefix "omg.org"
 
 // IDL
 module CORBA
 {
-  typedef string Identifier;
-  typedef string RepositoryId;
-
   interface Current{};
 
   // Basic Policy definition
