@@ -19,7 +19,8 @@ CIAO::ComponentInstallation_Impl::_default_POA (void)
 }
 
 int
-CIAO::ComponentInstallation_Impl::init (const char *fname
+CIAO::ComponentInstallation_Impl::init (const char *fname,
+                                        const char *section
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -27,6 +28,10 @@ CIAO::ComponentInstallation_Impl::init (const char *fname
     ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
   else
     this->filename_ = CORBA::string_dup (fname);
+
+  if (section == 0)
+    section = "ComponentInstallation";
+  this->section_name_ = CORBA::string_dup (section);
 
   ACE_Configuration_Heap *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -76,9 +81,15 @@ CIAO::ComponentInstallation_Impl::install (const char * implUUID,
                    Components::Deployment::InstallationFailure))
 {
   // Only use the root section for now.
-  const ACE_Configuration_Section_Key &section
+  const ACE_Configuration_Section_Key &root_section
     = this->installation_->root_section ();
   ACE_Configuration::VALUETYPE type;
+
+  ACE_Configuration_Section_Key section;
+  this->installation_->open_section (root_section,
+                                     this->section_name_.in (),
+                                     1,
+                                     section);
 
   // Check if implUUID has already been installed.
   if (this->installation_->find_value (section,
@@ -105,8 +116,14 @@ CIAO::ComponentInstallation_Impl::replace (const char * implUUID,
                    Components::Deployment::InstallationFailure))
 {
   // Only use the root section for now.
-  const ACE_Configuration_Section_Key &section
+  const ACE_Configuration_Section_Key &root_section
     = this->installation_->root_section ();
+
+  ACE_Configuration_Section_Key section;
+  this->installation_->open_section (root_section,
+                                     this->section_name_.in (),
+                                     1,
+                                     section);
 
   // @@ We may need to do some extra work to provide a more
   // comprehensive component installation facility.
@@ -129,8 +146,14 @@ CIAO::ComponentInstallation_Impl::remove (const char * implUUID
     ACE_THROW (Components::Deployment::UnknownImplId ());
 
   // Only use the root section for now.
-  const ACE_Configuration_Section_Key &section
+  const ACE_Configuration_Section_Key &root_section
     = this->installation_->root_section ();
+
+  ACE_Configuration_Section_Key section;
+  this->installation_->open_section (root_section,
+                                     this->section_name_.in (),
+                                     1,
+                                     section);
 
   if (this->installation_->remove_value (section,
                                          implUUID) != 0)
@@ -145,9 +168,15 @@ CIAO::ComponentInstallation_Impl::get_implementation (const char * implUUID
                    Components::Deployment::UnknownImplId,
                    Components::Deployment::InstallationFailure))
 {
-  const ACE_Configuration_Section_Key &section
+  const ACE_Configuration_Section_Key &root_section
     = this->installation_->root_section ();
   ACE_TString retstr;
+
+  ACE_Configuration_Section_Key section;
+  this->installation_->open_section (root_section,
+                                     this->section_name_.in (),
+                                     1,
+                                     section);
 
   // Check if implUUID has already been installed.
   if (this->installation_->get_string_value (section,

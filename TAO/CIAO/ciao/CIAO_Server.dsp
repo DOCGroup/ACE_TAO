@@ -128,6 +128,18 @@ SOURCE=.\Container_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Daemon_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DaemonC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DaemonS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\HomeRegistrar_i.cpp
 # End Source File
 # Begin Source File
@@ -185,6 +197,18 @@ SOURCE=.\Container_Base.h
 # Begin Source File
 
 SOURCE=.\Container_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Daemon_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DaemonC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DaemonS.h
 # End Source File
 # Begin Source File
 
@@ -346,6 +370,71 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
+SOURCE=.\Daemon.idl
+
+!IF  "$(CFG)" == "CIAO_Server - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\Daemon.idl
+InputName=Daemon
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CIAO_Server - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\Daemon.idl
+InputName=Daemon
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\HomeRegistrar.idl
 
 !IF  "$(CFG)" == "CIAO_Server - Win32 Release"
@@ -448,6 +537,18 @@ SOURCE=.\Container_Base.inl
 # Begin Source File
 
 SOURCE=.\Container_Impl.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Daemon_Impl.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\DaemonC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DaemonS.i
 # End Source File
 # Begin Source File
 

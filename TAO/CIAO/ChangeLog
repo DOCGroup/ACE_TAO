@@ -1,3 +1,41 @@
+Sun Feb 16 21:30:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes.html: Updated release info with the following.
+
+	* ciao/ComponentInstallation_Impl.cpp:
+	* ciao/ComponentInstallation_Impl.h: Fixed a problem of empty
+	  persistent backing store file.  I need to store the
+	  configuration data under a subsection (as oppose to the root
+	  section.)
+
+	* ciao/CIAO_Server.dsp:
+	* ciao/Daemon.idl:
+	* ciao/Daemon_Impl.cpp:
+	* ciao/Daemon_Impl.h:
+	* ciao/Daemon_Impl.inl: Added a generic server process control
+	  interface that provides operations to query available service
+	  interfaces and to shutdown the server process.
+
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/CIAO_Daemon.dsp:
+	* tools/Daemon/CIAO_Installation_Data.ini:
+	* tools/Daemon/Daemon.dsw:
+	* tools/Daemon/README:
+	* tools/Daemon/DaemonController.cpp:
+	* tools/Daemon/DaemonController.dsp:
+	* tools/Daemon/controller_i.cpp:
+	* tools/Daemon/controller_i.h:
+	* tools/Daemon/controller_i.inl: Added new per-host CIAO_Daemon
+	  implementaion which offer both ComponentInstallation interface
+	  which manages the local component implementation cache, and
+	  ServerActivator interface which the Assembly framework interacts
+	  with to spawn new ComponentServer processes.  See the README
+	  file in this directory and releasenotes.html for more details.
+
+	  There's also a DaemonController tool which provides a command
+	  line interface to control the daemon process and to interact
+	  with ComponentInstallation and ServerActivation interfaces.
+
 Sat Feb 15 22:54:11 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CIAO_Server.dsp:
