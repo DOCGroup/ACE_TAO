@@ -1,3 +1,18 @@
+Mon Oct  1 14:44:13 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Context.cpp (ssl_library_init):
+
+	  Initialize the locking callbacks in the crypto library before
+	  initializing the OpenSSL library.  OpenSSL may require the
+	  locking callbacks to be initialized before its own
+	  initialization.
+
+	* ace/SSL/SSL_Context.cpp (ssl_library_fini):
+
+	  Perform crypto library resource cleanup before reclaiming the
+	  locks used by the locking callbacks.  Crypto library resource
+	  cleanup makes use of the locking callbacks.
+
 Mon Oct  1 15:19:11 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* examples/C++NPv1/README: Added a section that illustrates the
