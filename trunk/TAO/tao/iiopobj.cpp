@@ -19,15 +19,15 @@ IIOP::Profile::Profile (const IIOP::Profile &src)
 
   // Free up our host if we've got one.
   if (this->host)
-    ACE_OS::free (host);
+    ACE_OS::free (this->host);
   
   this->host = ACE_OS::strdup (src.host);
 
-  object_key.length = src.object_key.length;
-  object_key.maximum = src.object_key.length;
+  this->object_key.length = src.object_key.length;
+  this->object_key.maximum = src.object_key.length;
 
   //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
-  this->object_key.buffer = new CORBA::Octet [object_key.maximum];
+  this->object_key.buffer = new CORBA::Octet [this->object_key.maximum];
 
   (void) ACE_OS::memcpy (this->object_key.buffer,
                          src.object_key.buffer,
