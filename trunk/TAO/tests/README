@@ -1,17 +1,20 @@
 $Id$
 
-The following tests of TAO are provided in this directory.  The
-individual directories contain READMEs on how to run the following
-tests:
+This directory contains a number of tests to validate that TAO is
+functioning correctly.  The individual directories contain READMEs on
+how to run the following tests:
 
-        . Cubit
+        . CDR
 
-          Many tests for various ORBs where the servant returns the
-          cube of the number sent to it by the client.
+          This directory contains several tests for the CDR stream
+          class. 
 
-        . Demux_test  (*NOTE* This is still under development)
-
-          This tests various demultiplexing strategies used in TAO.
+        . DynAny_Test
+        
+          Tests TAO's DynAny feature, which allows composition and
+          decomposition of arbitrarily complex CORBA::Any values at
+          runtime, without requiring any compile-time knowledge of the
+          IDL. 
 
         . Multiple_Inheritance
 
@@ -33,24 +36,3 @@ tests:
         . Param_Test
  
           Tests all the features of TAO's protocol engine.
-
-        . POA
-
-          Contains various small tests of POA features based on
-          examples in the OMG POA specification.
-
-        . Quoter
-        
-          Tests the use of the Global POA options with multiple threads.
-                      
-        . Simple
-          
-          Contains a number of very simple tests, which also
-          illustrate how to write canonical Orbix/VisiBroker/OmniORB
-          examples in TAO using standard CORBA features rather than
-          proprietary ORB features.
-
-        . Thruput
-
-          Throughput tests for TAO, based on TTCP.
-

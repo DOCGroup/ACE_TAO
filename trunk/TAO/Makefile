@@ -22,6 +22,8 @@ INFO	= README \
 DIRS	= tao \
 	  TAO_IDL \
 	  orbsvcs \
+	  examples \
+	  performance-tests \
 	  tests \
 	  utils \
 

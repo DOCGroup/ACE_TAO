@@ -1,3 +1,10 @@
+Tue Sep 15 20:10:37 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Makefile: Completely revised TAO's directory structure so that
+ 	  there are now two new top-level directories: examples and
+ 	  performance-tests.  This structure is designed to mimick the
+ 	  directory structure in ACE.
+
 1998-09-15  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* TAO/tests/Simple/bank : Added the client and server files for this test.
