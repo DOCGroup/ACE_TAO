@@ -1,3 +1,14 @@
+Sat Jun 19 12:20:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO-INSTALL.html:
+
+	  Updated the file with relevant and latest information. 
+	
+	* docs/minimumTAO.html:
+
+	  Moved the minimumTAO file from ACE_wrappers/docs, since it has
+	  no place there.
+
 Sat Jun 19 09:43:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
