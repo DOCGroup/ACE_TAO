@@ -20,6 +20,7 @@
 
 #include "PortableServerC.h"
 #include "tao/Abstract_Servant_Base.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
