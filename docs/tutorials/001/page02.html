@@ -25,6 +25,39 @@ program is really quite simple. The real work is done in the ACE derived
 classes.
 
 <P>
+Kirthika Parameswaran offers this abstract of Tutorial 1:
+<UL>
+<P>
+This is an simple logging server example.
+The Reactor is used to handle more than one client request using a
+single thread of execution instead of one thread per client. The Reactor
+reactes to events and demultiplexes the events to the appropriate
+Event_Handler registered with it, using the "callback" technique. The
+reactor runs in an infinte event loop handling all the incoming events.
+<P>
+The Logging_Acceptor listens at a SERVER PORT address and passively
+waits for requests to arrive. The Acceptor is also an Event_Handler and
+is registered with the Reactor. This way it is simply yet another
+Event_Hanlder for the Reactor and hence no special processing is needed
+for it.
+<P>
+Once a connection request occurs, the Acceptor accepts it and
+connection is established. The reactor instance is passed to the
+handler so that it can register with the Reactor. It does so with an
+ACE_Event_Handler::ACCEPT_MASK.
+<P>
+The Logging_Client is another Event_Handler which actually handles the
+client requests in its handle_input() method. It is also registered
+with the Reactor with the ACE_Event_Handler::READ_MASK.
+<P>
+The Event_Handlers can be unregistered from the Reactor using
+handle_close() methods 
+or explicitly calling the remove_handler() methods. 
+<P>
+This server application builds and executes succesfully waiting for
+client requests to arrive.
+<P>
+</UL>
 <HR WIDTH="100%">
 <PRE>/*
 &nbsp; Include the header file where our client acceptor is defined.
