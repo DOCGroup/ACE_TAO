@@ -199,6 +199,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       const char ace_gperf[] = ACE_GPERF;
       ACE_NEW (this->gperf_path_,
                char [ACE_OS::strlen (ace_root)
+                     + ACE_OS::strlen ("/bin/")
                      + ACE_OS::strlen (ace_gperf)
                      + 1]);
 #  if defined (ACE_WIN32)
