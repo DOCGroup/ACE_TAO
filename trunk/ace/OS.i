@@ -5950,6 +5950,32 @@ ACE_OS::gethostbyname (const char *name)
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
 
+
+ACE_INLINE struct hostent *
+ACE_OS::gethostbyaddr (const char *addr, int length, int type)
+{
+  ACE_OS_TRACE ("ACE_OS::gethostbyaddr");
+# if defined (ACE_PSOS)
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (length);
+  ACE_UNUSED_ARG (type);
+  ACE_NOTSUP_RETURN (0);
+# elif defined (ACE_HAS_NONCONST_GETBY)
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr),
+                                        (ACE_SOCKET_LEN) length,
+                                        type),
+                       struct hostent *,
+                       0);
+# else
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (addr,
+                                        (ACE_SOCKET_LEN) length,
+                                        type),
+                       struct hostent *,
+                       0);
+# endif /* ACE_HAS_NONCONST_GETBY */
+}
+
+
 ACE_INLINE struct hostent *
 ACE_OS::getipnodebyname (const char *name, int family, int flags)
 {
@@ -6017,31 +6043,6 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_PSOS */
-}
-
-
-ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr (const char *addr, int length, int type)
-{
-  ACE_OS_TRACE ("ACE_OS::gethostbyaddr");
-# if defined (ACE_PSOS)
-  ACE_UNUSED_ARG (addr);
-  ACE_UNUSED_ARG (length);
-  ACE_UNUSED_ARG (type);
-  ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr),
-                                        (ACE_SOCKET_LEN) length,
-                                        type),
-                       struct hostent *,
-                       0);
-# else
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (addr,
-                                        (ACE_SOCKET_LEN) length,
-                                        type),
-                       struct hostent *,
-                       0);
-# endif /* ACE_HAS_NONCONST_GETBY */
 }
 #endif /* ! VXWORKS */
 

@@ -1,3 +1,9 @@
+Tue Dec  4 14:47:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (gethostbyaddr): Moved this up before getipnodebyaddr()
+          to avoid a call to gethostbyaddr() before it's been seen
+          inlined. Thanks to Bala for reporting this.
+
 Tue Dec  4 13:52:44 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Date_Time_Test.cpp: Add a test for the microseconds part.
