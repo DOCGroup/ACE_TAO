@@ -11,17 +11,9 @@ NodeApplicationManager_Impl (CORBA::ORB_ptr o,
 {
 }
 
-ACE_INLINE
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeApplicationManager_Impl::
-_ciao_get_objref ()
+get_nadeapp_manager (void)
 {
-  return this->objref_.in ();
-}
-
-ACE_INLINE const char *
-CIAO::NodeApplicationManager_Impl::
-_ciao_get_ior ()
-{
-  return this->ior_.in ();
+  return this->objref_. in ();
 }
