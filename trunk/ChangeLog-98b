@@ -1,16 +1,20 @@
+Tue Jun 30 09:27:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * etc/ACE-guidelines.html: added a guideline about using ACE_Export.
+
 Tue Jun 30 03:39:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Synch.h (ACE_RW_Process_Mutex): This class no longer needs
-	  to inherit from ACE_Process_Mutex.
+        * ace/Synch.h (ACE_RW_Process_Mutex): This class no longer needs
+          to inherit from ACE_Process_Mutex.
 
-	* ace/Synch.cpp (ACE_RW_Process_Mutex): On non-Win32 platforms,
-	  the underlying ACE_File_Lock needs to be created with owner's
-	  read/write permission.  Otherwise, other process won't be able
-	  to access the lock.
+        * ace/Synch.cpp (ACE_RW_Process_Mutex): On non-Win32 platforms,
+          the underlying ACE_File_Lock needs to be created with owner's
+          read/write permission.  Otherwise, other process won't be able
+          to access the lock.
 
-	* Makefile (CONTROLLED_FILES): Added ChangeLog-98a and
-	  ChangeLog-97b into release.  Thanks to Ivan Murphy
-	  <Ivan.Murphy@med.siemens.de> for pointing this out.
+        * Makefile (CONTROLLED_FILES): Added ChangeLog-98a and
+          ChangeLog-97b into release.  Thanks to Ivan Murphy
+          <Ivan.Murphy@med.siemens.de> for pointing this out.
 
 Tue Jun 30 00:51:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -18,10 +22,10 @@ Tue Jun 30 00:51:32 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Jun 30 00:07:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/main.dsp: Added macro
- 	  definition ACE_SVC_HAS_DLL=0 in this project.  DLL linkage is
- 	  not used in this example (yet.)  Thanks to Joe Covalesky
- 	  <joe@nowsol.com> for noticing this.
+        * examples/Service_Configurator/Misc/main.dsp: Added macro
+          definition ACE_SVC_HAS_DLL=0 in this project.  DLL linkage is
+          not used in this example (yet.)  Thanks to Joe Covalesky
+          <joe@nowsol.com> for noticing this.
 
 Mon Jun 29 21:16:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
