@@ -1,3 +1,45 @@
+Mon May 29 14:21:24 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp:
+
+	  - All calls to add_ref() and remove_ref() on the servant must be
+	  treated as a non-servant upcall since the user can override
+	  these methods.  The POA must be ready to handle recursive calls
+	  from these methods.
+
+	  - Added TAO_POA_Guard, a new helper class.  This class makes
+	  sure that the lock is properly acquired, that the POA is not
+	  being destroyed, and the no non-servant upcalls are currently in
+	  progress.
+
+	* tao/Object_Adapter.cpp:
+
+	  - Moved wait_for_non_servant_upcalls_to_complete() to the
+	  Object_Adapter from Servant_Upcall.  This way other classes
+	  (e.g., the POA) can also call this method.
+
+	  - Changed the use of TAO_POA_GUARD to TAO_OBJECT_ADAPTER_GUARD.
+	  TAO_POA_GUARD is now exclusively reserved for the POA.
+
+	  - In servant_cleanup(), <servant_deactivation_condition>
+	  broadcast should be done after the servant cleanup is complete.
+	  Otherwise, the an awaiting thread may get to check for servant
+	  deactivation when the POA lock is temporarily released for
+	  _remove_ref() in the servant cleanup.  At this time the servant
+	  entry is still in the active object map and the awoken thread
+	  will get an untimely wakeup.  However, if the broadcast if done
+	  afterward the servant cleanup, the awaiting thread will get the
+	  correct and timely wakeup.
+
+	* tao/Exception.cpp: Added TAO_GUARD_FAILURE and
+	  TAO_POA_BEING_DESTROYED for exception location encoding.
+
+	* tests/POA/Non_Servant_Upcalls: New test to check the users
+	  ability to make calls on a POA during non-servant upcalls.  In
+	  this example, a servant which is being destroyed during because
+	  of a deactivate_object() call, tries to deactivate another
+	  object in its destructor.
+
 Mon May 29 09:56:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:

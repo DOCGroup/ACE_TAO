@@ -18,3 +18,11 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 This program tests the reactivation of a servant that
                 has been deactivated but not removed from the Active
                 Object Map yet.
+
+        . Non_Servant_Upcalls
+
+                This program check the users ability to make calls on
+                a POA during non-servant upcalls.  In this example, a
+                servant which is being destroyed during because of a
+                deactivate_object() call, tries to deactivate another
+                object in its destructor.

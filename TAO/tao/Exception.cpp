@@ -439,6 +439,12 @@ CORBA_SystemException::_info (void) const
         case TAO_POLICY_NARROW_CODE:
           location = "Failure when narrowing a Policy";
           break;
+        case TAO_GUARD_FAILURE:
+          location = "Failure when trying to acquire a guard/monitor";
+          break;
+        case TAO_POA_BEING_DESTROYED:
+          location = "POA is current being destroyed";
+          break;
         default:
           location = "unknown location";
         }
