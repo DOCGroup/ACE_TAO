@@ -34,7 +34,7 @@ public:
   ~TAO_FTEC_Event_Channel();
 
   enum MEMBERSHIP {
-    NONE,
+    UNSPECIFIED,
     PRIMARY,
     BACKUP
   };
