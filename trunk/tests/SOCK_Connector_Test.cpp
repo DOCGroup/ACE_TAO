@@ -39,7 +39,7 @@ find_another_host (char other_host[])
   ACE_OS::strcpy (other_host, "localhost");	// If all else fails
 
   // These gethost-type things don't work everywhere.
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_NETBSD)
   struct hostent *h;
   struct utsname un;
 
