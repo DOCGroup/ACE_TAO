@@ -47,9 +47,9 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::gettimeofday (ACE_Time_Value (*gettimeof
 }
 
 template <class TYPE, class FUNCTOR, class LOCK> LOCK &
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::lock (void)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::mutex (void)
 {
-  return this->lock_;
+  return this->mutex_;
 }
 
 template <class TYPE, class FUNCTOR, class LOCK> FUNCTOR &
