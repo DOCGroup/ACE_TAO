@@ -38,7 +38,7 @@ class ifr_adding_visitor : public ifr_visitor
   //    to the Interface Repository.
   //
 public:
-  ifr_adding_visitor (CORBA::Environment &ACE_TRY_ENV);
+  ifr_adding_visitor (void);
   // Constructor.
 
   virtual ~ifr_adding_visitor (void);
@@ -122,7 +122,8 @@ protected:
   const char *gen_version (AST_Decl *node);
   // Defaults to "1.0" for now.
 
-  void element_type (AST_Type *base_type);
+  void element_type (AST_Type *base_type,
+                     CORBA::Environment &ACE_TRY_ENV);
   // Creates or looks up the element type of an array or sequence,
   // and stores the result in ir_current_.
 

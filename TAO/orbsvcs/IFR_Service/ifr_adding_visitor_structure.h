@@ -37,8 +37,7 @@ class ifr_adding_visitor_structure : public ifr_adding_visitor
   //    for the case when a struct or exception node is seen in the AST.
   //
 public:
-  ifr_adding_visitor_structure (CORBA::Environment &ACE_TRY_ENV,
-                                CORBA::Boolean is_nested);
+  ifr_adding_visitor_structure (CORBA::Boolean is_nested);
   // Constructor.
 
   virtual ~ifr_adding_visitor_structure (void);

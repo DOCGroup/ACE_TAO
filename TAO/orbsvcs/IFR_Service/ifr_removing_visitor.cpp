@@ -6,8 +6,7 @@
 
 ACE_RCSID(IFR_Service, ifr_removing_visitor, "$Id$")
 
-ifr_removing_visitor::ifr_removing_visitor (CORBA::Environment &ACE_TRY_ENV)
-  : ifr_visitor (ACE_TRY_ENV)
+ifr_removing_visitor::ifr_removing_visitor (void)
 {
 }
 
@@ -27,45 +26,59 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
 
       AST_Decl *d = 0;
 
-      // Continue until each element is visited.
-      while (!si.is_done ())
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
         {
-          d = si.item ();
-
-          if (d == 0)
+          // Continue until each element is visited.
+          while (!si.is_done ())
             {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_scope -")
-                  ACE_TEXT (" bad node in this scope\n")
-                ), 
-                -1
-              );
-            }
+              d = si.item ();
 
-          if (d->node_type () == AST_Decl::NT_pre_defined)
-            {
-              // We can skip these - they don't get destroyed in the IfR.
+              if (d == 0)
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_removing_visitor::visit_scope -")
+                      ACE_TEXT (" bad node in this scope\n")
+                    ), 
+                    -1
+                  );
+                }
+
+              if (d->node_type () == AST_Decl::NT_pre_defined)
+                {
+                  // We can skip these - they don't get destroyed in the IfR.
+                  si.next ();
+                  continue;
+                }
+
+              IR_Contained_var top_level = 
+                be_global->repository ()->lookup_id (d->repoID (),
+                                                     ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              if (!CORBA::is_nil (top_level.in ()))
+                {
+                  // All we have to do is call destroy() on each IR object
+                  // in the global scope, because destroy() works on all
+                  // the contents recursively.
+                  top_level->destroy (ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+
               si.next ();
-              continue;
             }
-
-          IR_Contained_var top_level = 
-            be_global->repository ()->lookup_id (d->repoID (),
-                                                 this->env_);
-          TAO_IFR_CHECK_RETURN (-1);
-
-          if (!CORBA::is_nil (top_level.in ()))
-            {
-              // All we have to do is call destroy() on each IR object
-              // in the global scope, because destroy() works on all
-              // the contents recursively.
-              top_level->destroy (this->env_);
-              TAO_IFR_CHECK_RETURN (-1);
-            }
-
-          si.next ();
         }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (
+              ACE_ANY_EXCEPTION,
+              ACE_TEXT ("ifr_removing_visitor::visit_scope")
+            );
+
+          return -1;
+        }
+      ACE_ENDTRY;
     }
 
   return 0;

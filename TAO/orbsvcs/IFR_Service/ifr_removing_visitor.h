@@ -37,7 +37,7 @@ class ifr_removing_visitor : public ifr_visitor
   //    from the Interface Repository.
   //
 public:
-  ifr_removing_visitor (CORBA::Environment &ACE_TRY_ENV);
+  ifr_removing_visitor (void);
   // Constructor.
 
   virtual ~ifr_removing_visitor (void);
