@@ -199,7 +199,7 @@
 #define ACE_LACKS_DLCLOSE
 
 // gperf seems to need this
-//#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
 #if defined(__APPLE_CC__) && (__APPLE_CC__ < 1173)
 #error "Compiler must be upgraded, see http://developer.apple.com"
