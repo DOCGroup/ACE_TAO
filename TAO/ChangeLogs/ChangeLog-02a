@@ -2,7 +2,7 @@ Tue Jul 17 11:54:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
 
-          Modified preprocessor dump to go to cout instead of cerr. This
+          Modified preprocessor dump to go to stdout instead of stderr. This
           feature was requested by Alex Hornby <alex@anvil.co.uk>.
 
 Mon Jul 16 22:24:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
