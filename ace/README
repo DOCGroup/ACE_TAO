@@ -707,8 +707,82 @@ ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for
                                         tracking down origin of
                                         ACE_NOTSUP.
-ACE_HAS_{,U}INT{8,16,32,64}_T		Platform/compiler supports the
-					{,u}int{8,16,32,64}_t types.
+
+ACE_HAS_INT8_T                          Platform provides the int8_t type.
+ACE_HAS_INT16_T                         Platform provides the int16_t type.
+ACE_HAS_INT32_T                         Platform provides the int32_t type.
+ACE_HAS_INT64_T                         Platform provides the int64_t type.
+ACE_HAS_UINT8_T                         Platform provides the uint8_t type.
+ACE_HAS_UINT16_T                        Platform provides the uint16_t type.
+ACE_HAS_UINT32_T                        Platform provides the uint32_t type.
+ACE_HAS_UINT64_T                        Platform provides the uint64_t type.
+
+ACE_INT8_TYPE                           Specific type to use for ACE_INT8.
+                                        If not defined, ACE will attempt to
+					determine the correct type.
+ACE_INT16_TYPE                          Specific type to use for ACE_INT16.
+                                        If not defined, ACE will attempt to
+                                        determine the correct type.
+ACE_INT32_TYPE                          Specific type to use for ACE_INT32.
+                                        If not defined, ACE will attempt to
+                                        determine the correct type.
+ACE_INT64_TYPE                          Specific type to use for ACE_INT64.
+                                        If not defined, ACE will attempt to
+                                        determine the correct type.
+ACE_UINT8_TYPE                          Specific type to use for ACE_UINT8.
+                                        If not defined, ACE will attempt to
+                                        determine the correct type.
+ACE_UINT16_TYPE                         Specific type to use for ACE_UINT16.
+                                        If not defined, ACE will attempt to
+                                        determine the correct type.
+ACE_UINT32_TYPE                         Specific type to use for ACE_UINT32.
+                                        If not defined, ACE will attempt to
+                                        determine the correct type.
+ACE_UINT64_TYPE                         Specific type to use for ACE_UINT64.
+					If not defined, ACE will attempt to 
+					determine the correct type.
+
+ACE_INT8_FORMAT_SPECIFIER               String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_INT8 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+ACE_INT16_FORMAT_SPECIFIER              String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_INT16 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+ACE_INT32_FORMAT_SPECIFIER              String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_INT32 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+ACE_INT64_FORMAT_SPECIFIER              String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_INT64 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+ACE_UINT8_FORMAT_SPECIFIER              String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_UINT8 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+ACE_UINT16_FORMAT_SPECIFIER             String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_UINT16 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+ACE_UINT32_FORMAT_SPECIFIER             String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_UINT32 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+ACE_UINT64_FORMAT_SPECIFIER             String literal containing *printf 
+					format specifier (including the '%')
+					to be used for ACE_UINT64 values.  If
+					not defined, ACE will attempt to 
+					determine the correct setting.
+
 ACE_HAS_VOIDPTR_GETTIMEOFDAY            Platform/compiler supports
                                         void * as second parameter
                                         to gettimeofday

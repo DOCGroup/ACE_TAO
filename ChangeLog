@@ -1,8 +1,25 @@
+Thu Mar 24 12:27:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/README:
+
+	  Describe ACE_{,U}INT{8,16,32,64}_FORMAT_SPECIFIER macros.
+
+	  Describe ACE_{,U}INT{8,16,32,64}_TYPE macros.
+
+	* ace/Basic_Types.h:
+
+	  Decouple the conditionals used to set the ACE_SIZEOF_{SHORT,INT,
+	  LONG,LONG_LONG} macros from those used to define the
+	  ACE_{,U}INT{8,16,32,64} types.
+
+	  Removed cases for specific CPUs and OSs, but provide a mechanism
+	  where values can be set in platform specific config-*.h headers.
+
 Thu Mar 24 11:26:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/README:
 
-	  Describe new ACE_HAS_{,U}INT32_T macros.
+	  Describe ACE_HAS_{,U}INT{8,16,32,64}_T macros.
 
 	* configure.ac:
 
