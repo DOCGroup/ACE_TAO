@@ -175,9 +175,11 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
 
   // generate the Any <<= and >>= operators
   os->indent ();
-  *os << "void operator<<= (CORBA::Any &, " << node->name ()
+  *os << "void " << idl_global->export_macro ()
+      << " operator<<= (CORBA::Any &, " << node->name ()
       << ");" << be_nl;
-  *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
+  *os << "CORBA::Boolean " << idl_global->export_macro ()
+      << " operator>>= (const CORBA::Any &, "
       << node->name () << " &);\n";
 
   node->cli_hdr_any_op_gen (1);

@@ -1,3 +1,39 @@
+Tue Jun  9 08:53:30 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_codegen.h: Added two states (but no new
+	visitors) for argument passing to the upcall for the collocated
+	case. This was necessary since in this case, the argument is
+	passed as it is. In the skeleton case, we may have _var variables,
+	and hence we may have to pass the .in () or .inout () of those
+	_var variables.
+	
+        * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+        be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+        be_visitor_typedef, be_visitor_union}.cpp:
+
+	Once again, due to the compulsions of the MSVC++ compiler and the
+	DLLs, we require the export/import macros for all the <<= and >>=
+	operators so that they are visible outside.
+	
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  TAO_IDL/be_include/be_visitor_args.cpp (be_visitor_upcall_ss):
+
+	We were using _var variables to make sure that allocated memory
+	was released after the marshaling is done and the skeleton has
+	returned. However, for objrefs and strings, we ended up passing
+	the .in () values of these _var parameters. The expected value was
+	a pointer to the in () value. This is now corrected.
+
+	Also dealt with the collocated case, where we simply pass the
+	argument from the parameter list to the upcall as it is.
+
+	Due to these two differences, we had to add a bunch of visit_*
+	methods to the upcall_ss visitor.
+	
+	* TAO_IDL/be/be_visitor_operation.cpp: The same reasoning (case 1)
+	given for be_visitor_args.cpp holds here too for the return value
+	case. 
+
 1998-06-08  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* Updated orbsvcs/tests/Concurrency/CC_command.cpp because of an
