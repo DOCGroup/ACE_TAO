@@ -94,7 +94,7 @@ private:
   FILTER_LIST filter_list_;
   // List of filters
 
-  TAO_Notify_ID_Pool<CosNotifyFilter::FilterID> filter_ids_;
+  TAO_Notify_ID_Pool_Ex<CosNotifyFilter::FilterID,CosNotifyFilter::FilterIDSeq> filter_ids_;
   // Id generator for proxy suppliers
 };
 
