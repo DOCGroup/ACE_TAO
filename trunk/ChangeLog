@@ -1,3 +1,13 @@
+Sun Dec 19 14:23:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/ace.m4:
+	* m4/compiler.m4:
+	* m4/platform.m4:
+
+	  Replace use of $host with $target.  Needed if we're ever to
+	  support cross compilation.
+
 Sun Dec 19 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/QOS/Change_Sender_TSpec/receiver.cpp:

@@ -69,7 +69,7 @@ dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
     WERROR="-Werror"
  fi
 
- case "$host" in
+ case "$target" in
    *aix*)
      dnl In case anything here or in the config depends on OS
      dnl version number, grab it here and pass it all to the
@@ -113,7 +113,7 @@ dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
      ;;
  esac
 
- case "$host" in
+ case "$target" in
    *aix4.2* | *aix4.3*)
      case "$CXX" in
        xlC*)
@@ -184,7 +184,7 @@ dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
      ACE_CPPFLAGS="$ACE_CPPFLAGS -DHPUX_VERS=$OSVERS"
 
      # HP-UX OS version specific settings.
-     case "$host" in
+     case "$target" in
        *hpux11*)
 # aCC's "-mt" flag detected by the configure script should already set
 # the appropriate preprocessor, compiler and linker flags.

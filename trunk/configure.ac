@@ -162,7 +162,7 @@ dnl AC_AIX
 
 dnl AC_MINIX
 
-case $host_os in
+case $target_os in
   *cygwin* ) CYGWIN=yes;;
          * ) CYGWIN=no;;
 esac
@@ -230,7 +230,7 @@ dnl SECTION 3: check for programs <--- moved before section 2 (Ossama)
 dnl Platform specific libraries needed for ACE's autoconf tests
 dnl that currently do not have tests themselves.
 dnl Platform specific flags
-case "$host" in
+case "$target" in
   *freebsd*)
     LIBS="$LIBS -lcompat"
     ;;
@@ -1199,7 +1199,7 @@ ACE_CHECK_STRUCT([dirent],[dirent.h],,[AC_DEFINE([ACE_LACKS_STRUCT_DIR])])
 ACE_CHECK_STRUCT([flock],[fcntl.h],,[AC_DEFINE([ACE_LACKS_FILELOCKS])])
 ACE_CHECK_STRUCT([rwlock_t],[synch.h],,[AC_DEFINE([ACE_LACKS_RWLOCK_T])])
 ACE_CHECK_STRUCT([strbuf],[stropts.h],[AC_DEFINE([ACE_HAS_STRBUF_T])],)
-case "$host" in
+case "$target" in
 *irix*)
   dnl IRIX prusage fields don't match what ACE currently supports.
   ;;
@@ -3162,7 +3162,7 @@ fi
 dnl Check for `strftime' in the `intl' library, for SCO UNIX
 AC_FUNC_STRFTIME
 
-case "$host_os" in
+case "$target_os" in
   *win32*)
      AC_CHECK_FUNC([CancelIO],
        [AC_DEFINE([ACE_HAS_CANCEL_IO])],)
@@ -3326,7 +3326,7 @@ main ()
 AC_CHECK_FUNC([gethostbyaddr],,)
 
 dnl Check for 64 bit llseek() or lseek64()
-case "$host" in
+case "$target" in
   *UnixWare7*)
     dnl Skip the check
     ;;
@@ -3422,7 +3422,7 @@ AC_CHECK_FUNC([poll],
      ],[AC_DEFINE([ACE_POLL_IS_BROKEN])],)
   ],)
 
-case "$host" in
+case "$target" in
   *linux*)
     dnl Linux Event Poll
     ACE_CACHE_CHECK([for epoll_create],
@@ -6302,7 +6302,7 @@ dnl Some platforms define ip_mreq in <sys/netinet/in.h>.
 
 ACE_CACHE_CHECK([if running on an Alpha],
   [ace_cv_feature_alpha],[
-    case "$host" in
+    case "$target" in
       alpha*)
         ace_cv_feature_alpha=yes
         ;;
@@ -6312,7 +6312,7 @@ ACE_CACHE_CHECK([if running on an Alpha],
     esac
   ],
   [
-   case "$host" in
+   case "$target" in
      *linux*)
        dnl We only define ACE_HAS_ALPHA_TIMER if we are running Linux
        dnl on an Alpha and are using GNU C++!
@@ -6325,7 +6325,7 @@ ACE_CACHE_CHECK([if running on an Alpha],
 
 ACE_CACHE_CHECK([if running on a Power PC],
   [ace_cv_feature_powerpc],[
-    case "$host" in
+    case "$target" in
       powerpc*)
         ace_cv_feature_powerpc=yes
         ;;
@@ -6335,7 +6335,7 @@ ACE_CACHE_CHECK([if running on a Power PC],
     esac
   ],
   [
-   case "$host" in
+   case "$target" in
      *aix*)
        dnl We don't do anything for AIX since AIX already has a
        dnl hi-res timer function!
@@ -6351,7 +6351,7 @@ ACE_CACHE_CHECK([if running on a Power PC],
 
 ACE_CACHE_CHECK([if running on a Pentium(tm) processor],
   [ace_cv_feature_pentium],[
-    case "$host" in
+    case "$target" in
       i386-* | i486-* |i586-* | i686-*)
 dnl If we do have a pentium, than define ACE_HAS_PENTIUM and add
 dnl gethrtime.cpp to the source list, but only if we're using GNU C++
@@ -6432,7 +6432,7 @@ fi
 dnl FIXME!!!
 dnl The following is a kludge until the netdb reentrant function
 dnl number of arguments is handled.
-case "$host" in
+case "$target" in
   *linux*) AC_DEFINE([ACE_LACKS_NETDB_REENTRANT_FUNCTIONS]);;
   *) ;;
 esac
@@ -7076,7 +7076,9 @@ and the following information:
   Linker Flags:       $LDFLAGS
   Libraries:          $LIBS
   System type information:
-    Build: $build  Host: $host
+    Build:  $build  
+    Host:   $host
+    Target: $target
 
 In the meantime, please use the stock ACE build procedure detailed in
 the file 'ACE-INSTALL.html'.
