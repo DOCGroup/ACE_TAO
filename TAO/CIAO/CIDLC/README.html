@@ -1,48 +1,75 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+file      : CIDCL/readme.html
+author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+cvs-id    : $Id$
+-->
+
 <html>
+
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="GENERATOR" content="Mozilla/4.79 [en] (Windows NT 5.0; U) [Netscape]">
-   <title>TAO Release Information and TODO List</title>
+
+  <title>CIAO CIDL compiler README</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="description" content="CIAO CIDL compiler README"/>
+  <meta http-equiv="Content-Language" content="en"/>
+
+  <style type="text/css">
+  body {
+    font-family      : sans-serif;
+
+    color            : black;
+    background       : white;
+
+    max-width        : 40em;
+    padding          : 2em 2em 2em 3em;
+    margin           : 0 0 0 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family      : sans-serif;
+    font-weight      : 500;
+  }
+
+  h1 { font-size     : 170%; }
+  h2 { font-size     : 125%; }
+
+  ul.toc li {
+    padding          : .4em 0em 0em 0em;
+  }
+
+  ol.multiline li {
+    padding-top      : 0.6em;
+    padding-bottom   : 0.6em;
+  }
+
+  </style>
+
 </head>
-<body text="#000000" bgcolor="#FFFFFF">
-<!-- $Id$ -->
-<center>
-<hr></center>
 
-<center>
-<h3>
-Release Information for the Component Implentation Definition Language
-Compiler(CIDLC)</h3></center> 
-This document contains information on the following topics related to the
-<a href="../VERSION">current release</a> of <a
-href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a>: 
-<table BORDER=0 CELLSPACING=0 CELLPADDING=10 >
-<tr>
-
-The C++ source files in this directory are compiled into the
-code generators and driver for the CIAO CIDL compiler. CORBA 
-Compiler Framework (CCF) provides the front-end for the compiler. <p>
-
-Pre-built binary executables of CIDL compiler are available at <p>
-
-<code> http://www.dre.vanderbilt.edu/~boris/cidlc </code>
-
+<body>
 <p>
+The C++ source files in this directory are compiled into the
+code generators and driver for the CIAO CIDL compiler. CORBA
+Compiler Framework (CCF) provides the front-end for the compiler.</p>
 
-To build CIDL compiler you will need to compile CCF libraries
-first. Instructions for doing this can be found at <p>
+<p><a href="http://www.dre.vanderbilt.edu/cidlc/binary/">Pre-built binary
+executables of CIDL compiler</a> are available for different platforms.</p>
 
-<code> $(CIAO_ROOT)/CCF/Documentation/Build.html </code> <p>
+<p>To build CIDL compiler you will need to compile CCF libraries
+first. Please refer to <a href="../CCF/Documentation/Build.html">
+instructions for building CCF libraries</a>.</p>
 
-After you have CCF libraries compiled you can build CIDL compiler
-with makefiles on UNIX <p>
+<p>After you have CCF libraries compiled you can build CIDL compiler
+with makefiles on UNIX</p>
 
-<code> $ make -f Makefile.alt</code> <p>
+<code> $ make -f Makefile.alt</code>
 
-or by using VC 7.1 project on Windows. <p>
+<p>or by using VC 7.1 project on Windows.</p>
 
-</tr>
 </body>
 </html>
-

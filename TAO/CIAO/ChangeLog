@@ -1,3 +1,10 @@
+Thu Feb  5 12:58:14 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html:
+	* CIDLC/README.html:
+	 
+	  Updated all URLs to point to the 'central location'.
+
 Wed Feb  4 14:58:05 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* ./CIDLC/CIDLC.mpc:
