@@ -35,7 +35,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
     length = ACE_OS::strlen (s);
   else
     length = 0;
-
+  
   this->set (s, length, release);
 }
 
@@ -209,29 +209,16 @@ ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator==");
 
-  return this->len_ == s.len_
-    && ACE_OS::strncmp (this->rep_, s.rep_, this->len_) == 0;
+  return compare(s) == 0;
 }
 
 // Less than comparison operator.
 
-template <class CHAR> ACE_INLINE int
+template <class CHAR> ACE_INLINE int 
 ACE_String_Base<CHAR>::operator < (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator <");
-
-  size_t smaller_length = 0;
-  if (this->len_ < s.len_)
-    smaller_length = this->len_;
-  else
-    smaller_length = s.len_;
-
-  if (this->rep_ && s.rep_)
-    return ACE_OS::strncmp (this->rep_, s.rep_, smaller_length) < 0;
-  else if (s.rep_) 
-    return 1;
-  else 
-    return 0;
+  return compare(s) < 0;
 }
 
 // Greater than comparison operator.
@@ -240,19 +227,7 @@ template <class CHAR> ACE_INLINE int
 ACE_String_Base<CHAR>::operator > (const ACE_String_Base &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator >");
-  size_t smaller_length = 0;
-
-  if (this->len_ < s.len_)
-    smaller_length = this->len_;
-  else 
-    smaller_length = s.len_;
-
-  if (this->rep_ && s.rep_)
-    return ACE_OS::strncmp (this->rep_, s.rep_, smaller_length) > 0;
-  else if (this->rep_)
-    return 1;
-  else 
-    return 0;
+  return compare(s) > 0;
 }
 
 
@@ -270,28 +245,18 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::compare");
 
-  // We can't just pass both strings to strncmp, since they are not
-  // guaranteed to be null-terminated.
-
   // Pick smaller of the two lengths and perform the comparison.
-  size_t smaller_length = 0;
+  size_t smaller_length = ace_min(this->len_,s.len_);
 
-  if (this->len_ < s.len_)
-    smaller_length = this->len_;
-  else 
-    smaller_length = s.len_;
+  int result = ACE_OS::memcmp (this->rep_,
+                               s.rep_,
+                               smaller_length);
 
-  int result = ACE_OS::strncmp (this->rep_,
-                                s.rep_,
-                                smaller_length);
-
-  if (result != 0 || s.len_ == this->len_)
-    return result;
-  else if (this->len_ > s.len_)
-    // we need to differentiate based on length
-    return (this->rep_[smaller_length] - '\0');
-  else
-    return ('\0' - s.rep_[smaller_length]);
+  if (!result)
+    {
+      result = this->len_ - s.len_;
+    }
+  return result;
 }
 
 template <class CHAR> ACE_INLINE ssize_t
