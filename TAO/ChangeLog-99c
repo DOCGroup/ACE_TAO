@@ -1,11 +1,11 @@
 Thu Jul 29 22:00:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	* tao/Wait_Strategy.cpp:
-	  Fixed [BUGID:173] the dead-lock in the leader follower set. The
-	  problem is explained in the following comment:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/Wait_Strategy.cpp:
+          Fixed [BUGID:173] the dead-lock in the leader follower set. The
+          problem is explained in the following comment:
           //   Assume that we are the only follower, another thread is
           //   the leader and it completes its work, it sends us the
           //   signal and removes us from the set.
@@ -14,95 +14,95 @@ Thu Jul 29 22:00:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           //   the condition variable and go into the loop again.
           //   But now the follower set is empty and nobody is ever
           //   going to wake us up, dead-locking the application.
-	  the solution was to add the follower to the set after returning
-	  from the condition variable wait.
+          the solution was to add the follower to the set after returning
+          from the condition variable wait.
 
 Thu Jul 29 20:47:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* examples/Makefile:
-	* examples/POA/Makefile:
-	* orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/tests/Makefile:
-	* performance-tests/Cubit/TAO/Makefile:
-	* tao/Makefile:
-	* tests/Makefile:
+        * examples/Makefile:
+        * examples/POA/Makefile:
+        * orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/Makefile:
+        * performance-tests/Cubit/TAO/Makefile:
+        * tao/Makefile:
+        * tests/Makefile:
 
-	  When compiling with minimum CORBA support, disable certain ORB
- 	  services, examples and tests that rely on CORBA features that
- 	  are not supported in the minimum CORBA specification.
+          When compiling with minimum CORBA support, disable certain ORB
+          services, examples and tests that rely on CORBA features that
+          are not supported in the minimum CORBA specification.
 
 Thu Jul 29 19:11:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (create_lock):
+        * tao/Object_Adapter.cpp (create_lock):
 
-	  Fixed unused argument warnings in single-threaded build.
+          Fixed unused argument warnings in single-threaded build.
 
 Thu Jul 29 17:22:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ORB.{h,cpp}:
+        * tao/ORB.{h,cpp}:
 
-	  Moved CORBA_ORB::perform_work() and CORBA_ORB::work_pending()
-	  outside of the !TAO_HAS_MINIMUM_CORBA code block.  This change
-	  is similar to the change we made for shutdown because we (Irfan) 
-	  feel these methods are too important.
+          Moved CORBA_ORB::perform_work() and CORBA_ORB::work_pending()
+          outside of the !TAO_HAS_MINIMUM_CORBA code block.  This change
+          is similar to the change we made for shutdown because we (Irfan)
+          feel these methods are too important.
 
 Thu Jul 29 19:14:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tao/Stub.cpp:
-	  Added code to do_static_call and do_dynamic_call to
-	  plug memory leaks of the 'in' part of inout
-	  parameters.
+        * TAO/tao/Stub.cpp:
+          Added code to do_static_call and do_dynamic_call to
+          plug memory leaks of the 'in' part of inout
+          parameters.
 
-	* TAO/tests/Param_Test/bd_string.cpp:
-	  Cosmetic changes.
+        * TAO/tests/Param_Test/bd_string.cpp:
+          Cosmetic changes.
 
-	* TAO/tests/Param_Test/ub_objref_seq.cpp:
-	  Test code was causing leak in SII and DII tests.
+        * TAO/tests/Param_Test/ub_objref_seq.cpp:
+          Test code was causing leak in SII and DII tests.
 
 Thu Jul 29 19:10:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
-	  Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX, thanks to Ossama
-	  for pointing this out.
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+          Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX, thanks to Ossama
+          for pointing this out.
 
 Thu Jul 29 17:27:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.cpp (work_pending): Forward the work_pending() method to
-	  the Reactor's work_pending() method.  Thanks to Irfan for
- 	  pointing this out.
+        * tao/ORB.cpp (work_pending): Forward the work_pending() method to
+          the Reactor's work_pending() method.  Thanks to Irfan for
+          pointing this out.
 
 Thu Jul 29 16:16:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Connect.h:
-	* tao/IIOP_Connect.cpp:
-	* tao/UIOP_Connect.h:
-	* tao/UIOP_Connect.cpp:
-	  Added reference counting to the server-side Svc_Handlers, this
-	  fixes the problem reported in [BUGID:172]
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Connect.cpp:
+        * tao/UIOP_Connect.h:
+        * tao/UIOP_Connect.cpp:
+          Added reference counting to the server-side Svc_Handlers, this
+          fixes the problem reported in [BUGID:172]
 
-	* tests/Faults/Makefile:
-	* tests/Faults/client.cpp:
-	* tests/Faults/middle.cpp:
-	* tests/Faults/run_test.pl:
-	* tests/Faults/server.cpp:
-	* tests/Faults/test_i.h:
-	* tests/Faults/test_i.i:
-	* tests/Faults/test_i.cpp:
-	  Added new scenario to the test to check that the server does not 
-	  crash if the client dies before the server can send back the
-	  Reply. This was specially problematic if the server used the
-	  Reactor in the process, because it would call handle_close()
-	  Thanks to Geisler Andreas <Andreas.Geisler@erls.siemens.de> for
-	  pointing out this problem and breaking through our thick skulls
-	  with it.
+        * tests/Faults/Makefile:
+        * tests/Faults/client.cpp:
+        * tests/Faults/middle.cpp:
+        * tests/Faults/run_test.pl:
+        * tests/Faults/server.cpp:
+        * tests/Faults/test_i.h:
+        * tests/Faults/test_i.i:
+        * tests/Faults/test_i.cpp:
+          Added new scenario to the test to check that the server does not
+          crash if the client dies before the server can send back the
+          Reply. This was specially problematic if the server used the
+          Reactor in the process, because it would call handle_close()
+          Thanks to Geisler Andreas <Andreas.Geisler@erls.siemens.de> for
+          pointing out this problem and breaking through our thick skulls
+          with it.
 
 Thu Jul 29 14:54:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Event_Comm/Event_Comm_i.cpp:
-	  Fixed warnings about unused variables on platforms that do not
-	  defined ACE_HAS_REGEX
+        * examples/Event_Comm/Event_Comm_i.cpp:
+          Fixed warnings about unused variables on platforms that do not
+          defined ACE_HAS_REGEX
 
 Thu Jul 29 14:09:11 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -110,21 +110,21 @@ Thu Jul 29 14:09:11 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jul 29 13:40:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/run_test.pl:
-	  More fine tuning on the scripts so they won't give false
-	  negatives on slow machines.
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+          More fine tuning on the scripts so they won't give false
+          negatives on slow machines.
 
 Thu Jul 29 12:12:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
-	  Fix to CDR insertion operator for arrays containing typedef'd
-	  array on HP/UX-aCC.
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+          Fix to CDR insertion operator for arrays containing typedef'd
+          array on HP/UX-aCC.
 
 Thu Jul 29 11:21:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/POA/Forwarding/run_test.pl:
-	  Increased the timeout values because it was giving spurious
-	  timeouts on IRIX.
+        * examples/POA/Forwarding/run_test.pl:
+          Increased the timeout values because it was giving spurious
+          timeouts on IRIX.
 
 Thu Jul 29 02:51:45 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -151,164 +151,164 @@ Thu Jul 29 02:51:45 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Jul 29 01:06:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
-	  Added accessors for the SOCK_Dgram of both UDP and Mcast event
- 	  handlers.  Thanks to Dave Meyer <dmeyer@std.saic.com> for
-	  contributing this.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+          Added accessors for the SOCK_Dgram of both UDP and Mcast event
+          handlers.  Thanks to Dave Meyer <dmeyer@std.saic.com> for
+          contributing this.
 
 Wed Jul 28 22:07:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA_CORBA.h (Policy): We always inherit from ServantBase
-	  now.  Previously, we were inheriting from LocalServantBase if we
-	  had locality constraint policies, otherwise we inherit from
-	  ServantBase.  The difference between LocalServantBase and
-	  ServantBase is: (a) _dispatch() always returns an exception, and
-	  (b) create_stub() does not register with the POA but simply
-	  creates a fake stub.
+        * tao/POA_CORBA.h (Policy): We always inherit from ServantBase
+          now.  Previously, we were inheriting from LocalServantBase if we
+          had locality constraint policies, otherwise we inherit from
+          ServantBase.  The difference between LocalServantBase and
+          ServantBase is: (a) _dispatch() always returns an exception, and
+          (b) create_stub() does not register with the POA but simply
+          creates a fake stub.
 
-	  The problem with the above was that the POA policies were
-	  changed to make use of the POA registration and reference
-	  counting scheme.  However, when locality constrained, we never
-	  register with the POA, and thus breaking the code.
+          The problem with the above was that the POA policies were
+          changed to make use of the POA registration and reference
+          counting scheme.  However, when locality constrained, we never
+          register with the POA, and thus breaking the code.
 
-	  The fix was to always inherit from ServantBase.  Even when
-	  locality constrained, we register with the POA (not because of
-	  remote calls, but because of the reference counting).  We
-	  overwrite _dispatch() to throw an exception.
+          The fix was to always inherit from ServantBase.  Even when
+          locality constrained, we register with the POA (not because of
+          remote calls, but because of the reference counting).  We
+          overwrite _dispatch() to throw an exception.
 
 Wed Jul 28 22:09:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Simple/bank/server.cpp: Fixed a typo where
-	  #pragma instantiate Server<Account_Manager_i> should be #pragma
- 	  instantiate Server<AccountManager_i>.  Thanks to Bill Tovrea
- 	  <gwtovrea@west.raytheon.com> for reporting this.
+        * examples/Simple/bank/server.cpp: Fixed a typo where
+          #pragma instantiate Server<Account_Manager_i> should be #pragma
+          instantiate Server<AccountManager_i>.  Thanks to Bill Tovrea
+          <gwtovrea@west.raytheon.com> for reporting this.
 
 Wed Jul 28 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/DOVEBrowser/NS_Resolve.java: fixed name
-	  service reply handling, according to new reply format.  Thanks
-	  to Rebecca Sanford <Rebecca.A.Sanford@gd-is.com> for reporting
-	  the problem and for sending in the fix.
+          service reply handling, according to new reply format.  Thanks
+          to Rebecca Sanford <Rebecca.A.Sanford@gd-is.com> for reporting
+          the problem and for sending in the fix.
 
         * examples/Simulator/DOVEBrowser/PushConsumer.java: added missing
-	  catch blocks for new RtecScheduler INTERNAL and
-	  SYNCHRONIZATION_FAILURE exceptions.
+          catch blocks for new RtecScheduler INTERNAL and
+          SYNCHRONIZATION_FAILURE exceptions.
 
         * examples/Simulator/DOVEBrowser/make.bat: added commands to copy
-	  over TimeBase.pidl file with other IDL files.
+          over TimeBase.pidl file with other IDL files.
 
         * examples/Simulator/Event_Supplier/DualEC_Sup.dsp,
-	  examples/Simulator/Event_Supplier/Event_Sup.dsp,
-	  examples/Simulator/Event_Supplier/Logging_Sup.dsp: added
-	  orbsvcs/orbsvcs to preprocessor include paths, so generated
-	  headers will compile.
+          examples/Simulator/Event_Supplier/Event_Sup.dsp,
+          examples/Simulator/Event_Supplier/Logging_Sup.dsp: added
+          orbsvcs/orbsvcs to preprocessor include paths, so generated
+          headers will compile.
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp: added missing
-	  "o:" to get opts string (was not parsing for -o option).
+          "o:" to get opts string (was not parsing for -o option).
 
 Wed Jul 28 19:01:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Makefile (ORB_CORE_FILES):
+        * tao/Makefile (ORB_CORE_FILES):
 
-	  ObjectIDList was incorrectly removed from the list of sources to
-	  be built when building with minimum CORBA support.
+          ObjectIDList was incorrectly removed from the list of sources to
+          be built when building with minimum CORBA support.
 
-	* tao/TAO_Internal.cpp:
-	* tao/UIOP_Acceptor.cpp:
-	* tao/UIOP_Acceptor.h:
-	* tao/UIOP_Connect.cpp:
-	* tao/UIOP_Connect.h:
-	* tao/UIOP_Connect.i:
-	* tao/UIOP_Connector.cpp:
-	* tao/UIOP_Connector.h:
-	* tao/UIOP_Factory.cpp:
-	* tao/UIOP_Factory.h:
-	* tao/UIOP_Profile.cpp:
-	* tao/UIOP_Profile.h:
-	* tao/UIOP_Profile.i:
-	* tao/UIOP_Transport.cpp:
-	* tao/UIOP_Transport.h:
-	* tao/default_resource.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/UIOP_Acceptor.cpp:
+        * tao/UIOP_Acceptor.h:
+        * tao/UIOP_Connect.cpp:
+        * tao/UIOP_Connect.h:
+        * tao/UIOP_Connect.i:
+        * tao/UIOP_Connector.cpp:
+        * tao/UIOP_Connector.h:
+        * tao/UIOP_Factory.cpp:
+        * tao/UIOP_Factory.h:
+        * tao/UIOP_Profile.cpp:
+        * tao/UIOP_Profile.h:
+        * tao/UIOP_Profile.i:
+        * tao/UIOP_Transport.cpp:
+        * tao/UIOP_Transport.h:
+        * tao/default_resource.cpp:
 
-	  By default, only compile support for UIOP when TAO_HAS_UIOP is
-	  defined.  This change will allow the user to explicitly compile
-	  in support for UIOP even if TAO_HAS_MINIMUM_CORBA is defined.
+          By default, only compile support for UIOP when TAO_HAS_UIOP is
+          defined.  This change will allow the user to explicitly compile
+          in support for UIOP even if TAO_HAS_MINIMUM_CORBA is defined.
 
-	* tao/Object_Adapter.cpp:
-	* tao/POA.cpp:
+        * tao/Object_Adapter.cpp:
+        * tao/POA.cpp:
 
-	  Fixed unused argument warnings that occurred when
-	  TAO_HAS_MINIMUM_CORBA was defined.
+          Fixed unused argument warnings that occurred when
+          TAO_HAS_MINIMUM_CORBA was defined.
 
-	* tao/IORManipulation.cpp:
+        * tao/IORManipulation.cpp:
 
-	  Fixed warnings from gcc 2.95 that complained about choosing the
-	  best string conversion operator.
+          Fixed warnings from gcc 2.95 that complained about choosing the
+          best string conversion operator.
 
 Wed Jul 28 18:28:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/ub_string.cpp:
-	* TAO/tests/Param_Test/bd_string.cpp:
-	  Plugged some memroy leaks reported by Purify.
+        * TAO/tests/Param_Test/ub_string.cpp:
+        * TAO/tests/Param_Test/bd_string.cpp:
+          Plugged some memroy leaks reported by Purify.
 
-	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
-	  Fixed the last problem with generated code in IDL_Test,
-	  related to the T_var and T_forany const [] operator, which
-	  wasn't compiling for multidimensional arrays.
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+          Fixed the last problem with generated code in IDL_Test,
+          related to the T_var and T_forany const [] operator, which
+          wasn't compiling for multidimensional arrays.
 
-	* TAO/tests/IDL_Test/README:
-	  Added more info about the IDL compiler warning output when
-	  a module is reopened and the platform lacks namespaces.
+        * TAO/tests/IDL_Test/README:
+          Added more info about the IDL compiler warning output when
+          a module is reopened and the platform lacks namespaces.
 
 Wed Jul 28 15:47:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h: Added new macro TAO_HAS_UIOP. If the user has not
-	  already specified TAO_HAS_UIOP, and the platform supports UNIX
-	  domain sockets, and minimum CORBA is not defined, we turn on
-	  TAO_HAS_UIOP by default.  Note that even with minimum CORBA, the
-	  user can still get UIOP support simply be defining TAO_HAS_UIOP
-	  before reaching this code.
+        * tao/orbconf.h: Added new macro TAO_HAS_UIOP. If the user has not
+          already specified TAO_HAS_UIOP, and the platform supports UNIX
+          domain sockets, and minimum CORBA is not defined, we turn on
+          TAO_HAS_UIOP by default.  Note that even with minimum CORBA, the
+          user can still get UIOP support simply be defining TAO_HAS_UIOP
+          before reaching this code.
 
 Wed Jul 28 14:23:29 1999  Fred Kuhns <fredk@cs.wustl.edu>
 
-	* tao/IORManipulation.cpp:
-	Fixed a problem with how TAO_Stub creator was called.  It was
-	originally TAO_Stub ((Stream_var)type_id, ...).  However, this
-	resulted in both the stub object and the type_id obj owning the
-	same string.  The change is to first perform a string_dup () then
-	give the string to the stub object.  Thanks to Aniruddha Gokhale
-	<gokhale@research.bell-labs.com> for id'ing the bug and providing
-	a fix.
+        * tao/IORManipulation.cpp:
+        Fixed a problem with how TAO_Stub creator was called.  It was
+        originally TAO_Stub ((Stream_var)type_id, ...).  However, this
+        resulted in both the stub object and the type_id obj owning the
+        same string.  The change is to first perform a string_dup () then
+        give the string to the stub object.  Thanks to Aniruddha Gokhale
+        <gokhale@research.bell-labs.com> for id'ing the bug and providing
+        a fix.
 
 Wed Jul 28 13:53:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/OctetSeq/OctetSeq.cpp:
-	  The test was mistakenly not using the octet sequence
-	  optimizations.
+        * tests/OctetSeq/OctetSeq.cpp:
+          The test was mistakenly not using the octet sequence
+          optimizations.
 
-	* tao/IIOP_Connect.cpp:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Transport.cpp:
-	* tao/UIOP_Connect.cpp:
-	* tao/UIOP_Transport.cpp:
-	  Added a bunch of comments about code that could be refactored
-	  and things that were not very clear, thanks to James Megquier
-	  <jmegq@bbn.com> for helping out with this.
+        * tao/IIOP_Connect.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/UIOP_Connect.cpp:
+        * tao/UIOP_Transport.cpp:
+          Added a bunch of comments about code that could be refactored
+          and things that were not very clear, thanks to James Megquier
+          <jmegq@bbn.com> for helping out with this.
 
 Wed Jul 28 13:44:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Makefile:
-	* orbsvcs/examples/RtEC/Schedule/README:
-	* orbsvcs/examples/RtEC/Schedule/Makefile:
-	* orbsvcs/examples/RtEC/Schedule/Consumer.h:
-	* orbsvcs/examples/RtEC/Schedule/Consumer.cpp:
-	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
-	* orbsvcs/examples/RtEC/Schedule/Supplier.h:
-	* orbsvcs/examples/RtEC/Schedule/Supplier.cpp:
-	  New example that shows how to use the event service and the
-	  scheduling service to generate (and use) schedules.
+        * orbsvcs/examples/RtEC/Makefile:
+        * orbsvcs/examples/RtEC/Schedule/README:
+        * orbsvcs/examples/RtEC/Schedule/Makefile:
+        * orbsvcs/examples/RtEC/Schedule/Consumer.h:
+        * orbsvcs/examples/RtEC/Schedule/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Schedule.h:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Supplier.h:
+        * orbsvcs/examples/RtEC/Schedule/Supplier.cpp:
+          New example that shows how to use the event service and the
+          scheduling service to generate (and use) schedules.
 
 Wed Jul 28 13:09:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
