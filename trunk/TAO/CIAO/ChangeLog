@@ -1,3 +1,57 @@
+Wed Feb  4 13:58:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/CCM_Base.idl:
+        * ciao/CCM_Container.idl:
+        * ciao/CCM_Core.mpc:
+        * ciao/CCM_Deployment.idl:
+        * examples/Hello/Hello_Base/Hello_Base.idl:
+        * examples/OEP/BasicSP/BasicSP.idl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/Display/HUDisplay.idl:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * performance-tests/Benchmark/server.cpp:
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
+        * tests/temp/assembly/client.cpp:
+        * tests/temp/assembly/control.idl:
+        * tests/temp/assembly/control.mpc:
+        * tests/temp/assembly/server.cpp:
+        * tools/Assembly_Deployer/Assembly_Deployer.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.h:
+        * tools/Assembly_Deployer/Assembly_Manager.cpp:
+        * tools/Assembly_Deployer/Assembly_Service.idl:
+        * tools/Assembly_Deployer/Assembly_Visitors.h:
+        * tools/Assembly_Deployer/Deployment_Configuration.h:
+        * tools/ComponentServer/ComponentServer.cpp:
+        * tools/ComponentServer/ComponentServer_test_client.cpp:
+        * tools/Daemon/CIAO_Daemon.cpp:
+        * tools/Daemon/Daemon_Commands.cpp:
+        * tools/Daemon/CIAO_Daemon.cpp:
+        * tools/Daemon/Daemon_Commands.cpp:
+        * tools/ServerActivator/ServerActivator.cpp:
+        * tools/ServerActivator/ServerActivator_test_client.cpp:
+        * tools/XML_Helpers/XMLHelpers.mpc:
+        * tools/XML_Helpers/XML_Utils.h:
+
+		- Removed all include paths except TAO_ROOT and CIAO_ROOT
+		  for C++ and IDL compilers, from MPC files.
+
+		- Modified includes in source and header files as necessary,
+		  per the above changes.
+
+		- Added missing ACE_ROOT/ace includes.
+
+		- Made other modifications as necessary to MPC files to
+		  eliminate build errors.
+
 Mon Feb  2 20:07:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/XML_Helpers/Makefile.XML_Helpers:

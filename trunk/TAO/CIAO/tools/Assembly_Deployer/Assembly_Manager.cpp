@@ -9,8 +9,8 @@
 
 #include "Assembly_Impl.h"
 #include "Assembly_Service_Impl.h"
-#include "CIAO_ServersC.h"
-#include "Server_init.h"
+#include "ciao/CIAO_ServersC.h"
+#include "ciao/Server_init.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"

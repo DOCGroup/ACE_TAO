@@ -1,8 +1,7 @@
 // $Id$
 
 #include "Assembly_Impl.h"
-//#include "ACtive_Objref_Map.h"
-#include "Cookies.h"
+#include "ciao/Cookies.h"
 #include "../XML_Helpers/Assembly_Spec.h"
 #include "../XML_Helpers/XML_Utils.h"
 

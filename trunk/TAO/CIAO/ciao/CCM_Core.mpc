@@ -3,7 +3,7 @@
 
 project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   sharedname  = CIAO_Client
-  idlflags  += -I $(TAO_ROOT) -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
+  idlflags  += -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
 
   IDL_Files {
@@ -31,8 +31,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
   after += CIAO_Client
   sharedname  = CIAO_Container
   libs       += CIAO_Client
-  includes   += $(TAO_ROOT)/orbsvcs/orbsvcs
-  idlflags  += -I$(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Container_Export.h -Wb,export_macro=CIAO_CONTAINER_Export
+  idlflags  += -Wb,export_include=CIAO_Container_Export.h -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
 
   IDL_Files {
@@ -58,8 +57,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
   after += CIAO_Container
   sharedname  = CIAO_Server
   libs       +=  CIAO_Client
-  includes   += $(TAO_ROOT)/orbsvcs/orbsvcs
-  idlflags  += -I$(TAO_ROOT)/orbsvcs/orbsvcs -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
+  idlflags  += -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
 
   dynamicflags    = CIAO_SERVER_BUILD_DLL
 

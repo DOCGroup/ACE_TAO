@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CIAO_common.h"
+#include "ciao/CIAO_common.h"
 #include "BMClosedED_exec.h"
 
 #define DISPLACEMENT 256

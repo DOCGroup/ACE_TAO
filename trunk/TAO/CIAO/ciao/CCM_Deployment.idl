@@ -3,7 +3,7 @@
 /**
  * @@ Compile this file with:
  *
- *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *     tao_idl -I ../.. \
  *          -Wb,export_macro=CIAO_Export \
  *          -Wb,export_include=CIAO_export.h \
  *          -Wb,pre_include="ace/pre.h" \
