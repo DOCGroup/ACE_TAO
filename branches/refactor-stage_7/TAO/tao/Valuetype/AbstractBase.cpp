@@ -106,7 +106,7 @@ CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
       obj->_add_ref ();
     }
 
-  if (!CORBA::is_nil (obj->equivalent_obj_))
+  if (!CORBA::is_nil (obj->equivalent_obj_.in ()))
     {
       obj->equivalent_obj_->_add_ref ();
     }
@@ -162,8 +162,8 @@ CORBA::AbstractBase::_tao_any_destructor (void *x)
 CORBA::Object_ptr
 CORBA::AbstractBase::_to_object (void)
 {
-  if (!CORBA::is_nil (this->equivalent_obj_))
-    return CORBA::Object::_duplicate (this->equivalent_obj_);
+  if (!CORBA::is_nil (this->equivalent_obj_.in ()))
+    return CORBA::Object::_duplicate (this->equivalent_obj_.in ());
 
   if (this->concrete_stubobj_ == 0)
     {
@@ -420,10 +420,10 @@ CORBA::AbstractBase::equivalent_objref (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
+#if 0
 template class TAO::Any_Impl_T<CORBA::AbstractBase>;
 template class TAO::Any_Impl_T<CORBA::ValueBase>;
-
+#endif
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
