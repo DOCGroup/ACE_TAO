@@ -72,6 +72,7 @@ Service::handle_timeout (const ACE_Time_Value &tv,
 {
   ACE_UNUSED_ARG (tv);
   MessageBeep (MB_OK);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T (%t): Beep...\n")));
   return 0;
 }
 

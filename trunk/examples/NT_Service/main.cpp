@@ -188,13 +188,23 @@ Process::run (int argc, ACE_TCHAR* argv[])
     }
   else
     {
+      ofstream *output_file = new ofstream("ntsvc.log", ios::out);
+      if (output_file && output_file->rdstate() == ios::goodbit) 
+        ACE_LOG_MSG->msg_ostream(output_file, 1);
+      ACE_LOG_MSG->open(argv[0],
+                        ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM,
+                        0);
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T (%t): Starting service.\n")));
+
       ACE_NT_SERVICE_RUN (Beeper,
                           SERVICE::instance (),
                           ret);
       if (ret == 0)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "Couldn't start service"));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("Couldn't start service")));
+      else
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T (%t): Service stopped.\n")));
     }
 
   return 0;
