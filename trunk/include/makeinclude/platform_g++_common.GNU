@@ -9,15 +9,19 @@ CXX_VERSION := $(shell $(CXX) -dumpversion)
 #
 ifeq ($(templates),)
   ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
-    templates = "automatic"
+    templates = automatic
   else
     ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
-      templates = "automatic"
+      templates = automatic
     else
       ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
-        templates = "automatic"
+        templates = automatic
       else
-        templates = "explicit"
+        ifeq (egcs, $(findstring egcs, $(CXX_VERSION)))
+          templates = explicit
+        else
+          templates = explicit
+        endif
       endif
     endif
   endif
@@ -25,7 +29,7 @@ endif
 
 # Turn on the proper flags for explicit template instantiation.
 #
-ifeq ("$(templates)","explicit")
+ifeq ($(templates),explicit)
   ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
     TEMPLATES_FLAG=-fno-implicit-templates
   endif

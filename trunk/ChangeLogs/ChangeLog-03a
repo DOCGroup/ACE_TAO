@@ -1,3 +1,29 @@
+Tue Apr  9 00:52:42 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h (ACE_TEMPLATES_REQUIRE_SOURCE):
+
+          Moved this from within a guard to enable it unconditionally.
+
+        * ace/Obstack_T.cpp:
+
+          Added guards to make it consistent with other usage of _T.cpp
+          files.
+
+        * tests/test_config.h:
+
+          Reverted the change Sun Apr  7 18:04:56 2002  Krishnakumar B
+          <kitty@cs.wustl.edu>. The original code was right.
+
+        * include/makeinclude/platform_g++_common.GNU:
+
+          Cosmetic fixes. Explicitly check for egcs. It dumps out version
+          information in a non-standard format confusing the make
+          conditionals. Should fix the RedHat Static build.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Cosmetic fixes to fix build bustage.
+
 Tue Apr  9 00:05:37 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Logging_Strategy.h (ACE_Logging_Strategy): Changed "private" to
