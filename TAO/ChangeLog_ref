@@ -1,3 +1,11 @@
+Tue Aug 12 13:45:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Fixed bug in code generation where the fully scoped name of
+          the collocated proxy class wasn't always getting generated
+          where necessary.
+
 Tue Aug 12 13:25:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TOA_IDL/be/be_sequence.cpp:
