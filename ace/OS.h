@@ -342,7 +342,7 @@
 #define ACE_NON_BLOCKING_BUG_DELAY 35000
 #endif /* ACE_NON_BLOCKING_BUG_DELAY */
 
-#if defined (_DEBUG)
+#if defined (_DEBUG) && !defined (ACE_HAS_WINCE)
 class ACE_No_Heap_Check
 {
 public:
@@ -923,7 +923,9 @@ extern "C" pthread_t pthread_self (void);
 #define ACE_TRACE(X) ACE_Trace ____ (X, __LINE__, __FILE__)
 #endif /* ACE_NTRACE */
 
+#if !defined (ACE_HAS_WINCE)
 #include /**/ <time.h>
+#endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_NEEDS_SYSTIME_H)
 // Some platforms may need to include this, but I suspect that most
@@ -1413,7 +1415,7 @@ struct strrecvfd {};
 #if defined (ACE_HAS_UNICODE)
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #    include /**/ <cwchar>
-#  elif !defined (__BORLANDC__) /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#  elif !defined (__BORLANDC__) && !defined (ACE_HAS_WINCE) /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #    include /**/ <wchar.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
@@ -1525,6 +1527,9 @@ struct cancel_state
   // e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
 };
 
+#if defined (ACE_HAS_WINCE)
+#include /**/ <types.h>
+#else /* ! ACE_HAS_WINCE */
 #if defined (ACE_LACKS_SYS_TYPES_H)
   typedef unsigned char u_char;
   typedef unsigned short        u_short;
@@ -1540,6 +1545,7 @@ struct cancel_state
 #endif  /* ACE_LACKS_SYS_TYPES_H */
 
 #include /**/ <sys/stat.h>
+#endif /*ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_THREADS)
 
@@ -2128,16 +2134,18 @@ protected:
 #endif /* ACE_HAS_THREADS */
 
 // Standard C Library includes
+#if !defined (ACE_HAS_WINCE)
 # include /**/ <assert.h>
+# include /**/ <stdio.h>
+# include /**/ <new.h>
+# include /**/ <signal.h>
+# include /**/ <errno.h>
+#endif /* ACE_HAS_WINCE *.
 # include /**/ <limits.h>
 // NOTE: stdarg.h must be #included before stdio.h on LynxOS.
 # include /**/ <stdarg.h>
-# include /**/ <stdio.h>
-# include /**/ <new.h>
 # include /**/ <ctype.h>
-# include /**/ <signal.h>
 # include /**/ <string.h>
-# include /**/ <errno.h>
 # include /**/ <stdlib.h>
 # include /**/ <fcntl.h>
 # include /**/ <float.h>
@@ -2151,6 +2159,10 @@ protected:
 // Else they will get all the stream header files
 #include "ace/streams.h"
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
+#if !defined (ACE_HAS_WINCE)
+#include /**/ <fcntl.h>
+#endif /* ACE_HAS_WINCE */
 
 // This must come after signal.h is #included.
 #if defined (SCO)
@@ -2323,7 +2335,9 @@ struct utsname
 #endif /* !STRICT */
 #endif /* ACE_HAS_STRICT */
 
+#if !defined (ACE_HAS_WINCE)
 #include /**/ <sys/timeb.h>
+#endif /* ACE_HAS_WINCE */
 
 // The following defines are used by the ACE Name Server...
 #if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
@@ -2493,10 +2507,12 @@ PAGE_NOCACHE  */
 // #define ENAMETOOLONG            WSAENAMETOOLONG
 // #define ENOTEMPTY               WSAENOTEMPTY
 
+#if !defined (ACE_HAS_WINCE)
 #include /**/ <time.h>
 #include /**/ <direct.h>
 #include /**/ <process.h>
 #include /**/ <io.h>
+#endif /* ACE_HAS_WINCE */
 
 #if defined (__BORLANDC__)
 #include <fcntl.h>
