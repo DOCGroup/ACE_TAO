@@ -2214,6 +2214,10 @@ protected:
 # include /**/ <stdlib.h>
 # include /**/ <float.h>
 
+#if defined (ghs) && defined (__Chorus)
+# include /**/ <stdfileio.h>
+#endif /* ghs && __Chorus */
+
 #if defined (ACE_HAS_WINCE)
 #define islower iswlower
 #define isdigit iswdigit
