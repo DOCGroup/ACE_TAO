@@ -50,10 +50,10 @@
 #define ACE_CHORUS_DEFAULT_MIN_STACK_SIZE 0x2000
 
 // Chorus cannot grow shared memory, so this is the default size for a local name space
-#define ACE_CHORUS_LOCAL_NAME_SPACE_T_SIZE 128000 
+#define ACE_CHORUS_LOCAL_NAME_SPACE_T_SIZE 128000
 
 // Used in OS.i to map an actor id into a KnCap.
-#define ACE_CHORUS_MAX_ACTORS 64 
+#define ACE_CHORUS_MAX_ACTORS 64
 
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_ACCESS
@@ -118,6 +118,7 @@
 // And they're even POSIX pthreads
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
+#define ACE_HAS_PTHREAD_PROCESS_ENUM
 #define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_LACKS_PTHREAD_CLEANUP
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
