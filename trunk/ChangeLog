@@ -1,3 +1,17 @@
+Sun Jun 27 21:42:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Misc/test_XtReactor1.cpp:
+	* examples/Misc/test_XtReactor2.cpp:
+
+	  Fixed compile-time errors due to missing headers.
+
+	  Fixed compile-time warning about deprecated conversion from a
+	  string constant to char *.
+
+	* tests/TkReactor_Test.cpp:
+
+	  Fixed compile-time errors due to missing headers.
+
 Sun Jun 27 10:22:03 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Logging_Strategy.h: Clarified the use of the ACE_Reactor.

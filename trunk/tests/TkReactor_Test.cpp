@@ -50,6 +50,7 @@ int run_main (int, ACE_TCHAR*[])
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TkReactor.h"
+#include "ace/OS_NS_unistd.h"
 
 #include <tcl.h>
 #include <tk.h>
