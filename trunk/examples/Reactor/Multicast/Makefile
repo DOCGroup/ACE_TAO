@@ -1,5 +1,6 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#
+# $Id$
 #
 #	Makefile for the Reactor multicast tests
 #----------------------------------------------------------------------------
@@ -15,10 +16,6 @@ FILES	= Log_Wrapper
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
-
-LDLIBS	= $(addprefix $(VSHDIR),$(SHOBJ))
- 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VBIN)
 
