@@ -41,7 +41,8 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *,
 Client::Client (void)
   :client_mmdevice_ (&endpoint_strategy_),
    count_ (0),
-   address_ (ACE_OS::strdup ("224.9.9.2:12345")),
+   address_ (0),
+   peer_addr_str_ (0),
    fp_ (0),
    protocol_ (ACE_OS::strdup ("UDP")),
    frame_rate_ (30)
@@ -61,7 +62,7 @@ Client::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc,argv,"f:a:p:r:sd");
+  ACE_Get_Opt opts (argc,argv,"f:l:a:p:r:sd");
 
   this->use_sfp_ = 0;
 
@@ -73,8 +74,11 @@ Client::parse_args (int argc,
         case 'f':
           this->filename_ = ACE_OS::strdup (opts.opt_arg ());
           break;
-        case 'a':
+        case 'l':
           this->address_ = ACE_OS::strdup (opts.opt_arg ());
+          break;
+        case 'a':
+          this->peer_addr_str_ = ACE_OS::strdup (opts.opt_arg ());
           break;
         case 'p':
           this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
@@ -182,7 +186,7 @@ Client::init (int argc,
                              "r");
   if (this->fp_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Cannot open output file %s\n",
+                       "Cannot open input file %s\n",
                        this->filename_),
                       -1);
 
@@ -209,8 +213,22 @@ Client::init (int argc,
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
   // Set the address of the ftp client.
-  ACE_INET_Addr addr (this->address_);
-
+  ACE_INET_Addr* addr;
+  if (this->address_ != 0)
+    ACE_NEW_RETURN (addr,
+		    ACE_INET_Addr (this->address_),
+		    -1);
+  else
+    {
+      char buf [BUFSIZ];
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      ACE_NEW_RETURN (addr,
+		      ACE_INET_Addr ("5000",
+				     buf),
+		      -1);
+    }
+		    
   // Initialize the flowname
   ACE_NEW_RETURN (this->flowname_,
                   char [BUFSIZ],
@@ -226,7 +244,25 @@ Client::init (int argc,
                                     "USER_DEFINED",
                                     flow_protocol_str,
                                     this->protocol_,
-                                    &addr);
+                                    addr);
+
+  ACE_INET_Addr* peer_addr;
+  if (this->peer_addr_str_ != 0)
+    ACE_NEW_RETURN (peer_addr,
+		    ACE_INET_Addr (this->peer_addr_str_),
+		    -1);
+  else
+    {
+      char buf [BUFSIZ];
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      ACE_NEW_RETURN (peer_addr,
+		      ACE_INET_Addr ("5050",
+				     buf),
+		      -1);
+    }
+
+  entry.set_peer_addr (peer_addr);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());

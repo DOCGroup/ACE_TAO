@@ -141,6 +141,7 @@ private:
   const char *address_;
   // Address of the ftp client host machine or a multicast address - Default is
   // UDP multicast addess
+  const char *peer_addr_str_;
 
   TAO_Naming_Client my_naming_client_;
   // The Naming Service client.
