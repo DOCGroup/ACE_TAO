@@ -25,7 +25,7 @@ Thu Mar 06 20:29:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  export decl.
 
 	* tools/Daemon/DaemonController.dsp: Added files from the
-	  XML_Helpers directories.
+	  XML_Helpers directories for the added XML handling capability.
 
 	* tools/Daemon/CIAO_Daemon.cpp:
 	* tools/Daemon/Softpkg_Commands.cpp:
