@@ -59,15 +59,49 @@ unlink $iorfile_2;
 
 $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-f $iorfile $extra_args");
 
-ACE::waitforfile ($iorfile_1);
-ACE::waitforfile ($iorfile_2);
+if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile_1>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
 
-$status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $oneway -i $iterations -f $iorfile_1");
-$status  = system ("../Generic_Servant/client$Process::EXE_EXT $extra_args $oneway -i $iterations -f $iorfile_2 -x");
+if (ACE::waitforfile_timed ($iorfile_2, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile_2>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
+
+
+
+$CL_1  = Process::Create ("../Generic_Servant/client$Process::EXE_EXT ",
+			  " $extra_args $oneway -i $iterations -f $iorfile_1");
+$CL_2  = Process::Create ("../Generic_Servant/client$Process::EXE_EXT ",
+			  " $extra_args $oneway -i $iterations -f $iorfile_2 -x");
+
+$client_1 = $CL_1->TimedWait (60);
+if ($client_1 == -1) {
+  print STDERR "ERROR: client 1 timedout\n";
+  $CL_1->Kill (); $CL_1->TimedWait (1);
+}
+
+$client_2 = $CL_2->TimedWait (60);
+if ($client_2 == -1) {
+  print STDERR "ERROR: client 2 timedout\n";
+  $CL_2->Kill (); $CL_2->TimedWait (1);
+}
+
+$server = $SV->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile_1;
 unlink $iorfile_2;
 
-$SV->Wait ();
+if ($server != 0 || $client_1 != 0 || $client_2 != 0) {
+  exit 1;
+}
 
-exit $status;
+exit 0;
+
