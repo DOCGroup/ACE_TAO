@@ -440,6 +440,11 @@ namespace CORBA
      * occurs during initialization or at runtime, a CORBA system
      * exception will be thrown.  <tv> is reduced by the amount of time
      * spent in this call.
+     *
+     * If this function is called with  <tv> value, client threads
+     * making invocations will continue their operations. When the
+     * operation timesout and returns, any invocations showing up on
+     * the server will be buffered by TCP.
      **/
     void run (ACE_Time_Value &tv
               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -453,6 +458,11 @@ namespace CORBA
      * spent in this call.  If <tv> is 0, it means that the timeout is
      * infinite.  If <tv> is ACE_Time_Value::zero, it specifies to poll
      * and does not block.
+     *
+     * If this function is called with  <tv> value, client threads
+     * making invocations will continue their operations. When the
+     * operation timesout and returns, any invocations showing up on
+     * the server will be buffered by TCP.
      **/
     void run (ACE_Time_Value *tv
               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
