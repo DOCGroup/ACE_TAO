@@ -1,3 +1,8 @@
+Tue Aug 04 11:08:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/GenExportH.BAT: Moved it to where it really belong,
+ 	  $ACE_ROOT/bin/.
+
 Mon Aug 3 19:46:55 1998 Jeff Parsons <jp4@cs.wuslt.edu>
 
       * tao_idl/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
