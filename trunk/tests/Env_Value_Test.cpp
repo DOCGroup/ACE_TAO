@@ -97,6 +97,7 @@ main (int argc, char *[])
   template class ACE_Env_Value<int>;
   template class ACE_Env_Value<long>;
   template class ACE_Env_Value<short>;
+  template class ACE_Env_Value<unsigned short>;
   template class ACE_Env_Value<unsigned long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate  ACE_Env_Value<char*>
@@ -104,5 +105,6 @@ main (int argc, char *[])
 # pragma instantiate  ACE_Env_Value<int>
 # pragma instantiate  ACE_Env_Value<long>
 # pragma instantiate  ACE_Env_Value<short>
+# pragma instantiate  ACE_Env_Value<unsigned short>
 # pragma instantiate  ACE_Env_Value<unsigned long>
 #endif
