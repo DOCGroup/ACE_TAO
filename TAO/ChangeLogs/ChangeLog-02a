@@ -1,3 +1,10 @@
+Sun Mar  3 18:18:08 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tao/Makefile:
+	* tests/Makefile:
+	  Undo the changes on the Makefile that cause the conditional
+	  compile of the files depending on Messaging library.
+
 Sun Mar  3 17:51:37 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/DynamicInterface/Makefile:
