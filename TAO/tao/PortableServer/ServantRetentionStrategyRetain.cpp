@@ -157,16 +157,15 @@ namespace TAO
       // raised.
       TAO_Active_Object_Map_Entry *entry = 0;
       PortableServer::Servant servant = 0;
-      int result = -1;
 
-      result =
+      int result =
         active_object_map_->
           find_servant_using_system_id_and_user_id (system_id,
                                                     user_id.in(),
                                                     servant,
                                                     entry);
 
-      if (servant == 0)
+      if (result == -1)
         {
           ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
                             0);
@@ -209,13 +208,12 @@ namespace TAO
       // the Active Object Map, this operation returns the servant
       // associated with that object in the Active Object Map.
       PortableServer::Servant servant = 0;
-      int result = -1;
 
-      result =
+      int result =
         this->active_object_map_->find_servant_using_user_id (id,
                                                               servant);
 
-      if (servant == 0)
+      if (result == -1)
         {
           ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
                             0);
