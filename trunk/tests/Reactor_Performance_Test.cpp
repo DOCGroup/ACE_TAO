@@ -187,8 +187,7 @@ client (void *arg)
       for (i = 0; i < opt_nconnections; i++)
         if (failed_svc_handlers.get ()[i])
           {
-            ACE_INET_Addr failed_addr;
-            writers.get ()[i]->peer ().get_local_addr (failed_addr);
+            ACE_INET_Addr failed_addr = addresses.get()[i];
             ACE_ERROR ((LM_ERROR, "(%t) connection failed to %s, %d\n",
                         failed_addr.get_host_name (),
                         failed_addr.get_port_number ()));
@@ -196,6 +195,8 @@ client (void *arg)
       return 0;
     }
 
+  // If no connections failed (result == 0) then there should be valid
+  // ACE_Svc_handler pointers in each writers[] position.
   // Iterate to send data
   for (int j = 0; j < opt_nloops; j++)
     for (i = 0; i < opt_nconnections; i++)
@@ -235,7 +236,7 @@ create_reactor (void)
 void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  char *reactor_type = 0;
+  const char *reactor_type = 0;
   if (opt_wfmo_reactor)
     reactor_type = "WFMO_Reactor";
   else if (opt_select_reactor)
