@@ -1,0 +1,11 @@
+//$Id$
+
+interface Counter {
+
+  void increment ();
+  void decrement ();
+  long get_count ();
+  void reset ();
+
+};
+
