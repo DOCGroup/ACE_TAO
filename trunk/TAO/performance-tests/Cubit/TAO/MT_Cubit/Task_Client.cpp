@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Task_Client.h"
+#include "ace/Stats.h"
 
 Task_State::Task_State (int argc, char **argv)
   : key_ ("Cubit"),
@@ -183,9 +184,9 @@ Client::get_high_priority_latency (void)
 double
 Client::get_low_priority_latency (void)
 {
-  if (ts_->thread_count_ == 1) 
+  if (ts_->thread_count_ == 1)
     return 0;
-  
+
   double l = 0;
 
   for (u_int i = 1; i < ts_->thread_count_; i++)
@@ -210,32 +211,41 @@ Client::get_high_priority_jitter (void)
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
 
-  // we first compute the sum of the squares of the differences
+  ACE_Stats stats;
+
+  // We first compute the sum of the squares of the differences
   // each latency has from the average
   for (u_int i = 0; i < ts_->loop_count_ / ts_->granularity_; i ++)
     {
       double difference =
         ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
+      stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [0][i] * 1000 + 0.5));
     }
 
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
+
+  ACE_OS::fprintf (stderr, "high priority jitter:\n");
+  stats.print_summary (3, 1000, stderr);
+
   return sqrt (jitter / (number_of_samples - 1));
 }
 
 double
 Client::get_low_priority_jitter (void)
 {
-  if (ts_->thread_count_ == 1) 
+  if (ts_->thread_count_ == 1)
     return 0;
-  
+
   double jitter = 0.0;
   double average = get_low_priority_latency ();
   double number_of_samples = (ts_->thread_count_ - 1) * (ts_->loop_count_ / ts_->granularity_);
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
+
+  ACE_Stats stats;
 
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
@@ -245,7 +255,11 @@ Client::get_low_priority_jitter (void)
         double difference =
           ts_->global_jitter_array_[j][i] - average;
         jitter += difference * difference;
+        stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [j][i] * 1000 + 0.5));
       }
+
+  ACE_OS::fprintf (stderr, "low priority jitter:\n");
+  stats.print_summary (3, 1000, stderr);
 
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
@@ -593,7 +607,7 @@ Client::run_tests (Cubit_ptr cb,
   quantify_stop_recording_data();
   quantify_clear_data ();
 #endif /* USE_QUANTIFY */
-    
+
   // Make the calls in a loop.
 
   ACE_High_Res_Timer * timer_ = 0;
