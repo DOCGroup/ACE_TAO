@@ -2733,6 +2733,10 @@ TAO_ORB_Core::add_interceptor (
     }
   else
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ERROR: ORB Core unable to find the ")
+                  ACE_TEXT ("IORInterceptor Adapter Factory instance")));
       ACE_THROW (CORBA::INTERNAL ());
     }
 }
