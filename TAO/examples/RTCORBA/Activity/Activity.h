@@ -22,6 +22,7 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "activity_export.h"
+#include "ace/Null_Mutex.h"
 
 class ACE_Barrier;
 class Job_i;

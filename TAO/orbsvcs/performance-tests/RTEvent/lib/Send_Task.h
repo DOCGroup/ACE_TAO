@@ -12,10 +12,13 @@
 #include "Servant_var.h"
 #include "Supplier.h"
 #include "ace/Task.h"
+#include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class ACE_Barrier;
 
 /**
  * @class Send_Task

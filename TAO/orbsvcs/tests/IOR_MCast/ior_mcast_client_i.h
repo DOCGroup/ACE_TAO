@@ -5,6 +5,7 @@
 #define IOR_MCAST_CLIENT_I_H
 
 #include "MCastC.h"
+#include "ace/SString.h"
 
 class ior_mcast_Client_i
 {

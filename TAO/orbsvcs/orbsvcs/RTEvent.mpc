@@ -26,7 +26,6 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
       RtecUDPAdminC.cpp
       RtecUDPAdminS.cpp
       Event_Utilities.cpp
-      Event/CRC.cpp
       Event/ECG_Adapters.cpp
       Event/ECG_Address_Server_Base.cpp
       Event/ECG_CDR_Message_Receiver.cpp
