@@ -624,8 +624,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     {
       // @@ Hack to init the Leader-Follower state, so that we can
       //    wait again. (Alex).
-      this->transport_->wait_strategy ()->sending_request (this->orb_core_,
-                                                           1);
+      // this->transport_->wait_strategy ()->sending_request (this->orb_core_,
+      //                                                  1);
       
       // Wait for reply.
       reply_error = this->transport_->wait_for_reply ();
