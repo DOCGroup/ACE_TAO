@@ -66,9 +66,12 @@ sub write_comps {
     if (defined $deps && $deps ne "") {
       my($darr) = $self->create_array($deps);
       foreach my $dep (@$darr) {
-        print $fh "    Begin Project Dependency\r\n" .
-                  "    Project_Dep_Name $dep\r\n" .
-                  "    End Project Dependency\r\n";
+        ## Avoid cirular dependencies
+        if ($name ne $dep) {
+          print $fh "    Begin Project Dependency\r\n" .
+                    "    Project_Dep_Name $dep\r\n" .
+                    "    End Project Dependency\r\n";
+        }
       }
     }
 

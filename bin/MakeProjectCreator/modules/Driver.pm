@@ -140,7 +140,7 @@ sub run {
         push(@generators, $call);
       }
       else {
-        $self->usageAndExit("Invalid type: $type");
+        $self->usageAndExit("Invalid type: $args[$i]");
       }
     }
     elsif ($arg eq '-global') {
