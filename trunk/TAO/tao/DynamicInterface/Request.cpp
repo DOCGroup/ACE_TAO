@@ -166,9 +166,8 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
        this->target_,
        _tao_arg_list,
        number_args,
-       ACE_const_cast (char *, this->opname_),
-       ACE_static_cast (CORBA::ULong,
-                        ACE_OS::strlen (this->opname_)),
+       const_cast<char *> (this->opname_),
+       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
        this->exceptions_.in (),
        this);
 
@@ -212,9 +211,8 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
       this->target_,
       _tao_arg_list,
       number_args,
-      ACE_const_cast (char *, this->opname_),
-      ACE_static_cast (CORBA::ULong,
-                       ACE_OS::strlen (this->opname_)),
+      const_cast<char *> (this->opname_),
+      static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
       0,
       TAO::TAO_ONEWAY_INVOCATION);
 
@@ -258,9 +256,8 @@ CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
       this->target_,
       _tao_arg_list,
       number_args,
-      ACE_const_cast (char *, this->opname_),
-      ACE_static_cast (CORBA::ULong,
-                       ACE_OS::strlen (this->opname_)),
+      const_cast<char *> (this->opname_),
+      static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
       0,
       this->orb_->orb_core (),
       this);
