@@ -6,6 +6,7 @@
 #define ACE_RB_TREE_C
 
 #include "ace/RB_Tree.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -207,102 +208,106 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree
     }
 }
 
-// Method for restoring Red-Black properties after deletion.
+// Method for restoring Red-Black properties after a specific deletion case.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  void
-ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x)
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
+RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x,
+                 ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup");
 
-  while (x != 0
-         && x->parent ()
-         && x->color () == ACE_RB_Tree_Node_Base::BLACK)
+  while (x != this->root_
+         && (!x
+             || x->color () == ACE_RB_Tree_Node_Base::BLACK))
     {
-      if (x == x->parent ()->left ())
+      if (x == parent->left ())
         {
-          ACE_RB_Tree_Node<EXT_ID, INT_ID> *w = x->parent ()->right ();
+          ACE_RB_Tree_Node<EXT_ID, INT_ID> *w = parent->right ();
           if (w && w->color () == ACE_RB_Tree_Node_Base::RED)
             {
               w->color (ACE_RB_Tree_Node_Base::BLACK);
-              x->parent ()->color (ACE_RB_Tree_Node_Base::RED);
-              RB_rotate_left (x->parent ());
-              w = x->parent ()->right ();
+              parent->color (ACE_RB_Tree_Node_Base::RED);
+              RB_rotate_left (parent);
+              w = parent->right ();
             }
           // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-          if ((w) &&
-              (!w->left ()
-               || w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
+          if (w
+              && (!w->left ()
+                  || w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
               && (!w->right ()
                   || w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
             {
               w->color (ACE_RB_Tree_Node_Base::RED);
-              x = x->parent ();
+              x = parent;
+              parent = x->parent ();
             }
           else
             {
               // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-              if (w &&
-                  (!w->right ()
-                   || w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
+              if (w
+                  && (!w->right ()
+                      || w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
                 {
                   if (w->left ())
                     w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
                   w->color (ACE_RB_Tree_Node_Base::RED);
                   RB_rotate_right (w);
-                  w = x->parent ()->right ();
+                  w = parent->right ();
                 }
               if (w)
                 {
-                  w->color (x->parent ()->color ());
+                  w->color (parent->color ());
                   if (w->right ())
                     w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
                 }
-              x->parent ()->color (ACE_RB_Tree_Node_Base::BLACK);
-              RB_rotate_left (x->parent ());
+              parent->color (ACE_RB_Tree_Node_Base::BLACK);
+              RB_rotate_left (parent);
               x = root_;
             }
         }
       else
         {
-          ACE_RB_Tree_Node<EXT_ID, INT_ID> *w = x->parent ()->left ();
+          ACE_RB_Tree_Node<EXT_ID, INT_ID> *w = parent->left ();
           if (w && w->color () == ACE_RB_Tree_Node_Base::RED)
             {
               w->color (ACE_RB_Tree_Node_Base::BLACK);
-              x->parent ()->color (ACE_RB_Tree_Node_Base::RED);
-              RB_rotate_right (x->parent ());
-              w = x->parent ()->left ();
+              parent->color (ACE_RB_Tree_Node_Base::RED);
+              RB_rotate_right (parent);
+              w = parent->left ();
             }
           // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-          if (w &&
-              (!w->left ()
-               || w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
+          if (w
+              && (!w->left ()
+                  || w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
               && (!w->right ()
                   || w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
             {
               w->color (ACE_RB_Tree_Node_Base::RED);
-              x = x->parent ();
+              x = parent;
+              parent = x->parent ();
             }
           else
             {
               // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-              if (w &&
-                  (!w->left ()
-                   || w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK))
+              if (w
+                  && (!w->left ()
+                      || w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK))
                 {
                   w->color (ACE_RB_Tree_Node_Base::RED);
                   if (w->right ())
                     w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
                   RB_rotate_left (w);
-                  w = x->parent ()->left ();
+                  w = parent->left ();
                 }
               if (w)
                 {
-                  w->color (x->parent ()->color ());
+                  w->color (parent->color ());
                   if (w->left ())
                     w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
                 }
-              x->parent ()->color (ACE_RB_Tree_Node_Base::BLACK);
-              RB_rotate_right (x->parent ());
+              parent->color (ACE_RB_Tree_Node_Base::BLACK);
+              RB_rotate_right (parent);
               x = root_;
             }
         }
@@ -579,12 +584,14 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       else if (result == LEFT)
         {
           if (current->right ())
-            // If there is already a right subtree, complain.
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("%p\n"),
-                               ACE_LIB_TEXT ("\nright subtree already present in ")
-                               ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
-                              0);
+	    {
+              // If there is already a right subtree, complain.
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_LIB_TEXT ("%p\n"),
+                                 ACE_LIB_TEXT ("\nright subtree already present in ")
+                                 ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                                0);
+	    }
           else
             {
               // The right subtree is empty: insert new node there.
@@ -791,6 +798,130 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (const EXT_ID &k, 
   }
 }
 
+/// Recursive function to dump the state of an object.
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
+dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
+{
+  if (node)
+    {
+      dump_node_i (*node);
+
+      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ndown left\n")));
+      this->dump_i (node->left ());
+      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nup left\n")));
+
+      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ndown right\n")));
+      this->dump_i (node->right ());
+      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nup right\n")));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nNULL POINTER (BLACK)\n")));
+    }
+}
+
+
+/// Function to dump node itself.  Does not show parameterized node contents
+/// in its basic form, but template specialization can be used to
+/// provide definitions for various EXT_ID and INT_ID types.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
+dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const
+{
+  const char * color_str = (node.color () == ACE_RB_Tree_Node_Base::RED)
+                           ? "RED" : "BLACK";
+
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT (" color=[%s]\n"), color_str));
+}
+
+/// Tests the red-black invariant(s) throughout the whole tree.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  int
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant (void)
+{
+  ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant");
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+
+  // Recurse from the root, starting with the measured black height at
+  // 0, and the expected black height at -1, which will cause the
+  // count from first measured path to a leaf to be used as the
+  // expected one from that point onward (the key is to check
+  // consistency).
+  int expected_black_height = -1;
+  if (this->test_invariant_recurse (this->root_, expected_black_height, 0) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("invariant holds\n")));
+      return 0;
+    }
+
+  return -1;
+}
+
+/// Recursive function to test the red-black invariant(s) at all nodes in a subtree.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  int
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant_recurse (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x,
+                                                                             int & expected_black_height,
+                                                                             int measured_black_height)
+{
+  ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant_recurse");
+
+  if (!x)
+    {
+      // Count each leaf (zero pointer) as a black node (per CLR algorithm description).
+      ++measured_black_height;
+
+      if (expected_black_height == -1)
+	{
+          expected_black_height = measured_black_height;
+	}
+      else if (expected_black_height != measured_black_height)
+	{
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("\nexpected_black_height = %d but ")
+                             ACE_LIB_TEXT ("\nmeasured_black_height = %d in ")
+                             ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n"),
+                             expected_black_height, measured_black_height),
+                            -1);
+	}
+
+      return 0;
+    }
+
+  // Check the invariant that a red node cannot have a red child.
+  if (x->color () == ACE_RB_Tree_Node_Base::RED)
+    {
+      if (x->left () && x->left ()->color () == ACE_RB_Tree_Node_Base::RED)
+	{
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("%p\n"),
+                             ACE_LIB_TEXT ("\nRED parent has RED left child in ")
+                             ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
+                            -1);
+	}
+
+      if (x->right () && x->right ()->color () == ACE_RB_Tree_Node_Base::RED)
+	{
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("%p\n"),
+                             ACE_LIB_TEXT ("\nRED parent has RED right child in ")
+                             ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
+                            -1);
+	}
+    }
+  else
+    {
+      // Count each black node traversed.
+      ++measured_black_height;
+    }
+
+  return (test_invariant_recurse (x->left (), expected_black_height, measured_black_height) == 0)
+          ? test_invariant_recurse (x->right (), expected_black_height, measured_black_height)
+          : -1;
+}
+
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *z)
 {
@@ -801,6 +932,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
 
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *x;
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *y;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent;
 
   if (z->left () && z->right ())
     y = RB_tree_successor (z);
@@ -812,18 +944,21 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
   else
     x = y->right ();
 
+  parent = y->parent ();
   if (x)
-    x->parent (y->parent ());
-
-  if (y->parent ())
     {
-      if (y == y->parent ()->left ())
-        y->parent ()->left (x);
+      x->parent (parent);
+    }
+
+  if (parent)
+    {
+      if (y == parent->left ())
+        parent->left (x);
       else
-        y->parent ()->right (x);
+        parent->right (x);
     }
   else
-    root_ = x;
+    this->root_ = x;
 
   if (y != z)
     {
@@ -834,7 +969,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
 
   // CLR pp. 263 says that nil nodes are implicitly colored BLACK
   if (!y || y->color () == ACE_RB_Tree_Node_Base::BLACK)
-    RB_delete_fixup (x);
+    RB_delete_fixup (x, parent);
 
   y->parent (0);
   y->right (0);
@@ -928,5 +1063,6 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tr
 {
   ACE_TRACE ("ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Reverse_Iterator");
 }
+
 
 #endif /* !defined (ACE_RB_TREE_C) */
