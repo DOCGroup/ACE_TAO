@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 /* Handles timeouts. */
@@ -14,6 +15,7 @@
 
 #include "ace/Service_Types.h"
 #include "ace/Log_Msg.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Handle_Timeout : public ACE_Service_Object
 {

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Event_Handler.h"
@@ -9,6 +10,7 @@
 
 #include "ace/Reactor.h"
 #include "ace/Naming_Context.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Dump_Restore : public ACE_Event_Handler
 {

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -18,6 +19,7 @@
 #define OPTIONS_H
 
 #include "../Gateway/Event.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Options
   // = TITLE
