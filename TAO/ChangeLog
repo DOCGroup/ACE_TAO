@@ -1,3 +1,10 @@
+Sat Dec 28 13:09:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Transport.cpp (recv_i): Changed the recv_i
+	  method to handle closed socket correctly.  The original
+	  implementation caused SHMIOP falling into an infinite loop when
+	  the other end closed the connection.
+
 Sat Dec 28 10:33:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Fixed warnings
@@ -11,38 +18,38 @@ Fri Dec 27 20:00:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tests/Bug_1361_Regression/run_test.pl: Added more threads in the
 	  client to stress the ORB.
-	  
+
 Fri Dec 27 14:01:28 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
-	  Decrementing the reference count for object references 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+	  Decrementing the reference count for object references
 	  when unbinding it from the map. Thanks to Carlos for pointing
 	  it out. Fixed bug 1403.
-	
-	* orbsvcs/tests/ImplRepo/run_test.pl: 
+
+	* orbsvcs/tests/ImplRepo/run_test.pl:
 	  Fixed the typo in passing the name of the file to the ORBInitRef
 	  option. Did some minor indentation modifications.
-	
+
 Fri Dec 27 15:03:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/ior_corbaloc: Removed.
 
 Fri Dec 27 11:49:22 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.h: 
-	* tao/CORBALOC_Parser.cpp: 
+	* tao/CORBALOC_Parser.h:
+	* tao/CORBALOC_Parser.cpp:
 	  Modified the signature of parse_string_assign_helper. We dont
 	  have to send the length of original string as an argument.
-	  When invoking assign_ke_string, the length of the token needs 
+	  When invoking assign_ke_string, the length of the token needs
 	  to be sent as opposed to the length of the whole address.
           Thanks to Bertin Colpron <BColpron@interstarinc.com>
 	  for pointing out.
-	
+
 Fri Dec 27 14:57:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/Makefile:
 	* examples/Makefile.bor: Added ior_corbaloc to the list of
-	  directories. 
+	  directories.
 
 Fri Dec 27 14:41:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -59,14 +66,14 @@ Fri Dec 27 07:56:31 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	  Wed Dec 11 18:26:09 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-	  which was causing a reference (in a third IDL file) to a member of 
-	  the reopened module to lack the correct prefix, if it had been set. 
-	  Thanks to Nanbor Wang <nanbor@cse.wustl.edu> for reporting the 
+	  which was causing a reference (in a third IDL file) to a member of
+	  the reopened module to lack the correct prefix, if it had been set.
+	  Thanks to Nanbor Wang <nanbor@cse.wustl.edu> for reporting the
 	  problem.
 
 Fri Dec 27 07:15:34 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* examples/Simple/Simple_Util.h: Somehow missed this in my checkin. 
+	* examples/Simple/Simple_Util.h: Somehow missed this in my checkin.
 
 Thu Dec 26 09:07:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -89,18 +96,18 @@ Tue Dec 24 12:36:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* orbsvcs/tests/Security/Crash_Test/server.cpp: Fixed a compile
 	  error in g++ builds.
-	 
+
 Mon Dec 23 22:48:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Notify/Basic/AdminProperties.h:
 	* orbsvcs/tests/Notify/Basic/AdminProperties.cpp: Fixed compile
-	  errors in g++ builds that were caused by improper signatures. 
+	  errors in g++ builds that were caused by improper signatures.
 
 Mon Dec 23 22:33:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	A slight redesign of the changes applied to fix BUG 1276. The
-        redesign was motivated due to a  drop in our performance. 
-	
+        redesign was motivated due to a  drop in our performance.
+
 	* tao/Reply_Dispatcher.cpp:
 	* tao/Reply_Dispatcher.h:
 	* tao/Reply_Dispatcher.i: Did a slight redesign of how timeouts are
@@ -109,22 +116,22 @@ Mon Dec 23 22:33:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  used for normal cases ie. invocations without timeouts, we still
 	  created them for every invocation. Creation of synchronizaton
 	  primitives actually made things slow, and they have now been
-	  removed. 
-	
+	  removed.
+
 	* tao/Muxed_TMS.cpp: Removed calls to start_dispatch () and
-	  end_dispatch () on the Reply_Dispatcher. 
-	
+	  end_dispatch () on the Reply_Dispatcher.
+
 	* tao/Invocation.cpp: We now do a synchronization on the internal
 	  lock used by Muxed_TMS strategy so that no two threads are
 	  active on the Reply_Handler at the same time. This, though not
 	  very elegant, provides the same effect as the changes in "Sun
 	  Dec 22 11:26:30 2002  Balachandran Natarajan
 	  <bala@isis-server.isis.vanderbilt.edu>". The gist of the changes
-	  mentioned above have still been retained. 
+	  mentioned above have still been retained.
 
 	* tao/Exclusive_TMS.cpp: Removed calls to start_dispatch and
-	  end_dispatch () on the Reply_Dispatcher. 
-	
+	  end_dispatch () on the Reply_Dispatcher.
+
 	  These changes should get our performance back on track.
 
 Mon Dec 23 18:21:51 2002  Pradeep Gore  <pradeep@oomworks.com>
@@ -149,7 +156,7 @@ Mon Dec 23 18:21:51 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 Mon Dec 23 16:25:08 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Makefile: Added 
+	* orbsvcs/tests/Security/Makefile: Added
 	  orbsvcs/tests/Security/Crash_Test/Crash_Test directory.
 
 Mon Dec 23 15:50:54 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
