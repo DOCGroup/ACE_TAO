@@ -6,7 +6,7 @@ project(BMDevice_DnC_stub): ciao_client_dnc {
 
   idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export -Wb,stub_export_include=BMDevice_stub_export.h -Wb,skel_export_macro=BMDEVICE_SVNT_Export -Wb,skel_export_include=BMDevice_svnt_export.h
   libpaths += ..
-  libs += BasicSP_stub
+  libs += BasicSP_DnC_stub
   dynamicflags   = BMDEVICE_STUB_BUILD_DLL
 
   IDL_Files {
