@@ -180,3 +180,12 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
     }
 }
 
+void
+TT_Info::serialize_offer (const CosTrading::Offer& offer)
+{
+  //TAO_OutputCDR stream;
+  //CORBA::Environment env;
+
+  //stream.encode (CosTrading::_tc_Offer, &offer, 0, env);
+  //  ACE_Message_Block cdr = ACE_Message_Block::duplicate (stream.begin ());
+}

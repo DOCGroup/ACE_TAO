@@ -50,11 +50,12 @@ TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& _env)
 		   CosTrading::UnknownServiceType, 
 		   SERVICE_TYPE_REPOS::DuplicateServiceTypeName))
 {
-  TAO_TRY
-    {
-      ACE_DEBUG ((LM_DEBUG, "adding all types to the Repository.\n"));
 
-      for (int i = 0; i < NUM_TYPES; i++)
+  ACE_DEBUG ((LM_DEBUG, "adding all types to the Repository.\n"));
+  
+  for (int i = 0; i < NUM_TYPES; i++)
+    {
+      TAO_TRY
 	{
 	  this->repos_->add_type (TT_Info::INTERFACE_NAMES[i],
 				  this->type_structs_[i].if_name,
@@ -63,33 +64,40 @@ TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& _env)
 				  TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
-    }
-  TAO_CATCH (CosTrading::IllegalPropertyName, excp)
-    {
-      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
+      TAO_CATCH (SERVICE_TYPE_REPOS::ServiceTypeExists, ste)
+	{
+	  TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
 
-      if (excp.name.in () != 0)	
-	ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", excp.name.in ()));
-      
-      TAO_RETHROW;
-    }
-  TAO_CATCH (SERVICE_TYPE_REPOS::ValueTypeRedefinition, vtr)
-    {
-      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
+	  if (ste.name.in () != 0)	
+	    ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", ste.name.in ()));
 
-      if (vtr.type_1.in () != 0)	
-	ACE_DEBUG ((LM_DEBUG, "Type One: %s\n", vtr.type_2.in ()));
-      if (vtr.type_2.in () != 0)	
-	ACE_DEBUG ((LM_DEBUG, "Type Two: %s\n", vtr.type_2.in ()));
-      
-      TAO_RETHROW;
+	  goto add_type_label;
+	}
+      TAO_CATCH (CosTrading::IllegalPropertyName, excp)
+	{
+	  TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
+	  
+	  if (excp.name.in () != 0)	
+	    ACE_DEBUG ((LM_DEBUG, "Invalid name: %s\n", excp.name.in ()));
+	}
+      TAO_CATCH (SERVICE_TYPE_REPOS::ValueTypeRedefinition, vtr)
+	{
+	  TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
+	  
+	  if (vtr.type_1.in () != 0)	
+	    ACE_DEBUG ((LM_DEBUG, "Type One: %s\n", vtr.type_2.in ()));
+	  if (vtr.type_2.in () != 0)	
+	    ACE_DEBUG ((LM_DEBUG, "Type Two: %s\n", vtr.type_2.in ()));
+	}
+      TAO_CATCHANY
+	{
+	  TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
+	  TAO_RETHROW;
+	}
+      TAO_ENDTRY;
+
+    add_type_label: ;
     }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::add_all_types");
-      TAO_RETHROW;
-    }
-  TAO_ENDTRY;
 }
 
 void

@@ -26,6 +26,21 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
       TAO_Policy_Manager policies;
       CosTrading::Lookup::SpecifiedProps desired_props;
 
+      
+      //      CosTrading::PropertyNameSeq prop_names (3);
+      const char* prop_names[] =
+      {
+	TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME],
+	TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME],
+      	TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]
+      };
+      
+      //prop_names.length (3);
+      //prop_names[0] = ;
+      //      prop_names[1] = ;
+      //      prop_names[2] = ;
+
+      //      desired_props.prop_names (CosTrading::PropertyNameSeq (3, 3, (char **) prop_names, CORBA::B_FALSE));
       desired_props._d (CosTrading::Lookup::all);
       policies.exact_type_match (CORBA::B_FALSE);
       policies.search_card (4*NUM_OFFERS);
@@ -108,6 +123,9 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
   for (int length = offer_seq.length (), i = 0; i < length; i++)
     {
       TT_Info::dump_properties (offer_seq[i].properties);
+      //      TT_Info::serialize_offer (offer_seq[i]);
+      //      CosTrading::Offer_var offer = TT_Info::deserialize_offer ();
+      //      TT_Info::dump_properties (offer->properties);
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
     }
 

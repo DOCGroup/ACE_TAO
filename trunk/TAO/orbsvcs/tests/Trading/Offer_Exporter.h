@@ -74,7 +74,6 @@ public:
 		     CosTrading::UnknownServiceType, 
 		     CosTrading::IllegalConstraint, 
 		     CosTrading::Register::NoMatchingOffers));  
-  
 private:
 
   CosTrading::OfferIdSeq* grab_offerids (CORBA::Environment& env)
