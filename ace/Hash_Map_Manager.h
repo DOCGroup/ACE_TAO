@@ -82,6 +82,9 @@ public:
 			ACE_Allocator *allocator = 0);
   // Initialize a <Hash_Map_Manager> with size <length>.
 
+  ACE_Hash_Map_Manager (ACE_Allocator *allocator = 0);
+  // Initialize a <Hash_Map_Manager> with default size.
+
   int open (size_t length = DEFAULT_SIZE, 
 	    ACE_Allocator *allocator = 0);
   // Initialize a <Hash_Map_Manager> with size <length>.

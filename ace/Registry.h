@@ -157,7 +157,7 @@ public:
   public:
 
     enum { MAX_OBJECT_NAME_SIZE = BUFSIZ,
-	   MAX_CONTEXT_NAME_SIZE = BUFSIZ };
+	   MAX_CONTEXT_NAME_SIZE = MAXPATHLEN + 1 };
     // Max sizes of names
     // (Not too sure about this value)
     

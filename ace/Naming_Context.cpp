@@ -388,6 +388,7 @@ void
 ACE_Name_Options::namespace_dir (LPCTSTR dir)
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
+  ACE_OS::free ((void *) this->namespace_dir_ );
   this->namespace_dir_ = ACE_OS::strdup (dir);
 }
 
@@ -396,6 +397,7 @@ ACE_Name_Options::process_name (LPCTSTR pname)
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
   LPCTSTR t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
+  ACE_OS::free ((void *) this->process_name_ );
   this->process_name_ = ACE_OS::strdup (t);
 }
 
@@ -403,6 +405,7 @@ void
 ACE_Name_Options::nameserver_host (const char *host)
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
+  ACE_OS::free ((void *) this->nameserver_host_);
   this->nameserver_host_ = ACE_OS::strdup (host);
 }
 
@@ -424,8 +427,7 @@ void
 ACE_Name_Options::database (LPCTSTR db)
 {
   ACE_TRACE ("ACE_Name_Options::database");
-  if (this->database_ != 0)
-    ACE_OS::free ((void *) this->database_);
+  ACE_OS::free ((void *) this->database_);
   this->database_ = ACE_OS::strdup (db);
 }
 

@@ -124,6 +124,16 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Manager (size_t size,
     ACE_ERROR ((LM_ERROR, "ACE_Hash_Map_Manager\n"));
 }
 
+template <class EXT_ID, class INT_ID, class LOCK> 
+ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Manager (ACE_Allocator *allocator)
+  : total_size_ (0),
+    cur_size_ (0),
+    allocator_ (allocator)
+{
+  if (this->open (DEFAULT_SIZE, allocator) == -1)
+    ACE_ERROR ((LM_ERROR, "ACE_Hash_Map_Manager\n"));
+}
+
 template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i (void)
 {

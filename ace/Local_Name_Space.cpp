@@ -93,6 +93,13 @@ ACE_NS_String::operator == (const ACE_NS_String &s) const
 		       (void *) s.rep_, this->len_) == 0;
 }
 
+int
+ACE_NS_String::operator != (const ACE_NS_String &s) const
+{
+  ACE_TRACE ("ACE_NS_String::operator !=");
+  return !this->operator == (s);
+}
+
 ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst, 
 			      const ACE_USHORT16 *src, 
 			      size_t bytes)
@@ -101,6 +108,12 @@ ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
   ACE_OS::memcpy (this->rep_, src, bytes);
+}
+
+size_t 
+ACE_NS_String::hash (void) const
+{
+  return ACE::hash_pjw (this->rep_);
 }
 
 ACE_NS_Internal::ACE_NS_Internal (void)

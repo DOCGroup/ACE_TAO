@@ -212,6 +212,10 @@ public:
   // Constructor that copies <len> ACE_USHORT16's of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
+  ACE_WString (size_t len, ACE_Allocator *allocator = 0);
+  // Constructor that dynamically allocates memory for <len> + 1
+  // ACE_USHORT16 characters. The newly created memory is set memset to 0.
+
   ACE_WString (const ACE_WString &s);
   // Copy constructor.
 
@@ -261,6 +265,12 @@ public:
 
   static size_t wstrlen (const ACE_USHORT16 *);
   // Computes the length of a "0" terminated ACE_USHORT16 *.
+
+  void resize (size_t len);
+  // This method is designed for high-performance. Please use with
+  // care ;-) If the current size of the string is less than <len>,
+  // the string is resized to the new length. The data is is zero'd
+  // out after this operation.
 
 private:
   ACE_Allocator *allocator_;

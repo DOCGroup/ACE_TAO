@@ -21,7 +21,6 @@
 #if !defined (ACE_LOCAL_NAME_SPACE_H)
 #define ACE_LOCAL_NAME_SPACE_H
 
-#include "ace/Map_Manager.h"
 #include "ace/Service_Config.h"
 #include "ace/SString.h"
 #include "ace/Set.h"
@@ -64,11 +63,17 @@ public:
   int operator == (const ACE_NS_String &) const;
   // Compare an ACE_NS_String.
 
+  int operator != (const ACE_NS_String &) const;
+  // Compare an ACE_NS_String.
+
   size_t len (void) const;
   // Returns length of the string
 
   ACE_USHORT16 *fast_rep (void) const;
   // Returns the underlying representation.
+
+  size_t hash (void) const;
+  // Returns a hash value for this string.
 
 private:
   size_t len_;

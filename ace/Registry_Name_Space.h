@@ -16,11 +16,12 @@
 #if !defined (ACE_REGISTRY_NAME_SPACE_H)
 #define ACE_REGISTRY_NAME_SPACE_H
 
-#include "ace/Registry.h"
+#include "ace/OS.h"
 
 #if (defined (ACE_WIN32) && defined (UNICODE))
 // This only works on Win32 platforms when UNICODE is turned on
 
+#include "ace/Registry.h"
 #include "ace/Naming_Context.h"
 #include "ace/Name_Space.h"
 
