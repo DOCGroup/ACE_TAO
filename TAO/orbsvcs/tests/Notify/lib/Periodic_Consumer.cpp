@@ -251,7 +251,7 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
 }
 
 void
-TAO_NS_Periodic_Consumer::dump_stats (ACE_TCHAR* msg)
+TAO_NS_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
 {
   char buf[BUFSIZ];
   ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());
@@ -259,9 +259,9 @@ TAO_NS_Periodic_Consumer::dump_stats (ACE_TCHAR* msg)
   ACE_CString fname (buf);
 
   ACE_OS::sprintf (buf,
-                   "%s# Consumer Name = %s, Proxy ID = %d Samples Received = %d\n",
+                   "%s# Consumer Name = %s, Proxy ID = %d Load = %ul\n",
                    msg,
-                   this->name_.c_str (), this->proxy_id_, this->count_);
+                   this->name_.c_str (), this->proxy_id_, this->load_);
 
-  stats_.dump_samples (fname.c_str (), buf);
+  stats_.dump_samples (fname.c_str (), buf, dump_samples);
 }

@@ -56,7 +56,7 @@ public:
   virtual int svc (void);
 
   /// Dump stats.
-  void dump_stats (ACE_TCHAR* msg);
+  void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
   /// Get the name of the proxy
   const char* proxy_name (void);

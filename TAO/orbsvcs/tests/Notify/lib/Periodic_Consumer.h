@@ -48,7 +48,7 @@ public:
   virtual int init_state (ACE_Arg_Shifter& arg_shifter);
 
   /// dump stats
-  void dump_stats (ACE_TCHAR* msg);
+  void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
 protected:
 

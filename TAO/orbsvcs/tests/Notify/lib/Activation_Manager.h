@@ -85,7 +85,7 @@ public:
   virtual void done (TAO_NS_Periodic_Consumer* consumer);
 
   // Dump stats gathered during exec..
-  void dump_stats (void);
+  void dump_stats (int dump_samples);
 
   // Returns 0 if the file could be opened for write.
   int ior_output_file (const ACE_TCHAR *file_name);

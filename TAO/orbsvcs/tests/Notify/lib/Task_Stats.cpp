@@ -57,7 +57,7 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
+Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples)
 {
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 
@@ -113,23 +113,27 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
 
   this->var_2_ /= this->samples_count_;
 
-  ACE_OS::fprintf (output_file, "## Avg = %u, Var^2 = %u\n"
+  ACE_OS::fprintf (output_file, "## Latency: Avg = %u, Var^2 = %u\n"
                    , ACE_CU64_TO_CU32 (this->mean_)
                    , ACE_CU64_TO_CU32 (this->var_2_));
 
-  ACE_DEBUG ((LM_DEBUG, " Avg = %u, Var^2 = %u\n"
-              , ACE_CU64_TO_CU32 (this->mean_)
-              , ACE_CU64_TO_CU32 (this->var_2_)));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, " Latency: Avg = %u, Var^2 = %u\n"
+                , ACE_CU64_TO_CU32 (this->mean_)
+                , ACE_CU64_TO_CU32 (this->var_2_)));
 
-  // dump the samples recorded.
-  ACE_OS::fprintf (output_file, "#Invocation time \t Execution time\n");
-
-  for (i = 0; i != this->samples_count_; ++i)
+  // if we are asked to, dump the samples recorded.
+  if (dump_samples)
     {
-      ACE_UINT32 val_1 = Task_Stats::diff_usec (base_time_, time_inv_[i]);
+      ACE_OS::fprintf (output_file, "#Invocation time \t Execution time\n");
 
-      ACE_OS::fprintf (output_file, "%u \t %u\n",val_1,
-                       ACE_CU64_TO_CU32 (time_exec_[i]));
+      for (i = 0; i != this->samples_count_; ++i)
+        {
+          ACE_UINT32 val_1 = Task_Stats::diff_usec (base_time_, time_inv_[i]);
+
+          ACE_OS::fprintf (output_file, "%u \t %u\n",val_1,
+                           ACE_CU64_TO_CU32 (time_exec_[i]));
+        }
     }
 
   ACE_OS::fclose (output_file);
