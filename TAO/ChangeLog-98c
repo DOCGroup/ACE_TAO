@@ -1,3 +1,15 @@
+Mon Jul  6 15:10:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Makefile: 
+	  Updated dependencies.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	  The CDR size was wrong, this resulted in all kind of strange
+	  errors n the client side. This is another reminder that an octet
+	  sequence only uses a single Message_Block, not a chain of them.
+
 Mon Jul 06 14:58:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IIOP_Object.{h,cpp}:
