@@ -1,3 +1,11 @@
+Thu Oct 19 11:31:39 2000  Paul Calabrese  <calabrese_p@ociweb.com>
+
+	* orbsvcs/LifeCycle_Service/Makefile:
+
+	  Allow the LifeCycle_Service server to be built by moving
+          the block checking for minimum_corba down below
+          the includes that define it.
+
 Wed Oct 18 20:26:55 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp
