@@ -1,0 +1,14 @@
+Sun Jul 06 11:50:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/ComponentServer_Task.cpp:
+	* tools/RTComponentServer/ComponentServer_Task.h:
+	* tools/RTComponentServer/ComponentServer_Task.inl:
+	* tools/RTComponentServer/README:
+	* tools/RTComponentServer/RTComponentServer.cpp:
+	* tools/RTComponentServer/RTComponentServer.mpc: Added the
+	  skeleton of RTComponentServer.
+
+Sun Jul 06 11:33:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Added: this temporary ChangeLog file for changes within the
+	  RTComponentServer.
