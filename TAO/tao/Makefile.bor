@@ -231,6 +231,7 @@ OBJFILES = \
 	$(OBJDIR)\Synch_Refcountable.obj \
 	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
 	$(OBJDIR)\TAOC.obj \
+	$(OBJDIR)\TAOA.obj \
 	$(OBJDIR)\TAO_Internal.obj \
 	$(OBJDIR)\TAO_Server_Request.obj \
 	$(OBJDIR)\TAO_Singleton_Manager.obj \
@@ -257,6 +258,7 @@ OBJFILES = \
 	$(OBJDIR)\Wait_On_Read.obj \
 	$(OBJDIR)\Wait_Strategy.obj \
 	$(OBJDIR)\WrongTransactionC.obj \
+	$(OBJDIR)\WrongTransactionA.obj \
 	$(OBJDIR)\append.obj \
 	$(OBJDIR)\debug.obj \
 	$(OBJDIR)\default_client.obj \

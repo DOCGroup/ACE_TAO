@@ -42,7 +42,7 @@ module Messaging
   struct PolicyValue
   {
     CORBA::PolicyType ptype;
-    sequence<octet>   pvalue;
+    CORBA::OctetSeq   pvalue;
   };
 
   typedef sequence<PolicyValue> PolicyValueSeq;
