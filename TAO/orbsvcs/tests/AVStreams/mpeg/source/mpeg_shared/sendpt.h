@@ -29,4 +29,7 @@
    len -- length of pattern and send pattern (number of frames);
    f   -- number of frames to send (represented by result send pattern);
 */
+#include "ace/OS.h"
+
 void ComputeSendPattern(char * pat, char * buf, int len, int f);
+
