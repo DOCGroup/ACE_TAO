@@ -44,7 +44,7 @@ extern "C"
 # endif  /*  !m88k && !SCO */
 #elif defined (ACE_HAS_OSF1_GETTIMEOFDAY)
   int gettimeofday (struct timeval *tp, struct timezone * = 0);
-#elif defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
+#elif defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY)
 # define ACE_HAS_SVR4_GETTIMEOFDAY
 #endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 

@@ -54,8 +54,8 @@
 // Platform supports STREAMS.
 #define ACE_HAS_STREAMS
 
-// SunOS 4 style prototype.
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+// Platform/compiler supports timezone * as second parameter to gettimeofday().
+#define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 // Compiler/platform supports SVR4 dynamic linking semantics.
 #define ACE_HAS_SVR4_DYNAMIC_LINKING

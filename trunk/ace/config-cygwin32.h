@@ -105,7 +105,7 @@
 
 #define ACE_LACKS_MADVISE
 
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR

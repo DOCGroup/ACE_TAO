@@ -92,7 +92,7 @@
 #define ACE_HAS_STRERROR
 
 // ???
-// #define ACE_HAS_SUNOS4_GETTIMEOFDAY
+// #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 // HP/UX has an undefined syscall for GETRUSAGE...

@@ -568,7 +568,6 @@ ACE_HAS_STRING_CLASS                    Platform/Compiler supports a
 ACE_HAS_STRUCT_NETDB_DATA               Compiler/platform has strange
                                         hostent API for socket *_r()
                                         calls
-ACE_HAS_SUNOS4_GETTIMEOFDAY             SunOS 4 style prototype.
 ACE_HAS_SUNOS4_SIGNAL_T                 Compiler has horrible SunOS
                                         4.x signal handlers...
 ACE_HAS_SVR4_DYNAMIC_LINKING            Compiler/platform supports
@@ -668,6 +667,9 @@ ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for
                                         tracking down origin of
                                         ACE_NOTSUP.
+ACE_HAS_VOIDPTR_GETTIMEOFDAY            Platform/compiler supports
+					void * as second parameter 
+					to gettimeofday
 ACE_HAS_VOIDPTR_MMAP                    Platform requires void * for
                                         mmap().
 ACE_HAS_VOIDPTR_SOCKOPT                 OS/compiler uses void * arg 4

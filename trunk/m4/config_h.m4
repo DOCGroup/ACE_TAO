@@ -811,10 +811,6 @@ AH_TEMPLATE([ACE_HAS_STRINGS],
 AH_TEMPLATE([ACE_HAS_STRUCT_NETDB_DATA],
 [Compiler/platform has strange hostent API for socket *_r() calls])
 
-AH_TEMPLATE([ACE_HAS_SUNOS4_GETTIMEOFDAY],
-[Platform has void * as second parameter to gettimeofday and a has a
-   prototype])
-
 AH_TEMPLATE([ACE_HAS_SUNOS4_SIGNAL_T],
 [Compiler has horrible SunOS 4.x signal handlers...])
 
@@ -938,6 +934,10 @@ AH_TEMPLATE([ACE_HAS_USING_KEYWORD],
 AH_TEMPLATE([ACE_HAS_VERBOSE_NOTSUP],
 [Prints out console message in ACE_NOTSUP.  Useful for tracking down
    origin of ACE_NOTSUP.])
+
+AH_TEMPLATE([ACE_HAS_VOIDPTR_GETTIMEOFDAY],
+[Platform/compiler supports void * as second parameter to 
+   gettimeofday() and has a prototype.])
 
 AH_TEMPLATE([ACE_HAS_VOIDPTR_MMAP],[Platform requires void * for mmap().])
 

@@ -323,8 +323,8 @@
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
-// SunOS 4 style prototype for gettimeofday
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+// Platform/compiler supports void * as second parameter to gettimeofday().
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
 // Platform supports SVR4 dynamic linking semantics, in 64-bit mode only.
 // When used, this requires -ldl on the ACE library link line.

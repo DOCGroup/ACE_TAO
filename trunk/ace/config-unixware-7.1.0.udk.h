@@ -318,9 +318,8 @@
 /* Platform has <strings.h> (which contains bzero() prototype) */
 #define ACE_HAS_STRINGS
 
-/* Platform has void * as second parameter to gettimeofday and a has a
-   prototype */
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+/* Platform/compiler supports void * as second parameter to gettimeofday(). */
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
 /* Compiler/platform supports SVR4 dynamic linking semantics */
 #define ACE_HAS_SVR4_DYNAMIC_LINKING

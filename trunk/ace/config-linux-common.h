@@ -293,7 +293,8 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+// Platform/compiler supports void * as second parameter to gettimeofday().
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR

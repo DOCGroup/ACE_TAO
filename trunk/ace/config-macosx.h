@@ -132,8 +132,8 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports SVR4 gettimeofday() prototype
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+// Platform/compiler supports void * as second parameter to gettimeofday().
+#define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 #define ACE_LACKS_SYS_MSG_H
