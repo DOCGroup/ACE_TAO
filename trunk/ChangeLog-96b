@@ -11,10 +11,6 @@ Mon Nov 18 00:13:25 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 	* ace/Log_Record.h (ACE_Log_Record): Removed the iostream include
 	  mess that got accidentally committed to the release.
 
-	* Log_Record.h: Added conditional inclusion of iostream and
-	  iostream.h to deal with STL.  So far, I haven't run into any
-	  problems related to changing semantics.  We'll see.
-
 Sun Nov 17 00:13:25 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* For some totally evil reason, MSVC++ will not allow any use of
