@@ -173,8 +173,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_INET_Addr local_addr (port);
-  ACE_INET_Addr remote_addr (port,
-                             ACE_DEFAULT_SERVER_HOST);
+  ACE_INET_Addr remote_addr (port, ACE_LOCALHOST, PF_INET);
   My_Reactor reactor;
 
   ACE_Reactor::instance (&reactor);
@@ -202,7 +201,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
-    ACE_SOCK_Dgram dgram (ACE_sap_any_cast (ACE_INET_Addr &));
+    ACE_SOCK_Dgram dgram (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
 
     for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
       dgram.send (ACE_TEXT ("Hello"),
