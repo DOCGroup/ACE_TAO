@@ -198,6 +198,7 @@ extern "C" { char * cuserid (char *s); }
 #define TCSETS TIOCSETA
 
 #if (__FreeBSD_version > 400000)
+#undef ACE_LACKS_SETSCHED
 #undef ACE_LACKS_SIGSET
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SOCKLEN_T
