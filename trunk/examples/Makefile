@@ -18,6 +18,7 @@ DIRS  =	ASX \
 	Log_Msg \
 	Mem_Map \
 	Misc \
+	Naming \
 	Reactor	\
 	Service_Configurator \
 	Shared_Malloc \
