@@ -1,3 +1,14 @@
+Tue Feb 13 10:23:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS/server/IO.{h cpp}: (Side-affect necessitated by addition of
+          handle () method and handle_ member to ACE_Handler). Moved the
+          handle_ member to the JAWS_Synch_IO class - it needs it, and
+          JAWS_Asynch_IO class has it by inheritance from ACE_Handler. Left
+          the handle () methods in JAWS_IO, but made them pure virtual,
+          implemented in JAWS_Synch_IO (implementation moved from JAWS_IO)
+          and in JAWS_Asynch_IO, where they forward up to ACE_Handler's
+          handle () methods.
+
 Mon Feb 12 18:18:05 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
         * tests/Thread_Mutex_Test.cpp:
