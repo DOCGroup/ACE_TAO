@@ -11,7 +11,7 @@ Thread_Pool::close (u_long)
 }
 
 Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
-			  int n_threads)
+                          int n_threads)
   : ACE_Task<ACE_SYNCH> (thr_mgr),
   nt_(n_threads)
 {
@@ -98,21 +98,21 @@ Thread_Pool::svc (void)
 #endif
 
       if (this->getq (mb) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "(%t) in iteration %d, got result -1, exiting\n",
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) in iteration %d, got result -1, exiting\n",
                       count));
           break;
-	}
+        }
 
 #if 0
       if (mb->length() == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) in iteration %d, got NULL message, exiting\n",
-		      count));
-	  break;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) in iteration %d, got NULL message, exiting\n",
+                      count));
+          break;
+        }
 #endif
 
       Test::Echo_var echo = (Test::Echo_ptr)mb->base();
@@ -121,28 +121,38 @@ Thread_Pool::svc (void)
       // mb->release ();
 
       if (CORBA::is_nil(echo.in()))
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) in iteration %d, got NULL message, exiting\n",
-		      count));
-	  break;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) in iteration %d, got NULL message, exiting\n",
+                      count));
+          break;
+        }
 
       // Keep calling a few times after receiving exceptions
-      for(int exception_count = 50; exception_count; --exception_count) {
+      for(int exception_count = 50; exception_count; --exception_count)
+        {
+
         ACE_TRY_NEW_ENV
           {
             // keep calling until get an exception
-            while(true) {
-              if (0) {
-                Test::Payload pload(10); pload.length(10);
-                ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
-                echo->echo_payload(pload);
-              } else {
-                Test::Payload_var pout;
-                echo->echo_payload_out(pout.out());
+            while(true)
+              {
+                if (0)
+                  {
+                    Test::Payload pload(10);
+                    pload.length(10);
+                    ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
+                    echo->echo_payload (pload
+                                        ACE_ENV_ARG_PARAMETER);
+                    ACE_TRY_CHECK;
+
+                  }
+                else
+                  {
+                    Test::Payload_var pout;
+                    echo->echo_payload_out(pout.out());
+                  }
               }
-            }
           }
         ACE_CATCHANY
           {
