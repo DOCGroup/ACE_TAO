@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: aceexe {
+project: aceexe, crosscompile {
   after += gperf
   Define_Custom(GPERF) {
     command          = $(ACE_ROOT)/bin/gperf

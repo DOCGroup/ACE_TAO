@@ -1,3 +1,11 @@
+Fri Aug  5 15:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        * apps/gperf/tests/gperf_test.mpb
+        * apps/gperf/tests/tests.mpc
+
+          gperf is not built on cross compiled targets, thus tests will not run!
+          Therefore added the dependancy to the build of these test.
+
 Fri Apr 23 21:18:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* src/Options.h (operator !=):
