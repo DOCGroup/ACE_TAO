@@ -1,4 +1,4 @@
-#!/bin/ksh
+#! /bin/sh 
 # $Id$
 
 # =TITLE
@@ -10,14 +10,20 @@
 # =DESCRIPTION
 #  This script restarts the Naming, Scheduling and Event Service,
 #  if "clean" is specified as a parameter, then the old
-#  services are only killed and not restarted.
+#  services are only killed and not restarted 
 
 # save the old working dir
 old_dir=$cwd
 # get the user name
 login=`whoami`
-# get the user id
-uid=`id | perl -pe 's/uid=(\d+).*/$1/'`
+# get the user id 
+uid=`id | cut -c5-20 | cut -f1 -d"("`
+
+if [ `uname -s` = 'SunOS' ]; then
+  ps_opts=-ef
+else
+  ps_opts=aux
+fi
 
 #### Set TAO_ROOT, if it wasn't set.
 if [ ! "$TAO_ROOT" ]; then
@@ -31,7 +37,7 @@ fi
 
 echo // Killing the old services
 
-ps -ef | grep Service | grep $login | grep -v grep | cut -c10-17 > /tmp/pids$login
+ps $ps_opts | grep Service | grep $login | grep -v grep | cut -c10-17 > /tmp/pids$login
 
 if [ -s /tmp/pids$login ]; then
   pids=`cat /tmp/pids$login`
@@ -39,7 +45,7 @@ if [ -s /tmp/pids$login ]; then
 fi
 
 # stop here if "ss clean" was called
-if [ $1 ]; then
+if [ $1 ]; then 
   if [ $1 =  "clean" ]; then
      exit
   fi
@@ -62,8 +68,7 @@ cd $TAO_ROOT/orbsvcs/Naming_Service
 
 sleep 1
 
-IOR=`perl -ne 'print if (s/NameService IOR is <(.*)>/$1/);' \
-       /tmp/logfile_$login`
+IOR=`cat /tmp/logfile_$login | grep IOR | cut -c22-300 | cut -f1 -d">" `
 
 echo // The IOR of the Naming Service: $IOR
 
@@ -83,4 +88,4 @@ cd $old_dir
 echo // Started Event Service on port $eventserviceport
 
 echo "// Enjoy the use ;-)"
-ps -ef | grep Service | grep -v grep
+ps $ps_opts | grep Service | grep -v grep
