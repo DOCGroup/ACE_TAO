@@ -14,7 +14,7 @@ CFG=netsvcs - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "netsvcs.mak" CFG="netsvcs - Win32 Debug"
+!MESSAGE NMAKE /f "netsvcs4.mak" CFG="netsvcs - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -34,8 +34,8 @@ NULL=nul
 # Begin Project
 # PROP Target_Last_Scanned "netsvcs - Win32 Debug"
 RSC=rc.exe
-CPP=cl.exe
 MTL=mktyplib.exe
+CPP=cl.exe
 
 !IF  "$(CFG)" == "netsvcs - Win32 Release"
 
@@ -679,6 +679,7 @@ DEP_CPP_TS_SE=\
 SOURCE=.\Server_Logging_Handler.cpp
 DEP_CPP_SERVE=\
 	"..\..\ace\config-win32.h"\
+	".\Base_Optimizer.cpp"\
 	".\Base_Optimizer.h"\
 	".\Log_Message_Receiver.cpp"\
 	".\Log_Message_Receiver.h"\
