@@ -2275,7 +2275,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       size_t size = stacksize;
 
 #     if defined (PTHREAD_STACK_MIN)
-      if (size < PTHREAD_STACK_MIN)
+      if (size < ACE_static_cast (size_t, PTHREAD_STACK_MIN))
         size = PTHREAD_STACK_MIN;
 #     endif /* PTHREAD_STACK_MIN */
 
