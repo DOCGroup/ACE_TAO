@@ -64,6 +64,27 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
           this->resume_handler (handle) : 0);
 }
 
+int
+ACE_TP_Reactor::owner (ACE_thread_t, ACE_thread_t *o_id)
+{
+  ACE_TRACE ("ACE_TP_Reactor::owner");
+  if (o_id)
+    *o_id = ACE_Thread::self ();
+
+  return 0;
+  
+}
+
+int
+ACE_TP_Reactor::owner (ACE_thread_t *t_id)
+{
+  ACE_TRACE ("ACE_TP_Reactor::owner");
+  *t_id = ACE_Thread::self ();
+
+  return 0;
+  
+}
+
 // Overwrites ACE_Select_Reactor::dispatch_io_set() to *not* dispatch
 // any event handlers.  The information of one activated event handler
 // is stored away, so that the event handler can be dispatch later.
