@@ -1,3 +1,28 @@
+Thu Jan  8 15:15:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Streams/Answerer.cpp (RecordingStream::open): Change
+	  the signature to match the inherited ACE_Stream::open() method to
+	  allow easy configuration without forcing a EndTask module.
+
+	* examples/APG/Streams/CommandStream.{h cpp}: Move the ACE_SOCK_Stream*
+	  argument from open() to the constructor, and make default ctor
+	  private to force passage of the ACE_SOCK_Stream*. Change open() to
+	  properly inherit from ACE_Stream, avoiding the "hides inherited
+	  open()" diagnostics, and making this class easier to use in
+	  different use cases.
+
+	* examples/APG/Streams/RecordingDevice_Text.cpp: Changed usage of
+	  CommandStream class to match new API, above.
+
+	* examples/APG/Streams/Command.h:
+	* examples/APG/Streams/CommandTask.cpp:
+	* examples/APG/Streams/CommandTasks.cpp:
+	* examples/APG/Streams/RecordingDevice_Text.cpp: Prepended RESULT_
+	  to the enumerators SUCCESS, PASS, FAIL; prepended CMD_ to the
+	  enumerators UNKNOWN, ANSWER_CALL, RETRIEVE_CALLER_ID, PLAY_MESSAGE,
+	  RECORD_MESSAGE. These were done to avoid clashes with commonly
+	  defined macros. Thanks to Johnny Willemsen for reporting this.
+
 Thu Jan  8 20:15:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Reactor/Misc/test_demuxing.cpp:
