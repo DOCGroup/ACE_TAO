@@ -239,6 +239,7 @@ ORB_CORE_FILES = \
   Muxed_TMS \
   Reply_Dispatcher \
   Synch_Reply_Dispatcher \
+  Synch_Refcountable \
   Asynch_Reply_Dispatcher_Base \
   IOPC \
   PollableC \
