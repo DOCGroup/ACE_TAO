@@ -79,6 +79,14 @@ Thu Jun 19 16:58:00 UTC 2003 Stephen Torri <storri@cse.wustl.edu>
         * tao/RTCORBA/Multi_Priority_Mapping.h:
         * tao/RTCORBA/Multi_Priority_Mapping.i:
 
+	- TAO_Multi_Priority_Mapping is an implementation of 
+	  Priority_Mapping interface for communication between 
+	  different platforms. This implementation uses a custom
+	  mapping between the range of priorities for a given 
+	  scheduling class (ACE_SCHED_OTHER, ACE_SCHED_FIFO, 
+	  ACE_SCHED_RR) and the valid range of CORBA priorities 
+	  (0...32767)
+	
 Thu Jun 19 16:01:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/index.html:
