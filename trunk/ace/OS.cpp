@@ -505,6 +505,7 @@ ACE_Win32_Thread_Adapter::svc_run (ACE_Win32_Thread_Adapter *thread_args)
     status = (*func) (arg);  // Call thread entry point.
   }
   ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER) {
+    ACE_DEBUG ((LM_DEBUG, "(%t) Win32 structured exception exiting outermost svc_run\n"));
     // Here's where we might want to provide a hook to report this...
     // As it stands now, we just catch all Win32 structured exceptions
     // so that we can make sure to clean up correctly when the thread

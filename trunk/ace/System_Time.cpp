@@ -33,6 +33,7 @@ ACE_System_Time::get_local_system_time (ACE_Time_Value &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
   time_out.sec (ACE_OS::time (0));
+  return 0;
 }
 
 // Get the system time of the central time server.

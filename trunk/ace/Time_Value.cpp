@@ -18,7 +18,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
 ACE_Time_Value::ACE_Time_Value (const timeval &tv)
 {
-  ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
 }
 
@@ -27,7 +27,7 @@ ACE_Time_Value::ACE_Time_Value (const timeval &tv)
 
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
-  ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (file_time);
 }
 
@@ -46,7 +46,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
 
 ACE_Time_Value::operator FILETIME () const
 {
-  ACE_TRACE ("ACE_Time_Value::operator FILETIME");
+  // ACE_TRACE ("ACE_Time_Value::operator FILETIME");
   ACE_QWORD _100ns = ((ACE_QWORD) this->tv_sec_ * (1000 * 1000) + this->tv_usec_) * 10;
   FILETIME file_time;
   file_time.dwLowDateTime = ACE_LOW_DWORD (_100ns);
@@ -59,7 +59,7 @@ ACE_Time_Value::operator FILETIME () const
 void
 ACE_Time_Value::dump (void) const
 {
-  ACE_TRACE ("ACE_Time_Value::dump");
+  // ACE_TRACE ("ACE_Time_Value::dump");
 #if 0
   if (tv.usec () < 0 || tv.sec () < 0)
     stream << "-";
@@ -76,14 +76,14 @@ ACE_Time_Value::dump (void) const
 void
 ACE_Time_Value::set (long sec, long usec)
 {
-  ACE_TRACE ("ACE_Time_Value::set");
+  // ACE_TRACE ("ACE_Time_Value::set");
   this->tv_sec_ = sec;
   this->tv_usec_ = usec;
 }
 
 ACE_Time_Value::ACE_Time_Value (long sec, long usec)
 {
-  ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (sec, usec);
   this->normalize ();
 }
@@ -92,7 +92,7 @@ ACE_Time_Value::ACE_Time_Value (long sec, long usec)
 
 ACE_Time_Value::operator timeval () const
 {
-  ACE_TRACE ("ACE_Time_Value::operator timeval");
+  // ACE_TRACE ("ACE_Time_Value::operator timeval");
   timeval tv;
   tv.tv_sec = this->tv_sec_;
   tv.tv_usec = this->tv_usec_;
@@ -104,7 +104,7 @@ ACE_Time_Value::operator timeval () const
 void
 ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
 {
-  ACE_TRACE ("ACE_Time_Value::operator+=");
+  // ACE_TRACE ("ACE_Time_Value::operator+=");
   this->tv_sec_ += tv.tv_sec_;
   this->tv_usec_ += tv.tv_usec_;
   this->normalize ();
@@ -115,7 +115,7 @@ ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
 void
 ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
 {
-  ACE_TRACE ("ACE_Time_Value::operator-=");
+  // ACE_TRACE ("ACE_Time_Value::operator-=");
   this->tv_sec_ -= tv.tv_sec_;
   this->tv_usec_ -= tv.tv_usec_;
   this->normalize ();
@@ -126,7 +126,7 @@ ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
 ACE_Time_Value 
 operator + (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator +");
+  // ACE_TRACE ("operator +");
   ACE_Time_Value sum (tv1.tv_sec_ + tv2.tv_sec_, 
 		      tv1.tv_usec_ + tv2.tv_usec_); 
 
@@ -139,7 +139,7 @@ operator + (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 ACE_Time_Value 
 operator - (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator -");
+  // ACE_TRACE ("operator -");
   ACE_Time_Value delta (tv1.tv_sec_ - tv2.tv_sec_, 
 			tv1.tv_usec_ - tv2.tv_usec_); 
   delta.normalize ();
@@ -151,7 +151,7 @@ operator - (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 int
 operator > (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator >");
+  // ACE_TRACE ("operator >");
   if (tv1.tv_sec_ > tv2.tv_sec_)
     return 1;
   else if (tv1.tv_sec_ == tv2.tv_sec_ 
@@ -166,7 +166,7 @@ operator > (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 int
 operator >= (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 {
-  ACE_TRACE ("operator >=");
+  // ACE_TRACE ("operator >=");
   if (tv1.tv_sec_ > tv2.tv_sec_)
     return 1;
   else if (tv1.tv_sec_ == tv2.tv_sec_ 
@@ -179,7 +179,7 @@ operator >= (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2)
 void
 ACE_Time_Value::normalize (void)
 {
-  ACE_TRACE ("ACE_Time_Value::normalize");
+  // ACE_TRACE ("ACE_Time_Value::normalize");
   // New code from Hans Rohnert...
 
   if (this->tv_usec_ >= ONE_SECOND)

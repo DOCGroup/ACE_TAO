@@ -85,7 +85,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close (void)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->close_i ();
 }
@@ -104,7 +104,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
 					     ACE_Allocator *alloc)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   if (alloc == 0)
     alloc = ACE_Service_Config::alloc ();
@@ -272,7 +272,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind (const EXT_ID &ext_id,
                                                 INT_ID &int_id)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->trybind_i (ext_id, int_id);
 }
@@ -290,7 +290,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find (const EXT_ID &ext_id)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find");
-  ACE_Read_Guard<LOCK> m (this->lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->find_i (ext_id);
 }
@@ -449,7 +449,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind (const EXT_ID &ext_id,
                                                INT_ID &int_id)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->unbind_i (ext_id, int_id);
 }
@@ -459,7 +459,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind (const EXT_ID &ext_id,
                                              const INT_ID &int_id)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->bind_i (ext_id, int_id);
 }
@@ -471,7 +471,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind (const EXT_ID &ext_id,
                                                INT_ID &old_int_id)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->rebind_i (ext_id, int_id, old_ext_id, old_int_id);
 }
@@ -481,7 +481,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find (const EXT_ID &ext_id,
                                              INT_ID &int_id)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::find");
-  ACE_Read_Guard<LOCK> m (this->lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   return this->find_i (ext_id, int_id);
 }
@@ -501,7 +501,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind (const EXT_ID &ext_id)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
   return this->unbind_i (ext_id) == -1 ? -1 : 0;
 }
 
@@ -509,7 +509,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::current_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::current_size");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
   return this->cur_size_;
 }
 
@@ -517,7 +517,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::total_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::total_size");
-  ACE_Write_Guard<LOCK> m (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
   return this->max_size_;
 }
 
@@ -546,7 +546,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) 
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::next");
-  ACE_Read_Guard<LOCK> m (this->map_man_.lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   // Note that this->next_ is never negative at this point...
   if (size_t (this->next_) < this->map_man_.cur_size_)
@@ -562,7 +562,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void) 
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance");
-  ACE_Read_Guard<LOCK> m (this->map_man_.lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   for (++this->next_;
        size_t (this->next_) < this->map_man_.cur_size_
@@ -597,7 +597,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm) 
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::next");
-  ACE_Read_Guard<LOCK> m (this->map_man_.lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   if (this->next_ >= 0)
     {
@@ -612,7 +612,7 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::advance (void) 
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::advance");
-  ACE_Read_Guard<LOCK> m (this->map_man_.lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
   for (--this->next_;
        this->next_ >= 0

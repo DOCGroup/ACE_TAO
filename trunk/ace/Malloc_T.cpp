@@ -402,7 +402,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::trybind (const char *name,
 				     void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::trybind");
-  ACE_Write_Guard<LOCK> mon (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   ACE_Name_Node *node = this->shared_find (name);
   if (node == 0)
@@ -418,11 +418,11 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::trybind (const char *name,
 
 template <ACE_MEM_POOL_1, class LOCK> int
 ACE_Malloc<ACE_MEM_POOL_2, LOCK>::bind (const char *name, 
-				  void *pointer,
-				  int duplicates)
+					void *pointer,
+					int duplicates)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::bind");
-  ACE_Write_Guard<LOCK> mon (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   if (duplicates == 0 && this->shared_find (name) != 0)
     // If we're not allowing duplicates, then if the name is already
@@ -440,7 +440,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find (const char *name, void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find");
 
-  ACE_Read_Guard<LOCK> mon (this->lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   ACE_Name_Node *node = this->shared_find (name);
 
@@ -453,21 +453,26 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find (const char *name, void *&pointer)
     }
 }
 
-template <ACE_MEM_POOL_1, class LOCK> size_t
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::avail_chunks (const size_t size) const
-{
-  ACE_Read_Guard<LOCK> mon (this->lock_);
+// Returns a count of the number of available chunks that can hold
+// <size> byte allocations.
 
-  static const size_t mal_size = sizeof (ACE_Malloc_Header);
+template <ACE_MEM_POOL_1, class LOCK> size_t
+ACE_Malloc<ACE_MEM_POOL_2, LOCK>::avail_chunks (size_t size) const
+{
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, (LOCK &) this->lock_, 0);
+
   size_t count = 0;
-  const size_t sizeof_oversize_ = mal_size / size;
+  // Avoid dividing by 0...
+  size = size == 0 ? 1 : size;
+  const size_t sizeof_oversize = sizeof (ACE_Malloc_Header) / size;
     
   for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->s_.next_block_; 
-       ; currp = currp->s_.next_block_)
+       ; 
+       currp = currp->s_.next_block_)
     {
-      if (currp->s_.size_ * sizeof (ACE_Malloc_Header) >= size_)
-	count += currp->s_.size_ * sizeof_oversize_;
-      // How many will fit in this block.
+      if (currp->s_.size_ * sizeof (ACE_Malloc_Header) >= sizeof_oversize)
+	// How many will fit in this block.
+	count += currp->s_.size_ * sizeof_oversize;
             
       if (currp == this->cb_ptr_->freep_)
 	break;
@@ -481,7 +486,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find (const char *name)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find");
 
-  ACE_Read_Guard<LOCK> mon (this->lock_);
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
   return this->shared_find (name) == 0 ? -1 : 0;
 }
 
@@ -490,7 +495,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::unbind (const char *name, void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::unbind");
 
-  ACE_Write_Guard<LOCK> mon (this->lock_);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
   ACE_Name_Node *prev = 0;
   
   for (ACE_Name_Node *curr = this->cb_ptr_->name_head_; 
