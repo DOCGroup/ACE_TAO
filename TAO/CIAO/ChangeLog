@@ -1,3 +1,10 @@
+Sun Jan  4 17:48:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/RTComponentServer/RTConfig_Manager.cpp:
+
+	  Fixed warnings with g++ builds.
+
 Sat Jan  3 16:34:35 2004  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/IDL2/Traversal/Operation.hpp:

@@ -216,7 +216,9 @@ CIAO::RTPolicy_Set_Manager::find_policies_by_name (const char *name
     }
 
   // duplicate the sequence PolicyList.
-  CORBA::PolicyList_var retv = new CORBA::PolicyList (entry->int_id_);
+  CORBA::PolicyList_var retv =
+    new CORBA::PolicyList (entry->int_id_.in ());
+
   return retv._retn ();
 }
 
@@ -274,8 +276,9 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
                                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        retv = this->rtorb_->create_priority_banded_connection_policy (bands
-                                                                       ACE_ENV_ARG_PARAMETER);
+        retv = 
+          this->rtorb_->create_priority_banded_connection_policy (bands.in ()
+                                                                  ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
       }
       break;
