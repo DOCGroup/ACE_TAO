@@ -1,9 +1,14 @@
-Thu Mar  2 02:15:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+Fri Mar  2 02:18:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI_Timeouts/timeout_i.cpp:
+	  Fixed exception handling code.
+
+Fri Mar  2 02:15:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* tao/Connection_Handler.cpp:
 	  Fixed a wrong "#elsif".
 
-Thu Mar  2 01:32:32 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+Fri Mar  2 01:32:32 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp (set_socket_option):
 	  Added ACE_UNUSED_ARG to avoid warning on those platform 
