@@ -5,12 +5,12 @@
 ACE_INLINE wint_t
 ACE_OS::fgetwc (FILE* fp)
 {
-#if defined (ACE_LACKS_FGETWC)
+#  if defined (ACE_LACKS_FGETWC)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (0);
-#else
+#  else
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetwc (fp), wint_t, WEOF);
-#endif /* ACE_LACKS_FGETWC */
+#  endif /* ACE_LACKS_FGETWC */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -71,13 +71,13 @@ ACE_OS::wsncmp (const WChar *s, const WChar *t, size_t len)
 ACE_INLINE wint_t
 ACE_OS::ungetwc (wint_t c, FILE* fp)
 {
-#if defined (ACE_LACKS_FGETWC)
+#  if defined (ACE_LACKS_FGETWC)
   ACE_UNUSED_ARG (c);
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (0);
-#else
+#  else
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::ungetwc (c, fp), wint_t, WEOF);
-#endif /* ACE_LACKS_FGETWC */
+#  endif /* ACE_LACKS_FGETWC */
 }
 #endif /* ACE_HAS_WCHAR */
 
