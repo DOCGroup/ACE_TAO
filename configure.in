@@ -1781,10 +1781,53 @@ case "$target" in
   ;;
 esac
 ACE_CHECK_STRUCT(strrecvfd, stropts.h, , AC_DEFINE(ACE_LACKS_STRRECVFD))
-ACE_CHECK_STRUCT(sembuf, sys/sem.h, , AC_DEFINE(ACE_LACKS_SEMBUF_T))
 ACE_CHECK_STRUCT(sigaction, signal.h, , AC_DEFINE(ACE_LACKS_SIGACTION))
 ACE_CHECK_STRUCT(sigset_t, signal.h, , AC_DEFINE(ACE_LACKS_SIGSET))
 ACE_CHECK_STRUCT(utsname, sys/utsname.h, , AC_DEFINE(ACE_LACKS_UTSNAME_T))
+
+ACE_CACHE_CHECK([for struct sembuf],[ace_cv_struct_sembuf],
+  [
+   dnl Some platforms may need to include some headers before <sys/sem.h>.
+     AC_TRY_COMPILE(
+       [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/ipc.h>
+#include <sys/sem.h>
+       ],
+       [
+        struct sembuf ace_sembuf;
+       ],
+       [
+        ace_cv_struct_sembuf=yes
+       ],
+       [
+dnl Some compilers don't like the "struct" but we need the struct for
+dnl some platforms to resolve ambiguities between functions and
+dnl structures with with the same name.  So, we try the same test but
+dnl without "struct" if the above test with "struct" fails.  If both
+dnl tests fail, then we can be reasonably sure that we don't have the
+dnl structure we are testing for.
+        AC_TRY_COMPILE(
+          [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/ipc.h>
+#include <sys/sem.h>
+          ],
+          [
+           sembuf ace_sembuf;
+          ],
+          [
+           ace_cv_struct_sembuf=yes
+          ],
+          [
+           ace_cv_struct_sembuf=no
+          ])
+       ])
+  ], , AC_DEFINE(ACE_LACKS_SEMBUF_T))
 
 dnl Thanks to Konstantinos Margaritis <kmargar@cc.uoa.gr> for pointing out
 dnl that struct siginfo_t may also be defined in signal.h
@@ -3497,13 +3540,76 @@ AC_CHECK_FUNC(getpwnam,,) dnl
 AC_CHECK_FUNC(setpwent,,) dnl
 AC_CHECK_FUNC(endpwent,,) dnl
 AC_CHECK_FUNC(getpwent,,) dnl
+AC_CHECK_FUNC(getpwuid,,) dnl
 
 if test "$ac_cv_func_getpwnam" != yes ||
   test "$ac_cv_func_setpwent" != yes ||
   test "$ac_cv_func_endpwent" != yes ||
-  test "$ac_cv_func_getpwent" != yes; then
-  AC_DEFINE(ACE_LACKS_PWD_FUNCTIONS)
+  test "$ac_cv_func_getpwent" != yes ||
+  test "$ac_cv_func_getpwuid" != yes; then
+  AC_DEFINE(ACE_LACKS_PWD_FUNCTIONS) dnl
+else
+  dnl The password file related functions above are required for ACE's
+  dnl alternate implementation.
+
+  dnl Check for functions necessary for ACE's alternate implementation
+  dnl of the now obsolete cuserid() function.
+
+  ACE_CACHE_CHECK([checking if ACE cuserid implementation should be used],
+    [ace_cv_lib_use_alt_cuserid],
+    [
+     AC_TRY_LINK(
+       [
+/* Undefine _XOPEN_SOURCE since it may make the cuserid() prototype
+   visible.  ACE should not rely on such feature test macros. */
+#undef _XOPEN_SOURCE
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>
+#else
+# error No unistd.h header.  Need header where cuserid() is located.
+#endif  /*  ACE_LACKS_UNISTD_H */
+       ],
+       [
+        char * foo = cuserid ((char *)0);
+       ],
+       [
+        dnl If successful then use the system cuserid() implementation,
+        dnl despite the fact that ACE's implementation may be safer.
+        ace_cv_lib_use_alt_cuserid=no
+       ],
+       [
+        AC_TRY_LINK(
+          [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#undef _XOPEN_SOURCE
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>
+#else
+# error No unistd.h header.  Need header where geteuid() is located.
+#endif
+          ],
+          [
+           uid_t foo = geteuid ();
+          ],
+          [
+           dnl All of the functions necessary for ACE's cuserid()
+           dnl implementation exist.
+           ace_cv_lib_use_alt_cuserid=yes
+          ],
+          [
+           dnl If we get here, we're hosed!
+           ace_cv_lib_use_alt_cuserid=no
+          ])
+       ])
+    ],
+    [
+     AC_DEFINE(ACE_HAS_ALT_CUSERID)
+    ],)
 fi
+
+
 
 dnl Check for `strftime' in the `intl' library, for SCO UNIX
 AC_FUNC_STRFTIME
@@ -3568,7 +3674,7 @@ AC_CHECK_FUNC(lseek64, dnl
    ACE_CACHE_CHECK(for lseek64 prototype,
      ace_cv_lib_has_lseek64_prototype,
      [
-      save_CPPFLAGS="$CPPFLAGS"
+      ace_save_CPPFLAGS="$CPPFLAGS"
       ace_no_largefile64="-U_LARGEFILE64_SOURCE"
       CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
       AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
@@ -3579,7 +3685,7 @@ AC_CHECK_FUNC(lseek64, dnl
          ace_cv_lib_has_lseek64_prototype=no
         ])
       dnl Reset the compiler flags
-      CPPFLAGS="$save_CPPFLAGS"
+      CPPFLAGS="$ace_save_CPPFLAGS"
      ],, AC_DEFINE(ACE_LACKS_LSEEK64_PROTOTYPE))
   ],
   [
@@ -3592,7 +3698,7 @@ AC_CHECK_FUNC(lseek64, dnl
       ACE_CACHE_CHECK(for llseek prototype,
         ace_cv_lib_has_llseek_prototype,
         [
-         save_CPPFLAGS="$CPPFLAGS"
+         ace_save_CPPFLAGS="$CPPFLAGS"
          ace_no_largefile64="-U_LARGEFILE64_SOURCE"
          CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
          AC_EGREP_HEADER([[^_]+llseek], unistd.h,
@@ -3603,7 +3709,7 @@ AC_CHECK_FUNC(lseek64, dnl
             ace_cv_lib_has_llseek_prototype=yes
            ],)
          dnl Reset the compiler flags
-         CPPFLAGS="$save_CPPFLAGS"
+         CPPFLAGS="$ace_save_CPPFLAGS"
         ],, AC_DEFINE(ACE_LACKS_LLSEEK_PROTOTYPE))
      ],)
   ])
@@ -3717,7 +3823,7 @@ AC_CHECK_FUNC(pread, dnl
      ACE_CACHE_CHECK(for pread prototype,
        ace_cv_lib_has_pread_prototype,
        [
-        save_CPPFLAGS="$CPPFLAGS"
+        ace_save_CPPFLAGS="$CPPFLAGS"
         ace_no_xopen="-U_XOPEN_SOURCE"
         CPPFLAGS="$CPPFLAGS $ace_no_xopen"
         AC_EGREP_HEADER([[^_]+pread], unistd.h,
@@ -3728,7 +3834,7 @@ AC_CHECK_FUNC(pread, dnl
            ace_cv_lib_has_pread_prototype=no
           ])
         dnl Reset the compiler flags
-        CPPFLAGS="$save_CPPFLAGS"
+        CPPFLAGS="$ace_save_CPPFLAGS"
        ],, AC_DEFINE(ACE_LACKS_PREAD_PROTOTYPE))
     ],),)
 
@@ -3768,7 +3874,7 @@ AC_CHECK_FUNC(strptime, dnl
    ACE_CACHE_CHECK(for strptime prototype,
      ace_cv_lib_has_strptime_prototype,
      [
-      save_CPPFLAGS="$CPPFLAGS"
+      ace_save_CPPFLAGS="$CPPFLAGS"
       ace_no_xopen="-U_XOPEN_SOURCE"
       CPPFLAGS="$CPPFLAGS $ace_no_xopen"
       AC_EGREP_HEADER([[^_]+strptime], time.h,
@@ -3779,7 +3885,7 @@ AC_CHECK_FUNC(strptime, dnl
          ace_cv_lib_has_strptime_prototype=no
         ])
       dnl Reset the compiler flags
-      CPPFLAGS="$save_CPPFLAGS"
+      CPPFLAGS="$ace_save_CPPFLAGS"
      ],, AC_DEFINE(ACE_LACKS_STRPTIME_PROTOTYPE))
   ],
   [
@@ -3863,7 +3969,7 @@ AC_CHECK_FUNC(getpgid, dnl
    ACE_CACHE_CHECK(for getpgid prototype,
      ace_cv_lib_has_getpgid_prototype,
      [
-      save_CPPFLAGS="$CPPFLAGS"
+      ace_save_CPPFLAGS="$CPPFLAGS"
       ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
       CPPFLAGS="$CPPFLAGS $ace_no_xopen"
       AC_EGREP_HEADER([[^_]+getpgid], unistd.h,
@@ -3874,7 +3980,7 @@ AC_CHECK_FUNC(getpgid, dnl
          ace_cv_lib_has_getpgid_prototype=no
         ])
       dnl Reset the compiler flags
-      CPPFLAGS="$save_CPPFLAGS"
+      CPPFLAGS="$ace_save_CPPFLAGS"
      ],, AC_DEFINE(ACE_LACKS_GETPGID_PROTOTYPE))
   ],
   [
@@ -3892,7 +3998,7 @@ AC_CHECK_FUNC(setregid, dnl
    ACE_CACHE_CHECK(for setregid prototype,
      ace_cv_lib_has_setregid_prototype,
      [
-      save_CPPFLAGS="$CPPFLAGS"
+      ace_save_CPPFLAGS="$CPPFLAGS"
       ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
       CPPFLAGS="$CPPFLAGS $ace_no_xopen"
       AC_EGREP_HEADER([[^_]+setregid], time.h,
@@ -3903,7 +4009,7 @@ AC_CHECK_FUNC(setregid, dnl
          ace_cv_lib_has_setregid_prototype=no
         ])
       dnl Reset the compiler flags
-      CPPFLAGS="$save_CPPFLAGS"
+      CPPFLAGS="$ace_save_CPPFLAGS"
      ],, AC_DEFINE(ACE_LACKS_SETREGID_PROTO))
   ],
   [
@@ -3917,7 +4023,7 @@ AC_CHECK_FUNC(setreuid, dnl
    ACE_CACHE_CHECK(for setreuid prototype,
      ace_cv_lib_has_setreuid_prototype,
      [
-      save_CPPFLAGS="$CPPFLAGS"
+      ace_save_CPPFLAGS="$CPPFLAGS"
       ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
       CPPFLAGS="$CPPFLAGS $ace_no_xopen"
       AC_EGREP_HEADER([[^_]+setreuid], time.h,
@@ -3928,7 +4034,7 @@ AC_CHECK_FUNC(setreuid, dnl
          ace_cv_lib_has_setreuid_prototype=no
         ])
       dnl Reset the compiler flags
-      CPPFLAGS="$save_CPPFLAGS"
+      CPPFLAGS="$ace_save_CPPFLAGS"
      ],, AC_DEFINE(ACE_LACKS_SETREUID_PROTO))
   ],
   [
@@ -4248,9 +4354,23 @@ dnl name.
     ,
     AC_DEFINE(ACE_LACKS_THREAD_STACK_SIZE))
 
-  ACE_CHECK_FUNC(pthread_cancel, pthread.h, dnl
-    ,
-    AC_DEFINE(ACE_LACKS_PTHREAD_CANCEL))
+  ACE_CHECK_FUNC([pthread_cancel], [pthread.h],
+    [
+     dnl Make sure the prototype actually exists.  Some platforms,
+     dnl such as FreeBSD 4, appear to have a missing prototype.  If
+     dnl the prototype is missing, then don't use pthread_cancel.
+     dnl Creating a prototype for it in ACE is probably a bad idea.
+     AC_EGREP_HEADER([pthread_cancel], [pthread.h],
+       [
+        dnl Do nothing if the prototype exists.
+       ],
+       [
+        AC_DEFINE(ACE_LACKS_PTHREAD_CANCEL)
+       ])
+    ],
+    [
+     AC_DEFINE(ACE_LACKS_PTHREAD_CANCEL)
+    ])
 
   AC_CHECK_FUNC(pthread_yield, dnl
     ,
@@ -4630,7 +4750,7 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
      ACE_CACHE_CHECK(for strtok_r prototype,
      ace_cv_lib_has_strtok_r_prototype,
         [
-         save_CPPFLAGS="$CPPFLAGS"
+         ace_save_CPPFLAGS="$CPPFLAGS"
          ace_no_posix="-U_POSIX_SOURCE"
          CPPFLAGS="$CPPFLAGS $ace_no_posix"
          AC_EGREP_HEADER([[^_]+strtok_r], string.h,
@@ -4641,7 +4761,7 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
             ace_cv_lib_has_strtok_r_prototype=no
            ])
            dnl Reset the compiler flags
-           CPPFLAGS="$save_CPPFLAGS"
+           CPPFLAGS="$ace_save_CPPFLAGS"
         ],, AC_DEFINE(ACE_LACKS_STRTOK_R_PROTOTYPE))
     ],)
 

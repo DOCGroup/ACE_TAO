@@ -245,12 +245,18 @@
    DLLs first before looking for the DLL names specified. */
 #undef ACE_DISABLE_DEBUG_DLL_CHECK
 
+/* Platform supports Asynchronous IO calls */
+#undef ACE_HAS_AIO_CALLS
+
+/* Use ACE's alternate cuserid() implementation since a system
+   cuserid() may not exist, or it is not desirable to use it.  The
+   implementation requires ACE_LACKS_PWD_FUNCTIONS to be undefined and
+   that the geteuid() system call exists. */
+#undef ACE_HAS_ALT_CUSERID
+
 /* Platform supports new C++ style casts (dynamic_cast, static_cast,
    reinterpret_cast and const_cast) */
 #undef ACE_HAS_ANSI_CASTS
-
-/* Platform supports Asynchronous IO calls */
-#undef ACE_HAS_AIO_CALLS
 
 /* Number of TSS keys, with ACE_HAS_TSS_EMULATION _only_.  Defaults to 64.  */
 #undef ACE_DEFAULT_THREAD_KEYS

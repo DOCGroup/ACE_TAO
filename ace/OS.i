@@ -1219,9 +1219,14 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
     ACE_FAIL_RETURN (0);
   else
     return user;
-#elif defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
+#elif defined (ACE_HAS_ALT_CUSERID)
+#  if defined (ACE_LACKS_PWD_FUNCTIONS)
+#    error Cannot use alternate cuserid() without POSIX password functions!
+#  endif  /* ACE_LACKS_PWD_FUNCTIONS */
+
   // POSIX.1 dropped the cuserid() function.
-  // GNU GLIBC correctly deprecates the cuserid() function.
+  // GNU GLIBC and other platforms correctly deprecate the cuserid()
+  // function.
 
   struct passwd *pw = 0;
 
