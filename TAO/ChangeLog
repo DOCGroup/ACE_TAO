@@ -1,3 +1,8 @@
+Fri Apr 23 11:42:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Remote_Invocation.h:
+          Fixed doxygen documentation
+
 Fri Apr 23 11:32:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1495_Regression/interceptors.cpp:
