@@ -1,7 +1,23 @@
+Thu Sep  9 15:57:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/DLL_ORB.h:
+	* tao/DLL_ORB.inl:
+	* tao/DLL_ORB.cpp:
+
+	  Removed these files.  They have been deprecated for a few
+	  years.  See the `tests/DLL_ORB' test to get an idea of how to
+	  use DLL ORB functionality without explicitly linking the TAO
+	  library.  Thanks to Bala for the reminder.
+
+	* tao/Makefile.am (ORB_Core):
+	* tao/tao.mpc (Source_Files):
+
+	  Removed `DLL_ORB.cpp' from the source file list.
+
 Thu Sep  9 11:53:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp (version):
-        
+
           Fixed logic of method that computes the version to handle
           the case where the repository ID is set with 'typeid'
           with no valid version at the end of the string.
