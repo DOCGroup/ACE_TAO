@@ -94,7 +94,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
                           MAXHOSTNAMELEN) == -1)
     return -1;
   else
-    return this->set (tempname, 
+    return this->set (tempname,
                       addr.get_port_number (),
                       key,
                       &addr);
@@ -112,7 +112,7 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
                           MAXHOSTNAMELEN) == -1)
     return -1;
   else
-    return this->set (tempname, 
+    return this->set (tempname,
                       addr.get_port_number (),
                       key,
                       &addr);
@@ -306,7 +306,7 @@ IIOP_Object::IIOP_Object (const char *host,
 
 // Constructor.  It will usually be used by the server side.
 IIOP_Object::IIOP_Object (char *repository_id,
-                          const ACE_INET_Addr &addr, 
+                          const ACE_INET_Addr &addr,
                           const char *objkey)
   : STUB_Object (repository_id),
     profile (addr, objkey),

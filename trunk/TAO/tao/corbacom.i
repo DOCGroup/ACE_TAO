@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    corbacom.i
 //
@@ -13,7 +13,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//
 // ============================================================================
 
 // String utility support
@@ -41,20 +41,20 @@ CORBA::string_free (CORBA::Char *str)
 // String_var type
 // ----------------------------------------------------------------------
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::String_var::String_var (void)
 {
   this->ptr_ = 0;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::String_var::~String_var (void)
 {
   if (this->ptr_ != 0)
     CORBA::string_free (this->ptr_);
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::String_var::String_var (char *p)
   : ptr_ (p)
 {
@@ -73,14 +73,14 @@ CORBA::String_var::String_var (const CORBA::String_var& r)
   this->ptr_ = CORBA::string_dup (r.ptr_);
 }
 
-ACE_INLINE CORBA::Char & 
+ACE_INLINE CORBA::Char &
 CORBA::String_var::operator[] (CORBA::ULong index)
 {
   // we need to verify bounds else raise some exception
   return this->ptr_[index];
 }
 
-ACE_INLINE CORBA::Char 
+ACE_INLINE CORBA::Char
 CORBA::String_var::operator[] (CORBA::ULong index) const
 {
   // we need to verify bounds else raise some exception
@@ -127,6 +127,10 @@ CORBA::String_var::_retn (void)
   return temp;
 }
 
+// ----------------------------------------------------
+//  String_out type
+// ----------------------------------------------------
+
 ACE_INLINE
 CORBA::String_out::String_out (char *&s)
   : ptr_ (s)
@@ -136,7 +140,7 @@ CORBA::String_out::String_out (char *&s)
 
 ACE_INLINE
 CORBA::String_out::String_out (CORBA::String_var &s)
-  : ptr_ (s.out ()) 
+  : ptr_ (s.out ())
 {
 }
 
@@ -178,4 +182,3 @@ CORBA::String_out::ptr (void)
 {
   return this->ptr_;
 }
-
