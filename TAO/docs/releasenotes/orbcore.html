@@ -8,7 +8,7 @@
     <HR> <H3><A NAME="orb"></A>ORB &amp; ORB Core</H3> Point of
     contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A>
 
-    <p>Last Update: 26 November 1997</P>
+    <p>Last Update: 5 December 1997</P>
 
     <P>Current status:
 
@@ -33,33 +33,36 @@
       CORBA 2.0 Specification are currently not supported.  They will
       be supported in a future release of TAO.</dd>
       
-      <p><dt><em>Object references for objects dynamically created within a
-      server do not have proper host.</em></dt>
+      <dt><em>Object references for objects dynamically created within
+      a server may not have proper host.</em> (See also <a
+      href="#hostfix">recent fix</a>.)</dt>
 
       <dd>When an object is dynamically created and its object
       reference returned, it simply has to "guess" at the host
       information that is returned in the IIOP Profile.  Currently, it
-      guesses using the host name, which is a good guess in most
+      guesses using the host name, which is a reasonable guess in most
       cases.<p>
 
       However, if there are multiple interfaces on a machine
       <i>and</i> they have different host names, it is possible that
       the desired effect will not be realized, i.e., the connection to
       that new object may use a different interface from the original
-      object.  Currently the only way to change this is to manually
-      specify that dynamically-created objects bind to a specific
-      interface so that their IIOP Profile has the desired hostname.
-      A more desirable fix is being investigated.</dd>
-
-      <p><dt><em>Server ORB does not appear to honor the
-      <b>-ORBhost</b> option.</em></dt>
-
-      <dd>Some recent change has made this option non-operational.</dd>
+      object.  Currently the only way to change this is to use the <a
+      href="../Options.html#-ORBhost"><b>-ORBhost</b> option</a> to
+      manually specify that dynamically-created objects bind to a
+      specific interface so that their IIOP Profile has the desired
+      hostname.  A more desirable fix is being investigated.</dd>
     </dl>
 
     Recently Completed Work:
 
     <UL>
+      <li><a name="hostfix"></a>Fixed problem where object references
+      for objects dynamically created within a server do not have
+      proper host, at least if the desired host was specified using <a
+      href="../Options.html#-ORBhost"><b>-ORBhost</b></a> on the
+      command line.</li>
+
       <li>Added support for <a
       href="../Options.html#-ORBsndsock"><b>-ORBsndsock</b></a> and <a
       href="../Options.html#-ORBrcvsock"><b>-ORBrcvsock</b></a> ORB
@@ -235,17 +238,15 @@
 	  sitting around anywhere.  It should only get it when it
 	  needs it.  This should not be difficult to change.</p>
 	</LI>
-        </UL> Critical Work:
+        </UL>
+
+    Critical Work:
 
     <UL>
-      <LI>Add pre-cached connection on client side.  Clients will pass
-	in a comma-separated list of <em>host:port</em> destinations
-	using the <code>CORBA::ORB_init()</code> interface.</LI>
+      <LI>Support new concurrency models, e.g.,	Thread-per-Request.</LI>
+    </UL> 
 
-      <LI>Support new concurrency models, e.g.,
-	Thread-per-Request.</LI>
-
-    </UL> Future work:
+    Future work:
     <UL>
 
       <li>Implement <code>ORB::perform_work</code> and
@@ -261,7 +262,8 @@
 	TAO.</li>
 
       <li>Make the section in <a
-	  href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a> that documents installation on Unix platforms more complete.
+      href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
+      that documents installation on Unix platforms more complete.
 	</li>
 
       <li>Improve the <code>Service Configurator</code> service
@@ -270,7 +272,7 @@
       <LI>Integrate the <A HREF="#poa">POA</A> implementation.</LI>
 
       <LI>Add support for <TT>resolve_initial_references</TT> using
-	ACE support for UDP broadcast.</LI>
+	ACE support for UDP and  broadcast.</LI>
 
       <LI>Assist in porting higher level services (e.g., <A
 	  HREF="#eventchannel">Event Channel</A>) to TAO.</LI>
