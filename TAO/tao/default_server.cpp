@@ -55,25 +55,6 @@ TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
 }
 
 ACE_Lock *
-TAO_Default_Server_Strategy_Factory::create_servant_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-#if defined (ACE_HAS_THREADS)
-  if (this->activate_server_connections ())
-      ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
-                      0);
-  else
-#endif /* ACE_HAS_THREADS */
-      ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
-                      0);
-
-  return the_lock;
-}
-
-ACE_Lock *
 TAO_Default_Server_Strategy_Factory::create_event_loop_lock (void)
 {
   ACE_Lock *the_lock = 0;
