@@ -1,3 +1,9 @@
+Wed Apr 16 12:49:59 2003  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be_include/be_helper.h:
+
+	  Include <stdio.h> to pull in "FILE" typedef.
+
 Wed Apr 16 13:44:47 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\params:
