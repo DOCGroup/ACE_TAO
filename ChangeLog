@@ -1,22 +1,38 @@
+Sun Nov 19 10:37:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Add the new files to the MSVC projects.
+
+        * ace/Dynamic_Service_Base.h:
+          Add missing file.
+
+        * ace/Dynamic_Service_Base.cpp:
+          Removed template-like protections, this is a regular class.
+
+        * ace/Dynamic_Service.i:
+        * ace/Dynamic_Service.cpp:
+          Cosmetic fixes.
+
 Sun Nov 19 08:05:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Makefile: 
-	  Updated.
-	
-	* ace/Dynamic_Service.cpp: 
-	* ace/Dynamic_Service.h: 
-	* ace/Dynamic_Service_Base.cpp: 
-	* ace/Dynamic_Service_Base.h: 
-	  Not all methods in Dynamic_Service were based on the SERVICE
-	  types. Moved those to the base class 'Dynamic_Service_Base' and
-	  the Dynamic_Service inherits from the base class.
-	
+        * ace/Makefile:
+          Updated.
+
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service.h:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Dynamic_Service_Base.h:
+          Not all methods in Dynamic_Service were based on the SERVICE
+          types. Moved those to the base class 'Dynamic_Service_Base' and
+          the Dynamic_Service inherits from the base class.
+
 Sat Nov 18 11:35:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/OS_Test.cpp:
 
           Changed the signature of main to use ACE_TCHAR.  Although
-          I don't consider this the "right" way of doing this, it 
+          I don't consider this the "right" way of doing this, it
           will make the builds happy with ACE_USES_WCHAR until we
           implement something better.
 
