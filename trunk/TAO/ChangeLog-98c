@@ -1,3 +1,8 @@
+Sat Sep 26 20:25:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	  Fixed problem in TAO_ECG_Mcast_EH::unsubscribe() method.
+
 Sat Sep 26 09:59:59 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/NavWeap.idl

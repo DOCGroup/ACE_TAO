@@ -518,7 +518,7 @@ TAO_ECG_Mcast_EH::subscribe (const ACE_INET_Addr &mcast_addr)
 int
 TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
 {
-  return this->dgram_.unsubscribe ();
+  return this->dgram_.unsubscribe (mcast_addr);
 }
 
 void
