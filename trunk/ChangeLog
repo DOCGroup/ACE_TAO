@@ -1,3 +1,15 @@
+Mon Feb  2 06:56:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Makefile.ace:
+
+	  Building applications which use ACE library fail because
+	  LynxOS's linker is unable to find dlopen() which is used in
+	  DLL_Manager.o and implemented in OS_NS_dlfcn.o. 
+
+          To fix this, OS_NS_dlfcn.o must be placed after DLL_Manager.o
+	  when creating libACE.a with ar. Thanks to Olli Savia for the
+	  patch. 
+	  
 Sun Feb  1 19:09:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/config-borland-common.h:
