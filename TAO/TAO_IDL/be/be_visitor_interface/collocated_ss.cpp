@@ -43,7 +43,6 @@ be_visitor_interface_collocated_ss::~be_visitor_interface_collocated_ss (void)
 int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = tao_cg->server_skeletons ();
-  long i;
 
   this->ctx_->node (node);
 
@@ -90,32 +89,6 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
                          "codegen for base class ctor init failed\n"),
                         -1);
     }
-
-#if 0
-  if (node->n_inherits () > 0)
-    {
-      for (i = 0; i < node->n_inherits (); ++i)
-        {
-          be_interface* parent =
-            be_interface::narrow_from_decl (node->inherits()[i]);
-	  if (parent->is_nested ())
-	    {
-	      be_decl* scope =
-		be_scope::narrow_from_scope (parent->defined_in())->decl ();
-
-	      *os << "  ACE_NESTED_CLASS ("
-		  << "POA_" << scope->name () << ","
-		  << parent->local_coll_name ()
-		  << ") (servant, stub)," << be_nl;
-	    }
-	  else
-	    {
-	      *os << "  " << parent->full_coll_name ()
-		  << " (servant, stub)," << be_nl;
-	    }
-        }
-    }
-#endif
 
   *os << "  CORBA_Object (stub, servant, CORBA::B_TRUE)," << be_nl
       << "  servant_ (servant)";
