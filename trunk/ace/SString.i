@@ -26,6 +26,12 @@ ACE_CString::rep (void) const
   return new_string;
 }
 
+ACE_INLINE const char *
+ACE_CString::fast_rep (void) const
+{
+  return this->rep_;
+}
+
 // Comparison operator.
 
 ACE_INLINE int 
