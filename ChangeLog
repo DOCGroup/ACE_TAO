@@ -1,3 +1,8 @@
+Wed Aug 08 11:59:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Do not redefine ACE_IOV_MAX if it has already been
+	  defined.
+
 Wed Aug  8 06:21:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Makefile: Moved Message_Block from STREAMS_FILES to
@@ -21,8 +26,8 @@ Tue Aug  7 19:14:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Tue Aug  7 15:19:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace: Changed all uses of IOV_MAX to use the new ACE_IOV_MAX.  
-    
+	* ace: Changed all uses of IOV_MAX to use the new ACE_IOV_MAX.
+
 	* ace/OS.h: Added a new ACE_IOV_MAX that makes it clear this is
 	  an ACE-level #define.  We use this in C++NP v1.
 
@@ -41,7 +46,7 @@ Tue Aug  7 17:27:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Collection_test.cpp: Fixed a compile error with g++. This
 	  is a patch that Johnny Willemsen sent as a part of his last
-	  checkin. 
+	  checkin.
 
 Tue Aug 07 11:25:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
