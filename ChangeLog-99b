@@ -4,7 +4,9 @@ Mon Apr 12 14:24:28 1999  David L. Levine  <levine@cs.wustl.edu>
           added BIN2, LIB2, SHLIB2, and SHLIBA2 to support
           subsetting.  It allows realclean to remove old BIN,
           LIB, SHLIB, and SHLIBA targets after remove the
-          ace_components information file.
+          ace_components information file.  Also, removed explicit
+          -f following $(RM).  -f should be included in the RM macro
+          if appropriate for the platform.
 
 Mon Apr 12 13:01:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
