@@ -1,33 +1,41 @@
+Wed Sep 22 07:04:46 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a bug that I introduced in my Tue Sep 21 06:38:17 2004
+          change.  INSBIN can't be set to '.'.  It causes many problematic
+          interations with rules.local.GNU and rules.nested.GNU.
+
 Tue Sep 21 20:13:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added checks for getipnodebyaddr() and getipnodebyname() which
-	  set ACE_LACKS_GETIPNODEBYADDR and ACE_LACKS_GETIPNODEBYNAME.
+          Added checks for getipnodebyaddr() and getipnodebyname() which
+          set ACE_LACKS_GETIPNODEBYADDR and ACE_LACKS_GETIPNODEBYNAME.
 
-	* ace/OS_NS_netdb.inl:
+        * ace/OS_NS_netdb.inl:
 
-	  Changed __GNUC__'s in conditionals to ACE_LACKS_GETIPNODEBYADDR
-	  or ACE_LACKS_GETIPNODEBYNAME.
+          Changed __GNUC__'s in conditionals to ACE_LACKS_GETIPNODEBYADDR
+          or ACE_LACKS_GETIPNODEBYNAME.
 
-	* ace/config-linux-common.h:
-	* ace/config-netbsd.h:
+        * ace/config-linux-common.h:
+        * ace/config-netbsd.h:
 
-	  Added #define for ACE_LACKS_GETIPNODEBYADDR and
-	  ACE_LACKS_GETIPNODEBYNAME.
+          Added #define for ACE_LACKS_GETIPNODEBYADDR and
+          ACE_LACKS_GETIPNODEBYNAME.
 
 Tue Sep 21 17:50:27 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Naming/naming.mpc: Correct the exename for Nodelocal.
-	  It was conflicting with that of Netlocal, which, when generated,
-	  confused Visual Age C++ templates and automake.
+        * examples/APG/Naming/naming.mpc: Correct the exename for Nodelocal.
+          It was conflicting with that of Netlocal, which, when generated,
+          confused Visual Age C++ templates and automake.
 
 Tue Sep 21 12:16:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ACEXML/parser/parser/Parser.cpp: parse_encoding_decl(), don't
-	  crash if the input source doesn't declare an encoding.
-	  reset(), if current_ is already 0 (the case if no parsing ever
-	  really got started) don't dereference it.
+        * ACEXML/parser/parser/Parser.cpp: parse_encoding_decl(), don't
+          crash if the input source doesn't declare an encoding.
+          reset(), if current_ is already 0 (the case if no parsing ever
+          really got started) don't dereference it.
 
 Tue Sep 21 18:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
