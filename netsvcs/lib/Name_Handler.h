@@ -1,4 +1,4 @@
-// -*- C++ -*- 
+// -*- C++ -*-
 //
 // $Id$
 
@@ -26,6 +26,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SString.h"
+#include "ace/Svc_Handler.h"
 #include "ace/Naming_Context.h"
 #include "ace/Name_Request_Reply.h"
 #include "ace/Singleton.h"
