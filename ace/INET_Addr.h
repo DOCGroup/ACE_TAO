@@ -42,8 +42,7 @@ public:
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
   ACE_INET_Addr (u_short port_number,
-                 const ASYS_TCHAR host_name[],
-                 const ASYS_TCHAR protocol[] = "tcp");
+                 const ASYS_TCHAR host_name[]);
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>.
 
@@ -55,7 +54,7 @@ public:
   // INADDR_ANY.
 
   ACE_INET_Addr (u_short port_number,
-		 ACE_UINT32 ip_addr  = INADDR_ANY);
+		 ACE_UINT32 ip_addr = INADDR_ANY);
   // Creates an <ACE_INET_Addr> from a <port_number> and an Internet
   // <ip_addr>.  This method assumes that <port_number> and <ip_addr>
   // are in host byte order.
@@ -64,14 +63,14 @@ public:
 		 const ASYS_TCHAR host_name[],
                  const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
-  // <port_name> and the remote <host_name>.
+  // <port_name>, the remote <host_name>, and the <protocol>.
 
   ACE_INET_Addr (const ASYS_TCHAR port_name[],
 		 ACE_UINT32 ip_addr,
                  const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
-  // <port_name> and an Internet <ip_addr>.  This method assumes that
-  // <ip_addr> is in host byte order.
+  // <port_name>, an Internet <ip_addr>, and the <protocol>.  This
+  // method assumes that <ip_addr> is in host byte order.
 
   ~ACE_INET_Addr (void);
   // Default dtor.
@@ -104,14 +103,14 @@ public:
 	   const ASYS_TCHAR host_name[],
            const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
-  // <port_name> and the remote <host_name>.
+  // <port_name>, the remote <host_name>, and the <protocol>.
 
   int set (const ASYS_TCHAR port_name[],
 	   ACE_UINT32 ip_addr,
            const ASYS_TCHAR protocol[] = "tcp");
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
-  // <port_name> and an Internet address.  This assumes that <ip_addr>
-  // is already in network byte order.
+  // <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
+  // <ip_addr> is already in network byte order.
 
   int set (const ASYS_TCHAR addr[]);
   // Initializes an <ACE_INET_Addr> from the <addr>, which can be
