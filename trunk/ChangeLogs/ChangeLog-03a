@@ -43,7 +43,7 @@ Tue Jun 18 12:44:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 Tue Jun 18 12:17:58 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
-	  Added the $Id$ symbol.
+	  Added the RCS ID symbol.
 
 Tue Jun 18 12:41:15 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
