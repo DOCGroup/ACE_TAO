@@ -14,7 +14,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IORMANIP_CFLAGS) \
 
 CPPDIR = .
 
-INCDIR_NAME = tao/IORManipulation
+INCDIR_NAME = tao\IORManipulation
 INCLUDES = \
 	*.h *.i
 
