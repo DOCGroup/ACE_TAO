@@ -23,12 +23,7 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "tao/TAOS.h"
 #include "tao/Typecode.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
