@@ -53,7 +53,5 @@
 #include "big_union.h"
 #include "recursive_union.h"
 #include "complex_any.h"
-#if 0
 #include "multdim_array.h"
-#endif
 #endif /* if !defined */

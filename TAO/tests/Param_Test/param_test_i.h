@@ -313,7 +313,6 @@ public:
                       CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-# if 0
   // Test for multi dimensional arrays
   virtual Param_Test::Multdim_Array_slice *
   test_multdim_array (const Param_Test::Multdim_Array,
@@ -322,7 +321,6 @@ public:
                       CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#endif
   void shutdown (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
