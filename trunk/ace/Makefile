@@ -532,11 +532,14 @@ endif # GHS
 .obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp \
  OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -549,13 +552,17 @@ endif # GHS
  Log_Record.i \
  Template_Instantiations.cpp
 
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
+.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
+ OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -573,11 +580,14 @@ endif # GHS
  Sched_Params.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -590,14 +600,18 @@ endif # GHS
  Log_Record.i \
  Sched_Params.i
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
+ ACE.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -677,11 +691,14 @@ endif # GHS
  Active_Map_Manager.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -770,11 +787,14 @@ endif # GHS
  Arg_Shifter.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -786,15 +806,19 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+ ARGV.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -858,11 +882,14 @@ endif # GHS
  Map_Manager.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -957,11 +984,14 @@ endif # GHS
 .obj/Containers.o .obj/Containers.so .shobj/Containers.o .shobj/Containers.so: Containers.cpp \
  OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1026,11 +1056,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1121,14 +1154,18 @@ endif # GHS
  Hash_Map_With_Allocator_T.cpp \
  Configuration.i
 
-.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp Dirent.h \
+.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp \
+ Dirent.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1146,11 +1183,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1192,11 +1232,14 @@ endif # GHS
  Functor.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1217,11 +1260,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1239,11 +1285,14 @@ endif # GHS
  Hash_Map_Manager.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1335,11 +1384,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1405,11 +1457,14 @@ endif # GHS
  Method_Request.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1425,11 +1480,14 @@ endif # GHS
  Object_Manager.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1544,11 +1602,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1569,11 +1630,14 @@ endif # GHS
  Registry.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1590,11 +1654,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1673,15 +1740,19 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp Stats.h \
+.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp \
+ Stats.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1745,11 +1816,14 @@ endif # GHS
  System_Time.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1814,11 +1888,14 @@ endif # GHS
  pre.h \
  Time_Value.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1838,11 +1915,14 @@ endif # GHS
 .obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
  OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1861,11 +1941,14 @@ endif # GHS
  Timer_Queue_T.h \
  Free_List.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1940,11 +2023,14 @@ endif # GHS
  Timer_Queue_T.h \
  Free_List.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2013,11 +2099,14 @@ endif # GHS
  Timer_Queue_T.h \
  Free_List.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2083,11 +2172,14 @@ endif # GHS
  Containers.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2157,11 +2249,14 @@ endif # GHS
  Timer_Queue_T.h \
  Free_List.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2231,11 +2326,14 @@ endif # GHS
  Mem_Map.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2321,16 +2419,20 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp Synch_T.h \
+.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
+ Synch_T.h \
  pre.h \
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2364,12 +2466,15 @@ endif # GHS
  Managed_Object.cpp
 
 .obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp \
- inc_user_config.h \
+ config-all.h \
  pre.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  ACE.h \
  OS.h \
  Min_Max.h \
@@ -2452,11 +2557,14 @@ endif # GHS
  Log_Record.h \
  OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2470,12 +2578,15 @@ endif # GHS
  ACE.i
 
 .obj/Trace.o .obj/Trace.so .shobj/Trace.o .shobj/Trace.so: Trace.cpp \
- inc_user_config.h \
+ config-all.h \
  pre.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Trace.h \
  OS.h \
  Min_Max.h \
@@ -2495,11 +2606,14 @@ endif # GHS
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2612,13 +2726,17 @@ endif # GHS
  Method_Request.h \
  Activation_Queue.i
 
-.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp OS.h \
+.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp \
+ OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2690,11 +2808,14 @@ endif # GHS
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2766,15 +2887,19 @@ endif # GHS
  Reactor_Impl.h \
  Process_Manager.i
 
-.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp Thread.h \
+.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp \
+ Thread.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2805,11 +2930,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2823,15 +2951,19 @@ endif # GHS
  ACE.i \
  Synch_Options.i
 
-.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp Thread.h \
+.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp \
+ Thread.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2851,11 +2983,14 @@ endif # GHS
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2919,15 +3054,19 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp Thread.h \
+.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
+ Thread.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2960,11 +3099,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3048,11 +3190,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3134,11 +3279,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3160,11 +3308,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3280,11 +3431,14 @@ endif # GHS
  pre.h \
  Proactor_Impl.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3301,11 +3455,14 @@ endif # GHS
  pre.h \
  Containers.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3392,11 +3549,14 @@ endif # GHS
  Proactor.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3528,11 +3688,14 @@ endif # GHS
  Handle_Set.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3670,11 +3833,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3758,11 +3924,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3864,11 +4033,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3952,11 +4124,14 @@ endif # GHS
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4062,11 +4237,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4185,11 +4363,14 @@ endif # GHS
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4298,11 +4479,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4383,11 +4567,14 @@ endif # GHS
  Asynch_IO.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4402,11 +4589,14 @@ endif # GHS
 .obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.so .shobj/Asynch_IO_Impl.o .shobj/Asynch_IO_Impl.so: Asynch_IO_Impl.cpp \
  OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4423,11 +4613,14 @@ endif # GHS
  POSIX_Asynch_IO.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4445,11 +4638,14 @@ endif # GHS
  Handle_Set.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4565,11 +4761,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4583,16 +4782,20 @@ endif # GHS
  ACE.i \
  IPC_SAP.i
 
-.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp LSOCK.h \
+.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
+ LSOCK.h \
  pre.h \
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4623,11 +4826,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4666,11 +4872,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4706,11 +4915,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4749,11 +4961,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4786,11 +5001,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4818,15 +5036,19 @@ endif # GHS
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
+ SOCK.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4855,11 +5077,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4905,11 +5130,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4940,11 +5168,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4975,11 +5206,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5023,11 +5257,14 @@ endif # GHS
  INET_Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5058,11 +5295,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5138,11 +5378,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5173,11 +5416,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5200,15 +5446,19 @@ endif # GHS
  SOCK_IO.i \
  SOCK_Stream.i
 
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp Addr.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
+ Addr.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5227,11 +5477,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5252,11 +5505,14 @@ endif # GHS
  pre.h \
  Time_Value.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5282,11 +5538,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5313,11 +5572,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5335,11 +5597,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5358,11 +5623,14 @@ endif # GHS
  ATM_Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5388,11 +5656,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5412,16 +5683,20 @@ endif # GHS
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
+ DEV.h \
  pre.h \
  IO_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5449,11 +5724,14 @@ endif # GHS
  Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5479,11 +5757,14 @@ endif # GHS
  IO_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5507,17 +5788,21 @@ endif # GHS
  DEV_IO.i \
  DEV_Connector.i
 
-.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp DEV_IO.h \
+.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp \
+ DEV_IO.h \
  pre.h \
  DEV.h \
  IO_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5540,16 +5825,20 @@ endif # GHS
  DEV.i \
  DEV_IO.i
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
+ FIFO.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5571,11 +5860,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5599,11 +5891,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5627,11 +5922,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5655,11 +5953,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5682,11 +5983,14 @@ endif # GHS
  Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5704,16 +6008,20 @@ endif # GHS
  SString.i \
  Malloc_Base.h
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
+ FILE.h \
  pre.h \
  IO_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5743,11 +6051,14 @@ endif # GHS
  IO_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5778,11 +6089,14 @@ endif # GHS
  IO_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5810,11 +6124,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5830,15 +6147,19 @@ endif # GHS
  Addr.i \
  INET_Addr.i
 
-.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp IO_SAP.h \
+.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
+ IO_SAP.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5856,11 +6177,14 @@ endif # GHS
  IOStream.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5891,11 +6215,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5930,11 +6257,14 @@ endif # GHS
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5997,11 +6327,14 @@ endif # GHS
  Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6019,16 +6352,20 @@ endif # GHS
  SString.i \
  Malloc_Base.h
 
-.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp SPIPE.h \
+.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp \
+ SPIPE.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6058,11 +6395,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6093,11 +6433,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6128,11 +6471,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6160,11 +6506,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6183,11 +6532,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6209,11 +6561,14 @@ endif # GHS
  SV_Semaphore_Simple.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6233,11 +6588,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6256,11 +6614,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6274,16 +6635,20 @@ endif # GHS
  ACE.i \
  SV_Shared_Memory.i
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
+ TLI.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6306,11 +6671,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6335,11 +6703,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6369,11 +6740,14 @@ endif # GHS
  IPC_SAP.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6391,14 +6765,18 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i
 
-.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp TTY_IO.h \
+.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
+ TTY_IO.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6433,11 +6811,14 @@ endif # GHS
  Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6459,11 +6840,14 @@ endif # GHS
  Stream.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6611,11 +6995,14 @@ endif # GHS
  Stream.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6761,11 +7148,14 @@ endif # GHS
  Stream.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6911,11 +7301,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7005,11 +7398,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7036,11 +7432,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7125,16 +7524,20 @@ endif # GHS
  MEM_Addr.i \
  MEM_Connector.i
 
-.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp MEM_IO.h \
+.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp \
+ MEM_IO.h \
  pre.h \
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7217,11 +7620,14 @@ endif # GHS
  Malloc.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7287,11 +7693,14 @@ endif # GHS
  SOCK.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7367,14 +7776,18 @@ endif # GHS
  MEM_IO.i \
  MEM_Stream.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
+ DLL.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7395,11 +7808,14 @@ endif # GHS
  Shared_Object.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7529,11 +7945,14 @@ endif # GHS
  Malloc.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7649,11 +8068,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7792,11 +8214,14 @@ endif # GHS
  Shared_Object.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7834,11 +8259,14 @@ endif # GHS
  Shared_Object.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7881,11 +8309,14 @@ endif # GHS
  Shared_Object.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8015,11 +8446,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8036,11 +8470,14 @@ endif # GHS
 .obj/Svc_Conf_l.o .obj/Svc_Conf_l.so .shobj/Svc_Conf_l.o .shobj/Svc_Conf_l.so: Svc_Conf_l.cpp \
  OS.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8130,11 +8567,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8274,11 +8714,14 @@ endif # GHS
  Message_Block.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8347,22 +8790,28 @@ endif # GHS
 .obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.so .shobj/Codeset_IBM1047.o .shobj/Codeset_IBM1047.so: Codeset_IBM1047.cpp \
  Codeset_IBM1047.h \
  pre.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
- post.h
+ post.h \
+ ACE_export.h \
+ svc_export.h
 
 .obj/Message_Block.o .obj/Message_Block.so .shobj/Message_Block.o .shobj/Message_Block.so: Message_Block.cpp \
  Message_Block.h \
  ACE.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8432,11 +8881,14 @@ endif # GHS
  Message_Block.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8547,17 +8999,21 @@ endif # GHS
  Strategies.i \
  Message_Queue.i
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
+ Task.h \
  pre.h \
  Service_Object.h \
  Shared_Object.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8682,11 +9138,14 @@ endif # GHS
  Map_Manager.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8766,15 +9225,19 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp Malloc.h \
+.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp \
+ Malloc.h \
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8837,11 +9300,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8860,11 +9326,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8931,11 +9400,14 @@ endif # GHS
  Malloc.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8999,11 +9471,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9086,11 +9561,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9109,11 +9587,14 @@ endif # GHS
  Shared_Memory.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9135,11 +9616,14 @@ endif # GHS
  Shared_Memory.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9160,11 +9644,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9255,11 +9742,14 @@ endif # GHS
  INET_Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9366,11 +9856,14 @@ endif # GHS
  pre.h \
  Map_Manager.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9461,11 +9954,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9555,11 +10051,14 @@ endif # GHS
  Synch.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9651,11 +10150,14 @@ endif # GHS
  Event_Handler.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9746,11 +10248,14 @@ endif # GHS
  Shared_Object.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9833,11 +10338,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9856,11 +10364,14 @@ endif # GHS
  ACE.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9978,11 +10489,14 @@ endif # GHS
  INET_Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10082,11 +10596,14 @@ endif # GHS
  pre.h \
  Time_Value.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10108,11 +10625,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10214,11 +10734,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10337,11 +10860,14 @@ endif # GHS
  Registry_Name_Space.h \
  pre.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10358,11 +10884,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10465,11 +10994,14 @@ endif # GHS
  pre.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10546,11 +11078,14 @@ endif # GHS
  INET_Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10620,11 +11155,14 @@ endif # GHS
  Addr.h \
  ACE.h \
  OS.h \
- inc_user_config.h \
+ config-all.h \
  config.h \
+ config-linux-lxpthreads.h \
  config-linux-common.h \
  config-g++-common.h \
  post.h \
+ ACE_export.h \
+ svc_export.h \
  Min_Max.h \
  streams.h \
  Basic_Types.h \

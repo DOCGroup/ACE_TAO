@@ -45,12 +45,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/FIFO-Msg-client.o .obj/FIFO-Msg-client.so .shobj/FIFO-Msg-client.o .shobj/FIFO-Msg-client.so: FIFO-Msg-client.cpp \
  $(ACE_ROOT)/ace/FIFO_Send_Msg.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FIFO_Send.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -69,12 +72,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/FIFO-Msg-server.o .obj/FIFO-Msg-server.so .shobj/FIFO-Msg-server.o .shobj/FIFO-Msg-server.so: FIFO-Msg-server.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv_Msg.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -93,11 +99,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/FIFO-client.o .obj/FIFO-client.so .shobj/FIFO-client.o .shobj/FIFO-client.so: FIFO-client.cpp \
  $(ACE_ROOT)/ace/FIFO_Send.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -115,11 +124,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/FIFO-server.o .obj/FIFO-server.so .shobj/FIFO-server.o .shobj/FIFO-server.so: FIFO-server.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -137,11 +149,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/FIFO-test.o .obj/FIFO-test.so .shobj/FIFO-test.o .shobj/FIFO-test.so: FIFO-test.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

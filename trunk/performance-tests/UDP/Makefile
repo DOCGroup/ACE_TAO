@@ -42,10 +42,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/udp_test.o .obj/udp_test.so .shobj/udp_test.o .shobj/udp_test.so: udp_test.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
