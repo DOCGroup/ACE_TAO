@@ -47,6 +47,9 @@ libACEXML_la_SOURCES = \
   XML_Codecs.cpp \
   ZipCharStream.cpp
 
+libACEXML_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACEXML_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 

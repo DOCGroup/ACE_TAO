@@ -378,6 +378,9 @@ libACE_la_SOURCES = \
   $(Timer) \
   $(Metrics)
 
+libACE_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 nobase_include_HEADERS = \
   ACE.h \
   ACE_export.h \

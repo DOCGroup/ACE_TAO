@@ -1,3 +1,18 @@
+Sun Nov 14 10:12:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACEXML/apps/svcconf/Makefile.am:
+	* ACEXML/common/Makefile.am:
+	* ACEXML/parser/parser/Makefile.am:
+	* Kokyu/Makefile.am:
+	* ace/Makefile.am:
+	* ace/QoS/Makefile.am:
+	* ace/RMCast/Makefile.am:
+	* ace/SSL/Makefile.am:
+	* ace/TMCast/Makefile.am:
+	* protocols/ace/HTBP/Makefile.am:
+
+	  Restored LDFLAGS definition.
+
 Sun Nov 14 05:03:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/tao_orb_tests.lst:
