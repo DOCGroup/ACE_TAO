@@ -10,7 +10,8 @@
 //
 // = DESCRIPTION
 //      This is a simple test to illustrate the priority mechanism of
-//      ACE Tasks.
+//      ACE Tasks.  The test requires no options, but the -d option enables
+//      LM_DEBUG output.
 //
 // = AUTHOR
 //    Doug Schmidt
@@ -22,6 +23,8 @@
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
+
+static char *usage = "usage: %s [-d]\n";
 
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 // = TITLE
@@ -113,8 +116,8 @@ Priority_Task::svc (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
   if (prio == this->priority_)
-    ACE_DEBUG ((LM_DEBUG, "(%t) actual prio of %d equals desired priority\n",
-                  prio));
+    ACE_DEBUG ((LM_INFO, "(%t) actual prio of %d equals desired priority\n",
+                prio));
   else
     {
       ACE_DEBUG ((LM_ERROR, "(%t) actual prio = %d, desired priority_ = %d!\n",
@@ -128,9 +131,28 @@ Priority_Task::svc (void)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, char *[])
+main (int argc, char *argv[])
 {
   ACE_START_TEST ("Priority_Task_Test");
+
+  if (argc <= 1)
+    {
+      // Disable LM_DEBUG messages.
+      ACE_Log_Msg::instance ()->priority_mask (
+        ACE_Log_Msg::instance ()->priority_mask () & ~ LM_DEBUG);
+    }
+  else if (argc == 2)
+    {
+      if (strcmp (argv[1], "-d"))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, usage, argv [0]), -1);
+        }
+      // else -d option: don't disable LM_DEBUG messages
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, usage, argv [0]), -1);
+    }
 
   int status = 0;
 
@@ -161,8 +183,8 @@ main (int, char *[])
         priority.next ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) %d tasks spawned, wait for them to exit . . .\n",
-                        ACE_MAX_ITERATIONS));
+  ACE_DEBUG ((LM_INFO, "(%t) %d tasks spawned, wait for them to exit . . .\n",
+                       ACE_MAX_ITERATIONS));
 
   // Wait for all tasks to exit.
   ACE_Thread_Manager::instance ()->wait ();
