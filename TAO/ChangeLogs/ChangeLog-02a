@@ -1,3 +1,14 @@
+Mon Apr 10 17:50:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Makefile:
+	  Update dependencies
+
+	* tao/Object_Loader.cpp:
+	  Add missing template instantiation
+
+	* tao/GIOP_Message_Lite.cpp:
+	  Add minor comment for Bala
+
 Mon Apr 10 16:21:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Object_Loader/driver.dsp:

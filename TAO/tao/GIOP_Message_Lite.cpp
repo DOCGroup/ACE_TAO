@@ -449,10 +449,9 @@ TAO_GIOP_Message_Lite::
   return 0;
 }
 
-
-
-
-
+// @@ Bala: if you use ACE_UNUSED_ARG *please* put it at the beginning
+// of the function, where there is some hope that somebody will find
+// it! 
 CORBA::Boolean
 TAO_GIOP_Message_Lite::
   write_reply_header (TAO_OutputCDR &output,
@@ -460,13 +459,13 @@ TAO_GIOP_Message_Lite::
                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
   // Write the GIOP Lite header first
   this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
                                output);
 
   // Write the service context list
 #if (TAO_HAS_MINIMUM_CORBA == 1)
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   output << reply.service_context_notowned ();
 #else
   if (reply.params_ == 0)
@@ -493,7 +492,7 @@ TAO_GIOP_Message_Lite::
 
       // Now increment it to account for the last dummy one...
       count++;
-      
+
       // Now marshal the rest of the service context objects
       output << count;
       for (i = 0; i != l; ++i)
@@ -502,14 +501,14 @@ TAO_GIOP_Message_Lite::
             continue;
           output << svc_ctx[i];
         }
-      
+
       // @@ Much of this code is GIOP 1.1 specific and should be
       ptr_arith_t target =
         reply.params_->_tao_target_alignment ();
-      
+
       ptr_arith_t current =
         ptr_arith_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
-      
+
       CORBA::ULong pad = 0;
       if (target == 0)
         {
@@ -556,7 +555,7 @@ TAO_GIOP_Message_Lite::
           ACE_THROW_RETURN (CORBA::MARSHAL (),
                             0);
         }
-      
+
       output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);
       output << pad;
       for (CORBA::ULong j = 0; j != pad; ++j)
@@ -565,10 +564,10 @@ TAO_GIOP_Message_Lite::
         }
     }
 #endif /* TAO_HAS_MINIMUM_CORBA */
-  
+
   // Write the request ID
   output.write_ulong (reply.request_id_);
-  
+
   // Write the reply status
   switch (reply.reply_status_)
     {
@@ -590,7 +589,6 @@ TAO_GIOP_Message_Lite::
       break;
     }
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return 1;
 }
 
@@ -803,7 +801,7 @@ TAO_GIOP_Message_Lite::
 
       CORBA::Object_ptr object_ptr =
         forward_request.forward_reference.in();
-      
+
       this->output_ << object_ptr;
 
       // Flag for code below catch blocks.
@@ -1265,13 +1263,13 @@ TAO_GIOP_Message_Lite::
         extype = CORBA::SYSTEM_EXCEPTION;
 
       // write the reply_status
-      reply_params.reply_status_ = 
+      reply_params.reply_status_ =
         TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype);
-      
+
       // Make the GIOP & reply header. They are version specific.
       this->write_reply_header (output,
                                 reply_params);
-      
+
 
       x->_tao_encode (output, ACE_TRY_ENV);
       ACE_TRY_CHECK;
